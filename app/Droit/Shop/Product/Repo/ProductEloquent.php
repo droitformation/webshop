@@ -14,7 +14,7 @@ class ProductEloquent implements ProductInterface{
 
     public function getAll(){
 
-        return $this->product->with(array('categories','authors','domains','attributes','price'))->get();
+        return $this->product->with(array('categories','authors','domains','attributes'))->get();
     }
 
     public function getByCategorie($id){
@@ -30,7 +30,7 @@ class ProductEloquent implements ProductInterface{
 
     public function find($id){
 
-        return $this->product->where('id','=',$id)->with(array('categories','authors','domains','attributes','price'))->get()->first();
+        return $this->product->where('id','=',$id)->with(array('categories','authors','domains','attributes'))->get()->first();
     }
 
     public function create(array $data){
@@ -42,6 +42,7 @@ class ProductEloquent implements ProductInterface{
             'description'     => $data['description'],
             'weight'          => $data['weight'],
             'sku'             => $data['sku'],
+            'price'           => $data['price'],
             'is_downloadable' => $data['is_downloadable'],
             'hidden'          => ($data['hidden'] ? 1 : 0),
             'created_at'      => date('Y-m-d G:i:s'),

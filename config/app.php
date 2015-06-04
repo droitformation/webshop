@@ -144,11 +144,13 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+        'App\Providers\ShopServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
         'Laracasts\Generators\GeneratorsServiceProvider',
-        'Intervention\Image\ImageServiceProvider'
+        'Intervention\Image\ImageServiceProvider',
+        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider'
 	],
 
 	/*
@@ -170,6 +172,7 @@ return [
 		'Blade'     => 'Illuminate\Support\Facades\Blade',
 		'Bus'       => 'Illuminate\Support\Facades\Bus',
 		'Cache'     => 'Illuminate\Support\Facades\Cache',
+        'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
 		'Config'    => 'Illuminate\Support\Facades\Config',
 		'Cookie'    => 'Illuminate\Support\Facades\Cookie',
 		'Crypt'     => 'Illuminate\Support\Facades\Crypt',

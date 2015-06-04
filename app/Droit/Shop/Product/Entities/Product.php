@@ -11,7 +11,7 @@ class Product extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = array('title', 'teaser', 'image', 'description', 'weight', 'sku', 'is_downloadable' ,'hidden');
+    protected $fillable = array('title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable' ,'hidden');
 
     //
     public function getAttributePivotAttribute()
@@ -25,6 +25,11 @@ class Product extends Model{
         }
 
         //return ($attributes ? $attributes : []);
+    }
+
+    public function priceToCents()
+    {
+        return $this->price * 100;
     }
 
     public function categories()
@@ -53,8 +58,8 @@ class Product extends Model{
         return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value')->orderBy('sorting', 'asc');
     }
 
-    public function price()
+/*    public function price()
     {
         return $this->hasOne('App\Droit\Shop\Product\Entities\Price','product_id', 'id');
-    }
+    }*/
 }

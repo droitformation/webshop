@@ -31,6 +31,9 @@
         <!-- Navigation  -->
         @include('partials.header')
 
+        <!-- Navigation  -->
+        @include('partials.cart')
+
         <!-- Contenu -->
         @yield('content')
         <!-- Fin contenu -->

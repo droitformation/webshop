@@ -21,6 +21,7 @@ class CreateShopProductsTable extends Migration {
             $table->text('description')->nullable();
             $table->string('weight')->nullable();
             $table->integer('sku');
+            $table->decimal('price', 6, 2);
             $table->boolean('is_downloadable')->default(false);
             $table->tinyInteger('hidden');
             $table->softDeletes();
