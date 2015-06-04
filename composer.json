@@ -16,7 +16,8 @@
 		"phpunit/phpunit": "~4.0",
 		"phpspec/phpspec": "~2.1",
         "laracasts/generators": "~1.0",
-        "mockery/mockery": "0.9.*"
+        "mockery/mockery": "0.9.*",
+        "fzaninotto/faker": "1.4.0"
 	},
 	"autoload": {
 		"classmap": [

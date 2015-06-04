@@ -15,7 +15,8 @@ class CreateShopProduitDomainsTable extends Migration {
         Schema::create('shop_product_domains', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('product_id');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('shop_products');
             $table->integer('domain_id');
             $table->integer('sorting');
         });

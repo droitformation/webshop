@@ -14,8 +14,9 @@ class CreateShopProduitAuthorsTable extends Migration {
 	{
         Schema::create('shop_product_authors', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('product_id');
+            $table->increments('id')->unsigned();
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('shop_products');
             $table->integer('author_id');
             $table->integer('sorting');
         });

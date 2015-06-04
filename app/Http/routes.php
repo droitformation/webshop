@@ -19,3 +19,33 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+/*
+ * Test routes
+ * */
+
+
+
+Route::get('factory', function()
+{
+
+    $fakerobj = new Faker\Factory;
+    $faker = $fakerobj::create();
+    $date = \Carbon\Carbon::now();
+
+    $fillable = array('title', 'teaser', 'image', 'description', 'weight', 'sku', 'is_downloadable' ,'hidden');
+
+    for( $x = 1 ; $x < 11; $x++ )
+    {
+        App\Droit\Shop\Product\Entities\Product::create(array(
+            'title'           => $faker->sentence,
+            'teaser'          => $faker->paragraph,
+            'description'     => $faker->text,
+            'image'           => 'img'.$x.'.jpg',
+            'weight'          => $faker->numberBetween(200, 1000),
+            'sku'             => $faker->numberBetween(5, 50),
+            'is_downloadable' => (($x % 2) == 0 ? 1 : 0)
+        ));
+    }
+
+});
