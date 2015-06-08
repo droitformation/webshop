@@ -1,0 +1,70 @@
+#checkout, #livraison{
+    margin: 15px 0 15px 0;
+}
+
+#checkout, #livraison{
+    margin: 15px 0 15px 0;
+}
+
+.badge-notify{
+    background:red;
+    position:relative;
+    top: -15px;
+    left: -15px;
+}
+
+figure{
+    position: relative;
+    padding: 5px;
+    -webkit-box-shadow: 0 1px 4px 1px #4F4F4F;
+    box-shadow: 0 1px 4px 1px #4F4F4F;
+}
+
+figure img{
+    max-width: 100%;
+}
+
+figcaption.sp-quantity{
+    position: absolute;
+    top: -5px;
+    left: 0px;
+    width: 100%;
+}
+
+.sp-quantity button{
+    position: relative;
+    display: none;
+}
+.sp-quantity span.sp-plus{
+    float: left;
+    margin-left: -7px;
+}
+.sp-quantity span.sp-minus{
+    float: right;
+    margin-right: -7px;
+}
+
+.sp-quantity span.sp-minus button.badge, .sp-quantity span.sp-plus button.badge{
+    background: red;
+    border: none;
+    padding-bottom: 5px;
+    -webkit-box-shadow: 0 1px 1px 0 #333333;
+    box-shadow: 0 1px 1px 0 #333333;
+}
+
+.pager li.next-commander a{
+    background: #41aa2f;
+    border: 1px solid #41aa2f;
+    color: #fff;
+}
+
+#updateAdresse .form-control{
+    height: 30px;
+    padding: 0 12px;
+    font-size: 13px;
+}
+
+#updateAdresse .form-group {
+    margin-bottom: 5px;
+    font-size: 13px;
+}

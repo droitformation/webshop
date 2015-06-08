@@ -27,6 +27,11 @@ class AppServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind('Illuminate\Contracts\Auth\Registrar','App\Services\Registrar');
 
+        $this->registerUserService();
+        $this->registerAdresseService();
+
+        $this->registerPaysService();
+        $this->registerCiviliteService();
         $this->registerCategorieService();
         $this->registerAuthorService();
         $this->registerDomainService();
@@ -45,6 +50,28 @@ class AppServiceProvider extends ServiceProvider {
                 new \App\Droit\Categorie\Entities\Categorie,
                 new \App\Droit\Categorie\Entities\Parent_categories
             );
+        });
+    }
+
+    /**
+     * User
+     */
+    protected function registerUserService(){
+
+        $this->app->bindShared('App\Droit\User\Repo\UserInterface', function()
+        {
+            return new \App\Droit\User\Repo\UserEloquent(new \App\Droit\User\Entities\User);
+        });
+    }
+
+    /**
+     * Adresse
+     */
+    protected function registerAdresseService(){
+
+        $this->app->bindShared('App\Droit\Adresse\Repo\AdresseInterface', function()
+        {
+            return new \App\Droit\Adresse\Repo\AdresseEloquent(new \App\Droit\Adresse\Entities\Adresses);
         });
     }
 
@@ -68,6 +95,28 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->bindShared('App\Droit\Domain\Repo\DomainInterface', function()
         {
             return new \App\Droit\Domain\Repo\DomainEloquent(new \App\Droit\Domain\Entities\Domain);
+        });
+    }
+
+    /**
+     * Pays
+     */
+    protected function registerPaysService(){
+
+        $this->app->bindShared('App\Droit\Pays\Repo\PaysInterface', function()
+        {
+            return new \App\Droit\Pays\Repo\PaysEloquent(new \App\Droit\Pays\Entities\Pays);
+        });
+    }
+
+    /**
+     * Civilite
+     */
+    protected function registerCiviliteService(){
+
+        $this->app->bindShared('App\Droit\Civilite\Repo\CiviliteInterface', function()
+        {
+            return new \App\Droit\Civilite\Repo\CiviliteEloquent(new \App\Droit\Civilite\Entities\Civilite);
         });
     }
 

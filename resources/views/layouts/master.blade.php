@@ -15,6 +15,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 
+    <!-- Checkout Files -->
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/checkout/checkout-cornerflat.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/checkout/checkout.css');?>" media="screen" />
+    <script src="<?php echo asset('js/checkout/classie.js');?>"></script>
+    <script src="<?php echo asset('js/checkout/checkout.js');?>"></script>
+
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
@@ -31,9 +37,19 @@
         <!-- Navigation  -->
         @include('partials.header')
 
-        <!-- Navigation  -->
-        @include('partials.cart')
-
+        @if(!Cart::content()->isEmpty() && !Request::is('checkout/*'))
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-xl btn-info" data-toggle="collapse" href="#collapseCart" href="#"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+                    <span class="badge badge-notify">{{ Cart::count() }}</span>
+                    <div class="collapse" id="collapseCart">
+                        <!-- Cart  -->
+                        @include('partials.cart')
+                        <ul class="pager"><li class="next next-commander"><a href="{{ url('checkout/resume') }}">Commander <span aria-hidden="true">&rarr;</span></a></li></ul>
+                    </div>
+                </div>
+            </div>
+        @endif
         <!-- Contenu -->
         @yield('content')
         <!-- Fin contenu -->

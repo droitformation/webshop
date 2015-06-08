@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'model' => 'App\Shop\User\Entities\User',
+	'model' => 'App\Droit\User\Entities\User',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -27,7 +27,7 @@ class CartController extends Controller {
 	{
         $item = $this->product->find($request->input('product_id'));
 
-        \Cart::add($item->id, $item->title, 1, $item->price);
+        \Cart::add($item->id, $item->title, 1, $item->price , array('image' => $item->image));
 
         return redirect()->back();
 	}
@@ -35,6 +35,13 @@ class CartController extends Controller {
     public function removeProduct(Request $request){
 
         \Cart::remove($request->input('rowid'));
+
+        return redirect()->back();
+    }
+
+    public function quantityProduct(Request $request){
+
+        \Cart::update($request->input('rowid'), $request->input('qty'));
 
         return redirect()->back();
     }

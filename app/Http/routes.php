@@ -14,8 +14,12 @@
 Route::get('/', 'ProductController@index');
 Route::resource('product', 'ProductController');
 
+Route::get('checkout/resume', 'CheckoutController@resume');
+Route::get('checkout/confirm', 'CheckoutController@confirm');
+
 Route::post('addProduct', 'CartController@addProduct');
 Route::post('removeProduct', 'CartController@removeProduct');
+Route::post('quantityProduct', 'CartController@quantityProduct');
 
 Route::get('home', 'HomeController@index');
 
@@ -50,5 +54,38 @@ Route::get('factory', function()
             'is_downloadable' => (($x % 2) == 0 ? 1 : 0)
         ));
     }
+
+});
+
+Route::get('myaddress', function()
+{
+    $repo = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+
+    $adresse = $repo->create(array(
+        'civilite_id'   => 2,
+        'first_name'    => 'Cindy',
+        'last_name'     => 'Leschaud',
+        'email'         => 'cindy.leschaud@unine.ch',
+        'company'       => 'Unine',
+        'role'          => '',
+        'profession_id' => 1,
+        'telephone'     => '032 751 38 07',
+        'mobile'        => '078 690 00 23',
+        'fax'           => '',
+        'adresse'       => 'Ruelle de l\'hôtel de ville 3',
+        'cp'            => '',
+        'complement'    => '',
+        'npa'           => '2520',
+        'ville'         => 'La Neuveville',
+        'canton_id'     => 6,
+        'pays_id'       => 208,
+        'type'          => 1,
+        'user_id'       => 1,
+        'livraison'     => 1,
+    ));
+    
+    echo '<pre>';
+    print_r($adresse);
+    echo '</pre>';
 
 });
