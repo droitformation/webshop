@@ -4,20 +4,26 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Pays\Repo\PaysInterface;
-use App\Droit\Civilite\Repo\CiviliteInterface;
+use App\Droit\Canton\Repo\CantonInterface;
+use App\Droit\Profession\Repo\ProfessionInterface;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller {
 
     protected $user;
     protected $pays;
-    protected $civilite;
+    protected $canton;
+    protected $profession;
 
-    public function __construct(UserInterface $user, CiviliteInterface $civilite, PaysInterface $pays)
+    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession)
     {
-        $this->user     = $user;
-        $this->pays     = $pays;
-        $this->civilite = $civilite;
+        $this->middleware('auth');
+        $this->middleware('cart');
+
+        $this->user       = $user;
+        $this->pays       = $pays;
+        $this->canton     = $canton;
+        $this->profession = $profession;
     }
 
     /**
@@ -27,9 +33,13 @@ class CheckoutController extends Controller {
 	 */
 	public function resume()
 	{
+        $cantons     = $this->canton->getAll();
+        $professions = $this->profession->getAll();
+        $pays        = $this->pays->getAll();
+
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('shop.checkout.resume')->with(compact('user'));
+        return view('shop.checkout.resume')->with(compact('user','pays','cantons','professions'));
 	}
 
     /**
@@ -41,10 +51,11 @@ class CheckoutController extends Controller {
     {
         $user = $this->user->find(\Auth::user()->id);
 
-        $civilite = $this->civilite->getAll();
-        $pays     = $this->pays->getAll();
+        $cantons     = $this->canton->getAll();
+        $professions = $this->profession->getAll();
+        $pays        = $this->pays->getAll();
 
-        return view('shop.checkout.billing')->with(compact('user','pays','civilite'));
+        return view('shop.checkout.billing')->with(compact('user','pays','cantons','professions'));
     }
 
 }

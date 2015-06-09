@@ -31,6 +31,8 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerAdresseService();
 
         $this->registerPaysService();
+        $this->registerCantonService();
+        $this->registerProfessionService();
         $this->registerCiviliteService();
         $this->registerCategorieService();
         $this->registerAuthorService();
@@ -110,6 +112,17 @@ class AppServiceProvider extends ServiceProvider {
     }
 
     /**
+     * Pays
+     */
+    protected function registerCantonService(){
+
+        $this->app->bindShared('App\Droit\Canton\Repo\CantonInterface', function()
+        {
+            return new \App\Droit\Canton\Repo\CantonEloquent(new \App\Droit\Canton\Entities\Canton);
+        });
+    }
+
+    /**
      * Civilite
      */
     protected function registerCiviliteService(){
@@ -117,6 +130,17 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->bindShared('App\Droit\Civilite\Repo\CiviliteInterface', function()
         {
             return new \App\Droit\Civilite\Repo\CiviliteEloquent(new \App\Droit\Civilite\Entities\Civilite);
+        });
+    }
+
+    /**
+     * Profession
+     */
+    protected function registerProfessionService(){
+
+        $this->app->bindShared('App\Droit\Profession\Repo\ProfessionInterface', function()
+        {
+            return new \App\Droit\Profession\Repo\ProfessionEloquent(new \App\Droit\Profession\Entities\Profession);
         });
     }
 

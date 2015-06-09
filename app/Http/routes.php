@@ -17,11 +17,14 @@ Route::resource('product', 'ProductController');
 Route::get('checkout/resume', 'CheckoutController@resume');
 Route::get('checkout/confirm', 'CheckoutController@confirm');
 
+Route::resource('adresse', 'AdresseController');
+Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
+
 Route::post('addProduct', 'CartController@addProduct');
 Route::post('removeProduct', 'CartController@removeProduct');
 Route::post('quantityProduct', 'CartController@quantityProduct');
 
-Route::get('home', 'HomeController@index');
+//Route::get('home', 'HomeController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

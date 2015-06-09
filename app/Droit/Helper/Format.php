@@ -352,4 +352,18 @@ class Format {
 		return FALSE;	
 	}
 
+    public function convertSerializedData($data){
+
+        $user = [];
+        if(!empty($data['data']))
+        {
+            foreach($data['data'] as $info)
+            {
+                $user[$info['name']] = $info['value'];
+            }
+        }
+
+        return $user;
+    }
+
 }

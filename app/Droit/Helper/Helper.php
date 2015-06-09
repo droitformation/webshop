@@ -406,62 +406,6 @@ class Helper {
 
     }
 
-    public function dispatchLoi($lois){
-
-        foreach($lois as $loi)
-        {
-            $dispatch[$loi->droit][] = $loi;
-        }
-
-        ksort($dispatch);
-
-        return $dispatch;
-    }
-
-    public function dispatchDomaine($doctrines,$domaines = null){
-
-        foreach($doctrines as $doctrine)
-        {
-            $dispatch[$doctrine->domain_id][$doctrine->volume_id][] = $doctrine;
-        }
-
-        if(!empty($dispatch))
-        {
-
-            foreach($dispatch as $domain => $list)
-            {
-                krsort($dispatch[$domain]);
-                $dispatched[$domain] = $dispatch[$domain];
-            }
-
-            $dispatch = $this->sortArrayByArray($dispatched, $domaines);
-        }
-
-        return $dispatch;
-    }
-
-    public function dispatchMatiere($matieres){
-
-        foreach($matieres as $matiere)
-        {
-            $dispatch[$matiere->matiere->id]['title']      = $matiere->matiere->title;
-            $dispatch[$matiere->matiere->id]['slug']       = $matiere->matiere->slug;
-
-            if($matiere->page_exist)
-            {
-                $dispatch[$matiere->matiere->id]['matieres'][] = $matiere;
-            }
-
-            $sort[$matiere->matiere->id] = $this->_removeAccents(strtolower($matiere->matiere->title));
-            asort($sort);
-
-        }
-
-        $dispatch = (isset($dispatch) ? $this->sortArrayByArray($dispatch, array_keys($sort)) : [] );
-
-        return $dispatch;
-    }
-
 	public function sanitizeUrl($url){
 
 		if (!preg_match("/^(http|https|ftp):/", $url)) {
@@ -475,41 +419,6 @@ class Helper {
      * Content fonctions
      */
 
-    public function prepareBlocsHomepage($data){
-
-        $home = [];
-
-        if(!$data->isEmpty()){
-
-            foreach($data as $bloc)
-            {
-                $rang[$bloc->rang][] = $bloc;
-            }
-
-            foreach($rang as $index => $homebloc){
-                $home[$index]['count']    = count($homebloc);
-                $home[$index]['position'] = $homebloc[0]->position;
-                $home[$index]['blocs']    = $homebloc;
-            }
-        }
-
-        return $home;
-    }
-
-    public function prepareCategories($data){
-
-        $categories = array();
-
-        if(!empty($data))
-        {
-            foreach($data as $index => $key){
-                $categories[$key] = ['sorting' => $index];
-            }
-        }
-
-        return $categories;
-
-    }
 
     public function sortArrayByArray(Array $array, Array $orderArray) {
         $ordered = array();
@@ -530,159 +439,18 @@ class Helper {
         return array('' => $emptyLabel) + $selectList;
     }
 
-    public function prepareDisposition($article,$disposition){
+    public function convertSerializedData($data){
 
-        $data = [];
-
-        if(!empty($disposition)){
-
-            $virgule = explode(';',$disposition);
-
-            if(!empty($virgule))
-            {
-                foreach($virgule as $delimit)
-                {
-                    $cote = array_map('trim', explode('|', $delimit));
-                    $data[$article][] = implode(' ',$cote);
-                }
-            }
-
-            return $data;
-        }
-
-        return $data[] = $article;
-    }
-
-    public function searchSubdivision($subdivision)
-    {
-        $cote     = array_map('trim', explode('|', $subdivision));
-        $division = implode(' ',$cote);
-
-        return $division;
-    }
-
-    public function convertSearchParams($request){
-
-        $alinea   = (isset($request['alinea'])  ? $request['alinea']  : null);
-        $lettre   = (isset($request['lettre'])  ? $request['lettre']  : null);
-        $chiffre  = (isset($request['chiffre']) ? $request['chiffre'] : null);
-
-        $terms = '';
-
-        $terms .= ($alinea  ? 'al. '.$alinea : '');
-        $terms .= ($lettre  ? ' let. '.$lettre : '');
-        $terms .= ($chiffre ? ' ch. '.$chiffre : '');
-
-        return $terms;
-    }
-
-    public function dispatchInArrayDisposition($disposition){
-
-        $all = [];
-        if(!empty($disposition))
+        $user = [];
+        if(!empty($data))
         {
-            $virgule = explode(';',$disposition);
-
-            if(!empty($virgule))
+            foreach($data as $info)
             {
-                foreach($virgule as $delimit)
-                {
-                    $data = [];
-                    $cote = array_map('trim', explode('|', $delimit));
-
-                    if(!empty($cote))
-                    {
-                        foreach($cote as $division)
-                        {
-                            $data = array_merge($data,$this->findTypeDivision($division));
-                        }
-                    }
-
-                    $all[] = $data;
-                }
-            }
-
-            return $all;
-        }
-
-        return $all;
-    }
-
-
-    public function findTypeDivision($division){
-
-        $delimiteur = [
-            [
-                'delimt'  => 'alinea',
-                'find'    => 'al',
-                'replace' => ['al.', 'Al.', 'al', 'Al','.']
-            ],
-            [
-                'delimt'  => 'chiffre',
-                'find'    => 'ch',
-                'replace' => ['ch.','Ch.','ch','Ch','.']
-            ],
-            [
-                'delimt'  => 'lettre',
-                'find'    => 'let',
-                'replace' => ['let.','Let.','let','Let','.']
-            ]
-        ];
-
-        if (strpos($division, 'final') !== false)
-        {
-            return [$division];
-        }
-
-        $division = strtolower($division);
-
-        foreach($delimiteur as $del)
-        {
-            if (strpos($division, $del['find']) !== false)
-            {
-                foreach($del['replace'] as $replace)
-                {
-                    $division = str_replace($replace, "", $division);
-                }
-
-                $data[$del['delimt']] = trim($division);
+                $user[$info['name']] = $info['value'];
             }
         }
 
-        return (isset($data) ? $data : []);
-    }
-
-    public function convertDispositionPages($data){
-
-        $delimiteur = [ 'alinea', 'chiffre', 'lettre','page','volume_id' ];
-        $new   = [];
-        $pages = [];
-        $sub   = $data['sub'];
-        $count = count($sub['volume_id']);
-
-        for($x = 0; $x < $count; $x++)
-        {
-            foreach($delimiteur as $del)
-            {
-                if(isset($sub[$del][$x])){
-                    $new[$x][$del] = $sub[$del][$x];
-                }
-            }
-        }
-
-        if(!empty($new))
-        {
-            foreach($new as $array)
-            {
-                $values = array_filter(array_values($array));
-                if(!empty($values))
-                {
-                    $pages[] = $array;
-                }
-            }
-        }
-
-        return $pages;
+        return $user;
     }
 
 }

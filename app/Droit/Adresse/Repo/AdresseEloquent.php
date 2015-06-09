@@ -327,28 +327,13 @@ class AdresseEloquent implements AdresseInterface{
 		{
 			return false;
 		}
-		
+
+        $adresse->fill($data);
 		// Général
-		$adresse->civilite_id    = $data['civilite_id'];
-		$adresse->prenom         = $this->format->format_name($data['prenom']);
-		$adresse->nom            = $this->format->format_name($data['nom']);
-		$adresse->email          = $data['email'];
-		$adresse->entreprise     = $data['entreprise'];
-		$adresse->fonction       = $data['fonction'];
-		$adresse->profession_id  = $data['profession_id'];
-		$adresse->telephone      = $data['telephone'];
-		$adresse->mobile         = $data['mobile'];
-		$adresse->fax            = $data['fax'];
-		$adresse->adresse        = $data['adresse'];
-		$adresse->cp             = $data['cp'];
-		$adresse->complement     = $data['complement'];
-		$adresse->npa            = $data['npa'];
-		$adresse->ville          = $data['ville'];
-		$adresse->canton_id      = $data['canton_id'];
-		$adresse->pays_id        = $data['pays_id'];
-		$adresse->type           = $data['type'];
-		$adresse->user_id        = $data['user_id'];
-		$adresse->updated_at     = date('Y-m-d G:i:s');
+
+		$adresse->first_name  = $this->format->format_name($data['first_name']);
+		$adresse->last_name   = $this->format->format_name($data['last_name']);
+		$adresse->updated_at  = date('Y-m-d G:i:s');
 		
 		$adresse->save();	
 		

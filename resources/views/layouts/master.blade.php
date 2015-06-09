@@ -11,15 +11,19 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="<?php echo asset('js/jquery-1.11.3.min.js');?>"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 
     <!-- Checkout Files -->
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/checkout/checkout-cornerflat.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/checkout/checkout.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation/parsley.css');?>" media="screen" />
+
     <script src="<?php echo asset('js/checkout/classie.js');?>"></script>
     <script src="<?php echo asset('js/checkout/checkout.js');?>"></script>
+    <script src="<?php echo asset('js/validation/parsley.js');?>"></script>
+    <script src="<?php echo asset('js/validation/fr.js');?>"></script>
 
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
