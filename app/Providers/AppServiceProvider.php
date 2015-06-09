@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerCategorieService(){
 
-        $this->app->bindShared('App\Droit\Categorie\Repo\CategorieInterface', function()
+        $this->app->singleton('App\Droit\Categorie\Repo\CategorieInterface', function()
         {
             return new \App\Droit\Categorie\Repo\CategorieEloquent(
                 new \App\Droit\Categorie\Entities\Categorie,
@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerUserService(){
 
-        $this->app->bindShared('App\Droit\User\Repo\UserInterface', function()
+        $this->app->singleton('App\Droit\User\Repo\UserInterface', function()
         {
             return new \App\Droit\User\Repo\UserEloquent(new \App\Droit\User\Entities\User);
         });
@@ -71,7 +71,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerAdresseService(){
 
-        $this->app->bindShared('App\Droit\Adresse\Repo\AdresseInterface', function()
+        $this->app->singleton('App\Droit\Adresse\Repo\AdresseInterface', function()
         {
             return new \App\Droit\Adresse\Repo\AdresseEloquent(new \App\Droit\Adresse\Entities\Adresses);
         });
@@ -82,7 +82,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerAuthorService(){
 
-        $this->app->bindShared('App\Droit\Author\Repo\AuthorInterface', function()
+        $this->app->singleton('App\Droit\Author\Repo\AuthorInterface', function()
         {
             return new \App\Droit\Author\Repo\AuthorEloquent(new \App\Droit\Author\Entities\Author);
         });
@@ -94,7 +94,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerDomainService(){
 
-        $this->app->bindShared('App\Droit\Domain\Repo\DomainInterface', function()
+        $this->app->singleton('App\Droit\Domain\Repo\DomainInterface', function()
         {
             return new \App\Droit\Domain\Repo\DomainEloquent(new \App\Droit\Domain\Entities\Domain);
         });
@@ -105,7 +105,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerPaysService(){
 
-        $this->app->bindShared('App\Droit\Pays\Repo\PaysInterface', function()
+        $this->app->singleton('App\Droit\Pays\Repo\PaysInterface', function()
         {
             return new \App\Droit\Pays\Repo\PaysEloquent(new \App\Droit\Pays\Entities\Pays);
         });
@@ -116,7 +116,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerCantonService(){
 
-        $this->app->bindShared('App\Droit\Canton\Repo\CantonInterface', function()
+        $this->app->singleton('App\Droit\Canton\Repo\CantonInterface', function()
         {
             return new \App\Droit\Canton\Repo\CantonEloquent(new \App\Droit\Canton\Entities\Canton);
         });
@@ -127,7 +127,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerCiviliteService(){
 
-        $this->app->bindShared('App\Droit\Civilite\Repo\CiviliteInterface', function()
+        $this->app->singleton('App\Droit\Civilite\Repo\CiviliteInterface', function()
         {
             return new \App\Droit\Civilite\Repo\CiviliteEloquent(new \App\Droit\Civilite\Entities\Civilite);
         });
@@ -138,7 +138,7 @@ class AppServiceProvider extends ServiceProvider {
      */
     protected function registerProfessionService(){
 
-        $this->app->bindShared('App\Droit\Profession\Repo\ProfessionInterface', function()
+        $this->app->singleton('App\Droit\Profession\Repo\ProfessionInterface', function()
         {
             return new \App\Droit\Profession\Repo\ProfessionEloquent(new \App\Droit\Profession\Entities\Profession);
         });

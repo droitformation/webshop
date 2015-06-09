@@ -33,6 +33,11 @@ class ProductEloquent implements ProductInterface{
         return $this->product->where('id','=',$id)->with(array('categories','authors','domains','attributes'))->get()->first();
     }
 
+    public function getSome($ids){
+
+        return $this->product->whereIn('id', $ids)->get();
+    }
+
     public function create(array $data){
 
         $product = $this->product->create(array(

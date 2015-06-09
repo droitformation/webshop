@@ -35,6 +35,20 @@ Route::controllers([
  * Test routes
  * */
 
+Route::get('cartworker', function()
+{
+    $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+
+    $worker->getShipping();
+
+        echo '<pre>';
+        print_r($product);
+        echo '</pre>';
+
+
+});
+
+
 Route::get('factory', function()
 {
 

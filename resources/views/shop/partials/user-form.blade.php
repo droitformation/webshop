@@ -84,13 +84,13 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Canton</label>
                     <div class="col-sm-7">
-                        {!! Form::select('canton_id', $cantons->lists('title','id') , $user->adresse_livraison->canton_id, ['data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Canton']) !!}
+                        {!! Form::select('canton_id', $cantons->lists('title','id')->all() , $user->adresse_livraison->canton_id, ['data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Canton']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Pays</label>
                     <div class="col-sm-7">
-                        {!! Form::select('pays_id', $pays->lists('title','id') , $user->adresse_livraison->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Pays']) !!}
+                        {!! Form::select('pays_id', $pays->lists('title','id')->all() , $user->adresse_livraison->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Pays']) !!}
                     </div>
                 </div>
 
