@@ -11,7 +11,7 @@ class Product extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = array('title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable' ,'hidden');
+    protected $fillable = array('title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable');
 
     //
     public function getAttributePivotAttribute()
@@ -27,9 +27,12 @@ class Product extends Model{
         //return ($attributes ? $attributes : []);
     }
 
-    public function priceToCents()
+    public function getPriceCentsAttribute()
     {
-        return $this->price * 100;
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $price = $this->price / 100;
+
+        return $money->format($price);
     }
 
     public function categories()

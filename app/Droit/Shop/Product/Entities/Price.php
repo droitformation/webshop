@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Price extends Model{
 
     use SoftDeletes;
@@ -21,6 +22,8 @@ class Price extends Model{
     {
         $prix = $this->price_net/100;
         $prix = number_format($prix, 2, '.', ' ');
+
+
 
         return $prix;
     }

@@ -30,19 +30,6 @@
             {!! Form::hidden('product_id', $product->id) !!}
         {!! Form::close() !!}
 
-  <!--      {!! Form::open(array('url' => '/checkout')) !!}
-        {!! Form::hidden('product_id', $product->id) !!}
-        <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="{{env('STRIPE_API_PUBLIC')}}"
-            data-name="publications-droit"
-            data-currency="CHF"
-            data-label="Achat direct {{ $product->price }} CHF"
-            data-description="{{ $product->title }}"
-            data-amount="{{ $product->priceToCents() }}">
-        </script>
-        {!! Form::close() !!}-->
-
     </div>
 
 </div>

@@ -48,7 +48,7 @@
                     <span class="badge badge-notify">{{ Cart::count() }}</span>
                     <div class="collapse" id="collapseCart">
                         <!-- Cart  -->
-                        @include('partials.cart')
+                        @include('shop.partials.cart')
                         <ul class="pager"><li class="next next-commander"><a href="{{ url('checkout/resume') }}">Commander <span aria-hidden="true">&rarr;</span></a></li></ul>
                     </div>
                 </div>

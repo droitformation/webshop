@@ -6,6 +6,7 @@ use App\Droit\User\Repo\UserInterface;
 use App\Droit\Pays\Repo\PaysInterface;
 use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
+use App\Droit\Shop\Cart\Worker\CartWorker;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller {
@@ -14,8 +15,9 @@ class CheckoutController extends Controller {
     protected $pays;
     protected $canton;
     protected $profession;
+    protected $checkout;
 
-    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession)
+    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorker $checkout)
     {
         $this->middleware('auth');
         $this->middleware('cart');
@@ -24,6 +26,7 @@ class CheckoutController extends Controller {
         $this->pays       = $pays;
         $this->canton     = $canton;
         $this->profession = $profession;
+        $this->checkout   = $checkout;
     }
 
     /**
@@ -47,15 +50,13 @@ class CheckoutController extends Controller {
      *
      * @return Response
      */
-    public function billing()
+    public function confirm()
     {
-        $user = $this->user->find(\Auth::user()->id);
+        $user  = $this->user->find(\Auth::user()->id);
 
-        $cantons     = $this->canton->getAll();
-        $professions = $this->profession->getAll();
-        $pays        = $this->pays->getAll();
+        $shipping = $this->checkout->getShipping();
 
-        return view('shop.checkout.billing')->with(compact('user','pays','cantons','professions'));
+        return view('shop.checkout.confirm')->with(compact('user'));
     }
 
 }

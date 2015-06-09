@@ -40,22 +40,25 @@ Route::get('factory', function()
 
     $fakerobj = new Faker\Factory;
     $faker = $fakerobj::create();
-    $date = \Carbon\Carbon::now();
 
-    $fillable = array('title', 'teaser', 'image', 'description', 'weight', 'sku', 'is_downloadable' ,'hidden');
+    $repo = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
 
     for( $x = 1 ; $x < 11; $x++ )
     {
-        App\Droit\Shop\Product\Entities\Product::create(array(
+        $product = $repo->create(array(
             'title'           => $faker->sentence,
             'teaser'          => $faker->paragraph,
             'description'     => $faker->text,
             'image'           => 'img'.$x.'.jpg',
-            'price'           => $faker->randomFloat(2,20,200),
+            'price'           => $faker->numberBetween(2000, 40000),
             'weight'          => $faker->numberBetween(200, 1000),
             'sku'             => $faker->numberBetween(5, 50),
             'is_downloadable' => (($x % 2) == 0 ? 1 : 0)
         ));
+        
+        echo '<pre>';
+        print_r($product);
+        echo '</pre>';
     }
 
 });

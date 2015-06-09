@@ -21,6 +21,7 @@ return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpSpec' => array($vendorDir . '/phpspec/phpspec/src'),
+    'Money' => array($vendorDir . '/mathiasverraes/money/lib'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Laravel\\Cashier\\' => array($vendorDir . '/laravel/cashier/src'),
     'JakubOnderka\\PhpConsoleHighlighter' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),

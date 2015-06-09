@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 class CartController extends Controller {
 
     protected $product;
+    protected $money;
 
     public function __construct(ProductInterface $product)
     {
         $this->product = $product;
+        $this->money   = new \App\Droit\Shop\Product\Entities\Money;
     }
 
     /**
@@ -27,7 +29,7 @@ class CartController extends Controller {
 	{
         $item = $this->product->find($request->input('product_id'));
 
-        \Cart::add($item->id, $item->title, 1, $item->price , array('image' => $item->image));
+        \Cart::add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image));
 
         return redirect()->back();
 	}

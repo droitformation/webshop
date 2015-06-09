@@ -9,7 +9,7 @@
 </div>
 
 <!-- Cart  -->
-@include('partials.cart')
+@include('shop.partials.cart')
 
 <div class="row bs-wizard" style="border-bottom:0;">
 
@@ -41,7 +41,7 @@
         <h4>Adresse de livraison</h4>
 
         <address id="userAdresse">
-            @include('partials.user-livraison')
+            @include('shop.partials.user-livraison')
         </address>
         <p><a data-toggle="modal" data-target="#userFormModal" class="btn btn-default" href="#">Modifier votre adresse</a></p>
 
@@ -49,10 +49,10 @@
 </div>
 
 <!-- User form for update  -->
-@include('partials.user-form')
+@include('shop.partials.user-form')
 
 <ul class="pager">
-    <li class="next next-commander"><a href="{{ url('checkout/billing') }}">Finaliser ma commande <span aria-hidden="true">&rarr;</span></a></li>
+    <li class="next next-commander"><a href="{{ url('checkout/confirm') }}">Finaliser ma commande <span aria-hidden="true">&rarr;</span></a></li>
 </ul>
 
 @stop

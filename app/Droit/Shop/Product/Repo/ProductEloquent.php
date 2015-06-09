@@ -44,7 +44,6 @@ class ProductEloquent implements ProductInterface{
             'sku'             => $data['sku'],
             'price'           => $data['price'],
             'is_downloadable' => $data['is_downloadable'],
-            'hidden'          => ($data['hidden'] ? 1 : 0),
             'created_at'      => date('Y-m-d G:i:s'),
             'updated_at'      => date('Y-m-d G:i:s')
         ));
