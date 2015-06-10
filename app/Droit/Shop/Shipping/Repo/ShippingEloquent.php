@@ -1,7 +1,7 @@
-<?php namespace App\Droit\Shipping\Repo;
+<?php namespace App\Droit\Shop\Shipping\Repo;
 
 use App\Droit\Shop\Shipping\Repo\ShippingInterface;
-use App\Droit\Shop\Shipping\Entities as M;
+use App\Droit\Shop\Shipping\Entities\Shipping as M;
 
 class ShippingEloquent implements ShippingInterface{
 
@@ -12,9 +12,22 @@ class ShippingEloquent implements ShippingInterface{
         $this->shipping = $shipping;
     }
 
-    public function getAll(){
+    public function getAll($type = null){
 
-        return $this->shipping->all();
+        return $this->shipping->where('type','=',$type)->get();
+    }
+
+    public function getShipping($weight = null){
+
+        if($weight)
+        {
+            return $this->shipping
+                ->select('shop_shipping.*',\DB::raw('CAST( value as UNSIGNED ) as weight'))
+                ->where('type','=','poids')->where('value','>',$weight)->orderBy('weight', 'asc')->skip(0)->take(1)->get();
+        }
+
+        return $this->shipping->where('type','=','gratuit')->take(1)->get();
+
     }
 
     public function find($id){
