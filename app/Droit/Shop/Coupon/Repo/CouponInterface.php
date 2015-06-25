@@ -1,4 +1,4 @@
-<?php namespace App\Hub\Shop\Coupon\Repo;
+<?php namespace App\Droit\Shop\Coupon\Repo;
 
 interface CouponInterface {
 

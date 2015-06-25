@@ -138,4 +138,22 @@ class CartWorkerTest extends TestCase {
         $this->assertEquals(2600, $this->worker->orderShipping->price);
     }
 
+    /**
+     * @return void
+     */
+    public function testApplyCoupon()
+    {
+        \Cart::instance('newInstance');
+
+        \Cart::add(1, 'Uno', 1, '1000' , array('weight' => 500));
+
+        $product = $this->worker->setCoupon('test')->applyCoupon();
+
+echo '<pre>';
+print_r($this->worker->hasCoupon);
+echo '</pre>';exit;
+
+        $this->assertEquals(0, $product);
+    }
+
 }

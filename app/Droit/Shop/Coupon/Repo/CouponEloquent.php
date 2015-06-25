@@ -1,7 +1,7 @@
-<?php namespace App\Hub\Coupon\Repo;
+<?php namespace App\Droit\Shop\Coupon\Repo;
 
-use App\Hub\Shop\Coupon\Repo\CouponInterface;
-use App\Hub\Shop\Coupon\Entities as M;
+use App\Droit\Shop\Coupon\Repo\CouponInterface;
+use App\Droit\Shop\Coupon\Entities\Coupon as M;
 
 class CouponEloquent implements CouponInterface{
 
