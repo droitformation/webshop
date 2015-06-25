@@ -16,8 +16,8 @@ class CreateShopShippingTable extends Migration {
         {
             $table->increments('id');
             $table->string('title');
-            $table->string('value');
-            $table->string('price');
+            $table->integer('value');
+            $table->integer('price');
             $table->string('type');
         });
 	}

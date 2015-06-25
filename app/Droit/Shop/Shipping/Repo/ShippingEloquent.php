@@ -21,12 +21,15 @@ class ShippingEloquent implements ShippingInterface{
 
         if($weight)
         {
-            return $this->shipping
+             return $this->shipping
                 ->select('shop_shipping.*',\DB::raw('CAST( value as UNSIGNED ) as weight'))
-                ->where('type','=','poids')->where('value','>',$weight)->orderBy('weight', 'asc')->skip(0)->take(1)->get();
+                ->where('type','=','poids')
+                ->where('shop_shipping.value','>=',$weight)
+                ->orderBy('weight', 'asc')
+                ->take(1)->get()->first();
         }
 
-        return $this->shipping->where('type','=','gratuit')->take(1)->get();
+        return $this->shipping->where('type','=','gratuit')->take(1)->get()->first();
 
     }
 

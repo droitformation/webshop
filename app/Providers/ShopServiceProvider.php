@@ -24,6 +24,8 @@ class ShopServiceProvider extends ServiceProvider {
         $this->registerShippingService();
         $this->registerProductService();
         $this->registerAttributeService();
+        $this->registerCouponService();
+
 	}
 
 
@@ -58,6 +60,18 @@ class ShopServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Shop\Attribute\Repo\AttributeInterface', function()
         {
             return new \App\Droit\Shop\Attribute\Repo\AttributeEloquent(new \App\Droit\Shop\Attribute\Entities\Attribute);
+        });
+    }
+
+
+    /**
+     * Coupon
+     */
+    protected function registerCouponService(){
+
+        $this->app->singleton('App\Droit\Shop\Coupon\Repo\CouponInterface', function()
+        {
+            return new \App\Droit\Shop\Coupon\Repo\CouponEloquent(new \App\Droit\Shop\Coupon\Entities\Coupon);
         });
     }
 

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder  {
         $this->call('PaysTableSeeder');
         $this->call('ProfessionsTableSeeder');
         $this->call('Adresse_typesTableSeeder');
+
 	}
 
 }

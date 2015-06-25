@@ -11,6 +11,8 @@ use App\Droit\Shop\Shipping\Repo\ShippingInterface;
 
      public $orderShipping;
      public $orderWeight;
+     public $coupon;
+     public $noShipping = false;
 
      public function __construct(ProductInterface $product, ShippingInterface $shipping)
      {
@@ -19,33 +21,32 @@ use App\Droit\Shop\Shipping\Repo\ShippingInterface;
          $this->money    = new \App\Droit\Shop\Product\Entities\Money;
      }
 
+     public function noShipping()
+     {
+         $this->noShipping = true;
+
+         return $this;
+     }
+
+     public function setCoupon($coupon){
+
+
+     }
+
      public function setShipping(){
 
-         $weight = (!session()->has('noshipping') ? $this->orderWeight : null);
+         $weight = ($this->noShipping ? null : $this->orderWeight);
 
          $this->orderShipping = $this->shipping->getShipping($weight);
 
          return $this;
      }
 
-     public function calculateShippingRates(){
-
-         $shipping = $this->shipping->getAll();
-
-     }
-
      public function getShipping(){
 
-         $collection = $this->shipping->getAll('poids');
-         $sorted     = $collection->sortBy('value');
+         $shipping = $this->shipping->getShipping($this->orderWeight);
 
-         $weight = $this->orderWeight;
-         $weight = 5000;
-         $collection->search(function ($item, $weight) {
-             return $weight > $item->value;
-         });
-
-         return $sorted->toArray();
+         return $shipping;
      }
 
      public function getTotalWeight(){
@@ -55,8 +56,10 @@ use App\Droit\Shop\Shipping\Repo\ShippingInterface;
          $cart     = \Cart::content();
          $products = $cart->lists('options');
 
-         if(!$products->isEmpty()){
-             foreach($products as $product){
+         if(!$products->isEmpty())
+         {
+             foreach($products as $product)
+             {
                  $totalWeight +=  $product->weight;
              }
          }

@@ -22,12 +22,27 @@ class CouponEloquent implements CouponInterface{
         return $this->coupon->find($id);
     }
 
+    public function findByTitle($title){
+
+        $coupon = $this->coupon->where('title', '=' , $title)->get();
+
+        if(!$coupon->isEmpty())
+        {
+            return $coupon->first();
+        }
+
+        return false;
+    }
+
+
+
     public function create(array $data){
 
         $coupon = $this->coupon->create(array(
-            'title'     => $data['title'],
-            'value'     => $data['value'],
-            'expire_at' => $data['expire_at']
+            'title'      => $data['title'],
+            'value'      => $data['value'],
+            'product_id' => (isset($data['product_id']) ? $data['product_id'] : null),
+            'expire_at'  => $data['expire_at']
         ));
 
         if( ! $coupon )

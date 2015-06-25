@@ -16,6 +16,8 @@ class CartWorkerTest extends TestCase {
         \Cart::instance('newInstance')->destroy();
     }
 
+
+
 	/**
 	 * @return void
 	 */
@@ -34,6 +36,23 @@ class CartWorkerTest extends TestCase {
     /**
      * @return void
      */
+    public function testGetFreeShipping()
+    {
+        \Cart::instance('newInstance');
+
+        \Cart::add(55, 'Uno', 1, '12' , array('weight' => 155));
+        \Cart::add(56, 'Duo', 1, '34' , array('weight' => 25));
+
+        $this->worker->getTotalWeight();
+
+        $this->worker->noShipping()->setShipping();
+
+        $this->assertEquals(0, $this->worker->orderShipping->price);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetShippingRate()
     {
         \Cart::instance('newInstance');
@@ -44,7 +63,7 @@ class CartWorkerTest extends TestCase {
         $this->worker->getTotalWeight();
         $this->worker->setShipping();
 
-        $this->assertEquals(1000, $this->worker->orderShipping->first()->price);
+        $this->assertEquals(1000, $this->worker->orderShipping->price);
     }
 
     /**
@@ -61,7 +80,7 @@ class CartWorkerTest extends TestCase {
         $this->worker->getTotalWeight();
         $this->worker->setShipping();
 
-        $this->assertEquals(1100, $this->worker->orderShipping->first()->price);
+        $this->assertEquals(1100, $this->worker->orderShipping->price);
     }
 
     /**
@@ -74,17 +93,49 @@ class CartWorkerTest extends TestCase {
         \Cart::add(65, 'Uno', 1, '12' , array('weight' => 1500));
         \Cart::add(76, 'Duo', 1, '34' , array('weight' => 1500));
         \Cart::add(88, 'tres', 1, '44' , array('weight' => 2000));
+        \Cart::add(89, 'cuatro', 1, '44' , array('weight' => 5000));
 
         $this->worker->getTotalWeight();
         $this->worker->setShipping();
 
-       $result =  $this->worker->getShipping();
+        $this->assertEquals(1400, $this->worker->orderShipping->price);
+    }
 
-echo '<pre>';
-print_r($result);
-echo '</pre>';exit;
+    /**
+     * @return void
+     */
+    public function testGetShippingRateVeryBigger()
+    {
+        \Cart::instance('newInstance');
 
-        $this->assertEquals(1400, $this->worker->orderShipping->first()->price);
+        \Cart::add(65, 'Uno', 1, '12' , array('weight' => 5500));
+        \Cart::add(76, 'Duo', 1, '34' , array('weight' => 5500));
+        \Cart::add(88, 'tres', 1, '44' , array('weight' => 4000));
+        \Cart::add(89, 'cuatro', 1, '44' , array('weight' => 5000));
+
+        $this->worker->getTotalWeight();
+        $this->worker->setShipping();
+
+        $this->assertEquals(1900, $this->worker->orderShipping->price);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetShippingRateEvenBigger()
+    {
+        \Cart::instance('newInstance');
+
+        \Cart::add(65, 'Uno', 1, '12' , array('weight' => 5500));
+        \Cart::add(76, 'Duo', 1, '34' , array('weight' => 5500));
+        \Cart::add(88, 'tres', 1, '44' , array('weight' => 4000));
+        \Cart::add(89, 'cuatro', 1, '43' , array('weight' => 5000));
+        \Cart::add(90, 'cinquo', 1, '42' , array('weight' => 10000));
+
+        $this->worker->getTotalWeight();
+        $this->worker->setShipping();
+
+        $this->assertEquals(2600, $this->worker->orderShipping->price);
     }
 
 }

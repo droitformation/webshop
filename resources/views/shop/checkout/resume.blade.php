@@ -37,7 +37,7 @@
 </div>
 
 <div class="row" id="livraison">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <h4>Adresse de livraison</h4>
 
         <address id="userAdresse">
@@ -45,6 +45,19 @@
         </address>
         <p><a data-toggle="modal" data-target="#userFormModal" class="btn btn-default" href="#">Modifier votre adresse</a></p>
 
+    </div>
+    <div class="col-md-3">
+        <form>
+            <div class="form-group">
+                <label for="code">J'ai un rabais</label>
+                <div class="input-group">
+                    <input type="text" value="" name="coupon" class="form-control" placeholder="Code">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Ok</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
+        </form>
     </div>
 </div>
 

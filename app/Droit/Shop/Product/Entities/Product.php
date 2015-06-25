@@ -13,20 +13,6 @@ class Product extends Model{
 
     protected $fillable = array('title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable');
 
-    //
-    public function getAttributePivotAttribute()
-    {
-        if(isset($this->attri) && !empty($this->attri))
-        {
-
-            echo '<pre>';
-            print_r($this->attri);
-            echo '</pre>';exit;
-        }
-
-        //return ($attributes ? $attributes : []);
-    }
-
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

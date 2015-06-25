@@ -5,7 +5,10 @@ namespace Illuminate\Routing;
 use Closure;
 use LogicException;
 use ReflectionFunction;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use UnexpectedValueException;
 use Illuminate\Container\Container;
 use Illuminate\Routing\Matching\UriValidator;
 use Illuminate\Routing\Matching\HostValidator;
@@ -259,7 +262,7 @@ class Route
      */
     public function middleware()
     {
-        return (array) array_get($this->action, 'middleware', []);
+        return (array) Arr::get($this->action, 'middleware', []);
     }
 
     /**
@@ -304,7 +307,7 @@ class Route
      */
     public static function parseFilters($filters)
     {
-        return array_build(static::explodeFilters($filters), function ($key, $value) {
+        return Arr::build(static::explodeFilters($filters), function ($key, $value) {
             return Route::parseFilter($value);
         });
     }
@@ -351,7 +354,7 @@ class Route
      */
     public static function parseFilter($filter)
     {
-        if (!str_contains($filter, ':')) {
+        if (!Str::contains($filter, ':')) {
             return [$filter, []];
         }
 
@@ -403,7 +406,7 @@ class Route
      */
     public function parameter($name, $default = null)
     {
-        return array_get($this->parameters(), $name, $default);
+        return Arr::get($this->parameters(), $name, $default);
     }
 
     /**
@@ -587,7 +590,7 @@ class Route
     protected function replaceDefaults(array $parameters)
     {
         foreach ($parameters as $key => &$value) {
-            $value = isset($value) ? $value : array_get($this->defaults, $key);
+            $value = isset($value) ? $value : Arr::get($this->defaults, $key);
         }
 
         return $parameters;
@@ -598,6 +601,8 @@ class Route
      *
      * @param  callable|array  $action
      * @return array
+     *
+     * @throws \UnexpectedValueException
      */
     protected function parseAction($action)
     {
@@ -615,6 +620,12 @@ class Route
             $action['uses'] = $this->findCallable($action);
         }
 
+        if (is_string($action['uses']) && ! Str::contains($action['uses'], '@')) {
+            throw new UnexpectedValueException(sprintf(
+                'Invalid route action: [%s]', $action['uses']
+            ));
+        }
+
         return $action;
     }
 
@@ -626,7 +637,7 @@ class Route
      */
     protected function findCallable(array $action)
     {
-        return array_first($action, function ($key, $value) {
+        return Arr::first($action, function ($key, $value) {
             return is_callable($value) && is_numeric($key);
         });
     }
@@ -766,7 +777,7 @@ class Route
     {
         $uri = rtrim($prefix, '/').'/'.ltrim($this->uri, '/');
 
-        $this->uri = trim($uri , '/');
+        $this->uri = trim($uri, '/');
 
         return $this;
     }
