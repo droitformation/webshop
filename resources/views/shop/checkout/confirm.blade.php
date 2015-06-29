@@ -21,23 +21,47 @@
                     <th class="text-right" width="15%">Prix</th>
                 </tr>
             </thead>
+
             @foreach(Cart::content() as $item)
             <tbody>
                 <tr>
                     <td>{{ $item->name }}</td>
                     <td class="text-right">{{ $item->qty }}</td>
-                    <td class="text-right">{{ $item->price }} CHF</td>
+                    <td class="text-right">
+                        <?php $price = number_format((float)$item->price, 2, '.', ''); ?>
+                        {{ $price }} CHF
+                    </td>
                 </tr>
             </tbody>
             @endforeach
+
             <tfoot>
+                @if(isset($coupon) && !empty($coupon))
+                <tr>
+                    <td></td>
+                    <td class="text-right"><strong>Rabais appliqué</strong></td>
+                    <td class="text-right">
+                        @if($coupon['type'] == 'shipping')
+                            <span class="text-muted">Frais de port offerts</span>
+                        @else
+                            <span class="text-muted">{{ $coupon['title'] }}</span> &nbsp;{{ $coupon['value'] }}%
+                        @endif
+                    </td>
+                </tr>
+                @endif
+                <tr>
+                    <td></td>
+                    <td class="text-right"><strong>Frais d'envoi</strong></td>
+                    <td class="text-right">{{ $shipping }}  CHF</td>
+                </tr>
                 <tr class="active">
                     <td></td>
                     <td class="text-right"><strong>Total des produits</strong></td>
-                    <td class="text-right">{{ Cart::total() }} CHF</td>
+                    <td class="text-right">{{ $total }} CHF</td>
                 </tr>
             </tfoot>
         </table>
+
     </div>
 </div>
 @endif

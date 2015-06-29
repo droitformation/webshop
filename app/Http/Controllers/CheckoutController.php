@@ -40,9 +40,11 @@ class CheckoutController extends Controller {
         $professions = $this->profession->getAll();
         $pays        = $this->pays->getAll();
 
+        $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
+
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('shop.checkout.resume')->with(compact('user','pays','cantons','professions'));
+        return view('shop.checkout.resume')->with(compact('user','pays','cantons','professions','coupon'));
 	}
 
     /**
@@ -52,11 +54,13 @@ class CheckoutController extends Controller {
      */
     public function confirm()
     {
-        $user  = $this->user->find(\Auth::user()->id);
+        $user     = $this->user->find(\Auth::user()->id);
+        $shipping = $this->checkout->totalShipping();
+        $total    = $this->checkout->totalCartWithShipping();
 
-        $shipping = $this->checkout->getShipping();
+        $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
 
-        return view('shop.checkout.confirm')->with(compact('user'));
+        return view('shop.checkout.confirm')->with(compact('user','shipping','coupon','total'));
     }
 
 }

@@ -37,7 +37,7 @@ class Handler extends ExceptionHandler {
 	public function render($request, Exception $e)
 	{
         if ($e instanceof \App\Exceptions\CouponException)
-            return \Redirect::back()->with(array('status' => 'warning' , 'message' => 'Ce code n\'est pas valide'));
+            return \Redirect::back()->with(array('status' => 'warning' , 'message' => $e->getMessage()));
 
 		return parent::render($request, $e);
 	}

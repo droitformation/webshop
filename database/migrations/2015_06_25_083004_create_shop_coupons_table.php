@@ -17,6 +17,7 @@ class CreateShopCouponsTable extends Migration {
             $table->increments('id');
             $table->string('value');
             $table->string('title');
+            $table->enum('type', ['global', 'product','shipping'])->default('global');
             $table->integer('product_id')->nullable();
             $table->dateTime('expire_at');
             $table->timestamps();

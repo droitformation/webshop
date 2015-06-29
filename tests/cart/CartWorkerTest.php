@@ -143,8 +143,7 @@ class CartWorkerTest extends TestCase {
         \Cart::add(88, 'tres', 1, '44' , array('weight' => 4000));
         \Cart::add(89, 'cuatro', 1, '44' , array('weight' => 5000));
 
-        $this->worker->getTotalWeight();
-        $this->worker->setShipping();
+        $this->worker->getTotalWeight()->setShipping();
 
         $this->assertEquals(1900, $this->worker->orderShipping->price);
     }
@@ -180,8 +179,6 @@ class CartWorkerTest extends TestCase {
         $this->worker->setCoupon($this->onecoupon->title);
 
         $this->assertEquals($this->worker->hasCoupon->id, $this->onecoupon->id);
-
-       // $this->worker->applyCoupon();
 
     }
 
@@ -227,5 +224,21 @@ class CartWorkerTest extends TestCase {
         $price = $this->worker->setCoupon($this->twocoupon->title)->calculPriceWithCoupon();
 
         $this->assertEquals(8.00, $price);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculPriceWithSecondCoupon()
+    {
+        \Cart::instance('newInstance');
+
+        \Cart::add(1, 'Uno', 1, '10.00' , array('weight' => 500));
+        \Cart::add(2, 'Dos', 1, '15.00' , array('weight' => 600));
+
+        $this->worker->setCoupon($this->onecoupon->title)->applyCoupon();
+
+        $this->assertEquals(22.5, \Cart::total());
+
     }
 }

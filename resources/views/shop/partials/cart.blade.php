@@ -18,10 +18,5 @@
         </div>
         @endforeach
     </div>
-    <hr/>
-    <div class="row">
-        <div class="col-md-6"><span class="text-muted">Votre commande</span>&nbsp; {{ Cart::count() }} {{ Cart::count() > 1 ? 'articles': 'article'}}</div>
-        <div class="col-md-6 text-right"><span class="text-muted">Total</span>&nbsp; {{ Cart::total() }} CHF</div>
-    </div>
 
 @endif

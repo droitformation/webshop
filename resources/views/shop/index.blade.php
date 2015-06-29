@@ -22,8 +22,13 @@
                         <div class="caption">
                             <h5>{{ $product->title }}</h5>
                             <p>
-                                <a href="#" class="btn btn-sm btn-primary">Buy Now!</a>
-                                <a href="{{ url('product/'.$product->id) }}" class="btn btn-sm btn-default">Plus d'info</a></p>
+                                {!! Form::open(array('url' => 'addProduct')) !!}
+                                {!! Form::hidden('_token', csrf_token()) !!}
+                                <button type="submit" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-shopping-cart"></i></button>
+                                <a href="{{ url('product/'.$product->id) }}" class="btn btn-sm btn-default">Plus d'info</a>
+                                {!! Form::hidden('product_id', $product->id) !!}
+                                {!! Form::close() !!}
+                            </p>
                         </div>
                     </div>
                 </div>

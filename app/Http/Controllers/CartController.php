@@ -4,15 +4,18 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use Illuminate\Http\Request;
+use App\Droit\Shop\Cart\Worker\CartWorker;
 
 class CartController extends Controller {
 
     protected $product;
+    protected $worker;
     protected $money;
 
-    public function __construct(ProductInterface $product)
+    public function __construct(ProductInterface $product, CartWorker $worker)
     {
         $this->product = $product;
+        $this->worker  = $worker;
         $this->money   = new \App\Droit\Shop\Product\Entities\Money;
     }
 
@@ -46,6 +49,13 @@ class CartController extends Controller {
         \Cart::update($request->input('rowid'), $request->input('qty'));
 
         return redirect()->back();
+    }
+
+    public function applyCoupon(Request $request){
+
+        $this->worker->setCoupon($request->input('coupon'))->applyCoupon();
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Le coupon a été appliqué']);
     }
 
 }

@@ -9,6 +9,7 @@
 
 <!-- Cart  -->
 @include('partials.cart')
+@include('shop.partials.cart-total')
 
 <div class="row" id="livraison">
 

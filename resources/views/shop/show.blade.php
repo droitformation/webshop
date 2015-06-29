@@ -23,6 +23,8 @@
             <h3>{{ $product->title }}</h3>
             <p><strong>{{ $product->teaser }}</strong></p>
             <div>{{ $product->description }}</div>
+            <br/>
+            <p><strong>{{ $product->price_cents }} CHF</strong></p>
             <hr/>
 
             <input type="submit" value="Ajouter au panier" class="btn btn-sm btn-primary">

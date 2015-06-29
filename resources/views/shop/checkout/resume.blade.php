@@ -10,6 +10,7 @@
 
 <!-- Cart  -->
 @include('shop.partials.cart')
+@include('shop.partials.cart-total')
 
 <div class="row bs-wizard" style="border-bottom:0;">
 
@@ -47,17 +48,17 @@
 
     </div>
     <div class="col-md-3">
-        <form>
+        {!! Form::open(array('url' => 'applyCoupon')) !!}
             <div class="form-group">
                 <label for="code">J'ai un rabais</label>
                 <div class="input-group">
                     <input type="text" value="" name="coupon" class="form-control" placeholder="Code">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Ok</button>
+                        <button class="btn btn-default" type="submit">Ok</button>
                     </span>
                 </div><!-- /input-group -->
             </div>
-        </form>
+        {!! Form::close() !!}
     </div>
 </div>
 

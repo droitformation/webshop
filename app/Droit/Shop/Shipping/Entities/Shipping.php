@@ -12,4 +12,12 @@ class Shipping extends Model{
      */
     public $timestamps = false;
 
+    public function getPriceCentsAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $price = $this->price / 100;
+
+        return $money->format($price);
+    }
+
 }

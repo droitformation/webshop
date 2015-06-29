@@ -40,6 +40,7 @@
 
         <!-- Navigation  -->
         @include('partials.header')
+        @include('partials.message')
 
         @if(!Cart::content()->isEmpty() && !Request::is('checkout/*'))
             <div class="row">
@@ -49,11 +50,13 @@
                     <div class="collapse" id="collapseCart">
                         <!-- Cart  -->
                         @include('shop.partials.cart')
+                        @include('shop.partials.cart-total')
                         <ul class="pager"><li class="next next-commander"><a href="{{ url('checkout/resume') }}">Commander <span aria-hidden="true">&rarr;</span></a></li></ul>
                     </div>
                 </div>
             </div>
         @endif
+
         <!-- Contenu -->
         @yield('content')
         <!-- Fin contenu -->

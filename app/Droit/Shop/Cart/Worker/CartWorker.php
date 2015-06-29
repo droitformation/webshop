@@ -13,7 +13,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
      public $orderShipping;
      public $orderWeight;
-     public $hasCoupon;
+     public $hasCoupon  = false;
      public $noShipping = false;
 
      public function __construct(ProductInterface $product, ShippingInterface $shipping, CouponInterface $coupon)
@@ -37,10 +37,18 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
          if(!$valide)
          {
-             throw new \App\Exceptions\CouponException('False coupon');
+             $this->hasCoupon = false;
+             $this->applyCoupon();
+             session()->forget('coupon');
+
+             throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide');
          }
 
          $this->hasCoupon = $valide;
+
+         session(['coupon.title' => $valide->title]);
+         session(['coupon.value' => $valide->value]);
+         session(['coupon.type'  => $valide->type]);
 
          return $this;
 
@@ -48,7 +56,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
      public function setShipping(){
 
-         $weight = ($this->noShipping ? null : $this->orderWeight);
+         $weight = (session()->has('noShipping') ? null : $this->orderWeight);
 
          $this->orderShipping = $this->shipping->getShipping($weight);
 
@@ -84,27 +92,63 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
      public function applyCoupon()
      {
+        $cart = \Cart::content();
+
         if($this->hasCoupon)
         {
-            if($this->hasCoupon->product_id)
+            if($this->hasCoupon->type == 'product')
             {
                 $rowId = $this->searchItem($this->hasCoupon->product_id);
 
                 if(!empty($rowId))
                 {
                     $newprice = $this->calculPriceWithCoupon();
-
                     \Cart::update($rowId[0], array('price' => $newprice));
+                }
+                else
+                {
+                    throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide pour ce produit');
+                }
+            }
+            elseif($this->hasCoupon->type == 'shipping')
+            {
+                session(['noShipping' => 'noShipping']);
+            }
+            else
+            {
+                foreach($cart as $item)
+                {
+                    $newprice = $item->price - ($item->price * ($this->hasCoupon->value)/100);
+
+                    \Cart::update($item->rowid, array('price' => $newprice));
                 }
             }
         }
+        else
+        {
+            $this->resetCartPrices();
+        }
+
+     }
+
+     public function resetCartPrices()
+     {
+         $cart = \Cart::content();
+
+         foreach($cart as $item)
+         {
+             $product = $this->product->find($item->id);
+             \Cart::update($item->rowid, array('price' => $product->price_cents));
+         }
      }
 
      public function calculPriceWithCoupon()
      {
          $product = $this->product->find($this->hasCoupon->product_id);
 
-         return $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
+         $newprice = $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
+
+         return number_format((float)$newprice, 2, '.', '');
      }
 
      public function searchItem($id)
@@ -112,4 +156,19 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
         return \Cart::search(array('id' => $id));
      }
 
+     public function totalCartWithShipping()
+     {
+         $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
+
+         $price = \Cart::total() + $shipping->price_cents;
+
+         return number_format((float)$price, 2, '.', '');
+     }
+
+     public function totalShipping()
+     {
+         $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
+
+         return number_format((float)$shipping->price_cents, 2, '.', '');
+     }
  }

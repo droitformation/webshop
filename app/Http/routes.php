@@ -23,6 +23,7 @@ Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
 Route::post('addProduct', 'CartController@addProduct');
 Route::post('removeProduct', 'CartController@removeProduct');
 Route::post('quantityProduct', 'CartController@quantityProduct');
+Route::post('applyCoupon', 'CartController@applyCoupon');
 
 //Route::get('home', 'HomeController@index');
 

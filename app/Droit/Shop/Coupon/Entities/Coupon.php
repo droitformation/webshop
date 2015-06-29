@@ -9,6 +9,6 @@ class Coupon extends Model{
 
     protected $dates = ['expire_at'];
 
-    protected $fillable = array('value', 'title', 'expire_at','product_id');
+    protected $fillable = array('value','title','type','expire_at','product_id');
 
 }
