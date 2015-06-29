@@ -3,20 +3,50 @@
 class CartWorkerTest extends TestCase {
 
     protected $worker;
+    protected $coupon;
+    protected $product;
+    protected $onecoupon;
+    protected $twocoupon;
+    protected $oneproduct;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+        $this->worker  = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+        $this->coupon  = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+        $this->product = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+
+        $tomorrow = \Carbon\Carbon::now()->addDay();
+
+        $this->oneproduct =  $this->product->create([
+            'title'           => 'Test product',
+            'teaser'          => 'test',
+            'image'           => 'test.jpg',
+            'description'     => 'test' ,
+            'weight'          => 900,
+            'sku'             => 1,
+            'price'           => 1000,
+            'is_downloadable' => 0,
+            'hidden'          => 0,
+        ]);
+        
+        $this->onecoupon  =  $this->coupon->create(['value' => '10', 'title' => 'test', 'product_id' => null, 'expire_at' => $tomorrow ]);
+        $this->twocoupon  =  $this->coupon->create(['value' => '20', 'title' => 'second', 'product_id' => $this->oneproduct->id, 'expire_at' => $tomorrow ]);
+
     }
 
     public function tearDown()
     {
+        $this->coupon->delete($this->onecoupon->id);
+        $this->coupon->delete($this->twocoupon->id);
+
+        $product = new App\Droit\Shop\Product\Entities\Product();
+
+        $product->find($this->oneproduct->id)->forceDelete();
+
         \Cart::instance('newInstance')->destroy();
     }
-
-
 
 	/**
 	 * @return void
@@ -141,19 +171,61 @@ class CartWorkerTest extends TestCase {
     /**
      * @return void
      */
-    public function testApplyCoupon()
+    public function testSetCoupon()
     {
         \Cart::instance('newInstance');
 
         \Cart::add(1, 'Uno', 1, '1000' , array('weight' => 500));
 
-        $product = $this->worker->setCoupon('test')->applyCoupon();
+        $this->worker->setCoupon($this->onecoupon->title);
 
-echo '<pre>';
-print_r($this->worker->hasCoupon);
-echo '</pre>';exit;
+        $this->assertEquals($this->worker->hasCoupon->id, $this->onecoupon->id);
 
-        $this->assertEquals(0, $product);
+       // $this->worker->applyCoupon();
+
     }
 
+    /**
+     * @return void
+     */
+    public function testSearchItem()
+    {
+        \Cart::instance('newInstance');
+
+        \Cart::add($this->oneproduct->id, $this->oneproduct->title, 1, $this->oneproduct->price , array('weight' => $this->oneproduct->weight));
+
+        $found = $this->worker->searchItem($this->oneproduct->id);
+
+        $this->assertEquals($found[0], \Cart::content()->first()->rowid);
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testApplyCoupon()
+    {
+        \Cart::instance('newInstance');
+
+        \Cart::add($this->oneproduct->id, $this->oneproduct->title, 1, $this->oneproduct->price , array('weight' => $this->oneproduct->weight));
+        \Cart::add(1, 'un titre', 1, '2', array('weight' => '300'));
+
+        $this->worker->setCoupon($this->twocoupon->title)->applyCoupon();
+
+        $this->assertEquals(10, \Cart::total());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculPriceWithCoupon()
+    {
+        \Cart::instance('newInstance');
+
+        \Cart::add($this->oneproduct->id, $this->oneproduct->title, 1, $this->oneproduct->price , array('weight' => $this->oneproduct->weight));
+
+        $price = $this->worker->setCoupon($this->twocoupon->title)->calculPriceWithCoupon();
+
+        $this->assertEquals(8.00, $price);
+    }
 }

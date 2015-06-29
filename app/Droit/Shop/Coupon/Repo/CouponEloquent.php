@@ -72,9 +72,7 @@ class CouponEloquent implements CouponInterface{
 
     public function delete($id){
 
-        $coupon = $this->coupon->find($id);
-
-        return $coupon->delete();
+        return $this->coupon->find($id)->delete();
 
     }
 

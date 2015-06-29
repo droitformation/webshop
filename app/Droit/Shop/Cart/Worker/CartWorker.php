@@ -88,15 +88,28 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
         {
             if($this->hasCoupon->product_id)
             {
-                return $this->searchItem($this->hasCoupon->product_id);
+                $rowId = $this->searchItem($this->hasCoupon->product_id);
+
+                if(!empty($rowId))
+                {
+                    $newprice = $this->calculPriceWithCoupon();
+
+                    \Cart::update($rowId[0], array('price' => $newprice));
+                }
             }
         }
      }
 
-     public function searchItem($id){
+     public function calculPriceWithCoupon()
+     {
+         $product = $this->product->find($this->hasCoupon->product_id);
 
+         return $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
+     }
+
+     public function searchItem($id)
+     {
         return \Cart::search(array('id' => $id));
-
      }
 
  }
