@@ -99,7 +99,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
             if($this->hasCoupon->type == 'product')
             {
                 $rowId = $this->searchItem($this->hasCoupon->product_id);
-
+                session()->forget('noShipping');
                 if(!empty($rowId))
                 {
                     $newprice = $this->calculPriceWithCoupon();
@@ -116,6 +116,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
             }
             else
             {
+                session()->forget('noShipping');
                 foreach($cart as $item)
                 {
                     $newprice = $item->price - ($item->price * ($this->hasCoupon->value)/100);
