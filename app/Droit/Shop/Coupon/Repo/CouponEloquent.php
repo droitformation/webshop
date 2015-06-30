@@ -24,7 +24,7 @@ class CouponEloquent implements CouponInterface{
 
     public function findByTitle($title){
 
-        $coupon = $this->coupon->with(['products'])->where('title', '=' , $title)->get();
+        $coupon = $this->coupon->with(['products'])->where('expire_at','>=',\Carbon\Carbon::now())->where('title', '=' , $title)->get();
 
         if(!$coupon->isEmpty())
         {
