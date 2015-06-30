@@ -17,6 +17,7 @@ return array(
     'CreateCantonsTable' => $baseDir . '/database/migrations/2015_06_04_121746_create_cantons_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2015_06_03_151645_create_categories_table.php',
     'CreateCivilitesTable' => $baseDir . '/database/migrations/2015_06_04_121744_create_civilites_table.php',
+    'CreateCouponProductPivotTable' => $baseDir . '/database/migrations/2015_06_30_095342_create_coupon_product_pivot_table.php',
     'CreateDomainsTable' => $baseDir . '/database/migrations/2015_06_03_151645_create_domains_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2015_06_01_100000_create_password_resets_table.php',
     'CreatePaysTable' => $baseDir . '/database/migrations/2015_06_04_121747_create_pays_table.php',

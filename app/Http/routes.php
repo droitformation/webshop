@@ -39,13 +39,13 @@ Route::controllers([
 Route::get('cartworker', function()
 {
     $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
 
-    $worker->getShipping();
+    $coup = $coupon->find(1);
 
-        echo '<pre>';
-        print_r($product);
-        echo '</pre>';
-
+    echo '<pre>';
+    print_r($coup);
+    echo '</pre>';
 
 });
 

@@ -67,7 +67,8 @@
 @endif
 
 <ul class="pager">
-    <li class="next next-commander"><a href="{{ url('checkout/confirm') }}">Envoyer la commande &nbsp;<span class="glyphicon glyphicon-ok"></span></a></li>
+    <li class="previous"><a href="{{ url('checkout/resume') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
+    <li class="next next-commander"><a class="doAction" data-what="envoyer" data-action="la commande" href="{{ url('checkout/send') }}">Envoyer la commande &nbsp;<span class="glyphicon glyphicon-ok"></span></a></li>
 </ul>
 
 @stop

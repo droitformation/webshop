@@ -66,7 +66,8 @@
 @include('shop.partials.user-form')
 
 <ul class="pager">
-    <li class="next next-commander"><a href="{{ url('checkout/confirm') }}">Finaliser ma commande <span aria-hidden="true">&rarr;</span></a></li>
+    <li class="previous"><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
+    <li class="next next-confirm"><a href="{{ url('checkout/confirm') }}">Finaliser ma commande <span aria-hidden="true">&rarr;</span></a></li>
 </ul>
 
 @stop

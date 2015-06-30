@@ -22,6 +22,7 @@
 
     <script src="<?php echo asset('js/checkout/classie.js');?>"></script>
     <script src="<?php echo asset('js/checkout/checkout.js');?>"></script>
+    <script src="<?php echo asset('js/interaction.js');?>"></script>
     <script src="<?php echo asset('js/validation/parsley.js');?>"></script>
     <script src="<?php echo asset('js/validation/fr.js');?>"></script>
 

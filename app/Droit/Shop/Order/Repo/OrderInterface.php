@@ -1,4 +1,4 @@
-<?php namespace App\Hub\Shop\Order\Repo;
+<?php namespace App\Shop\Order\Repo;
 
 interface OrderInterface {
 

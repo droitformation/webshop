@@ -90,25 +90,22 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
+     public function removeFreeShippingCoupon()
+     {
+         session()->forget('noShipping');
+
+         return $this;
+     }
+
      public function applyCoupon()
      {
-        $cart = \Cart::content();
+         $this->removeFreeShippingCoupon()->resetCartPrices();
 
-        if($this->hasCoupon)
-        {
+         if($this->hasCoupon)
+         {
             if($this->hasCoupon->type == 'product')
             {
-                $rowId = $this->searchItem($this->hasCoupon->product_id);
-                session()->forget('noShipping');
-                if(!empty($rowId))
-                {
-                    $newprice = $this->calculPriceWithCoupon();
-                    \Cart::update($rowId[0], array('price' => $newprice));
-                }
-                else
-                {
-                    throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide pour ce produit');
-                }
+                $this->couponForProduct();
             }
             elseif($this->hasCoupon->type == 'shipping')
             {
@@ -116,20 +113,41 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
             }
             else
             {
-                session()->forget('noShipping');
-                foreach($cart as $item)
-                {
-                    $newprice = $item->price - ($item->price * ($this->hasCoupon->value)/100);
-
-                    \Cart::update($item->rowid, array('price' => $newprice));
-                }
+                $this->couponGlobal();
             }
-        }
-        else
-        {
-            $this->resetCartPrices();
-        }
+         }
+     }
 
+     public function couponForProduct()
+     {
+         if(isset($this->hasCoupon->products))
+         {
+             foreach($this->hasCoupon->products as $product_id)
+             {
+                 $rowId = $this->searchItem($product_id->id);
+
+                 if(!empty($rowId))
+                 {
+                     $newprice = $this->calculPriceWithCoupon($product_id->id);
+
+                     \Cart::update($rowId[0], array('price' => $newprice));
+                 }
+             }
+         }
+
+         // throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide pour ce produit');
+     }
+
+     public function couponGlobal()
+     {
+         $cart = \Cart::content();
+
+         foreach($cart as $item)
+         {
+             $newprice = $item->price - ($item->price * ($this->hasCoupon->value)/100);
+
+             \Cart::update($item->rowid, array('price' => $newprice));
+         }
      }
 
      public function resetCartPrices()
@@ -143,9 +161,9 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          }
      }
 
-     public function calculPriceWithCoupon()
+     public function calculPriceWithCoupon($product_id)
      {
-         $product = $this->product->find($this->hasCoupon->product_id);
+         $product = $this->product->find($product_id);
 
          $newprice = $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
 

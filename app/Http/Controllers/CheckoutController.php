@@ -63,4 +63,20 @@ class CheckoutController extends Controller {
         return view('shop.checkout.confirm')->with(compact('user','shipping','coupon','total'));
     }
 
+    /**
+     * Display checkout
+     *
+     * @return Response
+     */
+    public function send()
+    {
+        $user     = $this->user->find(\Auth::user()->id);
+        $shipping = $this->checkout->totalShipping();
+        $total    = $this->checkout->totalCartWithShipping();
+
+        $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
+
+        return view('shop.index')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
+    }
+
 }

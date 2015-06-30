@@ -19,12 +19,12 @@ class CouponEloquent implements CouponInterface{
 
     public function find($id){
 
-        return $this->coupon->find($id);
+        return $this->coupon->with(['products'])->find($id);
     }
 
     public function findByTitle($title){
 
-        $coupon = $this->coupon->where('title', '=' , $title)->get();
+        $coupon = $this->coupon->with(['products'])->where('title', '=' , $title)->get();
 
         if(!$coupon->isEmpty())
         {

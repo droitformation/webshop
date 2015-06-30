@@ -9,6 +9,11 @@ class Coupon extends Model{
 
     protected $dates = ['expire_at'];
 
-    protected $fillable = array('value','title','type','expire_at','product_id');
+    protected $fillable = array('value','title','type','expire_at');
+
+    public function products()
+    {
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_coupon_product', 'coupon_id', 'product_id');
+    }
 
 }
