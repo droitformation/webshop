@@ -7,6 +7,7 @@ use App\Droit\Pays\Repo\PaysInterface;
 use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Shop\Cart\Worker\CartWorker;
+use App\Droit\Shop\Order\Worker\OrderWorker;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller {
@@ -16,8 +17,9 @@ class CheckoutController extends Controller {
     protected $canton;
     protected $profession;
     protected $checkout;
+    protected $order;
 
-    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorker $checkout)
+    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorker $checkout, OrderWorker $order)
     {
         $this->middleware('auth');
         $this->middleware('cart');
@@ -27,6 +29,7 @@ class CheckoutController extends Controller {
         $this->canton     = $canton;
         $this->profession = $profession;
         $this->checkout   = $checkout;
+        $this->order      = $order;
     }
 
     /**
@@ -54,9 +57,9 @@ class CheckoutController extends Controller {
      */
     public function confirm()
     {
-        $user     = $this->user->find(\Auth::user()->id);
-        $shipping = $this->checkout->totalShipping();
-        $total    = $this->checkout->totalCartWithShipping();
+        $user      = $this->user->find(\Auth::user()->id);
+        $shipping  = $this->checkout->totalShipping();
+        $total     = $this->checkout->totalCartWithShipping();
 
         $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
 
@@ -70,11 +73,10 @@ class CheckoutController extends Controller {
      */
     public function send()
     {
-        $user     = $this->user->find(\Auth::user()->id);
-        $shipping = $this->checkout->totalShipping();
-        $total    = $this->checkout->totalCartWithShipping();
-
         $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
+        $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
+
+        $this->order->prepareOrder($shipping,$coupon);
 
         return view('shop.index')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
     }

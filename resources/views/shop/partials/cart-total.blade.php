@@ -14,8 +14,7 @@
                 </p>
             @endif
             <strong>Total</span>&nbsp;
-                <?php $total = number_format((float)Cart::total(), 2, '.', ''); ?>
-                {{ $total }} CHF
+                {{ number_format((float)Cart::total(), 2, '.', '') }} CHF
             </strong>
         </div>
     </div>

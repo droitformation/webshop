@@ -28,8 +28,7 @@
                     <td>{{ $item->name }}</td>
                     <td class="text-right">{{ $item->qty }}</td>
                     <td class="text-right">
-                        <?php $price = number_format((float)$item->price, 2, '.', ''); ?>
-                        {{ $price }} CHF
+                        {{ number_format((float)$item->price, 2, '.', '') }}
                     </td>
                 </tr>
             </tbody>
@@ -52,12 +51,12 @@
                 <tr>
                     <td></td>
                     <td class="text-right"><strong>Frais d'envoi</strong></td>
-                    <td class="text-right">{{ $shipping }}  CHF</td>
+                    <td class="text-right">{{ number_format((float)$shipping, 2, '.', '') }}  CHF</td>
                 </tr>
                 <tr class="active">
                     <td></td>
                     <td class="text-right"><strong>Total des produits</strong></td>
-                    <td class="text-right">{{ $total }} CHF</td>
+                    <td class="text-right">{{ number_format((float)$total, 2, '.', '') }} CHF</td>
                 </tr>
             </tfoot>
         </table>

@@ -1,7 +1,7 @@
-<?php namespace App\Shop\Order\Repo;
+<?php namespace App\Droit\Shop\Order\Repo;
 
-use App\Shop\Order\Repo\OrderInterface;
-use App\Shop\Order\Entities as M;
+use App\Droit\Shop\Order\Repo\OrderInterface;
+use App\Droit\Shop\Order\Entities\Order as M;
 
 class OrderEloquent implements OrderInterface{
 

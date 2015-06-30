@@ -49,6 +49,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          session(['coupon.title' => $valide->title]);
          session(['coupon.value' => $valide->value]);
          session(['coupon.type'  => $valide->type]);
+         session(['coupon.id'    => $valide->id]);
 
          return $this;
 
@@ -56,7 +57,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
      public function setShipping(){
 
-         $weight = (session()->has('noShipping') ? null : $this->orderWeight);
+         $weight = (\Session::has('noShipping') ? null : $this->orderWeight);
 
          $this->orderShipping = $this->shipping->getShipping($weight);
 
@@ -165,9 +166,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      {
          $product = $this->product->find($product_id);
 
-         $newprice = $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
-
-         return number_format((float)$newprice, 2, '.', '');
+         return $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
      }
 
      public function searchItem($id)
@@ -179,15 +178,18 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      {
          $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
 
-         $price = \Cart::total() + $shipping->price_cents;
-
-         return number_format((float)$price, 2, '.', '');
+         return \Cart::total() + $shipping->price_cents;
      }
 
      public function totalShipping()
      {
          $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
 
-         return number_format((float)$shipping->price_cents, 2, '.', '');
+         return $shipping->price_cents;
+     }
+
+     public function totalCart()
+     {
+         return \Cart::total();
      }
  }

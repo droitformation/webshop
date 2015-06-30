@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shop\Order\OrderWorker;
+namespace App\Droit\Shop\Order\Worker;
 
-use App\Shop\Order\Repo\OrderInterface;
+use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Cart\Worker\CartWorker;
 use App\Droit\User\Repo\UserInterface;
 
@@ -19,22 +19,27 @@ class OrderWorker{
         $this->user   = $user;
     }
 
-    public function prepareOrder()
+    public function prepareOrder($shipping,$coupon)
     {
         $user     = $this->user->find(\Auth::user()->id);
-        $shipping = $this->cart->totalShipping();
-        $total    = $this->cart->totalCartWithShipping();
-        $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
-
-        $cart = \Cart::content();
+        $cart     = \Cart::content();
 
         // Order global
-
-        $order = $this->order->create([
+/*        $order = $this->order->create([
             'user_id'     => $user,
-            'coupon_id'   => $data['coupon_id'],
-            'shipping_id' => $data['shipping_id']
-       ]);
+            'coupon_id'   => ($coupon ? $coupon->id : null),
+            'shipping_id' => $shipping->id
+        ]);*/
+
+        $order = [
+            'user_id'     => $user->id,
+            'coupon_id'   => ($coupon ? $coupon['id'] : null),
+            'shipping_id' => $shipping->id
+        ];
+
+        echo '<pre>';
+        print_r($order);
+        echo '</pre>';exit;
 
         foreach($cart as $article)
         {

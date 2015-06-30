@@ -1,4 +1,4 @@
-<?php namespace App\Shop\Order\Entities;
+<?php namespace App\Droit\Shop\Order\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
