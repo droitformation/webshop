@@ -14,6 +14,10 @@ use SebastianBergmann\Environment\Runtime;
  * A TestRunner for the Command Line Interface (CLI)
  * PHP SAPI Module.
  *
+ * @author     Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
 class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
@@ -329,28 +333,28 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
             $codeCoverageReports++;
         }
 
-        if ($codeCoverageReports > 0 && (!extension_loaded('tokenizer') || !$this->runtime->canCollectCodeCoverage())) {
-            if (!extension_loaded('tokenizer')) {
-                $this->showExtensionNotLoadedWarning(
-                    'tokenizer',
-                    'No code coverage will be generated.'
-                );
-            } elseif (!extension_loaded('Xdebug')) {
-                $this->showExtensionNotLoadedWarning(
-                    'Xdebug',
-                    'No code coverage will be generated.'
-                );
-            }
-
-            $codeCoverageReports = 0;
-        }
-
         if (!$this->printer instanceof PHPUnit_Util_Log_TAP) {
             if ($codeCoverageReports > 0 && !$this->codeCoverageFilter->hasWhitelist()) {
                 $this->printer->write("Warning:\tNo whitelist configured for code coverage\n");
             }
 
             $this->printer->write("\n");
+        }
+
+        if ($codeCoverageReports > 0 && (!extension_loaded('tokenizer') || !$this->runtime->canCollectCodeCoverage())) {
+            if (!extension_loaded('tokenizer')) {
+                $this->showExtensionNotLoadedMessage(
+                    'tokenizer',
+                    'No code coverage will be generated.'
+                );
+            } elseif (!extension_loaded('Xdebug')) {
+                $this->showExtensionNotLoadedMessage(
+                    'Xdebug',
+                    'No code coverage will be generated.'
+                );
+            }
+
+            $codeCoverageReports = 0;
         }
 
         if ($codeCoverageReports > 0) {
@@ -656,29 +660,9 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
                 $arguments['processIsolation'] = $phpunitConfiguration['processIsolation'];
             }
 
-            if (isset($phpunitConfiguration['stopOnError']) &&
-                !isset($arguments['stopOnError'])) {
-                $arguments['stopOnError'] = $phpunitConfiguration['stopOnError'];
-            }
-
             if (isset($phpunitConfiguration['stopOnFailure']) &&
                 !isset($arguments['stopOnFailure'])) {
                 $arguments['stopOnFailure'] = $phpunitConfiguration['stopOnFailure'];
-            }
-
-            if (isset($phpunitConfiguration['stopOnIncomplete']) &&
-                !isset($arguments['stopOnIncomplete'])) {
-                $arguments['stopOnIncomplete'] = $phpunitConfiguration['stopOnIncomplete'];
-            }
-
-            if (isset($phpunitConfiguration['stopOnRisky']) &&
-                !isset($arguments['stopOnRisky'])) {
-                $arguments['stopOnRisky'] = $phpunitConfiguration['stopOnRisky'];
-            }
-
-            if (isset($phpunitConfiguration['stopOnSkipped']) &&
-                !isset($arguments['stopOnSkipped'])) {
-                $arguments['stopOnSkipped'] = $phpunitConfiguration['stopOnSkipped'];
             }
 
             if (isset($phpunitConfiguration['timeoutForSmallTests']) &&
@@ -737,7 +721,6 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
             }
 
             $groupCliArgs = array();
-
             if (!empty($arguments['groups'])) {
                 $groupCliArgs = $arguments['groups'];
             }
@@ -970,21 +953,39 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
     /**
      * @param $extension
      * @param string $message
-     * @since Method available since Release 4.7.3
+     * @since Method available since Release 4.0.0
      */
-    private function showExtensionNotLoadedWarning($extension, $message = '')
+    private function showExtensionNotLoadedMessage($extension, $message = '')
     {
         if (isset($this->missingExtensions[$extension])) {
             return;
         }
 
-        $this->write("Warning:\t" . 'The ' . $extension . ' extension is not loaded' . "\n");
-
         if (!empty($message)) {
-            $this->write("\t\t" . $message . "\n");
+            $message = ' ' . $message;
         }
 
+        $this->showMessage(
+            'The ' . $extension . ' extension is not loaded.' . $message . "\n"
+        );
+
         $this->missingExtensions[$extension] = true;
+    }
+
+    /**
+     * Shows a message.
+     *
+     * @param string $message
+     * @param bool   $exit
+     * @since Method available since Release 4.0.0
+     */
+    private function showMessage($message, $exit = false)
+    {
+        $this->write($message . "\n");
+
+        if ($exit) {
+            exit(self::EXCEPTION_EXIT);
+        }
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Illuminate\Database\Connectors;
 
 use PDO;
-use Illuminate\Support\Arr;
 
 class Connector
 {
@@ -28,7 +27,7 @@ class Connector
      */
     public function getOptions(array $config)
     {
-        $options = Arr::get($config, 'options', []);
+        $options = array_get($config, 'options', []);
 
         return array_diff_key($this->options, $options) + $options;
     }
@@ -43,9 +42,9 @@ class Connector
      */
     public function createConnection($dsn, array $config, array $options)
     {
-        $username = Arr::get($config, 'username');
+        $username = array_get($config, 'username');
 
-        $password = Arr::get($config, 'password');
+        $password = array_get($config, 'password');
 
         return new PDO($dsn, $username, $password, $options);
     }

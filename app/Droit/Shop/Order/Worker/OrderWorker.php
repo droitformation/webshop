@@ -24,27 +24,30 @@ class OrderWorker{
         $user     = $this->user->find(\Auth::user()->id);
         $cart     = \Cart::content();
 
-        // Order global
-/*        $order = $this->order->create([
-            'user_id'     => $user,
-            'coupon_id'   => ($coupon ? $coupon->id : null),
-            'shipping_id' => $shipping->id
-        ]);*/
-
-        $order = [
+        $commande = [
             'user_id'     => $user->id,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
             'shipping_id' => $shipping->id
         ];
 
-        echo '<pre>';
-        print_r($order);
-        echo '</pre>';exit;
+        // Order global
+        $order = $this->order->create($commande);
 
-        foreach($cart as $article)
+        if(!$order)
         {
+            \Log::error('Problème lors de la commande'. serialize($commande));
 
+            throw new \App\Exceptions\OrderCreationException('Problème lors de la commande');
         }
+
+        $keyed = $cart->keyBy('id')->all();
+        $keyed = array_keys($keyed);
+        $order->products()->attach($keyed);
+
+        \Cart::destroy();
+
+        return $order;
+
     }
 
 }

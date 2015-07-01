@@ -8,6 +8,8 @@ use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Shop\Cart\Worker\CartWorker;
 use App\Droit\Shop\Order\Worker\OrderWorker;
+
+use App\Events\OrderWasPlaced;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller {
@@ -76,9 +78,12 @@ class CheckoutController extends Controller {
         $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
         $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
 
-        $this->order->prepareOrder($shipping,$coupon);
+        $order = $this->order->prepareOrder($shipping,$coupon);
 
-        return view('shop.index')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
+        event(new OrderWasPlaced($order));
+
+        return redirect('/')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
+
     }
 
 }

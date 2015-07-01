@@ -2,7 +2,6 @@
 
 namespace Illuminate\Console;
 
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -47,7 +46,7 @@ class Parser
     protected static function arguments(array $tokens)
     {
         return array_values(array_filter(array_map(function ($token) {
-            if (Str::startsWith($token, '{') && !Str::startsWith($token, '{--')) {
+            if (starts_with($token, '{') && !starts_with($token, '{--')) {
                 return static::parseArgument(trim($token, '{}'));
             }
         }, $tokens)));
@@ -62,7 +61,7 @@ class Parser
     protected static function options(array $tokens)
     {
         return array_values(array_filter(array_map(function ($token) {
-            if (Str::startsWith($token, '{--')) {
+            if (starts_with($token, '{--')) {
                 return static::parseOption(ltrim(trim($token, '{}'), '-'));
             }
         }, $tokens)));
@@ -78,7 +77,7 @@ class Parser
     {
         $description = null;
 
-        if (Str::contains($token, ' : ')) {
+        if (str_contains($token, ' : ')) {
             list($token, $description) = explode(' : ', $token, 2);
 
             $token = trim($token);
@@ -114,7 +113,7 @@ class Parser
     {
         $description = null;
 
-        if (Str::contains($token, ' : ')) {
+        if (str_contains($token, ' : ')) {
             list($token, $description) = explode(' : ', $token);
 
             $token = trim($token);

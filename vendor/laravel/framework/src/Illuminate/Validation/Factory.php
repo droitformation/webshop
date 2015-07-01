@@ -3,7 +3,6 @@
 namespace Illuminate\Validation;
 
 use Closure;
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Container\Container;
 use Symfony\Component\Translation\TranslatorInterface;
 use Illuminate\Contracts\Validation\Factory as FactoryContract;
@@ -164,7 +163,7 @@ class Factory implements FactoryContract
         $this->extensions[$rule] = $extension;
 
         if ($message) {
-            $this->fallbackMessages[Str::snake($rule)] = $message;
+            $this->fallbackMessages[snake_case($rule)] = $message;
         }
     }
 
@@ -181,7 +180,7 @@ class Factory implements FactoryContract
         $this->implicitExtensions[$rule] = $extension;
 
         if ($message) {
-            $this->fallbackMessages[Str::snake($rule)] = $message;
+            $this->fallbackMessages[snake_case($rule)] = $message;
         }
     }
 

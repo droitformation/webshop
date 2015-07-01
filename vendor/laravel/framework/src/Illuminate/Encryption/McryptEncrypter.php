@@ -3,6 +3,7 @@
 namespace Illuminate\Encryption;
 
 use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
 

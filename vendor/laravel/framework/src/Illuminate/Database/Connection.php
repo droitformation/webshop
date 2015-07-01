@@ -8,8 +8,6 @@ use DateTime;
 use Exception;
 use LogicException;
 use RuntimeException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Query\Processors\Processor;
@@ -668,7 +666,7 @@ class Connection implements ConnectionInterface
     {
         $message = $e->getPrevious()->getMessage();
 
-        return Str::contains($message, [
+        return str_contains($message, [
             'server has gone away',
             'no connection to the server',
             'Lost connection',
@@ -898,7 +896,7 @@ class Connection implements ConnectionInterface
      */
     public function getConfig($option)
     {
-        return Arr::get($this->config, $option);
+        return array_get($this->config, $option);
     }
 
     /**

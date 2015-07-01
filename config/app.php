@@ -150,7 +150,8 @@ return [
         'Illuminate\Html\HtmlServiceProvider',
         'Laracasts\Generators\GeneratorsServiceProvider',
         'Intervention\Image\ImageServiceProvider',
-        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider'
+        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
+        'Jenssegers\Rollbar\RollbarServiceProvider',
 	],
 
 	/*

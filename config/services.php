@@ -34,4 +34,10 @@ return [
 		'secret' => env('STRIPE_API_SECRET'),
 	],
 
+    'rollbar' => [
+        'access_token' => 'e2cdbd5bcb514f89ac4ae5a53fa05cbf',
+        'level'        => 'debug',
+        'environment'  => 'local',
+    ],
+
 ];

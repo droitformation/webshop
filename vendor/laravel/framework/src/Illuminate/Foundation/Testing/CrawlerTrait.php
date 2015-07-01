@@ -2,7 +2,6 @@
 
 namespace Illuminate\Foundation\Testing;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Symfony\Component\DomCrawler\Form;
@@ -59,9 +58,7 @@ trait CrawlerTrait
      */
     public function get($uri, array $headers = [])
     {
-        $server = $this->transformHeadersToServerVars($headers);
-
-        $this->call('GET', $uri, [], [], [], $server);
+        $this->call('GET', $uri, [], [], [], $headers);
 
         return $this;
     }
@@ -76,9 +73,7 @@ trait CrawlerTrait
      */
     public function post($uri, array $data = [], array $headers = [])
     {
-        $server = $this->transformHeadersToServerVars($headers);
-        
-        $this->call('POST', $uri, $data, [], [], $server);
+        $this->call('POST', $uri, $data, [], [], $headers);
 
         return $this;
     }
@@ -93,9 +88,7 @@ trait CrawlerTrait
      */
     public function put($uri, array $data = [], array $headers = [])
     {
-        $server = $this->transformHeadersToServerVars($headers);
-        
-        $this->call('PUT', $uri, $data, [], [], $server);
+        $this->call('PUT', $uri, $data, [], [], $headers);
 
         return $this;
     }
@@ -110,9 +103,7 @@ trait CrawlerTrait
      */
     public function patch($uri, array $data = [], array $headers = [])
     {
-        $server = $this->transformHeadersToServerVars($headers);
-        
-        $this->call('PATCH', $uri, $data, [], [], $server);
+        $this->call('PATCH', $uri, $data, [], [], $headers);
 
         return $this;
     }
@@ -127,9 +118,7 @@ trait CrawlerTrait
      */
     public function delete($uri, array $data = [], array $headers = [])
     {
-        $server = $this->transformHeadersToServerVars($headers);
-        
-        $this->call('DELETE', $uri, $data, [], [], $server);
+        $this->call('DELETE', $uri, $data, [], [], $headers);
 
         return $this;
     }
@@ -248,17 +237,6 @@ trait CrawlerTrait
     }
 
     /**
-     * Assert that a given string is not seen on the page.
-     *
-     * @param  string  $text
-     * @return $this
-     */
-    protected function dontSee($text)
-    {
-        return $this->see($text, true);
-    }
-
-    /**
      * Assert that the response contains JSON.
      *
      * @param  array|null  $data
@@ -336,7 +314,7 @@ trait CrawlerTrait
             $expected = $this->formatToExpectedJson($key, $value);
 
             $this->assertTrue(
-                Str::contains($actual, $this->formatToExpectedJson($key, $value)),
+                str_contains($actual, $this->formatToExpectedJson($key, $value)),
                 "Unable to find JSON fragment [{$expected}] within [{$actual}]."
             );
         }
@@ -355,7 +333,7 @@ trait CrawlerTrait
     {
         $expected = json_encode([$key => $value]);
 
-        if (Str::startsWith($expected, '{')) {
+        if (starts_with($expected, '{')) {
             $expected = substr($expected, 1);
         }
 
@@ -374,7 +352,7 @@ trait CrawlerTrait
      */
     protected function seeStatusCode($status)
     {
-        $this->assertEquals($status, $this->response->getStatusCode());
+        $this->assertEquals($this->response->getStatusCode(), $status);
 
         return $this;
     }
@@ -414,61 +392,6 @@ trait CrawlerTrait
         $this->assertEquals(
             $uri, $this->currentUri, "Did not land on expected page [{$uri}].\n"
         );
-
-        return $this;
-    }
-
-    /**
-     * Asserts that the response contains the given header and equals the optional value.
-     *
-     * @param  string $headerName
-     * @param  mixed $value
-     * @return $this
-     */
-    protected function seeHeader($headerName, $value = null)
-    {
-        $headers = $this->response->headers;
-
-        $this->assertTrue($headers->has($headerName), "Header [{$headerName}] not present on response.");
-
-        if (!is_null($value)) {
-            $this->assertEquals(
-                $headers->get($headerName), $value,
-                "Header [{$headerName}] was found, but value [{$headers->get($headerName)}] does not match [{$value}]."
-            );
-        }
-
-        return $this;
-    }
-
-    /**
-     * Asserts that the response contains the given cookie and equals the optional value.
-     *
-     * @param  string $cookieName
-     * @param  mixed $value
-     * @return $this
-     */
-    protected function seeCookie($cookieName, $value = null)
-    {
-        $headers = $this->response->headers;
-
-        $exist = false;
-
-        foreach ($headers->getCookies() as $cookie) {
-            if ($cookie->getName() === $cookieName) {
-                $exist = true;
-                break;
-            }
-        }
-
-        $this->assertTrue($exist, "Cookie [{$cookieName}] not present on response.");
-
-        if (!is_null($value)) {
-            $this->assertEquals(
-                $cookie->getValue(), $value,
-                "Cookie [{$cookieName}] was found, but value [{$cookie->getValue()}] does not match [{$value}]."
-            );
-        }
 
         return $this;
     }
@@ -749,36 +672,15 @@ trait CrawlerTrait
      */
     protected function prepareUrlForRequest($uri)
     {
-        if (Str::startsWith($uri, '/')) {
+        if (starts_with($uri, '/')) {
             $uri = substr($uri, 1);
         }
 
-        if (!Str::startsWith($uri, 'http')) {
+        if (!starts_with($uri, 'http')) {
             $uri = $this->baseUrl.'/'.$uri;
         }
 
         return trim($uri, '/');
-    }
-
-    /**
-     * Transform headers array to array of $_SERVER vars with HTTP_* format.
-     *
-     * @param  array  $headers
-     * @return array
-     */
-    protected function transformHeadersToServerVars(array $headers)
-    {
-        $server = [];
-
-        foreach ($headers as $name => $value) {
-            if (!starts_with($name, 'HTTP_')) {
-                $name = 'HTTP_'.strtr(strtoupper($name), '-', '_');
-            }
-
-            $server[$name] = $value;
-        }
-
-        return $server;
     }
 
     /**
@@ -791,23 +693,5 @@ trait CrawlerTrait
         $this->app->instance('middleware.disable', true);
 
         return $this;
-    }
-
-    /**
-     * Dump the content from the last response.
-     *
-     * @return void
-     */
-    public function dump()
-    {
-        $content = $this->response->getContent();
-
-        $json = json_decode($content);
-
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $content = $json;
-        }
-
-        dd($content);
     }
 }

@@ -17,7 +17,7 @@ class DetectEnvironment
     public function bootstrap(Application $app)
     {
         try {
-            Dotenv::load($app->environmentPath(), $app->environmentFile());
+            Dotenv::load($app->basePath(), $app->environmentFile());
         } catch (InvalidArgumentException $e) {
             //
         }

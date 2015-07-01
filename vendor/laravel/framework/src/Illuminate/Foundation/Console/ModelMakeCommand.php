@@ -2,7 +2,6 @@
 
 namespace Illuminate\Foundation\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -38,7 +37,7 @@ class ModelMakeCommand extends GeneratorCommand
     {
         if (parent::fire() !== false) {
             if ($this->option('migration')) {
-                $table = Str::plural(Str::snake(class_basename($this->argument('name'))));
+                $table = str_plural(snake_case(class_basename($this->argument('name'))));
 
                 $this->call('make:migration', ['name' => "create_{$table}_table", '--create' => $table]);
             }

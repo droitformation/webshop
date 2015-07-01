@@ -5,8 +5,6 @@ namespace Illuminate\Mail;
 use Closure;
 use Swift_Mailer;
 use Swift_Message;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use SuperClosure\Serializer;
 use Psr\Log\LoggerInterface;
 use InvalidArgumentException;
@@ -287,7 +285,7 @@ class Mailer implements MailerContract, MailQueueContract
      */
     protected function getQueuedCallable(array $data)
     {
-        if (Str::contains($data['callback'], 'SerializableClosure')) {
+        if (str_contains($data['callback'], 'SerializableClosure')) {
             return unserialize($data['callback'])->getClosure();
         }
 
@@ -357,9 +355,9 @@ class Mailer implements MailerContract, MailQueueContract
         // named keys instead, allowing the developers to use one or the other.
         if (is_array($view)) {
             return [
-                Arr::get($view, 'html'),
-                Arr::get($view, 'text'),
-                Arr::get($view, 'raw'),
+                array_get($view, 'html'),
+                array_get($view, 'text'),
+                array_get($view, 'raw'),
             ];
         }
 

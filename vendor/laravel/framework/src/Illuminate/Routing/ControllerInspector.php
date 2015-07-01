@@ -4,7 +4,6 @@ namespace Illuminate\Routing;
 
 use ReflectionClass;
 use ReflectionMethod;
-use Illuminate\Support\Str;
 
 class ControllerInspector
 {
@@ -66,7 +65,7 @@ class ControllerInspector
             return false;
         }
 
-        return Str::startsWith($method->name, $this->verbs);
+        return starts_with($method->name, $this->verbs);
     }
 
     /**
@@ -105,7 +104,7 @@ class ControllerInspector
      */
     public function getVerb($name)
     {
-        return head(explode('_', Str::snake($name)));
+        return head(explode('_', snake_case($name)));
     }
 
     /**
@@ -117,7 +116,7 @@ class ControllerInspector
      */
     public function getPlainUri($name, $prefix)
     {
-        return $prefix.'/'.implode('-', array_slice(explode('_', Str::snake($name)), 1));
+        return $prefix.'/'.implode('-', array_slice(explode('_', snake_case($name)), 1));
     }
 
     /**

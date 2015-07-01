@@ -13,7 +13,7 @@ class MySqlGrammar extends Grammar
      *
      * @var array
      */
-    protected $modifiers = ['Unsigned', 'Charset', 'Collate', 'Nullable', 'Default', 'Increment', 'Comment', 'After', 'First'];
+    protected $modifiers = ['Unsigned', 'Charset', 'Collate', 'Nullable', 'Default', 'Increment', 'Comment', 'After'];
 
     /**
      * The possible column serials.
@@ -638,20 +638,6 @@ class MySqlGrammar extends Grammar
     {
         if (in_array($column->type, $this->serials) && $column->autoIncrement) {
             return ' auto_increment primary key';
-        }
-    }
-
-    /**
-     * Get the SQL for a "first" column modifier.
-     *
-     * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
-     * @param  \Illuminate\Support\Fluent  $column
-     * @return string|null
-     */
-    protected function modifyFirst(Blueprint $blueprint, Fluent $column)
-    {
-        if (!is_null($column->first)) {
-            return ' first';
         }
     }
 

@@ -1053,9 +1053,7 @@ class PHPUnit_Framework_MockObject_Generator
             $typeHint  = '';
 
             if (!$forCall) {
-                if ($this->hasType($parameter)) {
-                    $typeHint = (string) $parameter->getType() . ' ';
-                } elseif ($parameter->isArray()) {
+                if ($parameter->isArray()) {
                     $typeHint = 'array ';
                 } elseif ((defined('HHVM_VERSION') || version_compare(PHP_VERSION, '5.4.0', '>='))
                           && $parameter->isCallable()) {
@@ -1109,16 +1107,6 @@ class PHPUnit_Framework_MockObject_Generator
     private function isVariadic(ReflectionParameter $parameter)
     {
         return method_exists('ReflectionParameter', 'isVariadic') && $parameter->isVariadic();
-    }
-
-    /**
-     * @param  ReflectionParameter $parameter
-     * @return boolean
-     * @since  Method available since Release 2.3.4
-     */
-    private function hasType(ReflectionParameter $parameter)
-    {
-        return method_exists('ReflectionParameter', 'hasType') && $parameter->hasType();
     }
 
     /**

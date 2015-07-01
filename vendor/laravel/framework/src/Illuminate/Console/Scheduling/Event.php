@@ -85,13 +85,6 @@ class Event
     public $output = '/dev/null';
 
     /**
-     * The array of callbacks to be run before the event is started.
-     *
-     * @var array
-     */
-    protected $beforeCallbacks = [];
-
-    /**
      * The array of callbacks to be run after the event is finished.
      *
      * @var array
@@ -124,7 +117,7 @@ class Event
      */
     public function run(Container $container)
     {
-        if (count($this->afterCallbacks) > 0 || count($this->beforeCallbacks) > 0) {
+        if (count($this->afterCallbacks) > 0) {
             $this->runCommandInForeground($container);
         } else {
             $this->runCommandInBackground();
@@ -151,26 +144,11 @@ class Event
      */
     protected function runCommandInForeground(Container $container)
     {
-        $this->callBeforeCallbacks($container);
-
         (new Process(
             trim($this->buildCommand(), '& '), base_path(), null, null, null
         ))->run();
 
         $this->callAfterCallbacks($container);
-    }
-
-    /**
-     * Call all of the "before" callbacks for the event.
-     *
-     * @param  \Illuminate\Contracts\Container\Container  $container
-     * @return void
-     */
-    protected function callBeforeCallbacks(Container $container)
-    {
-        foreach ($this->beforeCallbacks as $callback) {
-            $container->call($callback);
-        }
     }
 
     /**
@@ -685,30 +663,6 @@ class Event
     }
 
     /**
-     * Register a callback to ping a given URL before the job runs.
-     *
-     * @param  string  $url
-     * @return $this
-     */
-    public function pingBefore($url)
-    {
-        return $this->before(function () use ($url) { (new HttpClient)->get($url); });
-    }
-
-    /**
-     * Register a callback to be called before the operation.
-     *
-     * @param  \Closure  $callback
-     * @return $this
-     */
-    public function before(Closure $callback)
-    {
-        $this->beforeCallbacks[] = $callback;
-
-        return $this;
-    }
-
-    /**
      * Register a callback to ping a given URL after the job runs.
      *
      * @param  string  $url
@@ -717,17 +671,6 @@ class Event
     public function thenPing($url)
     {
         return $this->then(function () use ($url) { (new HttpClient)->get($url); });
-    }
-
-    /**
-     * Register a callback to be called after the operation.
-     *
-     * @param  \Closure  $callback
-     * @return $this
-     */
-    public function after(Closure $callback)
-    {
-        return $this->then($callback);
     }
 
     /**
@@ -772,7 +715,7 @@ class Event
      *
      * @param  int  $position
      * @param  string  $value
-     * @return $this
+     * @return void
      */
     protected function spliceIntoPosition($position, $value)
     {

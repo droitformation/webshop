@@ -2,7 +2,6 @@
 
 namespace Illuminate\Foundation\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -39,7 +38,7 @@ class KeyGenerateCommand extends Command
 
         if (file_exists($path)) {
             file_put_contents($path, str_replace(
-                'APP_KEY='.$this->laravel['config']['app.key'], 'APP_KEY='.$key, file_get_contents($path)
+                $this->laravel['config']['app.key'], $key, file_get_contents($path)
             ));
         }
 
@@ -57,10 +56,10 @@ class KeyGenerateCommand extends Command
     protected function getRandomKey($cipher)
     {
         if ($cipher === 'AES-128-CBC') {
-            return Str::random(16);
+            return str_random(16);
         }
 
-        return Str::random(32);
+        return str_random(32);
     }
 
     /**

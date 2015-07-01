@@ -4,11 +4,10 @@ namespace Illuminate\Mail\Transport;
 
 use Swift_Transport;
 use Swift_Mime_Message;
-use Swift_Events_SendEvent;
 use Swift_Events_EventListener;
 use GuzzleHttp\ClientInterface;
 
-class MandrillTransport extends Transport implements Swift_Transport
+class MandrillTransport implements Swift_Transport
 {
     /**
      * Guzzle client instance.
@@ -66,8 +65,6 @@ class MandrillTransport extends Transport implements Swift_Transport
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
-        $this->beforeSendPerformed($message);
-
         $data = [
             'key' => $this->key,
             'to' => $this->getToAddresses($message),
@@ -109,6 +106,14 @@ class MandrillTransport extends Transport implements Swift_Transport
         }
 
         return $to;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function registerPlugin(Swift_Events_EventListener $plugin)
+    {
+        //
     }
 
     /**

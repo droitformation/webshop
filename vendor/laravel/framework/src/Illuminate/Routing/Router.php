@@ -3,8 +3,6 @@
 namespace Illuminate\Routing;
 
 use Closure;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pipeline\Pipeline;
@@ -282,7 +280,7 @@ class Router implements RegistrarContract
         // If a given controller method has been named, we will assign the name to the
         // controller action array, which provides for a short-cut to method naming
         // so you don't have to define an individual route for these controllers.
-        $action['as'] = Arr::get($names, $method);
+        $action['as'] = array_get($names, $method);
 
         $this->{$route['verb']}($route['uri'], $action);
     }
@@ -400,8 +398,8 @@ class Router implements RegistrarContract
             isset($new['where']) ? $new['where'] : []
         );
 
-        if (isset($old['as'])) {
-            $new['as'] = $old['as'].(isset($new['as']) ? $new['as'] : '');
+        if (isset($old['as']) && isset($new['as'])) {
+            $new['as'] = $old['as'].$new['as'];
         }
 
         return array_merge_recursive(array_except($old, ['namespace', 'prefix', 'where', 'as']), $new);
@@ -412,14 +410,14 @@ class Router implements RegistrarContract
      *
      * @param  array  $new
      * @param  array  $old
-     * @return string|null
+     * @return string
      */
     protected static function formatUsesPrefix($new, $old)
     {
-        if (isset($new['namespace'])) {
-            return isset($old['namespace'])
-                    ? trim($old['namespace'], '\\').'\\'.trim($new['namespace'], '\\')
-                    : trim($new['namespace'], '\\');
+        if (isset($new['namespace']) && isset($old['namespace'])) {
+            return trim($old['namespace'], '\\').'\\'.trim($new['namespace'], '\\');
+        } elseif (isset($new['namespace'])) {
+            return trim($new['namespace'], '\\');
         }
 
         return isset($old['namespace']) ? $old['namespace'] : null;
@@ -430,7 +428,7 @@ class Router implements RegistrarContract
      *
      * @param  array  $new
      * @param  array  $old
-     * @return string|null
+     * @return string
      */
     protected static function formatGroupPrefix($new, $old)
     {
@@ -732,7 +730,7 @@ class Router implements RegistrarContract
 
         list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
 
-        return (isset($map[$name]) ? $map[$name] : $name).($parameters !== null ? ':'.$parameters : '');
+        return (isset($map[$name]) ? $map[$name] : $name).($parameters ? ':'.$parameters : '');
     }
 
     /**
@@ -875,7 +873,7 @@ class Router implements RegistrarContract
      */
     protected function parseFilter($callback)
     {
-        if (is_string($callback) && !Str::contains($callback, '@')) {
+        if (is_string($callback) && !str_contains($callback, '@')) {
             return $callback.'@filter';
         }
 
@@ -1083,7 +1081,7 @@ class Router implements RegistrarContract
             // To find the patterned middlewares for a request, we just need to check these
             // registered patterns against the path info for the current request to this
             // applications, and when it matches we will merge into these middlewares.
-            if (Str::is($pattern, $path)) {
+            if (str_is($pattern, $path)) {
                 $merge = $this->patternsByMethod($method, $filters);
 
                 $results = array_merge($results, $merge);
@@ -1310,7 +1308,7 @@ class Router implements RegistrarContract
     public function is()
     {
         foreach (func_get_args() as $pattern) {
-            if (Str::is($pattern, $this->currentRouteName())) {
+            if (str_is($pattern, $this->currentRouteName())) {
                 return true;
             }
         }
@@ -1354,7 +1352,7 @@ class Router implements RegistrarContract
     public function uses()
     {
         foreach (func_get_args() as $pattern) {
-            if (Str::is($pattern, $this->currentRouteAction())) {
+            if (str_is($pattern, $this->currentRouteAction())) {
                 return true;
             }
         }

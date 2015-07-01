@@ -3,7 +3,6 @@
 namespace Illuminate\Cache;
 
 use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Cache\Store;
 
@@ -44,7 +43,7 @@ class FileStore implements Store
      */
     public function get($key)
     {
-        return Arr::get($this->getPayload($key), 'data');
+        return array_get($this->getPayload($key), 'data');
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Illuminate\Database\Connectors;
 
 use PDO;
-use Illuminate\Support\Arr;
 
 class SqlServerConnector extends Connector implements ConnectorInterface
 {
@@ -64,7 +63,7 @@ class SqlServerConnector extends Connector implements ConnectorInterface
         ];
 
         $arguments = array_merge(
-            $arguments, Arr::only($config, ['appname', 'charset'])
+            $arguments, array_only($config, ['appname', 'charset'])
         );
 
         return $this->buildConnectString('dblib', $arguments);

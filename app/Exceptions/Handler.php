@@ -24,6 +24,8 @@ class Handler extends ExceptionHandler {
 	 */
 	public function report(Exception $e)
 	{
+        \Log::error($e);
+
 		return parent::report($e);
 	}
 
@@ -38,6 +40,9 @@ class Handler extends ExceptionHandler {
 	{
         if ($e instanceof \App\Exceptions\CouponException)
             return \Redirect::back()->with(array('status' => 'warning' , 'message' => $e->getMessage()));
+
+        if ($e instanceof \App\Exceptions\OrderCreationException)
+            return \Redirect::back()->with(array('status' => 'danger' , 'message' => $e->getMessage()));
 
 		return parent::render($request, $e);
 	}

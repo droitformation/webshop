@@ -43,12 +43,8 @@ class ExceptionCaster
     public static function castException(\Exception $e, array $a, Stub $stub, $isNested, $filter = 0)
     {
         $xPrefix = PHP_VERSION_ID >= 70000 ? "\0BaseException\0" : "\0Exception\0";
-        if (isset($a[$xPrefix.'trace'])) {
-            $trace = $a[$xPrefix.'trace'];
-            unset($a[$xPrefix.'trace']); // Ensures the trace is always last
-        } else {
-            $trace = array();
-        }
+        $trace = $a[$xPrefix.'trace'];
+        unset($a[$xPrefix.'trace']); // Ensures the trace is always last
 
         if (!($filter & Caster::EXCLUDE_VERBOSE)) {
             static::filterTrace($trace, static::$traceArgs);
@@ -78,9 +74,9 @@ class ExceptionCaster
     {
         $prefix = Caster::PREFIX_PROTECTED;
         $xPrefix = PHP_VERSION_ID >= 70000 ? "\0BaseException\0" : "\0Exception\0";
+        $b = (array) $a[$xPrefix.'previous'];
 
-        if (isset($a[$xPrefix.'previous'], $a[$xPrefix.'trace'][0])) {
-            $b = (array) $a[$xPrefix.'previous'];
+        if (isset($a[$xPrefix.'trace'][0])) {
             $b[$xPrefix.'trace'][0] += array(
                 'file' => $b[$prefix.'file'],
                 'line' => $b[$prefix.'line'],

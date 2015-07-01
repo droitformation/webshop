@@ -2,7 +2,6 @@
 
 namespace Illuminate\Cookie;
 
-use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Cookie;
 use Illuminate\Contracts\Cookie\QueueingFactory as JarContract;
 
@@ -99,7 +98,7 @@ class CookieJar implements JarContract
      */
     public function queued($key, $default = null)
     {
-        return Arr::get($this->queued, $key, $default);
+        return array_get($this->queued, $key, $default);
     }
 
     /**

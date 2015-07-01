@@ -21,6 +21,8 @@ Route::get('checkout/send', 'CheckoutController@send');
 Route::resource('adresse', 'AdresseController');
 Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
 
+Route::resource('profil', 'ProfileController');
+
 Route::post('addProduct', 'CartController@addProduct');
 Route::post('removeProduct', 'CartController@removeProduct');
 Route::post('quantityProduct', 'CartController@quantityProduct');

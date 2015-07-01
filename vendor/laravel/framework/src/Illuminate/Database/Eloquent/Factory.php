@@ -135,9 +135,7 @@ class Factory implements ArrayAccess
      */
     public function raw($class, array $attributes = [], $name = 'default')
     {
-        $raw = call_user_func($this->definitions[$class][$name], Faker::create());
-
-        return array_merge($raw, $attributes);
+        return call_user_func($this->definitions[$class][$name], Faker::create());
     }
 
     /**
@@ -145,7 +143,7 @@ class Factory implements ArrayAccess
      *
      * @param  string  $class
      * @param  string  $name
-     * @return \Illuminate\Database\Eloquent\FactoryBuilder
+     * @return \Illuminate\Database\Factory\Builder
      */
     public function of($class, $name = 'default')
     {

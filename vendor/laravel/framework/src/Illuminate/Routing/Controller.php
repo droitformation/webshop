@@ -4,7 +4,6 @@ namespace Illuminate\Routing;
 
 use Closure;
 use BadMethodCallException;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -138,7 +137,7 @@ abstract class Controller
      */
     protected function isInstanceFilter($filter)
     {
-        if (is_string($filter) && Str::startsWith($filter, '@')) {
+        if (is_string($filter) && starts_with($filter, '@')) {
             if (method_exists($this, substr($filter, 1))) {
                 return true;
             }

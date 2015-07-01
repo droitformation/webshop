@@ -2,8 +2,6 @@
 
 namespace Illuminate\Routing;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Illuminate\Contracts\Routing\UrlRoutable;
@@ -213,7 +211,7 @@ class UrlGenerator implements UrlGeneratorContract
     {
         $i = 'index.php';
 
-        return Str::contains($root, $i) ? str_replace('/'.$i, '', $root) : $root;
+        return str_contains($root, $i) ? str_replace('/'.$i, '', $root) : $root;
     }
 
     /**
@@ -341,7 +339,7 @@ class UrlGenerator implements UrlGeneratorContract
     protected function replaceNamedParameters($path, &$parameters)
     {
         return preg_replace_callback('/\{(.*?)\??\}/', function ($m) use (&$parameters) {
-            return isset($parameters[$m[1]]) ? Arr::pull($parameters, $m[1]) : $m[0];
+            return isset($parameters[$m[1]]) ? array_pull($parameters, $m[1]) : $m[0];
 
         }, $path);
     }
@@ -436,7 +434,7 @@ class UrlGenerator implements UrlGeneratorContract
      */
     protected function getStringParameters(array $parameters)
     {
-        return Arr::where($parameters, function ($k, $v) { return is_string($k); });
+        return array_where($parameters, function ($k, $v) { return is_string($k); });
     }
 
     /**
@@ -447,7 +445,7 @@ class UrlGenerator implements UrlGeneratorContract
      */
     protected function getNumericParameters(array $parameters)
     {
-        return Arr::where($parameters, function ($k, $v) { return is_numeric($k); });
+        return array_where($parameters, function ($k, $v) { return is_numeric($k); });
     }
 
     /**
@@ -493,15 +491,11 @@ class UrlGenerator implements UrlGeneratorContract
      */
     protected function addPortToDomain($domain)
     {
-        $secure = $this->request->isSecure();
-
-        $port = $this->request->getPort();
-
-        if (($secure && $port === 443) || (!$secure && $port === 80)) {
+        if (in_array($this->request->getPort(), ['80', '443'])) {
             return $domain;
         }
 
-        return $domain.':'.$port;
+        return $domain.':'.$this->request->getPort();
     }
 
     /**
@@ -575,7 +569,7 @@ class UrlGenerator implements UrlGeneratorContract
             $root = $this->cachedRoot;
         }
 
-        $start = Str::startsWith($root, 'http://') ? 'http://' : 'https://';
+        $start = starts_with($root, 'http://') ? 'http://' : 'https://';
 
         return preg_replace('~'.$start.'~', $scheme, $root, 1);
     }
@@ -600,7 +594,7 @@ class UrlGenerator implements UrlGeneratorContract
      */
     public function isValidUrl($path)
     {
-        if (Str::startsWith($path, ['#', '//', 'mailto:', 'tel:', 'http://', 'https://'])) {
+        if (starts_with($path, ['#', '//', 'mailto:', 'tel:', 'http://', 'https://'])) {
             return true;
         }
 

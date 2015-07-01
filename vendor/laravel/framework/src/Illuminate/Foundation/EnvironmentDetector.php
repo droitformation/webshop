@@ -3,8 +3,6 @@
 namespace Illuminate\Foundation;
 
 use Closure;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class EnvironmentDetector
 {
@@ -62,8 +60,8 @@ class EnvironmentDetector
      */
     protected function getEnvironmentArgument(array $args)
     {
-        return Arr::first($args, function ($k, $v) {
-            return Str::startsWith($v, '--env');
+        return array_first($args, function ($k, $v) {
+            return starts_with($v, '--env');
         });
     }
 }

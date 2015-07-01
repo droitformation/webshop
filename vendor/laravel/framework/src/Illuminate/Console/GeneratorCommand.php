@@ -2,7 +2,6 @@
 
 namespace Illuminate\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -87,11 +86,11 @@ abstract class GeneratorCommand extends Command
     {
         $rootNamespace = $this->laravel->getNamespace();
 
-        if (Str::startsWith($name, $rootNamespace)) {
+        if (starts_with($name, $rootNamespace)) {
             return $name;
         }
 
-        if (Str::contains($name, '/')) {
+        if (str_contains($name, '/')) {
             $name = str_replace('/', '\\', $name);
         }
 

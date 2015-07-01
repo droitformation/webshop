@@ -4,7 +4,6 @@ namespace Illuminate\Queue\Console;
 
 use Exception;
 use RuntimeException;
-use Illuminate\Support\Str;
 use Illuminate\Queue\IronQueue;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -97,7 +96,7 @@ class SubscribeCommand extends Command
 
         $url = $this->argument('url');
 
-        if (!Str::startsWith($url, ['http://', 'https://'])) {
+        if (!starts_with($url, ['http://', 'https://'])) {
             $url = $this->laravel['url']->to($url);
         }
 
