@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Droit\Pays\Repo\PaysInterface;
+use App\Droit\Canton\Repo\CantonInterface;
+use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\CreateAdresse;
@@ -13,13 +16,20 @@ use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
+    protected $pays;
+    protected $canton;
+    protected $profession;
     protected $adresse;
     protected $user;
     protected $format;
 
-    public function __construct(AdresseInterface $adresse, UserInterface $user)
+    public function __construct(AdresseInterface $adresse, UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession)
     {
         $this->middleware('auth');
+
+        $this->pays       = $pays;
+        $this->canton     = $canton;
+        $this->profession = $profession;
 
         $this->adresse = $adresse;
         $this->user    = $user;
@@ -34,9 +44,13 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        $cantons     = $this->canton->getAll();
+        $professions = $this->profession->getAll();
+        $pays        = $this->pays->getAll();
+
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('users.index')->with(['user' => $user]);
+        return view('users.index')->with(compact('user','pays','cantons','professions'));
     }
 
     /**
@@ -44,9 +58,11 @@ class ProfileController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function orders()
     {
-        //
+        $user = $this->user->find(\Auth::user()->id);
+
+        return view('users.orders')->with(compact('user'));
     }
 
     /**
@@ -54,31 +70,11 @@ class ProfileController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function colloques()
     {
-        //
-    }
+        $user = $this->user->find(\Auth::user()->id);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('users.colloques')->with(compact('user'));
     }
 
     /**
@@ -92,14 +88,4 @@ class ProfileController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

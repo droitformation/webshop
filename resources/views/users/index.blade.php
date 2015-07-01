@@ -2,103 +2,160 @@
 @section('content')
 
     <div class="container-fluid main-container">
-        <div class="col-md-3 sidebar">
-            <div class="row">
-                <!-- uncomment code for absolute positioning tweek see top comment in css -->
-                <div class="absolute-wrapper"> </div>
-                <!-- Menu -->
-                <div class="side-menu">
 
-                        <!-- Main Menu -->
-                        <div class="side-menu-container">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item active">
-                                    <h5 class="list-group-item-heading">Profil</h5>
-                                    <p class="list-group-item-text">Vos données</p>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <h5 class="list-group-item-heading">Shop</h5>
-                                    <p class="list-group-item-text">Commandes en cours/archives</p>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <h5 class="list-group-item-heading">Inscriptions</h5>
-                                    <p class="list-group-item-text">Colloques et événements</p>
-                                </a>
-                            </div>
-                        </div><!-- /.navbar-collapse -->
+        @include('users.partials.nav')
 
-                </div>
-
-            </div>
-        </div>
         <div class="col-md-9 content">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Profil
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        $fillable = [
-                        'user_id', 'civilite_id' ,'first_name','last_name', 'email', 'company', 'profession_id', 'telephone','mobile',
-                        'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_id','pays_id', 'type', 'livraison'
-                        ];
-                        $fillable = ['first_name','last_name', 'email', 'password'];
-                        <div class="col-md-8 col-md-offset-2">
-                            <form class="form-horizontal" role="form">
-                                <fieldset>
-                                    <!-- Form Name -->
-                                    <legend>Vos données</legend>
-                                    <!-- Text input-->
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="textinput">Prénom</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="first_name" placeholder="Prénom" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="textinput">Line 2</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Address Line 2" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="textinput">City</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="City" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="textinput">State</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" placeholder="State" class="form-control">
-                                        </div>
-                                        <label class="col-sm-2 control-label" for="textinput">Postcode</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" placeholder="Post Code" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="textinput">Country</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Country" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <div class="pull-right"><button type="submit" class="btn btn-primary">Save</button></div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div><!-- /.col-lg-12 -->
-                    </div><!-- /.row -->
 
-                </div>
-            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Vos données</div>
+                <div class="panel-body">
+
+                    {!! Form::open(array('method' => 'PUT','class'  => 'form-horizontal','url' => array('adresse/'.$user->adresse_livraison->id))) !!}
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Prénom</label>
+                                <div class="col-sm-7">
+                                    <input type="text" name="first_name" value="{{ $user->first_name }}" placeholder="Prénom" class="form-control form-required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Nom</label>
+                                <div class="col-sm-7">
+                                    <input type="text" name="last_name" value="{{ $user->last_name }}" placeholder="Nom" class="form-control form-required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Email</label>
+                                <div class="col-sm-7">
+                                    <input type="email" name="email" value="{{ $user->email }}" placeholder="E-mail" class="form-control form-required">
+                                    <p class="help-block">vaut comme adresse de login</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"></label>
+                                <div class="col-sm-7">
+                                    <a href="#" class="btn btn-xs btn-warning">Changer le mot de passe</a>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <div class="pull-right"><button type="submit" class="btn btn-primary">Sauvegarder</button></div>
+
+                        </fieldset>
+                    {!! Form::hidden('id', $user->id) !!}
+                    {!! Form::close() !!}
+
+                </div><!-- end panel body -->
+            </div><!-- end panel -->
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Adresse de livraison</div>
+                <div class="panel-body">
+
+                    {!! Form::open(array('method' => 'PUT','class'  => 'form-horizontal','url' => array('adresse/'.$user->adresse_livraison->id))) !!}
+
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Entreprise</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="company" class="form-control" value="{{ $user->adresse_livraison->company }}" placeholder="Entreprise">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Titre</label>
+                            <div class="col-sm-7">
+                                <?php $civilite = $user->adresse_livraison->civilite_id; ?>
+                                <label class="radio-inline">
+                                    &nbsp;<input type="radio" data-parsley-required name="civilite" {{ $civilite == 1 ? 'checked' : ''}} value="1"> Monsieur&nbsp;
+                                </label>
+                                <label class="radio-inline">
+                                    &nbsp;<input type="radio" data-parsley-required name="civilite" {{ $civilite == 2 ? 'checked' : ''}} value="2"> Madame&nbsp;
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" data-parsley-required name="civilite" {{ $civilite == 3 ? 'checked' : ''}} value="3"> Me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Prénom</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="first_name" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->first_name }}" placeholder="Prénom">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Nom</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="last_name" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->last_name }}" placeholder="Nom">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Canton</label>
+                            <div class="col-sm-7">
+                                {!! Form::select('profession_id', $professions->lists('title','id')->all() , $user->adresse_livraison->profession_id, ['class' => 'form-control form-required', 'placeholder' => 'Canton']) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Adresse</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->adresse }}" placeholder="Adresse">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Complément d'adresse</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="complement" class="form-control" value="{{ $user->adresse_livraison->complement }}" placeholder="Complément d'adresse">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Case Postale</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" name="cp" class="form-control" value="{{ $user->adresse_livraison->cp }}" placeholder="Case Postale">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Code postal</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" name="npa" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->npa }}" placeholder="Code postal">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Localité</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="ville" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->ville }}" placeholder="Localité">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Canton</label>
+                            <div class="col-sm-7">
+                                {!! Form::select('canton_id', $cantons->lists('title','id')->all() , $user->adresse_livraison->canton_id, ['data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Canton']) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Pays</label>
+                            <div class="col-sm-7">
+                                {!! Form::select('pays_id', $pays->lists('title','id')->all() , $user->adresse_livraison->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Pays']) !!}
+                            </div>
+                        </div>
+
+                        <br/>
+                        <div class="pull-right"><button type="submit" class="btn btn-primary">Sauvegarder</button></div>
+                        {!! Form::hidden('id', $user->adresse_livraison->id) !!}
+                        {!! Form::hidden('user_id', $user->id) !!}
+                        {!! Form::hidden('livraison', 1) !!}
+                        {!! Form::hidden('type', $user->adresse_livraison->type) !!}
+
+                    </fieldset>
+                    {!! Form::close() !!}
+
+                </div><!-- end panel body -->
+            </div><!-- end panel -->
+
         </div>
     </div>
 
