@@ -2,3 +2,11 @@
     margin-bottom: 5px;
     line-height: 40px;
 }
+
+.table > tbody > tr > td.nopadding{
+    padding: 0;
+}
+
+.table > tbody > tr > td .well{
+    border-radius: 0;
+}

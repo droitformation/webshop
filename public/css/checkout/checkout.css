@@ -129,3 +129,50 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 .bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
+
+/*
+    Toogle radio button
+*/
+
+/* old IE gets regular radios */
+.toggle-radio:not(.old-ie) {
+    display: inline-block;
+    width: auto;
+}
+.toggle-radio:not(.old-ie) label {
+    background: #f5f5f5;
+    padding: .75em 0;
+    display: block;
+    color: #222;
+    width: 230px;
+    line-height: 20px;
+    height: 80px;
+    float: left;
+    text-align: center;
+    opacity: 0.6;
+    border-left: 1px solid #bbb;
+}
+.toggle-radio:not(.old-ie) label small {
+    font-weight: normal;
+    padding: 5px;
+}
+
+.toggle-radio:not(.old-ie) label:hover {
+    cursor: pointer;
+    background: #f7f7f7;
+}
+.toggle-radio:not(.old-ie) label:last-child {
+    border-radius: 0 2px 2px 0;
+}
+.toggle-radio:not(.old-ie) [type="radio"] {
+    display: none;
+}
+.toggle-radio:not(.old-ie) [type="radio"]:first-child + label {
+    border-radius: 2px 0 0 2px;
+    border: none;
+}
+.toggle-radio:not(.old-ie) [type="radio"]:checked + label {
+    background: #3cb3ff;
+    color: #000;
+    opacity: 1;
+}

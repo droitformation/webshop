@@ -18,8 +18,11 @@ class CreateShopOrdersTable extends Migration {
             $table->integer('user_id');
             $table->integer('coupon_id')->nullable();
             $table->integer('shipping_id');
+            $table->integer('payement_id');
             $table->integer('amount');
             $table->string('order_no');
+            $table->enum('status', ['pending', 'payed', 'cancelled'])->default('pending');
+            $table->timestamp('payed_at')->nullable();
             $table->string('onetimeurl')->nullable(); // For download items
             $table->softDeletes();
 			$table->timestamps();

@@ -11,7 +11,7 @@ class Order extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['user_id', 'coupon_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl'];
+    protected $fillable = ['user_id', 'coupon_id', 'payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl'];
 
     public function getPriceCentsAttribute()
     {
@@ -34,6 +34,11 @@ class Order extends Model{
     public function shipping()
     {
         return $this->belongsTo('App\Droit\Shop\Shipping\Entities\Shipping');
+    }
+
+    public function payement()
+    {
+        return $this->belongsTo('App\Droit\Shop\Payement\Entities\Payement');
     }
 
     public function coupon()

@@ -40,6 +40,7 @@ class OrderEloquent implements OrderInterface{
             'user_id'     => $data['user_id'],
             'coupon_id'   => $data['coupon_id'],
             'shipping_id' => $data['shipping_id'],
+            'payement_id' => $data['payement_id'],
             'amount'      => $data['amount'],
             'order_no'    => $data['order_no']
         ));

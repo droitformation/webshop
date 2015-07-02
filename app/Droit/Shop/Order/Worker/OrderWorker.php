@@ -42,8 +42,7 @@ class OrderWorker{
             throw new \App\Exceptions\OrderCreationException('Problème lors de la commande');
         }
 
-        $keyed = $cart->keyBy('id')->all();
-        $keyed = array_keys($keyed);
+        $keyed = $this->productIdFromCart();
         $order->products()->attach($keyed);
 
         \Cart::destroy();
@@ -54,15 +53,19 @@ class OrderWorker{
 
     public function productIdFromCart()
     {
-        $cart  = \Cart::content();
-
-        foreach($cart as $product){
-
+        foreach(\Cart::content() as $product)
+        {
             if($product->qty > 1)
+            {
+                for ($x = 0; $x < $product->qty; $x++)
+                {
+                    $ids[] = $product->id;
+                }
+            }
+            else
             {
                 $ids[] = $product->id;
             }
-
         }
 
         return $ids;

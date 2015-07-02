@@ -61,6 +61,28 @@
             </tfoot>
         </table>
 
+        <div class="toggle-radio pull-right">
+            <input type="radio" name="ab" id="a" /><label for="a">
+                Par carte de crédit<br/>
+                <img src="{{ asset('images/creditcards.png') }}" alt="cartes de crédit">
+            </label>
+            <input type="radio" name="ab" id="b" checked /><label for="b">
+                Sur facture<br/>
+                <small>Vous recevrez une facture accompagnant votre livraison</small>
+            </label>
+        </div>
+
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{env('STRIPE_API_PUBLIC')}}"
+            data-name="www.publications-droit.ch"
+            data-currency="CHF"
+            data-label="{{ $total}} CHF"
+            data-description="Votre commande"
+            data-amount="{{ $total * 100 }}">
+        </script>
+
+
     </div>
 </div>
 @endif

@@ -26,6 +26,7 @@ class ShopServiceProvider extends ServiceProvider {
         $this->registerOrderService();
         $this->registerAttributeService();
         $this->registerCouponService();
+        $this->registerPaymentService();
 
 	}
 
@@ -75,7 +76,6 @@ class ShopServiceProvider extends ServiceProvider {
         });
     }
 
-
     /**
      * Coupon
      */
@@ -87,4 +87,14 @@ class ShopServiceProvider extends ServiceProvider {
         });
     }
 
+    /**
+     * Payment
+     */
+    protected function registerPaymentService(){
+
+        $this->app->singleton('App\Droit\Shop\Payment\Repo\PaymentInterface', function()
+        {
+            return new \App\Droit\Shop\Payment\Repo\PaymentEloquent(new \App\Droit\Shop\Payment\Entities\Payment);
+        });
+    }
 }
