@@ -11,7 +11,15 @@ class Order extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['user_id', 'coupon_id', 'shipping_id', 'onetimeurl'];
+    protected $fillable = ['user_id', 'coupon_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl'];
+
+    public function getPriceCentsAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $price = $this->amount / 100;
+
+        return $money->format($price);
+    }
 
     public function products()
     {
@@ -25,11 +33,11 @@ class Order extends Model{
 
     public function shipping()
     {
-        return $this->hasOne('App\Droit\Shop\Shipping\Entities\Shipping');
+        return $this->belongsTo('App\Droit\Shop\Shipping\Entities\Shipping');
     }
 
     public function coupon()
     {
-        return $this->hasOne('App\Hub\Shop\Coupon\Entities\Coupon');
+        return $this->belongsTo('App\Droit\Shop\Coupon\Entities\Coupon');
     }
 }

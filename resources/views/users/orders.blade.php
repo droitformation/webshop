@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <?php
                         setlocale(LC_ALL, 'fr_FR.UTF-8');
-                        $user->orders->load('products');
+                        $user->orders->load('products','shipping','coupon');
                     ?>
                     <?php
 
@@ -23,21 +23,71 @@
                     ?>
 
                     @if(!empty($user->orders))
-                        @foreach($user->orders as $orders)
+                        <table class="table">
+                            <tr>
+                                <th>Commande n°</th>
+                                <th>Passée le </th>
+                                <th>Montant</th>
+                                <th></th>
+                            </tr>
+                        @foreach($user->orders as $order)
 
-                                <p><strong>{{ $orders->created_at->formatLocalized('%d %B %Y') }}</strong></p>
-                                @if(!empty($orders->products))
-                                    <table class="table table-bordered">
-                                    @foreach($orders->products as $products)
-                                        <tr>
-                                            <td>{{ $products->title }}</td>
-                                            <td class="text-right">{{ $products->price_cents }} CHF</td>
-                                        </tr>
-                                    @endforeach
-                                    </table>
-                                @endif
+                           <tr>
+                               <td>{{ $order->order_no }}</td>
+                               <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
+                               <td>{{ $order->price_cents }}</td>
+                               <td class="text-right">
+                                   <a data-toggle="collapse" href="#order_no_{{ $order->id }}" aria-expanded="false" aria-controls="order_no_{{ $order->id }}">Voir la commande</a>
+                               </td>
+                           </tr>
+
+                            @if(!empty($order->products))
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="collapse" id="order_no_{{ $order->id }}">
+                                        @foreach($order->products as $product)
+
+                                            <div class="row order-item">
+                                                <div class="col-md-1">
+                                                    <a href="#"><img height="40" src="{{ asset('files/products/'.$product->image) }}" alt=""></a>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {{ $product->title }}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p class="text-right">{{ $product->price_cents }} CHF</p>
+                                                </div>
+                                            </div>
+
+                                        @endforeach
+
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    @if(isset($order->coupon))
+                                                       <p class="text-right"><strong>Rabais appliqué <small class="text-muted">{{ $order->coupon->title }}</small></strong></p>
+                                                    @endif
+                                                    <p class="text-right">Frais de port:</p>
+                                                    <p class="text-right"><strong>Total:</strong></p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @if(isset($order->coupon) && $order->coupon->type == 'shipping')
+                                                        <p class="text-right text-muted">Frais de port offerts</p>
+                                                    @else
+                                                        <p class="text-right">- {{ $order->coupon->value }}%</p>
+                                                    @endif
+                                                    <p class="text-right">{{ $order->shipping->price_cents }} CHF</p>
+                                                    <p class="text-right">{{ $order->price_cents }} CHF</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
 
                         @endforeach
+                        </table>
                     @endif
 
 

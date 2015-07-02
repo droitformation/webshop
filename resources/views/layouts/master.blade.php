@@ -18,6 +18,7 @@
     <!-- Checkout Files -->
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/checkout/checkout-cornerflat.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/checkout/checkout.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/user/profil.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation/parsley.css');?>" media="screen" />
 
     <script src="<?php echo asset('js/checkout/classie.js');?>"></script>

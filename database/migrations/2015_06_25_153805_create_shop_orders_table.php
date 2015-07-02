@@ -18,6 +18,8 @@ class CreateShopOrdersTable extends Migration {
             $table->integer('user_id');
             $table->integer('coupon_id')->nullable();
             $table->integer('shipping_id');
+            $table->integer('amount');
+            $table->string('order_no');
             $table->string('onetimeurl')->nullable(); // For download items
             $table->softDeletes();
 			$table->timestamps();

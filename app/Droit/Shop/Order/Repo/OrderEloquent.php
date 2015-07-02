@@ -17,6 +17,18 @@ class OrderEloquent implements OrderInterface{
         return $this->order->all();
     }
 
+    public function maxOrder($year)
+    {
+        $order = $this->order->where('order_no','LIKE', $year.'-%')->orderBy('order_no', 'desc')->take(1)->get();
+
+        if(!$order->isEmpty()){
+
+            return $order->first();
+        }
+
+        return false;
+    }
+
     public function find($id){
 
         return $this->order->with(['products','user','coupon','shipping'])->find($id);
@@ -27,7 +39,9 @@ class OrderEloquent implements OrderInterface{
         $order = $this->order->create(array(
             'user_id'     => $data['user_id'],
             'coupon_id'   => $data['coupon_id'],
-            'shipping_id' => $data['shipping_id']
+            'shipping_id' => $data['shipping_id'],
+            'amount'      => $data['amount'],
+            'order_no'    => $data['order_no']
         ));
 
         if( ! $order )
