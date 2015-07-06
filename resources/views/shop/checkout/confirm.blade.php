@@ -11,7 +11,7 @@
 @include('shop.partials.cart')
 
 @if(!Cart::content()->isEmpty())
-<div class="row" id="panier">
+<div class="row" id="panier" style="margin-bottom: 5px;">
     <div class="col-md-12">
         <table class="table">
             <thead>
@@ -60,32 +60,38 @@
                 </tr>
             </tfoot>
         </table>
-
-        <div class="toggle-radio pull-right">
-            <input type="radio" name="ab" id="a" /><label for="a">
-                Par carte de crédit<br/>
-                <img src="{{ asset('images/creditcards.png') }}" alt="cartes de crédit">
-            </label>
-            <input type="radio" name="ab" id="b" checked /><label for="b">
-                Sur facture<br/>
-                <small>Vous recevrez une facture accompagnant votre livraison</small>
-            </label>
-        </div>
-
-        <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="{{env('STRIPE_API_PUBLIC')}}"
-            data-name="www.publications-droit.ch"
-            data-currency="CHF"
-            data-label="{{ $total}} CHF"
-            data-description="Votre commande"
-            data-amount="{{ $total * 100 }}">
-        </script>
-
+        {{--
+              <div class="toggle-radio pull-right">
+               <input type="radio" name="ab" id="a" /><label for="a">
+                      Par carte de crédit<br/>
+                      <img src="{{ asset('images/creditcards.png') }}" alt="cartes de crédit">
+                  </label>
+                  <input type="radio" name="facture" id="b" checked /><label for="b">
+                      Sur facture<br/>
+                      <small>Vous recevrez une facture accompagnant votre livraison</small>
+                  </label>
+              </div>
+      --}}
 
     </div>
 </div>
 @endif
+
+<div class="row">
+    <div class="col-md-6 col-lg-offset-6">
+        <div class="checkbox pull-right">
+            <p class="text-info"><i class="glyphicon glyphicon-list-alt"></i> &nbsp;Vous recevrez une facture accompagnant votre livraison</p>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <label>
+                        <input type="checkbox"> J'a lu les
+                        <a href="#">termes et conditions générales</a>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <ul class="pager">
     <li class="previous"><a href="{{ url('checkout/resume') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
