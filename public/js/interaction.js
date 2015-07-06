@@ -7,14 +7,24 @@
         $('body').on('click','.doAction',function(event){
 
             var $this  = $(this);
-            var action = $this.data('action');
-            var what   = $this.data('what');
-            var answer = confirm('Voulez-vous vraiment '+ what +' '+ action +' ?');
+            var checked = $this.data('checked');
 
-            if (answer){
+            if(checked && !$('input[id=termsAndConditions]').is(':checked')){
+                alert('Vous devez accepter les conditions générales');
+                return false;
+            }
+
+            var action  = $this.data('action');
+            var what    = $this.data('what');
+            var answer  = confirm('Voulez-vous vraiment '+ what +' '+ action +' ?');
+
+            if (answer)
+            {
                 return true;
             }
+
             return false;
+
         });
 
 

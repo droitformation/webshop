@@ -2,6 +2,7 @@
 
 namespace Illuminate\Database\Eloquent;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as BaseCollection;
 
 class Collection extends BaseCollection
@@ -19,7 +20,7 @@ class Collection extends BaseCollection
             $key = $key->getKey();
         }
 
-        return array_first($this->items, function ($itemKey, $model) use ($key) {
+        return Arr::first($this->items, function ($itemKey, $model) use ($key) {
             return $model->getKey() == $key;
 
         }, $default);
@@ -93,33 +94,7 @@ class Collection extends BaseCollection
      */
     public function fetch($key)
     {
-        return new static(array_fetch($this->toArray(), $key));
-    }
-
-    /**
-     * Get the max value of a given key.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function max($key)
-    {
-        return $this->reduce(function ($result, $item) use ($key) {
-            return is_null($result) || $item->{$key} > $result ? $item->{$key} : $result;
-        });
-    }
-
-    /**
-     * Get the min value of a given key.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function min($key)
-    {
-        return $this->reduce(function ($result, $item) use ($key) {
-            return is_null($result) || $item->{$key} < $result ? $item->{$key} : $result;
-        });
+        return new static(Arr::fetch($this->toArray(), $key));
     }
 
     /**
@@ -214,7 +189,7 @@ class Collection extends BaseCollection
      */
     public function only($keys)
     {
-        $dictionary = array_only($this->getDictionary(), $keys);
+        $dictionary = Arr::only($this->getDictionary(), $keys);
 
         return new static(array_values($dictionary));
     }

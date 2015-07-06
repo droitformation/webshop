@@ -45,11 +45,12 @@ Route::get('cartworker', function()
 {
     $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
     $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+    $pdf    = new App\Droit\Generate\Pdf\PdfGenerator();
 
-    $coup = $coupon->find(1);
+    return $pdf->facture(1);
 
     echo '<pre>';
-    print_r($coup);
+    print_r($facture);
     echo '</pre>';
 
 });

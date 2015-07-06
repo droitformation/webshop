@@ -43,7 +43,7 @@ class Blueprint
     public $charset;
 
     /**
-     * The collation that should be used for the table;.
+     * The collation that should be used for the table.
      */
     public $collation;
 
@@ -277,6 +277,16 @@ class Blueprint
     public function dropTimestamps()
     {
         $this->dropColumn('created_at', 'updated_at');
+    }
+
+    /**
+     * Indicate that the timestamp columns should be dropped.
+     *
+     * @return void
+     */
+    public function dropTimestampsTz()
+    {
+        $this->dropTimestamps();
     }
 
     /**
@@ -709,6 +719,18 @@ class Blueprint
         $this->timestamp('created_at');
 
         $this->timestamp('updated_at');
+    }
+
+    /**
+     * Add creation and update timestampTz columns to the table.
+     *
+     * @return void
+     */
+    public function timestampsTz()
+    {
+        $this->timestampTz('created_at');
+
+        $this->timestampTz('updated_at');
     }
 
     /**

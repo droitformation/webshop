@@ -3,6 +3,8 @@
 namespace Illuminate\Database\Eloquent;
 
 use Closure;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -220,7 +222,9 @@ class Builder
             // On each chunk result set, we will pass them to the callback and then let the
             // developer take care of everything within the callback, which allows us to
             // keep the memory low for spinning through large result sets for working.
-            call_user_func($callback, $results);
+            if (call_user_func($callback, $results) === false) {
+                break;
+            }
 
             $page++;
 
@@ -353,7 +357,7 @@ class Builder
 
         $column = $this->model->getUpdatedAtColumn();
 
-        return array_add($values, $column, $this->model->freshTimestampString());
+        return Arr::add($values, $column, $this->model->freshTimestampString());
     }
 
     /**
@@ -513,9 +517,9 @@ class Builder
      */
     protected function isNested($name, $relation)
     {
-        $dots = str_contains($name, '.');
+        $dots = Str::contains($name, '.');
 
-        return $dots && starts_with($name, $relation.'.');
+        return $dots && Str::startsWith($name, $relation.'.');
     }
 
     /**
@@ -913,7 +917,7 @@ class Builder
      */
     public function getMacro($name)
     {
-        return array_get($this->macros, $name);
+        return Arr::get($this->macros, $name);
     }
 
     /**

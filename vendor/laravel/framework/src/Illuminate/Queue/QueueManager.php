@@ -24,6 +24,13 @@ class QueueManager implements FactoryContract, MonitorContract
     protected $connections = [];
 
     /**
+     * The array of resolved queue connectors.
+     *
+     * @var array
+     */
+    protected $connectors = [];
+
+    /**
      * Create a new queue manager instance.
      *
      * @param  \Illuminate\Foundation\Application  $app

@@ -84,8 +84,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <label>
-                        <input type="checkbox"> J'a lu les
-                        <a href="#">termes et conditions générales</a>
+                        <input id="termsAndConditions" type="checkbox"> J'a lu les <a href="#">termes et conditions générales</a>
                     </label>
                 </div>
             </div>
@@ -95,7 +94,7 @@
 
 <ul class="pager">
     <li class="previous"><a href="{{ url('checkout/resume') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
-    <li class="next next-commander"><a class="doAction" data-what="envoyer" data-action="la commande" href="{{ url('checkout/send') }}">Envoyer la commande &nbsp;<span class="glyphicon glyphicon-ok"></span></a></li>
+    <li class="next next-commander"><a class="doAction" data-checked="true" data-what="envoyer" data-action="la commande" href="{{ url('checkout/send') }}">Envoyer la commande &nbsp;<span class="glyphicon glyphicon-ok"></span></a></li>
 </ul>
 
 @stop
