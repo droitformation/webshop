@@ -29,7 +29,8 @@ class OrderWorker{
             'order_no'    => $this->newOrderNumber(),
             'amount'      =>  \Cart::total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
-            'shipping_id' => $shipping->id
+            'shipping_id' => $shipping->id,
+            'payement_id' => 1
         ];
 
         // Order global
@@ -80,11 +81,11 @@ class OrderWorker{
         if($last)
         {
             list($y, $lastid) = explode('-', $last->order_no);
-            $newid = intval($lastid) + 1;
+            $lastid = intval($lastid) + 1;
         }
 
         // Build order number
-        $order_no  = str_pad($newid, 8, '0', STR_PAD_LEFT);
+        $order_no  = str_pad($lastid, 8, '0', STR_PAD_LEFT);
         $order_no  = $year.'-'.$order_no;
 
         return $order_no;

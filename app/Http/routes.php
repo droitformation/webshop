@@ -45,7 +45,9 @@ Route::get('cartworker', function()
 {
     $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
     $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
-    $pdf    = new App\Droit\Generate\Pdf\PdfGenerator();
+    $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+
+    $pdf    = new App\Droit\Generate\Pdf\PdfGenerator( $order );
 
     return $pdf->facture(1);
 

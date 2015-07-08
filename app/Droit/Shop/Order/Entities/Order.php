@@ -38,7 +38,7 @@ class Order extends Model{
 
     public function payement()
     {
-        return $this->belongsTo('App\Droit\Shop\Payement\Entities\Payement');
+        return $this->belongsTo('App\Droit\Shop\Payment\Entities\Payment');
     }
 
     public function coupon()
