@@ -21,6 +21,18 @@ class Order extends Model{
         return $money->format($price);
     }
 
+    public function getTotalWithShippingAttribute()
+    {
+        $this->load('shipping');
+
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $total = $this->amount + $this->shipping->price;
+        $price = $total / 100;
+
+        return $money->format($price);
+
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_order_products', 'order_id', 'product_id')->withTimestamps();

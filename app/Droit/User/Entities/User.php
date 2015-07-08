@@ -53,6 +53,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return [];
     }
 
+    public function getAdresseFacturationAttribute()
+    {
+        if(isset($this->adresses))
+        {
+            $contact = $this->adresses->filter(function($adresse)
+            {
+                if ($adresse->type == 1) {
+                    return true;
+                }
+            });
+
+            return $contact->first();
+        }
+
+        return [];
+    }
+
     public function getNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;
