@@ -21,6 +21,16 @@ class Order extends Model{
         return $money->format($price);
     }
 
+    public function getPriceTotalExplodeAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $total = $this->amount + $this->shipping->price;
+        $price = $total / 100;
+        $price = $money->format($price);
+
+        return explode('.',$price);
+    }
+
     public function getTotalWithShippingAttribute()
     {
         $this->load('shipping');

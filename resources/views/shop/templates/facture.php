@@ -14,14 +14,14 @@
             display: block;
         }
         h3{
-            font-size: 14px;
+            font-size: 13px;
             display: block;
             font-weight: normal;
             color: #000;
-            line-height: 25px;
+            line-height: 20px;
             margin: 0;
             padding: 0;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
         #content{
             margin: 8mm 10mm;
@@ -46,7 +46,7 @@
             border-collapse: collapse;
         }
         #invoice-table{
-            margin-top: 20px;
+            margin-top: 10px;
         }
         #invoice-table tr,
         {
@@ -61,7 +61,8 @@
         }
         #invoice-table td
         {
-            padding: 6px 2px 6px 2px;
+            font-size: 11px;
+            padding: 5px 2px 5px 2px;
             border-bottom: 1px solid #c3c3c3;
             color: #4d4d4d;
         }
@@ -76,27 +77,35 @@
             list-style: none;
         }
 
+        #user{
+            margin-top: 15px;
+        }
+
         #user li,#tva li{
             font-size: 12px;
         }
 
-        #facdroit li, .facdroit li{
+        #facdroit li{
             font-size: 11px;
         }
 
-        .facdroit{
-            padding: 40px 20px 0px 20px;
+        .versement li{
+            font-size: 12px;
+        }
+
+        .versement{
+            padding: 45px 20px 0px 20px;
             list-style: none;
             margin: 0;
         }
 
         #tva li,.infos td{
             font-size: 10px;
-            line-height: 14px;
+            line-height: 13px;
         }
 
         .misc-infos{
-            padding: 10px;
+            padding: 3px 10px;
             background: #f0f0f0;
             margin-top: 15px;
         }
@@ -147,6 +156,7 @@
         .communications{
             display: block;
             margin: 5px 0;
+            font-size: 12px;
         }
 
         .warning{
@@ -158,12 +168,14 @@
         }
 
         .message{
-            margin: 3px 0;
+            margin: 0;
             display: block;
+            line-height: 14px;
+            font-size: 11px;
         }
 
         .signature{
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         /*
@@ -247,9 +259,9 @@
             <tr align="top">
                 <td align="top" width="60%" valign="top">
                     <?php
-                    if(!empty($facdroit)){
+                    if(!empty($expediteur)){
                         echo '<ul id="facdroit">';
-                            foreach($facdroit as $line){
+                            foreach($expediteur as $line){
                                 echo '<li>'.$line.'</li>';
                             }
                         echo '</ul>';
@@ -268,7 +280,7 @@
                             echo '<li>'.$adresse->civilite_title.' '.$order->user->name.'</li>';
                             echo '<li>'.$adresse->adresse.'</li>';
                             echo (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '');
-                            echo (!empty($adresse->cp) ? '<li>'.$adresse->cp.'</li>' : '');
+                            echo (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '');
                             echo '<li>'.$adresse->npa.' '.$adresse->ville.'</li>';
                             echo '</ul>';
                         }
@@ -276,7 +288,7 @@
                     ?>
                 </td>
             </tr>
-            <tr><td colspan="2" height="15">&nbsp;</td></tr>
+            <tr><td colspan="2" height="20">&nbsp;</td></tr>
         </table>
 
         <h1 class="title blue">Facture</h1>
@@ -284,11 +296,15 @@
         <table id="content-table">
             <tr>
                 <td width="59%" align="top" valign="top"  class="misc-infos">
-                    <ul id="tva">
-                        <li>N° CHE-115.251.043TVA</li>
-                        <li>Taux 2.5% inclus pour les livres</li>
-                        <li>Taux 8% pour les autres produits</li>
-                    </ul>
+                    <?php
+                    if(!empty($tva)){
+                        echo '<ul id="tva">';
+                        foreach($tva as $line){
+                            echo '<li>'.$line.'</li>';
+                        }
+                        echo '</ul>';
+                    }
+                    ?>
                 </td>
                 <td width="1%" align="top" valign="top"></td>
                 <td width="40%" align="top" valign="top" class="misc-infos">
@@ -341,7 +357,7 @@
         </table>
 
         <table id="content-table">
-            <tr><td colspan="2" height="15">&nbsp;</td></tr>
+            <tr><td colspan="2" height="10">&nbsp;</td></tr>
             <tr>
                 <!-- Messages for customer -->
                 <td width="62%" align="top" valign="top">
@@ -362,7 +378,7 @@
                             echo '</div>';
                         }
 
-                    echo '<p>Neuchâtel, le '.$date.'</p>';
+                    echo '<p class="message">Neuchâtel, le '.$date.'</p>';
 
                     ?>
                 </td>
@@ -392,6 +408,8 @@
         if($products->count() > 7){
             echo '<p style="page-break-after: always;"></p>';
         }
+
+        list($francs,$centimes) = $order->price_total_explode;
     ?>
 
     <table id="bv-table">
@@ -400,41 +418,51 @@
                 <table id="recu" valign="top">
                     <tr>
                         <td align="top" valign="center" height="43mm">
-                            <ul class="facdroit">
-                                <li>Université de Neuchâtel</li>
-                                <li>Séminaire sur le droit du bail</li>
-                                <li>2000 Neuchâtel</li>
-                            </ul>
+                            <?php
+                                if(!empty($versement)){
+                                    echo '<ul class="versement">';
+                                    foreach($versement as $line){
+                                        echo '<li>'.$line.'</li>';
+                                    }
+                                    echo '</ul>';
+                                }
+                            ?>
                         </td>
                     </tr>
-                    <tr><td align="top" valign="center" height="7.6mm" class="compte">20-4130-2</td></tr>
-                    <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs">123</span>00</td></tr>
+                    <tr><td align="top" valign="center" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
+                    <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
                 </table>
             </td>
             <td width="62mm" align="top" valign="top">
                 <table id="compte" valign="top">
                     <tr>
                         <td align="top" valign="center" height="43mm">
-                            <ul class="facdroit">
-                                <li>Université de Neuchâtel</li>
-                                <li>Séminaire sur le droit du bail</li>
-                                <li>2000 Neuchâtel</li>
-                            </ul>
+                            <?php
+                                if(!empty($versement)){
+                                    echo '<ul class="versement">';
+                                    foreach($versement as $line){
+                                        echo '<li>'.$line.'</li>';
+                                    }
+                                    echo '</ul>';
+                                }
+                            ?>
                         </td>
                     </tr>
-                    <tr><td align="top" valign="top" height="7.6mm" class="compte">20-4130-2</td></tr>
-                    <tr><td align="top" valign="top" height="6mm" class="price"><span class="francs">123</span>00</td></tr>
+                    <tr><td align="top" valign="top" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
+                    <tr><td align="top" valign="top" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
                 </table>
             </td>
             <td width="88mm" align="top" valign="top">
                 <table id="versement" valign="top">
                     <tr>
                         <td align="top" valign="top" width="64%" height="20mm">
-                            <ul class="facdroit">
-                                <li>U. 01852</li>
-                                <li>Vente ouvrages</li>
-                                <li>Facture N° 2013-00000242</li>
-                            </ul>
+                            <?php
+                                echo '<ul class="versement">';
+                                    echo '<li>'.$motif['centre'].'</li>';
+                                    echo '<li>'.$motif['texte'].'</li>';
+                                    echo '<li>Facture N° '.$order->order_no.'</li>';
+                                echo '</ul>';
+                            ?>
                         </td>
                         <td align="top" valign="top" width="32%" height="20mm"></td>
                     </tr>

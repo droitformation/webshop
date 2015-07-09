@@ -41,6 +41,7 @@ class CartWorkerTest extends TestCase {
     {
         $this->coupon->delete($this->onecoupon->id);
         $this->coupon->delete($this->twocoupon->id);
+        $this->coupon->delete($this->threecoupon->id);
 
         $product = new App\Droit\Shop\Product\Entities\Product();
 
@@ -77,7 +78,7 @@ class CartWorkerTest extends TestCase {
         $this->worker->getTotalWeight();
 
         $this->worker->setCoupon($this->threecoupon->title)->applyCoupon();
-        $this->worker->calculPriceWithCoupon();
+        $this->worker->getTotalWeight()->setShipping();
 
         $this->assertEquals(0, $this->worker->orderShipping->price);
     }
@@ -202,28 +203,14 @@ class CartWorkerTest extends TestCase {
     /**
      * @return void
      */
-    public function testApplyCoupon()
-    {
-        \Cart::instance('newInstance');
-
-        \Cart::add($this->oneproduct->id, $this->oneproduct->title, 1, $this->oneproduct->price , array('weight' => $this->oneproduct->weight));
-        \Cart::add(1, 'un titre', 1, '2', array('weight' => '300'));
-
-        $this->worker->setCoupon($this->twocoupon->title)->applyCoupon();
-
-        $this->assertEquals(10, \Cart::total());
-    }
-
-    /**
-     * @return void
-     */
     public function testCalculPriceWithCoupon()
     {
         \Cart::instance('newInstance');
 
         \Cart::add($this->oneproduct->id, $this->oneproduct->title, 1, $this->oneproduct->price , array('weight' => $this->oneproduct->weight));
 
-        $price = $this->worker->setCoupon($this->twocoupon->title)->calculPriceWithCoupon();
+        $this->worker->setCoupon($this->twocoupon->title)->applyCoupon();
+        $price = $this->worker->calculPriceWithCoupon($this->oneproduct->id);
 
         $this->assertEquals(8.00, $price);
     }

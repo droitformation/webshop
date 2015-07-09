@@ -158,6 +158,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          foreach($cart as $item)
          {
              $product = $this->product->find($item->id);
+
              if($product){
                  \Cart::update($item->rowid, array('price' => $product->price_cents));
              }

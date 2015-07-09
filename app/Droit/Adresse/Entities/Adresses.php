@@ -22,6 +22,16 @@ class Adresses extends Model {
 
         return  $this->civilite->title;
     }
+
+    public function getCpTrimAttribute()
+    {
+        $wordlist = array("CP", "case", "postale","Case","Postale","cp","Cp","Postfach","postfach", "C. P." , "PF" , "PO Box");
+
+        $cp = str_replace($wordlist, "",  $this->cp);
+        $cp = trim($cp);
+
+        return  'CP '.$cp;
+    }
  	
 	public function user()
     {
