@@ -40,13 +40,18 @@ class CouponEloquent implements CouponInterface{
             'title'      => $data['title'],
             'value'      => $data['value'],
             'type'       => $data['type'],
-            'product_id' => (isset($data['product_id']) ? $data['product_id'] : null),
             'expire_at'  => $data['expire_at']
         ));
 
         if( ! $coupon )
         {
             return false;
+        }
+
+        // add products if any
+        if(isset($data['product_id']) && !empty($data['product_id']))
+        {
+            $coupon->products()->attach($data['product_id']);
         }
 
         return $coupon;
@@ -65,6 +70,12 @@ class CouponEloquent implements CouponInterface{
         $coupon->fill($data);
 
         $coupon->save();
+
+        // add products if any
+        if(isset($data['product_id']) && !empty($data['product_id']))
+        {
+            $coupon->products()->sync([$data['product_id']]);
+        }
 
         return $coupon;
     }

@@ -28,7 +28,6 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'Laracasts\\Generators\\' => array($vendorDir . '/laracasts/generators/src'),
-    'Jenssegers\\Rollbar\\' => array($vendorDir . '/jenssegers/rollbar/src'),
     'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src/Intervention/Image'),
     'Illuminate\\Html\\' => array($vendorDir . '/illuminate/html'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),

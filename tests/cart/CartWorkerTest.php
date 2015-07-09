@@ -8,6 +8,7 @@ class CartWorkerTest extends TestCase {
     protected $onecoupon;
     protected $twocoupon;
     protected $oneproduct;
+    protected $threecoupon;
 
     public function setUp()
     {
@@ -31,9 +32,9 @@ class CartWorkerTest extends TestCase {
             'hidden'          => 0,
         ]);
         
-        $this->onecoupon  =  $this->coupon->create(['value' => '10', 'title' => 'test', 'product_id' => null, 'expire_at' => $tomorrow ]);
-        $this->twocoupon  =  $this->coupon->create(['value' => '20', 'title' => 'second', 'product_id' => $this->oneproduct->id, 'expire_at' => $tomorrow ]);
-
+        $this->onecoupon   =  $this->coupon->create(['value' => '10', 'type' => 'general', 'title' => 'test',   'product_id' => null, 'expire_at' => $tomorrow ]);
+        $this->twocoupon   =  $this->coupon->create(['value' => '20', 'type' => 'product', 'title' => 'second', 'product_id' => $this->oneproduct->id, 'expire_at' => $tomorrow ]);
+        $this->threecoupon =  $this->coupon->create(['value' => '0', 'type' => 'shipping', 'title' => 'freeshipping', 'product_id' => null, 'expire_at' => $tomorrow ]);
     }
 
     public function tearDown()
@@ -75,7 +76,8 @@ class CartWorkerTest extends TestCase {
 
         $this->worker->getTotalWeight();
 
-        $this->worker->noShipping()->setShipping();
+        $this->worker->setCoupon($this->threecoupon->title)->applyCoupon();
+        $this->worker->calculPriceWithCoupon();
 
         $this->assertEquals(0, $this->worker->orderShipping->price);
     }

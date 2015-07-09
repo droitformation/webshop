@@ -61,10 +61,14 @@
                                                     <p class="text-right"><strong>Total:</strong></p>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    @if(isset($order->coupon) && $order->coupon->type == 'shipping')
-                                                        <p class="text-right text-muted">Frais de port offerts</p>
-                                                    @else
-                                                        <p class="text-right">- {{ $order->coupon->value }}%</p>
+
+                                                    @if($order->coupon_id > 0)
+                                                        @if( $order->coupon->type == 'shipping')
+                                                            <?php $order->coupon_id->load('coupon'); ?>
+                                                            <p class="text-right text-muted">Frais de port offerts</p>
+                                                        @else
+                                                            <p class="text-right">- {{ $order->coupon->value }}%</p>
+                                                        @endif
                                                     @endif
                                                     <p class="text-right">{{ $order->shipping->price_cents }} CHF</p>
                                                     <p class="text-right">{{ $order->price_cents }} CHF</p>

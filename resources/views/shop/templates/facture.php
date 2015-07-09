@@ -1,7 +1,7 @@
 <html>
 <head>
     <style type="text/css">
-        @page { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; }
+        @page { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: auto;}
         * {
             box-sizing: border-box;
             margin: 0;
@@ -97,7 +97,7 @@
 
         .misc-infos{
             padding: 10px;
-            background: #f5f5f5;
+            background: #f0f0f0;
             margin-top: 15px;
         }
 
@@ -137,7 +137,7 @@
         
         .line{
             border-top: 1px solid #e5e5e5;
-            background: #f5f5f5;
+            background: #f0f0f0;
             padding-top: 5px;
         }
         
@@ -336,26 +336,6 @@
                     }
                 }
             ?>
-            <tr>
-                <td class="text-left">1</td>
-                <td>Title of your article here</td>
-                <td class="text-right">
-                    200.00 <span>CHF</span>
-                </td>
-                <td class="text-right">200.00  <span>CHF</span></td>
-            </tr>
-            <tr>
-                <td class="text-left">10</td>
-                <td>Details of project here</td>
-                <td class="text-right">75.00  <span>CHF</span></td>
-                <td class="text-right">750.00 <span>CHF</span></td>
-            </tr>
-            <tr>
-                <td class="text-left">1345</td>
-                <td>WordPress Blogging theme</td>
-                <td class="text-right">50.00 <span>CHF</span></td>
-                <td class="text-right">250.00 <span>CHF</span></td>
-            </tr>
 
             </tbody>
         </table>
@@ -407,7 +387,13 @@
             </tr>
         </table>
     </div>
-    
+
+    <?php
+        if($products->count() > 7){
+            echo '<p style="page-break-after: always;"></p>';
+        }
+    ?>
+
     <table id="bv-table">
         <tr align="top" valign="top">
             <td width="60mm" align="top" valign="top">

@@ -564,63 +564,6 @@
         ]
     },
     {
-        "name": "stripe/stripe-php",
-        "version": "v2.2.0",
-        "version_normalized": "2.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/stripe/stripe-php.git",
-            "reference": "c58a8b221a37ff8641ff88342c42681b37605a38"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c58a8b221a37ff8641ff88342c42681b37605a38",
-            "reference": "c58a8b221a37ff8641ff88342c42681b37605a38",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-json": "*",
-            "ext-mbstring": "*",
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0",
-            "satooshi/php-coveralls": "~0.6.1",
-            "squizlabs/php_codesniffer": "~2.0"
-        },
-        "time": "2015-06-01 21:09:44",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Stripe\\": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Stripe and contributors",
-                "homepage": "https://github.com/stripe/stripe-php/contributors"
-            }
-        ],
-        "description": "Stripe PHP Library",
-        "homepage": "https://stripe.com/",
-        "keywords": [
-            "api",
-            "payment processing",
-            "stripe"
-        ]
-    },
-    {
         "name": "fzaninotto/faker",
         "version": "v1.4.0",
         "version_normalized": "1.4.0.0",
@@ -962,92 +905,6 @@
             "email",
             "mail",
             "mailer"
-        ]
-    },
-    {
-        "name": "league/flysystem",
-        "version": "1.0.4",
-        "version_normalized": "1.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/flysystem.git",
-            "reference": "56862959b45131ad33e5a7727a25db19f2cf090b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/56862959b45131ad33e5a7727a25db19f2cf090b",
-            "reference": "56862959b45131ad33e5a7727a25db19f2cf090b",
-            "shasum": ""
-        },
-        "require": {
-            "ext-mbstring": "*",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "ext-fileinfo": "*",
-            "league/phpunit-coverage-listener": "~1.1",
-            "mockery/mockery": "~0.9",
-            "phpspec/phpspec": "~2.0",
-            "phpspec/prophecy-phpunit": "~1.0",
-            "phpunit/phpunit": "~4.1",
-            "predis/predis": "~1.0",
-            "tedivm/stash": "~0.12.0"
-        },
-        "suggest": {
-            "ext-fileinfo": "Required for MimeType",
-            "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
-            "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
-            "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
-            "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
-            "league/flysystem-copy": "Allows you to use Copy.com storage",
-            "league/flysystem-dropbox": "Allows you to use Dropbox storage",
-            "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
-            "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
-            "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
-            "league/flysystem-webdav": "Allows you to use WebDAV storage",
-            "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter",
-            "predis/predis": "Allows you to use Predis for caching"
-        },
-        "time": "2015-06-07 21:27:37",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.1-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "League\\Flysystem\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Frank de Jonge",
-                "email": "info@frenky.net"
-            }
-        ],
-        "description": "Many filesystems, one API.",
-        "keywords": [
-            "Cloud Files",
-            "WebDAV",
-            "aws",
-            "cloud",
-            "copy.com",
-            "dropbox",
-            "file systems",
-            "files",
-            "filesystem",
-            "ftp",
-            "rackspace",
-            "remote",
-            "s3",
-            "sftp",
-            "storage"
         ]
     },
     {
@@ -2043,109 +1900,6 @@
             }
         ],
         "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function."
-    },
-    {
-        "name": "rollbar/rollbar",
-        "version": "v0.14.0",
-        "version_normalized": "0.14.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/rollbar/rollbar-php.git",
-            "reference": "ff00d5cd676f1afeed73313f7d15572d2622214a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/ff00d5cd676f1afeed73313f7d15572d2622214a",
-            "reference": "ff00d5cd676f1afeed73313f7d15572d2622214a",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*"
-        },
-        "require-dev": {
-            "mockery/mockery": "0.9.*",
-            "phpunit/phpunit": "4.5.*"
-        },
-        "time": "2015-06-23 00:24:54",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/rollbar.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Rollbar, Inc.",
-                "email": "support@rollbar.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "Monitors errors and exceptions and reports them to Rollbar",
-        "homepage": "http://github.com/rollbar/rollbar-php",
-        "keywords": [
-            "debugging",
-            "errors",
-            "exceptions",
-            "logging",
-            "monitoring"
-        ]
-    },
-    {
-        "name": "jenssegers/rollbar",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/jenssegers/laravel-rollbar.git",
-            "reference": "063f9c317ab0314a457dbd19bf4ed81deee1d8d1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/jenssegers/laravel-rollbar/zipball/063f9c317ab0314a457dbd19bf4ed81deee1d8d1",
-            "reference": "063f9c317ab0314a457dbd19bf4ed81deee1d8d1",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/support": "4.*|5.*",
-            "php": ">=5.3",
-            "rollbar/rollbar": "~0.11"
-        },
-        "require-dev": {
-            "mockery/mockery": "*",
-            "orchestra/testbench": "3.0.*",
-            "satooshi/php-coveralls": "*"
-        },
-        "time": "2015-06-06 08:23:36",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Jenssegers\\Rollbar\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Jens Segers",
-                "homepage": "http://jenssegers.be"
-            }
-        ],
-        "description": "Rollbar error monitoring integration for Laravel projects",
-        "keywords": [
-            "error",
-            "laravel",
-            "logging",
-            "monitoring",
-            "rollbar"
-        ]
     },
     {
         "name": "psr/http-message",
@@ -4052,6 +3806,146 @@
             "dompdf",
             "laravel",
             "pdf"
+        ]
+    },
+    {
+        "name": "league/flysystem",
+        "version": "1.0.6",
+        "version_normalized": "1.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/flysystem.git",
+            "reference": "e87d33ecc3a9fe2b1931856dc9921628f8c18cd5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/e87d33ecc3a9fe2b1931856dc9921628f8c18cd5",
+            "reference": "e87d33ecc3a9fe2b1931856dc9921628f8c18cd5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "ext-fileinfo": "*",
+            "mockery/mockery": "~0.9",
+            "phpspec/phpspec": "^2.2",
+            "phpspec/prophecy-phpunit": "~1.0",
+            "phpunit/phpunit": "~4.1"
+        },
+        "suggest": {
+            "ext-fileinfo": "Required for MimeType",
+            "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+            "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+            "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+            "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+            "league/flysystem-copy": "Allows you to use Copy.com storage",
+            "league/flysystem-dropbox": "Allows you to use Dropbox storage",
+            "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+            "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+            "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+            "league/flysystem-webdav": "Allows you to use WebDAV storage",
+            "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter"
+        },
+        "time": "2015-07-08 20:43:57",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "League\\Flysystem\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Frank de Jonge",
+                "email": "info@frenky.net"
+            }
+        ],
+        "description": "Filesystem abstraction: Many filesystems, one API.",
+        "keywords": [
+            "Cloud Files",
+            "WebDAV",
+            "abstraction",
+            "aws",
+            "cloud",
+            "copy.com",
+            "dropbox",
+            "file systems",
+            "files",
+            "filesystem",
+            "filesystems",
+            "ftp",
+            "rackspace",
+            "remote",
+            "s3",
+            "sftp",
+            "storage"
+        ]
+    },
+    {
+        "name": "stripe/stripe-php",
+        "version": "v2.3.0",
+        "version_normalized": "2.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/stripe/stripe-php.git",
+            "reference": "9d76444550a09a6f9c55dd98113ba0901908e60a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/9d76444550a09a6f9c55dd98113ba0901908e60a",
+            "reference": "9d76444550a09a6f9c55dd98113ba0901908e60a",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-json": "*",
+            "ext-mbstring": "*",
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0",
+            "satooshi/php-coveralls": "~0.6.1",
+            "squizlabs/php_codesniffer": "~2.0"
+        },
+        "time": "2015-07-07 01:13:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Stripe\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Stripe and contributors",
+                "homepage": "https://github.com/stripe/stripe-php/contributors"
+            }
+        ],
+        "description": "Stripe PHP Library",
+        "homepage": "https://stripe.com/",
+        "keywords": [
+            "api",
+            "payment processing",
+            "stripe"
         ]
     }
 ]

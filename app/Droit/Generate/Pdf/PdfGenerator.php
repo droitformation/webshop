@@ -16,7 +16,7 @@ class PdfGenerator
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-        $order = $this->order->find(1);
+        $order = $this->order->find(3);
         $order->load('products','user','shipping','payement');
         $order->user->load('adresses');
 

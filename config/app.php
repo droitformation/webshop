@@ -152,7 +152,6 @@ return [
         'Laracasts\Generators\GeneratorsServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
-        'Jenssegers\Rollbar\RollbarServiceProvider',
 	],
 
 	/*
