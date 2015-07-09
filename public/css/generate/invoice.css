@@ -1,0 +1,233 @@
+h1{
+    font-size: 20px;
+    font-weight: 600;
+    display: block;
+}
+h3{
+    font-size: 13px;
+    display: block;
+    font-weight: normal;
+    color: #000;
+    line-height: 20px;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+.title{
+    margin-bottom: 10px;
+}
+/*
+* Table for invoice
+*/
+#invoice-table,
+#content-table
+{
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+#invoice-table{
+    margin-top: 10px;
+}
+#invoice-table tr,
+{
+    font-size: 12px;
+}
+#invoice-table th
+{
+    padding: 5px 2px;
+    font-weight: bold;
+    color: #000;
+    border-bottom: 2px solid #004c7c;
+}
+#invoice-table td
+{
+    font-size: 11px;
+    padding: 5px 2px 5px 2px;
+    border-bottom: 1px solid #c3c3c3;
+    color: #4d4d4d;
+}
+
+/*
+* Adresse
+*/
+
+#facdroit,#user,#tva{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#user{
+    padding-top: 40px;
+}
+
+#user li,#tva li{
+    font-size: 12px;
+}
+
+#facdroit li{
+    font-size: 11px;
+}
+
+.versement li{
+    font-size: 12px;
+}
+
+.versement{
+    padding: 45px 20px 0px 20px;
+    list-style: none;
+    margin: 0;
+}
+
+#tva li,.infos td{
+    font-size: 10px;
+    line-height: 13px;
+}
+
+.misc-infos{
+    padding: 3px 10px;
+    background: #f0f0f0;
+    margin-top: 15px;
+}
+
+/*
+* Colors
+*/
+.blue{
+    color: #004c7c;
+}
+
+/*
+* Textes
+*/
+
+.text-left{
+    text-align: left;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.text-middle{
+    text-align: center;
+}
+
+.total_line td{
+    line-height: 16px;
+    padding-right: 2px;
+    font-size: 11px;
+}
+
+.total_line td strong{
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+.line{
+    border-top: 1px solid #e5e5e5;
+    background: #f0f0f0;
+    padding-top: 5px;
+}
+
+/*
+* Messages
+*/
+.communications{
+    display: block;
+    margin: 5px 0;
+    font-size: 12px;
+}
+
+.warning{
+    color: #b80f1d;
+}
+
+.special{
+    color: #056734;
+}
+
+.message{
+    margin: 0;
+    display: block;
+    line-height: 14px;
+    font-size: 11px;
+}
+
+.signature{
+    margin-top: 15px;
+}
+
+/*
+* BV
+*/
+
+#bv-table{
+    position: absolute;
+    height: 106mm;
+    width: 210mm;
+    z-index: 3;
+    bottom: 0;
+    left: 0;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    background-image: url("../../images/bvr.jpg");
+}
+
+#recu{
+    margin: 0;
+    padding: 0;
+    width: 60mm;
+    height: 106mm;
+    border-collapse: collapse;
+}
+
+#recu td{
+    margin: 0;
+}
+
+#compte{
+    width: 62mm;
+    height: 106mm;
+    border-collapse: collapse;
+}
+
+#versement{
+    width: 88mm;
+    height: 106mm;
+    border-collapse: collapse;
+}
+
+.compte{
+    font-weight: bold;
+    padding-left: 105px;
+}
+
+.price{
+    text-align: right;
+    padding-right: 4px;
+    font-size: 17px;
+    letter-spacing:2.07mm;
+}
+
+.francs{
+    margin-right: 6.5mm;
+    letter-spacing:2.08mm;
+}
+
+#recu .francs{
+    margin-right: 6.2mm;
+    letter-spacing:2.08mm;
+}
+
+#compte .price{
+    padding-right: 5px;
+}

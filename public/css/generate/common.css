@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#content{
+    margin: 5mm 10mm;
+    display: block;
+    width: 100%;
+    z-index: 2;
+}
+
+.text-muted{
+    color: #666;
+}

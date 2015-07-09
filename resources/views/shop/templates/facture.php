@@ -2,260 +2,17 @@
 <head>
     <style type="text/css">
         @page { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: auto;}
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        h1{
-            font-size: 20px;
-            font-weight: 600;
-            display: block;
-        }
-        h3{
-            font-size: 13px;
-            display: block;
-            font-weight: normal;
-            color: #000;
-            line-height: 20px;
-            margin: 0;
-            padding: 0;
-            padding-bottom: 5px;
-        }
-        #content{
-            margin: 8mm 10mm;
-            display: block;
-            width: 100%;
-            z-index: 2;
-        }
-
-        .title{
-            margin-bottom: 10px;
-        }
-        /*
-        * Table for invoice
-        */
-        #invoice-table,
-        #content-table
-        {
-            font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-            font-size: 12px;
-            width: 100%;
-            text-align: left;
-            border-collapse: collapse;
-        }
-        #invoice-table{
-            margin-top: 10px;
-        }
-        #invoice-table tr,
-        {
-            font-size: 12px;
-        }
-        #invoice-table th
-        {
-            padding: 5px 2px;
-            font-weight: bold;
-            color: #000;
-            border-bottom: 2px solid #004c7c;
-        }
-        #invoice-table td
-        {
-            font-size: 11px;
-            padding: 5px 2px 5px 2px;
-            border-bottom: 1px solid #c3c3c3;
-            color: #4d4d4d;
-        }
-
-        /*
-        * Adresse
-        */
-
-        #facdroit,#user,#tva{
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        #user{
-            margin-top: 15px;
-        }
-
-        #user li,#tva li{
-            font-size: 12px;
-        }
-
-        #facdroit li{
-            font-size: 11px;
-        }
-
-        .versement li{
-            font-size: 12px;
-        }
-
-        .versement{
-            padding: 45px 20px 0px 20px;
-            list-style: none;
-            margin: 0;
-        }
-
-        #tva li,.infos td{
-            font-size: 10px;
-            line-height: 13px;
-        }
-
-        .misc-infos{
-            padding: 3px 10px;
-            background: #f0f0f0;
-            margin-top: 15px;
-        }
-
-        /*
-        * Colors
-        */
-        .blue{
-            color: #004c7c;
-        }
-
-        /*
-        * Textes
-        */
-
-        .text-left{
-            text-align: left;
-        }
-
-        .text-right{
-            text-align: right;
-        }
-
-        .text-middle{
-            text-align: center;
-        }
-
-        .total_line td{
-            line-height: 20px;
-            padding-right: 2px;
-        }
-
-        .total_line td strong{
-            margin: 0;
-            padding: 0;
-            vertical-align: top;
-        }
-        
-        .line{
-            border-top: 1px solid #e5e5e5;
-            background: #f0f0f0;
-            padding-top: 5px;
-        }
-        
-        /*
-        * Messages
-        */
-        .communications{
-            display: block;
-            margin: 5px 0;
-            font-size: 12px;
-        }
-
-        .warning{
-            color: #b80f1d;
-        }
-
-        .special{
-            color: #056734;
-        }
-
-        .message{
-            margin: 0;
-            display: block;
-            line-height: 14px;
-            font-size: 11px;
-        }
-
-        .signature{
-            margin-top: 15px;
-        }
-
-        /*
-        * BV
-        */
-
-        #bv-table{
-            position: absolute;
-            height: 106mm;
-            width: 210mm;
-            z-index: 3;
-            bottom: 0;
-            left: 0;
-            font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-            font-size: 12px;
-            width: 100%;
-            text-align: left;
-            border-collapse: collapse;
-            background-image: url("<?php echo asset('images/bvr.jpg'); ?>");
-        }
-
-        #recu{
-            margin: 0;
-            padding: 0;
-            width: 60mm;
-            height: 106mm;
-            border-collapse: collapse;
-        }
-
-        #recu td{
-            margin: 0;
-        }
-
-        #compte{
-            width: 62mm;
-            height: 106mm;
-            border-collapse: collapse;
-        }
-
-        #versement{
-            width: 88mm;
-            height: 106mm;
-            border-collapse: collapse;
-        }
-
-        .compte{
-            font-weight: bold;
-            padding-left: 105px;
-        }
-
-        .price{
-            text-align: right;
-            padding-right: 4px;
-            font-size: 17px;
-            letter-spacing:2.07mm;
-        }
-
-        .francs{
-            margin-right: 6.5mm;
-            letter-spacing:2.08mm;
-        }
-
-        #recu .francs{
-            margin-right: 6.2mm;
-            letter-spacing:2.08mm;
-        }
-
-        #compte .price{
-            padding-right: 5px;
-        }
-
     </style>
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/generate/common.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/generate/invoice.css');?>" media="screen" />
 </head>
 <body style="position: relative;height:297mm;">
     <div id="content">
         <table id="content-table">
             <tr>
-                <td colspan="2"><img height="90mm" src="<?php echo public_path('files/logos/facdroit.jpg'); ?>" alt="Unine logo" /></td>
+                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/facdroit.jpg'); ?>" alt="Unine logo" /></td>
             </tr>
-            <tr><td colspan="2" height="15">&nbsp;</td></tr>
+            <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
                 <td align="top" width="60%" valign="top">
                     <?php
@@ -288,7 +45,7 @@
                     ?>
                 </td>
             </tr>
-            <tr><td colspan="2" height="20">&nbsp;</td></tr>
+            <tr><td colspan="2" height="1">&nbsp;</td></tr>
         </table>
 
         <h1 class="title blue">Facture</h1>
@@ -307,7 +64,7 @@
                     ?>
                 </td>
                 <td width="1%" align="top" valign="top"></td>
-                <td width="40%" align="top" valign="top" class="misc-infos">
+                <td width="40%" align="top" valign="middle" class="misc-infos">
                     <table id="content-table" class="infos">
                         <tr>
                             <td width="28%"><strong class="blue">Total:</strong></td>
@@ -357,7 +114,7 @@
         </table>
 
         <table id="content-table">
-            <tr><td colspan="2" height="10">&nbsp;</td></tr>
+            <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr>
                 <!-- Messages for customer -->
                 <td width="62%" align="top" valign="top">
@@ -386,6 +143,23 @@
                 <!-- Total calculations -->
                 <td width="33%" align="top" valign="top" class="text-right">
                     <table width="100%" id="content-table" class="total_line" align="right" valign="top">
+                        <?php
+                        if($order->coupon_id > 0)
+                        {
+                            echo '<tr align="top" valign="top">';
+                            if( $order->coupon->type == 'shipping')
+                            {
+                                echo '<td width="40%" align="top" valign="top" class="text-right">Frais de port offerts</td>';
+                                echo '<td width="60%" align="top" valign="top" class="text-right"></td>';
+                            }
+                            else
+                            {
+                                echo '<td width="40%" align="top" valign="top" class="text-right text-muted">Rabais '.$order->coupon->title.'</td>';
+                                echo '<td width="60%" align="top" valign="top" class="text-right"> -'.$order->coupon->value.'%</td>';
+                            }
+                            echo '</tr>';
+                        }
+                        ?>
                         <tr align="top" valign="top">
                             <td width="40%" align="top" valign="top" class="text-right"><strong>Sous-total:</strong></td>
                             <td width="60%" align="top" valign="top" class="text-right"><?php echo $order->price_cents; ?> CHF</td>
