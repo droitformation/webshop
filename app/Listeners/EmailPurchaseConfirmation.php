@@ -32,11 +32,14 @@ class EmailPurchaseConfirmation
     {
         $order = $event->order;
         $order->load('user');
-        $user  = $order->user;
+        $user    = $order->user;
+        $facture = 'files/shop/factures/facture_'.$order->order_no.'.pdf';
 
-        $this->mailer->send('emails.shop.confirmation', ['user' => $user], function ($m) use ($user) {
+        $this->mailer->send('emails.shop.confirmation', ['user' => $user], function ($m) use ($user,$facture) {
+
             $m->to($user->email, $user->name)->subject('Confirmation de commande');
-        });
+            $m->attach($facture);
 
+        });
     }
 }

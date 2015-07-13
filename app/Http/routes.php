@@ -50,11 +50,14 @@ Route::get('cartworker', function()
 
     $pdf    = new App\Droit\Generate\Pdf\PdfGenerator( $order,$user );
 
-    return $pdf->bvEvent(6,true);
+    $order_no = $order->find(6);
+    //return $pdf->bvEvent(6,true);
 
     echo '<pre>';
-    print_r($facture);
+    //print_r($facture);
     echo '</pre>';
+
+    event(new App\Events\OrderWasPlaced($order_no));
 
 });
 
