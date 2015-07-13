@@ -50,7 +50,7 @@
 
         <h1 class="title blue">Facture</h1>
 
-        <table id="content-table">
+        <table class="content-table">
             <tr>
                 <td width="59%" align="top" valign="top"  class="misc-infos">
                     <?php
@@ -118,13 +118,12 @@
             <tr>
                 <!-- Messages for customer -->
                 <td width="62%" align="top" valign="top">
-                    <?php
 
+                    <h3>Communications</h3>
+                    <div class="communications">
+                    <?php
                         if(!empty($messages))
                         {
-                            echo '<h3>Communications</h3>';
-                            echo '<div class="communications">';
-
                             foreach($msgTypes as $msgType)
                             {
                                 if(isset($messages[$msgType]) && !empty($messages[$msgType]))
@@ -132,12 +131,12 @@
                                     echo '<p class="message '.$msgType.'">'.$messages[$msgType].'</p>';
                                 }
                             }
-                            echo '</div>';
                         }
-
-                    echo '<p class="message">Neuchâtel, le '.$date.'</p>';
-
                     ?>
+                        <p class="message"><?php echo $messages['remerciements']; ?></p><br/>
+                        <p class="message">Neuchâtel, le <?php echo $date; ?></p>
+                    </div>
+
                 </td>
                 <td width="5%" align="top" valign="top"></td>
                 <!-- Total calculations -->

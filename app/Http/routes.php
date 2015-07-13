@@ -50,7 +50,7 @@ Route::get('cartworker', function()
 
     $pdf    = new App\Droit\Generate\Pdf\PdfGenerator( $order,$user );
 
-    return $pdf->bonEvent(1,true);
+    return $pdf->bvEvent(6,true);
 
     echo '<pre>';
     print_r($facture);

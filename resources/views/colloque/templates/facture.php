@@ -11,7 +11,7 @@
     <div class="content">
         <table class="content-table">
             <tr>
-                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/'.$logo.''); ?>" alt="Unine logo" /></td>
+                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/facdroit.jpg'); ?>" alt="Unine logo" /></td>
             </tr>
             <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
@@ -25,6 +25,8 @@
                         echo '</ul>';
                     }
                     ?>
+
+                    <p class="tva"><?php echo $tva['numero']; ?></p>
                 </td>
                 <td align="top" width="40%" valign="top">
                     <?php
@@ -50,16 +52,10 @@
     </div>
 
     <div class="content">
-        <h1 class="title blue">BON DE PARTICIPATION <?php echo $inscription_no; ?></h1>
-        <p class="red"><small>A présenter lors de votre arrivée</small></p>
 
-        <table class="content-table content-wide push-top" valign="top">
-            <tr valign="top">
-                <td valign="top">
-                    <p class="organisateur"><strong>Organisé par:</strong> <?php echo $colloque['organisateur']; ?></p>
-                </td>
-            </tr>
-            <tr><td height="5">&nbsp;</td></tr>
+        <h1 class="title blue">FACTURE <?php echo $inscription_no; ?></h1>
+
+        <table class="content-table content-wide" valign="top">
             <tr valign="top">
                 <td valign="top">
                     <h2><?php echo $colloque['titre']; ?></h2>
@@ -73,22 +69,59 @@
                     <h3 class="titre-info"><strong>Lieu:</strong> Aula des Jeunes-Rives, Espace Louis-Agassiz 1, Neuchâtel</h3>
                 </td>
             </tr>
-            <tr><td height="5">&nbsp;</td></tr>
-            <tr>
-                <td valign="top">
-                    <h4>Choix:</h4>
-                    <p>Je participerai au repas de vendredi midi</p>
-                </td>
-            </tr>
         </table>
     </div>
 
     <div class="content">
         <table class="content-table" valign="top">
-            <tr><td height="25">&nbsp;</td></tr>
+            <tr><td height="5">&nbsp;</td></tr>
             <tr valign="top">
-                <td valign="top" align="center">
-                    <img style="max-width: 120mm" src="<?php echo public_path('files/colloques/cartes/'.$carte.''); ?>" alt="Carte" />
+                <td valign="top">
+
+                    <table class="content-table facture-table" valign="top">
+                        <tr valign="top">
+                            <td width="40%" valign="top">
+                                <p>Nous vous confirmons votre participation :</p>
+                            </td>
+                            <td width="60%" valign="top">
+                                <p><strong><?php echo $colloque['titre']; ?></strong> du <?php echo $colloque['date']; ?></p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="40%" valign="top">
+                                <p>Le montant de l'inscription est de:</p>
+                            </td>
+                            <td width="60%" valign="top">
+                                <p><strong><?php echo $price; ?> CHF</strong></p>
+                                <small>(montant non-soumis à la TVA)</small>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+            <tr><td height="20">&nbsp;</td></tr>
+            <tr valign="top">
+                <td valign="top">
+                    <p class="message"><?php echo $messages['remerciements']; ?></p>
+                    <p class="message">Neuchâtel, le <?php echo $date; ?></p>
+                </td>
+            </tr>
+            <tr><td height="10">&nbsp;</td></tr>
+            <tr>
+                <td align="right" valign="top">
+                    <p class="message"><strong><?php echo $signature; ?></strong></p>
+                </td>
+            </tr>
+            <tr><td height="20">&nbsp;</td></tr>
+            <tr valign="top">
+                <td valign="top">
+                    <?php
+                    if(!empty($annexes))
+                    {
+                        echo '<p class="red"><strong>Annexe'.(count($annexes) > 1 ? 's' : '').': '.implode(',',$annexes).'</strong></p>';
+                    }
+                    ?>
                 </td>
             </tr>
         </table>

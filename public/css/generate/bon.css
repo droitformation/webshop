@@ -1,7 +1,8 @@
 /*
 * Table
 */
-#content-table
+#content-table,
+.content-table
 {
     font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-size: 12px;
@@ -11,11 +12,13 @@
 }
 
 #content-table tr,
+.content-table tr
 {
     font-size: 12px;
 }
 
-#content-table th
+#content-table th,
+.content-table th
 {
     padding: 5px 2px;
     color: #000;
@@ -24,6 +27,7 @@
 .content-wide{
     background: #f7f7f7;
     padding: 10px;
+    margin-top: 10px;
 }
 
 .content-wide h1{
@@ -37,6 +41,10 @@
     border-bottom: 1px solid #f7f7f7;
 }
 
+.push-top{
+    margin-top: 30px;
+}
+
 .infos h4{
     font-size: 12px;
     margin-bottom: 3px;
@@ -47,8 +55,33 @@
     margin-bottom: 8px;
 }
 
-.organisateur{
-    margin-top: 15px;
-    margin-bottom: 15px;
+.tva{
+    font-size: 11px;
+    margin-top: 10px;
 }
 
+.message{
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.titre-info{
+    font-size: 11px;
+}
+
+.titre-info strong{
+    width: 50px;
+    display: inline-block;
+}
+
+.organisateur{
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.facture-table{
+}
+
+.facture-table td{
+    padding: 5px 0;
+}

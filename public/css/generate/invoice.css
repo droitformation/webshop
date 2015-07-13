@@ -21,7 +21,8 @@ h3{
 * Table for invoice
 */
 #invoice-table,
-#content-table
+#content-table,
+.content-table
 {
     font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-size: 12px;
@@ -230,4 +231,13 @@ h3{
 
 #compte .price{
     padding-right: 5px;
+}
+
+.versement-bv li{
+    font-size: 10px;
+    line-height: 13px;
+}
+
+.versement-bv li.inscription_no{
+   padding-top:5px;
 }

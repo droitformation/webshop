@@ -11,13 +11,13 @@ class PdfGenerator
     /**
      * Facture shop
      **/
-    public $messages = ['signature' => 'Avec nos remerciements, nous vous adressons nos salutations les meilleures'];
+    public $messages = ['remerciements' => 'Avec nos remerciements, nous vous adressons nos salutations les meilleures'];
     public $compte   = '20-4130-2';
     public $centre   = 'U. 01852';
     public $motif    = 'Vente ouvrages';
 
     public $expediteur = [
-        'nom'     => 'Secr&eacute;tariat  - Formation',
+        'nom'     => 'Secr&eacute;tariat - Formation',
         'adresse' => 'Avenue du 1er-Mars 26',
         'ville'   => 'CH-2000 Neuch&acirc;tel'
     ];
@@ -29,10 +29,12 @@ class PdfGenerator
     ];
 
     public $tva = [
-        'numero'      => 'CHE-115.251.043TVA',
+        'numero'      => 'CHE-115.251.043 TVA',
         'taux_réduit' => 'Taux 2.5% inclus pour les livres',
         'taux_normal' => 'Taux 8% pour les autres produits'
     ];
+
+    public $signature = 'Le secrétariat de la Faculté de droit';
 
     public function __construct(OrderInterface $order, UserInterface $user)
     {
@@ -40,8 +42,12 @@ class PdfGenerator
         $this->user   = $user;
     }
 
-    public function setMsg($message,$type){
-
+    /*
+     * Set messages
+     * Type: warning,special,message,remerciements
+     */
+    public function setMsg($message,$type)
+    {
         $this->messages[$type] = $message;
     }
 
@@ -104,10 +110,70 @@ class PdfGenerator
                 'date'         => $date,
             ],
             'user' => $user,
-            'invitation_no' => '64-2015/44'
+            'inscription_no' => '64-2015/44'
         ];
 
         return \PDF::loadView('colloque.templates.bon', $data)->setPaper('a4')->stream('bon.pdf');
+
+    }
+
+    public function factureEvent($inscription_id){
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+        $date  = Carbon::now()->formatLocalized('%d %B %Y');
+
+        $user = $this->user->find(1);
+        $user->load('adresses');
+
+        $data = [
+            'messages'   => $this->messages,
+            'expediteur' => $this->expediteur,
+            'colloque'   => [
+                'organisateur' => 'Séminaire sur le droit du bail',
+                'titre'        => 'Convergences et divergences entre le droit de la fonction publique et le droit privé du travail ?',
+                'soustitre'    => 'Conférence-débat et Journée scientifique',
+                'lieu'         => 'Aula des Jeunes-Rives, Espace Louis-Agassiz 1, Neuchâtel',
+                'date'         => $date,
+            ],
+            'user'           => $user,
+            'inscription_no' => '64-2015/44',
+            'price'          => '290',
+            'date'           => $date,
+            'signature'      => $this->signature,
+            'tva'            => $this->tva,
+            'annexes'        => ['bon' => 'bon de participation à présenter à l\'entrée']
+        ];
+
+        return \PDF::loadView('colloque.templates.facture', $data)->setPaper('a4')->stream('bon.pdf');
+
+    }
+
+
+    public function bvEvent($inscription_id, $stream = false)
+    {
+        $price    = '290.00';
+        $user     = $this->user->find(1);
+        $colloque = 64;
+
+        $data = [
+            'versement'  => $this->versement,
+            'motif' => [
+                'centre' => 'Conférence-débat et Journée scientifique',
+                'texte'  => '',
+            ],
+            'compte'    => $this->compte,
+            'price'     => $price,
+            'inscription_no' => '64-2015/44',
+        ];
+
+        $bv = \PDF::loadView('colloque.templates.bv', $data)->setPaper('a4');
+
+        if($stream)
+        {
+            return $bv->stream('bv_'.$colloque.'-'.$user->id.'.pdf');
+        }
+
+        return $bv->save('files/colloques/factures/bv_'.$colloque.'-'.$user->id.'.pdf');
 
     }
 
