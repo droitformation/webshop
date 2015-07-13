@@ -18,7 +18,7 @@ class OrderWasPlaced extends Event
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function   __construct(Order $order)
     {
         $this->order = $order;
     }

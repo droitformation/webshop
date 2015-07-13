@@ -4,25 +4,29 @@ namespace App\Droit\Shop\Order\Worker;
 
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Cart\Worker\CartWorker;
+use App\Droit\Shop\Cart\Repo\CartInterface;
 use App\Droit\User\Repo\UserInterface;
 
 class OrderWorker{
 
     protected $order;
     protected $cart;
+    protected $worker;
     protected $user;
+    protected $generator;
 
-    public function __construct(OrderInterface $order, CartWorker $cart, UserInterface $user)
+    public function __construct(OrderInterface $order, CartWorker $worker, UserInterface $user, CartInterface $cart)
     {
-        $this->order  = $order;
-        $this->cart   = $cart;
-        $this->user   = $user;
+        $this->order     = $order;
+        $this->cart      = $cart;
+        $this->worker    = $worker;
+        $this->user      = $user;
+        $this->generator = \App::make('App\Droit\Generate\Pdf\PdfGenerator');
     }
 
-    public function prepareOrder($shipping,$coupon)
+    public function make($shipping,$coupon)
     {
-        $user     = $this->user->find(\Auth::user()->id);
-        $cart     = \Cart::content();
+        $user = $this->user->find(\Auth::user()->id);
 
         $commande = [
             'user_id'     => $user->id,
@@ -34,22 +38,44 @@ class OrderWorker{
         ];
 
         // Order global
+        $order = $this->insertOrder($commande);
+
+        // All products for order
+        $order->products()->attach($this->productIdFromCart());
+
+        // Generate invoice
+        $this->generator->factureOrder($order->id);
+
+        return $order;
+
+    }
+
+    public function insertOrder($commande){
+
+        // Order global
         $order = $this->order->create($commande);
 
         if(!$order)
         {
+            // Save the cart
+            $this->saveCart($commande);
+
             \Log::error('Problème lors de la commande'. serialize($commande));
 
             throw new \App\Exceptions\OrderCreationException('Problème lors de la commande');
         }
 
-        $keyed = $this->productIdFromCart();
-        $order->products()->attach($keyed);
-
-        \Cart::destroy();
-
         return $order;
+    }
 
+    public function saveCart($commande)
+    {
+        // Save the cart
+        $this->cart->create([
+            'user_id'     => $commande['user_id'],
+            'cart'        => \Cart::content(),
+            'coupon_id'   => $commande['coupon_id']
+        ]);
     }
 
     public function productIdFromCart()

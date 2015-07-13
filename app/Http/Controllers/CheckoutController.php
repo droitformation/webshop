@@ -78,7 +78,10 @@ class CheckoutController extends Controller {
         $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
         $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
 
-        $order = $this->order->prepareOrder($shipping,$coupon);
+        $order = $this->order->make($shipping,$coupon);
+
+        // Destroy cart
+        \Cart::destroy();
 
         event(new OrderWasPlaced($order));
 

@@ -45,11 +45,12 @@ Route::get('cartworker', function()
 {
     $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
     $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
-    $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $user   = \App::make('App\Droit\User\Repo\UserInterface');
 
-    $pdf    = new App\Droit\Generate\Pdf\PdfGenerator( $order );
+    $pdf    = new App\Droit\Generate\Pdf\PdfGenerator( $order,$user );
 
-    return $pdf->facture(1);
+    return $pdf->bonEvent(1,true);
 
     echo '<pre>';
     print_r($facture);

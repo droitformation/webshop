@@ -5,13 +5,98 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#content{
+#content, .content{
     margin: 5mm 10mm;
     display: block;
     width: 100%;
     z-index: 2;
 }
 
+h1{
+    font-size: 20px;
+    font-weight: 600;
+    display: block;
+}
+
+h2{
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+h3{
+    font-size: 13px;
+    display: block;
+    font-weight: normal;
+    color: #000;
+    line-height: 20px;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+.organisateur{
+    font-size: 11px;
+}
+
+.organisateur h4{
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+
+.title{
+    margin-bottom: 10px;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.text-middle{
+    text-align: center;
+}
+
 .text-muted{
     color: #666;
+}
+
+/*
+* Colors
+*/
+.blue{
+    color: #004c7c;
+}
+
+.red{
+    color: #b70f1d;
+}
+
+.red small{
+    font-size: 10px;
+}
+/*
+* Adresse
+*/
+#facdroit,#user,#tva{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#user{
+    padding-top: 40px;
+}
+
+#user li,#tva li{
+    font-size: 12px;
+}
+
+#facdroit li{
+    font-size: 11px;
 }

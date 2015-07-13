@@ -1,0 +1,54 @@
+/*
+* Table
+*/
+#content-table
+{
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+#content-table tr,
+{
+    font-size: 12px;
+}
+
+#content-table th
+{
+    padding: 5px 2px;
+    color: #000;
+}
+
+.content-wide{
+    background: #f7f7f7;
+    padding: 10px;
+}
+
+.content-wide h1{
+    font-size: 18px;
+}
+
+.line{
+    height: 1px;
+    display: block;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f7f7f7;
+}
+
+.infos h4{
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.infos p{
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.organisateur{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
