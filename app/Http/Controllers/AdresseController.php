@@ -94,7 +94,7 @@ class AdresseController extends Controller {
         $adresse = $this->adresse->update($data);
         $user    = $this->user->find($data['user_id']);
 
-        echo view('partials.user-livraison', ['user' => $user]);
+        echo view('shop.partials.user-livraison', ['user' => $user]);
 
     }
 

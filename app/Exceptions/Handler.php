@@ -41,6 +41,9 @@ class Handler extends ExceptionHandler {
         if ($e instanceof \App\Exceptions\CouponException)
             return \Redirect::back()->with(array('status' => 'warning' , 'message' => $e->getMessage()));
 
+        if ($e instanceof \App\Exceptions\CardDeclined)
+            return \Redirect::back()->with(array('status' => 'warning' , 'message' => $e->getMessage()));
+
         if ($e instanceof \App\Exceptions\OrderCreationException)
             return \Redirect::back()->with(array('status' => 'danger' , 'message' => $e->getMessage()));
 

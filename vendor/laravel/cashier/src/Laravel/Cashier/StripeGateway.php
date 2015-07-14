@@ -321,7 +321,7 @@ class StripeGateway
     {
         $customer = $this->getStripeCustomer();
 
-        $this->updateQuantity($customer, $customer->subscription->quantity + $count);
+        $this->updateQuantity($customer->subscription->quantity + $count, $customer);
     }
 
     /**
@@ -347,18 +347,20 @@ class StripeGateway
     {
         $customer = $this->getStripeCustomer();
 
-        $this->updateQuantity($customer, $customer->subscription->quantity - $count);
+        $this->updateQuantity($customer->subscription->quantity - $count, $customer);
     }
 
     /**
      * Update the quantity of the subscription.
      *
-     * @param  \Stripe\Customer  $customer
      * @param  int  $quantity
+     * @param  \Stripe\Customer|null  $customer
      * @return void
      */
-    public function updateQuantity($customer, $quantity)
+    public function updateQuantity($quantity, $customer = null)
     {
+        $customer = $customer ?: $this->getStripeCustomer();
+
         $subscription = [
             'plan' => $customer->subscription->plan->id,
             'quantity' => $quantity,

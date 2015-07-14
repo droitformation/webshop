@@ -16,7 +16,7 @@ Route::resource('product', 'ProductController');
 
 Route::get('checkout/resume', 'CheckoutController@resume');
 Route::get('checkout/confirm', 'CheckoutController@confirm');
-Route::get('checkout/send', 'CheckoutController@send');
+Route::match(['get', 'post'],'checkout/send', 'CheckoutController@send');
 
 Route::resource('adresse', 'AdresseController');
 Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
@@ -36,6 +36,11 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+/*
+ * Payement via Paypal
+ * */
+
 
 /*
  * Test routes
@@ -69,7 +74,7 @@ Route::get('notification', function()
     $logo   = 'facdroit.png';
     $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
 
-    $order = $orders->find(7);
+    $order = $orders->find(8);
     $order->load('products','user','shipping','payement');
 
     $duDate = $order->created_at->addDays(30)->formatLocalized('%d %B %Y');

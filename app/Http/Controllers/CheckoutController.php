@@ -73,19 +73,56 @@ class CheckoutController extends Controller {
      *
      * @return Response
      */
-    public function send()
+    public function send(Request $request)
     {
         $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
         $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
 
         $order = $this->order->make($shipping,$coupon);
 
-        // Destroy cart
-        \Cart::destroy();
+        // Payement
+        if($request->input('stripeToken'))
+        {
+            $this->viaStripe($request->input('stripeToken'),$order);
+            $order->payed_at    = \Carbon\Carbon::now();
+            $order->status      = 'payed';
+            $order->payement_id = 2;
+            $order->save();
+        }
+
+        $this->cleanUp();
 
         event(new OrderWasPlaced($order));
 
         return redirect('/')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
+
+    }
+
+    public function viaStripe($token,$order){
+
+        \Stripe\Stripe::setApiKey("sk_test_ryko0RINfRXTIq65ATCIAPAV");
+
+        // Create the charge on Stripe's servers - this will charge the user's card
+        try {
+            $charge = \Stripe\Charge::create(array(
+                    "amount"      => $order->amount, // amount in cents, again
+                    "currency"    => "chf",
+                    "source"      => $token,
+                    "description" => "Example charge")
+            );
+        }
+        catch(\Stripe\Error\Card $e)
+        {
+            throw new \App\Exceptions\CardDeclined('Carte décliné', $e->getError() );
+        }
+    }
+
+    public function cleanUp(){
+
+        // Destroy cart
+        \Cart::destroy();
+        session()->forget('noShipping');
+        session()->forget('coupon');
 
     }
 
