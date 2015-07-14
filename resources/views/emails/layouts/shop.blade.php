@@ -115,8 +115,8 @@
             min-height: 1000px;
         }
         .emailBodyCell {
-            padding-top: 32px;
-            padding-bottom: 32px;
+            padding-top: 16px;
+            padding-bottom: 16px;
             padding-left: 16px;
             padding-right: 16px;
         }
@@ -382,17 +382,14 @@
         }
         /* Header */
         .eHeader {
-            padding-top: 16px;
-            padding-left: 16px;
-            padding-right: 16px;
-            padding-bottom: 16px;
+            padding: 5px 0;
         }
         .eHeaderLogo, .eHeaderOptions {
-            height: 48px;
+            height: 75px;
             font-size: 0 !important;
         }
         .eHeaderLogo, .eHeaderLogo a {
-            height: 48px;
+            height: 75px;
             text-align: left;
             font-size: 18px;
             font-weight: bold;
@@ -444,8 +441,8 @@
             text-align: center;
         }
         h1 {
-            font-size: 24px;
-            line-height: 36px;
+            font-size: 18px;
+            line-height: 30px;
             font-weight: bold;
         }
         .highlight p {
@@ -793,7 +790,7 @@
             color: #a1a2a5;
         }
         h1, h1 span, h2, h2 span, .eHeaderLogo, .eHeaderLogo a, .eHeaderLogoText, .eHeaderLogoText a, .eHeaderLogoText span, .invoiceHead .ihBlack, span.serviceName {
-            color: #465059;
+            color: #1a446e;
         }
         .priceTable th strong, .amount, .priceColumn.recommend, .priceTable .spBtn, .priceTable .spBtn span, .profileName, .profileName span, .invoiceTable .amount, .bannerLink a {
             color: #3cbff3;
@@ -846,12 +843,12 @@
         }
         /* Borders */
         .highlight, .eBody, .blank, .hBorder {
-            border-left: 4px solid #b3bdca;
-            border-right: 4px solid #b3bdca;
+            border-left: 1px solid #b3bdca;
+            border-right: 1px solid #b3bdca;
         }
         .highlight, .eBody, .blank, .hBorder {
-            border-left: 4px solid #b3bdca;
-            border-right: 4px solid #b3bdca;
+            border-left: 1px solid #b3bdca;
+            border-right: 1px solid #b3bdca;
         }
         .hBorder {
             background: #b3bdca;
@@ -909,8 +906,8 @@
             }
             td[class=btnMain] a {
                 display: block !important;
-                padding: 10px 18px !important;
-                line-height: 26px !important;
+                padding: 5px 10px !important;
+                line-height: 18px !important;
             }
             table[class=tag] td {
                 border-collapse: separate !important;
@@ -1197,8 +1194,6 @@
             }
         }
     </style>
-    <style type="text/css">
-    </style>
     
     <?php
         $resetMargin      = 'margin-top: 0;margin-left: 0;margin-right: 0;margin-bottom: 0;';
@@ -1213,193 +1208,34 @@
 
 <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;{{ $resetMargin }}{{ $resetPadding }}height: 100%;width: 100%;min-height: 1000px;background-color: #ffffff;">
 <div class="emailSummary" style="mso-hide: all;display: none !important;font-size: 0 !important;max-height: 0 !important;line-height: 0 !important;padding: 0 !important;overflow: hidden !important;float: none !important;width: 0 !important;height: 0 !important;">
-    Short teaser of your email's content for preview area.
+    {!! $title !!}
 </div>
 <table id="emailBody" width="100%" border="0" cellspacing="0" cellpadding="0" style="{{ $resetMargin }}{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;height: 100%;width: 100%;min-height: 1000px;background-color: #ffffff;">
     <tr>
-        <td align="center" valign="top" class="emailBodyCell" style="{{ $resetMargin }}padding-top: 32px;padding-bottom: 32px;padding-left: 16px;padding-right: 16px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 100%;width: 100%;min-height: 1000px;background-color: #ffffff;">
+        <td align="center" valign="top" class="emailBodyCell" style="{{ $resetMargin }}padding-top: 16px;padding-bottom: 16px;padding-left: 16px;padding-right: 16px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 100%;width: 100%;min-height: 1000px;background-color: #ffffff;">
             <table width="544" border="0" cellpadding="0" cellspacing="0" class="eBox" style="margin-top: 0;margin-left: auto;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;width: 544px;">
                 <tr>
-                    <td class="eHeader" style="{{ $resetMargin }}padding-top: 16px;padding-bottom: 16px;padding-left: 16px;padding-right: 16px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;width: 512px;border-left: 4px solid #ffffff;border-right: 4px solid #ffffff;"><table width="100%" border="0" cellpadding="0" cellspacing="0" style="{{ $resetMargin }}{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;">
-                            <tr>
-                                <!-- start .eHeaderLogo-->
-                                <td class="eHeaderLogo" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 48px;text-align: left;font-size: 0 !important;font-weight: bold;color: #465059;">
-                                    <a href="#" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #465059;height: 48px;text-align: left;font-size: 18px;font-weight: bold;line-height: 0;">
-                                        <img class="imageFix" src="images/logo.png" width="200" height="48" alt="SimpleApp" style="{{ $resetMargin }}{{ $resetPadding }}height: auto;width: auto;line-height: 100%;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;vertical-align: top;">
-                                    </a>
-                                </td>
-                                <!-- end .eHeaderLogo-->
-                                <td class="eHeaderOptions" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 48px;text-align: right;vertical-align: top;font-size: 0 !important;"><table border="0" cellpadding="0" cellspacing="0" class="optionsButton" align="right" style="margin-top: 0;margin-left: auto;margin-right: 0;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;width: 152px;text-align: left;">
-                                        <tr>
-                                            <td align="left" valign="top" class="btnLfTp" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;background-color: #f6f6f7;line-height: 100%;width: 4px;height: 5px;text-align: left;vertical-align: top;font-size: 0 !important;">
-                                                <img src="images/opBtn_lftp.png" width="4" height="4" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}height: 4px;width: 4px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                            $emptyCell
-                                            $emptyCellMobile
-                                            <td width="4" height="8" align="right" valign="top" class="btnRgTp" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;background-color: #f6f6f7;line-height: 100%;width: 4px;height: 5px;text-align: right;vertical-align: top;font-size: 0 !important;">
-                                                <img src="images/opBtn_rgtp.png" width="4" height="4" style="margin-top: 0;margin-left: auto;margin-right: 0;margin-bottom: 0;{{ $resetPadding }}height: 4px;width: 4px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            $emptyCell
-                                            <td class="btnIcon" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;background-color: #f6f6f7;width: 20px;height: 16px;text-align: center;vertical-align: middle;">
-                                                <a href="#" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #235daa;margin-top: auto;margin-left: auto;margin-right: auto;margin-bottom: auto;">
-                                                    <img src="images/sub_options.png" width="16" height="16" alt="Options" style="margin-top: auto;margin-left: auto;margin-right: auto;margin-bottom: auto;{{ $resetPadding }}height: 16px;width: 16px;line-height: 100%;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;">
-                                                </a>
-                                            </td>
-                                            <td class="btnMain mobileHide" style="{{ $resetMargin }}padding-top: 0;padding-bottom: 0;padding-left: 6px;padding-right: 2px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;background-color: #f6f6f7;height: 16px;font-size: 18px;line-height: 16px;mso-line-height-rule: exactly;text-align: left;vertical-align: middle;">
-                                                <a href="#" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #acafb3;font-size: 12px;">
-                                                    <span style="text-decoration: none;color: #acafb3;font-size: 12px;">
-                                                        Notification Options
-                                                    </span>
-                                                </a>
-                                            </td>
-                                            $emptyCell
-                                        </tr>
-                                        <tr>
-                                            <td align="left" valign="bottom" class="btnLfBt" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;background-color: #f6f6f7;line-height: 100%;width: 4px;height: 5px;text-align: left;vertical-align: bottom;font-size: 0 !important;">
-                                                <img src="images/opBtn_lfbt.png" width="4" height="4" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}height: 4px;width: 4px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                            $emptyCell
-                                            $emptyCellMobile
-                                            <td align="right" valign="bottom" class="btnRgBt" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;background-color: #f6f6f7;line-height: 100%;width: 4px;height: 5px;text-align: right;vertical-align: bottom;font-size: 0 !important;">
-                                                <img src="images/opBtn_rgbt.png" width="4" height="4" style="margin-top: 0;margin-left: auto;margin-right: 0;margin-bottom: 0;{{ $resetPadding }}height: 4px;width: 4px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                        </tr>
-                                    </table></td>
-                                <!-- end .eHeaderOptions-->
-                            </tr>
-                        </table></td>
+                    <td class="eHeader" style="{{ $resetMargin }}padding-top: 6px;padding-bottom: 6px;padding-left: 0px;padding-right: 0px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;width: 512px;border-left: 4px solid #ffffff;border-right: 4px solid #ffffff;">
+                    </td>
                 </tr>
+                <tr><td class="emptyCell hBorder" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 1px;line-height: 0 !important;background: #b3bdca;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;font-size: 0 !important;">&nbsp;</td></tr>
                 <tr>
-                    <td class="emptyCell hBorder" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 4px;line-height: 0 !important;background: #b3bdca;border-left: 4px solid #b3bdca;border-right: 4px solid #b3bdca;font-size: 0 !important;">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="highlight invoiceHead alignLeft" style="{{ $resetMargin }}padding-top: 12px;padding-bottom: 0;padding-left: 12px;padding-right: 12px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;width: 512px;font-size: 12px;color: #a1a2a5;background-color: #f6f6f7;border-left: 4px solid #b3bdca;border-right: 4px solid #b3bdca;">
-                        <h4 style="margin-top: 0;margin-left: 0;margin-right: 0;margin-bottom: 5px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;color: #54565c;">
-                            Invoice #051 <span style="font-size: 12px;font-weight: normal;color: #a1a2a5;">Mar 15 2014</span>
-                        </h4>
+                    <td class="highlight invoiceHead alignLeft" style="{{ $resetMargin }}padding-top: 6px;padding-bottom: 6px;padding-left: 12px;padding-right: 12px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;width: 512px;font-size: 12px;color: #a1a2a5;background-color: #ffffff;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;">
+
                         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;">
                             <tr>
-                                <td class="width184 pdRg16" style="{{ $resetMargin }}padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 16px;{{ $misc }}width: 184px;font-size: 12px;color: #a1a2a5;"><table border="0" cellpadding="0" cellspacing="0" class="tag" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;">
-                                        <tr>
-                                            <td width="2" height="2" align="left" valign="top" class="btnLfTp" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: top;">
-                                                <img src="images/tag_lftp.png" width="2" height="2" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                            <td width="4" height="8" align="right" valign="top" class="btnRgTp" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: top;">
-                                                <img src="images/tag_rgtp.png" width="2" height="2" style="margin-top: 0;margin-left: auto;margin-right: 0;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                            <td align="left" valign="middle" class="tagName" style="{{ $resetMargin }}padding-top: 2px;padding-bottom: 2px;padding-left: 4px;padding-right: 4px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 11px;color: #ffffff;background-color: #3cbff3;text-transform: uppercase;white-space: nowrap;">
-                                                Client
-                                            </td>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" valign="bottom" class="btnLfBt" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: bottom;">
-                                                <img src="images/tag_lfbt.png" width="2" height="2" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                            <td align="right" valign="bottom" class="btnRgBt" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: bottom;">
-                                                <img src="images/tag_rgbt.png" width="2" height="2" style="margin-top: 0;margin-left: auto;margin-right: 0;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            $tagReset
-                                            $tagReset
-                                            $tagReset
-                                        </tr>
-                                    </table>
-                                    <p style="margin-top: 0;margin-left: 0;margin-right: 0;margin-bottom: 24px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 12px;line-height: 19px;text-align: left;color: #a1a2a5;"><span class="ihBlack" style="color: #465059;">Connie S. Smythe</span><br>
-                                        Eisner Food Store<br>
-                                        753 Lakeland Terrace<br>
-                                        Southfield, MI 48075<br>
-                                        USA</p></td>
-                                <td class="width312" style="{{ $resetMargin }}{{ $resetPadding }}{{ $misc }}width: 312px;font-size: 12px;color: #a1a2a5;"><table border="0" cellpadding="0" cellspacing="0" class="tag" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;">
-                                        <tr>
-                                            <td width="2" height="2" align="left" valign="top" class="btnLfTp" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: top;">
-                                                <img src="images/tag_lftp.png" width="2" height="2" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                            <td width="4" height="8" align="right" valign="top" class="btnRgTp" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: top;">
-                                                <img src="images/tag_rgtp.png" width="2" height="2" style="margin-top: 0;margin-left: auto;margin-right: 0;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                            <td align="left" valign="middle" class="tagName" style="{{ $resetMargin }}padding-top: 2px;padding-bottom: 2px;padding-left: 4px;padding-right: 4px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 11px;color: #ffffff;background-color: #3cbff3;text-transform: uppercase;white-space: nowrap;">
-                                                Please send paymen to
-                                            </td>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" valign="bottom" class="btnLfBt" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: bottom;">
-                                                <img src="images/tag_lfbt.png" width="2" height="2" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                            <td class="emptyCell" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 0 !important;">&nbsp;</td>
-                                            <td align="right" valign="bottom" class="btnRgBt" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;font-size: 0 !important;color: #a1a2a5;background-color: #3cbff3;line-height: 100%;width: 2px;height: 2px;vertical-align: bottom;">
-                                                <img src="images/tag_rgbt.png" width="2" height="2" style="margin-top: 0;margin-left: auto;margin-right: 0;margin-bottom: 0;{{ $resetPadding }}height: 2px;width: 2px;line-height: 0 !important;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;font-size: 0 !important;">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            $tagReset
-                                            $tagReset
-                                            $tagReset
-                                        </tr>
-                                    </table>
-                                    <table class="invoiceList" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;">
-                                        <tr>
-                                            <td class="width116" style="{{ $resetMargin }}{{ $resetPadding }}{{ $misc }}width: 116px;font-size: 12px;line-height: 19px;color: #a1a2a5;">
-                                                <span class="ihBlack" style="color: #465059;">
-                                                    V.A.T. Reg #
-                                                </span>
-                                            </td>
-                                            <td style="{{ $resetMargin }}{{ $resetPadding }}{{ $borderCell }}">
-                                                123456
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="width116" style="{{ $resetMargin }}{{ $resetPadding }}{{ $misc }}width: 116px;font-size: 12px;line-height: 19px;color: #a1a2a5;">
-                                                <span class="ihBlack" style="color: #465059;">Account Name </span>
-                                            </td>
-                                            <td style="{{ $resetMargin }}{{ $resetPadding }}{{ $borderCell }}">
-                                                SimpleApp Ltd.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="width116" style="{{ $resetMargin }}{{ $resetPadding }}{{ $misc }}width: 116px;font-size: 12px;line-height: 19px;color: #a1a2a5;">
-                                                <span class="ihBlack" style="color: #465059;">Account # </span>
-                                            </td>
-                                            <td style="{{ $resetMargin }}{{ $resetPadding }}{{ $borderCell }}">
-                                                123456789
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="width116" style="{{ $resetMargin }}{{ $resetPadding }}{{ $misc }}width: 116px;font-size: 12px;line-height: 19px;color: #a1a2a5;">
-                                                <span class="ihBlack" style="color: #465059;">IBAN </span>
-                                            </td>
-                                            <td style="{{ $resetMargin }}{{ $resetPadding }}{{ $borderCell }}">
-                                                US89370400440532013000
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="width116" style="{{ $resetMargin }}{{ $resetPadding }}{{ $misc }}width: 116px;font-size: 12px;line-height: 19px;color: #a1a2a5;">
-                                                <span class="ihBlack" style="color: #465059;">SWIFT</span>
-                                            </td>
-                                            <td style="{{ $resetMargin }}{{ $resetPadding }}{{ $borderCell }}">
-                                                XETYUS66
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <p style="margin-top: 0;margin-left: 0;margin-right: 0;margin-bottom: 24px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 12px;line-height: 19px;text-align: left;color: #a1a2a5;">
-                                        4170 Haymond St., Mcdermitt, PA 18503 USA
-                                    </p>
+                                 <td width="30%">
+                                     <a href="{{ url('/') }}" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #465059;height: 85px;text-align: left;font-size: 18px;font-weight: bold;line-height: 0;">
+                                         <img class="imageFix" src="emails/logos/{{ $logo }}" alt="Faculté de droit" style="{{ $resetMargin }}{{ $resetPadding }}outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;vertical-align: top;height: 85px;">
+                                     </a>
+                                 </td>
+                                <td width="70%">
+                                    <h1>Commande du {{ $date }}</h1>
+                                    <h3 style="color: #838383;">Merci beaucoup pour votre commande.</h3>
                                 </td>
                             </tr>
                         </table>
+
                     </td>
                     <!-- end .highlight-->
                 </tr>
@@ -1409,18 +1245,22 @@
                 <!-- Fin contenu -->
 
                 <tr>
-                    <td class="emptyCell hBorder" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 4px;line-height: 0 !important;background: #b3bdca;border-left: 4px solid #b3bdca;border-right: 4px solid #b3bdca;font-size: 0 !important;">&nbsp;</td>
+                    <td class="emptyCell hBorder" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 1px;line-height: 0 !important;background: #b3bdca;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;font-size: 0 !important;">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="eFooter" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 0;padding-left: 0;padding-right: 0;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: center;font-size: 12px;line-height: 21px;width: 544px;color: #b2b2b2;border-left: 4px solid #ffffff;border-right: 4px solid #ffffff;">
-                        © 2015 SimpleApp. All Rights Reserved.
-                        <br>
-                        <a href="#" class="highFix" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #b2b2b2;cursor: pointer;">
-                            <span style="text-decoration: none;color: #b2b2b2;cursor: pointer;">
-                                4170 Haymond St. • Mcdermitt • PA 18503 USA
+                    <td class="eFooter" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 0;padding-left: 0;padding-right: 0;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: center;font-size: 12px;line-height: 21px;width: 544px;color: #b2b2b2;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;">
+                        © {{ date('Y') }} Secrétariat - Formation
+                        <br>Avenue du 1er-Mars 26, CH-2000 Neuchâtel
+                        <br> Telephone: +41 32 / 718 12 22<br>
+                        <a href="#" class="highFix" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #b2b2b2;cursor: pointer;padding-bottom: ">
+                            <span style="text-decoration: none;color: #7a7a7a;cursor: pointer;">
+                                droit.formation@unine.ch
                             </span>
                         </a>
                     </td>
+                </tr>
+                <tr>
+                    <td class="emptyCell hBorder" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 1px;line-height: 0 !important;background: #b3bdca;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;font-size: 0 !important;">&nbsp;</td>
                 </tr>
             </table>
 

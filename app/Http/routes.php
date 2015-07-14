@@ -61,6 +61,34 @@ Route::get('cartworker', function()
 
 });
 
+Route::get('notification', function()
+{
+    setlocale(LC_ALL, 'fr_FR.UTF-8');
+    $date   = \Carbon\Carbon::now()->formatLocalized('%d %B %Y');
+    $title  = 'Votre commande sur publications-droit.ch';
+    $logo   = 'facdroit.png';
+    $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+
+    $order = $orders->find(7);
+    $order->load('products','user','shipping','payement');
+
+    $duDate = $order->created_at->addDays(30)->formatLocalized('%d %B %Y');
+
+    $products = $order->products->groupBy('id');
+
+    $data = [
+        'title'     => $title,
+        'logo'      => $logo,
+        'order'     => $order,
+        'products'  => $products,
+        'date'      => $date,
+        'duDate'    => $duDate
+    ];
+
+    return View::make('emails.shop.confirmation', $data);
+
+});
+
 
 Route::get('factory', function()
 {

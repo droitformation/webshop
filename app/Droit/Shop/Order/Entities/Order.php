@@ -33,9 +33,12 @@ class Order extends Model{
 
     public function getTotalWithShippingAttribute()
     {
+        // formatter
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        // Load relations
         $this->load('shipping');
 
-        $money = new \App\Droit\Shop\Product\Entities\Money;
         $total = $this->amount + $this->shipping->price;
         $price = $total / 100;
 
