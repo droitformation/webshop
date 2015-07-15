@@ -44,7 +44,7 @@
         @include('partials.header')
         @include('partials.message')
 
-        @if(!Cart::content()->isEmpty() && !Request::is('checkout/*'))
+        @if(!Cart::content()->isEmpty() && (Request::is('/') || Request::is('product/*')))
             <div class="row">
                 <div class="col-md-12">
                     <a class="btn btn-xl btn-info" data-toggle="collapse" href="#collapseCart" href="#"><i class="glyphicon glyphicon-shopping-cart"></i></a>

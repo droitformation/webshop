@@ -60,66 +60,59 @@
                 </tr>
             </tfoot>
         </table>
-        {{--
-              <div class="toggle-radio pull-right">
-               <input type="radio" name="ab" id="a" /><label for="a">
-                      Par carte de crédit<br/>
-                      <img src="{{ asset('images/creditcards.png') }}" alt="cartes de crédit">
-                  </label>
-                  <input type="radio" name="facture" id="b" checked /><label for="b">
-                      Sur facture<br/>
-                      <small>Vous recevrez une facture accompagnant votre livraison</small>
-                  </label>
-              </div>
-      --}}
+
+        <p class="text-right"><label><input id="termsAndConditions" type="checkbox"> &nbsp;J'ai lu <a href="#">les termes et conditions générales</a></label></p>
+
+        <div class="toggle-radio pull-right">
+            @foreach($payments as $payment)
+            <input type="radio" class="paymentType" autocomplete=off name="payement_id" {{ ($payment->id == 1  ? 'checked': '') }} id="{{ $payment->slug }}" value="{{ $payment->id }}" />
+                <label for="{{ $payment->slug }}">
+                    {{ $payment->title }}<br/>
+                  <img src="{{ asset('images/'.$payment->image.'') }}" alt="{{ $payment->title }}">
+                    <small>{{ $payment->description }}</small>
+              </label>
+            @endforeach
+        </div>
 
     </div>
 </div>
 @endif
 
-<div class="row">
-    <div class="col-md-6">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            Stripe
-        </button>
 
-        <!-- Modal -->
-        <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Payer</h4>
-                    </div>
-                    <div class="modal-body">
-                        @include('shop.gateways.stripe')
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    </div>
-                </div>
+<!-- Modal -->
+<div class="modal fade " id="payment-stripe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Payer</h4>
             </div>
-        </div>
-
-    </div>
-    <div class="col-md-6">
-        <div class="checkbox pull-right">
-            <p class="text-info"><i class="glyphicon glyphicon-list-alt"></i> &nbsp;Vous recevrez une facture accompagnant votre livraison</p>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <label>
-                        <input id="termsAndConditions" type="checkbox"> J'a lu les <a href="#">termes et conditions générales</a>
-                    </label>
-                </div>
+            <div class="modal-body">
+                @include('shop.gateways.stripe')
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>
 </div>
 
+
 <ul class="pager">
     <li class="previous"><a href="{{ url('checkout/resume') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
-    <li class="next next-commander"><a class="doAction" data-checked="true" data-what="envoyer" data-action="la commande" href="{{ url('checkout/send') }}">Envoyer la commande &nbsp;<span class="glyphicon glyphicon-ok"></span></a></li>
+    <li class="next next-commander">
+
+        <a id="btn-invoice" class="doAction btn-commande" data-checked="true" data-what="envoyer" data-action="la commande" href="{{ url('checkout/send') }}">
+            Envoyer la commande &nbsp;
+            <span class="glyphicon glyphicon-ok"></span>
+        </a>
+
+        <a id="btn-stripe" style="display: none;" class="btn-commande" data-toggle="modal" data-target="#payment-stripe">
+            Payer la commande &nbsp;
+            <span class="glyphicon glyphicon-ok"></span>
+        </a>
+
+    </li>
 </ul>
 
 @stop

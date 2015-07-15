@@ -12,8 +12,9 @@
 */
 
 Route::get('/', 'ProductController@index');
-Route::resource('product', 'ProductController');
 
+Route::resource('product', 'ProductController');
+Route::resource('colloque', 'ColloqueController');
 Route::get('checkout/resume', 'CheckoutController@resume');
 Route::get('checkout/confirm', 'CheckoutController@confirm');
 Route::match(['get', 'post'],'checkout/send', 'CheckoutController@send');
@@ -55,14 +56,17 @@ Route::get('cartworker', function()
 
     $pdf    = new App\Droit\Generate\Pdf\PdfGenerator( $order,$user );
 
-    $order_no = $order->find(6);
-    //return $pdf->bvEvent(6,true);
+    $order_no = $order->find(21);
+    $create = new App\Jobs\CreateOrderInvoice($order_no);
+
+    //$order_no = $order->find(6);
+    //return $pdf->factureOrder(6,true);
 
     echo '<pre>';
-    //print_r($facture);
+    print_r($create->handle());
     echo '</pre>';
 
-    event(new App\Events\OrderWasPlaced($order_no));
+    //event(new App\Events\OrderWasPlaced($order_no));
 
 });
 

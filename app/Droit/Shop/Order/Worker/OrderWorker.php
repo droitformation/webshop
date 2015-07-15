@@ -6,8 +6,12 @@ use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Cart\Worker\CartWorker;
 use App\Droit\Shop\Cart\Repo\CartInterface;
 use App\Droit\User\Repo\UserInterface;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Jobs\CreateOrderInvoice;
 
 class OrderWorker{
+
+    use DispatchesJobs;
 
     protected $order;
     protected $cart;
@@ -43,8 +47,10 @@ class OrderWorker{
         // All products for order
         $order->products()->attach($this->productIdFromCart());
 
-        // Generate invoice
-        $this->generator->factureOrder($order->id);
+        // Create invoice for order
+        $job = (new CreateOrderInvoice($order));
+
+        $this->dispatch($job);
 
         return $order;
 

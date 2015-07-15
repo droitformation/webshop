@@ -177,73 +177,75 @@
         </table>
     </div>
 
-    <?php
-        if($products->count() > 7){
-            echo '<p style="page-break-after: always;"></p>';
-        }
+    <!-- BV id payment type = 1 -->
+    <?php if($order->payement_id == 1){ ?>
+        <?php
+            if($products->count() > 7){
+                echo '<p style="page-break-after: always;"></p>';
+            }
 
-        list($francs,$centimes) = $order->price_total_explode;
-    ?>
+            list($francs,$centimes) = $order->price_total_explode;
+        ?>
 
-    <table id="bv-table">
-        <tr align="top" valign="top">
-            <td width="60mm" align="top" valign="top">
-                <table id="recu" valign="top">
-                    <tr>
-                        <td align="top" valign="center" height="43mm">
-                            <?php
-                                if(!empty($versement)){
-                                    echo '<ul class="versement">';
-                                    foreach($versement as $line){
-                                        echo '<li>'.$line.'</li>';
+        <table id="bv-table">
+            <tr align="top" valign="top">
+                <td width="60mm" align="top" valign="top">
+                    <table id="recu" valign="top">
+                        <tr>
+                            <td align="top" valign="center" height="43mm">
+                                <?php
+                                    if(!empty($versement)){
+                                        echo '<ul class="versement">';
+                                        foreach($versement as $line){
+                                            echo '<li>'.$line.'</li>';
+                                        }
+                                        echo '</ul>';
                                     }
-                                    echo '</ul>';
-                                }
-                            ?>
-                        </td>
-                    </tr>
-                    <tr><td align="top" valign="center" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
-                    <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
-                </table>
-            </td>
-            <td width="62mm" align="top" valign="top">
-                <table id="compte" valign="top">
-                    <tr>
-                        <td align="top" valign="center" height="43mm">
-                            <?php
-                                if(!empty($versement)){
-                                    echo '<ul class="versement">';
-                                    foreach($versement as $line){
-                                        echo '<li>'.$line.'</li>';
+                                ?>
+                            </td>
+                        </tr>
+                        <tr><td align="top" valign="center" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
+                        <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
+                    </table>
+                </td>
+                <td width="62mm" align="top" valign="top">
+                    <table id="compte" valign="top">
+                        <tr>
+                            <td align="top" valign="center" height="43mm">
+                                <?php
+                                    if(!empty($versement)){
+                                        echo '<ul class="versement">';
+                                        foreach($versement as $line){
+                                            echo '<li>'.$line.'</li>';
+                                        }
+                                        echo '</ul>';
                                     }
+                                ?>
+                            </td>
+                        </tr>
+                        <tr><td align="top" valign="top" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
+                        <tr><td align="top" valign="top" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
+                    </table>
+                </td>
+                <td width="88mm" align="top" valign="top">
+                    <table id="versement" valign="top">
+                        <tr>
+                            <td align="top" valign="top" width="64%" height="20mm">
+                                <?php
+                                    echo '<ul class="versement">';
+                                        echo '<li>'.$motif['centre'].'</li>';
+                                        echo '<li>'.$motif['texte'].'</li>';
+                                        echo '<li>Facture N° '.$order->order_no.'</li>';
                                     echo '</ul>';
-                                }
-                            ?>
-                        </td>
-                    </tr>
-                    <tr><td align="top" valign="top" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
-                    <tr><td align="top" valign="top" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
-                </table>
-            </td>
-            <td width="88mm" align="top" valign="top">
-                <table id="versement" valign="top">
-                    <tr>
-                        <td align="top" valign="top" width="64%" height="20mm">
-                            <?php
-                                echo '<ul class="versement">';
-                                    echo '<li>'.$motif['centre'].'</li>';
-                                    echo '<li>'.$motif['texte'].'</li>';
-                                    echo '<li>Facture N° '.$order->order_no.'</li>';
-                                echo '</ul>';
-                            ?>
-                        </td>
-                        <td align="top" valign="top" width="32%" height="20mm"></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-
+                                ?>
+                            </td>
+                            <td align="top" valign="top" width="32%" height="20mm"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    <?php } ?>
 
 </body>
 </html>

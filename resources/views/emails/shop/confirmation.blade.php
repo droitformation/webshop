@@ -80,7 +80,9 @@
                 <tr>
                     <td colspan="2" class="eTotal alignRight" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width: 312px;border-bottom: 1px solid #ebebeb;font-size: 14px;line-height: 19px;color: #000;background-color: #f6f6f7;">
                         <strong>Total</strong><br/>
-                        <small>payable jusqu'au {{ $duDate }}</small>
+                        @if($order->payement_id == 1)
+                            <small>payable jusqu'au {{ $duDate }}</small>
+                        @endif
                     </td>
                     <td class="eTotal alignRight" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width:124px;border-bottom: 1px solid #ebebeb;font-size: 14px;line-height: 19px;color: #54565c;background-color: #f6f6f7;">
                         <span class="amount" style="color: #000000;font-size: 16px;font-weight: bold;">{{ $order->total_with_shipping }} CHF</span>

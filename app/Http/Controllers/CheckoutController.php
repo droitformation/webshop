@@ -8,7 +8,7 @@ use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Shop\Cart\Worker\CartWorker;
 use App\Droit\Shop\Order\Worker\OrderWorker;
-
+use App\Droit\Shop\Payment\Repo\PaymentInterface;
 use App\Events\OrderWasPlaced;
 use Illuminate\Http\Request;
 
@@ -20,8 +20,9 @@ class CheckoutController extends Controller {
     protected $profession;
     protected $checkout;
     protected $order;
+    protected $payment;
 
-    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorker $checkout, OrderWorker $order)
+    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorker $checkout, OrderWorker $order, PaymentInterface $payment)
     {
         $this->middleware('auth');
         $this->middleware('cart');
@@ -32,6 +33,7 @@ class CheckoutController extends Controller {
         $this->profession = $profession;
         $this->checkout   = $checkout;
         $this->order      = $order;
+        $this->payment    = $payment;
     }
 
     /**
@@ -62,10 +64,11 @@ class CheckoutController extends Controller {
         $user      = $this->user->find(\Auth::user()->id);
         $shipping  = $this->checkout->totalShipping();
         $total     = $this->checkout->totalCartWithShipping();
+        $payments  = $this->payment->getAll();
 
         $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
 
-        return view('shop.checkout.confirm')->with(compact('user','shipping','coupon','total'));
+        return view('shop.checkout.confirm')->with(compact('user','shipping','coupon','total','payments'));
     }
 
     /**
@@ -78,15 +81,19 @@ class CheckoutController extends Controller {
         $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
         $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
 
-        $order = $this->order->make($shipping,$coupon);
+        $order    = $this->order->make($shipping,$coupon);
 
-        // Payement
+        $order->load('user');
+
+        // Payment
         if($request->input('stripeToken'))
         {
-            $this->viaStripe($request->input('stripeToken'),$order);
-            $order->payed_at    = \Carbon\Carbon::now();
-            $order->status      = 'payed';
-            $order->payement_id = 2;
+            $charge = $this->viaStripe($request->input('stripeToken'),$order);
+
+            $order->payed_at       = \Carbon\Carbon::now();
+            $order->transaction_no = $charge->id;
+            $order->status         = 'payed';
+            $order->payement_id    = 2;
             $order->save();
         }
 
@@ -104,12 +111,16 @@ class CheckoutController extends Controller {
 
         // Create the charge on Stripe's servers - this will charge the user's card
         try {
+
             $charge = \Stripe\Charge::create(array(
-                    "amount"      => $order->amount, // amount in cents, again
+                    "amount"      => $order->total_with_shipping * 100, // amount in cents, again
                     "currency"    => "chf",
                     "source"      => $token,
-                    "description" => "Example charge")
+                    "description" => $order->user->email
+                )
             );
+
+            return $charge;
         }
         catch(\Stripe\Error\Card $e)
         {

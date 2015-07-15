@@ -64,6 +64,7 @@ figcaption.sp-quantity{
     background: #41aa2f;
     border: 1px solid #41aa2f;
     color: #fff;
+    cursor: pointer;
 }
 
 .pager li.next-confirm a{
@@ -145,17 +146,23 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 }
 .toggle-radio:not(.old-ie) label {
     background: #f5f5f5;
-    padding: .75em 0;
+    padding: 8px 5px;
     display: block;
     color: #222;
     width: 230px;
-    line-height: 20px;
-    height: 80px;
+    line-height: 18px;
+    height: 130px;
     float: left;
     text-align: center;
     opacity: 0.6;
     border-left: 1px solid #bbb;
 }
+
+.toggle-radio small{
+    line-height: 14px;
+    display: block;
+}
+
 .toggle-radio:not(.old-ie) label small {
     font-weight: normal;
     padding: 5px;
@@ -176,8 +183,8 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
     border: none;
 }
 .toggle-radio:not(.old-ie) [type="radio"]:checked + label {
-    background: #3cb3ff;
-    color: #000;
+    background: #337ab7;
+    color: #fff;
     opacity: 1;
 }
 

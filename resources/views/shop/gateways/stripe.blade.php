@@ -45,10 +45,15 @@
     <span class="payment-errors text-danger"></span>
     <div class="row">
         <div class="col-xs-12">
+            <p class="text-center"><img src="{{ asset('images/creditcards.png') }}" alt="Stripe"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
             <div class="form-group">
-                <label for="cardNumber">CARD NUMBER</label>
+                <label for="cardNumber">Numéro de carte</label>
                 <div class="input-group">
-                    <input  data-stripe="number" type="tel" class="form-control" name="cardNumber" placeholder="Valid Card Number" autocomplete="cc-number" required autofocus/>
+                    <input  data-stripe="number" type="tel" class="form-control" name="cardNumber" placeholder="Numéro valide" autocomplete="cc-number" required autofocus/>
                     <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                 </div>
             </div>
@@ -77,7 +82,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <button class="btn btn-success btn-lg btn-block" type="submit">Submit Payment</button>
+            <button class="btn btn-success btn-sm btn-block" type="submit">Payer</button>
         </div>
     </div>
 

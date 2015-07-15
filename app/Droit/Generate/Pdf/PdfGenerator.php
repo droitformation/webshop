@@ -86,7 +86,7 @@ class PdfGenerator
            return $facture->stream('facture_'.$order->order_no.'.pdf');
         }
 
-        return $facture->save('files/shop/factures/facture_'.$order->order_no.'.pdf');
+        return $facture->save(public_path().'/files/shop/factures/facture_'.$order->order_no.'.pdf');
 
     }
 
