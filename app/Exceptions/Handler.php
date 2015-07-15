@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler {
             return \Redirect::back()->with(array('status' => 'warning' , 'message' => $e->getMessage()));
 
         if ($e instanceof \App\Exceptions\OrderCreationException)
-            return \Redirect::back()->with(array('status' => 'danger' , 'message' => $e->getMessage()));
+            return \Redirect::to('checkout/confirm')->with(array('status' => 'danger' , 'message' => $e->getMessage()));
 
 		return parent::render($request, $e);
 	}

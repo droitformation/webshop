@@ -124,7 +124,7 @@ class CheckoutController extends Controller {
         }
         catch(\Stripe\Error\Card $e)
         {
-            throw new \App\Exceptions\CardDeclined('Carte décliné', $e->getError() );
+            throw new \App\Exceptions\CardDeclined('Carte décliné');
         }
     }
 
