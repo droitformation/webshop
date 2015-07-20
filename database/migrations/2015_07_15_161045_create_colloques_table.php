@@ -15,7 +15,6 @@ class CreateColloquesTable extends Migration
         Schema::create('colloques', function(Blueprint $table) {
 
             $table->increments('id');
-            $table->string('organisateur');
             $table->string('titre');
             $table->string('soustitre')->nullable();
             $table->string('sujet');
@@ -24,10 +23,12 @@ class CreateColloquesTable extends Migration
             $table->date('end_at')->nullable();
             $table->date('registration_at');
             $table->date('active_at')->nullable();
+            $table->integer('organisateur_id');
             $table->integer('location_id');
-            $table->integer('type_id')->nullable();
             $table->integer('compte_id')->nullable();
             $table->enum('visible', ['0','1'])->default(0);
+            $table->tinyInteger('bon')->default(1);
+            $table->tinyInteger('facture')->default(1);
             $table->timestamps();
         });
     }
