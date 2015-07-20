@@ -7,7 +7,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Shop</a></li>
-                    <li class="{{ Request::is('colloque') || Request::is('colloque/*') ? 'active' : '' }}"><a href="/colloques">Colloques</a></li>
+                    <li class="{{ Request::is('colloque') || Request::is('colloque/*') ? 'active' : '' }}"><a href="/colloque">Colloques</a></li>
                 </ul>
                 @if (!Auth::check())
                     <div class="btn-group pull-right">

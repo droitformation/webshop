@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateColloqueOrganisateurPivotTable extends Migration
+class CreateColloqueOptionGroupesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,11 @@ class CreateColloqueOrganisateurPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('colloque_organisateurs', function(Blueprint $table) {
+        Schema::create('colloque_option_groupes', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('colloque_id')->unsigned()->index();
-            $table->integer('organisateur_id')->unsigned()->index();
+            $table->text('text');
+            $table->integer('colloque_id');
+            $table->integer('option_id');
         });
     }
 
@@ -26,6 +27,6 @@ class CreateColloqueOrganisateurPivotTable extends Migration
      */
     public function down()
     {
-        Schema::drop('colloque_organisateurs');
+        Schema::drop('colloque_option_groupes');
     }
 }

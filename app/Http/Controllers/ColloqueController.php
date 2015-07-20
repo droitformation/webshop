@@ -3,12 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class ColloqueController extends Controller
 {
+    protected $colloque;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(ColloqueInterface $colloque)
+    {
+        //$this->middleware('guest');
+        $this->colloque = $colloque;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +29,9 @@ class ColloqueController extends Controller
      */
     public function index()
     {
-        //
+        $colloques = $this->colloque->getAll();
+
+        return view('colloques.index')->with(['colloques' => $colloques]);
     }
 
     /**
@@ -48,7 +63,9 @@ class ColloqueController extends Controller
      */
     public function show($id)
     {
-        //
+        $colloque = $this->colloque->find($id);
+
+        return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
     /**

@@ -15,11 +15,13 @@ class DatabaseSeeder extends Seeder  {
 		Model::unguard();
 
 		// $this->call('UserTableSeeder');
-        $this->call('CantonsTableSeeder');
+/*        $this->call('CantonsTableSeeder');
         $this->call('CivilitesTableSeeder');
         $this->call('PaysTableSeeder');
         $this->call('ProfessionsTableSeeder');
-        $this->call('Adresse_typesTableSeeder');
+        $this->call('Adresse_typesTableSeeder');*/
+        $this->call('OrganisateursTableSeeder');
+        $this->call('ColloqueTableSeeder');
 
 	}
 

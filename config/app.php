@@ -145,6 +145,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
         'App\Providers\ShopServiceProvider',
+        'App\Providers\ColloqueServiceProvider',
         'App\Providers\GenerateServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
         'Barryvdh\DomPDF\ServiceProvider',

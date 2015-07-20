@@ -7,9 +7,26 @@ class ColloqueTableSeeder extends \Illuminate\Database\Seeder  {
 		// Uncomment the below to wipe the table clean before populating
 		DB::table('colloques')->truncate();
 
+        $locations = [
+            [
+                'name'    => 'Aula des Jeunes-Rives',
+                'adresse' => 'Espace Louis-Agassiz 1, Neuchâtel',
+                'url'     => '',
+                'map'     => 'carte.jpg',
+            ]
+        ];
+
+        $comptes = [
+            [
+                'motif'    => '<p>U.01262<br>CEMAJ - 2015</p>',
+                'adresse'  => '<p>Université de Neuchâtel <br /> Service des fonds de tiers <br /> 2000 Neuchâtel</p>',
+                'compte'   => '20-5711-2'
+            ]
+        ];
+
 		$colloques = [
 			[
-                'title'           => 'Curae éuismod quam ultrûcéas',
+                'titre'           => 'Nouveau colloque',
                 'soustitre'       => 'Platea sociosqu potentié proîn',
                 'sujet'           => 'Est-a-dire curabitur lorem fermentum potenti',
                 'remarques'       => 'Frînglilia porttitor curabitur proin est èiam convallis léo tincidunt ût ac métus vestibulum elementum consequat pulvinar.',
@@ -29,5 +46,7 @@ class ColloqueTableSeeder extends \Illuminate\Database\Seeder  {
 		];
 
 		DB::table('colloques')->insert($colloques);
+        DB::table('locations')->insert($locations);
+        DB::table('comptes')->insert($comptes);
 	}
 }

@@ -113,7 +113,7 @@ class PdfGenerator
             'inscription_no' => '64-2015/44'
         ];
 
-        return \PDF::loadView('colloque.templates.bon', $data)->setPaper('a4')->stream('bon.pdf');
+        return \PDF::loadView('colloques.templates.bon', $data)->setPaper('a4')->stream('bon.pdf');
 
     }
 
@@ -144,7 +144,7 @@ class PdfGenerator
             'annexes'        => ['bon' => 'bon de participation à présenter à l\'entrée']
         ];
 
-        return \PDF::loadView('colloque.templates.facture', $data)->setPaper('a4')->stream('bon.pdf');
+        return \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4')->stream('bon.pdf');
 
     }
 
@@ -166,7 +166,7 @@ class PdfGenerator
             'inscription_no' => '64-2015/44',
         ];
 
-        $bv = \PDF::loadView('colloque.templates.bv', $data)->setPaper('a4');
+        $bv = \PDF::loadView('colloques.templates.bv', $data)->setPaper('a4');
 
         if($stream)
         {
