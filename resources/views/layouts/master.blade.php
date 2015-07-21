@@ -10,9 +10,11 @@
     <meta name="token" content="<?php echo csrf_token(); ?>">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
     <script src="<?php echo asset('js/jquery-1.11.3.min.js');?>"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 
     <!-- Checkout Files -->
@@ -24,6 +26,7 @@
 
     <script src="<?php echo asset('js/checkout/classie.js');?>"></script>
     <script src="<?php echo asset('js/checkout/checkout.js');?>"></script>
+    <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
     <script src="<?php echo asset('js/interaction.js');?>"></script>
     <script src="<?php echo asset('js/validation/parsley.js');?>"></script>
     <script src="<?php echo asset('js/validation/fr.js');?>"></script>

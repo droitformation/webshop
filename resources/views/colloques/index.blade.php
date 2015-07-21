@@ -33,8 +33,8 @@
                         </div>
                         <div class="panel-footer">
                             <div class="btn-group" role="group" aria-label="...">
-                                <button type="button" class="btn btn-success">Editer</button>
-                                <button type="button" class="btn btn-info">Inscriptions</button>
+                                <a href="{{ url('colloque/'.$colloque->id) }}" class="btn btn-success">Editer</a>
+                                <a href="{{ url('inscription/colloque/'.$colloque->id) }}" class="btn btn-info">Inscriptions</a>
                             </div>
                         </div>
                     </div>

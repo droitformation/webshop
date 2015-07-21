@@ -44,8 +44,6 @@
 
             var type = $(this).attr('id');
 
-            console.log('payment-'+type);
-
             $('.btn-commande').hide();
             $('#btn-'+type).show();
 
@@ -56,10 +54,8 @@
             if(!acceptTermsAndConditions())
             {
                 $('#payment-stripe').modal('hide');
-
                 return false;
             }
-
         })
 
     });

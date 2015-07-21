@@ -15,6 +15,9 @@ Route::get('/', 'ProductController@index');
 
 Route::resource('product', 'ProductController');
 Route::resource('colloque', 'ColloqueController');
+Route::get('inscription/colloque/{id}', 'InscriptionController@index');
+Route::resource('inscription', 'InscriptionController');
+
 Route::get('checkout/resume', 'CheckoutController@resume');
 Route::get('checkout/confirm', 'CheckoutController@confirm');
 Route::match(['get', 'post'],'checkout/send', 'CheckoutController@send');
@@ -124,6 +127,27 @@ Route::get('factory', function()
         print_r($product);
         echo '</pre>';
     }
+
+});
+
+Route::get('otherfactory', function()
+{
+
+    $users = factory(App\Droit\User\Entities\User::class, 10)->create();
+
+    foreach($users as $user)
+    {
+        $addresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
+            'user_id'    => $user->id,
+            'first_name' => $user->firstName,
+            'last_name'  => $user->lastName,
+            'email'      => $user->email,
+        ]);
+    }
+
+    echo '<pre>';
+    print_r($users);
+    echo '</pre>';exit;
 
 });
 

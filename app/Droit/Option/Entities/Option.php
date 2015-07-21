@@ -10,4 +10,13 @@ class Option extends Model{
 
     public $timestamps = false;
 
+    public function colloque()
+    {
+        return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');
+    }
+
+    public function groupe()
+    {
+        return $this->belongsToMany('App\Droit\Option\Entities\OptionGroupe','colloque_option_users','option_id','groupe_id');
+    }
 }

@@ -1,7 +1,7 @@
 <?php namespace App\Droit\Adresse\Repo;
 
 use App\Droit\Adresse\Repo\AdresseInterface;
-use App\Droit\Adresse\Entities\Adresses as M;
+use App\Droit\Adresse\Entities\Adresse as M;
 
 class AdresseEloquent implements AdresseInterface{
 

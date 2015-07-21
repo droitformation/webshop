@@ -73,7 +73,7 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->app->singleton('App\Droit\Adresse\Repo\AdresseInterface', function()
         {
-            return new \App\Droit\Adresse\Repo\AdresseEloquent(new \App\Droit\Adresse\Entities\Adresses);
+            return new \App\Droit\Adresse\Repo\AdresseEloquent(new \App\Droit\Adresse\Entities\Adresse);
         });
     }
 

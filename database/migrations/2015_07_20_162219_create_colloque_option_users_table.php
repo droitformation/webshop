@@ -15,8 +15,9 @@ class CreateColloqueOptionUsersTable extends Migration
         Schema::create('colloque_option_users', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('inscription_id');
             $table->integer('option_id');
-            $table->integer('groupe_id');
+            $table->integer('groupe_id')->nullable();
             $table->text('reponse');
         });
     }

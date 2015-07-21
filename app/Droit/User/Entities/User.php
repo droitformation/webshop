@@ -77,12 +77,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function adresses()
     {
-        return $this->hasMany('App\Droit\Adresse\Entities\Adresses','user_id', 'id');
+        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id');
     }
 
     public function orders()
     {
         return $this->hasMany('App\Droit\Shop\Order\Entities\Order','user_id', 'id');
     }
+
 
 }

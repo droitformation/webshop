@@ -26,6 +26,7 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerLocationService();
         $this->registerOrganisateurService();
         $this->registerCompteService();
+        $this->registerInscriptionService();
 
 	}
 
@@ -37,6 +38,17 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Colloque\Repo\ColloqueInterface', function()
         {
             return new \App\Droit\Colloque\Repo\ColloqueEloquent(new \App\Droit\Colloque\Entities\Colloque);
+        });
+    }
+
+    /**
+     * Inscription
+     */
+    protected function registerInscriptionService(){
+
+        $this->app->singleton('App\Droit\Inscription\Repo\InscriptionInterface', function()
+        {
+            return new \App\Droit\Inscription\Repo\InscriptionEloquent(new \App\Droit\Inscription\Entities\Inscription);
         });
     }
 

@@ -18,6 +18,7 @@ class CreateColloquesTable extends Migration
             $table->string('titre');
             $table->string('soustitre')->nullable();
             $table->string('sujet');
+            $table->string('url')->nullable();
             $table->text('remarques')->nullable();
             $table->date('start_at');
             $table->date('end_at')->nullable();
