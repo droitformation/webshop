@@ -30,13 +30,13 @@
                 </td>
                 <td align="top" width="40%" valign="top">
                     <?php
-                        $adresse = $user->adresse_facturation;
+                        $adresse = $inscription->user->adresse_facturation;
 
                         if($adresse)
                         {
                             echo '<ul id="user">';
                             echo (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '');
-                            echo '<li>'.$adresse->civilite_title.' '.$user->name.'</li>';
+                            echo '<li>'.$adresse->civilite_title.' '.$inscription->user->name.'</li>';
                             echo '<li>'.$adresse->adresse.'</li>';
                             echo (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '');
                             echo (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '');
@@ -53,20 +53,20 @@
 
     <div class="content">
 
-        <h1 class="title blue">FACTURE <?php echo $inscription_no; ?></h1>
+        <h1 class="title blue">FACTURE <?php echo $inscription->inscription_no; ?></h1>
 
         <table class="content-table content-wide" valign="top">
             <tr valign="top">
                 <td valign="top">
-                    <h2><?php echo $colloque['titre']; ?></h2>
-                    <h3><?php echo $colloque['soustitre']; ?></h3>
+                    <h2><?php echo $inscription->colloque->titre; ?></h2>
+                    <h3><?php echo $inscription->colloque->soustitre; ?></h3>
                 </td>
             </tr>
             <tr><td height="5">&nbsp;</td></tr>
             <tr>
                 <td valign="top">
-                    <h3 class="titre-info"><strong>Date:</strong> <?php echo $colloque['date']; ?></h3>
-                    <h3 class="titre-info"><strong>Lieu:</strong> Aula des Jeunes-Rives, Espace Louis-Agassiz 1, Neuchâtel</h3>
+                    <h3 class="titre-info"><strong>Date:</strong> <?php echo $inscription->colloque->event_date; ?></h3>
+                    <h3 class="titre-info"><strong>Lieu:</strong> <?php echo $inscription->colloque->location->name.', '.$inscription->colloque->location->adresse; ?></h3>
                 </td>
             </tr>
         </table>
@@ -84,7 +84,8 @@
                                 <p>Nous vous confirmons votre participation :</p>
                             </td>
                             <td width="60%" valign="top">
-                                <p><strong><?php echo $colloque['titre']; ?></strong> du <?php echo $colloque['date']; ?></p>
+                                <p><strong><?php echo $inscription->colloque->titre; ?></strong></p>
+                                <p><?php echo $inscription->colloque->event_date; ?></p>
                             </td>
                         </tr>
                         <tr valign="top">
@@ -92,7 +93,7 @@
                                 <p>Le montant de l'inscription est de:</p>
                             </td>
                             <td width="60%" valign="top">
-                                <p><strong><?php echo $price; ?> CHF</strong></p>
+                                <p><strong><?php echo $inscription->price_cents; ?> CHF</strong></p>
                                 <small>(montant non-soumis à la TVA)</small>
                             </td>
                         </tr>
@@ -117,10 +118,10 @@
             <tr valign="top">
                 <td valign="top">
                     <?php
-                    if(!empty($annexes))
-                    {
-                        echo '<p class="red"><strong>Annexe'.(count($annexes) > 1 ? 's' : '').': '.implode(',',$annexes).'</strong></p>';
-                    }
+                        if(!empty($annexes))
+                        {
+                            echo '<p class="red"><strong>Annexe'.(count($annexes) > 1 ? 's' : '').': '.implode(',',$annexes).'</strong></p>';
+                        }
                     ?>
                 </td>
             </tr>

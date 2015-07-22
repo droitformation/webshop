@@ -11,7 +11,7 @@
     <div class="content">
         <table class="content-table">
             <tr>
-                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/'.$logo.''); ?>" alt="Unine logo" /></td>
+                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/'.$inscription->colloque->organisateur->logo.''); ?>" alt="Unine logo" /></td>
             </tr>
             <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
@@ -28,13 +28,13 @@
                 </td>
                 <td align="top" width="40%" valign="top">
                     <?php
-                        $adresse = $user->adresse_facturation;
+                        $adresse = $inscription->user->adresse_facturation;
 
                         if($adresse)
                         {
                             echo '<ul id="user">';
                             echo (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '');
-                            echo '<li>'.$adresse->civilite_title.' '.$user->name.'</li>';
+                            echo '<li>'.$adresse->civilite_title.' '.$inscription->user->name.'</li>';
                             echo '<li>'.$adresse->adresse.'</li>';
                             echo (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '');
                             echo (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '');
@@ -50,36 +50,58 @@
     </div>
 
     <div class="content">
-        <h1 class="title blue">BON DE PARTICIPATION <?php echo $inscription_no; ?></h1>
+        <h1 class="title blue">BON DE PARTICIPATION <?php echo $inscription->inscription_no; ?></h1>
         <p class="red"><small>A présenter lors de votre arrivée</small></p>
 
-        <table class="content-table content-wide push-top" valign="top">
+        <table class="content-table content-wide" valign="top">
             <tr valign="top">
                 <td valign="top">
-                    <p class="organisateur"><strong>Organisé par:</strong> <?php echo $colloque['organisateur']; ?></p>
+                    <p class="organisateur"><strong>Organisé par:</strong> <?php echo $inscription->colloque->organisateur->name; ?></p>
                 </td>
             </tr>
             <tr><td height="5">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top">
-                    <h2><?php echo $colloque['titre']; ?></h2>
-                    <h3><?php echo $colloque['soustitre']; ?></h3>
+                    <h2><?php echo $inscription->colloque->titre; ?></h2>
+                    <h3><?php echo $inscription->colloque->soustitre; ?></h3>
                 </td>
             </tr>
             <tr><td height="5">&nbsp;</td></tr>
             <tr>
                 <td valign="top">
-                    <h3 class="titre-info"><strong>Date:</strong> <?php echo $colloque['date']; ?></h3>
-                    <h3 class="titre-info"><strong>Lieu:</strong> Aula des Jeunes-Rives, Espace Louis-Agassiz 1, Neuchâtel</h3>
+                    <h3 class="titre-info"><strong>Date:</strong> <?php echo $inscription->colloque->event_date; ?></h3>
+                    <h3 class="titre-info"><strong>Lieu:</strong> <?php echo $inscription->colloque->location->name.', '.$inscription->colloque->location->adresse; ?></h3>
                 </td>
             </tr>
             <tr><td height="5">&nbsp;</td></tr>
-            <tr>
-                <td valign="top">
-                    <h4>Choix:</h4>
-                    <p>Je participerai au repas de vendredi midi</p>
-                </td>
-            </tr>
+
+            <?php
+                if(!$inscription->options->isEmpty())
+                {
+                    echo '<tr><td valign="top">';
+                    echo '<h4>Choix:</h4>';
+                    echo '<ul class="options">';
+                    foreach($inscription->options as $options)
+                    {
+                        $options->option->load('groupe');
+                        echo '<li>'.$options->option->title;
+
+                        if($options->option->type == 'choix')
+                        {
+                            echo '<ul>';
+                            foreach($options->option->groupe as $groupe)
+                            {
+                                echo '<li class="blue text-indent">'.$groupe->text.'</li>';
+                            }
+                            echo '<ul>';
+                            echo '</li>';
+                        }
+                    }
+                    echo '<ul>';
+                    echo '</td></tr>';
+                }
+            ?>
+
         </table>
     </div>
 
@@ -88,7 +110,7 @@
             <tr><td height="25">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top" align="center">
-                    <img style="max-width: 120mm" src="<?php echo public_path('files/colloques/cartes/'.$carte.''); ?>" alt="Carte" />
+                    <img style="max-width: 120mm" src="<?php echo public_path('files/colloques/cartes/'.$inscription->colloque->location->map.''); ?>" alt="Carte" />
                 </td>
             </tr>
         </table>

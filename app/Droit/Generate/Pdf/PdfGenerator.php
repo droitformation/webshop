@@ -1,12 +1,12 @@
 <?php namespace App\Droit\Generate\Pdf;
 
 use Carbon\Carbon;
-use App\Droit\Shop\Order\Repo\OrderInterface;
-use App\Droit\User\Repo\UserInterface;
 
 class PdfGenerator
 {
     protected $order;
+    protected $inscription;
+    protected $user;
 
     /**
      * Facture shop
@@ -36,10 +36,11 @@ class PdfGenerator
 
     public $signature = 'Le secrétariat de la Faculté de droit';
 
-    public function __construct(OrderInterface $order, UserInterface $user)
+    public function __construct()
     {
-        $this->order  = $order;
-        $this->user   = $user;
+        $this->order       = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');;
+        $this->user        = \App::make('App\Droit\User\Repo\UserInterface');;
+        $this->inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');;
     }
 
     /*
@@ -81,99 +82,76 @@ class PdfGenerator
 
         $facture = \PDF::loadView('shop.templates.facture', $data)->setPaper('a4');
 
-        if($stream)
-        {
-           return $facture->stream('facture_'.$order->order_no.'.pdf');
-        }
+        $generate = ($stream ? 'stream' : 'save');
 
-        return $facture->save(public_path().'/files/shop/factures/facture_'.$order->order_no.'.pdf');
+        return $facture->$generate(public_path().'/files/shop/factures/facture_'.$order->order_no.'.pdf');
 
     }
 
-    public function bonEvent($inscription_id){
+    public function bonEvent($inscription,$stream = false){
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-        $user = $this->user->find(1);
-        $user->load('adresses');
+        $inscription->options->load('option');
+        $inscription->colloque->load('location','organisateur');
+        $inscription->user->load('adresses');
 
         $data = [
-            'expediteur' => $this->expediteur,
-            'logo'       => 'facdroit.jpg',
-            'carte'      => 'carte.jpg',
-            'colloque'   => [
-                'organisateur' => 'Séminaire sur le droit du bail',
-                'titre'        => 'Convergences et divergences entre le droit de la fonction publique et le droit privé du travail ?',
-                'soustitre'    => 'Conférence-débat et Journée scientifique',
-                'lieu'         => 'Aula des Jeunes-Rives, Espace Louis-Agassiz 1, Neuchâtel',
-                'date'         => $date,
-            ],
-            'user' => $user,
-            'inscription_no' => '64-2015/44'
+            'expediteur'  => $this->expediteur,
+            'inscription' => $inscription,
+            'date'        => $date
         ];
 
-        return \PDF::loadView('colloques.templates.bon', $data)->setPaper('a4')->stream('bon.pdf');
+        $bon = \PDF::loadView('colloques.templates.bon', $data)->setPaper('a4');
+
+        $generate = ($stream ? 'stream' : 'save');
+
+        return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
 
     }
 
-    public function factureEvent($inscription_id){
+    public function factureEvent($inscription,$stream = false){
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-        $user = $this->user->find(1);
-        $user->load('adresses');
+        $inscription->options->load('option');
+        $inscription->colloque->load('location','organisateur');
+        $inscription->user->load('adresses');
 
         $data = [
-            'messages'   => $this->messages,
-            'expediteur' => $this->expediteur,
-            'colloque'   => [
-                'organisateur' => 'Séminaire sur le droit du bail',
-                'titre'        => 'Convergences et divergences entre le droit de la fonction publique et le droit privé du travail ?',
-                'soustitre'    => 'Conférence-débat et Journée scientifique',
-                'lieu'         => 'Aula des Jeunes-Rives, Espace Louis-Agassiz 1, Neuchâtel',
-                'date'         => $date,
-            ],
-            'user'           => $user,
-            'inscription_no' => '64-2015/44',
-            'price'          => '290',
-            'date'           => $date,
-            'signature'      => $this->signature,
-            'tva'            => $this->tva,
-            'annexes'        => ['bon' => 'bon de participation à présenter à l\'entrée']
+            'messages'    => $this->messages,
+            'expediteur'  => $this->expediteur,
+            'inscription' => $inscription,
+            'date'        => $date,
+            'signature'   => $this->signature,
+            'tva'         => $this->tva,
+            'annexes'     => $inscription->annexe
         ];
 
-        return \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4')->stream('bon.pdf');
+        $facture = \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4');
+
+        $generate = ($stream ? 'stream' : 'save');
+
+        return $facture->$generate(public_path().'/files/colloques/factures/facture_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
 
     }
 
 
-    public function bvEvent($inscription_id, $stream = false)
+    public function bvEvent($inscription, $stream = false)
     {
-        $price    = '290.00';
-        $user     = $this->user->find(1);
-        $colloque = 64;
+        $inscription->colloque->load('compte');
 
         $data = [
-            'versement'  => $this->versement,
-            'motif' => [
-                'centre' => 'Conférence-débat et Journée scientifique',
-                'texte'  => '',
-            ],
-            'compte'    => $this->compte,
-            'price'     => $price,
-            'inscription_no' => '64-2015/44',
+            'inscription' => $inscription,
         ];
 
         $bv = \PDF::loadView('colloques.templates.bv', $data)->setPaper('a4');
 
-        if($stream)
-        {
-            return $bv->stream('bv_'.$colloque.'-'.$user->id.'.pdf');
-        }
+        $generate = ($stream ? 'stream' : 'save');
 
-        return $bv->save('files/colloques/factures/bv_'.$colloque.'-'.$user->id.'.pdf');
+        return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
 
     }
 

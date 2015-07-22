@@ -70,8 +70,30 @@
 }
 
 .titre-info strong{
-    width: 50px;
+    width: 40px;
     display: inline-block;
+}
+
+.options{
+    margin-left: 15px;
+    margin-top: 5px;
+    padding-left: 0;
+    list-style-type: square;
+}
+
+.options li{
+    margin-bottom: 5px;
+    list-style-type: square;
+}
+
+.options li ul{
+    list-style: none;
+}
+
+.options li ul li{
+    padding-left: 0px;
+    margin-bottom: 0;
+    list-style: none;
 }
 
 .organisateur{

@@ -23,8 +23,6 @@ class Price extends Model{
         $prix = $this->price_net/100;
         $prix = number_format($prix, 2, '.', ' ');
 
-
-
         return $prix;
     }
 

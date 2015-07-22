@@ -8,7 +8,7 @@
 </head>
 <body style="position: relative;height:297mm;">
 
-    <?php list($francs,$centimes) = explode('.',$price); ?>
+    <?php list($francs,$centimes) = explode('.',$inscription->price_cents); ?>
 
     <table id="bv-table">
         <tr align="top" valign="top">
@@ -17,17 +17,13 @@
                     <tr>
                         <td align="top" valign="center" height="43mm">
                             <?php
-                                if(!empty($versement)){
-                                    echo '<ul class="versement">';
-                                    foreach($versement as $line){
-                                        echo '<li>'.$line.'</li>';
-                                    }
-                                    echo '</ul>';
-                                }
+                                echo '<ul class="versement">';
+                                echo '<li>'.$inscription->colloque->compte->adresse.'</li>';
+                                echo '</ul>';
                             ?>
                         </td>
                     </tr>
-                    <tr><td align="top" valign="center" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
+                    <tr><td align="top" valign="center" height="7.6mm" class="compte"><?php echo $inscription->colloque->compte->compte; ?></td></tr>
                     <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
                 </table>
             </td>
@@ -36,17 +32,13 @@
                     <tr>
                         <td align="top" valign="center" height="43mm">
                             <?php
-                                if(!empty($versement)){
-                                    echo '<ul class="versement">';
-                                    foreach($versement as $line){
-                                        echo '<li>'.$line.'</li>';
-                                    }
-                                    echo '</ul>';
-                                }
+                                echo '<ul class="versement">';
+                                    echo '<li>'.$inscription->colloque->compte->adresse.'</li>';
+                                echo '</ul>';
                             ?>
                         </td>
                     </tr>
-                    <tr><td align="top" valign="top" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
+                    <tr><td align="top" valign="top" height="7.6mm" class="compte"><?php echo $inscription->colloque->compte->compte; ?></td></tr>
                     <tr><td align="top" valign="top" height="6mm" class="price"><span class="francs"><?php echo $francs; ?></span><?php echo $centimes; ?></td></tr>
                 </table>
             </td>
@@ -56,9 +48,8 @@
                         <td align="top" valign="top" width="64%" height="20mm">
                             <?php
                                 echo '<ul class="versement versement-bv">';
-                                    echo '<li>'.$motif['centre'].'</li>';
-                                    echo '<li>'.$motif['texte'].'</li>';
-                                    echo '<li class="inscription_no">N° '.$inscription_no.'</li>';
+                                    echo '<li>'.$inscription->colloque->compte->motif.'</li>';
+                                    echo '<li class="inscription_no">N° '.$inscription->inscription_no.'</li>';
                                 echo '</ul>';
                             ?>
                         </td>

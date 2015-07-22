@@ -41,10 +41,6 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-/*
- * Payement via Paypal
- * */
-
 
 /*
  * Test routes
@@ -56,20 +52,36 @@ Route::get('cartworker', function()
     $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
     $order  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $user   = \App::make('App\Droit\User\Repo\UserInterface');
+    $inscription   = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
-    $pdf    = new App\Droit\Generate\Pdf\PdfGenerator( $order,$user );
 
-    $order_no = $order->find(21);
-    $create = new App\Jobs\CreateOrderInvoice($order_no);
+    $inscrit = $inscription->find(1);
+
+/*    $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+
+    $annexes   = $inscrit->colloque->annexe;
+    // Generate annexes
+    if(!empty($annexes))
+    {
+        foreach($annexes as $annexe)
+        {
+            $doc = $annexe.'Event';
+            $generator->$doc($inscrit);
+        }
+    }*/
+
+    //$pdf    = new App\Droit\Generate\Pdf\PdfGenerator();
+
+    //$order_no = $order->find(21);
+    //$create = new App\Jobs\CreateOrderInvoice($order_no);
 
     //$order_no = $order->find(6);
+    //print_r($create->handle());
     //return $pdf->factureOrder(6,true);
 
-    echo '<pre>';
-    print_r($create->handle());
-    echo '</pre>';
+    //return $pdf->bvEvent($inscrit,true);
 
-    //event(new App\Events\OrderWasPlaced($order_no));
+    event(new App\Events\InscriptionWasRegistered($inscrit));
 
 });
 

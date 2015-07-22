@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider {
             'App\Listeners\EmailPurchaseConfirmation',
             'App\Listeners\NotifyAdminOfPurchase',
         ],
+        'App\Events\InscriptionWasRegistered' => [
+            'App\Listeners\EmailRegisterColloqueConfirmation'
+        ],
 	];
 
 	/**
