@@ -134,7 +134,7 @@ class PdfGenerator
 
         $generate = ($stream ? 'stream' : 'save');
 
-        return $facture->$generate(public_path().'/files/colloques/factures/facture_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+        return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
 
     }
 

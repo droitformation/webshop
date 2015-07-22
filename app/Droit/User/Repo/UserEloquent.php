@@ -19,7 +19,7 @@ class UserEloquent implements UserInterface{
 
     public function find($id){
 
-        return $this->user->with(['adresses','orders'])->findOrFail($id);
+        return $this->user->with(['adresses','orders','inscriptions'])->findOrFail($id);
     }
 
     public function create(array $data){

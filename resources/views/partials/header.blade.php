@@ -22,8 +22,8 @@
                             <a href="#" class="dropdown-toggle btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Mon compte <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('profil') }}">Mes données</a></li>
-                                <li><a href="#">Mes achats</a></li>
-                                <li><a href="#">Mes inscriptions</a></li>
+                                <li><a href="{{ url('profil') }}">Mes achats</a></li>
+                                <li><a href="{{ url('profil') }}">Mes inscriptions</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ url('auth/logout') }}">Déconnexion</a></li>
                             </ul>

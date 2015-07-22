@@ -53,25 +53,30 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
         $title  = 'Votre inscription sur publications-droit.ch';
         $logo   = 'facdroit.png';
 
-        $user = $this->inscription->user;
+        $user    = $this->inscription->user;
+        $annexes = $this->inscription->documents;
 
         $data = [
             'title'       => $title,
             'logo'        => $logo,
-            'inscription' => $this->inscription
+            'concerne'    => 'Inscription',
+            'annexes'     => $this->inscription->colloque->annexe,
+            'inscription' => $this->inscription,
+            'date'        => $date,
         ];
 
-/*        $facture = public_path().'/files/shop/factures/facture_'.$order->order_no.'.pdf';
-        $name    = 'facture_'.$order->order_no.'.pdf';*/
+        $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user,$annexes) {
 
-        $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user) {
             $message->to($user->email, $user->name)->subject('Confirmation d\'inscription');
 
-/*            if($facture)
+            if(!empty($annexes))
             {
-                $message->attach($facture, array('as' => $name, 'mime' => 'application/pdf'));
-            }*/
-
+                foreach($annexes as $annexe)
+                {
+                    $message->attach($annexe['file'], array('as' => $annexe['name'], 'mime' => 'application/pdf'));
+                }
+            }
         });
     }
+
 }

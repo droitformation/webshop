@@ -78,6 +78,17 @@ class ProfileController extends Controller
     }
 
     /**
+     *
+     * @return Response
+     */
+    public function inscription($id)
+    {
+        $user = $this->user->find(\Auth::user()->id);
+
+        return view('users.inscription')->with(compact('user','id'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  int  $id

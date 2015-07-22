@@ -85,5 +85,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('App\Droit\Shop\Order\Entities\Order','user_id', 'id');
     }
 
-
+    public function inscriptions()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription','user_id', 'id');
+    }
 }

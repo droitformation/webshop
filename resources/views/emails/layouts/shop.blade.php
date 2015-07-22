@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width">
     <meta name="format-detection" content="address=no;email=no;telephone=no">
-    <title>Commande #051</title>
+    <title></title>
     <style type="text/css">
         /* Modified:30/10/2014 */
         /* Global Reset */
@@ -1219,21 +1219,26 @@
                 </tr>
                 <tr><td class="emptyCell hBorder" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 1px;line-height: 0 !important;background: #b3bdca;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;font-size: 0 !important;">&nbsp;</td></tr>
                 <tr>
-                    <td class="highlight invoiceHead alignLeft" style="{{ $resetMargin }}padding-top: 6px;padding-bottom: 6px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;width: 512px;font-size: 12px;color: #a1a2a5;background-color: #ffffff;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;">
+                    <td class="highlight invoiceHead alignLeft" style="{{ $resetMargin }}padding-top: 6px;padding-bottom: 6px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: left;width: 512px;font-size: 12px;color: #a1a2a5;background-color: #ffffff;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;border-bottom: 1px solid #b3bdca;">
 
                         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;">
+                            <tr><td colspan="2" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;height:5px;line-height: 0 !important;font-size: 0 !important;">&nbsp;</td></tr>
                             <tr>
-                                <td width="25%" style="background: #b70f1d; text-align: center;" valign="middle" align="center">
+                                <td width="25%" style="text-align: center;" valign="middle" align="center">
                                      <a href="{{ url('/') }}" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #465059;height: 85px;text-align: center;font-size: 18px;font-weight: bold;line-height: 0;">
                                          <img class="imageFix" src="{{ asset('emails/logos/'.$logo) }}" alt="Faculté de droit" style="{{ $resetMargin }}{{ $resetPadding }}outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;vertical-align: top;height: 85px;">
                                      </a>
                                 </td>
-                                <td width="75%" style="background: #b70f1d;" valign="middle" align="center">
-                                    <h1 style="color:#fff; font-weight: normal; text-align: center; text-transform: uppercase;">
-                                        <a style="text-decoration: none; color:#fff;" href="{{ url('/') }}">publications-droit.ch</a>
+                                <td width="5%" style="color:#000;" valign="middle" align="center"></td>
+                                <td width="70%" style="color:#000;" valign="middle" align="center">
+                                    <p style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;height:5px;line-height: 0 !important;font-size: 0 !important;">&nbsp;</p>
+                                    <h1 style="font-weight: bold; text-align: left; text-transform: uppercase;">
+                                        <a style="text-decoration: none; color:#000;" href="{{ url('/') }}">publications-droit.ch</a>
                                     </h1>
-                                </td>
+                                    <h2>{{ $concerne }}</h2>
+                                </td
                             </tr>
+                            <tr><td colspan="2" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;height:5px;line-height: 0 !important;font-size: 0 !important;">&nbsp;</td></tr>
                         </table>
 
                     </td>
@@ -1248,30 +1253,28 @@
                     <td class="emptyCell hBorder" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;height: 1px;line-height: 0 !important;background: #b3bdca;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;font-size: 0 !important;">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="eFooter" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;font-size: 12px;line-height: 21px;width: 544px;color: #b2b2b2;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;">
+                    <td class="eFooter" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;font-size: 12px;line-height: 21px;width: 544px;color: #b2b2b2;border-left: 1px solid #b3bdca;border-right: 1px solid #b3bdca;background: #1a446e;">
 
                         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 0;margin-left: 0;margin-right: auto;margin-bottom: 0;{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;">
                             <tr><td colspan="4" style="{{ $resetPadding }}{{ $resetMargin }} line-height: 10px">&nbsp;</td></tr>
                             <tr>
                                 <td width="10px">&nbsp;</td>
                                 <td width="45%" valign="top" align="left">
-                                    <h3 style="color:#1a446e; margin-bottom: 5px;">Vers mon compte</h3>
+                                    <h3 style="color:#fff; margin-bottom: 5px;">Vers mon compte</h3>
                                     <ul style="{{ $resetMargin }}{{ $resetPadding }}">
-                                        <li style="color: #7a7a7a; list-style: none;"><a href="#">Mes données</a></li>
-                                        <li style="color: #7a7a7a; list-style: none;"><a href="#">Mes achats</a></li>
-                                        <li style="color: #7a7a7a; list-style: none;"><a href="#">Mes inscriptions</a></li>
+                                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="#">Mes données</a></li>
+                                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="#">Mes achats</a></li>
+                                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="#">Mes inscriptions</a></li>
                                     </ul>
                                 </td>
                                 <td width="45%" valign="top" align="right">
-                                    <h3 style="color:#1a446e; margin-bottom: 5px;">Secrétariat - Formation</h3>
-                                    <a href="#" class="highFix" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #b2b2b2;cursor: pointer;padding-bottom: ">
-                                        <span style="text-decoration: none;color: #1a446e;cursor: pointer;">
+                                    <h3 style="color:#fff; margin-bottom: 5px;">Secrétariat - Formation</h3>
+                                    <a href="#" class="highFix" style="{{ $resetPadding }}display: inline-block;text-decoration: underline;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #fff;cursor: pointer;padding-bottom:0; ">
+                                        <span style="text-decoration: none;color: #fff;cursor: pointer;">
                                             droit.formation@unine.ch
                                         </span>
-                                    </a>
-                                    <br>
-                                    <span style="color: #7a7a7a;">Avenue du 1er-Mars 26<br> CH-2000 Neuchâtel<br>Telephone: +41 32 / 718 12 22
-                                    </span><br>
+                                    </a><br>
+                                    <span style="color: #fff;line-height: 18px; display: block;">Avenue du 1er-Mars 26<br> CH-2000 Neuchâtel<br>Telephone: +41 32 / 718 12 22</span>
                                 </td>
                                 <td width="10px">&nbsp;</td>
                             </tr>

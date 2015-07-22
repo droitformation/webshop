@@ -4,12 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>Inscription</h2>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-
+            <p>&nbsp;</p>
             <?php $inscription->options->load('option'); ?>
             <?php $inscription->colloque->load('location','organisateur','compte'); ?>
 
@@ -18,6 +13,12 @@
             <p>{{ $inscription->colloque->event_date }}</p>
             <hr/>
 
+        </div>
+    </div>
+
+    <div class="row inscription">
+        <div class="col-md-6">
+
             <h4>{{ $inscription->user->name }}</h4>
             <p>Inscrit le: {{ $inscription->created_at->format('d/m/Y') }}</p>
 
@@ -25,6 +26,25 @@
             <p><strong>N°:</strong> {{ $inscription->inscription_no }}</p>
             <p><strong>Prix:</strong> {{ $inscription->price_cents }}</p>
 
+            @if($inscription->payed_at)
+                <h1 class="label label-success" style="font-size: 90%;">Payé le {{ $inscription->payed_at->format('d/m/Y') }}</h1>
+            @endif
+
+            <h4>Documents</h4>
+            <div class="btn-group" role="group" aria-label="...">
+                @if(!empty($inscription->documents))
+                    @foreach($inscription->documents as $type => $annexe)
+                        <?php
+                        $path = config('documents.colloque.'.$type.'');
+                        $file = 'files/colloques/'.$type.'/'.$annexe['name'];
+                        echo '<a target="_blank" href="'.$file.'" class="btn btn-default">'.$type.'</a>';
+                        ?>
+                    @endforeach
+                @endif
+            </div>
+
+        </div>
+        <div class="col-md-6">
             <h4>Options</h4>
             @if(!$inscription->options->isEmpty())
                 @foreach($inscription->options as $options)
@@ -42,18 +62,11 @@
             @endif
 
            <?php
-/*         echo '<pre>';
-            print_r($inscription->user);
-            print_r($inscription->colloque);
 
-            //$inscription->options->option->load('groupe');
-            print_r($inscription->options);
-            foreach($inscription->options as $options)
-            {
-                $options->option->load('groupe');
-                print_r($options->option);
-            }
-            echo '</pre>';*/
+/*          echo '<pre>';
+            print_r();
+            print_r($inscription->colloque);*/
+
             ?>
         </div>
     </div>

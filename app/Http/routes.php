@@ -28,6 +28,7 @@ Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
 Route::get('profil', 'ProfileController@index');
 Route::get('profil/orders', 'ProfileController@orders');
 Route::get('profil/colloques', 'ProfileController@colloques');
+Route::get('profil/inscription/{id}', 'ProfileController@inscription');
 
 Route::post('addProduct', 'CartController@addProduct');
 Route::post('removeProduct', 'CartController@removeProduct');
@@ -103,6 +104,7 @@ Route::get('notification', function()
     $data = [
         'title'     => $title,
         'logo'      => $logo,
+        'concerne'  => 'Commande',
         'order'     => $order,
         'products'  => $products,
         'date'      => $date,
@@ -110,6 +112,30 @@ Route::get('notification', function()
     ];
 
     return View::make('emails.shop.confirmation', $data);
+
+});
+
+Route::get('registration', function()
+{
+    setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+    $date   = \Carbon\Carbon::now()->formatLocalized('%d %B %Y');
+    $title  = 'Votre inscription sur publications-droit.ch';
+    $logo   = 'facdroit.png';
+
+    $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $inscrit     = $inscription->find(1);
+
+    $data = [
+        'title'       => $title,
+        'concerne'    => 'Inscription',
+        'logo'        => $logo,
+        'inscription' => $inscrit,
+        'annexes'     => $inscrit->colloque->annexe,
+        'date'        => $date,
+    ];
+
+    return View::make('emails.colloque.confirmation', $data);
 
 });
 

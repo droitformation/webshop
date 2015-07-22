@@ -49,6 +49,7 @@ class SendConfirmationEmail extends Job implements SelfHandling, ShouldQueue
 
         $data = [
             'title'     => $title,
+            'concerne'  => 'Commande',
             'logo'      => $logo,
             'order'     => $order,
             'products'  => $products,

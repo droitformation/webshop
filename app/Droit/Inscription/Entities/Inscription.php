@@ -12,7 +12,7 @@ class Inscription extends Model
 
     protected $table = 'colloque_inscriptions';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at','payed_at'];
 
     protected $fillable = ['colloque_id', 'user_id', 'group_id', 'inscription_no', 'price_id', 'payed_at', 'send_at', 'status'];
 
@@ -30,6 +30,27 @@ class Inscription extends Model
         {
             return ['bon' => 'bon de participation à présenter à l\'entrée'];
         }
+    }
+
+    public function getDocumentsAttribute()
+    {
+        $docs = [];
+
+        if(!empty($this->colloque->annexe))
+        {
+            foreach($this->colloque->annexe as $id => $annexe)
+            {
+                $path = config('documents.colloque.'.$annexe.'');
+
+                $file = public_path().$path.$annexe.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+                $name = $annexe.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+
+                $docs[$annexe]['file'] = $file;
+                $docs[$annexe]['name'] = $name;
+            }
+        }
+
+        return $docs;
     }
 
     public function price()
