@@ -207,6 +207,53 @@ Route::get('otherfactory', function()
 
 });
 
+
+Route::get('convert', function()
+{
+
+    $temp = new \App\Droit\Colloque\Entities\Colloque_temp();
+
+    $colloques = $temp->all();
+
+    foreach($colloques as $colloque)
+    {
+
+        $new  = new \App\Droit\Colloque\Entities\Colloque();
+
+        $new->id              = $colloque->id;
+        $new->titre           = $colloque->titre;
+        $new->soustitre       = $colloque->soustitre;
+        $new->sujet           = $colloque->sujet;
+        $new->start_at        = $colloque->start_at;
+        $new->end_at          = $colloque->end_at;
+        $new->active_at       = $colloque->active_at;
+        $new->registration_at = $colloque->registration_at;
+        $new->remarques       = $colloque->remarques;
+        $new->visible         = $colloque->visible;
+        $new->url             = $colloque->url;
+        $new->compte_id       = $colloque->compte_id;
+
+        if($colloque->typeColloque == 1){
+            $new->bon = 1;
+            $new->facture = 1;
+        }
+
+        if($colloque->typeColloque == 2){
+            $new->bon = 0;
+            $new->facture = 1;
+        }
+
+        if($colloque->typeColloque == 0){
+            $new->bon = 0;
+            $new->facture = 0;
+        }
+
+        $new->save();
+    }
+
+});
+
+
 Route::get('myaddress', function()
 {
     $repo = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
