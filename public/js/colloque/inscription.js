@@ -72,4 +72,5 @@
         $('.dataTables_length select').addClass('form-control');
 
     });
+
 }(window.jQuery);

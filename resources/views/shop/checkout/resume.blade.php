@@ -1,9 +1,9 @@
-@extends('layouts.master')
+@extends('layouts.shop')
 @section('content')
 
 <div class="row">
     <div class="col-md-12">
-        <a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour au shop</a>
+        <a href="{{ url('shop') }}"><span aria-hidden="true">&larr;</span> Retour au shop</a>
         <h2>Resumé de la commande</h2>
     </div>
 </div>
@@ -48,7 +48,7 @@
 
     </div>
     <div class="col-md-3">
-        {!! Form::open(array('url' => 'applyCoupon')) !!}
+        {!! Form::open(array('url' => 'cart/applyCoupon')) !!}
             <div class="form-group">
                 <label for="code">J'ai un rabais</label>
                 <div class="input-group">
@@ -66,7 +66,7 @@
 @include('shop.partials.user-form')
 
 <ul class="pager">
-    <li class="previous"><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
+    <li class="previous"><a href="{{ url('shop') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
     <li class="next next-confirm"><a href="{{ url('checkout/confirm') }}">Finaliser ma commande <span aria-hidden="true">&rarr;</span></a></li>
 </ul>
 

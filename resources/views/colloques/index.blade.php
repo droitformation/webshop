@@ -1,49 +1,115 @@
-@extends('layouts.master')
+@extends('layouts.colloque')
 @section('content')
 
     <div class="row">
         <div class="col-md-12">
             <h2>Colloques</h2>
             <p>&nbsp;</p>
+            <?php
+                $item = $colloques->first();
+            echo '<pre>';
+            print_r($item);
+            echo '</pre>';
+            ?>
         </div>
     </div>
 
-    @if(!$colloques->isEmpty())
-        <?php $colloques = $colloques->chunk(2); ?>
-        @foreach($colloques as $row)
-            <div class="row">
-            @foreach($row as $colloque)
+    <div class="row">
+        <div class="col-md-12">
 
-                <div class="col-md-6 col-xs-12">
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="#" class="thumbnail">
-                                        <img style="width: 80px;" class="media-object" src="{{ asset($colloque->illustration) }}" alt="" />
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">{{ $colloque->titre }}</h4>
-                                    <p>{{ $colloque->soustitre }}</p>
-                                    <p>{{ $colloque->sujet }}</p>
-                                </div>
+            <div class="grid">
+                <div class="grid-sizer"></div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc">
+                            <header>
+                                <span style="width:60px;height: 60px; background: #ddd; float: left; margin-right: 10px;">
+                                     <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
+                                    {{ $item->start_at->formatLocalized('%B') }}
+                                    {{ $item->start_at->format('d') }}
+                                    {{ $item->start_at->format('Y') }}
+                                </span>
+                                <p>{{ $item->titre }}<br/>{{ $item->soustitre }}</p>
+                            </header>
+                            <div class="body">
+                                <address>
+                                    <p><strong>Lieu:</strong></p>
+                                    <p>{{ $item->location->name }}, {{ $item->location->adresse }}</p>
+                                </address>
                             </div>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="btn-group" role="group" aria-label="...">
-                                <a href="{{ url('colloque/'.$colloque->id) }}" class="btn btn-success">Editer</a>
-                                <a href="{{ url('inscription/colloque/'.$colloque->id) }}" class="btn btn-info">Inscriptions</a>
-                            </div>
+                            <footer>
+                                @if(isset($item->centres))
+                                    @foreach($item->centres as $center)
+                                       <a href="{{ $center->url }}">
+                                           <img width="80px" src="{{ asset('files/logos/'.$center->logo) }}">
+                                       </a>
+                                    @endforeach
+                                @endif
+                            </footer>
                         </div>
                     </div>
-
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-content">
+                        <div class="item-bloc"></div>
+                    </div>
                 </div>
 
-            @endforeach
             </div>
-        @endforeach
-    @endif
+
+
+        </div>
+    </div>
+
 
 @stop

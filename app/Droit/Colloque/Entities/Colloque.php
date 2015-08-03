@@ -12,7 +12,7 @@ class Colloque extends Model
 
     protected $table = 'colloques';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at','start_at','end_at','registration_at','registration_at','active_at'];
 
     protected $fillable = [
         'titre', 'soustitre', 'sujet', 'remarques', 'start_at', 'end_at', 'registration_at', 'active_at', 'organisateur_id',

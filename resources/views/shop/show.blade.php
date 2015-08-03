@@ -1,10 +1,10 @@
-@extends('layouts.master')
+@extends('layouts.shop')
 @section('content')
 
 <div class="row">
     <div class="col-md-12">
         <h2>Produit</h2>
-        <a href="{{ url('/')}}" class="btn btn-sm btn-default pull-right">Retour à la liste</a>
+        <a href="{{ url('shop')}}" class="btn btn-sm btn-default pull-right">Retour à la liste</a>
     </div>
 </div>
 
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="col-md-7 col-sm-12">
-        {!! Form::open(array('url' => 'addProduct')) !!}
+        {!! Form::open(array('url' => 'cart/addProduct')) !!}
             {!! Form::hidden('_token', csrf_token()) !!}
             <h3>{{ $product->title }}</h3>
             <p><strong>{{ $product->teaser }}</strong></p>

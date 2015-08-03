@@ -1,47 +1,65 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
 */
 
-Route::get('/', 'ProductController@index');
+//Route::resource('product', 'ProductController');
+Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
+//Route::resource('colloque', 'Frontend\Colloque\ColloqueController');
 
-Route::resource('product', 'ProductController');
-Route::resource('colloque', 'ColloqueController');
 Route::get('inscription/colloque/{id}', 'InscriptionController@index');
 Route::resource('inscription', 'InscriptionController');
 
-Route::get('checkout/resume', 'CheckoutController@resume');
-Route::get('checkout/confirm', 'CheckoutController@confirm');
-Route::match(['get', 'post'],'checkout/send', 'CheckoutController@send');
+/* *
+ * Shop routes for frontend shop
+ * */
+Route::get('shop', 'Frontend\Shop\ShopController@index');
+Route::get('shop/product/{id}', 'Frontend\Shop\ShopController@show');
+
+/* *
+ * Checkout routes for frontend shop
+ * */
+Route::get('checkout/resume', 'Frontend\Shop\CheckoutController@resume');
+Route::get('checkout/confirm', 'Frontend\Shop\CheckoutController@confirm');
+Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
 
 Route::resource('adresse', 'AdresseController');
 Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
 
+/* *
+ * User profile routes
+ * */
 Route::get('profil', 'ProfileController@index');
 Route::get('profil/orders', 'ProfileController@orders');
 Route::get('profil/colloques', 'ProfileController@colloques');
 Route::get('profil/inscription/{id}', 'ProfileController@inscription');
 
-Route::post('addProduct', 'CartController@addProduct');
-Route::post('removeProduct', 'CartController@removeProduct');
-Route::post('quantityProduct', 'CartController@quantityProduct');
-Route::post('applyCoupon', 'CartController@applyCoupon');
+/* *
+ * Cart routes for frontend shop
+ * */
+Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
+Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
+Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
+Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
 //Route::get('home', 'HomeController@index');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
 
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 /*
  * Test routes

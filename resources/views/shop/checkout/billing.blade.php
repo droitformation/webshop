@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.shop')
 @section('content')
 
 <div class="row">
@@ -32,7 +32,7 @@
 
 <nav>
     <ul class="pager">
-        <li class="previous"><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour au shop</a></li>
+        <li class="previous"><a href="{{ url('shop') }}"><span aria-hidden="true">&larr;</span> Retour au shop</a></li>
         <li class="next"><a href="{{ url('checkout/billing') }}">Finaliser ma commande <span aria-hidden="true">&rarr;</span></a></li>
     </ul>
 </nav>

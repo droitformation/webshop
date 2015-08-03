@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.shop')
 @section('content')
 
 <div class="row">
@@ -22,10 +22,10 @@
                         <div class="caption">
                             <h5>{{ $product->title }}</h5>
                             <p>
-                                {!! Form::open(array('url' => 'addProduct')) !!}
+                                {!! Form::open(array('url' => 'cart/addProduct')) !!}
                                 {!! Form::hidden('_token', csrf_token()) !!}
                                 <button type="submit" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-shopping-cart"></i></button>
-                                <a href="{{ url('product/'.$product->id) }}" class="btn btn-sm btn-default">Plus d'info</a>
+                                <a href="{{ url('shop/product/'.$product->id) }}" class="btn btn-sm btn-default">Plus d'info</a>
                                 {!! Form::hidden('product_id', $product->id) !!}
                                 {!! Form::close() !!}
                             </p>
