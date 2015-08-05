@@ -13,7 +13,6 @@
 
     <!-- Checkout Files -->
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/checkout/checkout.css');?>" media="screen" />
-
     <script src="<?php echo asset('js/checkout/checkout.js');?>"></script>
 
     <base href="/">

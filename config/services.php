@@ -40,4 +40,16 @@ return [
         'environment'  => 'local',
     ],
 
+    'github' => [
+        'client_id'     => '9d2f63dc1cf12bf5ec8e',
+        'client_secret' => '9b4bc3765e6a1bdeb3ed4b84a3bc2f845df935da',
+        'redirect'      => 'http://shop.local/auth/github/callback',
+    ],
+
+    'droithub' => [
+        'client_id'     => '1',
+        'client_secret' => 'droitformation',
+        'redirect'      => 'http://shop.local/login/droithub',
+    ]
+
 ];

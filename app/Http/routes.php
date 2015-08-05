@@ -46,7 +46,6 @@ Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
 //Route::get('home', 'HomeController@index');
 
-
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -61,6 +60,8 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
+Route::get('login/{provider?}', 'Auth\AuthController@login');
+
 /*
  * Test routes
  * */
@@ -72,7 +73,6 @@ Route::get('cartworker', function()
     $order  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $user   = \App::make('App\Droit\User\Repo\UserInterface');
     $inscription   = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-
 
     $inscrit = $inscription->find(1);
 

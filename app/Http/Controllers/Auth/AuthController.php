@@ -4,7 +4,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Droit\User\Entities\User;
+use Illuminate\Support\Facades\Auth;
 use Validator;
+use Socialite;
+use Illuminate\Http\Request;
+use App\Services\AuthenticateUser;
 
 class AuthController extends Controller {
 
@@ -73,6 +77,18 @@ class AuthController extends Controller {
     protected function getFailedLoginMessage()
     {
         return trans('message.fail_login');
+    }
+
+    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = null)
+    {
+        return $authenticateUser->execute($request->all(), $this, $provider);
+    }
+
+    public function userHasLoggedIn($user)
+    {
+        \Session::flash('message', 'Welcome, ' . $user->username);
+
+        return redirect('/shop');
     }
 
 }

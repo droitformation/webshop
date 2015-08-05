@@ -11,7 +11,14 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+        $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $socialite->extend(
+            'droithub',
+            function ($app) use ($socialite) {
+                $config = $app['config']['services.droithub'];
+                return $socialite->buildProvider(\App\Services\DroitHubProvider::class, $config);
+            }
+        );
 	}
 
 	/**

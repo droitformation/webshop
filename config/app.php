@@ -135,6 +135,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
 		/*
 		 * Application Service Providers...
@@ -204,6 +205,7 @@ return [
 		'Schema'    => 'Illuminate\Support\Facades\Schema',
 		'Session'   => 'Illuminate\Support\Facades\Session',
 		'Storage'   => 'Illuminate\Support\Facades\Storage',
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
