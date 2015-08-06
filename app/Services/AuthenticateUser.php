@@ -28,7 +28,7 @@ class AuthenticateUser {
 
         $this->auth->login($user, true);
 
-        return $listener->userHasLoggedIn();
+        return $listener->userHasLoggedIn($user);
     }
 
     private function getAuthorizationFirst($provider)

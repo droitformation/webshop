@@ -8,12 +8,33 @@ use Laravel\Socialite\Two\User;
 class DroitHubProvider extends AbstractProvider implements ProviderInterface
 {
 
+    protected $provider = 'droithub';
+    /**
+     * The fields that are included in the profile.
+     *
+     * @var array
+     */
+    protected $fields = [
+        'id', 'name', 'email'
+    ];
+
     /**
      * {@inheritdoc}
      */
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase('http://hub.local/oauth/authorize', $state);
+    }
+
+    /**
+     * Get the POST fields for the token request.
+     *
+     * @param  string  $code
+     * @return array
+     */
+    protected function getTokenFields($code)
+    {
+        return parent::getTokenFields($code) + ['grant_type' => 'authorization_code'];
     }
 
     /**
@@ -29,15 +50,15 @@ class DroitHubProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $userUrl = 'http://hub.local/api/user?access_token='.$token;
+        $userUrl  = 'http://hub.local/api/user?access_token='.$token;
 
-        $response = $this->getHttpClient()->get(
-            $userUrl, $this->getRequestOptions()
-        );
+        $response = $this->getHttpClient()->get($userUrl, [
+            'headers' => [
+                'HTTP_Authorization' => 'Bearer '.$token
+            ],
+        ]);
 
-        $user = json_decode($response->getBody(), true);
-
-        return $user;
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -46,9 +67,11 @@ class DroitHubProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-            'id'       => $user['id'],
-            'name'     => array_get($user, 'name'),
-            'email'    => array_get($user, 'email')
+            'id'         => $user['id'],
+            'provider'   => $this->provider,
+            'first_name' => array_get($user, 'first_name'),
+            'last_name'  => array_get($user, 'last_name'),
+            'email'      => array_get($user, 'email')
         ]);
     }
 }

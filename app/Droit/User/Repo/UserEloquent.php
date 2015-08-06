@@ -75,8 +75,9 @@ class UserEloquent implements UserInterface{
         {
             $user = $this->user->create([
                 'provider_id' => $userData->id,
-                'name'        => $userData->name,
-                'username'    => $userData->nickname,
+                'provider'    => $userData->provider,
+                'first_name'  => $userData->first_name,
+                'last_name'   => $userData->last_name,
                 'email'       => $userData->email,
             ]);
         }
@@ -90,23 +91,24 @@ class UserEloquent implements UserInterface{
     {
 
         $socialData = [
-            'email'    => $userData->email,
-            'name'     => $userData->name,
-            'username' => $userData->nickname,
+            'email'      => $userData->email,
+            'first_name' => $userData->first_name,
+            'last_name'  => $userData->last_name,
         ];
+
         $dbData = [
-            'email'    => $user->email,
-            'name'     => $user->name,
-            'username' => $user->username,
+            'email'      => $user->email,
+            'first_name' => $user->first_name,
+            'last_name'  => $user->last_name,
         ];
 
         $update = array_diff($socialData, $dbData);
 
         if (!empty($update))
         {
-            $user->email    = $userData->email;
-            $user->name     = $userData->name;
-            $user->username = $userData->nickname;
+            $user->email      = $userData->email;
+            $user->first_name = $userData->first_name;
+            $user->last_name  = $userData->last_name;
             $user->save();
         }
     }
