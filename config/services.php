@@ -49,7 +49,7 @@ return [
     'droithub' => [
         'client_id'     => '1',
         'client_secret' => 'droitformation',
-        'redirect'      => 'http://shop.local/login/droithub',
+        'redirect'      => 'http://shop.local/login/droithub', // http://hub.local/login/droithub
     ]
 
 ];

@@ -135,7 +135,9 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
-        Laravel\Socialite\SocialiteServiceProvider::class,
+         Laravel\Socialite\SocialiteServiceProvider::class,
+        'LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider',
+        'LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -172,6 +174,7 @@ return [
 
 		'App'       => 'Illuminate\Support\Facades\App',
 		'Artisan'   => 'Illuminate\Support\Facades\Artisan',
+        'Authorizer' => 'LucaDegasperi\OAuth2Server\Facades\Authorizer',
 		'Auth'      => 'Illuminate\Support\Facades\Auth',
 		'Blade'     => 'Illuminate\Support\Facades\Blade',
 		'Bus'       => 'Illuminate\Support\Facades\Bus',

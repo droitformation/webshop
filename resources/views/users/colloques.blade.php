@@ -1,26 +1,22 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content')
 
-    <div class="container-fluid main-container">
+<div class="col-md-9 content">
 
-        @include('users.partials.nav')
+    <div class="panel panel-default">
+        <div class="panel-heading">Vos inscriptions</div>
+        <div class="panel-body">
 
-        <div class="col-md-9 content">
+            @if(isset($user->inscriptions) && !$user->inscriptions->isEmpty())
+                @foreach($user->inscriptions as $inscription)
+                    <?php $inscription->load('colloque'); ?>
+                    <a href="{{ url('profil/inscription/'.$inscription->id) }}">{{ $inscription->colloque->titre }}</a>
+                @endforeach
+            @endif
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Vos inscriptions</div>
-                <div class="panel-body">
+        </div><!-- end panel body -->
+    </div><!-- end panel -->
 
-                    @if(!$user->inscriptions->isEmpty())
-                        @foreach($user->inscriptions as $inscription)
-                            <a href="{{ url('profil/inscription/'.$inscription->id) }}">{{ $inscription->colloque->titre }}</a>
-                        @endforeach
-                    @endif
-
-                </div><!-- end panel body -->
-            </div><!-- end panel -->
-
-        </div>
-    </div>
+</div>
 
 @endsection

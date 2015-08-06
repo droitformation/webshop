@@ -12,7 +12,6 @@
                 @if (!Auth::check())
                     <div class="btn-group pull-right">
                         <a href="{{ url('auth/login')}}" class="btn btn-info navbar-btn">{{ trans('message.login') }}</a>
-                        <a href="{{ url('login/droithub')}}" class="btn btn-info navbar-btn">{{ trans('message.login') }} par droithub</a>
                         <a href="{{ url('auth/register')}}" class="btn btn-warning navbar-btn">{{ trans('message.register') }}</a>
                     </div>
                 @endif

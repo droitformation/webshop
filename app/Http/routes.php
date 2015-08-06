@@ -62,6 +62,54 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::get('login/{provider?}', 'Auth\AuthController@login');
 
+/* *
+ * Oauth 2 routes
+ * */
+Route::get('oauth/authorize', ['as' => 'oauth.authorize.get','middleware' => ['check-authorization-params', 'auth'], function() {
+    // display a form where the user can authorize the client to access it's data
+    $authParams = Authorizer::getAuthCodeRequestParams();
+
+    $formParams = array_except($authParams,'client');
+    $formParams['client_id'] = $authParams['client']->getId();
+    return view('oauth.authorization-form', ['params'=>$formParams,'client'=>$authParams['client']]);
+}]);
+
+Route::post('oauth/authorize', ['as' => 'oauth.authorize.post','middleware' => ['check-authorization-params', 'auth'], function() {
+
+    $params = Authorizer::getAuthCodeRequestParams();
+    $params['user_id'] = Auth::user()->id;
+
+    $redirectUri = '';
+
+    // if the user has allowed the client to access its data, redirect back to the client with an auth code
+    if (Input::get('approve') !== null) {
+        $redirectUri = Authorizer::issueAuthCode('user', $params['user_id'], $params);
+    }
+
+    // if the user has denied the client to access its data, redirect back to the client with an error message
+    if (Input::get('deny') !== null) {
+        $redirectUri = Authorizer::authCodeRequestDeniedRedirectUri();
+    }
+
+    return Redirect::to($redirectUri);
+
+}]);
+
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+
+Route::get('api/user', ['middleware' => 'oauth', function(){
+
+    $user_id = Authorizer::getResourceOwnerId();
+    $user    = \App\Droit\User\Entities\User::find($user_id);
+
+    return Response::json(['first_name' => $user->first_name, 'last_name' => $user->last_name, 'email' => $user->email, 'id' => $user_id]);
+
+}]);
+
+
+
 /*
  * Test routes
  * */

@@ -15,6 +15,7 @@ class Kernel extends HttpKernel {
 		'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
+        'LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware'
 	];
 
 	/**
@@ -28,6 +29,9 @@ class Kernel extends HttpKernel {
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
         'cart' => 'App\Http\Middleware\CartMiddleware',
+        'oauth' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware',
+        'oauth-owner' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthOwnerMiddleware',
+        'check-authorization-params' => 'LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware'
 	];
 
 }

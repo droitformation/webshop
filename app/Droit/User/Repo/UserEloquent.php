@@ -69,7 +69,7 @@ class UserEloquent implements UserInterface{
 
     public function findByUserNameOrCreate($userData)
     {
-        $user = $this->user->where('provider_id', '=', $userData->id)->first();
+        $user = $this->user->where('email', '=', $userData->email)->first();
 
         if(!$user)
         {

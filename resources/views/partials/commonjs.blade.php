@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo asset('css/user/profil.css');?>" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation/parsley.css');?>" media="screen" />
 
 <script src="<?php echo asset('js/jquery-1.11.3.min.js');?>"></script>
