@@ -41,20 +41,17 @@ class Colloque extends Model
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
-        $start_at = \Carbon\Carbon::createFromFormat('Y-m-d',$this->start_at);
-        $end_at   = \Carbon\Carbon::createFromFormat('Y-m-d',$this->end_at);
-
-        if($this->start_at == $this->end_at)
+        if($this->end_at && ($this->start_at != $end_at))
         {
-            return 'Le '.$start_at->formatLocalized('%d %B %Y');
+            $month  = ($this->start_at->month == $this->end_at->month ? '%d' : '%d %B');
+            $year   = ($this->start_at->year ==  $this->end_at->year ? '' : '%Y');
+            $format = $month.' '.$year;
+
+            return 'Du '.$this->start_at->formatLocalized($format).' au '.$this->end_at->formatLocalized('%d %B %Y');
         }
         else
         {
-            $month  = ($start_at->month == $end_at->month ? '%d' : '%d %B');
-            $year   = ($start_at->year == $end_at->year ? '' : '%Y');
-            $format = $month.' '.$year;
-
-            return 'Du '.$start_at->formatLocalized($format).' au '.$end_at->formatLocalized('%d %B %Y');
+            return 'Le '.$this->start_at->formatLocalized('%d %B %Y');
         }
     }
 

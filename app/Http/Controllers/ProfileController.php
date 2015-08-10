@@ -54,6 +54,19 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(UpdateAdresse $request)
+    {
+        $this->adresse->update($request->all());
+
+        return redirect('profil');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response
@@ -78,6 +91,18 @@ class ProfileController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function colloque($id)
+    {
+        $user = $this->user->find(\Auth::user()->id);
+
+        return view('users.colloques')->with(compact('user'));
+    }
+
+    /**
      *
      * @return Response
      */
@@ -86,17 +111,6 @@ class ProfileController extends Controller
         $user = $this->user->find(\Auth::user()->id);
 
         return view('users.inscription')->with(compact('user','id'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
     }
 
 }

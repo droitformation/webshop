@@ -15,7 +15,7 @@
                         <h5 class="list-group-item-heading">Mes achats</h5>
                         <p class="list-group-item-text">Commandes en cours/archives</p>
                     </a>
-                    <a href="{{ url('profil/colloques') }}" class="list-group-item {{ Request::is('profil/colloques') ? 'active' : '' }}">
+                    <a href="{{ url('profil/colloques') }}" class="list-group-item {{ Request::is('profil/colloques') || Request::is('profil/inscription') || Request::is('profil/inscription/*') ? 'active' : '' }}">
                         <h5 class="list-group-item-heading">Mes inscriptions</h5>
                         <p class="list-group-item-text">Colloques et événements</p>
                     </a>

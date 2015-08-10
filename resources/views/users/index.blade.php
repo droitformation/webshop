@@ -50,7 +50,7 @@
         <div class="panel-heading">Adresse de livraison</div>
         <div class="panel-body">
 
-            {!! Form::open(array('method' => 'PUT','class'  => 'form-horizontal','url' => array('adresse/'.$user->adresse_livraison->id))) !!}
+            {!! Form::open(array('method' => 'PUT','class'  => 'form-horizontal','url' => array('profil/update'))) !!}
 
             <fieldset>
                 <div class="form-group">
@@ -64,13 +64,13 @@
                     <div class="col-sm-7">
                         <?php $civilite = $user->adresse_livraison->civilite_id; ?>
                         <label class="radio-inline">
-                            &nbsp;<input type="radio" data-parsley-required name="civilite" {{ $civilite == 1 ? 'checked' : ''}} value="1"> Monsieur&nbsp;
+                            &nbsp;<input type="radio" data-parsley-required name="civilite_id" {{ $civilite == 1 ? 'checked' : ''}} value="1"> Monsieur&nbsp;
                         </label>
                         <label class="radio-inline">
-                            &nbsp;<input type="radio" data-parsley-required name="civilite" {{ $civilite == 2 ? 'checked' : ''}} value="2"> Madame&nbsp;
+                            &nbsp;<input type="radio" data-parsley-required name="civilite_id" {{ $civilite == 2 ? 'checked' : ''}} value="2"> Madame&nbsp;
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" data-parsley-required name="civilite" {{ $civilite == 3 ? 'checked' : ''}} value="3"> Me
+                            <input type="radio" data-parsley-required name="civilite_id" {{ $civilite == 3 ? 'checked' : ''}} value="3"> Me
                         </label>
                     </div>
                 </div>
@@ -88,7 +88,28 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Canton</label>
+                    <label class="col-sm-4 control-label">Téléphone</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="telephone" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->telephone }}" placeholder="telephone">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Mobile</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="mobile" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->mobile }}" placeholder="mobile">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Fax</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="fax" data-parsley-required class="form-control form-required" value="{{ $user->adresse_livraison->fax }}" placeholder="fax">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Profession</label>
                     <div class="col-sm-7">
                         {!! Form::select('profession_id', $professions->lists('title','id')->all() , $user->adresse_livraison->profession_id, ['class' => 'form-control form-required', 'placeholder' => 'Canton']) !!}
                     </div>

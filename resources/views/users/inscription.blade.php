@@ -1,8 +1,9 @@
 @extends('layouts.user')
 @section('content')
 
-
 <div class="col-md-9 content">
+
+    <p><a href="{{ url('profil/colloques') }}" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left"></span> &nbsp;Retour à la liste</a></p>
 
     <div class="panel panel-default">
         <div class="panel-heading">Inscription</div>
@@ -21,15 +22,23 @@
             <div class="row inscription">
                 <div class="col-md-6">
                     <h4>Date d'inscription</h4>
-                    <p>{{ $inscription->created_at->format('d/m/Y') }}</p>
+                    <p>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</p>
 
                     <h4>Infos</h4>
                     <p><strong>N°:</strong> {{ $inscription->inscription_no }}</p>
                     <p><strong>Prix:</strong> {{ $inscription->price_cents }}</p>
 
+
+                    <h4>Payement</h4>
+
                     @if($inscription->payed_at)
                         <h1 class="label label-success" style="font-size: 90%;">Payé le {{ $inscription->payed_at->format('d/m/Y') }}</h1>
+                    @else
+                        <h1 class="label label-warning" style="font-size: 90%;">En attente</h1>
                     @endif
+
+                </div>
+                <div class="col-md-6">
 
                     <h4>Documents</h4>
                     <div class="btn-group" role="group" aria-label="...">
@@ -44,8 +53,6 @@
                         @endif
                     </div>
 
-                </div>
-                <div class="col-md-6">
                     <h4>Options</h4>
                     @if(!$inscription->options->isEmpty())
                         @foreach($inscription->options as $options)

@@ -32,6 +32,7 @@ Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
  * User profile routes
  * */
 Route::get('profil', 'ProfileController@index');
+Route::match(['put', 'post'],'profil/update', 'ProfileController@update');
 Route::get('profil/orders', 'ProfileController@orders');
 Route::get('profil/colloques', 'ProfileController@colloques');
 Route::get('profil/inscription/{id}', 'ProfileController@inscription');

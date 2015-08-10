@@ -32,6 +32,23 @@ class Inscription extends Model
         }
     }
 
+    public function getStatusNameAttribute()
+    {
+        switch ($this->status) {
+            case 'pending':
+                $status = [ 'status' => 'En attente', 'color' => 'warning' ];
+                break;
+            case 'payed':
+                $status = [ 'status' => 'Payé', 'color' => 'success' ];
+                break;
+            case 'free':
+                $status = [ 'status' => 'Gratuit', 'color' => 'info' ];
+                break;
+        }
+
+        return $status;
+    }
+
     public function getDocumentsAttribute()
     {
         $docs = [];

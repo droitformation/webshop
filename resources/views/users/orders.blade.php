@@ -9,7 +9,7 @@
         <div class="panel-body">
             <?php
                 setlocale(LC_ALL, 'fr_FR.UTF-8');
-                $user->orders->load('products','shipping','coupon');
+                $user->orders->load('products','shipping','coupon','payement');
             ?>
             @if(!$user->orders->isEmpty())
                 <table class="table order-list">
@@ -17,6 +17,7 @@
                         <th>Commande n°</th>
                         <th>Passée le </th>
                         <th>Montant</th>
+                        <th>Statut</th>
                         <th></th>
                     </tr>
                     @foreach($user->orders as $order)
@@ -25,6 +26,7 @@
                         <td>{{ $order->order_no }}</td>
                         <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                         <td>{{ $order->price_cents }}</td>
+                        <td><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
                         <td class="text-right">
                             <a data-toggle="collapse" href="#order_no_{{ $order->id }}" aria-expanded="false" aria-controls="order_no_{{ $order->id }}">Voir la commande</a>
                         </td>
@@ -34,7 +36,7 @@
 
                         <?php $grouped = $order->products->groupBy('id'); ?>
                         <tr>
-                            <td colspan="4" class="nopadding">
+                            <td colspan="5" class="nopadding">
 
                                 <div class="collapse" id="order_no_{{ $order->id }}">
                                     <div class="well">
@@ -49,13 +51,29 @@
                                         </div>
                                     @endforeach
                                     </div>
+
                                     <div class="row">
-                                        <div class="col-md-9">
+                                        <div class="col-md-9"><p class="text-right">Payement</p></div>
+                                        <div class="col-md-3"><p class="text-right">{{ $order->payement->title }}</p></div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <?php
+                                                $facture = public_path('files/shop/factures/facture_'.$order->order_no.'.pdf');
+
+                                                if (File::exists($facture))
+                                                {
+                                                  echo '<a target="_blank" href="'.$facture.'" class="btn btn-success">Facture en pdf</a>';
+                                                }
+                                            ?>
+                                        </div>
+                                        <div class="col-md-7">
                                             @if(isset($order->coupon))
                                                <p class="text-right"><strong>Rabais appliqué <small class="text-muted">{{ $order->coupon->title }}</small></strong></p>
                                             @endif
-                                            <p class="text-right">Frais de port:</p>
-                                            <p class="text-right"><strong>Total:</strong></p>
+                                            <p class="text-right">Frais de port</p>
+                                            <p class="text-right"><strong>Total</strong></p>
                                         </div>
                                         <div class="col-md-3">
 

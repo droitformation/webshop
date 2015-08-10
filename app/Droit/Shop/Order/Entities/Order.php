@@ -21,6 +21,23 @@ class Order extends Model{
         return $money->format($price);
     }
 
+    public function getStatusCodeAttribute()
+    {
+        switch ($this->status) {
+            case 'pending':
+                $status = [ 'status' => 'En attente', 'color' => 'warning' ];
+                break;
+            case 'payed':
+                $status = [ 'status' => 'Payé', 'color' => 'success' ];
+                break;
+            case 'cancelled':
+                $status = [ 'status' => 'Annulé', 'color' => 'danger' ];
+                break;
+        }
+
+        return $status;
+    }
+
     public function getPriceTotalExplodeAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

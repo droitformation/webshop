@@ -12,7 +12,7 @@
     @include('partials.commonjs')
 
     <!-- Colloques Files -->
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/user/profile.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/user/profil.css');?>" media="screen" />
 
     <base href="/">
 </head>
