@@ -2,9 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Price extends Model{
+/*
+ * ONLY TEMPORARY MODEL
+ * REMOVE AFTER CONVERSION
+ **/
 
-    protected $table = 'colloque_prices';
+class Prix extends Model{
+
+    protected $table = 'prix';
 
     protected $fillable = array('colloque_id','price','type','description','rang');
 

@@ -14,12 +14,12 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function getAll(){
 
-        return $this->colloque->with(['location','organisateur','centres','compte','prices','documents'])->get();
+        return $this->colloque->with(['location','centres','compte','prices','documents'])->orderBy('start_at','DESC')->get();
     }
 
     public function find($id){
 
-        return $this->colloque->with(['location','organisateur','centres','compte','prices','documents','options'])->find($id);
+        return $this->colloque->with(['location','centres','compte','prices','documents','options'])->find($id);
     }
 
     public function create(array $data){
@@ -33,7 +33,7 @@ class ColloqueEloquent implements ColloqueInterface{
             'end_at'          => $data['end_at'],
             'registration_at' => $data['registration_at'],
             'active_at'       => $data['active_at'],
-            'organisateur_id' => $data['organisateur_id'],
+            'organisateur'    => $data['organisateur'],
             'location_id'     => $data['location_id'],
             'compte_id'       => $data['compte_id'],
             'visible'         => $data['visible'],

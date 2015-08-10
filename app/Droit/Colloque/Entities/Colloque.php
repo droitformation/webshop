@@ -15,7 +15,7 @@ class Colloque extends Model
     protected $dates = ['deleted_at','start_at','end_at','registration_at','registration_at','active_at'];
 
     protected $fillable = [
-        'titre', 'soustitre', 'sujet', 'remarques', 'start_at', 'end_at', 'registration_at', 'active_at', 'organisateur_id',
+        'titre', 'soustitre', 'sujet', 'remarques', 'start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
         'location_id', 'compte_id', 'visible', 'bon', 'facture', 'created_at', 'updated_at'
     ];
 
@@ -74,11 +74,6 @@ class Colloque extends Model
     public function location()
     {
         return $this->belongsTo('App\Droit\Location\Entities\Location');
-    }
-
-    public function organisateur()
-    {
-        return $this->belongsTo('App\Droit\Organisateur\Entities\Organisateur');
     }
 
     public function centres()

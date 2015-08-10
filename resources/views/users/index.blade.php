@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label"></label>
                         <div class="col-sm-7">
-                            <a href="#" class="btn btn-xs btn-warning">Changer le mot de passe</a>
+                            <a href="{{ url('password/new') }}" class="btn btn-xs btn-warning">Changer le mot de passe</a>
                         </div>
                     </div>
 

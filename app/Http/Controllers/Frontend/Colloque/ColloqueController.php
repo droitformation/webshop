@@ -27,9 +27,16 @@ class ColloqueController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $colloques = $this->colloque->getAll();
+
+        if ($request->ajax())
+        {
+            $colloques = $colloques->toArray();
+
+            return response()->json($colloques);
+        }
 
         return view('colloques.index')->with(['colloques' => $colloques]);
     }
@@ -64,8 +71,9 @@ class ColloqueController extends Controller
     public function show($id)
     {
         $colloque = $this->colloque->find($id);
+        $colloque = $colloque->toArray();
 
-        return view('colloques.show')->with(['colloque' => $colloque]);
+        return response()->json($colloque);
     }
 
     /**

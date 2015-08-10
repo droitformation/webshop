@@ -7,6 +7,7 @@
 
 //Route::resource('product', 'ProductController');
 Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
+Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
 //Route::resource('colloque', 'Frontend\Colloque\ColloqueController');
 
 Route::get('inscription/colloque/{id}', 'InscriptionController@index');
@@ -60,7 +61,8 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 // Password reset routes...
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
-
+Route::get('password/new', 'Auth\PasswordController@getNew');
+Route::post('password/define', 'Auth\PasswordController@postDefine');
 Route::get('login/{provider?}', 'Auth\AuthController@login');
 
 /* *
@@ -110,10 +112,9 @@ Route::get('api/user', ['middleware' => 'oauth', function(){
 }]);
 
 
-
-/*
+/* ============================================
  * Test routes
- * */
+ ============================================ */
 
 Route::get('cartworker', function()
 {
@@ -259,17 +260,21 @@ Route::get('otherfactory', function()
 
 Route::get('convert', function()
 {
-
-    $temp = new \App\Droit\Colloque\Entities\Colloque_temp();
-
+    $temp      = new \App\Droit\Colloque\Entities\Colloque_temp();
     $colloques = $temp->all();
 
     foreach($colloques as $colloque)
     {
 
-        $new  = new \App\Droit\Colloque\Entities\Colloque();
 
-        $new->id              = $colloque->id;
+        $new  = new \App\Droit\Colloque\Entities\Colloque();
+        $item = $new->find($colloque->id);
+
+        $item->organisateur = $colloque->organisateur_id;
+        $item->compte_id    = $colloque->compte_id;
+        $item->save();
+
+/*        $new->id              = $colloque->id;
         $new->titre           = $colloque->titre;
         $new->soustitre       = $colloque->soustitre;
         $new->sujet           = $colloque->sujet;
@@ -295,12 +300,43 @@ Route::get('convert', function()
         if($colloque->typeColloque == 0){
             $new->bon = 0;
             $new->facture = 0;
-        }
+        }*/
 
-        $new->save();
+        //$new->save();
     }
 
 });
+
+Route::get('prix', function()
+{
+    $price  = new App\Droit\Price\Entities\Prix;
+    $prices = $price->all();
+
+    foreach($prices as $prix)
+    {
+        $new  = new \App\Droit\Price\Entities\Price();
+
+        $new->id            = $prix->id;
+        $new->colloque_id   = $prix->colloque_id;
+        $new->price         = $prix->price * 100;
+        $new->description   = $prix->description;
+        $new->rang          = $prix->rang;
+
+        if($prix->type == 1)
+        {
+            $new->type = 'public';
+        }
+
+        if($prix->type == 2)
+        {
+            $new->type = 'admin';
+        }
+
+        //$new->save();
+    }
+
+});
+
 
 
 Route::get('myaddress', function()

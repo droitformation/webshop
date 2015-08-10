@@ -18,13 +18,13 @@ class CreateColloquesTable extends Migration
             $table->string('titre');
             $table->string('soustitre')->nullable();
             $table->string('sujet');
+            $table->string('organisateur')->nullable();
             $table->string('url')->nullable();
             $table->text('remarques')->nullable();
             $table->date('start_at');
             $table->date('end_at')->nullable();
             $table->date('registration_at');
             $table->date('active_at')->nullable();
-            $table->integer('organisateur_id');
             $table->integer('location_id');
             $table->integer('compte_id')->nullable();
             $table->enum('visible', ['0','1'])->default(0);

@@ -4,6 +4,11 @@ namespace App\Droit\Colloque\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
+/*
+ * ONLY TEMPORARY MODEL
+ * REMOVE AFTER CONVERSION
+ **/
+
 class Colloque_temp extends Model
 {
     protected $table = 'colloques_temp';
