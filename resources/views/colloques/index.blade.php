@@ -5,15 +5,6 @@
         <div class="col-md-12">
             <h2>Colloques</h2>
             <p>&nbsp;</p>
-            <?php
-
- /*            $item = $colloques->first();
-
-                echo '<pre>';
-                print_r($colloques);
-                echo '</pre>';
- */
-            ?>
         </div>
     </div>
 
@@ -31,7 +22,6 @@
 
                 </div>
             </div>
-
 
         </div>
     </div>

@@ -68,12 +68,15 @@ class ColloqueController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
         $colloque = $this->colloque->find($id);
-        $colloque = $colloque->toArray();
+        $colloque->load('location');
 
-        return response()->json($colloque);
+        if ($request->ajax())
+        {
+            return view('colloques.partials.details')->with(['colloque' => $colloque]);
+        }
     }
 
     /**

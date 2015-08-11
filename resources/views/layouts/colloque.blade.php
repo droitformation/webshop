@@ -17,7 +17,6 @@
     <script src="<?php echo asset('js/colloque/isotope.pkgd.min.js');?>"></script>
     <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
 
-
     <base href="/">
 </head>
 <body>

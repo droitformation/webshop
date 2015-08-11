@@ -11,64 +11,21 @@ $(document).ready( function() {
 
     $grid.on( 'click', '.grid-item-content', function() {
         $('.grid-item').removeClass('is-expanded');
-        $( this ).parent('.grid-item').toggleClass('is-expanded');
+        $('.grid-item .inner').empty();
+        $grid.isotope('layout');
 
-        var id   = $( this ).data('colloque');
-        var body = $('#colloque_' + id + ' .body');
+        var self   = $( this );
+        var id     = self.data('colloque');
+        var $body  = $('#colloque_' + id + ' .body .inner');
 
         $.get(url + "colloque/" + id, {}, function( data )
         {
-
-            body.append(data);
-
-            console.log(data);
+            $body.html(data);
+            self.parent('.grid-item').toggleClass('is-expanded');
+            $grid.isotope('layout');
         });
-
-        $grid.isotope('layout');
     });
 
 });
 
 var url = location.protocol + "//" + location.host+"/";
-
-new Vue({
-
-    el: '#colloques',
-
-    data: {
-        colloques: []
-    },
-
-    ready: function () {
-
-        this.fetchData();
-    },
-
-    methods: {
-        fetchData: function ()
-        {
-            $.ajax({
-                context: this,
-                url: "colloque",
-                success: function (result) {
-                    this.$set("colloques", result)
-                }
-            });
-        },
-
-        open:function (e) {
-
-            console.log(e.id);
-            $.ajax({
-                context: this,
-                url: "colloque/" + e.id,
-                success: function (result) {
-
-                    var body = $('#colloque_' + e.id + ' .body');
-                }
-            });
-
-        }
-
-    }
-});

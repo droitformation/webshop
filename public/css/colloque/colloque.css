@@ -24,7 +24,7 @@ body { font-family: sans-serif; }
 
 .grid {
     max-width: 1100px;
-    width: auto;
+    width: 1100px;
     margin: 0 auto;
     padding: 10px;
     background: #f8f8f8;
@@ -67,10 +67,15 @@ body { font-family: sans-serif; }
 
 .item-bloc header{
     width: 100%;
-    background: #e6e6e6;
-    padding: 10px 10px 0 10px;
+    background: #646768;
     flex: 1;
     max-height: 90px;
+}
+
+.item-bloc header p{
+   font-size: 12px;
+    padding: 5px 0;
+    color: #fff;
 }
 
 .item-bloc .body{
@@ -82,8 +87,7 @@ body { font-family: sans-serif; }
 
 .item-bloc footer{
     width: 100%;
-    background: #ecf0f2;
-    padding: 0px 10px 0 10px;
+    padding: 2px 10px 2px 10px;
     flex: 1;
     max-height: 66px;
 }
@@ -111,6 +115,70 @@ body { font-family: sans-serif; }
     z-index: 2;
 }
 
-.grid-item.is-expanded .grid-item-content {
+.grid-item .inner {
+    opacity: 0;
+    height: 0;
+    margin-top: 10px;
+    transition: opacity 0.2s 0s ease;  /* Mouse leave: immediate */
+}
 
+.grid-item address {
+    opacity: 1;
+    transition: opacity 0.2s 0.3s ease; /* Mouse enter: delay */
+}
+
+.grid-item.is-expanded  address {
+    opacity: 0;
+    height: 0;
+    transition: opacity 0.2s 0s ease;  /* Mouse leave: immediate */
+}
+
+.grid-item.is-expanded .inner {
+    opacity: 1;
+    overflow: hidden;
+    height: 265px;
+    transition: opacity 0.2s 0.3s ease; /* Mouse enter: delay */
+}
+
+.colloque-detail{
+    overflow: scroll;
+}
+
+.loader{
+    padding: 20px;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    vertical-align: middle;
+    display: none;
+}
+
+.colloque_date{
+    width:60px;
+    height:100%;
+    background: #fff;
+    float: left;
+    margin-right:5px;
+}
+
+.colloque_date span{
+    width:60px;
+    padding:0 5px;
+    display: block;
+    text-align: center;
+}
+
+.colloque_date span.month{
+   font-size: 16px;
+    color: #fff;
+    background: #e40000;
+}
+
+.colloque_date span.day{
+    font-size: 20px;
+    padding-top: 3px;
+}
+
+.colloque_date span.year{
+    font-size: 12px;
 }
