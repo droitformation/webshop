@@ -4,22 +4,24 @@ namespace App\Http\Controllers\Frontend\Colloque;
 
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class ColloqueController extends Controller
 {
     protected $colloque;
+    protected $inscription;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque)
+    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription)
     {
-        //$this->middleware('guest');
-        $this->colloque = $colloque;
+        $this->colloque    = $colloque;
+        $this->inscription = $inscription;
     }
 
     /**
@@ -85,21 +87,28 @@ class ColloqueController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function inscription($id)
     {
-        //
+        $colloque = $this->colloque->find($id);
+        $colloque->load('location','options','prices');
+
+        return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Registration for user.
      *
      * @param  Request  $request
-     * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function registration(Request $request)
     {
-        //
+
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';
+        //$this->inscription->create($request->all());
+
     }
 
     /**

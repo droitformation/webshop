@@ -16,6 +16,7 @@ class CreateColloqueDocumentsTable extends Migration
             $table->increments('id');
             $table->integer('colloque_id');
             $table->enum('display', ['0', '1'])->default('1');
+            $table->string('titre');
             $table->enum('type', ['illustration','programme','document']);
             $table->string('path');
         });

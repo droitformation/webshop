@@ -33,8 +33,6 @@
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.js"></script>
-    <script src="<?php echo asset('js/colloque/vue-resource.js');?>"></script>
     <script src="<?php echo asset('js/colloque/grid.js');?>"></script>
 
 </body>

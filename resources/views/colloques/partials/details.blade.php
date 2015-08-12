@@ -27,12 +27,17 @@
     <div class="col-md-3">
         @if(!$colloque->documents->isEmpty())
             @foreach($colloque->documents as $document)
-                <p>{{ $document->price_cents }}</p>
+
+                <?php $file = 'files/colloques/'.$document->type.'/'.$document->path; ?>
+                @if (File::exists($file) && ($document->type == 'programme' || $document->type == 'document'))
+                    <p><a class="btn btn-info btn-sm" href="{{ $file }}">{{ $document->titre }}</a></p>
+                @endif
+
             @endforeach
         @endif
     </div>
     <div class="col-md-4">
-
+        <img width="200px" src="{{ asset($colloque->illustration) }}" />
     </div>
 </div>
 

@@ -41,6 +41,27 @@ body { font-family: sans-serif; }
     height: 239px;
 }
 
+.grid-item .grid-item-content .closing{
+    opacity: 0;
+    top: -5px;
+    position: absolute;
+    right: -5px;
+    text-align: center;
+    width: 20px;
+    background: #888888;
+    border-radius: 10px;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    height: 20px;
+    line-height: 20px;
+}
+
+.grid-item.is-expanded  .grid-item-content .closing{
+    opacity: 1;
+}
+
 /* item-content is visible, and transitions size */
 .grid-item-content {
     width: 360px;
@@ -55,6 +76,7 @@ body { font-family: sans-serif; }
 .item-bloc{
     background: #fff;
     display: block;
+    position: relative;
     width: 100%;
     height: 100%;
     border: 1px solid #d6d6d6;
@@ -69,12 +91,13 @@ body { font-family: sans-serif; }
     width: 100%;
     background: #646768;
     flex: 1;
+    padding-right:10px;
     max-height: 90px;
 }
 
 .item-bloc header p{
    font-size: 12px;
-    padding: 5px 0;
+    padding: 5px 0 5px 0;
     color: #fff;
 }
 
@@ -115,6 +138,14 @@ body { font-family: sans-serif; }
     z-index: 2;
 }
 
+.grid-item header a{
+    display: none;
+}
+
+.grid-item.is-expanded header a{
+    display: block;
+}
+
 .grid-item .inner {
     opacity: 0;
     height: 0;
@@ -138,10 +169,6 @@ body { font-family: sans-serif; }
     overflow: hidden;
     height: 265px;
     transition: opacity 0.2s 0.3s ease; /* Mouse enter: delay */
-}
-
-.colloque-detail{
-    overflow: scroll;
 }
 
 .loader{
@@ -181,4 +208,15 @@ body { font-family: sans-serif; }
 
 .colloque_date span.year{
     font-size: 12px;
+}
+
+.colloque-details{
+    height: 275px;
+    overflow: scroll;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.colloque-details p{
+    margin-bottom: 2px;
 }

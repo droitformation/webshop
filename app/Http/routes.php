@@ -8,6 +8,8 @@
 //Route::resource('product', 'ProductController');
 Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
 Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
+Route::get('colloque/inscription/{id}', 'Frontend\Colloque\ColloqueController@inscription');
+Route::post('colloque/registration', 'Frontend\Colloque\ColloqueController@registration');
 //Route::resource('colloque', 'Frontend\Colloque\ColloqueController');
 
 Route::get('inscription/colloque/{id}', 'InscriptionController@index');
@@ -239,20 +241,32 @@ Route::get('factory', function()
 Route::get('otherfactory', function()
 {
 
-    $users = factory(App\Droit\User\Entities\User::class, 10)->create();
+    $path = public_path('files/colloques/');
+    $documents = [];
+    $temp      = new \App\Droit\Colloque\Entities\Colloque();
+    $colloques = $temp->all();
 
-    foreach($users as $user)
-    {
-        $addresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
-            'user_id'    => $user->id,
-            'first_name' => $user->firstName,
-            'last_name'  => $user->lastName,
-            'email'      => $user->email,
-        ]);
+    foreach($colloques as $colloque){
+
+       foreach($colloque->documents as $document)
+       {
+
+           $file = $path.'temp/'.$document->path;
+
+           //if (File::exists($file))
+          // {
+               if (!File::copy($file, $path.$document->type.'/'.$document->path))
+               {
+                   die("Couldn't copy file");
+               }
+
+               $documents[] = $path.$document->path;
+           //}
+       }
     }
 
     echo '<pre>';
-    print_r($users);
+    print_r($documents);
     echo '</pre>';exit;
 
 });

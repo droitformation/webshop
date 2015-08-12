@@ -9,6 +9,18 @@ $(document).ready( function() {
         }
     });
 
+    var $closing = $('.closing');
+
+    $closing.on( 'click', function(e) {
+        $('.grid-item').removeClass('is-expanded');
+        $('.grid-item .inner').empty();
+        $grid.isotope('layout');
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+
     $grid.on( 'click', '.grid-item-content', function() {
         $('.grid-item').removeClass('is-expanded');
         $('.grid-item .inner').empty();

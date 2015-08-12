@@ -29,11 +29,11 @@ class Colloque extends Model
 
         if(!$illustration->isEmpty())
         {
-            return 'files/colloques/illustrations/'.$illustration->first()->path;
+            return 'files/colloques/illustration/'.$illustration->first()->path;
         }
         else
         {
-            return 'files/colloques/illustrations/illu.png';
+            return 'files/colloques/illustration/illu.png';
         }
     }
 

@@ -1,6 +1,7 @@
 <div class="grid-item">
     <div class="grid-item-content" id="colloque_{{ $colloque->id }}" data-colloque="{{ $colloque->id }}">
         <div class="item-bloc">
+            <div class="closing">x</div>
             <header>
                 <div class="colloque_date">
                     <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
@@ -9,6 +10,8 @@
                     <span class="year"> {{ $colloque->start_at->format('Y') }}</span>
                 </div>
                 <p>{{ $colloque->titre }}<br/>{{ $colloque->soustitre }}</p>
+
+                <a href="{{ url('colloque/inscription/'.$colloque->id) }}" class="btn btn-danger btn-sm pull-right">inscription</a>
             </header>
             <div class="body">
                 <address>

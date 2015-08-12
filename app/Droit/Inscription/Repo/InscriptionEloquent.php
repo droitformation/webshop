@@ -47,6 +47,20 @@ class InscriptionEloquent implements InscriptionInterface{
             return false;
         }
 
+        if(isset($data['options']))
+        {
+            foreach($data['options'] as $option){
+                $inscription->options()->attach($option, ['user_id' => $inscription->user_id, 'inscription_id' => $inscription->id]);
+            }
+        }
+
+        if(isset($data['groupes']))
+        {
+            foreach($data['groupes'] as $option_id => $groupe_id){
+                $inscription->options()->attach($option, ['user_id' => $inscription->user_id, 'groupe_id' => $groupe_id, 'inscription_id' => $inscription->id]);
+            }
+        }
+
         return $inscription;
 
     }
