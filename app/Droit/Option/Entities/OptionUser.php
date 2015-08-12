@@ -26,4 +26,9 @@ class OptionUser extends Model
         return $this->belongsTo('App\Droit\Option\Entities\Option');
     }
 
+    public function option_groupe()
+    {
+        return $this->belongsTo('App\Droit\Option\Entities\OptionGroupe','groupe_id','id');
+    }
+
 }

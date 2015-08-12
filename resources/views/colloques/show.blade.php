@@ -35,7 +35,7 @@
                                                     <label class="control-label">Choix du prix applicable</label>
                                                     <!-- Only public prices -->
                                                     <?php  $filtered = $colloque->prices->reject(function ($item) {return $item->type == 'admin'; });?>
-                                                    <select required name="price" class="form-control">
+                                                    <select required name="price_id" class="form-control">
                                                         <option value="">Choix</option>
                                                         @foreach($filtered as $price)
                                                             <option value="{{ $price->id }}">{{ $price->description }} | <strong>{{ $price->price_cents }} CHF</strong></option>
@@ -85,6 +85,9 @@
 
                                                 @endforeach
                                             @endif
+
+                                            <input name="user_id" value="{{ Auth::user()->id }}" type="hidden">
+                                            <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
 
                                             <button class="btn btn-danger pull-right" type="submit">Envoyer</button>
                                         </fieldset>

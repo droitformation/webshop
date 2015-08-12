@@ -109,8 +109,12 @@ class ProfileController extends Controller
     public function inscription($id)
     {
         $user = $this->user->find(\Auth::user()->id);
+        $inscription = $user->inscriptions->find($id);
+        $inscription->load('user_options','colloque');
+        $inscription->user_options->load('option');
+        $inscription->colloque->load('location','centres','compte');
 
-        return view('users.inscription')->with(compact('user','id'));
+        return view('users.inscription')->with(compact('user','id','inscription'));
     }
 
 }

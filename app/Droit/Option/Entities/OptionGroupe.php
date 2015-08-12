@@ -20,4 +20,5 @@ class OptionGroupe extends Model
     {
         return $this->belongsTo('App\Droit\Option\Entities\Option');
     }
+
 }

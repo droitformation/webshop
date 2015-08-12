@@ -93,8 +93,10 @@ class PdfGenerator
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-        $inscription->options->load('option');
-        $inscription->colloque->load('location','organisateur');
+        $inscription->load('user_options');
+        $inscription->user_options->load('option');
+        $inscription->colloque->load('location','centres','compte');
+
         $inscription->user->load('adresses');
 
         $data = [
@@ -116,8 +118,10 @@ class PdfGenerator
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-        $inscription->options->load('option');
-        $inscription->colloque->load('location','organisateur');
+        $inscription->load('user_options');
+        $inscription->user_options->load('option');
+        $inscription->colloque->load('location','centres','compte');
+
         $inscription->user->load('adresses');
 
         $data = [

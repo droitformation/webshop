@@ -57,6 +57,8 @@ class Colloque extends Model
 
     public function getAnnexeAttribute()
     {
+        $annexes = [];
+
         if($this->bon)
         {
             $annexes[] = 'bon';

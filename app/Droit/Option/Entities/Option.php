@@ -19,4 +19,5 @@ class Option extends Model{
     {
         return $this->belongsToMany('App\Droit\Option\Entities\OptionGroupe','colloque_option_users','option_id','groupe_id')->groupBy('id');
     }
+
 }

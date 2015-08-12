@@ -85,9 +85,14 @@ class Inscription extends Model
         return $this->belongsTo('App\Droit\User\Entities\User');
     }
 
-    public function options()
+    public function user_options()
     {
         return $this->hasMany('App\Droit\Option\Entities\OptionUser');
+    }
+
+    public function options()
+    {
+        return $this->belongsToMany('App\Droit\Option\Entities\Option' , 'colloque_option_users', 'inscription_id', 'option_id');
     }
 
 }

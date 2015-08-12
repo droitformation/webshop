@@ -14,9 +14,9 @@ class OrderWorkerTest extends TestCase {
         $this->worker  = new \App\Droit\Shop\Order\Worker\OrderWorker(
             $this->mock,
             \App::make('App\Droit\Shop\Cart\Worker\CartWorker'),
-            \App::make('App\Droit\User\Repo\UserInterface')
+            \App::make('App\Droit\User\Repo\UserInterface'),
+            \App::make('App\Droit\User\Repo\CartInterface')
         );
-
     }
 
     public function tearDown()

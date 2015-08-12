@@ -24,7 +24,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function find($id){
 
-        return $this->inscription->with(['price','colloque','user','options'])->find($id);
+        return $this->inscription->with(['price','colloque','user','option'])->find($id);
     }
 
     public function create(array $data){
@@ -32,12 +32,9 @@ class InscriptionEloquent implements InscriptionInterface{
         $inscription = $this->inscription->create(array(
             'colloque_id'     => $data['colloque_id'],
             'user_id'         => $data['user_id'],
-            'group_id'        => $data['group_id'],
+            'group_id'        => (isset($data['group_id']) ? $data['group_id'] : null),
             'inscription_no'  => $data['inscription_no'],
             'price_id'        => $data['price_id'],
-            'payed_at'        => $data['payed_at'],
-            'send_at'         => $data['send_at'],
-            'status'          => $data['status'],
             'created_at'      => \Carbon\Carbon::now(),
             'updated_at'      => \Carbon\Carbon::now()
         ));
@@ -49,15 +46,17 @@ class InscriptionEloquent implements InscriptionInterface{
 
         if(isset($data['options']))
         {
-            foreach($data['options'] as $option){
+            foreach($data['options'] as $option)
+            {
                 $inscription->options()->attach($option, ['user_id' => $inscription->user_id, 'inscription_id' => $inscription->id]);
             }
         }
 
         if(isset($data['groupes']))
         {
-            foreach($data['groupes'] as $option_id => $groupe_id){
-                $inscription->options()->attach($option, ['user_id' => $inscription->user_id, 'groupe_id' => $groupe_id, 'inscription_id' => $inscription->id]);
+            foreach($data['groupes'] as $option_id => $groupe_id)
+            {
+                $inscription->options()->attach($option_id, ['user_id' => $inscription->user_id, 'groupe_id' => $groupe_id, 'inscription_id' => $inscription->id]);
             }
         }
 

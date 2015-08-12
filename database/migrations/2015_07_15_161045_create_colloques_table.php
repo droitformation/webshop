@@ -30,6 +30,7 @@ class CreateColloquesTable extends Migration
             $table->enum('visible', ['0','1'])->default(0);
             $table->tinyInteger('bon')->default(1);
             $table->tinyInteger('facture')->default(1);
+            $table->integer('counter')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

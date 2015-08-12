@@ -9,11 +9,6 @@
         <div class="panel-heading">Inscription</div>
         <div class="panel-body">
 
-            <?php $inscription = $user->inscriptions->find($id); ?>
-
-            <?php $inscription->options->load('option'); ?>
-            <?php $inscription->colloque->load('location','organisateur','compte'); ?>
-
             <h4>{{ $inscription->colloque->titre }} <small>{{ $inscription->colloque->soustitre }}</small></h4>
             <p class="text-primary">{{ $inscription->colloque->location->name }}</p>
             <p>{{ $inscription->colloque->event_date }}</p>
@@ -54,23 +49,27 @@
                     </div>
 
                     <h4>Options</h4>
-                    @if(!$inscription->options->isEmpty())
-                        @foreach($inscription->options as $options)
 
-                            <?php $options->option->load('groupe'); ?>
-                            <p>{{ $options->option->title }}</p>
+                    @if(!$inscription->user_options->isEmpty())
+                        <ol>
+                        @foreach($inscription->user_options as $user_options)
 
-                            @if($options->option->type == 'choix')
-                                @foreach($options->option->groupe as $groupe)
-                                    <p class="text-info">{{ $groupe->text }}</p>
-                                @endforeach
+                            <li>{{ $user_options->option->title }}
+
+                            @if($user_options->option->type == 'choix')
+                                <?php $user_options->load('option_groupe'); ?>
+                                <p class="text-info">{{ $user_options->option_groupe->text }}</p>
                             @endif
 
+                            </li>
                         @endforeach
+                        </ol>
                     @endif
 
                 </div>
             </div>
+
+
 
         </div><!-- end panel body -->
     </div><!-- end panel -->

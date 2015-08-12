@@ -7,6 +7,7 @@ use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Events\InscriptionWasRegistered;
 
 class ColloqueController extends Controller
 {
@@ -103,12 +104,20 @@ class ColloqueController extends Controller
      */
     public function registration(Request $request)
     {
+        $colloque = $this->colloque->find($request->input('colloque_id'));
+        $counter  = $this->colloque->getNewNoInscription($colloque->id);
 
-        echo '<pre>';
-        print_r($request->all());
-        echo '</pre>';
-        //$this->inscription->create($request->all());
+        // Prepare data
+        $data        = $request->all() + ['inscription_no' => $counter];
+        $inscription = $this->inscription->create($data);
 
+        // Update counter
+        $colloque->counter = $counter;
+        $colloque->save();
+
+        event(new InscriptionWasRegistered($inscription));
+
+        return redirect('colloque')->with(array('status' => 'success', 'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));
     }
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Jobs\SendConfirmationInscriptionEmail;
 
-class EmailRegisterColloqueConfirmation
+class EmailRegisterInscriptionConfirmation
 {
 
     use DispatchesJobs;

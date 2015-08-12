@@ -22,6 +22,14 @@ class ColloqueEloquent implements ColloqueInterface{
         return $this->colloque->with(['location','centres','compte','prices','documents','options'])->find($id);
     }
 
+    public function getNewNoInscription($colloque_id){
+
+        $colloque = $this->colloque->find($colloque_id);
+        $counter  = $colloque->counter + 1;
+
+        return $colloque_id.'-'.date('Y') .'/'.$counter;
+    }
+
     public function create(array $data){
 
         $colloque = $this->colloque->create(array(

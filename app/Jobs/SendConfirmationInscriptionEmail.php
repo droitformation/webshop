@@ -36,8 +36,10 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
     {
         $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-        $annexes   = $this->inscription->colloque->annexe;
-        // Generate annexes
+        $this->inscription->load('colloque');
+        $annexes = $this->inscription->colloque->annexe;
+
+        // Generate annexes if any
         if(!empty($annexes))
         {
             foreach($annexes as $annexe)

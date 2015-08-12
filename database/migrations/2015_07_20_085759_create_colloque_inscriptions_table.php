@@ -16,7 +16,7 @@ class CreateColloqueInscriptionsTable extends Migration
             $table->increments('id');
             $table->integer('colloque_id');
             $table->integer('user_id');
-            $table->integer('group_id');
+            $table->integer('group_id')->nullable();
             $table->string('inscription_no')->nullable();
             $table->integer('price_id');
             $table->date('payed_at')->nullable();

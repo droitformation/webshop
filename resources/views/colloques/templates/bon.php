@@ -11,7 +11,7 @@
     <div class="content">
         <table class="content-table">
             <tr>
-                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/'.$inscription->colloque->organisateur->logo.''); ?>" alt="Unine logo" /></td>
+                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/facdroit.png'); ?>" alt="Unine logo" /></td>
             </tr>
             <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
@@ -56,7 +56,7 @@
         <table class="content-table content-wide" valign="top">
             <tr valign="top">
                 <td valign="top">
-                    <p class="organisateur"><strong>Organisé par:</strong> <?php echo $inscription->colloque->organisateur->name; ?></p>
+                    <p class="organisateur"><strong>Organisé par:</strong> <?php echo $inscription->colloque->organisateur; ?></p>
                 </td>
             </tr>
             <tr><td height="5">&nbsp;</td></tr>
@@ -76,27 +76,24 @@
             <tr><td height="5">&nbsp;</td></tr>
 
             <?php
-                if(!$inscription->options->isEmpty())
+                if(!$inscription->user_options->isEmpty())
                 {
                     echo '<tr><td valign="top">';
                     echo '<h4>Choix:</h4>';
                     echo '<ul class="options">';
-                    foreach($inscription->options as $options)
-                    {
-                        $options->option->load('groupe');
-                        echo '<li>'.$options->option->title;
 
-                        if($options->option->type == 'choix')
+                    foreach($inscription->user_options as $user_options)
+                    {
+                        echo '<li>'.$user_options->option->title;
+
+                        if($user_options->option->type == 'choix')
                         {
-                            echo '<ul>';
-                            foreach($options->option->groupe as $groupe)
-                            {
-                                echo '<li class="blue text-indent">'.$groupe->text.'</li>';
-                            }
-                            echo '<ul>';
-                            echo '</li>';
+                            $user_options->load('option_groupe');
+                            echo '<li class="blue text-indent">'.$user_options->option_groupe->text.'</li>';
                         }
+                        echo '</li>';
                     }
+
                     echo '<ul>';
                     echo '</td></tr>';
                 }
