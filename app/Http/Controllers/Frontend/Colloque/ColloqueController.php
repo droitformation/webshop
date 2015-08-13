@@ -7,7 +7,6 @@ use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Events\InscriptionWasRegistered;
 
 class ColloqueController extends Controller
 {
@@ -90,34 +89,18 @@ class ColloqueController extends Controller
      */
     public function inscription($id)
     {
-        $colloque = $this->colloque->find($id);
-        $colloque->load('location','options','prices');
 
-        return view('colloques.show')->with(['colloque' => $colloque]);
-    }
+        $exist = $this->inscription->getByUser($id,\Auth::user()->id);
 
-    /**
-     * Registration for user.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function registration(Request $request)
-    {
-        $colloque = $this->colloque->find($request->input('colloque_id'));
-        $counter  = $this->colloque->getNewNoInscription($colloque->id);
+        if(!$exist)
+        {
+            $colloque = $this->colloque->find($id);
+            $colloque->load('location','options','prices');
 
-        // Prepare data
-        $data        = $request->all() + ['inscription_no' => $counter];
-        $inscription = $this->inscription->create($data);
+            return view('colloques.show')->with(['colloque' => $colloque]);
+        }
 
-        // Update counter
-        $colloque->counter = $counter;
-        $colloque->save();
-
-        event(new InscriptionWasRegistered($inscription));
-
-        return redirect('colloque')->with(array('status' => 'success', 'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));
+        return redirect('colloque')->with(array('status' => 'warning', 'message' => 'Vous êtes déjà inscrit à ce colloque' ));
     }
 
     /**

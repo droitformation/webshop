@@ -102,16 +102,18 @@
         </table>
     </div>
 
+   <?php if($inscription->colloque->location->location_map){ ?>
     <div class="content">
         <table class="content-table" valign="top">
             <tr><td height="25">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top" align="center">
-                    <img style="max-width: 120mm" src="<?php echo public_path('files/colloques/cartes/'.$inscription->colloque->location->map.''); ?>" alt="Carte" />
+                    <img style="max-width: 120mm" src="<?php echo public_path($inscription->colloque->location->location_map); ?>" alt="Carte" />
                 </td>
             </tr>
         </table>
     </div>
+    <?php } ?>
 
 </body>
 </html>

@@ -115,47 +115,55 @@ class PdfGenerator
 
     public function factureEvent($inscription,$stream = false){
 
-        setlocale(LC_ALL, 'fr_FR.UTF-8');
-        $date  = Carbon::now()->formatLocalized('%d %B %Y');
+        if($inscription->price->price > 0)
+        {
+            setlocale(LC_ALL, 'fr_FR.UTF-8');
+            $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-        $inscription->load('user_options');
-        $inscription->user_options->load('option');
-        $inscription->colloque->load('location','centres','compte');
+            $inscription->load('user_options');
+            $inscription->user_options->load('option');
+            $inscription->colloque->load('location','centres','compte');
 
-        $inscription->user->load('adresses');
+            $inscription->user->load('adresses');
 
-        $data = [
-            'messages'    => $this->messages,
-            'expediteur'  => $this->expediteur,
-            'inscription' => $inscription,
-            'date'        => $date,
-            'signature'   => $this->signature,
-            'tva'         => $this->tva,
-            'annexes'     => $inscription->annexe
-        ];
+            $data = [
+                'messages'    => $this->messages,
+                'expediteur'  => $this->expediteur,
+                'inscription' => $inscription,
+                'date'        => $date,
+                'signature'   => $this->signature,
+                'tva'         => $this->tva,
+                'annexes'     => $inscription->annexe
+            ];
 
-        $facture = \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4');
+            $facture = \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4');
 
-        $generate = ($stream ? 'stream' : 'save');
+            $generate = ($stream ? 'stream' : 'save');
 
-        return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+        }
 
+        return true;
     }
 
 
     public function bvEvent($inscription, $stream = false)
     {
-        $inscription->colloque->load('compte');
 
-        $data = [
-            'inscription' => $inscription,
-        ];
+        if($inscription->price->price > 0)
+        {
+            $inscription->colloque->load('compte');
 
-        $bv = \PDF::loadView('colloques.templates.bv', $data)->setPaper('a4');
+            $data = ['inscription' => $inscription,];
 
-        $generate = ($stream ? 'stream' : 'save');
+            $bv = \PDF::loadView('colloques.templates.bv', $data)->setPaper('a4');
 
-        return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+            $generate = ($stream ? 'stream' : 'save');
+
+            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+        }
+
+        return true;
 
     }
 

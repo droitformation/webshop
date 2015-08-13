@@ -69,9 +69,12 @@
                 </div>
             </div>
 
-
-
         </div><!-- end panel body -->
+        <div class="panel-footer">
+            <a href="{{ url('inscription/generate/'.$inscription->id) }}" class="btn btn-danger">
+                <span class="glyphicon glyphicon-file"></span> &nbsp;Regenerer les documents
+            </a>
+        </div>
     </div><!-- end panel -->
 
 </div>

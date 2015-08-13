@@ -35,6 +35,10 @@
 
             @endforeach
         @endif
+
+        @if($colloque->location->location_map)
+            <p><a class="btn btn-warning btn-sm" href="{{ $colloque->location->location_map }}">Plan d'accès</a></p>
+        @endif
     </div>
     <div class="col-md-4">
         <img width="200px" src="{{ asset($colloque->illustration) }}" />

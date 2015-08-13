@@ -24,7 +24,7 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
      */
     public function __construct(Inscription $inscription)
     {
-        $this->inscription  = $inscription;
+        $this->inscription = $inscription;
     }
 
     /**
@@ -34,19 +34,13 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
      */
     public function handle(Mailer $mailer)
     {
-        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
-
         $this->inscription->load('colloque');
         $annexes = $this->inscription->colloque->annexe;
 
         // Generate annexes if any
-        if(!empty($annexes))
+        if(empty($this->inscription->documents) && !empty($annexes))
         {
-            foreach($annexes as $annexe)
-            {
-                $doc = $annexe.'Event';
-                $generator->$doc($this->inscription);
-            }
+            $this->generate($annexes);
         }
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -79,6 +73,20 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
                 }
             }
         });
+
+        $this->inscription->send_at = date('Y-m-d');
+        $this->inscription->save();
+    }
+
+    public function generate($annexes){
+
+        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+
+        foreach($annexes as $annexe)
+        {
+            $doc = $annexe.'Event';
+            $generator->$doc($this->inscription);
+        }
     }
 
 }

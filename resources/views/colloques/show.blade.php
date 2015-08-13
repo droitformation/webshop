@@ -27,7 +27,7 @@
 
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form role="form" class="validate-form" method="POST" action="/colloque/registration" data-validate="parsley" >
+                                    <form role="form" class="validate-form" method="POST" action="registration" data-validate="parsley" >
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <fieldset>
                                             @if(!$colloque->prices->isEmpty())

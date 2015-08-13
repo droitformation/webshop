@@ -8,16 +8,35 @@
 //Route::resource('product', 'ProductController');
 Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
 Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
-Route::get('colloque/inscription/{id}', 'Frontend\Colloque\ColloqueController@inscription');
-Route::post('colloque/registration', 'Frontend\Colloque\ColloqueController@registration');
+
+Route::group(['middleware' => 'auth'], function () {
+
+    /* *
+     * Inscriptions pages
+     * */
+    Route::get('colloque/inscription/{id}', 'Frontend\Colloque\ColloqueController@inscription');
+    Route::post('registration', 'InscriptionController@registration');
+
+    /* *
+     * User profile routes
+     * */
+    Route::get('profil', 'ProfileController@index');
+    Route::match(['put', 'post'],'profil/update', 'ProfileController@update');
+    Route::get('profil/orders', 'ProfileController@orders');
+    Route::get('profil/colloques', 'ProfileController@colloques');
+    Route::get('profil/inscription/{id}', 'ProfileController@inscription');
+
+});
 //Route::resource('colloque', 'Frontend\Colloque\ColloqueController');
 
 Route::get('inscription/colloque/{id}', 'InscriptionController@index');
+Route::get('inscription/generate/{id}', 'InscriptionController@generate');
 Route::resource('inscription', 'InscriptionController');
 
 /* *
  * Shop routes for frontend shop
  * */
+Route::get('/', 'Frontend\Shop\ShopController@index');
 Route::get('shop', 'Frontend\Shop\ShopController@index');
 Route::get('shop/product/{id}', 'Frontend\Shop\ShopController@show');
 
@@ -30,15 +49,6 @@ Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@
 
 Route::resource('adresse', 'AdresseController');
 Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
-
-/* *
- * User profile routes
- * */
-Route::get('profil', 'ProfileController@index');
-Route::match(['put', 'post'],'profil/update', 'ProfileController@update');
-Route::get('profil/orders', 'ProfileController@orders');
-Route::get('profil/colloques', 'ProfileController@colloques');
-Route::get('profil/inscription/{id}', 'ProfileController@inscription');
 
 /* *
  * Cart routes for frontend shop

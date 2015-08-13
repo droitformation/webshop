@@ -60,10 +60,14 @@ class Inscription extends Model
                 $path = config('documents.colloque.'.$annexe.'');
 
                 $file = public_path().$path.$annexe.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
-                $name = $annexe.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
 
-                $docs[$annexe]['file'] = $file;
-                $docs[$annexe]['name'] = $name;
+                if (\File::exists($file))
+                {
+                    $name = $annexe.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+
+                    $docs[$annexe]['file'] = $file;
+                    $docs[$annexe]['name'] = $name;
+                }
             }
         }
 

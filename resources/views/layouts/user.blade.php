@@ -27,6 +27,9 @@
                         Droit formation
                     </a>
                 </div>
+
+                @include('frontend.partials.usernav')
+
             </div>
         </nav>
 
