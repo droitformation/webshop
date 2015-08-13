@@ -220,3 +220,34 @@ body { font-family: sans-serif; }
 .colloque-details p{
     margin-bottom: 2px;
 }
+
+.option-choix{
+    float: left;
+    width: 50%;
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+fieldset .form-group{
+    margin-bottom: 0;
+}
+
+.radio.option-choix + .radio{
+    margin-top: 5px;
+}
+
+.group-choix{
+    margin-bottom: 0;
+}
+
+.group-choix label{
+    display: block;
+    margin-bottom: 0;
+}
+
+.group-choix:after{
+    content: '.';
+    visibility: hidden;
+    clear: both;
+    height: 0;
+}
