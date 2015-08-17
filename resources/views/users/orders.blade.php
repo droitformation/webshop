@@ -62,9 +62,9 @@
                                             <?php
                                                 $facture = public_path('files/shop/factures/facture_'.$order->order_no.'.pdf');
 
-                                                if (File::exists($facture))
+                                                if ($order->facture)
                                                 {
-                                                  echo '<a target="_blank" href="'.$facture.'" class="btn btn-success">Facture en pdf</a>';
+                                                  echo '<a target="_blank" href="'.$order->facture.'" class="btn btn-success">Facture en pdf</a>';
                                                 }
                                             ?>
                                         </div>

@@ -67,6 +67,10 @@
                 <td width="40%" align="top" valign="middle" class="misc-infos">
                     <table id="content-table" class="infos">
                         <tr>
+                            <td width="28%"><strong class="blue">Payement</strong></td>
+                            <td width="72%"><?php echo $order->payement->title;  ?></td>
+                        </tr>
+                        <tr>
                             <td width="28%"><strong class="blue">Total:</strong></td>
                             <td width="72%"><?php echo $order->price_cents; ?> CHF</td>
                         </tr>
@@ -122,6 +126,12 @@
                     <h3>Communications</h3>
                     <div class="communications">
                     <?php
+
+                        if($order->payed_at)
+                        {
+                           echo '<p class="message special">Acquitté le '.$order->payed_at->format('d/m/Y').'</p>';
+                        }
+
                         if(!empty($messages))
                         {
                             foreach($msgTypes as $msgType)

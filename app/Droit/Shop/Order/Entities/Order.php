@@ -9,7 +9,7 @@ class Order extends Model{
 
     protected $table = 'shop_orders';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at','payed_at'];
 
     protected $fillable = ['user_id', 'coupon_id', 'payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl'];
 
@@ -46,6 +46,18 @@ class Order extends Model{
         $price = $money->format($price);
 
         return explode('.',$price);
+    }
+
+    public function getFactureAttribute()
+    {
+        $facture = public_path('files/shop/factures/facture_'.$this->order_no.'.pdf');
+
+        if (\File::exists($facture))
+        {
+            return 'files/shop/factures/facture_'.$this->order_no.'.pdf';
+        }
+
+        return false;
     }
 
     public function getTotalWithShippingAttribute()

@@ -25,7 +25,7 @@
         @include('frontend.partials.header')
         @include('partials.message')
 
-        @if(!Cart::content()->isEmpty() && (Request::is('shop') || Request::is('shop/product/*')))
+        @if(!Cart::content()->isEmpty() && (Request::is('shop') || Request::is('/') || Request::is('shop/product/*')))
             <div class="row">
                 <div class="col-md-12">
                     <a class="btn btn-xl btn-info" data-toggle="collapse" href="#collapseCart" href="#"><i class="glyphicon glyphicon-shopping-cart"></i></a>
