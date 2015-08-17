@@ -74,6 +74,20 @@ class Inscription extends Model
         return $docs;
     }
 
+    public function getInscritAttribute()
+    {
+        $this->load('user','groupe');
+
+        if(isset($this->groupe) && !empty($this->groupe))
+        {
+            $this->groupe->load('user');
+
+            return $this->groupe->user;
+        }
+
+        return $this->user;
+    }
+
     public function price()
     {
         return $this->belongsTo('App\Droit\Price\Entities\Price');
@@ -87,6 +101,16 @@ class Inscription extends Model
     public function user()
     {
         return $this->belongsTo('App\Droit\User\Entities\User');
+    }
+
+    public function groupe()
+    {
+        return $this->belongsTo('App\Droit\Inscription\Entities\Groupe', 'group_id', 'id');
+    }
+
+    public function participant()
+    {
+        return $this->hasOne('App\Droit\Inscription\Entities\Participant');
     }
 
     public function user_options()

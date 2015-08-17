@@ -28,18 +28,23 @@
                 </td>
                 <td align="top" width="40%" valign="top">
                     <?php
-                        $adresse = $inscription->user->adresse_facturation;
+                        $adresse = $inscription->adresse_facturation;
 
                         if($adresse)
                         {
                             echo '<ul id="user">';
                             echo (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '');
-                            echo '<li>'.$adresse->civilite_title.' '.$inscription->user->name.'</li>';
+                            echo '<li>'.$adresse->civilite_title.' '.$inscription->inscrit->name.'</li>';
                             echo '<li>'.$adresse->adresse.'</li>';
                             echo (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '');
                             echo (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '');
                             echo '<li>'.$adresse->npa.' '.$adresse->ville.'</li>';
                             echo '</ul>';
+                        }
+
+
+                        if(isset($inscription->participant)){
+                            echo '<br/><p><strong>Participant: </strong>'.$inscription->participant->name.'</p>';
                         }
                     ?>
 
@@ -66,7 +71,6 @@
                     <h3><?php echo $inscription->colloque->soustitre; ?></h3>
                 </td>
             </tr>
-            <tr><td height="5">&nbsp;</td></tr>
             <tr>
                 <td valign="top">
                     <h3 class="titre-info"><strong>Date:</strong> <?php echo $inscription->colloque->event_date; ?></h3>

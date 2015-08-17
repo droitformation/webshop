@@ -1,5 +1,4 @@
 <?php $group = $colloque->options->groupBy('type'); ?>
-<h4>Merci de préciser</h4>
 @foreach($group as $type => $options)
 
     <!-- Options checkboxes -->
@@ -14,22 +13,20 @@
     <!-- Options radio -->
     @if($type == 'choix')
         @foreach($options as $option)
-            <div class="well well-sm">
-                <div class="form-group group-choix">
-                    <label class="control-label">{{ $option->title }}</label>
-                    <?php $option->load('groupe'); ?>
-                    @if(!$option->groupe->isEmpty())
-                        @foreach($option->groupe as $groupe)
-                            <div class="radio option-choix">
-                                <label>
-                                    <input type="radio" required name="{{ $select }}[{{ $option->id }}]" value="{{ $groupe->id }}">
-                                    {{ $groupe->text }}
-                                </label>
-                            </div>
-                        @endforeach
-                    @endif
+            <div class="form-group group-choix">
+                <label class="control-label">{{ $option->title }}</label>
+                <?php $option->load('groupe'); ?>
+                @if(!$option->groupe->isEmpty())
+                    @foreach($option->groupe as $groupe)
+                        <div class="radio">
+                            <label>
+                                <input type="radio" required name="{{ $select }}[{{ $option->id }}]" value="{{ $groupe->id }}">
+                                {{ $groupe->text }}
+                            </label>
+                        </div>
+                    @endforeach
+                @endif
 
-                </div>
             </div>
         @endforeach
     @endif

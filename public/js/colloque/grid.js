@@ -22,20 +22,26 @@ $(document).ready( function() {
     });
 
     $grid.on( 'click', '.grid-item-content', function() {
-        $('.grid-item').removeClass('is-expanded');
-        $('.grid-item .inner').empty();
-        $grid.isotope('layout');
 
-        var self   = $( this );
-        var id     = self.data('colloque');
-        var $body  = $('#colloque_' + id + ' .body .inner');
+        var self      = $( this );
+        var $gridItem = self.parent('.grid-item');
 
-        $.get(url + "colloque/" + id, {}, function( data )
+        if(!$gridItem.hasClass('is-expanded'))
         {
-            $body.html(data);
-            self.parent('.grid-item').toggleClass('is-expanded');
+            $('.grid-item').removeClass('is-expanded');
+            $('.grid-item .inner').empty();
             $grid.isotope('layout');
-        });
+
+            var id     = self.data('colloque');
+            var $body  = $('#colloque_' + id + ' .body .inner');
+
+            $.get(url + "colloque/" + id, {}, function( data )
+            {
+                $body.html(data);
+                $gridItem.toggleClass('is-expanded');
+                $grid.isotope('layout');
+            });
+        }
     });
 
 });

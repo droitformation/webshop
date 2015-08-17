@@ -136,20 +136,25 @@ Route::get('cartworker', function()
     $user   = \App::make('App\Droit\User\Repo\UserInterface');
     $inscription   = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
-    $inscrit = $inscription->find(1);
+    $inscrit = $inscription->find(27);
+    $inscrit->load('groupe','participant');
+    $inscrit->inscrit->load('adresses');
+    $user = $inscrit->inscrit;
+    $user->load('adresses');
 
-/*    $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+
+    $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
 
     $annexes   = $inscrit->colloque->annexe;
     // Generate annexes
     if(!empty($annexes))
     {
-        foreach($annexes as $annexe)
-        {
-            $doc = $annexe.'Event';
-            $generator->$doc($inscrit);
-        }
-    }*/
+       foreach($annexes as $annexe)
+       {
+           $doc = $annexe.'Event';
+           $generator->$doc($inscrit);
+       }
+    }
 
     //$pdf    = new App\Droit\Generate\Pdf\PdfGenerator();
 
@@ -158,11 +163,11 @@ Route::get('cartworker', function()
 
     //$order_no = $order->find(6);
     //print_r($create->handle());
-    //return $pdf->factureOrder(6,true);
+    //return $generator->factureOrder(34,true);
 
     //return $pdf->bvEvent($inscrit,true);
 
-    event(new App\Events\InscriptionWasRegistered($inscrit));
+    //event(new App\Events\InscriptionWasRegistered($inscrit));
 
 });
 

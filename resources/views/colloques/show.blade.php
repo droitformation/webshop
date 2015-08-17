@@ -30,6 +30,7 @@
                                             @include('colloques.partials.prices', ['select' => 'price_id'])
                                         @endif
 
+                                        <h4>Merci de préciser</h4>
                                         @if(!$colloque->options->isEmpty())
                                             @include('colloques.partials.options', ['select' => 'groupes'])
                                         @endif
@@ -58,35 +59,28 @@
 
                                     <h4>Inscriptions multiple</h4>
 
-                                    <div class="row">
-                                        <div class="col-md-4">
+                                    <h4><a href="#" id="cloneBtn"><i class="glyphicon glyphicon-plus-sign"></i></a></h4>
+
+                                    <div id="wrapper_clone">
+                                        <fieldset class="field_clone" id="fieldset_clone">
                                             <div class="form-group">
-                                                <label>Nombre de participants</label>
-                                                <div class="input-group" style="width: 120px;">
-                                                    <input type="text" class="form-control">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-info" type="button">Ok</button>
-                                                    </span>
-                                                </div><!-- /input-group -->
+                                                <label>Nom du participant</label>
+                                                <input name="participant[]" required class="form-control" value="" type="text">
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <fieldset style="display: none;" class="field_clone">
 
-                                                @if(!$colloque->prices->isEmpty())
-                                                    @include('colloques.partials.prices', ['select' => 'price_id[]'])
-                                                @endif
+                                            @if(!$colloque->prices->isEmpty())
+                                                @include('colloques.partials.prices', ['select' => 'price_id[]'])
+                                            @endif
 
-                                                @if(!$colloque->options->isEmpty())
-                                                    @include('colloques.partials.options', ['select' => 'groupes[]'])
-                                                @endif
-
-                                            </fieldset>
-                                        </div>
+                                            @if(!$colloque->options->isEmpty())
+                                                @include('colloques.partials.options', ['select' => 'groupes[]'])
+                                            @endif
+                                        </fieldset>
                                     </div>
+
                                     <input name="user_id" value="{{ Auth::user()->id }}" type="hidden">
                                     <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
-                                    <br/>
+                                    <div class="clearfix"></div><br/>
                                     <button class="btn btn-danger" type="submit">Envoyer</button>
                                 </form>
                             </div>

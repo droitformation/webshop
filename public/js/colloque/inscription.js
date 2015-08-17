@@ -71,6 +71,30 @@
         $('.dataTables_filter input').addClass('form-control').attr('placeholder','Recherche...');
         $('.dataTables_length select').addClass('form-control');
 
-    });
 
+        // .field_clone
+        var $wrapper_clone  = $('#wrapper_clone');
+        var $cloneBtn       = $('#cloneBtn');
+        var $fieldset_clone = $('#fieldset_clone');
+
+        $cloneBtn.on( "click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('hey' );
+
+            var clone = $fieldset_clone.clone();
+            clone.attr('id', '');
+            clone.prepend('<a href="#" class="remove">x</a>');
+            clone.appendTo($wrapper_clone);
+        });
+
+        $('body').on("click", '.remove' ,function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var parent = $(this).closest('fieldset');
+            parent.remove();
+        });
+
+    });
 }(window.jQuery);

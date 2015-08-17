@@ -93,11 +93,14 @@ class PdfGenerator
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-        $inscription->load('user_options');
+        $inscription->load('user_options','groupe','participant');
         $inscription->user_options->load('option');
         $inscription->colloque->load('location','centres','compte');
 
-        $inscription->user->load('adresses');
+        $user = $inscription->inscrit;
+        $user->load('adresses');
+
+        $inscription->setAttribute('adresse_facturation',$user->adresse_facturation);
 
         $data = [
             'expediteur'  => $this->expediteur,
@@ -109,7 +112,7 @@ class PdfGenerator
 
         $generate = ($stream ? 'stream' : 'save');
 
-        return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+        return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$inscription->colloque->id.'-'.$inscription->inscrit->id.'.pdf');
 
     }
 
@@ -120,11 +123,14 @@ class PdfGenerator
             setlocale(LC_ALL, 'fr_FR.UTF-8');
             $date  = Carbon::now()->formatLocalized('%d %B %Y');
 
-            $inscription->load('user_options');
+            $inscription->load('user_options','groupe','participant');
             $inscription->user_options->load('option');
             $inscription->colloque->load('location','centres','compte');
 
-            $inscription->user->load('adresses');
+            $user = $inscription->inscrit;
+            $user->load('adresses');
+
+            $inscription->setAttribute('adresse_facturation',$user->adresse_facturation);
 
             $data = [
                 'messages'    => $this->messages,
@@ -140,7 +146,7 @@ class PdfGenerator
 
             $generate = ($stream ? 'stream' : 'save');
 
-            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$inscription->colloque->id.'-'.$inscription->inscrit->id.'.pdf');
         }
 
         return true;
@@ -160,7 +166,7 @@ class PdfGenerator
 
             $generate = ($stream ? 'stream' : 'save');
 
-            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$inscription->colloque->id.'-'.$inscription->user->id.'.pdf');
+            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$inscription->colloque->id.'-'.$inscription->inscrit->id.'.pdf');
         }
 
         return true;

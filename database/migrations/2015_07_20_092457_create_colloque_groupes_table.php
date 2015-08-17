@@ -16,8 +16,8 @@ class CreateColloqueGroupesTable extends Migration
             $table->increments('id');
             $table->integer('colloque_id');
             $table->integer('user_id');
-            $table->string('description');
-            $table->integer('adresse_id');
+            $table->string('description')->nullable();
+            $table->integer('adresse_id')->nullable();
         });
     }
 
