@@ -23,13 +23,14 @@ class ColloqueTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function testNewNoInscription()
+	public function testIntersectAnnexes()
 	{
-        $this->mock->shouldReceive('all')->once()->andReturn(4);
 
-        $this->interface->setNoInscription(1);
+        $annexes = ['bon','facture','bv'];
+        $result  = (count(array_intersect($annexes, ['bon','facture'])) == count(['bon','facture']) ? true : false);
 
-		$this->assertEquals(200, $response->getStatusCode());
+        $this->assertTrue($result);
+
 	}
 
 }

@@ -15,6 +15,7 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
     use InteractsWithQueue, SerializesModels;
 
     protected $inscription;
+    protected $generator;
     protected $mailer;
 
     /**
@@ -24,7 +25,10 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
      */
     public function __construct(Inscription $inscription)
     {
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+
         $this->inscription = $inscription;
+        $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
     }
 
     /**
@@ -40,10 +44,8 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
         // Generate annexes if any
         if(empty($this->inscription->documents) && !empty($annexes))
         {
-            $this->generate($annexes);
+            $this->generator->setInscription($this->inscription)->generate($annexes);
         }
-
-        setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $date   = \Carbon\Carbon::now()->formatLocalized('%d %B %Y');
         $title  = 'Votre inscription sur publications-droit.ch';
@@ -76,17 +78,6 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
 
         $this->inscription->send_at = date('Y-m-d');
         $this->inscription->save();
-    }
-
-    public function generate($annexes){
-
-        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
-
-        foreach($annexes as $annexe)
-        {
-            $doc = $annexe.'Event';
-            $generator->$doc($this->inscription);
-        }
     }
 
 }

@@ -42,7 +42,6 @@
                             echo '</ul>';
                         }
 
-
                         if(isset($inscription->participant)){
                             echo '<br/><p><strong>Participant: </strong>'.$inscription->participant->name.'</p>';
                         }

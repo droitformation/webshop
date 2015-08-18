@@ -1,0 +1,29 @@
+.datepicker {
+    z-index: 1450;
+}
+
+.navbar-fixed-top {
+    z-index: 1080;
+}
+
+.table-responsive {
+    overflow: hidden;
+}
+
+table.dataTable thead .sorting_asc::after{
+    content: "▲";
+    opacity: 0.3;
+}
+
+table.dataTable thead .sorting::after{
+    content: "▼";
+    opacity: 0.3;
+}
+
+.pagination > li > a, .pagination > li span {
+    padding: 5px 12px;
+}
+
+select.form-control + .chosen-container .chosen-results li, select.form-control + .chosen-container .chosen-results li.active-result {
+    white-space: pre-wrap;
+}

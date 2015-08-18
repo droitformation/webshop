@@ -13,6 +13,7 @@
 
     <!-- Colloques Files -->
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/colloque.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
 
     <script src="<?php echo asset('js/colloque/isotope.pkgd.min.js');?>"></script>
     <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>

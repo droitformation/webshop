@@ -31,7 +31,8 @@ class Kernel extends HttpKernel {
         'cart' => 'App\Http\Middleware\CartMiddleware',
         'oauth' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware',
         'oauth-owner' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthOwnerMiddleware',
-        'check-authorization-params' => 'LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware'
+        'check-authorization-params' => 'LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware',
+        'administration' =>'App\Http\Middleware\AdminMiddleware',
 	];
 
 }

@@ -15,7 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
      * Inscriptions pages
      * */
     Route::get('colloque/inscription/{id}', 'Frontend\Colloque\ColloqueController@inscription');
-    Route::post('registration', 'InscriptionController@registration');
+    Route::post('registration', 'Frontend\Colloque\InscriptionController@registration');
 
     /* *
      * User profile routes
@@ -27,11 +27,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profil/inscription/{id}', 'ProfileController@inscription');
 
 });
-//Route::resource('colloque', 'Frontend\Colloque\ColloqueController');
 
-Route::get('inscription/colloque/{id}', 'InscriptionController@index');
-Route::get('inscription/generate/{id}', 'InscriptionController@generate');
-Route::resource('inscription', 'InscriptionController');
+Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], function () {
+
+    Route::get('/', 'Admin\AdminController@index');
+    Route::get('inscription/colloque/{id}', 'Admin\Colloque\InscriptionController@index');
+    Route::get('inscription/generate/{id}', 'Admin\Colloque\InscriptionController@generate');
+    Route::resource('inscription', 'Admin\Colloque\InscriptionController');
+
+});
 
 /* *
  * Shop routes for frontend shop
@@ -130,33 +134,19 @@ Route::get('api/user', ['middleware' => 'oauth', function(){
 
 Route::get('cartworker', function()
 {
-    $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
-    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
-    $order  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $user   = \App::make('App\Droit\User\Repo\UserInterface');
-    $inscription   = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+    $coupon       = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+    $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $user         = \App::make('App\Droit\User\Repo\UserInterface');
+    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-    $inscrit = $inscription->find(27);
+    $inscrit = $inscription->find(31);
     $inscrit->load('groupe','participant');
-    $inscrit->inscrit->load('adresses');
-    $user = $inscrit->inscrit;
-    $user->load('adresses');
 
+    //$annexes = $inscrit->colloque->annexe;
 
-    $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
-
-    $annexes   = $inscrit->colloque->annexe;
-    // Generate annexes
-    if(!empty($annexes))
-    {
-       foreach($annexes as $annexe)
-       {
-           $doc = $annexe.'Event';
-           $generator->$doc($inscrit);
-       }
-    }
-
-    //$pdf    = new App\Droit\Generate\Pdf\PdfGenerator();
+   // $generator->setInscription($inscrit)->generate($annexes);
 
     //$order_no = $order->find(21);
     //$create = new App\Jobs\CreateOrderInvoice($order_no);

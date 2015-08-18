@@ -3,18 +3,16 @@
 
     <!-- Options checkboxes -->
     @if($type == 'checkbox')
-        <div class="well well-sm">
-            @foreach($options as $option)
-                <div class="form-group"><input type="checkbox" name="options[]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}</div>
-            @endforeach
-        </div>
+        @foreach($options as $option)
+            <div class="form-group type-choix"><input type="checkbox" name="options[]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}</div>
+        @endforeach
     @endif
 
     <!-- Options radio -->
     @if($type == 'choix')
         @foreach($options as $option)
-            <div class="form-group group-choix">
-                <label class="control-label">{{ $option->title }}</label>
+            <div class="form-group group-choix type-choix">
+                <label class="control-label"><strong>{{ $option->title }}</strong></label>
                 <?php $option->load('groupe'); ?>
                 @if(!$option->groupe->isEmpty())
                     @foreach($option->groupe as $groupe)

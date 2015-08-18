@@ -1,0 +1,53 @@
+
+.option-choix{
+    float: left;
+    width: 50%;
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+.field_clone{
+    background:  #f7f7f7;
+    padding: 8px;
+    width: 32%;
+    margin: 5px;
+    float: left;
+    position: relative;
+}
+
+.field_clone .remove{
+    background: red none repeat scroll 0 0;
+    color: #fff;
+    display: block;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 20px;
+}
+
+.field_clone .remove:hover{
+    text-decoration: none;
+    background: #F01800;
+}
+
+.radio.option-choix + .radio{
+    margin-top: 5px;
+}
+
+.group-choix{
+    margin-bottom: 0;
+}
+
+.group-choix label{
+    display: block;
+    margin-bottom: 0;
+}
+
+.type-choix{
+    padding: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
