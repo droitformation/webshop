@@ -144,12 +144,12 @@ Route::get('cartworker', function()
     $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-    $inscrit = $inscription->find(31);
+    $inscrit = $inscription->find(35);
     $inscrit->load('groupe','participant');
 
-    //$annexes = $inscrit->colloque->annexe;
+    $annexes = $inscrit->colloque->annexe;
 
-   // $generator->setInscription($inscrit)->generate($annexes);
+    $generator->setInscription($inscrit)->generate($annexes);
 
     //$order_no = $order->find(21);
     //$create = new App\Jobs\CreateOrderInvoice($order_no);

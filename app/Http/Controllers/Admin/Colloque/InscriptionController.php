@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Colloque;
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
+use App\Droit\Inscription\Worker\InscriptionWorker;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionRequest;
@@ -14,6 +15,7 @@ use App\Events\InscriptionWasRegistered;
 class InscriptionController extends Controller
 {
     protected $inscription;
+    protected $register;
     protected $colloque;
     protected $user;
     protected $generator;
@@ -23,13 +25,13 @@ class InscriptionController extends Controller
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user)
+    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorker $register)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
+        $this->register    = $register;
         $this->user        = $user;
         $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
-
     }
 
     /**
@@ -65,21 +67,66 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
-/*        $colloque = $this->colloque->find($request->input('colloque_id'));
-        $counter  = $this->colloque->getNewNoInscription($colloque->id);
 
-        // Prepare data
-        $data        = $request->all() + ['inscription_no' => $counter];
-        $inscription = $this->inscription->create($data);
+        $type     = $request->input('type');
+        $colloque = $this->colloque->find($request->input('colloque_id'));
+
+        // if type simple
+        if($type == 'simple')
+        {
+            $data        = $request->all();
+            $inscription = $this->register->register($data,$colloque->id);
+            $counter     = $colloque->counter + 1;
+
+            event(new InscriptionWasRegistered($inscription));
+        }
+        else
+        {
+            $groupe = new \App\Droit\Inscription\Entities\Groupe();
+
+            $group_user   = $groupe->create(['colloque_id' => $colloque->id , 'user_id' => $request->input('user_id')]);
+
+            $participants = $request->input('participant');
+            $prices       = $request->input('price_id');
+            $options      = $request->input('options');
+            $groupes      = $request->input('groupes');
+
+            foreach($participants as $index => $participant)
+            {
+                $data = [
+                    'group_id'    => $group_user->id,
+                    'colloque_id' => $colloque->id,
+                    'participant' => $participant,
+                    'price_id'    => $prices[$index]
+                ];
+
+                if(isset($options[$index]))
+                {
+                    $data['options'] = $options[$index];
+                }
+
+                if(isset($groupes[$index]))
+                {
+                    $data['groupes'] = $groupes[$index];
+                }
+
+                $inscriptions[] = $this->register->register($data,$colloque->id);
+            }
+
+            $counter = $colloque->counter + count($participants);
+
+        }
 
         // Update counter
         $colloque->counter = $counter;
         $colloque->save();
 
-        event(new InscriptionWasRegistered($inscription));
+        echo '<pre>';
+        print_r($inscriptions);
+        echo '</pre>';exit;
 
         return redirect('admin/inscription')->with(array('status' => 'success',
-            'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));*/
+            'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));
     }
 
     /**

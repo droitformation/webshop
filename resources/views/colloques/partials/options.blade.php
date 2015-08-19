@@ -4,7 +4,7 @@
     <!-- Options checkboxes -->
     @if($type == 'checkbox')
         @foreach($options as $option)
-            <div class="form-group type-choix"><input type="checkbox" name="options[]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}</div>
+            <div class="form-group type-choix"><input type="checkbox" class="option-input" name="options[0][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}</div>
         @endforeach
     @endif
 
@@ -18,7 +18,7 @@
                     @foreach($option->groupe as $groupe)
                         <div class="radio">
                             <label>
-                                <input type="radio" required name="{{ $select }}[{{ $option->id }}]" value="{{ $groupe->id }}">
+                                <input type="radio" required class="group-input" name="{{ $select }}[{{ $option->id }}]" value="{{ $groupe->id }}">
                                 {{ $groupe->text }}
                             </label>
                         </div>

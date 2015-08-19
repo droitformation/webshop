@@ -24,7 +24,6 @@
                         </div>
                     </div>
 
-                    <div id="selecteColloque"></div>
                     <div class="form-group">
                         <label><strong>Colloque</strong></label>
                         <select autocomplete="off" required class="form-control" id="colloqueSelection">
@@ -42,7 +41,8 @@
                         <input id="searchUser" class="form-control" placeholder="Chercher un utilisateur..." type="text">
                     </div>
 
-                    <div id="selecteUser"></div>
+                    <div id="inputUser"></div>
+                    <div id="inputolloque"></div>
 
                     <button type="submit" class="btn btn-info pull-right">Ok</button>
                 </form>
@@ -54,9 +54,9 @@
         <!-- Panel -->
         <div class="panel panel-info">
             <div class="panel-body">
-                <div id="selectInscription">
-                    <p>Veuillez choisir le type d'inscription, le colloque et l'utilisateur</p>
-                </div>
+                <div id="choiceUser"></div>
+                <div id="choiceColloque"></div>
+                <div id="selectInscription"></div>
             </div>
         </div>
         <!-- END panel -->

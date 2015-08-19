@@ -1,15 +1,14 @@
 <!-- Inscription multiple -->
-<h3>Inscription multiple</h3>
+
+<h4><strong>Facturé à:</strong></h4>
+<address>
+    {{ $user->name }}<br/>
+    {{ $user->adresse_facturation->adresse }}<br/>
+    {{ $user->adresse_facturation->npa }} {{ $user->adresse_facturation->ville }}
+</address>
 
 <form role="form" class="validate-form" method="POST" action="{{ url('admin/inscription') }}" data-validate="parsley" >
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-    <h4>Facturé à:</h4>
-    <address>
-        {{ $user->name }}<br/>
-        {{ $user->adresse_facturation->adresse }}<br/>
-        {{ $user->adresse_facturation->npa }} {{ $user->adresse_facturation->ville }}
-    </address>
 
     <p><a href="#" class="btn btn-sm btn-info" id="cloneBtn"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
 
@@ -25,7 +24,7 @@
             @endif
 
             @if(!$colloque->options->isEmpty())
-                @include('colloques.partials.options', ['select' => 'groupes[]'])
+                @include('colloques.partials.options', ['select' => 'groupes[0]'])
             @endif
         </fieldset>
     </div>
@@ -35,7 +34,7 @@
     <input name="type" value="{{ $type }}" type="hidden">
 
     <div class="clearfix"></div><br/>
-    <button class="btn btn-danger" type="submit">Envoyer</button>
+    <button class="btn btn-danger" type="submit">Inscrire</button>
 </form>
 
 <!-- END Inscriptions -->
