@@ -22,6 +22,14 @@ class UserEloquent implements UserInterface{
         return $this->user->with(['adresses','orders','inscriptions','roles'])->findOrFail($id);
     }
 
+    public function search($term){
+
+        return $this->user->where('email', 'like', '%'.$term.'%')
+            ->orWhere('first_name', 'like', '%'.$term.'%')
+            ->orWhere('last_name', 'like', '%'.$term.'%')
+            ->get();
+    }
+
     public function create(array $data){
 
         $user = $this->user->create(array(

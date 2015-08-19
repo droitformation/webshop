@@ -13,7 +13,8 @@ class SearchController extends Controller
 
     public function __construct(UserInterface $user)
     {
-        $this->user = $user;
+        $this->user   = $user;
+        $this->helper = new \App\Droit\Helper\Helper();
     }
 
     /**
@@ -24,9 +25,8 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $results = $this->user->search($request->input('term'));
+        $results = $this->helper->convertAutocomplete($results);
 
-        return response()->json(array(
-            'data' => $results
-        ));
+        return response()->json($results);
     }
 }

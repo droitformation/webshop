@@ -46,50 +46,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <!-- Multiple inscription -->
-
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-
-                                <form role="form" class="validate-form" method="POST" action=" registration" data-validate="parsley" >
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                                    <h4>Inscriptions multiple</h4>
-
-                                    <h4><a href="#" id="cloneBtn"><i class="glyphicon glyphicon-plus-sign"></i></a></h4>
-
-                                    <div id="wrapper_clone">
-                                        <fieldset class="field_clone" id="fieldset_clone">
-                                            <div class="form-group">
-                                                <label>Nom du participant</label>
-                                                <input name="participant[]" required class="form-control" value="" type="text">
-                                            </div>
-
-                                            @if(!$colloque->prices->isEmpty())
-                                                @include('colloques.partials.prices', ['select' => 'price_id[]'])
-                                            @endif
-
-                                            @if(!$colloque->options->isEmpty())
-                                                @include('colloques.partials.options', ['select' => 'groupes[]'])
-                                            @endif
-                                        </fieldset>
-                                    </div>
-
-                                    <input name="user_id" value="{{ Auth::user()->id }}" type="hidden">
-                                    <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
-                                    <div class="clearfix"></div><br/>
-                                    <button class="btn btn-danger" type="submit">Envoyer</button>
-                                </form>
-                            </div>
-                        </div><!-- end panel -->
-
-
-                    </div>
-                </div>
-
             </div>
         </div>
 

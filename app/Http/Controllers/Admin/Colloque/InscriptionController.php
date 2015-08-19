@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Colloque;
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
+use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionRequest;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,7 @@ class InscriptionController extends Controller
 {
     protected $inscription;
     protected $colloque;
+    protected $user;
     protected $generator;
 
     /**
@@ -21,10 +23,11 @@ class InscriptionController extends Controller
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription)
+    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
+        $this->user        = $user;
         $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
 
     }
@@ -36,9 +39,9 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-        $inscriptions = $this->inscription->getAll();
+        $colloques = $this->colloque->getAll();
 
-        return view('backend.inscriptions.index')->with(['inscriptions' => $inscriptions]);
+        return view('backend.inscriptions.index')->with(['colloques' => $colloques]);
     }
 
     /**
@@ -48,9 +51,10 @@ class InscriptionController extends Controller
      */
     public function create()
     {
+        $colloques = $this->colloque->getAll();
         $colloque = $this->colloque->find(71);
 
-        return view('backend.inscriptions.create')->with(['colloque' => $colloque]);
+        return view('backend.inscriptions.create')->with(['colloques' => $colloques,'colloque' => $colloque]);
     }
 
     /**
@@ -61,7 +65,7 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
-        $colloque = $this->colloque->find($request->input('colloque_id'));
+/*        $colloque = $this->colloque->find($request->input('colloque_id'));
         $counter  = $this->colloque->getNewNoInscription($colloque->id);
 
         // Prepare data
@@ -75,7 +79,7 @@ class InscriptionController extends Controller
         event(new InscriptionWasRegistered($inscription));
 
         return redirect('admin/inscription')->with(array('status' => 'success',
-            'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));
+            'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));*/
     }
 
     /**
@@ -142,4 +146,18 @@ class InscriptionController extends Controller
     {
         //
     }
+
+    /**
+     * Inscription partial
+     * @return Response
+     */
+    public function inscription(Request $request){
+
+        $colloque = $this->colloque->find($request->input('colloque_id'));
+        $user     = $this->user->find($request->input('user_id'));
+        $type     = $request->input('type');
+
+        echo view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type]);
+    }
+
 }

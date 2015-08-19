@@ -55,6 +55,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function getAdresseFacturationAttribute()
     {
+        $this->load('adresses');
+
         if(isset($this->adresses))
         {
             $contact = $this->adresses->filter(function($adresse)

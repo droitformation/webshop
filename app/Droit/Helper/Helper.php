@@ -453,4 +453,21 @@ class Helper {
         return $user;
     }
 
+    public function convertAutocomplete($results){
+        $data = [];
+        if(!$results->isEmpty())
+        {
+            foreach($results as $result)
+            {
+                $data[] = [
+                    'label'   => $result->name ,
+                    'desc'    => $result->email,
+                    'adresse' => $result->adresse_facturation,
+                    'value'   => $result->id
+                ];
+            }
+        }
+        return $data;
+    }
+
 }

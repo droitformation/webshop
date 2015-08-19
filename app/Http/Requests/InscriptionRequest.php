@@ -29,8 +29,8 @@ class InscriptionRequest extends Request
     public function rules()
     {
         return [
-            'user_id'  => 'required_without:group_id',
-            'group_id' => 'required_without:user_id'
+            'user_id'     => 'required',
+            'colloque_id' => 'required'
         ];
     }
 }

@@ -42,4 +42,59 @@ $( function() {
     // The url to the application
     var base_url = location.protocol + "//" + location.host+"/";
 
+    $( "#searchUser" ).autocomplete({
+        source: base_url + 'admin/search',
+        minLength: 3,
+        select: function( event, ui )
+        {
+            console.log(ui);
+
+            $('#selecteUser').html(
+                '<h4>Utilisateur sélectionné</h4>'
+                + '<address>'
+                +  ui.item.label + '<br/>'
+                +  ui.item.adresse.adresse + '<br/>'
+                +  ui.item.adresse.npa + ' ' +  ui.item.adresse.ville
+                + '</address>'
+                + '<input type="hidden" value="' + ui.item.value + '" name="user_id">'
+            );
+
+            $(this).val('');
+
+            return false;
+        }
+    }).autocomplete( "instance" )._renderItem = function( ul, item )
+    {
+        return $( "<li>" ).append( "<a>" + item.label + "<span>" + item.desc + "</span></a>" ).appendTo( ul );
+    };
+
+    $( "#colloqueSelection" ).change(function() {
+        var optionSelected = $("option:selected", this);
+        var valueSelected  = optionSelected.val();
+        $("#selecteColloque").html(
+            '<input type="hidden" value="' + valueSelected + '" name="colloque_id">'
+        );
+    });
+
+    $('#formInscription').on('submit', function (e) {
+
+        e.preventDefault();
+
+        var datastring = $("#formInscription").serialize();
+
+        $.ajax({
+            type: "POST",
+            url : base_url + "admin/inscription/type",
+            data: datastring,
+            success: function(data) {
+                $('#selectInscription').html(data);
+            },
+            error: function(){
+                alert('error handing here');
+            }
+        });
+
+    });
+
+
 });
