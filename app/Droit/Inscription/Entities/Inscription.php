@@ -88,6 +88,26 @@ class Inscription extends Model
         return $this->user;
     }
 
+    /**
+     * Scope a query to only include simple inscription
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSimple($query)
+    {
+        return $query->where('group_id', NULL);
+    }
+
+    /**
+     * Scope a query to only include multiple inscription
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMultiple($query)
+    {
+        return $query->where('user_id', NULL);
+    }
+
     public function price()
     {
         return $this->belongsTo('App\Droit\Price\Entities\Price');

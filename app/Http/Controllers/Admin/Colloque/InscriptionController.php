@@ -47,6 +47,24 @@ class InscriptionController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function colloque($id)
+    {
+        //$simple   = $this->inscription->getByColloque($id,'simple');
+        //$multiple = $this->inscription->getByColloque($id,'multiple');
+
+        $inscriptions = $this->inscription->getByColloque($id);
+        //$grouped  = $multiple->groupBy('group_id');
+
+        //$result   = $simple->merge($multiple);
+
+        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions]);
+    }
+
+    /**
      * Display creation.
      *
      * @return Response
@@ -121,12 +139,7 @@ class InscriptionController extends Controller
         $colloque->counter = $counter;
         $colloque->save();
 
-        echo '<pre>';
-        print_r($inscriptions);
-        echo '</pre>';exit;
-
-        return redirect('admin/inscription')->with(array('status' => 'success',
-            'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));
+        return redirect('admin/inscription')->with(array('status' => 'success', 'message' => 'L\'inscription à bien éété crée' ));
     }
 
     /**

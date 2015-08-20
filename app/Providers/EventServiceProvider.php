@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider {
         'App\Events\InscriptionWasRegistered' => [
             'App\Listeners\EmailRegisterInscriptionConfirmation'
         ],
+        'App\Events\InscriptionWasCreated' => [
+            'App\Listeners\CreateDocumentsInscription'
+        ],
 	];
 
 	/**

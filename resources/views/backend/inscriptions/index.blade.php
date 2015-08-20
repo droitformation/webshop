@@ -29,7 +29,7 @@
                         </thead>
                         <tbody class="selects">
 
-                            @if(!empty($inscriptions))
+             {{--               @if(!empty($inscriptions))
                                 @foreach($inscriptions as $inscription)
                                     <tr>
                                         <td><a class="btn btn-sky btn-sm" href="{{ url('admin/page/'.$inscription->id) }}">&Eacute;diter</a></td>
@@ -43,7 +43,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            @endif
+                            @endif--}}
 
                         </tbody>
                     </table>
