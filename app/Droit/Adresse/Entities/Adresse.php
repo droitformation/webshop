@@ -23,6 +23,11 @@ class Adresse extends Model {
         return  $this->civilite->title;
     }
 
+    public function getNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
+
     public function getCpTrimAttribute()
     {
         $wordlist = array("CP", "case", "postale","Case","Postale","cp","Cp","Postfach","postfach", "C. P." , "PF" , "PO Box");

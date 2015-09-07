@@ -470,4 +470,8 @@ class Helper {
         return $data;
     }
 
+    public function rand_color() {
+        return '#' . dechex(rand(0x000000, 0xFFFFFF));
+    }
+
 }

@@ -29,7 +29,7 @@ class ColloqueController extends Controller
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $colloques = $this->colloque->getAll();
 

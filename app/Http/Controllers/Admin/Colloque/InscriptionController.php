@@ -57,11 +57,32 @@ class InscriptionController extends Controller
         //$multiple = $this->inscription->getByColloque($id,'multiple');
 
         $inscriptions = $this->inscription->getByColloque($id);
-        //$grouped  = $multiple->groupBy('group_id');
 
-        //$result   = $simple->merge($multiple);
+        if(!$inscriptions->isEmpty())
+        {
+            foreach($inscriptions as $inscription)
+            {
+                $groupe = ($inscription->group_id ? $inscription->group_id : 0);
 
-        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions]);
+                $user = $inscription->inscrit;
+                $user->load('adresses');
+
+                $inscription->setAttribute('adresse_facturation',$user->adresse_facturation);
+
+                if($inscription->group_id)
+                {
+                    $inscription->load('groupe','participant');
+                    $inscription->groupe->load('user');
+                    $grouped[$groupe][] = $inscription;
+                }
+                else
+                {
+                    $grouped[] = $inscription;
+                }
+            }
+        }
+
+        return view('backend.inscriptions.index')->with(['inscriptions' => $grouped]);
     }
 
     /**
@@ -100,10 +121,12 @@ class InscriptionController extends Controller
         }
         else
         {
+            // Create a new group holder
             $groupe = new \App\Droit\Inscription\Entities\Groupe();
 
             $group_user   = $groupe->create(['colloque_id' => $colloque->id , 'user_id' => $request->input('user_id')]);
 
+            // Get all infos for inscriptions/participants
             $participants = $request->input('participant');
             $prices       = $request->input('price_id');
             $options      = $request->input('options');
@@ -118,28 +141,31 @@ class InscriptionController extends Controller
                     'price_id'    => $prices[$index]
                 ];
 
+                // choosen options for participants
                 if(isset($options[$index]))
                 {
                     $data['options'] = $options[$index];
                 }
 
+                // choosen groupe of options for participants
                 if(isset($groupes[$index]))
                 {
                     $data['groupes'] = $groupes[$index];
                 }
 
+                // Register a new inscription
                 $inscriptions[] = $this->register->register($data,$colloque->id);
+
+                // Update counter for no inscription
+                $counter = $colloque->counter + 1;
             }
-
-            $counter = $colloque->counter + count($participants);
-
         }
 
         // Update counter
         $colloque->counter = $counter;
         $colloque->save();
 
-        return redirect('admin/inscription')->with(array('status' => 'success', 'message' => 'L\'inscription à bien éété crée' ));
+        return redirect('admin/inscription')->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
     }
 
     /**

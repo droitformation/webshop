@@ -26,7 +26,7 @@ class InscriptionEloquent implements InscriptionInterface{
             $inscription->$type->get();
         }
 
-        return $inscription->get();;
+        return $inscription->groupBy('id')->get();
     }
 
     public function getByUser($colloque_id,$user_id)

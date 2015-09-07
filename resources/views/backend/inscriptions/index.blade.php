@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('content')
-
+<?php $helper = new \App\Droit\Helper\Helper(); ?>
 <div class="row">
     <div class="col-md-12">
 
@@ -23,27 +23,29 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
+                            <th class="col-sm-2">Nom</th>
+                            <th class="col-sm-2">Email</th>
+                            <th class="col-sm-2">Participant</th>
                             <th class="col-sm-2">No</th>
+                            <th class="col-sm-2">Date</th>
                             <th class="col-sm-1"></th>
                         </tr>
                         </thead>
                         <tbody class="selects">
 
-             {{--               @if(!empty($inscriptions))
+                            @if(!empty($inscriptions))
                                 @foreach($inscriptions as $inscription)
-                                    <tr>
-                                        <td><a class="btn btn-sky btn-sm" href="{{ url('admin/page/'.$inscription->id) }}">&Eacute;diter</a></td>
-                                        <td><strong>{{ $inscription->inscription_no }}</strong></td>
-                                        <td class="text-right">
-                                            <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                {!! csrf_field() !!}
-                                                <button data-action="no: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                            </form>
-                                        </td>
-                                    </tr>
+
+                                    @if(is_array($inscription))
+                                        @foreach($inscription as $register)
+                                            @include('backend.inscriptions.partials.row', ['inscription' => $register, 'group' => true])
+                                        @endforeach
+                                    @else
+                                        @include('backend.inscriptions.partials.row', ['inscription' => $inscription, 'group' => false])
+                                    @endif
+
                                 @endforeach
-                            @endif--}}
+                            @endif
 
                         </tbody>
                     </table>

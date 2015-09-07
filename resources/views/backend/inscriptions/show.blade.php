@@ -38,11 +38,7 @@
                                     @endforeach
                                 @endif
                             </select>
-                            <?php
-                      //     echo '<pre>';
-                           // print_r($parents);
-                            //echo '</pre>';
-                            ?>
+
                         </div>
                     </div>
 

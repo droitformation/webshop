@@ -92,3 +92,23 @@
     Sorting classes
 */
 
+.gallery .mix {
+    width: 100px;
+    margin: 2px;
+}
+
+.gallery.full-width li {
+    position: relative;
+    width: 100%;
+}
+
+.gallery img{
+    width: 100px;
+}
+.dataTable td p{
+    margin-bottom: 0;
+}
+
+.dataTable td .label{
+    margin-bottom: 3px;
+}

@@ -115,6 +115,9 @@
 <script type='text/javascript' src="<?php echo asset('backend/js/Sortable.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/selectize.js');?>"></script>
 
+<script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/gallery-simple.js');?>"></script>
+
 <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 

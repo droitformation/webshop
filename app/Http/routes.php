@@ -35,7 +35,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('inscription/generate/{id}', 'Admin\Colloque\InscriptionController@generate');
     Route::post('inscription/type', 'Admin\Colloque\InscriptionController@inscription');
     Route::resource('inscription', 'Admin\Colloque\InscriptionController');
-
+    Route::resource('colloque', 'Admin\Colloque\ColloqueController');
     Route::get('search', 'Admin\SearchController@search');
 
 });

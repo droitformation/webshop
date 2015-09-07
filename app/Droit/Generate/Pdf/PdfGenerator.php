@@ -127,7 +127,6 @@ class PdfGenerator
         $part = (isset($this->inscription->participant) ? '-'.$this->inscription->participant->id : '');
 
         return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.$part.'.pdf');
-
     }
 
     public function factureEvent()
@@ -154,6 +153,29 @@ class PdfGenerator
         return true;
     }
 
+    public function factureMultipleEvent()
+    {
+        if($this->inscription->price->price > 0)
+        {
+            $data = [
+                'messages'    => $this->messages,
+                'expediteur'  => $this->expediteur,
+                'inscription' => $this->inscription,
+                'date'        => $this->now,
+                'signature'   => $this->signature,
+                'tva'         => $this->tva,
+                'annexes'     => $this->inscription->annexe
+            ];
+
+            $facture  = \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4');
+
+            $generate = ($this->stream ? 'stream' : 'save');
+
+            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.'.pdf');
+        }
+
+        return true;
+    }
 
     public function bvEvent()
     {
