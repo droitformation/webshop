@@ -97,7 +97,6 @@ class PdfGenerator
 
     public function setInscription($inscription)
     {
-
         $inscription->load('user_options','groupe','participant');
         $inscription->user_options->load('option');
         $inscription->colloque->load('location','centres','compte');
@@ -153,28 +152,39 @@ class PdfGenerator
         return true;
     }
 
-    public function factureMultipleEvent()
+    public function factureGroupeEvent($groupe,$inscriptions)
     {
-        if($this->inscription->price->price > 0)
-        {
-            $data = [
-                'messages'    => $this->messages,
-                'expediteur'  => $this->expediteur,
-                'inscription' => $this->inscription,
-                'date'        => $this->now,
-                'signature'   => $this->signature,
-                'tva'         => $this->tva,
-                'annexes'     => $this->inscription->annexe
-            ];
 
-            $facture  = \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4');
+        $data = [
+            'messages'     => $this->messages,
+            'expediteur'   => $this->expediteur,
+            'inscriptions' => $inscriptions,
+            'groupe'       => $groupe,
+            'date'         => $this->now,
+            'signature'    => $this->signature,
+            'tva'          => $this->tva,
+            'annexes'      => $groupe->colloque->annexe
+        ];
 
-            $generate = ($this->stream ? 'stream' : 'save');
+        $facture  = \PDF::loadView('colloques.templates.groupe', $data)->setPaper('a4');
 
-            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.'.pdf');
-        }
+        $generate = ($this->stream ? 'stream' : 'save');
 
-        return true;
+        return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
+    }
+
+    public function bvGroupeEvent($groupe,$inscriptions)
+    {
+        $data = [
+            'inscriptions' => $inscriptions,
+            'groupe'       => $groupe,
+        ];
+
+        $bv = \PDF::loadView('colloques.templates.bvgroupe', $data)->setPaper('a4');
+
+        $generate = ($this->stream ? 'stream' : 'save');
+
+        return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
     }
 
     public function bvEvent()

@@ -11,6 +11,7 @@ use App\Http\Requests;
 use App\Http\Requests\InscriptionRequest;
 use App\Http\Controllers\Controller;
 use App\Events\InscriptionWasRegistered;
+use App\Events\GroupeInscriptionWasRegistered;
 
 class InscriptionController extends Controller
 {
@@ -160,6 +161,8 @@ class InscriptionController extends Controller
                 $counter = $colloque->counter + 1;
             }
         }
+
+        event(new GroupeInscriptionWasRegistered($group_user));
 
         // Update counter
         $colloque->counter = $counter;

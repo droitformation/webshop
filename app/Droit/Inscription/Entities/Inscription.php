@@ -53,17 +53,30 @@ class Inscription extends Model
     {
         $docs = [];
 
+        $this->load('user','groupe');
+
+        if(isset($this->groupe) && !empty($this->groupe))
+        {
+            $this->groupe->load('user');
+
+            $user = $this->groupe->user;
+        }
+        else
+        {
+            $user = $this->user;
+        }
+
         if(!empty($this->colloque->annexe))
         {
             foreach($this->colloque->annexe as $id => $annexe)
             {
                 $path = config('documents.colloque.'.$annexe.'');
 
-                $file = public_path().$path.$annexe.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+                $file = public_path().$path.$annexe.'_'.$this->colloque->id.'-'.$user->id.'.pdf';
 
                 if (\File::exists($file))
                 {
-                    $name = $annexe.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+                    $name = $annexe.'_'.$this->colloque->id.'-'.$user->id.'.pdf';
 
                     $docs[$annexe]['file'] = $file;
                     $docs[$annexe]['name'] = $name;

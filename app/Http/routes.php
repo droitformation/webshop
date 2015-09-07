@@ -142,14 +142,58 @@ Route::get('cartworker', function()
     $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $user         = \App::make('App\Droit\User\Repo\UserInterface');
     $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
     $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-    $inscrit = $inscription->find(35);
-    $inscrit->load('groupe','participant');
+    $gro = new \App\Droit\Inscription\Entities\Groupe();
+    $groupe = $gro::findOrNew(15);
 
-    $annexes = $inscrit->colloque->annexe;
+    $groupe->load('colloque','user');
+    $user = $groupe->user;
+    $user->load('adresses');
+    $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
 
-    $generator->setInscription($inscrit)->generate($annexes);
+    $inscriptions = $inscription->getByGroupe($groupe->id);
+
+    $generator->stream = true;
+
+    $somme        = 0;
+
+    $sum = $inscriptions->sum('price_cents');
+
+    if(!$inscriptions->isEmpty())
+    {
+        foreach($inscriptions as $inscription)
+        {
+            $somme   +=   $inscription->price->price;
+        }
+
+        $somme = $somme/100;
+        $somme = number_format($somme, 2);
+    }
+
+
+    return $generator->bvGroupeEvent($groupe,$inscriptions);
+
+    exit;
+
+    //exit;
+
+
+    foreach($inscriptions as $inscription){
+        $somme += $inscription->price->price;
+    }
+    $somme = $somme/100;
+    $somme = number_format((float)$somme, 2, '.', '');
+
+    echo $somme;
+    $job = (new \App\Jobs\MakeGroupeDocument($groupe));
+
+    $job->handle();
+
+/*    echo '<pre>';
+    print_r($groupe->adresse_facturation->name);
+    echo '</pre>';exit;*/
 
     //$order_no = $order->find(21);
     //$create = new App\Jobs\CreateOrderInvoice($order_no);

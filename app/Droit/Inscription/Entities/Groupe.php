@@ -18,4 +18,8 @@ class Groupe extends Model
         return $this->belongsTo('App\Droit\User\Entities\User');
     }
 
+    public function colloque()
+    {
+        return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');
+    }
 }
