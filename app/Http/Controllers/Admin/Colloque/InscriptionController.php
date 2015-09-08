@@ -113,7 +113,8 @@ class InscriptionController extends Controller
         {
             $data        = $request->all();
             $inscription = $this->register->register($data,$colloque->id);
-            $counter     = $colloque->counter + 1;
+            $colloque->counter = $colloque->counter + 1;
+            $colloque->save();
 
             event(new InscriptionWasCreated($inscription));
         }
@@ -174,14 +175,14 @@ class InscriptionController extends Controller
     public function show($id)
     {
         $inscription = $this->inscription->find($id);
-        $inscription->load('user_options','groupe','participant');
+        $inscription->load('colloque','user_options','groupe','participant');
 
         if(isset($inscription->user_options))
         {
             $inscription->user_options->load('option');
         }
 
-        return view('backend.inscriptions.show')->with(['inscription' => $inscription]);
+        return view('backend.inscriptions.show')->with(['inscription' => $inscription, 'colloque' => $inscription->colloque, 'user' => $inscription->inscrit]);
     }
 
     /**
@@ -222,7 +223,13 @@ class InscriptionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $inscription = $this->inscription->update($request->all());
+
+        $annexes     = $inscription->colloque->annexe;
+
+        $this->generator->setInscription($inscription)->generate($annexes);
+
+        return redirect('admin/inscription/'.$inscription->id)->with(array('status' => 'success', 'message' => 'L\'inscription a été mise à jour' ));
     }
 
     /**

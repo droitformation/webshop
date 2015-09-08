@@ -91,7 +91,7 @@ class Inscription extends Model
     {
         $this->load('user','groupe');
 
-        if(isset($this->groupe) && !empty($this->groupe))
+        if(isset($this->groupe) && !empty($this->group_id))
         {
             $this->groupe->load('user');
 

@@ -107,8 +107,34 @@ class InscriptionEloquent implements InscriptionInterface{
         }
 
         $inscription->fill($data);
-
         $inscription->save();
+
+        $inscription->options()->detach();
+
+        // Options
+        if(isset($data['options']))
+        {
+            foreach($data['options'] as $option)
+            {
+                $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);
+            }
+        }
+
+        // Options groupes
+        if(isset($data['groupes']))
+        {
+            foreach($data['groupes'] as $option_id => $groupe_id)
+            {
+                $inscription->options()->attach($option_id, ['groupe_id' => $groupe_id, 'inscription_id' => $inscription->id]);
+            }
+        }
+
+        if(isset($data['participant']) && !empty($data['participant']))
+        {
+            $participant = new \App\Droit\Inscription\Entities\Participant();
+            $participant->where('inscription_id','=',$inscription->id )->delete();
+            $participant->create(['name' => $data['participant'], 'inscription_id' => $inscription->id ]);
+        }
 
         return $inscription;
     }
