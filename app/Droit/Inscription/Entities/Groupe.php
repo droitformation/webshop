@@ -31,7 +31,7 @@ class Groupe extends Model
                 {
                     $inscription->load('participant');
                     $bons = $this->getFile('bon',$this->colloque->id,$this->user->id,$inscription->participant->id);
-                    $docs = array_merge($bons,$docs);
+                    $docs['groupe'][] = $bons;
                 }
 
                 unset($annexes['bon']);
@@ -50,18 +50,18 @@ class Groupe extends Model
     public function getFile($annexe,$colloque_id,$user_id,$part = null)
     {
         $docs = [];
+        $id   = $part;
         $part = ($part ? '-'.$part : '');
         $path = config('documents.colloque.'.$annexe.'');
         $file = public_path().$path.$annexe.'_'.$colloque_id.'-'.$user_id.$part.'.pdf';
 
         if (\File::exists($file))
         {
-            $name = $annexe.'_'.$colloque_id.'-'.$user_id.'.pdf';
+            $name = $annexe.'_'.$colloque_id.'-'.$user_id.$part.'.pdf';
 
             if($part)
             {
-                $docs[$annexe]['file'][] = $file;
-                $docs[$annexe]['name'][] = $name;
+                $docs = ['file' => $file,'name' => $name];
             }
             else
             {
