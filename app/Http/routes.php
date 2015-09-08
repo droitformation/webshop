@@ -147,20 +147,24 @@ Route::get('cartworker', function()
     $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
     $gro = new \App\Droit\Inscription\Entities\Groupe();
-    $groupe = $gro::findOrNew(15);
+    $groupe = $gro::findOrNew(20);
+    $groupe->load('colloque','user','inscriptions');
+    echo '<pre>';
+    print_r($groupe->documents);
+    echo '</pre>';exit;
 
-    $groupe->load('colloque','user');
+
     $user = $groupe->user;
     $user->load('adresses');
     $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
 
-    $inscriptions = $inscription->getByGroupe($groupe->id);
+/*    $inscriptions = $inscription->getByGroupe($groupe->id);
 
     $generator->stream = true;
 
     $job = (new \App\Jobs\MakeGroupeDocument($groupe));
 
-    $job->handle();
+    $job->handle();*/
 
 /*    echo '<pre>';
     print_r($groupe->adresse_facturation->name);
