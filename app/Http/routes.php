@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('/', 'Admin\AdminController@index');
     Route::get('inscription/colloque/{id}', 'Admin\Colloque\InscriptionController@colloque');
+    Route::get('inscription/create/{id?}', 'Admin\Colloque\InscriptionController@create');
     Route::get('inscription/generate/{id}', 'Admin\Colloque\InscriptionController@generate');
     Route::post('inscription/type', 'Admin\Colloque\InscriptionController@inscription');
     Route::resource('inscription', 'Admin\Colloque\InscriptionController');
@@ -157,36 +158,6 @@ Route::get('cartworker', function()
 
     $generator->stream = true;
 
-    $somme        = 0;
-
-    $sum = $inscriptions->sum('price_cents');
-
-    if(!$inscriptions->isEmpty())
-    {
-        foreach($inscriptions as $inscription)
-        {
-            $somme   +=   $inscription->price->price;
-        }
-
-        $somme = $somme/100;
-        $somme = number_format($somme, 2);
-    }
-
-
-    return $generator->bvGroupeEvent($groupe,$inscriptions);
-
-    exit;
-
-    //exit;
-
-
-    foreach($inscriptions as $inscription){
-        $somme += $inscription->price->price;
-    }
-    $somme = $somme/100;
-    $somme = number_format((float)$somme, 2, '.', '');
-
-    echo $somme;
     $job = (new \App\Jobs\MakeGroupeDocument($groupe));
 
     $job->handle();

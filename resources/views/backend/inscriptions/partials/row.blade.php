@@ -1,7 +1,7 @@
 <?php $style = ($group ? 'style="background-color:#f7f8fa;"' : ''); ?>
 <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
 <tr>
-    <td {!! $style !!}><a class="btn btn-sky btn-sm" href="{{ url('admin/page/'.$inscription->id) }}">&Eacute;diter</a></td>
+    <td {!! $style !!}><a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}">&Eacute;diter</a></td>
     <td {!! $style !!}>
         <?php
             echo ($group ? '<span class="label label-default">Groupe '.$inscription->group_id.'</span>' : '');

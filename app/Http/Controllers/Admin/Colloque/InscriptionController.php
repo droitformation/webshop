@@ -10,7 +10,7 @@ use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionRequest;
 use App\Http\Controllers\Controller;
-use App\Events\InscriptionWasRegistered;
+use App\Events\InscriptionWasCreated;
 use App\Events\GroupeInscriptionWasRegistered;
 
 class InscriptionController extends Controller
@@ -54,9 +54,8 @@ class InscriptionController extends Controller
      */
     public function colloque($id)
     {
-        //$simple   = $this->inscription->getByColloque($id,'simple');
-        //$multiple = $this->inscription->getByColloque($id,'multiple');
-
+        $grouped      = [];
+        $colloque     = $this->colloque->find($id);
         $inscriptions = $this->inscription->getByColloque($id);
 
         if(!$inscriptions->isEmpty())
@@ -83,7 +82,7 @@ class InscriptionController extends Controller
             }
         }
 
-        return view('backend.inscriptions.index')->with(['inscriptions' => $grouped]);
+        return view('backend.inscriptions.index')->with(['inscriptions' => $grouped, 'colloque' => $colloque]);
     }
 
     /**
@@ -91,12 +90,11 @@ class InscriptionController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($colloque_id = null)
     {
         $colloques = $this->colloque->getAll();
-        $colloque = $this->colloque->find(71);
 
-        return view('backend.inscriptions.create')->with(['colloques' => $colloques,'colloque' => $colloque]);
+        return view('backend.inscriptions.create')->with(['colloques' => $colloques, 'colloque_id' => $colloque_id]);
     }
 
     /**
@@ -107,7 +105,6 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
-
         $type     = $request->input('type');
         $colloque = $this->colloque->find($request->input('colloque_id'));
 
@@ -118,7 +115,7 @@ class InscriptionController extends Controller
             $inscription = $this->register->register($data,$colloque->id);
             $counter     = $colloque->counter + 1;
 
-            event(new InscriptionWasRegistered($inscription));
+            event(new InscriptionWasCreated($inscription));
         }
         else
         {
@@ -158,17 +155,14 @@ class InscriptionController extends Controller
                 $inscriptions[] = $this->register->register($data,$colloque->id);
 
                 // Update counter for no inscription
-                $counter = $colloque->counter + 1;
+                $colloque->counter = $colloque->counter + 1;
+                $colloque->save();
             }
+
+            event(new GroupeInscriptionWasRegistered($group_user));
         }
 
-        event(new GroupeInscriptionWasRegistered($group_user));
-
-        // Update counter
-        $colloque->counter = $counter;
-        $colloque->save();
-
-        return redirect('admin/inscription')->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
+        return redirect('admin/inscription/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
     }
 
     /**
@@ -180,6 +174,12 @@ class InscriptionController extends Controller
     public function show($id)
     {
         $inscription = $this->inscription->find($id);
+        $inscription->load('user_options','groupe','participant');
+
+        if(isset($inscription->user_options))
+        {
+            $inscription->user_options->load('option');
+        }
 
         return view('backend.inscriptions.show')->with(['inscription' => $inscription]);
     }

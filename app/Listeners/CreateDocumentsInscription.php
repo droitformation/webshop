@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\InscriptionWasCreated;
 use App\Jobs\MakeDocument;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class CreateDocumentsInscription

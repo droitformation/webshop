@@ -4,12 +4,26 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="options text-right" style="margin-bottom: 10px;">
-            <div class="btn-toolbar">
-               <a href="{{ url('admin/inscription/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-1">
+                        <a href="#"><img style="height: 80px;" src="{{ asset($colloque->illustration) }}"></a>
+                    </div>
+                    <div class="col-md-9">
+                        <h4><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
+                        <p><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->soustitre }}</a></p>
+                        <p>{{ $colloque->event_date }}</p>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group-vertical pull-right">
+                            <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success">
+                                <i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
 
         <div class="panel panel-midnightblue">
             <div class="panel-heading">

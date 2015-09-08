@@ -81,6 +81,7 @@ $( function() {
 
     $('#formInscription').on('submit', function (e) {
 
+        $('#colloqueSelection').trigger('change');
         e.preventDefault();
 
         var datastring = $("#formInscription").serialize();
@@ -93,7 +94,7 @@ $( function() {
                 $('#selectInscription').html(data);
             },
             error: function(){
-                alert('error handing here');
+                alert('problème avec la séléction de l\'utilisateur');
             }
         });
 

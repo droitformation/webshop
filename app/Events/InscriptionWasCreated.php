@@ -4,20 +4,22 @@ namespace App\Events;
 
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Droit\Inscription\Entities\Inscription;
 
 class InscriptionWasCreated extends Event
 {
     use SerializesModels;
+
+    public $inscription;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function   __construct(Inscription $inscription)
     {
-        //
+        $this->inscription = $inscription;
     }
 
     /**

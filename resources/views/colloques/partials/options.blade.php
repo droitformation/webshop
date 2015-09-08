@@ -4,7 +4,9 @@
     <!-- Options checkboxes -->
     @if($type == 'checkbox')
         @foreach($options as $option)
-            <div class="form-group type-choix"><input type="checkbox" class="option-input" name="options[0][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}</div>
+            <div class="form-group type-choix">
+                <input type="checkbox" class="option-input" name="options[0][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+            </div>
         @endforeach
     @endif
 

@@ -30,7 +30,7 @@
                             <option value="">Choisir le colloque</option>
                             @if(!$colloques->isEmpty())
                                 @foreach($colloques as $colloque)
-                                    <option value="{{ $colloque->id }}">{{ $colloque->titre }}</option>
+                                    <option <?php echo (isset($colloque_id) && ($colloque->id == $colloque_id) ? 'selected' : ''); ?> value="{{ $colloque->id }}">{{ $colloque->titre }}</option>
                                 @endforeach
                             @endif
                         </select>

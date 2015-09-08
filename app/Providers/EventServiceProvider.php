@@ -11,9 +11,6 @@ class EventServiceProvider extends ServiceProvider {
 	 * @var array
 	 */
 	protected $listen = [
-/*		'event.name' => [
-			'EventListener',
-		],*/
         'App\Events\OrderWasPlaced' => [
             'App\Listeners\EmailPurchaseConfirmation',
             'App\Listeners\NotifyAdminOfPurchase',

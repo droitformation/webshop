@@ -26,7 +26,6 @@ class MakeDocument extends Job implements SelfHandling, ShouldQueue
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $this->inscription = $inscription;
-        $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
     }
 
     /**
@@ -36,13 +35,16 @@ class MakeDocument extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
+
+        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+
         $this->inscription->load('colloque');
         $annexes = $this->inscription->colloque->annexe;
 
         // Generate annexes if any
         if(empty($this->inscription->documents) && !empty($annexes))
         {
-            $this->generator->setInscription($this->inscription)->generate($annexes);
+            $generator->setInscription($this->inscription)->generate($annexes);
         }
     }
 }
