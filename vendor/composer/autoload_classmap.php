@@ -9,6 +9,7 @@ return array(
     'Absolute_Positioner' => $vendorDir . '/dompdf/dompdf/include/absolute_positioner.cls.php',
     'Abstract_Renderer' => $vendorDir . '/dompdf/dompdf/include/abstract_renderer.cls.php',
     'AddCashierColumns' => $baseDir . '/database/migrations/2015_06_03_151644_add_cashier_columns.php',
+    'AddDeletedAtToOptions' => $baseDir . '/database/migrations/2015_09_08_141109_add_deleted_at_to_options.php',
     'AddDeletedAtToUsers' => $baseDir . '/database/migrations/2015_06_08_141109_add_deleted_at_to_users.php',
     'Adobe_Font_Metrics' => $vendorDir . '/phenx/php-font-lib/classes/Adobe_Font_Metrics.php',
     'Adresse_typesTableSeeder' => $baseDir . '/database/seeds/Adresse_typesTableSeeder.php',

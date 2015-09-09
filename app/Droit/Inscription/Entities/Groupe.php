@@ -3,11 +3,15 @@
 namespace App\Droit\Inscription\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Groupe extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'colloque_inscriptions_groupes';
+
+    protected $dates = ['deleted_at'];
 
     public $timestamps = false;
 

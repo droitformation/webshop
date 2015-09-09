@@ -143,7 +143,14 @@ class InscriptionEloquent implements InscriptionInterface{
 
         $inscription = $this->inscription->find($id);
 
-        return $inscription->delete();
+        if($inscription->group_id)
+        {
+            $inscription->load('participant');
+            $inscription->participant->delete();
+        }
 
+        $inscription->user_options()->delete();
+
+        return $inscription->delete();
     }
 }

@@ -12,7 +12,6 @@
                     </div>
                     <div class="col-md-9">
                         <h4><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
-                        <p><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->soustitre }}</a></p>
                         <p>{{ $colloque->event_date }}</p>
                     </div>
                     <div class="col-md-2">

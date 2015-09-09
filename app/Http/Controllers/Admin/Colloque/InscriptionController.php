@@ -240,7 +240,11 @@ class InscriptionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $inscription = $this->inscription->find($id);
+
+        $this->inscription->delete($id);
+
+        return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(array('status' => 'success', 'message' => 'Désinscription effectué' ));
     }
 
     /**

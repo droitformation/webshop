@@ -2,12 +2,18 @@
 namespace App\Droit\Option\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OptionUser extends Model
 {
+
+    use SoftDeletes;
+
     protected $table = 'colloque_option_users';
 
     protected $fillable = array('user_id','option_id','inscription_id','groupe_id','reponse');
+
+    protected $dates = ['deleted_at'];
 
     public $timestamps = false;
 

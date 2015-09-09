@@ -1,14 +1,17 @@
 <?php namespace App\Droit\Option\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Option extends Model{
 
+    use SoftDeletes;
+
     protected $table = 'colloque_options';
 
-    protected $fillable = array('colloque_id','title','type');
+    protected $dates = ['deleted_at'];
 
-    public $timestamps = false;
+    protected $fillable = array('colloque_id','title','type');
 
     public function colloque()
     {

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inscription extends Model
 {
-
     use SoftDeletes;
 
     protected $table = 'colloque_inscriptions';
