@@ -33,8 +33,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('/', 'Admin\AdminController@index');
     Route::get('inscription/colloque/{id}', 'Admin\Colloque\InscriptionController@colloque');
     Route::get('inscription/create/{id?}', 'Admin\Colloque\InscriptionController@create');
+    Route::get('inscription/add/{group_id}', 'Admin\Colloque\InscriptionController@add');
     Route::get('inscription/generate/{id}', 'Admin\Colloque\InscriptionController@generate');
     Route::post('inscription/type', 'Admin\Colloque\InscriptionController@inscription');
+    Route::post('inscription/push', 'Admin\Colloque\InscriptionController@push');
     Route::resource('inscription', 'Admin\Colloque\InscriptionController');
     Route::resource('colloque', 'Admin\Colloque\ColloqueController');
     Route::get('search', 'Admin\SearchController@search');

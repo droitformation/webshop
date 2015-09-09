@@ -17,6 +17,12 @@ class Groupe extends Model
 
     protected $fillable = ['colloque_id', 'user_id', 'description', 'adresse_id'];
 
+    public function getNameAttribute()
+    {
+        $this->load('user');
+
+        return $this->user->name;
+    }
     public function getDocumentsAttribute()
     {
         $docs = [];

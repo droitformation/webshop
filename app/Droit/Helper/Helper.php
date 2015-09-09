@@ -419,7 +419,6 @@ class Helper {
      * Content fonctions
      */
 
-
     public function sortArrayByArray(Array $array, Array $orderArray) {
         $ordered = array();
 
@@ -470,8 +469,26 @@ class Helper {
         return $data;
     }
 
-    public function rand_color() {
-        return '#' . dechex(rand(0x000000, 0xFFFFFF));
+    public function groupInscriptionCollection($collection){
+
+        $grouped = [];
+
+        if(!$collection->isEmpty())
+        {
+            foreach($collection as $inscription)
+            {
+                if($inscription->group_id)
+                {
+                    $grouped[$inscription->group_id][] = $inscription;
+                }
+                else
+                {
+                    $grouped[] = $inscription;
+                }
+            }
+        }
+
+        return $grouped;
     }
 
 }

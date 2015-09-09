@@ -59,6 +59,11 @@ $(document).ready(function() {
         pagingType: 'simple'
     });
 
+    $('.generic').DataTable({
+        language: langues,
+        pagingType: 'simple'
+    });
+
     $('.dataTables_filter input').addClass('form-control').attr('placeholder','Recherche...');
     $('.dataTables_length select').addClass('form-control');
 });

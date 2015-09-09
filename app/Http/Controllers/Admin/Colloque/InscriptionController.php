@@ -33,6 +33,7 @@ class InscriptionController extends Controller
         $this->register    = $register;
         $this->user        = $user;
         $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $this->helper      = new \App\Droit\Helper\Helper();
     }
 
     /**
@@ -54,35 +55,13 @@ class InscriptionController extends Controller
      */
     public function colloque($id)
     {
-        $grouped      = [];
         $colloque     = $this->colloque->find($id);
-        $inscriptions = $this->inscription->getByColloque($id);
 
-        if(!$inscriptions->isEmpty())
-        {
-            foreach($inscriptions as $inscription)
-            {
-                $groupe = ($inscription->group_id ? $inscription->group_id : 0);
+        $inscriptions    = $this->inscription->getByColloque($id);
+        $inscriptions    = $this->helper->groupInscriptionCollection($inscriptions);
+        $desinscriptions = $this->inscription->getByColloqueTrashed($id);
 
-                $user = $inscription->inscrit;
-                $user->load('adresses');
-
-                $inscription->setAttribute('adresse_facturation',$user->adresse_facturation);
-
-                if($inscription->group_id)
-                {
-                    $inscription->load('groupe','participant');
-                    $inscription->groupe->load('user');
-                    $grouped[$groupe][] = $inscription;
-                }
-                else
-                {
-                    $grouped[] = $inscription;
-                }
-            }
-        }
-
-        return view('backend.inscriptions.index')->with(['inscriptions' => $grouped, 'colloque' => $colloque]);
+        return view('backend.inscriptions.index')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions]);
     }
 
     /**
@@ -95,6 +74,65 @@ class InscriptionController extends Controller
         $colloques = $this->colloque->getAll();
 
         return view('backend.inscriptions.create')->with(['colloques' => $colloques, 'colloque_id' => $colloque_id]);
+    }
+
+    /**
+     * Display creation.
+     *
+     * @return Response
+     */
+    public function add($group_id)
+    {
+        $inscription = $this->inscription->getByGroupe($group_id);
+        $groupe      = $inscription->first()->load('groupe','colloque');
+
+        return view('backend.inscriptions.add')->with(['group_id' => $group_id, 'groupe' => $groupe->groupe, 'colloque' => $groupe->colloque]);
+    }
+
+    public function push(Request $request)
+    {
+
+        // Get all infos for inscription/participant
+        $participant  = $request->input('participant');
+        $price_id     = $request->input('price_id');
+        $options      = $request->input('options');
+        $groupes      = $request->input('groupes');
+        $group_id     = $request->input('group_id');
+
+        $colloque    = $this->colloque->find($request->input('colloque_id'));
+
+        $data = [
+            'group_id'    => $group_id,
+            'colloque_id' => $colloque->id,
+            'participant' => $participant,
+            'price_id'    => $price_id
+        ];
+
+        // choosen options for participants
+        if(isset($options))
+        {
+            $data['options'] = $options;
+        }
+
+        // choosen groupe of options for participants
+        if(isset($groupes))
+        {
+            $data['groupes'] = $groupes;
+        }
+
+        // Register a new inscription
+        $inscription = $this->register->register($data,$colloque->id);
+
+        // Update counter for no inscription
+        $colloque->counter = $colloque->counter + 1;
+        $colloque->save();
+
+        $groupe      = new \App\Droit\Inscription\Entities\Groupe();
+        $group_user  = $groupe->find($group_id);
+
+        event(new GroupeInscriptionWasRegistered($group_user));
+
+        return redirect('admin/inscription/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
     }
 
     /**
@@ -194,11 +232,17 @@ class InscriptionController extends Controller
     public function generate($id)
     {
         $inscription = $this->inscription->find($id);
-        $annexes     = $inscription->colloque->annexe;
 
-        $this->generator->setInscription($inscription)->generate($annexes);
+        if($inscription->group_id > 0)
+        {
+            event(new GroupeInscriptionWasRegistered($inscription->load('groupe')->groupe));
+        }
+        else
+        {
+            event(new InscriptionWasCreated($inscription));
+        }
 
-        return redirect('admin/inscription/'.$id)->with(array('status' => 'success', 'message' => 'Les documents ont été mis à jour' ));
+        return redirect('admin/inscription/'.$inscription->colloque_id)->with(array('status' => 'success', 'message' => 'Les documents ont été mis à jour' ));
     }
 
     /**

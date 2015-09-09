@@ -1,12 +1,16 @@
 {
     "name": "lucadegasperi/oauth2-server-laravel",
-    "description": "A OAuth 2.0 bridge for Laravel and Lumen",
+    "description": "An OAuth 2.0 bridge for Laravel and Lumen",
     "keywords": ["oauth2", "oauth", "server", "api", "laravel", "lumen"],
     "license": "MIT",
     "authors": [
         {
             "name": "Luca Degasperi",
             "email": "packages@lucadegasperi.com"
+        },
+        {
+            "name": "Vincent Klaiber",
+            "email": "hello@vinkla.com"
         }
     ],
     "require": {
@@ -21,10 +25,10 @@
     },
     "require-dev": {
         "orchestra/testbench": "3.1.*",
-        "phpunit/phpunit": "~4.0",
-        "phpspec/phpspec": "~2.0",
-        "mockery/mockery": "~0.9",
-        "henrikbjorn/phpspec-code-coverage": "~1.0"
+        "phpunit/phpunit": "^4.7.6",
+        "phpspec/phpspec": "^2.2.1",
+        "mockery/mockery": "^0.9.4",
+        "henrikbjorn/phpspec-code-coverage": "^1.0.1"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +49,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "5.0-dev"
+            "dev-master": "5.0-dev"
         }
     },
     "minimum-stability": "dev",

@@ -13,7 +13,7 @@
         @foreach($options as $option)
             <div class="form-group type-choix">
                 <?php $checked = (isset($groupe_choix) && isset($groupe_choix[$option->id])) ? 'checked' : '' ?>
-                @if(isset($inscription))
+                @if(isset($inscription) || isset($add))
                     <input type="checkbox" {{ $checked }} class="option-input" name="options[]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
                 @else
                     <input type="checkbox" {{ $checked }} class="option-input" name="options[0][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
@@ -32,7 +32,8 @@
                     @foreach($option->groupe as $groupe)
                         <?php
                             $checked = '';
-                            if(isset($groupe_choix) && isset($groupe_choix[$option->id])){
+                            if(isset($groupe_choix) && isset($groupe_choix[$option->id]))
+                            {
                                 $current = $groupe_choix[$option->id];
                                 $checked = ($current->contains('groupe_id', $groupe->id) ? 'checked' : '');
                             }

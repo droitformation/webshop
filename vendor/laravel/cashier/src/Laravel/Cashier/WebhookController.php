@@ -1,4 +1,6 @@
-<?php namespace Laravel\Cashier;
+<?php
+
+namespace Laravel\Cashier;
 
 use Config;
 use Exception;
@@ -7,7 +9,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WebhookController extends Controller
 {
@@ -20,7 +21,7 @@ class WebhookController extends Controller
     {
         $payload = $this->getJsonPayload();
 
-        if (! $this->eventExistsOnStripe($payload['id'])) {
+        if (! $this->eventExistsOnStripe($payload['id']) && ! $this->isInTestingEnvironment()) {
             return;
         }
 
@@ -87,12 +88,22 @@ class WebhookController extends Controller
     }
 
     /**
+     * Verify if cashier is in the testing environment.
+     *
+     * @return bool
+     */
+    protected function isInTestingEnvironment()
+    {
+        return getenv('CASHIER_ENV') === 'testing';
+    }
+
+    /**
      * Handle calls to missing methods on the controller.
      *
      * @param  array   $parameters
      * @return mixed
      */
-    public function missingMethod($parameters = array())
+    public function missingMethod($parameters = [])
     {
         return new Response;
     }

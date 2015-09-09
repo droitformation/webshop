@@ -51,3 +51,14 @@
     border: 1px solid #ddd;
     margin-bottom: 5px;
 }
+
+.isGoupe  > td{
+    background: #f7f8fa;
+}
+
+.btn-block {
+    display: block;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 100%;
+}

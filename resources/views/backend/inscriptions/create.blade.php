@@ -14,6 +14,11 @@
             <div class="panel-body">
                 <h3>Créer une Inscription</h3>
                 <form id="formInscription" class="validate-form" data-validate="parsley">
+
+                    @if(isset($group_id))
+                        <input type="hidden" name="group_id" value="{{ $group_id }}" />
+                        <h4>Détenteur: {!! $groupe->name !!}</h4>
+                    @endif
                     <div class="form-group">
                         <label><strong>Type d'inscription</strong></label>
                         <div class="radio">
