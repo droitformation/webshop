@@ -15,7 +15,7 @@ class OrderWorkerTest extends TestCase {
             $this->mock,
             \App::make('App\Droit\Shop\Cart\Worker\CartWorker'),
             \App::make('App\Droit\User\Repo\UserInterface'),
-            \App::make('App\Droit\User\Repo\CartInterface')
+            \App::make('App\Droit\Shop\Cart\Repo\CartInterface')
         );
     }
 

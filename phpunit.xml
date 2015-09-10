@@ -16,6 +16,9 @@
         <testsuite name="cart">
             <directory>./tests/cart/</directory>
         </testsuite>
+        <testsuite name="inscription">
+            <directory>./tests/inscription/</directory>
+        </testsuite>
         <testsuite name="order">
             <directory>./tests/order/</directory>
         </testsuite>
