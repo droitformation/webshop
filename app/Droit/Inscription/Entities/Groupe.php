@@ -60,7 +60,6 @@ class Groupe extends Model
     public function getFile($annexe,$colloque_id,$user_id,$part = null)
     {
         $docs = [];
-        $id   = $part;
         $part = ($part ? '-'.$part : '');
         $path = config('documents.colloque.'.$annexe.'');
         $file = public_path().$path.$annexe.'_'.$colloque_id.'-'.$user_id.$part.'.pdf';

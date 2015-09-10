@@ -152,39 +152,53 @@ class PdfGenerator
         return true;
     }
 
-    public function factureGroupeEvent($groupe,$inscriptions)
+    public function factureGroupeEvent($groupe,$inscriptions,$price)
     {
 
-        $data = [
-            'messages'     => $this->messages,
-            'expediteur'   => $this->expediteur,
-            'inscriptions' => $inscriptions,
-            'groupe'       => $groupe,
-            'date'         => $this->now,
-            'signature'    => $this->signature,
-            'tva'          => $this->tva,
-            'annexes'      => $groupe->colloque->annexe
-        ];
+        if($price > 0)
+        {
 
-        $facture  = \PDF::loadView('colloques.templates.groupe', $data)->setPaper('a4');
+            $data = [
+                'messages'     => $this->messages,
+                'expediteur'   => $this->expediteur,
+                'inscriptions' => $inscriptions,
+                'groupe'       => $groupe,
+                'date'         => $this->now,
+                'signature'    => $this->signature,
+                'tva'          => $this->tva,
+                'annexes'      => $groupe->colloque->annexe
+            ];
 
-        $generate = ($this->stream ? 'stream' : 'save');
+            $facture  = \PDF::loadView('colloques.templates.groupe', $data)->setPaper('a4');
 
-        return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
+            $generate = ($this->stream ? 'stream' : 'save');
+
+            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
+
+        }
+
+        return true;
     }
 
-    public function bvGroupeEvent($groupe,$inscriptions)
+    public function bvGroupeEvent($groupe,$inscriptions,$price)
     {
-        $data = [
-            'inscriptions' => $inscriptions,
-            'groupe'       => $groupe,
-        ];
 
-        $bv = \PDF::loadView('colloques.templates.bvgroupe', $data)->setPaper('a4');
+        if($price > 0)
+        {
+            $data = [
+                'inscriptions' => $inscriptions,
+                'groupe'       => $groupe,
+            ];
 
-        $generate = ($this->stream ? 'stream' : 'save');
+            $bv = \PDF::loadView('colloques.templates.bvgroupe', $data)->setPaper('a4');
 
-        return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
+            $generate = ($this->stream ? 'stream' : 'save');
+
+            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
+
+        }
+
+        return true;
     }
 
     public function bvEvent()

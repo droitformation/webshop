@@ -58,7 +58,7 @@ class MakeDocumentGroupe extends Job implements SelfHandling, ShouldQueue
             }
         }
 
-        $generator->factureGroupeEvent($this->groupe,$inscriptions);
-        $generator->bvGroupeEvent($this->groupe,$inscriptions);
+        $generator->factureGroupeEvent($this->groupe,$inscriptions,$inscriptions->first()->price->price);
+        $generator->bvGroupeEvent($this->groupe,$inscriptions,$inscriptions->first()->price->price);
     }
 }

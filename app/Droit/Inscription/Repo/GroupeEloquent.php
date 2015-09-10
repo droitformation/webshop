@@ -27,7 +27,6 @@ class GroupeEloquent implements GroupeInterface{
         $groupe = $this->groupe->create(array(
             'colloque_id'     => $data['colloque_id'],
             'user_id'         => $data['user_id'],
-            'adresse_id'      => $data['adresse_id'],
         ));
 
         if( ! $groupe )
