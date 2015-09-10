@@ -56,9 +56,21 @@
     background: #f7f8fa;
 }
 
+.isGroupeMain  > td{
+    background: #ececec;
+}
+
 .btn-block {
     display: block;
     padding-left: 8px;
     padding-right: 8px;
     width: 100%;
+}
+
+.btn-xs {
+    border-radius: 1px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 3px 4px;
 }

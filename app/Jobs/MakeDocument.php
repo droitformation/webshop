@@ -42,7 +42,7 @@ class MakeDocument extends Job implements SelfHandling, ShouldQueue
         $annexes = $this->inscription->colloque->annexe;
 
         // Generate annexes if any
-        if(empty($this->inscription->documents) && !empty($annexes))
+        if(!empty($annexes))
         {
             $generator->setInscription($this->inscription)->generate($annexes);
         }

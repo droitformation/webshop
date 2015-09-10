@@ -56,6 +56,11 @@ class InscriptionEloquent implements InscriptionInterface{
         return $this->inscription->with(['price','colloque','user'])->find($id);
     }
 
+    public function restore($id)
+    {
+        return $this->inscription->withTrashed()->find($id)->restore();
+    }
+
     public function create(array $data){
 
         $inscription = $this->inscription->create(array(
@@ -147,14 +152,6 @@ class InscriptionEloquent implements InscriptionInterface{
     public function delete($id){
 
         $inscription = $this->inscription->find($id);
-
-        if($inscription->group_id)
-        {
-            $inscription->load('participant');
-            $inscription->participant->delete();
-        }
-
-        $inscription->user_options()->delete();
 
         return $inscription->delete();
     }

@@ -51,7 +51,7 @@ class MakeDocumentGroupe extends Job implements SelfHandling, ShouldQueue
         {
             foreach($inscriptions as $inscription)
             {
-                if(empty($inscription->documents) && !empty($annexes))
+                if(!empty($annexes))
                 {
                     $generator->setInscription($inscription)->generate($annexes);
                 }

@@ -112,3 +112,7 @@
 .dataTable td .label{
     margin-bottom: 3px;
 }
+
+.no-sort::after { display: none!important; }
+
+.no-sort { pointer-events: none!important; cursor: default!important; }

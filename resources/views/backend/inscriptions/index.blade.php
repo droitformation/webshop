@@ -32,15 +32,17 @@
             <div class="panel-body">
                 <div class="table-responsive">
 
-                    <table class="table" style="margin-bottom: 0px;" id="generic"><!-- Start inscriptions -->
+                    <table class="table generic" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                         <thead>
                         <tr>
+                            <th class="col-sm-1">Groupe</th>
                             <th class="col-sm-1">Action</th>
-                            <th class="col-sm-2">Nom</th>
+                            <th class="col-sm-2">Déteteur</th>
                             <th class="col-sm-2">Email</th>
                             <th class="col-sm-2">Participant</th>
                             <th class="col-sm-1">No</th>
-                            <th class="col-sm-2">Date</th>
+                            <th class="col-sm-1">Prix</th>
+                            <th class="col-sm-1">Date</th>
                             <th class="col-sm-1"></th>
                         </tr>
                         </thead>
@@ -50,12 +52,6 @@
                                 @foreach($inscriptions as $inscription)
 
                                     @if(is_array($inscription))
-                                        <tr>
-                                            <td><strong>Groupe {{ $inscription[0]->group_id }}</strong></td>
-                                            <td>
-                                                <a class="btn btn-success btn-xs" href="{{ url('admin/inscription/add/'.$inscription[0]->group_id) }}">Ajouter un participant</a>
-                                            </td><td></td><td></td><td></td><td></td><td></td>
-                                        </tr>
                                         @foreach($inscription as $register)
                                             @include('backend.inscriptions.partials.row', ['inscription' => $register, 'group' => true])
                                         @endforeach
@@ -94,7 +90,13 @@
 
                                 <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
                                 <tr {!! $style !!}>
-                                    <td><a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}">&Eacute;diter</a></td>
+                                    <td>
+                                        <form action="{{ url('admin/inscription/restore/'.$inscription->id) }}" method="POST" class="form-horizontal">
+                                            <input type="hidden" name="_method" value="POST">
+                                            {!! csrf_field() !!}
+                                            <button data-what="Restaurer" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-warning btn-xs deleteAction">Restaurer</button>
+                                        </form>
+                                    </td>
                                     <td>
                                         <?php
                                         echo ($inscription->group_id > 0 ? '<span class="label label-default">Groupe '.$inscription->group_id.'</span>' : '');
@@ -103,7 +105,7 @@
                                         ?>
                                     </td>
                                     <td>{{ $inscription->adresse_facturation->email }}</td>
-                                    <td><?php //echo ($inscription->group_id > 0 ? $inscription->withTrashed()->participant->name :''); ?>
+                                    <td><?php echo ($inscription->group_id > 0 ? $inscription->participant->name :''); ?>
                                     </td>
                                     <td><strong>{{ $inscription->inscription_no }}</strong></td>
                                     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>

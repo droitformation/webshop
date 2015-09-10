@@ -56,12 +56,35 @@ $(document).ready(function() {
 
     $('#generic').DataTable({
         language: langues,
-        pagingType: 'simple'
+        pagingType: 'simple',
+        "columnDefs": [ {
+            "targets"  : 'no-sort',
+            "orderable": false
+        }]
     });
 
     $('.generic').DataTable({
         language: langues,
-        pagingType: 'simple'
+        pagingType: 'simple',
+        "columnDefs": [
+            { "visible": false, "targets": 0 }
+        ],
+        "drawCallback": function ( settings ) {
+            var api  = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last = null;
+
+            api.column(0, {page:'current'} ).data().each( function ( group, i ) {
+                if ( group && (last !== group) )
+                {
+                    $(rows).eq( i ).before(
+                        '<tr class="group isGroupeMain"><td>Groupe '+group+'</td><td><a class="btn btn-info btn-xs" href="admin/inscription/groupe/'+group+'">Changer le détenteur</a></td><td></td><td><a class="btn btn-success btn-xs" href="admin/inscription/add/'+group+'">Ajouter un participant</a></td><td colspan="4"></td></tr>'
+                    );
+
+                    last = group;
+                }
+            });
+        }
     });
 
     $('.dataTables_filter input').addClass('form-control').attr('placeholder','Recherche...');
