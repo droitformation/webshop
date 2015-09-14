@@ -9,7 +9,7 @@ use App\Droit\Inscription\Worker\InscriptionWorker;
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
 use App\Http\Requests;
-use App\Http\Requests\InscriptionRequest;
+use App\Http\Requests\InscriptionCreateRequest;
 use App\Http\Controllers\Controller;
 use App\Events\InscriptionWasCreated;
 use App\Events\GroupeInscriptionWasRegistered;
@@ -45,9 +45,9 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-        $colloques = $this->colloque->getAll();
+        $inscriptions = $this->inscription->getAll()->take(5);
 
-        return view('backend.inscriptions.index')->with(['colloques' => $colloques]);
+        return view('backend.inscriptions.index')->with(['inscriptions' => $inscriptions]);
     }
 
     /**
@@ -63,7 +63,7 @@ class InscriptionController extends Controller
         $inscriptions    = $this->helper->groupInscriptionCollection($inscriptions);
         $desinscriptions = $this->inscription->getByColloqueTrashed($id);
 
-        return view('backend.inscriptions.index')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions]);
+        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions]);
     }
 
     /**
@@ -144,10 +144,11 @@ class InscriptionController extends Controller
 
     public function change(Request $request)
     {
-        $group_id = $request->input('group_id');
-        $user_id  = $request->input('user_id');
 
-        $groupe   = $this->groupe->update(['id' => $group_id, 'user_id' => $user_id]);
+        $groupe = $this->groupe->update([
+            'id'      => $request->input('group_id'),
+            'user_id' => $request->input('user_id')
+        ]);
 
         event(new GroupeInscriptionWasRegistered($groupe));
 
@@ -160,15 +161,16 @@ class InscriptionController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(InscriptionRequest $request)
+    public function store(InscriptionCreateRequest $request)
     {
+
         $type     = $request->input('type');
         $colloque = $this->colloque->find($request->input('colloque_id'));
 
         // if type simple
         if($type == 'simple')
         {
-            $inscription = $this->register->register($request->all(),$colloque->id);
+            $inscription = $this->register->register($request->all(),$colloque->id, true);
 
             event(new InscriptionWasCreated($inscription));
         }
@@ -297,18 +299,12 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->find($id);
 
-        if($inscription->group_id)
-        {
-            $inscription->load('groupe');
-            $refresh = $inscription->groupe;
-        }
-
         $this->inscription->delete($id);
 
         // Refresh the groupe invoice and bv
-        if(isset($refresh))
+        if($inscription->group_id > 0)
         {
-            event(new GroupeInscriptionWasRegistered($refresh));
+            event(new GroupeInscriptionWasRegistered($inscription->groupe));
         }
 
         return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(array('status' => 'success', 'message' => 'Désinscription effectué' ));

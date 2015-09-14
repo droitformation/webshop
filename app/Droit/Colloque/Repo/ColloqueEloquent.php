@@ -25,10 +25,10 @@ class ColloqueEloquent implements ColloqueInterface{
     public function increment($colloque_id)
     {
         $colloque = $this->colloque->find($colloque_id);
-        $counter  = $colloque->counter + 1;
+        $colloque->counter = $colloque->counter + 1;
         $colloque->save();
 
-        return $counter;
+        return $colloque->counter;
     }
 
     public function getNewNoInscription($colloque_id){

@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('inscription', 'Admin\Colloque\InscriptionController');
     Route::resource('colloque', 'Admin\Colloque\ColloqueController');
     Route::get('search', 'Admin\SearchController@search');
-
+    Route::get('export/inscription/{id}', 'Admin\ExportController@inscription');
 });
 
 /* *
@@ -170,13 +170,13 @@ Route::get('cartworker', function()
 
     $generator->stream = true;
 
-    $job = (new \App\Jobs\MakeDocumentGroupe($groupe));
+    //$job = (new \App\Jobs\MakeDocumentGroupe($groupe));
 
-    $job->handle();
+    //$job->handle();
 
-/*    echo '<pre>';
+    echo '<pre>';
     print_r($groupe->adresse_facturation->name);
-    echo '</pre>';exit;*/
+    echo '</pre>';exit;
 
     //$order_no = $order->find(21);
     //$create = new App\Jobs\CreateOrderInvoice($order_no);

@@ -12,7 +12,17 @@ class InscriptionWorker{
         $this->colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     }
 
-    public function register($data,$colloque_id){
+    public function register($data,$colloque_id, $simple = false){
+
+        if($simple)
+        {
+            $already = $this->inscription->getByUser($colloque_id,$data['user_id']);
+
+            if($already)
+            {
+                throw new \App\Exceptions\RegisterException('Register failed');
+            }
+        }
 
         $inscription_no = $this->colloque->getNewNoInscription($colloque_id);
 

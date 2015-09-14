@@ -47,6 +47,9 @@ class Handler extends ExceptionHandler {
         if ($e instanceof \App\Exceptions\OrderCreationException)
             return \Redirect::to('checkout/confirm')->with(array('status' => 'danger' , 'message' => $e->getMessage()));
 
+        if ($e instanceof \App\Exceptions\RegisterException)
+            return \Redirect::back()->with(array('status' => 'warning' , 'message' => 'Vous êtes déjà inscrit à ce colloque'));
+
 		return parent::render($request, $e);
 	}
 

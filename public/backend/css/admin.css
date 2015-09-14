@@ -41,6 +41,10 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     font-size: 12px;
 }
 
+.normalTable p{
+    margin-bottom: 0;
+}
+
 .ui-widget-content li a{
     padding:0;
     margin: 0;

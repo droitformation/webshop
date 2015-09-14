@@ -3,16 +3,18 @@
 class InscriptionTest extends TestCase {
 
     protected $mock;
+    protected $groupe;
     protected $interface;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->refreshApplication();
-
         $this->mock = Mockery::mock('App\Droit\Inscription\Repo\InscriptionInterface');
         $this->app->instance('App\Droit\Inscription\Repo\InscriptionInterface', $this->mock);
+
+        $this->groupe = Mockery::mock('App\Droit\Inscription\Repo\GroupeInterface');
+        $this->app->instance('App\Droit\Inscription\Repo\GroupeInterface', $this->groupe);
 
         $user = App\Droit\User\Entities\User::find(1);
 
@@ -21,7 +23,7 @@ class InscriptionTest extends TestCase {
 
     public function tearDown()
     {
-         Mockery::close();
+         \Mockery::close();
 /*
         \Eloquent::unguard();
         \DB::table('colloque_inscriptions')->delete();
@@ -36,24 +38,43 @@ class InscriptionTest extends TestCase {
 	 */
 	public function testRegisterNewInscription()
 	{
-        $this->expectsEvents(App\Events\InscriptionWasCreated::class);
+        $this->WithoutEvents();
 
         $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
-        $this->mock->shouldReceive('create')->once()->with($input);
+        $inscription = new \App\Droit\Inscription\Entities\Inscription();
+
+        $this->mock->shouldReceive('getByUser')->once();
+        $this->mock->shouldReceive('create')->once()->with($input)->andReturn($inscription);
 
         $response = $this->call('POST', '/admin/inscription', $input);
 
-        echo '<pre>';
-        print_r($response->getContent());
-        echo '</pre>';exit;
+        $this->assertRedirectedTo('/admin/inscription/colloque/71');
+
+	}
+
+    /**
+     *
+     * @return void
+     */
+    public function testRegisterMultipleNewInscription()
+    {
+
+        $this->WithoutEvents();
+
+        $input = ['type' => 'multiple', 'colloque_id' => 71, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
+
+        $inscription = new \App\Droit\Inscription\Entities\Inscription();
+        $group       = new \App\Droit\Inscription\Entities\Groupe();
+        $group->id   = 1;
+
+        $this->groupe->shouldReceive('create')->andReturn($group);
+        $this->mock->shouldReceive('create')->twice()->andReturn($inscription);
+
+        $response = $this->call('POST', '/admin/inscription',$input);
 
         $this->assertRedirectedTo('/admin/inscription/colloque/71');
 
-/*        $response = $this->call('POST', '/admin/inscription', ['type' => 'multiple', 'colloque_id' => 71, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ]);
-
-        $this->assertRedirectedTo('/admin/inscription/colloque/71');*/
-
-	}
+    }
 
 }

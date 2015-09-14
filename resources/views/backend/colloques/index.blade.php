@@ -20,11 +20,11 @@
                     <table class="table" style="margin-bottom: 0px;" id="generic">
                         <thead>
                         <tr>
-                            <th class="col-sm-1">Action</th>
+                            <th class="col-sm-2">Action</th>
                             <th class="col-sm-1"></th>
-                            <th class="col-sm-2">Titre</th>
+                            <th class="col-sm-3">Titre</th>
                             <th class="col-sm-2">Sujet</th>
-                            <th class="col-sm-2"></th>
+                            <th class="col-sm-1"></th>
                         </tr>
                         </thead>
                         <tbody class="selects">
@@ -36,6 +36,7 @@
                                             <div class="btn-group" role="group" aria-label="...">
                                                 <a class="btn btn-sky btn-sm" href="{{ url('admin/colloque/'.$colloque->id) }}">&Eacute;diter</a>
                                                 <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions</a>
+                                                <a class="btn btn-inverse btn-sm" href="{{ url('admin/export/inscription/'.$colloque->id) }}">Exporter</a>
                                             </div>
                                         </td>
                                         <td><img style="height: 50px;" src="{{ asset($colloque->illustration) }}" /></td>
