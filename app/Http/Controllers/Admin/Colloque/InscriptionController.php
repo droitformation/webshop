@@ -86,9 +86,8 @@ class InscriptionController extends Controller
     public function add($group_id)
     {
         $inscription = $this->inscription->getByGroupe($group_id);
-        $groupe      = $inscription->first()->load('groupe','colloque');
 
-        return view('backend.inscriptions.add')->with(['group_id' => $group_id, 'groupe' => $groupe->groupe, 'colloque' => $groupe->colloque]);
+        return view('backend.inscriptions.add')->with(['group_id' => $group_id, 'groupe' => $inscription->first()->groupe, 'colloque' => $inscription->first()->colloque]);
     }
 
     /**
@@ -105,7 +104,6 @@ class InscriptionController extends Controller
 
     public function push(Request $request)
     {
-
         // Get all infos for inscription/participant
         $participant  = $request->input('participant');
         $price_id     = $request->input('price_id');
@@ -135,13 +133,9 @@ class InscriptionController extends Controller
         }
 
         // Register a new inscription
-        $inscription = $this->register->register($data,$colloque->id);
-
-        // Update counter for no inscription
-        $colloque->counter = $colloque->counter + 1;
-        $colloque->save();
+        $this->register->register($data,$colloque->id);
         
-        $group_user  = $this->groupe->find($group_id);
+        $group_user = $this->groupe->find($group_id);
 
         event(new GroupeInscriptionWasRegistered($group_user));
 
@@ -174,17 +168,13 @@ class InscriptionController extends Controller
         // if type simple
         if($type == 'simple')
         {
-            $data        = $request->all();
-            $inscription = $this->register->register($data,$colloque->id);
-            $colloque->counter = $colloque->counter + 1;
-            $colloque->save();
+            $inscription = $this->register->register($request->all(),$colloque->id);
 
             event(new InscriptionWasCreated($inscription));
         }
         else
         {
-            
-            $group_user   = $this->groupe->create(['colloque_id' => $colloque->id , 'user_id' => $request->input('user_id')]);
+            $group_user = $this->groupe->create(['colloque_id' => $colloque->id , 'user_id' => $request->input('user_id')]);
 
             // Get all infos for inscriptions/participants
             $participants = $request->input('participant');
@@ -214,11 +204,8 @@ class InscriptionController extends Controller
                 }
 
                 // Register a new inscription
-                $inscriptions[] = $this->register->register($data,$colloque->id);
+                $this->register->register($data,$colloque->id);
 
-                // Update counter for no inscription
-                $colloque->counter = $colloque->counter + 1;
-                $colloque->save();
             }
 
             event(new GroupeInscriptionWasRegistered($group_user));
@@ -259,7 +246,6 @@ class InscriptionController extends Controller
 
         if($inscription->group_id)
         {
-            $inscription->load('groupe');
             event(new GroupeInscriptionWasRegistered($inscription->groupe));
         }
         else
@@ -342,7 +328,6 @@ class InscriptionController extends Controller
 
         if($inscription->group_id)
         {
-            $inscription->load('groupe');
             event(new GroupeInscriptionWasRegistered($inscription->groupe));
         }
         else

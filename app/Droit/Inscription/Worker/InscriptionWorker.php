@@ -14,7 +14,7 @@ class InscriptionWorker{
 
     public function register($data,$colloque_id){
 
-        $inscription_no  = $this->colloque->getNewNoInscription($colloque_id);
+        $inscription_no = $this->colloque->getNewNoInscription($colloque_id);
 
         // Prepare data
         $data        = $data + ['inscription_no' => $inscription_no];

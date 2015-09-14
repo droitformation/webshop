@@ -40,7 +40,7 @@ class Groupe extends Model
                 foreach($inscriptions as $inscription)
                 {
                     $inscription->load('participant');
-                    $bons = $this->getFile('bon',$this->colloque->id,$this->user->id,$inscription->participant->id);
+                    $bons = $this->getFile('bon',$this->colloque->id,$this->id,$inscription->participant->id);
                     $docs['groupe'][] = $bons;
                 }
 
@@ -49,7 +49,7 @@ class Groupe extends Model
 
             foreach($this->colloque->annexe as $id => $annexe)
             {
-                $new =  $this->getFile($annexe,$this->colloque->id,$this->user->id);
+                $new =  $this->getFile($annexe,$this->colloque->id,$this->id);
                 $docs = array_merge($new,$docs);
             }
         }

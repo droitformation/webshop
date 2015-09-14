@@ -123,9 +123,9 @@ class PdfGenerator
 
         $generate = ($this->stream ? 'stream' : 'save');
 
-        $part = (isset($this->inscription->participant) ? '-'.$this->inscription->participant->id : '');
+        $part = (isset($this->inscription->participant) ? $this->inscription->group_id.'-'.$this->inscription->participant->id : $this->inscription->user_id);
 
-        return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.$part.'.pdf');
+        return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$this->inscription->colloque->id.'-'.$part.'.pdf');
     }
 
     public function factureEvent()
@@ -173,7 +173,7 @@ class PdfGenerator
 
             $generate = ($this->stream ? 'stream' : 'save');
 
-            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
+            return $facture->$generate(public_path().'/files/colloques/facture/facture_'.$groupe->colloque_id.'-'.$groupe->id.'.pdf');
 
         }
 
@@ -194,7 +194,7 @@ class PdfGenerator
 
             $generate = ($this->stream ? 'stream' : 'save');
 
-            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$groupe->colloque_id.'-'.$groupe->user_id.'.pdf');
+            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$groupe->colloque_id.'-'.$groupe->id.'.pdf');
 
         }
 

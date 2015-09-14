@@ -72,7 +72,7 @@
 
             <div class="panel panel-warning">
                 <div class="panel-body">
-                    <table class="table generic" style="margin-bottom: 0px;"><!-- Start inscriptions -->
+                    <table class="table" id="generic" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>

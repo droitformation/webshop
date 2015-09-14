@@ -151,29 +151,28 @@ Route::get('cartworker', function()
 
     $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-/*    $gro = new \App\Droit\Inscription\Entities\Groupe();
-    $groupe = $gro::findOrNew(20);
+    $gro = new \App\Droit\Inscription\Entities\Groupe();
+    $groupe = $gro::findOrNew(25);
     $groupe->load('colloque','user','inscriptions');
-    echo '<pre>';
-    print_r($groupe->documents);
-    echo '</pre>';exit;
 
+/*    echo '<pre>';
+    print_r($groupe->documents);
+    echo '</pre>';exit;*/
 
     $user = $groupe->user;
     $user->load('adresses');
-    $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);*/
+    $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
 
-    $inscription  = new \App\Droit\Inscription\Entities\Inscription();
+/*    $inscription  = new \App\Droit\Inscription\Entities\Inscription();
     $restore = $inscription->withTrashed()->find(74)->restore();
     $inscription->withTrashed()->find(74)->participant()->restore();
-    $inscription->withTrashed()->find(74)->user_options()->restore();
+    $inscription->withTrashed()->find(74)->user_options()->restore();*/
 
+    $generator->stream = true;
 
-/*     $generator->stream = true;
+    $job = (new \App\Jobs\MakeDocumentGroupe($groupe));
 
-    $job = (new \App\Jobs\MakeGroupeDocument($groupe));
-
-    $job->handle();*/
+    $job->handle();
 
 /*    echo '<pre>';
     print_r($groupe->adresse_facturation->name);
