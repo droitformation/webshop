@@ -28,7 +28,7 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerCompteService();
         $this->registerInscriptionService();
         $this->registerGroupeService();
-
+        $this->registerOptionService();
 	}
 
     /**

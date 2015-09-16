@@ -8,21 +8,24 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\Inscription\Worker\InscriptionWorker;
 
 class ExportController extends Controller
 {
     protected $inscription;
     protected $colloque;
+    protected $worker;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription )
+    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, InscriptionWorker $worker )
     {
         $this->inscription = $inscription;
         $this->colloque    = $colloque;
+        $this->worker      = $worker;
         $this->helper      = new \App\Droit\Helper\Helper();
     }
 
@@ -43,6 +46,14 @@ class ExportController extends Controller
      */
     public function inscription($id)
     {
+        $colloque     = $this->colloque->find($id);
+        $inscriptions = $this->inscription->getByColloque($id);
+        $dispatch      = $this->worker->dispatch($inscriptions);
+
+        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'dispatch' => $dispatch]);
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+
         \Excel::create('Export inscriptions', function($excel) use ($id) {
 
             $inscriptions = $this->inscription->getByColloque($id);

@@ -28,13 +28,6 @@ class Adresse extends Model {
         return $this->first_name.' '.$this->last_name;
     }
 
-    public function getTheCantonAttribute()
-    {
-        $this->load('canton');
-        return $this->canton->title;
-    }
-
-
     public function getCpTrimAttribute()
     {
         $wordlist = array("CP", "case", "postale","Case","Postale","cp","Cp","Postfach","postfach", "C. P." , "PF" , "PO Box");
@@ -53,6 +46,11 @@ class Adresse extends Model {
     public function pays()
     {
         return $this->belongsTo('App\Droit\Pays\Entities\Pays','pays_id');
+    }
+
+    public function profession()
+    {
+        return $this->belongsTo('App\Droit\Profession\Entities\Profession','profession_id');
     }
 
     public function canton()
