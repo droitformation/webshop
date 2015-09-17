@@ -20,7 +20,12 @@ class Option extends Model{
 
     public function groupe()
     {
-        return $this->belongsToMany('App\Droit\Option\Entities\OptionGroupe','colloque_option_users','option_id','groupe_id')->groupBy('id');
+        return $this->hasMany('App\Droit\Option\Entities\OptionGroupe','option_id')->groupBy('id');
+    }
+
+    public function groupe_inscription()
+    {
+        return $this->belongsToMany('App\Droit\Option\Entities\OptionGroupe','colloque_option_groupes','option_id','groupe_id')->groupBy('id');
     }
 
 }

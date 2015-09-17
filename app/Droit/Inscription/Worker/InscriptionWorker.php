@@ -35,39 +35,63 @@ class InscriptionWorker{
         return $inscription;
     }
 
-    public function dispatch($inscriptions, $option_id = null)
+    public function dispatch($inscriptions, $type = null)
     {
         $dispatch = [];
-        // $option = $this->option->find($option_id);
+        $options  = $inscriptions->first()->colloque->options;
+
+        $choix = $options->filter(function ($item) {
+            return $item->type == 'choix';
+        });
+
+        $checkbox = $options->filter(function ($item) {
+            return $item->type == 'checkbox';
+        });
 
         if(!$inscriptions->isEmpty())
         {
             foreach($inscriptions as $inscription)
             {
-                if(!$inscription->options->isEmpty())
+                if(!$inscription->user_options->isEmpty())
                 {
-                    foreach($inscription->options as $option)
+                    foreach($inscription->user_options as $option)
                     {
-                        if($option->type == 'choix')
+                        if($option->option->type == 'choix')
                         {
-                            $option->load('groupe');
-
-                            foreach($option->groupe as $groupe)
-                            {
-                                $dispatch[$option->type][$option->id][$groupe->id] = $inscription->toArray();
-                            }
+                            $dispatch['choix'][$option->option->id][$option->option_groupe->id][] = $inscription->inscription_no;
                         }
-                        else
+
+                        if($option->option->type == 'checkbox')
                         {
-                            $dispatch[$option->type][$option->id][] = $inscription->toArray();
+                            $dispatch['checkbox'][$option->option->id][] = $inscription->inscription_no;
+                        }
+                        else{
+                            $dispatch['empty'][] = $inscription->inscription_no;
                         }
                     }
                 }
+                else
+                {
+                    $dispatch['empty'][] = $inscription->inscription_no;
+                }
+
             }
         }
 
         return $dispatch;
 
+    }
+
+    public function checkbox($inscription){
+
+        $dispatch = [];
+
+        foreach($inscription->options as $option)
+        {
+            $dispatch['checkbox'][$option->id][] = $inscription;
+        }
+
+        return $dispatch;
     }
 
 }

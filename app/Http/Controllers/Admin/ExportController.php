@@ -48,7 +48,7 @@ class ExportController extends Controller
     {
         $colloque     = $this->colloque->find($id);
         $inscriptions = $this->inscription->getByColloque($id);
-        $dispatch      = $this->worker->dispatch($inscriptions);
+        $dispatch     = $this->worker->dispatch($inscriptions);
 
         return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'dispatch' => $dispatch]);
 

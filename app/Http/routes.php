@@ -148,35 +148,42 @@ Route::get('cartworker', function()
     $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $user         = \App::make('App\Droit\User\Repo\UserInterface');
     $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-
+    $colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-    $gro = new \App\Droit\Inscription\Entities\Groupe();
+/*    $gro = new \App\Droit\Inscription\Entities\Groupe();
     $groupe = $gro::findOrNew(25);
     $groupe->load('colloque','user','inscriptions');
 
-/*    echo '<pre>';
-    print_r($groupe->documents);
-    echo '</pre>';exit;*/
-
     $user = $groupe->user;
     $user->load('adresses');
-    $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
+    $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);*/
 
-/*    $inscription  = new \App\Droit\Inscription\Entities\Inscription();
-    $restore = $inscription->withTrashed()->find(74)->restore();
-    $inscription->withTrashed()->find(74)->participant()->restore();
-    $inscription->withTrashed()->find(74)->user_options()->restore();*/
+    $inde = $colloque->find(71);
 
-    $generator->stream = true;
+    foreach($inde->options as $option)
+    {
+        $option->load('groupe');
+        echo '<pre>';
+        print_r($option);
+        echo '</pre>';
 
+    }
+
+
+    /*     $restore = $inscription->withTrashed()->find(74)->restore();
+        $inscription->withTrashed()->find(74)->participant()->restore();
+        $inscription->withTrashed()->find(74)->user_options()->restore();*/
+
+/*    $generator->stream = true;
+
+    echo '<pre>';
+    print_r($groupe->adresse_facturation->name);
+    echo '</pre>';exit;*/
     //$job = (new \App\Jobs\MakeDocumentGroupe($groupe));
 
     //$job->handle();
 
-    echo '<pre>';
-    print_r($groupe->adresse_facturation->name);
-    echo '</pre>';exit;
 
     //$order_no = $order->find(21);
     //$create = new App\Jobs\CreateOrderInvoice($order_no);
