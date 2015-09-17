@@ -46,17 +46,20 @@ class ExportController extends Controller
      */
     public function inscription($id)
     {
+        //$format = $request->input('format');
+
         $colloque     = $this->colloque->find($id);
         $inscriptions = $this->inscription->getByColloque($id);
-        $dispatch     = $this->worker->dispatch($inscriptions);
+        $inscriptions = $this->worker->dispatch($inscriptions);
 
-        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'dispatch' => $dispatch]);
+        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'dispatch' => $inscriptions]);
 
         ////////////////////////////////////////////////////////////////////////////////////////
 
         \Excel::create('Export inscriptions', function($excel) use ($id) {
 
             $inscriptions = $this->inscription->getByColloque($id);
+            $inscriptions = $this->worker->dispatch($inscriptions);
             $colloque     = $this->colloque->find($id);
 
             $excel->sheet('Export', function($sheet) use ($inscriptions,$colloque) {

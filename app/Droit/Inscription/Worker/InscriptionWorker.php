@@ -52,27 +52,38 @@ class InscriptionWorker{
         {
             foreach($inscriptions as $inscription)
             {
-                if(!$inscription->user_options->isEmpty())
+                if(!$options->isEmpty())
                 {
-                    foreach($inscription->user_options as $option)
+                    foreach($options as $option)
                     {
-                        if($option->option->type == 'choix')
-                        {
-                            $dispatch['choix'][$option->option->id][$option->option_groupe->id][] = $inscription->inscription_no;
-                        }
+                        $option->load('groupe');
+                        $groupe_choix = $inscription->user_options->groupBy('option_id');
 
-                        if($option->option->type == 'checkbox')
+                        if(isset($groupe_choix) && isset($groupe_choix[$option->id]))
                         {
-                            $dispatch['checkbox'][$option->option->id][] = $inscription->inscription_no;
+                            $current = $groupe_choix[$option->id];
+
+                            if($option->type == 'choix' && !$option->groupe->isEmpty())
+                            {
+                                foreach($option->groupe as $groupe)
+                                {
+                                    if($current->contains('groupe_id', $groupe->id))
+                                    {
+                                        $dispatch['choix'][$option->id][$groupe->id][] = $inscription;
+                                    }
+                                }
+                            }
+
+                            if($option->type == 'checkbox')
+                            {
+                                $dispatch['checkbox'][$option->id][] = $inscription;
+                            }
                         }
-                        else{
-                            $dispatch['empty'][] = $inscription->inscription_no;
+                        else
+                        {
+                            $dispatch['empty'][] = $inscription;
                         }
                     }
-                }
-                else
-                {
-                    $dispatch['empty'][] = $inscription->inscription_no;
                 }
 
             }
