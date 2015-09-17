@@ -1,7 +1,7 @@
 <?php
-/*echo '<pre>';
-print_r($dispatch);
-echo '</pre>';*/
+echo '<pre>';
+//print_r($inscriptions);
+echo '</pre>';
 ?>
 
 
@@ -20,7 +20,18 @@ echo '</pre>';*/
 </table>
 
 @if(!empty($inscriptions))
-    @foreach($inscriptions as $groupes)
-        @include('export.table', ['inscriptions' => $groupes])
+    @foreach($inscriptions as $idoption =>  $options)
+
+        <table><tr><td>{{ $alloptions[$idoption] }}</td></tr></table>
+
+        @if($type == 'choix')
+            @foreach($options as $idgroupe => $option)
+
+                <table><tr><td>{{ $allgroupes[$idgroupe] }}</td></tr></table>
+
+                @include('export.table', ['inscriptions' => $option])
+            @endforeach
+        @endif
+
     @endforeach
 @endif

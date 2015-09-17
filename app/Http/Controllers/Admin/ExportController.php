@@ -48,11 +48,35 @@ class ExportController extends Controller
     {
         //$format = $request->input('format');
 
-        $colloque     = $this->colloque->find($id);
+        $order = 'choix';
+
+        $colloque = $this->colloque->find($id);
+        $colloque->options->load('groupe');
+
+        $allgroupes = [];
+        $alloptions = [];
+
+        if(!$colloque->options->isEmpty())
+        {
+            foreach($colloque->options as $option)
+            {
+                $alloptions[$option->id] = $option->title;
+
+                if(isset($option->groupe) && !$option->groupe->isEmpty())
+                {
+                    foreach($option->groupe as $groupe)
+                    {
+                        $allgroupes[$groupe->id] = $groupe->text;
+                    }
+                }
+
+            }
+        }
+
         $inscriptions = $this->inscription->getByColloque($id);
         $inscriptions = $this->worker->dispatch($inscriptions);
 
-        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'dispatch' => $inscriptions]);
+        return view('export.inscription')->with(['inscriptions' => $inscriptions[$order], 'colloque' => $colloque, 'type' => $order, 'alloptions' => $alloptions, 'allgroupes' => $allgroupes]);
 
         ////////////////////////////////////////////////////////////////////////////////////////
 
