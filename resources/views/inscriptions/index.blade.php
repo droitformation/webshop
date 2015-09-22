@@ -23,14 +23,13 @@
         <tbody>
         @if(!$inscriptions->isEmpty())
             @foreach($inscriptions as $inscription)
-                <?php $inscription->user->load('adresses') ?>
                 <tr>
                     <td><span class="label label-primary">{{ $inscription->inscription_no }}</span></td>
                     <td>{{ $inscription->created_at->format('d/m/Y') }}</td>
                     <td>{{ $inscription->user->first_name }}</td>
                     <td>{{ $inscription->user->last_name }}</td>
                     <td>{{ $inscription->user->email }}</td>
-                    <td>{{ $inscription->user->adresse_livraison->company }}</td>
+                    <td>{{ $inscription->user->adresse_livraison->company or '' }}</td>
                     <td><a class="btn btn-info btn-sm" href="{{ url('inscription/'.$inscription->id) }}">éditer</a></td>
                 </tr>
             @endforeach

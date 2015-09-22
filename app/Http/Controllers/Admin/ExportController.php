@@ -58,10 +58,21 @@ class ExportController extends Controller
 
         if(!$colloque->options->isEmpty())
         {
+            $alloptions = $colloque->options->lists('id','title')->all();
+
+            $grouped = $colloque->options->map(function ($item, $key)
+            {
+                if(isset($item->groupe) && !$item->groupe->isEmpty())
+                {
+                    foreach($item->groupe as $groupe)
+                    {
+                        return $groupe;
+                    }
+                }
+            })->values();
+
             foreach($colloque->options as $option)
             {
-                $alloptions[$option->id] = $option->title;
-
                 if(isset($option->groupe) && !$option->groupe->isEmpty())
                 {
                     foreach($option->groupe as $groupe)
@@ -73,7 +84,14 @@ class ExportController extends Controller
             }
         }
 
+        $grouped = $grouped->lists('text','id');
+        echo '<pre>';
+        print_r($allgroupes);
+        print_r($grouped);
+        echo '</pre>';exit;
+
         $inscriptions = $this->inscription->getByColloque($id);
+
         $inscriptions = $this->worker->dispatch($inscriptions);
 
         return view('export.inscription')->with(['inscriptions' => $inscriptions[$order], 'colloque' => $colloque, 'type' => $order, 'alloptions' => $alloptions, 'allgroupes' => $allgroupes]);

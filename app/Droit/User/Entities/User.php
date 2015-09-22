@@ -71,7 +71,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $contact->first();
         }
 
-        return [];
+        return false;
     }
 
     public function getNameAttribute()

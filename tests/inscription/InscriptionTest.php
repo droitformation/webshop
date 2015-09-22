@@ -69,12 +69,28 @@ class InscriptionTest extends TestCase {
         $group->id   = 1;
 
         $this->groupe->shouldReceive('create')->andReturn($group);
-        $this->mock->shouldReceive('create')->twice()->andReturn($inscription);
+        $this->mock->shouldReceive('create')->times(2)->andReturn($inscription);
 
         $response = $this->call('POST', '/admin/inscription',$input);
 
         $this->assertRedirectedTo('/admin/inscription/colloque/71');
 
+    }
+
+    public function testLastInscriptions()
+    {
+        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->make();
+        $inscription2 = factory(\App\Droit\Inscription\Entities\Inscription::class)->make();
+
+        $inscriptions = new Illuminate\Support\Collection(
+            array(  $inscription1, $inscription2 )
+        );
+
+        $this->mock->shouldReceive('getAll')->once()->andReturn($inscriptions);
+
+        $response = $this->call('GET', 'admin/inscription');
+
+        $this->assertViewHas('inscriptions');
     }
 
 }
