@@ -160,6 +160,10 @@ Route::get('cartworker', function()
     $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);*/
 
     $inde = $colloque->find(71);
+    $inde->load('inscriptions');
+    echo '<pre>';
+    print_r($inde);
+    echo '</pre>';exit;
 
     foreach($inde->options as $option)
     {

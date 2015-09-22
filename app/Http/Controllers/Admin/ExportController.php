@@ -46,8 +46,6 @@ class ExportController extends Controller
      */
     public function inscription($id)
     {
-        //$format = $request->input('format');
-
         $order = 'choix';
 
         $colloque = $this->colloque->find($id);
@@ -58,18 +56,7 @@ class ExportController extends Controller
 
         if(!$colloque->options->isEmpty())
         {
-            $alloptions = $colloque->options->lists('id','title')->all();
-
-            $grouped = $colloque->options->map(function ($item, $key)
-            {
-                if(isset($item->groupe) && !$item->groupe->isEmpty())
-                {
-                    foreach($item->groupe as $groupe)
-                    {
-                        return $groupe;
-                    }
-                }
-            })->values();
+            $alloptions = $colloque->options->lists('title','id')->all();
 
             foreach($colloque->options as $option)
             {
@@ -80,21 +67,21 @@ class ExportController extends Controller
                         $allgroupes[$groupe->id] = $groupe->text;
                     }
                 }
-
             }
         }
 
-        $grouped = $grouped->lists('text','id');
-        echo '<pre>';
-        print_r($allgroupes);
-        print_r($grouped);
-        echo '</pre>';exit;
-
         $inscriptions = $this->inscription->getByColloque($id);
 
-        $inscriptions = $this->worker->dispatch($inscriptions);
+        if(!$inscriptions->isEmpty())
+        {
+            $inscriptions = $this->worker->dispatch($inscriptions);
+            if(isset($inscriptions[$order]))
+            {
+                $inscriptions = $inscriptions[$order];
+            }
+        }
 
-        return view('export.inscription')->with(['inscriptions' => $inscriptions[$order], 'colloque' => $colloque, 'type' => $order, 'alloptions' => $alloptions, 'allgroupes' => $allgroupes]);
+        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'alloptions' => $alloptions, 'allgroupes' => $allgroupes]);
 
         ////////////////////////////////////////////////////////////////////////////////////////
 

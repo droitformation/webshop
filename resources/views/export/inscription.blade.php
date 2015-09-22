@@ -20,7 +20,7 @@ echo '</pre>';
 </table>
 
 @if(!empty($inscriptions))
-    @foreach($inscriptions as $idoption =>  $options)
+    @foreach($inscriptions as $idoption => $options)
 
         <table><tr><td>{{ $alloptions[$idoption] }}</td></tr></table>
 

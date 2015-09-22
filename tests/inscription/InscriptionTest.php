@@ -79,12 +79,7 @@ class InscriptionTest extends TestCase {
 
     public function testLastInscriptions()
     {
-        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->make();
-        $inscription2 = factory(\App\Droit\Inscription\Entities\Inscription::class)->make();
-
-        $inscriptions = new Illuminate\Support\Collection(
-            array(  $inscription1, $inscription2 )
-        );
+        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make();
 
         $this->mock->shouldReceive('getAll')->once()->andReturn($inscriptions);
 

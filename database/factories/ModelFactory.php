@@ -23,6 +23,24 @@ $factory->define(App\Droit\Inscription\Entities\Inscription::class, function (Fa
     ];
 });
 
+$factory->define(App\Droit\Option\Entities\Option::class, function (Faker\Generator $faker) {
+    return [
+        'id'          => 1,
+        'colloque_id' => 1,
+        'title'       => 'Option',
+        'type'        => 'checkbox',
+    ];
+});
+
+$factory->define(App\Droit\Option\Entities\OptionGroupe::class, function (Faker\Generator $faker) {
+    return [
+        'id'          => 1,
+        'colloque_id' => 1,
+        'option_id'   => 1,
+        'text'        => 'Groupe',
+    ];
+});
+
 $factory->define(App\Droit\User\Entities\User::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,

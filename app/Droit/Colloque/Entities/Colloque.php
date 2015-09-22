@@ -103,4 +103,8 @@ class Colloque extends Model
         return $this->hasMany('App\Droit\Option\Entities\Option');
     }
 
+    public function inscriptions()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription');
+    }
 }
