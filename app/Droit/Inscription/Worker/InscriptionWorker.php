@@ -3,6 +3,11 @@ namespace App\Droit\Inscription\Worker;
 
 class InscriptionWorker{
 
+    /*
+    * Helper class for misc functions
+    **/
+    protected $helper;
+
     protected $inscription;
     protected $colloque;
     protected $option;
@@ -12,6 +17,8 @@ class InscriptionWorker{
         $this->inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
         $this->colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
         $this->option      = \App::make('App\Droit\Option\Repo\OptionInterface');
+
+        $this->helper  = new \App\Droit\Helper\Helper();
     }
 
     public function register($data,$colloque_id, $simple = false){
@@ -35,58 +42,45 @@ class InscriptionWorker{
         return $inscription;
     }
 
-    public function dispatch($inscriptions, $type = null)
+    public function dispatch($inscriptions, $options)
     {
-        $dispatch = [];
-        $options  = $inscriptions->first()->colloque->options;
-
-        $choix = $options->filter(function ($item) {
-            return $item->type == 'choix';
-        });
-
-        $checkbox = $options->filter(function ($item) {
-            return $item->type == 'checkbox';
-        });
-
-        if(!$inscriptions->isEmpty())
+        foreach($inscriptions as $inscription)
         {
-            foreach($inscriptions as $inscription)
+            foreach($options as $option_id => $option)
             {
-                if(!$options->isEmpty())
+                $groupe_choix = $inscription->user_options->groupBy('option_id');
+
+                if(isset($groupe_choix) && isset($groupe_choix[$option_id]) && $this->helper->is_multi($option))
                 {
-                    foreach($options as $option)
+
+                        foreach ($option as $groupe_id => $groupe)
+                        {
+                            $current = $groupe_choix[$option_id];
+
+                            if($current->contains('groupe_id', $groupe_id))
+                            {
+                                $dispatch[$option_id][$groupe_id][] = $inscription;
+                            }
+                        }
+
+
+
+
+
+                }
+                elseif(!$this->helper->is_multi($option))
+                {
+                    if(isset($groupe_choix) && isset($groupe_choix[$option_id]))
                     {
-                        $option->load('groupe');
-                        $groupe_choix = $inscription->user_options->groupBy('option_id');
-
-                        if(isset($groupe_choix) && isset($groupe_choix[$option->id]))
-                        {
-                            $current = $groupe_choix[$option->id];
-
-                            if($option->type == 'choix' && !$option->groupe->isEmpty())
-                            {
-                                foreach($option->groupe as $groupe)
-                                {
-                                    if($current->contains('groupe_id', $groupe->id))
-                                    {
-                                        $dispatch['choix'][$option->id][$groupe->id][] = $inscription;
-                                    }
-                                }
-                            }
-
-                            if($option->type == 'checkbox')
-                            {
-                                $dispatch['checkbox'][$option->id][] = $inscription;
-                            }
-                        }
-                        else
-                        {
-                            $dispatch['empty'][] = $inscription;
-                        }
+                        $dispatch[$option_id][] = $inscription;
+                    }
+                    else
+                    {
+                        $dispatch[0][] = $inscription;
                     }
                 }
-
             }
+
         }
 
         return $dispatch;

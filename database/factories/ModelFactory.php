@@ -32,7 +32,7 @@ $factory->define(App\Droit\Option\Entities\Option::class, function (Faker\Genera
     ];
 });
 
-$factory->define(App\Droit\Option\Entities\OptionGroupe::class, function (Faker\Generator $faker) {
+$factory->define(App\Droit\Option\Entities\OptionGroupe::class, function (Faker\Generator $faker){
     return [
         'id'          => 1,
         'colloque_id' => 1,

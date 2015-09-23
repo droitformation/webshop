@@ -20,7 +20,28 @@ class Adresse extends Model {
     {
         $this->load('civilite');
 
-        return  $this->civilite->title;
+        return  (isset($this->civilite->title) ? $this->civilite->title : '');
+    }
+
+    public function getCantonTitleAttribute()
+    {
+        $this->load('canton');
+
+        return  (isset($this->canton->title) ? $this->canton->title : '');
+    }
+
+    public function getProfessionTitleAttribute()
+    {
+        $this->load('profession');
+
+        return  (isset($this->profession->title) ? $this->profession->title : '');
+    }
+
+    public function getPaysTitleAttribute()
+    {
+        $this->load('pays');
+
+        return (isset($this->pays->title) ? $this->pays->title : '');
     }
 
     public function getNameAttribute()
@@ -35,7 +56,7 @@ class Adresse extends Model {
         $cp = str_replace($wordlist, "",  $this->cp);
         $cp = trim($cp);
 
-        return  'CP '.$cp;
+        return  (!empty($cp) ? 'CP '.$cp : '');
     }
  	
 	public function user()

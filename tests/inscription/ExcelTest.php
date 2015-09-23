@@ -52,21 +52,44 @@ class ExcelTest extends TestCase {
         $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make();
         $options      = factory(\App\Droit\Option\Entities\Option::class,2)->make();
 
-        $groupe       = factory(\App\Droit\Option\Entities\OptionGroupe::class)->make();
+        $options = $options->map(function ($item, $key) {
+            $groupe       = factory(\App\Droit\Option\Entities\OptionGroupe::class, 2)->make();
+            $item->groupe = $groupe;
+            return $item;
+        });
 
         $colloque->id = 1;
-        $colloque->options         = $options;
-        $colloque->inscriptions    = $inscriptions;
+        $colloque->options      = $options;
+        $colloque->inscriptions = $inscriptions;
 
         $this->excel->setColloque($colloque);
 
         $actual = $this->excel->getMainOptions();
         $groupe = $this->excel->getGroupeOptions();
 
-        $expect = [ 1 => 'Option', 1 => 'Option' ];
+        $expect_option = [ 1 => 'Option', 1 => 'Option' ];
+        $expect_groupe = [
+            1 => [1 => 'Groupe', 1 => 'Groupe']
+        ];
 
-        $this->assertEquals($expect, $actual);
-        $this->assertEquals([], $groupe);
+        $this->assertEquals($expect_option, $actual);
+        $this->assertEquals($expect_groupe, $groupe);
+    }
+
+    public function testRowInfosForInscription()
+    {
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->make();
+
+        $this->excel->setColumns(['name','npa']);
+
+        $actual = $this->excel->row($inscription);
+
+        $i = array_search('participant', array_keys($actual));
+
+        $this->assertEquals('2520', $actual['npa']);
+        $this->assertEquals('Cindy Leschaud', $actual['name']);
+        $this->assertTrue(isset($actual['participant']));
+        $this->assertEquals(2,$i);
     }
 
 }

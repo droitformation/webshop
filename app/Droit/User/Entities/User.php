@@ -61,9 +61,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         {
             $contact = $this->adresses->filter(function($adresse)
             {
-                if ($adresse->type == 1) {
+                if ($adresse->type == 1)
+                {
                     $adresse->load('canton');
                     $adresse->load('profession');
+
                     return true;
                 }
             });

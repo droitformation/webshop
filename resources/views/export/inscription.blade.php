@@ -28,7 +28,27 @@ echo '</pre>';
             @foreach($options as $idgroupe => $option)
 
                 <table><tr><td>{{ $allgroupes[$idgroupe] }}</td></tr></table>
-
+                <table>
+                    <tr>
+                        <th>Civilité</th>
+                        <th>Prénom et nom</th>
+                        <th>Participant</th>
+                        <th>Email</th>
+                        <th>Profession</th>
+                        <th>Entreprise</th>
+                        <th>Téléphone</th>
+                        <th>Addresse</th>
+                        <th>Compl.</th>
+                        <th>CP</th>
+                        <th>NPA	</th>
+                        <th>Ville</th>
+                        <th>Canton</th>
+                        <th>Pays</th>
+                        <th>Date</th>
+                        <th>Numéro</th>
+                        <th>Options</th>
+                    </tr>
+                </table>
                 @include('export.table', ['inscriptions' => $option])
             @endforeach
         @endif

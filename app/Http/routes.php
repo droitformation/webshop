@@ -159,24 +159,25 @@ Route::get('cartworker', function()
     $user->load('adresses');
     $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);*/
 
-    $inde = $colloque->find(71);
-    $inde->load('inscriptions');
+    $inde  = $colloque->find(71);
+    $excel = new App\Droit\Generate\Excel\ExcelGenerator();
+
+    //$inde->load('inscriptions');
+    $cindy = $inscription->find(86);
+    $cindy = $excel->row($cindy);
+
+    $columns = [
+        'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
+        'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
+    ];
+
+    $colunms = array_merge(array_slice($columns, 0, 2), ['participant'], array_slice($columns, 2));
     echo '<pre>';
-    print_r($inde);
+    print_r($cindy);
     echo '</pre>';exit;
 
-    foreach($inde->options as $option)
-    {
-        $option->load('groupe');
-        echo '<pre>';
-        print_r($option);
-        echo '</pre>';
-
-    }
-
-
     /*     $restore = $inscription->withTrashed()->find(74)->restore();
-        $inscription->withTrashed()->find(74)->participant()->restore();
+
         $inscription->withTrashed()->find(74)->user_options()->restore();*/
 
 /*    $generator->stream = true;
