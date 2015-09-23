@@ -26,6 +26,7 @@ class ExportController extends Controller
         $this->inscription = $inscription;
         $this->colloque    = $colloque;
         $this->worker      = $worker;
+        $this->generator   = new \App\Droit\Generate\Excel\ExcelGenerator();
         $this->helper      = new \App\Droit\Helper\Helper();
     }
 
@@ -47,41 +48,26 @@ class ExportController extends Controller
     public function inscription($id)
     {
         $order = 'choix';
+        $inscriptions = [];
 
         $colloque = $this->colloque->find($id);
-        $colloque->options->load('groupe');
-
-        $allgroupes = [];
-        $alloptions = [];
-
-        if(!$colloque->options->isEmpty())
-        {
-            $alloptions = $colloque->options->lists('title','id')->all();
-
-            foreach($colloque->options as $option)
-            {
-                if(isset($option->groupe) && !$option->groupe->isEmpty())
-                {
-                    foreach($option->groupe as $groupe)
-                    {
-                        $allgroupes[$groupe->id] = $groupe->text;
-                    }
-                }
-            }
-        }
 
         $inscriptions = $this->inscription->getByColloque($id);
 
-        if(!$inscriptions->isEmpty())
+        $this->generator->setColloque($colloque);
+        $this->generator->setSort($order);
+
+        if(!$this->generator->inscriptions->isEmpty())
         {
-            $inscriptions = $this->worker->dispatch($inscriptions);
-            if(isset($inscriptions[$order]))
-            {
-                $inscriptions = $inscriptions[$order];
-            }
+            $this->generator->sort();
+            $inscriptions = $this->generator->toRow($this->generator->inscriptions);
+
+            echo '<pre>';
+            print_r($inscriptions);
+            echo '</pre>';exit;
         }
 
-        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'alloptions' => $alloptions, 'allgroupes' => $allgroupes]);
+        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque]);
 
         ////////////////////////////////////////////////////////////////////////////////////////
 

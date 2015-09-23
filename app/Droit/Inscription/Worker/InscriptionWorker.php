@@ -12,6 +12,8 @@ class InscriptionWorker{
     protected $colloque;
     protected $option;
 
+    public $dispatch = [];
+
     public function __construct()
     {
         $this->inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
@@ -40,63 +42,6 @@ class InscriptionWorker{
         $inscription = $this->inscription->create($data);
 
         return $inscription;
-    }
-
-    public function dispatch($inscriptions, $options)
-    {
-        foreach($inscriptions as $inscription)
-        {
-            foreach($options as $option_id => $option)
-            {
-                $groupe_choix = $inscription->user_options->groupBy('option_id');
-
-                if(isset($groupe_choix) && isset($groupe_choix[$option_id]) && $this->helper->is_multi($option))
-                {
-
-                        foreach ($option as $groupe_id => $groupe)
-                        {
-                            $current = $groupe_choix[$option_id];
-
-                            if($current->contains('groupe_id', $groupe_id))
-                            {
-                                $dispatch[$option_id][$groupe_id][] = $inscription;
-                            }
-                        }
-
-
-
-
-
-                }
-                elseif(!$this->helper->is_multi($option))
-                {
-                    if(isset($groupe_choix) && isset($groupe_choix[$option_id]))
-                    {
-                        $dispatch[$option_id][] = $inscription;
-                    }
-                    else
-                    {
-                        $dispatch[0][] = $inscription;
-                    }
-                }
-            }
-
-        }
-
-        return $dispatch;
-
-    }
-
-    public function checkbox($inscription){
-
-        $dispatch = [];
-
-        foreach($inscription->options as $option)
-        {
-            $dispatch['checkbox'][$option->id][] = $inscription;
-        }
-
-        return $dispatch;
     }
 
 }

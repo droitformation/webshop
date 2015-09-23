@@ -163,15 +163,15 @@ Route::get('cartworker', function()
     $excel = new App\Droit\Generate\Excel\ExcelGenerator();
 
     //$inde->load('inscriptions');
-    $cindy = $inscription->find(86);
-    $cindy = $excel->row($cindy);
+    $cindy = $inscription->find(90);
+    $cindy->load('user_options');
+    //$cindy = $excel->row($cindy);
 
     $columns = [
         'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
         'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
     ];
 
-    $colunms = array_merge(array_slice($columns, 0, 2), ['participant'], array_slice($columns, 2));
     echo '<pre>';
     print_r($cindy);
     echo '</pre>';exit;

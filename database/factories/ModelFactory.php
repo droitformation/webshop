@@ -41,6 +41,15 @@ $factory->define(App\Droit\Option\Entities\OptionGroupe::class, function (Faker\
     ];
 });
 
+$factory->define(App\Droit\Option\Entities\OptionUser::class, function (Faker\Generator $faker){
+    return [
+        'user_id'          => 1,
+        'option_id'        => 1,
+        'inscription_id'   => 1,
+        'groupe_id'        => 1,
+    ];
+});
+
 $factory->define(App\Droit\User\Entities\User::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,

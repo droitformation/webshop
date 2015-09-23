@@ -101,6 +101,25 @@
          return $row;
      }
 
+     public function toRow($inscriptions)
+     {
+         $data = [];
+
+         foreach($inscriptions as $key => $inscription)
+         {
+             if(is_array($inscription))
+             {
+                 $data[$key] = array_merge($data, $this->toRow($inscription));
+             }
+             else
+             {
+                 $data[] = $this->row($inscription);
+             }
+         }
+
+         return $data;
+     }
+
      /*
      * Get user infos
      **/
@@ -117,9 +136,8 @@
      /*
       * Dispatch inscription by sort
       **/
-     public function sort($inscriptions)
+     public function sort()
      {
-
          if($this->sort == 'checkbox')
          {
              $options = $this->getMainOptions();
@@ -130,7 +148,13 @@
              $options = $this->getGroupeOptions();
          }
 
-         $inscriptions = $this->inscription_worker->dispatch($inscriptions,$options);
+         if(!empty($options))
+         {
+            $this->dispatch($this->inscriptions,$options);
+            $this->inscriptions = $this->dispatch;
+         }
+
+         return $this;
      }
 
      /*
@@ -168,5 +192,43 @@
          return (isset($groupes) ? $groupes : []);
      }
 
+     public function dispatch($inscriptions, $options)
+     {
+         foreach($inscriptions as $inscription)
+         {
+             $groupe_choix = $inscription->user_options->groupBy('option_id');
+
+             foreach($options as $option_id => $option)
+             {
+                 if(isset($groupe_choix[$option_id]))
+                 {
+                     $current = $groupe_choix[$option_id];
+
+                     $this->optionDispatch($option,$option_id,$current,$inscription);
+                 }
+                 else
+                 {
+                     $this->dispatch[0][] = $inscription;
+                 }
+             }
+         }
+     }
+
+     public function optionDispatch($option,$option_id,$current,$inscription)
+     {
+         if(is_array($option))
+         {
+             $key = key($option);
+
+             if($current->contains('groupe_id', $key))
+             {
+                 $this->dispatch[$option_id][$key][] = $inscription;
+             }
+         }
+         else
+         {
+             $this->dispatch[$option_id][] = $inscription;
+         }
+     }
 
  }

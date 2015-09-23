@@ -5,6 +5,7 @@ class InscriptionTest extends TestCase {
     protected $mock;
     protected $groupe;
     protected $interface;
+    protected $worker;
 
     public function setUp()
     {
@@ -15,6 +16,8 @@ class InscriptionTest extends TestCase {
 
         $this->groupe = Mockery::mock('App\Droit\Inscription\Repo\GroupeInterface');
         $this->app->instance('App\Droit\Inscription\Repo\GroupeInterface', $this->groupe);
+
+        $this->worker = new App\Droit\Inscription\Worker\InscriptionWorker();
 
         $user = App\Droit\User\Entities\User::find(1);
 
@@ -87,5 +90,6 @@ class InscriptionTest extends TestCase {
 
         $this->assertViewHas('inscriptions');
     }
+
 
 }

@@ -1,9 +1,8 @@
 <?php
 echo '<pre>';
-//print_r($inscriptions);
+print_r($inscriptions);
 echo '</pre>';
 ?>
-
 
 <table>
     <tr>
@@ -19,10 +18,10 @@ echo '</pre>';
     <tr><td colspan="2"></td></tr>
 </table>
 
-@if(!empty($inscriptions))
-    @foreach($inscriptions as $idoption => $options)
+@if(!empty($inscriptionihljs))
+    @foreach($inscriptijlons as $idoption => $options)
 
-        <table><tr><td>{{ $alloptions[$idoption] }}</td></tr></table>
+
 
         @if($type == 'choix')
             @foreach($options as $idgroupe => $option)
