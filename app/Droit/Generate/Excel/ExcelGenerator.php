@@ -104,12 +104,25 @@
      public function toRow($inscriptions)
      {
          $data = [];
-
+         
          foreach($inscriptions as $key => $inscription)
          {
              if(is_array($inscription))
              {
-                 $data[$key] = array_merge($data, $this->toRow($inscription));
+                 foreach($inscription as $option => $value)
+                 {
+                     if(is_array($value))
+                     {
+                         foreach ($value as $final)
+                         {
+                             $data[$key][$option][] = $this->row($final);
+                         }
+                     }
+                     else
+                     {
+                         $data[$key][] = $this->row($value);
+                     }
+                 }
              }
              else
              {
@@ -124,10 +137,10 @@
      * Get user infos
      **/
      public function user($inscription){
-
+         
          foreach($this->columns as $column)
          {
-             $user[$column] = trim($inscription->adresse_facturation->$column);
+             $user[$column] = (isset($inscription->adresse_facturation->$column) ? trim($inscription->adresse_facturation->$column) : '');
          }
 
          return $user;
@@ -164,7 +177,7 @@
      {
          if(!$this->options->isEmpty())
          {
-             return $this->options->lists('title','id')->all();
+             return $this->options->where('type','checkbox')->lists('title','id')->all();
          }
 
          return [];

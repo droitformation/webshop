@@ -47,9 +47,7 @@ class ExportController extends Controller
      */
     public function inscription($id)
     {
-        $order = 'choix';
-        $inscriptions = [];
-
+        $order    = 'checkbox';
         $colloque = $this->colloque->find($id);
 
         $inscriptions = $this->inscription->getByColloque($id);
@@ -61,10 +59,6 @@ class ExportController extends Controller
         {
             $this->generator->sort();
             $inscriptions = $this->generator->toRow($this->generator->inscriptions);
-
-            echo '<pre>';
-            print_r($inscriptions);
-            echo '</pre>';exit;
         }
 
         return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque]);
