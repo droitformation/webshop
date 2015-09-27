@@ -7,6 +7,7 @@
         <th>Profession</th>
         <th>Entreprise</th>
         <th>Téléphone</th>
+        <th>Mobile</th>
         <th>Addresse</th>
         <th>Compl.</th>
         <th>CP</th>

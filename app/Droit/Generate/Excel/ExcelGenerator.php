@@ -23,8 +23,7 @@
       * Default columns
       **/
      protected $columns = [
-         'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
-         'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
+         'civilite_title' ,'name', 'email', 'profession_title','company', 'telephone','mobile', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
      ];
 
      /*
