@@ -1,7 +1,7 @@
 <?php
-echo '<pre>';
+/*echo '<pre>';
 print_r($inscriptions);
-echo '</pre>';
+echo '</pre>';*/
 ?>
 
 <table>
@@ -18,39 +18,29 @@ echo '</pre>';
     <tr><td colspan="2"></td></tr>
 </table>
 
-@if(!empty($inscriptionihljs))
-    @foreach($inscriptijlons as $idoption => $options)
+@if(!empty($inscriptions))
+    @if(!empty($order))
+        @foreach($inscriptions as $option_id => $rows)
 
+            <table>
+                <tr><td><strong>{{ (isset($options[$option_id]) ? 'OPTION: '.$options[$option_id] : '') }}</strong></td></tr>
+            </table>
 
+            @if($order == 'checkbox')
+                @include('export.table',['rows' => $rows])
+            @else
+                @foreach($rows as $groupe_id => $row)
 
-        @if($type == 'choix')
-            @foreach($options as $idgroupe => $option)
+                    <table>
+                        <tr><td><strong>{{ (isset($groupes[$option_id][$groupe_id]) ? 'CHOIX: '.$groupes[$option_id][$groupe_id] : '') }}</strong></td></tr>
+                    </table>
 
-                <table><tr><td>{{ $allgroupes[$idgroupe] }}</td></tr></table>
-                <table>
-                    <tr>
-                        <th>Civilité</th>
-                        <th>Prénom et nom</th>
-                        <th>Participant</th>
-                        <th>Email</th>
-                        <th>Profession</th>
-                        <th>Entreprise</th>
-                        <th>Téléphone</th>
-                        <th>Addresse</th>
-                        <th>Compl.</th>
-                        <th>CP</th>
-                        <th>NPA	</th>
-                        <th>Ville</th>
-                        <th>Canton</th>
-                        <th>Pays</th>
-                        <th>Date</th>
-                        <th>Numéro</th>
-                        <th>Options</th>
-                    </tr>
-                </table>
-                @include('export.table', ['inscriptions' => $option])
-            @endforeach
-        @endif
+                    @include('export.table',['rows' => $row])
+                @endforeach
+            @endif
 
-    @endforeach
+        @endforeach
+    @else
+        @include('export.table',['rows' => $inscriptions])
+    @endif
 @endif

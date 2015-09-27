@@ -50,6 +50,24 @@
          setlocale(LC_ALL, 'fr_FR.UTF-8');
      }
 
+     public function init($colloque, $options = []){
+
+         $this->setColloque($colloque);
+
+         if(isset($options['order']) && $options['order'])
+         {
+             $this->setSort($options['order']);
+         }
+
+         if(!$this->inscriptions->isEmpty())
+         {
+             $this->sort();
+             return $this->toRow($this->inscriptions);
+         }
+
+         return false;
+     }
+
      /*
       * Set the current colloque and set options and inscriptions
       **/
@@ -97,6 +115,11 @@
 
          $row['numero'] = $inscription->inscription_no;
          $row['date']   = $inscription->created_at->format('d/m/Y');
+
+         $filtered = $inscription->options->filter(function ($item) {  return $item->type == 'checkbox';  });
+         $row['options'] = implode('\n',$filtered->lists('title')->all());
+
+         array_walk($row, array($this, 'makeRow'));
 
          return $row;
      }
@@ -147,6 +170,14 @@
      }
 
      /*
+     * Each table row
+     **/
+     public function makeRow(&$item,$key)
+     {
+         $item = '<td>'.$item.'</td>';
+     }
+
+     /*
       * Dispatch inscription by sort
       **/
      public function sort()
@@ -177,7 +208,16 @@
      {
          if(!$this->options->isEmpty())
          {
-             return $this->options->where('type','checkbox')->lists('title','id')->all();
+             if($this->sort == 'checkbox')
+             {
+                 $options = $this->options->where('type','checkbox');
+             }
+             else
+             {
+                 $options = $this->options;
+             }
+
+             return $options->lists('title','id')->all();
          }
 
          return [];

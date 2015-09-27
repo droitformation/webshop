@@ -183,4 +183,16 @@ class ExcelTest extends TestCase {
 
     }
 
+    public function testMakeRowForTable()
+    {
+        $worker = new App\Droit\Generate\Excel\ExcelGenerator();
+
+        $array  = ['cindy','leschaud'];
+        $expect = ['<td>cindy</td>','<td>leschaud</td>'];
+
+        array_walk($array, array($worker, 'makeRow'));
+
+        $this->assertEquals($expect,$array);
+    }
+
 }

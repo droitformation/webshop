@@ -47,34 +47,30 @@ class ExportController extends Controller
      */
     public function inscription($id)
     {
-        $order    = 'checkbox';
+        $order    = false;
+/*
         $colloque = $this->colloque->find($id);
 
-        $inscriptions = $this->inscription->getByColloque($id);
+        $inscriptions = $this->generator->init($colloque, ['order' => $order]);
+        $options      = $this->generator->getMainOptions();
+        $groupes      = $this->generator->getGroupeOptions();
 
-        $this->generator->setColloque($colloque);
-        $this->generator->setSort($order);
-
-        if(!$this->generator->inscriptions->isEmpty())
-        {
-            $this->generator->sort();
-            $inscriptions = $this->generator->toRow($this->generator->inscriptions);
-        }
-
-        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque]);
+        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);*/
 
         ////////////////////////////////////////////////////////////////////////////////////////
 
-        \Excel::create('Export inscriptions', function($excel) use ($id) {
+        \Excel::create('Export inscriptions', function($excel) use ($id,$order) {
 
-            $inscriptions = $this->inscription->getByColloque($id);
-            $inscriptions = $this->worker->dispatch($inscriptions);
-            $colloque     = $this->colloque->find($id);
+            $excel->sheet('Export', function($sheet) use ($id,$order) {
 
-            $excel->sheet('Export', function($sheet) use ($inscriptions,$colloque) {
+                $colloque = $this->colloque->find($id);
+
+                $inscriptions = $this->generator->init($colloque, ['order' => $order]);
+                $options      = $this->generator->getMainOptions();
+                $groupes      = $this->generator->getGroupeOptions();
 
                 $sheet->setOrientation('landscape');
-                $sheet->loadView('export.inscription', ['inscriptions' => $inscriptions, 'colloque' => $colloque]);
+                $sheet->loadView('export.inscription', ['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);
 
             });
 
