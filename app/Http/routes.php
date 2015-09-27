@@ -8,6 +8,7 @@
 //Route::resource('product', 'ProductController');
 Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
 Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
+Route::get('code', 'CodeController@index');
 
 Route::group(['middleware' => 'auth'], function () {
 
