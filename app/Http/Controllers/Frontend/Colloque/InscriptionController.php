@@ -46,6 +46,13 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
+        $user_id = $request->input('user_id');
+
+        if($user_id && !$this->inscription->hasPayed($user_id))
+        {
+            return redirect('colloque')->with(array('status' => 'warning', 'message' => 'Vous avez des payements en attente' ));
+        }
+
         $colloque = $this->colloque->find($request->input('colloque_id'));
         $inscription_no  = $this->colloque->getNewNoInscription($colloque->id);
 

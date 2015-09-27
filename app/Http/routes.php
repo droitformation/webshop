@@ -15,7 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
      * Inscriptions pages
      * */
     Route::get('colloque/inscription/{id}', 'Frontend\Colloque\ColloqueController@inscription');
-    Route::post('registration', 'Frontend\Colloque\InscriptionController@registration');
+    Route::post('registration', 'Frontend\Colloque\InscriptionController@store');
 
     /* *
      * User profile routes

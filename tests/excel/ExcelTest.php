@@ -86,8 +86,8 @@ class ExcelTest extends TestCase {
 
         $i = array_search('participant', array_keys($actual));
 
-        $this->assertEquals('2520', $actual['npa']);
-        $this->assertEquals('Cindy Leschaud', $actual['name']);
+        $this->assertEquals('<td>2520</td>', $actual['npa']);
+        $this->assertEquals('<td>Cindy Leschaud</td>', $actual['name']);
         $this->assertTrue(isset($actual['participant']));
         $this->assertEquals(2,$i);
     }

@@ -61,6 +61,18 @@ class InscriptionEloquent implements InscriptionInterface{
         return $this->inscription->withTrashed()->find($id)->restore();
     }
 
+    public function hasPayed($user_id)
+    {
+        $notpayed = $this->inscription->where('user_id','=',$user_id)->whereNull('payed_at')->get();
+
+        if($notpayed->isEmpty())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public function create(array $data){
 
         $inscription = $this->inscription->create(array(
