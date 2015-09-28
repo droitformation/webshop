@@ -74,7 +74,7 @@ class CouponEloquent implements CouponInterface{
         // add products if any
         if(isset($data['product_id']) && !empty($data['product_id']))
         {
-            $coupon->products()->sync([$data['product_id']]);
+            $coupon->products()->sync($data['product_id']);
         }
 
         return $coupon;
