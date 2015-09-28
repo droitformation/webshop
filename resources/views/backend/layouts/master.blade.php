@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
     <link rel="stylesheet" href="<?php echo asset('backend/css/types.css');?>">
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
+    <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-toggle/toggles.css');?>" />
 
     <base href="/">
 
@@ -104,6 +105,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/imagemanager.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/filemanager.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/plugins/form-toggle/toggle.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/datatables/jquery.dataTables.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/datatables/dataTables.bootstrap.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>

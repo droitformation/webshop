@@ -4857,5 +4857,55 @@
             "qrcode",
             "wrapper"
         ]
+    },
+    {
+        "name": "torann/registry",
+        "version": "0.2.0",
+        "version_normalized": "0.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Torann/laravel-registry.git",
+            "reference": "81a6b43c509838bc5311a60760a9785c2717c8b8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Torann/laravel-registry/zipball/81a6b43c509838bc5311a60760a9785c2717c8b8",
+            "reference": "81a6b43c509838bc5311a60760a9785c2717c8b8",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~5.0",
+            "php": ">=5.3.0"
+        },
+        "time": "2015-02-21 16:17:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Torann\\Registry\\": "src/Torann/Registry"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD 2-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Daniel Stainback",
+                "email": "daniel@lyften.com"
+            }
+        ],
+        "description": "Laravel registry manager for application configurations",
+        "keywords": [
+            "Settings",
+            "configuration",
+            "laravel",
+            "registry"
+        ]
     }
 ]

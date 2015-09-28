@@ -12,6 +12,13 @@ $( function() {
         buttons    : ['html','|','formatting','bold','italic','|','unorderedlist','orderedlist','outdent','indent','|','image','file','link','alignment']
     });
 
+    $('.redactorSimple').redactor({
+        minHeight: 50,
+        maxHeight: 100,
+        focus    : true,
+        buttons  : ['formatting','bold','italic','|','unorderedlist']
+    });
+
     $.fn.datepicker.dates['fr'] = {
         days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
         daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
@@ -138,7 +145,8 @@ $( function() {
         e.preventDefault(); e.stopPropagation();
 
         $(this).closest('fieldset').remove();
-
     });
+
+    $('.toggle').toggles({on:true});
 
 });

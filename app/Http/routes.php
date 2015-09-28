@@ -43,6 +43,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('inscription/change', 'Admin\Colloque\InscriptionController@change');
     Route::resource('inscription', 'Admin\Colloque\InscriptionController');
     Route::resource('colloque', 'Admin\Colloque\ColloqueController');
+    Route::resource('config', 'Admin\ConfigController');
+    Route::resource('coupon', 'Admin\CouponController');
     Route::get('search', 'Admin\SearchController@search');
     Route::get('export/inscription/{id}', 'Admin\ExportController@inscription');
 });
