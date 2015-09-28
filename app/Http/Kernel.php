@@ -33,6 +33,8 @@ class Kernel extends HttpKernel {
         'oauth-owner' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthOwnerMiddleware',
         'check-authorization-params' => 'LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware',
         'administration' =>'App\Http\Middleware\AdminMiddleware',
+        'pending' =>'App\Http\Middleware\PendingPayement',
+        'registered' =>'App\Http\Middleware\Registered',
 	];
 
 }

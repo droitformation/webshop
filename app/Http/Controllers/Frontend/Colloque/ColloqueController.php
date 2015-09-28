@@ -89,18 +89,10 @@ class ColloqueController extends Controller
      */
     public function inscription($id)
     {
+        $colloque = $this->colloque->find($id);
+        $colloque->load('location','options','prices');
 
-        $exist = $this->inscription->getByUser($id,\Auth::user()->id);
-
-        if(!$exist)
-        {
-            $colloque = $this->colloque->find($id);
-            $colloque->load('location','options','prices');
-
-            return view('colloques.show')->with(['colloque' => $colloque]);
-        }
-
-        return redirect('colloque')->with(array('status' => 'warning', 'message' => 'Vous êtes déjà inscrit à ce colloque' ));
+        return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
     /**

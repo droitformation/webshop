@@ -15,8 +15,8 @@ Route::group(['middleware' => 'auth'], function () {
     /* *
      * Inscriptions pages
      * */
-    Route::get('colloque/inscription/{id}', 'Frontend\Colloque\ColloqueController@inscription');
-    Route::post('registration', 'Frontend\Colloque\InscriptionController@store');
+    Route::get('colloque/inscription/{id}', ['middleware' => ['registered','pending'], 'uses' => 'Frontend\Colloque\ColloqueController@inscription']);
+    Route::post('registration', ['uses' => 'Frontend\Colloque\InscriptionController@store']);
 
     /* *
      * User profile routes
@@ -164,18 +164,17 @@ Route::get('cartworker', function()
     $excel = new App\Droit\Generate\Excel\ExcelGenerator();
 
     //$inde->load('inscriptions');
-    $cindy = $inscription->find(90);
-    $cindy->load('user_options');
-    //$cindy = $excel->row($cindy);
+    $cindy = $inscription->hasPayed(1);
 
     $columns = [
         'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
         'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
     ];
 
-    echo '<pre>';
-    print_r($cindy);
-    echo '</pre>';exit;
+   if(!$cindy)
+   {
+       echo 'not payed';
+   }
 
     /*     $restore = $inscription->withTrashed()->find(74)->restore();
 

@@ -63,14 +63,19 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function hasPayed($user_id)
     {
-        $notpayed = $this->inscription->where('user_id','=',$user_id)->whereNull('payed_at')->get();
+        $days  = \Config::get('inscription.days');
 
-        if($notpayed->isEmpty())
-        {
-            return true;
-        }
+        $today = \Carbon\Carbon::now()->subDays($days);
 
-        return false;
+        $notpayed = $this->inscription->whereNull('payed_at')->where('created_at','<=',$today)
+            ->where(function ($query) use ($user_id)
+            {
+                $query->whereHas('groupe', function ($query) use ($user_id){
+                    $query->where('user_id','=',$user_id);
+                })->orWhere('user_id','=',$user_id);
+            })->get();
+
+        return ($notpayed->isEmpty() ? true : false );
     }
 
     public function create(array $data){
