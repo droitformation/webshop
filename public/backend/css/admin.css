@@ -58,7 +58,10 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     width: 550px;
 }
 
-.toggleItem{
-    float: left;
+.single-dropzone .dz-image-preview, .dz-file-preview {
+    display: none;
+}
+
+.form-horizontal .checkbox-inline.centre{
     margin: 5px;
 }

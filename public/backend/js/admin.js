@@ -221,8 +221,6 @@ $( function() {
         }
     });
 
-    $("[name='centres[]']").bootstrapSwitch({
-        size: 'mini'
-    });
+    //$("[name='centres[]']").bootstrapSwitch({  size: 'mini' });
 
 });

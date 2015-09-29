@@ -14,7 +14,22 @@
                 <div class="panel-heading">
                     <h4><i class="fa fa-edit"></i> &nbsp;Ajouter un colloque</h4>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" ng-app="upload">
+
+                        <form method="POST" enctype="multipart/form-data" class="form-horizontal"
+                              flow-init flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                              flow-files-submitted="$flow.upload()">
+                            <div class="uploadBtn">
+                                <span class="btn btn-xs btn-info" ng-hide="$flow.files.length"    flow-btn flow-attrs="{accept:'image/*'}">Selectionner image</span>
+                                <span class="btn btn-xs btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Changer</span>
+                                <span class="btn btn-xs btn-danger" ng-show="$flow.files.length"  ng-click="$flow.cancel()">Supprimer</span>
+                            </div>
+                            <div class="thumbnail big" ng-hide="$flow.files.length"><img src="http://www.placehold.it/560x160/EFEFEF/AAAAAA&text=choisir+une+image" /></div>
+                            <div class="thumbnail big" ng-show="$flow.files.length"><img flow-img="$flow.files[0]" /></div>
+                            <input type="hidden" class="uploadImage" name="image" value="{[{ $flow.files[0].name }]}">
+                        </form>
+                    </div>
+
                     <form action="{{ url('admin/colloque') }}" method="POST" class="form-horizontal" id="wizard">
                         {!! csrf_field() !!}
 
@@ -59,25 +74,18 @@
 
                                     @if(!$organisateurs->isEmpty())
                                         @foreach($organisateurs as $organisateur)
-                                            <div class="toggleItem">
-                                               {{ $organisateur->name }} <br/><input type="checkbox" name="centres[]" value="{{ $organisateur->id }}">
-                                            </div>
+                                            <label class="checkbox-inline centre">
+                                                <input type="checkbox" name="centres[]" value="{{ $organisateur->id }}"> {{ $organisateur->name }}
+                                            </label>
                                         @endforeach
                                     @endif
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="endroit" class="col-sm-3 control-label">Endroit</label>
-                                <div class="col-sm-6">
-                                    {!! Form::text('endroit', '' , array('class' => 'form-control required' )) !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 <label class="col-sm-3 control-label">Endroit</label>
                                 <div class="col-sm-6 col-xs-8">
-                                    <select class="form-control" name="endroit" id="endroitSelect">
+                                    <select class="form-control required" name="endroit" id="endroitSelect">
                                         @if(!$locations->isEmpty())
                                             <option value="">Choix</option>
                                             @foreach($locations as $location)
@@ -85,11 +93,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-6 col-xs-8 col-md-push-3 col-xs-push-0">
+                                    <br/>
                                     <div id="showEndroit"></div>
                                 </div>
                             </div>
@@ -104,23 +108,45 @@
                         </fieldset>
 
                         <fieldset title="Step 2">
-                            <legend>Personal Data</legend>
+                            <legend>Dates</legend>
+
                             <div class="form-group">
-                                <label for="fieldnick" class="col-md-3 control-label">Nick</label>
-                                <div class="col-md-6"><input id="fieldnick" class="form-control" name="name" minlength="4" type="text" required></div>
+                                <label class="col-sm-3 control-label">Date de début</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="start_at" class="form-control datePicker required" id="start_at">
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="fieldabout" class="col-md-3 control-label">About</label>
-                                <div class="col-md-6"><textarea id="fieldabout" class="form-control autosize" rows="2"></textarea></div>
+                                <label class="col-sm-3 control-label">Date de fin</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="end_at" class="form-control datePicker" id="end_at">
+                                </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Délai d'inscription</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="registration_at" class="form-control datePicker" id="registration_at">
+                                </div>
+                            </div>
+
                         </fieldset>
 
                         <fieldset title="Step 3">
-                            <legend>Preview</legend>
+                            <legend>Documents</legend>
                             <div class="form-group">
                                 <label for="" class="col-md-3 control-label">Terms and Conditions</label>
                                 <div class="col-md-9">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, nemo, atque consequuntur officiis asperiores consectetur porro labore commodi esse error quisquam nihil illum sunt facere inventore possimus autem ab voluptates quibusdam non voluptatum suscipit architecto. Illo, facilis, corporis, veritatis dolores minus quasi iure cupiditate quis autem ducimus nisi obcaecati tenetur sed ea excepturi pariatur consequatur enim labore officia mollitia. Rerum, voluptatem numquam molestiae recusandae iusto ipsum inventore unde accusantium labore delectus? Doloremque, fugit, sunt libero laboriosam cupiditate sed sequi nostrum saepe. Mollitia, alias, expedita accusantium porro error autem dolore veniam commodi nesciunt provident vitae neque. Nostrum, sed, molestias itaque provident inventore natus animi quasi laborum laboriosam facere ratione aperiam iusto. Non ducimus facere sunt doloribus? Asperiores, natus distinctio quis iure!</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, nemo, atque consequuntur officiis
+                                        asperiores consectetur porro labore commodi esse error quisquam nihil illum sunt facere inventore possimus
+                                        autem ab voluptates quibusdam non voluptatum suscipit architecto. Illo, facilis, corporis, veritatis dolores
+                                        minus quasi iure cupiditate quis autem ducimus nisi obcaecati tenetur sed ea excepturi pariatur consequatur
+                                        enim labore officia mollitia. Rerum, voluptatem numquam molestiae recusandae iusto ipsum inventore unde a
+                                        ccusantium labore delectus? Doloremque, fugit, sunt libero laboriosam cupiditate sed sequi nostrum saepe.
+                                        Mollitia, alias, expedita accusantium porro error autem dolore veniam commodi nesciunt provident vitae
+                                        neque. Nostrum, sed, molestias itaque provident inventore natus animi quasi laborum laboriosam facere
+                                        ratione aperiam iusto. Non ducimus facere sunt doloribus? Asperiores, natus distinctio quis iure!</p>
                                 </div>
                             </div>
                         </fieldset>

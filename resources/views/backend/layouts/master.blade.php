@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="<?php echo asset('backend/css/admin.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
     <link rel="stylesheet" href="<?php echo asset('backend/css/types.css');?>">
+    <link rel="stylesheet" href="<?php echo asset('backend/css/dropzone.css');?>">
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
-    <link rel='stylesheet' type='text/css' href=<?php echo asset('backend/css/bootstrap-switch.css');?> />
 
     <base href="/">
 
@@ -94,12 +94,13 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
 
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/chosen/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/enquire.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/jquery.cookie.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/jquery.nicescroll.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/bootstrap-switch.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/placeholdr.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/redactor.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/fr.js');?>"></script>
@@ -117,15 +118,15 @@
 <script type='text/javascript' src="<?php echo asset('backend/js/nestable.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/Sortable.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/selectize.js');?>"></script>
-
-<script type='text/javascript' src=<?php echo asset('backend/plugins/form-stepy/jquery.stepy.js');?>></script>
-<script type='text/javascript' src=<?php echo asset('backend/js/formwizard.js');?>></script>
+<script type='text/javascript' src="<?php echo asset('backend/plugins/form-stepy/jquery.stepy.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/formwizard.js');?>"></script>
 
 <script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/gallery-simple.js');?>"></script>
 
 <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 
+<script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/upload.js');?>"></script>
 </body>
 </html>

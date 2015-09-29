@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('coupon', 'Admin\CouponController');
     Route::get('search', 'Admin\SearchController@search');
     Route::get('export/inscription/{id}', 'Admin\ExportController@inscription');
+
+    Route::post('upload', 'Admin\UploadController@upload');
 });
 
 /* *

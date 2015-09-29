@@ -19,7 +19,7 @@ class OrganisateurEloquent implements OrganisateurInterface{
 
     public function centres(){
 
-        return $this->organisateur->where('centre','=',1)->get();
+        return $this->organisateur->where('centre','=',1)->orderBy('name')->get();
     }
 
     public function find($id){
