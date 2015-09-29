@@ -2,9 +2,12 @@
 
 class CartWorkerTest extends TestCase {
 
+    protected $mock;
+    protected $product_mock;
     protected $worker;
     protected $coupon;
     protected $product;
+    protected $shipping;
     protected $onecoupon;
     protected $twocoupon;
     protected $oneproduct;
@@ -14,39 +17,26 @@ class CartWorkerTest extends TestCase {
     {
         parent::setUp();
 
-        $this->worker  = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
-        $this->coupon  = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
-        $this->product = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+        $this->shipping = \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface');
 
-        $tomorrow = \Carbon\Carbon::now()->addDay();
+        $this->mock = Mockery::mock('App\Droit\Shop\Coupon\Repo\CouponInterface');
+        $this->app->instance('App\Droit\Shop\Coupon\Repo\CouponInterface', $this->mock);
 
-        $this->oneproduct =  $this->product->create([
-            'title'           => 'Test product',
-            'teaser'          => 'test',
-            'image'           => 'test.jpg',
-            'description'     => 'test' ,
-            'weight'          => 900,
-            'sku'             => 1,
-            'price'           => 1000,
-            'is_downloadable' => 0,
-            'hidden'          => 0,
-        ]);
-        
-        $this->onecoupon   =  $this->coupon->create(['value' => '10', 'type' => 'general', 'title' => 'test',   'product_id' => null, 'expire_at' => $tomorrow ]);
-        $this->twocoupon   =  $this->coupon->create(['value' => '20', 'type' => 'product', 'title' => 'second', 'product_id' => $this->oneproduct->id, 'expire_at' => $tomorrow ]);
-        $this->threecoupon =  $this->coupon->create(['value' => '0', 'type' => 'shipping', 'title' => 'freeshipping', 'product_id' => null, 'expire_at' => $tomorrow ]);
+        $this->product_mock = Mockery::mock('App\Droit\Shop\Product\Repo\ProductInterface');
+        $this->app->instance('App\Droit\Shop\Product\Repo\ProductInterface', $this->product_mock);
+
+        $this->worker = new App\Droit\Shop\Cart\Worker\CartWorker(
+            $this->product_mock, $this->shipping, $this->mock
+        );
+
+        $this->oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
+        $this->onecoupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
+        $this->twocoupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'two')->make();
+        $this->threecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'three')->make();
     }
 
     public function tearDown()
     {
-        $this->coupon->delete($this->onecoupon->id);
-        $this->coupon->delete($this->twocoupon->id);
-        $this->coupon->delete($this->threecoupon->id);
-
-        $product = new App\Droit\Shop\Product\Entities\Product();
-
-        $product->find($this->oneproduct->id)->forceDelete();
-
         \Cart::instance('newInstance')->destroy();
     }
 
@@ -74,6 +64,9 @@ class CartWorkerTest extends TestCase {
 
         \Cart::add(55, 'Uno', 1, '12' , array('weight' => 155));
         \Cart::add(56, 'Duo', 1, '34' , array('weight' => 25));
+
+        $this->mock->shouldReceive('findByTitle')->once()->andReturn($this->threecoupon);
+        $this->product_mock->shouldReceive('find')->once()->andReturn($this->oneproduct);
 
         $this->worker->getTotalWeight();
 
@@ -179,6 +172,8 @@ class CartWorkerTest extends TestCase {
 
         \Cart::add(1, 'Uno', 1, '1000' , array('weight' => 500));
 
+        $this->mock->shouldReceive('findByTitle')->once()->andReturn($this->onecoupon);
+
         $this->worker->setCoupon($this->onecoupon->title);
 
         $this->assertEquals($this->worker->hasCoupon->id, $this->onecoupon->id);
@@ -209,8 +204,15 @@ class CartWorkerTest extends TestCase {
 
         \Cart::add($this->oneproduct->id, $this->oneproduct->title, 1, $this->oneproduct->price , array('weight' => $this->oneproduct->weight));
 
+        $this->mock->shouldReceive('findByTitle')->once()->andReturn($this->twocoupon);
+        $this->product_mock->shouldReceive('find')->once()->andReturn($this->oneproduct);
+
         $this->worker->setCoupon($this->twocoupon->title)->applyCoupon();
+
         $price = $this->worker->calculPriceWithCoupon($this->oneproduct->id);
+
+        // Product price => 10.00
+        // Coupon for product value 20%
 
         $this->assertEquals(8.00, $price);
     }
@@ -222,12 +224,47 @@ class CartWorkerTest extends TestCase {
     {
         \Cart::instance('newInstance');
 
-        \Cart::add(1, 'Uno', 1, '10.00' , array('weight' => 500));
-        \Cart::add(2, 'Dos', 1, '15.00' , array('weight' => 600));
+        // Has to match the factory product
+        \Cart::add(100, 'Dos', 1, '10.00' , array('weight' => 600));
+
+        $this->mock->shouldReceive('findByTitle')->once()->andReturn($this->onecoupon);
+        $this->product_mock->shouldReceive('find')->twice()->andReturn($this->oneproduct);
 
         $this->worker->setCoupon($this->onecoupon->title)->applyCoupon();
 
-        $this->assertEquals(22.5, \Cart::total());
+        // Product price => 10.00
+        // Coupon for product value 10%
+
+        $this->assertEquals(9, \Cart::total());
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculPriceWithFirstAndSecondCoupon()
+    {
+        \Cart::instance('newInstance');
+
+        // Has to match the factory product
+        \Cart::add(100, 'Dos', 1, '10.00' , array('weight' => 600));
+
+        $this->mock->shouldReceive('findByTitle')->once()->andReturn($this->onecoupon);
+        $this->product_mock->shouldReceive('find')->twice()->andReturn($this->oneproduct);
+
+        $this->worker->setCoupon($this->onecoupon->title)->applyCoupon();
+
+        // Product price => 10.00
+        // Coupon for product value 10%
+
+        $this->assertEquals(9, \Cart::total());
+
+        // Add free shipping later for example via admin
+
+        $this->withSession(['noShipping']);
+        $this->worker->setShipping();
+
+        $this->assertEquals(0, $this->worker->orderShipping->price);
 
     }
 }

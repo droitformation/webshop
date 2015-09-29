@@ -90,7 +90,6 @@ $( function() {
     });
 
     $('#formInscription').on('submit', function (e) {
-
         $('#colloqueSelection').trigger('change');
         e.preventDefault();
 
@@ -107,7 +106,33 @@ $( function() {
                 alert('problème avec la séléction de l\'utilisateur');
             }
         });
+    });
 
+    $('#endroitSelect').on('change', function (e) {
+        e.preventDefault();
+
+        var id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url : base_url + "admin/colloque/location/" + id,
+            success: function(data) {
+                if(data)
+                {
+                    $('#showEndroit').html(
+                        '<div class="col-md-3"><img style="width:100%;" src="files/colloques/cartes/'+ data.map +'" alt="Map"></div>'
+                        + '<div class="col-md-8">'
+                            + '<h4>'+ data.name + '</h4>'
+                            + '<p>' + data.adresse + '</p>'
+                        + '</div>'
+                        + '<div class="col-md-1 text-right">'
+                            + '<a class="btn btn-xs btn-info" href="admin/location/'+ data.id +'">Éditer</a>'
+                        + '</div>'
+                    );
+                }
+            },
+            error: function(){ alert('problème avec la séléction de l\'utilisateur'); }
+        });
     });
 
     $('body').on("click", '#cloneBtn' ,function(e) {
@@ -148,8 +173,8 @@ $( function() {
     });
 
     $('#multi-select').multiSelect({
-        selectableHeader: "<input type='text' class='form-control' style='margin-bottom: 10px;'  autocomplete='off' placeholder='Filtrer par nom'>",
-        selectionHeader : "<input type='text' class='form-control' style='margin-bottom: 10px;' autocomplete='off' placeholder='Filtrer par nom'>",
+        selectableHeader: "<input type='text' class='form-control' style='margin-bottom: 10px;'  autocomplete='off' placeholder='Rechercher par nom'>",
+        selectionHeader : "<input type='text' class='form-control' style='margin-bottom: 10px;' autocomplete='off' placeholder='Rechercher par nom'>",
         afterInit: function(ms){
 
             var that = this,
@@ -196,5 +221,8 @@ $( function() {
         }
     });
 
+    $("[name='centres[]']").bootstrapSwitch({
+        size: 'mini'
+    });
 
 });

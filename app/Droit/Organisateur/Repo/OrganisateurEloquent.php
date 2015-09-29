@@ -17,6 +17,11 @@ class OrganisateurEloquent implements OrganisateurInterface{
         return $this->organisateur->all();
     }
 
+    public function centres(){
+
+        return $this->organisateur->where('centre','=',1)->get();
+    }
+
     public function find($id){
 
         return $this->organisateur->find($id);
@@ -28,7 +33,8 @@ class OrganisateurEloquent implements OrganisateurInterface{
             'name'        => $data['name'],
             'description' => $data['description'],
             'url'         => $data['name'],
-            'logo'        => $data['logo']
+            'logo'        => $data['logo'],
+            'centre'      => $data['centre']
         ));
 
         if( ! $organisateur )

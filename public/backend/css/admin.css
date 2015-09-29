@@ -57,3 +57,8 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 .ms-container {
     width: 550px;
 }
+
+.toggleItem{
+    float: left;
+    margin: 5px;
+}

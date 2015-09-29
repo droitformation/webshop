@@ -52,7 +52,6 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          session(['coupon.id'    => $valide->id]);
 
          return $this;
-
      }
 
      public function setShipping(){
@@ -98,10 +97,15 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
-     public function applyCoupon()
+     public function reset()
      {
          $this->removeFreeShippingCoupon()->resetCartPrices();
 
+         return $this;
+     }
+
+     public function applyCoupon()
+     {
          if($this->hasCoupon)
          {
             if($this->hasCoupon->type == 'product')
@@ -135,8 +139,6 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
                  }
              }
          }
-
-         // throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide pour ce produit');
      }
 
      public function couponGlobal()
@@ -159,7 +161,8 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          {
              $product = $this->product->find($item->id);
 
-             if($product){
+             if($product)
+             {
                  \Cart::update($item->rowid, array('price' => $product->price_cents));
              }
          }

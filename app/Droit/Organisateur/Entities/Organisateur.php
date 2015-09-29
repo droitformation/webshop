@@ -6,7 +6,7 @@ class Organisateur extends Model{
 
     protected $table = 'organisateurs';
 
-    protected $fillable = array('name','description','url','logo');
+    protected $fillable = array('name','description','url','logo','centre');
 
     public $timestamps = false;
 

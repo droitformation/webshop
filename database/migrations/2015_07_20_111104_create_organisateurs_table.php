@@ -18,6 +18,7 @@ class CreateOrganisateursTable extends Migration
             $table->string('description');
             $table->string('url');
             $table->string('logo');
+            $table->tinyInteger('centre');
         });
     }
 

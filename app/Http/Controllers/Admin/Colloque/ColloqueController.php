@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Colloque;
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
+use App\Droit\Location\Repo\LocationInterface;
+use App\Droit\Organisateur\Repo\OrganisateurInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -12,16 +14,20 @@ class ColloqueController extends Controller
 {
     protected $colloque;
     protected $inscription;
+    protected $location;
+    protected $organisateur;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription)
+    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription, LocationInterface $location, OrganisateurInterface $organisateur)
     {
-        $this->colloque    = $colloque;
-        $this->inscription = $inscription;
+        $this->colloque     = $colloque;
+        $this->inscription  = $inscription;
+        $this->location     = $location;
+        $this->organisateur = $organisateur;
     }
 
     /**
@@ -43,7 +49,10 @@ class ColloqueController extends Controller
      */
     public function create()
     {
-        //
+        $locations     = $this->location->getAll();
+        $organisateurs = $this->organisateur->centres();
+
+        return view('backend.colloques.create')->with(['locations' => $locations, 'organisateurs' => $organisateurs]);
     }
 
     /**
@@ -81,5 +90,15 @@ class ColloqueController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function location($id)
+    {
+        return $this->location->find($id);
     }
 }

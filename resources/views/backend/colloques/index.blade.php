@@ -21,8 +21,7 @@
                         <thead>
                         <tr>
                             <th class="col-sm-2">Action</th>
-                            <th class="col-sm-1"></th>
-                            <th class="col-sm-3">Titre</th>
+                            <th class="col-sm-4">Titre</th>
                             <th class="col-sm-2">Sujet</th>
                             <th class="col-sm-1"></th>
                         </tr>
@@ -39,8 +38,11 @@
                                                 <a class="btn btn-inverse btn-sm" href="{{ url('admin/export/inscription/'.$colloque->id) }}">Exporter</a>
                                             </div>
                                         </td>
-                                        <td><img style="height: 50px;" src="{{ asset($colloque->illustration) }}" /></td>
-                                        <td><strong>{{ $colloque->titre }}</strong></td>
+                                        <td>
+                                            <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset($colloque->illustration) }}" />
+                                            <strong>{{ $colloque->titre }}</strong>
+                                            <p>{{ $colloque->event_date }}</p>
+                                        </td>
                                         <td><strong>{{ $colloque->sujet }}</strong></td>
                                         <td class="text-right">
                                             <form action="{{ url('admin/colloque/'.$colloque->id) }}" method="POST" class="form-horizontal">

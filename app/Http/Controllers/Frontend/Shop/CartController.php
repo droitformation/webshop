@@ -53,7 +53,7 @@ class CartController extends Controller {
 
     public function applyCoupon(Request $request){
 
-        $this->worker->setCoupon($request->input('coupon'))->applyCoupon();
+        $this->worker->reset()->setCoupon($request->input('coupon'))->applyCoupon();
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'Le coupon a été appliqué']);
     }

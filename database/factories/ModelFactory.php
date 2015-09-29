@@ -81,3 +81,61 @@ $factory->define(App\Droit\Adresse\Entities\Adresse::class, function (Faker\Gene
     ];
 });
 
+/*
+ * SHOP FACTORIES
+ */
+
+$factory->define(App\Droit\Shop\Product\Entities\Product::class, function (Faker\Generator $faker) {
+    return [
+        'id'              => 100,
+        'title'           => 'Test product',
+        'teaser'          => 'test',
+        'image'           => 'test.jpg',
+        'description'     => 'test' ,
+        'weight'          => 900,
+        'sku'             => 1,
+        'price'           => 1000,
+        'is_downloadable' => 0,
+        'hidden'          => 0,
+    ];
+});
+
+$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'one', function (Faker\Generator $faker) {
+
+    $tomorrow = \Carbon\Carbon::now()->addDay();
+
+    return [
+        'value'      => '10',
+        'type'       => 'general',
+        'title'      => 'test',
+        'product_id' => null,
+        'expire_at'  => $tomorrow
+    ];
+});
+
+
+$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'two', function (Faker\Generator $faker) {
+
+    $tomorrow = \Carbon\Carbon::now()->addDay();
+
+    return [
+        'value'      => '20',
+        'type'       => 'product',
+        'title'      => 'second',
+        'product_id' => 100,
+        'expire_at'  => $tomorrow
+    ];
+});
+
+$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'three', function (Faker\Generator $faker) {
+
+    $tomorrow = \Carbon\Carbon::now()->addDay();
+
+    return [
+        'value'      => '0',
+        'type'       => 'shipping',
+        'title'      => 'freeshipping',
+        'product_id' => null,
+        'expire_at'  => $tomorrow
+    ];
+});

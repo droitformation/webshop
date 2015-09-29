@@ -30,7 +30,6 @@ class ShopServiceProvider extends ServiceProvider {
         $this->registerCartService();
 	}
 
-
     /**
      * Product
      */
@@ -108,4 +107,5 @@ class ShopServiceProvider extends ServiceProvider {
             return new \App\Droit\Shop\Cart\Repo\CartEloquent(new \App\Droit\Shop\Cart\Entities\Cart);
         });
     }
+
 }
