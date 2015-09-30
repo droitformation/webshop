@@ -16,13 +16,14 @@ class UploadController extends Controller
 
     public function upload(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , $request->input('path'));
+        $path  = $request->input('path').'/'.$request->input('type');
+        $files = $this->upload->upload( $request->file('file') ,$path);
 
         if($files)
         {
             $array = [
                 'success' => true,
-                'files'   => $request->input('file'),
+                'files'   => $files['name'],
                 'get'     => $request->all(),
                 'post'    => $request->all()
             ];

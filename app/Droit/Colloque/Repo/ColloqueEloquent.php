@@ -45,16 +45,12 @@ class ColloqueEloquent implements ColloqueInterface{
             'soustitre'       => $data['soustitre'],
             'sujet'           => $data['sujet'],
             'remarques'       => $data['remarques'],
-            'start_at'        => $data['start_at'],
-            'end_at'          => $data['end_at'],
-            'registration_at' => $data['registration_at'],
-            'active_at'       => $data['active_at'],
             'organisateur'    => $data['organisateur'],
             'location_id'     => $data['location_id'],
-            'compte_id'       => $data['compte_id'],
-            'visible'         => $data['visible'],
-            'bon'             => $data['bon'],
-            'facture'         => $data['facture'],
+            'start_at'        => $data['start_at'],
+            'end_at'          => (isset($data['end_at']) && $data['end_at'] != '0000-00-00' ? $data['end_at'] : null),
+            'registration_at' => $data['registration_at'],
+            'active_at'       => (isset($data['active_at']) ? $data['active_at'] : null),
             'created_at'      => \Carbon\Carbon::now(),
             'updated_at'      => \Carbon\Carbon::now()
         ));
@@ -64,8 +60,13 @@ class ColloqueEloquent implements ColloqueInterface{
             return false;
         }
 
-        return $colloque;
+        // centres
+        if(isset($data['centres']))
+        {
+            $colloque->centres()->attach($data['centres']);
+        }
 
+        return $colloque;
     }
 
     public function update(array $data){
@@ -78,6 +79,8 @@ class ColloqueEloquent implements ColloqueInterface{
         }
 
         $colloque->fill($data);
+
+        $colloque->end_at = (isset($data['end_at']) &&  !empty($data['end_at']) ? $data['end_at'] : null);
 
         $colloque->save();
 

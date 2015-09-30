@@ -17,6 +17,13 @@ class DocumentEloquent implements DocumentInterface{
         return $this->document->all();
     }
 
+    public function getDocForColloque($colloque_id,$type)
+    {
+        $document = $this->document->where('colloque_id','=',$colloque_id)->where('type','=',$type)->get();
+
+        return (!$document->isEmpty() ? $document->first() : null);
+    }
+
     public function find($id){
 
         return $this->document->find($id);
@@ -25,10 +32,10 @@ class DocumentEloquent implements DocumentInterface{
     public function create(array $data){
 
         $document = $this->document->create(array(
-            'name'    => $data['name'],
-            'adresse' => $data['adresse'],
-            'url'     => $data['name'],
-            'map'     => $data['map']
+            'colloque_id' => $data['colloque_id'],
+            'name'        => (isset($data['name']) ? $data['name'] : ''),
+            'type'        => $data['type'],
+            'path'        => $data['path']
         ));
 
         if( ! $document )

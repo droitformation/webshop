@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Colloque;
 
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\Document\Worker\DocumentWorker;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Location\Repo\LocationInterface;
 use App\Droit\Organisateur\Repo\OrganisateurInterface;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Controller;
 class ColloqueController extends Controller
 {
     protected $colloque;
+    protected $document;
     protected $inscription;
     protected $location;
     protected $organisateur;
@@ -22,9 +24,10 @@ class ColloqueController extends Controller
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription, LocationInterface $location, OrganisateurInterface $organisateur)
+    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription, LocationInterface $location, OrganisateurInterface $organisateur, DocumentWorker $document)
     {
         $this->colloque     = $colloque;
+        $this->document     = $document;
         $this->inscription  = $inscription;
         $this->location     = $location;
         $this->organisateur = $organisateur;
@@ -63,7 +66,9 @@ class ColloqueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $colloque      = $this->colloque->create($request->all());
+
+        return redirect('admin/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'Le colloque a été crée'));
     }
 
     /**
@@ -74,11 +79,33 @@ class ColloqueController extends Controller
      */
     public function show($id,Request $request)
     {
-        $colloque = $this->colloque->find($id);
+        $colloque      = $this->colloque->find($id);
+        $locations     = $this->location->getAll();
+        $organisateurs = $this->organisateur->centres();
+
         $colloque->load('location');
 
-        return view('backend.colloques.show')->with(['colloque' => $colloque]);
+        return view('backend.colloques.show')->with(['colloque' => $colloque,'locations' => $locations, 'organisateurs' => $organisateurs]);
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $colloque     = $this->colloque->update($request->all());
+        $illustration = $request->input('illustration');
+
+        if(isset($illustration) && !empty($illustration))
+        {
+            $this->document->updateColloqueDoc($id, ['illustration' => $illustration]);
+        }
+
+        return redirect('admin/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'Le colloque a été mis à jour' ));
     }
 
     /**

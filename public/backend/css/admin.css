@@ -65,3 +65,10 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 .form-horizontal .checkbox-inline.centre{
     margin: 5px;
 }
+
+.stepy-header li {
+    display: inline-block;
+    width: 220px;
+    background: #e2eaf3;
+    padding: 5px 10px;
+}
