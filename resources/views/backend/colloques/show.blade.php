@@ -2,13 +2,17 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-9">
-
+        <div class="col-md-12">
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
                     <a href="{{ url('admin/colloque') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
 
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">
@@ -32,17 +36,16 @@
                                     <label for="titre" class="col-sm-3 control-label">Vignette</label>
                                     <div class="col-sm-3">
                                         <div class="uploadBtn">
-                                            <span class="btn btn-xs btn-info" ng-hide="$flow.files.length"    flow-btn flow-attrs="{accept:'image/*'}">Selectionner image</span>
+                                            <span class="btn btn-xs btn-info"    ng-hide="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Selectionner image</span>
                                             <span class="btn btn-xs btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Changer</span>
-                                            <span class="btn btn-xs btn-danger" ng-show="$flow.files.length"  ng-click="$flow.cancel()">Supprimer</span>
+                                            <span class="btn btn-xs btn-danger"  ng-show="$flow.files.length" ng-click="$flow.cancel()">Supprimer</span>
                                         </div>
 
                                         <div class="thumbnail big" ng-hide="$flow.files.length">
-                                            <img src="{{ asset($colloque->illustration) }}" />
+                                            <img style="height: 180px;" src="{{ asset($colloque->illustration) }}" />
                                         </div>
                                         <div class="thumbnail big" ng-show="$flow.files.length"><img style="height: 180px;" flow-img="$flow.files[0]" /></div>
                                         <input type="hidden" name="illustration" value="{[{ $flow.files[0].name }]}">
-
                                     </div>
                                 </div>
 
@@ -148,6 +151,83 @@
                             <input type="submit" class="finish btn-success btn" value="Submit" />
                         </form>
                     </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="panel panel-gray">
+                <div class="panel-heading">Programme</div>
+                <div class="panel-body">
+                    <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <input type="file" name="file">
+                                    <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
+                                    <input type="hidden" name="path" value="files/colloque">
+                                    <input type="hidden" name="type" value="programme">
+                                    <input type="hidden" name="name" value="Programme">
+                                </div>
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <button type="submit" class="btn btn-info">Ok</button>
+                            </div>
+                        </div>
+                    </form>
+                    @if($colloque->programme)
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a target="_blank" href="{{ $colloque->programme }}">Le programme</a>
+                                <form action="{{ url('admin/document/'.$colloque->programme) }}" method="POST" class="pull-right">
+                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                    <button data-action="{{ $colloque->programme }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                </form>
+                            </li>
+                        </ul>
+                    @endif
+                </div>
+            </div>
+
+            <div class="panel panel-gray">
+                <div class="panel-heading">Documents</div>
+                <div class="panel-body">
+
+                    <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" value="" placeholder="Nom">
+                                </div>
+                                <div class="form-group">
+                                    <input type="file" name="file">
+                                    <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
+                                    <input type="hidden" name="path" value="files/colloque">
+                                    <input type="hidden" name="type" value="document">
+                                </div>
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <button type="submit" class="btn btn-info">Ok</button>
+                            </div>
+                        </div>
+                    </form>
+                    @if($colloque->documents)
+                        <ul class="list-group">
+                            @foreach($colloque->documents as $document)
+                                @if($document->type == 'document')
+                                    <li class="list-group-item">
+                                        <a target="_blank" href="{{ $document->path }}">{{ $document->path }}</a>
+                                        <form action="{{ url('admin/document/'.$document->progidramme) }}" method="POST" class="pull-right">
+                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                            <button data-action="{{ $document->path }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                        </form>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    @endif
+
+                </div>
             </div>
 
         </div>

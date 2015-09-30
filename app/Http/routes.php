@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('export/inscription/{id}', 'Admin\ExportController@inscription');
 
     Route::post('upload', 'Admin\UploadController@upload');
+    Route::post('uploadFile', 'Admin\UploadController@uploadFile');
 });
 
 /* *

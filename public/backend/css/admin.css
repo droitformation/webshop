@@ -72,3 +72,14 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     background: #e2eaf3;
     padding: 5px 10px;
 }
+
+/*
+    Upload dropzone
+*/
+
+.dropzone {
+    background: white none repeat scroll 0 0;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    min-height: 50px;
+    padding: 0px;
+}

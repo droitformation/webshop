@@ -10,17 +10,17 @@
     <meta name="_token" content="<?php echo csrf_token(); ?>">
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php echo asset('backend/css/styles.css?=121');?>">
-    <link rel="stylesheet" href="<?php echo asset('backend/js/vendor/redactor/redactor.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/vendor/redactor/redactor.css'); ?>">
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
-    <link rel="stylesheet" href="<?php echo asset('css/jquery-ui.min.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('backend/css/chosen.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/jquery-ui.min.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dropzone.css');?>">
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
-    <link rel="stylesheet" href="<?php echo asset('backend/css/admin.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/admin.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
-    <link rel="stylesheet" href="<?php echo asset('backend/css/types.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('backend/css/dropzone.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/types.css');?>">
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -98,6 +98,7 @@
 
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/chosen/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/enquire.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/jquery.cookie.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/jquery.nicescroll.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>

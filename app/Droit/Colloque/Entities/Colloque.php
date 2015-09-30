@@ -37,6 +37,22 @@ class Colloque extends Model
         }
     }
 
+    public function getProgrammeAttribute()
+    {
+        $this->load('documents');
+
+        $programme = $this->documents->filter(function ($item){
+            return $item->type == 'programme';
+        });
+
+        if(!$programme->isEmpty())
+        {
+            return 'files/colloques/programme/'.$programme->first()->path;
+        }
+
+        return false;
+    }
+
     public function getEventDateAttribute()
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
