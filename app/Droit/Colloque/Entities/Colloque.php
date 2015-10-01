@@ -47,7 +47,7 @@ class Colloque extends Model
 
         if(!$programme->isEmpty())
         {
-            return 'files/colloques/programme/'.$programme->first()->path;
+            return $programme->first();
         }
 
         return false;

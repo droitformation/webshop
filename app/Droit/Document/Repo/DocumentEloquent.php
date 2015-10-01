@@ -33,7 +33,7 @@ class DocumentEloquent implements DocumentInterface{
 
         $document = $this->document->create(array(
             'colloque_id' => $data['colloque_id'],
-            'name'        => (isset($data['name']) ? $data['name'] : ''),
+            'titre'       => (isset($data['titre']) ? $data['titre'] : ''),
             'type'        => $data['type'],
             'path'        => $data['path']
         ));
@@ -66,6 +66,8 @@ class DocumentEloquent implements DocumentInterface{
     public function delete($id){
 
         $document = $this->document->find($id);
+
+        \File::delete('colloque/'.$document->type.'/'.$document->path);
 
         return $document->delete();
 

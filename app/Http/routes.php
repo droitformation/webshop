@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('inscription', 'Admin\Colloque\InscriptionController');
     Route::resource('colloque', 'Admin\Colloque\ColloqueController');
     Route::get('colloque/location/{id}', 'Admin\Colloque\ColloqueController@location');
+    Route::resource('document', 'Admin\Colloque\DocumentController');
     Route::resource('config', 'Admin\ConfigController');
     Route::resource('coupon', 'Admin\CouponController');
     Route::get('search', 'Admin\SearchController@search');

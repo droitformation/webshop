@@ -66,7 +66,7 @@ class ColloqueController extends Controller
      */
     public function store(Request $request)
     {
-        $colloque      = $this->colloque->create($request->all());
+        $colloque = $this->colloque->create($request->all());
 
         return redirect('admin/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'Le colloque a été crée'));
     }

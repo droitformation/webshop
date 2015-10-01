@@ -31,7 +31,7 @@ class UploadController extends Controller
                     'colloque_id' => $request->input('colloque_id'),
                     'type'        => $request->input('type'),
                     'path'        => $files['name'],
-                    'name'        => $request->input('name')
+                    'titre'       => $request->input('titre')
                 ]);
 
             return redirect()->back()->with(array('status' => 'success', 'message' => 'Document ajouté'));
