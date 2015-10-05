@@ -144,6 +144,52 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Colloque actif jusqu'au</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" name="active_at" class="form-control datePicker" value="{{ ($colloque->active_at ? $colloque->active_at->format('Y-m-d') : '') }}" id="active_at">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p class="help-block">Garder le colloque actif dans la liste pour inscrire des personnes depuis l'admin</p>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset title="Général">
+                                <legend>Annexes</legend>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Générer le <strong>bon de participation</strong></label>
+                                    <div class="col-sm-5">
+                                        <label class="radio-inline"><input type="radio" checked name="bon" value="1"> Oui</label>
+                                        <label class="radio-inline"><input type="radio" name="bon" value="0"> Non</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Générer la <strong>facture</strong> et le <strong>BV</strong></label>
+                                    <div class="col-sm-5">
+                                        <label class="radio-inline"><input type="radio" checked name="facture" value="1"> Oui</label>
+                                        <label class="radio-inline"><input type="radio" name="facture" value="0"> Non</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Compte pour BV</label>
+                                    <div class="col-sm-5">
+                                        <select name="compte_id" class="form-control">
+                                            @if(!$comptes->isEmpty())
+                                                @foreach($comptes as $compte)
+                                                    <option value="{{ $compte->id }}">
+                                                        {!! $compte->motif !!} |
+                                                        {!! $compte->compte !!}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
                             </fieldset>
 
                             <input type="hidden" name="id" value="{{ $colloque->id }}">
@@ -155,8 +201,8 @@
         </div>
         <div class="col-md-4">
 
-            <div class="panel panel-gray">
-                <div class="panel-heading">Programme</div>
+            <div class="panel panel-midnightblue">
+                <div class="panel-heading"><i class="fa fa-file"></i> &nbsp;Programme</div>
                 <div class="panel-body">
 
                     @if($colloque->programme)
@@ -182,7 +228,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-2 text-right">
-                                <button type="submit" class="btn btn-info">Ok</button>
+                                <button type="submit" class="btn btn-info">Ajouter</button>
                             </div>
                         </div>
                     </form>
@@ -191,8 +237,8 @@
                 </div>
             </div>
 
-            <div class="panel panel-gray">
-                <div class="panel-heading">Documents</div>
+            <div class="panel panel-midnightblue">
+                <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Documents</div>
                 <div class="panel-body">
                     <ul class="list-group">
                         @if($colloque->documents)
@@ -212,14 +258,14 @@
                             <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <p><input type="text" class="form-control" required name="titre" value="" placeholder="Nom"></p>
+                                        <p><input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier"></p>
                                         <p><input type="file" required name="file"></p>
                                         <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
                                         <input type="hidden" name="path" value="files/colloques">
                                         <input type="hidden" name="type" value="document">
                                     </div>
                                     <div class="col-sm-2 text-right">
-                                        <button type="submit" class="btn btn-info">Ok</button>
+                                        <button type="submit" class="btn btn-info">Ajouter</button>
                                     </div>
                                 </div>
                             </form>

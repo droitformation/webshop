@@ -87,3 +87,5 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 .list-group-item .form-group {
     margin-bottom: 0px;
 }
+
+.form-control

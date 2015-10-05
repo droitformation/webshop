@@ -8,12 +8,14 @@ use App\Droit\Document\Worker\DocumentWorker;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Location\Repo\LocationInterface;
 use App\Droit\Organisateur\Repo\OrganisateurInterface;
+use App\Droit\Compte\Repo\CompteInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class ColloqueController extends Controller
 {
     protected $colloque;
+    protected $compte;
     protected $document;
     protected $inscription;
     protected $location;
@@ -24,9 +26,17 @@ class ColloqueController extends Controller
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription, LocationInterface $location, OrganisateurInterface $organisateur, DocumentWorker $document)
+    public function __construct(
+        ColloqueInterface $colloque,
+        CompteInterface $compte,
+        InscriptionInterface $inscription,
+        LocationInterface $location,
+        OrganisateurInterface $organisateur,
+        DocumentWorker $document
+    )
     {
         $this->colloque     = $colloque;
+        $this->compte       = $compte;
         $this->document     = $document;
         $this->inscription  = $inscription;
         $this->location     = $location;
@@ -81,11 +91,12 @@ class ColloqueController extends Controller
     {
         $colloque      = $this->colloque->find($id);
         $locations     = $this->location->getAll();
+        $comptes       = $this->compte->getAll();
         $organisateurs = $this->organisateur->centres();
 
         $colloque->load('location');
 
-        return view('backend.colloques.show')->with(['colloque' => $colloque,'locations' => $locations, 'organisateurs' => $organisateurs]);
+        return view('backend.colloques.show')->with(['colloque' => $colloque, 'comptes' => $comptes, 'locations' => $locations, 'organisateurs' => $organisateurs]);
     }
 
     /**

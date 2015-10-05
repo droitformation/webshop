@@ -108,11 +108,21 @@ $( function() {
         });
     });
 
-    $('#endroitSelect').on('change', function (e) {
+    if($('#endroitSelect').length && $('#endroitSelect').val() != "")
+    {
+        console.log('sfew');
+        $('#endroitSelect').find('select').trigger('change');
+    }
+
+    $('body').on('change', '#endroitSelect' , function (e) {
         e.preventDefault();
 
         var id = $(this).val();
 
+
+    });
+
+    function getEndroit(id){
         $.ajax({
             type: "GET",
             url : base_url + "admin/colloque/location/" + id,
@@ -122,18 +132,18 @@ $( function() {
                     $('#showEndroit').html(
                         '<div class="col-md-3"><img style="width:100%;" src="files/colloques/cartes/'+ data.map +'" alt="Map"></div>'
                         + '<div class="col-md-8">'
-                            + '<h4>'+ data.name + '</h4>'
-                            + '<p>' + data.adresse + '</p>'
+                        + '<h4>'+ data.name + '</h4>'
+                        + '<p>' + data.adresse + '</p>'
                         + '</div>'
                         + '<div class="col-md-1 text-right">'
-                            + '<a class="btn btn-xs btn-info" href="admin/location/'+ data.id +'">Éditer</a>'
+                        + '<a class="btn btn-xs btn-info" href="admin/location/'+ data.id +'">Éditer</a>'
                         + '</div>'
                     );
                 }
             },
-            error: function(){ alert('problème avec la séléction de l\'utilisateur'); }
+            error: function(){ alert('problème avec la séléction de l\'endroit'); }
         });
-    });
+    }
 
     $('body').on("click", '#cloneBtn' ,function(e) {
 
