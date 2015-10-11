@@ -42,7 +42,10 @@ class UploadController extends Controller
 
     public function upload(Request $request)
     {
-        $path  = $request->input('path').'/'.$request->input('type');
+        $type  = $request->input('type',null);
+        $type  = ($type ? '/'.$type : '');
+        $path  = $request->input('path').$type;
+
         $files = $this->upload->upload( $request->file('file') ,$path);
 
         if($files)
