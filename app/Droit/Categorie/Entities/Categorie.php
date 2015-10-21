@@ -3,23 +3,15 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Categorie extends Model{
+class Categorie extends Model {
 
     use SoftDeletes;
 
-    protected $table = 'categories';
+	protected $fillable = ['title','image','ismain','hideOnSite'];
+    protected $dates    = ['created_at','updated_at','deleted_at'];
 
-    protected $dates = ['deleted_at'];
-
-    protected $fillable = array('title', 'sorting', 'deleted' ,'hidden');
-    /**
-     * Set timestamps off
-     */
-    public $timestamps = false;
-
-    public function parent()
+    public function categorie_arrets()
     {
-        return $this->hasOne('App\Hub\Shop\Categorie\Entities\Parent_categories','categorie_id', 'id');
+        return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', 'arret_categories', 'categories_id', 'arret_id');
     }
-
 }

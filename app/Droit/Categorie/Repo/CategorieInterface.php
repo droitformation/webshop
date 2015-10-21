@@ -1,13 +1,14 @@
-<?php namespace App\Droit\Categorie\Repo;
+<?php namespace  App\Droit\Categorie\Repo;
 
 interface CategorieInterface {
 
     public function getAll();
-    public function getParent();
-	public function find($data);
-	public function create(array $data);
-	public function update(array $data);
-	public function delete($id);
+    public function getAllMain();
+    public function getAllOnSite();
+    public function find($data);
+    public function findyByImage($file);
+    public function create(array $data);
+    public function update(array $data);
+    public function delete($id);
 
 }
-

@@ -1,36 +1,32 @@
 <?php namespace App\Droit\Author\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Author extends Model{
+class Author extends Model {
 
-    use SoftDeletes;
+	protected $fillable = ['first_name','last_name','occupation','bio','photo','rang'];
 
-    protected $table = 'authors';
+    public $timestamps  = false;
 
-    protected $dates = ['deleted_at'];
-
-    protected $fillable = array('first_name', 'last_name','occupation','bio');
-    /**
-     * Set timestamps off
-     */
-    public $timestamps = false;
-
-    public function getLastNameSlugAttribute()
-    {
-        $string = strtolower(htmlentities($this->last_name));
-        //Listez ici tous les balises HTML que vous pourriez rencontrer
-        $string = preg_replace("/&(.)(acute|cedil|circ|ring|tilde|uml|grave);/", "$1", $string);
-        //Tout ce qui n'est pas caractère alphanumérique  -> _
-        $string = preg_replace("/([^a-z0-9]+)/", "_", html_entity_decode($string));
-
-        return strtolower($string);
-    }
-
-    public function getCompleteNameAttribute()
+    public function getNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;
     }
 
+    public function getNameTitleAttribute()
+    {
+        return $this->first_name.' '.$this->last_name.', '.$this->occupation;
+    }
+
+    public function getAuthorPhotoAttribute()
+    {
+        return (!empty($this->photo) ? $this->photo : 'avatar.png');
+    }
+
+    public function analyses()
+    {
+        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyse_authors', 'analyse_id', 'author_id');
+    }
+
 }
+

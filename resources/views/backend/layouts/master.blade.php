@@ -11,6 +11,29 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
+
+    @if(isset($isNewsletter))
+        <link rel="stylesheet" href="<?php echo asset('newsletter/css/backend/newsletter.css'); ?>">
+        <link rel="stylesheet" href="<?php echo asset('newsletter/css/frontend/newsletter.css'); ?>">
+
+        @if(isset($infos))
+            <style type="text/css">
+                #StyleNewsletter h2, #StyleNewsletterCreate h2{
+                    color: {{ $infos->newsletter->color }};
+                }
+                #StyleNewsletter .contentForm h3,
+                #StyleNewsletter .contentForm h4,
+                #StyleNewsletterCreate .contentForm h3,
+                #StyleNewsletterCreate .contentForm h4
+                {
+                    color: {{ $infos->newsletter->color }};
+                }
+            </style>
+        @endif
+
+    @endif
+
+
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/vendor/redactor/redactor.css'); ?>">
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/jquery-ui.min.css');?>">
@@ -18,10 +41,11 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dropzone.css');?>">
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
+    <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
+
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/admin.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/types.css');?>">
-    <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <base href="/">
@@ -95,39 +119,49 @@
 <script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
 
+<!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/chosen/chosen.jquery.js');?>"></script>
+
+<!-- Layout fixes plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/enquire.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/jquery.cookie.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/jquery.nicescroll.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/placeholdr.js');?>"></script>
+
+<!-- redactor -->
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/redactor.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/fr.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/imagemanager.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/filemanager.js');?>"></script>
+
+<!-- Form plugins -->
+<script type="text/javascript" src="<?php echo asset('backend/js/placeholdr.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/datatables/jquery.dataTables.min.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/datatables/dataTables.bootstrap.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/application.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/jqColorPicker.min.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/nestable.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/Sortable.min.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/selectize.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/form-stepy/jquery.stepy.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/formwizard.js');?>"></script>
 
+<!-- Upload plugins -->
+<script type="text/javascript" src="<?php echo asset('backend/js/dropzone.js');?>"></script>
+
+<!-- Gallery plugins -->
 <script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/gallery-simple.js');?>"></script>
 
+<!-- Scripts -->
+<script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/application.js');?>"></script>
 <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
 
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload.js');?>"></script>
+
+@if(isset($isNewsletter))
+    @include('backend.newsletter.scripts')
+@endif
+
 </body>
 </html>

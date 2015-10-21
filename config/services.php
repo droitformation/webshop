@@ -46,6 +46,11 @@ return [
         'redirect'      => 'http://shop.local/auth/github/callback',
     ],
 
+    'mailjet' => [
+        'api'    => env('MAILJET_API'),
+        'secret' => env('MAILJET_SECRET'),
+    ],
+
     'droithub' => [
         'client_id'     => '1',
         'client_secret' => 'droitformation',

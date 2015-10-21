@@ -406,14 +406,28 @@ class Helper {
 
     }
 
-	public function sanitizeUrl($url){
+    public function sanitizeUrl($url){
 
-		if (!preg_match("/^(http|https|ftp):/", $url)) {
-			$url = 'http://'.$url;
-		}
+        if (!preg_match("/^(http|https|ftp):/", $url)) {
+            $url = 'http://'.$url;
+        }
 
-		return $url;
-	}
+        return $url;
+    }
+
+    public function prepareCategories($data){
+
+        $categories = [];
+
+        if(!empty($data))
+        {
+            foreach($data as $index => $key){
+                $categories[$key] = ['sorting' => $index];
+            }
+        }
+
+        return $categories;
+    }
 
     /**
      * Content fonctions

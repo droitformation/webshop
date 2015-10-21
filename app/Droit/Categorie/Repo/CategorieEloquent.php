@@ -1,82 +1,50 @@
-<?php namespace App\Droit\Categorie\Repo;
+<?php namespace  App\Droit\Categorie\Repo;
 
-use App\Droit\Categorie\Repo\CategorieInterface;
-use App\Droit\Categorie\Entities\Categorie as M;
-use App\Droit\Categorie\Entities\Parent_categories as P;
+use  App\Droit\Categorie\Repo\CategorieInterface;
+use  App\Droit\Categorie\Entities\Categorie as M;
 
 class CategorieEloquent implements CategorieInterface{
 
     protected $categorie;
-    protected $parent;
-    protected $helper;
 
-    public function __construct(M $categorie, P $parent)
+    public function __construct(M $categorie)
     {
         $this->categorie = $categorie;
-        $this->parent    = $parent;
-        $this->helper    = new \App\Hub\Helper\Helper();
     }
 
     public function getAll(){
 
-        return $this->categorie->with(array('parent'))->get();
+        return $this->categorie->orderBy('title', 'ASC')->get();
     }
 
-    public function getParent(){
+    public function getAllOnSite(){
+        return $this->categorie->where('hideOnSite', '=', 0)->orderBy('title', 'ASC')->get();
+    }
 
-        $parents = $this->getAll();
+    public function getAllMain(){
 
-        if(!$parents->isEmpty())
-        {
-            foreach($parents as $parent){
-                $allcats[$parent->parent->parent_id][] = $parent->id;
-                $catsort[$parent->parent->parent_id][$parent->id] =  $parent->sorting;
-            }
-
-            $first_level = $allcats[2];
-
-            foreach($first_level as $level)
-            {
-                if(isset($allcats[$level]))
-                {
-                    $data[$level] = $allcats[$level];
-                }
-                else{
-                    $data[$level] = $level;
-                }
-            }
-
-            // Sorting
-            foreach($catsort as $cat => $sorting)
-            {
-                if(isset($data[$cat]))
-                {
-                    krsort($sorting);
-                    $sorting = array_keys($sorting);
-                    $sorted  = $this->helper->sortArrayByArray($data[$cat],$sorting);
-                    $data[$cat] = $sorted;
-                }
-            }
-
-           krsort($data);
-
-        }
-
-        return $data;
-
+        return $this->categorie->where('ismain','=', 1)->orderBy('title', 'ASC')->get();
     }
 
     public function find($id){
 
-        return $this->categorie->where('id','=',$id)->with(array('parent'))->get();
+        return $this->categorie->with(array('categorie_arrets'))->findOrFail($id);
+    }
+
+    public function findyByImage($file){
+
+        return $this->categorie->where('image','=',$file)->get();
     }
 
     public function create(array $data){
 
         $categorie = $this->categorie->create(array(
-            'title'   => $data['title'],
-            'sorting' => $data['sorting'],
-            'hidden'  => $data['hidden']
+            'title'      => $data['title'],
+            'image'      => $data['image'],
+            'ismain'     => (isset($data['ismain']) && $data['ismain'] == 1 ? 1 : 0),
+            'hideOnSite' => (isset($data['hideOnSite']) && $data['hideOnSite'] == 1 ? 1 : 0),
+            'created_at' => date('Y-m-d G:i:s'),
+            'updated_at' => date('Y-m-d G:i:s')
         ));
 
         if( ! $categorie )
@@ -99,6 +67,12 @@ class CategorieEloquent implements CategorieInterface{
 
         $categorie->fill($data);
 
+        if(!empty($data['image']))
+        {
+            $categorie->image = $data['image'];
+        }
+
+        $categorie->updated_at = date('Y-m-d G:i:s');
         $categorie->save();
 
         return $categorie;
@@ -109,7 +83,6 @@ class CategorieEloquent implements CategorieInterface{
         $categorie = $this->categorie->find($id);
 
         return $categorie->delete();
-
     }
 
 }

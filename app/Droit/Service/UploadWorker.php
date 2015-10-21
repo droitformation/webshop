@@ -56,7 +56,7 @@ class UploadWorker implements UploadInterface {
 	*/	
 	public function resize( $path, $name , $width = null , $height = null){
 
-        $img = \Image::make($path);
+        $img = \Image::make($path)->orientate();
 
         // prevent possible upsizing
         $img->resize($width, $height, function ($constraint) {

@@ -1,7 +1,7 @@
 <?php namespace App\Droit\Author\Repo;
 
 use App\Droit\Author\Repo\AuthorInterface;
-use App\Droit\Author\Author as M;
+use App\Droit\Author\Entities\Author as M;
 
 class AuthorEloquent implements AuthorInterface{
 
@@ -14,19 +14,23 @@ class AuthorEloquent implements AuthorInterface{
 
     public function getAll(){
 
-        return $this->author->all();
+        return $this->author->with(['analyses'])->orderBy('last_name', 'asc')->get();
     }
 
     public function find($id){
 
-        return $this->author->find($id);
+        return $this->author->with(['analyses'])->findOrFail($id);
     }
 
     public function create(array $data){
 
         $author = $this->author->create(array(
             'first_name' => $data['first_name'],
-            'last_name'  => $data['last_name']
+            'last_name'  => $data['last_name'],
+            'occupation' => $data['occupation'],
+            'bio'        => $data['bio'],
+            'photo'      => (isset($data['photo']) ? $data['photo'] : null),
+            'rang'       => (isset($data['rang']) ? $data['rang'] : 0),
         ));
 
         if( ! $author )
@@ -47,8 +51,15 @@ class AuthorEloquent implements AuthorInterface{
             return false;
         }
 
-        $author->first_name = $data['first_name'];
-        $author->last_name  = $data['last_name'];
+        $author->fill($data);
+
+        if(isset($data['photo']) && !empty($data['photo'])){
+            $author->photo  = $data['photo'];
+        }
+
+        if(isset($data['rang']) && !empty($data['rang'])){
+            $author->rang  = $data['rang'];
+        }
 
         $author->save();
 
@@ -59,8 +70,7 @@ class AuthorEloquent implements AuthorInterface{
 
         $author = $this->author->find($id);
 
-        return $author->delete($id);
-
+        return $author->delete();
     }
 
 }

@@ -31,27 +31,98 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], function () {
 
-    Route::get('/', 'Admin\AdminController@index');
-    Route::get('inscription/colloque/{id}', 'Admin\Colloque\InscriptionController@colloque');
-    Route::get('inscription/create/{id?}', 'Admin\Colloque\InscriptionController@create');
-    Route::get('inscription/add/{group_id}', 'Admin\Colloque\InscriptionController@add');
-    Route::get('inscription/generate/{id}', 'Admin\Colloque\InscriptionController@generate');
-    Route::post('inscription/restore/{id}', 'Admin\Colloque\InscriptionController@restore');
-    Route::get('inscription/groupe/{id}', 'Admin\Colloque\InscriptionController@groupe');
-    Route::post('inscription/type', 'Admin\Colloque\InscriptionController@inscription');
-    Route::post('inscription/push', 'Admin\Colloque\InscriptionController@push');
-    Route::post('inscription/change', 'Admin\Colloque\InscriptionController@change');
-    Route::resource('inscription', 'Admin\Colloque\InscriptionController');
-    Route::resource('colloque', 'Admin\Colloque\ColloqueController');
-    Route::get('colloque/location/{id}', 'Admin\Colloque\ColloqueController@location');
-    Route::resource('document', 'Admin\Colloque\DocumentController');
-    Route::resource('config', 'Admin\ConfigController');
-    Route::resource('coupon', 'Admin\CouponController');
-    Route::get('search', 'Admin\SearchController@search');
-    Route::get('export/inscription/{id}', 'Admin\ExportController@inscription');
+    Route::get('/', 'Backend\AdminController@index');
+    Route::resource('config', 'Backend\ConfigController');
+    Route::get('search', 'Backend\SearchController@search');
 
-    Route::post('upload', 'Admin\UploadController@upload');
-    Route::post('uploadFile', 'Admin\UploadController@uploadFile');
+    /*
+    |--------------------------------------------------------------------------
+    | Inscriptions and colloque Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('inscription/colloque/{id}', 'Backend\Colloque\InscriptionController@colloque');
+    Route::get('inscription/create/{id?}', 'Backend\Colloque\InscriptionController@create');
+    Route::get('inscription/add/{group_id}', 'Backend\Colloque\InscriptionController@add');
+    Route::get('inscription/generate/{id}', 'Backend\Colloque\InscriptionController@generate');
+    Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
+    Route::get('inscription/groupe/{id}', 'Backend\Colloque\InscriptionController@groupe');
+    Route::post('inscription/type', 'Backend\Colloque\InscriptionController@inscription');
+    Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
+    Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
+    Route::resource('inscription', 'Backend\Colloque\InscriptionController');
+    Route::resource('colloque', 'Backend\Colloque\ColloqueController');
+    Route::get('colloque/location/{id}', 'Backend\Colloque\ColloqueController@location');
+    Route::resource('document', 'Backend\Colloque\DocumentController');
+
+    Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Inscriptions and colloque Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('coupon', 'Backend\CouponController');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Upload files direct, with jquery and redactor Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('upload', 'Backend\UploadController@upload');
+    Route::post('uploadFile', 'Backend\UploadController@uploadFile');
+    Route::post('uploadJS', 'Backend\UploadController@uploadJS');
+    Route::post('uploadRedactor', 'Backend\UploadController@uploadRedactor');
+
+    Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
+    Route::get('fileJson/{id?}', ['uses' => 'Backend\UploadController@fileJson']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Content, arrets and analyses Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('arret',     'Backend\Content\ArretController');
+    Route::resource('analyse',   'Backend\Content\AnalyseController');
+    Route::resource('categorie', 'Backend\Content\CategorieController');
+    Route::resource('contenu',   'Backend\Content\ContentController');
+    Route::resource('author',    'Backend\Content\AuthorController');
+
+    /*
+  |--------------------------------------------------------------------------
+  | Backend subscriptions, newsletters and campagnes Routes
+  |--------------------------------------------------------------------------
+  */
+
+    Route::post('sorting', 'Backend\Newsletter\CampagneController@sorting');
+    Route::post('sortingGroup', 'Backend\Newsletter\CampagneController@sortingGroup');
+
+    Route::get('ajax/arrets/{id}',   'Backend\Content\ArretController@simple');
+    Route::get('ajax/arrets',        'Backend\Content\ArretController@arrets');
+    Route::get('ajax/analyses/{id}', 'Backend\Content\AnalyseController@simple');
+    Route::get('ajax/categories',    'Backend\Content\CategorieController@categories');
+    Route::post('ajax/categorie/arrets', 'Backend\Content\CategorieController@arrets');
+
+    Route::resource('newsletter', 'Backend\Newsletter\NewsletterController');
+
+    Route::post('campagne/send', 'Backend\Newsletter\CampagneController@send');
+    Route::post('campagne/test', 'Backend\Newsletter\CampagneController@test');
+    Route::post('campagne/sorting', 'Backend\Newsletter\CampagneController@sorting');
+    Route::post('campagne/process', 'Backend\Newsletter\CampagneController@process');
+    Route::post('campagne/editContent', 'Backend\Newsletter\CampagneController@editContent');
+    Route::post('campagne/remove', 'Backend\Newsletter\CampagneController@remove');
+    Route::get('campagne/create/{newsletter}', 'Backend\Newsletter\CampagneController@create');
+    Route::get('campagne/simple/{id}', 'Backend\Newsletter\CampagneController@simple');
+    Route::resource('campagne', 'Backend\Newsletter\CampagneController');
+
+    Route::resource('subscriber', 'Backend\Newsletter\SubscriberController');
+    Route::get('subscribers', ['uses' => 'Backend\Newsletter\SubscriberController@subscribers']);
+
+    Route::resource('statistics', 'Backend\Newsletter\StatsController');
+
 });
 
 /* *
