@@ -23,7 +23,9 @@
         "venturecraft/revisionable": "1.*",
 		"laravel/socialite": "^3.0@dev",
         "simplesoftwareio/simple-qrcode": "1.3.*",
-        "torann/registry": "0.2.*@dev"
+        "torann/registry": "0.2.*@dev",
+        "baum/baum": "~1.1",
+        "inlinestyle/inlinestyle": "1.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

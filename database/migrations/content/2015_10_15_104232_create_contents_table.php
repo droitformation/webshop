@@ -22,6 +22,10 @@ class CreateContentsTable extends Migration {
             $table->integer('rang')->default(0);
 			$table->enum('type', array('pub','texte','soutien'));
 			$table->enum('position', array('sidebar','home-bloc','home-colonne'));
+            $table->integer('parent_id')->nullable();
+            $table->integer('lft')->nullable();
+            $table->integer('rgt')->nullable();
+            $table->integer('depth')->nullable();
 			$table->timestamps();
             $table->softDeletes();
 		});

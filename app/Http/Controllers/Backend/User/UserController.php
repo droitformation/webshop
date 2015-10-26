@@ -1,11 +1,14 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers\Backend\User;
+
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
-use Illuminate\Http\Request;
 
 class UserController extends Controller {
 
@@ -25,7 +28,7 @@ class UserController extends Controller {
     {
         $users = $this->user->getAll();
 
-        return view('admin.users.index')->with([ 'users' => $users ]);
+        return view('backend.users.index')->with([ 'users' => $users ]);
     }
 
     /**

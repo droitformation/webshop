@@ -10,6 +10,24 @@ Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
 Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
 Route::get('code', 'CodeController@index');
 
+/*
+|--------------------------------------------------------------------------
+| Subscriptions adn newsletter Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('campagne/{id}', 'Frontend\CampagneController@show');
+
+/* Routes to implement  */
+/*
+    Route::get('newsletter', 'Frontend\NewsletterController@index');
+    Route::resource('newsletter', 'Frontend\NewsletterController');
+    Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
+*/
+    Route::post('unsubscribe', 'Backend\Newsletter\InscriptionController@unsubscribe');
+    Route::post('subscribe', 'Backend\Newsletter\InscriptionController@subscribe');
+    Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activation');
+
+
 Route::group(['middleware' => 'auth'], function () {
 
     /* *

@@ -90,7 +90,8 @@ class SubscriberController extends Controller
         {
             foreach($lists as $list)
             {
-                $this->worker->setList($list);
+                $newsletter = $this->newsletter->find($list);
+                $this->worker->setList($newsletter->list_id);
                 $this->worker->subscribeEmailToList($subscribe->email);
             }
         }
@@ -143,7 +144,8 @@ class SubscriberController extends Controller
         {
             foreach($added as $list)
             {
-                $this->worker->setList($list);
+                $newsletter = $this->newsletter->find($list);
+                $this->worker->setList($newsletter->list_id);
                 $this->worker->subscribeEmailToList($subscriber->email);
             }
         }
@@ -152,7 +154,8 @@ class SubscriberController extends Controller
         {
             foreach($added as $list)
             {
-                $this->worker->setList($list);
+                $newsletter = $this->newsletter->find($list);
+                $this->worker->setList($newsletter->list_id);
                 $this->worker->removeContact($subscriber->email);
             }
         }

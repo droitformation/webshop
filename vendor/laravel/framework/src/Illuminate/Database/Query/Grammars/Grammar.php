@@ -131,8 +131,6 @@ class Grammar extends BaseGrammar
     {
         $sql = [];
 
-        $query->setBindings([], 'join');
-
         foreach ($joins as $join) {
             $table = $this->wrapTable($join->table);
 
@@ -143,10 +141,6 @@ class Grammar extends BaseGrammar
 
             foreach ($join->clauses as $clause) {
                 $clauses[] = $this->compileJoinConstraint($clause);
-            }
-
-            foreach ($join->bindings as $binding) {
-                $query->addBinding($binding, 'join');
             }
 
             // Once we have constructed the clauses, we'll need to take the boolean connector
@@ -609,6 +603,20 @@ class Grammar extends BaseGrammar
         $joiner = $union['all'] ? ' union all ' : ' union ';
 
         return $joiner.$union['query']->toSql();
+    }
+
+    /**
+     * Compile an exists statement into SQL.
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     *
+     * @return string
+     */
+    public function compileExists(Builder $query)
+    {
+        $select = $this->compileSelect($query);
+
+        return "select exists($select) as {$this->wrap('exists')}";
     }
 
     /**

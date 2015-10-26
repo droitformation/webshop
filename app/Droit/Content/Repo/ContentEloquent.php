@@ -74,6 +74,12 @@ class ContentEloquent implements ContentInterface{
             $content->image = $data['image'];
         }
 
+        if($data['parent_id'] > 0)
+        {
+            $parent = $this->content->findOrFail($data['parent_id']);
+            $content->makeChildOf($parent);
+        }
+
 		$content->updated_at = date('Y-m-d G:i:s');
 
 		$content->save();

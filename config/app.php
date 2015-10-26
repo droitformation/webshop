@@ -149,6 +149,7 @@ return [
         Laracasts\Generators\GeneratorsServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class,
 
 		/*
 		 * Application Service Providers...

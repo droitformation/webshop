@@ -39,11 +39,13 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/jquery-ui.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dropzone.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/dragdrop/dragula.min.css');?>">
+
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
 
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/admin.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dragdrop.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/types.css');?>">
 
@@ -156,7 +158,11 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/application.js');?>"></script>
 <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
 
+<script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragula.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragdrop.js');?>"></script>
+
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload.js');?>"></script>
 
 @if(isset($isNewsletter))

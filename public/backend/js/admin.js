@@ -111,14 +111,14 @@ $( function() {
     if($('#endroitSelect').length && $('#endroitSelect').val() != "")
     {
         console.log('sfew');
-        $('#endroitSelect').find('select').trigger('change');
+        $('#endroitSelect').trigger('change');
     }
 
     $('body').on('change', '#endroitSelect' , function (e) {
         e.preventDefault();
 
         var id = $(this).val();
-
+        getEndroit(id);
 
     });
 
@@ -129,16 +129,20 @@ $( function() {
             success: function(data) {
                 if(data)
                 {
-                    $('#showEndroit').html(
-                        '<div class="col-md-3"><img style="width:100%;" src="files/colloques/cartes/'+ data.map +'" alt="Map"></div>'
+                    var map = (data.map ? '<img style="width:100%;" src="files/colloques/cartes/'+ data.map +'" alt="Map">' : '<span class="text-danger">il n\'existe pas de carte</span>');
+                    var html = '<div class="col-md-3">'
+                        + '<p>La carte du bon</p>'
+                        + map
+                        + '</div>'
                         + '<div class="col-md-8">'
                         + '<h4>'+ data.name + '</h4>'
                         + '<p>' + data.adresse + '</p>'
                         + '</div>'
                         + '<div class="col-md-1 text-right">'
                         + '<a class="btn btn-xs btn-info" href="admin/location/'+ data.id +'">Éditer</a>'
-                        + '</div>'
-                    );
+                        + '</div>';
+
+                    $('#showEndroit').html(html);
                 }
             },
             error: function(){ alert('problème avec la séléction de l\'endroit'); }
@@ -230,6 +234,8 @@ $( function() {
             $('#productSelect').hide();
         }
     });
+
+    $('.colorpicker').colorPicker();
 
     //$("[name='centres[]']").bootstrapSwitch({  size: 'mini' });
 
