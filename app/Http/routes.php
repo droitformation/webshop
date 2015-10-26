@@ -55,6 +55,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     /*
     |--------------------------------------------------------------------------
+    | Ajax specialisations Routes
+    |--------------------------------------------------------------------------
+    */
+/*
+    Route::get('tags', 'Backend\SpecialisationController@specialisations');
+    Route::get('allTags', 'Backend\SpecialisationController@allTags');
+    Route::post('addTag', 'Backend\SpecialisationController@addTag');
+    Route::post('removeTag', 'Backend\SpecialisationController@removeTag');
+*/
+    Route::get('specialisation/search', 'Backend\SpecialisationController@search');
+    Route::resource('specialisation', 'Backend\SpecialisationController');
+
+    /*
+    |--------------------------------------------------------------------------
     | Inscriptions and colloque Routes
     |--------------------------------------------------------------------------
     */

@@ -94,8 +94,6 @@ class ColloqueController extends Controller
         $comptes       = $this->compte->getAll();
         $organisateurs = $this->organisateur->centres();
 
-        $colloque->load('location');
-
         return view('backend.colloques.show')->with(['colloque' => $colloque, 'comptes' => $comptes, 'locations' => $locations, 'organisateurs' => $organisateurs]);
     }
 

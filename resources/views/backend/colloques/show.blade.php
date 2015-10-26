@@ -193,7 +193,7 @@
                             </fieldset>
 
                             <input type="hidden" name="id" value="{{ $colloque->id }}">
-                            <input type="submit" class="finish btn-success btn" value="Submit" />
+                            <input type="submit" class="finish btn-success btn" value="Envoyer" />
                         </form>
                     </div>
             </div>
@@ -202,19 +202,16 @@
         <div class="col-md-4">
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading"><i class="fa fa-file"></i> &nbsp;Programme</div>
+                <div class="panel-heading"><i class="fa fa-file"></i> &nbsp;Documents</div>
                 <div class="panel-body">
 
+                    <h4>Programme</h4>
                     @if($colloque->programme)
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
-                                <form action="{{ url('admin/document/'.$colloque->programme->id) }}" method="POST" class="pull-right">
-                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                    <button data-action="Programme" class="btn btn-danger btn-sm deleteAction">x</button>
-                                </form>
-                            </li>
-                        </ul>
+                        <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
+                        <form action="{{ url('admin/document/'.$colloque->programme->id) }}" method="POST" class="pull-right">
+                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                            <button data-action="Programme" class="btn btn-danger btn-sm deleteAction">x</button>
+                        </form><hr/>
                     @else
                     <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="form-group">
@@ -234,42 +231,43 @@
                     </form>
                     @endif
 
+                    <h4>Documents</h4>
+
+                        @if($colloque->documents)
+                            @foreach($colloque->documents as $document)
+                                @if($document->type == 'document')
+                                    <a class="btn btn-default" target="_blank" href="{{ $document->path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
+                                    <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
+                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                        <button data-action="{{ $document->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                    </form>
+                                @endif
+                            @endforeach
+                        @endif
+                        <br/> <br/>
+                        <h5>Ajouter un document</h5>
+                        <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <p><input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier"></p>
+                                    <p><input type="file" required name="file"></p>
+                                    <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
+                                    <input type="hidden" name="path" value="files/colloques">
+                                    <input type="hidden" name="type" value="document">
+                                </div>
+                                <div class="col-sm-2 text-right">
+                                    <button type="submit" class="btn btn-info">Ajouter</button>
+                                </div>
+                            </div>
+                        </form>
                 </div>
             </div>
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Documents</div>
+                <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Spécialisation</div>
                 <div class="panel-body">
-                    <ul class="list-group">
-                        @if($colloque->documents)
-                            @foreach($colloque->documents as $document)
-                                @if($document->type == 'document')
-                                    <li class="list-group-item">
-                                        <a class="btn btn-default" target="_blank" href="{{ $document->path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
-                                        <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
-                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-action="{{ $document->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
-                                        </form>
-                                    </li>
-                                @endif
-                            @endforeach
-                        @endif
-                        <li class="list-group-item">
-                            <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                <div class="form-group">
-                                    <div class="col-sm-10">
-                                        <p><input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier"></p>
-                                        <p><input type="file" required name="file"></p>
-                                        <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
-                                        <input type="hidden" name="path" value="files/colloques">
-                                        <input type="hidden" name="type" value="document">
-                                    </div>
-                                    <div class="col-sm-2 text-right">
-                                        <button type="submit" class="btn btn-info">Ajouter</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </li>
+                    <ul id="tags">
+                        <li>Tag2</li>
                     </ul>
                 </div>
             </div>

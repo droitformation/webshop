@@ -36,10 +36,10 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/vendor/redactor/redactor.css'); ?>">
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/jquery-ui.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/dragdrop/dragula.min.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/jquery.tagit.css');?>">
 
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
@@ -125,6 +125,7 @@
 
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/chosen/chosen.jquery.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/tag-it.min.js');?>"></script>
 
 <!-- Layout fixes plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/enquire.js');?>"></script>
