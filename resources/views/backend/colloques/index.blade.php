@@ -39,7 +39,11 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset($colloque->illustration) }}" />
+                                            @if($colloque->illustration)
+                                                <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
+                                            @else
+                                                <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
+                                            @endif
                                             <strong>{{ $colloque->titre }}</strong>
                                             <p>{{ $colloque->event_date }}</p>
                                         </td>

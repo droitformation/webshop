@@ -165,6 +165,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
 
 @if(isset($isNewsletter))
     @include('backend.newsletter.scripts')

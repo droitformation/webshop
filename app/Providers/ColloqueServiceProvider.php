@@ -30,6 +30,8 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerDocumentService();
         $this->registerGroupeService();
         $this->registerOptionService();
+        $this->registerPriceService();
+
 	}
 
     /**

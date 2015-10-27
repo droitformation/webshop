@@ -84,9 +84,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
     Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
+
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
     Route::get('colloque/location/{id}', 'Backend\Colloque\ColloqueController@location');
     Route::get('colloque/adresse/{id}', 'Backend\Colloque\ColloqueController@adresse');
+    Route::post('colloque/addprice', 'Backend\Colloque\ColloqueController@addprice');
+    Route::post('colloque/removeprice', 'Backend\Colloque\ColloqueController@removeprice');
+    Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
+    Route::post('colloque/removeoption', 'Backend\Colloque\ColloqueController@removeoption');
+
     Route::resource('document', 'Backend\Colloque\DocumentController');
 
     Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');

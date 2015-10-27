@@ -26,7 +26,7 @@ class PriceEloquent implements PriceInterface{
 
         $price = $this->price->create(array(
             'colloque_id' => $data['colloque_id'],
-            'price'       => $data['price'],
+            'price'       => $data['price'] * 100,
             'type'        => $data['type'],
             'description' => $data['description']
         ));

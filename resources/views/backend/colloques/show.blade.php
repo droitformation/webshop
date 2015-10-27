@@ -32,17 +32,12 @@
                                 <div class="form-group">
                                     <label for="titre" class="col-sm-3 control-label">Adresse principale<br/><small>Indiqué sur bon, bv, facture</small></label>
                                     <div class="col-sm-6">
-                                        <div class="thumbnail">
-                                            <div id="showAdresse">{!! $colloque->adresse->adresse !!}</div><br/>
-                                            <button class="btn btn-xs btn-primary" type="button" data-toggle="collapse" data-target="#choixAdresse">Changer l'adresse</button>
-                                        </div>
-                                        <br/>
-                                        <div class="collapse" id="choixAdresse">
+                                        <div id="choixAdresse">
                                             <select class="form-control required" autocomplete="off" name="adresse_id" id="adresseSelect">
                                                 <?php
-                                                    $adresses = $organisateurs->reject(function ($item) {
-                                                        return $item->adresse == '';
-                                                    });
+                                                $adresses = $organisateurs->reject(function ($item) {
+                                                    return $item->adresse == '';
+                                                });
                                                 ?>
                                                 @if(!$adresses->isEmpty())
                                                     <option value="">Choix</option>
@@ -51,9 +46,13 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
+                                        </div><br/>
+                                        <div class="thumbnail">
+                                            <div id="showAdresse">{!! $colloque->adresse->adresse !!}</div>
                                         </div>
-
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
                                     </div>
                                 </div>
 
@@ -129,30 +128,26 @@
                             </fieldset>
 
                             <fieldset title="Dates">
+
                                 <legend>Dates</legend>
                                 @include('backend.colloques.partials.dates')
 
                             </fieldset>
                             <fieldset title="Prix">
+
                                 <legend>Prix</legend>
+                                @include('backend.colloques.partials.prices',['type' => 'public', 'title' => 'Prix public'])
+                                @include('backend.colloques.partials.prices',['type' => 'admin' , 'title' => 'Prix admin'])
 
-                                <?php
-                                    $public = $colloque->prices->filter(function ($item)
-                                    {
-                                        return $item->type == 'public';
-                                    });
+                            </fieldset>
+                            <fieldset title="Options">
 
-                                    $admin = $colloque->prices->filter(function ($item)
-                                    {
-                                        return $item->type == 'admin';
-                                    });
-                                ?>
-
-                                @include('backend.colloques.partials.prices',['type' => 'public', 'title' => 'Prix public',   'prices' => $public])
-                                @include('backend.colloques.partials.prices',['type' => 'admin' , 'title' => 'Prix spéciaux', 'prices' => $admin])
+                                <legend>Options</legend>
+                                @include('backend.colloques.partials.options')
 
                             </fieldset>
                             <fieldset title="Annexes">
+
                                 <legend>Annexes</legend>
                                 @include('backend.colloques.partials.annexes')
 

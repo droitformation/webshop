@@ -91,4 +91,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 .list-group-item .label {
     font-size: 90%;
     line-height: 18px;
+    display: inline-block;
+    min-width: 85px;
+    margin-right: 5px;
 }
