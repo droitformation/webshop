@@ -161,6 +161,29 @@ class ColloqueController extends Controller
      * @param  int  $id
      * @return Response
      */
+    public function generate($id,$doc)
+    {
+        $colloque = $this->colloque->find($id);
+        $user     = \Auth::user();
+
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->make([
+            'colloque_id' => $colloque->id,
+            'user_id'     => $user->id,
+            'price_id'    => $colloque->prices->first()->id
+        ]);
+
+        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $generator->stream = true;
+
+        $doc = $doc.'Event';
+        return $generator->setInscription($inscription)->$doc();
+    }
+
+    /**
+     *
+     * @param  int  $id
+     * @return Response
+     */
     public function addprice(Request $request)
     {
         parse_str($request->input('data'), $data);

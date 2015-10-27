@@ -235,6 +235,15 @@
                 </div>
             </div>
 
+            <div class="panel panel-gray">
+                <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Tester les documents</div>
+                <div class="panel-body">
+                    <a target="_blank" class="btn btn-sm btn-warning" href="{{ url('admin/colloque/generate/'.$colloque->id.'/bon') }}">Tester le bon</a>
+                    <a target="_blank" class="btn btn-sm btn-warning" href="{{ url('admin/colloque/generate/'.$colloque->id.'/facture') }}">Tester la facture</a>
+                    <a target="_blank" class="btn btn-sm btn-warning" href="{{ url('admin/colloque/generate/'.$colloque->id.'/bv') }}">Tester le bv</a>
+                </div>
+            </div>
+
         </div>
     </div>
 

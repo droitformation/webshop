@@ -8,7 +8,13 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-1">
-                            <a href="#"><img style="height: 80px;" src="{{ asset($colloque->illustration) }}"></a>
+                            <a href="#">
+                                @if($colloque->illustration)
+                                    <img style="height: 80px; float:left;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
+                                @else
+                                    <img style="height: 80px; float:left;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
+                                @endif
+                            </a>
                         </div>
                         <div class="col-md-9">
                             <h4><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>

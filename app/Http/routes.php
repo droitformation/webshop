@@ -88,6 +88,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
     Route::get('colloque/location/{id}', 'Backend\Colloque\ColloqueController@location');
     Route::get('colloque/adresse/{id}', 'Backend\Colloque\ColloqueController@adresse');
+    Route::get('colloque/generate/{id}/{doc}', 'Backend\Colloque\ColloqueController@generate');
     Route::post('colloque/addprice', 'Backend\Colloque\ColloqueController@addprice');
     Route::post('colloque/removeprice', 'Backend\Colloque\ColloqueController@removeprice');
     Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
