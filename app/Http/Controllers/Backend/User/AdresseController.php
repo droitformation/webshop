@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Backend\User;
 
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\CreateAdresse;
 use App\Http\Requests\UpdateAdresse;
-use Illuminate\Http\Request;
 
 class AdresseController extends Controller {
 

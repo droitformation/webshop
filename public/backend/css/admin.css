@@ -88,4 +88,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     margin-bottom: 0px;
 }
 
-.form-control
+.list-group-item .label {
+    font-size: 90%;
+    line-height: 18px;
+}

@@ -16,7 +16,7 @@ class Colloque extends Model
 
     protected $fillable = [
         'titre', 'soustitre', 'sujet', 'remarques', 'start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
-        'location_id', 'compte_id', 'visible', 'bon', 'facture', 'created_at', 'updated_at'
+        'location_id', 'compte_id', 'visible', 'bon', 'facture', 'adresse_id','created_at', 'updated_at'
     ];
 
     public function getIllustrationAttribute()
@@ -29,12 +29,10 @@ class Colloque extends Model
 
         if(!$illustration->isEmpty())
         {
-            return 'files/colloques/illustration/'.$illustration->first()->path;
+            return $illustration->first();
         }
-        else
-        {
-            return 'files/colloques/illustration/illu.png';
-        }
+
+        return false;
     }
 
     public function getProgrammeAttribute()
@@ -87,6 +85,16 @@ class Colloque extends Model
         }
 
         return $annexes;
+    }
+
+    public function specialisations()
+    {
+        return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation','colloque_specialisations','colloque_id','specialisation_id');
+    }
+
+    public function adresse()
+    {
+        return $this->belongsTo('App\Droit\Organisateur\Entities\Organisateur','adresse_id');
     }
 
     public function location()

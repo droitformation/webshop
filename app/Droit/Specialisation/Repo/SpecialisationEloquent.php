@@ -22,6 +22,16 @@ class SpecialisationEloquent implements SpecialisationInterface{
         return $this->specialisation->find($id);
     }
 
+    public function search($term, $like = null)
+    {
+        if($like)
+        {
+            return $this->specialisation->where('title','LIKE', '%'.$term.'%')->get();
+        }
+
+        return $this->specialisation->where('title','=', $term)->get()->first();
+    }
+
     public function create(array $data){
 
         $specialisation = $this->specialisation->create(array(

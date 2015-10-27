@@ -10,4 +10,10 @@ class Document extends Model{
 
     public $timestamps = false;
 
+
+    public function getColloquePathAttribute()
+    {
+        return 'files/colloques/document/'.$this->path;
+    }
+
 }

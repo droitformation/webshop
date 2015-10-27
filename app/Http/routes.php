@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('removeTag', 'Backend\SpecialisationController@removeTag');
 */
     Route::get('specialisation/search', 'Backend\SpecialisationController@search');
+    Route::delete('specialisation/destroy', 'Backend\SpecialisationController@destroy');
     Route::resource('specialisation', 'Backend\SpecialisationController');
 
     /*
@@ -85,6 +86,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
     Route::get('colloque/location/{id}', 'Backend\Colloque\ColloqueController@location');
+    Route::get('colloque/adresse/{id}', 'Backend\Colloque\ColloqueController@adresse');
     Route::resource('document', 'Backend\Colloque\DocumentController');
 
     Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
@@ -171,8 +173,8 @@ Route::get('checkout/resume', 'Frontend\Shop\CheckoutController@resume');
 Route::get('checkout/confirm', 'Frontend\Shop\CheckoutController@confirm');
 Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
 
-Route::resource('adresse', 'AdresseController');
-Route::post('ajax/adresse/{id}', 'AdresseController@ajaxUpdate');
+Route::resource('adresse', 'Backend\User\AdresseController');
+Route::post('ajax/adresse/{id}', 'Backend\User\AdresseController@ajaxUpdate');
 
 /* *
  * Cart routes for frontend shop

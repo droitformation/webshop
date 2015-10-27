@@ -25,38 +25,58 @@ class SpecialisationController extends Controller {
 	 */
 	public function index(Request $request)
 	{
+        $data = [];
+
 		$specialisations = $this->specialisation->getAll();
+
+        if(!$specialisations->isEmpty())
+        {
+            foreach($specialisations as $result)
+            {
+                $data[] = ['label' => $result->title , 'value'   => $result->id];
+            }
+        }
 
         if($request->ajax())
         {
-            return response()->json( $specialisations, 200 );
+            return response()->json( $data, 200 );
         }
 	}
 
     public function search(Request $request)
     {
+        $data = [];
         $term = $request->input('term');
-        $tags = $this->specialisation->search($term);
+
+        $specialisation = $this->specialisation->search($term,true);
+
+        if(!$specialisation->isEmpty())
+        {
+            foreach($specialisation as $result)
+            {
+                $data[] = ['label' => $result->title, 'value' => $result->id];
+            }
+        }
 
         if($request->ajax())
         {
-            return \Response::json( $tags, 200 );
+            return response()->json( $data, 200 );
         }
     }
 	
 	public function store(Request $request)
 	{
-		$id   = $request->input('id');
-		$specialisation  = $request->input('specialisation');
-		$find = $this->specialisation->search($specialisation);
+        $colloque_id    = $request->input('colloque_id');
+		$specialisation = $request->input('specialisation');
+		$find           = $this->specialisation->search($specialisation);
 				
 		// If specialisation not found	
 		if(!$find)
 		{
-			$find = $this->specialisation->create(['title' => $specialisation, 'colloque_id' => $id]);
+			$find = $this->specialisation->create(['title' => $specialisation, 'colloque_id' => $colloque_id]);
 		}
 
-        $colloque = $this->colloque->find($id);
+        $colloque = $this->colloque->find($colloque_id);
         $colloque->specialisations()->attach($find->id);
 
         if($request->ajax())
@@ -67,11 +87,12 @@ class SpecialisationController extends Controller {
 		
 	public function destroy(Request $request)
 	{
-		$id   =  $request->input('id');
-		$specialisation  =  $request->input('specialisation');
+        $colloque_id    =  $request->input('colloque_id');
+		$specialisation =  $request->input('specialisation');
+        $find           = $this->specialisation->search($specialisation);
 
-        $colloque   = $this->colloque->find($id);
-        $colloque->pecialisations()->detach($specialisation->id);
+        $colloque   = $this->colloque->find($colloque_id);
+        $colloque->specialisations()->detach($find->id);
 
         if($request->ajax())
         {

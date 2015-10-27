@@ -106,6 +106,7 @@ class ColloqueController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $colloque     = $this->colloque->update($request->all());
         $illustration = $request->input('illustration');
 
@@ -136,5 +137,15 @@ class ColloqueController extends Controller
     public function location($id)
     {
         return $this->location->find($id);
+    }
+
+    /**
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function adresse($id)
+    {
+        return $this->organisateur->find($id);
     }
 }

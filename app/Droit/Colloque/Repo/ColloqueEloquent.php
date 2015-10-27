@@ -19,7 +19,7 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function find($id){
 
-        return $this->colloque->with(['location','centres','compte','prices','documents','options'])->find($id);
+        return $this->colloque->with(['location','adresse','specialisations','centres','compte','prices','documents','options'])->find($id);
     }
 
     public function increment($colloque_id)
@@ -47,8 +47,9 @@ class ColloqueEloquent implements ColloqueInterface{
             'remarques'       => $data['remarques'],
             'organisateur'    => $data['organisateur'],
             'location_id'     => $data['location_id'],
+            'adresse_id'      => (isset($data['adresse_id']) ? $data['adresse_id'] : 1),
             'start_at'        => $data['start_at'],
-            'end_at'          => (isset($data['end_at']) && $data['end_at'] != '0000-00-00' ? $data['end_at'] : null),
+            'end_at'          => (isset($data['end_at']) && !empty($data['end_at']) ? $data['end_at'] : null),
             'registration_at' => $data['registration_at'],
             'active_at'       => (isset($data['active_at']) ? $data['active_at'] : null),
             'created_at'      => \Carbon\Carbon::now(),
@@ -80,7 +81,8 @@ class ColloqueEloquent implements ColloqueInterface{
 
         $colloque->fill($data);
 
-        $colloque->end_at = (isset($data['end_at']) &&  !empty($data['end_at']) ? $data['end_at'] : null);
+        $colloque->end_at    = (isset($data['end_at']) &&  !empty($data['end_at']) ? $data['end_at'] : null);
+        $colloque->active_at = (isset($data['active_at']) &&  !empty($data['active_at']) ? $data['active_at'] : null);
 
         $colloque->save();
 

@@ -108,19 +108,16 @@ $( function() {
         });
     });
 
-    if($('#endroitSelect').length && $('#endroitSelect').val() != "")
-    {
-        var id = $('#endroitSelect').val();
-        console.log(id);
-        getEndroit(id);
+    /*
+     * Choice of location for event
+     * */
+    if($('#endroitSelect').length && $('#endroitSelect').val() != "") {
+        getEndroit($('#endroitSelect').val());
     }
 
-    $(document).on('change', '#endroitSelect' , function (e) {
+    $(document).on('change', '#endroitSelect' , function (e){
         e.preventDefault();
-
-        var id = $(this).val();
-        getEndroit(id);
-
+        getEndroit($(this).val());
     });
 
     function getEndroit(id){
@@ -140,13 +137,44 @@ $( function() {
                         + '<p>' + data.adresse + '</p>'
                         + '</div>'
                         + '<div class="col-md-1 text-right">'
-                        + '<a class="btn btn-xs btn-info" href="admin/location/'+ data.id +'">Éditer</a>'
+                       // + '<a class="btn btn-xs btn-info" href="admin/location/'+ data.id +'">Éditer</a>'
                         + '</div>';
 
                     $('#showEndroit').html(html);
                 }
             },
             error: function(){ alert('problème avec la séléction de l\'endroit'); }
+        });
+    }
+
+    /*
+     * Choice of adresse for event
+     * */
+    if($('#adresseSelect').length && $('#adresseSelect').val() != "") {
+        getAdresse($('#adresseSelect').val());
+    }
+
+    $(document).on('change', '#adresseSelect' , function (e) {
+        e.preventDefault();
+        getAdresse($(this).val());
+    });
+
+    function getAdresse(id){
+        $.ajax({
+            type: "GET",
+            url : base_url + "admin/colloque/adresse/" + id,
+            success: function(data) {
+                if(data)
+                {
+                    var logo = (data.logo ? '<img style="width:100%;" src="files/logos/'+ data.logo +'" alt="Logo">' : '<span class="text-danger">il n\'existe pas de logo</span>');
+                    var html = '<div class="row"><div class="col-md-3">' + logo + '</div>'
+                        + '<div class="col-md-8">'
+                        + '<p>' + data.adresse + '</p>'
+                        + '</div></div>';
+                    $('#showAdresse').html(html);
+                }
+            },
+            error: function(){ alert('problème avec la séléction de l\'adresse'); }
         });
     }
 
@@ -242,20 +270,20 @@ $( function() {
     var base_url = location.protocol + "//" + location.host+"/";
 
     $("#tags").tagit({
-        fieldName: "specialisation",
-        placeholderText : "Spécialisation",
-        removeConfirmation: true,
+        fieldName          : "specialisation",
+        placeholderText    : "Rechercher une spécialisation",
+        removeConfirmation : true,
         afterTagAdded: function(event, ui) {
-            if(!ui.duringInitialization){
-
-                var tag = ui.tagLabel;
-                var id  = $(this).data('id');
+            if(!ui.duringInitialization)
+            {
+                var specialisation = ui.tagLabel;
+                var colloque_id    = $(this).data('id');
 
                 $.ajax({
-                    dataType: "json",
-                    type    : 'POST',
-                    url     : base_url + 'admin/specialisation',
-                    data: {  id  : id,  tag : tag , _token: $("meta[name='token']").attr('content') },
+                    dataType : "json",
+                    type     : 'POST',
+                    url      : base_url + 'admin/specialisation',
+                    data: {  colloque_id  : colloque_id, specialisation : specialisation , _token: $("meta[name='_token']").attr('content') },
                     success: function( data ) {
                         console.log('added');
                     },
@@ -265,22 +293,20 @@ $( function() {
         },
         beforeTagRemoved: function(event, ui) {
 
-            var tag = ui.tagLabel;
-            var id  = $(this).data('id');
+            var specialisation = ui.tagLabel;
+            var colloque_id    = $(this).data('id');
 
-            var answer = confirm('Voulez-vous vraiment supprimer : '+ tag +' ?');
+            var answer = confirm('Voulez-vous vraiment supprimer : '+ specialisation +' ?');
             if (answer) {
                 $.ajax({
-                    dataType: "json",
-                    type: 'DELETE',
-                    url: base_url + 'admin/specialisation',
-                    data: {id: id, tag: tag, _token: $("meta[name='token']").attr('content')},
+                    dataType : "json",
+                    type     : 'POST',
+                    url      : base_url + 'admin/specialisation/destroy',
+                    data     : {_method: 'delete', colloque_id: colloque_id, specialisation: specialisation, _token: $("meta[name='_token']").attr('content')},
                     success: function (data) {
                         console.log('removed');
                     },
-                    error: function (data) {
-                        console.log('error');
-                    }
+                    error: function (data) {console.log('error');}
                 });
             }
             else
@@ -293,15 +319,15 @@ $( function() {
             minLength: 2,
             source: function( request, response ) {
                 $.ajax({
-                    dataType: "json",
-                    type    : 'GET',
-                    url     : base_url + 'admin/specialisation/search',
+                    dataType : "json",
+                    type     : 'GET',
+                    url      : base_url + 'admin/specialisation/search',
                     data: {  term: request.term , _token: $("meta[name='_token']").attr('content') },
                     success: function( data ) {
                         response( $.map( data, function( item ) {
                             return {
-                                label: item.title,
-                                value: item.title
+                                label: item.label,
+                                value: item.label
                             }
                         }));
                     },

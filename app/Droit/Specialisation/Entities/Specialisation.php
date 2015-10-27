@@ -8,11 +8,12 @@ class Specialisation extends Model{
 
     protected $table = 'specialisations';
 
-    protected $fillable = ['title','hidden'];
+    protected $fillable = ['title'];
 
     /**
      * Set timestamps off
      */
     public $timestamps = false;
+
 
 }

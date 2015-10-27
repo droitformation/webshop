@@ -20,12 +20,9 @@
                 </div>
 
                 <?php $centers = $colloque->centres->lists('id')->all();  ?>
-                    <div class="panel-body" ng-app="upload">
+                    <div class="panel-body">
 
-                        <form action="{{ url('admin/colloque/'.$colloque->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal"
-                              flow-init="{query: {'path' : 'files/colloques', 'colloque_id' : <?php echo $colloque->id; ?>, 'type' : 'illustration' , '_token': <?php echo csrf_token(); ?> }}"
-                              flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-                              flow-files-submitted="$flow.upload()">
+                        <form action="{{ url('admin/colloque/'.$colloque->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
                             <input type="hidden" name="_method" value="PUT">
                             {!! csrf_field() !!}
 
@@ -33,19 +30,30 @@
                                 <legend>Général</legend>
 
                                 <div class="form-group">
-                                    <label for="titre" class="col-sm-3 control-label">Vignette</label>
-                                    <div class="col-sm-3">
-                                        <div class="uploadBtn">
-                                            <span class="btn btn-xs btn-info"    ng-hide="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Selectionner image</span>
-                                            <span class="btn btn-xs btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Changer</span>
-                                            <span class="btn btn-xs btn-danger"  ng-show="$flow.files.length" ng-click="$flow.cancel()">Supprimer</span>
+                                    <label for="titre" class="col-sm-3 control-label">Adresse principale<br/><small>Indiqué sur bon, bv, facture</small></label>
+                                    <div class="col-sm-6">
+                                        <div class="thumbnail">
+                                            <div id="showAdresse">{!! $colloque->adresse->adresse !!}</div><br/>
+                                            <button class="btn btn-xs btn-primary" type="button" data-toggle="collapse" data-target="#choixAdresse">Changer l'adresse</button>
+                                        </div>
+                                        <br/>
+                                        <div class="collapse" id="choixAdresse">
+                                            <select class="form-control required" autocomplete="off" name="adresse_id" id="adresseSelect">
+                                                <?php
+                                                    $adresses = $organisateurs->reject(function ($item) {
+                                                        return $item->adresse == '';
+                                                    });
+                                                ?>
+                                                @if(!$adresses->isEmpty())
+                                                    <option value="">Choix</option>
+                                                    @foreach($adresses as $adresse)
+                                                        <option {{ ($colloque->adresse->id == $adresse->id ? 'selected' : '') }} value="{{ $adresse->id }}">{{ $adresse->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
                                         </div>
 
-                                        <div class="thumbnail big" ng-hide="$flow.files.length">
-                                            <img style="height: 180px;" src="{{ asset($colloque->illustration) }}" />
-                                        </div>
-                                        <div class="thumbnail big" ng-show="$flow.files.length"><img style="height: 180px;" flow-img="$flow.files[0]" /></div>
-                                        <input type="hidden" name="illustration" value="{[{ $flow.files[0].name }]}">
                                     </div>
                                 </div>
 
@@ -62,7 +70,7 @@
                                     <div class="col-sm-6">
                                         {!! Form::text('soustitre', $colloque->soustitre , array('class' => 'form-control' )) !!}
                                     </div>
-                                    <div class="col-sm-3"><p class="help-block"></p></div>
+                                    <div class="col-sm-3"></div>
                                 </div>
 
                                 <div class="form-group">
@@ -122,73 +130,31 @@
 
                             <fieldset title="Dates">
                                 <legend>Dates</legend>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Date de début</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="start_at" class="form-control datePicker required" value="{{ $colloque->start_at->format('Y-m-d') }}" id="start_at">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Date de fin</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="end_at" class="form-control datePicker" value="{{ ($colloque->end_at ? $colloque->end_at->format('Y-m-d') : '') }}" id="end_at">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Délai d'inscription</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="registration_at" class="form-control datePicker" value="{{ $colloque->registration_at->format('Y-m-d') }}" id="registration_at">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Colloque actif jusqu'au</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="active_at" class="form-control datePicker" value="{{ ($colloque->active_at ? $colloque->active_at->format('Y-m-d') : '') }}" id="active_at">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <p class="help-block">Garder le colloque actif dans la liste pour inscrire des personnes depuis l'admin</p>
-                                    </div>
-                                </div>
+                                @include('backend.colloques.partials.dates')
 
                             </fieldset>
-                            <fieldset title="Général">
+                            <fieldset title="Prix">
+                                <legend>Prix</legend>
+
+                                <?php
+                                    $public = $colloque->prices->filter(function ($item)
+                                    {
+                                        return $item->type == 'public';
+                                    });
+
+                                    $admin = $colloque->prices->filter(function ($item)
+                                    {
+                                        return $item->type == 'admin';
+                                    });
+                                ?>
+
+                                @include('backend.colloques.partials.prices',['type' => 'public', 'title' => 'Prix public',   'prices' => $public])
+                                @include('backend.colloques.partials.prices',['type' => 'admin' , 'title' => 'Prix spéciaux', 'prices' => $admin])
+
+                            </fieldset>
+                            <fieldset title="Annexes">
                                 <legend>Annexes</legend>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Générer le <strong>bon de participation</strong></label>
-                                    <div class="col-sm-5">
-                                        <label class="radio-inline"><input type="radio" checked name="bon" value="1"> Oui</label>
-                                        <label class="radio-inline"><input type="radio" name="bon" value="0"> Non</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Générer la <strong>facture</strong> et le <strong>BV</strong></label>
-                                    <div class="col-sm-5">
-                                        <label class="radio-inline"><input type="radio" checked name="facture" value="1"> Oui</label>
-                                        <label class="radio-inline"><input type="radio" name="facture" value="0"> Non</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Compte pour BV</label>
-                                    <div class="col-sm-5">
-                                        <select name="compte_id" class="form-control">
-                                            @if(!$comptes->isEmpty())
-                                                @foreach($comptes as $compte)
-                                                    <option value="{{ $compte->id }}">
-                                                        {!! $compte->motif !!} |
-                                                        {!! $compte->compte !!}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
+                                @include('backend.colloques.partials.annexes')
 
                             </fieldset>
 
@@ -205,6 +171,19 @@
                 <div class="panel-heading"><i class="fa fa-file"></i> &nbsp;Documents</div>
                 <div class="panel-body">
 
+                    <h4>Vignette</h4>
+                    @if($colloque->illustration)
+                        <div class="thumbnail big">
+                            <form action="{{ url('admin/document/'.$colloque->illustration->id) }}" method="POST" class="pull-right">
+                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                <button data-action="Vignette" class="btn btn-danger btn-sm deleteAction">x</button>
+                            </form>
+                            <img style="height: 140px;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
+                        </div>
+                    @else
+                        @include('backend.colloques.partials.upload', ['type' => 'illustration', 'name' => 'Illustration'])
+                    @endif
+
                     <h4>Programme</h4>
                     @if($colloque->programme)
                         <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
@@ -213,22 +192,7 @@
                             <button data-action="Programme" class="btn btn-danger btn-sm deleteAction">x</button>
                         </form><hr/>
                     @else
-                    <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-sm-10">
-                                <div class="form-group">
-                                    <input type="file" name="file">
-                                    <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
-                                    <input type="hidden" name="path" value="files/colloques">
-                                    <input type="hidden" name="type" value="programme">
-                                    <input type="hidden" name="name" value="Programme">
-                                </div>
-                            </div>
-                            <div class="col-sm-2 text-right">
-                                <button type="submit" class="btn btn-info">Ajouter</button>
-                            </div>
-                        </div>
-                    </form>
+                        @include('backend.colloques.partials.upload', ['type' => 'programme', 'name' => 'Programme'])
                     @endif
 
                     <h4>Documents</h4>
@@ -236,7 +200,7 @@
                         @if($colloque->documents)
                             @foreach($colloque->documents as $document)
                                 @if($document->type == 'document')
-                                    <a class="btn btn-default" target="_blank" href="{{ $document->path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
+                                    <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
                                     <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
                                         <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                         <button data-action="{{ $document->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
@@ -266,8 +230,12 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Spécialisation</div>
                 <div class="panel-body">
-                    <ul id="tags">
-                        <li>Tag2</li>
+                    <ul id="tags" data-id="{{ $colloque->id }}">
+                        @if(!$colloque->specialisations->isEmpty())
+                            @foreach($colloque->specialisations as $specialisation)
+                                <li>{{ $specialisation->title }}</li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>

@@ -1,9 +1,10 @@
-<?php namespace App\Droit\Domain\Repo;
+<?php namespace App\Droit\Specialisation\Repo;
 
-interface DomainInterface {
+interface SpecialisationInterface {
 
     public function getAll();
     public function find($data);
+    public function search($term, $like = null);
     public function create(array $data);
     public function update(array $data);
     public function delete($id);
