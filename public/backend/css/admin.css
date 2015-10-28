@@ -89,7 +89,8 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .list-group-item {
-    padding: 0 15px 5px 15px;
+    padding: 5px 15px 5px 15px;
+    line-height: 23px;
 }
 
 .list-group-item .form-group {
@@ -119,7 +120,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 
 .list-group-item .label {
     font-size: 90%;
-    line-height: 18px;
+    line-height: 20px;
     display: inline-block;
     min-width: 85px;
     margin-right: 5px;
