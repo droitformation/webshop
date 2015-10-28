@@ -480,6 +480,7 @@ class Helper {
         {
             foreach($results as $result)
             {
+
                 $data[] = [
                     'label'   => $result->name ,
                     'desc'    => $result->email,

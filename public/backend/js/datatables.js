@@ -93,26 +93,27 @@ $(document).ready(function() {
             "url": "admin/subscribers"
         },
         "columns": [
-            {
-                data: 'id',
-                title: 'Editer'
-            },
-            {
-                data: 'status'
-            },
-            {
-                data: 'activated_at',
-                title: 'Activé le'
-            },
-            {
-                data: 'email'
-            },
-            {
-                data: 'abo'
-            },
-            {
-                data: 'delete'
-            }
+            {data: 'id', title: 'Editer'},
+            {data: 'status'},
+            {data: 'activated_at', title: 'Activé le'},
+            {data: 'email'},
+            {data: 'abo'},
+            {data: 'delete'}
+        ],
+        language: langues
+    });
+
+    var table = $('.users_table').DataTable({
+        "serverSide": true,
+        "ajax": {
+            "url": "admin/users"
+        },
+        "columns": [
+            {data: 'id', title: 'Editer'},
+            {data: 'nom', title : 'Nom'},
+            {data: 'email', title: 'E-mail'},
+            {data: 'adresse', title: 'Addresse(s)'},
+            {data: 'delete'}
         ],
         language: langues
     });

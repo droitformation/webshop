@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\User;
+namespace App\Http\Controllers\Frontend\User;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -82,6 +82,23 @@ class AdresseController extends Controller {
         $adresse = $this->adresse->update($request->all());
 
         return redirect('adresse/'.$id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function ajaxUpdate($id,Request $request)
+    {
+
+        $data    = $this->format->convertSerializedData($request->all());
+        $adresse = $this->adresse->update($data);
+        $user    = $this->user->find($data['user_id']);
+
+        echo view('shop.partials.user-livraison', ['user' => $user]);
+
     }
 
     /**

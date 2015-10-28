@@ -121,4 +121,76 @@ class UserEloquent implements UserInterface{
         }
     }
 
+    public function get_ajax($draw, $start, $length, $sortCol, $sortDir, $search){
+
+        $columns = ['id','nom','email','adresse'];
+
+        $iTotal  = $this->user->all()->count();
+
+        if($search)
+        {
+            $data = $this->user->where('email','LIKE','%'.$search.'%')
+                ->with(['adresses'])
+                ->orderBy($columns[$sortCol], $sortDir)
+                ->take($length)
+                ->skip($start)
+                ->get();
+
+            $recordsTotal = $data->count();
+        }
+        else
+        {
+            $data = $this->user->with(['adresses'])
+                ->orderBy($columns[$sortCol], $sortDir)
+                ->take($length)
+                ->skip($start)
+                ->get();
+
+            $recordsTotal = $iTotal;
+        }
+
+        $output = array(
+            "draw"            => $draw,
+            "recordsTotal"    => $iTotal,
+            "recordsFiltered" => $recordsTotal,
+            "data"            => []
+        );
+
+        foreach($data as $user)
+        {
+            $row = [];
+
+            $row['id']      = '<a class="btn btn-sky btn-sm" href="'.url('admin/user/'.$user->id).'">&Eacute;diter</a>';
+            $row['nom']     = $user->name;
+            $row['email']   = $user->email;
+            $row['adresse'] = '';
+
+            if( !$user->adresses->isEmpty())
+            {
+                $html = '<ul class="list-group" style="margin-bottom: 0;">';
+                foreach ($user->adresses as $adresse)
+                {
+                    $html .= '<li class="list-group-item">';
+                    $html .=  $adresse->type_title;
+                    $html .= '<a href="'.url('admin/adresse/'.$adresse->id).'" class="btn btn-xs btn-info pull-right">éditer</a>';
+                    $html .= '</li>';
+                }
+                $html .= '</ul>';
+
+                $row['adresse'] = $html;
+            }
+
+            $row['delete']  = '<form action="'.url('admin/user/'.$user->id).'" method="POST">'.csrf_field().'<input type="hidden" name="_method" value="DELETE">';
+            $row['delete'] .= '<button data-what="supprimer" data-action="Abonné '.$user->name.'" class="btn btn-danger btn-xs deleteAction pull-right">Supprimer</button>';
+            $row['delete'] .= '</form>';
+
+            //$row = array_values($row);
+
+            $output['data'][] = $row;
+        }
+
+        return json_encode( $output );
+
+    }
+
 }

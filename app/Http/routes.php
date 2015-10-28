@@ -55,15 +55,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     /*
     |--------------------------------------------------------------------------
+    | User and Adresse Backend Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('adresse', 'Backend\User\AdresseController');
+    Route::get('users', 'Backend\User\UserController@users');
+    Route::resource('user', 'Backend\User\UserController');
+
+    /*
+    |--------------------------------------------------------------------------
     | Ajax specialisations Routes
     |--------------------------------------------------------------------------
     */
-/*
-    Route::get('tags', 'Backend\SpecialisationController@specialisations');
-    Route::get('allTags', 'Backend\SpecialisationController@allTags');
-    Route::post('addTag', 'Backend\SpecialisationController@addTag');
-    Route::post('removeTag', 'Backend\SpecialisationController@removeTag');
-*/
+
     Route::get('specialisation/search', 'Backend\SpecialisationController@search');
     Route::delete('specialisation/destroy', 'Backend\SpecialisationController@destroy');
     Route::resource('specialisation', 'Backend\SpecialisationController');
@@ -180,8 +185,11 @@ Route::get('checkout/resume', 'Frontend\Shop\CheckoutController@resume');
 Route::get('checkout/confirm', 'Frontend\Shop\CheckoutController@confirm');
 Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
 
-Route::resource('adresse', 'Backend\User\AdresseController');
-Route::post('ajax/adresse/{id}', 'Backend\User\AdresseController@ajaxUpdate');
+/* *
+ * Update user adresse via ajax
+ * */
+Route::resource('adresse', 'Frontend\User\AdresseController');
+Route::post('ajax/adresse/{id}', 'Frontend\User\AdresseController@ajaxUpdate');
 
 /* *
  * Cart routes for frontend shop
@@ -263,21 +271,23 @@ Route::get('api/user', ['middleware' => 'oauth', function(){
 
 Route::get('cartworker', function()
 {
-    $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
-    $coupon       = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
-    $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $user         = \App::make('App\Droit\User\Repo\UserInterface');
-    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-/*    $gro = new \App\Droit\Inscription\Entities\Groupe();
-    $groupe = $gro::findOrNew(25);
-    $groupe->load('colloque','user','inscriptions');
-
-    $user = $groupe->user;
-    $user->load('adresses');
-    $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);*/
+    /*  
+       $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+       $coupon       = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+       $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+       $user         = \App::make('App\Droit\User\Repo\UserInterface');
+       $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+       $colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+       $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
+   
+     $gro = new \App\Droit\Inscription\Entities\Groupe();
+       $groupe = $gro::findOrNew(25);
+       $groupe->load('colloque','user','inscriptions');
+   
+       $user = $groupe->user;
+       $user->load('adresses');
+       $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
 
     $inde  = $colloque->find(71);
     $excel = new App\Droit\Generate\Excel\ExcelGenerator();
@@ -289,37 +299,15 @@ Route::get('cartworker', function()
         'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
         'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
     ];
+*/
 
-   if(!$cindy)
-   {
-       echo 'not payed';
-   }
-
-    /*     $restore = $inscription->withTrashed()->find(74)->restore();
-
-        $inscription->withTrashed()->find(74)->user_options()->restore();*/
-
-/*    $generator->stream = true;
-
+    $adresse    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+    $me = $adresse->find(1);
+    $me->load('typeadresse');
     echo '<pre>';
-    print_r($groupe->adresse_facturation->name);
-    echo '</pre>';exit;*/
-    //$job = (new \App\Jobs\MakeDocumentGroupe($groupe));
-
-    //$job->handle();
-
-
-    //$order_no = $order->find(21);
-    //$create = new App\Jobs\CreateOrderInvoice($order_no);
-
-    //$order_no = $order->find(6);
-    //print_r($create->handle());
-    //return $generator->factureOrder(34,true);
-
-    //return $pdf->bvEvent($inscrit,true);
-
-    //event(new App\Events\InscriptionWasRegistered($inscrit));
-
+    print_r($me);
+    echo '</pre>';
+    
 });
 
 Route::get('notification', function()

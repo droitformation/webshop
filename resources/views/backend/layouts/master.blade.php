@@ -117,20 +117,19 @@
 
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-<script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
 
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/chosen/chosen.jquery.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/tag-it.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
 
-<!-- Layout fixes plugins -->
-<script type="text/javascript" src="<?php echo asset('backend/js/enquire.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/jquery.cookie.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/jquery.nicescroll.min.js');?>"></script>
+<!-- Layout and fixes plugins -->
+<script type="text/javascript" src="<?php echo asset('backend/js/layouts/enquire.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.nicescroll.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/layouts/application.js');?>"></script>
 
 <!-- redactor -->
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/redactor.js');?>"></script>
@@ -139,24 +138,25 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/filemanager.js');?>"></script>
 
 <!-- Form plugins -->
-<script type="text/javascript" src="<?php echo asset('backend/js/placeholdr.js');?>"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/placeholdr.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/jqColorPicker.min.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/vendor/jquery/jqColorPicker.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
 <!-- Upload plugins -->
-<script type="text/javascript" src="<?php echo asset('backend/js/dropzone.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
 
 <!-- Gallery plugins -->
 <script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/gallery-simple.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/gallery/gallery-simple.js');?>"></script>
 
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/application.js');?>"></script>
 <script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
 
 <script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragula.js');?>"></script>
@@ -164,7 +164,7 @@
 
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/upload.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
 
 @if(isset($isNewsletter))

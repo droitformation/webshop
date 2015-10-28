@@ -51,12 +51,9 @@
                 success : function(result) {
                     if(result)
                     {
-
-                       console.log(result);
                        $('#userFormModal').modal('hide');
                        $('#userAdresse').empty();
                        $('#userAdresse').html(result);
-
                     }
                 }
             });

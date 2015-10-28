@@ -59,7 +59,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         if(isset($this->adresses))
         {
-            $contact = $this->adresses->filter(function($adresse)
+            $contact = $this->adresses->filter(function($adresse) use ($type)
             {
                 if ($adresse->type == 1)
                 {

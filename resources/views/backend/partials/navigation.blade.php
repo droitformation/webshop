@@ -14,6 +14,12 @@
             </a>
         </li>
         <li class="divider"></li>
+        <li class="<?php echo (Request::is('admin/user') || Request::is('admin/user/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/user') }}">
+                <i class="fa fa-users"></i> <span>Utilisateurs</span>
+            </a>
+        </li>
+        <li class="divider"></li>
         <li class="<?php echo (Request::is('admin/colloque') || Request::is('admin/colloque/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/colloque') }}">
                 <i class="fa fa-institution"></i> <span>Colloques</span>

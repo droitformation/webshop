@@ -16,6 +16,13 @@ class Adresse extends Model {
         'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_id','pays_id', 'type', 'livraison'
     ];
 
+    public function getTypeTitleAttribute()
+    {
+        $this->load('typeadresse');
+
+        return  (isset($this->typeadresse->type) ? $this->typeadresse->type : '');
+    }
+
     public function getCiviliteTitleAttribute()
     {
         $this->load('civilite');
@@ -82,6 +89,11 @@ class Adresse extends Model {
     public function civilite()
     {
         return $this->belongsTo('App\Droit\Civilite\Entities\Civilite','civilite_id');
+    }
+
+    public function typeadresse()
+    {
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse_types','type');
     }
 
     public function scopePrincipaleAddresse($query,$user_id)

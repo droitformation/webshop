@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\User;
+namespace App\Http\Controllers\Frontend\User;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -29,17 +29,6 @@ class UserController extends Controller {
         $users = $this->user->getAll();
 
         return view('backend.users.index')->with([ 'users' => $users ]);
-    }
-
-    public function users(Request $request)
-    {
-        $order  = $request->input('order');
-        $search = $request->input('search',null);
-        $search = ($search ? $search['value'] : null);
-
-        return $this->user->get_ajax(
-            $request->input('draw'), $request->input('start'), $request->input('length'), $order[0]['column'], $order[0]['dir'], $search
-        );
     }
 
     /**
