@@ -47,9 +47,9 @@
                                        <thead>
                                            <tr>
                                                <th class="col-md-2">Sujet</th>
-                                               <th class="col-md-4">Auteurs</th>
+                                               <th class="col-md-3">Auteurs</th>
                                                <th class="col-md-1">Status</th>
-                                               <th class="col-md-2"></th>
+                                               <th class="col-md-3"></th>
                                                <th class="col-md-2"></th>
                                                <th class="col-md-1"></th>
                                            </tr>
@@ -67,14 +67,13 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($campagne->status == 'brouillon')
+                                                        <div class="btn-group">
                                                             <a class="btn btn-inverse btn-sm" href="{{ url('admin/campagne/'.$campagne->id) }}">Composer</a>
-                                                        @else
-                                                            <div class="btn-group">
+                                                            @if($campagne->status == 'envoyé')
                                                                 <a class="btn btn-primary btn-sm" href="{{ url('admin/statistics/'.$campagne->id) }}">Stats</a>
                                                                 <a href="javascript:;" class="btn btn-default btn-sm sendEmailNewsletter" data-campagne="{{ $campagne->id }}">Envoyer par email</a>
-                                                            </div>
-                                                        @endif
+                                                            @endif
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         @if($campagne->status == 'brouillon')

@@ -84,8 +84,37 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     padding: 0px;
 }
 
+.panel-body > .list-group {
+    margin: 0 -20px;
+}
+
+.list-group-item {
+    padding: 0 15px 5px 15px;
+}
+
 .list-group-item .form-group {
     margin-bottom: 0px;
+}
+
+.list-group-item p{
+    margin-bottom: 0;
+}
+
+.list-group-item h5{
+    margin: 5px 0 0 0;
+}
+
+.order-item{
+    margin-bottom: 5px;
+    line-height: 40px;
+}
+
+.table > tbody > tr > td.nopadding{
+    padding: 0;
+}
+
+.table > tbody > tr > td .well{
+    border-radius: 0;
 }
 
 .list-group-item .label {
@@ -94,4 +123,18 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     display: inline-block;
     min-width: 85px;
     margin-right: 5px;
+}
+
+.list-group-item-title:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-bottom: 0;
+}
+
+.list-group .list-group-item-title {
+    border: 1px solid #ddd;
+    display: block;
+    margin-bottom: -1px;
+    padding: 10px 15px;
+    position: relative;
 }
