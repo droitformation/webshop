@@ -7,7 +7,7 @@
 
         <div class="media">
             <div class="media-left">
-                <img width="170px" style="margin-right: 20px;" class="media-object img-thumbnail" src="{{ asset($colloque->illustration) }}" alt="{{ $colloque->titre }}">
+                <img width="170px" style="margin-right: 20px;" class="media-object img-thumbnail" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt="{{ $colloque->titre }}">
             </div>
             <div class="media-body">
                 <h4 class="media-heading">{{ $colloque->titre }}<br/>{{ $colloque->soustitre }}</h4>

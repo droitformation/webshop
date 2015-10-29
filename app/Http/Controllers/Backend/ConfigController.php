@@ -13,9 +13,9 @@ class ConfigController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function colloque()
     {
-        return view('backend.config.index');
+        return view('backend.config.colloque');
     }
 
     /**
@@ -23,9 +23,9 @@ class ConfigController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function shop()
     {
-        //
+        return view('backend.config.shop');
     }
 
     /**
@@ -41,7 +41,7 @@ class ConfigController extends Controller
 
         \Registry::store($settings);
 
-        return redirect('admin/config')->with(array('status' => 'success', 'message' => 'Configuration mises à jour' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Configuration mises à jour' ));
     }
 
     /**

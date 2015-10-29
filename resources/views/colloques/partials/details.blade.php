@@ -41,7 +41,7 @@
         @endif
     </div>
     <div class="col-md-4">
-        <img width="200px" src="{{ asset($colloque->illustration) }}" />
+        <img width="200px" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
     </div>
 </div>
 

@@ -27,9 +27,10 @@ class PendingPayement
      */
     public function handle($request, Closure $next)
     {
-        $message = \Registry::get('inscription.messages.pending');
+        $message  = \Registry::get('inscription.messages.pending');
+        $restrict = \Registry::get('inscription.restrict');
 
-        if(!$this->inscription->hasPayed(\Auth::user()->id))
+        if($restrict && !$this->inscription->hasPayed(\Auth::user()->id))
         {
             return redirect('colloque')->with(array('status' => 'warning', 'message' => $message ));
         }

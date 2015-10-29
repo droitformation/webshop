@@ -50,7 +50,10 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], function () {
 
     Route::get('/', 'Backend\AdminController@index');
+    Route::get('config/shop', 'Backend\ConfigController@shop');
+    Route::get('config/colloque', 'Backend\ConfigController@colloque');
     Route::resource('config', 'Backend\ConfigController');
+
     Route::get('search', 'Backend\SearchController@search');
 
     /*

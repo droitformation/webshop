@@ -6,6 +6,7 @@ $( function() {
         minHeight  : 250,
         maxHeight: 450,
         focus: true,
+        lang: 'fr',
         plugins: ['advanced','imagemanager','filemanager'],
         fileUpload : 'uploadFileRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageUpload: 'uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
@@ -18,7 +19,8 @@ $( function() {
         minHeight: 50,
         maxHeight: 100,
         focus    : true,
-        buttons  : ['formatting','bold','italic','|','unorderedlist']
+        lang: 'fr',
+        buttons  : ['formatting','bold','italic','link','|','unorderedlist']
     });
 
     $.fn.datepicker.dates['fr'] = {
