@@ -30,6 +30,7 @@ return array(
     'CivilitesTableSeeder' => $baseDir . '/database/seeds/CivilitesTableSeeder.php',
     'ColloqueTableSeeder' => $baseDir . '/database/seeds/ColloqueTableSeeder.php',
     'CreateAddressesTable' => $baseDir . '/database/migrations/2015_06_04_133859_create_addresses_table.php',
+    'CreateAdresseSpecialisationsTable' => $baseDir . '/database/migrations/2015_11_02_155041_create_adresse_specialisations_table.php',
     'CreateAdresseTypesTable' => $baseDir . '/database/migrations/2015_06_04_154217_create_adresse_types_table.php',
     'CreateAnalyseAuthorsTable' => $baseDir . '/database/migrations/content/2015_08_18_132233_create_analyse_authors_table.php',
     'CreateAnalysesArretTable' => $baseDir . '/database/migrations/content/2014_12_08_143551_create_analyses_arret_table.php',

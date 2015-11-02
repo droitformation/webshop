@@ -225,7 +225,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Spécialisation</div>
                 <div class="panel-body">
-                    <ul id="tags" data-id="{{ $colloque->id }}">
+                    <ul id="tags" data-model="colloque" data-id="{{ $colloque->id }}">
                         @if(!$colloque->specialisations->isEmpty())
                             @foreach($colloque->specialisations as $specialisation)
                                 <li>{{ $specialisation->title }}</li>

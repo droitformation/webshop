@@ -5,18 +5,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Specialisation\Repo\SpecialisationInterface;
 
 class SpecialisationController extends Controller {
 
     protected $colloque;
     protected $specialisation;
+    protected $adresse;
 
-    public function __construct(ColloqueInterface $colloque, SpecialisationInterface $specialisation){
-
+    public function __construct(ColloqueInterface $colloque, SpecialisationInterface $specialisation, AdresseInterface $adresse)
+    {
         $this->colloque       = $colloque;
         $this->specialisation = $specialisation;
-
+        $this->adresse        = $adresse;
 	}
 
 	/**
@@ -33,7 +35,7 @@ class SpecialisationController extends Controller {
         {
             foreach($specialisations as $result)
             {
-                $data[] = ['label' => $result->title , 'value'   => $result->id];
+                $data[] = $result->title;
             }
         }
 
@@ -66,18 +68,19 @@ class SpecialisationController extends Controller {
 	
 	public function store(Request $request)
 	{
-        $colloque_id    = $request->input('colloque_id');
+        $id             = $request->input('id');
 		$specialisation = $request->input('specialisation');
+        $model          = $request->input('model');
 		$find           = $this->specialisation->search($specialisation);
-				
-		// If specialisation not found	
-		if(!$find)
-		{
-			$find = $this->specialisation->create(['title' => $specialisation, 'colloque_id' => $colloque_id]);
-		}
 
-        $colloque = $this->colloque->find($colloque_id);
-        $colloque->specialisations()->attach($find->id);
+		// If specialisation not found	
+/*		if(!$find)
+		{
+			$find = $this->specialisation->create(['title' => $specialisation, $model.'_id' => $id]);
+		}*/
+
+        $item = $this->$model->find($id);
+        $item->specialisations()->attach($find->id);
 
         if($request->ajax())
         {
@@ -87,18 +90,18 @@ class SpecialisationController extends Controller {
 		
 	public function destroy(Request $request)
 	{
-        $colloque_id    =  $request->input('colloque_id');
-		$specialisation =  $request->input('specialisation');
+        $id             = $request->input('id');
+		$specialisation = $request->input('specialisation');
+        $model          = $request->input('model');
         $find           = $this->specialisation->search($specialisation);
 
-        $colloque   = $this->colloque->find($colloque_id);
-        $colloque->specialisations()->detach($find->id);
+        $item   = $this->$model->find($id);
+        $item->specialisations()->detach($find->id);
 
         if($request->ajax())
         {
             return response()->json( $specialisation, 200 );
         }
-
 	}
 
 

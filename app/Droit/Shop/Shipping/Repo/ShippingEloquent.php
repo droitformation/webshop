@@ -16,10 +16,10 @@ class ShippingEloquent implements ShippingInterface{
 
         if($type)
         {
-            return $this->shipping->where('type','=',$type)->get();
+            return $this->shipping->with(['orders'])->where('type','=',$type)->get();
         }
 
-        return $this->shipping->all();
+        return $this->shipping->with(['orders'])->get();
 
     }
 
@@ -49,8 +49,8 @@ class ShippingEloquent implements ShippingInterface{
         $shipping = $this->shipping->create(array(
             'title' => $data['title'],
             'value' => $data['value'],
-            'price' => $data['price'],
-            'type' => $data['type']
+            'price' => $data['price'] * 100,
+            'type'  => $data['type']
         ));
 
         if( ! $shipping )
@@ -72,6 +72,7 @@ class ShippingEloquent implements ShippingInterface{
         }
 
         $shipping->fill($data);
+        $shipping->price = $data['price'] * 100;
 
         $shipping->save();
 

@@ -16,32 +16,40 @@
                 </div>
                 <div class="panel-body">
 
-                    <table class="table">
-                        <tr>
-                            <th>Action</th>
-                            <th>Titre</th>
-                            <th>Poids maximum</th>
-                            <th>Prix</th>
-                            <th>Type</th>
-                            <th></th>
-                        </tr>
+                    <table class="table" id="arrets">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Titre</th>
+                                <th>Poids maximum</th>
+                                <th>Prix</th>
+                                <th>Type</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         @if(!$shippings->isEmpty())
                             @foreach($shippings as $shipping)
                                 <tr>
                                     <td><a href="{{ url('admin/shipping/'.$shipping->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                     <td>{{ $shipping->title }}</td>
-                                    <td>{{ $shipping->value }} grammes</td>
+                                    <td>{{ $shipping->weight }} grammes</td>
                                     <td>{{ $shipping->price_cents }}</td>
                                     <td>{{ $shipping->type }}</td>
                                     <td class="text-right">
+                                        @if($shipping->orders->isEmpty())
                                         <form action="{{ url('admin/shipping/'.$shipping->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-action="{{ $shipping->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            <button data-what="Supprimer" data-action="{{ $shipping->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
                                         </form>
+                                        @else
+                                            <span class="text-danger">Frais de port utilisés</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
                         @endif
+                        </tbody>
                     </table>
 
                 </div>

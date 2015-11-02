@@ -16,4 +16,8 @@ class Coupon extends Model{
         return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_coupon_product', 'coupon_id', 'product_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Droit\Shop\Order\Entities\Order','coupon_id');
+    }
 }

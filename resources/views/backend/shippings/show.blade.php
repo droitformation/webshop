@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Prix</label>
                             <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control" value="{{ $shipping->price }}" name="price">
+                                <input type="text" class="form-control" value="{{ $shipping->price_cents }}" name="price">
                             </div>
                         </div>
 

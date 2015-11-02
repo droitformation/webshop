@@ -215,3 +215,14 @@ $factory->define(App\Droit\Newsletter\Entities\Newsletter_campagnes::class, func
         'newsletter_id' => 1
     ];
 });
+
+$factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Generator $faker) {
+    return [
+        'first_name' => 'Cindy',
+        'last_name'  => 'Leschaud',
+        'occupation' => 'Webmaster',
+        'bio'        => 'Test',
+        'photo'      => 'cindy.jpg',
+        'rang'       => 1
+    ];
+});

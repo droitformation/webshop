@@ -20,4 +20,18 @@ class Shipping extends Model{
         return $money->format($price);
     }
 
+    public function getWeightAttribute()
+    {
+        if(is_numeric($this->value) && $this->value > 0)
+        {
+            return number_format($this->value, 0, ".", "'");
+        }
+
+        return $this->value;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Droit\Shop\Order\Entities\Order','shipping_id');
+    }
 }

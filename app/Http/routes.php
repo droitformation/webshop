@@ -276,9 +276,17 @@ Route::get('api/user', ['middleware' => 'oauth', function(){
 Route::get('cartworker', function()
 {
 
+    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+    $item   = $coupon->find(1);
+    $item->load('orders');
+
+    echo '<pre>';
+    print_r($item);
+    echo '</pre>';
+
     /*  
        $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
-       $coupon       = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+
        $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
        $user         = \App::make('App\Droit\User\Repo\UserInterface');
        $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
@@ -303,7 +311,7 @@ Route::get('cartworker', function()
         'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
         'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
     ];
-*/
+
 
     $adresse    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
     $me = $adresse->find(1);
@@ -311,7 +319,7 @@ Route::get('cartworker', function()
     echo '<pre>';
     print_r($me);
     echo '</pre>';
-    
+    */
 });
 
 Route::get('notification', function()

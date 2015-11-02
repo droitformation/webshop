@@ -57,7 +57,7 @@ $(document).ready(function() {
     $('#generic').DataTable({
         language: langues,
         pagingType: 'simple',
-        "columnDefs": [ {
+        "columnDefs": [{
             "targets"  : 'no-sort',
             "orderable": false
         }]

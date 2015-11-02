@@ -85,7 +85,7 @@ class CouponTest extends TestCase {
 
         $this->coupon->shouldReceive('create')->once()->andReturn($coupon);
 
-        $response = $this->call('POST', 'admin/coupon', ['value' => '20', 'type' => 'general', 'title' => 'second', 'expire_at' => \Carbon\Carbon::now()]);
+        $response = $this->call('POST', 'admin/coupon', ['value' => '20', 'type' => 'general', 'title' => 'second', 'expire_at' => \Carbon\Carbon::now()->addDay(2)->toDateString()]);
 
         $this->assertRedirectedTo('admin/coupon');
     }

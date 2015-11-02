@@ -16,14 +16,17 @@
                 </div>
                 <div class="panel-body">
 
-                    <table class="table">
-                        <tr>
-                            <th>Action</th>
-                            <th>Titre</th>
-                            <th>Valeur</th>
-                            <th>Date</th>
-                            <th></th>
-                        </tr>
+                    <table class="table" id="generic">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Titre</th>
+                                <th>Valeur</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         @if(!$coupons->isEmpty())
                             @foreach($coupons as $coupon)
                                 <tr>
@@ -32,14 +35,19 @@
                                     <td>{{ $coupon->value }} %</td>
                                     <td>{{ $coupon->expire_at->formatLocalized('%d %B %Y') }}</td>
                                     <td class="text-right">
-                                        <form action="{{ url('admin/coupon/'.$coupon->id) }}" method="POST" class="form-horizontal">
-                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-action="{{ $coupon->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                        </form>
+                                        @if($coupon->orders->isEmpty())
+                                            <form action="{{ url('admin/coupon/'.$coupon->id) }}" method="POST" class="form-horizontal">
+                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                <button data-what="Supprimer" data-action="{{ $coupon->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            </form>
+                                        @else
+                                            <span class="text-danger">Coupon utilisé</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
                         @endif
+                        </tbody>
                     </table>
 
                 </div>

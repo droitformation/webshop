@@ -334,18 +334,23 @@ $( function() {
         }
     });
 
-
-    $('#typeSelect').change(function()
+    function isProductCoupon()
     {
-        if($(this).val() == 'product')
+        var $select = $('#productSelect');
+
+        if($('#typeSelect').val() == 'product')
         {
-            $('#productSelect').show();
+            $select.show();
         }
         else
         {
-            $('#productSelect').hide();
+            $select.hide();
         }
-    });
+    }
+
+    isProductCoupon();
+
+    $('#typeSelect').change(function() { isProductCoupon(); });
 
     $('.colorpicker').colorPicker();
 
