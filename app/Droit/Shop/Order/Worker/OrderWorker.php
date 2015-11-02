@@ -2,14 +2,16 @@
 
 namespace App\Droit\Shop\Order\Worker;
 
+use App\Droit\Shop\Order\Worker\OrderWorkerInterface;
+
 use App\Droit\Shop\Order\Repo\OrderInterface;
-use App\Droit\Shop\Cart\Worker\CartWorker;
+use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 use App\Droit\Shop\Cart\Repo\CartInterface;
 use App\Droit\User\Repo\UserInterface;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Jobs\CreateOrderInvoice;
 
-class OrderWorker{
+class OrderWorker implements OrderWorkerInterface{
 
     use DispatchesJobs;
 
@@ -17,18 +19,16 @@ class OrderWorker{
     protected $cart;
     protected $worker;
     protected $user;
-    protected $generator;
 
-    public function __construct(OrderInterface $order, CartWorker $worker, UserInterface $user, CartInterface $cart)
+    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart)
     {
         $this->order     = $order;
         $this->cart      = $cart;
         $this->worker    = $worker;
         $this->user      = $user;
-        $this->generator = \App::make('App\Droit\Generate\Pdf\PdfGenerator');
     }
 
-    public function make($shipping,$coupon)
+    public function make($shipping,$coupon = null)
     {
         $user = $this->user->find(\Auth::user()->id);
 
@@ -38,14 +38,12 @@ class OrderWorker{
             'amount'      =>  \Cart::total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
             'shipping_id' => $shipping->id,
-            'payement_id' => 1
+            'payement_id' => 1,
+            'products'    => $this->productIdFromCart()
         ];
 
         // Order global
         $order = $this->insertOrder($commande);
-
-        // All products for order
-        $order->products()->attach($this->productIdFromCart());
 
         // Create invoice for order
         $job = (new CreateOrderInvoice($order));
@@ -79,7 +77,7 @@ class OrderWorker{
         // Save the cart
         $this->cart->create([
             'user_id'     => $commande['user_id'],
-            'cart'        => \Cart::content(),
+            'cart'        => serialize(\Cart::content()),
             'coupon_id'   => $commande['coupon_id']
         ]);
     }
@@ -90,7 +88,7 @@ class OrderWorker{
         {
             if($product->qty > 1)
             {
-                for ($x = 0; $x < $product->qty; $x++)
+                for($x = 0; $x < $product->qty; $x++)
                 {
                     $ids[] = $product->id;
                 }

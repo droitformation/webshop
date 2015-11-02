@@ -37,6 +37,11 @@
                 <i class="fa fa-star"></i> <span>Coupons</span>
             </a>
         </li>
+        <li class="<?php echo (Request::is('admin/shipping') || Request::is('admin/shipping/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/shipping') }}">
+                <i class="fa fa-truck"></i> <span>Frais de port</span>
+            </a>
+        </li>
 
         <li class="divider"></li>
 

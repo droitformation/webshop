@@ -28,6 +28,9 @@ class ShopServiceProvider extends ServiceProvider {
         $this->registerCouponService();
         $this->registerPaymentService();
         $this->registerCartService();
+
+        $this->registerOrderWorkerService();
+        $this->registerCartWorkerService();
 	}
 
     /**
@@ -105,6 +108,37 @@ class ShopServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Shop\Cart\Repo\CartInterface', function()
         {
             return new \App\Droit\Shop\Cart\Repo\CartEloquent(new \App\Droit\Shop\Cart\Entities\Cart);
+        });
+    }
+
+    /**
+     * OrderWorker
+     */
+    protected function registerOrderWorkerService(){
+
+        $this->app->singleton('App\Droit\Shop\Order\Worker\OrderWorkerInterface', function()
+        {
+            return new \App\Droit\Shop\Order\Worker\OrderWorker(
+                \App::make('App\Droit\Shop\Order\Repo\OrderInterface'),
+                \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface'),
+                \App::make('App\Droit\User\Repo\UserInterface'),
+                \App::make('App\Droit\Shop\Cart\Repo\CartInterface')
+            );
+        });
+    }
+
+    /**
+     * CartWorker
+     */
+    protected function registerCartWorkerService(){
+
+        $this->app->singleton('App\Droit\Shop\Cart\Worker\CartWorkerInterface', function()
+        {
+            return new \App\Droit\Shop\Cart\Worker\CartWorker(
+                \App::make('App\Droit\Shop\Product\Repo\ProductInterface'),
+                \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface'),
+                \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface')
+            );
         });
     }
 

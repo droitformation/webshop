@@ -100,29 +100,64 @@ $factory->define(App\Droit\Shop\Product\Entities\Product::class, function (Faker
     ];
 });
 
+$factory->define(App\Droit\Shop\Order\Entities\Order::class, function (Faker\Generator $faker) {
+
+    return [
+        'id'          => 100,
+        'user_id'     => 1,
+        'coupon_id'   => null,
+        'payement_id' => 1,
+        'order_no'    => '2015-00000004',
+        'amount'      => 10000,
+        'shipping_id' => 1,
+        'onetimeurl'  => null
+    ];
+
+});
+
 $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'one', function (Faker\Generator $faker) {
 
     $tomorrow = \Carbon\Carbon::now()->addDay();
 
     return [
+        'id'         => 100,
         'value'      => '10',
         'type'       => 'general',
         'title'      => 'test',
-        'product_id' => null,
         'expire_at'  => $tomorrow
     ];
 });
 
+$factory->define(App\Droit\Shop\Shipping\Entities\Shipping::class, function (Faker\Generator $faker) {
+
+    return [
+        'id'         => 100,
+        'title'      => 'Envoi par Poste <2kg',
+        'value'      => '2000',
+        'price'      => '1000',
+        'type'       => 'poids',
+    ];
+});
+
+$factory->define(App\Droit\Shop\Cart\Entities\Cart::class, function (Faker\Generator $faker) {
+
+    return [
+        'id'        => 1,
+        'user_id'   => 1,
+        'coupon_id' => null,
+        'cart'      => serialize([1,2,3]),
+    ];
+});
 
 $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'two', function (Faker\Generator $faker) {
 
     $tomorrow = \Carbon\Carbon::now()->addDay();
 
     return [
+        'id'         => 200,
         'value'      => '20',
         'type'       => 'product',
         'title'      => 'second',
-        'product_id' => 100,
         'expire_at'  => $tomorrow
     ];
 });

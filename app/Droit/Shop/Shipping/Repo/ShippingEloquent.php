@@ -14,7 +14,13 @@ class ShippingEloquent implements ShippingInterface{
 
     public function getAll($type = null){
 
-        return $this->shipping->where('type','=',$type)->get();
+        if($type)
+        {
+            return $this->shipping->where('type','=',$type)->get();
+        }
+
+        return $this->shipping->all();
+
     }
 
     public function getShipping($weight = null){

@@ -21,8 +21,8 @@ class OrderEloquent implements OrderInterface{
     {
         $order = $this->order->where('order_no','LIKE', $year.'-%')->orderBy('order_no', 'desc')->take(1)->get();
 
-        if(!$order->isEmpty()){
-
+        if(!$order->isEmpty())
+        {
             return $order->first();
         }
 
@@ -48,6 +48,12 @@ class OrderEloquent implements OrderInterface{
         if( ! $order )
         {
             return false;
+        }
+
+        if(!empty($data['products']))
+        {
+            // All products for order
+            $order->products()->attach($data['products_id']);
         }
 
         return $order;

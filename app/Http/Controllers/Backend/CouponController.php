@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CouponRequest;
 use App\Droit\Shop\Coupon\Repo\CouponInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 
@@ -51,7 +52,7 @@ class CouponController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CouponRequest $request)
     {
         $coupon  = $this->coupon->create($request->all());
 
@@ -73,24 +74,13 @@ class CouponController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CouponRequest $request, $id)
     {
         $coupon  = $this->coupon->update($request->all());
 

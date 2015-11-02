@@ -113,6 +113,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     */
 
     Route::resource('coupon', 'Backend\CouponController');
+    Route::resource('shipping', 'Backend\ShippingController');
 
     /*
     |--------------------------------------------------------------------------

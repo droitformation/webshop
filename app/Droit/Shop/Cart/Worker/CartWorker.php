@@ -1,10 +1,11 @@
 <?php namespace App\Droit\Shop\Cart\Worker;
 
+use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Shipping\Repo\ShippingInterface;
 use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
- class CartWorker{
+ class CartWorker implements CartWorkerInterface{
 
      protected $money;
      protected $product;

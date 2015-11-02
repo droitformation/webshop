@@ -6,8 +6,8 @@ use App\Droit\User\Repo\UserInterface;
 use App\Droit\Pays\Repo\PaysInterface;
 use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
-use App\Droit\Shop\Cart\Worker\CartWorker;
-use App\Droit\Shop\Order\Worker\OrderWorker;
+use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
+use App\Droit\Shop\Order\Worker\OrderWorkerInterface;
 use App\Droit\Shop\Payment\Repo\PaymentInterface;
 use App\Events\OrderWasPlaced;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class CheckoutController extends Controller {
     protected $order;
     protected $payment;
 
-    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorker $checkout, OrderWorker $order, PaymentInterface $payment)
+    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorkerInterface $checkout, OrderWorkerInterface $order, PaymentInterface $payment)
     {
         $this->middleware('auth');
         $this->middleware('cart');

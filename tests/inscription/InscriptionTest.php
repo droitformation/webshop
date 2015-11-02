@@ -27,12 +27,6 @@ class InscriptionTest extends TestCase {
     public function tearDown()
     {
          \Mockery::close();
-/*
-        \Eloquent::unguard();
-        \DB::table('colloque_inscriptions')->delete();
-        \DB::table('colloque_inscriptions_groupes')->delete();
-        \DB::table('colloque_option_users')->delete();
-*/
     }
 
     /**

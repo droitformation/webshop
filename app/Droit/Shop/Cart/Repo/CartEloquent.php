@@ -25,9 +25,9 @@ class CartEloquent implements CartInterface{
     public function create(array $data){
 
         $cart = $this->cart->create(array(
-            'user_id' => $data['user_id'],
-            'cart_id' => $data['cart_id'],
-            'cart'    => $data['cart'],
+            'user_id'   => $data['user_id'],
+            'coupon_id' => $data['coupon_id'],
+            'cart'      => $data['cart'],
         ));
 
         if( ! $cart )
@@ -55,10 +55,9 @@ class CartEloquent implements CartInterface{
         return $cart;
     }
 
-    public function delete($id){
-
+    public function delete($id)
+    {
         return $this->cart->find($id)->delete();
-
     }
 
 }
