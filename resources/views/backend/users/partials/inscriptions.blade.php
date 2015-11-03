@@ -37,44 +37,73 @@
 
                         <div class="collapse customCollapse" id="inscription_no_{{ $inscription->id }}">
 
-                            <div class="row inscription_wrapper">
-                                <div class="col-md-2">
-                                    <h4>Payement</h4>
-                                    @if($inscription->payed_at)
-                                        <h1 class="label label-success" style="font-size: 90%;">Payé le {{ $inscription->payed_at->format('d/m/Y') }}</h1>
-                                    @else
-                                        <h1 class="label label-warning" style="font-size: 90%;">En attente</h1>
-                                    @endif
+                            <div class="inscription_wrapper">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <h4>Payement</h4>
+                                        @if($inscription->payed_at)
+                                            <h1 class="label label-success" style="font-size: 90%;">Payé le {{ $inscription->payed_at->format('d/m/Y') }}</h1>
+                                        @else
+                                            <h1 class="label label-warning" style="font-size: 90%;">En attente</h1>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h4>Documents</h4>
+                                        @if(!empty($inscription->documents))
+                                            <div class="btn-group">
+                                                @foreach($inscription->documents as $type => $annexe)
+                                                    <?php
+                                                    $file = config('documents.colloque.'.$type).$annexe['name'];
+                                                    echo '<a target="_blank" href="'.$file.'" class="btn btn-default">'.strtoupper($type).'</a>';
+                                                    ?>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h4>Options</h4>
+                                        @if(!$inscription->user_options->isEmpty())
+                                            <ol>
+                                                @foreach($inscription->user_options as $user_options)
+                                                    <li>{{ $user_options->option->title }}
+                                                        @if($user_options->option->type == 'choix')
+                                                            <?php $user_options->load('option_groupe'); ?>
+                                                            <p class="text-info">{{ $user_options->option_groupe->text }}</p>
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ol>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <h4>Documents</h4>
-                                    @if(!empty($inscription->documents))
-                                        @foreach($inscription->documents as $type => $annexe)
-                                            <?php
-                                            $file = config('documents.colloque.'.$type).$annexe['name'];
-                                            echo '<a target="_blank" href="'.$file.'" class="btn btn-sm btn-block btn-default">'.strtoupper($type).'</a>';
-                                            ?>
-                                        @endforeach
-                                    @endif
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @if(!$inscription->payed_at)
+                                            <hr/>
+                                            <a href="{{ url('/') }}" class="btn btn-sm btn-warning"><i class="fa fa-paperclip"></i> &nbsp;Générer un rappel</a>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-5">
+                                        @if(!empty($inscription->documents))
+                                            <hr/>
+                                            <a href="{{ url('/') }}" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i> &nbsp;Regénérer les documents</a>
+                                            <a href="{{ url('/') }}" class="btn btn-sm btn-success"><i class="fa fa-trophy"></i> &nbsp;Attestation</a>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-5">
+                                        <hr/>
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
+                                            <i class="fa fa-star"></i> &nbsp;&Eacute;diter l'inscription
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
+                                            <i class="fa fa-send-o"></i> &nbsp;Envoyer l'inscription
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <h4>Options</h4>
-                                    @if(!$inscription->user_options->isEmpty())
-                                        <ol>
-                                            @foreach($inscription->user_options as $user_options)
-                                                <li>{{ $user_options->option->title }}
-                                                    @if($user_options->option->type == 'choix')
-                                                        <?php $user_options->load('option_groupe'); ?>
-                                                        <p class="text-info">{{ $user_options->option_groupe->text }}</p>
-                                                    @endif
-                                                </li>
-                                            @endforeach
-                                        </ol>
-                                    @endif
-                                </div>
-                                <div class="col-md-4">
-                                    <h4>Actions</h4>
-                                </div>
+
+                                @include('backend.users.partials.send', ['inscription' => $inscription])
+                                @include('backend.users.partials.edit', ['inscription' => $inscription])
                             </div>
                         </div>
 
@@ -83,6 +112,7 @@
             @endforeach
         </tbody>
     </table>
+
 
 @else
     <p>Encore aucune inscription</p>

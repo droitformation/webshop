@@ -13,6 +13,7 @@ use App\Http\Requests\InscriptionCreateRequest;
 use App\Http\Controllers\Controller;
 use App\Events\InscriptionWasCreated;
 use App\Events\GroupeInscriptionWasRegistered;
+use App\Jobs\SendConfirmationInscriptionEmail;
 
 class InscriptionController extends Controller
 {
@@ -261,14 +262,20 @@ class InscriptionController extends Controller
     /**
      * Send inscription via admin
      *
-     * @param  int  $id
      * @return Response
      */
-    public function send($id)
+    public function send(Request $request)
     {
+        $id    = $request->input('id');
+        $email = $request->input('email',null);
+
         $inscription = $this->inscription->find($id);
 
-        event(new InscriptionWasRegistered($inscription));
+        $job = (new SendConfirmationInscriptionEmail($inscription,$email))->delay(5);
+
+        $this->dispatch($job);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Email envoyé'));
     }
 
     /**
@@ -286,7 +293,7 @@ class InscriptionController extends Controller
 
         $this->generator->setInscription($inscription)->generate($annexes);
 
-        return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(array('status' => 'success', 'message' => 'L\'inscription a été mise à jour' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été mise à jour' ));
     }
 
     /**

@@ -21,6 +21,11 @@ a{
     padding-right: 5px;
 }
 
+.modal-dialog {
+    z-index: 1070;
+    margin-top: 80px;
+}
+
 .user_edit{
     border-left: 1px solid #ccc;
 }

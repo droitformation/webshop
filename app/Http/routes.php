@@ -101,6 +101,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('inscription/type', 'Backend\Colloque\InscriptionController@inscription');
     Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
     Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
+    Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
 
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
