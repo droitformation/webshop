@@ -78,6 +78,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     /*
     |--------------------------------------------------------------------------
+    | Ajax members Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('member/search', 'Backend\MemberController@search');
+    Route::delete('member/destroy', 'Backend\MemberController@destroy');
+    Route::resource('member', 'Backend\MemberController');
+
+    /*
+    |--------------------------------------------------------------------------
     | Inscriptions and colloque Routes
     |--------------------------------------------------------------------------
     */

@@ -6,12 +6,32 @@ a{
     cursor: pointer;
 }
 
+.panel-group .panel {
+    margin-bottom: 20px;
+}
+
 .navbar-fixed-top {
     z-index: 1080;
 }
 
 .table-responsive {
     overflow: hidden;
+}
+.collapse_anchor i{
+    padding-right: 5px;
+}
+
+.user_edit{
+    border-left: 1px solid #ccc;
+}
+
+.collapse_anchor:hover,.collapse_anchor:active{
+    outline: none;
+    text-decoration: none;
+}
+
+.inscription_wrapper{
+    padding: 10px 10px 15px 10px;
 }
 
 table.dataTable thead .sorting_asc::after{

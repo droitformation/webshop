@@ -76,6 +76,11 @@ class Adresse extends Model {
         return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation','adresse_specialisations','adresse_id','specialisation_id');
     }
 
+    public function members()
+    {
+        return $this->belongsToMany('App\Droit\Member\Entities\Member','adresse_members','adresse_id','member_id');
+    }
+
     public function pays()
     {
         return $this->belongsTo('App\Droit\Pays\Entities\Pays','pays_id');

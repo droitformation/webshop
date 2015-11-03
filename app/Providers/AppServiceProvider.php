@@ -45,6 +45,7 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerAuthorService();
         $this->registerDomainService();
         $this->registerSpecialisationService();
+        $this->registerMemberService();
         $this->registerUploadService();
 
 	}
@@ -160,6 +161,17 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Specialisation\Repo\SpecialisationInterface', function()
         {
             return new \App\Droit\Specialisation\Repo\SpecialisationEloquent(new \App\Droit\Specialisation\Entities\Specialisation);
+        });
+    }
+
+    /**
+     * Member
+     */
+    protected function registerMemberService(){
+
+        $this->app->singleton('App\Droit\Member\Repo\MemberInterface', function()
+        {
+            return new \App\Droit\Member\Repo\MemberEloquent(new \App\Droit\Member\Entities\Member);
         });
     }
 

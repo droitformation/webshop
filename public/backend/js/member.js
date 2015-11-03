@@ -2,26 +2,25 @@ $( function() {
 
     var base_url = location.protocol + "//" + location.host+"/";
 
-    $.get(base_url + 'admin/specialisation', function( data )
+    $.get(base_url + 'admin/member', function( data )
     {
-        $("#specialisations").tagit({
-            fieldName          : "specialisation",
-            placeholderText    : "Ajouter une spécialisation",
+        $("#members").tagit({
+            fieldName          : "member",
+            placeholderText    : "Ajouter un membre",
             removeConfirmation : true,
             availableTags      : data,
             afterTagAdded: function(event, ui)
             {
                 if(!ui.duringInitialization)
                 {
-                    var specialisation = ui.tagLabel;
+                    var member = ui.tagLabel;
                     var id    = $(this).data('id');
-                    var model = $(this).data('model');
 
                     $.ajax({
                         dataType : "json",
                         type     : 'POST',
-                        url      : base_url + 'admin/specialisation',
-                        data: { id : id, model : model, specialisation : specialisation , _token: $("meta[name='_token']").attr('content') },
+                        url      : base_url + 'admin/member',
+                        data: { id : id, member : member , _token: $("meta[name='_token']").attr('content') },
                         success: function( data ) {
                             console.log('added');
                         },
@@ -31,17 +30,16 @@ $( function() {
             },
             beforeTagRemoved: function(event, ui)
             {
-                var specialisation = ui.tagLabel;
+                var member = ui.tagLabel;
                 var id    = $(this).data('id');
-                var model = $(this).data('model');
 
-                var answer = confirm('Voulez-vous vraiment supprimer : '+ specialisation +' ?');
+                var answer = confirm('Voulez-vous vraiment supprimer : '+ member +' ?');
                 if (answer) {
                     $.ajax({
                         dataType : "json",
                         type     : 'POST',
-                        url      : base_url + 'admin/specialisation/destroy',
-                        data     : {_method: 'delete', id: id, model : model, specialisation: specialisation, _token: $("meta[name='_token']").attr('content')},
+                        url      : base_url + 'admin/member/destroy',
+                        data     : {_method: 'delete', id: id, member: member, _token: $("meta[name='_token']").attr('content')},
                         success: function (data) {
                             console.log('removed');
                         },
