@@ -38,9 +38,9 @@ class UserController extends Controller {
      */
     public function index()
     {
-        $users = $this->user->getAll();
+        $users = $this->user->getPaginate();
 
-        return view('backend.users.index')->with([ 'users' => $users ]);
+        return view('backend.users.index')->with(['users' => $users]);
     }
 
     public function users(Request $request)

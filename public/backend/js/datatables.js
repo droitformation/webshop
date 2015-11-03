@@ -112,7 +112,7 @@ $(document).ready(function() {
             {data: 'id', title: 'Editer'},
             {data: 'nom', title : 'Nom'},
             {data: 'email', title: 'E-mail'},
-            {data: 'adresse', title: 'Addresse(s)'},
+            {data: 'adresse', title: 'Adresse(s)'},
             {data: 'delete'}
         ],
         language: langues

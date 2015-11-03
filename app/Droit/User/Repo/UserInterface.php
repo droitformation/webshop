@@ -3,6 +3,7 @@
 interface UserInterface {
 
     public function getAll();
+    public function getPaginate();
     public function find($data);
     public function search($term);
     public function create(array $data);

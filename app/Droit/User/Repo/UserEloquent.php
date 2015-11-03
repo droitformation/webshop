@@ -12,9 +12,14 @@ class UserEloquent implements UserInterface{
         $this->user = $user;
     }
 
-    public function getAll(){
-
+    public function getAll()
+    {
         return $this->user->all();
+    }
+
+    public function getPaginate()
+    {
+        return $this->user->with(['adresses'])->orderBy('created_at','DESC')->take(5)->get();
     }
 
     public function find($id){
