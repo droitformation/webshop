@@ -35,6 +35,17 @@ class UserEloquent implements UserInterface{
             ->get();
     }
 
+    public function searchSimple($terms)
+    {
+
+
+        return $this->user->with(['adresses'])
+                            ->searchEmail($terms['email'])
+                            ->searchLastName($terms['last_name'])
+                            ->searchFirstName($terms['first_name'])
+                            ->get();
+    }
+
     public function create(array $data){
 
         $user = $this->user->create(array(

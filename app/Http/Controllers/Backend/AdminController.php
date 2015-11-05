@@ -4,13 +4,20 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
+
+use App\Droit\User\Repo\UserInterface;
+use App\Droit\Adresse\Repo\AdresseInterface;
 
 class AdminController extends Controller {
 
-    public function __construct()
+    protected $user;
+    protected $adresse;
+
+    public function __construct(UserInterface $user, AdresseInterface $adresse)
     {
+        $this->user    = $user;
+        $this->adresse = $adresse;
     }
 
 	/**
@@ -22,5 +29,17 @@ class AdminController extends Controller {
 	{
         return view('backend.index');
 	}
+
+    /**
+     *
+     * @return Response
+     */
+    public function searchuser()
+    {
+        $users    = $this->user->getPaginate();
+        $adresses = $this->adresse->getPaginate();
+
+        return view('backend.user')->with(['users' => $users, 'adresses' => $adresses]);
+    }
 
 }

@@ -21,8 +21,13 @@ class AdresseEloquent implements AdresseInterface{
 		
 		return $this->adresse->where('user_id','=',0)->take(10)->skip(0)->get();	
 	}
-		
-	public function getLast($nbr){
+
+    public function getPaginate()
+    {
+        return $this->adresse->where('user_id','=',0)->orderBy('created_at','DESC')->take(5)->get();
+    }
+
+    public function getLast($nbr){
 	
 		return $this->adresse->orderBy('id', 'DESC')->take($nbr)->skip(0)->get();	
 	}

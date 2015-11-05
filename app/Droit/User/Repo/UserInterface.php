@@ -6,6 +6,7 @@ interface UserInterface {
     public function getPaginate();
     public function find($data);
     public function search($term);
+    public function searchSimple($terms);
     public function create(array $data);
     public function update(array $data);
     public function delete($id);

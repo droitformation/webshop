@@ -80,6 +80,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->first_name.' '.$this->last_name;
     }
 
+    /*
+     * Search scopes
+     * */
+
+    public function scopeSearchFirstName($query, $first_name)
+    {
+        if ($first_name) $query->where('first_name', 'like' ,'%'.$first_name.'%');
+    }
+
+    public function scopeSearchLastName($query, $last_name)
+    {
+        if ($last_name) $query->where('last_name', 'like' ,'%'.$last_name.'%');
+    }
+
+    public function scopeSearchEmail($query, $email)
+    {
+        if ($email) $query->where('email', 'like' ,'%'.$email.'%');
+    }
+
+    /*
+     * Relations
+     * */
+
     public function adresses()
     {
         return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id');

@@ -16,8 +16,8 @@
             </ul>
         </li>
         <li class="divider"></li>
-        <li class="<?php echo (Request::is('admin/user') || Request::is('admin/user/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/user') }}">
+        <li class="<?php echo (Request::is('admin/searchuser') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/searchuser') }}">
                 <i class="fa fa-users"></i> <span>Utilisateurs</span>
             </a>
         </li>

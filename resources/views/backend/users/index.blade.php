@@ -17,7 +17,7 @@
              <div class="col-md-3">
                  <div class="panel panel-midnightblue">
                      <div class="panel-body">
-                        <h4>Rechercher</h4>
+                        <h4>Rechercher par</h4>
                          <form action="{{ url('admin/user/search') }}" method="post">
                              <div class="form-group">
                                  <label>Prénom</label>
@@ -44,14 +44,14 @@
              <div class="col-md-9">
                  <div class="panel panel-midnightblue">
                      <div class="panel-body">
+
                          <h4>Dernier comptes crées</h4>
-                         <table class="table" style="margin-bottom: 0px;" id="">
+                         <table class="table">
                              <thead>
                              <tr>
                                  <th class="col-sm-1">Action</th>
                                  <th class="col-sm-3">Nom</th>
                                  <th class="col-sm-3">Email</th>
-                                 <th class="col-sm-3">Adresse(s)</th>
                                  <th class="col-sm-2"></th>
                              </tr>
                              </thead>
@@ -62,18 +62,6 @@
                                          <td><a class="btn btn-sky btn-sm" href="{{ url('admin/user/'.$user->id) }}">&Eacute;diter</a></td>
                                          <td><strong>{{ $user->name }}</strong></td>
                                          <td>{{ $user->email }}</td>
-                                         <td>
-                                             @if( !$user->adresses->isEmpty())
-                                                 <ul class="list-group" style="margin-bottom: 0;">
-                                                     @foreach ($user->adresses as $adresse)
-                                                         <li class="list-group-item">
-                                                             {{ $adresse->type_title }}
-                                                             <a href="{{ url('admin/adresse/'.$adresse->id) }}" class="btn btn-xs btn-info pull-right">éditer</a>
-                                                         </li>
-                                                     @endforeach
-                                                 </ul>
-                                             @endif
-                                         </td>
                                          <td class="text-right">
                                              {!! Form::open(array('route' => array('admin.user.destroy', $user->id), 'method' => 'delete')) !!}
                                              <button data-action="{{ $user->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
@@ -84,6 +72,38 @@
                              @endif
                              </tbody>
                          </table>
+
+                         <h4>Dernières adresses crées</h4>
+                         <table class="table" style="margin-bottom: 0px;" >
+                             <thead>
+                             <tr>
+                                 <th class="col-sm-1">Action</th>
+                                 <th class="col-sm-3">Nom</th>
+                                 <th class="col-sm-3">Email</th>
+                                 <th class="col-sm-2">Entreprise</th>
+                                 <th class="col-sm-2">Ville</th>
+                             </tr>
+                             </thead>
+                             <tbody class="selects">
+                             @if(!empty($adresses))
+                                 @foreach($adresses as $adresse)
+                                     <tr>
+                                         <td><a class="btn btn-sky btn-sm" href="{{ url('admin/adresse/'.$adresse->id) }}">&Eacute;diter</a></td>
+                                         <td><strong>{{ $adresse->name }}</strong></td>
+                                         <td>{{ $adresse->email }}</td>
+                                         <td>{{ $adresse->company }}</td>
+                                         <td>{{ $adresse->ville }}</td>
+                                         <td class="text-right">
+                                             {!! Form::open(array('route' => array('admin.adresse.destroy', $adresse->id), 'method' => 'delete')) !!}
+                                             <button data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                             {!! Form::close() !!}
+                                         </td>
+                                     </tr>
+                                 @endforeach
+                             @endif
+                             </tbody>
+                         </table>
+
                      </div>
                  </div>
              </div>

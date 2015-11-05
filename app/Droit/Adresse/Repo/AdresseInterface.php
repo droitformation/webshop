@@ -3,13 +3,15 @@
 interface AdresseInterface {
 
 	public function getAll();
+    public function getPaginate();
 	/**
 	 * Return all infos of the user
 	 *
 	 * @return stdObject Collection of users
 	 */
 	public function find($data);
-	public function getLast($nbr);	
+	public function getLast($nbr);
+    public function searchSimple($terms);
 	
 	// function for gather infos on adresse to show
 	public function show($id);
