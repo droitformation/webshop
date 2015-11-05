@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <h3>Utilisateur/Comptes</h3>
+        <h3>Recherche</h3>
 
         <div class="options text-right" style="margin-bottom: 10px;">
             <div class="btn-toolbar">

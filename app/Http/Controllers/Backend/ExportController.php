@@ -10,22 +10,48 @@ use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Worker\InscriptionWorker;
 
+use App\Droit\Profession\Repo\ProfessionInterface;
+use App\Droit\Canton\Repo\CantonInterface;
+use App\Droit\Pays\Repo\PaysInterface;
+use App\Droit\Specialisation\Repo\SpecialisationInterface;
+use App\Droit\Member\Repo\MemberInterface;
+
 class ExportController extends Controller
 {
     protected $inscription;
     protected $colloque;
     protected $worker;
+    protected $profession;
+    protected $canton;
+    protected $pays;
+    protected $specialisation;
+    protected $member;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, InscriptionWorker $worker )
+    public function __construct(
+        ColloqueInterface $colloque,
+        InscriptionInterface $inscription,
+        InscriptionWorker $worker,
+        ProfessionInterface $profession,
+        PaysInterface $pays,
+        CantonInterface $canton,
+        MemberInterface $member,
+        SpecialisationInterface $specialisation
+    )
     {
-        $this->inscription = $inscription;
-        $this->colloque    = $colloque;
-        $this->worker      = $worker;
+        $this->inscription    = $inscription;
+        $this->colloque       = $colloque;
+        $this->worker         = $worker;
+        $this->profession     = $profession;
+        $this->canton         = $canton;
+        $this->pays           = $pays;
+        $this->member         = $member;
+        $this->specialisation = $specialisation;
+
         $this->generator   = new \App\Droit\Generate\Excel\ExcelGenerator();
         $this->helper      = new \App\Droit\Helper\Helper();
     }
@@ -89,14 +115,18 @@ class ExportController extends Controller
     }
 
     /**
-     * Display the specified resource.
      *
-     * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function user()
     {
+        $professions     = $this->profession->getAll();
+        $cantons         = $this->canton->getAll();
+        $pays            = $this->pays->getAll();
+        $members         = $this->member->getAll();
+        $specialisations = $this->specialisation->getAll();
 
+        return view('export.user')->with(compact('pays','cantons','professions','members','specialisations'));
     }
 
     /**

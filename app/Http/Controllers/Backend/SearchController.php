@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 
+use App\Http\Requests\SearchRequest;
+
 class SearchController extends Controller
 {
     protected $user;
@@ -18,7 +20,16 @@ class SearchController extends Controller
     {
         $this->user    = $user;
         $this->adresse = $adresse;
-        $this->helper = new \App\Droit\Helper\Helper();
+        $this->helper  = new \App\Droit\Helper\Helper();
+    }
+
+    /**
+     *
+     * @return Response
+     */
+    public function form()
+    {
+        return view('backend.results');
     }
 
     /**
@@ -26,15 +37,12 @@ class SearchController extends Controller
      *
      * @return Response
      */
-    public function user(Request $request)
+    public function user(SearchRequest $request)
     {
         $users    = $this->user->searchSimple($request->all());
-        echo '<pre>';
-        print_r($users);
-        echo '</pre>';exit;
-        //$adresses = $this->adresse->search($request->all());
+        $adresses = $this->adresse->searchSimple($request->all());
 
-        return view('backend.results')->with(['users' => $users, 'adresses' => []]);
+        return view('backend.results')->with(['users' => $users, 'adresses' => $adresses]);
     }
 
     /**

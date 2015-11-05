@@ -30,16 +30,5 @@ class AdminController extends Controller {
         return view('backend.index');
 	}
 
-    /**
-     *
-     * @return Response
-     */
-    public function searchuser()
-    {
-        $users    = $this->user->getPaginate();
-        $adresses = $this->adresse->getPaginate();
-
-        return view('backend.user')->with(['users' => $users, 'adresses' => $adresses]);
-    }
 
 }

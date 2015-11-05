@@ -37,8 +37,6 @@ class UserEloquent implements UserInterface{
 
     public function searchSimple($terms)
     {
-
-
         return $this->user->with(['adresses'])
                             ->searchEmail($terms['email'])
                             ->searchLastName($terms['last_name'])

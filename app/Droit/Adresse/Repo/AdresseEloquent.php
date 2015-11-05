@@ -22,6 +22,16 @@ class AdresseEloquent implements AdresseInterface{
 		return $this->adresse->where('user_id','=',0)->take(10)->skip(0)->get();	
 	}
 
+    public function searchSimple($terms)
+    {
+        return $this->adresse->with(['user'])
+            ->where('user_id','=',0)
+            ->searchEmail($terms['email'])
+            ->searchLastName($terms['last_name'])
+            ->searchFirstName($terms['first_name'])
+            ->get();
+    }
+
     public function getPaginate()
     {
         return $this->adresse->where('user_id','=',0)->orderBy('created_at','DESC')->take(5)->get();

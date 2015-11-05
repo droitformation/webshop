@@ -172,3 +172,22 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 #accordion{
     margin-bottom: 20px;
 }
+
+.container-export{
+    margin-bottom: 20px;
+}
+
+.checkbox-item{
+    width: 20%;
+    display: inline-block;
+    margin: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    background: #f6f6f6;
+}
+
+.checkbox-item input[type="checkbox"]{
+    margin-left: 0;
+    margin-right: 5px;
+}

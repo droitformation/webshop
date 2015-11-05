@@ -65,7 +65,30 @@ class Adresse extends Model {
 
         return  (!empty($cp) ? 'CP '.$cp : '');
     }
- 	
+
+    /*
+     * Search scopes
+     * */
+
+    public function scopeSearchFirstName($query, $first_name)
+    {
+        if ($first_name) $query->where('first_name', 'like' ,'%'.$first_name.'%');
+    }
+
+    public function scopeSearchLastName($query, $last_name)
+    {
+        if ($last_name) $query->where('last_name', 'like' ,'%'.$last_name.'%');
+    }
+
+    public function scopeSearchEmail($query, $email)
+    {
+        if ($email) $query->where('email', 'like' ,'%'.$email.'%');
+    }
+
+    /*
+     * Relations
+     * */
+
 	public function user()
     {
         return $this->belongsTo('App\Droit\User\Entities\User','user_id');

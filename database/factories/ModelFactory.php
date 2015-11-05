@@ -59,21 +59,28 @@ $factory->define(App\Droit\User\Entities\User::class, function (Faker\Generator 
     ];
 });
 
-$factory->define(App\Droit\Adresse\Entities\Adresse::class, function (Faker\Generator $faker) {
+$profession = \App::make('App\Droit\Profession\Repo\ProfessionInterface');
+$canton     = \App::make('App\Droit\Canton\Repo\CantonInterface');
+$pays       = \App::make('App\Droit\Pays\Repo\PaysInterface');
+
+$professions = $profession->getAll()->lists('title','id')->all();
+$cantons     = $canton->getAll()->lists('title','id')->all();
+
+$factory->define(App\Droit\Adresse\Entities\Adresse::class, function (Faker\Generator $faker) use ($professions,$cantons) {
     return [
-        'civilite_id'  => $faker->numberBetween(1,3),
+        'civilite_id'  => $faker->numberBetween(1,4),
         'first_name'   => $faker->firstName,
         'last_name'    => $faker->lastName,
         'email'        => $faker->email,
         'company'      => $faker->company,
-        'profession_id'=> $faker->numberBetween(1,4),
+        'profession_id' => array_rand($professions, 1),
         'telephone'    => $faker->phoneNumber,
         'mobile'       => $faker->phoneNumber,
         'fax'          => $faker->phoneNumber,
         'adresse'      => $faker->address,
         'npa'          => $faker->postcode,
         'ville'        => $faker->city,
-        'canton_id'    => $faker->numberBetween(1,26),
+        'canton_id'     => array_rand($cantons, 1),
         'pays_id'      => 208,
         'type'         => 1,
         'user_id'      => 1,

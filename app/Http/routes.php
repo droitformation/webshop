@@ -50,11 +50,13 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], function () {
 
     Route::get('/', 'Backend\AdminController@index');
+
     Route::get('user/search', 'Backend\UserController@search');
     Route::get('config/shop', 'Backend\ConfigController@shop');
     Route::get('config/colloque', 'Backend\ConfigController@colloque');
     Route::resource('config', 'Backend\ConfigController');
 
+    Route::get('search/form', 'Backend\SearchController@form');
     Route::post('search/user', 'Backend\SearchController@user');
     Route::get('search', 'Backend\SearchController@search');
 
@@ -118,6 +120,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('document', 'Backend\Colloque\DocumentController');
 
     Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
+    Route::get('export/user', 'Backend\ExportController@user');
 
     /*
     |--------------------------------------------------------------------------
@@ -530,38 +533,9 @@ Route::get('prix', function()
 
 });
 
-
-
 Route::get('myaddress', function()
 {
-    $repo = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
-
-    $adresse = $repo->create(array(
-        'civilite_id'   => 2,
-        'first_name'    => 'Cindy',
-        'last_name'     => 'Leschaud',
-        'email'         => 'cindy.leschaud@unine.ch',
-        'company'       => 'Unine',
-        'role'          => '',
-        'profession_id' => 1,
-        'telephone'     => '032 751 38 07',
-        'mobile'        => '078 690 00 23',
-        'fax'           => '',
-        'adresse'       => 'Ruelle de l\'hôtel de ville 3',
-        'cp'            => '',
-        'complement'    => '',
-        'npa'           => '2520',
-        'ville'         => 'La Neuveville',
-        'canton_id'     => 6,
-        'pays_id'       => 208,
-        'type'          => 1,
-        'user_id'       => 1,
-        'livraison'     => 1,
-    ));
-    
-    echo '<pre>';
-    print_r($adresse);
-    echo '</pre>';
+    factory(App\Droit\Adresse\Entities\Adresse::class,200)->create();
 
 });
 

@@ -16,9 +16,14 @@
             </ul>
         </li>
         <li class="divider"></li>
-        <li class="<?php echo (Request::is('admin/searchuser') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/searchuser') }}">
-                <i class="fa fa-users"></i> <span>Utilisateurs</span>
+        <li class="<?php echo (Request::is('admin/search/form') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/search/form') }}">
+                <i class="fa fa-users"></i> <span>Recherche</span>
+            </a>
+        </li>
+        <li class="<?php echo (Request::is('admin/export/user') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/export/user') }}">
+                <i class="fa fa-cloud-download"></i> &nbsp;<span>Export</span>
             </a>
         </li>
         <li class="divider"></li>
