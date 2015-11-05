@@ -85,6 +85,59 @@ class Adresse extends Model {
         if ($email) $query->where('email', 'like' ,'%'.$email.'%');
     }
 
+    public function scopeSearchCanton($query, $cantons)
+    {
+        if ($cantons) $query->whereIn('canton_id', $cantons);
+    }
+
+    public function scopeSearchPays($query, $pays)
+    {
+        if ($pays) $query->where('pays_id', '=' ,$pays);
+    }
+
+    public function scopeSearchProfession($query, $professions)
+    {
+        if ($professions) $query->whereIn('profession_id', $professions);
+    }
+
+    public function scopeSearchMemberEach($query, $members)
+    {
+        if ($members) $query->whereHas('members', function ($query) use ($members)
+        {
+            $query->whereIn('member_id', $members);
+        });
+    }
+
+    public function scopeSearchSpecialisationEach($query, $specialisations)
+    {
+        if ($specialisations) $query->whereHas('specialisations', function ($query) use ($specialisations)
+        {
+            $query->whereIn('specialisation_id', $specialisations);
+        });
+    }
+
+    public function scopeSearchMember($query, $members)
+    {
+        if ($members) $query->whereHas('members', function ($query) use ($members)
+        {
+            foreach($members as $member)
+            {
+                $query->where('member_id', '=' ,$member);
+            }
+        });
+    }
+
+    public function scopeSearchSpecialisation($query, $specialisations)
+    {
+        if ($specialisations) $query->whereHas('specialisations', function ($query) use ($specialisations)
+        {
+            foreach($specialisations as $specialisation)
+            {
+                $query->where('specialisation_id', '=' ,$specialisation);
+            }
+        });
+    }
+
     /*
      * Relations
      * */

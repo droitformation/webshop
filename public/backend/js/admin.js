@@ -437,4 +437,19 @@ $( function() {
         $prev.find(".fa").removeClass("fa-arrow-circle-down").addClass("fa-arrow-circle-right");
     });
 
+
+    $( "#selectPays" ).change(function() {
+        console.log('sv');
+        var optionSelected = $("option:selected", this);
+        var valueSelected  = optionSelected.val();
+
+        if(valueSelected != 208)
+        {
+            $('#selectCantons').hide();
+        }
+        else{
+            $('#selectCantons').show();
+        }
+    });
+
 });

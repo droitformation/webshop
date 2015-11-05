@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('search/form', 'Backend\SearchController@form');
     Route::post('search/user', 'Backend\SearchController@user');
     Route::get('search', 'Backend\SearchController@search');
+    Route::post('search/global', 'Backend\SearchController@globalsearch');
 
     /*
     |--------------------------------------------------------------------------
@@ -121,6 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
     Route::get('export/user', 'Backend\ExportController@user');
+
 
     /*
     |--------------------------------------------------------------------------

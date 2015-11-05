@@ -46,6 +46,20 @@ class SearchController extends Controller
     }
 
     /**
+     * Search user global
+     *
+     * @return Response
+     */
+    public function globalsearch(Request $request)
+    {
+        $each     = $request->input('each',false);
+
+        $adresses = $this->adresse->searchMultiple($request->all(), $each);
+
+        return view('export.results')->with(['adresses' => $adresses]);
+    }
+
+    /**
      * Search user for inscription autocomplete
      *
      * @return Response

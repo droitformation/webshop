@@ -32,6 +32,36 @@ class AdresseEloquent implements AdresseInterface{
             ->get();
     }
 
+    public function searchMultiple($terms, $each = false)
+    {
+        $cantons         = (isset($terms['cantons']) ? $terms['cantons'] : null);
+        $professions     = (isset($terms['professions']) ? $terms['professions'] : null);
+        $pays            = (isset($terms['pays']) ? $terms['pays'] : null);
+        $specialisations = (isset($terms['specialisations']) ? $terms['specialisations'] : null);
+        $members         = (isset($terms['members']) ? $terms['members'] : null);
+
+        if($each)
+        {
+            return $this->adresse->with(['user'])
+                ->searchCanton($cantons)
+                ->searchPays($pays)
+                ->searchProfession($professions)
+                ->searchSpecialisationEach($specialisations)
+                ->searchMemberEach($members)
+                ->get();
+        }
+        else
+        {
+            return $this->adresse->with(['user'])
+                ->searchCanton($cantons)
+                ->searchPays($pays)
+                ->searchProfession($professions)
+                ->searchSpecialisation($specialisations)
+                ->searchMember($members)
+                ->get();
+        }
+    }
+
     public function getPaginate()
     {
         return $this->adresse->where('user_id','=',0)->orderBy('created_at','DESC')->take(5)->get();
@@ -159,144 +189,6 @@ class AdresseEloquent implements AdresseInterface{
 		
 		return $infos->type;			
 	}
-
-	/**
-	 * Return all adresse for user
-	 *
-	 * @return stdObject Collection of adresse
-	 */			
-	public function adresseUser($user_id){
-	
-		return $this->adresse->where('user_id','=',$user_id)->get();
-	}
-
-	/**
-	 * Return all adresse for user
-	 *
-	 * @return array with infos from user , type of adresses already or not for select type adresse during creation
-	 */		
-	public function infosIfUser($id = null){
-		
-		$nametypes = \Droit\User\Entities\Adresse_types::all()->lists('type','id');
-		$types     = $nametypes;
-		
-		if( $id )
-		{
-			$data['user_id'] = $id;
-			$adresses_user   = $this->adresseUser($id);
-			$adresses        = $adresses_user->lists('type','id');
-			
-			if(!empty($adresses))
-			{
-				foreach($adresses as $adresse)
-				{
-					unset($types[$adresse]);
-				}
-				
-				$data['adresses']  = $adresses;
-				$data['types']     = $types;
-				$data['livraison'] = 0;
-			}
-			else
-			{
-				$data['types']     = array( 1 => 'Contact');
-				$data['livraison'] = 1;
-			}
-		}
-		else
-		{
-			$data['adresses']  = array();
-			$data['user_id']   = 0;	
-			$data['types']     = array( 1 => 'Contact');
-			$data['livraison'] = 0;
-		}		
-		
-		return $data;
-	}
-		
-	/**
-	 * Return all memberships for adresse
-	 *
-	 * @return stdObject Collection of users
-	 */	
-	public function members($id){
-				
-		return UM::where( 'adresse_id', '=' , $id)->join('membres', function($join)
-        {
-            $join->on('user_membres.membre_id', '=', 'membres.id');
-        })->select('user_membres.*' , 'membres.*','user_membres.id as idmem')->get();													
-	}
-	
-	/**
-	 * Return all memberships for adresse
-	 *
-	 * @return stdObject Collection of users
-	 */	
-	public function specialisations($id){
-				
-		return US::where( 'adresse_id', '=' , $id)->join('specialisations', function($join)
-        {
-            $join->on('user_specialisations.specialisation_id', '=', 'specialisations.id');
-        })->select('user_specialisations.*','specialisations.*','user_specialisations.id as idspec')->get();														
-	}
-
-
-    /**
-     * Attach specialisation to adresse
-     *
-     * @return boolean
-     */
-    public function addSpecialisation($specialisation,$adresse_id)
-    {
-        $adresse = $this->find($adresse_id);
-
-        if (!$adresse->specialisations->contains($specialisation))
-        {
-            $adresse->specialisations()->attach($specialisation);
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Detach specialisation from adresse
-     *
-     * @return boolean
-     */
-    public function removeSpecialisation($specialisation,$adresse_id)
-    {
-        return $this->adresse->find($adresse_id)->specialisations()->detach($specialisation);
-    }
-
-    /**
-     * Attach membre to adresse
-     *
-     * @return boolean
-     */
-    public function addMembre($membre,$adresse_id){
-
-        $adresse = $this->find($adresse_id);
-
-        if (!$adresse->membres->contains($membre))
-        {
-            $adresse->membres()->attach($membre);
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Detach specialisation from adresse
-     *
-     * @return boolean
-     */
-    public function removeMembre($membre,$adresse_id){
-
-        return $this->adresse->find($adresse_id)->membres()->detach($membre);
-    }
-
 
 	public function create(array $data){
 
