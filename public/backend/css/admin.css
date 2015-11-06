@@ -178,13 +178,22 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .checkbox-item{
-    width: 20%;
-    display: inline-block;
+    width: 100%;
+    display: block;
     margin: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     padding: 5px 10px;
     background: #f6f6f6;
+    vertical-align: middle;
+}
+
+.checkbox-item .label{
+    line-height: 17px;
+}
+
+.checkbox-item .item-content{
+    width: 80%;
 }
 
 .checkbox-item input[type="checkbox"]{

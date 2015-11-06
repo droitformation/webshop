@@ -118,24 +118,28 @@ class Adresse extends Model {
 
     public function scopeSearchMember($query, $members)
     {
-        if ($members) $query->whereHas('members', function ($query) use ($members)
+        if ($members)
         {
             foreach($members as $member)
             {
-                $query->where('member_id', '=' ,$member);
+                $query->whereHas('members', function($query) use ($member){
+                    $query->where('member_id', '=' ,$member);
+                });
             }
-        });
+        }
     }
 
     public function scopeSearchSpecialisation($query, $specialisations)
     {
-        if ($specialisations) $query->whereHas('specialisations', function ($query) use ($specialisations)
+        if ($specialisations)
         {
             foreach($specialisations as $specialisation)
             {
-                $query->where('specialisation_id', '=' ,$specialisation);
+                $query->whereHas('specialisations', function($query) use ($specialisation){
+                    $query->where('specialisation_id', '=' ,$specialisation);
+                });
             }
-        });
+        }
     }
 
     /*
