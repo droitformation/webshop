@@ -452,4 +452,31 @@ $( function() {
         }
     });
 
+    /*
+    * checkboxes
+    * */
+
+    $('#select_all').on('click',function(){
+        if(this.checked)
+        {
+            $('.checkbox_all').each(function(){
+                this.checked = true;
+            });
+        }
+        else
+        {
+            $('.checkbox_all').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+
+/*    $('.checkbox').on('click',function(){
+        if($('.checkbox:checked').length == $('.checkbox_all').length){
+            $('#select_all').prop('checked',true);o
+        }else{
+            $('#select_all').prop('checked',false);
+        }
+    });*/
+
 });

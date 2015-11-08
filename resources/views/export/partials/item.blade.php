@@ -12,7 +12,7 @@
                     @foreach($column as $item)
                         <div class="checkbox checkbox-item">
                             <label>
-                                <input name="{{ $name }}" value="{{ $item->id }}" type="checkbox">
+                                <input {!! isset($class) ? 'class="'.$class.'"' : '' !!} name="{{ $name }}" value="{{ $item->id }}" type="checkbox">
                                 <span class="item-content">{{ $item->title }}</span>
                                 <span class="label label-info pull-right">{{ $item->id }}</span>
                             </label>

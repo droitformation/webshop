@@ -32,7 +32,8 @@
 
                                 <div id="selectCantons">
                                     <h4><i class="fa fa-map"></i> &nbsp;Cantons</h4>
-                                    @include('export.partials.item', ['name' => 'cantons[]', 'items' => $cantons])
+                                    <p class="text-right"><input type="checkbox" id="select_all" /> &nbsp;Séléctionner tous</p>
+                                    @include('export.partials.item', ['name' => 'cantons[]', 'items' => $cantons, 'class' => 'checkbox_all'])
                                 </div>
 
                                 <hr/>

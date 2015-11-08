@@ -200,3 +200,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     margin-left: 0;
     margin-right: 5px;
 }
+
+#checkbox_all{
+
+}
