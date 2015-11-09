@@ -18,7 +18,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 <!-- start row -->
@@ -48,9 +47,18 @@
                                       <label for="message" class="control-label">Email</label>
                                       {!! Form::text('email', $user->email , array('class' => 'form-control') ) !!}
                                   </div>
-                                  <div class="form-group">
-                                      <a class="text-danger" href="#"><i class="fa fa-exclamation-circle"></i>&nbsp;Modifier le mot de passe</a>
+
+                                  <a class="text-danger" data-toggle="collapse" href="#changePassword" href="#">
+                                      <i class="fa fa-exclamation-circle"></i>&nbsp;Modifier le mot de passe
+                                  </a>
+                                  <div class="collapse" id="changePassword">
+                                      <div class="form-group">
+                                          <br/>
+                                          <label for="pasword" class="control-label">Nouveau mot de passe</label>
+                                          <input type="password" name="password" class="form-control">
+                                      </div>
                                   </div>
+
                                   {!! Form::hidden('id', $user->id ) !!}
                                   <button class="btn btn-primary pull-right" type="submit">Enregistrer</button>
                               </form>

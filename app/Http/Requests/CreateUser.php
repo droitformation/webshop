@@ -27,10 +27,10 @@ class CreateUser extends Request {
 	public function rules()
 	{
         return [
-            'name'     => 'required',
-            'email'    => 'required|email|max:255|unique:users',
-            'numero'   => 'required_if:role,abonne',
-            'password' => 'required|min:6',
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|email|max:255|unique:users',
+            'password'   => 'required|min:6',
         ];
 	}
 

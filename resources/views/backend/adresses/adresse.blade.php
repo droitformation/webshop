@@ -3,17 +3,6 @@
     {!! csrf_field() !!}
     <hr/>
     <div class="form-group">
-        <label class="col-sm-4 control-label">Adresse de livraison</label>
-        <div class="col-sm-7">
-            <label class="radio-inline">
-                <input type="radio" {{ $adresse->livraison ? 'checked' : '' }} name="livraison" value="1"> Oui
-            </label>
-            <label class="radio-inline">
-                <input type="radio" {{ !$adresse->livraison ? 'checked' : '' }} name="livraison" value="0"> Non
-            </label>
-        </div>
-    </div>
-    <div class="form-group">
         <label class="col-sm-4 control-label">Type d'adresse</label>
         <div class="col-sm-7">
             <select class="form-control" name="type">
@@ -106,7 +95,6 @@
     </div>
 
     {!! Form::hidden('id', $adresse->id) !!}
-    {!! Form::hidden('user_id', $user->id) !!}
     <br/>
     <p class="pull-right"><button class="btn btn-primary" type="submit">Enregistrer</button></p>
 </form>

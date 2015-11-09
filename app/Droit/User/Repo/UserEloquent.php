@@ -75,6 +75,11 @@ class UserEloquent implements UserInterface{
 
         $user->fill($data);
 
+        if(!empty($data['password']))
+        {
+            $user->password = bcrypt($data['password']);
+        }
+
         $user->updated_at = date('Y-m-d G:i:s');
 
         $user->save();

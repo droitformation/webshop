@@ -27,12 +27,9 @@ class UpdateUser extends Request {
 	public function rules()
 	{
         return [
-            'name'   => 'required',
-            'email'  => 'required',
-            'numero' => 'required_if:role,abonne',
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required',
         ];
 	}
-
-
-
 }

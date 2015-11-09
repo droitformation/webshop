@@ -9,7 +9,7 @@
             <div class="row">
 
                 <div class="col-md-12">
-                    <form action="{{ url('admin/search/global') }}" method="post">
+                    <form action="{{ url('admin/export/global') }}" method="post">
 
                         <div class="panel panel-midnightblue">
                             <div class="panel-body">

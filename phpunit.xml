@@ -40,6 +40,9 @@
         <testsuite name="content">
             <directory>./tests/backend/content/</directory>
         </testsuite>
+        <testsuite name="adresse">
+            <directory>./tests/backend/adresse/</directory>
+        </testsuite>
     </testsuites>
     <php>
         <env name="APP_ENV" value="testing"/>

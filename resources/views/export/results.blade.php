@@ -16,10 +16,21 @@
 
                 <div class="col-md-12">
 
-                    @if(isset($adresses) && !$adresses->isEmpty())
-                        <div class="panel panel-midnightblue">
-                            <div class="panel-body">
-                                <h4><i class="fa fa-home"></i> &nbsp;Résultats adresses</h4>
+                    <div class="panel panel-midnightblue">
+                        <div class="panel-body">
+                            <h4><i class="fa fa-home"></i> &nbsp;Résultats adresses</h4>
+                            <blockquote>
+                                @foreach($terms as $label => $terms)
+                                    <p>
+                                        <strong>{{ $label }}:</strong>
+                                        @foreach($terms as $term)
+                                           {{ $term }}
+                                        @endforeach
+                                    </p>
+                                @endforeach
+                                <p><strong>Trouvés :</strong> {{ $adresses->count() }}</p>
+                            </blockquote>
+                            @if(isset($adresses) && !$adresses->isEmpty())
                                 <table class="table" style="margin-bottom: 0px;" >
                                     <thead>
                                     <tr>
@@ -33,7 +44,8 @@
                                     <tbody class="selects">
                                         @foreach($adresses as $adresse)
                                             <tr>
-                                                <td><a class="btn btn-sky btn-sm" href="{{ url('admin/adresse/'.$adresse->id) }}">&Eacute;diter</a></td>
+                                                <?php $url = ($adresse->user_id > 0 ? 'user/'.$adresse->user_id : 'adresse/'.$adresse->id); ?>
+                                                <td><a class="btn btn-sky btn-sm" href="{{ url('admin/'.$url) }}">&Eacute;diter</a></td>
                                                 <td><strong>{{ $adresse->name }}</strong></td>
                                                 <td>{{ $adresse->email }}</td>
                                                 <td>{{ $adresse->company }}</td>
@@ -47,10 +59,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
+                            @endif
                         </div>
-                    @endif
-
+                    </div>
                 </div>
 
             </div>

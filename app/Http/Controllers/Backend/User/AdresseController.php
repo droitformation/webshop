@@ -33,7 +33,7 @@ class AdresseController extends Controller {
     {
         $adresses = $this->adresse->getAll();
 
-        return view('adresse.index')->with([ 'adresses' => $adresses ]);
+        return view('backend.adresses.index')->with([ 'adresses' => $adresses ]);
     }
 
     /**
@@ -43,7 +43,7 @@ class AdresseController extends Controller {
      */
     public function create()
     {
-        return view('adresse.create');
+        return view('backend.adresses.create');
     }
 
     /**
@@ -58,6 +58,38 @@ class AdresseController extends Controller {
         return redirect('adresse/'.$adresse->id);
     }
 
+
+    public function convert(Request $request)
+    {
+        $adresse = $this->adresse->find($request->input('id'));
+
+        $data = [
+            'first_name' => $adresse->first_name,
+            'last_name'  => $adresse->last_name,
+            'email'      => $adresse->email,
+            'password'   => bcrypt($request->input('password')),
+        ];
+
+        $validator = \Validator::make($data, [
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|email|max:255|unique:users',
+            'password'   => 'required|min:5',
+        ]);
+
+        if ($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = $this->user->create($data);
+
+        $this->adresse->update(['id' => $adresse->id, 'user_id' => $user->id, 'livraison' => 1]);
+
+        return redirect('admin/user/'.$user->id);
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -68,7 +100,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->find($id);
 
-        return view('adresse.show')->with(array( 'adresse' => $adresse ));
+        return view('backend.adresses.show')->with(array( 'adresse' => $adresse ));
     }
 
     /**
@@ -81,7 +113,9 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->update($request->all());
 
-        return redirect('adresse/'.$id);
+        $url = ($adresse->user_id > 0 ? 'user/'.$adresse->user_id : 'adresse/'.$adresse->id);
+
+        return redirect('admin/'.$url)->with(array('status' => 'success', 'message' => 'Adresse mise à jour' ));
     }
 
     /**
@@ -94,7 +128,7 @@ class AdresseController extends Controller {
     {
         $this->adresse->delete($id);
 
-        return redirect('/')->with(array('status' => 'success', 'message' => 'Adresse supprimé' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Adresse supprimé' ));
     }
 
 }

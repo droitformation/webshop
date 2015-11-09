@@ -77,7 +77,7 @@ class UserController extends Controller {
     {
         $user = $this->user->create($request->all());
 
-        return redirect('user/'.$user->id);
+        return redirect('admin/user/'.$user->id);
     }
 
     /**
@@ -88,12 +88,9 @@ class UserController extends Controller {
      */
     public function show($id)
     {
-        $user        = $this->user->find($id);
-        $cantons     = $this->canton->getAll();
-        $professions = $this->profession->getAll();
-        $pays        = $this->pays->getAll();
+        $user = $this->user->find($id);
 
-        return view('backend.users.show')->with(compact('pays','cantons','professions','user'));
+        return view('backend.users.show')->with(compact('user'));
     }
 
     /**
@@ -108,7 +105,7 @@ class UserController extends Controller {
 
         $request->ajax();
 
-        return redirect('user/'.$user->id);
+        return redirect('admin/user/'.$user->id)->with(array('status' => 'success', 'message' => 'Utilisateur mis à jour' ));
     }
 
     /**
@@ -121,7 +118,7 @@ class UserController extends Controller {
     {
         $this->user->delete($id);
 
-        return redirect('/')->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
     }
 
 }

@@ -71,6 +71,9 @@ class Handler extends ExceptionHandler {
         if ($e instanceof \App\Exceptions\UserNotExistException)
             return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Cet email n\'existe pas'));
 
+        if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)
+            return redirect()->to('admin');
+
 		return parent::render($request, $e);
 	}
 

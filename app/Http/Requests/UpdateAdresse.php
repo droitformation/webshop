@@ -27,18 +27,9 @@ class UpdateAdresse extends Request {
 	public function rules()
 	{
         return [
-            'user_id'       => 'required',
-            'civilite_id'   => 'required',
-            'first_name'    => 'required',
-            'last_name'     => 'required',
-            'profession_id' => 'required',
-            'telephone'     => 'required',
-            'adresse'       => 'required',
-            'npa'           => 'required',
-            'ville'         => 'required',
-            'canton_id'     => 'required',
-            'pays_id'       => 'required',
-            'type'          => 'required',
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required_without_all:first_name,last_name',
         ];
 	}
 

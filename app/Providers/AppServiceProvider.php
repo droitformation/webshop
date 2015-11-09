@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider {
                 return $socialite->buildProvider(\App\Services\DroitHubProvider::class, $config);
             }
         );
+
+        view()->composer('*', 'App\Http\ViewComposers\LabelComposer');
 	}
 
 	/**

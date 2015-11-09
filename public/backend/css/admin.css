@@ -201,6 +201,16 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     margin-right: 5px;
 }
 
-#checkbox_all{
+blockquote {
+    font-size: 15px;
+}
 
+blockquote p{
+    margin-bottom: 2px;
+}
+
+.nav-title{
+    padding: 3px 10px;
+    background: #313338;
+    color: #fff;
 }

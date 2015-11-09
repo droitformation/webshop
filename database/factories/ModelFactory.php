@@ -83,7 +83,7 @@ $factory->define(App\Droit\Adresse\Entities\Adresse::class, function (Faker\Gene
         'canton_id'     => array_rand($cantons, 1),
         'pays_id'      => 208,
         'type'         => 1,
-        'user_id'      => 1,
+        'user_id'      => 0,
         'livraison'    => 1
     ];
 });
@@ -108,7 +108,6 @@ $factory->define(App\Droit\Shop\Product\Entities\Product::class, function (Faker
 });
 
 $factory->define(App\Droit\Shop\Order\Entities\Order::class, function (Faker\Generator $faker) {
-
     return [
         'id'          => 100,
         'user_id'     => 1,
@@ -119,7 +118,6 @@ $factory->define(App\Droit\Shop\Order\Entities\Order::class, function (Faker\Gen
         'shipping_id' => 1,
         'onetimeurl'  => null
     ];
-
 });
 
 $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'one', function (Faker\Generator $faker) {
