@@ -168,11 +168,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('sorting', 'Backend\Newsletter\CampagneController@sorting');
     Route::post('sortingGroup', 'Backend\Newsletter\CampagneController@sortingGroup');
 
-    Route::get('ajax/arrets/{id}',   'Backend\Content\ArretController@simple');
-    Route::get('ajax/arrets',        'Backend\Content\ArretController@arrets');
-    Route::get('ajax/analyses/{id}', 'Backend\Content\AnalyseController@simple');
-    Route::get('ajax/categories',    'Backend\Content\CategorieController@categories');
-    Route::post('ajax/categorie/arrets', 'Backend\Content\CategorieController@arrets');
+    Route::get('ajax/arret/{id}',   'Backend\Content\ArretController@simple');
+    Route::get('ajax/arrets/{id?}', 'Backend\Content\ArretController@arrets');
+    Route::get('ajax/analyses/{id}','Backend\Content\AnalyseController@simple');
+    Route::get('ajax/categories',   'Backend\Content\CategorieController@categories');
+    Route::post('ajax/categorie/arrets','Backend\Content\CategorieController@arrets');
 
     Route::resource('newsletter', 'Backend\Newsletter\NewsletterController');
 

@@ -7,11 +7,16 @@ class Categorie extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['title','image','ismain','hideOnSite'];
+	protected $fillable = ['title','image','site_id','ismain','hideOnSite'];
     protected $dates    = ['created_at','updated_at','deleted_at'];
 
     public function categorie_arrets()
     {
         return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', 'arret_categories', 'categories_id', 'arret_id');
+    }
+
+    public function site()
+    {
+        return $this->belongsTo('\App\Droit\Site\Entities\Site');
     }
 }

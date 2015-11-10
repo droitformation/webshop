@@ -29,6 +29,20 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Site</label>
+                    <div class="col-sm-3">
+                        @if(!$sites->isEmpty())
+                            <select class="form-control" name="site_id">
+                                <option value="">Appartient au site</option>
+                                @foreach($sites as $site)
+                                    <option value="{{ $site->id }}">{{ $site->nom }}</option>
+                                @endforeach
+                            </select>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="file" class="col-sm-3 control-label">Image</label>
                     <div class="col-sm-7">
                         <div class="list-group">

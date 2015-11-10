@@ -14,21 +14,26 @@ class UploadWorker implements UploadInterface {
         {
             $name = $file->getClientOriginalName();
             $ext  = $file->getClientOriginalExtension();
+
+            $image_name =  basename($name,'.'.$ext);
+
+            $string  = \Str::slug($image_name);
+            $newname = $string.'.'.$ext;
+
             // Get the name first because after moving, the file doesn't exist anymore
-            $new  = $file->move($destination,$name);
+            $new  = $file->move($destination,$newname);
             $size = $new->getSize();
             $mime = $new->getMimeType();
             $path = $new->getRealPath();
 
-            $image_name =  basename($name,'.'.$ext);
-
             //resize
-            if($type){
+            if($type)
+            {
                 $sizes = \Config::get('size.'.$type);
-                $this->resize( $path, $image_name, $sizes['width'], $sizes['height']);
+                $this->resize( $path, $newname, $sizes['width'], $sizes['height']);
             }
 
-            $newfile = array( 'name' => $name ,'ext' => $ext ,'size' => $size ,'mime' => $mime ,'path' => $path  );
+            $newfile = array( 'name' => $newname ,'ext' => $ext ,'size' => $size ,'mime' => $mime ,'path' => $path  );
 
             return $newfile;
         }
@@ -43,8 +48,8 @@ class UploadWorker implements UploadInterface {
 	 * rename file 
 	 * @return instance
 	*/	
-	public function rename( $file , $name , $path ){
-		
+	public function rename( $file , $name , $path )
+    {
 		$newpath = $path.$name;
 		
 		return \Image::make( $file )->save($newpath);

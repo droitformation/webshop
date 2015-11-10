@@ -19,15 +19,7 @@
                                 {
                                     foreach($categories as $idcat => $categorie)
                                     {
-                                        $haystack = ['CO','CCT','LEg','LTr','Fonction publique'];
-
-                                        if(in_array($categorie,$haystack)){
-                                            $withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $imgcategories[$idcat]);
-                                            echo '<option value="'.$idcat.'">'.$categorie.'<small> - '.$withoutExt.'</li>';
-                                        }
-                                        else{
-                                            echo '<option value="'.$idcat.'">'.$categorie.'</small></li>';
-                                        }
+                                        echo '<option value="'.$idcat.'">'.$categorie.'</small></li>';
                                     }
                                 }
                             ?>
@@ -38,7 +30,7 @@
                 <div class="form-group">
                     <label>Sélectionner des arrêts</label>
 
-                    <div ng-controller="MultiSelectionController as selectarret">
+                    <div ng-controller="MultiSelectionController as selectarret" ng-init="getSite(<?php echo $infos->newsletter->site_id; ?>)">
 
                         <div class="listArrets forArrets" ng-init="typeItem='arrets'">
                             <div ng-repeat="(listName, list) in selectarret.models.lists">

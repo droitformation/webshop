@@ -41,6 +41,7 @@ class CategorieEloquent implements CategorieInterface{
         $categorie = $this->categorie->create(array(
             'title'      => $data['title'],
             'image'      => $data['image'],
+            'site_id'    => (isset($data['site_id']) ? $data['site_id'] : null),
             'ismain'     => (isset($data['ismain']) && $data['ismain'] == 1 ? 1 : 0),
             'hideOnSite' => (isset($data['hideOnSite']) && $data['hideOnSite'] == 1 ? 1 : 0),
             'created_at' => date('Y-m-d G:i:s'),

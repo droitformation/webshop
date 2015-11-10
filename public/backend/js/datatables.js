@@ -4,8 +4,8 @@
 
 $(document).ready(function() {
 
-    var init = function() {
-
+    var init = function()
+    {
         var api    = this.api();
         var column = api.column(3);
 
@@ -15,14 +15,12 @@ $(document).ready(function() {
                 var val = $.fn.dataTable.util.escapeRegex(
                     $(this).val()
                 );
-
                 column.search( val ? '^'+val+'$' : '', true, false ).draw();
             } );
 
         column.data().unique().sort().each( function ( d, j ) {
             select.append( '<option value="'+d+'">'+d+'</option>' )
         });
-
     };
 
     var langues = {
@@ -49,6 +47,12 @@ $(document).ready(function() {
     };
 
     $('#arrets').DataTable({
+        initComplete: init,
+        language    : langues,
+        pagingType  : 'simple'
+    });
+
+    $('.simple').DataTable({
         initComplete: init,
         language    : langues,
         pagingType  : 'simple'

@@ -36,6 +36,8 @@ class AppServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind('Illuminate\Contracts\Auth\Registrar','App\Services\Registrar');
 
+        $this->registerSiteService();
+
         $this->registerUserService();
         $this->registerAdresseService();
 
@@ -63,6 +65,17 @@ class AppServiceProvider extends ServiceProvider {
                 new \App\Droit\Categorie\Entities\Categorie,
                 new \App\Droit\Categorie\Entities\Parent_categories
             );
+        });
+    }
+
+    /**
+     * Site
+     */
+    protected function registerSiteService(){
+
+        $this->app->singleton('App\Droit\Site\Repo\SiteInterface', function()
+        {
+            return new \App\Droit\Site\Repo\SiteEloquent(new \App\Droit\Site\Entities\Site);
         });
     }
 

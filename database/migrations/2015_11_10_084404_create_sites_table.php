@@ -18,6 +18,7 @@ class CreateSitesTable extends Migration
             $table->string('url');
             $table->string('logo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

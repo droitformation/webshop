@@ -138,9 +138,9 @@ class ArretController extends Controller {
      *
      * @return response
      */
-    public function arrets()
+    public function arrets($site = null)
     {
-        return response()->json( $this->arret->getAll() , 200 );
+        return response()->json( $this->arret->getAll($site) , 200 );
     }
 
     /**

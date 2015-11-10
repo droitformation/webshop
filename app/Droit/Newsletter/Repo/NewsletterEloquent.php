@@ -14,12 +14,12 @@ class NewsletterEloquent implements NewsletterInterface{
 	
 	public function getAll(){
 		
-		return $this->newsletter->with(['campagnes'])->get();
+		return $this->newsletter->with(['campagnes','site'])->get();
 	}
 
 	public function find($id){
 				
-		return $this->newsletter->find($id);
+		return $this->newsletter->with(['site'])->find($id);
 	}
 
 	public function create(array $data){
@@ -32,6 +32,7 @@ class NewsletterEloquent implements NewsletterInterface{
             'unsuscribe'   => $data['unsuscribe'],
             'preview'      => $data['preview'],
             'list_id'      => $data['list_id'],
+            'site_id'      => (isset($data['site_id']) ? $data['site_id'] : null),
             'color'        => (isset($data['color']) ? $data['color'] : ''),
             'logos'        => (isset($data['logos']) ? $data['logos'] : ''),
             'header'       => (isset($data['header']) ? $data['header'] : ''),

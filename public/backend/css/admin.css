@@ -214,3 +214,7 @@ blockquote p{
     background: #313338;
     color: #fff;
 }
+
+.tab-container .tab-content{
+    background: #fff;
+}

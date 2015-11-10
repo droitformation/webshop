@@ -81,9 +81,9 @@ var App = angular.module('newsletter', ["angular-redactor","flow","ngSanitize","
  */
 App.factory('Arrets', ['$http', '$q', function($http, $q) {
     return {
-        query: function() {
+        query: function(site) {
             var deferred = $q.defer();
-            $http.get('/admin/ajax/arrets', { cache: true }).success(function(data) {
+            $http.get('/admin/ajax/arrets/' + site , { cache: true }).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -92,7 +92,7 @@ App.factory('Arrets', ['$http', '$q', function($http, $q) {
         },
         simple: function(id) {
             var deferred = $q.defer();
-            $http.get('/admin/ajax/arrets/'+ id).success(function(data) {
+            $http.get('/admin/ajax/arret/'+ id).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -156,8 +156,6 @@ App.controller("EditController",['$scope','$http','myService', function($scope,$
 
         if(idItem)
         {
-            console.log(idItem);
-
             $( "#sortGroupe_" + idItem ).sortable( "disable" );
             $( ".sortGroupe .groupe_rang").css({ "border":"none"});
         }
@@ -219,13 +217,17 @@ App.controller('SelectController', ['$scope','$http','Arrets','myService',functi
 
     /* function for refreshing the asynchronus retrival of blocs */
     this.refresh = function() {
-        Arrets.query()
-            .then(function (data) {
+
+        $scope.getSite = function(site)
+        {
+            Arrets.query(site).then(function (data) {
                 self.arrets = data;
             });
+        };
     }
 
-    if(self.arrets.length == 0){
+    if(self.arrets.length == 0)
+    {
         this.refresh();
     }
 
@@ -273,31 +275,32 @@ App.controller("MultiSelectionController",['$scope',"Arrets","myService", functi
     };
 
     /* function for refreshing the asynchronus retrival of blocs */
-    this.refresh = function() {
-
-        Arrets.query()
-            .then(function (data) {
-
+    this.refresh = function()
+    {
+        $scope.getSite = function(site)
+        {
+            Arrets.query(site).then(function (data)
+            {
                 self.items  = data;
-                //console.log(self.items);
                 self.models = myService.convertArret(self.items, self.models);
-
             });
+        };
     }
 
-    if(self.items.length == 0){
+    if(self.items.length == 0)
+    {
         self.refresh();
     }
 
-    this.dropped = function(item){
-
+    this.dropped = function(item)
+    {
         angular.forEach(self.models.lists.B, function(value, key){
             value.isSelected = true;
         });
+
         angular.forEach(self.models.lists.A, function(value, key){
             value.isSelected = false;
         });
-
     };
 
 }]);

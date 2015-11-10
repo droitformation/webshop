@@ -7,17 +7,20 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CategorieRequest;
 
 use App\Droit\Categorie\Repo\CategorieInterface;
+use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Service\UploadInterface;
 
 class CategorieController extends Controller {
 
     protected $categorie;
     protected $upload;
+    protected $site;
 
-    public function __construct( CategorieInterface $categorie, UploadInterface $upload )
+    public function __construct( CategorieInterface $categorie, UploadInterface $upload, SiteInterface  $site)
     {
         $this->categorie = $categorie;
         $this->upload    = $upload;
+        $this->site      = $site;
     }
 
     /**
@@ -29,8 +32,9 @@ class CategorieController extends Controller {
     public function index()
     {
         $categories = $this->categorie->getAll();
+        $sites      = $this->site->getAll();
 
-        return view('backend.categories.index')->with(['categories' => $categories]);
+        return view('backend.categories.index')->with(['categories' => $categories, 'sites' => $sites]);
     }
 
 	/**
@@ -41,7 +45,9 @@ class CategorieController extends Controller {
 	 */
 	public function create()
 	{
-        return view('backend.categories.create');
+        $sites = $this->site->getAll();
+
+        return view('backend.categories.create')->with(['sites' => $sites]);
 	}
 
 	/**
@@ -53,7 +59,7 @@ class CategorieController extends Controller {
 	public function store(CategorieRequest $request)
 	{
         $data = $request->except('file');
-        $file = $this->upload->upload( $request->file('file') , 'newsletter/pictos' , 'categorie');
+        $file = $this->upload->upload( $request->file('file') , 'pictos' , 'categorie');
 
         $data['image'] = $file['name'];
 
@@ -72,8 +78,9 @@ class CategorieController extends Controller {
 	public function show($id)
 	{
         $categorie = $this->categorie->find($id);
+        $sites     = $this->site->getAll();
 
-        return view('backend.categories.show')->with(['categorie' => $categorie]);
+        return view('backend.categories.show')->with(['categorie' => $categorie, 'sites' => $sites]);
 	}
 
 	/**
@@ -90,7 +97,7 @@ class CategorieController extends Controller {
 
         if($_file)
         {
-            $file = $this->upload->upload( $_file , 'newsletter/pictos' , 'categorie');
+            $file = $this->upload->upload( $_file , 'pictos' , 'categorie');
             $data['image'] = $file['name'];
         }
 

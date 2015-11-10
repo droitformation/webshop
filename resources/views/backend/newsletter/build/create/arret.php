@@ -1,4 +1,4 @@
-<form ng-controller="SelectController as select"
+<form ng-controller="SelectController as select" ng-init="getSite(<?php echo $infos->newsletter->site_id; ?>)"
       class="row form-horizontal" name="arretForm"
       method="post" action="<?php echo url('admin/campagne/process'); ?>">
 
@@ -20,7 +20,7 @@
                     <!-- Categories -->
                     <div class="resetMarge" ng-repeat="categorie in select.categories">
                         <a target="_blank" href="<?php echo url('jurisprudence').'#'.$bloc->reference; ?>">
-                            <img ng-show="categorie.image" width="130" border="0" alt="{[{ categorie.title }]}" ng-src="<?php echo asset('newsletter/pictos/{[{ categorie.image }]}') ?>">
+                            <img ng-show="categorie.image" width="130" border="0" alt="{[{ categorie.title }]}" ng-src="<?php echo asset('pictos/{[{ categorie.image }]}') ?>">
                         </a>
                     </div>
                 </td>

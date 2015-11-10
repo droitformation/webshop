@@ -12,8 +12,13 @@ class ArretEloquent implements ArretInterface{
 		$this->arret = $arret;
 	}
 
-    public function getAll()
+    public function getAll($site = null)
     {
+        if($site)
+        {
+            return $this->arret->where('pid','=',$site)->with(['arrets_categories','arrets_analyses'])->orderBy('reference', 'ASC')->get();
+        }
+
         return $this->arret->with(['arrets_categories','arrets_analyses'])->orderBy('reference', 'ASC')->get();
     }
 
@@ -73,7 +78,8 @@ class ArretEloquent implements ArretInterface{
 	public function create(array $data){
 
 		$arret = $this->arret->create(array(
-			'user_id'    => $data['user_id'],
+			'pid'        => $data['pid'],
+            'user_id'    => $data['user_id'],
             'reference'  => $data['reference'],
             'pub_date'   => $data['pub_date'],
             'abstract'   => $data['abstract'],

@@ -7,7 +7,7 @@ class Arret extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['user_id','reference','pub_date','abstract','pub_text','file','categories'];
+	protected $fillable = ['pid','user_id','reference','pub_date','abstract','pub_text','file','categories'];
     protected $dates    = ['pub_date'];
 
     public function arrets_categories()

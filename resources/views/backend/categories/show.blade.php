@@ -32,13 +32,27 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Site</label>
+                    <div class="col-sm-3">
+                        @if(!$sites->isEmpty())
+                            <select class="form-control" name="site_id">
+                                <option value="">Appartient au site</option>
+                                @foreach($sites as $site)
+                                    <option {{ $categorie->site_id == $site->id ? 'selected' : '' }} value="{{ $site->id }}">{{ $site->nom }}</option>
+                                @endforeach
+                            </select>
+                        @endif
+                    </div>
+                </div>
+
                 @if(!empty($categorie->image ))
                 <div class="form-group">
                     <label for="file" class="col-sm-3 control-label">Fichier</label>
                     <div class="col-sm-3">
                         <div class="list-group">
                             <div class="list-group-item text-center">
-                                <a href="#"><img height="120" src="{!! asset('newsletter/pictos/'.$categorie->image) !!}" alt="$categorie->title" /></a>
+                                <a href="#"><img height="120" src="{!! asset('pictos/'.$categorie->image) !!}" alt="$categorie->title" /></a>
                             </div>
                         </div>
                     </div>
