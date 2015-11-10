@@ -23,12 +23,12 @@ class Product extends Model{
 
     public function categories()
     {
-        return $this->belongsToMany('App\Droit\Categorie\Entities\Categorie', 'shop_product_categories', 'product_id', 'categorie_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        return $this->belongsToMany('\App\Droit\Shop\Categorie\Entities\Categorie', 'shop_product_categories', 'product_id', 'categorie_id');
     }
 
     public function authors()
     {
-        return $this->belongsToMany('App\Droit\Author\Entities\Author', 'shop_product_authors', 'product_id', 'author_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'shop_product_authors', 'product_id', 'author_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
     public function domains()

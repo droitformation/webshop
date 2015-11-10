@@ -133,6 +133,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('coupon', 'Backend\Shop\CouponController');
     Route::resource('shipping', 'Backend\Shop\ShippingController');
     Route::resource('product', 'Backend\Shop\ProductController');
+
+    Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
+    Route::resource('order', 'Backend\Shop\OrderController');
+
     /*
     |--------------------------------------------------------------------------
     | Upload files direct, with jquery and redactor Routes

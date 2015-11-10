@@ -2,7 +2,7 @@
 
 interface OrderInterface {
 
-    public function getAll();
+    public function getPeriod($start,$end);
 	public function find($data);
     public function maxOrder($year);
 	public function create(array $data);

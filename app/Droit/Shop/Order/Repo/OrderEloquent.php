@@ -12,9 +12,9 @@ class OrderEloquent implements OrderInterface{
         $this->order = $order;
     }
 
-    public function getAll(){
-
-        return $this->order->all();
+    public function getPeriod($start,$end)
+    {
+        return $this->order->whereBetween('created_at', [$start, $end])->get();
     }
 
     public function maxOrder($year)

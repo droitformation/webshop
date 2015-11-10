@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Arret\Repo\ArretInterface;
 use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Service\UploadInterface;
+use App\Droit\Site\Repo\SiteInterface;
 
 class ArretController extends Controller {
 
@@ -15,12 +16,14 @@ class ArretController extends Controller {
     protected $categorie;
     protected $upload;
     protected $helper;
+    protected $site;
 
-    public function __construct( ArretInterface $arret, CategorieInterface $categorie , UploadInterface $upload )
+    public function __construct( ArretInterface $arret, CategorieInterface $categorie , UploadInterface $upload, SiteInterface $site)
     {
         $this->arret     = $arret;
         $this->categorie = $categorie;
         $this->upload    = $upload;
+        $this->site      = $site;
         $this->helper    = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR');
@@ -37,8 +40,9 @@ class ArretController extends Controller {
     {
         $arrets     = $this->arret->getAll();
         $categories = $this->categorie->getAll();
+        $sites      = $this->site->getAll();
 
-        return view('backend.arrets.index')->with(array( 'arrets' => $arrets , 'categories' => $categories ));
+        return view('backend.arrets.index')->with(['arrets' => $arrets , 'categories' => $categories, 'sites' => $sites]);
     }
 
     /**
@@ -50,8 +54,9 @@ class ArretController extends Controller {
     {
         $arret      = $this->arret->find($id);
         $categories = $this->categorie->getAll();
+        $sites      = $this->site->getAll();
 
-        return view('backend.arrets.show')->with([ 'isNewsletter' => true, 'arret' => $arret, 'categories' => $categories]);
+        return view('backend.arrets.show')->with([ 'isNewsletter' => true, 'arret' => $arret, 'categories' => $categories, 'sites' => $sites]);
     }
 
     /**
@@ -62,8 +67,9 @@ class ArretController extends Controller {
     public function create()
     {
         $categories = $this->categorie->getAll();
+        $sites      = $this->site->getAll();
 
-        return view('backend.arrets.create')->with([ 'isNewsletter' => true, 'categories' => $categories ]);
+        return view('backend.arrets.create')->with([ 'isNewsletter' => true, 'categories' => $categories, 'sites' => $sites]);
     }
 
     /**

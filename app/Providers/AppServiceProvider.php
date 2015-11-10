@@ -62,8 +62,7 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Categorie\Repo\CategorieInterface', function()
         {
             return new \App\Droit\Categorie\Repo\CategorieEloquent(
-                new \App\Droit\Categorie\Entities\Categorie,
-                new \App\Droit\Categorie\Entities\Parent_categories
+                new \App\Droit\Categorie\Entities\Categorie
             );
         });
     }

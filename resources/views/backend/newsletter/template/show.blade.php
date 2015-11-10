@@ -31,6 +31,19 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Site</label>
+                            <div class="col-sm-3">
+                                @if(!$sites->isEmpty())
+                                    <select class="form-control" name="site_id">
+                                        <option value="">Appartient au site</option>
+                                        @foreach($sites as $site)
+                                            <option {{ $newsletter->site_id == $site->id ? 'selected' : '' }} value="{{ $site->id }}">{{ $site->nom }}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="message" class="col-sm-3 control-label">Nom de la liste</label>
                             <div class="col-sm-5">
                                 <select class="form-control" required name="list_id">

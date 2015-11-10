@@ -15,7 +15,7 @@ class GroupeEloquent implements GroupeInterface{
 		$this->groupe = $groupe;
 	}
 
-    public function getAll($pid){
+    public function getAll(){
 
         return $this->groupe->with(array('arrets_groupes'))->get();
     }
@@ -65,7 +65,6 @@ class GroupeEloquent implements GroupeInterface{
         $groupe = $this->groupe->find($id);
 
 		return $groupe->delete();
-		
 	}
 
 }

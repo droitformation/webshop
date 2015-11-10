@@ -9,18 +9,21 @@ use App\Http\Controllers\Controller;
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Service\UploadWorker;
 use App\Droit\Newsletter\Worker\MailjetInterface;
+use App\Droit\Site\Repo\SiteInterface;
 
 class NewsletterController extends Controller
 {
     protected $newsletter;
     protected $upload;
     protected $mailjet;
+    protected $site;
 
-    public function __construct(NewsletterInterface $newsletter, UploadWorker $upload, MailjetInterface $mailjet )
+    public function __construct(NewsletterInterface $newsletter, UploadWorker $upload, MailjetInterface $mailjet, SiteInterface $site)
     {
         $this->newsletter = $newsletter;
         $this->upload     = $upload;
         $this->mailjet    = $mailjet;
+        $this->site       = $site;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -33,8 +36,9 @@ class NewsletterController extends Controller
     public function index()
     {
         $newsletters = $this->newsletter->getAll();
+        $sites       = $this->site->getAll();
 
-        return view('backend.newsletter.template.index')->with(['isNewsletter' => true, 'newsletters' => $newsletters]);
+        return view('backend.newsletter.template.index')->with(['isNewsletter' => true, 'newsletters' => $newsletters, 'sites' => $sites]);
     }
 
     /**
@@ -46,8 +50,9 @@ class NewsletterController extends Controller
     {
         $lists = $this->mailjet->getAllLists();
         $lists = (isset($lists->Data) ? $lists->Data : []);
+        $sites = $this->site->getAll();
 
-        return view('backend.newsletter.template.create')->with(['lists' => $lists]);
+        return view('backend.newsletter.template.create')->with(['lists' => $lists, 'sites' => $sites]);
     }
 
     /**
@@ -81,8 +86,9 @@ class NewsletterController extends Controller
         $lists      = $this->mailjet->getAllLists();
         $lists      = (isset($lists->Data) ? $lists->Data : []);
         $newsletter = $this->newsletter->find($id);
+        $sites      = $this->site->getAll();
 
-        return view('backend.newsletter.template.show')->with(['newsletter' => $newsletter, 'lists' => $lists]);
+        return view('backend.newsletter.template.show')->with(['newsletter' => $newsletter, 'lists' => $lists, 'sites' => $sites]);
     }
 
     /**
@@ -94,7 +100,6 @@ class NewsletterController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $newsletter = $this->newsletter->update($request->except('logos','header'));
 
         $logos  = $request->file('logos',null);

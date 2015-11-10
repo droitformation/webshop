@@ -28,6 +28,7 @@ class ShopServiceProvider extends ServiceProvider {
         $this->registerCouponService();
         $this->registerPaymentService();
         $this->registerCartService();
+        $this->registerCategorieService();
 
         $this->registerOrderWorkerService();
         $this->registerCartWorkerService();
@@ -41,6 +42,19 @@ class ShopServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Shop\Product\Repo\ProductInterface', function()
         {
             return new \App\Droit\Shop\Product\Repo\ProductEloquent(new \App\Droit\Shop\Product\Entities\Product);
+        });
+    }
+
+    /**
+     * Categorie
+     */
+    protected function registerCategorieService(){
+
+        $this->app->singleton('App\Droit\Shop\Categorie\Repo\CategorieInterface', function()
+        {
+            return new \App\Droit\Shop\Categorie\Repo\CategorieEloquent(
+                new \App\Droit\Shop\Categorie\Entities\Categorie
+            );
         });
     }
 

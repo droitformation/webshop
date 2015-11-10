@@ -2,7 +2,7 @@
 
 interface GroupeInterface {
 
-    public function getAll($pid);
+    public function getAll();
 	public function find($id);
     public function findAll($data);
 	public function create(array $data);

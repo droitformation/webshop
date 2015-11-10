@@ -6,22 +6,25 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Shop\Product\Repo\ProductInterface;
+use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 
-class ProductController extends Controller {
+class OrderController extends Controller {
 
 	protected $product;
     protected $categorie;
+    protected $order;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product, CategorieInterface $categorie)
+	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order)
 	{
         $this->product   = $product;
         $this->categorie = $categorie;
+        $this->order     = $order;
 	}
 
 	/**
@@ -29,11 +32,19 @@ class ProductController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-        $products = $this->product->getAll();
+        $period = $request->all();
 
-		return view('backend.products.index')->with(['products' => $products]);
+        if(empty($period))
+        {
+            $period['start'] = \Carbon\Carbon::now()->startOfMonth();
+            $period['end']   = \Carbon\Carbon::now()->endOfMonth();
+        }
+
+        $orders = $this->order->getPeriod($period['start'],$period['end']);
+
+		return view('backend.orders.index')->with(['orders' => $orders]);
 	}
 
     /**
@@ -44,7 +55,7 @@ class ProductController extends Controller {
     {
         $product = $this->product->find($id);
 
-        return view('backend.products.show')->with(['product' => $product]);
+        return view('backend.orders.show')->with(['product' => $product]);
     }
 
     /**
@@ -70,19 +81,6 @@ class ProductController extends Controller {
         return redirect('admin/product')->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $product  = $this->product->update($request->all());
-
-        return redirect('admin/product')->with(array('status' => 'success', 'message' => 'Le produit a été mis à jour' ));
-    }
 
     /**
      * Remove the specified resource from storage.

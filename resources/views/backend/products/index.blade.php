@@ -15,17 +15,17 @@
                     <h4><i class="fa fa-edit"></i> &nbsp;Produits <span class="muted">livres</span></h4>
                 </div>
                 <div class="panel-body">
-                    <?php 
-                    echo '<pre>';
-                    print_r($products);
-                    echo '</pre>';
-                    ?>
                     <table class="table" id="">
                         <thead>
                             <tr>
                                 <th>Action</th>
+                                <th>Image</th>
                                 <th>Titre</th>
-                                <th>Poids maximum</th>
+                                <th>Poids</th>
+                                <th>Attributs</th>
+                                <th>Catégories</th>
+                                <th>Auteurs</th>
+                                <th>Domaines</th>
                                 <th>Prix</th>
                                 <th></th>
                             </tr>
@@ -35,9 +35,44 @@
                             @foreach($products as $product)
                                 <tr>
                                     <td><a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-sm btn-info">éditer</a></td>
+                                    <td><img style="height: 50px;" src="{{ asset('files/products/'.$product->image) }}" /></td>
                                     <td>{{ $product->title }}</td>
                                     <td>{{ $product->weight }} grammes</td>
+                                    <td>
+                                        @if(!$product->attributes->isEmpty())
+                                            @foreach($product->attributes as $attribute)
+                                                <p>{{ $attribute->title }} :{{ $attribute->pivot->value }} </p>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$product->categories->isEmpty())
+                                            @foreach($product->categories as $categorie)
+                                                <p>{{ $categorie->title }}</p>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$product->authors->isEmpty())
+                                            @foreach($product->authors as $author)
+                                                <p>{{ $author->name }}</p>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$product->domains->isEmpty())
+                                            @foreach($product->domains as $domain)
+                                                <p>{{ $domain->title }}</p>
+                                            @endforeach
+                                        @endif
+                                    </td>
                                     <td>{{ $product->price_cents }}</td>
+                                    <td class="text-right">
+                                        <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
+                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                            <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif

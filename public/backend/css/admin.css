@@ -218,3 +218,10 @@ blockquote p{
 .tab-container .tab-content{
     background: #fff;
 }
+
+a {
+    outline: 0;
+}
+a:hover, a:active, a:focus {
+    outline: 0;
+}

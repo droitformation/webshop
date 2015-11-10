@@ -24,8 +24,10 @@
                     <div class="panel-body">
 
                         <div class="row">
-
-                            <div class="col-md-7">
+                            <div class="col-md-1">
+                                <img height="100%" src="{{ asset('logos/'.$newsletter->site->logo) }}" alt="{{ $newsletter->site->nom }}" />
+                            </div>
+                            <div class="col-md-6">
                                 <h3>{{ $newsletter->titre }}</h3>
                             </div>
                             <div class="col-md-3">
