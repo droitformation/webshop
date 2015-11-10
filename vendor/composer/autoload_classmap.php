@@ -103,6 +103,8 @@ return array(
     'CreateShopProduitCategoriesTable' => $baseDir . '/database/migrations/2015_06_03_163407_create_shop_produit_categories_table.php',
     'CreateShopProduitDomainsTable' => $baseDir . '/database/migrations/2015_06_03_160208_create_shop_produit_domains_table.php',
     'CreateShopShippingTable' => $baseDir . '/database/migrations/2015_06_04_082812_create_shop_shipping_table.php',
+    'CreateSiteCategoriesTable' => $baseDir . '/database/migrations/2015_11_10_084604_create_site_categories_table.php',
+    'CreateSitesTable' => $baseDir . '/database/migrations/2015_11_10_084404_create_sites_table.php',
     'CreateSpecialisationsTable' => $baseDir . '/database/migrations/2015_07_20_161012_create_specialisations_table.php',
     'CreateSystemRegistriesTable' => $baseDir . '/database/migrations/2015_09_25_185537_create_system_registries_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2015_06_01_000000_create_users_table.php',

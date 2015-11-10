@@ -15,7 +15,11 @@
                     <h4><i class="fa fa-edit"></i> &nbsp;Produits <span class="muted">livres</span></h4>
                 </div>
                 <div class="panel-body">
-
+                    <?php 
+                    echo '<pre>';
+                    print_r($products);
+                    echo '</pre>';
+                    ?>
                     <table class="table" id="">
                         <thead>
                             <tr>
