@@ -32,7 +32,7 @@ class AdresseEloquent implements AdresseInterface{
             ->get();
     }
 
-    public function searchMultiple($terms, $each = false)
+    public function searchMultiple($terms, $each = false, $paginate = false)
     {
         $cantons         = (isset($terms['cantons']) ? $terms['cantons'] : null);
         $professions     = (isset($terms['professions']) ? $terms['professions'] : null);
@@ -40,24 +40,23 @@ class AdresseEloquent implements AdresseInterface{
         $specialisations = (isset($terms['specialisations']) ? $terms['specialisations'] : null);
         $members         = (isset($terms['members']) ? $terms['members'] : null);
 
-        if($each)
+        $searchSpecialisation = ($each ? 'searchSpecialisationEach' : 'searchSpecialisation');
+        $searchMember         = ($each ? 'searchMemberEach' : 'searchMember');
+
+        if($paginate)
         {
             return $this->adresse->with(['user'])
-                ->searchCanton($cantons)
-                ->searchPays($pays)
-                ->searchProfession($professions)
-                ->searchSpecialisationEach($specialisations)
-                ->searchMemberEach($members)
-                ->get();
+                ->searchCanton($cantons)->searchPays($pays)->searchProfession($professions)
+                ->$searchSpecialisation($specialisations)
+                ->$searchMember($members)
+                ->paginate($paginate);
         }
         else
         {
             return $this->adresse->with(['user'])
-                ->searchCanton($cantons)
-                ->searchPays($pays)
-                ->searchProfession($professions)
-                ->searchSpecialisation($specialisations)
-                ->searchMember($members)
+                ->searchCanton($cantons)->searchPays($pays)->searchProfession($professions)
+                ->$searchSpecialisation($specialisations)
+                ->$searchMember($members)
                 ->get();
         }
     }

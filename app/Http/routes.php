@@ -123,6 +123,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
     Route::get('export/user', 'Backend\ExportController@user');
     Route::post('export/global', 'Backend\ExportController@globalexport');
+    Route::get('export/global/{page?}', 'Backend\ExportController@globalexport');
+
+    Route::get('download/{file}', function($file)
+    {
+        $file = storage_path('excel/exports/'.$file);
+
+        return Response::download($file);
+    });
 
     /*
     |--------------------------------------------------------------------------

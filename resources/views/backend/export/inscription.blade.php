@@ -28,7 +28,7 @@
                 </table>
 
                 @if($order == 'checkbox')
-                    @include('export.table',['rows' => $rows])
+                    @include('backend.export.table',['rows' => $rows])
                 @else
                     @foreach($rows as $groupe_id => $row)
 
@@ -36,13 +36,13 @@
                             <tr><td><strong>{{ (isset($groupes[$option_id][$groupe_id]) ? 'CHOIX: '.$groupes[$option_id][$groupe_id] : '') }}</strong></td></tr>
                         </table>
 
-                        @include('export.table',['rows' => $row])
+                        @include('backend.export.table',['rows' => $row])
                     @endforeach
                 @endif
 
             @endforeach
         @else
-            @include('export.table',['rows' => $inscriptions])
+            @include('backend.export.table',['rows' => $inscriptions])
         @endif
     @endif
 

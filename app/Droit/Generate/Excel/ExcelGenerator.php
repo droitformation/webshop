@@ -45,7 +45,7 @@
      public function __construct()
      {
          $this->inscription_worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorker');
-         $this->helper  = new \App\Droit\Helper\Helper();
+         $this->helper             = new \App\Droit\Helper\Helper();
          setlocale(LC_ALL, 'fr_FR.UTF-8');
      }
 

@@ -41,6 +41,7 @@ return array(
     'CreateArretsGroupeTable' => $baseDir . '/database/migrations/content/2014_12_16_113223_create_arrets_groupe_table.php',
     'CreateArretsTable' => $baseDir . '/database/migrations/content/2014_09_24_085719_create_arrets_table.php',
     'CreateAuthorsTable' => $baseDir . '/database/migrations/content/2015_03_02_115104_create_authors_table.php',
+    'CreateCacheTable' => $baseDir . '/database/migrations/2015_11_11_093957_create_cache_table.php',
     'CreateCantonsTable' => $baseDir . '/database/migrations/2015_06_04_121746_create_cantons_table.php',
     'CreateCartsTable' => $baseDir . '/database/migrations/2015_07_13_082123_create_carts_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/content/2014_09_24_090223_create_categories_table.php',

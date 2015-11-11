@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <h3>Résultats</h3>
+            <h3>Résultats adresses</h3>
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
@@ -13,25 +13,34 @@
             </div>
 
             <div class="row">
-
                 <div class="col-md-12">
 
                     <div class="panel panel-midnightblue">
                         <div class="panel-body">
-                            <h4><i class="fa fa-home"></i> &nbsp;Résultats adresses</h4>
-                            <blockquote>
-                                @foreach($terms as $label => $terms)
-                                    <p>
-                                        <strong>{{ $label }}:</strong>
-                                        @foreach($terms as $term)
-                                           {{ $term }}
+
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <blockquote>
+                                        @foreach($terms as $label => $terms)
+                                            <p>
+                                                <strong>{{ $label }}:</strong>
+                                                @foreach($terms as $term)
+                                                   {{ $term }}
+                                                @endforeach
+                                            </p>
                                         @endforeach
-                                    </p>
-                                @endforeach
-                                <p><strong>Trouvés :</strong> {{ $adresses->count() }}</p>
-                            </blockquote>
+                                        <p><strong>Trouvés :</strong> {{ $count }}</p>
+                                    </blockquote>
+                                </div>
+                                <div class="col-md-3 text-right">
+                                    <div class="btn-group">
+                                        <a href="{{ url('admin/download/'.$download) }}" class="btn btn-info"><i class="fa fa-download"></i> &nbsp; Télécharger Export [xls]</a>
+                                    </div>
+                                </div>
+                            </div>
+
                             @if(isset($adresses) && !$adresses->isEmpty())
-                                <table class="table" style="margin-bottom: 0px;" >
+                                <table class="table simple" style="margin-bottom: 0px;" >
                                     <thead>
                                     <tr>
                                         <th class="col-sm-1">Action</th>
@@ -59,7 +68,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
+                                {!! $adresses->setPath('admin/export/global')->render() !!}
+
                             @endif
+
                         </div>
                     </div>
                 </div>

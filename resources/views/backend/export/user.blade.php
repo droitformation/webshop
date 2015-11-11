@@ -33,19 +33,19 @@
                                 <div id="selectCantons">
                                     <h4><i class="fa fa-map"></i> &nbsp;Cantons</h4>
                                     <p class="text-right"><input type="checkbox" id="select_all" /> &nbsp;Séléctionner tous</p>
-                                    @include('export.partials.item', ['name' => 'cantons[]', 'items' => $cantons, 'class' => 'checkbox_all'])
+                                    @include('backend.export.partials.item', ['name' => 'cantons[]', 'items' => $cantons, 'class' => 'checkbox_all'])
                                 </div>
 
                                 <hr/>
 
                                 <h4><i class="fa fa-cubes"></i> &nbsp;Professions</h4>
-                                @include('export.partials.item', ['name' => 'professions[]', 'items' => $professions])
+                                @include('backend.export.partials.item', ['name' => 'professions[]', 'items' => $professions])
 
                                 <h4><i class="fa fa-bookmark"></i> &nbsp;Membres</h4>
-                                @include('export.partials.item', ['name' => 'members[]', 'items' => $members])
+                                @include('backend.export.partials.item', ['name' => 'members[]', 'items' => $members])
 
                                 <h4><i class="fa fa-tags"></i> &nbsp;Spécialisations</h4>
-                                @include('export.partials.item', ['name' => 'specialisations[]', 'items' => $specialisations])
+                                @include('backend.export.partials.item', ['name' => 'specialisations[]', 'items' => $specialisations])
 
                                 <div class="form-group">
                                     <div class="checkbox">
