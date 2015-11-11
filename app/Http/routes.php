@@ -122,8 +122,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
     Route::get('export/user', 'Backend\ExportController@user');
-    Route::post('export/global', 'Backend\ExportController@globalexport');
-    Route::get('export/global/{page?}', 'Backend\ExportController@globalexport');
+    Route::post('export/global', 'Backend\ExportController@exportsearch');
+    Route::get('export/global/{page?}', 'Backend\ExportController@exportsearch');
 
     Route::get('download/{file}', function($file)
     {
@@ -143,6 +143,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('product', 'Backend\Shop\ProductController');
 
     Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
+    Route::post('order/export', 'Backend\Shop\OrderController@export');
     Route::resource('order', 'Backend\Shop\OrderController');
 
     /*

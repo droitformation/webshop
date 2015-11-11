@@ -46,7 +46,7 @@ class AdresseEloquent implements AdresseInterface{
         if($paginate)
         {
             return $this->adresse->with(['user'])
-                ->searchCanton($cantons)->searchPays($pays)->searchProfession($professions)
+                ->searchPays($pays)->searchCanton($cantons)->searchProfession($professions)
                 ->$searchSpecialisation($specialisations)
                 ->$searchMember($members)
                 ->paginate($paginate);
@@ -54,7 +54,7 @@ class AdresseEloquent implements AdresseInterface{
         else
         {
             return $this->adresse->with(['user'])
-                ->searchCanton($cantons)->searchPays($pays)->searchProfession($professions)
+                ->searchPays($pays)->searchCanton($cantons)->searchProfession($professions)
                 ->$searchSpecialisation($specialisations)
                 ->$searchMember($members)
                 ->get();

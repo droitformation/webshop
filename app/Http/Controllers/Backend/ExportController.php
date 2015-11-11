@@ -81,9 +81,11 @@ class ExportController extends Controller
      *
      * @return Response
      */
-    public function user()
+    public function user(Request $request)
     {
-        \Cache::forget('export_terms');
+        $request->session()->forget('terms');
+        $request->session()->forget('download');
+        $request->session()->forget('count');
 
         return view('backend.export.user');
     }
@@ -93,37 +95,48 @@ class ExportController extends Controller
      *
      * @return Response
      */
-    public function globalexport(Request $request)
+    public function exportsearch(Request $request)
     {
-        $request_terms = $request->all();
-
-        if(empty($request_terms))
+        if($request->session()->has('terms'))
         {
-            $request_terms = Cache::remember('request_terms', 60, function() use ($request_terms) {
-                return $request_terms;
-            });
+            $terms    = $request->session()->get('terms');
+            $download = $request->session()->get('download');
+            $count    = $request->session()->get('count');
+
+            $each     = (isset($terms['each']) ? true : false);
+            $adresses = $this->adresse->searchMultiple($terms, $each, 20);
+        }
+        else
+        {
+            $terms    = $request->all();
+            $each     = $request->input('each',false);
+
+            $toExport = $this->adresse->searchMultiple($request->all(), $each);
+            $download = $this->doExport($toExport);
+
+            $adresses = $this->adresse->searchMultiple($request->all(), $each, 20);
+
+            $request->session()->put('terms', $terms);
+            $request->session()->put('count', $toExport->count());
+            $request->session()->put('download', $download);
+
+            $count = $toExport->count();
         }
 
-        $each     = (isset($request_terms['each']) ? true : null);
-        $export   = $this->adresse->searchMultiple($request_terms, $each);
-        $count    = $export->count();
-        $download = $this->doExport($export);
-
-        $adresses = $this->adresse->searchMultiple($request_terms, $each, true);
-        $terms    = $this->label->nameTerms($request_terms);
+        $terms = $this->label->nameTerms($terms);
 
         return view('backend.export.results')->with(['adresses' => $adresses, 'terms' => $terms, 'download' => $download, 'count' => $count]);
     }
 
-    public function search()
+    public function exportview(Request $request)
     {
-        $export_terms      = $this->label->nameTerms($request->all());
-        $export_constraint = $request->input('each',false);
+        $each     = $request->input('each',false);
+        $adresses = $this->adresse->searchMultiple($request->all(), $each);
 
-        \Cache::put('export_terms',$export_terms, 60);
-        \Cache::put('export_constraint',$export_constraint, 60);
+        $download = $this->doExport($adresses);
+        $terms    = $this->label->nameTerms($request->all());
 
-        return redirect('admin/export/global');
+        return view('backend.export.results')->with(['adresses' => $paginatedAdresses, 'terms' => $terms, 'download' => $download]);
     }
 
     public function doExport($adresses)

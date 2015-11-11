@@ -18,8 +18,8 @@ namespace App\Droit\Helper;
          $this->profession     = \App::make('App\Droit\Profession\Repo\ProfessionInterface');
          $this->canton         = \App::make('App\Droit\Canton\Repo\CantonInterface');
          $this->pays           = \App::make('App\Droit\Pays\Repo\PaysInterface');
-         $this->member         = \App::make('App\Droit\Specialisation\Repo\SpecialisationInterface');
-         $this->specialisation = \App::make('App\Droit\Member\Repo\MemberInterface');
+         $this->specialisation = \App::make('App\Droit\Specialisation\Repo\SpecialisationInterface');
+         $this->member         = \App::make('App\Droit\Member\Repo\MemberInterface');
      }
 
      public function getLabel($label,$id)

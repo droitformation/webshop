@@ -25,6 +25,8 @@ class OrderController extends Controller {
         $this->product   = $product;
         $this->categorie = $categorie;
         $this->order     = $order;
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
 
 	/**
@@ -35,17 +37,45 @@ class OrderController extends Controller {
 	public function index(Request $request)
 	{
         $period = $request->all();
+        $status = $request->input('status',null);
+        $export = $request->input('export',null);
 
         if(empty($period))
         {
-            $period['start'] = \Carbon\Carbon::now()->startOfMonth();
-            $period['end']   = \Carbon\Carbon::now()->endOfMonth();
+            $period['start']  = \Carbon\Carbon::now()->startOfMonth();
+            $period['end']    = \Carbon\Carbon::now()->endOfMonth();
         }
 
-        $orders = $this->order->getPeriod($period['start'],$period['end']);
+        if($export)
+        {
+            $this->export(['start' => $period['start'], 'end' => $period['end'], 'status' => $status]);
+        }
+
+        $orders = $this->order->getPeriod($period['start'],$period['end'], $status);
+
+        $request->flash();
 
 		return view('backend.orders.index')->with(['orders' => $orders]);
 	}
+
+    /**
+     * Show the application welcome screen to the user.
+     *
+     * @return Response
+     */
+    public function export($data)
+    {
+        $orders = $this->order->getPeriod($data['start'], $data['end'], $data['status']);
+
+        \Excel::create('Export Commandes', function($excel) use ($orders)
+        {
+            $excel->sheet('Export_Commandes', function($sheet) use ($orders)
+            {
+                $sheet->setOrientation('landscape');
+                $sheet->loadView('backend.export.orders', ['orders' => $orders]);
+            });
+        })->export('xls');
+    }
 
     /**
      *

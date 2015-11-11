@@ -121,7 +121,7 @@
                           <div class="panel-body">
                               <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes</h3>
 
-                              @include('backend.users.partials.commandes')
+                              @include('backend.users.partials.commandes', ['orders' => $user->orders])
                           </div>
                       </div>
 

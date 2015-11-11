@@ -1,7 +1,7 @@
-@if(!$user->orders->isEmpty())
+@if(!$orders->isEmpty())
 
-    <?php $user->orders->load('products','shipping','coupon','payement'); ?>
-    <?php $orders = $user->orders->sortByDesc('created_at'); ?>
+    <?php $orders->load('products','shipping','coupon','payement'); ?>
+    <?php $orders = $orders->sortByDesc('created_at'); ?>
 
     <table class="table table-striped">
         <thead>
