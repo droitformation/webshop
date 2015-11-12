@@ -14,7 +14,7 @@ class ProductEloquent implements ProductInterface{
 
     public function getAll(){
 
-        return $this->product->with(array('categories','authors','domains','attributes'))->get();
+        return $this->product->with(array('categories','authors','domains','attributes','orders'))->get();
     }
 
     public function getByCategorie($id){

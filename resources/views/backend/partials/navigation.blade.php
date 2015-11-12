@@ -29,7 +29,7 @@
         <li class="nav-title">Evenements</li>
         <li class="<?php echo (Request::is('admin/colloque') || Request::is('admin/colloque/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/colloque') }}">
-                <i class="fa fa-institution"></i> <span>Colloques</span>
+                <i class="fa fa-flag"></i> <span>Colloques</span>
             </a>
         </li>
         <li class="<?php echo (Request::is('admin/inscription') || Request::is('admin/inscription/*') ? 'active' : '' ); ?>">

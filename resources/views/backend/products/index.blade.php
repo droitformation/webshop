@@ -15,69 +15,75 @@
                     <h4><i class="fa fa-edit"></i> &nbsp;Produits <span class="muted">livres</span></h4>
                 </div>
                 <div class="panel-body">
-                    <table class="table" id="">
-                        <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Image</th>
-                                <th>Titre</th>
-                                <th>Poids</th>
-                                <th>Attributs</th>
-                                <th>Catégories</th>
-                                <th>Auteurs</th>
-                                <th>Domaines</th>
-                                <th>Prix</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+
                         @if(!$products->isEmpty())
-                            @foreach($products as $product)
-                                <tr>
-                                    <td><a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-sm btn-info">éditer</a></td>
-                                    <td><img style="height: 50px;" src="{{ asset('files/products/'.$product->image) }}" /></td>
-                                    <td>{{ $product->title }}</td>
-                                    <td>{{ $product->weight }} grammes</td>
-                                    <td>
-                                        @if(!$product->attributes->isEmpty())
-                                            @foreach($product->attributes as $attribute)
-                                                <p>{{ $attribute->title }} :{{ $attribute->pivot->value }} </p>
-                                            @endforeach
+                        @foreach($products as $product)
+
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p>
+                                            <img style="height: 80px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
+                                            {{ $product->title }}
+                                            <span class="clearfix"></span>
+                                        </p>
+                                        @if($product->orders->count() == 0)
+                                            <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
+                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-xs deleteAction">Supprimer</button>
+                                            </form>
                                         @endif
-                                    </td>
-                                    <td>
-                                        @if(!$product->categories->isEmpty())
-                                            @foreach($product->categories as $categorie)
-                                                <p>{{ $categorie->title }}</p>
-                                            @endforeach
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(!$product->authors->isEmpty())
-                                            @foreach($product->authors as $author)
-                                                <p>{{ $author->name }}</p>
-                                            @endforeach
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(!$product->domains->isEmpty())
-                                            @foreach($product->domains as $domain)
-                                                <p>{{ $domain->title }}</p>
-                                            @endforeach
-                                        @endif
-                                    </td>
-                                    <td>{{ $product->price_cents }}</td>
-                                    <td class="text-right">
-                                        <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
-                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                    </div>
+                                    <div class="col-md-2">
+                                        <ul class="list-unstyled">
+                                            @if(!$product->attributes->isEmpty())
+                                                @foreach($product->attributes as $attribute)
+                                                    <li><strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }} </li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <ul class="list-unstyled">
+                                            @if(!$product->categories->isEmpty())
+                                                @foreach($product->categories as $categorie)
+                                                    <li>{{ $categorie->title }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <ul class="list-unstyled">
+                                            @if(!$product->authors->isEmpty())
+                                                @foreach($product->authors as $author)
+                                                    <li>{{ $author->name }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <ul class="list-unstyled">
+                                            @if(!$product->domains->isEmpty())
+                                                @foreach($product->domains as $domain)
+                                                    <li>{{ $domain->title }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <p>{{ $product->price_cents }} CHF</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <p> {{ $product->weight }} grammes</p>
+                                    </div>
+                                    <div class="col-md-1 text-right">
+                                        <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-sm btn-info">éditer</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @endforeach
                         @endif
-                        </tbody>
-                    </table>
 
                 </div>
             </div>

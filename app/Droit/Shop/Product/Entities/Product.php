@@ -11,7 +11,7 @@ class Product extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = array('title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable');
+    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable'];
 
     public function getPriceCentsAttribute()
     {
@@ -41,14 +41,9 @@ class Product extends Model{
         return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value')->orderBy('sorting', 'asc');
     }
 
-
-    public function attri()
+    public function orders()
     {
-        return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value')->orderBy('sorting', 'asc');
+        return $this->belongsToMany('App\Droit\Shop\Order\Entities\Order', 'shop_order_products','product_id', 'order_id');
     }
 
-/*    public function price()
-    {
-        return $this->hasOne('App\Droit\Shop\Product\Entities\Price','product_id', 'id');
-    }*/
 }
