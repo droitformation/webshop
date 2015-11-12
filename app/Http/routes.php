@@ -142,6 +142,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('shipping', 'Backend\Shop\ShippingController');
     Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
     Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');
+    Route::post('product/addType/{id}', 'Backend\Shop\ProductController@addType');
+    Route::post('product/removeType/{id}', 'Backend\Shop\ProductController@removeType');
     Route::resource('product', 'Backend\Shop\ProductController');
 
     Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');

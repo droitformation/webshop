@@ -136,4 +136,23 @@ class ProductController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'attribut a été supprimé' ));
     }
 
+    public function addType($id, Request $request)
+    {
+        $product = $this->product->find($id);
+        $types   = $request->input('type');
+
+        $product->$types()->attach($request->input('type_id'));
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Le type a été ajouté' ));
+    }
+
+    public function removeType($id, Request $request)
+    {
+        $product = $this->product->find($id);
+        $types   = $request->input('type');
+
+        $product->$types()->detach($request->input('type_id'));
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'attribut a été supprimé' ));
+    }
 }

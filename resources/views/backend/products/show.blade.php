@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/product') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/product') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
         </div>
@@ -103,6 +103,7 @@
             </div>
         </div>
         <div class="col-md-5">
+
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">
                     <h4><i class="fa fa-star"></i> &nbsp;Attributs</h4>
@@ -151,6 +152,11 @@
                     </form>
                 </div>
             </div>
+
+            @include('backend.products.partials.item',['title' => 'Catégories', 'items' => $categories, 'types' => 'categories'])
+            @include('backend.products.partials.item',['title' => 'Auteurs', 'items' => $authors,  'types' => 'authors'])
+            @include('backend.products.partials.item',['title' => 'Domaines', 'items' => $domains, 'types' => 'domains'])
+
         </div>
     </div>
 
