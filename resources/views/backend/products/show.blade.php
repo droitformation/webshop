@@ -17,11 +17,23 @@
                 <div class="panel-heading">
                     <h4><i class="fa fa-edit"></i> &nbsp;Editer le produit</h4>
                 </div>
-                <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
+                <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
+
+                        <div class="form-group">
+                            <label for="file" class="col-sm-2 control-label">Visibilité</label>
+                            <div class="col-sm-8">
+                                <label class="checkbox-inline">
+                                    <input {{ !$product->hidden ? 'checked' : '' }} type="checkbox" name="hidden" value="0"> Caché
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input {{ $product->hidden ? 'checked' : '' }} type="checkbox" name="hidden" value="1"> Visible
+                                </label>
+                            </div>
+                        </div>
 
                         @if(!empty($product->image ))
                             <div class="form-group">

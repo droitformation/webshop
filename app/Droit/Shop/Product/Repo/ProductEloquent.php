@@ -47,6 +47,7 @@ class ProductEloquent implements ProductInterface{
             'description'     => $data['description'],
             'weight'          => $data['weight'],
             'sku'             => $data['sku'],
+            'hidden'          => 1,
             'price'           => $data['price'] * 100,
             'is_downloadable' => (isset($data['is_downloadable']) ? $data['is_downloadable'] : null),
             'created_at'      => date('Y-m-d G:i:s'),

@@ -14,7 +14,7 @@
                 <div class="panel-heading">
                     <h4><i class="fa fa-edit"></i> &nbsp;Ajouter produit</h4>
                 </div>
-                <form action="{{ url('admin/product') }}" method="POST" class="form-horizontal">
+                <form action="{{ url('admin/product') }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
@@ -78,13 +78,6 @@
                 </form>
             </div>
 
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-midnightblue">
-                <div class="panel-body">
-
-                </div>
-            </div>
         </div>
     </div>
 

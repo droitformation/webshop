@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Droit\Service\UploadInterface;
+
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
@@ -14,6 +16,7 @@ use App\Droit\Domain\Repo\DomainInterface;
 
 class ProductController extends Controller {
 
+    protected $upload;
 	protected $product;
     protected $categorie;
     protected $order;
@@ -26,7 +29,7 @@ class ProductController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain)
+	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain, UploadInterface $upload)
 	{
         $this->product   = $product;
         $this->categorie = $categorie;
@@ -34,6 +37,7 @@ class ProductController extends Controller {
         $this->attribute = $attribute;
         $this->author    = $author;
         $this->domain    = $domain;
+        $this->upload    = $upload;
 	}
 
 	/**
@@ -86,9 +90,14 @@ class ProductController extends Controller {
      */
     public function store(Request $request)
     {
-        $product  = $this->product->create($request->all());
+        $data = $request->except('file');
+        $file = $this->upload->upload( $request->file('file') , 'files/products');
 
-        return redirect('admin/product')->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
+        $data['image'] = $file['name'];
+
+        $product = $this->product->create($data);
+
+        return redirect('admin/product/'.$product->id)->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
     }
 
     /**
@@ -100,6 +109,15 @@ class ProductController extends Controller {
      */
     public function update(Request $request, $id)
     {
+        $data = $request->except('file');
+        $file = $request->file('file',null);
+
+        if($file)
+        {
+            $file = $this->upload->upload( $request->file('file') , 'files/products');
+            $data['image'] = $file['name'];
+        }
+
         $product  = $this->product->update($request->all());
 
         return redirect('admin/product')->with(array('status' => 'success', 'message' => 'Le produit a été mis à jour' ));
