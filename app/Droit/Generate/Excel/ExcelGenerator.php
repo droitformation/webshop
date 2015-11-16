@@ -22,7 +22,7 @@
      /*
       * Default columns
       **/
-     protected $columns = [
+     public $columns = [
          'civilite_title' ,'name', 'email', 'profession_title','company', 'telephone','mobile', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
      ];
 
@@ -102,16 +102,6 @@
      }
 
      /*
-     * Get pretty names of columns
-     **/
-     public function columnsName()
-     {
-         $names = ['Civilité' ,'Nom et prénom', 'E-mail', 'Profession','Entrprise', 'Téléphone','Mobile', 'Sdresse', 'CP', 'complément d\'adresse','NPA', 'Ville', 'Canton','Pays'];
-
-         return array_intersect_key($names,$this->columns);
-     }
-
-     /*
       * Prepare one row for inscription with all infos
       **/
      public function row($inscription)
@@ -184,17 +174,6 @@
      public function makeRow(&$item,$key)
      {
          $item = '<td>'.$item.'</td>';
-     }
-
-     /*
-    * Each table row
-    **/
-     public function toRowUser($user)
-     {
-         $user = $this->user($user);
-         array_walk($user, array($this, 'makeRow'));
-
-         return $user;
      }
 
      /*
@@ -302,6 +281,19 @@
          {
              $this->dispatch[$option_id][] = $inscription;
          }
+     }
+
+     /*
+      * Order functions
+      * */
+
+     /* Each user row */
+     public function toRowUser($user)
+     {
+         $user = $this->user($user);
+         array_walk($user, array($this, 'makeRow'));
+
+         return implode('',$user);
      }
 
  }

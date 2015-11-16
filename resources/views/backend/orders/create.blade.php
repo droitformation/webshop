@@ -1,54 +1,81 @@
 @extends('backend.layouts.master')
 @section('content')
 
+    <div class="row"><!-- row -->
+        <div class="col-md-12"><!-- col -->
+            <p><a class="btn btn-default" href="{{ url('admin/orders') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste des commandes</a></p>
+        </div>
+    </div>
+
+    <!-- start row -->
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
 
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/product') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
-            </div>
+            <div class="panel panel-magenta">
+                <div class="panel-body">
+                    <h3>Créer une commande</h3>
 
-            <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Ajouter produit</h4>
-                </div>
-                <form action="{{ url('admin/product') }}" method="POST" class="form-horizontal">
-                    {!! csrf_field() !!}
-
-                    <div class="panel-body">
-
+                    <form id="formOrder" class="validate-form" data-validate="parsley">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Titre</label>
-                            <div class="col-sm-3 col-xs-6">
-                                <input type="text" class="form-control" name="title">
-                            </div>
+                            <label><strong>Rechercher un utilisateur</strong></label>
+                            <input id="searchUser" class="form-control" placeholder="Chercher un utilisateur..." type="text">
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Poids</label>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="weight">
-                                    <span class="input-group-addon">grammes</span>
+                        <div id="inputUser"></div>
+
+                        <div id="wrapper_clone_order">
+                            <fieldset class="field_clone_order" id="fieldset_clone_order">
+                                <div class="form-group">
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label>Produit</label>
+                                            <select name="products[]" required class="chosen-select form-control" data-placeholder="produits">
+                                                <option value="">Choix</option>
+                                                @if(!$products->isEmpty())
+                                                    @foreach($products as $product)
+                                                        <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Quantité</label>
+                                            <input class="form-control" name="qty[]">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Livre gratuit</label>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="gratuit[]" value="1"> Oui</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
+                            </fieldset>
                         </div>
+                        <hr/>
+                        <p><a href="#" class="btn btn-sm btn-info pull-right" id="cloneBtnOrder"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un produit</a></p>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Prix</label>
-                            <div class="col-sm-3 col-xs-6">
-                                <input type="text" class="form-control" name="price">
-                            </div>
-                        </div>
+                    </form>
 
-                    </div>
-                    <div class="panel-footer text-right">
-                        <button type="submit" class="btn btn-info">Créer le produit</button>
-                    </div>
-                </form>
+                </div>
             </div>
+
+        </div>
+    </div>
+    <!-- start row -->
+    <div class="row">
+        <div class="col-md-7">
+            <!-- Panel -->
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <div id="choiceUser"></div>
+                    <div id="choiceProducts"></div>
+                    <button type="submit" class="btn btn-info">Valider cette commander</button>
+                </div>
+            </div>
+            <!-- END panel -->
 
         </div>
     </div>

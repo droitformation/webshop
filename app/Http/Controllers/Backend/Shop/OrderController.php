@@ -38,22 +38,26 @@ class OrderController extends Controller {
 	 */
 	public function index(Request $request)
 	{
+
+        $names   = config('columns.names');
+
         $period  = $request->all();
         $status  = $request->input('status',null);
+        $columns = $request->input('columns',$this->generator->columns);
         $export  = $request->input('export',null);
-        $columns = $this->generator->columnsName();
 
         $period['start'] = (!isset($period['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($period['start']) );
         $period['end']   = (!isset($period['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($period['end']) );
 
-        if($export)
-        {
-            $this->export(['start' => $period['start'], 'end' => $period['end'], 'status' => $status]);
-        }
-
         $orders = $this->order->getPeriod($period['start'],$period['end'], $status);
 
-		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns]);
+        if($export)
+        {
+            $this->generator->setColumns($columns);
+            $this->export($orders);
+        }
+
+		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names]);
 	}
 
     /**
@@ -61,16 +65,16 @@ class OrderController extends Controller {
      *
      * @return Response
      */
-    public function export($data)
+    public function export($orders)
     {
-        $orders = $this->order->getPeriod($data['start'], $data['end'], $data['status']);
-
         \Excel::create('Export Commandes', function($excel) use ($orders)
         {
             $excel->sheet('Export_Commandes', function($sheet) use ($orders)
             {
+                $names   = config('columns.names');
+
                 $sheet->setOrientation('landscape');
-                $sheet->loadView('backend.export.orders', ['orders' => $orders]);
+                $sheet->loadView('backend.export.orders', ['orders' => $orders , 'generator' => $this->generator, 'names' => $names]);
             });
         })->export('xls');
     }
@@ -93,7 +97,9 @@ class OrderController extends Controller {
      */
     public function create()
     {
-        return view('backend.products.create');
+        $products = $this->product->getAll();
+
+        return view('backend.orders.create')->with(['products' => $products]);
     }
 
     /**
@@ -106,7 +112,7 @@ class OrderController extends Controller {
     {
         $product  = $this->product->create($request->all());
 
-        return redirect('admin/product')->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
+        return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
     }
 
 
@@ -120,7 +126,7 @@ class OrderController extends Controller {
     {
         $this->product->delete($id);
 
-        return redirect('admin/product')->with(array('status' => 'success' , 'message' => 'Le produit a été supprimé' ));
+        return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'Le produit a été supprimé' ));
     }
 
 }

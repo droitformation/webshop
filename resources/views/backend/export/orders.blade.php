@@ -14,6 +14,10 @@
                 <th>Payé le</th>
                 <th class="text-right">Montant</th>
                 <th class="text-right">Statut</th>
+
+                @foreach($generator->columns as $columns)
+                    <th>{{ $names[$columns] }}</th>
+                @endforeach
             </tr>
             </thead>
             <tbody>
@@ -24,6 +28,9 @@
                         <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
                         <td>{{ $order->price_cents }} CHF</td>
                         <td>{{ $order->status_code['status'] }}</td>
+
+                        {!! $generator->toRowUser($order->user) !!}
+
                     </tr>
                 @endforeach
             </tbody>

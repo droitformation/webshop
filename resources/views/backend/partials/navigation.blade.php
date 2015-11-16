@@ -41,8 +41,11 @@
         <li class="<?php echo (Request::is('admin/product') || Request::is('admin/product/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/product') }}"><i class="fa fa-book"></i> <span>Livres</span></a>
         </li>
-        <li class="<?php echo (Request::is('admin/orders') || Request::is('admin/order/*') ? 'active' : '' ); ?>">
+        <li class="<?php echo (Request::is('admin/orders') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/orders') }}"><i class="fa fa-shopping-cart"></i> <span>Commandes</span></a>
+        </li>
+        <li class="<?php echo (Request::is('admin/order/create') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/order/create') }}"><i class="fa fa-plus-circle"></i> <span>Nouvelle commande</span></a>
         </li>
         <li class="divider"></li>
         <li class="<?php echo (Request::is('admin/coupon') || Request::is('admin/coupon/*') ? 'active' : '' ); ?>">

@@ -26,38 +26,36 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">Statut</span>
                                     <select class="form-control" name="status">
-                                        <option {{ old('status') == 'pending' || !old('status') ? 'selected' : '' }} value="pending">En attente</option>
+                                        <option value="">Tous</option>
+                                        <option {{ old('status') == 'pending' ? 'selected' : '' }} value="pending">En attente</option>
                                         <option {{ old('status') == 'payed' ? 'selected' : '' }} value="payed">Payé</option>
                                         <option {{ old('status') == 'cancelled' ? 'selected' : '' }} value="cancelled">Annulé</option>
                                         <option {{ old('status') == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-3 col-xs-12">
-                                <span class="hidden-lg hidden-md"><hr/></span>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-sort"></i> &nbsp; Trier</button>
-                                    <button class="btn btn-info btn-sm" name="export" value="1" type="submit"><i class="fa fa-download"></i> Télécharger [xls]</button>
-                                </div>
-                            </div>
                         </div>
 
                         <div id="exportOptions">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h5>Champs</h5>
+                            <h4>Champs</h4>
+                            @if(!empty($names))
+                                @foreach($names as $key => $name)
+                                    <div class="checkbox-inline checkbox-border">
+                                        <label>
+                                            <input class="checkbox_all" {{ in_array($key,$columns) ? 'checked' : '' }} value="{{ $key }}" name="columns[]" type="checkbox"> {{ $name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            @endif
+                            <p style="margin-top: 10px;"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
+                            <hr/>
+                        </div>
 
-                                    @if(!empty($columns))
-                                        @foreach($columns as $id => $column)
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="{{ $id }}" name="columns[]" type="checkbox"> {{ $column }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    @endif
-
-                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-default" type="submit"><i class="fa fa-filter"></i> &nbsp; Filtrer la liste</button>
+                                &nbsp;&nbsp;ou&nbsp;&nbsp;
+                                <button class="btn btn-primary" name="export" value="1" type="submit"><i class="fa fa-download"></i> Télécharger [xls]</button>
                             </div>
                         </div>
 
