@@ -41,14 +41,15 @@
         <li class="<?php echo (Request::is('admin/product') || Request::is('admin/product/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/product') }}"><i class="fa fa-book"></i> <span>Livres</span></a>
         </li>
+        <li class="<?php echo (Request::is('admin/orders') || Request::is('admin/order/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/orders') }}"><i class="fa fa-shopping-cart"></i> <span>Commandes</span></a>
+        </li>
+        <li class="divider"></li>
         <li class="<?php echo (Request::is('admin/coupon') || Request::is('admin/coupon/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/coupon') }}"><i class="fa fa-star"></i> <span>Coupons</span></a>
         </li>
         <li class="<?php echo (Request::is('admin/shipping') || Request::is('admin/shipping/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/shipping') }}"><i class="fa fa-truck"></i> <span>Frais de port</span></a>
-        </li>
-        <li class="<?php echo (Request::is('admin/orders') || Request::is('admin/order/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/orders') }}"><i class="fa fa-shopping-cart"></i> <span>Commandes</span></a>
         </li>
         <li class="nav-title">Sites</li>
         <li class="<?php echo (Request::is('admin/contenu') ? 'active' : '' ); ?>"><a href="{{ url('admin/contenu') }}"><i class="fa fa-reorder"></i> <span>Contenus</span></a></li>

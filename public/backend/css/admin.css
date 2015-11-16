@@ -17,6 +17,21 @@ a{
 .table-responsive {
     overflow: hidden;
 }
+
+.inscription_wrapper table tr td{
+    line-height: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.inscription_wrapper p{
+    margin-bottom: 2px;
+}
+
+.divider-hidden{
+    border-width:0;
+}
+
 .collapse_anchor i{
     padding-right: 5px;
 }

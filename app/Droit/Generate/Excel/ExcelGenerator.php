@@ -102,6 +102,16 @@
      }
 
      /*
+     * Get pretty names of columns
+     **/
+     public function columnsName()
+     {
+         $names = ['Civilité' ,'Nom et prénom', 'E-mail', 'Profession','Entrprise', 'Téléphone','Mobile', 'Sdresse', 'CP', 'complément d\'adresse','NPA', 'Ville', 'Canton','Pays'];
+
+         return array_intersect_key($names,$this->columns);
+     }
+
+     /*
       * Prepare one row for inscription with all infos
       **/
      public function row($inscription)
@@ -158,11 +168,11 @@
      /*
      * Get user infos
      **/
-     public function user($inscription){
-         
+     public function user($model)
+     {
          foreach($this->columns as $column)
          {
-             $user[$column] = (isset($inscription->adresse_facturation->$column) ? trim($inscription->adresse_facturation->$column) : '');
+             $user[$column] = (isset($model->adresse_facturation->$column) ? trim($model->adresse_facturation->$column) : '');
          }
 
          return $user;
@@ -174,6 +184,17 @@
      public function makeRow(&$item,$key)
      {
          $item = '<td>'.$item.'</td>';
+     }
+
+     /*
+    * Each table row
+    **/
+     public function toRowUser($user)
+     {
+         $user = $this->user($user);
+         array_walk($user, array($this, 'makeRow'));
+
+         return $user;
      }
 
      /*

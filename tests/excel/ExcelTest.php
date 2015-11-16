@@ -195,4 +195,28 @@ class ExcelTest extends TestCase {
         $this->assertEquals($expect,$array);
     }
 
+    public function testMakeUserRowForTable()
+    {
+        $worker = new App\Droit\Generate\Excel\ExcelGenerator();
+
+        $user    = factory(App\Droit\User\Entities\User::class)->make();
+        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->make([
+            'id'         => 1,
+            'first_name' => 'Céline',
+            'last_name'  => 'Leschaud',
+            'type'       => 1
+        ]);
+
+        $adresses = new \Illuminate\Support\Collection([$adresse]);
+
+        $user->adresses = $adresses;
+
+        $expect = ['name' => '<td>Céline Leschaud</td>'];
+
+        $actual = $worker->toRowUser($user);
+
+        $this->assertContains('<td>Céline Leschaud</td>',$actual);
+        $this->assertArrayHasKey('name',$actual);
+    }
+
 }

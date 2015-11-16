@@ -27,6 +27,17 @@ class Helper {
 	
         return $formatDate;
     }
+
+    public function formatTwoDates($start,$end)
+    {
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+        $month  = ($start->month == $end->month ? '%d' : '%d %B');
+        $year   = ($start->year ==  $end->year ? '' : '%Y');
+        $format = $month.' '.$year;
+
+        return $start->formatLocalized($format).' au '.$end->formatLocalized('%d %B %Y');
+    }
     
     //created_at field in DB
 	public function getCreatedAtAttribute($value) { 

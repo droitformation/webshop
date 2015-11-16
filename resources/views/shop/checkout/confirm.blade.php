@@ -97,21 +97,16 @@
     </div>
 </div>
 
-
 <ul class="pager">
     <li class="previous"><a href="{{ url('checkout/resume') }}"><span aria-hidden="true">&larr;</span> Retour</a></li>
     <li class="next next-commander">
-
         <a id="btn-invoice" class="doAction btn-commande" data-checked="true" data-what="envoyer" data-action="la commande" href="{{ url('checkout/send') }}">
-            Envoyer la commande &nbsp;
-            <span class="glyphicon glyphicon-ok"></span>
+            Envoyer la commande &nbsp;<span class="glyphicon glyphicon-ok"></span>
         </a>
 
         <a id="btn-stripe" style="display: none;" class="btn-commande" data-toggle="modal" data-target="#payment-stripe">
-            Payer la commande &nbsp;
-            <span class="glyphicon glyphicon-ok"></span>
+            Payer la commande &nbsp;<span class="glyphicon glyphicon-ok"></span>
         </a>
-
     </li>
 </ul>
 

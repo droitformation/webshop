@@ -14,6 +14,7 @@ class OrderController extends Controller {
 	protected $product;
     protected $categorie;
     protected $order;
+    protected $generator;
 
 	/**
 	 * Create a new controller instance.
@@ -25,6 +26,7 @@ class OrderController extends Controller {
         $this->product   = $product;
         $this->categorie = $categorie;
         $this->order     = $order;
+        $this->generator = new \App\Droit\Generate\Excel\ExcelGenerator();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
@@ -36,15 +38,13 @@ class OrderController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-        $period = $request->all();
-        $status = $request->input('status',null);
-        $export = $request->input('export',null);
+        $period  = $request->all();
+        $status  = $request->input('status',null);
+        $export  = $request->input('export',null);
+        $columns = $this->generator->columnsName();
 
-        if(empty($period))
-        {
-            $period['start']  = \Carbon\Carbon::now()->startOfMonth();
-            $period['end']    = \Carbon\Carbon::now()->endOfMonth();
-        }
+        $period['start'] = (!isset($period['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($period['start']) );
+        $period['end']   = (!isset($period['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($period['end']) );
 
         if($export)
         {
@@ -53,9 +53,7 @@ class OrderController extends Controller {
 
         $orders = $this->order->getPeriod($period['start'],$period['end'], $status);
 
-        $request->flash();
-
-		return view('backend.orders.index')->with(['orders' => $orders]);
+		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns]);
 	}
 
     /**
