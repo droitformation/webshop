@@ -274,6 +274,10 @@ a:hover, a:active, a:focus {
     margin-bottom: 5px;
 }
 
+.form-required{
+    border:1px solid #ffaeae;
+}
+
 #adresseParent{
     margin: 5px 0 25px 0;
 }

@@ -108,7 +108,7 @@ class OrderController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateOrderRequest $request)
     {
         echo '<pre>';
         print_r($request->all());
