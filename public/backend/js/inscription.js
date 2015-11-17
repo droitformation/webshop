@@ -8,12 +8,22 @@ $( "#searchUser" ).autocomplete({
     select: function( event, ui )
     {
         $('#inputUser').html('<input type="hidden" value="' + ui.item.value + '" name="user_id">');
+
+        var company = ui.item.adresse.company ? ui.item.adresse.company + '<br/>' : '';
+        var cp      = ui.item.cp ? ui.item.cp + '<br/>' : '';
+        var compl   = ui.item.adresse.complement ? ui.item.adresse.complement + '<br/>' : '';
+
         $('#choiceUser').html(
             '<h4><strong>Utilisateur</strong></h4>'
+            + '<p><a id="removeUser" class="btn btn-danger btn-xs">Retirer</a></p>'
             + '<address>'
-            +  ui.item.label + '<br/>' + ui.item.adresse.adresse + '<br/>' + ui.item.adresse.npa + ' ' + ui.item.adresse.ville
+            +  ui.item.adresse.civilite.title + '<br/>'
+            +  company
+            +  ui.item.label + '<br/>'
+            +  ui.item.adresse.adresse + '<br/>'
+            +  compl + cp
+            +  ui.item.adresse.npa + ' ' + ui.item.adresse.ville
             + '</address>'
-            + '<a id="removeUser" class="btn btn-danger btn-xs">Retirer</a>'
         );
 
         $(this).val('');
@@ -62,7 +72,6 @@ $('#formInscription').on('submit', function (e) {
  * Product add to new order
  * */
 
-
 $('.chosen-select').chosen();
 
 $('body').on("click", '#cloneBtnOrder' ,function(e) {
@@ -74,18 +83,15 @@ $('body').on("click", '#cloneBtnOrder' ,function(e) {
     e.stopPropagation();
 
     var clone = $fieldset_clone.clone();
+    clone.find('input').val('');
+    var select = clone.find('.chosen-select');
+
+    $(select).removeClass("chzn-done").removeAttr("id").css("display", "block").next().remove();
 
     clone.attr('id', '');
-    clone.prepend('<a href="#" class="remove_order">x</a>');
     clone.appendTo($wrapper_clone);
 
-});
-
-$('body').on("focusout", '#formOrder' ,function(e) {
-
-    var products = $('.field_clone_order');
-    console.log(products);
-    $('#choiceProducts').html();
+    select.chosen();
 
 });
 

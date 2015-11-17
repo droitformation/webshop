@@ -496,6 +496,7 @@ class Helper {
                     'label'   => $result->name ,
                     'desc'    => $result->email,
                     'adresse' => $result->adresse_facturation,
+                    'cp'      => $result->adresse_facturation->cp_trim,
                     'value'   => $result->id
                 ];
             }

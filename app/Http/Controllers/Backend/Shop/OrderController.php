@@ -110,6 +110,10 @@ class OrderController extends Controller {
      */
     public function store(Request $request)
     {
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';exit;
+
         $product  = $this->product->create($request->all());
 
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));

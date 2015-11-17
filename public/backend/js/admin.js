@@ -420,4 +420,23 @@ $( function() {
         }
     });*/
 
+    var $adresse = $('#adresseParent');
+
+    $adresse.on('show','.collapse', function() {
+        console.log($(this));
+        $adresse.find('.collapse.in').collapse('hide');
+    });
+
+    $('#adresseParent').find('.accordion-toggle').click(function()
+    {
+        var $toggle = $(this).data('toggle');
+
+        console.log($toggle);
+        //Expand or collapse this panel
+        $('#'+$toggle).slideToggle('fast');
+        //Hide the other panels
+        $(".collapse").not( $('#'+$toggle) ).slideUp('fast');
+    });
+
+
 });

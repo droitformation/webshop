@@ -63,7 +63,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             {
                 if ($adresse->type == 1)
                 {
-                    $adresse->load('canton','profession','specialisations');
+                    $adresse->load('canton','profession','specialisations','civilite');
 
                     return true;
                 }
