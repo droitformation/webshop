@@ -9,6 +9,8 @@ use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 use App\Droit\Shop\Cart\Repo\CartInterface;
 use App\Droit\User\Repo\UserInterface;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Droit\Generate\Pdf\PdfGeneratorInterface;
+
 use App\Jobs\CreateOrderInvoice;
 
 class OrderWorker implements OrderWorkerInterface{
@@ -19,16 +21,18 @@ class OrderWorker implements OrderWorkerInterface{
     protected $cart;
     protected $worker;
     protected $user;
+    protected $generator;
 
-    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart)
+    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator)
     {
         $this->order     = $order;
         $this->cart      = $cart;
         $this->worker    = $worker;
         $this->user      = $user;
+        $this->generator = $generator;
     }
 
-    public function make($shipping,$coupon = null)
+    public function make($shipping,$coupon = null, $admin = null)
     {
         $user = $this->user->find(\Auth::user()->id);
 
@@ -47,11 +51,68 @@ class OrderWorker implements OrderWorkerInterface{
 
         // Create invoice for order
         $job = (new CreateOrderInvoice($order));
-
         $this->dispatch($job);
 
         return $order;
 
+    }
+
+    public function makeAdmin($commande)
+    {
+        // TODO Find shipping
+
+        // TODO Find coupon if any
+
+        $commande = [
+            'user_id'     => $commande['user_id'],
+            'adresse_id'  => (isset($commande['adresse_id']) ? $commande['adresse_id'] : null),
+            'order_no'    => $this->newOrderNumber(),
+            'amount'      =>  \Cart::total() * 100,
+            'coupon_id'   => (isset($commande['coupon_id']) ? $commande['coupon_id'] : null),
+            'shipping_id' => $commande['shipping_id'],
+            'payement_id' => 1,
+            'products'    => $this->productIdFromForm($commande['products'])
+        ];
+
+        // Order global
+        $order = $this->insertOrder($commande);
+
+        if(isset($commande['tva']))
+        {
+            $this->generator->setTva($commande['tva']);
+        }
+
+        if(isset($commande['free']) && $commande['free'])
+        {
+            session(['noShipping' => 'noShipping']);
+        }
+
+        // Create invoice for order
+        $this->generator->factureOrder($order->id);
+
+        return $order;
+    }
+
+    public function productIdFromForm($commande)
+    {
+        $qty = $commande['qty'];
+
+        foreach($commande['products'] as $index => $product)
+        {
+            if($qty[$index] > 1)
+            {
+                for($x = 0; $x < $qty[$index]; $x++)
+                {
+                    $ids[] = $product;
+                }
+            }
+            else
+            {
+                $ids[] = $product->id;
+            }
+        }
+
+        return $ids;
     }
 
     public function insertOrder($commande){

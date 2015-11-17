@@ -1,12 +1,14 @@
 <?php namespace App\Droit\Generate\Pdf;
 
 use Carbon\Carbon;
+use App\Droit\Shop\Order\Repo\OrderInterface;
+use App\Droit\User\Repo\UserInterface;
 
-class PdfGenerator
+class PdfGenerator implements PdfGeneratorInterface
 {
     protected $order;
-    protected $inscription;
     protected $user;
+    protected $inscription;
     protected $now;
 
     public $stream = false;
@@ -31,19 +33,21 @@ class PdfGenerator
         'ville'   => '2000 Neuchâtel'
     ];
 
-    public $tva = [
-        'numero'      => 'CHE-115.251.043 TVA',
-        'taux_réduit' => 'Taux 2.5% inclus pour les livres',
-        'taux_normal' => 'Taux 8% pour les autres produits'
-    ];
+    public $tva;
 
     public $signature = 'Le secrétariat de la Faculté de droit';
 
-    public function __construct()
+    public function __construct(OrderInterface $order, UserInterface $user)
     {
-        $this->order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-        $this->user  = \App::make('App\Droit\User\Repo\UserInterface');
+        $this->order = $order;
+        $this->user  = $user;
+
         $this->now   = Carbon::now()->formatLocalized('%d %B %Y');
+
+        $this->tva = [
+            'taux_reduit' => \Registry::get('shop.taux_réduit'),
+            'taux_normal' => \Registry::get('shop.taux_normal')
+        ];
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -57,11 +61,29 @@ class PdfGenerator
         $this->messages[$type] = $message;
     }
 
+    /*
+     * Set taux tva
+     * Type: warning,special,message,remerciements
+     */
+    public function setTva($tva)
+    {
+        $this->tva = $tva;
+    }
+
     public function factureOrder($order_id)
     {
         $order = $this->order->find($order_id);
         $order->load('products','user','shipping','payement');
-        $order->user->load('adresses');
+
+        if($order->user_id)
+        {
+            $order->user->load('adresses');
+            $adresse = $order->user->adresse_facturation;
+        }
+        else
+        {
+            $adresse = $order->adresse;
+        }
 
         $products = $order->products->groupBy('id');
         $msgTypes = ['warning','special','remarque','signature'];
@@ -74,9 +96,13 @@ class PdfGenerator
                 'centre' => $this->centre,
                 'texte'  => $this->motif,
             ],
-            'tva'       => $this->tva,
+            'tva' => [
+                'taux_reduit' => 'Taux '.$this->tva['taux_réduit'].'% inclus pour les livres',
+                'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
+            ],
             'compte'    => $this->compte,
             'order'     => $order,
+            'adresse'   => $adresse,
             'products'  => $products,
             'msgTypes'  => $msgTypes,
             'date'      => $this->now

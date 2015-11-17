@@ -14,7 +14,6 @@ class CreateOrderInvoice extends Job implements SelfHandling, ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $order;
-    protected $generator;
 
     /**
      * Create a new job instance.
@@ -24,7 +23,6 @@ class CreateOrderInvoice extends Job implements SelfHandling, ShouldQueue
     public function __construct(Order $order)
     {
         $this->order = $order;
-
     }
 
     /**
@@ -34,10 +32,7 @@ class CreateOrderInvoice extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-        $order  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-        $user   = \App::make('App\Droit\User\Repo\UserInterface');
-
-        $generator = new \App\Droit\Generate\Pdf\PdfGenerator($order,$user);
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
         // Generate invoice
         $generator->factureOrder($this->order->id);

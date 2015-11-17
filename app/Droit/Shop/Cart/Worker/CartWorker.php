@@ -55,8 +55,8 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
-     public function setShipping(){
-
+     public function setShipping()
+     {
          $weight = (\Session::has('noShipping') ? null : $this->orderWeight);
 
          $this->orderShipping = $this->shipping->getShipping($weight);
@@ -64,8 +64,8 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
-     public function getShipping(){
-
+     public function getShipping()
+     {
          $shipping = $this->shipping->getShipping($this->orderWeight);
 
          return $shipping;

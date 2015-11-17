@@ -3,7 +3,7 @@
 
 <div ng-app="upload"><!-- App -->
     <form action="{{ url('admin/config') }}" method="POST" class="form" enctype="multipart/form-data"
-          flow-init="{query: {'path' : 'files/main', '_token': <?php echo csrf_token(); ?> }}"
+          flow-init="{query: {'path' : 'files/main', '_token': '<?php echo csrf_token(); ?>' }}"
           flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
           flow-files-submitted="$flow.upload()">
          {!! csrf_field() !!}
@@ -54,6 +54,20 @@
                             <div class="form-group">
                                 <label><strong>N° de TVA</strong></label>
                                 <input type="text" class="form-control" name="shop[infos][tva]" value="{!! Registry::get('shop.infos.tva')!!}">
+                            </div>
+                            <div class="form-group">
+                                <label><strong>TVA taux réduit</strong></label>
+                                <div class="input-group col-md-3">
+                                    <input type="text" class="form-control" name="shop[infos][taux_réduit]" value="{!! Registry::get('shop.infos.taux_réduit')!!}">
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>TVA taux normal</strong></label>
+                                <div class="input-group col-md-3">
+                                    <input type="text" class="form-control" name="shop[infos][taux_normal]" value="{!! Registry::get('shop.infos.taux_normal')!!}">
+                                    <span class="input-group-addon">%</span>
+                                </div>
                             </div>
                         </div>
                     </div>

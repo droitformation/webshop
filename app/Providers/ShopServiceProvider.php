@@ -32,6 +32,7 @@ class ShopServiceProvider extends ServiceProvider {
 
         $this->registerOrderWorkerService();
         $this->registerCartWorkerService();
+        $this->registerPdfGeneratorService();
 	}
 
     /**
@@ -136,7 +137,8 @@ class ShopServiceProvider extends ServiceProvider {
                 \App::make('App\Droit\Shop\Order\Repo\OrderInterface'),
                 \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface'),
                 \App::make('App\Droit\User\Repo\UserInterface'),
-                \App::make('App\Droit\Shop\Cart\Repo\CartInterface')
+                \App::make('App\Droit\Shop\Cart\Repo\CartInterface'),
+                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface')
             );
         });
     }
@@ -152,6 +154,20 @@ class ShopServiceProvider extends ServiceProvider {
                 \App::make('App\Droit\Shop\Product\Repo\ProductInterface'),
                 \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface'),
                 \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface')
+            );
+        });
+    }
+
+    /**
+     * PdfGenerator
+     */
+    protected function registerPdfGeneratorService(){
+
+        $this->app->singleton('App\Droit\Generate\Pdf\PdfGeneratorInterface', function()
+        {
+            return new \App\Droit\Generate\Pdf\PdfGenerator(
+                \App::make('App\Droit\Shop\Order\Repo\OrderInterface'),
+                \App::make('App\Droit\User\Repo\UserInterface')
             );
         });
     }

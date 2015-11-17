@@ -54,7 +54,8 @@ class OrderEloquent implements OrderInterface{
     public function create(array $data){
 
         $order = $this->order->create(array(
-            'user_id'     => $data['user_id'],
+            'user_id'     => ($data['user_id'] ? $data['user_id'] : null),
+            'adresse_id'  => ($data['adresse_id'] ? $data['adresse_id'] : null),
             'coupon_id'   => $data['coupon_id'],
             'shipping_id' => $data['shipping_id'],
             'payement_id' => $data['payement_id'],

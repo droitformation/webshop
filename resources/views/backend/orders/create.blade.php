@@ -11,14 +11,14 @@
     <div class="row">
         <div class="col-md-9">
 
-            <div class="panel panel-magenta">
+            <div class="panel panel-primary">
                 <form id="formOrder" action="{{ url('admin/order') }}" class="validate-form" data-validate="parsley" method="POST">
                     {!! csrf_field() !!}
                     <div class="panel-body">
                         <h3>Créer une commande</h3>
 
                             <div id="adresseParent">
-                                <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher une adresse</a>
+                                <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher un utilisateur</a>
                                 <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter une adresse</a>
 
                                 <div class="collapse" id="adresseFind">
@@ -29,7 +29,7 @@
                                 <div class="collapse" id="adresseMake">
                                     <div class="row">
                                         @include('backend.orders.partials.adresse')
-                                    </div><hr/>
+                                    </div>
                                 </div>
                             </div>
 
@@ -43,7 +43,7 @@
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <label>Produit</label>
-                                                <select name="products[]" required class="chosen-select form-control" data-placeholder="produits">
+                                                <select name="order[products][]" required class="chosen-select form-control" data-placeholder="produits">
                                                     <option value="">Choix</option>
                                                     @if(!$products->isEmpty())
                                                         @foreach($products as $product)
@@ -54,12 +54,12 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Quantité</label>
-                                                <input class="form-control" name="qty[]">
+                                                <input class="form-control" name="order[qty][]">
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Livre gratuit</label>
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="gratuit[]" value="1"> Oui</label>
+                                                    <label><input type="checkbox" name="order[gratuit][]" value="1"> Oui</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
@@ -71,27 +71,38 @@
                                     </div>
                                 </fieldset>
                             </div>
+                            <p><a href="#" class="btn btn-sm btn-default" id="cloneBtnOrder"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un produit</a></p>
                             <hr/>
-                            <p><a href="#" class="btn btn-sm btn-warning pull-right" id="cloneBtnOrder"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un produit</a></p>
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            &nbsp; <i class="fa fa-truck"></i>&nbsp; Frais de port gratuit &nbsp;<input type="checkbox" name="order[free]" value="1">
+                                        </label>
+                                    </div>
+                                </div>
+                                <label>Modifier les taux de tva</label><br/>
+                                <div class="form-group row">
+                                    <div class="col-md-2 col-xs-3">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" name="order[tva][taux_reduit]" value="" placeholder="Réduit">
+                                            <span class="input-group-addon">%</span>
+                                        </div><!-- /input-group -->
+                                    </div>
+                                    <div class="col-md-2 col-xs-3">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" name="order[tva][taux_normal]" value="" placeholder="Normal">
+                                            <span class="input-group-addon">%</span>
+                                        </div><!-- /input-group -->
+                                    </div>
+                                </div>
+                            </fieldset>
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-info">Valider cette commander</button>
+                        <button type="submit" class="btn btn-info">Valider la commande</button>
                     </div>
                 </form>
             </div>
-
-        </div>
-    </div>
-    <!-- start row -->
-    <div class="row">
-        <div class="col-md-7">
-            <!-- Panel -->
-            <div class="panel panel-info">
-                <div class="panel-body">
-
-                </div>
-            </div>
-            <!-- END panel -->
 
         </div>
     </div>

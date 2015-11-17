@@ -283,5 +283,11 @@ a:hover, a:active, a:focus {
 }
 
 #adresseMake,#adresseFind{
-    padding: 20px 0 0 0;
+    border: 1px solid #eee;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+#adresseFind {
+    padding-bottom: 0px;
 }

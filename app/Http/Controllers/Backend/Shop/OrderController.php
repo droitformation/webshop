@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Backend\Shop;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\CreateOrderRequest;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
+use App\Droit\Shop\Order\Worker\OrderWorkerInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
+use App\Droit\Adresse\Repo\AdresseInterface;
 
 class OrderController extends Controller {
 
@@ -15,17 +17,22 @@ class OrderController extends Controller {
     protected $categorie;
     protected $order;
     protected $generator;
+    protected $worker;
+    protected $adresse;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order)
+	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order, OrderWorkerInterface $worker, AdresseInterface $adresse)
 	{
         $this->product   = $product;
         $this->categorie = $categorie;
         $this->order     = $order;
+        $this->worker    = $worker;
+        $this->adresse   = $adresse;
+
         $this->generator = new \App\Droit\Generate\Excel\ExcelGenerator();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -114,7 +121,25 @@ class OrderController extends Controller {
         print_r($request->all());
         echo '</pre>';exit;
 
-        $product  = $this->product->create($request->all());
+        $user_id = $request->input('user_id',null);
+        $order   = $request->input('order');
+        $adresse = $request->input('adresse');
+
+        if(!$user_id)
+        {
+            $adresse = $this->adresse->create($adresse);
+            $data['adresse_id']  = $adresse->id;
+        }
+        else
+        {
+            $data['user_id']  = $user_id;
+        }
+
+        $data['products'] = $order;
+
+        $order = $this->worker->makeAdmin($data);
+
+        $product = $this->product->create($request->all());
 
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
     }

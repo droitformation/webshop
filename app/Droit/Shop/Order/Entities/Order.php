@@ -11,7 +11,7 @@ class Order extends Model{
 
     protected $dates = ['deleted_at','payed_at'];
 
-    protected $fillable = ['user_id', 'coupon_id', 'payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl'];
+    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl'];
 
     public function getPriceCentsAttribute()
     {
@@ -83,6 +83,11 @@ class Order extends Model{
     public function user()
     {
         return $this->belongsTo('App\Droit\User\Entities\User');
+    }
+
+    public function adresse()
+    {
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse');
     }
 
     public function shipping()

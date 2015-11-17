@@ -28,13 +28,11 @@
                 <td align="top" width="40%" valign="top">
                     <?php
 
-                        $adresse = $order->user->adresse_facturation;
-
                         if($adresse)
                         {
                             echo '<ul id="user">';
                             echo (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '');
-                            echo '<li>'.$adresse->civilite_title.' '.$order->user->name.'</li>';
+                            echo '<li>'.$adresse->civilite_title.' '.$adresse->name.'</li>';
                             echo '<li>'.$adresse->adresse.'</li>';
                             echo (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '');
                             echo (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '');
@@ -54,8 +52,10 @@
             <tr>
                 <td width="59%" align="top" valign="top"  class="misc-infos">
                     <?php
-                    if(!empty($tva)){
+                    if(!empty($tva))
+                    {
                         echo '<ul id="tva">';
+                        echo \Registry::get('shop.tva').' TVA';
                         foreach($tva as $line){
                             echo '<li>'.$line.'</li>';
                         }
