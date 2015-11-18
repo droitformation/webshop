@@ -45,8 +45,8 @@ class PdfGenerator implements PdfGeneratorInterface
         $this->now   = Carbon::now()->formatLocalized('%d %B %Y');
 
         $this->tva = [
-            'taux_reduit' => \Registry::get('shop.taux_réduit'),
-            'taux_normal' => \Registry::get('shop.taux_normal')
+            'taux_reduit' => \Registry::get('shop.infos.taux_reduit'),
+            'taux_normal' => \Registry::get('shop.infos.taux_normal')
         ];
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -97,7 +97,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'texte'  => $this->motif,
             ],
             'tva' => [
-                'taux_reduit' => 'Taux '.$this->tva['taux_réduit'].'% inclus pour les livres',
+                'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres',
                 'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
             ],
             'compte'    => $this->compte,

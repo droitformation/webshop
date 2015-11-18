@@ -51,12 +51,32 @@ class OrderEloquent implements OrderInterface{
         return $this->order->with(['products','user','coupon','shipping'])->find($id);
     }
 
+
+    public function newOrderNumber()
+    {
+        $lastid = 1;
+        $year   = date("Y");
+        $last   = $this->maxOrder($year);
+
+        if($last)
+        {
+            list($y, $lastid) = explode('-', $last->order_no);
+            $lastid = intval($lastid) + 1;
+        }
+
+        // Build order number
+        $order_no  = str_pad($lastid, 8, '0', STR_PAD_LEFT);
+        $order_no  = $year.'-'.$order_no;
+
+        return $order_no;
+    }
+
     public function create(array $data){
 
         $order = $this->order->create(array(
             'user_id'     => ($data['user_id'] ? $data['user_id'] : null),
             'adresse_id'  => ($data['adresse_id'] ? $data['adresse_id'] : null),
-            'coupon_id'   => $data['coupon_id'],
+            'coupon_id'   => ($data['coupon_id'] ? $data['coupon_id'] : null),
             'shipping_id' => $data['shipping_id'],
             'payement_id' => $data['payement_id'],
             'amount'      => $data['amount'],
@@ -68,10 +88,20 @@ class OrderEloquent implements OrderInterface{
             return false;
         }
 
+        // All products for order isFree
         if(!empty($data['products']))
         {
-            // All products for order
-            $order->products()->attach($data['products_id']);
+            if(isset($data['admin']))
+            {
+                foreach($data['products'] as $product)
+                {
+                    $order->products()->attach($product);
+                }
+            }
+            else
+            {
+                $order->products()->attach($data['products']);
+            }
         }
 
         return $order;

@@ -43,7 +43,7 @@ class Product extends Model{
 
     public function orders()
     {
-        return $this->belongsToMany('App\Droit\Shop\Order\Entities\Order', 'shop_order_products','product_id', 'order_id');
+        return $this->belongsToMany('App\Droit\Shop\Order\Entities\Order', 'shop_order_products','product_id', 'order_id')->withPivot('isFree');
     }
 
 }

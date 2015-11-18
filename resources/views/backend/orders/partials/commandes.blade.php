@@ -54,10 +54,25 @@
                                             </thead>
                                             <tbody>
                                             @foreach($grouped as $product)
+                                                <?php
+                                                    // Is the product free?
+                                                    $price_sum = $product->reject(function ($item) {
+                                                        return $item->pivot->isFree;
+                                                    })->sum('price_cents');
+
+                                                    $prod_free = $product->filter(function ($item) {
+                                                        return $item->pivot->isFree;
+                                                    });
+                                                ?>
                                                 <tr>
-                                                    <td width="10%"><p class="text-left" style="width:70px;margin-right: 20px;">{{ $product->count() }} x</p></td>
-                                                    <td width="75%"><a href="{{ url('admin/product/'.$product->first()->id) }}">{{ $product->first()->title }}</a></td>
-                                                    <td width="15%"><p class="text-right">{{ $product->first()->price_cents }} CHF</p></td>
+                                                    <td width="10%" valign="top"><p class="text-left" style="width:70px;margin-right: 20px;">{{ $product->count() }} x</p></td>
+                                                    <td width="75%" valign="top">
+                                                        <a href="{{ url('admin/product/'.$product->first()->id) }}">{{ $product->first()->title }}</a>
+                                                        @if(!$prod_free->isEmpty())
+                                                            <br/><small>Dont livres gratuits : {{ $prod_free->count() }}</small>
+                                                        @endif
+                                                    </td>
+                                                    <td width="15%" valign="top"><p class="text-right">{{ $price_sum }} CHF</p></td>
                                                 </tr>
                                             @endforeach
                                             <tr><td colspan="3" style="line-height: 9px;">&nbsp;</td></tr>

@@ -9,7 +9,7 @@
 
     <!-- start row -->
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-11">
 
             <div class="panel panel-primary">
                 <form id="formOrder" action="{{ url('admin/order') }}" class="validate-form" data-validate="parsley" method="POST">
@@ -41,7 +41,7 @@
                                     <div class="form-group">
 
                                         <div class="row">
-                                            <div class="col-md-7">
+                                            <div class="col-lg-7 col-md-6 col-xs-12">
                                                 <label>Produit</label>
                                                 <select name="order[products][]" required class="chosen-select form-control" data-placeholder="produits">
                                                     <option value="">Choix</option>
@@ -52,17 +52,24 @@
                                                     @endif
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-lg-1 col-md-2 col-xs-12">
                                                 <label>Quantité</label>
                                                 <input class="form-control" name="order[qty][]">
                                             </div>
-                                            <div class="col-md-2">
-                                                <label>Livre gratuit</label>
+                                            <div class="col-lg-1 col-md-2 col-xs-12">
+                                                <label>Rabais</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" name="order[rabais][]">
+                                                    <span class="input-group-addon">%</span>
+                                                </div><!-- /input-group -->
+                                            </div>
+                                            <div class="col-lg-2 col-md-1 col-xs-12">
+                                                <label></label>
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="order[gratuit][]" value="1"> Oui</label>
+                                                    <label><input type="checkbox" name="order[gratuit][]" value="1"> Livre gratuit</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-lg-1 col-md-1 col-xs-12 text-right">
                                                 <label>&nbsp;</label>
                                                 <p><a href="#" class="btn btn-danger btn-sm remove_order">x</a></p>
                                             </div>

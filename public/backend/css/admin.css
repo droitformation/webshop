@@ -267,6 +267,11 @@ a:hover, a:active, a:focus {
     outline: 0;
 }
 
+.input-group-addon {
+    min-width: 30px;
+    padding: 7px 4px;
+}
+
 .card{
     padding: 10px;
     border: 1px solid #f2f2f2;

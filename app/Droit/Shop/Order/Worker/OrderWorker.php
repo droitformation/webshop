@@ -22,6 +22,7 @@ class OrderWorker implements OrderWorkerInterface{
     protected $worker;
     protected $user;
     protected $generator;
+    protected $product;
 
     public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator)
     {
@@ -38,7 +39,7 @@ class OrderWorker implements OrderWorkerInterface{
 
         $commande = [
             'user_id'     => $user->id,
-            'order_no'    => $this->newOrderNumber(),
+            'order_no'    => $this->order->newOrderNumber(),
             'amount'      =>  \Cart::total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
             'shipping_id' => $shipping->id,
@@ -55,64 +56,6 @@ class OrderWorker implements OrderWorkerInterface{
 
         return $order;
 
-    }
-
-    public function makeAdmin($commande)
-    {
-        // TODO Find shipping
-
-        // TODO Find coupon if any
-
-        $commande = [
-            'user_id'     => $commande['user_id'],
-            'adresse_id'  => (isset($commande['adresse_id']) ? $commande['adresse_id'] : null),
-            'order_no'    => $this->newOrderNumber(),
-            'amount'      =>  \Cart::total() * 100,
-            'coupon_id'   => (isset($commande['coupon_id']) ? $commande['coupon_id'] : null),
-            'shipping_id' => $commande['shipping_id'],
-            'payement_id' => 1,
-            'products'    => $this->productIdFromForm($commande['products'])
-        ];
-
-        // Order global
-        $order = $this->insertOrder($commande);
-
-        if(isset($commande['tva']))
-        {
-            $this->generator->setTva($commande['tva']);
-        }
-
-        if(isset($commande['free']) && $commande['free'])
-        {
-            session(['noShipping' => 'noShipping']);
-        }
-
-        // Create invoice for order
-        $this->generator->factureOrder($order->id);
-
-        return $order;
-    }
-
-    public function productIdFromForm($commande)
-    {
-        $qty = $commande['qty'];
-
-        foreach($commande['products'] as $index => $product)
-        {
-            if($qty[$index] > 1)
-            {
-                for($x = 0; $x < $qty[$index]; $x++)
-                {
-                    $ids[] = $product;
-                }
-            }
-            else
-            {
-                $ids[] = $product->id;
-            }
-        }
-
-        return $ids;
     }
 
     public function insertOrder($commande){
@@ -161,25 +104,6 @@ class OrderWorker implements OrderWorkerInterface{
         }
 
         return $ids;
-    }
-
-    public function newOrderNumber(){
-
-        $lastid = 1;
-        $year   = date("Y");
-        $last   = $this->order->maxOrder($year);
-
-        if($last)
-        {
-            list($y, $lastid) = explode('-', $last->order_no);
-            $lastid = intval($lastid) + 1;
-        }
-
-        // Build order number
-        $order_no  = str_pad($lastid, 8, '0', STR_PAD_LEFT);
-        $order_no  = $year.'-'.$order_no;
-
-        return $order_no;
     }
 
 }

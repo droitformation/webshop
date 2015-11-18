@@ -102,13 +102,32 @@
                 {
                     foreach($products as $product_id => $product)
                     {
+                        // Is the product free?
+                        $price_unit = $product->reject(function ($item) {
+                            return $item->pivot->isFree;
+                        });
+
+                        $prod_free = $product->filter(function ($item) {
+                            return $item->pivot->isFree;
+                        });
+
                         $qty = $product->count();
+
                         echo '<tr>';
-                            echo '<td class="text-left">'.$qty.'</td>';
-                            echo '<td class="text-left">'.$product->first()->title.'</td>';
-                            echo '<td class="text-right">'.$product->first()->price_cents.' <span>CHF</span></td>';
-                            $subtotal = $product->first()->price_cents * $qty;
-                            echo '<td class="text-right">'. number_format((float)$subtotal, 2, '.', '').' <span>CHF</span></td>';
+                            echo '<td class="text-left" valign="top">'.$qty.'</td>';
+                            echo '<td class="text-left" valign="top">'.$product->first()->title;
+
+                            if(!$prod_free->isEmpty())
+                            {
+                                echo ' <br/><small>Dont livres gratuits : '.$prod_free->count() .'</small>';
+                            }
+
+                            echo '</td>';
+                            echo '<td class="text-right" valign="top">'.(!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 0).'</td>';
+
+                            // Calculate price with quantitiy
+                            $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 0) * $qty;
+                            echo '<td class="text-right" valign="top">'. number_format((float)$subtotal, 2, '.', '').' <span>CHF</span></td>';
                         echo '</tr>';
                     }
                 }

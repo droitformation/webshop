@@ -83,7 +83,7 @@ $('body').on("click", '#cloneBtnOrder' ,function(e) {
     e.stopPropagation();
 
     var clone = $fieldset_clone.clone();
-    clone.find('input').removeAttr('value');
+    clone.find('input').val('');
     clone.find('input[type="checkbox"]').attr('checked', false);
     var select = clone.find('.chosen-select');
 

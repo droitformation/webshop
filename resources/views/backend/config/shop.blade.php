@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label><strong>TVA taux réduit</strong></label>
                                 <div class="input-group col-md-3">
-                                    <input type="text" class="form-control" name="shop[infos][taux_réduit]" value="{!! Registry::get('shop.infos.taux_réduit')!!}">
+                                    <input type="text" class="form-control" name="shop[infos][taux_reduit]" value="{!! Registry::get('shop.infos.taux_reduit')!!}">
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>

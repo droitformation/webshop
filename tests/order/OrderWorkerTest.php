@@ -6,6 +6,7 @@ class OrderWorkerTest extends TestCase {
     protected $user;
     protected $order;
     protected $cart;
+    protected $product;
 
     public function setUp()
     {
@@ -20,6 +21,9 @@ class OrderWorkerTest extends TestCase {
         $this->cart = Mockery::mock('App\Droit\Shop\Cart\Repo\CartInterface');
         $this->app->instance('App\Droit\Shop\Cart\Repo\CartInterface', $this->cart);
 
+        $this->product = Mockery::mock('App\Droit\Shop\Product\Repo\ProductInterface');
+        $this->app->instance('App\Droit\Shop\Product\Repo\ProductInterface', $this->product);
+
         $user = App\Droit\User\Entities\User::find(1);
         $this->be($user);
     }
@@ -29,24 +33,6 @@ class OrderWorkerTest extends TestCase {
         Mockery::close();
         \Cart::instance('newInstance')->destroy();
     }
-
-	/**
-	 * @return void
-	 */
-	public function testNewOrderNumber()
-	{
-
-        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderWorkerInterface');
-
-        $order = factory( App\Droit\Shop\Order\Entities\Order::class)->make([
-            'order_no' => '2015-00000003'
-        ]);
-
-        $this->order->shouldReceive('maxOrder')->once()->andReturn($order);
-        $response = $worker->newOrderNumber();
-
-        $this->assertEquals('2015-00000004', $response);
-	}
 
     /**
      * @return void
@@ -85,10 +71,9 @@ class OrderWorkerTest extends TestCase {
 
         $shipping = factory(App\Droit\Shop\Shipping\Entities\Shipping::class)->make();
         $user     = factory(App\Droit\User\Entities\User::class)->make();
-        $max      = factory(App\Droit\Shop\Order\Entities\Order::class)->make([ 'order_no' => '2015-00000003' ]);
 
         $this->user->shouldReceive('find')->once()->andReturn($user);
-        $this->order->shouldReceive('maxOrder')->once()->andReturn($max);
+        $this->order->shouldReceive('newOrderNumber')->once()->andReturn('2015-00000003');
         $this->order->shouldReceive('create')->once()->andReturn($order);
 
         $this->expectsJobs(App\Jobs\CreateOrderInvoice::class);
@@ -110,10 +95,9 @@ class OrderWorkerTest extends TestCase {
         $shipping = factory(App\Droit\Shop\Shipping\Entities\Shipping::class)->make();
         $cart     = factory(App\Droit\Shop\Cart\Entities\Cart::class)->make();
         $user     = factory(App\Droit\User\Entities\User::class)->make();
-        $max      = factory(App\Droit\Shop\Order\Entities\Order::class)->make(['order_no' => '2015-00000003']);
 
         $this->user->shouldReceive('find')->once()->andReturn($user);
-        $this->order->shouldReceive('maxOrder')->once()->andReturn($max);
+        $this->order->shouldReceive('newOrderNumber')->once()->andReturn('2015-00000003');
         $this->order->shouldReceive('create')->once()->andReturn(null);
         $this->cart->shouldReceive('create')->once()->andReturn($cart);
 
@@ -122,4 +106,116 @@ class OrderWorkerTest extends TestCase {
     }
 
 
+    /* Order Worker for administration
+     * */
+    /**
+     * @return void
+     */
+    public function testMakeNewOrderAdmin()
+    {
+        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
+
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
+        $this->product->shouldReceive('find')->times(3)->andReturn($product);
+
+        $commande = ['products' => [1,2,3], 'qty' => [1,1,1]];
+        $expected = 300;
+        $result   = $worker->total($commande);
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testMakeNewOrderAdmin2()
+    {
+        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
+
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
+        $this->product->shouldReceive('find')->times(3)->andReturn($product);
+
+        $commande = ['products' => [1,2,3], 'qty' => [1,3,1]];
+        $expected = 500;
+        $result   = $worker->total($commande);
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testMakeNewOrderAdminRabais()
+    {
+        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
+
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
+        $this->product->shouldReceive('find')->times(3)->andReturn($product);
+
+        $commande = ['products' => [1,2,3], 'qty' => [1,1,1], 'rabais' => [1 => 10]];
+        $expected = 290;
+        $result   = $worker->total($commande);
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testMakeNewOrderAdminRabaisGratuit()
+    {
+        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
+
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
+        $this->product->shouldReceive('find')->times(3)->andReturn($product);
+
+        $commande = ['products' => [1,2,3], 'qty' => [1,1,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true]];
+        $expected = 190;
+        $result   = $worker->total($commande);
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testMakeNewOrderAdminWeight()
+    {
+        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
+
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
+        $this->product->shouldReceive('find')->times(3)->andReturn($product);
+
+        $commande = ['products' => [1,2,3], 'qty' => [1,1,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true]];
+        $expected = 300;
+        $result   = $worker->total($commande, 'weight');
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testProductLoopWithGratuit()
+    {
+        $worker   = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
+
+        $commande = ['products' => [1,2,3], 'qty' => [1,2,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true]];
+
+        $expected = [
+            [1 => ['isFree' => 1]] ,
+            [2 => ['isFree' => null]],
+            [2 => ['isFree' => null]],
+            [3 => ['isFree' => null]]
+        ];
+
+        $result = $worker->productIdFromForm($commande);
+
+        $this->assertEquals($expected,$result);
+    }
 }

@@ -77,7 +77,7 @@ class Order extends Model{
 
     public function products()
     {
-        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_order_products', 'order_id', 'product_id')->withTimestamps();
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_order_products', 'order_id', 'product_id')->withTimestamps()->withPivot('isFree');
     }
 
     public function user()
