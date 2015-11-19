@@ -11,6 +11,7 @@ use App\Droit\Shop\Cart\Repo\CartInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Droit\Shop\Shipping\Repo\ShippingInterface;
+use App\Droit\Adresse\Repo\AdresseInterface;
 
 class OrderAdminWorker implements OrderAdminWorkerInterface{
 
@@ -21,8 +22,9 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
     protected $generator;
     protected $product;
     protected $shipping;
+    protected $adresse;
 
-    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator, ProductInterface $product, ShippingInterface $shipping)
+    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator, ProductInterface $product, ShippingInterface $shipping, AdresseInterface $adresse)
     {
         $this->order     = $order;
         $this->cart      = $cart;
@@ -31,6 +33,7 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         $this->product   = $product;
         $this->shipping  = $shipping;
         $this->generator = $generator;
+        $this->adresse   = $adresse;
     }
 
     public function prepare($commande)
@@ -70,7 +73,7 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         $prepared = $this->prepare($data);
 
         $commande = [
-            'user_id'     => $prepared['user_id'],
+            'user_id'     => (isset($prepared['user_id']) ? $prepared['user_id'] : null),
             'adresse_id'  => (isset($prepared['adresse_id']) ? $prepared['adresse_id'] : null),
             'order_no'    => $prepared['order_no'],
             'amount'      => $prepared['amount'],
@@ -100,8 +103,8 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         $total    = 0;
         $qty      = array_filter($commande['qty']);
 
-        $gratuit  = (isset($commande['gratuit']) ? array_filter($commande['gratuit']) : []);
-        $rabais   = (isset($commande['rabais']) ? array_filter($commande['rabais']) : []);
+        $gratuit  = (isset($commande['gratuit']) ? $this->removeEmpty($commande['gratuit']) : []);
+        $rabais   = (isset($commande['rabais']) ?  $this->removeEmpty($commande['rabais']) : []);
 
         foreach($commande['products'] as $index => $product_id)
         {
@@ -133,25 +136,47 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         return $total;
     }
 
+    public function removeEmpty($items)
+    {
+        foreach($items as $key => $value)
+        {
+            if(is_null($value) || $value == '')
+                unset($items[$key]);
+        }
+
+        return $items;
+    }
+
     public function productIdFromForm($commande)
     {
         $qty     = $commande['qty'];
         $gratuit = (isset($commande['gratuit']) ? array_filter($commande['gratuit']) : []);
+        $rabais  = (isset($commande['rabais']) ?  $this->removeEmpty($commande['rabais']) : []);
 
         foreach($commande['products'] as $index => $product)
         {
-            $product = (isset($gratuit[$index]) ? [$product => ['isFree' => 1]] : [$product => ['isFree' => null]]);
+            $product_new = (isset($gratuit[$index]) ? [$product => ['isFree' => 1]] : [$product => ['isFree' => null]]);
+
+            if(isset($gratuit[$index]))
+            {
+                $product_new[$product]['isFree'] = (isset($gratuit[$index]) ? 1 : null);
+            }
+
+            if(isset($rabais[$index]))
+            {
+                $product_new[$product]['rabais'] = (isset($rabais[$index]) ? $rabais[$index] : null);
+            }
 
             if($qty[$index] > 1)
             {
                 for($x = 0; $x < $qty[$index]; $x++)
                 {
-                    $ids[] = $product;
+                    $ids[] = $product_new;
                 }
             }
             else
             {
-                $ids[] = $product;
+                $ids[] = $product_new;
             }
         }
 

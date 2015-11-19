@@ -24,7 +24,7 @@
                         {{ $order->order_no }}
                     </a>
                 </td>
-                <td>{{ $order->user->name }}</td>
+                <td>{{ $order->user->name or $order->adresse->name }}</td>
                 <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                 <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
                 <td class="text-right">{{ $order->price_cents }} CHF</td>
@@ -42,15 +42,38 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <address class="well well-sm">
-                                           <?php $order->user->load('adresses'); ?>
-                                            @include('shop.partials.user-livraison', ['user' => $order->user])
+                                           <?php
+                                                if($order->user_id)
+                                                {
+                                                    $order->user->load('adresses');
+                                                    $order->user->adresse_livraison->load(['pays','civilite']);
+                                                    $adresse = $order->user->adresse_livraison;
+                                                }
+                                                else{
+                                                    $adresse = $order->adresse;
+                                                    $adresse->load(['pays','civilite']);
+                                                }
+                                           ?>
+                                            
+                                           <strong>{{ $adresse->civilite->title }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>
+                                           {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
+                                           {{ $adresse->adresse }}<br>
+                                           {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
+                                           {!! !empty($adresse->cp) ? $adresse->cp.'<br>' : '' !!}
+                                           {{ $adresse->npa }} {{ $adresse->ville }}<br>
+                                           {{ $adresse->pays->title }}
+                                            
                                         </address>
                                     </div>
                                     <div class="col-md-9">
                                         <table width="100%" class="table-condensed">
                                             <thead>
-                                                <tr><th>Qt</th><th>Titre</th><th class="text-right">Prix</th></tr>
-                                                <tr><th colspan="3" style="border-top:1px solid #bebebe;line-height: 6px;padding:0;">&nbsp;</th></tr>
+                                                <tr>
+                                                    <th>Qt</th>
+                                                    <th>Titre</th>
+                                                    <th class="text-right">Prix unité</th>
+                                                    <th class="text-right">Prix</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($grouped as $product)
@@ -66,43 +89,50 @@
                                                 ?>
                                                 <tr>
                                                     <td width="10%" valign="top"><p class="text-left" style="width:70px;margin-right: 20px;">{{ $product->count() }} x</p></td>
-                                                    <td width="75%" valign="top">
+                                                    <td width=60%" valign="top">
                                                         <a href="{{ url('admin/product/'.$product->first()->id) }}">{{ $product->first()->title }}</a>
                                                         @if(!$prod_free->isEmpty())
                                                             <br/><small>Dont livres gratuits : {{ $prod_free->count() }}</small>
                                                         @endif
                                                     </td>
+                                                    <td width="15%" valign="top" class="text-right">
+                                                        {{ $product->first()->price_cents }} CHF
+                                                    </td>
                                                     <td width="15%" valign="top"><p class="text-right">{{ $price_sum }} CHF</p></td>
                                                 </tr>
                                             @endforeach
-                                            <tr><td colspan="3" style="line-height: 9px;">&nbsp;</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <table width="100%" class="table-condensed">
+                                        <tbody>
                                             <tr>
-                                                <td width="85%" colspan="2"><p class="text-right">Payement</p></td>
-                                                <td width="15%"><p class="text-right">{{ $order->payement->title }}</p></td>
+                                                <td width="85%" class="text-right">Payement</td>
+                                                <td width="15%" class="text-right">{{ $order->payement->title }}</td>
                                             </tr>
                                             <tr>
-                                                <td width="10%"></td>
-                                                <td width="75%" class="text-right">
+                                                <td width="85%" class="text-right">
                                                     @if(isset($order->coupon))<strong>Rabais appliqué <small class="text-muted">{{ $order->coupon->title }}</small></strong>@endif
                                                 </td>
-                                                <td width="15%">
+                                                <td width="15%" class="text-right">
                                                     @if($order->coupon_id > 0)
                                                         <?php $order->load('coupon'); ?>
-                                                        <p class="text-right text-muted"><?php echo ($order->coupon->type == 'shipping' ? 'Frais de port offerts' : $order->coupon->value.'%') ?></p>
+                                                        <p class="text-muted"><?php echo ($order->coupon->type == 'shipping' ? 'Frais de port offerts' : $order->coupon->value.'%') ?></p>
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td width="85%" colspan="2"><p class="text-right">Frais de port</p></td>
-                                                <td width="15%"><p class="text-right">{{ $order->shipping->price_cents }} CHF</p></td>
+                                                <td width="85%" class="text-right">Frais de port</td>
+                                                <td width="15%" class="text-right">{{ $order->shipping->price_cents }} CHF</td>
                                             </tr>
-                                            <tr><td colspan="3" style="line-height: 9px;">&nbsp;</td></tr>
+                                            <tr><td colspan="2" style="line-height: 10px;">&nbsp;</td></tr>
                                             <tr>
-                                                <td width="85%" colspan="2" style="padding-top:5px;" class="text-right"><strong>Total</strong></td>
+                                                <td width="85%" style="padding-top:5px;" class="text-right"><strong>Total</strong></td>
                                                 <td width="15%" style="border-top:1px solid #ddd;padding-top:5px;"><p class="text-right">{{ $order->price_cents }} CHF</p></td>
                                             </tr>
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </div>
 

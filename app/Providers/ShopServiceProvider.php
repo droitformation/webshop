@@ -159,7 +159,8 @@ class ShopServiceProvider extends ServiceProvider {
                 \App::make('App\Droit\Shop\Cart\Repo\CartInterface'),
                 \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
                 \App::make('App\Droit\Shop\Product\Repo\ProductInterface'),
-                \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface')
+                \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface'),
+                \App::make('App\Droit\Adresse\Repo\AdresseInterface')
             );
         });
     }

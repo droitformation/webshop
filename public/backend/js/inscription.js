@@ -82,9 +82,19 @@ $('body').on("click", '#cloneBtnOrder' ,function(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    var clone = $fieldset_clone.clone();
-    clone.find('input').val('');
-    clone.find('input[type="checkbox"]').attr('checked', false);
+    var length = $('.field_clone_order').length;
+    var clone  = $fieldset_clone.clone();
+
+    clone.find('input[type="text"]').val('');
+
+    // Checkbox
+    var $checkbox = clone.find('input[type="checkbox"]');
+    var name      = $checkbox.attr('name');
+    name          = name.replace('order[gratuit][]', 'order[gratuit][' + length + ']');
+
+    $checkbox.attr('name', name);
+    $checkbox.attr('checked', false);
+
     var select = clone.find('.chosen-select');
 
     $(select).removeClass("chzn-done").removeAttr("id").css("display", "block").next().remove();

@@ -116,8 +116,21 @@ class OrderController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateOrderRequest $request)
+    public function store(Request $request)
     {
+        $this->validate($request, [
+            'adresse.first_name'  => 'required',
+            'adresse.last_name'   => 'required',
+            'adresse.adresse'     => 'required',
+            'adresse.npa'         => 'required',
+            'adresse.ville'       => 'required',
+        ]);
+
+        $adresse = $request->input('adresse');
+
+        echo '<pre>';
+        print_r($adresse);
+        echo '</pre>';exit;
 
   /*      echo '<pre>';
         print_r($request->all());
@@ -129,7 +142,7 @@ class OrderController extends Controller {
         print_r($order);
         echo '</pre>';exit;*/
 
-        return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La cocmmande a été crée' ));
+        return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
     }
 
 

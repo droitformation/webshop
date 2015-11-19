@@ -218,4 +218,21 @@ class OrderWorkerTest extends TestCase {
 
         $this->assertEquals($expected,$result);
     }
+
+    public function testFilterArray()
+    {
+        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
+
+        $items  = [
+            0 => 1,
+            1 => null,
+            2 => ''
+        ];
+
+        $expected = [ 0 => 1];
+
+        $result = $worker->removeEmpty($items);
+
+        $this->assertEquals($expected,$result);
+    }
 }

@@ -123,10 +123,10 @@
                             }
 
                             echo '</td>';
-                            echo '<td class="text-right" valign="top">'.(!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 0).'</td>';
+                            echo '<td class="text-right" valign="top">'.(!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit').'</td>';
 
                             // Calculate price with quantitiy
-                            $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 0) * $qty;
+                            $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit') * $qty;
                             echo '<td class="text-right" valign="top">'. number_format((float)$subtotal, 2, '.', '').' <span>CHF</span></td>';
                         echo '</tr>';
                     }

@@ -15,8 +15,17 @@ class Product extends Model{
 
     public function getPriceCentsAttribute()
     {
+
         $money = new \App\Droit\Shop\Product\Entities\Money;
-        $price = $this->price / 100;
+
+        if(isset($this->pivot) && $this->pivot->rabais)
+        {
+            $price = ($this->price - ($this->price * $this->pivot->rabais/100)) / 100;
+        }
+        else
+        {
+            $price = $this->price / 100;
+        }
 
         return $money->format($price);
     }
@@ -43,7 +52,7 @@ class Product extends Model{
 
     public function orders()
     {
-        return $this->belongsToMany('App\Droit\Shop\Order\Entities\Order', 'shop_order_products','product_id', 'order_id')->withPivot('isFree');
+        return $this->belongsToMany('App\Droit\Shop\Order\Entities\Order', 'shop_order_products','product_id', 'order_id')->withPivot('isFree','rabais');
     }
 
 }

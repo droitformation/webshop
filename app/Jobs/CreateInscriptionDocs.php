@@ -33,7 +33,7 @@ class CreateInscriptionDocs extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
         $this->inscription->load('colloque');
         $annexes = $this->inscription->colloque->annexe;

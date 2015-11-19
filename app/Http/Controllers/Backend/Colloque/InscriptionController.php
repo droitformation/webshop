@@ -35,7 +35,7 @@ class InscriptionController extends Controller
         $this->register    = $register;
         $this->user        = $user;
         $this->groupe      = $groupe;
-        $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $this->generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->helper      = new \App\Droit\Helper\Helper();
     }
 
