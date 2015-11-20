@@ -20,6 +20,7 @@ class OrderController extends Controller {
     protected $worker;
     protected $adresse;
     protected $shipping;
+    protected $helper;
 
 	/**
 	 * Create a new controller instance.
@@ -35,6 +36,7 @@ class OrderController extends Controller {
         $this->adresse   = $adresse;
 
         $this->generator = new \App\Droit\Generate\Excel\ExcelGenerator();
+        $this->helper    = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
@@ -118,19 +120,21 @@ class OrderController extends Controller {
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'adresse.first_name'  => 'required',
-            'adresse.last_name'   => 'required',
-            'adresse.adresse'     => 'required',
-            'adresse.npa'         => 'required',
-            'adresse.ville'       => 'required',
+        $order    = $request->input('order');
+        $products = $this->helper->convertProducts($order);
+
+        $validator = \Validator::make($request->all(), [
+            'adresse.first_name'  => 'required_without:user_id',
+            'adresse.last_name'   => 'required_without:user_id',
+            'adresse.adresse'     => 'required_without:user_id',
+            'adresse.npa'         => 'required_without:user_id',
+            'adresse.ville'       => 'required_without:user_id',
         ]);
 
-        $adresse = $request->input('adresse');
-
-        echo '<pre>';
-        print_r($adresse);
-        echo '</pre>';exit;
+        if ($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->with('old_products', $products)->withInput();
+        }
 
   /*      echo '<pre>';
         print_r($request->all());

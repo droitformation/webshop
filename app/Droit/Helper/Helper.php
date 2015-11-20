@@ -471,6 +471,33 @@ class Helper {
         return array('' => $emptyLabel) + $selectList;
     }
 
+    public function convertProducts($data)
+    {
+        $products = [];
+
+        for($x = 0; $x < count($data['products']); $x++)
+        {
+            $product = [];
+
+            $product['product'] = $data['products'][$x];
+            $product['qty']     = $data['qty'][$x];
+
+            if(isset($data['rabais'][$x])  && !empty($data['rabais'][$x]))
+            {
+                $product['rabais'] = $data['rabais'][$x];
+            }
+
+            if(isset($data['gratuit'][$x])  && !empty($data['gratuit'][$x]))
+            {
+                $product['gratuit'] = 1;
+            }
+
+            $products[] = $product;
+        }
+
+        return $products;
+    }
+
     public function convertSerializedData($data){
 
         $user = [];

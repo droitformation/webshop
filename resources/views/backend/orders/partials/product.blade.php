@@ -6,26 +6,26 @@
                 <option value="">Choix</option>
                 @if(!$products->isEmpty())
                     @foreach($products as $product)
-                        <option {{ isset($old_product) && $old_product == $product->id ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->title }}</option>
+                        <option {{ isset($old_product['product']) && $old_product['product'] == $product->id ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->title }}</option>
                     @endforeach
                 @endif
             </select>
         </div>
         <div class="col-lg-1 col-md-2 col-xs-12">
             <label>Quantité</label>
-            <input class="form-control" required type="text" name="order[qty][]">
+            <input class="form-control" required type="text" value="{{ isset($old_product) ? $old_product['qty'] : '' }}" name="order[qty][]">
         </div>
         <div class="col-lg-1 col-md-2 col-xs-12">
             <label>Rabais</label>
             <div class="input-group">
-                <input class="form-control" type="text" name="order[rabais][]">
+                <input class="form-control" value="{{ isset($old_product['rabais']) ? $old_product['rabais'] : '' }}" type="text" name="order[rabais][]">
                 <span class="input-group-addon">%</span>
             </div><!-- /input-group -->
         </div>
         <div class="col-lg-2 col-md-1 col-xs-12">
             <label></label>
             <div class="checkbox">
-                <label><input type="checkbox" name="order[gratuit][]" value="1"> Livre gratuit</label>
+                <label><input type="checkbox" {{ isset($old_product['gratuit']) ? 'checked' : '' }} name="order[gratuit][]" value="1"> Livre gratuit</label>
             </div>
         </div>
         <div class="col-lg-1 col-md-1 col-xs-12 text-right">

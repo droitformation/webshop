@@ -50,7 +50,7 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
 
         // Find shipping
         $weight   = $this->total($commande['order'], 'weight');
-        $weight   = (isset($commande['order']['free']) ? null : $weight);
+        $weight   = (isset($commande['free']) ? null : $weight);
         $shipping = $this->shipping->getShipping($weight);
 
         $data['shipping_id'] = $shipping->id;
@@ -58,7 +58,7 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         $data['amount']      = $this->total($commande['order']);
         $data['order_no']    = $this->order->newOrderNumber();
 
-        $tva = array_filter($commande['order']['tva']);
+        $tva = array_filter($commande['tva']);
 
         if(!empty($tva))
         {

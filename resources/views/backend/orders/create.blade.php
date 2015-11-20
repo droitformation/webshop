@@ -46,16 +46,17 @@
 
                             <div id="wrapper_clone_order">
 
-                                <?php $old_products = old('order.products'); ?>
+                                @if(Session::has('old_products'))
 
-                                @if(!empty($old_products))
-
-                                    <?php $first = array_shift($old_products); ?>
+                                    <?php
+                                        $old_products = Session::get('old_products');
+                                        $first = array_shift($old_products);
+                                    ?>
 
                                     @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'old_product' => $first])
 
-                                    @foreach($old_products as $product)
-                                        @include('backend.orders.partials.product', ['id' => '', 'old_product' => $product])
+                                    @foreach($old_products as $old_product)
+                                        @include('backend.orders.partials.product', ['id' => '', 'old_product' => $old_product])
                                     @endforeach
                                 @else
                                     @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order'])
@@ -69,7 +70,7 @@
                                     <div class="checkbox">
                                         <label>
                                             &nbsp; <i class="fa fa-truck"></i>&nbsp;
-                                            Frais de port gratuit &nbsp;<input type="checkbox" {{ old('order[free]') == 1 ? 'checked' : '' }} name="order[free]" value="1">
+                                            Frais de port gratuit &nbsp;<input type="checkbox" {{ old('free') == 1 ? 'checked' : '' }} name="free" value="1">
                                         </label>
                                     </div>
                                 </div>
@@ -77,13 +78,13 @@
                                 <div class="form-group row">
                                     <div class="col-md-2 col-xs-3">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" name="order[tva][taux_reduit]" value="{{ old('order[tva][taux_reduit]') }}" placeholder="Réduit">
+                                            <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ old('tva[taux_reduit]') }}" placeholder="Réduit">
                                             <span class="input-group-addon">%</span>
                                         </div><!-- /input-group -->
                                     </div>
                                     <div class="col-md-2 col-xs-3">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" name="order[tva][taux_normal]" value="{{ old('order[tva][taux_normal]') }}" placeholder="Normal">
+                                            <input class="form-control" type="text" name="tva[taux_normal]" value="{{ old('tva[taux_normal]') }}" placeholder="Normal">
                                             <span class="input-group-addon">%</span>
                                         </div><!-- /input-group -->
                                     </div>
