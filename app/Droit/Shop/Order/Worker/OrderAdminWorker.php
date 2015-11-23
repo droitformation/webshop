@@ -65,6 +65,13 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
             $data['tva'] = $tva;
         }
 
+        $message = array_filter($commande['message']);
+
+        if(!empty($message))
+        {
+            $data['message'] = $message;
+        }
+
         return $data;
     }
 
@@ -90,6 +97,14 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         if(isset($prepared['tva']))
         {
             $this->generator->setTva($prepared['tva']);
+        }
+
+        if(isset($prepared['message']))
+        {
+            foreach($prepared['message'] as $type => $message)
+            {
+                $this->generator->setMsg($message,$type);
+            }
         }
 
         // Create invoice for order

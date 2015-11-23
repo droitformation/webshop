@@ -288,9 +288,10 @@ a:hover, a:active, a:focus {
 }
 
 #adresseMake,#adresseFind{
-    border: 1px solid #eee;
+    border: 1px solid #d2d3d6;
     margin-top: 20px;
     padding: 20px;
+    background: #f5f5f5;
 }
 
 #adresseFind {
@@ -299,4 +300,8 @@ a:hover, a:active, a:focus {
 
 #adresseParent .collapse.in{
     display: block !important;
+}
+
+#cloneBtnOrder{
+    margin-top: 10px;
 }

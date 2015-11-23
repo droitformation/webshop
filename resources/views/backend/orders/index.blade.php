@@ -34,10 +34,35 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-lg-3 col-md-1 col-xs-12 text-left">
+                                <div class="btn-group">
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-filter"></i> &nbsp; Rechercher</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-1 col-xs-12 text-right">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary" name="export" value="1" type="submit"><i class="fa fa-download"></i> Télécharger [xls]</button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="exportOptions">
-                            <h4>Champs</h4>
+                        <hr/>
+                        <h4>Filtres</h4>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a class="btn btn-sm btn-primary" role="button" data-toggle="collapse" href="#exportOptions">Choisir les champs</a>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" {{ old('onlyfree') || $onlyfree == 1 ? 'checked' : '' }} name="onlyfree" value="1">
+                                        <i class="fa fa-star"></i>&nbsp;&nbsp;Que livres gratuits &nbsp;&nbsp;
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="exportOptions" class="collapse">
                             @if(!empty($names))
                                 @foreach($names as $key => $name)
                                     <div class="checkbox-inline checkbox-border">
@@ -48,15 +73,6 @@
                                 @endforeach
                             @endif
                             <p style="margin-top: 10px;"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
-                            <hr/>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn btn-default" type="submit"><i class="fa fa-filter"></i> &nbsp; Filtrer la liste</button>
-                                &nbsp;&nbsp;ou&nbsp;&nbsp;
-                                <button class="btn btn-primary" name="export" value="1" type="submit"><i class="fa fa-download"></i> Télécharger [xls]</button>
-                            </div>
                         </div>
 
                     </form>
@@ -67,12 +83,9 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
                     <?php $helper = new \App\Droit\Helper\Helper(); ?>
-                    <h3><i class="fa fa-shopping-cart"></i> &nbsp;
-                        Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span>
-                    </h3>
+                    <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
 
                     @include('backend.orders.partials.commandes', ['orders' => $orders])
-
                 </div>
             </div>
 

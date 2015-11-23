@@ -75,6 +75,25 @@ class Order extends Model{
 
     }
 
+    /**
+     * Scope a query to only get orders with free products
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIsfree($query,$isfree)
+    {
+        $pivot = $this->products()->getTable();
+
+        if($isfree) $query->whereHas('products', function ($q) use ($pivot) {
+            $q->where("{$pivot}.isFree", 1);
+        });
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        if ($status) $query->where('status','=',$status);
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_order_products', 'order_id', 'product_id')->withTimestamps()->withPivot('isFree','rabais');
