@@ -54,6 +54,7 @@ class OrderController extends Controller {
         $period   = $request->all();
         $status   = $request->input('status',null);
         $onlyfree = $request->input('onlyfree',null);
+        $details  = $request->input('details',null);
         $columns  = $request->input('columns',$this->generator->columns);
         $export   = $request->input('export',null);
 
@@ -65,10 +66,10 @@ class OrderController extends Controller {
         if($export)
         {
             $this->generator->setColumns($columns);
-            $this->export($orders);
+            $this->export($orders,$details);
         }
 
-		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names, 'onlyfree' => $onlyfree]);
+		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names, 'onlyfree' => $onlyfree, 'details' => $details]);
 	}
 
     /**
@@ -76,16 +77,17 @@ class OrderController extends Controller {
      *
      * @return Response
      */
-    public function export($orders)
+    public function export($orders, $details = null)
     {
-        \Excel::create('Export Commandes', function($excel) use ($orders)
+        \Excel::create('Export Commandes', function($excel) use ($orders,$details)
         {
-            $excel->sheet('Export_Commandes', function($sheet) use ($orders)
+            $excel->sheet('Export_Commandes', function($sheet) use ($orders,$details)
             {
-                $names   = config('columns.names');
+                $names  = config('columns.names');
+                $view   = (isset($details) ? 'details' : 'orders');
 
                 $sheet->setOrientation('landscape');
-                $sheet->loadView('backend.export.orders', ['orders' => $orders , 'generator' => $this->generator, 'names' => $names]);
+                $sheet->loadView('backend.export.'.$view , ['orders' => $orders , 'generator' => $this->generator, 'names' => $names]);
             });
         })->export('xls');
     }

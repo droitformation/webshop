@@ -39,11 +39,6 @@
                                     <button class="btn btn-default" type="submit"><i class="fa fa-filter"></i> &nbsp; Rechercher</button>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-1 col-xs-12 text-right">
-                                <div class="btn-group">
-                                    <button class="btn btn-primary" name="export" value="1" type="submit"><i class="fa fa-download"></i> Télécharger [xls]</button>
-                                </div>
-                            </div>
                         </div>
 
                         <hr/>
@@ -57,6 +52,14 @@
                                     <label>
                                         <input type="checkbox" {{ old('onlyfree') || $onlyfree == 1 ? 'checked' : '' }} name="onlyfree" value="1">
                                         <i class="fa fa-star"></i>&nbsp;&nbsp;Que livres gratuits &nbsp;&nbsp;
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" {{ old('details') || $details == 1 ? 'checked' : '' }} name="details" value="1">
+                                        <i class="fa fa-list"></i>&nbsp;&nbsp;Détail des commandes &nbsp;&nbsp;
                                     </label>
                                 </div>
                             </div>
@@ -75,6 +78,7 @@
                             <p style="margin-top: 10px;"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
                         </div>
 
+                        <button class="btn btn-primary pull-right" name="export" value="1" type="submit"><i class="fa fa-download"></i> Télécharger [xls]</button>
                     </form>
 
                 </div>
