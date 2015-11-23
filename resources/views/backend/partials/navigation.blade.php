@@ -38,6 +38,10 @@
             </a>
         </li>
         <li class="nav-title">Shop</li>
+        <li class="<?php echo (Request::is('admin/abo') || Request::is('admin/abo/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/abo') }}"><i class="fa fa-bookmark"></i> <span>Abonnements</span></a>
+        </li>
+        <li class="divider"></li>
         <li class="<?php echo (Request::is('admin/product') || Request::is('admin/product/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/product') }}"><i class="fa fa-book"></i> <span>Livres</span></a>
         </li>
