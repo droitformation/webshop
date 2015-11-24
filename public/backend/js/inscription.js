@@ -12,6 +12,7 @@ $( "#searchUser" ).autocomplete({
     select: function( event, ui )
     {
         $('#inputUser').html('<input type="hidden" value="' + ui.item.value + '" name="user_id">');
+        $(this).val('');
 
         var company = ui.item.adresse.company ? ui.item.adresse.company + '<br/>' : '';
         var cp      = ui.item.cp ? ui.item.cp + '<br/>' : '';
@@ -30,8 +31,6 @@ $( "#searchUser" ).autocomplete({
             + '</address>'
         );
 
-        $(this).val('');
-
         return false;
     }
 }).autocomplete( "instance" )._renderItem = function( ul, item ) {
@@ -42,7 +41,8 @@ $('body').on('click','#removeUser', function(e) {
     e.preventDefault();
     $('#inputUser').html('');
     $('#choiceUser').html('');
-});
+    $('#adresseFind').addClass('in');
+})
 
 var $inputUser = $('#inputUser');
 
@@ -60,12 +60,11 @@ if($inputUser.length)
             var compl   = data.complement ? data.complement + '<br/>' : '';
 
             $('#choiceUser').html(
-                '<h4><strong>Utilisateur</strong></h4>'
-                + '<p><a id="removeUser" class="btn btn-danger btn-xs">Retirer</a></p>'
+                '<p><a id="removeUser" class="btn btn-danger btn-xs">Retirer</a></p>'
                 + '<address>'
-                +  data.civilite.title + '<br/>'
                 +  company
-                +  data.name + '<br/>'
+                +  data.civilite.title + ' '
+                +  data.first_name + ' ' + data.last_name + '<br/>'
                 +  data.adresse + '<br/>'
                 +  compl + cp
                 +  data.npa + ' ' + data.ville

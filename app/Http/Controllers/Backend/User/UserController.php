@@ -90,11 +90,6 @@ class UserController extends Controller {
     {
         $user = $this->user->find($id);
 
-        if($request->ajax())
-        {
-            return $user->adresse_facturation;
-        }
-
         return view('backend.users.show')->with(compact('user'));
     }
 

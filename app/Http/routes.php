@@ -58,6 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('search/form', 'Backend\SearchController@form');
     Route::post('search/user', 'Backend\SearchController@user');
+    Route::get('search/adresse', 'Backend\SearchController@adresse');
+
     Route::get('search', 'Backend\SearchController@search');
 
     /*

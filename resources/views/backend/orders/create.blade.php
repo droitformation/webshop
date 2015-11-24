@@ -31,7 +31,7 @@
 
                             <div class="collapse" id="adresseFind">
                                 <div class="form-group">
-                                    <input id="searchUser" class="form-control" placeholder="Chercher un utilisateur..." type="text">
+                                    <input id="searchUser" class="form-control" placeholder="Chercher une adresse..." type="text">
                                 </div>
                             </div>
                             <div class="collapse {{ !empty($adresse) ? 'in' : '' }}" id="adresseMake">

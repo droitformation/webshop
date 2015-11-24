@@ -96,9 +96,14 @@ class AdresseController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
         $adresse = $this->adresse->find($id);
+
+        if($request->ajax())
+        {
+            return $adresse->load('canton','profession','specialisations','civilite');
+        }
 
         return view('backend.adresses.show')->with(array( 'adresse' => $adresse ));
     }

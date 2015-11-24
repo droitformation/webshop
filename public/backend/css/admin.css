@@ -83,6 +83,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     display: inline-block;
     list-style: outside none none;
     padding: 3px;
+    z-index: 1000;
 }
 
 .ui-widget-content li a span{
@@ -95,9 +96,12 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .ui-widget-content li a{
-    padding:0;
-    margin: 0;
+    border-bottom: 1px solid #f2f2f2;
+    display: block;
+    margin: 2px 0;
+    padding: 2px 0;
 }
+
 .ui-widget-content li.ui-state-focus{
     background: #f5f5f5;
     border: 1px solid transparent;

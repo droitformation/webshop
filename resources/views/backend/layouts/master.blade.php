@@ -164,6 +164,7 @@
 
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/inscription.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/user.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>

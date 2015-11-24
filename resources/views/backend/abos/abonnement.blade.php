@@ -20,19 +20,23 @@
                     <div class="panel-body">
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Numéro</label>
-                            <div class="col-sm-3 col-xs-5">
-                                <input type="text" class="form-control" value="{{ $abonnement->numero }}" name="numero">
+                            <label class="col-sm-3 col-xs-12 control-label"></label>
+                            <div class="col-sm-4 col-xs-12">
+                                <div id="inputUserSimple" data-user="{{ $abonnement->adresse_id }}"></div>
+                                <div id="choiceUserSimple"></div>
+
+                                <div class="collapse" id="adresseFind">
+                                    <div class="form-group">
+                                        <input id="searchUserSimple" class="form-control" placeholder="Chercher une adresse..." type="text">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Adresse</label>
-                            <div class="col-sm-3 col-xs-3">
-                                <input type="text" class="form-control" value="{{ $abonnement->adresse_id }}" name="adresse_id">
-
-                                <div id="inputUserSimple" data-user="{{ $abonnement->adresse_id }}"></div>
-                                <div id="choiceUserSimple"></div>
+                            <label class="col-sm-3 control-label">Numéro</label>
+                            <div class="col-sm-3 col-xs-5">
+                                <input type="text" class="form-control" value="{{ $abonnement->numero }}" name="numero">
                             </div>
                         </div>
 

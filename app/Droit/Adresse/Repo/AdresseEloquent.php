@@ -22,6 +22,14 @@ class AdresseEloquent implements AdresseInterface{
 		return $this->adresse->where('user_id','=',0)->take(10)->skip(0)->get();	
 	}
 
+    public function search($term)
+    {
+        return $this->adresse->where('email', 'like', '%'.$term.'%')
+            ->orWhere('first_name', 'like', '%'.$term.'%')
+            ->orWhere('last_name', 'like', '%'.$term.'%')
+            ->get();
+    }
+
     public function searchSimple($terms)
     {
         return $this->adresse->with(['user'])
