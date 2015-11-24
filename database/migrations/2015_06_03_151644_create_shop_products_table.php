@@ -23,7 +23,7 @@ class CreateShopProductsTable extends Migration {
             $table->integer('sku');
             $table->integer('price');
             $table->boolean('is_downloadable')->default(false);
-            $table->tinyInteger('hidden');
+            $table->tinyInteger('hidden')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

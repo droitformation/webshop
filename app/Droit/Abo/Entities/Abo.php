@@ -11,13 +11,20 @@ class Abo extends Model{
 
     protected $fillable = array('title','product_id','plan');
 
+    public function getPlanFrAttribute()
+    {
+        $traduction = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
+
+        return $traduction[$this->plan];
+    }
+
     public function product()
     {
         return $this->belongsTo('App\Droit\Shop\Product\Entities\Product');
     }
 
-    public function users()
+    public function abonnements()
     {
-        return $this->belongsToMany('App\Droit\User\Entities\User', 'abo_users', 'abo_id', 'user_id')->withTimestamps();
+        return $this->hasMany('App\Droit\Abo\Entities\Abo_users','abo_id');
     }
 }

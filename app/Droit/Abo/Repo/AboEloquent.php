@@ -19,7 +19,7 @@ class AboEloquent implements AboInterface{
 
     public function find($id){
 
-        return $this->abo->find($id);
+        return $this->abo->with(['abonnements','product'])->find($id);
     }
 
     public function create(array $data){

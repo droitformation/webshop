@@ -2,79 +2,49 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-12">
 
             <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/coupon') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
+                <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
             </div>
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Editer coupon</h4>
+                <div class="panel-heading"><h4><i class="fa fa-edit"></i> Abonnements</h4></div>
+                <div class="panel-body">
+                    <table class="table" id="generic">
+                        <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>Numéro</th>
+                            <th>Nom</th>
+                            <th>Entreprise</th>
+                            <th>Exemplaires</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @if(!$abo->abonnements->isEmpty())
+                                @foreach($abo->abonnements as $abonnement)
+                                    <tr>
+                                        <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info">éditer</a></td>
+                                        <td>{{ $abonnement->numero }}</td>
+                                        <td>{{ $abonnement->user->name }}</td>
+                                        <td>{{ $abonnement->user->company }}</td>
+                                        <td>{{ $abonnement->exemplaires }}</td>
+                                        <td>{{ $abonnement->status }}</td>
+                                        <td class="text-right">
+                                            <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
+                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                <button data-what="Supprimer" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-sm deleteAction">Désabonner</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
-                <form action="{{ url('admin/coupon/'.$coupon->id) }}" method="POST" class="form-horizontal">
-                    <input type="hidden" name="_method" value="PUT">
-                    {!! csrf_field() !!}
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Type de rabais</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <select class="form-control" name="type" id="typeSelect">
-                                    <option {{ ($coupon->type == 'global' ?  'selected' : '') }} value="global">Sur toute la commande</option>
-                                    <option {{ ($coupon->type == 'product' ? 'selected' : '') }} value="product">Sur un ou plusieurs produits</option>
-                                    <option {{ ($coupon->type == 'shipping'? 'selected' : '') }} value="shipping">Frais de port gratuit</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <?php $choices = $coupon->products->lists('id')->all(); ?>
-
-                        <div class="form-group" id="productSelect" {{ ($coupon->type == 'product' ? 'style="display:block;"' : 'style="display:none;"') }}>
-                            <label class="col-sm-3 control-label">Choix des produits</label>
-                            <div class="col-sm-9 col-xs-12">
-                                @if(!$products->isEmpty())
-                                    <select name="product_id[]" multiple="multiple" id="multi-select">
-                                        @foreach($products as $product)
-                                            <option {{ (in_array($product->id,$choices) ? 'selected' : '') }} value="{{ $product->id }}">{{ $product->title }}</option>
-                                        @endforeach
-                                    </select>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Titre</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control" value="{{ $coupon->title }}" name="title">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Valeur</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ $coupon->value }}" name="value">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Date d'expiration</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control datePicker" value="{{ $coupon->expire_at->format('Y-m-d') }}" name="expire_at">
-                            </div>
-                        </div>
-
-                        <input type="hidden" value="{{ $coupon->id }}" name="id">
-
-                    </div>
-                    <div class="panel-footer text-right">
-                        <button type="submit" class="btn btn-info">Envoyer</button>
-                    </div>
-                </form>
 
             </div>
         </div>

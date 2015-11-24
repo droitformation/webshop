@@ -19,14 +19,13 @@ class CreateAboUsersTable extends Migration
             $table->integer('numero');
             $table->integer('exemplaires');
             $table->integer('adresse_id');
-            $table->integer('tiers_id');
-            $table->integer('price');
-            $table->string('reference');
-            $table->text('remarque');
+            $table->integer('tiers_id')->nullable();
+            $table->integer('price')->nullable();
+            $table->string('reference')->nullable();
+            $table->text('remarque')->nullable();
 
             $table->enum('status',['abonne','gratuit'])->default('abonne');
             $table->enum('renouvellement',['auto','year'])->default('auto');
-            $table->enum('plan',['month','semester','year'])->default('year');
 
             $table->timestamps();
             $table->softDeletes();
