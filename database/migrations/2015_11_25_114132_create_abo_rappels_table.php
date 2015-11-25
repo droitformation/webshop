@@ -16,6 +16,7 @@ class CreateAboRappelsTable extends Migration
             $table->increments('id');
             $table->integer('abo_facture_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

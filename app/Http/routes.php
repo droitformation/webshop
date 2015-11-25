@@ -172,6 +172,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     |--------------------------------------------------------------------------
     */
     Route::resource('abo', 'Backend\AboController');
+    Route::get('abonnements/{id}', 'Backend\AboUserController@index');
     Route::resource('abonnement', 'Backend\AboUserController');
 
     /*

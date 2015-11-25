@@ -22,7 +22,9 @@ class Abo extends Model{
     {
         $this->load('products');
 
-        return $this->products->first();
+        $products = $this->products->sortByDesc('created_at');
+
+        return $products->first();
     }
 
     public function products()

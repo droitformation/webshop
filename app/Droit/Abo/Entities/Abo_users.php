@@ -25,4 +25,10 @@ class Abo_users extends Model{
     {
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','tiers_id');
     }
+
+    public function factures()
+    {
+        return $this->hasMany('App\Droit\Abo\Entities\Abo_factures','abo_user_id','id');
+    }
+
 }

@@ -14,10 +14,11 @@ class CreateAboPaymentsTable extends Migration
     {
         Schema::create('abo_factures', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('abo_id');
+            $table->integer('abo_user_id');
+            $table->integer('product_id');
             $table->date('payed_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -11,7 +11,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-6">
 
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">
@@ -26,7 +26,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
-                            <div class="col-sm-3 col-xs-5">
+                            <div class="col-sm-4 col-xs-5">
                                 <input type="text" class="form-control" value="{{ $abonnement->numero }}" name="numero">
                             </div>
                         </div>
@@ -54,7 +54,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tiers payant</label>
-                            <div class="col-sm-3 col-xs-5">
+                            <div class="col-sm-4 col-xs-5">
 
                                 <!-- Autocomplete for tiers adresse -->
                                 <div class="autocomplete-wrapper">
@@ -75,7 +75,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Prix spécial</label>
-                            <div class="col-sm-3 col-xs-5">
+                            <div class="col-sm-4 col-xs-5">
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="{{ $abonnement->price }}" name="price">
                                     <span class="input-group-addon">CHF</span>
@@ -85,14 +85,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Exemplaires</label>
-                            <div class="col-sm-3 col-xs-5">
+                            <div class="col-sm-4 col-xs-5">
                                 <input type="text" class="form-control" value="{{ $abonnement->exemplaires }}" name="exemplaires">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Renouvellement</label>
-                            <div class="col-sm-3 col-xs-8">
+                            <div class="col-sm-4 col-xs-8">
                                 <select class="form-control" name="type" id="typeSelect">
                                     <option {{ ($abonnement->renouvellement == 'auto' ?  'selected' : '') }} value="auto">Auto</option>
                                     <option {{ ($abonnement->renouvellement == 'year' ? 'selected' : '') }} value="year">1 an</option>
@@ -102,7 +102,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Statut</label>
-                            <div class="col-sm-3 col-xs-8">
+                            <div class="col-sm-4 col-xs-8">
                                 <select class="form-control" name="type" id="typeSelect">
                                     <option {{ ($abonnement->status == 'abonne' ?  'selected' : '') }} value="abonne">Abonné</option>
                                     <option {{ ($abonnement->status == 'gratuit' ? 'selected' : '') }} value="gratuit">Gratuit</option>
@@ -133,13 +133,86 @@
 
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
 
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">
                     <h4><i class="fa fa-star-half-empty"></i> &nbsp;Payements</h4>
                 </div>
                 <div class="panel-body">
+
+                    @if(isset($abonnement->factures))
+                        <?php $groupes = $abonnement->factures->groupBy('product_id'); ?>
+
+                            <?php
+                              /*  echo '<pre>';
+                                print_r($groupes);
+                                echo '</pre>';*/
+                            ?>
+                    @endif
+
+                    <?php $abonnement->abo->load('products'); ?>
+
+                    @if(isset($abonnement->abo->products))
+                        <?php $products = $abonnement->abo->products->sortByDesc('created_at'); ?>
+                        @foreach($products as $product)
+
+                            <h5><i class="fa fa-star"></i>&nbsp;&nbsp;{{ $product->title }}</h5>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                @if(isset($groupes[$product->id]))
+                                    @foreach($groupes[$product->id] as $facture)
+                                        <ul class="list-group">
+
+                                            <?php $facture->load('rappels'); ?>
+
+                                            @if($facture->payed_at)
+                                                <li class="list-group-item list-group-item-success">
+                                                <strong>Payement</strong> &nbsp; {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}
+                                                <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
+                                                </li>
+                                            @else
+                                                <li class="list-group-item">
+                                                    <strong">En attente</strong>
+                                                    <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}"  class="btn btn-success btn-xs pull-right">Payement</a>
+                                                    <div class="collapse" id="payInvoice_{{ $facture->id }}">
+                                                        <span class="clearfix"><p>&nbsp;</p></span>
+                                                        <form action="{{ url('admin/abonnement') }}" method="POST">
+                                                            {!! csrf_field() !!}
+                                                            <div class="form-group input-group">
+                                                                <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" type="button">Ok</button>
+                                                                </span>
+                                                            </div><!-- /input-group -->
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                            @endif
+
+                                            @if(!$facture->rappels->isEmpty())
+                                                @foreach($facture->rappels as $rappels)
+                                                    <li class="list-group-item list-group-item-warning">
+                                                        <strong>Rappel</strong> &nbsp;{{ $rappels->created_at->formatLocalized('%d %B %Y') }}
+                                                        <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
+                                                    </li>
+                                                @endforeach
+                                            @endif
+
+                                        </ul>
+                                    @endforeach
+                                @endif
+                                </div>
+                                <div class="col-md-6">
+
+
+
+                                </div>
+                            </div>
+
+                        @endforeach
+                    @endif
 
                 </div>
             </div>

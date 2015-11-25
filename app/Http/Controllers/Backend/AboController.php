@@ -16,6 +16,8 @@ class AboController extends Controller {
     {
         $this->abo     = $abo;
         $this->adresse = $adresse;
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
 
 	/**
