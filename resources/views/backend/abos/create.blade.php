@@ -2,6 +2,17 @@
 @section('content')
 
     <div class="row">
+        <div class="col-md-12">
+
+            <div class="options text-left" style="margin-bottom: 10px;">
+                <div class="btn-toolbar">
+                    <a href="{{ url('admin/coupon') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-9">
 
             <div class="options text-left" style="margin-bottom: 10px;">

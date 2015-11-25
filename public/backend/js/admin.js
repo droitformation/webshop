@@ -438,5 +438,11 @@ $( function() {
         $(".collapse").not( $('#'+$toggle) ).slideUp('fast');
     });
 
+    $('#selectAbos').ddslick({
+        selectText: "Select your favorite social network",
+        onSelected: function (data) {
+            console.log(data);
+        }
+    });
 
 });

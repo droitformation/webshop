@@ -291,14 +291,14 @@ a:hover, a:active, a:focus {
     margin: 5px 0 25px 0;
 }
 
-#adresseMake,#adresseFind{
+#adresseMake,#adresseFind, .adresse-find{
     border: 1px solid #d2d3d6;
     margin-top: 20px;
     padding: 20px;
     background: #f5f5f5;
 }
 
-#adresseFind {
+#adresseFind , .adresse-find{
     padding-bottom: 0px;
 }
 
@@ -308,4 +308,8 @@ a:hover, a:active, a:focus {
 
 #cloneBtnOrder{
     margin-top: 10px;
+}
+
+.dd-selected-text{
+    display: inline;
 }

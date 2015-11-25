@@ -29,8 +29,8 @@ class AboController extends Controller {
         return view('backend.abos.index')->with(['abos' => $abos]);
 	}
 
-    public function show($id){
-
+    public function show($id)
+    {
         $abo = $this->abo->find($id);
 
         return view('backend.abos.show')->with(['abo' => $abo]);

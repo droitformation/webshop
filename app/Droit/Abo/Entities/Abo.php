@@ -9,7 +9,7 @@ class Abo extends Model{
 
     protected $table = 'abos';
 
-    protected $fillable = array('title','product_id','plan');
+    protected $fillable = array('title','plan');
 
     public function getPlanFrAttribute()
     {
@@ -18,9 +18,16 @@ class Abo extends Model{
         return $traduction[$this->plan];
     }
 
-    public function product()
+    public function getCurrentProductAttribute()
     {
-        return $this->belongsTo('App\Droit\Shop\Product\Entities\Product');
+        $this->load('products');
+
+        return $this->products->first();
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id');
     }
 
     public function abonnements()

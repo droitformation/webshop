@@ -13,6 +13,7 @@ use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 use App\Droit\Author\Repo\AuthorInterface;
 use App\Droit\Domain\Repo\DomainInterface;
+use App\Droit\Abo\Repo\AboInterface;
 
 class ProductController extends Controller {
 
@@ -23,13 +24,24 @@ class ProductController extends Controller {
     protected $attribute;
     protected $author;
     protected $domain;
+    protected $abo;
+    protected $helper;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain, UploadInterface $upload)
+	public function __construct(
+        ProductInterface $product,
+        CategorieInterface $categorie,
+        OrderInterface $order,
+        AttributeInterface $attribute,
+        AuthorInterface $author,
+        DomainInterface $domain,
+        UploadInterface $upload,
+        AboInterface $abo
+    )
 	{
         $this->product   = $product;
         $this->categorie = $categorie;
@@ -38,6 +50,9 @@ class ProductController extends Controller {
         $this->author    = $author;
         $this->domain    = $domain;
         $this->upload    = $upload;
+        $this->abo       = $abo;
+
+        $this->helper    = new \App\Droit\Helper\Helper();
 	}
 
 	/**
@@ -78,8 +93,9 @@ class ProductController extends Controller {
         $categories  = $this->categorie->getAll();
         $authors     = $this->author->getAll();
         $domains     = $this->domain->getAll();
+        $abos        = $this->abo->getAll();
 
-        return view('backend.products.show')->with(['product' => $product,'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains]);
+        return view('backend.products.show')->with(['product' => $product,'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains, 'abos' => $abos]);
     }
 
     /**

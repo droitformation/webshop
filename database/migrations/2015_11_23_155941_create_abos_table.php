@@ -15,7 +15,6 @@ class CreateAbosTable extends Migration
         Schema::create('abos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('product_id');
             $table->enum('plan',['month','semester','year'])->default('year');
             $table->timestamps();
             $table->softDeletes();

@@ -21,8 +21,8 @@
                     <div class="col-md-4">
                         <div class="panel panel-midnightblue">
                             <div class="panel-body">
-                                <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->product->image) }}" />
-                                <h4>{{ $abo->product->title }} <br/> <span class="label label-grape">{{ $abo->plan_fr }}</span></h4>
+                                <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
+                                <h4>{{ $abo->current_product->title }} <br/> <span class="label label-grape">{{ $abo->plan_fr }}</span></h4>
                             </div>
                             <div class="panel-footer">
                                 <form action="{{ url('admin/abo/'.$abo->id) }}" method="POST" class="form-horizontal">

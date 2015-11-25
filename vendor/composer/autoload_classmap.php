@@ -30,6 +30,8 @@ return array(
     'CivilitesTableSeeder' => $baseDir . '/database/seeds/CivilitesTableSeeder.php',
     'ColloqueTableSeeder' => $baseDir . '/database/seeds/ColloqueTableSeeder.php',
     'CreateAboPaymentsTable' => $baseDir . '/database/migrations/2015_11_23_160616_create_abo_payments_table.php',
+    'CreateAboProductsTable' => $baseDir . '/database/migrations/2015_11_25_114902_create_abo_products_table.php',
+    'CreateAboRappelsTable' => $baseDir . '/database/migrations/2015_11_25_114132_create_abo_rappels_table.php',
     'CreateAboUsersTable' => $baseDir . '/database/migrations/2015_11_23_160559_create_abo_users_table.php',
     'CreateAbosTable' => $baseDir . '/database/migrations/2015_11_23_155941_create_abos_table.php',
     'CreateAddressesTable' => $baseDir . '/database/migrations/2015_06_04_133859_create_addresses_table.php',

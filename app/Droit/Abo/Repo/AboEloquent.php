@@ -14,25 +14,30 @@ class AboEloquent implements AboInterface{
 
     public function getAll(){
 
-        return $this->abo->all();
+        return $this->abo->with(['products'])->get();
     }
 
     public function find($id){
 
-        return $this->abo->with(['abonnements','product'])->find($id);
+        return $this->abo->with(['abonnements','products'])->find($id);
     }
 
     public function create(array $data){
 
         $abo = $this->abo->create(array(
-            'title'      => $data['title'],
-            'product_id' => $data['product_id'],
-            'plan'       => $data['plan']
+            'title' => $data['title'],
+            'plan'  => $data['plan']
         ));
 
         if( ! $abo )
         {
             return false;
+        }
+
+        // products
+        if(isset($data['products']))
+        {
+            $abo->products()->attach($data['products']);
         }
 
         return $abo;
@@ -51,6 +56,12 @@ class AboEloquent implements AboInterface{
         $abo->fill($data);
 
         $abo->save();
+
+        // products
+        if(isset($data['products']))
+        {
+            $abo->products()->sync($data['products']);
+        }
 
         return $abo;
     }

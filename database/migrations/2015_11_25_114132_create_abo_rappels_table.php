@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAboPaymentsTable extends Migration
+class CreateAboRappelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class CreateAboPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('abo_factures', function (Blueprint $table) {
+        Schema::create('abo_rappels', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('abo_id');
-            $table->date('payed_at')->nullable();
+            $table->integer('abo_facture_id');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateAboPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('abo_factures');
+        Schema::drop('abo_rappels');
     }
 }

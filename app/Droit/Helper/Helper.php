@@ -554,4 +554,24 @@ class Helper {
         return $grouped;
     }
 
+
+    public function abos($abos)
+    {
+        if(!$abos->isEmpty())
+        {
+            foreach($abos as $abo)
+            {
+                $results[] = [
+                    'text'        => $abo->product->title,
+                    'value'       => $abo->id,
+                    'selected'    => false,
+                    'description' => $abo->plan_fr,
+                    'imageSrc'    => asset('files/products/'.$abo->product->image)
+                ];
+            }
+        }
+
+        return $results;
+    }
+
 }
