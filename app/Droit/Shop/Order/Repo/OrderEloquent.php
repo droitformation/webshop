@@ -12,14 +12,9 @@ class OrderEloquent implements OrderInterface{
         $this->order = $order;
     }
 
-    public function getPeriod($start,$end,$status = null)
+    public function getPeriod($start, $end, $status = null, $onlyfree = null)
     {
-        if($status)
-        {
-            return $this->order->whereBetween('created_at', [$start, $end])->where('status','=',$status)->get();
-        }
-
-        return $this->order->whereBetween('created_at', [$start, $end])->get();
+        return $this->order->whereBetween('created_at', [$start, $end])->status($status)->isfree($onlyfree)->get();
     }
 
     public function lastYear()
@@ -50,7 +45,6 @@ class OrderEloquent implements OrderInterface{
 
         return $this->order->with(['products','user','coupon','shipping'])->find($id);
     }
-
 
     public function newOrderNumber()
     {

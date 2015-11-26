@@ -77,7 +77,10 @@
                                             </thead>
                                             <tbody>
                                             @foreach($grouped as $product)
+
                                                 <?php
+
+                                                    $money = new \App\Droit\Shop\Product\Entities\Money;
                                                     // Is the product free?
                                                     $price_sum = $product->reject(function ($item) {
                                                         return $item->pivot->isFree;
@@ -89,7 +92,7 @@
                                                 ?>
                                                 <tr>
                                                     <td width="10%" valign="top"><p class="text-left" style="width:70px;margin-right: 20px;">{{ $product->count() }} x</p></td>
-                                                    <td width=60%" valign="top">
+                                                    <td width="60%" valign="top">
                                                         <a href="{{ url('admin/product/'.$product->first()->id) }}">{{ $product->first()->title }}</a>
                                                         @if(!$prod_free->isEmpty())
                                                             <br/><small>Dont livres gratuits : {{ $prod_free->count() }}</small>
@@ -98,7 +101,7 @@
                                                     <td width="15%" valign="top" class="text-right">
                                                         {{ $product->first()->price_cents }} CHF
                                                     </td>
-                                                    <td width="15%" valign="top"><p class="text-right">{{ $price_sum }} CHF</p></td>
+                                                    <td width="15%" valign="top"><p class="text-right">{{ $money->format($price_sum) }} CHF</p></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

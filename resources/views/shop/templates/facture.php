@@ -144,24 +144,26 @@
 
                     <h3>Communications</h3>
                     <div class="communications">
-                    <?php
+                        <?php
 
-                        if($order->payed_at)
-                        {
-                           echo '<p class="message special">Acquitté le '.$order->payed_at->format('d/m/Y').'</p>';
-                        }
-
-                        if(!empty($messages))
-                        {
-                            foreach($msgTypes as $msgType)
+                            if($order->payed_at)
                             {
-                                if(isset($messages[$msgType]) && !empty($messages[$msgType]))
-                                {
-                                    echo '<p class="message '.$msgType.'">'.$messages[$msgType].'</p>';
-                                }
+                               echo '<p class="message special">Acquitté le '.$order->payed_at->format('d/m/Y').'</p>';
                             }
-                        }
-                    ?>
+
+                            if(!empty($messages))
+                            {
+                                foreach($msgTypes as $msgType)
+                                {
+                                    if(isset($messages[$msgType]) && !empty($messages[$msgType]))
+                                    {
+                                        echo '<p class="message '.$msgType.'">'.$messages[$msgType].'</p>';
+                                    }
+                                }
+                                echo '<br/>';
+                            }
+                        ?>
+
                         <p class="message"><?php echo $messages['remerciements']; ?></p><br/>
                         <p class="message">Neuchâtel, le <?php echo $date; ?></p>
                     </div>

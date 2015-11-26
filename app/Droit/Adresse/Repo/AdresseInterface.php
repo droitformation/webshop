@@ -11,6 +11,7 @@ interface AdresseInterface {
 	 */
 	public function find($data);
 	public function getLast($nbr);
+    public function search($term);
     public function searchSimple($terms);
     public function searchMultiple($terms, $each = false);
 	

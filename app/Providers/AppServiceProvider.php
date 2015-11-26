@@ -37,6 +37,8 @@ class AppServiceProvider extends ServiceProvider {
 		$this->app->bind('Illuminate\Contracts\Auth\Registrar','App\Services\Registrar');
 
         $this->registerSiteService();
+        $this->registerAboService();
+        $this->registerAboUserService();
 
         $this->registerUserService();
         $this->registerAdresseService();
@@ -75,6 +77,28 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Site\Repo\SiteInterface', function()
         {
             return new \App\Droit\Site\Repo\SiteEloquent(new \App\Droit\Site\Entities\Site);
+        });
+    }
+
+    /**
+     * Abo
+     */
+    protected function registerAboService(){
+
+        $this->app->singleton('App\Droit\Abo\Repo\AboInterface', function()
+        {
+            return new \App\Droit\Abo\Repo\AboEloquent(new \App\Droit\Abo\Entities\Abo);
+        });
+    }
+
+    /**
+     * Abo user
+     */
+    protected function registerAboUserService(){
+
+        $this->app->singleton('App\Droit\Abo\Repo\AboUserInterface', function()
+        {
+            return new \App\Droit\Abo\Repo\AboUserEloquent(new \App\Droit\Abo\Entities\Abo_users);
         });
     }
 

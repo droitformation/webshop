@@ -145,6 +145,7 @@
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/vendor/jquery/jqColorPicker.min.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/vendor/jquery/jquery.ddslick.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
@@ -161,9 +162,9 @@
 
 <script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragula.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragdrop.js');?>"></script>
-
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/inscription.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/user.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/angular/angular-flow.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
@@ -172,6 +173,8 @@
 @if(isset($isNewsletter))
     @include('backend.newsletter.scripts')
 @endif
+
+
 
 </body>
 </html>

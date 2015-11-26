@@ -10,6 +10,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-7">
 
@@ -24,7 +25,7 @@
                     <div class="panel-body">
 
                         <div class="form-group">
-                            <label for="file" class="col-sm-2 control-label">Visibilité</label>
+                            <label for="file" class="col-sm-3 control-label">Visibilité</label>
                             <div class="col-sm-8">
                                 <label class="checkbox-inline">
                                     <input {{ !$product->hidden ? 'checked' : '' }} type="checkbox" name="hidden" value="0"> Caché
@@ -37,7 +38,7 @@
 
                         @if(!empty($product->image ))
                             <div class="form-group">
-                                <label for="file" class="col-sm-2 control-label">Image</label>
+                                <label for="file" class="col-sm-3 control-label">Image</label>
                                 <div class="col-sm-2">
                                     <img style="height: 160px;;" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="" />
                                 </div>
@@ -45,35 +46,35 @@
                         @endif
 
                         <div class="form-group">
-                            <label for="file" class="col-sm-2 control-label">Changer l'image</label>
+                            <label for="file" class="col-sm-3 control-label">Changer l'image</label>
                             <div class="col-sm-8">
                                 {!! Form::file('file') !!}
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Titre</label>
+                            <label class="col-sm-3 control-label">Titre</label>
                             <div class="col-sm-8 col-xs-8">
                                 <input type="text" class="form-control" value="{{ $product->title }}" name="title">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Teaser</label>
+                            <label class="col-sm-3 control-label">Teaser</label>
                             <div class="col-sm-8">
                                 <textarea style="height: 100px;" class="form-control" name="teaser">{{ $product->teaser }}</textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="message" class="col-sm-2 control-label">Description</label>
+                            <label for="message" class="col-sm-3 control-label">Description</label>
                             <div class="col-sm-8">
                                 <textarea name="description" class="form-control redactor">{{ $product->description }}</textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Poids maximum</label>
+                            <label class="col-sm-3 control-label">Poids maximum</label>
                             <div class="col-sm-4 col-xs-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="{{ $product->weight }}" name="weight">
@@ -83,7 +84,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Prix</label>
+                            <label class="col-sm-3 control-label">Prix</label>
                             <div class="col-sm-4 col-xs-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="{{ $product->price_cents }}" name="price">
@@ -93,7 +94,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Stock</label>
+                            <label class="col-sm-3 control-label">Stock</label>
                             <div class="col-sm-4 col-xs-6">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="sku" value="{{ $product->sku }}">
@@ -101,12 +102,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Existe sous forme d'abonnement</label>
+                            <div class="col-sm-4 col-xs-8">
+                                @if(!$abos->isEmpty())
+                                <select name="abo_id" class="form-control">
+                                    <option value="">Choix</option>
+                                    @foreach($abos as $abo)
+                                        <option {{ isset($product->abos) && $product->abos->id == $abo->id  ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->title }}</option>
+                                    @endforeach
+                                </select>
+                                @endif
+                            </div>
+                        </div>
+
                     </div>
                     <div class="panel-footer mini-footer">
                         <div class="col-sm-2">
                             <input type="hidden" value="{{ $product->id }}" name="id">
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-9 text-right">
                             <button class="btn btn-primary" type="submit">Envoyer </button>
                         </div>
                     </div>

@@ -2,12 +2,17 @@
 // The url to the application
 var base_url = location.protocol + "//" + location.host+"/";
 
+
+/*
+* User interactivity
+* */
 $( "#searchUser" ).autocomplete({
     source: base_url + 'admin/search',
     minLength: 3,
     select: function( event, ui )
     {
         $('#inputUser').html('<input type="hidden" value="' + ui.item.value + '" name="user_id">');
+        $(this).val('');
 
         var company = ui.item.adresse.company ? ui.item.adresse.company + '<br/>' : '';
         var cp      = ui.item.cp ? ui.item.cp + '<br/>' : '';
@@ -26,8 +31,6 @@ $( "#searchUser" ).autocomplete({
             + '</address>'
         );
 
-        $(this).val('');
-
         return false;
     }
 }).autocomplete( "instance" )._renderItem = function( ul, item ) {
@@ -38,7 +41,43 @@ $('body').on('click','#removeUser', function(e) {
     e.preventDefault();
     $('#inputUser').html('');
     $('#choiceUser').html('');
-});
+    $('#adresseFind').addClass('in');
+})
+
+var $inputUser = $('#inputUser');
+
+if($inputUser.length)
+{
+    var user = $inputUser.data('user');
+    if(user)
+    {
+        $.get( "admin/user/" + user , function( data ) {
+            console.log(data);
+            $('#inputUser').html('<input type="hidden" value="' + data.id + '" name="user_id">');
+
+            var company = data.company ? data.company + '<br/>' : '';
+            var cp      = data.cp ? data.cp + '<br/>' : '';
+            var compl   = data.complement ? data.complement + '<br/>' : '';
+
+            $('#choiceUser').html(
+                '<p><a id="removeUser" class="btn btn-danger btn-xs">Retirer</a></p>'
+                + '<address>'
+                +  company
+                +  data.civilite.title + ' '
+                +  data.first_name + ' ' + data.last_name + '<br/>'
+                +  data.adresse + '<br/>'
+                +  compl + cp
+                +  data.npa + ' ' + data.ville
+                + '</address>'
+            );
+
+        });
+    }
+}
+
+/*
+* Colloques interactivity
+* */
 
 $( "#colloqueSelection" ).change(function()
 {

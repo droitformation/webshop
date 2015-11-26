@@ -512,18 +512,19 @@ class Helper {
         return $user;
     }
 
-    public function convertAutocomplete($results){
+    public function convertAutocomplete($results, $isType = 'user')
+    {
         $data = [];
+
         if(!$results->isEmpty())
         {
             foreach($results as $result)
             {
-
                 $data[] = [
                     'label'   => $result->name ,
                     'desc'    => $result->email,
-                    'adresse' => $result->adresse_facturation,
-                    'cp'      => $result->adresse_facturation->cp_trim,
+                    'adresse' => ($isType == 'user' ? $result->adresse_facturation : $result->load('canton','profession','specialisations','civilite')),
+                    'cp'      => ($isType == 'user' ? $result->adresse_facturation->cp_trim : $result->cp_trim),
                     'value'   => $result->id
                 ];
             }
@@ -551,6 +552,26 @@ class Helper {
         }
 
         return $grouped;
+    }
+
+
+    public function abos($abos)
+    {
+        if(!$abos->isEmpty())
+        {
+            foreach($abos as $abo)
+            {
+                $results[] = [
+                    'text'        => $abo->product->title,
+                    'value'       => $abo->id,
+                    'selected'    => false,
+                    'description' => $abo->plan_fr,
+                    'imageSrc'    => asset('files/products/'.$abo->product->image)
+                ];
+            }
+        }
+
+        return $results;
     }
 
 }

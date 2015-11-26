@@ -58,6 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('search/form', 'Backend\SearchController@form');
     Route::post('search/user', 'Backend\SearchController@user');
+    Route::get('search/adresse', 'Backend\SearchController@adresse');
+
     Route::get('search', 'Backend\SearchController@search');
 
     /*
@@ -163,6 +165,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
     Route::get('fileJson/{id?}', ['uses' => 'Backend\UploadController@fileJson']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Abonnements Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('abo', 'Backend\AboController');
+    Route::get('abonnements/{id}', 'Backend\AboUserController@index');
+    Route::resource('abonnement', 'Backend\AboUserController');
 
     /*
     |--------------------------------------------------------------------------

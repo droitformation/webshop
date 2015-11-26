@@ -8,7 +8,7 @@ class OrderProduct extends Model
 {
     protected $table = 'shop_order_products';
 
-    protected $fillable = ['order_id', 'product_id'];
+    protected $fillable = ['order_id', 'product_id','isFree','rabais'];
 
     public function products()
     {

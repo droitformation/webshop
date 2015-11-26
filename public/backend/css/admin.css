@@ -83,6 +83,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     display: inline-block;
     list-style: outside none none;
     padding: 3px;
+    z-index: 1000;
 }
 
 .ui-widget-content li a span{
@@ -95,9 +96,12 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .ui-widget-content li a{
-    padding:0;
-    margin: 0;
+    border-bottom: 1px solid #f2f2f2;
+    display: block;
+    margin: 2px 0;
+    padding: 2px 0;
 }
+
 .ui-widget-content li.ui-state-focus{
     background: #f5f5f5;
     border: 1px solid transparent;
@@ -143,7 +147,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .list-group-item .form-group {
-    margin-bottom: 0px;
+    margin-bottom: 2px;
 }
 
 .list-group-item p{
@@ -287,16 +291,25 @@ a:hover, a:active, a:focus {
     margin: 5px 0 25px 0;
 }
 
-#adresseMake,#adresseFind{
-    border: 1px solid #eee;
+#adresseMake,#adresseFind, .adresse-find{
+    border: 1px solid #d2d3d6;
     margin-top: 20px;
     padding: 20px;
+    background: #f5f5f5;
 }
 
-#adresseFind {
+#adresseFind , .adresse-find{
     padding-bottom: 0px;
 }
 
 #adresseParent .collapse.in{
     display: block !important;
+}
+
+#cloneBtnOrder{
+    margin-top: 10px;
+}
+
+.dd-selected-text{
+    display: inline;
 }

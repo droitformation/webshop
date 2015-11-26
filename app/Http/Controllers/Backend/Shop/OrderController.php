@@ -51,23 +51,25 @@ class OrderController extends Controller {
 
         $names   = config('columns.names');
 
-        $period  = $request->all();
-        $status  = $request->input('status',null);
-        $columns = $request->input('columns',$this->generator->columns);
-        $export  = $request->input('export',null);
+        $period   = $request->all();
+        $status   = $request->input('status',null);
+        $onlyfree = $request->input('onlyfree',null);
+        $details  = $request->input('details',null);
+        $columns  = $request->input('columns',$this->generator->columns);
+        $export   = $request->input('export',null);
 
         $period['start'] = (!isset($period['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($period['start']) );
         $period['end']   = (!isset($period['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($period['end']) );
 
-        $orders = $this->order->getPeriod($period['start'],$period['end'], $status);
+        $orders = $this->order->getPeriod($period['start'],$period['end'], $status, $onlyfree);
 
         if($export)
         {
             $this->generator->setColumns($columns);
-            $this->export($orders);
+            $this->export($orders,$details);
         }
 
-		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names]);
+		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names, 'onlyfree' => $onlyfree, 'details' => $details]);
 	}
 
     /**
@@ -75,16 +77,17 @@ class OrderController extends Controller {
      *
      * @return Response
      */
-    public function export($orders)
+    public function export($orders, $details = null)
     {
-        \Excel::create('Export Commandes', function($excel) use ($orders)
+        \Excel::create('Export Commandes', function($excel) use ($orders,$details)
         {
-            $excel->sheet('Export_Commandes', function($sheet) use ($orders)
+            $excel->sheet('Export_Commandes', function($sheet) use ($orders,$details)
             {
-                $names   = config('columns.names');
+                $names  = config('columns.names');
+                $view   = (isset($details) ? 'details' : 'orders');
 
                 $sheet->setOrientation('landscape');
-                $sheet->loadView('backend.export.orders', ['orders' => $orders , 'generator' => $this->generator, 'names' => $names]);
+                $sheet->loadView('backend.export.'.$view , ['orders' => $orders , 'generator' => $this->generator, 'names' => $names]);
             });
         })->export('xls');
     }
@@ -129,6 +132,12 @@ class OrderController extends Controller {
             'adresse.adresse'     => 'required_without:user_id',
             'adresse.npa'         => 'required_without:user_id',
             'adresse.ville'       => 'required_without:user_id',
+        ], [
+            'adresse.first_name.required_without'  => 'Une adresse (prénom) est requise sans utilisateur',
+            'adresse.last_name.required_without'   => 'Une adresse (nom) est requise sans utilisateur',
+            'adresse.adresse.required_without'     => 'Une adresse (adresse) est requise sans utilisateur',
+            'adresse.npa.required_without'         => 'Une adresse (npa) est requise sans utilisateur',
+            'adresse.ville.required_without'       => 'Une adresse (ville) est requise sans utilisateur',
         ]);
 
         if ($validator->fails())
@@ -141,10 +150,6 @@ class OrderController extends Controller {
         echo '</pre>';exit;*/
 
         $order = $this->worker->make($request->all());
-
- /*       echo '<pre>';
-        print_r($order);
-        echo '</pre>';exit;*/
 
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
     }
