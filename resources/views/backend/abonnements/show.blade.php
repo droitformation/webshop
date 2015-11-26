@@ -62,7 +62,7 @@
                                         <input type="hidden" class="form-control" value="{{ $abonnement->tiers_id }}" name="tiers_id">
                                     </div>
                                     <div class="choice-adresse"></div>
-                                    <div class="collapse adresse-find">
+                                    <div class="collapse in adresse-find">
                                         <div class="form-group">
                                             <input id="search-adresse2" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
                                         </div>
@@ -93,7 +93,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Renouvellement</label>
                             <div class="col-sm-4 col-xs-8">
-                                <select class="form-control" name="type" id="typeSelect">
+                                <select class="form-control" name="renouvellement">
                                     <option {{ ($abonnement->renouvellement == 'auto' ?  'selected' : '') }} value="auto">Auto</option>
                                     <option {{ ($abonnement->renouvellement == 'year' ? 'selected' : '') }} value="year">1 an</option>
                                 </select>
@@ -103,7 +103,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Statut</label>
                             <div class="col-sm-4 col-xs-8">
-                                <select class="form-control" name="type" id="typeSelect">
+                                <select class="form-control" name="status">
                                     <option {{ ($abonnement->status == 'abonne' ?  'selected' : '') }} value="abonne">Abonné</option>
                                     <option {{ ($abonnement->status == 'gratuit' ? 'selected' : '') }} value="gratuit">Gratuit</option>
                                 </select>
@@ -143,12 +143,6 @@
 
                     @if(isset($abonnement->factures))
                         <?php $groupes = $abonnement->factures->groupBy('product_id'); ?>
-
-                            <?php
-                              /*  echo '<pre>';
-                                print_r($groupes);
-                                echo '</pre>';*/
-                            ?>
                     @endif
 
                     <?php $abonnement->abo->load('products'); ?>
@@ -169,16 +163,16 @@
 
                                             @if($facture->payed_at)
                                                 <li class="list-group-item list-group-item-success">
-                                                <strong>Payement</strong> &nbsp; {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}
-                                                <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
+                                                    <strong>Payement</strong> &nbsp; {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}
+                                                    <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
                                                 </li>
                                             @else
                                                 <li class="list-group-item">
-                                                    <strong">En attente</strong>
+                                                    <strong>En attente</strong>
                                                     <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}"  class="btn btn-success btn-xs pull-right">Payement</a>
                                                     <div class="collapse" id="payInvoice_{{ $facture->id }}">
                                                         <span class="clearfix"><p>&nbsp;</p></span>
-                                                        <form action="{{ url('admin/abonnement') }}" method="POST">
+                                                        <form action="{{ url('admin/facture') }}" method="POST">
                                                             {!! csrf_field() !!}
                                                             <div class="form-group input-group">
                                                                 <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
@@ -202,10 +196,25 @@
 
                                         </ul>
                                     @endforeach
+                                @else
+
+                                    <form action="{{ url('admin/facture/make') }}" method="POST">
+                                        {!! csrf_field() !!}
+                                        <div class="form-group input-group">
+                                            <input type="text" class="form-control datePicker" name="created_at" placeholder="Date">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" type="submit">Ajouter facture</button>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                        <input type="hidden" value="{{ $product->id }}" name="product_id">
+                                        <input type="hidden" value="{{ $abonnement->id }}" name="abo_user_id">
+                                        <input type="hidden" value="Facture" name="type">
+                                    </form>
+
                                 @endif
+
                                 </div>
                                 <div class="col-md-6">
-
 
 
                                 </div>

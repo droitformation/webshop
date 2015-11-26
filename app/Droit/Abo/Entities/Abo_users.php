@@ -9,7 +9,7 @@ class Abo_users extends Model{
 
     protected $table = 'abo_users';
 
-    protected $fillable = array('abo_id','numero','exemplaires','adresse_id','tiers_id','price','reference','remarque','status','renouvellement','plan');
+    protected $fillable = array('abo_id','numero','exemplaires','adresse_id','tiers_id','price','reference','remarque','status','renouvellement');
 
     public function abo()
     {

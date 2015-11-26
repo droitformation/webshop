@@ -39,6 +39,7 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerSiteService();
         $this->registerAboService();
         $this->registerAboUserService();
+        $this->registerAboFactureService();
 
         $this->registerUserService();
         $this->registerAdresseService();
@@ -98,7 +99,18 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->app->singleton('App\Droit\Abo\Repo\AboUserInterface', function()
         {
-            return new \App\Droit\Abo\Repo\AboUserEloquent(new \App\Droit\Abo\Entities\Abo_users);
+            return new \App\Droit\Abo\Repo\AboUserEloquent(new \App\Droit\Abo\Entities\Abo_users, new \App\Droit\Abo\Entities\Abo_factures, new \App\Droit\Abo\Entities\Abo_rappels);
+        });
+    }
+
+    /**
+     * Abo facture
+     */
+    protected function registerAboFactureService(){
+
+        $this->app->singleton('App\Droit\Abo\Repo\AboFactureInterface', function()
+        {
+            return new \App\Droit\Abo\Repo\AboFactureEloquent(new \App\Droit\Abo\Entities\Abo_factures);
         });
     }
 

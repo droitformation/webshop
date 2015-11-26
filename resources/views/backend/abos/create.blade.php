@@ -6,7 +6,7 @@
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/coupon') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
         </div>
@@ -15,44 +15,14 @@
     <div class="row">
         <div class="col-md-9">
 
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/coupon') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
-            </div>
-
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Ajouter coupon</h4>
+                    <h4><i class="fa fa-edit"></i> &nbsp;Ajouter abo</h4>
                 </div>
-                <form action="{{ url('admin/coupon') }}" method="POST" class="form-horizontal">
+                <form action="{{ url('admin/abo') }}" method="POST" class="form-horizontal">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Type de rabais</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <select class="form-control" name="type" id="typeSelect">
-                                    <option value="global">Sur toute la commande</option>
-                                    <option value="product">Sur un ou plusieurs produits</option>
-                                    <option value="shipping">Frais de port gratuit</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group" id="productSelect" style="display:none;">
-                            <label class="col-sm-3 control-label">Choix des produits</label>
-                            <div class="col-sm-9 col-xs-12">
-                                @if(!$products->isEmpty())
-                                <select name="product_id[]" multiple="multiple" id="multi-select">
-                                    @foreach($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->title }}</option>
-                                    @endforeach
-                                </select>
-                                @endif
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
@@ -62,25 +32,33 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Valeur</label>
+                            <label class="col-sm-3 control-label">Récurrence</label>
                             <div class="col-sm-3 col-xs-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="value">
-                                    <span class="input-group-addon">%</span>
-                                </div>
+                                <select class="form-control" name="plan">
+                                    <option value=""></option>
+                                    @foreach($plans as $name => $plan)
+                                        <option {{ $name == 'year' ? 'selected' : '' }} value="{{ $name }}">{{ $plan }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Date d'expiration</label>
-                            <div class="col-sm-3 col-xs-6">
-                                <input type="text" class="form-control datePicker" name="expire_at">
+                            <label for="message" class="col-sm-3 control-label">Produits</label>
+                            <div class="col-sm-5 col-xs-8">
+                                <select multiple class="form-control" id="multi-select" name="products_id[]">
+                                    @if(!empty($products))
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
                         </div>
 
                     </div>
                     <div class="panel-footer text-right">
-                        <button type="submit" class="btn btn-info">Créer un coupon</button>
+                        <button type="submit" class="btn btn-info">Créer un abo</button>
                     </div>
                 </form>
             </div>

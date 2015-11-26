@@ -2,14 +2,20 @@
 
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Abo\Entities\Abo_users as M;
+use App\Droit\Abo\Entities\Abo_factures;
+use App\Droit\Abo\Entities\Abo_rappels;
 
 class AboUserEloquent implements AboUserInterface{
 
     protected $abo_user;
+    protected $abo_facture;
+    protected $abo_rappel;
 
-    public function __construct(M $abo_user)
+    public function __construct(M $abo_user, Abo_factures $abo_facture, Abo_rappels $abo_rappel)
     {
-        $this->abo_user = $abo_user;
+        $this->abo_user    = $abo_user;
+        $this->abo_facture = $abo_facture;
+        $this->abo_rappel  = $abo_rappel;
     }
 
     public function getAll()
@@ -29,13 +35,12 @@ class AboUserEloquent implements AboUserInterface{
             'numero'         => $data['numero'],
             'exemplaires'    => $data['exemplaires'],
             'adresse_id'     => $data['adresse_id'],
-            'tiers_id'       => $data['tiers_id'],
-            'price'          => $data['price'],
+            'tiers_id'       => isset($data['tiers_id']) && $data['tiers_id'] > 0 ? $data['tiers_id'] : null,
+            'price'          => isset($data['price']) && $data['price'] > 0 ? $data['price'] : null,
             'reference'      => $data['reference'],
             'remarque'       => $data['remarque'],
             'status'         => $data['status'],
             'renouvellement' => $data['renouvellement'],
-            'plan'           => $data['plan']
         ));
 
         if( ! $abo_user )
@@ -43,8 +48,13 @@ class AboUserEloquent implements AboUserInterface{
             return false;
         }
 
-        return $abo_user;
+        // Make first facture
+        if(isset($data['product_id']))
+        {
+            $this->makeFacture(['abo_user_id' => $abo_user->id, 'product_id' => $data['product_id']]);
+        }
 
+        return $abo_user;
     }
 
     public function update(array $data){
@@ -68,6 +78,22 @@ class AboUserEloquent implements AboUserInterface{
         $abo_user = $this->abo_user->find($id);
 
         return $abo_user->delete();
+
+    }
+
+    public function makeFacture($data)
+    {
+        $facture = $this->abo_facture->create($data);
+
+        if(!$facture)
+        {
+            return false;
+        }
+
+        return $facture;
+    }
+
+    public function makeRappel($data){
 
     }
 }

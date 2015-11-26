@@ -21,6 +21,8 @@ $('input.search-adresse').each(function()
         $.get( "admin/adresse/" + adresse , function( data )
         {
             $choice.html(template(data));
+            $find.removeClass('in');
+            $input.find('input').val(adresse);
         });
     }
 

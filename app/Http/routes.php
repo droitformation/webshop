@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('/', 'Backend\AdminController@index');
 
-    Route::get('user/search', 'Backend\UserController@search');
+    Route::get('user/search', 'Backend\User\UserController@search');
     Route::get('config/shop', 'Backend\ConfigController@shop');
     Route::get('config/colloque', 'Backend\ConfigController@colloque');
     Route::resource('config', 'Backend\ConfigController');
@@ -173,6 +173,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     */
     Route::resource('abo', 'Backend\AboController');
     Route::get('abonnements/{id}', 'Backend\AboUserController@index');
+    Route::get('abonnement/create/{id}', 'Backend\AboUserController@create');
+    Route::post('abonnement/make', 'Backend\AboUserController@make');
+
+    Route::resource('facture', 'Backend\AboFactureController');
     Route::resource('abonnement', 'Backend\AboUserController');
 
     /*

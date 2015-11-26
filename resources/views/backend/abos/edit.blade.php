@@ -2,80 +2,70 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-12">
 
             <div class="options text-left" style="margin-bottom: 10px;">
-                <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                <div class="btn-toolbar">
+                    <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9">
 
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Editer abo</h4>
+                    <h4><i class="fa fa-edit"></i> &nbsp;&Eacute;diter abo</h4>
                 </div>
                 <form action="{{ url('admin/abo/'.$abo->id) }}" method="POST" class="form-horizontal">
-
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
+
                     <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Type de rabais</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <select class="form-control" name="type" id="typeSelect">
-                                    <option {{ ($abo->type == 'global' ?  'selected' : '') }} value="global">Sur toute la commande</option>
-                                    <option {{ ($abo->type == 'product' ? 'selected' : '') }} value="product">Sur un ou plusieurs produits</option>
-                                    <option {{ ($abo->type == 'shipping'? 'selected' : '') }} value="shipping">Frais de port gratuit</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <?php $choices = $abo->products->lists('id')->all(); ?>
-
-                        <div class="form-group" id="productSelect" {{ ($abo->type == 'product' ? 'style="display:block;"' : 'style="display:none;"') }}>
-                            <label class="col-sm-3 control-label">Choix des produits</label>
-                            <div class="col-sm-9 col-xs-12">
-                                @if(!$products->isEmpty())
-                                    <select name="product_id[]" multiple="multiple" id="multi-select">
-                                        @foreach($products as $product)
-                                            <option {{ (in_array($product->id,$choices) ? 'selected' : '') }} value="{{ $product->id }}">{{ $product->title }}</option>
-                                        @endforeach
-                                    </select>
-                                @endif
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
-                            <div class="col-sm-5 col-xs-8">
+                            <div class="col-sm-3 col-xs-6">
                                 <input type="text" class="form-control" value="{{ $abo->title }}" name="title">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Valeur</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ $abo->value }}" name="value">
-                                    <span class="input-group-addon">%</span>
-                                </div>
+                            <label class="col-sm-3 control-label">Récurrence</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <select class="form-control" name="plan">
+                                    <option value=""></option>
+                                    @foreach($plans as $name => $plan)
+                                        <option {{ $name ==  $abo->plan ? 'selected' : '' }} value="{{ $name }}">{{ $plan }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Date d'expiration</label>
+                            <label for="message" class="col-sm-3 control-label">Produits</label>
                             <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control datePicker" value="{{ $abo->expire_at->format('Y-m-d') }}" name="expire_at">
+                                <select multiple class="form-control" id="multi-select" name="products_id[]">
+                                    <?php $product_abos = !$abo->products->isEmpty() ? $abo->products->lists('id')->all() : []; ?>
+                                    @if(!$products->isEmpty())
+                                        @foreach($products as $product)
+                                            <option {{ in_array($product->id,$product_abos) ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->title }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
                         </div>
 
-                        <input type="hidden" value="{{ $abo->id }}" name="id">
-
                     </div>
                     <div class="panel-footer text-right">
+                        {!! Form::hidden('id', $abo->id ) !!}
                         <button type="submit" class="btn btn-info">Envoyer</button>
                     </div>
                 </form>
-
             </div>
+
         </div>
     </div>
 

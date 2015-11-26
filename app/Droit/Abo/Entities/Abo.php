@@ -9,7 +9,7 @@ class Abo extends Model{
 
     protected $table = 'abos';
 
-    protected $fillable = array('title','plan');
+    protected $fillable = ['title','plan'];
 
     public function getPlanFrAttribute()
     {
@@ -22,9 +22,14 @@ class Abo extends Model{
     {
         $this->load('products');
 
-        $products = $this->products->sortByDesc('created_at');
+        if(!$this->products->isEmpty())
+        {
+            $products = $this->products->sortByDesc('created_at');
 
-        return $products->first();
+            return ['title' => $products->first()->title, 'image' => $products->first()->image, 'id' => $products->first()->id];
+        }
+
+        return ['image' => 'placeholder.jpg', 'title' => $this->title , 'id' => null];
     }
 
     public function products()

@@ -35,13 +35,12 @@ class AboEloquent implements AboInterface{
         }
 
         // products
-        if(isset($data['products']))
+        if(isset($data['products_id']))
         {
-            $abo->products()->attach($data['products']);
+            $abo->products()->attach($data['products_id']);
         }
 
         return $abo;
-
     }
 
     public function update(array $data){
@@ -58,9 +57,9 @@ class AboEloquent implements AboInterface{
         $abo->save();
 
         // products
-        if(isset($data['products']))
+        if(isset($data['products_id']))
         {
-            $abo->products()->sync($data['products']);
+            $abo->products()->sync($data['products_id']);
         }
 
         return $abo;

@@ -106,13 +106,14 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Existe sous forme d'abonnement</label>
                             <div class="col-sm-4 col-xs-8">
+                                <?php $product_abos = $product->abos->lists('id')->all(); ?>
                                 @if(!$abos->isEmpty())
-                                <select name="abo_id" class="form-control">
-                                    <option value="">Choix</option>
-                                    @foreach($abos as $abo)
-                                        <option {{ isset($product->abos) && $product->abos->id == $abo->id  ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->title }}</option>
-                                    @endforeach
-                                </select>
+                                    <select name="abo_id" class="form-control" multiple>
+                                        <option value="">Choix</option>
+                                        @foreach($abos as $abo)
+                                            <option {{ in_array($abo->id ,$product_abos) ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->title }}</option>
+                                        @endforeach
+                                    </select>
                                 @endif
                             </div>
                         </div>
@@ -152,7 +153,7 @@
                     @endif
 
                     <h4>Ajouter un attribut</h4>
-                    <form action="{{ url('admin/product/attributs/'.$product->id) }}" method="POST">
+                    <form action="{{ url('admin/product/addAttribut/'.$product->id) }}" method="POST">
                         {!! csrf_field() !!}
                         <div class="form-group">
                             <div class="col-md-6">

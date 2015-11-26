@@ -1,6 +1,6 @@
 <?php namespace App\Droit\Abo\Repo;
 
-interface AboUserInterface {
+interface AboFactureInterface {
 
     public function getAll();
     public function find($data);
@@ -8,7 +8,4 @@ interface AboUserInterface {
     public function update(array $data);
     public function delete($id);
 
-    // factures
-    public function makeFacture($data);
-    public function makeRappel($data);
 }
