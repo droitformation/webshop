@@ -177,7 +177,7 @@
                                                             <div class="form-group input-group">
                                                                 <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
                                                                 <span class="input-group-btn">
-                                                                    <button class="btn btn-default" type="button">Ok</button>
+                                                                    <button class="btn btn-info" type="submit">Ok</button>
                                                                 </span>
                                                             </div><!-- /input-group -->
                                                         </form>

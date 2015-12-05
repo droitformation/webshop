@@ -21,4 +21,9 @@ class Abo_factures extends Model{
         return $this->hasMany('App\Droit\Abo\Entities\Abo_rappels','abo_facture_id','id');
     }
 
+    public function product()
+    {
+        return $this->belongsTo('App\Droit\Shop\Product\Entities\Product', 'product_id');
+    }
+
 }
