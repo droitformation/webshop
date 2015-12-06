@@ -45,6 +45,7 @@ class PdfGenerator implements PdfGeneratorInterface
         $this->now   = Carbon::now()->formatLocalized('%d %B %Y');
 
         $this->tva = [
+            'numero'      => \Registry::get('shop.infos.tva'),
             'taux_reduit' => \Registry::get('shop.infos.taux_reduit'),
             'taux_normal' => \Registry::get('shop.infos.taux_normal')
         ];

@@ -73,9 +73,18 @@ class AboController extends Controller {
         return redirect('admin/abo/'.$abo->id)->with(array('status' => 'success', 'message' => 'L\'abo  a été mis à jour' ));
     }
 		
-	public function destroy(Request $request)
+	public function destroy($id)
 	{
+        $abo = $this->abo->find($id);
 
+        if(!$abo->abonnements->isEmpty())
+        {
+            return redirect()->back()->with(array('status' => 'warning', 'message' => 'Il existe des utilisateurs pour cet abo' ));
+        }
+
+        $this->abo->delete($id);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abo  a été supprimé' ));
 	}
 
 }

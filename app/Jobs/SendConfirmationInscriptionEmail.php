@@ -31,7 +31,7 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
         // Allow us to pass another email to the job
         $this->email       = $email;
         $this->inscription = $inscription;
-        $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $this->generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     }
 
     /**
@@ -41,6 +41,10 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
      */
     public function handle(Mailer $mailer)
     {
+        echo '<pre>';
+        print_r($this->inscription);
+        echo '</pre>';exit;
+
         $this->inscription->load('colloque');
         $annexes = $this->inscription->colloque->annexe;
 

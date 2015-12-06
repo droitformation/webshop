@@ -18,7 +18,7 @@
                     <div class="panel-body">
                         <div class="form-group col-md-4">
                             <label><strong>Logo</strong></label>
-                            <div style="width: 200px;">
+                            <div style="max-width: 200px;">
                                 <div class="uploadBtn">
                                     <span class="btn btn-xs btn-info"    ng-hide="$flow.files.length"    flow-btn flow-attrs="{accept:'image/*'}">Selectionner image</span>
                                     <span class="btn btn-xs btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Changer</span>
@@ -32,7 +32,7 @@
                                 <div class="thumbnail big" ng-if="!$flow.files.length">
                                     <?php $logo = Registry::get('shop.infos.logo'); ?>
                                     <?php $logo = (!empty($logo) ? asset('files/main/'.$logo) : 'http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=Logo'); ?>
-                                    <img style="max-height: 180px;" src="{{ $logo }}" />
+                                    <img style="max-width: 100%;" src="{{ $logo }}" />
                                     <input type="hidden" name="shop[infos][logo]" value="{{ Registry::get('shop.infos.logo') }}">
                                 </div>
 

@@ -66,8 +66,10 @@ class AboUserController extends Controller {
         return redirect('admin/abo/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été mis à jour' ));
     }
 
-	public function destroy(Request $request)
+	public function destroy($id)
 	{
+        $this->abonnement->delete($id);
 
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonné a été supprimé' ));
 	}
 }
