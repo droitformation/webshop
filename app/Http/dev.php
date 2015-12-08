@@ -6,9 +6,25 @@
 Route::get('cartworker', function()
 {
 
-    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+/*    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
     $item   = $coupon->find(1);
     $item->load('orders');
+*/
+
+
+    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    $item = $inscription->find(105);
+
+    $item->load('colloque');
+    $annexes = $item->colloque->annexe;
+
+    // Generate annexes if any
+    if(empty($item->documents) && !empty($annexes))
+    {
+        $generator->setInscription($item)->generate($annexes);
+    }
 
     echo '<pre>';
     print_r($item);

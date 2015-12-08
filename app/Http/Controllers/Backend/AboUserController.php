@@ -61,7 +61,7 @@ class AboUserController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $abonnement  = $this->abonnement->update($request->all());
+        $abonnement = $this->abonnement->update($request->all());
 
         return redirect('admin/abo/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été mis à jour' ));
     }
