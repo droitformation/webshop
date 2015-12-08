@@ -80,6 +80,11 @@ class ProductEloquent implements ProductInterface{
 
         $product->save();
 
+        if(isset($data['abo_id']))
+        {
+            $product->abos()->sync($data['abo_id']);
+        }
+
         return $product;
     }
 

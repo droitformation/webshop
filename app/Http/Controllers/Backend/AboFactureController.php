@@ -25,14 +25,10 @@ class AboFactureController extends Controller {
 
 	public function store(Request $request)
 	{
-        echo '<pre>';
-        print_r($request->all());
-        echo '</pre>';exit;
-
         $type = $request->input('type');
         $item = $this->$type->create($request->except('type'));
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'La facture a été crée']);
+        return redirect()->back()->with(['status' => 'success', 'message' => $type.' a été crée']);
 	}
 
     public function update(Request $request, $id)
@@ -44,7 +40,10 @@ class AboFactureController extends Controller {
 		
 	public function destroy(Request $request)
 	{
+        $type = $request->input('type');
+        $this->$type->delete($request->input('id'));
 
+        return redirect()->back()->with(array('status' => 'success', 'message' => $type.' a été supprimé' ));
 	}
 
 }

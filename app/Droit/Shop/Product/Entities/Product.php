@@ -11,7 +11,23 @@ class Product extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable','abo_id'];
+    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable'];
+
+    public function getReferenceAttribute()
+    {
+        $this->load('attributes');
+        $attribute = $this->attributes->where('id',4);
+
+        return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
+    }
+
+    public function getEditionAttribute()
+    {
+        $this->load('attributes');
+        $attribute = $this->attributes->where('id',3);
+
+        return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
+    }
 
     public function getPriceCentsAttribute()
     {
@@ -47,7 +63,7 @@ class Product extends Model{
 
     public function attributes()
     {
-        return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value')->orderBy('sorting', 'asc');
+        return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value','id')->orderBy('sorting', 'asc');
     }
 
     public function orders()

@@ -26,7 +26,6 @@ class AboFactureEloquent implements AboFactureInterface{
 
         $facture = $this->facture->create(array(
             'abo_user_id' => $data['abo_user_id'],
-            'payed_at'    => $data['payed_at'],
             'product_id'  => $data['product_id']
         ));
 

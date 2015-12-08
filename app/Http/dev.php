@@ -12,7 +12,7 @@ Route::get('cartworker', function()
 */
 
 
-    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+/*    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $item = $inscription->find(105);
@@ -24,12 +24,15 @@ Route::get('cartworker', function()
     if(empty($item->documents) && !empty($annexes))
     {
         $generator->setInscription($item)->generate($annexes);
-    }
+    }*/
 
+    $repo = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+    $item = $repo->find(82);
+    $attribute = $item->attributes->where('id',3);
     echo '<pre>';
-    print_r($item);
+    print_r($attribute->first()->pivot->value);
     echo '</pre>';
-
+    exit;
     /*
        $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
 

@@ -151,24 +151,30 @@
                         <?php $products = $abonnement->abo->products->sortByDesc('created_at'); ?>
                         @foreach($products as $product)
 
-                            <h5><i class="fa fa-star"></i>&nbsp;&nbsp;{{ $product->title }}</h5>
-                            @if(isset($groupes[$product->id]))
-                                @foreach($groupes[$product->id] as $facture)
+                            <div class="well well-sm">
+                                <h4><i class="fa fa-stop-circle-o"></i> &nbsp;{{ $product->title }}</h4>
 
-                                <div class="row">
-                                    <div class="col-md-6">
+                                @if(isset($groupes[$product->id]))
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        @foreach($groupes[$product->id] as $facture)
 
-                                    <ul class="list-group">
-                                        <?php $facture->load('rappels'); ?>
-                                        @if($facture->payed_at)
-                                            <li class="list-group-item list-group-item-success">
-                                                <strong>Payé</strong> &nbsp; le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}
-                                                <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
-                                            </li>
-                                        @else
-                                            <li class="list-group-item">
-                                                <strong>En attente</strong>
-                                                <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}"  class="btn btn-success btn-xs pull-right">Payement</a>
+                                            <?php $facture->load('rappels'); ?>
+
+                                            <!-- Payed -->
+                                            @if($facture->payed_at)
+                                                <p><span class="label label-success"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Payé </strong> le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}</p>
+                                                @include('backend.abonnements.partials.payement', ['payement' => $facture, 'type' => 'facture'])
+                                            @else
+                                                <p><span class="label label-default"><i class="fa fa-star"></i></span>&nbsp;&nbsp; <strong>En attente</strong></p>
+                                                <form action="{{ url('admin/facture') }}" method="POST">
+                                                    <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer comme payé</a>
+                                                    {!! csrf_field() !!}
+                                                    <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">
+                                                    <input type="hidden" value="rappel" name="type">
+                                                    <button class="btn btn-sm btn-warning" type="submit">Créer un rappel</button>
+                                                </form>
+
                                                 <div class="collapse" id="payInvoice_{{ $facture->id }}">
                                                     <span class="clearfix"><p>&nbsp;</p></span>
                                                     <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST">
@@ -177,53 +183,51 @@
                                                         <div class="form-group input-group">
                                                             <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
                                                             <input type="hidden" value="{{ $facture->id }}" name="id">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-info" type="submit">Ok</button>
-                                                            </span>
-                                                        </div><!-- /input-group -->
+                                                            <span class="input-group-btn"><button class="btn btn-info" type="submit">Ok</button></span>
+                                                        </div>
                                                     </form>
                                                 </div>
-                                            </li>
-                                        @endif
 
-                                    </ul>
-                                @endforeach
+                                            @endif
+                                            <!-- End Payed -->
 
-                                    </div>
-                                    <div class="col-md-6">
+                                        @endforeach
+                                        </div>
+
                                         @if(!$facture->rappels->isEmpty())
-                                            @foreach($facture->rappels as $rappels)
-                                                <li class="list-group-item list-group-item-warning">
-                                                    <strong>Rappel</strong> &nbsp;{{ $rappels->created_at->formatLocalized('%d %B %Y') }}
-                                                    <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
-                                                </li>
-                                            @endforeach
+                                            <div class="col-md-6">
+                                                <!-- Rappels -->
+                                                @foreach($facture->rappels as $rappel)
+                                                    <p><span class="label label-warning"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Rappel </strong> le {!! $rappel->created_at->formatLocalized('%d %B %Y') !!}</p>
+                                                    @include('backend.abonnements.partials.payement', ['payement' => $rappel, 'type' => 'rappel'])
+                                                @endforeach
+                                                <!-- End Rappels -->
+                                            </div>
                                         @endif
 
-
                                     </div>
-                                </div>
-                            @endif
-
+                                @endif
+                            </div>
                         @endforeach
                     @endif
 
                     <hr/>
+                    <h4>Créer une facture</h4>
                     <form action="{{ url('admin/facture') }}" method="POST">
                         {!! csrf_field() !!}
-                        <div class="form-group">
-                            <input type="text" class="form-control datePicker" name="created_at" placeholder="Date">
-                        </div><!-- /input-group -->
-                        <div class="form-group">
-                            <select class="form-control" name="product_id">
-                                @if(!$products->isEmpty())
-                                    @foreach($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->title }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
+                        <div class="row">
+                            <div class="col-md-4"><input type="text" class="form-control datePicker" name="created_at" placeholder="Date"></div>
+                            <div class="col-md-5">
+                                <select class="form-control" name="product_id">
+                                    @if(!$products->isEmpty())
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="col-md-3"><button class="btn btn-info" type="submit">Ajouter une facture</button></div>
                         </div>
-                        <button class="btn btn-info" type="submit">Ajouter facture</button>
                         <input type="hidden" value="{{ $abonnement->id }}" name="abo_user_id">
                         <input type="hidden" value="facture" name="type">
                     </form>

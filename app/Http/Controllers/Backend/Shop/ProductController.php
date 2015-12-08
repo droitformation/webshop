@@ -163,6 +163,7 @@ class ProductController extends Controller {
 
     public function removeAttribut($id, Request $request)
     {
+
         $product = $this->product->find($id);
 
         $product->attributes()->detach($request->input('attribute_id'));

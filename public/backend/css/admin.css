@@ -313,3 +313,9 @@ a:hover, a:active, a:focus {
 .dd-selected-text{
     display: inline;
 }
+
+.well-sm {
+    border-radius: 1px;
+    padding: 5px 10px 10px 10px;
+    background: #fff;
+}

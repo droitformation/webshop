@@ -102,19 +102,22 @@
                                 </div>
                             </div>
                         </div>
-
+                        <hr/>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Existe sous forme d'abonnement</label>
                             <div class="col-sm-4 col-xs-8">
                                 <?php $product_abos = $product->abos->lists('id')->all(); ?>
                                 @if(!$abos->isEmpty())
-                                    <select name="abo_id" class="form-control" multiple>
+                                    <select name="abo_id[]" class="form-control" multiple>
                                         <option value="">Choix</option>
                                         @foreach($abos as $abo)
                                             <option {{ in_array($abo->id ,$product_abos) ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->title }}</option>
                                         @endforeach
                                     </select>
                                 @endif
+                            </div>
+                            <div class="col-sm-4 col-xs-12">
+                                <p class="text-danger">Attention indiquer la référence dans les attributs pour la facture !</p>
                             </div>
                         </div>
 
@@ -144,7 +147,7 @@
                             <div>
                                 <strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }}
                                 <form action="{{ url('admin/product/removeAttribut/'.$product->id) }}" method="POST" class="pull-right">{!! csrf_field() !!}
-                                    <input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
+                                    <input type="hidden" name="attribute_id" value="{{ $attribute->pivot->id }}">
                                     <button data-action="{{ $attribute->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                 </form>
                             </div>

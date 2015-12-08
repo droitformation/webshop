@@ -11,6 +11,12 @@ class Abo_users extends Model{
 
     protected $fillable = array('abo_id','numero','exemplaires','adresse_id','tiers_id','price','reference','remarque','status','renouvellement');
 
+
+    public function getAboNoAttribute()
+    {
+        return $this->numero;
+    }
+
     public function abo()
     {
         return $this->belongsTo('App\Droit\Abo\Entities\Abo','abo_id');
