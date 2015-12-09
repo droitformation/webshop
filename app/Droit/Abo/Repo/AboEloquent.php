@@ -26,6 +26,7 @@ class AboEloquent implements AboInterface{
 
         $abo = $this->abo->create(array(
             'title' => $data['title'],
+            'logo'  => (isset($data['logo']) ? $data['logo']: null),
             'plan'  => $data['plan']
         ));
 

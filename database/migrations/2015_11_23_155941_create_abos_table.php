@@ -16,6 +16,7 @@ class CreateAbosTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->enum('plan',['month','semester','year'])->default('year');
+            $table->string('logo');
             $table->timestamps();
             $table->softDeletes();
         });

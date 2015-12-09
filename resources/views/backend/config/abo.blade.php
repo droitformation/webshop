@@ -2,8 +2,9 @@
 @section('content')
 
 <div ng-app="upload"><!-- App -->
-    <form action="{{ url('admin/config') }}" method="POST" class="form" enctype="multipart/form-data"
-          flow-init="{query: {'path' : 'files/main', '_token': '<?php echo csrf_token(); ?>' }}"
+
+    <form action="{{ url('admin/config') }}" method="POST" class="form" enctype="multipart/form-data" ng-controller="UploadController as ctr"
+          flow-init="{query: {'path' : 'files/main', 'id' : 'abo_logo', '_token': '<?php echo csrf_token(); ?>' }}"
           flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
           flow-files-submitted="$flow.upload()">
          {!! csrf_field() !!}
@@ -26,12 +27,12 @@
                                 </div>
                                 <div class="thumbnail big" ng-if="$flow.files.length">
                                     <img style="max-height: 180px;" flow-img="$flow.files[0]" />
-                                    <input type="hidden" name="abo[infos][logo]" value="{[{ $flow.files[0].name }]}">
+                                    <input type="hidden" id="abo_logo" name="abo[infos][logo]" value="">
                                 </div>
 
                                 <div class="thumbnail big" ng-if="!$flow.files.length">
                                     <?php $logo = Registry::get('abo.infos.logo'); ?>
-                                    <?php $logo = (!empty($logo) ? asset('files/main/'.$logo) : 'http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=Logo'); echo $logo;?>
+                                    <?php $logo = (!empty($logo) ? asset('files/main/'.$logo) : 'http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=Logo'); ?>
                                     <img style="max-width: 100%;" src="{{ $logo }}" />
                                     <input type="hidden" name="abo[infos][logo]" value="{{ Registry::get('abo.infos.logo') }}">
                                 </div>
@@ -39,14 +40,6 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="form-group">
-                                <label><strong>Nom</strong></label>
-                                <input type="text" class="form-control" name="abo[infos][nom]" value="{!! Registry::get('abo.infos.nom')!!}">
-                            </div>
-                            <div class="form-group">
-                                <label><strong>Email</strong></label>
-                                <input type="text" class="form-control" name="abo[infos][email]" value="{!! Registry::get('abo.infos.email')!!}">
-                            </div>
                             <div class="form-group">
                                 <label><strong>Adresse</strong></label>
                                 <textarea name="abo[infos][adresse]" class="form-control redactorSimple">{!! Registry::get('abo.infos.adresse') !!}</textarea>

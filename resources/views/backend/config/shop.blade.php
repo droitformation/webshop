@@ -3,7 +3,7 @@
 
 <div ng-app="upload"><!-- App -->
     <form action="{{ url('admin/config') }}" method="POST" class="form" enctype="multipart/form-data"
-          flow-init="{query: {'path' : 'files/main', '_token': '<?php echo csrf_token(); ?>' }}"
+          flow-init="{query: {'path' : 'files/main','id' : 'shop_logo', '_token': '<?php echo csrf_token(); ?>' }}"
           flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
           flow-files-submitted="$flow.upload()">
          {!! csrf_field() !!}
@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="thumbnail big" ng-if="$flow.files.length">
                                     <img style="max-height: 180px;" flow-img="$flow.files[0]" />
-                                    <input type="hidden" name="shop[infos][logo]" value="{[{ $flow.files[0].name }]}">
+                                    <input type="hidden" name="shop[infos][logo]" id="shop_logo" value="">
                                 </div>
 
                                 <div class="thumbnail big" ng-if="!$flow.files.length">

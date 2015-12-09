@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
+use App\Droit\Service\UploadInterface;
 
 class AboController extends Controller {
 
     protected $abo;
     protected $adresse;
     protected $product;
+    protected $upload;
 
-    public function __construct(AboInterface $abo, AdresseInterface $adresse, ProductInterface $product)
+    public function __construct(AboInterface $abo, AdresseInterface $adresse, ProductInterface $product, UploadInterface $upload)
     {
         $this->abo     = $abo;
         $this->adresse = $adresse;
         $this->product = $product;
+        $this->upload  = $upload;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
@@ -53,7 +56,16 @@ class AboController extends Controller {
 
 	public function store(Request $request)
 	{
-        $abo = $this->abo->create($request->all());
+        $data = $request->except('file');
+        $file = $request->file('file',null);
+
+        if($file)
+        {
+            $file = $this->upload->upload( $file , 'files/main');
+            $data['logo'] = $file['name'];
+        }
+
+        $abo = $this->abo->create($data);
 
         return redirect('admin/abo')->with(array('status' => 'success', 'message' => 'L\'abo a été crée' ));
 	}
@@ -68,7 +80,16 @@ class AboController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $abo  = $this->abo->update($request->all());
+        $data = $request->except('file');
+        $file = $request->file('file',null);
+
+        if($file)
+        {
+            $file = $this->upload->upload( $file , 'files/main');
+            $data['logo'] = $file['name'];
+        }
+
+        $abo = $this->abo->update($data);
 
         return redirect('admin/abo/'.$abo->id)->with(array('status' => 'success', 'message' => 'L\'abo  a été mis à jour' ));
     }
