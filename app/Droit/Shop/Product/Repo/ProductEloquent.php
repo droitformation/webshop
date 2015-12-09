@@ -14,12 +14,12 @@ class ProductEloquent implements ProductInterface{
 
     public function getAll(){
 
-        return $this->product->with(array('categories','authors','domains','attributes','orders','abos'))->get();
+        return $this->product->with(array('categories','authors','domains','attributs','orders','abos'))->get();
     }
 
     public function getByCategorie($id){
 
-        return $this->product->with(array('authors','attributes','categories'))->whereHas('categories', function($query) use ($id)
+        return $this->product->with(array('authors','attributs','categories'))->whereHas('categories', function($query) use ($id)
         {
             // Set the constraint on the tags
             $query->where('categorie_id', '=' ,$id);
@@ -30,7 +30,7 @@ class ProductEloquent implements ProductInterface{
 
     public function find($id){
 
-        return $this->product->where('id','=',$id)->with(array('categories','authors','domains','attributes','abos'))->get()->first();
+        return $this->product->where('id','=',$id)->with(array('categories','authors','domains','attributs','abos'))->get()->first();
     }
 
     public function getSome($ids){

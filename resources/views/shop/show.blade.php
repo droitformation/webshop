@@ -44,8 +44,8 @@
 
             <div class="well">
                 <ul class="list-unstyled">
-                    @if(!$product->attributes->isEmpty())
-                        @foreach($product->attributes as $attribute)
+                    @if(!$product->attributs->isEmpty())
+                        @foreach($product->attributs as $attribute)
                             <li><strong>{{ $attribute->title }} :</strong>{{ $attribute->pivot->value }} </li>
                         @endforeach
                     @endif

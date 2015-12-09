@@ -15,16 +15,17 @@ class Product extends Model{
 
     public function getReferenceAttribute()
     {
-        $this->load('attributes');
-        $attribute = $this->attributes->where('id',4);
+        $this->load('attributs');
+
+        $attribute = $this->attributs->where('id',4);
 
         return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
     }
 
     public function getEditionAttribute()
     {
-        $this->load('attributes');
-        $attribute = $this->attributes->where('id',3);
+        $this->load('attributs');
+        $attribute = $this->attributs->where('id',3);
 
         return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
     }
@@ -61,7 +62,7 @@ class Product extends Model{
         return $this->belongsToMany('App\Droit\Domain\Entities\Domain', 'shop_product_domains', 'product_id', 'domain_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
-    public function attributes()
+    public function attributs()
     {
         return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value','id')->orderBy('sorting', 'asc');
     }

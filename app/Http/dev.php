@@ -26,13 +26,19 @@ Route::get('cartworker', function()
         $generator->setInscription($item)->generate($annexes);
     }*/
 
-    $repo = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
-    $item = $repo->find(82);
-    $attribute = $item->attributes->where('id',3);
-    echo '<pre>';
-    print_r($attribute->first()->pivot->value);
-    echo '</pre>';
+//    $repo      = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+//    $item      = $repo->find(82);
+//    $attribute = $item->attributes->where('id',3);
+
+    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $abonnement = $abo->find(2);
+
+    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $generator->stream = true;
+    return $generator->factureAbo($abonnement);
+
     exit;
+
     /*
        $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
 

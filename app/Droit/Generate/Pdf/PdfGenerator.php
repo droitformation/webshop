@@ -17,7 +17,6 @@ class PdfGenerator implements PdfGeneratorInterface
      * Facture shop
      **/
     public $messages = ['remerciements' => 'Avec nos remerciements, nous vous adressons nos salutations les meilleures'];
-    public $compte   = '20-4130-2';
     public $centre   = 'U. 01852';
     public $motif    = 'Vente ouvrages';
 
@@ -101,7 +100,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres',
                 'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
             ],
-            'compte'    => $this->compte,
+            'compte'    => \Registry::get('shop.compte.colloque'),
             'order'     => $order,
             'adresse'   => $adresse,
             'products'  => $products,
@@ -181,7 +180,6 @@ class PdfGenerator implements PdfGeneratorInterface
 
     public function factureGroupeEvent($groupe,$inscriptions,$price)
     {
-
         if($price > 0)
         {
 
@@ -262,4 +260,29 @@ class PdfGenerator implements PdfGeneratorInterface
         }
     }
 
+    public function factureAbo($abo)
+    {
+        $adresse  = ($abo->tiers_id ? $abo->tiers : $abo->user);
+        $msgTypes = ['warning','special','remarque','signature'];
+
+        $data = [
+            'expediteur' => $this->expediteur,
+            'messages'   => $this->messages,
+            'tva' => [
+                'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres'
+            ],
+            'compte'   => \Registry::get('shop.compte.abo'),
+            'abo'      => $abo,
+            'adresse'  => $adresse,
+            'msgTypes' => $msgTypes,
+            'date'     => $this->now
+        ];
+
+        $facture = \PDF::loadView('backend.abonnements.templates.facture', $data)->setPaper('a4');
+
+        $generate = ($this->stream ? 'stream' : 'save');
+
+        return $facture->$generate(public_path().'/files/abos/facture_'.$abo->abo_no.'.pdf');
+
+    }
 }

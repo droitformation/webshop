@@ -12,5 +12,6 @@ interface PdfGeneratorInterface
     public function factureGroupeEvent($groupe,$inscriptions,$price);
     public function bvGroupeEvent($groupe,$inscriptions,$price);
     public function bvEvent();
+    public function factureAbo($abo_id);
     public function generate($annexes);
 }

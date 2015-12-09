@@ -95,6 +95,25 @@ h3{
     margin-top: 15px;
 }
 
+.content-abo{
+    font-size: 14px;
+}
+
+small{
+    font-size: 10px;
+}
+
+.communications ul{
+    margin-left: 12px;
+    margin-top: 5px;
+    padding-left: 0;
+}
+
+.communications ul li{
+    padding-left: 0;
+    font-size: 11px;
+}
+
 /*
 * Colors
 */
@@ -243,4 +262,10 @@ h3{
     width: 180px;
     overflow: hidden;
     height:45px;
+}
+
+#abo-table{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e5e5e5;
 }

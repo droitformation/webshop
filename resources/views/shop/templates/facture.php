@@ -55,7 +55,7 @@
                     if(!empty($tva))
                     {
                         echo '<ul id="tva">';
-                        echo \Registry::get('shop.tva').' TVA';
+                        echo \Registry::get('shop.infos.tva').' TVA';
                         foreach($tva as $line){
                             echo '<li>'.$line.'</li>';
                         }

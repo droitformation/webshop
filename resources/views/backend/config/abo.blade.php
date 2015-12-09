@@ -26,14 +26,14 @@
                                 </div>
                                 <div class="thumbnail big" ng-if="$flow.files.length">
                                     <img style="max-height: 180px;" flow-img="$flow.files[0]" />
-                                    <input type="hidden" name="shop[infos][logo]" value="{[{ $flow.files[0].name }]}">
+                                    <input type="hidden" name="abo[infos][logo]" value="{[{ $flow.files[0].name }]}">
                                 </div>
 
                                 <div class="thumbnail big" ng-if="!$flow.files.length">
-                                    <?php $logo = Registry::get('shop.infos.logo'); ?>
-                                    <?php $logo = (!empty($logo) ? asset('files/main/'.$logo) : 'http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=Logo'); ?>
+                                    <?php $logo = Registry::get('abo.infos.logo'); ?>
+                                    <?php $logo = (!empty($logo) ? asset('files/main/'.$logo) : 'http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=Logo'); echo $logo;?>
                                     <img style="max-width: 100%;" src="{{ $logo }}" />
-                                    <input type="hidden" name="shop[infos][logo]" value="{{ Registry::get('shop.infos.logo') }}">
+                                    <input type="hidden" name="abo[infos][logo]" value="{{ Registry::get('abo.infos.logo') }}">
                                 </div>
 
                             </div>
@@ -41,37 +41,19 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label><strong>Nom</strong></label>
-                                <input type="text" class="form-control" name="shop[infos][nom]" value="{!! Registry::get('shop.infos.nom')!!}">
+                                <input type="text" class="form-control" name="abo[infos][nom]" value="{!! Registry::get('abo.infos.nom')!!}">
                             </div>
                             <div class="form-group">
                                 <label><strong>Email</strong></label>
-                                <input type="text" class="form-control" name="shop[infos][email]" value="{!! Registry::get('shop.infos.email')!!}">
+                                <input type="text" class="form-control" name="abo[infos][email]" value="{!! Registry::get('abo.infos.email')!!}">
                             </div>
                             <div class="form-group">
                                 <label><strong>Adresse</strong></label>
-                                <textarea name="shop[infos][adresse]" class="form-control redactorSimple">{!! Registry::get('shop.infos.adresse') !!}</textarea>
+                                <textarea name="abo[infos][adresse]" class="form-control redactorSimple">{!! Registry::get('abo.infos.adresse') !!}</textarea>
                             </div>
                             <div class="form-group">
-                                <label><strong>Compte postal vente livres</strong></label>
-                                <input type="text" class="form-control" name="shop[compte][livre]" value="{!! Registry::get('shop.compte.livre')!!}">
-                            </div>
-                            <div class="form-group">
-                                <label><strong>N° de TVA</strong></label>
-                                <input type="text" class="form-control" name="shop[infos][tva]" value="{!! Registry::get('shop.infos.tva')!!}">
-                            </div>
-                            <div class="form-group">
-                                <label><strong>TVA taux réduit</strong></label>
-                                <div class="input-group col-md-3">
-                                    <input type="text" class="form-control" name="shop[infos][taux_reduit]" value="{!! Registry::get('shop.infos.taux_reduit')!!}">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label><strong>TVA taux normal</strong></label>
-                                <div class="input-group col-md-3">
-                                    <input type="text" class="form-control" name="shop[infos][taux_normal]" value="{!! Registry::get('shop.infos.taux_normal')!!}">
-                                    <span class="input-group-addon">%</span>
-                                </div>
+                                <label><strong>Compte abonnements</strong></label>
+                                <input type="text" class="form-control" name="abo[compte]" value="{!! Registry::get('abo.compte')!!}">
                             </div>
                         </div>
                     </div>
@@ -80,8 +62,27 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
 
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h4><i class="fa fa-comment"></i> Abonnements</h4></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label><strong>Communications</strong></label>
+                            <textarea class="form-control redactorSimple" name="abo[message]">{!! Registry::get('abo.message')!!}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>Conditions de paiement</strong></label>
+                            <div class="input-group" style="width: 150px;">
+                                <input type="text" class="form-control" name="abo[days]" value="{!! Registry::get('abo.days')!!}">
+                                <span class="input-group-addon" id="basic-addon2">jours net</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><button type="submit" class="btn btn-info pull-right">Mettre à jour</button></div>
+                </div>
+
+            </div>
         </div>
 
     </form>

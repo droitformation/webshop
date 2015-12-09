@@ -22,9 +22,9 @@
                         <div class="col-md-4">
                         <div class="panel panel-midnightblue">
                             <div class="panel-body">
-                                <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->current_product['image']) }}" />
+                                <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
                                 <h4>{{ $abo->title }}  <span class="label label-grape pull-right">{{ $abo->plan_fr }}</span></h4>
-                                <p><strong>&Eacute;dition:</strong> {{ $abo->current_product['title'] }}</p>
+                                <p><strong>&Eacute;dition:</strong> {{ $abo->current_product->title }}</p>
                             </div>
                             <div class="panel-footer">
                                 <form action="{{ url('admin/abo/'.$abo->id) }}" method="POST" class="form-horizontal">

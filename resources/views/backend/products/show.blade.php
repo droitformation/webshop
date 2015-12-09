@@ -142,8 +142,8 @@
                 </div>
                 <div class="panel-body">
 
-                    @if(!$product->attributes->isEmpty())
-                        @foreach($product->attributes as $attribute)
+                    @if(!$product->attributs->isEmpty())
+                        @foreach($product->attributs as $attribute)
                             <div>
                                 <strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }}
                                 <form action="{{ url('admin/product/removeAttribut/'.$product->id) }}" method="POST" class="pull-right">{!! csrf_field() !!}
