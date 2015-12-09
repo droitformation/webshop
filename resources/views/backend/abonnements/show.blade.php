@@ -168,6 +168,7 @@
                                             @else
                                                 <p><span class="label label-default"><i class="fa fa-star"></i></span>&nbsp;&nbsp; <strong>En attente</strong></p>
                                                 <form action="{{ url('admin/facture') }}" method="POST">
+                                                    <a class="btn btn-sm btn-default" href="{{ asset('files/abos/facture_'.$facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
                                                     <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer comme payé</a>
                                                     {!! csrf_field() !!}
                                                     <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">

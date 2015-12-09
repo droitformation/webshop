@@ -22,6 +22,11 @@ class AboRappelEloquent implements AboRappelInterface{
         return $this->rappel->with(['facture'])->find($id);
     }
 
+    public function findByFacture($facture_id)
+    {
+        return $this->rappel->where('abo_facture_id','=',$facture_id)->get();
+    }
+
     public function create(array $data){
 
         $rappel = $this->rappel->create([

@@ -11,9 +11,18 @@ class Abo_factures extends Model{
     protected $dates    = ['payed_at'];
     protected $fillable = ['abo_user_id','product_id','payed_at'];
 
+    public function getAboFactureAttribute()
+    {
+        $this->load('abonnement');
+
+        $abo_ref = $this->abonnement->abo_ref;
+
+        return $abo_ref.'_'.$this->id.'.pdf';
+    }
+
     public function abonnement()
     {
-        return $this->belongsTo('App\Droit\Abo\Entities\Abo_user','abo_user_id');
+        return $this->belongsTo('App\Droit\Abo\Entities\Abo_users','abo_user_id');
     }
 
     public function rappels()

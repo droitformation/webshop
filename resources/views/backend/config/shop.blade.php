@@ -11,10 +11,8 @@
         <div class="row">
 
             <div class="col-md-6">
+                <h4><i class="fa fa-home"></i> &nbsp;Adresse générale pour facture shop</h4>
                 <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-cart"></i> Adresse générale pour facture</h4>
-                    </div>
                     <div class="panel-body">
                         <div class="form-group col-md-4">
                             <label><strong>Logo</strong></label>

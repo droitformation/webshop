@@ -10,19 +10,16 @@
     <div id="content">
         <table id="content-table">
             <tr>
-                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/facdroit.jpg'); ?>" alt="Unine logo" /></td>
+                <td colspan="2"><img height="70mm" src="<?php echo public_path('files/main/'.\Registry::get('shop.infos.logo')); ?>" alt="Unine logo" /></td>
             </tr>
             <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
                 <td align="top" width="60%" valign="top">
                     <?php
-                    if(!empty($expediteur)){
-                        echo '<ul id="facdroit">';
-                            foreach($expediteur as $line){
-                                echo '<li>'.$line.'</li>';
-                            }
-                        echo '</ul>';
-                    }
+                        echo '<div id="facdroit">';
+                        echo '<li>'.\Registry::get('shop.infos.nom').'</li>';
+                        echo '<li>'.\Registry::get('shop.infos.adresse').'</li>';
+                        echo '</div>';
                     ?>
                 </td>
                 <td align="top" width="40%" valign="top">

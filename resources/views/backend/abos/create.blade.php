@@ -32,6 +32,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Centre/institut</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" name="name">
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">facultatif</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Récurrence</label>
                             <div class="col-sm-3 col-xs-6">
                                 <select class="form-control" name="plan">

@@ -10,19 +10,22 @@
     <div id="content">
         <table id="content-table">
             <tr>
-                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/facdroit.jpg'); ?>" alt="Unine logo" /></td>
+                <td><img height="70mm" src="<?php echo public_path('files/main/'.\Registry::get('abo.infos.logo')); ?>" alt="Unine logo" /></td>
+                <td align="right">
+                    <?php if($abo->abo->logo){ ?>
+                        <img height="65mm" src="<?php echo public_path('files/main/'.$abo->abo->logo); ?>" alt="logo" />
+                    <?php } ?>
+                </td>
             </tr>
             <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
                 <td align="top" width="60%" valign="top">
                     <?php
-                    if(!empty($expediteur)){
-                        echo '<ul id="facdroit">';
-                        foreach($expediteur as $line){
-                            echo '<li>'.$line.'</li>';
-                        }
-                        echo '</ul>';
-                    }
+                        echo '<div id="facdroit">';
+                        echo ($abo->abo->name ? '<li>'.$abo->abo->name.'</li>' : '');
+                        echo '<li>'.\Registry::get('abo.infos.nom').'</li>';
+                        echo '<li>'.\Registry::get('abo.infos.adresse').'</li>';
+                        echo '</div>';
                     ?>
                 </td>
                 <td align="top" width="40%" valign="top">
@@ -44,7 +47,15 @@
             <tr><td colspan="2" height="1">&nbsp;</td></tr>
         </table>
 
-        <h1 class="title blue">Facture</h1>
+        <h1 class="title blue">
+            <?php
+                if($rappel)
+                {
+                    echo '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span>';
+                }
+            ?>
+            Facture
+        </h1>
 
         <table class="content-table">
             <tr>

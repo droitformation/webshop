@@ -20,6 +20,15 @@ class Abo_users extends Model{
         return $product->edition.'-'.$this->numero.'-'.$product->reference;
     }
 
+    public function getAboRefAttribute()
+    {
+        $this->load('abo');
+
+        $product = $this->abo->current_product;
+
+        return $product->edition.'-'.$this->numero;
+    }
+
     public function getPriceTotalExplodeAttribute()
     {
         return explode('.',$this->price_cents);

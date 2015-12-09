@@ -9,7 +9,7 @@ class Abo extends Model{
 
     protected $table = 'abos';
 
-    protected $fillable = ['title','plan','logo'];
+    protected $fillable = ['title','plan','logo','name'];
 
     public function getPlanFrAttribute()
     {

@@ -82,7 +82,7 @@ h3{
 /*
 * Adresse
 */
-#facdroit,#user,#tva{
+#facdroit,#user,#tva, #adresse{
     margin: 0;
     padding: 0;
     list-style: none;
@@ -92,7 +92,7 @@ h3{
     padding-top: 40px;
 }
 
-#user li,#tva li{
+#user li,#tva li, #adresse li{
     font-size: 12px;
 }
 
