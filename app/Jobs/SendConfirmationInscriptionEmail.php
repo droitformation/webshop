@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
 use Illuminate\Contracts\Mail\Mailer;
 use App\Droit\Inscription\Entities\Inscription;
 
@@ -15,7 +16,6 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
     use InteractsWithQueue, SerializesModels;
 
     protected $inscription;
-    protected $generator;
     protected $mailer;
     protected $email;
 
@@ -31,7 +31,6 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
         // Allow us to pass another email to the job
         $this->email       = $email;
         $this->inscription = $inscription;
-        $this->generator   = new \App\Droit\Generate\Pdf\PdfGenerator();
     }
 
     /**
@@ -41,13 +40,15 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
      */
     public function handle(Mailer $mailer)
     {
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+        
         $this->inscription->load('colloque');
         $annexes = $this->inscription->colloque->annexe;
 
         // Generate annexes if any
         if(empty($this->inscription->documents) && !empty($annexes))
         {
-            $this->generator->setInscription($this->inscription)->generate($annexes);
+            $generator->setInscription($this->inscription)->generate($annexes);
         }
 
         $date   = \Carbon\Carbon::now()->formatLocalized('%d %B %Y');

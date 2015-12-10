@@ -151,85 +151,88 @@
                         <?php $products = $abonnement->abo->products->sortByDesc('created_at'); ?>
                         @foreach($products as $product)
 
-                            <h5><i class="fa fa-star"></i>&nbsp;&nbsp;{{ $product->title }}</h5>
+                            <div class="well well-sm">
+                                <h4><i class="fa fa-stop-circle-o"></i> &nbsp;{{ $product->title }}</h4>
 
-                            <div class="row">
-                                <div class="col-md-6">
                                 @if(isset($groupes[$product->id]))
-                                    @foreach($groupes[$product->id] as $facture)
-                                        <ul class="list-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        @foreach($groupes[$product->id] as $facture)
 
                                             <?php $facture->load('rappels'); ?>
 
+                                            <!-- Payed -->
                                             @if($facture->payed_at)
-                                                <li class="list-group-item list-group-item-success">
-                                                    <strong>Payement</strong> &nbsp; {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}
-                                                    <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST" class="form-horizontal pull-right">
-                                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                        <button data-what="Supprimer" data-action="Facture" class="btn btn-danger btn-sm deleteAction">x</button>
-                                                    </form>
-                                                </li>
+
+                                                <p><span class="label label-success"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Payé </strong> le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}</p>
+                                                @include('backend.abonnements.partials.payement', ['payement' => $facture, 'type' => 'facture'])
                                             @else
-                                                <li class="list-group-item">
-                                                    <strong>En attente</strong>
-                                                    <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}"  class="btn btn-success btn-xs pull-right">Payement</a>
-                                                    <div class="collapse" id="payInvoice_{{ $facture->id }}">
-                                                        <span class="clearfix"><p>&nbsp;</p></span>
-                                                        <form action="{{ url('admin/facture/'.$facture->id ) }}" method="POST">
-                                                            <input type="hidden" name="_method" value="PUT">
-                                                            {!! csrf_field() !!}
-                                                            <div class="form-group input-group">
-                                                                <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn btn-default" type="submit">Ok</button>
-                                                                </span>
-                                                            </div><!-- /input-group -->
+                                                <p><span class="label label-default"><i class="fa fa-star"></i></span>&nbsp;&nbsp; <strong>En attente</strong></p>
+                                                <form action="{{ url('admin/facture') }}" method="POST">
+                                                    <a class="btn btn-sm btn-default" href="{{ asset('files/abos/facture_'.$facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                                    <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer comme payé</a>
+                                                    {!! csrf_field() !!}
+                                                    <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">
+                                                    <input type="hidden" value="rappel" name="type">
+                                                    <button class="btn btn-sm btn-warning" type="submit">Créer un rappel</button>
+                                                </form>
+
+                                                <div class="collapse" id="payInvoice_{{ $facture->id }}">
+                                                    <span class="clearfix"><p>&nbsp;</p></span>
+                                                    <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST">
+                                                        {!! csrf_field() !!}
+                                                        <input type="hidden" name="_method" value="PUT">
+                                                        <div class="form-group input-group">
+                                                            <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
                                                             <input type="hidden" value="{{ $facture->id }}" name="id">
-                                                        </form>
-                                                    </div>
-                                                </li>
-                                            @endif
+                                                            <span class="input-group-btn"><button class="btn btn-info" type="submit">Ok</button></span>
+                                                        </div>
+                                                    </form>
+                                                </div>
 
-                                            @if(!$facture->rappels->isEmpty())
-                                                @foreach($facture->rappels as $rappels)
-                                                    <li class="list-group-item list-group-item-warning">
-                                                        <strong>Rappel</strong> &nbsp;{{ $rappels->created_at->formatLocalized('%d %B %Y') }}
-                                                        <form action="{{ url('admin/rappel/'.$rappels->id) }}" method="POST" class="form-horizontal">
-                                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                            <button data-what="Supprimer" data-action="Rappel" class="btn btn-danger btn-sm deleteAction">x</button>
-                                                        </form>
-                                                    </li>
+                                            @endif
+                                            <!-- End Payed -->
+
+                                        @endforeach
+                                        </div>
+
+                                        @if(!$facture->rappels->isEmpty())
+                                            <div class="col-md-6">
+                                                <!-- Rappels -->
+                                                @foreach($facture->rappels as $rappel)
+                                                    <p><span class="label label-warning"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Rappel </strong> le {!! $rappel->created_at->formatLocalized('%d %B %Y') !!}</p>
+                                                    @include('backend.abonnements.partials.payement', ['payement' => $rappel, 'type' => 'rappel'])
                                                 @endforeach
-                                            @endif
+                                                <!-- End Rappels -->
+                                            </div>
+                                        @endif
 
-                                        </ul>
-                                    @endforeach
-                                @else
-
-                                    <form action="{{ url('admin/facture') }}" method="POST">
-                                        {!! csrf_field() !!}
-                                        <div class="form-group input-group">
-                                            <input type="text" class="form-control datePicker" name="created_at" placeholder="Date">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-info" type="submit">Ajouter facture</button>
-                                            </span>
-                                        </div><!-- /input-group -->
-                                        <input type="hidden" value="{{ $product->id }}" name="product_id">
-                                        <input type="hidden" value="{{ $abonnement->id }}" name="abo_user_id">
-                                        <input type="hidden" value="Facture" name="type">
-                                    </form>
-
+                                    </div>
                                 @endif
-
-                                </div>
-                                <div class="col-md-6">
-
-
-                                </div>
                             </div>
-
                         @endforeach
                     @endif
+
+                    <hr/>
+                    <h4>Créer une facture</h4>
+                    <form action="{{ url('admin/facture') }}" method="POST">
+                        {!! csrf_field() !!}
+                        <div class="row">
+                            <div class="col-md-4"><input type="text" class="form-control datePicker" name="created_at" placeholder="Date"></div>
+                            <div class="col-md-5">
+                                <select class="form-control" name="product_id">
+                                    @if(!$products->isEmpty())
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="col-md-3"><button class="btn btn-info" type="submit">Ajouter une facture</button></div>
+                        </div>
+                        <input type="hidden" value="{{ $abonnement->id }}" name="abo_user_id">
+                        <input type="hidden" value="facture" name="type">
+                    </form>
 
                 </div>
             </div>

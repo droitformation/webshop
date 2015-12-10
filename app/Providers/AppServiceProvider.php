@@ -42,6 +42,8 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerAboFactureService();
         $this->registerAboRappelService();
 
+        $this->registerAboWorkerService();
+
         $this->registerUserService();
         $this->registerAdresseService();
 
@@ -128,6 +130,33 @@ class AppServiceProvider extends ServiceProvider {
     }
 
     /**
+     * Abo rappel
+     */
+    protected function registerAboRappelService(){
+
+        $this->app->singleton('App\Droit\Abo\Repo\AboRappelInterface', function()
+        {
+            return new \App\Droit\Abo\Repo\AboRappelEloquent(new \App\Droit\Abo\Entities\Abo_rappels);
+        });
+    }
+
+    /**
+     * Abo worker
+     */
+    protected function registerAboWorkerService(){
+
+        $this->app->singleton('App\Droit\Abo\Worker\AboWorkerInterface', function()
+        {
+            return new \App\Droit\Abo\Worker\AboWorker(
+                \App::make('App\Droit\Abo\Repo\AboFactureInterface'),
+                \App::make('App\Droit\Abo\Repo\AboRappelInterface'),
+                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
+                \App::make('App\Droit\Abo\Repo\AboUserInterface')
+            );
+        });
+    }
+
+    /**
      * User
      */
     protected function registerUserService(){
@@ -184,7 +213,7 @@ class AppServiceProvider extends ServiceProvider {
     }
 
     /**
-     * Pays
+     * Canton
      */
     protected function registerCantonService(){
 
@@ -248,5 +277,6 @@ class AppServiceProvider extends ServiceProvider {
             return new \App\Droit\Service\UploadWorker();
         });
     }
+
 
 }

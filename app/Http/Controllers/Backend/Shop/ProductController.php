@@ -156,16 +156,17 @@ class ProductController extends Controller {
     {
         $product = $this->product->find($id);
 
-        $product->attributes()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);
+        $product->attributs()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'attribut a été ajouté' ));
     }
 
     public function removeAttribut($id, Request $request)
     {
+
         $product = $this->product->find($id);
 
-        $product->attributes()->detach($request->input('attribute_id'));
+        $product->attributs()->detach($request->input('attribute_id'));
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'attribut a été supprimé' ));
     }

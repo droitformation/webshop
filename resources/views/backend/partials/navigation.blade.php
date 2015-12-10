@@ -12,6 +12,7 @@
             <a href="javascript:;"><i class="fa fa-cog"></i><span>Configurations</span></a>
             <ul class="acc-menu">
                 <li class="<?php echo (Request::is('admin/config/shop') ? 'active' : '' ); ?>"><a href="{{ url('admin/config/shop')  }}">Shop</a></li>
+                <li class="<?php echo (Request::is('admin/config/abo') ? 'active' : '' ); ?>"><a href="{{ url('admin/config/abo')  }}">Abonnements</a></li>
                 <li class="<?php echo (Request::is('admin/config/colloque') ? 'active' : '' ); ?>"><a href="{{ url('admin/config/colloque')  }}">Colloque</a></li>
             </ul>
         </li>

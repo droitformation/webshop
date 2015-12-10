@@ -6,13 +6,38 @@
 Route::get('cartworker', function()
 {
 
-    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
+/*    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
     $item   = $coupon->find(1);
     $item->load('orders');
+*/
 
-    echo '<pre>';
-    print_r($item);
-    echo '</pre>';
+
+/*    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    $item = $inscription->find(105);
+
+    $item->load('colloque');
+    $annexes = $item->colloque->annexe;
+
+    // Generate annexes if any
+    if(empty($item->documents) && !empty($annexes))
+    {
+        $generator->setInscription($item)->generate($annexes);
+    }*/
+
+//    $repo      = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+//    $item      = $repo->find(82);
+//    $attribute = $item->attributes->where('id',3);
+
+    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $abonnement = $abo->find(1);
+
+    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $generator->stream = true;
+    return $generator->factureAbo($abonnement);
+
+    exit;
 
     /*
        $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');

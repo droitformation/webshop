@@ -47,7 +47,6 @@ class AboFactureEloquent implements AboFactureInterface{
         }
 
         $facture->fill($data);
-
         $facture->save();
 
         return $facture;

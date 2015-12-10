@@ -19,7 +19,7 @@
                 <div class="panel-heading">
                     <h4><i class="fa fa-edit"></i> &nbsp;&Eacute;diter abo</h4>
                 </div>
-                <form action="{{ url('admin/abo/'.$abo->id) }}" method="POST" class="form-horizontal">
+                <form action="{{ url('admin/abo/'.$abo->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
@@ -33,6 +33,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Centre/institut</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" name="name" value="{{ $abo->name }}">
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">facultatif</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Récurrence</label>
                             <div class="col-sm-3 col-xs-6">
                                 <select class="form-control" name="plan">
@@ -41,6 +51,29 @@
                                         <option {{ $name ==  $abo->plan ? 'selected' : '' }} value="{{ $name }}">{{ $plan }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+
+                        @if(!empty($abo->logo ))
+                            <div class="form-group">
+                                <label for="file" class="col-sm-3 control-label">Fichier</label>
+                                <div class="col-sm-3">
+                                    <div class="list-group">
+                                        <div class="list-group-item text-center">
+                                            <a href="#"><img height="120" src="{!! asset('files/main/'.$abo->logo) !!}" alt="logo" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="form-group">
+                            <label for="file" class="col-sm-3 control-label">Changer le logo</label>
+                            <div class="col-sm-7">
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        {!! Form::file('file') !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

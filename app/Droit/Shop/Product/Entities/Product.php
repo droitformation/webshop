@@ -11,7 +11,24 @@ class Product extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable','abo_id'];
+    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable'];
+
+    public function getReferenceAttribute()
+    {
+        $this->load('attributs');
+
+        $attribute = $this->attributs->where('id',4);
+
+        return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
+    }
+
+    public function getEditionAttribute()
+    {
+        $this->load('attributs');
+        $attribute = $this->attributs->where('id',3);
+
+        return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
+    }
 
     public function getPriceCentsAttribute()
     {
@@ -45,9 +62,9 @@ class Product extends Model{
         return $this->belongsToMany('App\Droit\Domain\Entities\Domain', 'shop_product_domains', 'product_id', 'domain_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
-    public function attributes()
+    public function attributs()
     {
-        return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value')->orderBy('sorting', 'asc');
+        return $this->belongsToMany('App\Droit\Shop\Attribute\Entities\Attribute', 'shop_product_attributes', 'product_id', 'attribute_id')->withPivot('sorting','value','id')->orderBy('sorting', 'asc');
     }
 
     public function orders()

@@ -1,7 +1,7 @@
 <?php namespace App\Droit\Abo\Repo;
 
 use App\Droit\Abo\Repo\AboUserInterface;
-use App\Droit\Abo\Entities\Abo_users as M;
+use App\Droit\Abo\Entities\Abo_users;
 use App\Droit\Abo\Entities\Abo_factures;
 use App\Droit\Abo\Entities\Abo_rappels;
 
@@ -11,7 +11,7 @@ class AboUserEloquent implements AboUserInterface{
     protected $abo_facture;
     protected $abo_rappel;
 
-    public function __construct(M $abo_user, Abo_factures $abo_facture, Abo_rappels $abo_rappel)
+    public function __construct(Abo_users $abo_user, Abo_factures $abo_facture, Abo_rappels $abo_rappel)
     {
         $this->abo_user    = $abo_user;
         $this->abo_facture = $abo_facture;

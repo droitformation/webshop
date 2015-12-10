@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('user/search', 'Backend\User\UserController@search');
     Route::get('config/shop', 'Backend\ConfigController@shop');
+    Route::get('config/abo', 'Backend\ConfigController@abo');
     Route::get('config/colloque', 'Backend\ConfigController@colloque');
     Route::resource('config', 'Backend\ConfigController');
 
