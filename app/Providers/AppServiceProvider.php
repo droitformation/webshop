@@ -40,6 +40,7 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerAboService();
         $this->registerAboUserService();
         $this->registerAboFactureService();
+        $this->registerAboRappelService();
 
         $this->registerUserService();
         $this->registerAdresseService();
@@ -102,6 +103,18 @@ class AppServiceProvider extends ServiceProvider {
             return new \App\Droit\Abo\Repo\AboUserEloquent(new \App\Droit\Abo\Entities\Abo_users, new \App\Droit\Abo\Entities\Abo_factures, new \App\Droit\Abo\Entities\Abo_rappels);
         });
     }
+
+    /**
+     * Abo rappel
+     */
+    protected function registerAboRappelService(){
+
+        $this->app->singleton('App\Droit\Abo\Repo\AboRappelInterface', function()
+        {
+            return new \App\Droit\Abo\Repo\AboRappelEloquent(new \App\Droit\Abo\Entities\Abo_rappels());
+        });
+    }
+
 
     /**
      * Abo facture

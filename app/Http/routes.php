@@ -171,13 +171,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     | Abonnements Routes
     |--------------------------------------------------------------------------
     */
-    Route::resource('abo', 'Backend\AboController');
-    Route::get('abonnements/{id}', 'Backend\AboUserController@index');
-    Route::get('abonnement/create/{id}', 'Backend\AboUserController@create');
-    Route::post('abonnement/make', 'Backend\AboUserController@make');
 
-    Route::resource('facture', 'Backend\AboFactureController');
-    Route::resource('abonnement', 'Backend\AboUserController');
+    Route::get('abonnements/{id}', 'Backend\Abo\AboUserController@index');
+    Route::get('abonnement/create/{id}', 'Backend\Abo\AboUserController@create');
+    Route::resource('abonnement', 'Backend\Abo\AboUserController');
+    Route::resource('rappel', 'Backend\Abo\AboFactureController');
+    Route::resource('facture', 'Backend\Abo\AboFactureController');
+    Route::resource('abo', 'Backend\Abo\AboController');
 
     /*
     |--------------------------------------------------------------------------

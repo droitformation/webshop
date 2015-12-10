@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Backend;
+<?php namespace App\Http\Controllers\Backend\Abo;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -24,7 +24,7 @@ class AboFactureController extends Controller {
 	{
         $facture = $this->facture->create($request->all());
 
-        return redirect('admin/abo')->with(array('status' => 'success', 'message' => 'La facture a été crée' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été crée' ));
 	}
 
     /**
@@ -38,17 +38,7 @@ class AboFactureController extends Controller {
     {
         $facture = $this->facture->update($request->all());
 
-        return redirect('admin/abo/'.$facture->id)->with(array('status' => 'success', 'message' => 'La facture a été mis à jour' ));
-    }
-
-    public function make(Request $request)
-    {
-        $type = $request->input('type');
-        $data = $request->except('type');
-        $make = 'make'.$type;
-        $new  = $this->abonnement->$make($data);
-
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La '.$type.' a été crée' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été mise à jour' ));
     }
 		
 	public function destroy(Request $request)

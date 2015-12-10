@@ -19,14 +19,14 @@ class AboFactureEloquent implements AboFactureInterface{
 
     public function find($id){
 
-        return $this->facture->with(['abonnement','products'])->find($id);
+        return $this->facture->with(['abonnement','product'])->find($id);
     }
 
     public function create(array $data){
 
         $facture = $this->facture->create(array(
-            'title' => $data['title'],
-            'plan'  => $data['plan']
+            'abo_user_id' => $data['abo_user_id'],
+            'product_id'  => $data['product_id']
         ));
 
         if( ! $facture )
@@ -41,7 +41,7 @@ class AboFactureEloquent implements AboFactureInterface{
 
         $facture = $this->facture->findOrFail($data['id']);
 
-        if( ! $facture )
+        if( !$facture )
         {
             return false;
         }

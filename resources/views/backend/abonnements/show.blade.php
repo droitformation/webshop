@@ -164,7 +164,10 @@
                                             @if($facture->payed_at)
                                                 <li class="list-group-item list-group-item-success">
                                                     <strong>Payement</strong> &nbsp; {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}
-                                                    <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
+                                                    <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST" class="form-horizontal pull-right">
+                                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                        <button data-what="Supprimer" data-action="Facture" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                    </form>
                                                 </li>
                                             @else
                                                 <li class="list-group-item">
@@ -172,14 +175,16 @@
                                                     <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}"  class="btn btn-success btn-xs pull-right">Payement</a>
                                                     <div class="collapse" id="payInvoice_{{ $facture->id }}">
                                                         <span class="clearfix"><p>&nbsp;</p></span>
-                                                        <form action="{{ url('admin/facture') }}" method="POST">
+                                                        <form action="{{ url('admin/facture/'.$facture->id ) }}" method="POST">
+                                                            <input type="hidden" name="_method" value="PUT">
                                                             {!! csrf_field() !!}
                                                             <div class="form-group input-group">
                                                                 <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
                                                                 <span class="input-group-btn">
-                                                                    <button class="btn btn-default" type="button">Ok</button>
+                                                                    <button class="btn btn-default" type="submit">Ok</button>
                                                                 </span>
                                                             </div><!-- /input-group -->
+                                                            <input type="hidden" value="{{ $facture->id }}" name="id">
                                                         </form>
                                                     </div>
                                                 </li>
@@ -189,7 +194,10 @@
                                                 @foreach($facture->rappels as $rappels)
                                                     <li class="list-group-item list-group-item-warning">
                                                         <strong>Rappel</strong> &nbsp;{{ $rappels->created_at->formatLocalized('%d %B %Y') }}
-                                                        <a href="{{ url('admin/abonnement') }}" class="btn btn-danger btn-xs pull-right">&nbsp;x&nbsp;</a>
+                                                        <form action="{{ url('admin/rappel/'.$rappels->id) }}" method="POST" class="form-horizontal">
+                                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                            <button data-what="Supprimer" data-action="Rappel" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                        </form>
                                                     </li>
                                                 @endforeach
                                             @endif
@@ -198,7 +206,7 @@
                                     @endforeach
                                 @else
 
-                                    <form action="{{ url('admin/facture/make') }}" method="POST">
+                                    <form action="{{ url('admin/facture') }}" method="POST">
                                         {!! csrf_field() !!}
                                         <div class="form-group input-group">
                                             <input type="text" class="form-control datePicker" name="created_at" placeholder="Date">

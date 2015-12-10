@@ -81,18 +81,6 @@ class AboUserEloquent implements AboUserInterface{
 
     }
 
-    public function makeFacture($data)
-    {
-        $facture = $this->abo_facture->create($data);
-
-        if(!$facture)
-        {
-            return false;
-        }
-
-        return $facture;
-    }
-
     public function makeRappel($data){
 
     }
