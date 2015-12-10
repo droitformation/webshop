@@ -4,20 +4,43 @@
     <div class="row">
         <div class="col-md-12">
             <div class="options text-left" style="margin-bottom: 10px;">
-                <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                <a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
             </div>
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
-                    <a href="{{ url('admin/abonnement/export/'.$abo->id) }}" class="btn btn-info"><i class="fa fa-download"></i> &nbsp;Exporter factures</a>
+                    <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
+
+                    <form action="{{ url('admin/abonnement/export') }}" method="POST" class="form-inline">{!! csrf_field() !!}
+                        <input type="hidden" name="edition" value="{{ $abo->current_product->edition }}">
+                        <input type="hidden" name="product_id" value="{{ $abo->current_product->id }}">
+                        <input type="hidden" name="abo_id" value="{{ $abo->id }}">
+                        <div class="form-group">
+                            <select class="form-control" name="type">
+                                <option value="facture">Factures</option>
+                                <option value="rappel">Rappels</option>
+                            </select>
+                            <button class="btn btn-info"><i class="fa fa-download"></i> &nbsp;Exporter</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-2 col-md-3 col-xs-12">
+            @if(!empty($files))
+                <div class="list-group">
+                    @foreach($files as $file)
+                        <?php $name = explode('/',$file); ?>
+                        <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="list-group-item">{{ end($name) }}</a>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+        <div class="col-lg-10 col-md-9 col-xs-12">
 
             <div class="panel panel-midnightblue">
                 <div class="panel-heading"><h4><i class="fa fa-edit"></i> Abonnements</h4></div>

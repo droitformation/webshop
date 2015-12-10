@@ -46,18 +46,51 @@ class AboWorker implements AboWorkerInterface{
     /**
      *  Merging pdfs
      */
-    public function merge($files, $name)
+    public function merge($files, $name, $abo_id)
     {
-        $outputName = public_path().'/files/abos/'.$name.'.pdf';
+        $outputDir =  public_path().'/files/abos/bound/'.$abo_id.'/';
+        $outputName = $outputDir.'/'.$name.'.pdf';
+
+        if (!\File::exists($outputDir))
+        {
+            \File::makeDirectory($outputDir);
+        }
+
+        if (!\File::exists($outputName))
+        {
+            \File::delete($outputName);
+        }
 
         $pdf = new \Clegginabox\PDFMerger\PDFMerger;
 
-        //Every pdf file should come at the end of the command
         foreach($files as $file)
         {
             $pdf->addPDF($file, 'all');
         }
 
         $pdf->merge('file', $outputName, 'P');
+    }
+
+    public function update($abonnement)
+    {
+        $factures = $abonnement->factures;
+
+        if(!$factures->isEmpty())
+        {
+            foreach($factures as $facture)
+            {
+                if($abonnement->status == 'abonne')
+                {
+                    $this->generator->factureAbo($abonnement ,$facture->id);
+                }
+                else
+                {
+                     if (!\File::exists($facture->abo_facture))
+                     {
+                         \File::delete($facture->abo_facture);
+                     }
+                }
+            }
+        }
     }
 }

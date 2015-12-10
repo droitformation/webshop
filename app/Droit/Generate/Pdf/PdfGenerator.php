@@ -284,14 +284,14 @@ class PdfGenerator implements PdfGeneratorInterface
         $generate   = ($this->stream ? 'stream' : 'save');
         $filename   = ($rappel ? 'rappel' : 'facture');
 
-        $dir = public_path().'/files/abos/'.$abo->abo_edition;
+        $dir = public_path().'/files/abos/'.$filename.'/'.$abo->abo_edition;
 
         if (!\File::exists($dir))
         {
             \File::makeDirectory($dir);
         }
 
-        return $facture->$generate(public_path().'/files/abos/'.$abo->abo_edition.'/'.$filename.'_'.$abo->abo_ref.'_'.$facture_id.'.pdf');
+        return $facture->$generate(public_path().'/files/abos/'.$filename.'/'.$abo->abo_product.'/'.$filename.'_'.$abo->abo_ref.'_'.$facture_id.'.pdf');
 
     }
 }

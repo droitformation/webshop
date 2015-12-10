@@ -34,7 +34,10 @@ class AboUserController extends Controller {
 
         $abo = $this->abo->find($id);
 
-        return view('backend.abos.show')->with(['abo' => $abo]);
+        $dir   = './files/abos/bound/'.$id;
+        $files = \File::files($dir);
+
+        return view('backend.abos.show')->with(['abo' => $abo, 'files' => $files]);
     }
 
     public function create($id){
@@ -54,9 +57,13 @@ class AboUserController extends Controller {
     public function store(AbonnementRequest $request)
     {
         $abonnement = $this->abonnement->create($request->all());
-        $facture    = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $request->input('product_id')]);
 
-        $this->worker->make($facture->id);
+        if($abonnement->status == 'abonne')
+        {
+            $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $request->input('product_id')]);
+
+            $this->worker->make($facture->id);
+        }
 
         return redirect('admin/abonnement/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été crée' ));
     }
@@ -65,7 +72,9 @@ class AboUserController extends Controller {
     {
         $abonnement = $this->abonnement->update($request->all());
 
-        return redirect('admin/abo/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été mis à jour' ));
+        $this->worker->update($abonnement);
+
+        return redirect('admin/abonnement/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été mis à jour' ));
     }
 
 	public function destroy($id)
@@ -75,12 +84,20 @@ class AboUserController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonné a été supprimé' ));
 	}
 
-    public function export($id)
+    public function export(Request $request)
     {
-        $this->facture->getAll($id);
+        $abo_id     = $request->input('abo_id');
+        $product_id = $request->input('product_id');
+        $type       = $request->input('type');
+        $edition    = $request->input('edition');
+        $edition    = $type.'_'.$edition.'_'.date('Y');
 
-        $dir = 'files/abos/'.$id.'/';
+        $dir   = 'files/abos/'.$type.'/'.$product_id;
+        $files = \File::files($dir);
 
+        $this->worker->merge($files, $edition, $abo_id);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Les factures ont été liés' ));
 
     }
 }

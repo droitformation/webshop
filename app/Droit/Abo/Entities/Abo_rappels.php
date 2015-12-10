@@ -14,7 +14,7 @@ class Abo_rappels extends Model{
     {
         $this->load('facture');
 
-        $file = 'files/abos/'.$this->facture->abonnement->abo_edition.'/rappel_'.$this->facture->abonnement->abo_ref.'_'.$this->facture->id.'.pdf';
+        $file = 'files/abos/rappel/'.$this->facture->abonnement->abo_product.'/rappel_'.$this->facture->abonnement->abo_ref.'_'.$this->facture->id.'.pdf';
 
         if (\File::exists($file))
         {

@@ -175,7 +175,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('abonnements/{id}', 'Backend\Abo\AboUserController@index');
     Route::get('abonnement/create/{id}', 'Backend\Abo\AboUserController@create');
-    Route::get('abonnement/export/{id}', 'Backend\Abo\AboUserController@export');
+    Route::post('abonnement/export', 'Backend\Abo\AboUserController@export');
     Route::resource('abonnement', 'Backend\Abo\AboUserController');
     Route::resource('rappel', 'Backend\Abo\AboFactureController');
     Route::resource('facture', 'Backend\Abo\AboFactureController');

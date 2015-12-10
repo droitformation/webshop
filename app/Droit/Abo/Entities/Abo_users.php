@@ -35,6 +35,15 @@ class Abo_users extends Model{
 
         $product = $this->abo->current_product;
 
+        return $product->edition;
+    }
+
+    public function getAboProductAttribute()
+    {
+        $this->load('abo');
+
+        $product = $this->abo->current_product;
+
         return $product->id;
     }
 
