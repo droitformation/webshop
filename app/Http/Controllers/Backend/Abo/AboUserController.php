@@ -8,6 +8,7 @@ use App\Http\Requests\AbonnementRequest;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Abo\Repo\AboInterface;
+use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Worker\AboWorkerInterface;
 
 class AboUserController extends Controller {
@@ -15,13 +16,15 @@ class AboUserController extends Controller {
     protected $abonnement;
     protected $adresse;
     protected $abo;
+    protected $facture;
     protected $worker;
 
-    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboWorkerInterface $worker)
+    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboWorkerInterface $worker, AboFactureInterface $facture)
     {
         $this->abonnement = $abonnement;
         $this->adresse    = $adresse;
         $this->abo        = $abo;
+        $this->facture    = $facture;
         $this->worker     = $worker;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -51,8 +54,9 @@ class AboUserController extends Controller {
     public function store(AbonnementRequest $request)
     {
         $abonnement = $this->abonnement->create($request->all());
+        $facture    = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $request->input('product_id')]);
 
-        $this->worker->make($abonnement->id);
+        $this->worker->make($facture->id);
 
         return redirect('admin/abonnement/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été crée' ));
     }
@@ -60,8 +64,6 @@ class AboUserController extends Controller {
     public function update(Request $request, $id)
     {
         $abonnement = $this->abonnement->update($request->all());
-
-        $this->worker->make($abonnement->id);
 
         return redirect('admin/abo/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été mis à jour' ));
     }
@@ -72,4 +74,13 @@ class AboUserController extends Controller {
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonné a été supprimé' ));
 	}
+
+    public function export($id)
+    {
+        $this->facture->getAll($id);
+
+        $dir = 'files/abos/'.$id.'/';
+
+
+    }
 }

@@ -12,9 +12,9 @@ class AboFactureEloquent implements AboFactureInterface{
         $this->facture = $facture;
     }
 
-    public function getAll(){
-
-        return $this->facture->all();
+    public function getAll($product_id)
+    {
+        return $this->facture->where('product_id','=',$product_id)->get();
     }
 
     public function find($id){

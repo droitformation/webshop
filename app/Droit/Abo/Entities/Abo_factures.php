@@ -15,9 +15,14 @@ class Abo_factures extends Model{
     {
         $this->load('abonnement');
 
-        $abo_ref = $this->abonnement->abo_ref;
+        $file = 'files/abos/'.$this->abonnement->abo_edition.'/facture_'.$this->abonnement->abo_ref.'_'.$this->id.'.pdf';
 
-        return $abo_ref.'_'.$this->id.'.pdf';
+        if (\File::exists($file))
+        {
+            return $file;
+        }
+
+        return false;
     }
 
     public function abonnement()
@@ -33,11 +38,6 @@ class Abo_factures extends Model{
     public function rappels()
     {
         return $this->hasMany('App\Droit\Abo\Entities\Abo_rappels','abo_facture_id','id');
-    }
-
-    public function product()
-    {
-        return $this->belongsTo('App\Droit\Shop\Product\Entities\Product', 'product_id');
     }
 
 }

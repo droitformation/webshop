@@ -16,6 +16,7 @@ use League\OAuth2\Server\Exception\AccessDeniedException;
 use League\OAuth2\Server\ResourceServer as Checker;
 use League\OAuth2\Server\TokenType\TokenTypeInterface;
 use League\OAuth2\Server\Util\RedirectUri;
+use LucaDegasperi\OAuth2Server\Exceptions\NoActiveAccessTokenException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -84,6 +85,26 @@ class Authorizer
     public function getChecker()
     {
         return $this->checker;
+    }
+
+    /**
+     * Get the current access token for the session.
+     *
+     * If the session does not have an active access token, an exception will be thrown.
+     *
+     * @throws \LucaDegasperi\OAuth2Server\Exceptions\NoActiveAccessTokenException
+     *
+     * @return \League\OAuth2\Server\Entity\AccessTokenEntity
+     */
+    public function getAccessToken()
+    {
+        $accessToken = $this->getChecker()->getAccessToken();
+
+        if (is_null($accessToken)) {
+            throw new NoActiveAccessTokenException('Tried to access session data without an active access token');
+        }
+
+        return $accessToken;
     }
 
     /**
@@ -209,7 +230,7 @@ class Authorizer
      */
     public function getScopes()
     {
-        return $this->checker->getAccessToken()->getScopes();
+        return $this->getAccessToken()->getScopes();
     }
 
     /**
@@ -231,7 +252,7 @@ class Authorizer
             return true;
         }
 
-        return $this->checker->getAccessToken()->hasScope($scope);
+        return $this->getAccessToken()->hasScope($scope);
     }
 
     /**
@@ -241,7 +262,7 @@ class Authorizer
      */
     public function getResourceOwnerId()
     {
-        return $this->checker->getAccessToken()->getSession()->getOwnerId();
+        return $this->getAccessToken()->getSession()->getOwnerId();
     }
 
     /**
@@ -251,7 +272,7 @@ class Authorizer
      */
     public function getResourceOwnerType()
     {
-        return $this->checker->getAccessToken()->getSession()->getOwnerType();
+        return $this->getAccessToken()->getSession()->getOwnerType();
     }
 
     /**

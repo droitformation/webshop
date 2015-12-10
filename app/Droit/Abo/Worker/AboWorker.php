@@ -8,6 +8,8 @@ use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
+use Symfony\Component\Process\Process;
+
 class AboWorker implements AboWorkerInterface{
 
     protected $facture;
@@ -39,5 +41,23 @@ class AboWorker implements AboWorkerInterface{
         }
 
         $this->generator->factureAbo($abo ,$facture_id, $rappels);
+    }
+
+    /**
+     *  Merging pdfs
+     */
+    public function merge($files, $name)
+    {
+        $outputName = public_path().'/files/abos/'.$name.'.pdf';
+
+        $pdf = new \Clegginabox\PDFMerger\PDFMerger;
+
+        //Every pdf file should come at the end of the command
+        foreach($files as $file)
+        {
+            $pdf->addPDF($file, 'all');
+        }
+
+        $pdf->merge('file', $outputName, 'P');
     }
 }

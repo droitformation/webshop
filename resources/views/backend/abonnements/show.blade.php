@@ -5,7 +5,7 @@
         <div class="col-md-12">
 
             <div class="options text-left" style="margin-bottom: 10px;">
-                <a href="{{ url('admin/abo/'.$abonnement->abo_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                <a href="{{ url('admin/abonnements/'.$abonnement->abo_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
             </div>
         </div>
     </div>
@@ -163,28 +163,40 @@
 
                                             <!-- Payed -->
                                             @if($facture->payed_at)
+                                                <p>
+                                                    <span class="label label-success"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
+                                                    <strong>Payé le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}</strong>
+                                                </p>
 
-                                                <p><span class="label label-success"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Payé </strong> le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}</p>
+                                                @if($facture->abo_facture)
+                                                    <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                                @endif
+
                                                 @include('backend.abonnements.partials.payement', ['payement' => $facture, 'type' => 'facture'])
                                             @else
-                                                <p><span class="label label-default"><i class="fa fa-star"></i></span>&nbsp;&nbsp; <strong>En attente</strong></p>
-                                                <form action="{{ url('admin/facture') }}" method="POST">
-                                                    <a class="btn btn-sm btn-default" href="{{ asset('files/abos/facture_'.$facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
-                                                    <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer comme payé</a>
-                                                    {!! csrf_field() !!}
+                                                <p>
+                                                    <span class="label label-default"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
+                                                    <strong>En attente: {{ $facture->created_at->formatLocalized('%d %B %Y') }}</strong>
+                                                </p>
+
+                                                @if($facture->abo_facture)
+                                                    <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                                @endif
+
+                                                <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer payé</a>
+
+                                                <form action="{{ url('admin/facture') }}" method="POST" class="pull-right">{!! csrf_field() !!}
                                                     <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">
                                                     <input type="hidden" value="rappel" name="type">
                                                     <button class="btn btn-sm btn-warning" type="submit">Créer un rappel</button>
                                                 </form>
 
                                                 <div class="collapse" id="payInvoice_{{ $facture->id }}">
-                                                    <span class="clearfix"><p>&nbsp;</p></span>
                                                     <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST">
-                                                        {!! csrf_field() !!}
-                                                        <input type="hidden" name="_method" value="PUT">
+                                                        <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
+                                                        <input type="hidden" value="{{ $facture->id }}" name="id">
                                                         <div class="form-group input-group">
                                                             <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
-                                                            <input type="hidden" value="{{ $facture->id }}" name="id">
                                                             <span class="input-group-btn"><button class="btn btn-info" type="submit">Ok</button></span>
                                                         </div>
                                                     </form>
@@ -198,12 +210,25 @@
 
                                         @if(!$facture->rappels->isEmpty())
                                             <div class="col-md-6">
+
                                                 <!-- Rappels -->
                                                 @foreach($facture->rappels as $rappel)
-                                                    <p><span class="label label-warning"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Rappel </strong> le {!! $rappel->created_at->formatLocalized('%d %B %Y') !!}</p>
-                                                    @include('backend.abonnements.partials.payement', ['payement' => $rappel, 'type' => 'rappel'])
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <span class="label label-warning"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
+                                                            <strong>Rappel le {!! $rappel->created_at->formatLocalized('%d %B %Y') !!}</strong>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            @include('backend.abonnements.partials.payement', ['payement' => $rappel, 'type' => 'rappel'])
+                                                        </div>
+                                                    </div>
                                                 @endforeach
+
+                                                @if($facture->rappels->first()->abo_rappel)
+                                                    <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->rappels->first()->abo_rappel) }}"><i class="fa fa-file"></i> &nbsp;Rappel pdf</a>
+                                                @endif
                                                 <!-- End Rappels -->
+
                                             </div>
                                         @endif
 

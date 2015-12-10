@@ -2,14 +2,16 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="options text-left" style="margin-bottom: 10px;">
                 <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="options text-right" style="margin-bottom: 10px;">
-                <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
+                    <a href="{{ url('admin/abonnement/export/'.$abo->id) }}" class="btn btn-info"><i class="fa fa-download"></i> &nbsp;Exporter factures</a>
+                </div>
             </div>
         </div>
     </div>

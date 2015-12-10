@@ -129,16 +129,6 @@ class AppServiceProvider extends ServiceProvider {
         });
     }
 
-    /**
-     * Abo rappel
-     */
-    protected function registerAboRappelService(){
-
-        $this->app->singleton('App\Droit\Abo\Repo\AboRappelInterface', function()
-        {
-            return new \App\Droit\Abo\Repo\AboRappelEloquent(new \App\Droit\Abo\Entities\Abo_rappels);
-        });
-    }
 
     /**
      * Abo worker

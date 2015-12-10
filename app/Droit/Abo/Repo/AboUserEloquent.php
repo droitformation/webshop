@@ -48,12 +48,6 @@ class AboUserEloquent implements AboUserInterface{
             return false;
         }
 
-        // Make first facture
-        if(isset($data['product_id']))
-        {
-            $this->makeFacture(['abo_user_id' => $abo_user->id, 'product_id' => $data['product_id']]);
-        }
-
         return $abo_user;
     }
 
@@ -81,7 +75,15 @@ class AboUserEloquent implements AboUserInterface{
 
     }
 
-    public function makeRappel($data){
+    public function makeFacture($data)
+    {
+        $facture = $this->abo_facture->create($data);
 
+        if(!$facture)
+        {
+            return false;
+        }
+
+        return $facture;
     }
 }

@@ -281,10 +281,17 @@ class PdfGenerator implements PdfGeneratorInterface
 
         $facture = \PDF::loadView('backend.abonnements.templates.facture', $data)->setPaper('a4');
 
-        $generate = ($this->stream ? 'stream' : 'save');
-        $filename = ($rappel ? 'rappel' : 'facture');
+        $generate   = ($this->stream ? 'stream' : 'save');
+        $filename   = ($rappel ? 'rappel' : 'facture');
 
-        return $facture->$generate(public_path().'/files/abos/'.$filename.'_'.$abo->abo_ref.'_'.$facture_id.'.pdf');
+        $dir = public_path().'/files/abos/'.$abo->abo_edition;
+
+        if (!\File::exists($dir))
+        {
+            \File::makeDirectory($dir);
+        }
+
+        return $facture->$generate(public_path().'/files/abos/'.$abo->abo_edition.'/'.$filename.'_'.$abo->abo_ref.'_'.$facture_id.'.pdf');
 
     }
 }

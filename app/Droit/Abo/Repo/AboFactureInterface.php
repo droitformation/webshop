@@ -2,7 +2,7 @@
 
 interface AboFactureInterface {
 
-    public function getAll();
+    public function getAll($product_id);
     public function find($data);
     public function create(array $data);
     public function update(array $data);

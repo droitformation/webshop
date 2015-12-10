@@ -6,13 +6,9 @@
 Route::get('cartworker', function()
 {
 
-/*    $coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
-    $item   = $coupon->find(1);
-    $item->load('orders');
-*/
 
-
-/*    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+/*
+    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $item = $inscription->find(105);
@@ -30,50 +26,61 @@ Route::get('cartworker', function()
 //    $item      = $repo->find(82);
 //    $attribute = $item->attributes->where('id',3);
 
-    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+/*    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $abonnement = $abo->find(1);
 
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     $generator->stream = true;
-    return $generator->factureAbo($abonnement);
+    return $generator->factureAbo($abonnement);*/
+
+    $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
+
+    $files = [
+        'files/abos/facture_REV-1_16.pdf',
+        'files/abos/facture_REV-2_21.pdf',
+        'files/abos/facture_RJN-288_17.pdf',
+        'files/abos/facture_RJN-288_18.pdf',
+        'files/abos/facture_RJN-289_20.pdf'
+    ];
+
+    $worker->merge($files, 'binding');
 
     exit;
 
     /*
-       $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+        $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
 
-       $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-       $user         = \App::make('App\Droit\User\Repo\UserInterface');
-       $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-       $colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-       $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $order        = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $user         = \App::make('App\Droit\User\Repo\UserInterface');
+        $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+        $colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+        $generator    = new \App\Droit\Generate\Pdf\PdfGenerator();
 
-     $gro = new \App\Droit\Inscription\Entities\Groupe();
-       $groupe = $gro::findOrNew(25);
-       $groupe->load('colloque','user','inscriptions');
+        $gro = new \App\Droit\Inscription\Entities\Groupe();
+        $groupe = $gro::findOrNew(25);
+        $groupe->load('colloque','user','inscriptions');
 
-       $user = $groupe->user;
-       $user->load('adresses');
-       $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
+        $user = $groupe->user;
+        $user->load('adresses');
+        $groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
 
-    $inde  = $colloque->find(71);
-    $excel = new App\Droit\Generate\Excel\ExcelGenerator();
+        $inde  = $colloque->find(71);
+        $excel = new App\Droit\Generate\Excel\ExcelGenerator();
 
-    //$inde->load('inscriptions');
-    $cindy = $inscription->hasPayed(1);
+        //$inde->load('inscriptions');
+        $cindy = $inscription->hasPayed(1);
 
-    $columns = [
-        'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
-        'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
-    ];
+        $columns = [
+            'civilite_title' ,'name', 'email', 'company', 'profession_title', 'telephone','mobile',
+            'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
+        ];
 
-
-    $adresse    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
-    $me = $adresse->find(1);
-    $me->load('typeadresse');
-    echo '<pre>';
-    print_r($me);
-    echo '</pre>';
+        $adresse    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+        $me = $adresse->find(1);
+        $me->load('typeadresse');
+        echo '<pre>';
+        print_r($me);
+        echo '</pre>';
     */
 });
 
