@@ -10,7 +10,33 @@
                 </div>
                 <div class="panel-body">
 
-                    <div class='examples'>
+                    <form>
+                        <div class="file-upload-wrapper" data-name="file">
+                            <button type="button" class="btn btn-default" id="file" data-toggle="modal" data-target="#uploadModal">Chercher</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Choisir un fichier</h4>
+                                        </div>
+                                        <div class="modal-body">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                            <button type="button" class="btn btn-primary">Inserer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    {{--<div class='examples'>
                         <div class='parent'>
                             <div class='wrapper'>
                                 <div id='middle-defaults' class='wide'>
@@ -34,7 +60,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div>--}}
 
                 </div>
             </div>

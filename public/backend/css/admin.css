@@ -325,3 +325,16 @@ a:hover, a:active, a:focus {
     padding: 5px 10px 10px 10px;
     background: #fff;
 }
+
+.file-upload-list{
+    list-style: none;
+}
+
+.file-upload-item{
+    display: inline-block;
+    margin: 7px;
+}
+
+.file-upload-item img{
+    height: 80px;
+}

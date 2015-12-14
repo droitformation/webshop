@@ -56,6 +56,16 @@ return [
 			'bucket' => 'your-bucket',
 		],
 
+        'files' => [
+            'driver' => 'local',
+            'root'   => public_path('files'),
+        ],
+
+        'uploads' => [
+            'driver' => 'local',
+            'root'   => public_path('uploads'),
+        ],
+
 		'rackspace' => [
 			'driver'    => 'rackspace',
 			'username'  => 'your-username',
