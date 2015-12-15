@@ -8,7 +8,7 @@
  *
  */
 $.fn.extend({
-    treeview:	function() {
+    treeview: function() {
         return this.each(function() {
             // Initialize the top levels;
             var tree = $(this);
@@ -20,17 +20,17 @@ $.fn.extend({
             tree.find('li').has("ul").each(function () {
                 var branch = $(this); //li with children ul
 
-                branch.prepend("<i class='tree-indicator glyphicon glyphicon-chevron-right'></i>");
+                branch.prepend("<i class='tree-indicator fa fa-chevron-right'></i>");
                 branch.addClass('tree-branch');
                 branch.on('click', function (e) {
                     if (this == e.target) {
                         var icon = $(this).children('i:first');
 
-                        icon.toggleClass("glyphicon-chevron-down glyphicon-chevron-right");
+                        icon.toggleClass("fa-chevron-down fa-chevron-right");
                         $(this).children().children().toggle();
                     }
                 })
-                branch.children().children().toggle();
+                //branch.children().children().toggle();
 
                 /**
                  *	The following snippet of code enables the treeview to

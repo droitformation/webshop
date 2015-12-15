@@ -216,7 +216,7 @@ Route::get('convert', function()
 Route::get('manager', function()
 {
     $manager = App::make('App\Droit\Service\FileWorkerInterface');
-    $files   = $manager->listFiles('files');
+    $files   = $manager->listDirectoryFiles('files/logos/');
 
     echo '<pre>';
     print_r($files);

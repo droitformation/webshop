@@ -61,7 +61,6 @@ class UploadController extends Controller
         return false;
     }
 
-
     public function uploadJS(Request $request)
     {
         $files = $this->upload->upload( $request->file('file') , 'files', 'newsletter');

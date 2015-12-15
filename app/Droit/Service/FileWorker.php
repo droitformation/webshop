@@ -67,15 +67,21 @@ class FileWorker implements FileWorkerInterface{
         return $files;
     }
 
-    public function listFiles($dir)
+    public function listDirectoryFiles($dir)
+    {
+        return $this->tree($dir);
+    }
+
+    public function listActionFiles($dir)
     {
         echo '<ul>';
         foreach($dir as $name => $subdir)
         {
             if(is_array($subdir))
             {
-                echo '<h4>'.$name.'</h4>';
+                echo '<li>'.$name.'';
                 $this->listFiles($subdir);
+                echo '</li>';
             }
             else
             {
@@ -87,7 +93,31 @@ class FileWorker implements FileWorkerInterface{
                     echo '<span class="clearfix"></span></form>';
                 echo '</li>';
             }
+
         }
         echo '</ul>';
+    }
+
+    public function treeDirectories($directories, $path = '')
+    {
+        $key   = key($directories);
+        $exist = (is_array( $directories[$key] ) ? true : false);
+
+        echo ($exist ? '<ul>' : '' );
+
+        if($exist)
+        {
+            foreach($directories as $name => $subdir)
+            {
+                if(is_array($subdir))
+                {
+                    echo '<li><a class="file-folder" href="'.$path.$name.'">'.$name.'</a>';
+                    //$this->treeDirectories($subdir,$name);
+                    echo '</li>';
+                }
+            }
+        }
+
+        echo ($exist ? '</ul>' : '' );
     }
 }

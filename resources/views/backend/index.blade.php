@@ -13,7 +13,7 @@
                     <form>
                         <div class="file-upload-wrapper" data-name="file">
                             <button type="button" class="btn btn-default" id="file" data-toggle="modal" data-target="#uploadModal">Chercher</button>
-
+                            <div class="file-input"></div>
                             <!-- Modal -->
                             <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModal">
                                 <div class="modal-dialog modal-dialog-big" role="document">
@@ -23,11 +23,29 @@
                                             <h4 class="modal-title" id="myModalLabel">Choisir un fichier</h4>
                                         </div>
                                         <div class="modal-body">
-                                           {{-- @include('backend.partials.files', ['files' => $files, 'name' => 'file'])--}}
+
+                                            @inject('fileWorker', 'App\Droit\Service\FileWorkerInterface')
+
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <ul class="treeview">
+                                                        <li><a href="#">Documents</a>
+                                                            @if(!empty($files))
+                                                                <?php $fileWorker->treeDirectories($files,'files/'); ?>
+                                                            @endif
+                                                        </li>
+                                                    </ul>
+
+                                                    <div id="dropzone" class="dropzone"></div>
+
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div id="fileManager" data-path="uploads"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-primary">Inserer</button>
                                         </div>
                                     </div>
                                 </div>
@@ -64,25 +82,6 @@
 
                     <!-- TREEVIEW CODE -->
 
-                    @inject('fileWorker', 'App\Droit\Service\FileWorkerInterface')
-
-                    <?php
-
-
-                    echo '<pre>';
-                    //print_r();
-                    echo '</pre>';
-                    ?>
-
-                    <ul class="treeview">
-                        <li><a href="#">Documents</a>
-
-                            @if(!empty($files))
-                                <?php $fileWorker->listFiles($files); ?>
-                            @endif
-
-                        </li>
-                    </ul>
 
                 </div>
             </div>

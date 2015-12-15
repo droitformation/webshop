@@ -2,7 +2,16 @@
 
     @if(!empty($files))
         @foreach($files as $file)
-            <li><a class="file-upload-chosen" data-targetid="file" href="{{ $file }}"><img src="{{ asset('pictos/'.$file) }}" alt="" /></a></li>
+            <?php $extension = File::extension($path.$file); ?>
+                <li>
+                    <a class="file-upload-chosen" data-targetid="file" data-dismiss="modal" href="{{ $path.'/'.$file }}">
+                        @if(in_array($extension, $images))
+                            <img src="{{ asset($path.'/'.$file) }}" alt="image" />
+                        @else
+                            {{ $file }}
+                        @endif
+                    </a>
+                </li>
         @endforeach
     @endif
 

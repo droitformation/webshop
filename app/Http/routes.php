@@ -167,6 +167,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
     Route::get('fileJson/{id?}', ['uses' => 'Backend\UploadController@fileJson']);
 
+    Route::post('files', ['uses' => 'Backend\FileController@files']);
+
     /*
     |--------------------------------------------------------------------------
     | Abonnements Routes
