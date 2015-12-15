@@ -59,7 +59,7 @@ class AuthorController extends Controller
 
         if($_file)
         {
-            $photo = $this->upload->upload($_file, 'authors');
+            $photo = $this->upload->upload($_file, 'files/authors');
             $all['photo'] = $photo['name'];
         }
 
@@ -94,7 +94,7 @@ class AuthorController extends Controller
 
         if($_file)
         {
-            $photo = $this->upload->upload($_file, 'authors');
+            $photo = $this->upload->upload($_file, 'files/authors');
             $all['photo'] = $photo['name'];
         }
 

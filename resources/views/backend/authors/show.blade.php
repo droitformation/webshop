@@ -44,7 +44,7 @@
                     <div class="col-sm-3">
                         <div class="list-group">
                             <div class="list-group-item text-center">
-                                <a href="#"><img height="120" src="{{ asset('authors/'.$author->photo) }}" alt="{{$author->name}}" /></a>
+                                <a href="#"><img height="120" src="{{ asset('files/authors/'.$author->photo) }}" alt="{{$author->name}}" /></a>
                             </div>
                         </div>
                     </div>

@@ -32,7 +32,7 @@
                     {
                         foreach($bloc->arrets_categories as $categorie)
                         {
-                            echo '<a target="_blank" href="'.url('jurisprudence').'#'.$bloc->reference.'"><img width="130" border="0" alt="'.$categorie->title.'" src="'.asset('pictos/'.$categorie->image).'"></a>';
+                            echo '<a target="_blank" href="'.url('jurisprudence').'#'.$bloc->reference.'"><img width="130" border="0" alt="'.$categorie->title.'" src="'.asset('files/pictos/'.$categorie->image).'"></a>';
                         }
                     }
                     ?>
@@ -64,7 +64,7 @@
                                             <table border="0" width="375" align="left" cellpadding="0" cellspacing="0" class="resetTable">
                                                 <tr>
                                                     <td valign="top" width="60" class="resetMarge">
-                                                        <img width="60" border="0" alt="{{ $analyse_authors->name }}" src="{{ asset('authors/'.$analyse_authors->photo) }}">
+                                                        <img width="60" border="0" alt="{{ $analyse_authors->name }}" src="{{ asset('files/authors/'.$analyse_authors->photo) }}">
                                                     </td>
                                                     <td valign="top" width="10" class="resetMarge"></td>
                                                     <td valign="top" width="305" class="resetMarge">

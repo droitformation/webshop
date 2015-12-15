@@ -58,6 +58,8 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerMemberService();
         $this->registerUploadService();
 
+        $this->registerFileWorkerService();
+
 	}
 
     /**
@@ -268,5 +270,15 @@ class AppServiceProvider extends ServiceProvider {
         });
     }
 
+    /*
+    * FileWorker
+    */
+    protected function registerFileWorkerService(){
+
+        $this->app->bind('App\Droit\Service\FileWorkerInterface', function()
+        {
+            return new \App\Droit\Service\FileWorker();
+        });
+    }
 
 }

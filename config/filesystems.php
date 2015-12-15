@@ -66,6 +66,11 @@ return [
             'root'   => public_path('uploads'),
         ],
 
+        'pictos' => [
+            'driver' => 'local',
+            'root'   => public_path('pictos'),
+        ],
+
 		'rackspace' => [
 			'driver'    => 'rackspace',
 			'username'  => 'your-username',

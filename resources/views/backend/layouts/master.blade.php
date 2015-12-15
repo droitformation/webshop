@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
 
     @if(isset($isNewsletter))
         <link rel="stylesheet" href="<?php echo asset('newsletter/css/backend/newsletter.css'); ?>">
@@ -170,6 +171,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/member.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/file-upload.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
 
 @if(isset($isNewsletter))
     @include('backend.newsletter.scripts')

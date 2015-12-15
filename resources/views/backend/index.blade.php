@@ -16,14 +16,14 @@
 
                             <!-- Modal -->
                             <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModal">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-dialog-big" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabel">Choisir un fichier</h4>
                                         </div>
                                         <div class="modal-body">
-
+                                           {{-- @include('backend.partials.files', ['files' => $files, 'name' => 'file'])--}}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
@@ -61,6 +61,28 @@
                         </div>
 
                     </div>--}}
+
+                    <!-- TREEVIEW CODE -->
+
+                    @inject('fileWorker', 'App\Droit\Service\FileWorkerInterface')
+
+                    <?php
+
+
+                    echo '<pre>';
+                    //print_r();
+                    echo '</pre>';
+                    ?>
+
+                    <ul class="treeview">
+                        <li><a href="#">Documents</a>
+
+                            @if(!empty($files))
+                                <?php $fileWorker->listFiles($files); ?>
+                            @endif
+
+                        </li>
+                    </ul>
 
                 </div>
             </div>

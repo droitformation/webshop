@@ -8,16 +8,19 @@ use Illuminate\Http\Request;
 
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
+use App\Droit\Service\FileWorkerInterface;
 
 class AdminController extends Controller {
 
     protected $user;
     protected $adresse;
+    protected $file;
 
-    public function __construct(UserInterface $user, AdresseInterface $adresse)
+    public function __construct(UserInterface $user, AdresseInterface $adresse, FileWorkerInterface $file)
     {
         $this->user    = $user;
         $this->adresse = $adresse;
+        $this->file    = $file;
     }
 
 	/**
@@ -27,8 +30,8 @@ class AdminController extends Controller {
 	 */
 	public function index()
 	{
-        return view('backend.index');
+        $files = $this->file->manager();
+
+        return view('backend.index')->with(['files' => $files]);
 	}
-
-
 }

@@ -1,7 +1,7 @@
 $( function() {
 
 
-    $('#uploadModal').on('show.bs.modal', function (e) {
+/*    $('#uploadModal').on('show.bs.modal', function (e) {
 
         var target = $(e.relatedTarget).attr('id');
         var $body  = $(this).find('.modal-body');
@@ -10,10 +10,9 @@ $( function() {
 
             var list = '<ul class="file-upload-list">';
             $.each(data, function( i, item ) {
-               // console.log(item.image);
 
                 list += '<li class="file-upload-item">'
-                     + '<a id="' + target + '" href="' + item.image + '" class="file-upload-chosen">'
+                     + '<a data-targetid="' + target + '" href="' + item.title + '" class="file-upload-chosen">'
                      + '<img src="' + item.image + '" alt="" />'
                      + '</a>'
                      + '</li>';
@@ -23,16 +22,24 @@ $( function() {
 
             $body.append(list);
 
-            console.log(list);
+
         });
 
-    });
+    });*/
 
     $('body').on('click','.file-upload-chosen' ,function(e){
-        e.preventDefault();
-        e.stopPropagation;
-        var target = $('this').attr('id');
-        $('#'+target).after('<input name="file" value="wde">');
+
+        e.preventDefault(); e.stopPropagation();
+
+        $('#uploadModal').hide();
+
+        var target = $(this).data('targetid');
+        var value  = $(this).attr('href');
+
+        console.log(target);
+
+        $('#'+target).after('<input type="hidden" name="' + target + '" value="' + value + '">');
+
     });
 
 });

@@ -338,3 +338,17 @@ a:hover, a:active, a:focus {
 .file-upload-item img{
     height: 80px;
 }
+
+.modal-dialog-big {
+    width: 70%;
+}
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+
+.modal-body{
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+}

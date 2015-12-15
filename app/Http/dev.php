@@ -213,8 +213,15 @@ Route::get('convert', function()
 
 });
 
-Route::get('prix', function()
+Route::get('manager', function()
 {
+    $manager = App::make('App\Droit\Service\FileWorkerInterface');
+    $files   = $manager->listFiles('files');
+
+    echo '<pre>';
+    print_r($files);
+    echo '</pre>';exit;
+
 });
 
 Route::get('myaddress', function()

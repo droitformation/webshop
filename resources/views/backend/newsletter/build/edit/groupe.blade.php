@@ -17,7 +17,7 @@
                     <h3 style="text-align: left;">{{ $categories[$bloc->categorie_id] }}</h3>
                 </td>
                 <td width="160" align="center" valign="top" class="resetMarge">
-                    <img width="130" border="0" src="{{ asset('pictos/'.$bloc->image) }}" alt="{{ $categories[$bloc->categorie] }}" />
+                    <img width="130" border="0" src="{{ asset('files/pictos/'.$bloc->image) }}" alt="{{ $categories[$bloc->categorie] }}" />
                 </td>
             </tr><!-- space -->
         </table>
@@ -51,7 +51,7 @@
                                 foreach($arret->arrets_categories as $categorie)
                                 {
                                     if($categorie->id != $bloc->categorie){
-                                        echo '<a target="_blank" href="'.url('jurisprudence').'#'.$arret->reference.'"><img width="130" border="0" alt="'.$categorie->title.'" src="'.asset('pictos/'.$categorie->image).'"></a>';
+                                        echo '<a target="_blank" href="'.url('jurisprudence').'#'.$arret->reference.'"><img width="130" border="0" alt="'.$categorie->title.'" src="'.asset('files/pictos/'.$categorie->image).'"></a>';
                                     }
                                 }
                             }
