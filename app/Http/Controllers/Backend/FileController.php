@@ -22,7 +22,7 @@ class FileController extends Controller
         $images = ['jpg','jpeg','JPG','JPEG','png','gif'];
         $files  = $this->file->listDirectoryFiles($request->input('path'));
 
-        echo view('backend.partials.files', ['path' => $request->input('path') ,'files' => $files, 'images' => $images]);
+        echo view('manager.partials.files', ['path' => $request->input('path') ,'files' => $files, 'images' => $images]);
     }
 
 }

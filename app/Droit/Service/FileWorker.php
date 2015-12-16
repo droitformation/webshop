@@ -111,8 +111,10 @@ class FileWorker implements FileWorkerInterface{
             {
                 if(is_array($subdir))
                 {
-                    echo '<li><a class="file-folder" href="'.$path.$name.'">'.$name.'</a>';
-                    //$this->treeDirectories($subdir,$name);
+                    $active = ($name == 'uploads' ? 'active' : '');
+
+                    echo '<li>
+                        <a class="'.$active.' node file-folder" href="'.$path.$name.'"><i class="fa fa-folder-o"></i> &nbsp;'.$name.'</a>';
                     echo '</li>';
                 }
             }

@@ -1,3 +1,61 @@
+/*
+    Upload dropzone
+*/
+
+.dropzone {
+    background: #f5f5f5 none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    margin-left: 20px;
+    min-height: 30px;
+    padding: 0;
+}
+
+.dropzone .dz-message {
+    margin: 1em 0;
+}
+
+.dropzone .dz-preview .dz-details {
+    padding: 1em;
+}
+
+.dropzone .dz-preview {
+    display: block;
+    margin: 10px auto;
+    max-width: 100px;
+    min-height: 80px;
+    position: relative;
+    vertical-align: top;
+}
+
+.dropzone .dz-preview .dz-image {
+    border-radius: 15px;
+    display: block;
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+    width: 100px;
+    z-index: 10;
+}
+
+.dropzone .dz-preview.dz-image-preview {
+    background: none;
+}
+
+.dropzone .dz-preview .dz-remove {
+    color: #fff;
+    background: #fcaf40;
+    margin-top: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    text-align: center;
+}
+
+.dropzone .dz-preview .dz-remove:hover {
+    text-decoration: none;
+}
+
 .listFiles{
     margin: 0 auto;
     text-align: center;
@@ -26,8 +84,53 @@
     max-height:100%;
 }
 
-.list-group-item form{
-    margin-bottom: 0;
+#gallery li{
+    width: 120px;
+    height: 120px;
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 5px;
+}
+
+#gallery li p{
+    width: 110px;
+    height: 20px;
+    line-height: 15px;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    background: #6e6e6e;
+    padding: 3px 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#gallery li a{
+    background: #fff none repeat scroll 0 0;
+    display: block;
+    height: 100px;
+    line-height: 90px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    width: 110px;
+}
+
+#gallery li a img{
+    height: auto;
+}
+
+/* item-content is visible, and transitions size */
+.file-item {
+    width: 360px;
+    height: 239px;
+    border: 5px solid transparent;
+    -webkit-transition: width 0.4s, height 0.4s;
+    -moz-transition: width 0.4s, height 0.4s;
+    -o-transition: width 0.4s, height 0.4s;
+    transition: width 0.4s, height 0.4s;
 }
 
 #fileManager{
@@ -56,91 +159,91 @@
     padding-bottom: 0;
 }
 
-div.treeview {
-    min-width: 100px;
-    min-height: 100px;
 
-    max-height: 256px;
-    overflow:auto;
+/*
+FILE MANAGER
+*/
 
-    padding: 4px;
-
-    margin-bottom: 20px;
-
-    color: #369;
-
-    border: solid 1px;
-    border-radius: 4px;
+#uploadModal dl {
+    float: left;
+    text-align: center;
 }
-div.treeview ul:first-child:before {
-    display: none;
+#uploadModal dt,
+#uploadModal dd {
+    width: 10.5em;
+    float: left;
 }
-.treeview, .treeview ul {
-    margin:0;
-    padding:0;
-    list-style:none;
-
-    color: #369;
+#uploadModal dt {
+    margin-bottom: 4em;
 }
-.treeview ul {
-    margin-left:1em;
-    position:relative
+/* vertical space between the images */
+#uploadModal dd {margin:75px 0 0 -10.5em;
 }
-.treeview ul ul {
-    margin-left:.5em
-}
-.treeview ul:before {
-    content:"";
-    display:block;
-    width:0;
-    position:absolute;
-    top:0;
-    left:0;
-    border-left:1px solid;
-
-    /* creates a more theme-ready standard for the bootstrap themes */
-    bottom:15px;
-}
-.treeview li {
-    margin:0;
-    padding:0 1em;
-    line-height:2em;
-    font-weight:700;
-    position:relative
+#uploadModal img {
+    max-width:  100px;
+    max-height: 100px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
 }
 
-.treeview li:first-child {
-   cursor: pointer;
+.tree ul {
+    list-style: none;
+    padding-left: 5px;
+}
+.tree ul li {
+    line-height: 22px;
+    padding: 2px 0;
+    padding-left: 16px;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.tree ul li:before {
+    content: '';
+    height: 1px;
+    width: 10px;
+    background-color: #333;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    margin: auto;
 }
 
-.treeview ul li:before {
-    content:"";
-    display:block;
-    width:10px;
-    height:0;
-    border-top:1px solid;
-    margin-top:-1px;
-    position:absolute;
-    top:1em;
-    left:0
+.tree ul li:after {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background-color: #333;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
 }
-.tree-indicator {
-    margin-right:5px;
 
-    cursor:pointer;
+.tree ul li:last-child:after {
+    height: 10px;
 }
-.treeview li a {
+.tree ul a {
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: #ffffff;
+    cursor: pointer;
+    display: block;
+    line-height: 22px;
+    padding: 2px 0 2px 5px;
+}
+
+.tree ul a:hover {
+    color: #fff;
+    background: #347cba;
     text-decoration: none;
-    color:inherit;
+}
 
-    cursor:pointer;
-}
-.treeview li button, .treeview li button:active, .treeview li button:focus {
+.tree ul a.active {
+    color: #fff;
+    background: #6e6e6e;
     text-decoration: none;
-    color:inherit;
-    border:none;
-    background:transparent;
-    margin:0px 0px 0px 0px;
-    padding:0px 0px 0px 0px;
-    outline: 0;
 }
+

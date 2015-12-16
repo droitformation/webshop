@@ -11,8 +11,8 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dropzone.css?=13321');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
 
     @if(isset($isNewsletter))
         <link rel="stylesheet" href="<?php echo asset('newsletter/css/backend/newsletter.css'); ?>">
@@ -42,6 +42,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/dragdrop/dragula.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/jquery.tagit.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/least.min.css');?>">
 
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
@@ -51,7 +52,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/types.css');?>">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <base href="/">
 
 </head>
@@ -157,6 +158,8 @@
 <!-- Gallery plugins -->
 <script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/gallery/gallery-simple.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('js/colloque/isotope.pkgd.min.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/gallery/least.js');?>"></script>
 
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>

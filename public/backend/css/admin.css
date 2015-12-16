@@ -126,16 +126,6 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     padding: 5px 10px;
 }
 
-/*
-    Upload dropzone
-*/
-
-.dropzone {
-    background: white none repeat scroll 0 0;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    min-height: 50px;
-    padding: 0px;
-}
 
 .panel-body > .list-group {
     margin: 0 -20px;

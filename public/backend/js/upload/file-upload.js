@@ -1,42 +1,21 @@
 $( function() {
 
-
-/*    $('#uploadModal').on('show.bs.modal', function (e) {
-
-        var target = $(e.relatedTarget).attr('id');
-        var $body  = $(this).find('.modal-body');
-
-        $.get( "admin/imageJson", function( data ) {
-
-            var list = '<ul class="file-upload-list">';
-            $.each(data, function( i, item ) {
-
-                list += '<li class="file-upload-item">'
-                     + '<a data-targetid="' + target + '" href="' + item.title + '" class="file-upload-chosen">'
-                     + '<img src="' + item.image + '" alt="" />'
-                     + '</a>'
-                     + '</li>';
-            });
-
-            list += '</ul>';
-
-            $body.append(list);
-
-
-        });
-
-    });*/
-
     $('#uploadModal').on('show.bs.modal', function ()
     {
-        console.log('vber');
         var $manager = $('#fileManager');
 
         $.post( "admin/files", { path: 'files/uploads' }).done(function( data ){
             $manager.empty().append(data);
             $manager.data('path','files/uploads');
-        });
 
+            var $grid = $('#gallery').isotope({
+                itemSelector: '.file-item',
+                masonry: {
+                    columnWidth: 120
+                }
+            });
+
+        });
     })
 
     $('body').on('click','.file-upload-chosen' ,function(e)
@@ -79,7 +58,17 @@ $( function() {
         $.post( "admin/files", { path: path }).done(function( data ){
             $manager.empty().append(data);
             $manager.data('path',path);
+
+            var $grid = $('#gallery').isotope({
+                itemSelector: '.file-item',
+                masonry: {
+                    layoutMode: 'fitColumns',
+                    columnWidth: 120
+                }
+            });
         });
+
+        $(this).addClass('.active');
 
     });
 
@@ -92,7 +81,13 @@ $( function() {
 
     });
 
-    var myDropzone = new Dropzone("div#dropzone", { url: "admin/upload"});
+    var myDropzone = new Dropzone("div#dropzone", {
+        url: "admin/upload",
+        dictDefaultMessage: "Ajouter une image",
+        thumbnailWidth: 100,
+        thumbnailHeight: 80,
+        addRemoveLinks : true
+    });
 
     myDropzone.on('sending', function(file, xhr, formData){
         var path =  $('#fileManager').data('path');
@@ -110,5 +105,4 @@ $( function() {
         });
 
     });
-
 });
