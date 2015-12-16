@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dropzone.css?=13321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/croppic.css');?>">
 
     @if(isset($isNewsletter))
         <link rel="stylesheet" href="<?php echo asset('newsletter/css/backend/newsletter.css'); ?>">
@@ -42,7 +43,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/dragdrop/dragula.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/jquery.tagit.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/least.min.css');?>">
 
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
@@ -127,6 +127,8 @@
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/chosen/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/list.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/list.fuzzysearch.min.js');?>"></script>
 
 <!-- Layout and fixes plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/layouts/enquire.js');?>"></script>
@@ -154,12 +156,12 @@
 
 <!-- Upload plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/manager/croppic.js');?>"></script>
 
 <!-- Gallery plugins -->
 <script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/gallery/gallery-simple.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('js/colloque/isotope.pkgd.min.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/gallery/least.js');?>"></script>
 
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>

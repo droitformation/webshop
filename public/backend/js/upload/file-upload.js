@@ -1,5 +1,9 @@
 $( function() {
 
+    /********
+     *  First load uploads folder in manager
+     * *********/
+
     $('#uploadModal').on('show.bs.modal', function ()
     {
         var $manager = $('#fileManager');
@@ -8,22 +12,28 @@ $( function() {
             $manager.empty().append(data);
             $manager.data('path','files/uploads');
 
-            var $grid = $('#gallery').isotope({
+            $('#gallery').isotope({
                 itemSelector: '.file-item',
                 masonry: {
-                    columnWidth: 120
+                    layoutMode: 'fitColumns', columnWidth: 120
                 }
             });
 
         });
     })
 
+    /********
+     *  Choose file in manager
+     * *********/
+
     $('body').on('click','.file-upload-chosen' ,function(e)
     {
         e.preventDefault();
         e.stopPropagation();
 
-        var image  = '';
+        var cropper = new Croppic('cropManager');
+        cropper.destroy();
+
         var exts   = ['jpg','jpeg','png','gif'];
         var target = $(this).data('targetid');
         var value  = $(this).attr('href');
@@ -34,7 +44,12 @@ $( function() {
         // check file type is valid as given in 'exts' array
         if ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 )
         {
-            image = '<img class="file-choosen file-image thumbnail" src="' + value + '" alt="image">';
+            var image = '<img class="file-choosen file-image thumbnail" src="' + value + '" alt="image">';
+        }
+        else
+        {
+            var filename = value.replace(/^.*[\\\/]/, '')
+            var image    = '<a target="_blank" class="file-choosen" href="' + value + '">' + filename + '</a>';
         }
 
         var input  = '<input class="file-choosen" type="hidden" name="' + target + '" value="' + value + '">' + image;
@@ -47,23 +62,53 @@ $( function() {
 
     });
 
+    /********
+     * Deleter file in manager
+     * *********/
+
+    $('body').on('click','.file-manager-delete' ,function(e){
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        var src    = $(this).data('src');
+        var button = $(this);
+
+        $.post( "admin/files/delete", { src: src }).done(function( data )
+        {
+            if(data)
+            {
+                var $image = button.closest('.file-item');
+
+                $('#gallery').isotope('remove', $image).isotope('layout');
+            }
+        });
+
+    });
+
+    /********
+     *  Change folder in manager
+     * *********/
     $('body').on('click','.file-folder' ,function(e){
 
         e.preventDefault();
         e.stopPropagation();
 
+        var cropper = new Croppic('cropManager');
+        cropper.destroy();
+
         var $manager  = $('#fileManager');
         var path      = $(this).attr('href');
 
-        $.post( "admin/files", { path: path }).done(function( data ){
+        $.post( "admin/files", { path: path }).done(function( data )
+        {
             $manager.empty().append(data);
             $manager.data('path',path);
 
-            var $grid = $('#gallery').isotope({
+            $('#gallery').isotope({
                 itemSelector: '.file-item',
                 masonry: {
-                    layoutMode: 'fitColumns',
-                    columnWidth: 120
+                    layoutMode: 'fitColumns', columnWidth: 120
                 }
             });
         });
@@ -72,37 +117,88 @@ $( function() {
 
     });
 
-    $('body').on('click','.file-remove' ,function(e){
+    /********
+     * Remove choosen file
+     * *********/
+
+     $('body').on('click','.file-remove' ,function(e){
 
         e.preventDefault();
         e.stopPropagation();
 
         $(this).closest('.file-choosen-wrapper').remove();
+    });
+
+    /********
+     * Cropp image in manager
+     * *********/
+
+    $('body').on('click','.file-manager-crop' ,function(e){
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        var src = $(this).data('src');
+
+        var cropperOptions = {
+            cropUrl    : 'admin/files/crop',
+            loadPicture: src,
+            modal      : true,
+            onAfterImgCrop: function()
+            {
+                console.log('onAfterImgCrop');
+                var cropper = new Croppic('cropManager');
+                cropper.destroy();
+            },
+            cropData:{
+                "_token": $('meta[name="_token"]').attr('content')
+            }
+        }
+
+        var cropperHeader = new Croppic('cropManager', cropperOptions);
 
     });
 
-    var myDropzone = new Dropzone("div#dropzone", {
-        url: "admin/upload",
-        dictDefaultMessage: "Ajouter une image",
-        thumbnailWidth: 100,
-        thumbnailHeight: 80,
-        addRemoveLinks : true
-    });
 
-    myDropzone.on('sending', function(file, xhr, formData){
-        var path =  $('#fileManager').data('path');
-        formData.append('path', path);
-    });
+    /********
+     *  Upload in manager
+     * *********/
 
-    myDropzone.on("success", function(file) {
+    var $dropzone = $('div#dropzone');
 
-        var $manager  = $('#fileManager');
-        var path      =  $manager.data('path');
-
-        $.post( "admin/files", { path: path }).done(function( data ){
-            $manager.empty().append(data);
-            $manager.data('path',path);
+    if($dropzone.length)
+    {
+        var myDropzone = new Dropzone("div#dropzone", {
+            url: "admin/upload",
+            dictDefaultMessage: "Ajouter une image",
+            thumbnailWidth: 100,
+            thumbnailHeight: 80,
+            addRemoveLinks : true
         });
 
-    });
+        myDropzone.on('sending', function(file, xhr, formData){
+            var path =  $('#fileManager').data('path');
+            formData.append('path', path);
+        });
+
+        myDropzone.on("success", function(file) {
+
+            var $manager  = $('#fileManager');
+            var path      =  $manager.data('path');
+
+            $.post( "admin/files", { path: path }).done(function( data ){
+                $manager.empty().append(data);
+                $manager.data('path',path);
+
+                $('#gallery').isotope({
+                    itemSelector: '.file-item',
+                    masonry: {
+                        layoutMode: 'fitColumns', columnWidth: 120
+                    }
+                });
+            });
+
+        });
+    }
+
 });

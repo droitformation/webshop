@@ -14,7 +14,7 @@
                     <div class="col-md-2">
 
                         <div class="tree">
-                            <p>Documents</p>
+                            <h4>Dossiers</h4>
 
                             @if(!empty($files))
                                 <?php $fileWorker->treeDirectories($files,'files/'); ?>
@@ -23,7 +23,7 @@
                         </div>
 
                         <div id="dropzone" class="dropzone"></div>
-
+                        <div id="cropManager"></div>
                     </div>
                     <div class="col-md-10">
                         <div id="fileManager" data-path="uploads"></div>

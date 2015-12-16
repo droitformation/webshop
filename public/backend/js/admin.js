@@ -445,4 +445,20 @@ $( function() {
         }
     });
 
+    var fuzzyOptions = {
+        searchClass: "fuzzy-search",
+        location: 0,
+        distance: 100,
+        threshold: 0.4,
+        multiSearch: true
+    };
+    var options = {
+        valueNames: [ 'title', 'ISBN', 'author' ],
+        plugins: [
+            ListFuzzySearch()
+        ]
+    };
+
+    var userList = new List('products-list', options);
+
 });

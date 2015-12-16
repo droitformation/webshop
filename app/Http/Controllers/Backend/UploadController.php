@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Droit\Service\UploadWorker;
+use App\Droit\Service\UploadInterface;
 use App\Droit\Document\Repo\DocumentInterface;
 
 class UploadController extends Controller
@@ -13,7 +13,7 @@ class UploadController extends Controller
     protected $upload;
     protected $document;
 
-    public function __construct( UploadWorker $upload, DocumentInterface $document )
+    public function __construct( UploadInterface $upload, DocumentInterface $document )
     {
         $this->upload   = $upload;
         $this->document = $document;

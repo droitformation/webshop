@@ -330,7 +330,7 @@ a:hover, a:active, a:focus {
 }
 
 .modal-dialog-big {
-    width: 70%;
+    width: 90%;
 }
 
 /* Important part */
@@ -341,4 +341,7 @@ a:hover, a:active, a:focus {
 .modal-body{
     max-height: calc(100vh - 300px);
     overflow-y: auto;
+    margin: 20px 0;
+    padding: 0 20px;
+    position: relative;
 }

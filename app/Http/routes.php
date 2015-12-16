@@ -168,6 +168,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('fileJson/{id?}', ['uses' => 'Backend\UploadController@fileJson']);
 
     Route::post('files', ['uses' => 'Backend\FileController@files']);
+    Route::post('files/delete', ['uses' => 'Backend\FileController@delete']);
+    Route::post('files/crop', ['uses' => 'Backend\FileController@crop']);
 
     /*
     |--------------------------------------------------------------------------

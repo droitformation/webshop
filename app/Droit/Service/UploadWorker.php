@@ -73,6 +73,26 @@ class UploadWorker implements UploadInterface {
 	}
 
     /*
+     * crop file
+     * @return instance
+    */
+    public function crop($image, $width, $height, $x, $y, $rotation = null)
+    {
+        // open file a image resource
+        $img = \Image::make($image);
+
+        // crop image
+        $img->crop($width, $height, $x, $y);
+
+        if($rotation)
+        {
+            $img->rotate($rotation);
+        }
+
+        $img->save();
+    }
+
+    /*
      * Scan directory
      * @return array
     */

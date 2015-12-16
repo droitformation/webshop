@@ -19,5 +19,12 @@ interface UploadInterface{
 	 * @return array
 	*/	
 	public function resize( $path, $name , $width = null , $height = null);
-    
+
+
+    /*
+     * resize crop
+     * @return array
+    */
+    public function crop($image , $width, $height, $x, $y, $rotation = null);
+
 }

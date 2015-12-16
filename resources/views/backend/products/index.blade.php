@@ -14,8 +14,10 @@
                 <div class="panel-heading">
                     <h4><i class="fa fa-edit"></i> &nbsp;Produits <span class="muted">livres</span></h4>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" id="products-list">
 
+                        <input class="fuzzy-search" />
+                        <div class="list">
                         @if(!$products->isEmpty())
                         @foreach($products as $product)
 
@@ -24,7 +26,7 @@
                                     <div class="col-md-4">
                                         <p>
                                             <img style="height: 80px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
-                                            {{ $product->title }}
+                                            <span class="title">{{ $product->title }}</span>
                                             <span class="clearfix"></span>
                                         </p>
                                         @if($product->orders->count() == 0)
@@ -38,7 +40,7 @@
                                         <ul class="list-unstyled">
                                             @if(!$product->attributs->isEmpty())
                                                 @foreach($product->attributs as $attribute)
-                                                    <li><strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }} </li>
+                                                    <li class="{{ $attribute->title }}"><strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }} </li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -47,7 +49,7 @@
                                         <ul class="list-unstyled">
                                             @if(!$product->categories->isEmpty())
                                                 @foreach($product->categories as $categorie)
-                                                    <li>{{ $categorie->title }}</li>
+                                                    <li class="{{ $categorie->title }}">{{ $categorie->title }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -56,7 +58,7 @@
                                         <ul class="list-unstyled">
                                             @if(!$product->authors->isEmpty())
                                                 @foreach($product->authors as $author)
-                                                    <li>{{ $author->name }}</li>
+                                                    <li class="author">{{ $author->name }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -84,7 +86,7 @@
 
                         @endforeach
                         @endif
-
+                        </div>
                 </div>
             </div>
 
