@@ -60,11 +60,24 @@ class ProductController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-        $products = $this->product->getAll();
 
-		return view('backend.products.index')->with(['products' => $products]);
+        $search = $request->input('search',null);
+
+        if($search)
+        {
+            $search = array_filter($search);
+        }
+
+        $products    = $this->product->getAll($search);
+
+        $attributes  = $this->attribute->getAll();
+        $categories  = $this->categorie->getAll();
+        $authors     = $this->author->getAll();
+        $domains     = $this->domain->getAll();
+
+		return view('backend.products.index')->with(['products' => $products,'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains]);
 	}
 
     /**

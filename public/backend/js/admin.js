@@ -453,12 +453,14 @@ $( function() {
         multiSearch: true
     };
     var options = {
-        valueNames: [ 'title', 'ISBN', 'author' ],
+        valueNames: [ 'title', 'ISBN', 'author','Référence', 'Éditeur', 'domain', 'categorie' ],
+        page: 10,
         plugins: [
-            ListFuzzySearch()
+            ListFuzzySearch(),
+            ListPagination({})
         ]
     };
 
-    var userList = new List('products-list', options);
+    var userList = new List('search-list', options);
 
 });

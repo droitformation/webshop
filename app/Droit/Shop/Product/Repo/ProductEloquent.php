@@ -12,9 +12,9 @@ class ProductEloquent implements ProductInterface{
         $this->product = $product;
     }
 
-    public function getAll(){
-
-        return $this->product->with(array('categories','authors','domains','attributs','orders','abos'))->get();
+    public function getAll($search = null)
+    {
+        return $this->product->with(array('categories','authors','domains','attributs','orders','abos'))->search($search)->get();
     }
 
     public function getByCategorie($id){

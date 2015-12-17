@@ -29,6 +29,11 @@ class AboFactureController extends Controller {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
 
+    public function index($id)
+    {
+        $factures = $this->facture->getAll($id);
+    }
+
 	public function store(Request $request)
 	{
         $type = $request->input('type');

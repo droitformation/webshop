@@ -14,7 +14,7 @@ class AboFactureEloquent implements AboFactureInterface{
 
     public function getAll($product_id)
     {
-        return $this->facture->where('product_id','=',$product_id)->get();
+        return $this->facture->with(['abonnement','product','rappels'])->where('product_id','=',$product_id)->get();
     }
 
     public function find($id){

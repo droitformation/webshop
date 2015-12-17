@@ -186,8 +186,8 @@
             </div>
 
             @include('backend.products.partials.item',['title' => 'Catégories', 'items' => $categories, 'types' => 'categories'])
-            @include('backend.products.partials.item',['title' => 'Auteurs', 'items' => $authors,  'types' => 'authors'])
-            @include('backend.products.partials.item',['title' => 'Domaines', 'items' => $domains, 'types' => 'domains'])
+            @include('backend.products.partials.item',['title' => 'Auteurs',    'items' => $authors,    'types' => 'authors'])
+            @include('backend.products.partials.item',['title' => 'Domaines',   'items' => $domains,    'types' => 'domains'])
 
         </div>
     </div>

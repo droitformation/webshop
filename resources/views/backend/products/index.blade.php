@@ -10,14 +10,46 @@
                 </div>
             </div>
 
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal" action="{{ url('admin/products') }}" method="post">
+                        {!! csrf_field() !!}
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @include('backend.products.partials.sort',['title' => 'Catégories', 'items' => $categories, 'types' => 'categories', 'type' => 'categorie_id'])
+                            </div>
+                            <div class="col-md-2">
+                                @include('backend.products.partials.sort',['title' => 'Auteurs',    'items' => $authors,    'types' => 'authors', 'type' => 'author_id'])
+                            </div>
+                            <div class="col-md-2">
+                                @include('backend.products.partials.sort',['title' => 'Domaines',   'items' => $domains,    'types' => 'domains', 'type' => 'domain_id'])
+                            </div>
+                            <div class="col-md-2">
+                                <label>&nbsp;</label><br/>
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-filter"></i> &nbsp;Trier</button>
+                                <a class="btn btn-default" href="{{ url('admin/products') }}">Tous</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Produits <span class="muted">livres</span></h4>
+                    <h4><i class="fa fa-edit"></i> &nbsp;Livres</h4>
                 </div>
-                <div class="panel-body" id="products-list">
+                <div class="panel-body" id="search-list">
 
-                        <input class="fuzzy-search" />
-                        <div class="list">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 col-md-push-6">
+                             <input class="form-control fuzzy-search" placeholder="Recherche par mots clés" />
+                        </div>
+                    </div>
+
+                    <div class="list">
                         @if(!$products->isEmpty())
                         @foreach($products as $product)
 
@@ -25,36 +57,27 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <p>
-                                            <img style="height: 80px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
-                                            <span class="title">{{ $product->title }}</span>
-                                            <span class="clearfix"></span>
+                                            <a href="{{ url('admin/product/'.$product->id) }}">
+                                                <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
+                                                <span class="title">{{ $product->title }}</span>
+                                                @if(!$product->attributs->isEmpty())
+                                                    @foreach($product->attributs as $attribute)
+                                                        <span class="{{ $attribute->title }} text-hide" style="height: 0;">{{ $attribute->pivot->value }}</span>
+                                                    @endforeach
+                                                @endif
+                                            </a>
                                         </p>
-                                        @if($product->orders->count() == 0)
-                                            <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-xs deleteAction">Supprimer</button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-2">
-                                        <ul class="list-unstyled">
-                                            @if(!$product->attributs->isEmpty())
-                                                @foreach($product->attributs as $attribute)
-                                                    <li class="{{ $attribute->title }}"><strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }} </li>
-                                                @endforeach
-                                            @endif
-                                        </ul>
                                     </div>
                                     <div class="col-md-1">
                                         <ul class="list-unstyled">
                                             @if(!$product->categories->isEmpty())
                                                 @foreach($product->categories as $categorie)
-                                                    <li class="{{ $categorie->title }}">{{ $categorie->title }}</li>
+                                                    <li class="categorie">{{ $categorie->title }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <ul class="list-unstyled">
                                             @if(!$product->authors->isEmpty())
                                                 @foreach($product->authors as $author)
@@ -63,30 +86,37 @@
                                             @endif
                                         </ul>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <ul class="list-unstyled">
                                             @if(!$product->domains->isEmpty())
                                                 @foreach($product->domains as $domain)
-                                                    <li>{{ $domain->title }}</li>
+                                                    <li class="domain">{{ $domain->title }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
                                     </div>
                                     <div class="col-md-1">
-                                        <p>{{ $product->price_cents }} CHF</p>
+                                        <p><strong>Prix:</strong> {{ $product->price_cents }} CHF</p>
+                                        <p><strong>Poids:</strong> {{ $product->weight }} gr.</p>
                                     </div>
-                                    <div class="col-md-1">
-                                        <p> {{ $product->weight }} grammes</p>
-                                    </div>
-                                    <div class="col-md-1 text-right">
-                                        <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-sm btn-info">éditer</a>
+                                    <div class="col-md-2 text-right">
+                                        <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
+                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                            <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
+                                            @if($product->orders->count() == 0)
+                                            <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-xs deleteAction">&nbsp; x &nbsp;</button>
+                                            @endif
+                                        </form>
                                     </div>
                                 </div>
                             </div>
 
                         @endforeach
                         @endif
-                        </div>
+                    </div>
+
+                    <ul class="pagination"></ul>
+
                 </div>
             </div>
 

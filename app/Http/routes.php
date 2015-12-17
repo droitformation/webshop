@@ -143,10 +143,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::resource('coupon', 'Backend\Shop\CouponController');
     Route::resource('shipping', 'Backend\Shop\ShippingController');
+
     Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
     Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');
     Route::post('product/addType/{id}', 'Backend\Shop\ProductController@addType');
     Route::post('product/removeType/{id}', 'Backend\Shop\ProductController@removeType');
+    Route::match(['get', 'post'], 'products', 'Backend\Shop\ProductController@index');
     Route::resource('product', 'Backend\Shop\ProductController');
 
     Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
@@ -182,6 +184,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('abonnement/export', 'Backend\Abo\AboUserController@export');
     Route::resource('abonnement', 'Backend\Abo\AboUserController');
     Route::resource('rappel', 'Backend\Abo\AboFactureController');
+    Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');
     Route::resource('facture', 'Backend\Abo\AboFactureController');
     Route::resource('abo', 'Backend\Abo\AboController');
 

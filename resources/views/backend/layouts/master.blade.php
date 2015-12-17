@@ -129,6 +129,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/list.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/list.fuzzysearch.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/list.pagination.min.js');?>"></script>
 
 <!-- Layout and fixes plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/layouts/enquire.js');?>"></script>

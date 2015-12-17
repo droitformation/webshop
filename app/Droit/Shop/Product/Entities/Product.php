@@ -47,6 +47,25 @@ class Product extends Model{
         return $money->format($price);
     }
 
+    /* search scopes query */
+
+    public function scopeSearch($query, $search)
+    {
+        if($search && !empty($search))
+        {
+            foreach($search as $item => $value)
+            {
+                $name = str_replace('_id','',$item).'s';
+
+                $query->whereHas($name, function ($query) use ($item,$value)
+                {
+                    $query->where($item, $value);
+                });
+            }
+        }
+
+    }
+
     public function categories()
     {
         return $this->belongsToMany('\App\Droit\Shop\Categorie\Entities\Categorie', 'shop_product_categories', 'product_id', 'categorie_id');

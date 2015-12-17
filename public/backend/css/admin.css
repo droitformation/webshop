@@ -273,10 +273,11 @@ a:hover, a:active, a:focus {
 }
 
 .card{
-    padding: 10px;
-    border: 1px solid #f2f2f2;
-    background: #f5f5f5;
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #eaeaea;
+    line-height: 16px;
     margin-bottom: 5px;
+    padding: 10px;
 }
 
 .form-required{
@@ -344,4 +345,12 @@ a:hover, a:active, a:focus {
     margin: 20px 0;
     padding: 0 20px;
     position: relative;
+}
+
+.list{
+    margin-top: 20px;
+}
+
+.card .list-unstyled {
+    margin-bottom: 0;
 }

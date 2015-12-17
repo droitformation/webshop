@@ -44,7 +44,7 @@
         </li>
         <li class="divider"></li>
         <li class="<?php echo (Request::is('admin/product') || Request::is('admin/product/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/product') }}"><i class="fa fa-book"></i> <span>Livres</span></a>
+            <a href="{{ url('admin/products') }}"><i class="fa fa-book"></i> <span>Livres</span></a>
         </li>
         <li class="<?php echo (Request::is('admin/orders') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/orders') }}"><i class="fa fa-shopping-cart"></i> <span>Commandes</span></a>
