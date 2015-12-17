@@ -9,7 +9,6 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
-use App\Droit\Abo\Worker\AboWorkerInterface;
 
 class AboUserController extends Controller {
 
@@ -17,15 +16,13 @@ class AboUserController extends Controller {
     protected $adresse;
     protected $abo;
     protected $facture;
-    protected $worker;
 
-    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboWorkerInterface $worker, AboFactureInterface $facture)
+    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboFactureInterface $facture)
     {
         $this->abonnement = $abonnement;
         $this->adresse    = $adresse;
         $this->abo        = $abo;
         $this->facture    = $facture;
-        $this->worker     = $worker;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
@@ -84,20 +81,4 @@ class AboUserController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonné a été supprimé' ));
 	}
 
-    public function export(Request $request)
-    {
-        $abo_id     = $request->input('abo_id');
-        $product_id = $request->input('product_id');
-        $type       = $request->input('type');
-        $edition    = $request->input('edition');
-        $edition    = $type.'_'.$edition.'_'.date('Y');
-
-        $dir   = 'files/abos/'.$type.'/'.$product_id;
-        $files = \File::files($dir);
-
-        $this->worker->merge($files, $edition, $abo_id);
-
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Les factures ont été liés' ));
-
-    }
 }

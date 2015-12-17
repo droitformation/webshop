@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Worker\AboWorkerInterface;
@@ -12,14 +13,16 @@ use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
 class AboFactureController extends Controller {
 
+    protected $abo;
     protected $facture;
     protected $rappel;
     protected $product;
     protected $generator;
     protected $worker;
 
-    public function __construct(AboFactureInterface $facture, ProductInterface $product, AboRappelInterface $rappel, PdfGeneratorInterface $generator, AboWorkerInterface $worker)
+    public function __construct(AboInterface $abo, AboFactureInterface $facture, ProductInterface $product, AboRappelInterface $rappel, PdfGeneratorInterface $generator, AboWorkerInterface $worker)
     {
+        $this->abo       = $abo;
         $this->facture   = $facture;
         $this->rappel    = $rappel;
         $this->product   = $product;
@@ -29,9 +32,14 @@ class AboFactureController extends Controller {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
 
-    public function index($id)
+    public function index($id, Request $request)
     {
-        $factures = $this->facture->getAll($id);
+        $abo      = $this->abo->find($id);
+        $product  = $request->input('product_id',null);
+        $factures = $this->facture->getAll($product);
+
+
+        return view('backend.abos.factures')->with(['factures' => $factures, 'abo' => $abo]);
     }
 
 	public function store(Request $request)

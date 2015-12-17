@@ -26,8 +26,7 @@
                             </form>
                         </div>
                         <div class="col-md-4">
-                            <form action="{{ url('admin/factures') }}" method="POST" class="form-inline">{!! csrf_field() !!}
-                                <input type="hidden" name="abo_id" value="{{ $abo->id }}">
+                            <form action="{{ url('admin/factures/'.$abo->id) }}" method="POST" class="form-inline">{!! csrf_field() !!}
                                 <div class="form-group">
                                     <select class="form-control" name="product_id">
                                         @if(!$abo->products->isEmpty())
@@ -36,7 +35,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    <button class="btn btn-info"><i class="fa fa-download"></i> &nbsp;Factures</button>
+                                    <button class="btn btn-info">Factures</button>
                                 </div>
                             </form>
                         </div>

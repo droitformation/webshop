@@ -58,6 +58,15 @@ $(document).ready(function() {
         pagingType  : 'simple'
     });
 
+    $('.simple-table').DataTable({
+        language: langues,
+        pagingType: 'simple',
+        "columnDefs": [{
+            "targets"  : 'no-sort',
+            "orderable": false
+        }]
+    });
+
     $('#generic').DataTable({
         language: langues,
         pagingType: 'simple',
