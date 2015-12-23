@@ -117,6 +117,7 @@ class AboController extends Controller {
         $product_id = $request->input('product_id');
         $type       = $request->input('type');
         $edition    = $request->input('edition');
+
         $edition    = $type.'_'.$edition.'_'.date('Y');
 
         $dir   = 'files/abos/'.$type.'/'.$product_id;

@@ -9,6 +9,7 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
+use App\Droit\Abo\Worker\AboWorkerInterface;
 
 class AboUserController extends Controller {
 
@@ -16,13 +17,15 @@ class AboUserController extends Controller {
     protected $adresse;
     protected $abo;
     protected $facture;
+    protected $worker;
 
-    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboFactureInterface $facture)
+    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboFactureInterface $facture, AboWorkerInterface $worker)
     {
         $this->abonnement = $abonnement;
         $this->adresse    = $adresse;
         $this->abo        = $abo;
         $this->facture    = $facture;
+        $this->worker     = $worker;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}

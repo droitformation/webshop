@@ -11,11 +11,19 @@
                 <div class="panel-body">
 
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-5">
                             <form action="{{ url('admin/abonnement/export') }}" method="POST" class="form-inline">{!! csrf_field() !!}
                                 <input type="hidden" name="edition" value="{{ $abo->current_product->edition }}">
-                                <input type="hidden" name="product_id" value="{{ $abo->current_product->id }}">
                                 <input type="hidden" name="abo_id" value="{{ $abo->id }}">
+                                <div class="form-group">
+                                    <select class="form-control" name="product_id">
+                                        @if(!$abo->products->isEmpty())
+                                            @foreach($abo->products as $product)
+                                                <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <select class="form-control" name="type">
                                         <option value="facture">Factures</option>
@@ -25,7 +33,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <form action="{{ url('admin/factures/'.$abo->id) }}" method="POST" class="form-inline">{!! csrf_field() !!}
                                 <div class="form-group">
                                     <select class="form-control" name="product_id">
@@ -39,7 +47,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 text-right">
                             <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
                         </div>
                     </div>
