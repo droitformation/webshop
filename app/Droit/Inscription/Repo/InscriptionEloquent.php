@@ -67,7 +67,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
         $today = \Carbon\Carbon::now()->subDays($days);
 
-        $notpayed = $this->inscription->whereNull('payed_at')
+        $notpayed = $this->inscription->where('status','!=','free')->whereNull('payed_at')
             ->where(function ($query) use ($user_id)
             {
                 $query->whereHas('groupe', function ($query) use ($user_id){

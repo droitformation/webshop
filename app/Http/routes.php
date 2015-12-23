@@ -23,9 +23,9 @@ Route::get('campagne/{id}', 'Frontend\CampagneController@show');
     Route::resource('newsletter', 'Frontend\NewsletterController');
     Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
 */
-    Route::post('unsubscribe', 'Backend\Newsletter\InscriptionController@unsubscribe');
-    Route::post('subscribe', 'Backend\Newsletter\InscriptionController@subscribe');
-    Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activation');
+Route::post('unsubscribe', 'Backend\Newsletter\InscriptionController@unsubscribe');
+Route::post('subscribe', 'Backend\Newsletter\InscriptionController@subscribe');
+Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activation');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -116,10 +116,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('colloque/location/{id}', 'Backend\Colloque\ColloqueController@location');
     Route::get('colloque/adresse/{id}', 'Backend\Colloque\ColloqueController@adresse');
     Route::get('colloque/generate/{id}/{doc}', 'Backend\Colloque\ColloqueController@generate');
+
     Route::post('colloque/addprice', 'Backend\Colloque\ColloqueController@addprice');
     Route::post('colloque/removeprice', 'Backend\Colloque\ColloqueController@removeprice');
+    Route::post('colloque/editprice', 'Backend\Colloque\ColloqueController@editprice');
+
     Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
     Route::post('colloque/removeoption', 'Backend\Colloque\ColloqueController@removeoption');
+    Route::post('colloque/editoption', 'Backend\Colloque\ColloqueController@editoption');
 
     Route::resource('document', 'Backend\Colloque\DocumentController');
 
@@ -244,6 +248,7 @@ Route::get('shop/product/{id}', 'Frontend\Shop\ShopController@show');
 /* *
  * Checkout routes for frontend shop
  * */
+
 Route::get('checkout/resume', 'Frontend\Shop\CheckoutController@resume');
 Route::get('checkout/confirm', 'Frontend\Shop\CheckoutController@confirm');
 Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');

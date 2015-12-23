@@ -9,9 +9,12 @@
                     <span class="day"> {{ $colloque->start_at->format('d') }}</span>
                     <span class="year"> {{ $colloque->start_at->format('Y') }}</span>
                 </div>
-                <p>{{ $colloque->titre }}<br/>{{ $colloque->soustitre }}</p>
+                <p><strong>{{ $colloque->titre }}</strong><br/>{{ $colloque->soustitre }}</p>
 
-                <a href="{{ url('colloque/inscription/'.$colloque->id) }}" class="btn btn-danger btn-sm pull-right">inscription</a>
+                @if($colloque->registration_at >= date('Y-m-d'))
+                    <a href="{{ url('colloque/inscription/'.$colloque->id) }}" class="btn btn-danger btn-sm pull-right">inscription</a>
+                @endif
+
             </header>
             <div class="body">
                 <address>

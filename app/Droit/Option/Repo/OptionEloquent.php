@@ -49,7 +49,6 @@ class OptionEloquent implements OptionInterface{
         }
 
         $option->fill($data);
-
         $option->save();
 
         return $option;

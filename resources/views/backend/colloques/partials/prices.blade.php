@@ -13,7 +13,9 @@
                 @foreach($prices as $prix)
                     <li class="list-group-item">
                         <span class="label label-default">{{ $prix->price_cents }} CHF</span>&nbsp;
-                        {{ $prix->description }}
+                        <a class="editablePrice" data-name="description" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la description">
+                            {{ $prix->description }}
+                        </a>
                         <button class="btn btn-xs btn-danger pull-right removePrice" data-id="{{ $prix->id }}" type="button">&nbsp;<i class="fa fa-times"></i>&nbsp;</button>
                     </li>
                 @endforeach

@@ -29,6 +29,24 @@ class OrderEloquent implements OrderInterface{
         return false;
     }
 
+    public function hasPayed($user_id)
+    {
+        $days  = \Registry::get('inscription.days');
+
+        $today = \Carbon\Carbon::now()->subDays($days);
+
+        $notpayed = $this->order->whereNull('payed_at')->where('user_id','=',$user_id);
+
+        if($days > 0)
+        {
+            $notpayed->where('created_at','<=',$today);
+        }
+
+        $notpayed = $notpayed->get();
+
+        return ($notpayed->isEmpty() ? true : false );
+    }
+
     public function maxOrder($year)
     {
         $order = $this->order->where('order_no','LIKE', $year.'-%')->orderBy('order_no', 'desc')->take(1)->get();

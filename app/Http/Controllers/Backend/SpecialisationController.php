@@ -74,10 +74,10 @@ class SpecialisationController extends Controller {
 		$find           = $this->specialisation->search($specialisation);
 
 		// If specialisation not found	
-/*		if(!$find)
+    	if(!$find)
 		{
 			$find = $this->specialisation->create(['title' => $specialisation, $model.'_id' => $id]);
-		}*/
+		}
 
         $item = $this->$model->find($id);
         $item->specialisations()->attach($find->id);

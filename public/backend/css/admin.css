@@ -96,10 +96,10 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .ui-widget-content li a{
-    border-bottom: 1px solid #f2f2f2;
     display: block;
     margin: 2px 0;
     padding: 2px 0;
+    text-decoration: none;
 }
 
 .ui-widget-content li.ui-state-focus{
@@ -170,8 +170,8 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .list-group-item .btn.btn-danger {
-    line-height: 12px;
-    margin-top: -3px;
+    line-height: 19px;
+    margin-top: -1px;
 }
 
 
@@ -353,4 +353,13 @@ a:hover, a:active, a:focus {
 
 .card .list-unstyled {
     margin-bottom: 0;
+}
+
+.form-horizontal .editable {
+    padding: 0;
+}
+
+.editable-click, a.editable-click, a.editable-click:hover {
+    text-decoration: none;
+    border: 0;
 }

@@ -195,6 +195,21 @@ class ColloqueController extends Controller
     }
 
     /**
+     * @return Response
+     */
+    public function editprice(Request $request)
+    {
+        $price = $this->price->update([ 'id' => $request->input('pk'), 'description' =>  $request->input('value')]);
+
+        if($price)
+        {
+            return response('OK', 200);
+        }
+
+        return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+    }
+
+    /**
      *
      * @param  int  $id
      * @return Response
@@ -224,6 +239,21 @@ class ColloqueController extends Controller
         return view('backend.colloques.partials.options')->with(['colloque' => $colloque]);
     }
 
+    /**
+     * @return Response
+     */
+    public function editoption(Request $request)
+    {
+         $option = $this->option->update([ 'id' => $request->input('pk'), 'title' =>  $request->input('value')]);
+
+         if($option)
+         {
+             return response('OK', 200);
+         }
+
+         return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+    }
+    
     /**
      *
      * @param  int  $id

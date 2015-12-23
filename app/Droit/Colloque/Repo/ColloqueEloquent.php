@@ -67,6 +67,12 @@ class ColloqueEloquent implements ColloqueInterface{
             $colloque->centres()->attach($data['centres']);
         }
 
+        // illustration
+        if(isset($data['illustration']))
+        {
+            $colloque->documents()->create( ['colloque_id' => $colloque->id ,'display' => 1,'type' => 'illustration','titre' => 'Illustration','path' => $data['illustration'] ]);
+        }
+
         return $colloque;
     }
 
@@ -85,6 +91,12 @@ class ColloqueEloquent implements ColloqueInterface{
         $colloque->active_at = (isset($data['active_at']) &&  !empty($data['active_at']) ? $data['active_at'] : null);
 
         $colloque->save();
+
+        // centres
+        if(isset($data['centres']))
+        {
+            $colloque->centres()->sync($data['centres']);
+        }
 
         return $colloque;
     }

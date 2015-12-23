@@ -8,6 +8,7 @@ var App = angular.module('upload', ['flow'] , function($interpolateProvider)
             target    : 'admin/upload',
             testChunks:false,
             singleFile: true,
+            query:{ _token : $("meta[name='_token']").attr('content') } ,
             permanentErrors: [404, 500, 501],
             simultaneousUploads: 4
         };

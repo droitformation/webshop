@@ -30,6 +30,14 @@
                                 <legend>Général</legend>
 
                                 <div class="form-group">
+                                    <label class="col-sm-3 control-label"><strong>Visible</strong></label>
+                                    <div class="col-sm-5">
+                                        <label class="radio-inline"><input type="radio" {{ $colloque->visible ? 'checked' : '' }} name="visible" value="1"> Oui</label>
+                                        <label class="radio-inline"><input type="radio" {{ !$colloque->visible ? 'checked' : '' }} name="visible" value="0"> Non</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="titre" class="col-sm-3 control-label">Adresse principale<br/><small>Indiqué sur bon, bv, facture</small></label>
                                     <div class="col-sm-6">
                                         <div id="choixAdresse">
@@ -225,7 +233,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Spécialisation</div>
                 <div class="panel-body">
-                    <ul id="tags" data-model="colloque" data-id="{{ $colloque->id }}">
+                    <ul id="specialisations" data-model="colloque" data-id="{{ $colloque->id }}">
                         @if(!$colloque->specialisations->isEmpty())
                             @foreach($colloque->specialisations as $specialisation)
                                 <li>{{ $specialisation->title }}</li>

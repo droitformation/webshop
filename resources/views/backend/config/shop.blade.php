@@ -78,7 +78,33 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <h4><i class="fa fa-ban"></i> &nbsp;Restrictions</h4>
+                <div class="panel panel-warning">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label><strong>Empêcher les mauvais payeur de continuer à s'inscrire</strong></label></br>
+                            <?php $restrict = Registry::get('shop.restrict'); ?>
+                            <label class="radio-inline">
+                                <input type="radio" {{ ($restrict ? 'checked' : '') }} name="shop[restrict]" value="1"> oui &nbsp;
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" {{ (!$restrict ? 'checked' : '') }} name="shop[restrict]" value="0"> non
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>Si oui la facture est considérée comme non payée après</strong></label>
+                            <div class="input-group" style="width: 130px;">
+                                <input type="text" class="form-control" name="shop[days]" value="{!! Registry::get('shop.days')!!}">
+                                <span class="input-group-addon" id="basic-addon2">jours</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
 

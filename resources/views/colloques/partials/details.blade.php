@@ -14,9 +14,10 @@
 
         <p><strong>Prix d'inscription:</strong></p>
 
-        @if(!$colloque->prices->isEmpty())
+        <?php $prices = $colloque->prices->whereLoose('type','public'); ?>
+        @if(!$prices->isEmpty())
             <dl>
-                @foreach($colloque->prices as $price)
+                @foreach($prices as $price)
                     <dt>{{ $price->description }}</dt>
                     <dd>{{ $price->price_cents }} CHF</dd>
                 @endforeach
@@ -30,7 +31,7 @@
 
                 <?php $file = 'files/colloques/'.$document->type.'/'.$document->path; ?>
                 @if (File::exists($file) && ($document->type == 'programme' || $document->type == 'document'))
-                    <p><a class="btn btn-info btn-sm" href="{{ $file }}">{{ $document->titre }}</a></p>
+                    <p><a class="btn btn-info btn-sm" href="{{ $file }}">{{ !empty($document->titre) ? $document->titre : 'Programme' }}</a></p>
                 @endif
 
             @endforeach
@@ -44,12 +45,3 @@
         <img width="200px" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
     </div>
 </div>
-
-
-<?php
-
-/*    echo '<pre>';
-    print_r($colloque->prices);
-    echo '</pre>';*/
-
-?>

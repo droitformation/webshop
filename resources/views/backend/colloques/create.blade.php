@@ -17,7 +17,7 @@
                 <div class="panel-body" ng-app="upload">
 
                     <form action="{{ url('admin/colloque') }}" enctype="multipart/form-data" method="POST" class="form-horizontal"
-                          flow-init="{query: {'path' : 'files/colloques', 'colloque_id' : 1, 'type' : 'illustration' , '_token': <?php echo csrf_token(); ?> }}"
+                          flow-init="{query: {'path' : 'files/colloques', 'colloque_id' : 1, 'type' : 'illustration' }}"
                           flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
                           flow-files-submitted="$flow.upload()">
                         {!! csrf_field() !!}

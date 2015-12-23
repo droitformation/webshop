@@ -25,6 +25,7 @@ class CheckoutController extends Controller {
     public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorkerInterface $checkout, OrderWorkerInterface $order, PaymentInterface $payment)
     {
         $this->middleware('auth');
+        $this->middleware('pending');
         $this->middleware('cart');
 
         $this->user       = $user;

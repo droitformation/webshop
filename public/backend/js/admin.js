@@ -123,7 +123,7 @@ $( function() {
     /*
     * Colloques options and prices
     */
-    $('.addPrice').on("click",function(e) {
+    $('body').on("click",".addPrice",function(e) {
 
         e.preventDefault();e.stopPropagation();
 
@@ -462,5 +462,12 @@ $( function() {
     };
 
     var userList = new List('search-list', options);
+
+    /*
+     Inline edit for prices and options colloques
+    */
+
+    $('.editableOption').editable();
+    $('.editablePrice').editable();
 
 });
