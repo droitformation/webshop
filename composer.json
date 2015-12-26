@@ -7,22 +7,22 @@
     "minimum-stability": "dev",
     "prefer-stable" : true,
     "require": {
-		"laravel/framework": "5.1.*",
+		"laravel/framework": "5.2.*",
         "illuminate/html": "5.*",
         "guzzlehttp/guzzle": "5.1.0",
-        "league/oauth2-server": "^4.1",
-        "lucadegasperi/oauth2-server-laravel": "5.0.*@dev",
+        "league/oauth2-server": "4.1.4",
+        "lucadegasperi/oauth2-server-laravel": "dev-master",
 		"barryvdh/laravel-debugbar": "^2.0",
         "laravel/cashier": "~5.0",
 		"intervention/image": "^2.2",
         "gloudemans/shoppingcart": "~1.3",
         "mathiasverraes/money": "dev-master",
-        "barryvdh/laravel-dompdf": "0.5.*",
+        "barryvdh/laravel-dompdf": "0.6.*",
         "maatwebsite/excel": "~2.0.0",
         "omnipay/stripe": "~2.0",
         "venturecraft/revisionable": "1.*",
 		"laravel/socialite": "^3.0@dev",
-        "simplesoftwareio/simple-qrcode": "1.3.*",
+        "simplesoftwareio/simple-qrcode": "1.3.2",
         "torann/registry": "0.2.*@dev",
         "baum/baum": "~1.1",
         "inlinestyle/inlinestyle": "1.*",
@@ -33,7 +33,9 @@
 		"phpspec/phpspec": "~2.1",
         "laracasts/generators": "~1.0",
         "mockery/mockery": "0.9.*",
-        "fzaninotto/faker": "1.4.0"
+        "fzaninotto/faker": "1.4.0",
+        "symfony/dom-crawler":"~3.0",
+        "symfony/css-selector" : "~3.0"
 	},
 	"autoload": {
 		"classmap": [

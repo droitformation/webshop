@@ -13,6 +13,7 @@ Simple QrCode
 - [Usage](#docs-usage)
 - [Helpers](#docs-helpers)
 - [Common QrCode Usage](#docs-common-usage)
+- [Usage Outside of Laravel](#docs-outside-laravel)
 
 <a id="docs-introduction"></a>
 ## Introduction
@@ -37,9 +38,7 @@ Next, run the `composer update` command.
 Register the `SimpleSoftwareIO\QrCode\QrCodeServiceProvider` in your `app/config/app.php` within the `providers` array.
 
 ###### Laravel 5
-Register the `SimpleSoftwareIO\QrCode\QrCodeServiceProvider` in your `config/app.php` within the `providers` array.
-
-__Important:__ For Laravel 5.1 LTS you have to register the Service Provider with `::class`.
+Register the `SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class` in your `config/app.php` within the `providers` array.
 
 #### Aliases
 
@@ -47,9 +46,7 @@ __Important:__ For Laravel 5.1 LTS you have to register the Service Provider wit
 Finally, register the `'QrCode' => 'SimpleSoftwareIO\QrCode\Facades\QrCode'` in your `app/config/app.php` configuration file within the `aliases` array.
 
 ###### Laravel 5
-Finally, register the `'QrCode' => 'SimpleSoftwareIO\QrCode\Facades\QrCode'` in your `config/app.php` configuration file within the `aliases` array.
-
-__Important:__ For Laravel 5.1 LTS you have to register the Facade with `::class`.
+Finally, register the `'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class` in your `config/app.php` configuration file within the `aliases` array.
 
 <a id="docs-ideas"></a>
 ## Simple Ideas
@@ -59,9 +56,16 @@ __Important:__ For Laravel 5.1 LTS you have to register the Facade with `::class
 One of the main items that we use this package for is to have QrCodes in all of our print views.  This allows our customers to return to the original page after it is printed by simply scanning the code.  We achieved this by adding the following into our footer.blade.php file.
 
 	<div class="visible-print text-center">
-		{{ QrCode::size(100)->generate(Request::url()); }}
+		{!! QrCode::size(100)->generate(Request::url()); !!}
 		<p>Scan me to return to the original page.</p>
 	</div>
+
+#### Embed A QrCode
+
+You may embed a qrcode inside of an e-mail to allow your users to quickly scan.  The following is an example of how to do this with Laravel.
+
+    //Inside of a blade template.
+	<img src="{!!$message->embedData(QrCode::format('png')->generate('Embed me into an e-mail!'), 'QrCode.png', 'image/png')!!}">
 
 <a id="docs-usage"></a>
 ## Usage
@@ -84,10 +88,7 @@ This will make a QrCode that says "Make me into a QrCode!"
 
 `Generate` by default will return a SVG image string.  You can print this directly into a modern browser within Laravel's Blade system with the following:
 
-	{{ QrCode::generate('Make me into a QrCode!'); }}
-	
-__Important:__ Laravel 5 by default will escape the svg when using {{}}. Please use `{!! !!}` instead.	
-	
+	{!! QrCode::generate('Make me into a QrCode!'); !!}
 
 The `generate` method has a second parameter that will accept a filename and path to save the QrCode.
 
@@ -197,11 +198,11 @@ The `merge` method merges an image over a QrCode.  This is commonly used to plac
     //Generates a QrCode with an image centered in the middle.  The inserted image takes up 30% of the QrCode.
     QrCode::format('png')->merge('path-to-image.png', .3)->generate();
 
->The `merge` method only supports PNG at this time.
+>The `merge` method only supports PNG at this time. The 'merge' path is relative to app base path.
 
 >You should use a high level of error correction when using the `merge` method to ensure that the QrCode is still readable.  We recommend using `errorCorrection('H')`.
 
-![Merged Logo](/docs/imgs/merged-qrcode.png?raw=true)
+![Merged Logo](https://raw.githubusercontent.com/SimpleSoftwareIO/simple-qrcode/master/docs/imgs/merged-qrcode.png?raw=true)
 
 #### Advance Usage
 
@@ -212,7 +213,7 @@ All methods support chaining.  The `generate` method must be called last and any
 
 You can display a PNG image without saving the file by providing a raw string and encoding with `base64_encode`.
 
-	<img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(100)->generate('Make me into an QrCode!')) }} ">
+	<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('Make me into an QrCode!')) !!} ">
 
 <a id="docs-helpers"></a>
 ## Helpers
@@ -317,3 +318,13 @@ You can use a prefix found in the table below inside the `generate` section to c
 | MeCard | mecard: | MECARD:Simple, Software;Some Address, Somewhere, 20430;TEL:555-555-5555;EMAIL:support@simplesoftware.io; |
 | VCard | BEGIN:VCARD | [See Examples](https://en.wikipedia.org/wiki/VCard) |
 | Wifi | wifi: | wifi:WEP/WPA;SSID;PSK;Hidden(True/False) |
+
+<a id="docs-outside-laravel"></a>
+##Usage Outside of Laravel
+
+You may use this package outside of Laravel by instantiating a new `BaconQrCodeGenerator` class.
+
+    use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
+
+    $qrcode = new BaconQrCodeGenerator;
+    $qrcode->size(500)->generate('Make a qrcode without Laravel!');

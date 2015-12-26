@@ -25,6 +25,8 @@ class SqlServerGrammar extends Grammar
      */
     public function compileSelect(Builder $query)
     {
+        $original = $query->columns;
+
         if (is_null($query->columns)) {
             $query->columns = ['*'];
         }
@@ -38,7 +40,11 @@ class SqlServerGrammar extends Grammar
             return $this->compileAnsiOffset($query, $components);
         }
 
-        return $this->concatenate($components);
+        $sql = $this->concatenate($components);
+
+        $query->columns = $original;
+
+        return $sql;
     }
 
     /**
@@ -211,9 +217,11 @@ class SqlServerGrammar extends Grammar
      */
     public function compileExists(Builder $query)
     {
-        $select = $this->compileSelect($query);
+        $existsQuery = clone $query;
 
-        return "select cast(case when exists($select) then 1 else 0 end as bit) as {$this->wrap('exists')}";
+        $existsQuery->columns = [];
+
+        return $this->compileSelect($existsQuery->selectRaw('1 [exists]')->limit(1));
     }
 
     /**

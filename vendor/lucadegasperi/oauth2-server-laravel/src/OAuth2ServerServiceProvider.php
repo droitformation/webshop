@@ -12,7 +12,9 @@
 namespace LucaDegasperi\OAuth2Server;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Lumen\Application as LumenApplication;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\ResourceServer;
 use League\OAuth2\Server\Storage\AccessTokenInterface;
@@ -55,9 +57,9 @@ class OAuth2ServerServiceProvider extends ServiceProvider
     {
         $source = realpath(__DIR__.'/../config/oauth2.php');
 
-        if (class_exists('Illuminate\Foundation\Application', false) && $app->runningInConsole()) {
+        if ($app instanceof LaravelApplication && $app->runningInConsole()) {
             $this->publishes([$source => config_path('oauth2.php')]);
-        } elseif (class_exists('Laravel\Lumen\Application', false)) {
+        } elseif ($app instanceof LumenApplication) {
             $app->configure('oauth2');
         }
 
@@ -75,7 +77,7 @@ class OAuth2ServerServiceProvider extends ServiceProvider
     {
         $source = realpath(__DIR__.'/../database/migrations/');
 
-        if (class_exists('Illuminate\Foundation\Application', false) && $app->runningInConsole()) {
+        if ($app instanceof LaravelApplication && $app->runningInConsole()) {
             $this->publishes([$source => database_path('migrations')], 'migrations');
         }
     }
@@ -87,18 +89,20 @@ class OAuth2ServerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerAuthorizer();
-        $this->registerMiddlewareBindings();
+        $this->registerAuthorizer($this->app);
+        $this->registerMiddlewareBindings($this->app);
     }
 
     /**
      * Register the Authorization server with the IoC container.
      *
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     *
      * @return void
      */
-    public function registerAuthorizer()
+    public function registerAuthorizer(Application $app)
     {
-        $this->app->bindShared('oauth2-server.authorizer', function ($app) {
+        $app->singleton('oauth2-server.authorizer', function ($app) {
             $config = $app['config']->get('oauth2');
             $issuer = $app->make(AuthorizationServer::class)
                 ->setClientStorage($app->make(ClientInterface::class))
@@ -150,34 +154,34 @@ class OAuth2ServerServiceProvider extends ServiceProvider
             return $authorizer;
         });
 
-        $this->app->bind(Authorizer::class, function ($app) {
-            return $app['oauth2-server.authorizer'];
-        });
+        $app->alias('oauth2-server.authorizer', Authorizer::class);
     }
 
     /**
      * Register the Middleware to the IoC container because
      * some middleware need additional parameters.
      *
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     *
      * @return void
      */
-    public function registerMiddlewareBindings()
+    public function registerMiddlewareBindings(Application $app)
     {
-        $this->app->bindShared(CheckAuthCodeRequestMiddleware::class, function ($app) {
+        $app->singleton(CheckAuthCodeRequestMiddleware::class, function ($app) {
             return new CheckAuthCodeRequestMiddleware($app['oauth2-server.authorizer']);
         });
 
-        $this->app->bindShared(OAuthMiddleware::class, function ($app) {
+        $app->singleton(OAuthMiddleware::class, function ($app) {
             $httpHeadersOnly = $app['config']->get('oauth2.http_headers_only');
 
             return new OAuthMiddleware($app['oauth2-server.authorizer'], $httpHeadersOnly);
         });
 
-        $this->app->bindShared(OAuthClientOwnerMiddleware::class, function ($app) {
+        $app->singleton(OAuthClientOwnerMiddleware::class, function ($app) {
             return new OAuthClientOwnerMiddleware($app['oauth2-server.authorizer']);
         });
 
-        $this->app->bindShared(OAuthUserOwnerMiddleware::class, function ($app) {
+        $app->singleton(OAuthUserOwnerMiddleware::class, function ($app) {
             return new OAuthUserOwnerMiddleware($app['oauth2-server.authorizer']);
         });
     }

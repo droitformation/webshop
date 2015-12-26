@@ -35,7 +35,6 @@ class Item implements ItemInterface
      * Initialize this item with the specified parameters
      *
      * @param array|null $parameters An array of parameters to set on this object
-     * @return $this Item
      */
     public function initialize($parameters = null)
     {

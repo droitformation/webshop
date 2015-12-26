@@ -26,7 +26,6 @@ namespace InlineStyle;
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-use Symfony\Component\CssSelector\CssSelector;
 use Symfony\Component\CssSelector\Exception\ParseException;
 
 /**
@@ -129,7 +128,13 @@ class InlineStyle
     private function _getNodesForCssSelector($sel)
     {
         try {
-            $xpathQuery = CssSelector::toXPath($sel);
+            if (class_exists('Symfony\Component\CssSelector\CssSelector')) {
+                $xpathQuery = \Symfony\Component\CssSelector\CssSelector::toXPath($sel);
+            } else {
+                $converter = new \Symfony\Component\CssSelector\CssSelectorConverter(true);
+                $xpathQuery = $converter->toXPath($sel);
+            }
+
             return $this->_getDomXpath()->query($xpathQuery);
         }
         catch(ParseException $e) {
@@ -198,9 +203,11 @@ class InlineStyle
      *
      * @param \DOMNode $node leave empty to extract from the whole document
      * @param string $base The base URI for relative stylesheets
+     * @param array $devices Considered devices
+     * @param boolean $remove Should it remove the original stylesheets
      * @return array the extracted stylesheets
      */
-    public function extractStylesheets($node = null, $base = '', $devices = array('all', 'screen', 'handheld'))
+    public function extractStylesheets($node = null, $base = '', $devices = array('all', 'screen', 'handheld'), $remove = true)
     {
         if(null === $node) {
             $node = $this->_dom;
@@ -232,12 +239,14 @@ class InlineStyle
                     }
                 } else {
                     $stylesheets = array_merge($stylesheets,
-                        $this->extractStylesheets($child, $base));
+                        $this->extractStylesheets($child, $base, $devices, $remove));
                 }
             }
 
-            foreach ($removeQueue as $child) {
-                $child->parentNode->removeChild($child);
+            if ($remove) {
+                foreach ($removeQueue as $child) {
+                    $child->parentNode->removeChild($child);
+                }
             }
         }
 

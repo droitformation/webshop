@@ -37,7 +37,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     protected function registerAuthorService(){
 
-        $this->app->bind('App\Droit\Author\Repo\AuthorInterface', function()
+        $this->app->singleton('App\Droit\Author\Repo\AuthorInterface', function()
         {
             return new \App\Droit\Author\Repo\AuthorEloquent( new \App\Droit\Author\Entities\Author );
         });
@@ -48,7 +48,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     protected function registerAnalyseService(){
 
-        $this->app->bind('App\Droit\Analyse\Repo\AnalyseInterface', function()
+        $this->app->singleton('App\Droit\Analyse\Repo\AnalyseInterface', function()
         {
             return new \App\Droit\Analyse\Repo\AnalyseEloquent( new \App\Droit\Analyse\Entities\Analyse );
         });
@@ -59,7 +59,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     protected function registerArretService(){
 
-        $this->app->bind('App\Droit\Arret\Repo\ArretInterface', function()
+        $this->app->singleton('App\Droit\Arret\Repo\ArretInterface', function()
         {
             return new \App\Droit\Arret\Repo\ArretEloquent( new \App\Droit\Arret\Entities\Arret );
         });
@@ -70,7 +70,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     protected function registerCategorieService(){
 
-        $this->app->bind('App\Droit\Categorie\Repo\CategorieInterface', function()
+        $this->app->singleton('App\Droit\Categorie\Repo\CategorieInterface', function()
         {
             return new \App\Droit\Categorie\Repo\CategorieEloquent( new \App\Droit\Categorie\Entities\Categorie );
         });
@@ -82,7 +82,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     protected function registerGroupeService(){
 
-        $this->app->bind('App\Droit\Arret\Repo\GroupeInterface', function()
+        $this->app->singleton('App\Droit\Arret\Repo\GroupeInterface', function()
         {
             return new \App\Droit\Arret\Repo\GroupeEloquent( new \App\Droit\Arret\Entities\Groupe );
         });
@@ -93,7 +93,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     protected function registerUploadService(){
 
-        $this->app->bind('App\Droit\Service\UploadInterface', function()
+        $this->app->singleton('App\Droit\Service\UploadInterface', function()
         {
             return new \App\Droit\Service\UploadWorker();
         });
@@ -104,7 +104,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     protected function registerContentService(){
 
-        $this->app->bind('App\Droit\Content\Repo\ContentInterface', function()
+        $this->app->singleton('App\Droit\Content\Repo\ContentInterface', function()
         {
             return new \App\Droit\Content\Repo\ContentEloquent( new \App\Droit\Content\Entities\Content );
         });
