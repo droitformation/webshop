@@ -8,7 +8,7 @@
     "prefer-stable" : true,
     "require": {
 		"laravel/framework": "5.2.*",
-        "illuminate/html": "5.*",
+        "laravelcollective/html": "5.2",
         "guzzlehttp/guzzle": "5.1.0",
         "league/oauth2-server": "4.1.4",
         "lucadegasperi/oauth2-server-laravel": "dev-master",
@@ -31,7 +31,6 @@
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
 		"phpspec/phpspec": "~2.1",
-        "laracasts/generators": "~1.0",
         "mockery/mockery": "0.9.*",
         "fzaninotto/faker": "1.4.0",
         "symfony/dom-crawler":"~3.0",

@@ -284,7 +284,10 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::get('password/new', 'Auth\PasswordController@getNew');
 Route::post('password/define', 'Auth\PasswordController@postDefine');
-Route::get('login/{provider?}', 'Auth\AuthController@login');
+Route::get('login', 'Auth\AuthController@login');
+
+Route::get('auth/droithub', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/droithub/callback', 'Auth\AuthController@handleProviderCallback');
 
 /* *
  * Oauth 2 routes
@@ -295,6 +298,7 @@ Route::get('oauth/authorize', ['as' => 'oauth.authorize.get','middleware' => ['c
 
     $formParams = array_except($authParams,'client');
     $formParams['client_id'] = $authParams['client']->getId();
+
     return view('oauth.authorization-form', ['params'=>$formParams,'client'=>$authParams['client']]);
 }]);
 
@@ -315,7 +319,7 @@ Route::post('oauth/authorize', ['as' => 'oauth.authorize.post','middleware' => [
         $redirectUri = Authorizer::authCodeRequestDeniedRedirectUri();
     }
 
-    return Redirect::to($redirectUri);
+    return redirect($redirectUri);
 
 }]);
 

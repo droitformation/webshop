@@ -5,6 +5,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Droit\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Console\Tests\Helper\ProgressIndicatorTest;
 use Validator;
 use Socialite;
 use Illuminate\Http\Request;
@@ -79,16 +80,35 @@ class AuthController extends Controller {
         return trans('message.fail_login');
     }
 
-    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = null)
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
     {
-        return $authenticateUser->execute($request->all(), $this, $provider);
+        return Socialite::driver('droithub')->redirect();
     }
 
-    public function userHasLoggedIn($user)
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
     {
-        \Session::flash('message', 'Welcome, ' . $user->name);
+        $user = Socialite::driver('droithub')->user();
 
-        return redirect('/shop');
+        // stroing data to our use table and logging them in
+        $data = [
+            'name'  => $user->getName(),
+            'email' => $user->getEmail()
+        ];
+
+        Auth::login(\App\Droit\User\Entities\User::firstOrCreate($data));
+
+        //after login redirecting to home page
+        return redirect($this->redirectPath());
     }
 
 }
