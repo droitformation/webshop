@@ -81,7 +81,7 @@ class AuthController extends Controller {
     }
 
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the Droitformation authentication page.
      *
      * @return Response
      */
@@ -95,7 +95,7 @@ class AuthController extends Controller {
      *
      * @return Response
      */
-    public function handleProviderCallback()
+/*    public function handleProviderCallback()
     {
         $user = Socialite::driver('droithub')->user();
 
@@ -109,6 +109,6 @@ class AuthController extends Controller {
 
         //after login redirecting to home page
         return redirect($this->redirectPath());
-    }
+    }*/
 
 }

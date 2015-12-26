@@ -183,7 +183,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     |--------------------------------------------------------------------------
     */
 
-    Route::get('abonnements/{id}', 'Backend\Abo\AboUserController@index');
+    Route::match(['get', 'post'], 'abonnements/{id?}', 'Backend\Abo\AboUserController@index');
     Route::get('abonnement/create/{id}', 'Backend\Abo\AboUserController@create');
     Route::post('abonnement/export', 'Backend\Abo\AboController@export');
     Route::resource('abonnement', 'Backend\Abo\AboUserController');
@@ -287,7 +287,7 @@ Route::post('password/define', 'Auth\PasswordController@postDefine');
 Route::get('login', 'Auth\AuthController@login');
 
 Route::get('auth/droithub', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/droithub/callback', 'Auth\AuthController@handleProviderCallback');
+//Route::get('auth/droithub/callback', 'Auth\AuthController@handleProviderCallback');
 
 /* *
  * Oauth 2 routes

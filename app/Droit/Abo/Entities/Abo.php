@@ -34,7 +34,7 @@ class Abo extends Model{
 
     public function products()
     {
-        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id');
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')->orderBy('created_at','desc');
     }
 
     public function abonnements()

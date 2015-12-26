@@ -71,7 +71,7 @@
                     <table id="content-table" class="infos">
                         <tr>
                             <td width="20%"><strong class="blue">Date:</strong></td>
-                            <td width="80%"><?php echo $abo->created_at->formatLocalized('%d %B %Y'); ?></td>
+                            <td width="80%"><?php echo $facture->created_at->formatLocalized('%d %B %Y'); ?></td>
                         </tr>
                         <tr>
                             <td width="28%"><strong class="blue">Total:</strong></td>

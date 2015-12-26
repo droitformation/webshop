@@ -47,13 +47,14 @@ class AboFactureEloquent implements AboFactureInterface{
         }
 
         $facture->fill($data);
+        $facture->created_at = $data['created_at'];
         $facture->save();
 
         return $facture;
     }
 
-    public function delete($id){
-
+    public function delete($id)
+    {
         $facture = $this->facture->find($id);
 
         return $facture->delete();

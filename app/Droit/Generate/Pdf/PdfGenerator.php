@@ -260,7 +260,7 @@ class PdfGenerator implements PdfGeneratorInterface
         }
     }
 
-    public function factureAbo($abo, $facture_id, $rappel = null)
+    public function factureAbo($abo, $facture, $rappel = null)
     {
         $adresse  = ($abo->tiers_id ? $abo->tiers : $abo->user);
         $msgTypes = ['warning','special','remarque','signature'];
@@ -273,13 +273,14 @@ class PdfGenerator implements PdfGeneratorInterface
             ],
             'compte'   => \Registry::get('shop.compte.abo'),
             'abo'      => $abo,
+            'facture'  => $facture,
             'adresse'  => $adresse,
             'msgTypes' => $msgTypes,
             'date'     => $this->now,
             'rappel'   => $rappel
         ];
 
-        $facture = \PDF::loadView('backend.abonnements.templates.facture', $data)->setPaper('a4');
+        $template = \PDF::loadView('backend.abonnements.templates.facture', $data)->setPaper('a4');
 
         $generate   = ($this->stream ? 'stream' : 'save');
         $filename   = ($rappel ? 'rappel' : 'facture');
@@ -291,7 +292,7 @@ class PdfGenerator implements PdfGeneratorInterface
             \File::makeDirectory($dir);
         }
 
-        return $facture->$generate(public_path().'/files/abos/'.$filename.'/'.$abo->abo_product.'/'.$filename.'_'.$abo->abo_ref.'_'.$facture_id.'.pdf');
+        return $template->$generate(public_path().'/files/abos/'.$filename.'/'.$abo->abo_product.'/'.$filename.'_'.$abo->abo_ref.'_'.$facture->id.'.pdf');
 
     }
 }

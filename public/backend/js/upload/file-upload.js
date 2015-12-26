@@ -71,18 +71,28 @@ $( function() {
         e.preventDefault();
         e.stopPropagation();
 
-        var src    = $(this).data('src');
-        var button = $(this);
+        var $this  = $(this);
+        var action = $this.data('action');
+        var what   = $this.data('what');
+        var answer = confirm('Voulez-vous vraiment ' + what + ' : '+ action +' ?');
 
-        $.post( "admin/files/delete", { src: src }).done(function( data )
+        if (answer)
         {
-            if(data)
-            {
-                var $image = button.closest('.file-item');
+            var src    = $(this).data('src');
+            var button = $(this);
 
-                $('#gallery').isotope('remove', $image).isotope('layout');
-            }
-        });
+            $.post( "admin/files/delete", { src: src }).done(function( data )
+            {
+                if(data)
+                {
+                    var $image = button.closest('.file-item');
+
+                    $('#gallery').isotope('remove', $image).isotope('layout');
+                }
+            });
+        }
+
+        return false;
 
     });
 
@@ -113,7 +123,8 @@ $( function() {
             });
         });
 
-        $(this).addClass('.active');
+        $('.file-folder').removeClass('active');
+        $(this).addClass('active');
 
     });
 
@@ -171,6 +182,7 @@ $( function() {
         var myDropzone = new Dropzone("div#dropzone", {
             url: "admin/upload",
             dictDefaultMessage: "Ajouter une image",
+            dictRemoveFile: "Enlever",
             thumbnailWidth: 100,
             thumbnailHeight: 80,
             addRemoveLinks : true

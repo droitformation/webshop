@@ -33,7 +33,7 @@ class AboController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index()
 	{
         $abos = $this->abo->getAll();
 

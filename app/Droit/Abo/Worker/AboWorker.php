@@ -40,7 +40,7 @@ class AboWorker implements AboWorkerInterface{
             $rappels = $rappels->count();
         }
 
-        $this->generator->factureAbo($abo ,$facture_id, $rappels);
+        $this->generator->factureAbo($abo ,$facture, $rappels);
     }
 
     /**
@@ -81,7 +81,7 @@ class AboWorker implements AboWorkerInterface{
             {
                 if($abonnement->status == 'abonne')
                 {
-                    $this->generator->factureAbo($abonnement ,$facture->id);
+                    $this->generator->factureAbo($abonnement ,$facture);
                 }
                 else
                 {

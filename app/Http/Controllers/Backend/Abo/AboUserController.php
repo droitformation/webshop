@@ -30,8 +30,11 @@ class AboUserController extends Controller {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
 
-    public function index($id){
+    public function index($id, Request $request){
 
+        $product_id  = $request->input('product_id', null);
+
+        $id  = ($product_id ? $product_id : $id);
         $abo = $this->abo->find($id);
 
         $dir   = './files/abos/bound/'.$id;

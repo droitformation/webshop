@@ -36,10 +36,18 @@ class AboFactureController extends Controller {
     {
         $abo      = $this->abo->find($id);
         $product  = $request->input('product_id',null);
+        $product  = ($product ? $product : $abo->current_product->id);
         $factures = $this->facture->getAll($product);
 
+        return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id]);
+    }
 
-        return view('backend.abos.factures')->with(['factures' => $factures, 'abo' => $abo]);
+    public function show($id)
+    {
+        $facture = $this->facture->find($id);
+        $abo     = $this->abo->find($facture->abonnement->abo_id);
+
+        return view('backend.abonnements.factures.show')->with([ 'facture' => $facture, 'abo' => $abo ]);
     }
 
 	public function store(Request $request)
@@ -63,6 +71,8 @@ class AboFactureController extends Controller {
     public function update(Request $request, $id)
     {
         $facture = $this->facture->update($request->all());
+
+        $this->worker->make($facture->id);
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'La facture a été mis à jour']);
     }
