@@ -32,14 +32,14 @@ class AboFactureController extends Controller {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
 
-    public function index($id, Request $request)
+    public function index($id)
     {
-        $abo      = $this->abo->find($id);
-        $product  = $request->input('product_id',null);
-        $product  = ($product ? $product : $abo->current_product->id);
-        $factures = $this->facture->getAll($product);
+        $factures = $this->facture->getAll($id);
+        $abo      = $this->abo->findAboByProduct($id);
+        $dir      = './files/abos/bound/'.$abo->id;
+        $files    = \File::files($dir);
 
-        return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id]);
+        return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files]);
     }
 
     public function show($id)

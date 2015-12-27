@@ -3,7 +3,6 @@
 
     <div class="row">
         <div class="col-md-12">
-
             <div class="options text-left" style="margin-bottom: 10px;">
                 <a href="{{ url('admin/abonnements/'.$abonnement->abo_id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
             </div>
@@ -165,13 +164,13 @@
 
                                                 <!-- Payed -->
                                                 @if($facture->payed_at)
-                                                    <p>
-                                                        <span class="label label-success"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
-                                                        <strong>Payé le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}</strong>
-                                                    </p>
 
                                                     <div class="row">
                                                         <div class="col-md-9">
+                                                            <p>
+                                                                <span class="label label-success"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
+                                                                <strong>Payé le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}</strong>
+                                                            </p>
                                                             @if($facture->abo_facture)
                                                                 <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
                                                             @endif

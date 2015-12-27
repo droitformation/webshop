@@ -3,42 +3,63 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h3>{{ $abo->title }} &Eacute;dition {{ $abo->current_product->reference }}</h3>
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                        </div>
-                        <div class="col-md-10 text-right">
-                            <form action="{{ url('admin/abonnement/export') }}" method="POST" class="form-inline">{!! csrf_field() !!}
-                                <input type="hidden" name="edition" value="{{ $abo->current_product->edition }}">
-                                <input type="hidden" name="abo_id" value="{{ $abo->id }}">
-                                <input type="hidden" name="product_id" value="{{ $id }}">
-                                <div class="form-group">
-                                    <select class="form-control" style="width: 200px;" name="type">
-                                        <option value="facture">Toutes les factures</option>
-                                        <option value="rappel">Tous les rappels</option>
-                                    </select>
-                                    <button class="btn btn-info"><i class="fa fa-download"></i> &nbsp;Exporter et lier</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
+                    <h3>{{ $abo->title }} &Eacute;dition {{ $abo->current_product->reference }}</h3>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
+            <p><a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-2 col-xs-12">
             <div class="panel panel-midnightblue">
+                <div class="panel-body" style="padding-bottom: 5px;">
+
+                    <form action="{{ url('admin/abonnement/export') }}" method="POST" class="form-inline">{!! csrf_field() !!}
+                        <input type="hidden" name="edition" value="{{ $abo->current_product->edition }}">
+                        <input type="hidden" name="abo_id" value="{{ $abo->id }}">
+                        <input type="hidden" name="product_id" value="{{ $id }}">
+                        <p>
+                            <select class="form-control" style="width:100%" name="type">
+                                <option value="facture">Toutes les factures</option>
+                                <option value="rappel">Tous les rappels</option>
+                            </select>
+                        </p>
+                        <p><button class="btn btn-info btn-block"><i class="fa fa-download"></i> &nbsp;Exporter et lier</button></p>
+                    </form>
+
+                </div>
+            </div>
+            <div class="panel panel-midnightblue">
+                <div class="panel-body" style="padding-bottom: 0;">
+                    <h4 style="margin-top: 0;">Documents</h4>
+                    @if(!empty($files))
+                        <div class="list-group">
+                            @foreach($files as $file)
+                                <?php $name = explode('/',$file); ?>
+                                <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="list-group-item">
+                                    <i class="fa fa-download"></i>&nbsp; {{ end($name) }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 col-xs-12">
+            <div class="panel panel-midnightblue">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-folder-open"></i> Factures</h4>
+                </div>
                 <div class="panel-body">
-                    <h4>Factures</h4>
                     <table class="table simple-table">
                         <thead>
                             <tr>
@@ -95,21 +116,6 @@
                 </div>
             </div>
 
-        </div>
-        <div class="col-lg-2 col-md-2 col-xs-12">
-            <div class="panel panel-midnightblue">
-                <div class="panel-body">
-                    <h4>Documents</h4>
-                    @if(!empty($files))
-                        <div class="list-group">
-                            @foreach($files as $file)
-                                <?php $name = explode('/',$file); ?>
-                                <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="list-group-item">{{ end($name) }}</a>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
         </div>
     </div>
 

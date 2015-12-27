@@ -1,46 +1,35 @@
 @extends('backend.layouts.master')
 @section('content')
 
-    <div class="row">
+    <div class="row" style="margin-bottom: 10px;">
         <div class="col-md-12">
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-
-                    <div class="row">
-                        <div class="col-md-10">
-                            <form action="{{ url('admin/factures/'.$abo->id) }}" method="POST" class="form-inline">{!! csrf_field() !!}
-                                <div class="form-group">
-                                    <select class="form-control" name="product_id">
-                                        @if(!$abo->products->isEmpty())
-                                            @foreach($abo->products as $product)
-                                                <option value="{{ $product->id }}">{{ $product->title }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    <button class="btn btn-info">Liste des factures</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+            <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
+            <h3>{{ $abo->title }}</h3>
         </div>
     </div>
 
     <div class="row">
-
-        <div class="col-md-12">
-
+        <div class="col-md-2">
+            <p><a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
             <div class="panel panel-midnightblue">
-                <div class="panel-heading"><h4><i class="fa fa-edit"></i> Abonnements</h4></div>
+                <div class="panel-body" style="padding-bottom: 0;">
+                    <h4>Factures</h4>
+                    <div class="list-group">
+                        @if(!$abo->products->isEmpty())
+                            @foreach($abo->products as $product)
+                                <a class="list-group-item" href="{{ url('admin/factures/'.$product->id) }}">
+                                    &nbsp;<i class="fa fa-folder-open"></i>&nbsp; &Eacute;dition <strong>{{ $product->reference }}</strong>
+                                </a>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <p class="text-right"><a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a></p>
+            <div class="panel panel-midnightblue">
+                <div class="panel-heading"><h4><i class="fa fa-tag"></i> Abonnements</h4></div>
                 <div class="panel-body">
                     <table class="table" id="generic">
                         <thead>
