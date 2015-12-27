@@ -2,18 +2,25 @@
 @section('content')
 
     <div class="row" style="margin-bottom: 10px;">
-        <div class="col-md-12">
-            <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
-            <h3>{{ $abo->title }}</h3>
+        <div class="col-md-2">
+            <p><a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+        <div class="col-md-8">
+            <img class="thumbnail" style="height: 60px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
+            <h3 style="margin-bottom: 0;">Abo</h3>
+            <h4 style="margin: 0;">{{ $abo->title }}</h4>
+        </div>
+        <div class="col-md-2">
+            <p class="text-right"><a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a></p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2">
-            <p><a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+
             <div class="panel panel-midnightblue">
                 <div class="panel-body" style="padding-bottom: 0;">
-                    <h4>Factures</h4>
+                    <h4 style="margin-top: 0;">Factures</h4>
                     <div class="list-group">
                         @if(!$abo->products->isEmpty())
                             @foreach($abo->products as $product)
@@ -27,7 +34,6 @@
             </div>
         </div>
         <div class="col-md-10">
-            <p class="text-right"><a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a></p>
             <div class="panel panel-midnightblue">
                 <div class="panel-heading"><h4><i class="fa fa-tag"></i> Abonnements</h4></div>
                 <div class="panel-body">

@@ -117,13 +117,17 @@ class AboController extends Controller {
         $product_id = $request->input('product_id');
         $type       = $request->input('type');
         $edition    = $request->input('edition');
-
-        $edition    = $type.'_'.$edition.'_'.date('Y');
+        $reference  = $request->input('reference','na');
+        $reference  = str_replace('/','_',$reference);
+        $edition    = $type.'_'.$edition.'_'.$reference;
 
         $dir   = 'files/abos/'.$type.'/'.$product_id;
         $files = \File::files($dir);
 
-        $this->worker->merge($files, $edition, $abo_id);
+        if(!empty($files))
+        {
+            $this->worker->merge($files, $edition, $abo_id);
+        }
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Les factures ont été liés' ));
 

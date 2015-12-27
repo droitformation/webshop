@@ -14,8 +14,7 @@ class Abo_factures extends Model{
     public function getAboFactureAttribute()
     {
         $this->load('abonnement');
-
-        $file = 'files/abos/facture/'.$this->abonnement->abo_product.'/facture_'.$this->abonnement->abo_ref.'_'.$this->id.'.pdf';
+        $file = 'files/abos/facture/'.$this->product_id.'/facture_'.$this->product->edition.'-'.$this->abo_user_id.'_'.$this->id.'.pdf';
 
         if (\File::exists($file))
         {

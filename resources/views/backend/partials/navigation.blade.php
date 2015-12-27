@@ -39,7 +39,7 @@
             </a>
         </li>
         <li class="nav-title">Shop</li>
-        <li class="<?php echo (Request::is('admin/abo') || Request::is('admin/abo/*') ? 'active' : '' ); ?>">
+        <li class="<?php echo (Request::is('admin/abo') || Request::is('admin/abo/*') || Request::is('admin/abonnements/*') || Request::is('admin/abonnement/*') || Request::is('admin/facture/*') || Request::is('admin/factures/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/abo') }}"><i class="fa fa-bookmark"></i> <span>Abonnements</span></a>
         </li>
         <li class="divider"></li>

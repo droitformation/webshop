@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/factures/'.$abo->id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/factures/'.$facture->product_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
         </div>
@@ -46,6 +46,13 @@
                             <label class="col-sm-3 control-label">Date de payement</label>
                             <div class="col-sm-3 col-xs-6">
                                 <input type="text" class="form-control datePicker" value="{{ $facture->payed_at ? $facture->payed_at->format('Y-m-d') : '' }}" name="payed_at">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Prix</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" value="{{ $abonnement->price_cents }}" name="price">
                             </div>
                         </div>
 

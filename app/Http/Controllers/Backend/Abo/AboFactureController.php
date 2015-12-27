@@ -8,26 +8,29 @@ use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Worker\AboWorkerInterface;
+use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
 class AboFactureController extends Controller {
 
     protected $abo;
+    protected $abonnement;
     protected $facture;
     protected $rappel;
     protected $product;
     protected $generator;
     protected $worker;
 
-    public function __construct(AboInterface $abo, AboFactureInterface $facture, ProductInterface $product, AboRappelInterface $rappel, PdfGeneratorInterface $generator, AboWorkerInterface $worker)
+    public function __construct(AboUserInterface $abonnement, AboInterface $abo, AboFactureInterface $facture, ProductInterface $product, AboRappelInterface $rappel, PdfGeneratorInterface $generator, AboWorkerInterface $worker)
     {
-        $this->abo       = $abo;
-        $this->facture   = $facture;
-        $this->rappel    = $rappel;
-        $this->product   = $product;
-        $this->generator = $generator;
-        $this->worker    = $worker;
+        $this->abo        = $abo;
+        $this->abonnement = $abonnement;
+        $this->facture    = $facture;
+        $this->rappel     = $rappel;
+        $this->product    = $product;
+        $this->generator  = $generator;
+        $this->worker     = $worker;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
@@ -36,18 +39,22 @@ class AboFactureController extends Controller {
     {
         $factures = $this->facture->getAll($id);
         $abo      = $this->abo->findAboByProduct($id);
+        $product  = $this->product->find($id);
+
         $dir      = './files/abos/bound/'.$abo->id;
         $files    = \File::files($dir);
 
-        return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files]);
+        return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
     }
 
     public function show($id)
     {
-        $facture = $this->facture->find($id);
-        $abo     = $this->abo->find($facture->abonnement->abo_id);
+        $facture    = $this->facture->find($id);
+        $abo        = $this->abo->find($facture->abonnement->abo_id);
+        $abonnement = $this->abonnement->find($facture->abo_user_id);
+        $product    = $this->product->find($facture->product_id);
 
-        return view('backend.abonnements.factures.show')->with([ 'facture' => $facture, 'abo' => $abo ]);
+        return view('backend.abonnements.factures.show')->with([ 'facture' => $facture, 'abo' => $abo, 'abonnement' => $abonnement, 'product' => $product ]);
     }
 
 	public function store(Request $request)
@@ -70,7 +77,11 @@ class AboFactureController extends Controller {
 
     public function update(Request $request, $id)
     {
-        $facture = $this->facture->update($request->all());
+        $facture    = $this->facture->update($request->except('price'));
+        $abonnement = $this->abonnement->find($facture->abo_user_id);
+
+        $abonnement->price = $request->input('price') * 100;
+        $abonnement->save();
 
         $this->worker->make($facture->id);
 

@@ -1,20 +1,14 @@
 @extends('backend.layouts.master')
 @section('content')
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-12">
-                    <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
-                    <h3>{{ $abo->title }} &Eacute;dition {{ $abo->current_product->reference }}</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-2">
             <p><a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+        <div class="col-md-10">
+            <img class="thumbnail" style="height: 60px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
+            <h3 style="margin: 0;">{{ $abo->title }}</h3>
+            <p>&Eacute;dition {{ $product->reference }}</p>
         </div>
     </div>
 
@@ -24,9 +18,10 @@
                 <div class="panel-body" style="padding-bottom: 5px;">
 
                     <form action="{{ url('admin/abonnement/export') }}" method="POST" class="form-inline">{!! csrf_field() !!}
-                        <input type="hidden" name="edition" value="{{ $abo->current_product->edition }}">
+                        <input type="hidden" name="edition" value="{{ $product->edition }}">
+                        <input type="hidden" name="reference" value="{{ $product->reference }}">
                         <input type="hidden" name="abo_id" value="{{ $abo->id }}">
-                        <input type="hidden" name="product_id" value="{{ $id }}">
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <p>
                             <select class="form-control" style="width:100%" name="type">
                                 <option value="facture">Toutes les factures</option>
@@ -40,7 +35,7 @@
             </div>
             <div class="panel panel-midnightblue">
                 <div class="panel-body" style="padding-bottom: 0;">
-                    <h4 style="margin-top: 0;">Documents</h4>
+                    <h4 style="margin-top: 0;">Factures liés</h4>
                     @if(!empty($files))
                         <div class="list-group">
                             @foreach($files as $file)

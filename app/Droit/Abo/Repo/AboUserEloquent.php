@@ -61,6 +61,7 @@ class AboUserEloquent implements AboUserInterface{
         }
 
         $abo_user->fill($data);
+        $abo_user->price = (isset($data['price']) && $data['price'] > 0 ? $data['price'] * 100 : null);
 
         $abo_user->save();
 
