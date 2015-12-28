@@ -203,6 +203,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('categorie', 'Backend\Content\CategorieController');
     Route::resource('contenu',   'Backend\Content\ContentController');
     Route::resource('author',    'Backend\Content\AuthorController');
+    Route::resource('page',      'Backend\PageController');
 
     /*
   |--------------------------------------------------------------------------

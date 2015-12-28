@@ -61,6 +61,10 @@
         </li>
         <li class="nav-title">Sites</li>
         <li class="<?php echo (Request::is('admin/contenu') ? 'active' : '' ); ?>"><a href="{{ url('admin/contenu') }}"><i class="fa fa-reorder"></i> <span>Contenus</span></a></li>
+        <li class="<?php echo (Request::is('admin/page') || Request::is('admin/page/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/page') }}"><i class="fa fa-reorder"></i> <span>Pages</span></a>
+        </li>
+
         <li class="<?php echo (Request::is('admin/author') ? 'active' : '' ); ?>"><a href="{{ url('admin/author') }}"><i class="fa fa-user"></i> <span>Auteurs</span></a></li>
         <li class="<?php echo (Request::is('admin/arret/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/arret')  }}"><i class="fa fa-edit"></i> <span>Arrêts</span></a></li>
         <li class="<?php echo (Request::is('admin/analyse/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/analyse')  }}"><i class="fa fa-dot-circle-o"></i> <span>Analyses</span></a></li>

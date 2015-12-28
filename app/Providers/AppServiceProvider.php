@@ -59,6 +59,7 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerUploadService();
 
         $this->registerFileWorkerService();
+        $this->registerPageService();
 
 	}
 
@@ -278,6 +279,18 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->bind('App\Droit\Service\FileWorkerInterface', function()
         {
             return new \App\Droit\Service\FileWorker();
+        });
+    }
+
+
+    /**
+     * Page
+     */
+    protected function registerPageService(){
+
+        $this->app->singleton('App\Droit\Page\Repo\PageInterface', function()
+        {
+            return new \App\Droit\Page\Repo\PageEloquent(new \App\Droit\Page\Entities\Page);
         });
     }
 
