@@ -12,13 +12,13 @@
             </div>
         </div>
 
-        @if(!$root->isEmpty())
+
             <div class="panel panel-primary">
                 <div class="panel-heading">Pages</div>
                 <div class="panel-body">
 
                     <p class="help-block"><i class="fa fa-crosshairs"></i> &nbsp;Cliquez-glissez les pages pour changer l'ordre dans le menu</p>
-
+                    @if(!$root->isEmpty())
                     <div id="nestable" class="dd nestable_list" style="height: auto;">
 
                         <ol class="dd-list" id="sortable">
@@ -28,9 +28,10 @@
                         </ol>
 
                     </div>
+                    @endif
                 </div>
             </div>
-        @endif
+
     </div>
 </div>
 

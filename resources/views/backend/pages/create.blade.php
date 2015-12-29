@@ -57,15 +57,6 @@
                         </div>
                     </div>
 
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Insérer un filligrane</label>
-                        <div class="col-sm-5">
-                            <label class="radio-inline"><input type="radio" value="1" name="filligrane"> Oui</label>
-                            <label class="radio-inline"><input type="radio" value="0" name="filligrane" checked> Non</label>
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <label for="contenu" class="col-sm-3 control-label">Contenu</label>
                         <div class="col-sm-7">
