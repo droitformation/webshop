@@ -5,8 +5,18 @@ use Illuminate\Database\Eloquent\Model;
 class Analyse extends Model {
 
     protected $table    = 'analyses';
-    protected $fillable = ['user_id','authors','pub_date','abstract','file','categories','arrets'];
+    protected $fillable = ['user_id','authors','pub_date','abstract','file','categories','arrets','site_id'];
     protected $dates    = ['pub_date','created_at','updated_at'];
+
+    /**
+     * Scope a query to only include arrets for site
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSite($query,$site)
+    {
+        if ($site) $query->where('site_id','=',$site);
+    }
 
     public function analyses_categories()
     {

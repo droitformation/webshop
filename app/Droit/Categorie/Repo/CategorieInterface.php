@@ -2,7 +2,7 @@
 
 interface CategorieInterface {
 
-    public function getAll();
+    public function getAll($site = null);
     public function getAllMain();
     public function getAllOnSite();
     public function find($data);

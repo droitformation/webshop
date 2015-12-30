@@ -12,12 +12,13 @@ class CategorieEloquent implements CategorieInterface{
         $this->categorie = $categorie;
     }
 
-    public function getAll(){
-
-        return $this->categorie->orderBy('title', 'ASC')->get();
+    public function getAll($site = null)
+    {
+        return $this->categorie->site($site)->orderBy('title', 'ASC')->get();
     }
 
-    public function getAllOnSite(){
+    public function getAllOnSite()
+    {
         return $this->categorie->where('hideOnSite', '=', 0)->orderBy('title', 'ASC')->get();
     }
 

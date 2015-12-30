@@ -28,6 +28,17 @@ Route::post('subscribe', 'Backend\Newsletter\InscriptionController@subscribe');
 Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activation');
 
 
+Route::group(['prefix' => 'bail'], function () {
+
+    Route::get('/', array('uses' => 'BailController@index'));
+    Route::get('lois', array('uses' => 'BailController@lois'));
+    Route::get('jurisprudence', array('uses' => 'BailController@jurisprudence'));
+    Route::get('doctrine', array('uses' => 'BailController@doctrine'));
+    Route::get('calcul', array('uses' => 'BailController@calcul'));
+    Route::post('loyer', array('uses' => 'BailController@loyer'));
+
+});
+
 Route::group(['middleware' => 'auth'], function () {
 
     /* *

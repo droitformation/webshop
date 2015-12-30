@@ -10,6 +10,16 @@ class Arret extends Model {
 	protected $fillable = ['site_id','user_id','reference','pub_date','abstract','pub_text','file','categories'];
     protected $dates    = ['pub_date'];
 
+    /**
+     * Scope a query to only include arrets for site
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSite($query,$site)
+    {
+        if ($site) $query->where('site_id','=',$site);
+    }
+
     public function arrets_categories()
     {
         return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');

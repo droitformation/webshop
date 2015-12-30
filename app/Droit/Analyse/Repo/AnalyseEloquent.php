@@ -15,9 +15,9 @@ class AnalyseEloquent implements AnalyseInterface{
 		$this->analyse = $analyse;
 	}
 
-    public function getAll($include = []){
+    public function getAll($include = [],$site = null){
 
-        $analyse = $this->analyse->with( array('analyse_authors','analyses_categories','analyses_arrets'));
+        $analyse = $this->analyse->site($site)->with( array('analyse_authors','analyses_categories','analyses_arrets'));
 
         if(!empty($include))
         {
@@ -42,6 +42,7 @@ class AnalyseEloquent implements AnalyseInterface{
             'file'       => $data['file'],
             'categories' => (isset($data['categories']) ? count($data['categories']) : 0),
             'arrets'     => (isset($data['arrets']) ? count($data['arrets']) : 0),
+            'site_id'    => (isset($data['site_id']) ? $data['site_id'] : null),
 			'created_at' => date('Y-m-d G:i:s'),
 			'updated_at' => date('Y-m-d G:i:s')
 		));
