@@ -172,7 +172,7 @@ class ColloqueController extends Controller
             'price_id'    => $colloque->prices->first()->id
         ]);
 
-        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $generator->stream = true;
 
         $doc = $doc.'Event';
