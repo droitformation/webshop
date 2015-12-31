@@ -75,10 +75,21 @@ button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus
   font-size: 12px;
 }
 
+#breadcrumbs{
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
 /* line 67, main.scss */
 #header h1 {
   font-size: 20px;
   margin-top: 15px;
+}
+
+#photo{
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: 20px;
 }
 
 /* line 72, main.scss */
@@ -92,14 +103,14 @@ button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus
 
 /* line 80, main.scss */
 footer {
-  bottom: 0;
   color: #fff;
   font-size: 12px;
   line-height: 16px;
-  margin-top: 40px;
+  margin-top: 30px;
+  margin-left: -15px;
+  margin-right: -15px;
   padding: 10px 15px;
   text-align: center;
-  width: 100%;
 }
 
 /* line 90, main.scss */
@@ -114,8 +125,8 @@ footer a {
 
 /* line 98, main.scss */
 .colorSection {
-  height: 35px;
-  line-height: 24px;
+  height: 40px;
+  line-height: 30px;
 }
 
 /* line 104, main.scss */
@@ -130,8 +141,23 @@ footer a {
 }
 
 /* line 114, main.scss */
-.colorBlock {
-  background: #cb2629;
+.colorBlock{
+    background: #cb2629;
+}
+
+ .btn-danger {
+    background: #cb2629;
+     font-size: 12px;
+     line-height: 20px;
+}
+
+.sidebar .colorBlock {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.sidebar form {
+    margin: 20px 0;
 }
 
 /* line 118, main.scss */
@@ -154,39 +180,8 @@ footer a {
 	Search
 =======================================*/
 /* line 136, main.scss */
-.searchform {
-  position: relative;
-  margin-bottom: 0;
-}
-
-/* line 141, main.scss */
-.searchform input[type="text"] {
-  border-radius: 5px;
-  height: 25px;
-  margin-bottom: 0;
-  padding: 0;
-  position: relative;
-  text-indent: 5px;
-  z-index: 1;
-  color: #999999;
-}
-
-/* line 152, main.scss */
-.searchform input[type="submit"] {
-  position: absolute;
-  border: none;
-  background: url("../../images/bail/search_btn.png") 1px 3px no-repeat;
-  text-indent: -999px;
-  right: 1px;
-  top: 1px;
-  z-index: 10;
-  height: 25px;
-  width: 28px;
-}
-
-/* line 164, main.scss */
-.searchform input[type="submit"]:hover {
-  background: url("../../images/bail/search_btn.png") 1px 3px no-repeat;
+.searchform input {
+  height: 30px;
 }
 
 /*======================================
@@ -350,7 +345,7 @@ a.newsletterLink:hover {
 /* line 303, main.scss */
 #rightmenu {
   min-height: 190px;
-  padding: 15px 15px;
+  padding: 15px 10px;
 }
 
 /* line 307, main.scss */

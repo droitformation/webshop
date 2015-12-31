@@ -2,7 +2,7 @@
 @section('content')
 		      				     
 	 <!-- Illustration -->
-	 <section id="photo"><img src=" {{ asset('/images/bail/home.png') }}" alt=""></section>
+	 <section id="photo"><img src=" {{ asset('/images/bail/header.jpg') }}" alt=""></section>
 	 
 	 <div id="content" class="inner">
 	     <div class="row">
