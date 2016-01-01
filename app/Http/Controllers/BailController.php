@@ -32,7 +32,10 @@ class BailController extends Controller
 
     public function index()
     {
-        return view('frontend.bail.index');
+        $categories = $this->categorie->getAll($this->site);
+        $authors    = $this->author->getAll();
+
+        return view('frontend.bail.index')->with(['categories' => $categories , 'authors' => $authors ]);
     }
 
     public function lois(){

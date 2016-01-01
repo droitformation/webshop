@@ -64,7 +64,7 @@ button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus
 }
 
 /* line 57, main.scss */
-#header {
+.header {
   background: #fff;
   height: 86px;
 }
@@ -81,9 +81,9 @@ button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus
 }
 
 /* line 67, main.scss */
-#header h1 {
+.header h1 {
   font-size: 20px;
-  margin-top: 15px;
+  line-height: 80px;
 }
 
 #photo{
@@ -156,9 +156,6 @@ footer a {
     margin-right: -15px;
 }
 
-.sidebar form {
-    margin: 20px 0;
-}
 
 /* line 118, main.scss */
 .colorBlock h4 {
@@ -233,14 +230,32 @@ h3.link {
 }
 
 /* line 211, main.scss */
-.blockTitle {
+.color-bloc {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+    padding:10px 10px;
+    background: #cb2629;
+    margin-left:-15px;
+    margin-right:-15px;
+    -webkit-box-shadow:inset 6px 0 5px -2px #750000;
+    box-shadow:inset 6px 0 5px -2px #750000;
+}
+
+.form-bloc{
+  padding:5px 10px;
+}
+
+.color-bloc a{
   color: #fff;
   font-size: 12px;
   font-weight: bold;
   font-style: italic;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  background: #cb2629 url("../../images/bail/search_bg.png") repeat-y;
+}
+
+.sidebar-bloc{
+  padding: 10px;
 }
 
 /* line 221, main.scss */
@@ -299,10 +314,6 @@ a.newsletterLink:hover {
   color: #cb2629;
 }
 
-/* line 270, main.scss */
-.calculator, .calculator p, .calculator label {
-  font-size: 11px;
-}
 
 /* line 274, main.scss */
 .calculator label {
@@ -319,106 +330,24 @@ a.newsletterLink:hover {
   text-align: center;
 }
 
-/******************************************************
-* RIGHT
-******************************************************/
-/* line 290, main.scss */
-.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-  border-bottom-right-radius: 0;
+#rightmenu{
+  padding: 10px;
 }
 
-/* line 293, main.scss */
-.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
-  border-bottom-left-radius: 0;
+#rightmenu h5 a{
+   border-bottom:1px solid #CB2629;
+   padding: 5px;
+   display:block;
+   color:#000;
+   font-weight:normal;
 }
 
-/* line 296, main.scss */
-.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
-  border-top-right-radius: 0;
+#rightmenu h5 a.active{
+  font-weight:bold;
 }
 
-/* line 299, main.scss */
-.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
-  border-top-left-radius: 0;
-}
-
-/* line 303, main.scss */
-#rightmenu {
-  min-height: 190px;
-  padding: 15px 10px;
-}
-
-/* line 307, main.scss */
-#rightmenu a {
-  display: block;
-  color: #000;
-  text-decoration: none;
-}
-
-/* line 313, main.scss */
-#rightmenu .ui-widget-content {
-  background: none;
-  border: none;
-  color: #222222;
-}
-
-/* line 319, main.scss */
-#rightmenu h4 a {
-  font-style: italic;
-  font-size: 13px;
-  margin-bottom: 3px;
-}
-
-/* line 325, main.scss */
-.ui-accordion .ui-accordion-header .ui-accordion-header-icon {
-  background: none;
-}
-
-/* line 329, main.scss */
-#rightmenu a:hover {
-  color: #CB2629;
-  text-decoration: none;
-}
-
-/* line 333, main.scss */
-#rightmenu h4 {
-  background: url(../../images/bail/right_close.png) 100% 7px no-repeat;
-  border: none;
-  border-bottom: 1px solid #CB2629;
-  display: block;
-  margin: 0 0 12px;
-  padding: 0;
-  font-size: 12px;
-  line-height: 15px;
-  font-weight: normal;
-  text-decoration: none;
-  color: #000;
-}
-
-/* line 346, main.scss */
-#rightmenu h4:last-child {
-  margin-bottom: 0;
-}
-
-/* line 349, main.scss */
-#rightmenu h4.accordion {
-  background: url(../../images/bail/right_close.png) 100% 7px no-repeat;
-  color: #fff;
-  display: block;
-  text-decoration: none;
-  padding: 0;
-}
-
-/* line 356, main.scss */
-#rightmenu h4.accordion.active {
-  font-weight: bold;
-  background: url(../../images/bail/right_open.png) 100% 7px no-repeat;
-}
-
-/* line 362, main.scss */
-#rightmenu h4 a,
-#rightmenu h4 span.a {
-  padding: 3px 0;
+#rightmenu h5 a i{
+  color:#CB2629;
 }
 
 /* line 366, main.scss */
@@ -475,7 +404,7 @@ a.newsletterLink:hover {
   margin: 0;
   height: 25px;
   padding: 11px 20px 2px;
-  background: #cb2629 url("../images/search_bg.png") 0 0 repeat-y;
+  background: #cb2629;
   font-size: 13px;
   font-weight: bold;
   color: #fff;

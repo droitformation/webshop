@@ -15,7 +15,7 @@ class Categorie extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSite($query,$site)
+    public function scopeSites($query,$site)
     {
         if ($site) $query->where('site_id','=',$site);
     }

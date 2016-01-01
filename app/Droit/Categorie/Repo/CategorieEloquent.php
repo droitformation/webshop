@@ -14,7 +14,7 @@ class CategorieEloquent implements CategorieInterface{
 
     public function getAll($site = null)
     {
-        return $this->categorie->site($site)->orderBy('title', 'ASC')->get();
+        return $this->categorie->sites($site)->orderBy('title', 'ASC')->get();
     }
 
     public function getAllOnSite()

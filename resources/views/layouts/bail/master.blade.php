@@ -33,7 +33,7 @@
                 <div class="maincontent col-md-9">
 
                     <!-- Entête et menu -->
-                    <header id="header" class="header">
+                    <header class="header">
                         <div class="row">
                             <h1 class="col-md-3"><a class="" href=""><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
                             <nav class="col-md-9" id="menu-principal">
