@@ -62,7 +62,7 @@
         <li class="nav-title">Sites</li>
         <li class="<?php echo (Request::is('admin/contenu') ? 'active' : '' ); ?>"><a href="{{ url('admin/contenu') }}"><i class="fa fa-reorder"></i> <span>Contenus</span></a></li>
         <li class="<?php echo (Request::is('admin/page') || Request::is('admin/page/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/page') }}"><i class="fa fa-reorder"></i> <span>Pages</span></a>
+            <a href="{{ url('admin/page') }}"><i class="fa fa-file"></i> <span>Pages</span></a>
         </li>
 
         <li class="<?php echo (Request::is('admin/author') ? 'active' : '' ); ?>"><a href="{{ url('admin/author') }}"><i class="fa fa-user"></i> <span>Auteurs</span></a></li>

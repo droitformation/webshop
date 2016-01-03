@@ -35,7 +35,6 @@
                                             <div class="btn-group" role="group" aria-label="...">
                                                 <a class="btn btn-sky btn-sm" href="{{ url('admin/colloque/'.$colloque->id) }}">&Eacute;diter</a>
                                                 <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions</a>
-                                                <a class="btn btn-inverse btn-sm" href="{{ url('admin/export/inscription/'.$colloque->id) }}">Exporter</a>
                                             </div>
                                         </td>
                                         <td>
@@ -51,7 +50,7 @@
                                         <td class="text-right">
                                             <form action="{{ url('admin/colloque/'.$colloque->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button data-action="{{ $colloque->titre }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                                <button data-action="{{ $colloque->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                             </form>
                                         </td>
                                     </tr>

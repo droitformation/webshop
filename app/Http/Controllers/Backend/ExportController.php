@@ -70,7 +70,7 @@ class ExportController extends Controller
                 $groupes      = $this->generator->getGroupeOptions();
 
                 $sheet->setOrientation('landscape');
-                $sheet->loadView('export.inscription', ['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);
+                $sheet->loadView('backend.export.inscription', ['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);
 
             });
 

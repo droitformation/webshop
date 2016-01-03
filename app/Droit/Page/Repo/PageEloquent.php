@@ -12,9 +12,9 @@ class PageEloquent implements PageInterface{
         $this->page = $page;
     }
 
-    public function getAll(){
+    public function getAll($site = null){
 
-        return $this->page->orderBy('rang')->get();
+        return $this->page->site($site)->orderBy('rang')->get();
     }
 
     public function getTree($key = null, $seperator = '  '){
@@ -54,6 +54,7 @@ class PageEloquent implements PageInterface{
             'title'       => $data['title'],
             'content'     => $data['content'],
             'template'    => $data['template'],
+            'site_id'     => $data['site_id'],
             'slug'        => \Str::slug($data['title']),
             'rang'        => (isset($data['rang']) ? $data['rang'] : 0),
             'main'        => (isset($data['main']) ? $data['main'] : null),

@@ -20,9 +20,19 @@ class Page extends Node {
     protected $table = 'pages';
 
     protected $dates    = ['deleted_at'];
-    protected $fillable = ['title','content','rang','main','template','slug','parent_id','lft','rgt','depth','hidden'];
+    protected $fillable = ['title','content','rang','main','template','slug','parent_id','lft','rgt','depth','hidden','site_id'];
 
     protected $orderColumn = 'rang';
+
+    /**
+     * Scope a query to only include arrets for site
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSite($query,$site)
+    {
+        if ($site) $query->where('site_id','=',$site);
+    }
 
     public function getLimitTextAttribute()
     {

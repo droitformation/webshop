@@ -10,22 +10,24 @@
                         <div class="col-md-1">
                             <a href="#">
                                 @if($colloque->illustration)
-                                    <img style="height: 80px; float:left;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
+                                    <img style="height: 50px; float:left;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
                                 @else
-                                    <img style="height: 80px; float:left;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
+                                    <img style="height: 50px; float:left;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
                                 @endif
                             </a>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-5 panel-list">
                             <h4><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
-                            <p>{{ $colloque->event_date }}</p>
+                            <small>{{ $colloque->event_date }}</small>
                         </div>
-                        <div class="col-md-2">
-                            <div class="pull-right">
-                                <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success btn-block">
-                                    <i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
-                                <a class="btn btn-warning btn-block" data-toggle="collapse" href="#desinscriptionTable" aria-expanded="false" aria-controls="desinscriptionTable">Désinscriptions</a>
-                            </div>
+                        <div class="col-md-2 text-right">
+                            <a class="btn btn-inverse btn-block" href="{{ url('admin/export/inscription/'.$colloque->id) }}"><i class="fa fa-download"></i> &nbsp;Exporter</a>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success btn-block"><i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <a class="btn btn-warning btn-block" data-toggle="collapse" href="#desinscriptionTable" aria-expanded="false" aria-controls="desinscriptionTable">Désinscriptions</a>
                         </div>
                     </div>
                 </div>

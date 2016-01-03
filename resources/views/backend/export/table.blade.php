@@ -15,8 +15,8 @@
         <th>Ville</th>
         <th>Canton</th>
         <th>Pays</th>
-        <th>Date</th>
         <th>Numéro</th>
+        <th>Date</th>
         <th>Options</th>
     </tr>
     @foreach($rows as $option)

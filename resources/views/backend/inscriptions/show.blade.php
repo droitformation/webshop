@@ -22,6 +22,7 @@
                     </div>
                     <div class="panel-body">
                         <fieldset>
+
                             @if($inscription->group_id)
                                 <div class="form-group">
                                     <label>Nom du participant</label>

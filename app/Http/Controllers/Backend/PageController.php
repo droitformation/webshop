@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Droit\Page\Worker\PageWorker;
 use App\Droit\Page\Repo\PageInterface;
+use App\Droit\Site\Repo\SiteInterface;
 use App\Http\Requests\CreatePage;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -13,11 +14,13 @@ class PageController extends Controller
 {
     protected $page;
     protected $worker;
+    protected $site;
 
-    public function __construct(PageInterface $page, PageWorker $worker)
+    public function __construct(PageInterface $page, PageWorker $worker, SiteInterface  $site)
     {
         $this->page   = $page;
         $this->worker = $worker;
+        $this->site   = $site;
 
         view()->share('templates',config('template'));
     }
@@ -31,8 +34,9 @@ class PageController extends Controller
     {
         $pages = $this->page->getAll();
         $root  = $this->page->getRoot();
+        $sites = $this->site->getAll();
 
-        return view('backend.pages.index')->with(array( 'pages' => $pages, 'root' => $root ));
+        return view('backend.pages.index')->with(array( 'pages' => $pages, 'root' => $root , 'sites' => $sites));
     }
 
     /**
@@ -43,8 +47,9 @@ class PageController extends Controller
     public function create()
     {
         $pages = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
-        
-        return view('backend.pages.create')->with(['pages' => $pages]);
+        $sites = $this->site->getAll();
+
+        return view('backend.pages.create')->with(['pages' => $pages, 'sites' => $sites]);
     }
 
     /**
@@ -52,7 +57,7 @@ class PageController extends Controller
      *
      * @return Response
      */
-    public function store(CreatePage $request)
+    public function store(Request $request)
     {
         $page = $this->page->create($request->all());
 
@@ -69,8 +74,9 @@ class PageController extends Controller
     {
         $page  = $this->page->find($id);
         $pages = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
+        $sites = $this->site->getAll();
 
-        return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages));
+        return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages, 'sites' => $sites));
     }
 
     /**
@@ -81,7 +87,6 @@ class PageController extends Controller
      */
     public function update($id, Request $request)
     {
-
         $page = $this->page->update($request->all());
 
         return redirect('admin/page/'.$page->id)->with( array('status' => 'success' , 'message' => 'La page a été mise à jour' ));

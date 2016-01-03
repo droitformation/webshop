@@ -3,8 +3,7 @@
 <tr {!! $style !!}>
     <td>{{ $inscription->group_id ? $inscription->group_id  : '' }}</td>
     <td>
-        <a class="btn btn-sky btn-xs btn-block" href="{{ url('admin/inscription/'.$inscription->id) }}">&Eacute;diter</a>
-        <a class="btn btn-warning btn-xs btn-block" href="{{ url('admin/inscription/generate/'.$inscription->id) }}">Regénérer docs</a>
+        <a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}">&Eacute;diter</a>
     </td>
     <td>
         <?php
@@ -21,7 +20,7 @@
         <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">
             <input type="hidden" name="_method" value="DELETE">
             {!! csrf_field() !!}
-            <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-xs deleteAction">Désinscription</button>
+            <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">Désinscription</button>
         </form>
     </td>
 </tr>

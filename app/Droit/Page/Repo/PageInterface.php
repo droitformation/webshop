@@ -2,7 +2,7 @@
 
 interface PageInterface {
 
-    public function getAll();
+    public function getAll($site = null);
     public function find($id);
     public function search($term);
     public function buildTree($data);

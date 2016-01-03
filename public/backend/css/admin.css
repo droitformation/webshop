@@ -131,6 +131,10 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     margin: 0 -20px;
 }
 
+.panel-list h4,.panel-list p{
+    margin: 0;
+}
+
 .list-group-item {
     padding: 5px 15px 5px 15px;
     line-height: 23px;
@@ -362,4 +366,28 @@ a:hover, a:active, a:focus {
 .editable-click, a.editable-click, a.editable-click:hover {
     text-decoration: none;
     border: 0;
+}
+
+.nestable_list{
+    margin-top: 20px;
+}
+
+.nestable_list .dd-handle {
+    position: relative;
+    height: 40px;
+    line-height: 35px;
+    margin: 5px 0;
+    padding: 0 10px;
+    cursor: move;
+}
+
+.nestable_list .dd-handle a:not(.btn){
+    font-size: 15px;
+}
+
+.nestable_list .dd-handle form{
+    position: absolute;
+    right: 5px;
+    top: 0;
+    z-index: 20;
 }

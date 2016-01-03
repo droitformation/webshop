@@ -32,6 +32,7 @@ class CreatePagesTable extends Migration
             $table->integer('rang')->nullable();
             $table->integer('main')->nullable();
             $table->integer('hidden')->nullable();
+            $table->integer('site_id')->nullable();
             $table->string('template');
             $table->softDeletes();
             $table->timestamps();
