@@ -55,7 +55,7 @@ class PageEloquent implements PageInterface{
             'content'     => $data['content'],
             'template'    => $data['template'],
             'site_id'     => $data['site_id'],
-            'slug'        => \Str::slug($data['title']),
+            'slug'        => (isset($data['slug']) && !empty($data['slug']) ? $data['slug'] : \Str::slug($data['slug'])),
             'rang'        => (isset($data['rang']) ? $data['rang'] : 0),
             'main'        => (isset($data['main']) ? $data['main'] : null),
             'hidden'      => $data['hidden'] ? 1 : null,

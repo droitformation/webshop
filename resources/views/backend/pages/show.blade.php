@@ -34,6 +34,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Titre dans le menu</label>
+                        <div class="col-sm-4">
+                            {!! Form::text('slug', $page->slug , array('class' => 'form-control') ) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Site</label>
                         <div class="col-sm-3">
                             @if(!$sites->isEmpty())

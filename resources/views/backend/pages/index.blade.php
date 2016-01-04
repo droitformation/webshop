@@ -3,14 +3,30 @@
 
 <?php $helper = new \App\Droit\Helper\Helper(); ?>
 
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-xs-12">
 
-        <div class="options text-right" style="margin-bottom: 10px;">
-            <div class="btn-toolbar">
-               <a href="{{ url('admin/page/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-push-8 col-md-4 col-xs-12">
+        <form action="{{ url('admin/page/create') }}" method="get">
+            <div class="form-group input-group">
+
+                <select class="form-control" name="template">
+                    @if(!empty($templates))
+                        @foreach($templates as $template => $nom)
+                            <option {{ $template == 'page' ? 'selected' : '' }} value="{{ $template }}">{{ $nom }}</option>
+                        @endforeach
+                    @endif
+                </select>
+
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> &nbsp;Ajouter</button>
+                </span>
+            </div><!-- /input-group -->
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
 
         <div class="panel panel-primary">
             <div class="panel-heading">Pages</div>

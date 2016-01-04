@@ -12,6 +12,8 @@
     <div class="col-md-12">
         <div class="panel panel-midnightblue">
 
+            {{ $template }}
+
             <!-- form start -->
             <form data-validate-parsley action="{{ url('admin/page') }}" method="POST" class="form-horizontal" >
             {!! csrf_field() !!}
@@ -23,6 +25,13 @@
                         <label for="message" class="col-sm-3 control-label">Titre</label>
                         <div class="col-sm-4">
                             {!! Form::text('title', null , array('class' => 'form-control') ) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Titre dans le menu</label>
+                        <div class="col-sm-4">
+                            {!! Form::text('slug', null , array('class' => 'form-control') ) !!}
                         </div>
                     </div>
 
