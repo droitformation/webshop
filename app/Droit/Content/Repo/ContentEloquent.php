@@ -25,11 +25,6 @@ class ContentEloquent implements ContentInterface{
 		return $this->content->findOrFail($id);
 	}
 
-    public function findyByPosition(array $positions){
-
-        return $this->content->whereIn('position', $positions)->orderBy('rang','ASC')->get();
-    }
-
 	public function findyByType($type){
 
 		return $this->content->where('type','=',$type)->orderBy('rang','ASC')->get();
@@ -38,12 +33,12 @@ class ContentEloquent implements ContentInterface{
 	public function create(array $data){
 
 		$content = $this->content->create(array(
-			'titre'      => $data['titre'],
-			'contenu'    => $data['contenu'],
+			'title'      => $data['title'],
+			'content'    => $data['content'],
             'image'      => (isset($data['image']) ? $data['image'] : ''),
 			'url'        => (isset($data['url']) ? $data['url'] : ''),
 			'type'       => $data['type'],
-			'position'   => $data['position'],
+			'page_id'    => $data['page_id'],
             'rang'       => (isset($data['rang']) ? $data['rang'] : 0),
 			'created_at' => date('Y-m-d G:i:s'),
 			'updated_at' => date('Y-m-d G:i:s')
@@ -74,12 +69,6 @@ class ContentEloquent implements ContentInterface{
             $content->image = $data['image'];
         }
 
-        if($data['parent_id'] > 0)
-        {
-            $parent = $this->content->findOrFail($data['parent_id']);
-            $content->makeChildOf($parent);
-        }
-
 		$content->updated_at = date('Y-m-d G:i:s');
 
 		$content->save();
@@ -92,7 +81,6 @@ class ContentEloquent implements ContentInterface{
         $content = $this->content->find($id);
 
 		return $content->delete();
-
 	}
 
 }

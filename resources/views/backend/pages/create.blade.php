@@ -12,32 +12,31 @@
     <div class="col-md-12">
         <div class="panel panel-midnightblue">
 
-            {{ $template }}
-
             <!-- form start -->
             <form data-validate-parsley action="{{ url('admin/page') }}" method="POST" class="form-horizontal" >
             {!! csrf_field() !!}
 
-            <div class="panel-heading"><h4>Ajouter une page</h4></div>
+            <div class="panel-heading"><h4>Ajouter une</h4></div>
                 <div class="panel-body event-info">
 
                     <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Titre</label>
-                        <div class="col-sm-4">
-                            {!! Form::text('title', null , array('class' => 'form-control') ) !!}
+                        <label class="col-sm-3 control-label">Visible sur le site</label>
+                        <div class="col-sm-5">
+                            <label class="radio-inline"><input type="radio" value="0" name="hidden"> Oui</label>
+                            <label class="radio-inline"><input type="radio" value="1" name="hidden" checked> Non</label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Titre dans le menu</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             {!! Form::text('slug', null , array('class' => 'form-control') ) !!}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Site</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             @if(!$sites->isEmpty())
                                 <select class="form-control" name="site_id">
                                     <option value="">Appartient au site</option>
@@ -46,19 +45,6 @@
                                     @endforeach
                                 </select>
                             @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="type" class="col-sm-3 control-label">Type de page</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="template">
-                                @if(!empty($templates))
-                                    @foreach($templates as $template => $nom)
-                                        <option {{ $template == 'page' ? 'selected' : '' }} value="{{ $template }}">{{ $nom }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
                         </div>
                     </div>
 
@@ -73,19 +59,45 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Visible sur le site</label>
-                        <div class="col-sm-5">
-                            <label class="radio-inline"><input type="radio" value="0" name="hidden"> Oui</label>
-                            <label class="radio-inline"><input type="radio" value="1" name="hidden" checked> Non</label>
+                        <label for="type" class="col-sm-3 control-label">Type de page</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="template">
+                                @if(!empty($templates))
+                                    @foreach($templates as $template => $nom)
+                                        <option {{ $template == $selected ? 'selected' : '' }} value="{{ $template }}">{{ $nom }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Titre</label>
+                        <div class="col-sm-7">
+                            {!! Form::text('title', null , array('class' => 'form-control') ) !!}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="contenu" class="col-sm-3 control-label">Contenu</label>
                         <div class="col-sm-7">
-                            {!! Form::textarea('content', null, array('class' => 'form-control  redactor', 'cols' => '50' , 'rows' => '4' )) !!}
+                            {!! Form::textarea('content', null, array('class' => 'form-control  redactorSimple' )) !!}
                         </div>
                     </div>
+
+                    @if($selected == 'lien')
+
+
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Liens</label>
+                            <div class="col-sm-7">
+                                <div class="well">
+                                    <p><a href="#" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc lien</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    @endif
 
                 </div>
                 <div class="panel-footer mini-footer ">

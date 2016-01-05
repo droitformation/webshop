@@ -46,11 +46,11 @@ class PageController extends Controller
      */
     public function create(Request $request)
     {
-        $template = $request->input('template');
+        $selected = $request->input('template');
         $pages    = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
         $sites    = $this->site->getAll();
 
-        return view('backend.pages.create')->with(['pages' => $pages, 'sites' => $sites, 'template' => $template]);
+        return view('backend.pages.create')->with(['pages' => $pages, 'sites' => $sites, 'selected' => $selected]);
     }
 
     /**

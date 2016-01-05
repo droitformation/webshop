@@ -1,13 +1,15 @@
 <?php namespace App\Droit\Content\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Baum\Node;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Content extends Node {
+class Content extends Model {
 
-    public $timestamps = false;
+    use SoftDeletes;
 
-	protected $fillable = ['titre','contenu','image','url','slug','type','position','rang','parent_id','lft','rgt','depth'];
+    protected $dates    = ['deleted_at'];
+
+	protected $fillable = ['title','content','image','url','type','rang','page_id'];
 
     protected $table = 'contents';
 

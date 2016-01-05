@@ -15,17 +15,13 @@ class CreateContentsTable extends Migration {
 		Schema::create('contents', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('titre')->nullable();
-			$table->text('contenu')->nullable();
+			$table->string('title')->nullable();
+			$table->text('content')->nullable();
 			$table->string('image')->nullable();
 			$table->string('url')->nullable();
             $table->integer('rang')->default(0);
-			$table->enum('type', array('pub','texte','soutien'));
-			$table->enum('position', array('sidebar','home-bloc','home-colonne'));
-            $table->integer('parent_id')->nullable();
-            $table->integer('lft')->nullable();
-            $table->integer('rgt')->nullable();
-            $table->integer('depth')->nullable();
+			$table->integer('page_id');
+			$table->enum('type', array('agenda','loi','canton','lien','text'));
 			$table->timestamps();
             $table->softDeletes();
 		});
