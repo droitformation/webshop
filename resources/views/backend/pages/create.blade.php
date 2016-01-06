@@ -50,24 +50,11 @@
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             {!! Form::text('rang', null , array('class' => 'form-control') ) !!}
                         </div>
                         <div class="col-sm-2">
                             <p class="help-block">Ordre croissant</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="type" class="col-sm-3 control-label">Type de page</label>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="template">
-                                @if(!empty($templates))
-                                    @foreach($templates as $template => $nom)
-                                        <option {{ $template == $selected ? 'selected' : '' }} value="{{ $template }}">{{ $nom }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
                         </div>
                     </div>
 
@@ -89,11 +76,14 @@
 
 
                         <div class="form-group">
-                            <label for="message" class="col-sm-3 control-label">Liens</label>
+                            <label for="message" class="col-sm-3 control-label">Blocs de contenu</label>
                             <div class="col-sm-7">
-                                <div class="well">
-                                    <p><a href="#" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc lien</a></p>
-                                </div>
+
+                                <a href="#" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc lois</a>
+                                <a href="#" class="btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc autorité</a>
+                                <a href="#" class="btn btn-orange btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc lien</a>
+                                <a href="#" class="btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc FAQ</a>
+
                             </div>
                         </div>
 
@@ -101,7 +91,10 @@
 
                 </div>
                 <div class="panel-footer mini-footer ">
-                    <div class="col-sm-3">{!! Form::hidden('parent_id', 0) !!}</div>
+                    <div class="col-sm-3">
+                        {!! Form::hidden('parent_id', 0) !!}
+                        <input type="hidden" name="template" value="page">
+                    </div>
                     <div class="col-sm-6">
                         <button class="btn btn-primary" type="submit">Envoyer</button>
                     </div>
