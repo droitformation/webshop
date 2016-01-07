@@ -106,7 +106,6 @@ class PageController extends Controller
         return redirect('admin/page')->with(array('status' => 'success' , 'message' => 'La page a été supprimé' ));
     }
 
-
     public function sorting(Request $request)
     {
         $data = $request->all();

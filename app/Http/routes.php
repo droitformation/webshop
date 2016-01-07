@@ -216,6 +216,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('author',    'Backend\Content\AuthorController');
     Route::resource('page',      'Backend\PageController');
 
+    Route::get('content/{type}',   'Backend\ContentController@index');
+
     /*
   |--------------------------------------------------------------------------
   | Backend subscriptions, newsletters and campagnes Routes

@@ -391,3 +391,9 @@ a:hover, a:active, a:focus {
     top: 0;
     z-index: 20;
 }
+
+#bloc-wrapper{
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #f4f4f4;
+}
