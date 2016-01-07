@@ -24,6 +24,8 @@ class CreateShopProductsTable extends Migration {
             $table->integer('price');
             $table->boolean('is_downloadable')->default(false);
             $table->tinyInteger('hidden')->nullable();
+            $table->text('url')->nullable();
+            $table->integer('rang')->default(0);
             $table->integer('abo_id')->nullable();
             $table->softDeletes();
             $table->timestamps();

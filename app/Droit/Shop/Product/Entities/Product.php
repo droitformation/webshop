@@ -11,7 +11,7 @@ class Product extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable'];
+    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable','hidden','abo_id','url','rang'];
 
     public function getReferenceAttribute()
     {
@@ -32,7 +32,6 @@ class Product extends Model{
 
     public function getPriceCentsAttribute()
     {
-
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         if(isset($this->pivot) && $this->pivot->rabais)

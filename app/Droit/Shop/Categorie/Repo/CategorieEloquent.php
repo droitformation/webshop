@@ -25,9 +25,10 @@ class CategorieEloquent implements CategorieInterface{
     public function create(array $data){
 
         $categorie = $this->categorie->create(array(
-            'title'      => $data['title'],
-            'sorting'    => $data['sorting'],
-            'site_id'    => (isset($data['site_id']) ? $data['site_id'] : null)
+            'title'     => $data['title'],
+            'rang'      => (isset($data['rang']) ? $data['rang'] : 0),
+            'image'     => (isset($data['image']) ? $data['image'] : null),
+            'parent_id' => (isset($data['parent_id']) ? $data['parent_id'] : null)
         ));
 
         if( ! $categorie )

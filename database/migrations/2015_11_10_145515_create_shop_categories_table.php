@@ -15,8 +15,11 @@ class CreateShopCategoriesTable extends Migration
         Schema::create('shop_categories', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('title');
-            $table->integer('site_id');
-            $table->integer('sorting');
+            $table->string('image')->nullable();
+            $table->integer('parent_id')->nullable();
+            $table->integer('rang');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
