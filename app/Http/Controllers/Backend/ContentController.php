@@ -22,9 +22,9 @@ class ContentController extends Controller
      *
      * @return Response
      */
-    public function index($type)
+    public function index($type,$page)
     {
-        return view('backend.pages.partials.'.$type);
+        return view('backend.pages.partials.'.$type)->with(['page_id' => $page]);
     }
 
     /**

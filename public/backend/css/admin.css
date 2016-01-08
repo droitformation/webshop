@@ -393,7 +393,12 @@ a:hover, a:active, a:focus {
 }
 
 #bloc-wrapper{
+
+}
+
+.bloc-content{
     margin: 20px 0;
     padding: 10px;
     border: 1px solid #f4f4f4;
+    background: #eee;
 }

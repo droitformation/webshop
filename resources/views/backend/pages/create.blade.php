@@ -72,24 +72,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Blocs de contenu</label>
-                        <div class="col-sm-7">
-                            <div id="content-bloc-wrapper">
-
-                                <a href="#" data-type="lois" class="new-bloc-content btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc lois</a>
-                                <a href="#" data-type="autorite" class="new-bloc-content btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc autorité</a>
-                                <a href="#" data-type="lien" class="new-bloc-content btn btn-orange btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc lien</a>
-                                <a href="#" data-type="faq" class="new-bloc-content btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un bloc FAQ</a>
-
-                                <div id="bloc-wrapper">
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
                 <div class="panel-footer mini-footer ">
                     <div class="col-sm-3">

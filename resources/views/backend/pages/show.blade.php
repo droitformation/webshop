@@ -13,7 +13,7 @@
 
     @if (!empty($page) )
 
-    <div class="col-md-12">
+    <div class="col-md-7">
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
@@ -27,52 +27,11 @@
                 <div class="panel-body event-info">
 
                     <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Titre</label>
-                        <div class="col-sm-4">
-                            {!! Form::text('title', $page->title , array('class' => 'form-control') ) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Titre dans le menu</label>
-                        <div class="col-sm-4">
-                            {!! Form::text('slug', $page->slug , array('class' => 'form-control') ) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Site</label>
-                        <div class="col-sm-3">
-                            @if(!$sites->isEmpty())
-                                <select class="form-control" name="site_id">
-                                    <option value="">Appartient au site</option>
-                                    @foreach($sites as $site)
-                                        <option {{ $page->site_id == $site->id ? 'selected' : '' }} value="{{ $site->id }}">{{ $site->nom }}</option>
-                                    @endforeach
-                                </select>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="type" class="col-sm-3 control-label">Type de page</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="template">
-                                @if(!empty($templates))
-                                    @foreach($templates as $template => $nom)
-                                        <option {{ $page->template  == $template ? 'selected' : '' }}  value="{{ $template }}">{{ $nom }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
                         <div class="col-sm-2">
                             {!! Form::text('rang', $page->rang , array('class' => 'form-control') ) !!}
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <p class="help-block">Ordre croissant</p>
                         </div>
                     </div>
@@ -85,28 +44,80 @@
                         </div>
                     </div>
 
-                    @if($page->template == 'page' || $page->template == 'accueil')
-
-                        <div class="form-group">
-                            <label for="content" class="col-sm-3 control-label">Contenu</label>
-                            <div class="col-sm-7">
-                                {!! Form::textarea('content', $page->content , array('class' => 'form-control  redactor', 'cols' => '50' , 'rows' => '4' )) !!}
-                            </div>
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Titre dans le menu</label>
+                        <div class="col-sm-5">
+                            {!! Form::text('slug', $page->slug , array('class' => 'form-control') ) !!}
                         </div>
+                    </div>
 
-                    @endif
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Site</label>
+                        <div class="col-sm-5">
+                            @if(!$sites->isEmpty())
+                                <select class="form-control" name="site_id">
+                                    <option value="">Appartient au site</option>
+                                    @foreach($sites as $site)
+                                        <option {{ $page->site_id == $site->id ? 'selected' : '' }} value="{{ $site->id }}">{{ $site->nom }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Titre</label>
+                        <div class="col-sm-8">
+                            {!! Form::text('title', $page->title , array('class' => 'form-control') ) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contenu" class="col-sm-3 control-label">Contenu</label>
+                        <div class="col-sm-8">
+                            {!! Form::textarea('content', $page->content , array('class' => 'form-control  redactor' )) !!}
+                        </div>
+                    </div>
 
                 </div>
                 <div class="panel-footer mini-footer ">
                     {!! Form::hidden('parent_id', 0) !!}
                     {!! Form::hidden('id', $page->id ) !!}
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-9">
                         <button class="btn btn-primary" type="submit">Envoyer </button>
                     </div>
                 </div>
 
             </form>
+        </div>
+    </div>
+
+
+    <div class="col-md-5">
+        <div class="panel panel-midnightblue">
+
+            <div class="panel-body event-info">
+                <div class="form-group">
+
+                    <h4>Blocs de contenu</h4>
+                    <div id="content-bloc-wrapper">
+
+                        <a href="#" data-type="lois" class="new-bloc-content btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lois</a>
+                        <a href="#" data-type="autorite" class="new-bloc-content btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc autorité</a>
+                        <a href="#" data-type="lien" class="new-bloc-content btn btn-orange btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lien</a>
+                        <a href="#" data-type="faq" class="new-bloc-content btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc FAQ</a>
+
+                        <div id="bloc-wrapper" data-page="{{ $page->id }}">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 
