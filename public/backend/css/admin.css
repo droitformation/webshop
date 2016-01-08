@@ -398,7 +398,7 @@ a:hover, a:active, a:focus {
 
 .bloc-content{
     margin: 20px 0;
-    padding: 10px;
+    padding: 10px 15px;
     border: 1px solid #f4f4f4;
     background: #eee;
 }

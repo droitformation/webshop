@@ -13,7 +13,7 @@
 
     @if (!empty($page) )
 
-    <div class="col-md-7">
+    <div class="col-md-6">
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
@@ -96,14 +96,15 @@
     </div>
 
 
-    <div class="col-md-5">
+    <div class="col-md-6">
         <div class="panel panel-midnightblue">
 
             <div class="panel-body event-info">
                 <div class="form-group">
 
                     <h4>Blocs de contenu</h4>
-                    <div id="content-bloc-wrapper">
+
+                    <div id="content-bloc-wrapper" data-page="{{ $page->id }}">
 
                         <a href="#" data-type="lois" class="new-bloc-content btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lois</a>
                         <a href="#" data-type="autorite" class="new-bloc-content btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc autorité</a>
@@ -114,6 +115,20 @@
 
                         </div>
                     </div>
+
+                    <hr/>
+
+                    @if(!$page->blocs->isEmpty())
+                        <?php $grouped = $page->blocs->groupBy('type'); ?>
+                        @foreach($grouped as $groupe => $blocs)
+                            <h5>{{ ucfirst($groupe) }}</h5>
+                            <ul class="list-group">
+                                @foreach($blocs as $bloc)
+                                    <li class="list-group-item">{!! $bloc->name !!}</li>
+                                @endforeach
+                            </ul>
+                        @endforeach
+                    @endif
 
                 </div>
             </div>

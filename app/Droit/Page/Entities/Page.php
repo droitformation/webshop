@@ -62,4 +62,9 @@ class Page extends Node {
 
         return substr($s, 0, $l = min(strlen($s),  $l + $i)) . (count($tags = array_reverse($tags)) ? '' : '') . (strlen($s) > $l ? $e : '');
     }
+
+    public function blocs()
+    {
+        return $this->hasMany('App\Droit\Content\Entities\Content');
+    }
 }

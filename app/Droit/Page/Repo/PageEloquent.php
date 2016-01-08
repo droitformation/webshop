@@ -34,7 +34,7 @@ class PageEloquent implements PageInterface{
 
     public function find($id){
 
-        return $this->page->findOrFail($id);
+        return $this->page->with(['blocs'])->find($id);
     }
 
     public function getBySlug($slug)

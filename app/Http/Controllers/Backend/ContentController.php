@@ -44,9 +44,11 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        $content = $this->content->create($request->all());
+        $data = $request->input('data');
 
-        return redirect('admin/content/'.$content->id)->with(array('status' => 'success' , 'message' => 'Le content a été crée' ));
+        $content = $this->content->create($data);
+
+        echo 'ok';
     }
 
     /**
@@ -72,7 +74,7 @@ class ContentController extends Controller
     {
         $content = $this->content->update($request->all());
 
-        return redirect('admin/content/'.$content->id)->with( array('status' => 'success' , 'message' => 'Le content a été mise à jour' ));
+        return view('backend.pages.partials.'.$content->type)->with(['page_id' => $content->page_id, 'content' => $content]);
     }
 
     /**
@@ -85,6 +87,6 @@ class ContentController extends Controller
     {
         $this->content->delete($id);
 
-        return redirect('admin/content')->with(array('status' => 'success' , 'message' => 'La content a été supprimé' ));
+        echo 'ok';
     }
 }

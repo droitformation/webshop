@@ -33,8 +33,8 @@ class ContentEloquent implements ContentInterface{
 	public function create(array $data){
 
 		$content = $this->content->create(array(
-			'title'      => $data['title'],
-			'content'    => $data['content'],
+			'title'      => (isset($data['title']) ? $data['title'] : ''),
+			'content'    => (isset($data['content']) ? $data['content'] : ''),
             'image'      => (isset($data['image']) ? $data['image'] : ''),
 			'url'        => (isset($data['url']) ? $data['url'] : ''),
 			'type'       => $data['type'],

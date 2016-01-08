@@ -5,7 +5,8 @@ $( function() {
 
     var $wrapper = $('#content-bloc-wrapper');
 
-    if($wrapper.length){
+    if($wrapper.length)
+    {
 
         $('body').on("click", '.new-bloc-content' ,function(e) {
             e.preventDefault(); e.stopPropagation();
@@ -14,7 +15,6 @@ $( function() {
             var page_id = $wrapper.data('page');
 
             $.get( "admin/content/" + type + "/" + page_id, function( data ) {
-                console.log(data);
 
                 var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right">x</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
@@ -33,6 +33,33 @@ $( function() {
                 });
 
             });
+        });
+
+        $('body').on('click','.add-bloc-btn',function(e)
+        {
+            e.preventDefault(); e.stopPropagation();
+
+            var $form  = $(this).closest('form');
+            var inputs = $form.find('input,textarea,file');
+
+            var map = {};
+
+            inputs.each(function() {
+                map[$(this).attr("name")] = $(this).val();
+            });
+
+            console.log(map);
+
+            $.ajax({
+                type : "POST",
+                url  : base_url + "admin/content",
+                data : { data: map , _token: $("meta[name='_token']").attr('content') },
+                success: function(data) {
+
+                },
+                error: function(){alert('problème avec l\'ajout du bloc');}
+            });
+
         });
     }
 
