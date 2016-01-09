@@ -28,6 +28,13 @@ class FileController extends Controller
         echo view('manager.partials.files', ['path' => $request->input('path') ,'files' => $files, 'images' => $images]);
     }
 
+    public function tree()
+    {
+        $files = $this->file->manager();
+
+        echo view('manager.partials.folders', ['files' => $files]);
+    }
+
     public function delete(Request $request)
     {
         $file = $request->input('src');

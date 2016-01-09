@@ -8,18 +8,12 @@
             </div>
             <div class="modal-body">
 
-                @inject('fileWorker', 'App\Droit\Service\FileWorkerInterface')
-
                 <div class="row">
                     <div class="col-md-2">
 
                         <div class="tree">
                             <h4>Dossiers</h4>
-
-                            @if(!empty($files))
-                                <?php $fileWorker->treeDirectories($files,'files/'); ?>
-                            @endif
-
+                            <div id="fileManagerTree"></div>
                         </div>
 
                         <div id="dropzone" class="dropzone"></div>

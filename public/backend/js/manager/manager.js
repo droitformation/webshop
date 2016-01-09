@@ -4,9 +4,10 @@ $( function() {
      *  First load uploads folder in manager
      * *********/
 
-    $('#uploadModal').on('show.bs.modal', function ()
+    $('body').on('show.bs.modal','#uploadModal', function ()
     {
-        var $manager = $('#fileManager');
+        var $manager  = $('#fileManager');
+        var $tree     = $('#fileManagerTree');
 
         $.post( "admin/files", { path: 'files/uploads' }).done(function( data ){
             $manager.empty().append(data);
@@ -14,13 +15,56 @@ $( function() {
 
             $('#gallery').isotope({
                 itemSelector: '.file-item',
-                masonry: {
-                    layoutMode: 'fitColumns', columnWidth: 120
-                }
+                masonry     : {layoutMode: 'fitColumns', columnWidth: 120}
+            });
+        });
+
+        $.get( "admin/tree", function( data ) {
+            $tree.empty().append(data);
+        });
+
+        var myDropzone = new Dropzone("div#dropzone", {
+            url: "admin/upload",
+            dictDefaultMessage: "Ajouter une image",
+            dictRemoveFile: "Enlever",
+            thumbnailWidth: 100,
+            thumbnailHeight: 80,
+            addRemoveLinks : true
+        });
+
+        myDropzone.on('sending', function(file, xhr, formData){
+            var path =  $('#fileManager').data('path');
+            formData.append('path', path);
+        });
+
+        myDropzone.on("success", function(file) {
+
+            var $manager  = $('#fileManager');
+            var path      =  $manager.data('path');
+
+            $.post( "admin/files", { path: path }).done(function( data ){
+                $manager.empty().append(data);
+                $manager.data('path',path);
+
+                $('#gallery').isotope({
+                    itemSelector: '.file-item',
+                    masonry: {
+                        layoutMode: 'fitColumns', columnWidth: 120
+                    }
+                });
             });
 
         });
-    })
+    });
+
+    $('body').on('shown.bs.modal','#uploadModal', function ()
+    {
+        var $content = $(this).find('.modal-content');
+        var $body    = $(this).find('.modal-body');
+        var maxHeight = $content.height() - 100;
+        $body.css({ 'height' : maxHeight });
+
+    });
 
     /********
      *  Choose file in manager
@@ -86,7 +130,6 @@ $( function() {
                 if(data)
                 {
                     var $image = button.closest('.file-item');
-
                     $('#gallery').isotope('remove', $image).isotope('layout');
                 }
             });
@@ -117,9 +160,7 @@ $( function() {
 
             $('#gallery').isotope({
                 itemSelector: '.file-item',
-                masonry: {
-                    layoutMode: 'fitColumns', columnWidth: 120
-                }
+                masonry: {layoutMode: 'fitColumns', columnWidth: 120}
             });
         });
 
@@ -170,47 +211,5 @@ $( function() {
 
     });
 
-
-    /********
-     *  Upload in manager
-     * *********/
-
-    var $dropzone = $('div#dropzone');
-
-    if($dropzone.length)
-    {
-        var myDropzone = new Dropzone("div#dropzone", {
-            url: "admin/upload",
-            dictDefaultMessage: "Ajouter une image",
-            dictRemoveFile: "Enlever",
-            thumbnailWidth: 100,
-            thumbnailHeight: 80,
-            addRemoveLinks : true
-        });
-
-        myDropzone.on('sending', function(file, xhr, formData){
-            var path =  $('#fileManager').data('path');
-            formData.append('path', path);
-        });
-
-        myDropzone.on("success", function(file) {
-
-            var $manager  = $('#fileManager');
-            var path      =  $manager.data('path');
-
-            $.post( "admin/files", { path: path }).done(function( data ){
-                $manager.empty().append(data);
-                $manager.data('path',path);
-
-                $('#gallery').isotope({
-                    itemSelector: '.file-item',
-                    masonry: {
-                        layoutMode: 'fitColumns', columnWidth: 120
-                    }
-                });
-            });
-
-        });
-    }
 
 });

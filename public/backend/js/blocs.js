@@ -16,7 +16,7 @@ $( function() {
 
             $.get( "admin/content/" + type + "/" + page_id, function( data ) {
 
-                var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right">x</a>' + data + '</div>';
+                var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right remove-bloc-btn">x</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
 
                 $('.redactorBlocSimple').redactor({
@@ -61,6 +61,13 @@ $( function() {
             });
 
         });
+
+        $('body').on('click','.remove-bloc-btn',function(e)
+        {
+            e.preventDefault(); e.stopPropagation();
+            $(this).closest('.bloc-content').remove();
+        });
+
     }
 
 });

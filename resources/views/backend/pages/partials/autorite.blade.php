@@ -9,7 +9,12 @@
 
     <div class="form-group">
         <label for="file" class="control-label">Image</label>
-        {!!  Form::file('file')!!}
+        <div class="file-upload-wrapper" data-name="file">
+            <button type="button" class="btn btn-default" id="image" data-toggle="modal" data-target="#uploadModal">Chercher</button>
+            <div class="file-input"></div>
+
+            @include('manager.modal')
+        </div>
     </div>
 
     <div class="form-group">

@@ -16,7 +16,6 @@
                             <div class="file-input"></div>
 
                             @include('manager.modal')
-
                         </div>
                     </form>
 
