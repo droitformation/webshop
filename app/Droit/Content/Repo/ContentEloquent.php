@@ -33,15 +33,16 @@ class ContentEloquent implements ContentInterface{
 	public function create(array $data){
 
 		$content = $this->content->create(array(
-			'title'      => (isset($data['title']) ? $data['title'] : ''),
-			'content'    => (isset($data['content']) ? $data['content'] : ''),
-            'image'      => (isset($data['image']) ? $data['image'] : ''),
-			'url'        => (isset($data['url']) ? $data['url'] : ''),
-			'type'       => $data['type'],
-			'page_id'    => $data['page_id'],
-            'rang'       => (isset($data['rang']) ? $data['rang'] : 0),
-			'created_at' => date('Y-m-d G:i:s'),
-			'updated_at' => date('Y-m-d G:i:s')
+			'title'        => (isset($data['title']) ? $data['title'] : ''),
+			'content'      => (isset($data['content']) ? $data['content'] : ''),
+            'image'        => (isset($data['image']) ? $data['image'] : ''),
+			'url'          => (isset($data['url']) ? $data['url'] : ''),
+			'categorie_id' => (isset($data['categorie_id']) ? $data['categorie_id'] : null),
+			'type'         => $data['type'],
+			'page_id'      => $data['page_id'],
+            'rang'         => (isset($data['rang']) ? $data['rang'] : 0),
+			'created_at'   => date('Y-m-d G:i:s'),
+			'updated_at'   => date('Y-m-d G:i:s')
 		));
 
 		if( ! $content )

@@ -17,13 +17,13 @@ class CreateCategoriesTable extends Migration {
 			$table->increments('id')->unsigned();
             $table->string('title');
             $table->text('image');
-            $table->integer('ismain');
-            $table->tinyInteger('hideOnSite')->default(0);
+            $table->integer('ismain')->nullable();
+			$table->integer('site_id');
+            $table->tinyInteger('hideOnSite')->nullable();
             $table->timestamps();
             $table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.

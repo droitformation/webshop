@@ -21,6 +21,7 @@ class CreateContentsTable extends Migration {
 			$table->string('url')->nullable();
             $table->integer('rang')->default(0);
 			$table->integer('page_id');
+			$table->integer('categorie_id')->nullable();
 			$table->enum('type', array('agenda','loi','faq','lien','autorite'));
 			$table->timestamps();
             $table->softDeletes();

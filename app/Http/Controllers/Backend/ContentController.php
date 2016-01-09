@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Content\Repo\ContentInterface;
+use App\Droit\Categorie\Repo\CategorieInterface;
 
 class ContentController extends Controller
 {
     protected $content;
+    protected $categorie;
 
-    public function __construct(ContentInterface $content)
+    public function __construct(ContentInterface $content, CategorieInterface $categorie)
     {
-        $this->content = $content;
+        $this->content   = $content;
+        $this->categorie = $categorie;
     }
 
     /**
@@ -24,17 +27,9 @@ class ContentController extends Controller
      */
     public function index($type,$page)
     {
-        return view('backend.pages.partials.'.$type)->with(['page_id' => $page]);
-    }
+        $categories = $this->categorie->getAll(2);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('backend.contents.create');
+        return view('backend.pages.partials.'.$type)->with(['page_id' => $page, 'categories' => $categories]);
     }
 
     /**
