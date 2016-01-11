@@ -92,7 +92,8 @@ class OrderEloquent implements OrderInterface{
             'shipping_id' => $data['shipping_id'],
             'payement_id' => $data['payement_id'],
             'amount'      => $data['amount'],
-            'order_no'    => $data['order_no']
+            'order_no'    => $data['order_no'],
+            'comment'     => ($data['comment'] ? $data['comment'] : null),
         ));
 
         if( ! $order )
