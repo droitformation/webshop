@@ -38,33 +38,36 @@
             </div>
 
             <h5><a href="{{ url('bail/jurisprudence') }}">Jurisprudence <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-            <div class="jurisprudence">
-                <div class="filtre">
-                    <h6>Par catégorie</h6>
-                    <div class="list categories clear">
-                        <select id="arret-chosen" class="chosen-select category" multiple data-placeholder="Filtrer par catégorie..." name="filter">
-                            <?php
-                                if(!empty($categories)){
-                                    foreach($categories as $categorie)
-                                    {
-                                        echo '<option value="c'.$categorie->id.'">'.$categorie->title.'</option>';
-                                    }
-                                }
-                            ?>
-                        </select>
-                    </div>
-                    <h6>Par année</h6>
-                    <ul id="arret-annees" class="list annees clear">
-                        <?php
-                            if(!empty($years)){
-                                foreach($years as $year){
-                                    echo '<li><a rel="y'.$year.'" href="#">Paru en '.$year.'</a></li>';
-                                }
-                            }
-                        ?>
-                    </ul>
-                </div>
-            </div>
+            @if( Request::is('bail/jurisprudence') )
+                <div id="masterFilter"><!--END jusriprudence-->
+
+                    <div class="widget list categories clear">
+                        <h3 class="title"><i class="icon-tasks"></i> &nbsp;Catégories</h3>
+
+                        @if(!empty($categories))
+                            <select id="arret-chosen" name="category_check" data-placeholder="Choisir une ou plusieurs catégories" style="width:100%" multiple class="chosen-select category">
+                                @foreach($categories as $categorie)
+                                    <option value="c{{ $categorie->id }}">{{ $categorie->title }}</option>
+                                @endforeach
+                            </select>
+                        @endif
+
+                    </div><!--END WIDGET-->
+
+                    <div class="widget list annees clear">
+                        <h3 class="title"><i class="icon-calendar"></i> &nbsp;Années</h3>
+                        @if(!empty($years))
+                            <ul id="arret-annees" class="list annees clear">
+                                @foreach($years as $year)
+                                    <li><a rel="y{{ $year }}" href="#">Paru en {{ $year }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div><!--END WIDGET-->
+
+                </div><!--END jusriprudence-->
+            @endif
+
             <h5><a href="{{ url('bail/doctrine') }}" title="Articles de doctrine">Articles de doctrine <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
             <div class="accordionContentPart accordionContent seminaire">
 

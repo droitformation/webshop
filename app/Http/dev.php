@@ -224,9 +224,34 @@ Route::get('manager', function()
 
 });
 
-Route::get('myaddress', function()
+Route::get('dispatch', function()
 {
-    factory(App\Droit\Adresse\Entities\Adresse::class,200)->create();
+    $model =  App::make('App\Droit\Arret\Repo\ArretInterface');
+
+    $arrets = $model->getAll(2);
+
+    $files = $arrets->lists('file');
+
+
+    foreach($files as $path)
+    {
+        $file = explode('/', $path);
+        $file = end($file);
+
+        $name   = public_path('files').'/arrets/dispatch/'.$file;
+        $target = public_path('files').'/arrets/bail/'.$file;
+
+        if(File::exists($name) && File::isFile($name))
+        {
+            File::copy( $name, $target);
+            echo $name;
+            echo '<br/>';
+        }
+    }
+
+    echo '<pre>';
+   // print_r();
+    echo '</pre>';exit;
 
 });
 
