@@ -25,7 +25,7 @@
                                 <p>{!! $analyse->abstract !!}</p>
                             </div><!--END POST-TITLE-->
                             <div class="post-entry">
-                                @if(!empty($analyse->file ))
+                                @if(!empty($analyse->file ) && File::exists(public_path('files/analyses/'.$analyse->file)))
                                     <p>
                                         <a target="_blank" href="{{ asset('files/analyses/'.$analyse->file) }}">
                                             Télécharger cette analyse en PDF &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>

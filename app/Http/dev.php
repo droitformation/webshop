@@ -226,32 +226,47 @@ Route::get('manager', function()
 
 Route::get('dispatch', function()
 {
-    $model =  App::make('App\Droit\Arret\Repo\ArretInterface');
+    $document    = 'analyse';
+    $interface   = ucfirst($document);
+    $directorie  = 'arrets';
+    $putinfolder = $document.'s';
 
-    $arrets = $model->getAll(2);
+    $model  =  App::make('App\Droit\\'.$interface.'\\Repo\\'.$interface.'Interface');
 
-    $files = $arrets->lists('file');
-
+    $models = $model->getAll(2);
+    $files  = $models->lists('file');
 
     foreach($files as $path)
     {
         $file = explode('/', $path);
         $file = end($file);
 
-        $name   = public_path('files').'/arrets/dispatch/'.$file;
-        $target = public_path('files').'/arrets/bail/'.$file;
+        $tosearch[] = $file;
+    }
 
-        if(File::exists($name) && File::isFile($name))
+    $path   = public_path('files').'/'.$directorie.'/dispatch';
+    $search = File::allFiles($path);
+
+    foreach($search as $find)
+    {
+        $file = explode('/', $find);
+        $file = end($file);
+
+        if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
         {
-            File::copy( $name, $target);
-            echo $name;
+            $target = public_path('files').'/'.$putinfolder.'/bail/'.$file;
+
+            //File::copy( $find, $target );
+            echo $find;
             echo '<br/>';
         }
     }
 
     echo '<pre>';
-   // print_r();
-    echo '</pre>';exit;
+    //print_r($tosearch);
+    echo '</pre>';
+
+    exit;
 
 });
 

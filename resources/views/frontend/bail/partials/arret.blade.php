@@ -19,7 +19,7 @@
                     <a class="anchor" name="{{ $arret->reference }}"></a>
                     {!! $arret->parsedText !!}
 
-                    @if(!empty($arret->file ))
+                    @if(!empty($arret->file ) && File::exists(public_path('files/arrets/'.$arret->file)))
                         <p><a target="_blank" href="{{ asset('files/arrets/'.$arret->file) }}">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a></p>
                     @endif
                 </div>

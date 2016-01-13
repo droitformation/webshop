@@ -6,3 +6,4 @@ composer.lock
 .idea/
 /public/logos/
 /public/files/arrets/
+/public/files/analyses/

@@ -61,7 +61,7 @@ class BailController extends Controller
     {
         $arrets     = $this->arret->getAll($this->site);
         $categories = $this->categorie->getAll($this->site);
-        $analyses   = $this->analyse->getAll([],$this->site);
+        $analyses   = $this->analyse->getAll($this->site);
         $authors    = $this->author->getAll();
 
         $arrets     = $this->jurisprudence->preparedArrets($arrets);

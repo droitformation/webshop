@@ -2,7 +2,7 @@
 
 interface AnalyseInterface {
 
-    public function getAll($include = [],$site = null);
+    public function getAll($site = null,$include = []);
 	public function find($data);
 	public function create(array $data);
 	public function update(array $data);
