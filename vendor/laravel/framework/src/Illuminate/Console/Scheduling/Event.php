@@ -211,12 +211,14 @@ class Event
      */
     public function buildCommand()
     {
+        $output = ProcessUtils::escapeArgument($this->output);
+
         $redirect = $this->shouldAppendOutput ? ' >> ' : ' > ';
 
         if ($this->withoutOverlapping) {
-            $command = '(touch '.$this->mutexPath().'; '.$this->command.'; rm '.$this->mutexPath().')'.$redirect.$this->output.' 2>&1 &';
+            $command = '(touch '.$this->mutexPath().'; '.$this->command.'; rm '.$this->mutexPath().')'.$redirect.$output.' 2>&1 &';
         } else {
-            $command = $this->command.$redirect.$this->output.' 2>&1 &';
+            $command = $this->command.$redirect.$output.' 2>&1 &';
         }
 
         return $this->user ? 'sudo -u '.$this->user.' '.$command : $command;
@@ -245,7 +247,6 @@ class Event
         }
 
         return $this->expressionPasses() &&
-               $this->filtersPass($app) &&
                $this->runsInEnvironment($app->environment());
     }
 
@@ -271,7 +272,7 @@ class Event
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return bool
      */
-    protected function filtersPass($app)
+    public function filtersPass($app)
     {
         foreach ($this->filters as $callback) {
             if (! $app->call($callback)) {
@@ -497,6 +498,16 @@ class Event
     }
 
     /**
+     * Schedule the event to run quarterly.
+     *
+     * @return $this
+     */
+    public function quarterly()
+    {
+        return $this->cron('0 0 1 */3 *');
+    }
+
+    /**
      * Schedule the event to run yearly.
      *
      * @return $this
@@ -659,7 +670,7 @@ class Event
      */
     public function sendOutputTo($location, $append = false)
     {
-        $this->output = ProcessUtils::escapeArgument($location);
+        $this->output = $location;
 
         $this->shouldAppendOutput = $append;
 
@@ -681,11 +692,12 @@ class Event
      * E-mail the results of the scheduled operation.
      *
      * @param  array|mixed  $addresses
+     * @param  bool  $onlyIfOutputExists
      * @return $this
      *
      * @throws \LogicException
      */
-    public function emailOutputTo($addresses)
+    public function emailOutputTo($addresses, $onlyIfOutputExists = false)
     {
         if (is_null($this->output) || $this->output == $this->getDefaultOutput()) {
             throw new LogicException('Must direct output to a file in order to e-mail results.');
@@ -693,9 +705,22 @@ class Event
 
         $addresses = is_array($addresses) ? $addresses : func_get_args();
 
-        return $this->then(function (Mailer $mailer) use ($addresses) {
-            $this->emailOutput($mailer, $addresses);
+        return $this->then(function (Mailer $mailer) use ($addresses, $onlyIfOutputExists) {
+            $this->emailOutput($mailer, $addresses, $onlyIfOutputExists);
         });
+    }
+
+    /**
+     * E-mail the results of the scheduled operation if it produces output.
+     *
+     * @param  array|mixed  $addresses
+     * @return $this
+     *
+     * @throws \LogicException
+     */
+    public function emailWrittenOutputTo($addresses)
+    {
+        return $this->emailOutputTo($addresses, true);
     }
 
     /**
@@ -703,11 +728,18 @@ class Event
      *
      * @param  \Illuminate\Contracts\Mail\Mailer  $mailer
      * @param  array  $addresses
+     * @param  bool  $includeEmpty
      * @return void
      */
-    protected function emailOutput(Mailer $mailer, $addresses)
+    protected function emailOutput(Mailer $mailer, $addresses, $onlyIfOutputExists = false)
     {
-        $mailer->raw(file_get_contents($this->output), function ($m) use ($addresses) {
+        $text = file_get_contents($this->output);
+
+        if ($onlyIfOutputExists && empty($text)) {
+            return;
+        }
+
+        $mailer->raw($text, function ($m) use ($addresses) {
             $m->subject($this->getEmailSubject());
 
             foreach ($addresses as $address) {
