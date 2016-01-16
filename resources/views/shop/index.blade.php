@@ -16,12 +16,13 @@
     @foreach($chunks  as $chunk)
         <div class="row text-center">
             @foreach($chunk  as $product)
+
                 <div class="col-md-3 col-sm-6 hero-feature">
                     <div class="thumbnail">
                         <img src="{{ asset('files/products/'.$product->image) }}" alt="">
                         <div class="caption">
                             <h5>{{ $product->title }}</h5>
-                            <p class="text-muted">{{ isset($product->abos) ? 'Existe sous forme d\'abonnement' : '' }}</p>
+                            <p class="text-muted">{{ !$product->abos->isEmpty() ? 'Existe sous forme d\'abonnement' : '' }}</p>
                             <p>
                                 {!! Form::open(array('url' => 'cart/addProduct')) !!}
                                 {!! Form::hidden('_token', csrf_token()) !!}

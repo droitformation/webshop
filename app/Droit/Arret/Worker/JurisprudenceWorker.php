@@ -22,6 +22,8 @@ class JurisprudenceWorker{
         $this->arret      = $arret;
         $this->analyse    = $analyse;
         $this->custom     = new \App\Droit\Helper\Helper();
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /**
@@ -69,17 +71,13 @@ class JurisprudenceWorker{
      *
      * @return collection
      */
-    public function preparedArrets()
+    public function preparedArrets($arrets)
     {
-
-        $include  = $this->showArrets();
-        $arrets   = $this->arret->getAllActives($include);
+        //$include  = $this->showArrets();
+        //$arrets   = $this->arret->getAllActives($include);
 
         $prepared = $arrets->filter(function($arret)
         {
-            // format the title with the date
-            setlocale(LC_ALL, 'fr_FR.UTF-8');
-
             $arret->setAttribute('humanTitle',$arret->reference.' du '.$arret->pub_date->formatLocalized('%d %B %Y'));
             $arret->setAttribute('parsedText',$arret->pub_text);
 
@@ -114,17 +112,13 @@ class JurisprudenceWorker{
      *
      * @return collection
      */
-    public function preparedAnalyses()
+    public function preparedAnalyses($analyses)
     {
-
-        $include  = $this->showAnalyses();
-        $analyses = $this->analyse->getAll($include);
+        //$include  = $this->showAnalyses();
+        //$analyses = $this->analyse->getAll($include);
 
         $prepared = $analyses->filter(function($analyse)
         {
-            // format the title with the date
-            setlocale(LC_ALL, 'fr_FR.UTF-8');
-
             // categories for isotope
             if(!$analyse->analyses_categories->isEmpty())
             {

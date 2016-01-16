@@ -4,6 +4,7 @@
 /* line 7, main.scss */
 body {
   background: #cccccc;
+  font-family: Arial,​Verdana,​Helvetica,​sans-serif;
 }
 
 /* line 11, main.scss */
@@ -18,7 +19,7 @@ h1, h2, h3, h4, h5 {
 
 /* line 19, main.scss */
 h3 {
-  font-size: 0.9em;
+  font-size: 1.2em;
   font-weight: bold;
 }
 
@@ -593,6 +594,19 @@ a.newsletterLink:hover {
   padding: 0;
 }
 
+.widget{
+  margin-top: 20px;
+}
+
+.widget h3{
+  font-size: 13px;
+}
+
+.list{
+  margin-left: 5px;
+  padding-left: 0;
+}
+
 /******************************************************
 * Calculette
 ******************************************************/
@@ -661,17 +675,23 @@ a.newsletterLink:hover {
 }
 
 /* line 604, main.scss */
-.arret .content {
-  font-size: 12px;
-  line-height: 18px;
+.arret .post-entry {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: justify;
 }
 
 /* line 609, main.scss */
-.arret .content h3 {
+.arret .post-title h3 {
   color: #000000;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   padding: 0;
+}
+
+.arret .post-title p {
+  font-style: italic;
+  color: #555;
 }
 
 /* line 616, main.scss */
@@ -725,6 +745,8 @@ a.newsletterLink:hover {
 /* line 658, main.scss */
 .line {
   line-height: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #cb2629;
 }

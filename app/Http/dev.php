@@ -224,9 +224,49 @@ Route::get('manager', function()
 
 });
 
-Route::get('myaddress', function()
+Route::get('dispatch', function()
 {
-    factory(App\Droit\Adresse\Entities\Adresse::class,200)->create();
+    $document    = 'analyse';
+    $interface   = ucfirst($document);
+    $directorie  = 'arrets';
+    $putinfolder = $document.'s';
+
+    $model  =  App::make('App\Droit\\'.$interface.'\\Repo\\'.$interface.'Interface');
+
+    $models = $model->getAll(2);
+    $files  = $models->lists('file');
+
+    foreach($files as $path)
+    {
+        $file = explode('/', $path);
+        $file = end($file);
+
+        $tosearch[] = $file;
+    }
+
+    $path   = public_path('files').'/'.$directorie.'/dispatch';
+    $search = File::allFiles($path);
+
+    foreach($search as $find)
+    {
+        $file = explode('/', $find);
+        $file = end($file);
+
+        if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
+        {
+            $target = public_path('files').'/'.$putinfolder.'/bail/'.$file;
+
+            //File::copy( $find, $target );
+            echo $find;
+            echo '<br/>';
+        }
+    }
+
+    echo '<pre>';
+    //print_r($tosearch);
+    echo '</pre>';
+
+    exit;
 
 });
 

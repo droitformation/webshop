@@ -3,7 +3,8 @@
 interface ArretInterface {
 
     public function getAll($site = null);
-    public function getAllActives($include = []);
+    public function annees($site);
+    public function getAllActives($include = [], $site = null);
     public function getPaginate($nbr);
     public function getLatest($include = []);
 	public function find($data);

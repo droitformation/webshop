@@ -19,8 +19,14 @@ class GoogleProvider extends AbstractProvider implements ProviderInterface
      * @var array
      */
     protected $scopes = [
+<<<<<<< HEAD
         'profile',
         'email',
+=======
+        'https://www.googleapis.com/auth/plus.me',
+        'https://www.googleapis.com/auth/plus.login',
+        'https://www.googleapis.com/auth/plus.profile.emails.read',
+>>>>>>> 0e43fec4d68c1531e6c848ec9293a2a76d1e6cb1
     ];
 
     /**

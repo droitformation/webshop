@@ -17,16 +17,29 @@ class ArretEloquent implements ArretInterface{
         return $this->arret->with(['arrets_categories','arrets_analyses'])->site($site)->orderBy('reference', 'ASC')->get();
     }
 
-    public function getAllActives($include = []){
+    public function annees($site)
+    {
+        $arrets   = $this->arret->where('site_id','=',$site)->get();
 
-        $arrets = $this->arret->with( array('arrets_categories','arrets_analyses'));
+        $prepared = $arrets->lists('pub_date');
 
-        if(!empty($include)){
+        $grouped = $prepared->groupBy(function ($item, $key) {
+            return $item->year;
+        });
+
+        return array_reverse(array_keys($grouped->toArray()));
+    }
+
+    public function getAllActives($include = [], $site = null)
+    {
+        $arrets = $this->arret->where('site_id','=',$site)->with( array('arrets_categories','arrets_analyses'));
+
+        if(!empty($include))
+        {
             $arrets->whereIn('id', $include);
         }
 
         return $arrets->orderBy('reference', 'ASC')->get();
-
     }
 
     public function getPaginate($nbr)

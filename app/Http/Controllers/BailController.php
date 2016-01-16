@@ -11,7 +11,10 @@ use App\Droit\Arret\Repo\ArretInterface;
 use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Analyse\Repo\AnalyseInterface;
 use App\Droit\Author\Repo\AuthorInterface;
+
 use App\Droit\Page\Repo\PageInterface;
+use App\Droit\Arret\Worker\JurisprudenceWorker;
+
 
 class BailController extends Controller
 {
@@ -19,9 +22,10 @@ class BailController extends Controller
     protected $categorie;
     protected $analyse;
     protected $author;
+    protected $jurisprudence;
     protected $site;
 
-    public function __construct(ArretInterface $arret, CategorieInterface $categorie, AnalyseInterface $analyse, AuthorInterface $author, PageInterface $page)
+    public function __construct(ArretInterface $arret, CategorieInterface $categorie, AnalyseInterface $analyse, AuthorInterface $author, JurisprudenceWorker $jurisprudence, PageInterface $page)
     {
         $this->site  = 2;
 
@@ -30,6 +34,12 @@ class BailController extends Controller
         $this->analyse   = $analyse;
         $this->author    = $author;
         $this->page      = $page;
+
+         $years = $this->arret->annees(2);
+
+        view()->share('years',$years);
+
+        setlocale(LC_ALL, 'fr_FR');
     }
 
     public function index()
@@ -53,11 +63,13 @@ class BailController extends Controller
 
     public function jurisprudence()
     {
-
         $arrets     = $this->arret->getAll($this->site);
         $categories = $this->categorie->getAll($this->site);
-        $analyses   = $this->analyse->getAll([],$this->site);
+        $analyses   = $this->analyse->getAll($this->site);
         $authors    = $this->author->getAll();
+
+        $arrets     = $this->jurisprudence->preparedArrets($arrets);
+        $analyses   = $this->jurisprudence->preparedAnalyses($analyses);
 
         return view('frontend.bail.jurisprudence')->with(['arrets' => $arrets , 'analyses' => $analyses, 'categories' => $categories, 'authors' => $authors ]);
     }
