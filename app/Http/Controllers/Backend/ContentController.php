@@ -8,16 +8,19 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Content\Repo\ContentInterface;
 use App\Droit\Categorie\Repo\CategorieInterface;
+use App\Droit\Page\Repo\PageInterface;
 
 class ContentController extends Controller
 {
     protected $content;
     protected $categorie;
+    protected $page;
 
-    public function __construct(ContentInterface $content, CategorieInterface $categorie)
+    public function __construct(ContentInterface $content, CategorieInterface $categorie, PageInterface $page)
     {
         $this->content   = $content;
         $this->categorie = $categorie;
+        $this->page      = $page;
     }
 
     /**
@@ -43,7 +46,9 @@ class ContentController extends Controller
 
         $content = $this->content->create($data);
 
-        echo 'ok';
+        $page = $this->page->find($content->page_id);
+
+        echo view('backend.pages.partials.list')->with(['page' => $page]);
     }
 
     /**
@@ -84,4 +89,5 @@ class ContentController extends Controller
 
         echo 'ok';
     }
+
 }

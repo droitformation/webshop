@@ -106,32 +106,20 @@
 
                     <div id="content-bloc-wrapper" data-page="{{ $page->id }}">
 
+                        <a href="#" data-type="text" class="new-bloc-content btn btn-primary btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc texte</a>
                         <a href="#" data-type="lois" class="new-bloc-content btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lois</a>
                         <a href="#" data-type="autorite" class="new-bloc-content btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc autorité</a>
                         <a href="#" data-type="lien" class="new-bloc-content btn btn-orange btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lien</a>
                         <a href="#" data-type="faq" class="new-bloc-content btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc FAQ</a>
 
-                        <div id="bloc-wrapper" data-page="{{ $page->id }}">
-
-                        </div>
+                        <div id="bloc-wrapper" data-page="{{ $page->id }}"></div>
                     </div>
 
                     <hr/>
 
-                    @if(!$page->blocs->isEmpty())
-                        <?php $grouped = $page->blocs->groupBy('type'); ?>
-                        @foreach($grouped as $groupe => $blocs)
-                            <h5>{{ ucfirst($groupe) }}</h5>
-                            <ul class="list-group">
-                                @foreach($blocs as $bloc)
-                                    <li class="list-group-item">{!! $bloc->name !!}
-                                        <a href="#" data-what="supprimer" data-action="{{ $groupe }}" class="btn btn-danger btn-xs pull-right deleteAction"><i class="fa fa-times"></i></a>
-                                        <a href="#" class="btn btn-info btn-xs pull-right">éditer</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endforeach
-                    @endif
+                    <div id="listBlocs">
+                        @include('backend.pages.partials.list')
+                    </div>
 
                 </div>
             </div>

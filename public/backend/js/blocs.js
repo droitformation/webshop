@@ -39,6 +39,7 @@ $( function() {
         {
             e.preventDefault(); e.stopPropagation();
 
+            var self   = $(this);
             var $form  = $(this).closest('form');
             var inputs = $form.find('input,textarea,file');
 
@@ -54,8 +55,10 @@ $( function() {
                 type : "POST",
                 url  : base_url + "admin/content",
                 data : { data: map , _token: $("meta[name='_token']").attr('content') },
-                success: function(data) {
-
+                success: function(data)
+                {
+                    self.closest('.bloc-content').remove();
+                    $('#listBlocs').empty().append(data);
                 },
                 error: function(){alert('problème avec l\'ajout du bloc');}
             });

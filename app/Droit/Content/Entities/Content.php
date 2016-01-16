@@ -9,7 +9,7 @@ class Content extends Model {
 
     protected $dates    = ['deleted_at'];
 
-	protected $fillable = ['title','content','image','url','type','rang','page_id'];
+	protected $fillable = ['title','content','image','url','type','rang','page_id','style'];
 
     protected $table = 'contents';
 

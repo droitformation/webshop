@@ -11,6 +11,7 @@ use App\Droit\Arret\Repo\ArretInterface;
 use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Analyse\Repo\AnalyseInterface;
 use App\Droit\Author\Repo\AuthorInterface;
+use App\Droit\Page\Repo\PageInterface;
 
 class BailController extends Controller
 {
@@ -20,7 +21,7 @@ class BailController extends Controller
     protected $author;
     protected $site;
 
-    public function __construct(ArretInterface $arret, CategorieInterface $categorie, AnalyseInterface $analyse, AuthorInterface $author)
+    public function __construct(ArretInterface $arret, CategorieInterface $categorie, AnalyseInterface $analyse, AuthorInterface $author, PageInterface $page)
     {
         $this->site  = 2;
 
@@ -28,14 +29,16 @@ class BailController extends Controller
         $this->categorie = $categorie;
         $this->analyse   = $analyse;
         $this->author    = $author;
+        $this->page      = $page;
     }
 
     public function index()
     {
         $categories = $this->categorie->getAll($this->site);
         $authors    = $this->author->getAll();
+        $page       = $this->page->getBySlug(2,'home');
 
-        return view('frontend.bail.index')->with(['categories' => $categories , 'authors' => $authors ]);
+        return view('frontend.bail.index')->with([ 'categories' => $categories , 'authors' => $authors, 'page' => $page ]);
     }
 
     public function lois(){

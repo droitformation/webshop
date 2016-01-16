@@ -23,7 +23,6 @@
                             <th class="col-sm-2">Titre</th>
                             <th class="col-sm-1">Image</th>
                             <th class="col-sm-2">Type</th>
-                            <th class="col-sm-2">Position</th>
                             <th class="col-sm-1"></th>
                         </tr>
                         </thead>
@@ -40,7 +39,6 @@
                                             @endif
                                         </td>
                                         <td>{{{ $item->type or '' }}}</td>
-                                        <td>{{ $positions[$item->position] }}</td>
                                         <td class="text-right">
                                             {!! Form::open(array('route' => array('admin.contenu.destroy', $item->id), 'method' => 'delete')) !!}
                                                 <button data-what="supprimer" data-action="contenu: {{{ $item->titre }}}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>

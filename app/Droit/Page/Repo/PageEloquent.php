@@ -37,9 +37,9 @@ class PageEloquent implements PageInterface{
         return $this->page->with(['blocs'])->find($id);
     }
 
-    public function getBySlug($slug)
+    public function getBySlug($site,$slug)
     {
-        return $this->page->where('slug','=',$slug)->first();
+        return $this->page->with(['blocs'])->site($site)->where('slug','=',$slug)->first();
     }
 
     public function buildTree($data)

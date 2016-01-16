@@ -19,10 +19,11 @@ class CreateContentsTable extends Migration {
 			$table->text('content')->nullable();
 			$table->string('image')->nullable();
 			$table->string('url')->nullable();
+            $table->string('style')->nullable();
             $table->integer('rang')->default(0);
 			$table->integer('page_id');
 			$table->integer('categorie_id')->nullable();
-			$table->enum('type', array('agenda','loi','faq','lien','autorite'));
+			$table->enum('type', array('agenda','loi','faq','lien','autorite','text'));
 			$table->timestamps();
             $table->softDeletes();
 		});

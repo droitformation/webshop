@@ -41,6 +41,7 @@ class ContentEloquent implements ContentInterface{
 			'type'         => $data['type'],
 			'page_id'      => $data['page_id'],
             'rang'         => (isset($data['rang']) ? $data['rang'] : 0),
+			'style'        => (isset($data['style']) ? $data['style'] : ''),
 			'created_at'   => date('Y-m-d G:i:s'),
 			'updated_at'   => date('Y-m-d G:i:s')
 		));

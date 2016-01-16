@@ -6,7 +6,7 @@ interface PageInterface {
     public function find($id);
     public function search($term);
     public function buildTree($data);
-    public function getBySlug($slug);
+    public function getBySlug($site,$slug);
     public function create(array $data);
     public function update(array $data);
     public function updateSorting(array $data);

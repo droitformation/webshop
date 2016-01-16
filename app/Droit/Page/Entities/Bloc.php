@@ -8,6 +8,6 @@ class Bloc extends Model {
 
     protected $table   = 'blocs';
 
-    protected $fillable = ['title','content','rang','image','type','page_id','lien'];
+    protected $fillable = ['title','content','rang','image','type','page_id','lien','style'];
 
 }

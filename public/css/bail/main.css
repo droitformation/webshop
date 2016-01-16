@@ -101,6 +101,25 @@ button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus
   visibility: hidden;
 }
 
+/*
+  Styles
+*/
+
+.agenda{
+  padding: 15px;
+  background: #cb2629;
+  color: #f5c8c8;
+}
+
+.agenda a, .agenda h5{
+  color: #fff;
+}
+
+.agenda h5{
+  margin-bottom: 5px;
+  border: none;
+}
+
 /* line 80, main.scss */
 footer {
   color: #fff;
