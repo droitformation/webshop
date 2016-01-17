@@ -7,7 +7,7 @@
 	 
 	 	 <div class="row">
 	 	 	<div class="col-md-12">
-		 	 	<h3 class="line">Jurisprudence</h3>
+		 	 	<h3 class="line up">Jurisprudence</h3>
 	 	 	</div>
 	 	 </div>
 	 	 <div id="arrets" class="row">

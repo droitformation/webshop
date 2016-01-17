@@ -32,7 +32,7 @@ class ContentController extends Controller
     {
         $categories = $this->categorie->getAll(2);
 
-        return view('backend.pages.partials.'.$type)->with(['page_id' => $page, 'categories' => $categories]);
+        return view('backend.pages.create.'.$type)->with(['page_id' => $page, 'categories' => $categories]);
     }
 
     /**
@@ -59,9 +59,10 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-        $content  = $this->content->find($id);
+        $content    = $this->content->find($id);
+        $categories = $this->categorie->getAll(2);
 
-        return view('backend.contents.show')->with(array( 'content' => $content ));
+        echo view('backend.pages.partials.edit')->with(['content' => $content, 'categories' => $categories]);
     }
 
     /**
@@ -72,9 +73,13 @@ class ContentController extends Controller
      */
     public function update($id, Request $request)
     {
-        $content = $this->content->update($request->all());
+        $data = $request->input('data');
 
-        return view('backend.pages.partials.'.$content->type)->with(['page_id' => $content->page_id, 'content' => $content]);
+        $content = $this->content->update($data);
+
+        $page = $this->page->find($content->page_id);
+
+        echo view('backend.pages.partials.list')->with(['page' => $page]);
     }
 
     /**
@@ -83,11 +88,13 @@ class ContentController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->content->delete($id);
 
-        echo 'ok';
+        $page = $this->page->find($request->page_id);
+
+        echo view('backend.pages.partials.list')->with(['page' => $page]);
     }
 
 }

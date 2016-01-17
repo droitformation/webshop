@@ -22,7 +22,7 @@ class Content extends Model {
 
         if($this->content)
         {
-            return $this->truncate($this->content,100);
+            return $this->truncate($this->content,80,'...',true);
         }
     }
 

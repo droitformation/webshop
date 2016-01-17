@@ -29,15 +29,20 @@ class BailController extends Controller
     {
         $this->site  = 2;
 
-        $this->arret     = $arret;
-        $this->categorie = $categorie;
-        $this->analyse   = $analyse;
-        $this->author    = $author;
-        $this->page      = $page;
+        $this->arret         = $arret;
+        $this->categorie     = $categorie;
+        $this->analyse       = $analyse;
+        $this->author        = $author;
+        $this->page          = $page;
+        $this->jurisprudence = $jurisprudence;
 
-         $years = $this->arret->annees(2);
+        $years      = $this->arret->annees(2);
+        $categories = $this->categorie->getAll($this->site);
+        $authors    = $this->author->getAll();
 
         view()->share('years',$years);
+        view()->share('categories',$categories);
+        view()->share('authors',$authors);
 
         setlocale(LC_ALL, 'fr_FR');
     }
@@ -51,27 +56,28 @@ class BailController extends Controller
         return view('frontend.bail.index')->with([ 'categories' => $categories , 'authors' => $authors, 'page' => $page ]);
     }
 
-    public function lois(){
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $slug
+     * @return Response
+     */
+    public function page($slug)
+    {
+        $page = $this->page->getBySlug($this->site,$slug);
 
-        return view('frontend.bail.lois');
-    }
-
-    public function autorites(){
-
-        return view('frontend.bail.autorites');
+        return view('frontend.bail.'.$slug)->with(['page' => $page]);
     }
 
     public function jurisprudence()
     {
         $arrets     = $this->arret->getAll($this->site);
-        $categories = $this->categorie->getAll($this->site);
         $analyses   = $this->analyse->getAll($this->site);
-        $authors    = $this->author->getAll();
 
         $arrets     = $this->jurisprudence->preparedArrets($arrets);
         $analyses   = $this->jurisprudence->preparedAnalyses($analyses);
 
-        return view('frontend.bail.jurisprudence')->with(['arrets' => $arrets , 'analyses' => $analyses, 'categories' => $categories, 'authors' => $authors ]);
+        return view('frontend.bail.jurisprudence')->with(['arrets' => $arrets , 'analyses' => $analyses]);
     }
 
 /*    public function doctrine(){

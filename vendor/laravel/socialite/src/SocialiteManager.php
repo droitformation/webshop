@@ -5,13 +5,9 @@ namespace Laravel\Socialite;
 use InvalidArgumentException;
 use Illuminate\Support\Manager;
 use Laravel\Socialite\One\TwitterProvider;
-<<<<<<< HEAD
-use League\OAuth1\Client\Server\Twitter as TwitterServer;
-=======
 use Laravel\Socialite\One\BitbucketProvider;
 use League\OAuth1\Client\Server\Twitter as TwitterServer;
 use League\OAuth1\Client\Server\Bitbucket as BitbucketServer;
->>>>>>> 0e43fec4d68c1531e6c848ec9293a2a76d1e6cb1
 
 class SocialiteManager extends Manager implements Contracts\Factory
 {
@@ -78,28 +74,11 @@ class SocialiteManager extends Manager implements Contracts\Factory
         $config = $this->app['config']['services.linkedin'];
 
         return $this->buildProvider(
-          'Laravel\Socialite\Two\LinkedInProvider', $config
+            'Laravel\Socialite\Two\LinkedInProvider', $config
         );
     }
 
     /**
-<<<<<<< HEAD
-     * Create an instance of the specified driver.
-     *
-     * @return \Laravel\Socialite\Two\AbstractProvider
-     */
-    protected function createBitbucketDriver()
-    {
-        $config = $this->app['config']['services.bitbucket'];
-
-        return $this->buildProvider(
-          'Laravel\Socialite\Two\BitbucketProvider', $config
-        );
-    }
-
-    /**
-=======
->>>>>>> 0e43fec4d68c1531e6c848ec9293a2a76d1e6cb1
      * Build an OAuth 2 provider instance.
      *
      * @param  string  $provider
@@ -129,8 +108,6 @@ class SocialiteManager extends Manager implements Contracts\Factory
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Create an instance of the specified driver.
      *
      * @return \Laravel\Socialite\One\AbstractProvider
@@ -145,7 +122,6 @@ class SocialiteManager extends Manager implements Contracts\Factory
     }
 
     /**
->>>>>>> 0e43fec4d68c1531e6c848ec9293a2a76d1e6cb1
      * Format the server configuration.
      *
      * @param  array  $config

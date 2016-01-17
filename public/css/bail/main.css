@@ -114,6 +114,8 @@ button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus
 
 .agenda a, .agenda h5{
   color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
 .agenda h5{
@@ -745,8 +747,10 @@ a.newsletterLink:hover {
 /* line 658, main.scss */
 .line {
   line-height: 30px;
-  margin-bottom: 40px;
-  margin-top: 40px;
-  padding-bottom: 20px;
   border-bottom: 1px solid #cb2629;
+}
+
+.line.up {
+  margin-bottom: 20px;
+  margin-top: 40px;
 }

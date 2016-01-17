@@ -39,11 +39,11 @@
                             <h1 class="col-md-3"><a class="" href=""><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
                             <nav class="col-md-9" id="menu-principal">
 
-                                <a class="{{ Request::is('bail') ? 'active' : '' }}" href="{{ url('bail') }}">Home</a>
-                                <a class="{{ Request::is('bail/loi') ? 'active' : '' }}" href="{{ url('bail/lois') }}">Lois</a>
-                                <a class="{{ Request::is('bail/autorites') ? 'active' : '' }}" href="{{ url('bail/autorites') }}">Autorités</a>
-                                <a class="{{ Request::is('bail/liens') ? 'active' : '' }}" href="{{ url('bail/liens') }}">Liens utiles</a>
-                                <a class="{{ Request::is('bail/faq') ? 'noborder active' : 'noborder' }}" href="{{ url('bail/faq') }}">FAQ</a>
+                                <a class="{{ Request::is('bail') || Request::is('bail/page/home') ? 'active' : '' }}" href="{{ url('bail') }}">Home</a>
+                                <a class="{{ Request::is('bail/page/loi') ? 'active' : '' }}" href="{{ url('bail/page/lois') }}">Lois</a>
+                                <a class="{{ Request::is('bail/page/autorites') ? 'active' : '' }}" href="{{ url('bail/page/autorites') }}">Autorités</a>
+                                <a class="{{ Request::is('bail/page/liens') ? 'active' : '' }}" href="{{ url('bail/page/liens') }}">Liens utiles</a>
+                                <a class="{{ Request::is('bail/page/faq') ? 'noborder active' : 'noborder' }}" href="{{ url('bail/page/faq') }}">FAQ</a>
 
                             </nav>
                         </div>
