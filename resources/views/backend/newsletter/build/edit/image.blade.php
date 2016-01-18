@@ -26,7 +26,7 @@
                     <img flow-img="$flow.files[0]" ng-if="notedited"/>
                     <?php $lien = (isset($bloc->lien) && !empty($bloc->lien) ? $bloc->lien : url('/') ); ?>
                     <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
-                        <img style="max-width: 557px;" alt="Droit du travail" src="{{ asset('files/'.$bloc->image) }}" />
+                        <img style="max-width: 557px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$bloc->image) }}" />
                     </a>
                 </div>
                 <div class="thumbnail big" ng-show="$flow.files.length">

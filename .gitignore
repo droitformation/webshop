@@ -9,4 +9,6 @@ composer.lock
 /public/files/products/
 /public/files/arrets/
 /public/files/analyses/
+/public/dispatch/
+/public/files/uploads/
 

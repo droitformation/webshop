@@ -69,6 +69,10 @@ class OrderController extends Controller {
             $this->export($orders,$details);
         }
 
+   /*     echo '<pre>';
+        print_r($orders);
+        echo '</pre>';exit;*/
+
 		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names, 'onlyfree' => $onlyfree, 'details' => $details]);
 	}
 

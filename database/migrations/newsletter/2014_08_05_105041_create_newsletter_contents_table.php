@@ -19,7 +19,7 @@ class CreateNewsletterContentsTable extends Migration {
             $table->integer('type_id');
             $table->string('titre')->nullable();
             $table->binary('contenu')->nullable();
-            $table->string('image')->nullable();
+            $table->text('image')->nullable();
             $table->string('lien')->nullable();
             $table->integer('arret_id')->nullable();
             $table->integer('groupe_id')->nullable();

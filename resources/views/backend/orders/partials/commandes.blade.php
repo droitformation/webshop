@@ -49,19 +49,20 @@
                                                     $order->user->adresse_livraison->load(['pays','civilite']);
                                                     $adresse = $order->user->adresse_livraison;
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     $adresse = $order->adresse;
                                                     $adresse->load(['pays','civilite']);
                                                 }
                                            ?>
-                                            
-                                           <strong>{{ $adresse->civilite->title }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>
+
+                                           <strong>{{ $adresse->civilite_title }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>
                                            {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
                                            {{ $adresse->adresse }}<br>
                                            {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
                                            {!! !empty($adresse->cp) ? $adresse->cp.'<br>' : '' !!}
                                            {{ $adresse->npa }} {{ $adresse->ville }}<br>
-                                           {{ $adresse->pays->title }}
+                                           {{ $adresse->pays_title }}
                                             
                                         </address>
                                     </div>

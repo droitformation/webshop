@@ -20,7 +20,7 @@
                     <td valign="top" align="center" width="160" class="resetMarge">
                         <?php $lien = (isset($bloc->lien) && !empty($bloc->lien) ? $bloc->lien : url('/') ); ?>
                         <a target="_blank" href="<?php echo $lien; ?>">
-                            <img width="130px" style="max-width: 130px; max-height: 220px;" alt="Droit du travail" src="{{ asset('files/'.$bloc->image.'') }}" />
+                            <img width="130px" style="max-width: 130px; max-height: 220px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$bloc->image.'') }}" />
                         </a>
                     </td>
                 </tr>

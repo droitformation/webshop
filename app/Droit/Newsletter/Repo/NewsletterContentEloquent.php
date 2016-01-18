@@ -21,6 +21,11 @@ class NewsletterContentEloquent implements NewsletterContentInterface{
         $this->helper   = new \App\Droit\Helper\Helper();
         $this->groupe   = new \App\Droit\Arret\Entities\Groupe();
 	}
+
+    public function getAll()
+    {
+        return $this->contents->all();
+    }
 	
 	public function getByCampagne($newsletter_campagne_id){
 		

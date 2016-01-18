@@ -13,7 +13,7 @@
                         <p class="centerText">
                             <?php $lien = (isset($bloc->lien) && !empty($bloc->lien) ? $bloc->lien : url('/') ); ?>
                             <a target="_blank" href="<?php echo $lien; ?>">
-                                <img style="max-width: 560px;" alt="Droit du travail" src="{{ asset('files/'.$bloc->image) }}" />
+                                <img style="max-width: 560px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$bloc->image) }}" />
                             </a>
                         </p>
                     </td>

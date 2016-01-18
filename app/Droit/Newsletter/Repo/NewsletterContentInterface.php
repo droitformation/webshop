@@ -2,6 +2,7 @@
 
 interface NewsletterContentInterface {
 
+	public function getAll();
 	public function getByCampagne($newsletter_campagne_id);
     public function getRang($newsletter_campagne_id);
     public function updateSorting(array $data);

@@ -270,6 +270,51 @@ Route::get('dispatch', function()
 
 });
 
+Route::get('dispatchnewsletter', function()
+{
+    $model  =  App::make('App\Droit\Newsletter\Repo\NewsletterContentInterface');
+
+    $models = $model->getAll();
+    $files  = $models->lists('image')->all();
+    $files = array_filter($files);
+
+    foreach($files as $path)
+    {
+        $file = explode(',', $path);
+
+        foreach($file as $item){
+            $tosearch[] = $item;
+        }
+    }
+
+    $path   = public_path('dispatch/newsletter_images');
+    $search = File::allFiles($path);
+
+    foreach($search as $find)
+    {
+
+        $file = explode('/', $find);
+        $file = end($file);
+
+        echo $file;
+        echo '<br/>';
+
+        if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
+        {
+            $target = public_path('files').'/uploads/'.$file;
+
+            File::copy( $find, $target );
+        }
+    }
+
+    echo '<pre>';
+    //print_r($files);
+    echo '</pre>';
+
+    exit;
+
+});
+
 Event::listen('illuminate.query', function($query, $bindings, $time, $name)
 {
     $data = compact('bindings', 'time', 'name');
