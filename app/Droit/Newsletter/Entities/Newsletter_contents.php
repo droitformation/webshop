@@ -8,6 +8,19 @@ class Newsletter_contents extends Model {
 
     public $timestamps = false;
 
+    public function getImageListAttribute()
+    {
+        $images = $this->image;
+        $list   = explode(',',$images);
+
+        if(!empty($list) && count($list) > 1)
+        {
+            return $list;
+        }
+
+        return null;
+    }
+
     public function campagne(){
 
         return $this->belongsTo('App\Droit\Newsletter\Entities\Newsletter_campagnes');

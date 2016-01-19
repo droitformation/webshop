@@ -25,9 +25,21 @@
                 <div class="thumbnail big" ng-hide="$flow.files.length">
                     <img flow-img="$flow.files[0]" ng-if="notedited"/>
                     <?php $lien = (isset($bloc->lien) && !empty($bloc->lien) ? $bloc->lien : url('/') ); ?>
-                    <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
-                        <img style="max-width: 557px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$bloc->image) }}" />
-                    </a>
+
+                    <!-- For old system check if multiple images -->
+                    @if($bloc->image_list)
+                        @foreach($bloc->image_list as $image)
+                            <?php $width = 540/count($bloc->image_list); ?>
+                            <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
+                                <img style="max-width: {{ $width }}px;float: left; margin: 0 1px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$image) }}" />
+                            </a>
+                        @endforeach
+                    @else
+                        <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
+                            <img style="max-width: 557px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$bloc->image) }}" />
+                        </a>
+                    @endif
+
                 </div>
                 <div class="thumbnail big" ng-show="$flow.files.length">
                     <img flow-img="$flow.files[0]" />
@@ -35,6 +47,7 @@
                 <p class="errorUpload bg-danger text-danger" style="display: none;"></p>
             </td>
         </tr>
+        <tr bgcolor="ffffff"><td colspan="3" height="10"></td></tr><!-- space -->
         <tr bgcolor="ffffff">
             <td align="center" valign="top" width="560" class="resetMarge">
                 @if( $bloc->titre )
