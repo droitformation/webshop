@@ -6,10 +6,10 @@
         </tr><!-- space -->
         <tr bgcolor="ffffff" class="blocBorder">
             <td width="400" align="left" class="resetMarge contentForm" valign="top">
-                <h3 style="text-align: left;font-family: sans-serif;">{{ $categories[$bloc->categorie] }}</h3>
+                <h3 style="text-align: left;">{{ isset($categories[$bloc->categorie_id]) ? $categories[$bloc->categorie_id] : '' }}</h3>
             </td>
             <td width="160" align="center" valign="top" class="resetMarge">
-                <img width="130" border="0" src="{{ asset('files/pictos/'.$bloc->image) }}" alt="{{ $categories[$bloc->categorie] }}" />
+                <img width="130" border="0" src="{{ asset('files/uploads/'.$bloc->image) }}" alt="{{ $categories[$bloc->categorie] }}" />
             </td>
         </tr><!-- space -->
     </table>
@@ -44,7 +44,7 @@
                                 if($categorie->id != $bloc->categorie){
                                     echo '<tr align="center" style="margin: 0;padding: 0;"><td style="margin: 0;padding: 0;page-break-before: always;" valign="top">';
                                     echo '<a target="_blank" href="'.url('jurisprudence').'#'.$arret->reference.'" style="margin:0;padding:0;display: block;">
-                                            <img style="margin:0;padding:0;display: block;" width="130" height="158" border="0" alt="'.$categorie->title.'" src="'.asset('files/pictos/'.$categorie->image).'">
+                                            <img style="margin:0;padding:0;display: block;" width="130" height="158" border="0" alt="'.$categorie->title.'" src="'.asset('files/uploads/'.$categorie->image).'">
                                         </a>';
                                     echo '</td></tr>';
                                 }

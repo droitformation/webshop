@@ -47,7 +47,7 @@
                             @if(!empty($campagne))
                                 @foreach($campagne as $bloc)
                                     <div class="bloc_rang" id="bloc_rang_{{ $bloc->idItem }}" data-rel="{{ $bloc->idItem }}">
-                                        <?php echo view('backend.newsletter/build/edit/'.$bloc->type->partial)->with(array('bloc' => $bloc, 'categories' => $categories, 'imgcategories' => $imgcategories))->__toString(); ?>
+                                        <?php echo view('backend.newsletter/build/edit/'.$bloc->type->partial)->with(array('bloc' => $bloc, 'categories' => $categories, 'imgcategories' => $imgcategories, 'infos' => $infos))->__toString(); ?>
                                     </div>
                                 @endforeach
                             @endif

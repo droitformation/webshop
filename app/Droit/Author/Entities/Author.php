@@ -20,7 +20,7 @@ class Author extends Model {
 
     public function getAuthorPhotoAttribute()
     {
-        return (!empty($this->photo) ? $this->photo : 'avatar.png');
+        return (!empty($this->photo) ? $this->photo : 'avatar.jpg');
     }
 
     public function analyses()

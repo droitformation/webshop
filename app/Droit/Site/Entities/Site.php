@@ -11,6 +11,6 @@ class Site extends Model{
 
     protected $table    = 'sites';
 
-    protected $fillable = ['nom','url','logo'];
+    protected $fillable = ['nom','url','logo','slug'];
 
 }

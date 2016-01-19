@@ -27,7 +27,7 @@
                                echo '<tr align="center" style="margin: 0;padding: 0;"><td style="margin: 0;padding: 0;page-break-before: always;"  valign="top">';
                                // Categories
                                echo '<a target="_blank" href="'.url('jurisprudence').'#'.$bloc->reference.'" style="margin:0;padding:0;display: block;">
-                                        <img width="130" height="158" style="margin:0;padding:0;display: block;" border="0" alt="'.$categorie->title.'" src="'.asset('files/pictos/'.$categorie->image).'">
+                                        <img width="130" height="158" style="margin:0;padding:0;display: block;" border="0" alt="'.$categorie->title.'" src="'.asset('files/uploads/'.$categorie->image).'">
                                       </a>';
 
                                echo '</td></tr>';
@@ -96,10 +96,11 @@
             </td>
             <td width="25" class="resetMarge"></td><!-- space -->
             <td align="center" valign="top" width="160" class="resetMarge">
+                <?php $infos->newsletter->load('site'); ?>
                 <!-- Categories -->
                 <div class="resetMarge">
                     <a target="_blank" href="{{ url('jurisprudence') }}">
-                        <img width="130" border="0" alt="Analyse" src="{{ asset('images/analyse.png') }}">
+                        <img width="130" border="0" alt="Analyse" src="{{ asset('files/pictos/'.$infos->newsletter->site->slug.'/analyse.jpg') }}">
                     </a>
                 </div>
             </td>

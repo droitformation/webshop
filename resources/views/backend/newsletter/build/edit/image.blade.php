@@ -31,12 +31,12 @@
                         @foreach($bloc->image_list as $image)
                             <?php $width = 540/count($bloc->image_list); ?>
                             <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
-                                <img style="max-width: {{ $width }}px;float: left; margin: 0 1px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$image) }}" />
+                                <img style="max-width: {{ $width }}px;float: left; margin: 0 1px;" alt="{{ $bloc->titre }}" src="{{ asset('files/uploads/'.$image) }}" />
                             </a>
                         @endforeach
                     @else
                         <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
-                            <img style="max-width: 557px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$bloc->image) }}" />
+                            <img style="max-width: 557px;" alt="{{ $bloc->titre }}" src="{{ asset('files/uploads/'.$bloc->image) }}" />
                         </a>
                     @endif
 

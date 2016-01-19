@@ -68,14 +68,14 @@ class ArretEloquent implements ArretInterface{
         return false;
     }
 
-	public function find($id){
+	public function find($id, $trashed = null){
 
         if(is_array($id))
         {
-            return $this->arret->whereIn('id', $id)->with(['arrets_categories','arrets_analyses'])->get();
+            return $this->arret->trashed($trashed)->whereIn('id', $id)->with(['arrets_categories','arrets_analyses'])->get();
         }
 
-		return $this->arret->with(['arrets_categories','arrets_analyses'])->find($id);
+		return $this->arret->with(['arrets_categories','arrets_analyses'])->where('id','=',$id)->trashed($trashed)->get()->first();
 	}
 
     public function findyByImage($file){

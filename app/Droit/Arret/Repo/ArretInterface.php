@@ -7,7 +7,7 @@ interface ArretInterface {
     public function getAllActives($include = [], $site = null);
     public function getPaginate($nbr);
     public function getLatest($include = []);
-	public function find($data);
+    public function find($id, $trashed = null);
     public function findyByImage($file);
 	public function create(array $data);
 	public function update(array $data);

@@ -90,32 +90,39 @@ class CampagneWorker implements CampagneInterface{
             {
                 if ($item->arret_id > 0)
                 {
-                    $arret = $this->arret->find($item->arret_id);
+                    $arret = $this->arret->find($item->arret_id,true);
 
-                    if($arret->dumois)
+                    if($arret)
                     {
-                        $analyses = $this->worker->getAnalyseForArret($arret);
-                        $arret->setAttribute('analyses',$analyses);
+                        if($arret->dumois)
+                        {
+                            $analyses = $this->worker->getAnalyseForArret($arret);
+                            $arret->setAttribute('analyses',$analyses);
+                        }
+
+                        $arret->setAttribute('type',$item->type);
+                        $arret->setAttribute('rangItem',$item->rang);
+                        $arret->setAttribute('idItem',$item->id);
+
+                        return $arret;
                     }
 
-                    $arret->setAttribute('type',$item->type);
-                    $arret->setAttribute('rangItem',$item->rang);
-                    $arret->setAttribute('idItem',$item->id);
-
-                    return $arret;
+                    return false;
                 }
                 elseif($item->groupe_id > 0){
 
                     $groupe       = $this->groupe->find($item->groupe_id);
                     $group_arrets = $groupe->arrets_groupes;
 
-                    if(isset($group_arrets)){
-                        foreach($group_arrets as $arretId){
+                    if(isset($group_arrets))
+                    {
+                        foreach($group_arrets as $arretId)
+                        {
                             $arrets[] =  $this->arret->find($arretId->id);
                         }
                     }
 
-                    $arrets    = new Collection($arrets);
+                    $arrets    = isset($arrets) && !empty($arrets) ? new Collection($arrets) : [];
                     $categorie = $groupe->categorie_id;
 
                     $image = $this->categorie->find($categorie);

@@ -14,7 +14,7 @@
                 color: {{ $infos->newsletter->color }};
             }
 
-            #StyleNewsletter .contentForm h3, #StyleNewsletter .contentForm h4{
+            #StyleNewsletter .contentForm h3{
                 color: {{ $infos->newsletter->color }};
             }
 

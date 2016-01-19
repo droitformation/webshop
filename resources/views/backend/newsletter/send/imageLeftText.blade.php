@@ -11,9 +11,19 @@
                 <tr>
                     <td valign="top" align="center" width="160" class="resetMarge">
                         <?php $lien = (isset($bloc->lien) && !empty($bloc->lien) ? $bloc->lien : url('/') ); ?>
-                        <a target="_blank" href="<?php echo $lien; ?>">
-                            <img width="130px" style="max-width: 130px; max-height: 220px;" alt="Droit du travail" src="{{ asset('files/uploads/'.$bloc->image) }}" />
-                        </a>
+                        <!-- For old system check if multiple images -->
+                        @if($bloc->image_list)
+                            @foreach($bloc->image_list as $image)
+                                <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
+                                    <img style="max-width: 130px;" alt="{{ $bloc->titre }}" src="{{ asset('files/uploads/'.$image) }}" />
+                                </a>
+                            @endforeach
+                        @else
+                            <a style="border: none;padding: 0;margin: 0;" target="_blank" href="<?php echo $lien; ?>">
+                                <img style="max-width: 130px;" alt="{{ $bloc->titre }}" src="{{ asset('files/uploads/'.$bloc->image) }}" />
+                            </a>
+                        @endif
+
                     </td>
                     <td width="25" class="resetMarge"></td><!-- space -->
                     <td valign="top" width="375" class="resetMarge">

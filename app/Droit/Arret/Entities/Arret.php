@@ -20,6 +20,11 @@ class Arret extends Model {
         if ($site) $query->where('site_id','=',$site);
     }
 
+    public function scopeTrashed($query,$trashed)
+    {
+        if ($trashed) $query->withTrashed();
+    }
+
     public function arrets_categories()
     {
         return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');

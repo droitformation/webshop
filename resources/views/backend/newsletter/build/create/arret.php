@@ -20,7 +20,7 @@
                     <!-- Categories -->
                     <div class="resetMarge" ng-repeat="categorie in select.categories">
                         <a target="_blank" href="<?php echo url('jurisprudence').'#'.$bloc->reference; ?>">
-                            <img ng-show="categorie.image" width="130" border="0" alt="{[{ categorie.title }]}" ng-src="<?php echo asset('files/pictos/{[{ categorie.image }]}') ?>">
+                            <img ng-show="categorie.image" width="130" border="0" alt="{[{ categorie.title }]}" ng-src="<?php echo asset('files/uploads/{[{ categorie.image }]}') ?>">
                         </a>
                     </div>
                 </td>

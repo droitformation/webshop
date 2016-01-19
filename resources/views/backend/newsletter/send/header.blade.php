@@ -13,7 +13,11 @@
                         </tr>
                         <tr bgcolor="{{ $infos->newsletter->color }}">
                             <td width="20"></td>
-                            <td align="left"><h2 class="header headerSmall">Editée par {{ $infos->auteurs }}</h2></td>
+                            <td align="left">
+                                @if(!empty($infos->auteurs))
+                                    <h2 class="header headerSmall">Editée par {{ $infos->auteurs }}</h2>
+                                @endif
+                            </td>
                             <td width="20"></td>
                         </tr>
                     </table>
