@@ -15,7 +15,7 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 	
 	public function getAll()
     {
-		return $this->user->with(['subscriptions'])->get();
+		return $this->user->with(['subscriptions','user'])->get();
 	}
 
     public function getAllNbr($nbr)
@@ -25,7 +25,7 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
 	public function find($id)
     {
-		return $this->user->with(['subscriptions'])->findOrFail($id);
+		return $this->user->with(['subscriptions','user'])->find($id);
 	}
 
 	public function findByEmail($email)
