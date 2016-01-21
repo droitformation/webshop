@@ -292,23 +292,70 @@ Route::get('dispatchnewsletter', function()
 
     foreach($search as $find)
     {
-
         $file = explode('/', $find);
         $file = end($file);
-
         echo $file;
         echo '<br/>';
 
         if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
         {
             $target = public_path('files').'/uploads/'.$file;
-
             File::copy( $find, $target );
         }
     }
 
     echo '<pre>';
     //print_r($files);
+    echo '</pre>';
+
+    exit;
+
+});
+
+Route::get('dispatchcolloque', function()
+{
+    $model  =  App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+
+    $models = $model->getAll();
+
+    foreach($models as $colloque)
+    {
+        $files = $colloque->documents->lists('path','type')->all();
+
+        foreach($files as $type => $item)
+        {
+            $tosearch[$colloque->id] = $files;
+        }
+    }
+
+    $path   = public_path('dispatch/colloque');
+    $search = File::allFiles($path);
+
+    foreach($search as $file)
+    {
+        $file = explode('/', $file);
+        $file = end($file);
+        $found[] = $file;
+    }
+
+    foreach($tosearch as $coloque)
+    {
+        foreach($coloque as $type => $item)
+        {
+           // echo $item.'<br/>';
+
+            if(in_array($item,$found) && File::exists(public_path('dispatch/colloque/'.$item)) && File::isFile(public_path('dispatch/colloque/'.$item)))
+            {
+                $target = public_path('files').'/colloques/'.$type.'/'.$item;
+                echo $target;
+                echo '<br/>';
+                //File::copy( public_path('dispatch/colloque/'.$item), $target );
+            }
+        }
+    }
+
+    echo '<pre>';
+   // print_r($found);
     echo '</pre>';
 
     exit;

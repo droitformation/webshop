@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateColloqueGroupesTable extends Migration
+class CreateColloqueInscriptionsGroupesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,8 +17,10 @@ class CreateColloqueGroupesTable extends Migration
             $table->integer('colloque_id');
             $table->integer('user_id');
             $table->string('description')->nullable();
-            $table->integer('adresse_id')->nullable();
+            $table->integer('adresse_id')->unsigned()->index();
+            $table->softDeletes();
         });
+
     }
 
     /**

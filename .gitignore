@@ -11,4 +11,5 @@ composer.lock
 /public/files/analyses/
 /public/dispatch/
 /public/files/uploads/
+public/files/colloques
 
