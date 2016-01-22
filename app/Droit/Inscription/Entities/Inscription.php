@@ -112,7 +112,12 @@ class Inscription extends Model
             return $this->groupe->user->adresse_facturation;
         }
 
-        return $this->user->adresse_facturation;
+        if($this->user)
+        {
+            return $this->user->adresse_facturation;
+        }
+
+        return null;
     }
 
     /**

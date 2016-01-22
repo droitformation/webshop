@@ -19,7 +19,7 @@
                     <h4><i class="fa fa-edit"></i> &nbsp;Éditer un colloque</h4>
                 </div>
 
-                <?php $centers = $colloque->centres->lists('id')->all();  ?>
+                <?php $centers = $colloque->centres->lists('id')->all(); ?>
                     <div class="panel-body">
 
                         <form action="{{ url('admin/colloque/'.$colloque->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">

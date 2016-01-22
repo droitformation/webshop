@@ -26,7 +26,7 @@ class InscriptionEloquent implements InscriptionInterface{
             $inscription->$type;
         }
 
-        return $inscription->groupBy('id')->get();
+        return $inscription->groupBy('id')->paginate(20);
     }
 
     public function getByColloqueTrashed($id)
