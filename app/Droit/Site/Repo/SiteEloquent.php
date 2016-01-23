@@ -19,7 +19,7 @@ class SiteEloquent implements SiteInterface{
 
     public function find($id){
 
-        return $this->site->find($id);
+        return $this->site->with(['menus'])->find($id);
     }
 
     public function create(array $data){

@@ -195,6 +195,44 @@ footer a {
   color: #f5c8c8;
 }
 
+.faq_list{
+  margin-bottom: 20px;
+  margin-left: 0;
+  padding:0;
+}
+
+.faq_list p{
+   width: 32%;
+   display: table;
+   float: left;
+   margin: 5px;
+ }
+
+.faq_list p a{
+  display: table-cell;
+  font-size: 13px;
+  height: 40px;
+  padding: 4px 15px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  line-height: 15px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.faq_list p a:hover, .faq_list p a.active{
+  background: #e3e3e3;
+}
+
+
+.faq_wrapper h3{
+  margin-bottom: 10px;
+}
+
+.faq_wrapper div{
+  margin-bottom: 20px;
+}
+
 /*======================================
 	Search
 =======================================*/

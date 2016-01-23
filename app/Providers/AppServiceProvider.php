@@ -60,6 +60,10 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->registerFileWorkerService();
         $this->registerPageService();
+        $this->registerMenuService();
+
+        $this->registerFaqQuestionService();
+        $this->registerFaqCategorieService();
 
 	}
 
@@ -282,7 +286,6 @@ class AppServiceProvider extends ServiceProvider {
         });
     }
 
-
     /**
      * Page
      */
@@ -294,4 +297,36 @@ class AppServiceProvider extends ServiceProvider {
         });
     }
 
+    /**
+     * Menu
+     */
+    protected function registerMenuService(){
+
+        $this->app->singleton('App\Droit\Menu\Repo\MenuInterface', function()
+        {
+            return new \App\Droit\Menu\Repo\MenuEloquent(new \App\Droit\Menu\Entities\Menu);
+        });
+    }
+
+    /**
+     * Question
+     */
+    protected function registerFaqQuestionService(){
+
+        $this->app->singleton('App\Droit\Faq\Repo\FaqQuestionInterface', function()
+        {
+            return new \App\Droit\Faq\Repo\FaqQuestionEloquent(new \App\Droit\Faq\Entities\Faq_question);
+        });
+    }
+
+    /**
+     * Categorie
+     */
+    protected function registerFaqCategorieService(){
+
+        $this->app->singleton('App\Droit\Faq\Repo\FaqCategorieInterface', function()
+        {
+            return new \App\Droit\Faq\Repo\FaqCategorieEloquent(new \App\Droit\Faq\Entities\Faq_categorie);
+        });
+    }
 }

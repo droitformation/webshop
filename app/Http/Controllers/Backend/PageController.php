@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Droit\Page\Worker\PageWorker;
 use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Site\Repo\SiteInterface;
+use App\Droit\Menu\Repo\MenuInterface;
 use App\Http\Requests\CreatePage;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -15,12 +16,14 @@ class PageController extends Controller
     protected $page;
     protected $worker;
     protected $site;
+    protected $menu;
 
-    public function __construct(PageInterface $page, PageWorker $worker, SiteInterface  $site)
+    public function __construct(PageInterface $page, PageWorker $worker, SiteInterface  $site, MenuInterface $menu)
     {
         $this->page   = $page;
         $this->worker = $worker;
         $this->site   = $site;
+        $this->menu   = $menu;
 
         view()->share('templates',config('template'));
     }
@@ -34,7 +37,7 @@ class PageController extends Controller
     {
         $pages = $this->page->getAll();
         $root  = $this->page->getRoot();
-        $sites = $this->site->getAll();
+        $sites = $this->menu->getAll();
 
         return view('backend.pages.index')->with(array( 'pages' => $pages, 'root' => $root , 'sites' => $sites));
     }
@@ -48,8 +51,9 @@ class PageController extends Controller
     {
         $pages    = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
         $sites    = $this->site->getAll();
+        $menus    = $this->menu->getAll();
 
-        return view('backend.pages.create')->with(['pages' => $pages, 'sites' => $sites]);
+        return view('backend.pages.create')->with(['pages' => $pages, 'sites' => $sites, 'menus' => $menus]);
     }
 
     /**
@@ -75,8 +79,9 @@ class PageController extends Controller
         $page  = $this->page->find($id);
         $pages = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
         $sites = $this->site->getAll();
+        $menus = $this->site->getAll();
 
-        return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages, 'sites' => $sites));
+        return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages, 'sites' => $sites, 'menus' => $menus));
     }
 
     /**

@@ -8,9 +8,12 @@ class Site extends Model{
     use SoftDeletes;
 
     protected $dates    = ['deleted_at'];
-
     protected $table    = 'sites';
-
     protected $fillable = ['nom','url','logo','slug'];
+
+    public function menus()
+    {
+        return $this->hasMany('App\Droit\Menu\Entities\Menu');
+    }
 
 }

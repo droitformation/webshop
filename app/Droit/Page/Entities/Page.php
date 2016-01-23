@@ -20,7 +20,7 @@ class Page extends Node {
     protected $table = 'pages';
 
     protected $dates    = ['deleted_at'];
-    protected $fillable = ['title','content','rang','main','template','slug','parent_id','lft','rgt','depth','hidden','site_id'];
+    protected $fillable = ['title','menu_title','content','rang','menu_id','template','slug','parent_id','lft','rgt','depth','hidden','site_id'];
 
     protected $orderColumn = 'rang';
 
@@ -67,4 +67,10 @@ class Page extends Node {
     {
         return $this->hasMany('App\Droit\Content\Entities\Content');
     }
+
+    public function menu()
+    {
+        return $this->belongsTo('App\Droit\Menu\Entities\Menu');
+    }
+
 }

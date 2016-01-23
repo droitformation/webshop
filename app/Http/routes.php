@@ -31,7 +31,7 @@ Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activ
 Route::group(['prefix' => 'bail'], function () {
 
     Route::get('/', array('uses' => 'BailController@index'));
-    Route::get('page/{slug}', array('uses' => 'BailController@page'));
+    Route::get('page/{slug}/{var?}', array('uses' => 'BailController@page'));
     Route::get('lois', array('uses' => 'BailController@lois'));
     Route::get('jurisprudence', array('uses' => 'BailController@jurisprudence'));
     Route::get('doctrine', array('uses' => 'BailController@doctrine'));

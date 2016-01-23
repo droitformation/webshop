@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Titre dans le menu</label>
                         <div class="col-sm-2">
-                            {!! Form::text('slug', null , array('class' => 'form-control') ) !!}
+                            {!! Form::text('menu_title', null , array('class' => 'form-control') ) !!}
                         </div>
                     </div>
 
@@ -42,6 +42,20 @@
                                     <option value="">Appartient au site</option>
                                     @foreach($sites as $site)
                                         <option value="{{ $site->id }}">{{ $site->nom }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Menu</label>
+                        <div class="col-sm-2">
+                            @if(!$menus->isEmpty())
+                                <select class="form-control" name="menu_id">
+                                    <option value="">Choix</option>
+                                    @foreach($menus as $menu)
+                                        <option value="{{ $menu->id }}">{{ $menu->title }}</option>
                                     @endforeach
                                 </select>
                             @endif
