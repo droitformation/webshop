@@ -59,11 +59,13 @@ class BailController extends Controller
         $authors    = $this->author->getAll();
 
         $menus = $this->site->find(2);
+        $faqcantons = [ 'be'=>'Berne','fr'=>'Fribourg', 'ge'=>'Genève', 'ju'=>'Jura', 'ne'=>'Neuchâtel', 'vs'=>'Valais', 'vd'=>'Vaud'];
 
         view()->share('menus',$menus->menus);
         view()->share('years',$years);
         view()->share('categories',$categories);
         view()->share('authors',$authors);
+        view()->share('faqcantons',$faqcantons);
 
         setlocale(LC_ALL, 'fr_FR');
     }
@@ -98,7 +100,7 @@ class BailController extends Controller
             $data['current']   = $categorie;
         }
 
-        return view('frontend.bail.'.$slug)->with($data);
+        return view('frontend.bail.'.$page->template)->with($data);
     }
 
     public function jurisprudence()

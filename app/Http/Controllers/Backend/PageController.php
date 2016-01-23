@@ -79,7 +79,7 @@ class PageController extends Controller
         $page  = $this->page->find($id);
         $pages = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
         $sites = $this->site->getAll();
-        $menus = $this->site->getAll();
+        $menus = $this->menu->getAll();
 
         return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages, 'sites' => $sites, 'menus' => $menus));
     }

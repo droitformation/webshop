@@ -31,7 +31,7 @@
         <div id="main" class="container">
             <div class="row">
                 <!-- Contenu principal -->
-                <div class="maincontent col-md-9">
+                <div id="mainContent" class="maincontent col-md-9">
 
                     <!-- Entête et menu -->
                     <header class="header">
@@ -64,7 +64,7 @@
 
                     <!-- Fin contenu -->
 
-                    <footer class="colorBlock">
+                    <footer id="mainFooter" class="colorBlock">
                         © 2013 - bail.ch<br/>
                         Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
                         <a href="mailto:seminaire.bail@unine.ch">seminaire.bail@unine.ch</a>

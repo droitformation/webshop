@@ -50,7 +50,7 @@
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Menu</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-5">
                             @if(!$menus->isEmpty())
                                 <select class="form-control" name="menu_id">
                                     <option value="">Choix</option>
@@ -82,7 +82,7 @@
                     <div class="form-group">
                         <label for="contenu" class="col-sm-3 control-label">Contenu</label>
                         <div class="col-sm-7">
-                            {!! Form::textarea('content', null, array('class' => 'form-control  redactorSimple' )) !!}
+                            {!! Form::textarea('content', null, array('class' => 'form-control  redactor' )) !!}
                         </div>
                     </div>
 

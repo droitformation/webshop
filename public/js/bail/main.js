@@ -103,5 +103,15 @@ $(function() {
 		
 	});
 
+	var height  = $('#mainSidebar').height();
+	var content = $('#mainContent').height();
+
+	if(height > content){
+		$('#mainContent').css({ 'height' : height });
+		$('#mainFooter').css({ 'position' : 'absolute', 'bottom' : 0, 'width' : '100%' });
+	}
+
+	console.log(height);
+	console.log(content);
 
 });
