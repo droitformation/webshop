@@ -37,6 +37,8 @@ class InscriptionController extends Controller
         $this->groupe      = $groupe;
         $this->generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->helper      = new \App\Droit\Helper\Helper();
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /**

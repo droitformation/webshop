@@ -7,6 +7,32 @@ Route::get('cartworker', function()
 {
 
 
+    $adresse_specialisation = new \App\Droit\Adresse\Entities\Adresse_specialisation();
+
+    $specialisations = $adresse_specialisation->where('adresse_id','=',1)->whereIn('specialisation_id',[1,71])->get();
+
+    $query = 'SELECT adresse_id, COUNT(specialisation_id)
+                FROM adresse_specialisations
+                WHERE
+                     (adresse_id = 1 AND specialisation_id = 1)
+                  OR (adresse_id = 1 AND specialisation_id = 70)
+                   OR (adresse_id = 1 AND specialisation_id = 71)
+                GROUP by adresse_id
+                HAVING COUNT(specialisation_id) > 1';
+
+    $query = 'SELECT d.adresse_id, d.specialisation_id
+                FROM   adresse_specialisations d
+                JOIN   adresse_specialisations x ON d.adresse_id = x.adresse_id
+                JOIN   adresse_specialisations y ON d.adresse_id = y.adresse_id
+                WHERE  x.specialisation_id = 1
+                AND    y.specialisation_id = 70';
+
+    $users =  DB::select( DB::raw($query) );
+
+
+    echo '<pre>';
+    print_r($users);
+    echo '</pre>';exit;
 /*
     $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
@@ -33,7 +59,7 @@ Route::get('cartworker', function()
     $generator->stream = true;
     return $generator->factureAbo($abonnement);*/
 
-    $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
+/*    $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
 
     $files = [
         'files/abos/facture_REV-1_16.pdf',
@@ -43,7 +69,7 @@ Route::get('cartworker', function()
         'files/abos/facture_RJN-289_20.pdf'
     ];
 
-    $worker->merge($files, 'binding');
+    $worker->merge($files, 'binding');*/
 
     exit;
 

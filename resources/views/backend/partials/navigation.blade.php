@@ -22,8 +22,8 @@
                 <i class="fa fa-users"></i> <span>Recherche</span>
             </a>
         </li>
-        <li class="<?php echo (Request::is('admin/export/user') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/export/user') }}">
+        <li class="<?php echo (Request::is('admin/export/view') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/export/view') }}">
                 <i class="fa fa-cloud-download"></i> &nbsp;<span>Export</span>
             </a>
         </li>

@@ -140,9 +140,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('document', 'Backend\Colloque\DocumentController');
 
     Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
-    Route::get('export/user', 'Backend\ExportController@user');
-    Route::post('export/global', 'Backend\ExportController@exportsearch');
-    Route::get('export/global/{page?}', 'Backend\ExportController@exportsearch');
+    Route::get('export/view', 'Backend\ExportController@view');
+    Route::get('export/generate', 'Backend\ExportController@generate');
+    Route::match(['get', 'post'],'export/search', 'Backend\ExportController@search');
 
     Route::get('download/{file}', function($file)
     {

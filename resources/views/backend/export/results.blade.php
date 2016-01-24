@@ -8,7 +8,7 @@
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/export/user') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/export/view') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-md-3 text-right">
                                     <div class="btn-group">
-                                        <a href="{{ url('admin/download/'.$download) }}" class="btn btn-info"><i class="fa fa-download"></i> &nbsp; Télécharger Export [xls]</a>
+                                        <a href="{{ url('admin/export/generate') }}" class="btn btn-info"><i class="fa fa-download"></i> &nbsp; Télécharger Export [xls]</a>
                                     </div>
                                 </div>
                             </div>

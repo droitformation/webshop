@@ -46,7 +46,7 @@
                                         @foreach($categorie_sites[$site->id] as $categorie)
                                             <tr>
                                                 <td><a class="btn btn-sky btn-sm" href="{{ url('admin/categorie/'.$categorie->id) }}">&Eacute;diter</a></td>
-                                                <td><img height="50" src="{{ asset('files/pictos/'.$categorie->image) }}" alt="{{ $categorie->title }}" /></td>
+                                                <td><img height="50" src="{!! asset('files/pictos/'.$categorie->site->slug.'/'.$categorie->image) !!}" alt="{{ $categorie->title }}" /></td>
                                                 <td><strong>{{ $categorie->title }}</strong></td>
                                                 <td>{{ $categorie->site_id }}</td>
                                                 <td class="text-right">

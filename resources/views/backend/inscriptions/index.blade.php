@@ -28,7 +28,7 @@
                             @if(!empty($inscriptions))
                                 @foreach($inscriptions as $inscription)
 
-                                    <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
+                                    <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); ?>
 
                                     <tr {!! $style !!}>
                                         <td><a class="btn btn-sky btn-xs btn-block" href="{{ url('admin/inscription/'.$inscription->id) }}">&Eacute;diter</a></td>

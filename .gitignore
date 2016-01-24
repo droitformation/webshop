@@ -12,4 +12,6 @@ composer.lock
 /public/dispatch/
 /public/files/uploads/
 public/files/colloques
+public/files/pictos
+storage/excel/exports/
 

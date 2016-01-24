@@ -81,7 +81,7 @@ class ExportController extends Controller
      *
      * @return Response
      */
-    public function user(Request $request)
+    public function view(Request $request)
     {
         $request->session()->forget('terms');
         $request->session()->forget('download');
@@ -95,53 +95,44 @@ class ExportController extends Controller
      *
      * @return Response
      */
-    public function exportsearch(Request $request)
+    public function search(Request $request)
     {
         if($request->session()->has('terms'))
         {
-            $terms    = $request->session()->get('terms');
-            $download = $request->session()->get('download');
-            $count    = $request->session()->get('count');
-
-            $each     = (isset($terms['each']) ? true : false);
-            $adresses = $this->adresse->searchMultiple($terms, $each, 20);
+            $terms = $request->session()->get('terms');
+            $each  = (isset($terms['each']) ? true : false);
         }
         else
         {
-            $terms    = $request->all();
-            $each     = $request->input('each',false);
-
-            $toExport = $this->adresse->searchMultiple($request->all(), $each);
-            $download = $this->doExport($toExport);
-
-            $adresses = $this->adresse->searchMultiple($request->all(), $each, 20);
-
+            $terms = $request->all();
+            $each  = $request->input('each',false);
             $request->session()->put('terms', $terms);
-            $request->session()->put('count', $toExport->count());
-            $request->session()->put('download', $download);
-
-            $count = $toExport->count();
         }
 
+        $adresses = $this->adresse->searchMultiple($terms, $each, 20);
+
+        //$toExport = $this->adresse->searchMultiple($request->all(), $each);
+        //$download = $this->doExport($toExport);
+
         $terms = $this->label->nameTerms($terms);
+        $count = $adresses->total();
 
-        return view('backend.export.results')->with(['adresses' => $adresses, 'terms' => $terms, 'download' => $download, 'count' => $count]);
+        return view('backend.export.results')->with(['adresses' => $adresses, 'terms' => $terms, 'download' => '', 'count' => $count]);
     }
 
-    public function exportview(Request $request)
+    public function generate(Request $request)
     {
-        $each     = $request->input('each',false);
-        $adresses = $this->adresse->searchMultiple($request->all(), $each);
+        $terms    = $request->session()->get('terms');
+        $each     = (isset($terms['each']) ? true : false);
+        $adresses = $this->adresse->searchMultiple($terms, $each);
 
-        $download = $this->doExport($adresses);
-        $terms    = $this->label->nameTerms($request->all());
+        $this->doExport($adresses);
 
-        return view('backend.export.results')->with(['adresses' => $paginatedAdresses, 'terms' => $terms, 'download' => $download]);
     }
 
-    public function doExport($adresses)
+    public function doExport($adresses, $store = false)
     {
-        \Excel::create('Export_Adresses_'.date('dmy'), function($excel) use ($adresses)
+        $export = \Excel::create('Export_Adresses_'.date('dmy'), function($excel) use ($adresses)
         {
             $excel->sheet('Export_Adresses', function($sheet) use ($adresses)
             {
@@ -150,9 +141,17 @@ class ExportController extends Controller
                 $sheet->setOrientation('landscape');
                 $sheet->loadView('backend.export.adresse', ['adresses' => $adresses, 'columns' => $columns]);
             });
-        })->store('xls', storage_path('excel/exports'));
+        });
 
-        return 'Export_Adresses_'.date('dmy').'.xls';
+        if($store)
+        {
+            $export->store('xls', storage_path('excel/exports'));
+        }
+        else{
+            $export->download('xls');
+        }
+
+        //return 'Export_Adresses_'.date('dmy').'.xls';
     }
 
     /**
