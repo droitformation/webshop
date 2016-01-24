@@ -21,7 +21,7 @@ class Menu extends Model{
 
     public function pages()
     {
-        return $this->hasMany('App\Droit\Page\Entities\Page');
+        return $this->hasMany('App\Droit\Page\Entities\Page')->orderBy('rang');
     }
 
     public function site()

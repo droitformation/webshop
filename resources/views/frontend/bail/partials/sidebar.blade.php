@@ -138,11 +138,8 @@
                     </ul>
                 </div>
 
-                <h5><a href="{{ url('bail/bibliographie') }}" title="Bibliographie">Bibliographie <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                <h5><a href="{{ url('bail/commentaire') }}" title="Commentaire pratique">Commentaire pratique <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-
                 @if(!$menus->isEmpty())
-                    <?php $menu = $menus->whereLoose('position','sidebar'); ?>
+                    <?php $menu = $menus->whereLoose('position','sidebar')->sortBy('rang'); ?>
                     @if(!$menu->isEmpty())
                         <?php $menu = $menu->first()->load('pages'); ?>
                         @if(!$menu->pages->isEmpty())

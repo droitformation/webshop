@@ -37,7 +37,7 @@ class PageController extends Controller
     {
         $pages = $this->page->getAll();
         $root  = $this->page->getRoot();
-        $sites = $this->menu->getAll();
+        $sites = $this->site->getAll();
 
         return view('backend.pages.index')->with(array( 'pages' => $pages, 'root' => $root , 'sites' => $sites));
     }

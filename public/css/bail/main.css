@@ -269,6 +269,12 @@ footer a {
   padding: 0 0 0 15px;
 }
 
+/* line 188, main.scss */
+#menu-principal > a:last-child:after {
+  content: "";
+}
+
+
 /* line 193, main.scss */
 #menu-principal a.noborder:after {
   border: none;
