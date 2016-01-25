@@ -98,9 +98,9 @@
                                       <div class="panel-body">
                                           <h3 style="margin-bottom: 0;"><i class="fa fa-map-marker"></i>
                                               &nbsp;Adresse {{ $adresse->type_title }}  &nbsp;{!! $adresse->livraison ? '<small class="text-mute">livraison</small>' : '' !!}
-                                              <a role="button" class="btn btn-sm btn-primary pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$adresse->type}}">Voir</a>
+                                              <a role="button" class="btn btn-sm btn-primary pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$adresse->id}}">Voir</a>
                                           </h3>
-                                          <div id="collapse{{$adresse->type}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                          <div id="collapse{{$adresse->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                               @include('backend.users.adresse',['adresse' => $adresse])
                                           </div>
                                       </div>

@@ -24,7 +24,7 @@
                         {{ $order->order_no }}
                     </a>
                 </td>
-                <td>{{ $order->user->name or $order->adresse->name }}</td>
+                <td>{{ $order->adresse ? $order->adresse->name : 'Admin' }}</td>
                 <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                 <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
                 <td class="text-right">{{ $order->price_cents }} CHF</td>
@@ -45,25 +45,32 @@
                                            <?php
                                                 if($order->user_id)
                                                 {
-                                                    $order->user->load('adresses');
-                                                    $order->user->adresse_livraison->load(['pays','civilite']);
-                                                    $adresse = $order->user->adresse_livraison;
+                                                    if( $order->user)
+                                                    {
+                                                        $order->user->load('adresses');
+                                                        $order->user->adresse_livraison->load(['pays','civilite']);
+                                                        $adresse = $order->user->adresse_livraison;
+                                                    }
                                                 }
                                                 else
                                                 {
                                                     $adresse = $order->adresse;
-                                                    $adresse->load(['pays','civilite']);
+                                                    if($adresse)
+                                                    {
+                                                        $adresse->load(['pays','civilite']);
+                                                    }
                                                 }
                                            ?>
 
-                                           <strong>{{ $adresse->civilite_title }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>
-                                           {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
-                                           {{ $adresse->adresse }}<br>
-                                           {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
-                                           {!! !empty($adresse->cp) ? $adresse->cp.'<br>' : '' !!}
-                                           {{ $adresse->npa }} {{ $adresse->ville }}<br>
-                                           {{ $adresse->pays_title }}
-                                            
+                                           @if($adresse)
+                                               <strong>{{ $adresse->civilite_title }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>
+                                               {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
+                                               {{ $adresse->adresse }}<br>
+                                               {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
+                                               {!! !empty($adresse->cp) ? $adresse->cp.'<br>' : '' !!}
+                                               {{ $adresse->npa }} {{ $adresse->ville }}<br>
+                                               {{ $adresse->pays_title }}
+                                           @endif
                                         </address>
                                     </div>
                                     <div class="col-md-9">
