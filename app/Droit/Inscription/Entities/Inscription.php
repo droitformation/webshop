@@ -97,7 +97,12 @@ class Inscription extends Model
             return $this->groupe->user;
         }
 
-        return $this->user;
+        if($this->user)
+        {
+            return $this->user;
+        }
+
+        return false;
     }
 
     public function getAdresseFacturationAttribute()
@@ -109,12 +114,12 @@ class Inscription extends Model
             $this->groupe->load('user');
             $this->groupe->user->load('adresses');
 
-            return $this->groupe->user->adresse_facturation;
+            return $this->groupe->user->adresse_contact;
         }
 
         if($this->user)
         {
-            return $this->user->adresse_facturation;
+            return $this->user->adresse_contact;
         }
 
         return null;
@@ -153,6 +158,11 @@ class Inscription extends Model
     public function user()
     {
         return $this->belongsTo('App\Droit\User\Entities\User');
+    }
+
+    public function duplicate()
+    {
+        return $this->belongsTo('App\Droit\User\Entities\User_duplicates', 'user_id', 'user_id');
     }
 
     public function groupe()

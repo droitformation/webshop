@@ -13,6 +13,7 @@
                 <th class="text-right">Montant</th>
                 <th class="text-right">Statut</th>
                 <th class="text-right">Facture</th>
+                <th class="text-right">Via admin</th>
             </tr>
         </thead>
         <tbody>
@@ -24,12 +25,13 @@
                         {{ $order->order_no }}
                     </a>
                 </td>
-                <td>{{ $order->adresse ? $order->adresse->name : 'Admin' }}</td>
+                <td>{{ $order->order_adresse ? $order->order_adresse->name : 'Admin' }}</td>
                 <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                 <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
                 <td class="text-right">{{ $order->price_cents }} CHF</td>
                 <td class="text-right"><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
                 <td class="text-right"><?php echo ($order->facture ? '<a target="_blank" href="'.$order->facture.'" class="btn btn-xs btn-default">Facture en pdf</a>' : ''); ?></td>
+                <td class="text-right">{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>
             </tr>
             @if(!empty($order->products))
 
@@ -42,25 +44,8 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <address class="well well-sm">
-                                           <?php
-                                                if($order->user_id)
-                                                {
-                                                    if( $order->user)
-                                                    {
-                                                        $order->user->load('adresses');
-                                                        $order->user->adresse_livraison->load(['pays','civilite']);
-                                                        $adresse = $order->user->adresse_livraison;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    $adresse = $order->adresse;
-                                                    if($adresse)
-                                                    {
-                                                        $adresse->load(['pays','civilite']);
-                                                    }
-                                                }
-                                           ?>
+
+                                           <?php $adresse = $order->order_adresse ?>
 
                                            @if($adresse)
                                                <strong>{{ $adresse->civilite_title }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>

@@ -401,3 +401,7 @@ a:hover, a:active, a:focus {
     border: 1px solid #f4f4f4;
     background: #eee;
 }
+
+.selects p {
+    margin-bottom: 0;
+}

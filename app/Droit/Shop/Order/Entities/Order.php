@@ -21,6 +21,28 @@ class Order extends Model{
         return $money->format($price);
     }
 
+    public function getOrderAdresseAttribute()
+    {
+        $this->load('user','adresse');
+
+        if( $this->user )
+        {
+            $this->user->load('adresses');
+            $this->user->adresse_livraison->load(['pays','civilite']);
+            return $this->user->adresse_livraison;
+        }
+
+        if( $this->adresse )
+        {
+            $adresse = $this->adresse;
+            if($adresse)
+            {
+                $adresse->load(['pays','civilite']);
+                return $adresse;
+            }
+        }
+    }
+
     public function getStatusCodeAttribute()
     {
         switch ($this->status) {

@@ -12,14 +12,14 @@ class InscriptionEloquent implements InscriptionInterface{
         $this->inscription = $inscription;
     }
 
-    public function getAll(){
+    public function getAll($nbr = null){
 
-        return $this->inscription->with(['price','colloque','user'])->get();
+        return $this->inscription->with(['price','colloque','user'])->take($nbr)->get();
     }
 
     public function getByColloque($id,$type = false)
     {
-        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user']);
+        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user','participant','groupe']);
 
         if($type)
         {
@@ -31,7 +31,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByColloqueTrashed($id)
     {
-        return $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user'])->onlyTrashed()->groupBy('id')->get();
+        return $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user','participant','groupe'])->onlyTrashed()->groupBy('id')->get();
     }
 
     public function getByUser($colloque_id,$user_id)

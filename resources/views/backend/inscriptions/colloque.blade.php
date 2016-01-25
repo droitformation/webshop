@@ -40,12 +40,12 @@
                 <div class="panel-body">
                     <div class="table-responsive">
 
-                        <table class="table generic" style="margin-bottom: 0px;"><!-- Start inscriptions -->
+                        <table class="table" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                             <thead>
                             <tr>
                                 <th class="col-sm-1">Groupe</th>
                                 <th class="col-sm-1">Action</th>
-                                <th class="col-sm-2">Déteteur</th>
+                                <th class="col-sm-3">Déteteur</th>
                                 <th class="col-sm-2">Email</th>
                                 <th class="col-sm-2">Participant</th>
                                 <th class="col-sm-1">No</th>
@@ -58,20 +58,15 @@
 
                             @if(!empty($inscriptions))
                                 @foreach($inscriptions as $inscription)
-
-                                    @if(is_array($inscription))
-                                        @foreach($inscription as $register)
-                                            @include('backend.inscriptions.partials.row', ['inscription' => $register, 'group' => true])
-                                        @endforeach
-                                    @else
-                                        @include('backend.inscriptions.partials.row', ['inscription' => $inscription, 'group' => false])
-                                    @endif
-
+                                    @include('backend.inscriptions.partials.row', ['inscription' => $inscription])
                                 @endforeach
                             @endif
 
                             </tbody>
                         </table><!-- End inscriptions -->
+
+                        {!! $inscriptions->links() !!}
+
                     </div>
                 </div>
             </div>

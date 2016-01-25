@@ -48,7 +48,7 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-        $inscriptions = $this->inscription->getAll()->take(5);
+        $inscriptions = $this->inscription->getAll(5);
 
         return view('backend.inscriptions.index')->with(['inscriptions' => $inscriptions]);
     }
@@ -61,9 +61,9 @@ class InscriptionController extends Controller
     public function colloque($id)
     {
         $colloque     = $this->colloque->find($id);
+        $inscriptions = $this->inscription->getByColloque($id);
 
-        $inscriptions    = $this->inscription->getByColloque($id);
-        $inscriptions    = $this->helper->groupInscriptionCollection($inscriptions);
+        //$inscriptions    = $this->helper->groupInscriptionCollection($inscriptions);
         $desinscriptions = $this->inscription->getByColloqueTrashed($id);
 
         return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions]);

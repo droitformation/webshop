@@ -354,7 +354,7 @@ Route::get('dispatchcolloque', function()
         }
     }
 
-    $path   = public_path('dispatch/colloque');
+    $path   = public_path('files/colloques/temp');
     $search = File::allFiles($path);
 
     foreach($search as $file)
@@ -370,12 +370,12 @@ Route::get('dispatchcolloque', function()
         {
            // echo $item.'<br/>';
 
-            if(in_array($item,$found) && File::exists(public_path('dispatch/colloque/'.$item)) && File::isFile(public_path('dispatch/colloque/'.$item)))
+            if(in_array($item,$found) && File::exists(public_path('files/colloques/temp/'.$item)) && File::isFile(public_path('files/colloques/temp/'.$item)))
             {
                 $target = public_path('files').'/colloques/'.$type.'/'.$item;
                 echo $target;
                 echo '<br/>';
-                //File::copy( public_path('dispatch/colloque/'.$item), $target );
+                File::copy( public_path('files/colloques/temp/'.$item), $target );
             }
         }
     }

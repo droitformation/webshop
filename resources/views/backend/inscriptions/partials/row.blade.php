@@ -1,4 +1,4 @@
-<?php $style = ($group ? 'class="isGoupe"' : ''); setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
+<?php $style = ($inscription->group_id ? 'class="isGoupe"' : ''); ?>
 
 <tr {!! $style !!}>
     <td>{{ $inscription->group_id ? $inscription->group_id  : '' }}</td>
@@ -6,15 +6,13 @@
         <a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}">&Eacute;diter</a>
     </td>
     <td>
-        @if($inscription->adresse_facturation)
-            <?php
-                echo ($inscription->adresse_facturation->company != '' ? '<p><strong>'.$inscription->adresse_facturation->company.'</strong><br/></p>' : '');
-                echo '<p>'.$inscription->adresse_facturation->civilite_title.' '.$inscription->adresse_facturation->name.'</p>';
-            ?>
-        @endif
+        <?php
+            echo '<p><strong>'.($inscription->inscrit ? $inscription->inscrit->name : '<span class="label label-warning">Duplicata</span>').'</strong><br/></p>';
+            echo '<p>'.($inscription->inscrit ? $inscription->inscrit->name : '').'</p>';
+        ?>
     </td>
-    <td>{{ $inscription->adresse_facturation ? $inscription->adresse_facturation->email : '' }}</td>
-    <td><?php echo ($group ? $inscription->participant->name :''); ?></td>
+    <td>{!! ($inscription->inscrit ? $inscription->inscrit->email : '<span class="label label-warning">Duplicata</span>') !!}</td>
+    <td><?php echo ($inscription->group_id ? $inscription->participant->name :''); ?></td>
     <td><strong>{{ $inscription->inscription_no }}</strong></td>
     <td>{{ $inscription->price->price_cents }} CHF</td>
     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
