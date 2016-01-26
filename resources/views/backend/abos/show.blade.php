@@ -5,13 +5,16 @@
         <div class="col-md-2">
             <p><a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <img class="thumbnail" style="height: 60px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
             <h3 style="margin-bottom: 0;">Abo</h3>
             <h4 style="margin: 0;">{{ $abo->title }}</h4>
         </div>
         <div class="col-md-2">
             <p class="text-right"><a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a></p>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-warning btn-block" data-toggle="collapse" href="#desinscriptionTable" aria-expanded="false" aria-controls="desinscriptionTable">Désinscriptions</a>
         </div>
     </div>
 
@@ -33,20 +36,16 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-10">
             <div class="panel panel-midnightblue">
                 <div class="panel-heading"><h4><i class="fa fa-tag"></i> Abonnements</h4></div>
                 <div class="panel-body">
+
                     <table class="table" id="generic">
                         <thead>
                         <tr>
-                            <th>Action</th>
-                            <th>Numéro</th>
-                            <th>Nom</th>
-                            <th>Entreprise</th>
-                            <th>Exemplaires</th>
-                            <th>Status</th>
-                            <th></th>
+                            <th>Action</th><th>Numéro</th><th>Nom</th><th>Entreprise</th><th>Exemplaires</th><th>Status</th><th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -73,6 +72,47 @@
                 </div>
 
             </div>
+
+            <div class="collapse" id="desinscriptionTable">
+
+                <div class="panel panel-warning">
+                    <div class="panel-body">
+                        <h4><i class="fa fa-ban"></i> Résiliations</h4>
+                        <table class="table simple-table">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">Action</th>
+                                <th class="col-md-1">Numéro</th>
+                                <th class="col-md-4">Nom</th>
+                                <th class="col-md-4">Entreprise</th>
+                                <th class="col-md-1">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @if(!$abo->resilie->isEmpty())
+                                    @foreach($abo->resilie as $abonnement)
+                                        <tr>
+                                            <td>
+                                                <form action="{{ url('admin/abonnement/restore/'.$abonnement->id) }}" method="POST" class="form-horizontal">
+                                                    <input type="hidden" name="_method" value="POST">
+                                                    {!! csrf_field() !!}
+                                                    <button data-what="Restaurer" data-action="N°: {{ $abonnement->numero }}" class="btn btn-warning btn-xs deleteAction">Restaurer</button>
+                                                </form>
+                                            </td>
+                                            <td>{{ $abonnement->numero }}</td>
+                                            <td>{{ $abonnement->user->name }}</td>
+                                            <td>{{ $abonnement->user->company }}</td>
+                                            <td>{{ $abonnement->status }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
     </div>

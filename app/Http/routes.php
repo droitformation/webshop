@@ -199,6 +199,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::match(['get', 'post'], 'abonnements/{id?}', 'Backend\Abo\AboUserController@index');
     Route::get('abonnement/create/{id}', 'Backend\Abo\AboUserController@create');
     Route::post('abonnement/export', 'Backend\Abo\AboController@export');
+    Route::post('abonnement/restore/{id}', 'Backend\Abo\AboUserController@restore');
     Route::resource('abonnement', 'Backend\Abo\AboUserController');
     Route::resource('rappel', 'Backend\Abo\AboFactureController');
     Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');

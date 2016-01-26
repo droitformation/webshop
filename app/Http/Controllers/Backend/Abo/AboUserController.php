@@ -87,4 +87,12 @@ class AboUserController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonné a été supprimé' ));
 	}
 
+
+    public function restore($id)
+    {
+        $this->abonnement->restore($id);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonnemebt a été restauré' ));
+    }
+
 }

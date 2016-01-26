@@ -72,12 +72,12 @@ class Abo_users extends Model{
 
     public function user()
     {
-        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id');
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id')->withTrashed();
     }
 
     public function tiers()
     {
-        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','tiers_id');
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','tiers_id')->withTrashed();
     }
 
     public function factures()
