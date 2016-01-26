@@ -149,7 +149,7 @@ class ProductController extends Controller {
 
         $product  = $this->product->update($request->all());
 
-        return redirect('admin/product')->with(array('status' => 'success', 'message' => 'Le produit a été mis à jour' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Le produit a été mis à jour' ));
     }
 
     /**

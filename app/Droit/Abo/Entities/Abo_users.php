@@ -17,7 +17,7 @@ class Abo_users extends Model{
 
         $product = $this->abo->current_product;
 
-        return $product->edition.'-'.$this->numero.'-'.$product->reference;
+        return $product->reference.'-'.$this->numero.'-'.$product->edition;
     }
 
     public function getAboRefAttribute()
@@ -26,7 +26,7 @@ class Abo_users extends Model{
 
         $product = $this->abo->current_product;
 
-        return $product->edition.'-'.$this->numero;
+        return $product->reference.'-'.$this->numero;
     }
 
     public function getAboEditionAttribute()
@@ -35,7 +35,7 @@ class Abo_users extends Model{
 
         $product = $this->abo->current_product;
 
-        return $product->edition;
+        return $product->reference;
     }
 
     public function getAboProductAttribute()
