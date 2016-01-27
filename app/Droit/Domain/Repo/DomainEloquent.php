@@ -25,7 +25,7 @@ class DomainEloquent implements DomainInterface{
     public function create(array $data){
 
         $domain = $this->domain->create(array(
-            'domain' => $data['domain']
+            'title' => $data['title']
         ));
 
         if( ! $domain )

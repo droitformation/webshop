@@ -1,0 +1,22 @@
+body, .row-fluid .wellcome-msg[class*="span"], .author-img-holder, .featublue-author, .heading-bar h2, .reviews-section, #main-header .navbar-inverse .nav > li > a:hover, .featured-author,
+#main-header .navbar-inverse .nav li.dropdown.open > .dropdown-toggle, #main-header .navbar-inverse .nav li.dropdown.active > .dropdown-toggle, #main-header .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle	{	border-color:#278db8;	}
+.nav-tabs > .active > a{	border-top-color:#278db8;	}
+.top-nav li a:hover, .top-nav li a.active, #main-header input[type="button"], .bb-custom-wrapper, .post-date, .footer-top1 .sub-btn, .post-date2, .slide2-caption, .side-holder h2, .vote-btn, .more-btn, .accordion-inner tr.heading-bar-table, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a
+{	background: #278db8;	}
+.e-commerce-list li a, .wellcome-msg p, .phon-list, .testimonials .title span, .author-det-box .title2, .book-detail .title, .side-holder .title, .pagination ul > .active > a, .pagination ul > .active > span, .book-i-caption .title, .r-type, .review-list em, .cart-option-box i, .green-t, .title-holder h4 i
+{	color:#278db8;	}
+#main-header input[type="button"]:hover{	background:#278db8;	}
+a{	color:#278db8;	}
+ .accordion-inner tr.heading-bar-table{ border-color:#216783 }
+.bb-custom-content{	 background: url("../../images/flower-bg.jpg") no-repeat scroll center top #278db8 !important;	 }
+.cart-btn2 {    background: url("../../images/blue/cart-icon.png") no-repeat scroll 0 0 transparent;	}
+.product_view li a.grid-view	{	background-image:url("../../images/blue/grid-icon.png");	}
+.product_view li a.list-view	{	background-image:url("../../images/blue/list-icon.png");	}
+.cart-btn{	background-image:url("../../images/blue/cart-icon.png");	}
+.blog-sec-slider .bx-wrapper .bx-prev,	.blog-sec-slider .bx-wrapper .bx-next {	    background-image: url("../../images/blue/controls2.png") ;	}
+.shop-btn {	    background: url("../../images/blue/shop-btn.png") no-repeat scroll 0 0 transparent;	}
+.sale-icon {    background-image:  url("../../images/blue/sale-icon.png");}
+.bx-wrapper .bx-prev ,
+.bx-wrapper .bx-next {    background-image: url("../../images/blue/controls.png") }
+.testimonials .bx-wrapper .bx-next,
+.testimonials .bx-wrapper .bx-prev {    background-image: url("../../images/red/controls1.png") }

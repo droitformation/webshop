@@ -1,0 +1,24 @@
+body, .row-fluid .wellcome-msg[class*="span"], .author-img-holder, .featuorange-author, .heading-bar h2, .reviews-section, #main-header .navbar-inverse .nav > li > a:hover, .featured-author, 
+#main-header .navbar-inverse .nav li.dropdown.open > .dropdown-toggle, #main-header .navbar-inverse .nav li.dropdown.active > .dropdown-toggle, #main-header .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle
+{	border-color:#e19e29;	}
+.nav-tabs > .active > a{border-top-color:#e19e29;}
+.top-nav li a:hover, .top-nav li a.active, #main-header input[type="button"], .bb-custom-wrapper, .post-date, .footer-top1 .sub-btn, .post-date2, .slide2-caption, .side-holder h2, .vote-btn, .more-btn, .accordion-inner tr.heading-bar-table, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a,
+#main-header .navbar-inverse .nav li.dropdown.open > .dropdown-toggle, #main-header .navbar-inverse .nav li.dropdown.active > .dropdown-toggle, #main-header .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle
+{	background: #e19e29 !important;	}
+.e-commerce-list li a, .wellcome-msg p, .phon-list, .testimonials .title span, .author-det-box .title2, .book-detail .title, .side-holder .title, .pagination ul > .active > a, .pagination ul > .active > span, .book-i-caption .title, .r-type, .review-list em, .cart-option-box i, .green-t, .title-holder h4 i
+{	color:#e19e29;	}
+#main-header input[type="button"]:hover{	background:#e19e29;	}
+a{	color:#e19e29;	}
+ .accordion-inner tr.heading-bar-table{ border-color:#c98f2c }
+.bb-custom-content{	 background: url("../../images/flower-bg.jpg") no-repeat scroll center top #e19e29 !important;	 }
+.cart-btn2 {    background: url("../../images/orange/cart-icon.png") no-repeat scroll 0 0 transparent;	}
+.product_view li a.grid-view	{	background-image:url("../../images/orange/grid-icon.png");	}
+.product_view li a.list-view	{	background-image:url("../../images/orange/list-icon.png");	}
+.cart-btn{		background-image:url("../../images/orange/cart-icon.png");	}
+.blog-sec-slider .bx-wrapper .bx-prev,	.blog-sec-slider .bx-wrapper .bx-next {    background-image: url("../../images/orange/controls2.png") ;		}
+.shop-btn {    background: url("../../images/orange/shop-btn.png") no-repeat scroll 0 0 transparent;		}
+.sale-icon {    background-image:  url("../../images/orange/sale-icon.png");}
+.bx-wrapper .bx-prev ,
+.bx-wrapper .bx-next {    background-image: url("../../images/orange/controls.png"); }
+.testimonials .bx-wrapper .bx-next,
+.testimonials .bx-wrapper .bx-prev {    background-image: url("../../images/red/controls1.png") }

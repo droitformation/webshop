@@ -9,10 +9,10 @@ use App\Droit\Service\UploadInterface;
 
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
-use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 use App\Droit\Author\Repo\AuthorInterface;
 use App\Droit\Domain\Repo\DomainInterface;
+use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Abo\Repo\AboInterface;
 
 class ProductController extends Controller {
@@ -20,11 +20,11 @@ class ProductController extends Controller {
     protected $upload;
 	protected $product;
     protected $categorie;
-    protected $order;
     protected $attribute;
     protected $author;
     protected $domain;
     protected $abo;
+    protected $order;
     protected $helper;
 
 	/**
@@ -62,7 +62,6 @@ class ProductController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-
         $search = $request->input('search',null);
 
         if($search)
