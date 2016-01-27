@@ -6,7 +6,7 @@
                 <div class="colloque_date">
                     <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
                     <span class="month">{{ $colloque->start_at->formatLocalized('%b') }}</span>
-                    <span class="day"> {{ $colloque->start_at->format('d') }}</span>
+                    <span class="day">  {{ $colloque->start_at->format('d') }}</span>
                     <span class="year"> {{ $colloque->start_at->format('Y') }}</span>
                 </div>
                 <p><strong>{{ $colloque->titre }}</strong><br/>{{ $colloque->soustitre }}</p>
@@ -19,7 +19,7 @@
             <div class="body">
                 <address>
                     <p><strong>Lieu:</strong></p>
-                    <p>{{ $colloque->location->name }}, {{ $colloque->location->adresse }}</p>
+                    <p>{{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? $colloque->location->adresse : '' }}</p>
                 </address>
                 <div class="inner"></div>
             </div>

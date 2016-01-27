@@ -25,6 +25,12 @@ class InscriptionTest extends TestCase
         $this->subscription = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterUserInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterUserInterface', $this->subscription);
 
+        $model = new \App\Droit\User\Entities\User();
+
+        $user = $model->find(710);
+
+        $this->actingAs($user);
+
     }
 
     public function tearDown()

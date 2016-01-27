@@ -15,6 +15,12 @@ class MailjetWorkerTest extends TestCase
 
         $this->mock = Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
         $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);
+
+        $model = new \App\Droit\User\Entities\User();
+
+        $user = $model->find(710);
+
+        $this->actingAs($user);
     }
 
     public function tearDown()

@@ -1,17 +1,12 @@
 <?php namespace App\Droit\User\Entities;
 
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Laravel\Cashier\Billable;
-use Laravel\Cashier\Contracts\Billable as BillableContract;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract, BillableContract {
+class User extends Authenticatable {
 
-	use Authenticatable, CanResetPassword, Billable, SoftDeletes;
+	use Billable, SoftDeletes;
 
 	/**
 	 * The database table used by the model.

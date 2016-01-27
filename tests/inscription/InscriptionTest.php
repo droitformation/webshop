@@ -3,6 +3,7 @@
 class InscriptionTest extends TestCase {
 
     protected $mock;
+    protected $colloque;
     protected $groupe;
     protected $interface;
     protected $worker;
@@ -17,9 +18,13 @@ class InscriptionTest extends TestCase {
         $this->groupe = Mockery::mock('App\Droit\Inscription\Repo\GroupeInterface');
         $this->app->instance('App\Droit\Inscription\Repo\GroupeInterface', $this->groupe);
 
-        $this->worker = new App\Droit\Inscription\Worker\InscriptionWorker();
+        $this->worker = Mockery::mock('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $this->app->instance('App\Droit\Inscription\Worker\InscriptionWorkerInterface', $this->worker);
 
-        $user = App\Droit\User\Entities\User::find(1);
+        $this->colloque = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
+        $this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->colloque);
+
+        $user = App\Droit\User\Entities\User::find(710);
 
         $this->actingAs($user);
     }
@@ -37,12 +42,11 @@ class InscriptionTest extends TestCase {
 	{
         $this->WithoutEvents();
 
-        $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
-        $inscription = new \App\Droit\Inscription\Entities\Inscription();
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
-        $this->mock->shouldReceive('getByUser')->once();
-        $this->mock->shouldReceive('create')->once()->with($input)->andReturn($inscription);
+        $this->worker->shouldReceive('register')->once()->andReturn($inscription);
 
         $response = $this->call('POST', '/admin/inscription', $input);
 
@@ -56,17 +60,15 @@ class InscriptionTest extends TestCase {
      */
     public function testRegisterMultipleNewInscription()
     {
-
         $this->WithoutEvents();
 
         $input = ['type' => 'multiple', 'colloque_id' => 71, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
 
-        $inscription = new \App\Droit\Inscription\Entities\Inscription();
-        $group       = new \App\Droit\Inscription\Entities\Groupe();
-        $group->id   = 1;
+        $group       = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
-        $this->groupe->shouldReceive('create')->andReturn($group);
-        $this->mock->shouldReceive('create')->times(2)->andReturn($inscription);
+        $this->groupe->shouldReceive('create')->once()->andReturn($group);
+        $this->worker->shouldReceive('register')->twice()->andReturn($inscription);
 
         $response = $this->call('POST', '/admin/inscription',$input);
 
@@ -76,14 +78,36 @@ class InscriptionTest extends TestCase {
 
     public function testLastInscriptions()
     {
-        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make();
+        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make([
+            'user_id' => 710 // thats a real user else the load method for the inscription will throw an error
+        ]);
 
-        $this->mock->shouldReceive('getAll')->once()->andReturn($inscriptions);
+        $this->mock->shouldReceive('getAll')->with(5)->once()->andReturn($inscriptions);
 
         $response = $this->call('GET', 'admin/inscription');
 
         $this->assertViewHas('inscriptions');
     }
 
+
+    /**
+     * Inscription from frontend
+     * @return void
+     */
+    public function testRegisterInscription()
+    {
+        $this->WithoutEvents();
+
+        $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
+
+        $this->worker->shouldReceive('register')->once()->andReturn($inscription);
+
+        $response = $this->call('POST', '/admin/inscription', $input);
+
+        $this->assertRedirectedTo('/inscription/71');
+
+    }
 
 }

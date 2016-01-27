@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+
 class OrderWorkerTest extends TestCase {
+
+    use WithoutMiddleware;
 
     protected $mock;
     protected $user;
@@ -24,8 +28,12 @@ class OrderWorkerTest extends TestCase {
         $this->product = Mockery::mock('App\Droit\Shop\Product\Repo\ProductInterface');
         $this->app->instance('App\Droit\Shop\Product\Repo\ProductInterface', $this->product);
 
-        $user = App\Droit\User\Entities\User::find(1);
-        $this->be($user);
+        $model = new \App\Droit\User\Entities\User();
+
+        $user = $model->find(710);
+
+        $this->actingAs($user);
+
     }
 
     public function tearDown()
@@ -58,6 +66,7 @@ class OrderWorkerTest extends TestCase {
      */
     public function testMakeNewOrder()
     {
+
         $worker = \App::make('App\Droit\Shop\Order\Worker\OrderWorkerInterface');
 
         // Price 2.00 chf
@@ -205,12 +214,13 @@ class OrderWorkerTest extends TestCase {
     {
         $worker   = \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface');
 
-        $commande = ['products' => [1,2,3], 'qty' => [1,2,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true]];
+        $commande = [ 'products' => [1,2,3], 'qty' => [1,2,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true]];
+        // Beware array index start from 0, rabais is for the second product, gratuit for the first
 
         $expected = [
-            [1 => ['isFree' => 1]] ,
-            [2 => ['isFree' => null]],
-            [2 => ['isFree' => null]],
+            [1 => ['isFree' => 1]],
+            [2 => ['isFree' => null,'rabais' => 10]],
+            [2 => ['isFree' => null,'rabais' => 10]],
             [3 => ['isFree' => null]]
         ];
 

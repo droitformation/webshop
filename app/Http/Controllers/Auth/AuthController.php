@@ -3,13 +3,10 @@
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use App\Droit\User\Entities\User;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\Console\Tests\Helper\ProgressIndicatorTest;
+
 use Validator;
 use Socialite;
-use Illuminate\Http\Request;
-use App\Services\AuthenticateUser;
+use App\Droit\User\Entities\User;
 
 class AuthController extends Controller {
 
@@ -26,7 +23,7 @@ class AuthController extends Controller {
 	|
 	*/
 
-	use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
 	/**
 	 * Create a new authentication controller instance.

@@ -32,8 +32,11 @@ class SubscriptionTest extends TestCase
         $this->newsletter = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterInterface', $this->newsletter);
 
-        $user = App\Droit\User\Entities\User::find(1);
-        $this->be($user);
+        $model = new \App\Droit\User\Entities\User();
+
+        $user = $model->find(710);
+
+        $this->actingAs($user);
 
     }
 
@@ -84,7 +87,7 @@ class SubscriptionTest extends TestCase
         $this->worker->shouldReceive('removeContact')->once()->andReturn(true);
         $this->subscription->shouldReceive('delete')->once();
 
-        $response = $this->action('DELETE','Backend\Newsletter\SubscriberController@destroy', [] ,['email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->action('DELETE','Backend\Newsletter\SubscriberController@destroy', [1] ,['email' => 'cindy.leschaud@gmail.com']);
 
         $this->assertRedirectedTo('admin/subscriber');
 

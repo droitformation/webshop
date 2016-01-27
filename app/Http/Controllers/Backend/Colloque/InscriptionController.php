@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Colloque;
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
-use App\Droit\Inscription\Worker\InscriptionWorker;
+use App\Droit\Inscription\Worker\InscriptionWorkerInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
 use App\Http\Requests;
@@ -28,7 +28,7 @@ class InscriptionController extends Controller
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorker $register, GroupeInterface $groupe)
+    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorkerInterface $register, GroupeInterface $groupe)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
@@ -166,20 +166,21 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionCreateRequest $request)
     {
-
         $type     = $request->input('type');
-        $colloque = $this->colloque->find($request->input('colloque_id'));
+        $colloque = $request->input('colloque_id');
+
+       // $colloque = $this->colloque->find($request->input('colloque_id'));
 
         // if type simple
         if($type == 'simple')
         {
-            $inscription = $this->register->register($request->all(),$colloque->id, true);
+            $inscription = $this->register->register($request->all(),$colloque, true);
 
             event(new InscriptionWasCreated($inscription));
         }
         else
         {
-            $group_user = $this->groupe->create(['colloque_id' => $colloque->id , 'user_id' => $request->input('user_id')]);
+            $group_user = $this->groupe->create(['colloque_id' => $colloque , 'user_id' => $request->input('user_id')]);
 
             // Get all infos for inscriptions/participants
             $participants = $request->input('participant');
@@ -191,7 +192,7 @@ class InscriptionController extends Controller
             {
                 $data = [
                     'group_id'    => $group_user->id,
-                    'colloque_id' => $colloque->id,
+                    'colloque_id' => $colloque,
                     'participant' => $participant,
                     'price_id'    => $prices[$index]
                 ];
@@ -209,14 +210,14 @@ class InscriptionController extends Controller
                 }
 
                 // Register a new inscription
-                $this->register->register($data,$colloque->id);
+                $this->register->register($data,$colloque);
 
             }
 
             event(new GroupeInscriptionWasRegistered($group_user));
         }
 
-        return redirect('admin/inscription/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
+        return redirect('admin/inscription/colloque/'.$colloque)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
     }
 
     /**

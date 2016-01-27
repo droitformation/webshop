@@ -1,7 +1,10 @@
 <?php
 namespace App\Droit\Inscription\Worker;
+use App\Droit\Inscription\Repo\InscriptionInterface;
+use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\Option\Repo\OptionInterface;
 
-class InscriptionWorker{
+class InscriptionWorker implements InscriptionWorkerInterface{
 
     /*
     * Helper class for misc functions
@@ -14,11 +17,11 @@ class InscriptionWorker{
 
     public $dispatch = [];
 
-    public function __construct()
+    public function __construct(InscriptionInterface $inscription, ColloqueInterface $colloque, OptionInterface $option)
     {
-        $this->inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-        $this->colloque    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-        $this->option      = \App::make('App\Droit\Option\Repo\OptionInterface');
+        $this->inscription = $inscription;
+        $this->colloque    = $colloque;
+        $this->option      = $option;
 
         $this->helper  = new \App\Droit\Helper\Helper();
     }

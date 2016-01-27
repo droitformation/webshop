@@ -31,8 +31,11 @@ class NewsletterTest extends TestCase
 
         $this->helper = Mockery::mock('App\Droit\Helper\Helper');
 
-        $user = App\Droit\User\Entities\User::find(1);
-        $this->be($user);
+        $model = new \App\Droit\User\Entities\User();
+
+        $user = $model->find(710);
+
+        $this->actingAs($user);
 
     }
 

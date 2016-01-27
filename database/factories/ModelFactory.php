@@ -13,13 +13,23 @@
 
 $factory->define(App\Droit\Inscription\Entities\Inscription::class, function (Faker\Generator $faker) {
     return [
-        'colloque_id'    => $faker->numberBetween(11, 71),
+        'colloque_id'    => 71,
         'inscription_no' => $faker->numberBetween(11, 71).'-2015/'.$faker->numberBetween(1, 5),
-        'user_id'        => 1,
+        'user_id'        => 710,
         'group_id'       => null,
         'price_id'       => $faker->numberBetween(200,300),
         'created_at'     => \Carbon\Carbon::now(),
         'updated_at'     => \Carbon\Carbon::now()
+    ];
+});
+
+$factory->define(App\Droit\Inscription\Entities\Groupe::class, function (Faker\Generator $faker) {
+    return [
+        'id'          => 1,
+        'colloque_id' => 1,
+        'user_id'     => 710,
+        'description' => 'Une description',
+        'adresse_id'  => 1,
     ];
 });
 

@@ -46,7 +46,6 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
-
         $colloque = $this->colloque->find($request->input('colloque_id'));
         $inscription_no  = $this->colloque->getNewNoInscription($colloque->id);
 
@@ -55,8 +54,7 @@ class InscriptionController extends Controller
         $inscription = $this->inscription->create($data);
 
         // Update counter
-        $colloque->counter = $colloque->counter + 1;
-        $colloque->save();
+        $this->colloque->increment($colloque->id);
 
         event(new InscriptionWasRegistered($inscription));
 

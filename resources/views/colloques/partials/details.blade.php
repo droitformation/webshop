@@ -4,7 +4,7 @@
     <div class="col-md-5 colloque-details">
 
         <p><strong>Lieu:</strong></p>
-        <p>{{ $colloque->location->name }}, {{ $colloque->location->adresse }}</p>
+        <p>{{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? $colloque->location->adresse : '' }}</p>
 
         <p><strong>Date:</strong></p>
         <p>{{ $colloque->event_date }}</p>
@@ -37,7 +37,7 @@
             @endforeach
         @endif
 
-        @if($colloque->location->location_map)
+        @if($colloque->location && $colloque->location->location_map)
             <p><a class="btn btn-warning btn-sm" href="{{ $colloque->location->location_map }}">Plan d'accès</a></p>
         @endif
     </div>

@@ -61,13 +61,6 @@
                 @endforeach
             @endif
 
-           <?php
-
-/*          echo '<pre>';
-            print_r();
-            print_r($inscription->colloque);*/
-
-            ?>
         </div>
     </div>
 

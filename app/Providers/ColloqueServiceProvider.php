@@ -27,6 +27,7 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerOrganisateurService();
         $this->registerCompteService();
         $this->registerInscriptionService();
+        $this->registerInscriptionWorkerService();
         $this->registerDocumentService();
         $this->registerGroupeService();
         $this->registerOptionService();
@@ -53,6 +54,21 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Inscription\Repo\InscriptionInterface', function()
         {
             return new \App\Droit\Inscription\Repo\InscriptionEloquent(new \App\Droit\Inscription\Entities\Inscription);
+        });
+    }
+
+    /**
+     * Inscription
+     */
+    protected function registerInscriptionWorkerService(){
+
+        $this->app->singleton('App\Droit\Inscription\Worker\InscriptionWorkerInterface', function()
+        {
+            return new \App\Droit\Inscription\Worker\InscriptionWorker(
+                \App::make('App\Droit\Inscription\Repo\InscriptionInterface'),
+                \App::make('App\Droit\Colloque\Repo\ColloqueInterface'),
+                \App::make('App\Droit\Option\Repo\OptionInterface')
+            );
         });
     }
 
