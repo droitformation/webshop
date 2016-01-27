@@ -102,7 +102,7 @@
                                             <td>{{ $abonnement->numero }}</td>
                                             <td>{{ $abonnement->user->name }}</td>
                                             <td>{{ $abonnement->user->company }}</td>
-                                            <td>{{ $abonnement->status }}</td>
+                                            <td>Résilié</td>
                                         </tr>
                                     @endforeach
                                 @endif

@@ -167,9 +167,9 @@ class OrderController extends Controller {
      */
     public function destroy($id)
     {
-        $this->product->delete($id);
+        $this->order->delete($id);
 
-        return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'Le produit a été supprimé' ));
+        return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));
     }
 
 }

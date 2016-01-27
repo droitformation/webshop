@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider {
         );
 
         //view()->composer('*', 'App\Http\ViewComposers\LabelComposer');
+        view()->composer('*', 'App\Http\ViewComposers\LabelComposer');
 	}
 
 	/**

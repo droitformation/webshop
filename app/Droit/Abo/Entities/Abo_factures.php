@@ -26,7 +26,7 @@ class Abo_factures extends Model{
 
     public function abonnement()
     {
-        return $this->belongsTo('App\Droit\Abo\Entities\Abo_users','abo_user_id');
+        return $this->belongsTo('App\Droit\Abo\Entities\Abo_users','abo_user_id')->withTrashed();
     }
 
     public function product()

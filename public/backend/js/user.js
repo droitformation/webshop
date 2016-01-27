@@ -49,14 +49,15 @@ $('input.search-adresse').each(function()
 
 function template(data)
 {
-    var company = data.company ? data.company + '<br/>' : '';
-    var cp      = data.cp ? data.cp + '<br/>' : '';
-    var compl   = data.complement ? data.complement + '<br/>' : '';
+    var company  = data.company ? data.company + '<br/>' : '';
+    var cp       = data.cp ? data.cp + '<br/>' : '';
+    var compl    = data.complement ? data.complement + '<br/>' : '';
+    var civilite = data.civilite ? data.civilite.title : '';
 
     var html = '<p><a class="btn btn-danger btn-xs remove-adresse">Changer</a></p>'
              + '<address>'
              +  company
-             +  data.civilite.title + ' '
+             +  civilite + ' '
              +  data.first_name + ' ' + data.last_name + '<br/>'
              +  data.adresse + '<br/>' +  compl + cp
              +  data.npa + ' ' + data.ville

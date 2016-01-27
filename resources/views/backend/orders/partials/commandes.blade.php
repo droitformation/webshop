@@ -14,6 +14,7 @@
                 <th class="text-right">Statut</th>
                 <th class="text-right">Facture</th>
                 <th class="text-right">Via admin</th>
+                <th class="text-right">Annuler</th>
             </tr>
         </thead>
         <tbody>
@@ -32,12 +33,18 @@
                 <td class="text-right"><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
                 <td class="text-right"><?php echo ($order->facture ? '<a target="_blank" href="'.$order->facture.'" class="btn btn-xs btn-default">Facture en pdf</a>' : ''); ?></td>
                 <td class="text-right">{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>
+                <td class="text-right">
+                    <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
+                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                        <button data-what="Annuler" data-action="{{ $order->order_no }}" class="btn btn-danger btn-xs deleteAction">annuler</button>
+                    </form>
+                </td>
             </tr>
             @if(!empty($order->products))
 
                 <?php $grouped = $order->products->groupBy('id'); ?>
                 <tr>
-                    <td colspan="7" class="nopadding">
+                    <td colspan="9" class="nopadding">
                         <div class="collapse customCollapse" id="order_no_{{ $order->id }}">
                             <div class="inscription_wrapper">
 
