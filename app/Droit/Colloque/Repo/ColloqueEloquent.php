@@ -12,9 +12,9 @@ class ColloqueEloquent implements ColloqueInterface{
         $this->colloque = $colloque;
     }
 
-    public function getAll(){
+    public function getAll($active = false){
 
-        return $this->colloque->with(['location','centres','compte','prices','documents'])->orderBy('start_at','DESC')->get();
+        return $this->colloque->active($active)->with(['location','centres','compte','prices','documents'])->orderBy('start_at','DESC')->get();
     }
 
     public function find($id){

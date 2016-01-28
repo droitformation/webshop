@@ -26,7 +26,7 @@
                             <p>
                                 {!! Form::open(array('url' => 'cart/addProduct')) !!}
                                 {!! Form::hidden('_token', csrf_token()) !!}
-                                <button type="submit" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-shopping-cart"></i></button>
+                                <button type="submit" class="btn btn-sm btn-info">Ajouter au panier</button>
                                 <a href="{{ url('shop/product/'.$product->id) }}" class="btn btn-sm btn-default">Plus d'info</a>
                                 {!! Form::hidden('product_id', $product->id) !!}
                                 {!! Form::close() !!}

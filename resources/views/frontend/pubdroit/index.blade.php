@@ -5,184 +5,249 @@
     <section class="row-fluid">
         <section class="span12 wellcome-msg m-bottom first">
             <h2>BIENVENUE sur publications-droit.ch.</h2>
-            <p>Offering a wide selection of books on thousands of topics at low prices to satisfy any book-lover!</p>
+            <p>Portail des divers publications de la Faculté de droit de l'Université de Neuchâtel</p>
         </section>
     </section>
-    <section class="row-fluid ">
-        <figure class="span4 s-product">
-            <div class="s-product-img"><a href="book-detail.html"><img src="frontend/pubdroit/images/image02.jpg" alt="Image02"/></a></div>
-            <article class="s-product-det">
-                <h3><a href="book-detail.html">A Walk Across The Sun</a></h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod dolore magna aliqua.</p>
-                <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span>
-                <div class="cart-price"> <a href="cart.html" class="cart-btn2">Add to Cart</a> <span class="price">$129.90</span> </div>
-                <span class="sale-icon">Sale</span> </article>
-        </figure>
-        <figure class="span4 s-product">
-            <div class="s-product-img"><a href="book-detail.html"><img src="frontend/pubdroit/images/image03.jpg" alt="Image02"/></a></div>
-            <article class="s-product-det">
-                <h3><a href="book-detail.html">Harry Potter</a></h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod dolore magna aliqua.</p>
-                <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span>
-                <div class="cart-price"> <a href="cart.html" class="cart-btn2">Add to Cart</a> <span class="price">$44.95</span> </div>
-                <span class="sale-icon">Sale</span> </article>
-        </figure>
-        <figure class="span4 s-product">
-            <div class="s-product-img"><a href="book-detail.html"><img src="frontend/pubdroit/images/image04.jpg" alt="Image02"/></a></div>
-            <article class="s-product-det">
-                <h3><a href="book-detail.html">Sleeping Beauty</a></h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod dolore magna aliqua.</p>
-                <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span>
-                <div class="cart-price"> <a href="cart.html" class="cart-btn2">Add to Cart</a> <span class="price">$223.00</span> </div>
-                <span class="sale-icon">Sale</span> </article>
-        </figure>
-    </section>
-    <!-- Start BX Slider holder -->
-    <section class="row-fluid features-books">
-        <section class="span12 m-bottom">
+
+    <section class="row-fluid">
+
+        <section class="span8">
+
             <div class="heading-bar">
-                <h2>Featured Books</h2>
-                <span class="h-line"></span> </div>
-            <div class="slider1">
+                <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Evénements</h2>
+                <span class="h-line"></span>
+            </div>
+
+            @if(!$colloques->isEmpty())
+                <?php $chunks = $colloques->chunk(1); ?>
+                @foreach($chunks as $chunk)
+                    <section class="row-fluid">
+                        @foreach($chunk as $colloque)
+
+                            <div class="event-post span12">
+                                <div class="post-img">
+                                    <a href="{{ url('colloque/'.$colloque->id) }}">
+                                        <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
+                                    </a>
+                                    <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span> </div>
+                                <div class="post-det">
+                                    <h3><a href="{{ url('colloque/'.$colloque->id) }}"><strong>{{ $colloque->titre }}</strong></a></h3>
+                                    <span class="comments-num">{{ $colloque->soustitre }}</span>
+                                    <p><strong>Lieu: </strong>
+                                    {{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? $colloque->location->adresse : '' }}</p>
+                                    {!! $colloque->remarque !!}
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        @endforeach
+                    </section>
+                @endforeach
+            @endif
+
+            <div class="b-post-bottom">
+                <a class="more-btn" href="blog-detail.html">Archives</a>
+            </div>
+
+        </section>
+
+        <section id="nouveautes" class="span4">
+
+            <div class="heading-bar">
+                <h2><i class="fa fa-heart"></i> &nbsp;Coups de coeur</h2>
+                <span class="h-line"></span>
+            </div>
+
+            @if(!$nouveautes->isEmpty())
+                <?php $chunks = $nouveautes->take(3); ?>
+                @foreach($chunks as $product)
+                    <figure class="s-product">
+                        <div class="s-product-img">
+                            <a href="{{ url('product/'.$product->id) }}"><img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/></a>
+                        </div>
+                        <article class="s-product-det">
+                            <h3><a href="{{ asset('files/products/'.$product->image) }}">{{ $product->title }}</a></h3>
+                            <p>{!! $product->teaser !!}</p>
+                            <div class="cart-price">
+                                <a href="cart.html" class="cart-btn2">Ajouter au panier</a>
+                                <span class="price">{{ $product->price_cents }} CHF</span>
+                            </div>
+                        </article>
+                        <div class="clearfix"></div>
+                    </figure>
+                @endforeach
+            @endif
+
+        </section>
+    </section>
+
+    <div class="heading-bar">
+        <h2>Nouveautés</h2>
+        <span class="h-line"></span>
+    </div>
+
+    @if(!$nouveautes->isEmpty())
+    <?php $chunks = $nouveautes->chunk(3); ?>
+        @foreach($chunks as $chunk)
+            <section class="row-fluid">
+                @foreach($chunk as $product)
+                <figure class="span4 s-product">
+                    <div class="s-product-img">
+                        <a href="{{ url('product/'.$product->id) }}">
+                            <img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
+                        </a>
+                    </div>
+                    <article class="s-product-det">
+                        <h3><a href="{{ asset('files/products/'.$product->image) }}">{{ $product->title }}</a></h3>
+                        <p>{!! $product->teaser !!}</p>
+                        <div class="cart-price">
+                            <a href="cart.html" class="cart-btn2">Ajouter au panier</a>
+                            <span class="price">{{ $product->price_cents }} CHF</span>
+                        </div>
+                        <span class="sale-icon">Sale</span>
+                    </article>
+                </figure>
+                @endforeach
+            </section>
+        @endforeach
+    @endif
+
+    <section class="row-fluid">
+        <div class="heading-bar">
+            <h2>Publications</h2>
+            <span class="h-line"></span>
+        </div>
+        <!-- Start Main Content -->
+        <section class="span9 first">
+            <!-- Start Ad Slider Section -->
+            <div class="blog-sec-slider">
+                <div class="slider5">
+                    <div class="slide"><a href="#"><img src="frontend/pubdroit/images/ad-book.jpg" alt=""/></a></div>
+                </div>
+            </div>
+            <!-- End Ad Slider Section -->
+
+            <!-- Start Grid View Section -->
+            <div class="product_sort">
+                <div class="row-1">
+                    <div class="left">
+                        <span class="s-title">Sort by</span>
+                        <span class="list-nav">
+                            <select name="">
+                                <option>Position</option>
+                                <option>Position 2</option>
+                                <option>Position 3</option>
+                                <option>Position 4</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="right">
+                        <span>Show</span>
+                        <span>
+                            <select name="">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </span>
+                        <span>per page</span>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <span class="left">Items 1 to 9 of 15 total</span>
+                    <ul class="product_view">
+                        <li>View as:</li>
+                        <li><a class="grid-view" href="grid-view.html">Grid View</a></li>
+                        <li><a class="list-view" href="list-view.html">List View</a></li>
+                    </ul>
+                </div>
+            </div>
+            <section class="list-holder">
 
                 @if(!$products->isEmpty())
                     @foreach($products as $product)
-                        <div class="slide">
-                            <a href="{{ url('product/'.$product->id) }}"><img src="{{ asset('files/products/'.$product->image) }}" alt=""></a>
-                            <span class="title">
-                                <a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a>
-                            </span>
-                            <span class="rating-bar">
-                                <img style="max-width: 140px;" src="{{ asset('frontend/pubdroit/images/rating-star.png') }}" alt="Rating Star"/>
-                            </span>
-                            <div class="cart-price">
-                                {!! Form::open(array('url' => 'cart/addProduct')) !!}
-                                    {!! Form::hidden('_token', csrf_token()) !!}
-                                    <button type="submit" class="cart-btn2">Ajouter au panier</button>
-                                    {!! Form::hidden('product_id', $product->id) !!}
-                                {!! Form::close() !!}
-                                <span class="price">{{ $product->price_cents }} CHF</span>
+
+                        <article class="item-holder">
+                            <div class="span2">
+                                <a href="{{ url('product/'.$product->id) }}"><img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" /></a>
                             </div>
-                        </div>
+                            <div class="span10">
+                                <div class="title-bar">
+                                    <a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a>
+                                    <span>{!! $product->teaser !!}</span>
+                                </div>
+                                <div class="readmore">{!! $product->description !!}</div>
+                                <div class="cart-price">
+                                    {!! Form::open(array('url' => 'cart/addProduct')) !!}
+                                    {!! Form::hidden('_token', csrf_token()) !!}
+                                    <button type="submit" class="cart-btn2"><i class="fa fa-shopping-cart"></i></button>
+                                    <span class="price">{{ $product->price_cents }} CHF</span>
+                                    {!! Form::hidden('product_id', $product->id) !!}
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                        </article>
+
                     @endforeach
                 @endif
 
-            </div>
-        </section>
-    </section>
-    <!-- End BX Slider holder -->
-    <!-- Start Featured Author -->
-    <section class="row-fluid m-bottom">
-        <section class="span9">
-            <div class="featured-author">
-                <div class="left"> <span class="author-img-holder"><a href="about-us.html"><img src="frontend/pubdroit/images/image16.jpg" alt=""/></a></span>
-                    <div class="author-det-box">
-                        <div class="ico-holder">
-                            <div id="socialicons" class="hidden-phone"> <a id="social_linkedin" class="social_active" href="#" title="Visit Google Plus page"><span></span></a> <a id="social_facebook" class="social_active" href="#" title="Visit Facebook page"><span></span></a> <a id="social_twitter" class="social_active" href="#" title="Visit Twitter page"><span></span></a> </div>
-                        </div>
-                        <div class="author-det"> <span class="title">Featured Author</span> <span class="title2">Mr. Khalid Hosseini</span>
-                            <ul class="books-list">
-                                <li><a href="book-detail.html"><img src="frontend/pubdroit/images/image11.jpg" alt=""/></a></li>
-                                <li><a href="book-detail.html"><img src="frontend/pubdroit/images/image12.jpg" alt=""/></a></li>
-                                <li><a href="book-detail.html"><img src="frontend/pubdroit/images/image13.jpg" alt=""/></a></li>
-                                <li><a href="book-detail.html"><img src="frontend/pubdroit/images/image14.jpg" alt=""/></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="right">
-                    <div class="current-book"> <strong class="title"><a href="book-detail.html">The Kite Runner</a></strong>
-                        <p>Lorem ipsum dolor slo nsec  tueraliquet rbi nec In nisl lorem in ...</p>
-                        <div class="cart-price"> <a href="cart.html" class="cart-btn2">Add to Cart</a> <span class="price">$129.90</span> </div>
-                    </div>
-                    <div class="c-b-img"> <a href="book-detail.html"><img src="frontend/pubdroit/images/image17.jpg" alt="" /></a> </div>
+            </section>
+            <div class="blog-footer">
+                <div class="pagination">
+                    {!! $products->links() !!}
                 </div>
             </div>
-        </section>
-        <section class="span3 best-sellers">
-            <div class="heading-bar">
-                <h2>Best Sellers</h2>
-                <span class="h-line"></span> </div>
-            <div class="slider2">
-                <div class="slide"><a href="book-detail.html"><img src="frontend/pubdroit/images/image15.jpg" alt=""/></a>
-                    <div class="slide2-caption">
-                        <div class="left"> <span class="title"><a href="book-detail.html">Thousand Splendid Miles</a></span> <span class="author-name">by Khalid Housseini</span> </div>
-                        <div class="right"> <span class="price">$139.50</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-                    </div>
-                </div>
-                <div class="slide"><a href="book-detail.html"><img src="frontend/pubdroit/images/image15.jpg" alt=""/></a>
-                    <div class="slide2-caption">
-                        <div class="left"> <span class="title"><a href="book-detail.html">Thousand Splendid Miles</a></span> <span class="author-name">by Khalid Housseini</span> </div>
-                        <div class="right"> <span class="price">$139.50</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-                    </div>
-                </div>
-                <div class="slide"><a href="book-detail.html"><img src="frontend/pubdroit/images/image15.jpg" alt=""/></a>
-                    <div class="slide2-caption">
-                        <div class="left"> <span class="title"><a href="book-detail.html">Thousand Splendid Miles</a></span> <span class="author-name">by Mr. Khalid </span> </div>
-                        <div class="right"> <span class="price">$139.50</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </section>
-    <!-- End Featured Author -->
-    <section class="row-fluid m-bottom">
-        <!-- Start Blog Section -->
-        <section class="span9 blog-section">
-            <div class="heading-bar">
-                <h2>Latest from the Blog</h2>
-                <span class="h-line"></span> </div>
-            <div class="slider3">
-                <div class="slide">
-                    <div class="post-img"><a href="blog-detail.html"><img src="frontend/pubdroit/images/image18.jpg" alt=""/></a> <span class="post-date"><span>02</span> May</span> </div>
-                    <div class="post-det">
-                        <h3><a href="blog-detail.html">Our latest arrival is the Spring Summer 2013 Book Fair</a></h3>
-                        <span class="comments-num">6 comments</span>
-                        <p>Gluten-free quinoa selfies carles, kogi gentrify retro marfa viral. Aesthetic before they sold out put a bird on it sriracha typewriter. Skateboard viral irony tonx ... </p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="post-img"><a href="blog-detail.html"><img src="frontend/pubdroit/images/image29.jpg" alt=""/></a> <span class="post-date"><span>24</span> Oct</span> </div>
-                    <div class="post-det">
-                        <h3><a href="blog-detail.html">Our latest arrival is the Spring Summer 2012 Book Fair</a></h3>
-                        <span class="comments-num">48 comments</span>
-                        <p>Gluten-free quinoa selfies carles, kogi gentrify retro marfa viral. Aesthetic before they sold out put a bird on it sriracha typewriter. Skateboard viral irony tonx ... </p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="post-img"><a href="blog-detail.html"><img src="frontend/pubdroit/images/image30.jpg" alt=""/></a> <span class="post-date"><span>10</span> Aug</span> </div>
-                    <div class="post-det">
-                        <h3><a href="blog-detail.html">Our latest arrival is the Spring Summer 2011 Book Fair</a></h3>
-                        <span class="comments-num">24 comments</span>
-                        <p>Gluten-free quinoa selfies carles, kogi gentrify retro marfa viral. Aesthetic before they sold out put a bird on it sriracha typewriter. Skateboard viral irony tonx ... </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- End Blog Section -->
-        <!-- Start Testimonials Section -->
-        <section class="span3 testimonials">
-            <div class="heading-bar">
-                <h2>Testimonials</h2>
-                <span class="h-line"></span> </div>
-            <div class="slider4">
-                <div class="slide">
-                    <div class="author-name-holder"> <img src="frontend/pubdroit/images/image19.png" /> </div>
-                    <strong class="title">Robert Smith <span>Manager</span></strong>
-                    <div class="slide">
-                        <p>Lorem ipsum dolor slo onsec nelioro tueraliquet Morbi nec In Curabitur lorem in design Morbi nec In Curabituritus gojus, </p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="author-name-holder"> <img src="frontend/pubdroit/images/image19.png" /> </div>
-                    <strong class="title">Mr. Khalid Hosseini <span>Manager</span></strong>
-                    <div class="slide">
-                        <p>Gluten-free quinoa selfies carles, kogi gentrify retro marfa viral. Aesthetic before they sold out put a bird on it sriracha typewriter. Skateboard viral irony tonx ... </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- End Testimonials Section -->
-    </section>
+            <!-- End Grid View Section -->
 
+        </section>
+        <!-- End Main Content -->
+
+        <!-- Start Main Side Bar -->
+        <section class="span3">
+            <div class="side-holder">
+                <article class="banner-ad">
+                    <img src="frontend/pubdroit/images/ad.jpg" alt="Helbing" />
+                </article>
+            </div>
+
+            <!-- Start Shop by Section -->
+            <div class="side-holder">
+                <article class="shop-by-list">
+                    <h2>Trouver par</h2>
+                    <div class="side-inner-holder">
+                        @if(!$categories->isEmpty())
+                            <strong class="title">Collections</strong>
+                            <ul class="side-list">
+                                @foreach($categories as $categorie_id => $categorie)
+                                    <li><a href="{{ url('categorie/'.$categorie_id) }}">{{ $categorie }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                        @if(!$domains->isEmpty())
+                            <strong class="title">Thèmes</strong>
+                            <ul class="side-list">
+                                @foreach($domains as $domain_id => $domain)
+                                    <li><a href="{{ url('domain/'.$domain_id) }}">{{ $domain }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                        @if(!$authors->isEmpty())
+                            <strong class="title">Auteur</strong>
+                            <ul class="side-list">
+                                @foreach($authors as $author_id => $author)
+                                    <li><a href="{{ url('domain/'.$author_id) }}">{{ $author }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+                </article>
+            </div>
+            <!-- End Shop by Section -->
+
+        </section>
+        <!-- End Main Side Bar -->
+    </section>
+    </section>
 @stop

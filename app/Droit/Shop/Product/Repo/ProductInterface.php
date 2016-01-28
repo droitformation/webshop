@@ -3,6 +3,7 @@
 interface ProductInterface {
 
     public function getAll($search = null);
+	public function getNbr($nbr = null,$reject = null);
     public function getSome($ids);
 	public function getByCategorie($id);
 	public function find($data);

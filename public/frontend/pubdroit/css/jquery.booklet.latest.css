@@ -122,9 +122,13 @@
 	min-height:137px;
 }
 .cart-price {
-	max-width:244px;
-	margin:75px auto 0;
-	overflow:hidden;
+	max-width: 244px;
+	overflow: hidden;
+	margin-top: 20px;
+}
+.s-product-det .cart-price {
+	bottom: 12px;
+	position: absolute;
 }
 .cart-price span.cart {
 	background:url(../images/cart-icon2.png) no-repeat left top;

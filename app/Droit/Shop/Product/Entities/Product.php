@@ -62,7 +62,25 @@ class Product extends Model{
                 });
             }
         }
+    }
 
+    public function scopeReject($query, $categories)
+    {
+        if($categories)
+        {
+            foreach($categories as $categorie)
+            {
+                $query->whereHas('categories', function ($query) use ($categorie)
+                {
+                    $query->where('categorie_id', '!=' ,$categorie);
+                });
+            }
+        }
+    }
+
+    public function scopeNbr($query,$nbr)
+    {
+        if ($nbr) $query->take($nbr);
     }
 
     public function categories()

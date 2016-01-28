@@ -105,7 +105,8 @@
 							</button>
 							<div class="nav-collapse collapse">
 								<ul class="nav">
-									<li><a href="{{ url('domaines') }}"><i class="fa fa-star"></i> &nbsp; Collections</a></li>
+									<li><a href="{{ url('categorie/1') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
+									<li><a href="{{ url('domaines') }}"><i class="fa fa-bookmark"></i> &nbsp; Collections</a></li>
 									<li><a href="{{ url('categories') }}"><i class="fa fa-tags"></i> &nbsp;Thèmes</a></li>
 									<li><a href="{{ url('authors') }}"><i class="fa fa-users"></i> &nbsp;Auteurs</a></li>
 								</ul>
@@ -281,36 +282,10 @@
 		<script src="<?php echo asset('frontend/pubdroit/js/input-clear.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/range-slider.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/jquery.zoom.js');?>"></script>
-
+		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/bookblock.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/custom.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/social.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/jquery.booklet.latest.js');?>"></script>
-
-		<script type="text/javascript">
-			$(function () {
-				$("#mybook").booklet({
-					width:'100%',
-					height:430,
-					auto: true,
-					//speed: 250,
-				});
-			});
-		</script>
-		<!-- JS Files End -->
-		<noscript>
-			<style>
-				#socialicons>a span { top: 0px; left: -100%; -webkit-transition: all 0.3s ease; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s 	ease-in-out;}
-				#socialicons>a:hover div{left: 0px;}
-			</style>
-		</noscript>
-		<script type="text/javascript">
-			/* <![CDATA[ */
-			$(document).ready(function() {
-				$('.social_active').hoverdir( {} );
-			})
-			/* ]]> */
-		</script>
 
 	</body>
 </html>

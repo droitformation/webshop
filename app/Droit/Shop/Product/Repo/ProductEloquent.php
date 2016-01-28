@@ -14,18 +14,29 @@ class ProductEloquent implements ProductInterface{
 
     public function getAll($search = null)
     {
-        return $this->product->with(array('categories','authors','domains','attributs','orders','abos'))->search($search)->get();
+        return $this->product
+            ->with(array('categories','authors','domains','attributs','orders','abos'))
+            ->search($search)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
+    public function getNbr($nbr = null, $reject = null)
+    {
+        return $this->product
+            ->with(array('categories','authors','domains','attributs','abos'))
+            ->reject($reject)
+            ->orderBy('created_at', 'DESC')
+            ->paginate($nbr);
     }
 
     public function getByCategorie($id){
 
         return $this->product->with(array('authors','attributs','categories'))->whereHas('categories', function($query) use ($id)
         {
-            // Set the constraint on the tags
             $query->where('categorie_id', '=' ,$id);
 
         })->orderBy('created_at', 'DESC')->get();
-
     }
 
     public function find($id){

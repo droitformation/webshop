@@ -87,6 +87,11 @@ class Colloque extends Model
         return $annexes;
     }
 
+    public function scopeActive($query,$status)
+    {
+        if ($status) $query->where('registration_at','>',date('Y-m-d'));
+    }
+
     public function specialisations()
     {
         return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation','colloque_specialisations','colloque_id','specialisation_id');

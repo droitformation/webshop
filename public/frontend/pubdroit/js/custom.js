@@ -2,7 +2,7 @@
 jQuery(document).ready(function($){	   
 /* BX slider 1*/
    if ($('.slider1').length){
-		$('.slider1').bxSlider({ slideWidth: 142, minSlides: 1, maxSlides: 8, slideMargin: 18,  speed: 1500  });
+		$('.slider1').bxSlider({ slideWidth: 237, minSlides: 1, maxSlides: 8, slideMargin: 18,  speed: 1500  });
     }
    if ($('.slider2').length){
 		$('.slider2').bxSlider({ slideWidth: 270,   mode: 'horizontal',  useCSS: false, easing: 'easeOutElastic',  speed: 2000 });
@@ -26,6 +26,10 @@ jQuery(document).ready(function($){
 });
 /* End BX slider*/
 
+$('.readmore').readmore({
+	moreLink : '<a class="morelink" href="#">Lire plus</a>',
+	lessLink: '<a class="morelink" href="#">Fermer</a>'
+});
 
 /* Start Range Slider*/
 $(function() {

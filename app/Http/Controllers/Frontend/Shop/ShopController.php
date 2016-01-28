@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Shop\Attribute\Repo\AttributeInterface;
@@ -11,6 +12,7 @@ use App\Droit\Domain\Repo\DomainInterface;
 
 class ShopController extends Controller {
 
+	protected $colloque;
 	protected $product;
 	protected $categorie;
 	protected $attribute;
@@ -22,8 +24,9 @@ class ShopController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product,  CategorieInterface $categorie, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain)
+	public function __construct(ColloqueInterface $colloque,ProductInterface $product,  CategorieInterface $categorie, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain)
 	{
+		$this->colloque  = $colloque;
         $this->product   = $product;
 		$this->categorie = $categorie;
 		$this->attribute = $attribute;
@@ -32,8 +35,8 @@ class ShopController extends Controller {
 
 		view()->share('categories', $this->categorie->getAll()->pluck('title','id'));
 		view()->share('attributes', $this->attribute->getAll()->pluck('title','id'));
-		view()->share('authors', $this->author->getAll()->pluck('name','id'));
-		view()->share('domains', $this->domain->getAll()->pluck('title','id'));
+		view()->share('authors', $this->author->getAll()->take(6)->pluck('name','id'));
+		view()->share('domains', $this->domain->getAll()->take(6)->pluck('title','id'));
 
 	}
 
@@ -44,9 +47,11 @@ class ShopController extends Controller {
 	 */
 	public function index()
 	{
-        $products = $this->product->getAll()->take(10);
+        $nouveautes = $this->product->getByCategorie(5)->take(6);
+		$products   = $this->product->getNbr(10,[5]);
+        $colloques  = $this->colloque->getAll(true);
 
-		return view('frontend.pubdroit.index')->with(['products' => $products]);
+		return view('frontend.pubdroit.index')->with(['products' => $products, 'nouveautes' => $nouveautes, 'colloques' => $colloques]);
 	}
 
     /**
