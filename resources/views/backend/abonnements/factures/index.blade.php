@@ -5,10 +5,13 @@
         <div class="col-md-2">
             <p><a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8">
             <img class="thumbnail" style="height: 60px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
             <h3 style="margin: 0;">{{ $abo->title }}</h3>
             <p>&Eacute;dition {{ $product->reference }}</p>
+        </div>
+        <div class="col-md-2 text-right">
+            <p><a href="{{ url('admin/facture/generate/'.$product->id) }}" class="btn btn-warning">Generate</a></p>
         </div>
     </div>
 

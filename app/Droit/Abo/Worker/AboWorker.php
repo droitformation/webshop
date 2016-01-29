@@ -7,7 +7,7 @@ use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
-
+use App\Jobs\MakeFactureAbo;
 use Symfony\Component\Process\Process;
 
 class AboWorker implements AboWorkerInterface{
@@ -25,6 +25,31 @@ class AboWorker implements AboWorkerInterface{
         $this->generator = $generator;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
+    }
+
+    public function generate($product_id, $all = false)
+    {
+        $factures = $this->facture->getAll($product_id);
+
+        if(!$factures->isEmpty())
+        {
+            foreach($factures as $facture)
+            {
+                if($all)
+                {
+                    $job = (new MakeFactureAbo($facture))->delay(3);
+                    $this->dispatch($job);
+                }
+                else
+                {
+                    if(!$facture->abo_facture)
+                    {
+                        $job = (new MakeFactureAbo($facture))->delay(3);
+                        $this->dispatch($job);
+                    }
+                }
+            }
+        }
     }
 
     public function make($facture_id, $rappel = false)

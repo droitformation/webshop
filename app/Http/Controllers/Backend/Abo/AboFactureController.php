@@ -96,4 +96,9 @@ class AboFactureController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => $type.' a été supprimé' ));
 	}
 
+    public function generate($id)
+    {
+        $this->worker->generate($id);
+    }
+
 }

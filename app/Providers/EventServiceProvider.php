@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider {
         'App\Events\GroupeInscriptionWasRegistered' => [
             'App\Listeners\CreateDocumentsGroupeInscription'
         ],
+		'App\Events\jobFinsished' => [
+			'App\Listeners\notifyAdmin',
+		],
 	];
 
 	/**
