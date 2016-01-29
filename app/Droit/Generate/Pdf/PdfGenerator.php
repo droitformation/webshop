@@ -292,7 +292,7 @@ class PdfGenerator implements PdfGeneratorInterface
             \File::makeDirectory($dir);
         }
 
-        return $template->$generate(public_path().'/files/abos/'.$filename.'/'.$facture->product_id.'/'.$filename.'_'.$facture->product->edition.'-'.$facture->abo_user_id.'_'.$facture->id.'.pdf');
+        return $template->$generate(public_path().'/files/abos/'.$filename.'/'.$facture->product_id.'/'.$filename.'_'.$facture->product->reference.'-'.$facture->abo_user_id.'_'.$facture->id.'.pdf');
 
     }
 }

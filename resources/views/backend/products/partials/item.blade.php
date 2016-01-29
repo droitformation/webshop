@@ -12,14 +12,14 @@
                         {!! csrf_field() !!}
                         <input type="hidden" name="type_id" value="{{ $type->id }}" />
                         <input type="hidden" name="type" value="{{ $types }}" />
-                        <button data-action="{{ $type->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                        <button data-action="{{ $type->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
                     </form>
                 </div>
             @endforeach
             <hr/>
         @endif
 
-        <h4>Ajouter un {{ $title }}</h4>
+        <h4>Ajouter {{ $title }}</h4>
         <form action="{{ url('admin/product/addType/'.$product->id) }}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="type" value="{{ $types }}">

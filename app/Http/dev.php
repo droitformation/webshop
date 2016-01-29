@@ -239,6 +239,18 @@ Route::get('convert', function()
 
 });
 
+Route::get('testproduct', function()
+{
+    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $abonnement = $abo->find(155);
+
+
+    echo '<pre>';
+    print_r($abonnement->abo_no);
+    echo '</pre>';exit;
+
+});
+
 Route::get('manager', function()
 {
     $manager = App::make('App\Droit\Service\FileWorkerInterface');

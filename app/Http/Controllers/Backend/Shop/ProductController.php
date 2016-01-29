@@ -140,6 +140,19 @@ class ProductController extends Controller {
         $data = $request->except('file');
         $file = $request->file('file',null);
 
+        // Make sur that if it is a abo we have attributes (reference and edition)
+        $abo_id = $request->input('abo_id',null);
+
+        if(!empty($abo_id))
+        {
+            $product = $this->product->find($request->input('id'));
+
+            if(empty($product->reference) || empty($product->edition))
+            {
+                return redirect()->back()->with(['status' => 'warning', 'message' => 'Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement']);
+            }
+        }
+
         if($file)
         {
             $file = $this->upload->upload( $request->file('file') , 'files/products');
@@ -175,7 +188,6 @@ class ProductController extends Controller {
 
     public function removeAttribut($id, Request $request)
     {
-
         $product = $this->product->find($id);
 
         $product->attributs()->detach($request->input('attribute_id'));

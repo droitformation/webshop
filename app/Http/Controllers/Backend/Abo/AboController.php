@@ -118,15 +118,23 @@ class AboController extends Controller {
         $type       = $request->input('type');
         $edition    = $request->input('edition');
         $reference  = $request->input('reference','na');
-        $reference  = str_replace('/','_',$reference);
-        $edition    = $type.'_'.$edition.'_'.$reference;
 
+        $reference  = str_replace('/','_',$reference);
+
+        // facture_RJN-155_939
+        // Name of the pdf file with all the invoices bound together for a particular edition
+        $name = $type.'_'.$reference.'_'.$edition;
+
+        // Type : facture or rappel
+        // Directory for edition => product_id
         $dir   = 'files/abos/'.$type.'/'.$product_id;
+
+        // Get all files in directory
         $files = \File::files($dir);
 
         if(!empty($files))
         {
-            $this->worker->merge($files, $edition, $abo_id);
+            $this->worker->merge($files, $name, $abo_id);
         }
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Les factures ont été liés' ));

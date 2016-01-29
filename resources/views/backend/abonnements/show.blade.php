@@ -190,6 +190,8 @@
                                                         <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
                                                     @endif
 
+                                                    <a href="{{ url('admin/facture/'.$facture->id ) }}" class="btn btn-primary btn-sm">éditer</a>
+
                                                     <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer payé</a>
 
                                                     <form action="{{ url('admin/facture') }}" method="POST" class="pull-right">{!! csrf_field() !!}

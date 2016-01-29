@@ -117,7 +117,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-4 col-xs-12">
-                                <p class="text-danger">Attention indiquer la référence dans les attributs pour la facture !</p>
+                                <p class="text-danger">Attention indiquer la référence et l'édition dans les attributs pour la facture !</p>
                             </div>
                         </div>
 
@@ -147,8 +147,8 @@
                             <div>
                                 <strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }}
                                 <form action="{{ url('admin/product/removeAttribut/'.$product->id) }}" method="POST" class="pull-right">{!! csrf_field() !!}
-                                    <input type="hidden" name="attribute_id" value="{{ $attribute->pivot->id }}">
-                                    <button data-action="{{ $attribute->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                    <input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
+                                    <button data-action="{{ $attribute->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
                                 </form>
                             </div>
                         @endforeach
@@ -185,9 +185,9 @@
                 </div>
             </div>
 
-            @include('backend.products.partials.item',['title' => 'Catégories', 'items' => $categories, 'types' => 'categories'])
-            @include('backend.products.partials.item',['title' => 'Auteurs',    'items' => $authors,    'types' => 'authors'])
-            @include('backend.products.partials.item',['title' => 'Domaines',   'items' => $domains,    'types' => 'domains'])
+            @include('backend.products.partials.item',['title' => 'Catégorie', 'items' => $categories, 'types' => 'categories'])
+            @include('backend.products.partials.item',['title' => 'Auteur',    'items' => $authors,    'types' => 'authors'])
+            @include('backend.products.partials.item',['title' => 'Domaine',   'items' => $domains,    'types' => 'domains'])
 
         </div>
     </div>
