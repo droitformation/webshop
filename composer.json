@@ -26,7 +26,8 @@
         "torann/registry": "0.2.*@dev",
         "baum/baum": "~1.1",
         "inlinestyle/inlinestyle": "1.*",
-        "clegginabox/pdf-merger": "dev-master"
+        "clegginabox/pdf-merger": "dev-master",
+		"pusher/pusher-php-server": "~2.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

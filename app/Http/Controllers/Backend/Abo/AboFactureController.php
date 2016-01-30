@@ -88,17 +88,20 @@ class AboFactureController extends Controller {
         return redirect()->back()->with(['status' => 'success', 'message' => 'La facture a été mis à jour']);
     }
 		
-	public function destroy(Request $request)
+	public function destroy($id)
 	{
-        $type = $request->input('type');
-        $this->$type->delete($request->input('id'));
+        $this->facture->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => $type.' a été supprimé' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été supprimé' ));
 	}
 
-    public function generate($id)
+    public function generate($product_id)
     {
-        $this->worker->generate($id);
+        $abo = $this->abo->findAboByProduct($product_id);
+
+        $this->worker->generate($abo, $product_id);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'La création des factures est en cours' ));
     }
 
 }

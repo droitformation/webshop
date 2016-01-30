@@ -262,6 +262,16 @@ Route::get('manager', function()
 
 });
 
+Route::get('/job', function () {
+
+    $model    =  App::make('App\Droit\Abo\Repo\AboFactureInterface');
+    $facture  = $model->find(939);
+
+    dispatch(new App\Jobs\NotifyJobFinished('test done!'));
+
+    return 'Done!';
+});
+
 Route::get('dispatch', function()
 {
     $document    = 'analyse';

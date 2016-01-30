@@ -31,6 +31,10 @@ $('.readmore').readmore({
 	lessLink: '<a class="morelink" href="#">Fermer</a>'
 });
 
+$('.side-list').slimScroll({
+	height: '200px'
+});
+
 /* Start Range Slider*/
 $(function() {
 		$( "#slider-range" ).slider({

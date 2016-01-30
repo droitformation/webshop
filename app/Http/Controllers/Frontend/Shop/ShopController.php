@@ -35,8 +35,8 @@ class ShopController extends Controller {
 
 		view()->share('categories', $this->categorie->getAll()->pluck('title','id'));
 		view()->share('attributes', $this->attribute->getAll()->pluck('title','id'));
-		view()->share('authors', $this->author->getAll()->take(6)->pluck('name','id'));
-		view()->share('domains', $this->domain->getAll()->take(6)->pluck('title','id'));
+		view()->share('authors', $this->author->getAll()->pluck('name','id'));
+		view()->share('domains', $this->domain->getAll()->pluck('title','id'));
 
 	}
 

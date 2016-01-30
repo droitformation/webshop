@@ -454,7 +454,7 @@ $( function() {
     };
     var options = {
         valueNames: [ 'title', 'ISBN', 'author','Référence', 'Éditeur', 'domain', 'categorie' ],
-        page: 10,
+        page: 20,
         plugins: [
             ListFuzzySearch(),
             ListPagination({})

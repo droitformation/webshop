@@ -8,9 +8,13 @@ use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Jobs\MakeFactureAbo;
+use App\Jobs\NotifyJobFinished;
 use Symfony\Component\Process\Process;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class AboWorker implements AboWorkerInterface{
+
+    use DispatchesJobs;
 
     protected $facture;
     protected $rappel;
@@ -27,29 +31,23 @@ class AboWorker implements AboWorkerInterface{
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
-    public function generate($product_id, $all = false)
+    public function generate($abo, $product_id, $all = false)
     {
-        $factures = $this->facture->getAll($product_id);
-
-        if(!$factures->isEmpty())
+        // All abonnements for the product
+        if(!$abo->abonnements->isEmpty())
         {
-            foreach($factures as $facture)
+            $chunks = $abo->abonnements->chunk(30);
+
+            foreach($chunks as $chunk)
             {
-                if($all)
-                {
-                    $job = (new MakeFactureAbo($facture))->delay(3);
-                    $this->dispatch($job);
-                }
-                else
-                {
-                    if(!$facture->abo_facture)
-                    {
-                        $job = (new MakeFactureAbo($facture))->delay(3);
-                        $this->dispatch($job);
-                    }
-                }
+                $job = (new MakeFactureAbo($chunk, $product_id, $all));
+                $this->dispatch($job);
             }
         }
+
+        $job = (new NotifyJobFinished('Les factures ont été crées'));
+        $this->dispatch($job);
+
     }
 
     public function make($facture_id, $rappel = false)

@@ -24,7 +24,7 @@ class AboEloquent implements AboInterface{
 
     public function findAboByProduct($id)
     {
-        $abos = $this->abo->whereHas('products', function ($query) use ($id)
+        $abos = $this->abo->with(['abonnements','products'])->whereHas('products', function ($query) use ($id)
         {
             $query->where('product_id', $id);
         })->get();

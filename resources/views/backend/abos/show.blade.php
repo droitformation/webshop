@@ -28,7 +28,7 @@
                         @if(!$abo->products->isEmpty())
                             @foreach($abo->products as $product)
                                 <a class="list-group-item" href="{{ url('admin/factures/'.$product->id) }}">
-                                    &nbsp;<i class="fa fa-folder-open"></i>&nbsp; &Eacute;dition <strong>{{ $product->reference }}</strong>
+                                    &nbsp;<i class="fa fa-folder-open"></i>&nbsp; &Eacute;dition <strong>{{ $product->reference }} {{ $product->edition }}</strong>
                                 </a>
                             @endforeach
                         @endif
@@ -50,7 +50,12 @@
                         </thead>
                         <tbody>
                             @if(!$abo->abonnements->isEmpty())
-                                @foreach($abo->abonnements as $abonnement)
+                                <?php
+                                    $abonnes = $abo->abonnements->reject(function ($abonne) {
+                                        return $abonne->status == 'resilie';
+                                    });
+                                ?>
+                                @foreach($abonnes as $abonnement)
                                     <tr>
                                         <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                         <td>{{ $abonnement->numero }}</td>

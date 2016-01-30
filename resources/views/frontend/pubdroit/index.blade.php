@@ -36,7 +36,7 @@
                                     <p><strong>Lieu: </strong>
                                     {{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? $colloque->location->adresse : '' }}</p>
                                     {!! $colloque->remarque !!}
-
+                                    <p><a class="more-btn btn-sm" href="{{ url('colloque/'.$colloque->id) }}">Inscription</a></p>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -60,7 +60,7 @@
             </div>
 
             @if(!$nouveautes->isEmpty())
-                <?php $chunks = $nouveautes->take(3); ?>
+                <?php $chunks = $nouveautes->take(4); ?>
                 @foreach($chunks as $product)
                     <figure class="s-product">
                         <div class="s-product-img">

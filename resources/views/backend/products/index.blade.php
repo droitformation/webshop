@@ -20,7 +20,7 @@
                                 @include('backend.products.partials.sort',['title' => 'Catégories', 'items' => $categories, 'types' => 'categories', 'type' => 'categorie_id'])
                             </div>
                             <div class="col-md-2">
-                                @include('backend.products.partials.sort',['title' => 'Auteurs',    'items' => $authors,    'types' => 'authors', 'type' => 'author_id'])
+                                @include('backend.products.partials.sort',['title' => 'Auteurs',    'items' => $authors, 'types' => 'authors', 'type' => 'author_id'])
                             </div>
                             <div class="col-md-2">
                                 @include('backend.products.partials.sort',['title' => 'Domaines',   'items' => $domains,    'types' => 'domains', 'type' => 'domain_id'])
@@ -78,7 +78,7 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-2">
-                                        <ul class="list-unstyled">
+                                        <ul class="list-unstyled" style="display: none;">
                                             @if(!$product->authors->isEmpty())
                                                 @foreach($product->authors as $author)
                                                     <li class="author">{{ $author->name }}</li>
@@ -87,7 +87,7 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-2">
-                                        <ul class="list-unstyled">
+                                        <ul class="list-unstyled" style="display: none;">
                                             @if(!$product->domains->isEmpty())
                                                 @foreach($product->domains as $domain)
                                                     <li class="domain">{{ $domain->title }}</li>

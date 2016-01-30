@@ -35,7 +35,7 @@ class MakeDocumentGroupe extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $register  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
         $this->groupe->load('colloque','user');

@@ -32,7 +32,7 @@ class AboUserController extends Controller {
 
     public function index($id, Request $request){
 
-        $product_id  = $request->input('product_id', null);
+        $product_id = $request->input('product_id', null);
 
         $id  = ($product_id ? $product_id : $id);
         $abo = $this->abo->find($id);

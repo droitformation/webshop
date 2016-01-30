@@ -11,13 +11,14 @@
     ================================================== -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+	<!-- All css -->
+	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/bs.css');?>">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
 	<!-- Css Files Start -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/style.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/skins/red.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/update-responsive.css');?>">
-
-	<!-- All css -->
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/bs.css');?>">
 
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/main-slider.css');?>">
@@ -39,19 +40,19 @@
 			<!-- Start Main Header -->
 			<!-- Start Top Nav Bar -->
 			<section class="top-nav-bar">
-				<section class="container-fluid container">
-					<section class="row-fluid">
-						<section class="span6">
+				<section class="container">
+					<section class="row">
+						<section class="col-md-6">
 							<ul class="top-nav">
-								<li><a href="index.html" class="active">Home page</a></li>
-								<li><a href="grid-view.html">Shop</a></li>
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="shortcodes.html">Short Codes</a></li>
-								<li><a href="blog-detail.html">News</a></li>
-								<li><a href="contact.html">Contact Us</a></li>
+								<li><a href="index.html" class="active">Accueil</a></li>
+								<li><a href="grid-view.html">Newsletter</a></li>
+								<li><a href="blog.html">Bachelors en droit</a></li>
+								<li><a href="shortcodes.html">Masters</a></li>
+								<li><a href="blog-detail.html">CAS/MAS/DAS</a></li>
+								<li><a href="contact.html">Contact</a></li>
 							</ul>
 						</section>
-						<section class="span6 e-commerce-list">
+						<section class="col-md-6 e-commerce-list">
 							<ul>
 								<li>Bienvenue! <a href="checkout.html">Login</a> or <a href="checkout.html">Créer un compte</a></li>
 								<li class="p-category"><a href="#">eng</a> <a href="#">de</a> <a href="#">fr</a></li>
@@ -74,14 +75,14 @@
 			<header id="main-header">
 				<section class="container-fluid container">
 					<section class="row-fluid">
-						<section class="span4">
+						<section class="col-md-4">
 							<h1 id="logo">
 								<a href="{{ url('/') }}">
 									<img style="height: 75px; width:380px;" src="frontend/pubdroit/images/logo.svg" />
 								</a>
 							</h1>
 						</section>
-						<section class="span8">
+						<section class="col-md-8">
 							<ul class="top-nav2">
 								<li><a href="checkout.html">Mon compte</a></li>
 								<li><a href="cart.html">Panier</a></li>
@@ -95,28 +96,25 @@
 					</section>
 				</section>
 				<!-- Start Main Nav Bar -->
+
 				<nav id="nav">
-					<div class="navbar navbar-inverse">
-						<div class="navbar-inner">
-							<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<div class="nav-collapse collapse">
-								<ul class="nav">
-									<li><a href="{{ url('categorie/1') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
-									<li><a href="{{ url('domaines') }}"><i class="fa fa-bookmark"></i> &nbsp; Collections</a></li>
-									<li><a href="{{ url('categories') }}"><i class="fa fa-tags"></i> &nbsp;Thèmes</a></li>
-									<li><a href="{{ url('authors') }}"><i class="fa fa-users"></i> &nbsp;Auteurs</a></li>
-								</ul>
-							</div>
-							<!--/.nav-collapse -->
+					<div class="navbar">
+						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<div class="nav-collapse collapse in">
+							<ul class="nav">
+								<li><a href="{{ url('categorie/1') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
+								<li><a href="{{ url('domaines') }}"><i class="fa fa-bookmark"></i> &nbsp; Collections</a></li>
+								<li><a href="{{ url('categories') }}"><i class="fa fa-tags"></i> &nbsp;Thèmes</a></li>
+								<li><a href="{{ url('authors') }}"><i class="fa fa-users"></i> &nbsp;Auteurs</a></li>
+							</ul>
 						</div>
-						<!-- /.navbar-inner -->
 					</div>
-					<!-- /.navbar -->
-				</nav>
+				</nav><!-- /.navbar -->
+
 				<!-- End Main Nav Bar -->
 			</header>
 			<!-- End Main Header -->
@@ -134,20 +132,20 @@
 			<section class="container-fluid footer-top1">
 				<section class="container">
 					<section class="row-fluid">
-						<figure class="span3">
+						<figure class="col-md-3">
 							<h4>Newsletter</h4>
 							<p>Subscribe to be the first to know about Best Deals and Exclusive Offers!</p>
 							<input name="" type="text" class="field-bg" value="Enter Your Email"/>
 							<input name="" type="submit" value="Subscribe" class="sub-btn" />
 						</figure>
-						<figure class="span3">
+						<figure class="col-md-3">
 							<h4>Twitter</h4>
 							<ul class="tweets-list">
 								<li>Bookshoppe’- WooCommerce theme by crunchpress http<a href="#">://z.8o/XcexW23Q #envato</a></li>
 								<li>Bookshoppe’- WooCommerce theme by crunchpress http<a href="#">://z.8o/XcexW23Q #envato</a></li>
 							</ul>
 						</figure>
-						<figure class="span3">
+						<figure class="col-md-3">
 							<h4>Location</h4>
 							<p>5/23, Loft Towers, Business Center, 6th Floor, Media City, Dubai.</p>
           <span>
@@ -157,7 +155,7 @@
 		  </ul>
           </span> <span class="mail-list"> <a href="#">info@companyname</a><br />
           <a href="#">jobs@companyname.com</a> </span> </figure>
-						<figure class="span3">
+						<figure class="col-md-3">
 							<h4>Opening Time</h4>
 							<p>Monday-Friday ______8.00 to 18.00</p>
 							<p>Saturday ____________ 9.00 to 18.00</p>
@@ -184,7 +182,7 @@
 				</section>
 				<section class="container">
 					<section class="row-fluid">
-						<figure class="span4">
+						<figure class="col-md-4">
 							<h4>BestSellers</h4>
 							<ul class="f2-img-list">
 								<li>
@@ -213,7 +211,7 @@
 								</li>
 							</ul>
 						</figure>
-						<figure class="span4">
+						<figure class="col-md-4">
 							<h4>Top Rated Books</h4>
 							<ul class="f2-img-list">
 								<li>
@@ -242,7 +240,7 @@
 								</li>
 							</ul>
 						</figure>
-						<figure class="span4">
+						<figure class="col-md-4">
 							<h4>From the blog</h4>
 							<ul class="f2-pots-list">
 								<li> <span class="post-date2">28 APR</span> <a href="blog-detail.html">Corso completo di grafica web completo di grafi dare...</a> <span class="comments-num">6 comments</span> </li>
@@ -259,10 +257,10 @@
 				<section class="social-ico-bar">
 					<section class="container">
 						<section class="row-fluid">
-							<article class="span6">
+							<article class="col-md-6">
 								<p>© 2016  publications-droit.ch </p>
 							</article>
-							<article class="span6 copy-right">
+							<article class="col-md-6 copy-right">
 							</article>
 						</section>
 					</section>
@@ -284,6 +282,7 @@
 		<script src="<?php echo asset('frontend/pubdroit/js/jquery.zoom.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/bookblock.js');?>"></script>
+		<script src="<?php echo asset('frontend/js/jquery.slimscroll.min.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/custom.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/jquery.booklet.latest.js');?>"></script>
 

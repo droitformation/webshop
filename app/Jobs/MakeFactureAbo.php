@@ -13,15 +13,21 @@ class MakeFactureAbo extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $facture;
+    protected $all;
+    protected $abos;
+    protected $product_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Abo_factures $facture)
+    public function __construct($abos, $product_id, $all)
     {
-       $this->facture = $facture;
+        $this->facture    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+        $this->all        = $all;
+        $this->abos       = $abos;
+        $this->product_id = $product_id;
     }
 
     /**
@@ -31,9 +37,41 @@ class MakeFactureAbo extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $generator = new \App\Droit\Generate\Pdf\PdfGenerator();
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-        $generator->factureAbo($this->facture->abonnement ,$this->facture);
+        // All abonnements for the product
+        if(!$this->abos->isEmpty())
+        {
+            foreach($this->abos as $abonnement)
+            {
+                // Do we already have a facture in the DB?
+                $facture = $this->facture->findByUserAndProduct($abonnement->id,  $this->product_id);
+
+                // If not and the abonnement is an abonne create a facture
+                if(!$facture && $abonnement->status == 'abonne')
+                {
+                    $facture = $this->facture->create([
+                        'abo_user_id' => $abonnement->id,
+                        'product_id'  => $this->product_id,
+                        'created_at'  => date('Y-m-d')
+                    ]);
+                }
+
+                // If we want all afctures to be remade or made if none exist
+                if($this->all)
+                {
+                    $generator->factureAbo($facture->abonnement, $facture);
+                }
+                else
+                {
+                    // does an pdf already exist? if not make one
+                    if($facture && !$facture->abo_facture)
+                    {
+                        $generator->factureAbo($facture->abonnement, $facture);
+                    }
+                }
+            }
+        }
 
     }
 }

@@ -22,6 +22,18 @@ class AboFactureEloquent implements AboFactureInterface{
         return $this->facture->with(['abonnement','product'])->find($id);
     }
 
+    public function findByUserAndProduct($abo_user_id, $product_id)
+    {
+        $facture = $this->facture->where('abo_user_id','=',$abo_user_id)->where('product_id','=',$product_id)->get();
+
+        if(!$facture->isEmpty())
+        {
+            return $facture->first();
+        }
+
+        return null;
+    }
+
     public function create(array $data){
 
         $facture = $this->facture->create(array(
