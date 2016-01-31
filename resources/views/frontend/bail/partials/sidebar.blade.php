@@ -9,7 +9,7 @@
         <!-- Bloc recherche -->
 
         <div class="color-bloc form-bloc">
-            <form action="bail/search'" method="POST" class="searchform">
+            <form action="bail/search" method="POST" class="searchform">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Recherche...">
                     <span class="input-group-btn">
@@ -26,8 +26,8 @@
 
             <div id="rightmenu">
 
-                <h5><a href="#" data-toggle="collapse" href="#newsletterList">Newsletter <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                <div class="collapse" id="newsletterList">
+                <h5><a href="#" aria-controls="newslettersLists" data-toggle="collapse" href="#newslettersLists">Newsletter <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
+                <div class="collapse" id="newslettersLists">
                     <ul class="menu">
                         <li><a href="index.php?id=108&amp;uid=364">Newsletter décembre 2013</a></li>
                         <li><a href="index.php?id=108&amp;uid=357">Newsletter novembre 2013</a></li>
@@ -46,9 +46,8 @@
 
                         <div class="widget list categories clear">
                             <h3 class="title"><i class="icon-tasks"></i> &nbsp;Catégories</h3>
-
-                            @if(!empty($categories))
-                                <select id="arret-chosen" name="category_check" data-placeholder="Choisir une ou plusieurs catégories" style="width:100%" multiple class="chosen-select category">
+                            @if(!$categories->isEmpty())
+                                <select id="arret-chosen" name="chosen-select" data-placeholder="Choisir une ou plusieurs catégories" style="width:100%" multiple class="chosen-select category">
                                     @foreach($categories as $categorie)
                                         <option value="c{{ $categorie->id }}">{{ $categorie->title }}</option>
                                     @endforeach
@@ -72,12 +71,12 @@
                 @endif
 
                 <h5><a href="{{ url('bail/doctrine') }}" title="Articles de doctrine">Articles de doctrine <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                <div class="accordionContentPart accordionContent seminaire">
+                @if( Request::is('bail/seminaire') )
+                <div class="seminaire">
 
                     <div class="filtre">
                         <h6>Par catégorie</h6>
                         <div class="list categories clear">
-
                             <select id="seminaire-chosen" class="seminaire-chosen chosen-select category" multiple data-placeholder="Filtrer par catégorie..." name="filter">
                                 <?php
                                     if(!empty($bscategories)){
@@ -88,13 +87,13 @@
                                     }
                                 ?>
                             </select>
-
                         </div>
                         <h6>Par année</h6>
                         <ul id="seminaireannees" class="list annees clear">
                             <?php
 
-                            if(!empty($bsyears)){
+                            if(!empty($bsyears))
+                            {
                                 foreach($bsyears as $id => $bsyear){
                                     echo '<li><a rel="y'.$id.'" href="#">Paru en '.$bsyear.'</a></li>';
                                 }
@@ -118,6 +117,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <h5><a href="#" data-toggle="collapse" href="#revueList">Revues <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
                 <div class="collapse" id="revueList">
@@ -166,7 +166,7 @@
 
                 <form action="{{ url('bail/calcul') }}" id="calculette">
                     <label>Votre canton</label>
-                    <select class="form-control" name="canton" required id="input-canton">
+                    <select class="form-control" name="canton" id="input-canton" required>
                         <option value="">Choix</option>
                         @foreach($faqcantons as $canton_id => $canton)
                             <option value="{{ $canton_id }}">{{ $canton }}</option>
@@ -176,8 +176,8 @@
                     <label>Votre loyer actuel (sans les charges)</label>
                     <input type="text" class="form-control" name="loyer" id="input-loyer" required>
 
-                    <label>Date d\'entrée en vigueur de votre loyer actuel</label>
-                    <input type="text" class="form-control" name="date" id="input-datepicker" required>
+                    <label>Date d'entrée en vigueur de votre loyer actuel</label>
+                    <input type="text" class="form-control datepicker" name="date" id="input-datepicker" required>
                     <br>
                     <p><button class="btn btn-danger btn-sm" type="submit">Calculer</button></p>
                 </form>
@@ -189,7 +189,6 @@
             <!-- Bloc inscription newsletter -->
             <h5 class="color-bloc">Inscription à la newsletter</h5>
             <div class="sidebar-bloc">
-
                 <form method="post" action="{{ url('bail/subscribe') }}">
                     <input type="hidden" name="list_id" value="2">
                     <div class="input-group">

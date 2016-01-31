@@ -1,0 +1,431 @@
+/* ===== Primary Styles =====================================================
+   Bail
+   ========================================================================== */
+/* line 7, main.scss */
+body {
+    font-family: Arial,​Verdana,​Helvetica,​sans-serif;
+}
+
+/* line 11, main.scss */
+img {
+    max-width: 100%;
+}
+
+/* line 15, main.scss */
+h1, h2, h3, h4, h5 {
+    margin: 0 0 10px 0;
+}
+
+/* line 19, main.scss */
+h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* line 24, main.scss */
+h4 {
+    font-size:1em;
+    font-weight: bold;
+}
+
+/* line 29, main.scss */
+h5 {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* line 34, main.scss */
+a, a:hover, a:active, a:visited {
+    text-decoration: none;
+}
+
+p {
+    font-size: 13px;
+    line-height: 18px;
+}
+
+
+.line {
+    line-height: 30px;
+}
+
+.line.up {
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+select.form-control {
+    font-size: 13px;
+    height: 30px;
+    line-height: 1.2;
+}
+
+/*======================================
+	Struture
+=======================================*/
+
+.inner{
+    padding: 0 10px;
+}
+
+.min-inner {
+    margin: 0;
+    padding: 5px 15px;
+}
+
+.maincontent{
+    -webkit-box-shadow: 2px 0 5px 4px #BABABA;
+    box-shadow: 2px 0 5px 4px #BABABA;
+    padding-bottom: 20px;
+}
+
+.upMarge {
+    margin-top: 15px;
+}
+
+/*======================================
+	Main Blocks
+=======================================*/
+#main {
+    background: #fff;
+}
+
+.header {
+    background: #fff;
+    height: 86px;
+}
+
+#photo{
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: 20px;
+}
+
+#mainSidebar{
+    position: relative;
+    z-index: 10;
+    margin-bottom: 15px;
+}
+
+#content-wrapper{
+    z-index: 1;
+    position: relative;
+}
+
+#mainFooter{
+    z-index: 12;
+    position: relative;
+}
+
+/*======================================
+	Breadcrumbs
+=======================================*/
+
+#breadcrumbs, #breadcrumbs a {
+    color: #fff;
+    font-size: 12px;
+}
+
+#breadcrumbs{
+    margin-left: -15px;
+    margin-right: -15px;
+    line-height: 30px;
+}
+
+.header h1 {
+    font-size: 20px;
+    line-height: 80px;
+}
+
+.clear:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+
+/*======================================
+	Sidebar
+=======================================*/
+.colorSection {
+    height: 40px;
+    line-height: 30px;
+}
+
+.color-bloc {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+    padding:10px 10px;
+    margin-left:-15px;
+    margin-right:-15px;
+}
+
+/* line 118, main.scss */
+.colorBlock h4 {
+    margin-top: 5px;
+}
+
+/* line 122, main.scss */
+.colorBlock h4,
+.colorBlock a,
+.colorBlock p {
+    text-align: left;
+}
+
+.sidebar .colorBlock {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+/* line 109, main.scss */
+.homepageBlock p {
+    text-align: justify;
+}
+
+h3.link {
+    margin-bottom: 0;
+}
+
+.form-bloc{
+    padding:5px 10px;
+}
+
+.color-bloc {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+    padding:10px 10px;
+    margin-left:-15px;
+    margin-right:-15px;
+}
+
+.color-bloc a{
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.sidebar-bloc{
+    padding: 10px;
+}
+
+#rightmenu{
+    padding: 10px;
+}
+
+#rightmenu h5 a{
+    padding: 5px;
+    display:block;
+    color:#000;
+    font-size: 13px;
+    font-weight:normal;
+}
+
+#rightmenu h5 a.active{
+    font-weight:bold;
+}
+
+#rightmenu ul.menu {
+    margin: 0;
+    padding: 0 10px 20px;
+    list-style: none;
+}
+
+#rightmenu ul.menu li {
+    margin: 0;
+    font-size: 13px;
+}
+
+/*** special soutien ***/
+#right .soutien .logo {
+    padding: 10px 0 0;
+    text-align: right;
+}
+
+/*======================================
+	Search
+=======================================*/
+/* line 136, main.scss */
+.searchform input {
+    height: 30px;
+}
+
+/*======================================
+	Navigation
+=======================================*/
+/* line 172, main.scss */
+#menu-principal {
+    line-height: 70px;
+}
+
+/* line 176, main.scss */
+#menu-principal > a {
+    display: inline-block;
+    padding: 0 5px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* line 188, main.scss */
+#menu-principal > a:after {
+    content: "|";
+    padding: 0 0 0 15px;
+}
+
+/* line 188, main.scss */
+#menu-principal > a:last-child:after {
+    content: "";
+}
+
+/* line 193, main.scss */
+#menu-principal a.noborder:after {
+    border: none;
+    content: "";
+    padding: 0;
+}
+
+/*======================================
+	styles for plugins
+=======================================*/
+
+/* line 520, main.scss */
+.chzn-container-multi .chzn-choices .search-field .default {
+    color: #999999;
+}
+
+/* line 524, main.scss */
+.chzn-container-multi .chzn-choices .search-field input {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0 none !important;
+    box-shadow: none;
+    color: #666666;
+    margin: 1px 0;
+    outline: 0 none;
+    padding: 5px;
+}
+
+.ui-datepicker{
+    z-index: 1000;
+}
+
+/*======================================
+	Filtres sidebar
+=======================================*/
+
+.filtre h6 {
+    color: #666666;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0;
+}
+
+.widget{
+    margin-top: 20px;
+}
+
+.widget h3{
+    font-size: 13px;
+}
+
+.list{
+    margin-left: 5px;
+    padding-left: 0;
+}
+
+/*======================================
+	Arrets
+=======================================*/
+#arrets .arrets .arret.hidden {
+    display: none;
+}
+
+#analyses {
+    border-bottom: 1px solid #DCDCDC;
+    display: block;
+    margin-bottom: 30px;
+}
+
+#arrets .arrets .cat.hidden {
+    display: none;
+}
+
+.arret .post-entry {
+    font-size: 14px;
+    line-height: 20px;
+    text-align: justify;
+}
+
+.arret .post-title h3 {
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0;
+}
+
+.arret .post-title p {
+    font-style: italic;
+    color: #555;
+}
+
+#arrets .arrets .cat .details h4 {
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: normal;
+    font-style: italic;
+}
+
+#arrets .arrets .cat .details img {
+    display: block;
+    margin: 0 auto;
+}
+
+.arret {
+    margin-bottom: 25px;
+}
+
+.arret p, .arret ul {
+    margin-bottom: 10px;
+}
+
+.arret ul li {
+    font-size: 13px;
+}
+
+/*======================================
+	Form
+=======================================*/
+
+.form-control::-moz-placeholder {
+    color: #999;
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+/*======================================
+	Footer
+=======================================*/
+
+footer {
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 10px 15px;
+    text-align: center;
+}
+
+
+footer a {
+    color: #fff;
+}
+
+

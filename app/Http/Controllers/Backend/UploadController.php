@@ -85,7 +85,7 @@ class UploadController extends Controller
         if($files)
         {
             $array = [
-                'filelink' => url('/').'/files/'.$files['name'],
+                'filelink' => url('/').'/files/uploads/'.$files['name'],
                 'filename' => $files['name']
             ];
 
@@ -127,7 +127,7 @@ class UploadController extends Controller
             {
                 if(!in_array($file,$except))
                 {
-                    $data[] = ['name' => $file, 'link' => url('/').'/files/'.$file, 'title' => $file];
+                    $data[] = ['name' => $file, 'link' => url('/').'/files/uploads/'.$file, 'title' => $file];
                 }
             }
         }

@@ -1,5 +1,4 @@
-@extends('layouts.matrimonial')
-
+@extends('layouts.matrimonial.master')
 @section('content')
 
 <?php use Carbon\Carbon; ?>

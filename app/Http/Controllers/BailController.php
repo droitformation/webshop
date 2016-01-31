@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Arret\Repo\ArretInterface;
@@ -18,6 +19,8 @@ use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Arret\Worker\JurisprudenceWorker;
 
+use App\Droit\Calculette\Worker\CalculetteWorkerInterface;
+
 class BailController extends Controller
 {
     protected $arret;
@@ -29,6 +32,7 @@ class BailController extends Controller
     protected $faqcat;
     protected $site_id;
     protected $site;
+    protected $calculette;
 
     public function __construct(
         ArretInterface $arret,
@@ -39,7 +43,8 @@ class BailController extends Controller
         PageInterface $page,
         SiteInterface $site,
         FaqQuestionInterface $question,
-        FaqCategorieInterface $faqcat
+        FaqCategorieInterface $faqcat,
+        CalculetteWorkerInterface $calculette
     )
     {
         $this->site_id  = 2;
@@ -53,6 +58,7 @@ class BailController extends Controller
         $this->question      = $question;
         $this->faqcat        = $faqcat;
         $this->site          = $site;
+        $this->calculette    = $calculette;
 
         $years      = $this->arret->annees(2);
         $categories = $this->categorie->getAll($this->site_id);
@@ -72,9 +78,9 @@ class BailController extends Controller
 
     public function index()
     {
-        $page = $this->page->getBySlug(2,'home');
+        $page = $this->page->getBySlug(2,'index');
 
-        return view('frontend.bail.home')->with([ 'page' => $page ]);
+        return view('frontend.bail.index')->with([ 'page' => $page ]);
     }
 
     /**
@@ -114,7 +120,19 @@ class BailController extends Controller
         return view('frontend.bail.jurisprudence')->with(['arrets' => $arrets , 'analyses' => $analyses]);
     }
 
+    public function loyer(Request $request)
+    {
+        $data = $request->all();
 
+        if(!empty( $data ))
+        {
+            $date = Carbon::createFromFormat('d/m/Y', $request->input('date'))->toDateTimeString();
+
+            return $this->calculette->calculer($request->input('canton'), $date, $request->input('loyer'));
+        }
+
+        return [];
+    }
 
     /*    public function doctrine(){
 
@@ -135,27 +153,8 @@ class BailController extends Controller
             return view('bail.search')->with( array( 'resultats' => $query ));
         }
 
-        public function calcul(){
 
-            return view('bail.calcul')->with( array( ));
-        }
-
-        public function loyer(){
-
-            $calcul = array();
-            $data   = Input::all();
-
-            if(!empty( $data ))
-            {
-                $canton = Input::get('canton');
-                $date   = strtotime(Input::get('date'));
-                $loyer  = Input::get('loyer');
-
-                $calcul = $this->calculette->calculer($canton, $date , $loyer);
-            }
-
-            return $calcul;
-        }*/
+    */
 
 
 }

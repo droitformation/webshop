@@ -1,11 +1,9 @@
 function initAccordion(){
 	// Get URL of current page
 	var baseUrl = $('#base').attr('href');
-	
 	var currentUrl = window.location.href.replace(baseUrl, '');
 
 	$('.accordionContent').hide();
-	
 	$('.accordionPart').each(function(i) {
 
 		var ok       = false;
@@ -70,14 +68,12 @@ function initAccordion(){
 			
 		}
 	});
-	
-		
+
 	// Cancel links on accordion toggler
 	$('#rightmenu h4.accordion a').on('click', function(event) {
 		event.preventDefault();
 	});
-	
- 
+
 }
 
 function initRevueMenu() {
@@ -105,7 +101,7 @@ function initRevueMenu() {
 $( document ).ready(function() {
 	//bailInit();
 	
-	initAccordion();
+	//initAccordion();
 
-	
+
 });

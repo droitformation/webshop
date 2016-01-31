@@ -262,14 +262,15 @@ Route::get('manager', function()
 
 });
 
-Route::get('/job', function () {
+Route::get('/calculette', function () {
 
-    $model    =  App::make('App\Droit\Abo\Repo\AboFactureInterface');
-    $facture  = $model->find(939);
+    $model    =  App::make('App\Droit\Calculette\Worker\CalculetteWorkerInterface');
+    $facture  = $model->taux_actuel();
 
-    dispatch(new App\Jobs\NotifyJobFinished('test done!'));
+    echo '<pre>';
+    print_r($facture);
+    echo '</pre>';exit;
 
-    return 'Done!';
 });
 
 Route::get('dispatch', function()

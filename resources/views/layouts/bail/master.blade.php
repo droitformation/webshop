@@ -8,12 +8,16 @@
 
     <!-- CSS Files
     ================================================== -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo asset('css/jquery-ui.min.css'); ?>" type="text/css"  />
 	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/css/chosen.css');?>">
+    <link rel="stylesheet" href="<?php echo asset('frontend/css/structure.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('css/bail/main.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/css/filter.css');?>">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
     <!-- Javascript Files
     ================================================== -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
@@ -21,22 +25,24 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 	<script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
 	<script type="text/javascript" src="<?php echo asset('frontend/js/chosen.jquery.js');?>"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="<?php echo asset('js/bail/main.js');?>"></script>
-    <script src="<?php echo asset('js/bail/bail.js');?>"></script>
     <script src="<?php echo asset('js/bail/arrets.js');?>"></script>
     <script src="<?php echo asset('js/bail/seminaires.js');?>"></script>
 
 	</head>
 	<body>
         <div id="main" class="container">
-            <div class="row">
+
+            <div class="row" id="content-wrapper">
                 <!-- Contenu principal -->
                 <div id="mainContent" class="maincontent col-md-9">
 
                     <!-- Entête et menu -->
                     <header class="header">
                         <div class="row">
-                            <h1 class="col-md-3"><a class="" href="{{ url('bail/page/home') }}"><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
+                            <h1 class="col-md-3"><a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
                             <nav class="col-md-9" id="menu-principal">
 
                                 @if(!$menus->isEmpty())
@@ -64,19 +70,22 @@
 
                     <!-- Fin contenu -->
 
-                    <footer id="mainFooter" class="colorBlock">
-                        © 2013 - bail.ch<br/>
-                        Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
-                        <a href="mailto:seminaire.bail@unine.ch">seminaire.bail@unine.ch</a>
-                    </footer>
-
                 </div>
                 <!-- Fin contenu principal -->
 
+                <!-- sidebar -->
                 @include('frontend.bail.partials.sidebar')
+                <!-- End sidebar -->
 
             </div>
+
+            <footer id="mainFooter" class="colorBlock">
+                © {{ date('Y') }} - bail.ch<br/>
+                Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
+                <a href="mailto:seminaire.bail@unine.ch">seminaire.bail@unine.ch</a>
+            </footer>
+
 	    </div>
-    	
+
 	</body>
 </html>

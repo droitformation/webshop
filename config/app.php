@@ -171,7 +171,7 @@ return [
         App\Providers\NewsletterServiceProvider::class,
         App\Providers\ShopServiceProvider::class,
         App\Providers\ColloqueServiceProvider::class,
-        App\Providers\GenerateServiceProvider::class,
+        App\Providers\CalculetteServiceProvider::class,
 	],
 
 	/*

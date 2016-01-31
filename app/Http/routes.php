@@ -40,6 +40,14 @@ Route::group(['prefix' => 'bail'], function () {
 
 });
 
+Route::group(['prefix' => 'matrimonial'], function () {
+
+    Route::get('/', array('uses' => 'MatrimonialController@index'));
+    Route::get('page/{slug}/{var?}', array('uses' => 'MatrimonialController@page'));
+    Route::get('jurisprudence', array('uses' => 'MatrimonialController@jurisprudence'));
+
+});
+
 Route::group(['middleware' => 'auth'], function () {
 
     /* *
