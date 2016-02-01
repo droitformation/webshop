@@ -16,4 +16,8 @@ class Site extends Model{
         return $this->hasMany('App\Droit\Menu\Entities\Menu');
     }
 
+    public function pages()
+    {
+        return $this->hasMany('App\Droit\Page\Entities\Page');
+    }
 }

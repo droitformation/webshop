@@ -60,7 +60,7 @@
             <a href="{{ url('admin/shipping') }}"><i class="fa fa-truck"></i> <span>Frais de port</span></a>
         </li>
         <li class="nav-title">Sites</li>
-        <li class="<?php echo (Request::is('admin/contenu') ? 'active' : '' ); ?>"><a href="{{ url('admin/contenu') }}"><i class="fa fa-reorder"></i> <span>Contenus</span></a></li>
+        <li class="<?php echo (Request::is('admin/bloc') ? 'active' : '' ); ?>"><a href="{{ url('admin/bloc') }}"><i class="fa fa-reorder"></i> <span>Contenus</span></a></li>
         <li class="<?php echo (Request::is('admin/page') || Request::is('admin/page/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/page') }}"><i class="fa fa-file"></i> <span>Pages</span></a>
         </li>

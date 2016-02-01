@@ -14,7 +14,7 @@ $( function() {
             var type    = $(this).data('type');
             var page_id = $wrapper.data('page');
 
-            $.get( "admin/content/" + type + "/" + page_id, function( data ) {
+            $.get( "admin/pagecontent/" + type + "/" + page_id, function( data ) {
 
                 var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right remove-bloc-btn">x</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
@@ -53,7 +53,7 @@ $( function() {
 
             $.ajax({
                 type : "POST",
-                url  : base_url + "admin/content",
+                url  : base_url + "admin/pagecontent",
                 data : { data: map , _token: $("meta[name='_token']").attr('content') },
                 success: function(data)
                 {
@@ -84,7 +84,7 @@ $( function() {
 
             $.ajax({
                 type : "POST",
-                url  : base_url + "admin/content/" + id,
+                url  : base_url + "admin/pagecontent/" + id,
                 data : { data: map , _method: 'put',  _token: $("meta[name='_token']").attr('content') },
                 success: function(data)
                 {
@@ -102,7 +102,7 @@ $( function() {
 
             var id = $(this).data('id');
 
-            $.get( "admin/content/" + id, function( data ) {
+            $.get( "admin/pagecontent/" + id, function( data ) {
 
                 var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right remove-bloc-btn">x</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
@@ -142,7 +142,7 @@ $( function() {
             {
                 $.ajax({
                     type : "POST",
-                    url  : base_url + "admin/content/" + id,
+                    url  : base_url + "admin/pagecontent/" + id,
                     data : { page_id: page_id, id : id , _method: 'delete',  _token: $("meta[name='_token']").attr('content') },
                     success: function(data)
                     {

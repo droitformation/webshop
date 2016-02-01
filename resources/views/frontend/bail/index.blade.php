@@ -6,16 +6,16 @@
 	 
 	 <div id="content" class="inner">
 
-		 @if(!$page->blocs->isEmpty())
-			 <?php $chunk = $page->blocs->chunk(3); ?>
-			 @foreach($chunk as $blocs)
+		 @if(!$page->contents->isEmpty())
+			 <?php $chunk = $page->contents->chunk(3); ?>
+			 @foreach($chunk as $contents)
 
 				 <div class="row">
-					 @foreach($blocs as $bloc)
+					 @foreach($contents as $content)
 						 <div class="col-md-4 homepageBlock">
-                             <div class="{{ !empty($bloc->style) ? $bloc->style : '' }}">
-                                 <h5 class="line">{!! $bloc->title !!}</h5>
-                                 {!! $bloc->content !!}
+                             <div class="{{ !empty($content->style) ? $content->style : '' }}">
+                                 <h5 class="line">{!! $content->title !!}</h5>
+                                 {!! $content->content !!}
                              </div>
 						 </div>
 					 @endforeach

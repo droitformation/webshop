@@ -6,7 +6,7 @@
 
         <div class="options text-right" style="margin-bottom: 10px;">
             <div class="btn-toolbar">
-               <a href="{{ url('admin/contenu/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+               <a href="{{ url('admin/bloc/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
             </div>
         </div>
 
@@ -26,14 +26,14 @@
                 @if(!$sites->isEmpty())
                     @foreach($sites as $site)
                         <?php $site_pages = $site->pages->pluck('id')->toArray(); ?>
-                        <div id="site{{ $site->id }}" class="tab-pane {{ $site->id == 1 ? 'active' : '' }}">
+                        <div id="site{{ $site->id }}" class="tab-pane {{ $site->id == 1 ? 'active' : '' }}" style="min-height: 150px">
 
-                            @if(!$content->isEmpty())
-                                <?php $pages = $content->groupBy('page_id'); ?>
+                            @if(!$blocs->isEmpty())
+                                <?php $pages = $blocs->groupBy('page_id'); ?>
                                 @foreach($pages as $page_id => $page)
                                     @if(in_array($page_id,$site_pages))
                                         <h4>{{ $page->first()->page->title }}</h4>
-                                        @include('backend.content.partials.type',['content' => $page])
+                                        @include('backend.bloc.partials.type',['bloc' => $page])
                                     @endif
                                 @endforeach
                             @endif

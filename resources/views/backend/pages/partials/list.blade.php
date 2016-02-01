@@ -1,5 +1,5 @@
-@if(!$page->blocs->isEmpty())
-    <?php $grouped = $page->blocs->groupBy('type'); ?>
+@if(!$page->contents->isEmpty())
+    <?php $grouped = $page->contents->groupBy('type'); ?>
     @foreach($grouped as $groupe => $blocs)
         <h5>{{ ucfirst($groupe) }}</h5>
         <ul class="list-group">

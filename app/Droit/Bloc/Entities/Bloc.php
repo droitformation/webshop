@@ -1,17 +1,15 @@
-<?php namespace App\Droit\Content\Entities;
+<?php namespace App\Droit\Bloc\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Content extends Model {
+class Bloc extends Model {
 
     use SoftDeletes;
 
-    protected $dates    = ['deleted_at'];
+	protected $fillable = ['title','content','image','url','slug','rang','site_id','type','position','page_id'];
 
-	protected $fillable = ['title','content','image','url','type','rang','page_id','style'];
-
-    protected $table = 'contents';
+    protected $table = 'blocs';
 
     public function getNameAttribute()
     {
@@ -54,4 +52,5 @@ class Content extends Model {
     {
         return $this->belongsTo('App\Droit\Page\Entities\Page');
     }
+
 }

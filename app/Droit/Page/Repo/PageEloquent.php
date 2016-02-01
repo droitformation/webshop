@@ -34,12 +34,12 @@ class PageEloquent implements PageInterface{
 
     public function find($id){
 
-        return $this->page->with(['blocs'])->find($id);
+        return $this->page->with(['contents'])->find($id);
     }
 
     public function getBySlug($site,$slug)
     {
-        return $this->page->with(['blocs'])->site($site)->where('slug','=',$slug)->first();
+        return $this->page->with(['contents'])->site($site)->where('slug','=',$slug)->first();
     }
 
     public function buildTree($data)

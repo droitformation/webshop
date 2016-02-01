@@ -56,6 +56,10 @@ a:visited {
   background: #fff;
 }
 
+#content{
+    margin-bottom: 10px;
+}
+
 .header {
   background: #fff;
   height: 86px;

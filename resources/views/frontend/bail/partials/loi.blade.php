@@ -1,4 +1,4 @@
-<?php $chunk = $blocs->chunk(10); ?>
+<?php $chunk = $contents->chunk(10); ?>
 <div class="row">
     @foreach($chunk as $blocs)
 

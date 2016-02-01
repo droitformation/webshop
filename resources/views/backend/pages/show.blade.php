@@ -66,6 +66,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Type de contenu</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" name="template">
+                                <option {{ $page->template == 'page' ? 'selected' : '' }} value="page">Page</option>
+                                <option {{ $page->template == 'index' ? 'selected' : '' }} value="index">Page d'accueil</option>
+                                <option {{ $page->template == 'newsletter' ? 'selected' : '' }} value="newsletter">Contenu généré newsletter</option>
+                                <option {{ $page->template == 'jurisprudence' ? 'selected' : '' }} value="jurisprudence">Contenu généré jurisprudence</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Menu</label>
                         <div class="col-sm-5">
                             @if(!$menus->isEmpty())

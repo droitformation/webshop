@@ -44,6 +44,17 @@ p {
     line-height: 18px;
 }
 
+.title{
+    font-size: 20px;
+}
+
+.post{
+    margin-bottom: 30px;
+}
+
+.content-bloc{
+    margin: 15px 0;
+}
 
 .line {
     line-height: 30px;

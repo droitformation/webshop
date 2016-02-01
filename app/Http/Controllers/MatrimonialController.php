@@ -73,6 +73,7 @@ class MatrimonialController extends Controller
         view()->share('years',$years);
         view()->share('categories',$categories);
         view()->share('authors',$authors);
+        view()->share('site',$menus);
 
         setlocale(LC_ALL, 'fr_FR');
     }
@@ -95,6 +96,37 @@ class MatrimonialController extends Controller
         $page = $this->page->getBySlug($this->site_id,$slug);
 
         $data['page'] = $page;
+
+        if($slug == 'jurisprudence')
+        {
+            $arrets     = $this->arret->getAll($this->site_id)->take(10);
+            $analyses   = $this->analyse->getAll($this->site_id)->take(10);
+
+            $data['arrets']   = $this->jurisprudence->preparedArrets($arrets);
+            $data['analyses'] = $this->jurisprudence->preparedAnalyses($analyses);
+        }
+
+        if($slug == 'newsletter')
+        {
+            if($var)
+            {
+                $data['campagne'] = $this->campagne->find($var);
+                $data['content']  = $this->worker->prepareCampagne($var);
+            }
+            else
+            {
+                $newsletters = $this->newsletter->getAll(3)->first();
+                if(!$newsletters->campagnes->isEmpty())
+                {
+                    $data['campagne'] = $newsletters->campagnes->first();
+                    $data['content']  = $this->worker->prepareCampagne($newsletters->campagnes->first()->id);
+                }
+            }
+
+            $data['categories']    = $this->worker->getCategoriesArrets();
+            $data['imgcategories'] = $this->worker->getCategoriesImagesArrets();
+
+        }
 
         return view('frontend.matrimonial.'.$page->template)->with($data);
     }

@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-md-12">
 
-			<p><a href="{{ url('newsletter/'.$campagne->newsletter_id ) }}"><i class="fa fa-arrow-circle-left"></i> Retour</a></p>
+			<p><a href="{{ url('matrimonial/page/newsletter/'.$campagne->newsletter_id ) }}"><i class="fa fa-arrow-circle-left"></i> Retour</a></p>
 			<h2>{{ $campagne->sujet }}</h2>
 			<h3>{{ $campagne->auteurs }}</h3>
 
@@ -21,7 +21,16 @@
 
 			@if(!empty($content))
 				@foreach($content as $bloc)
-					{!! view('frontend/content/'.$bloc->type->partial)->with( ['bloc' => $bloc ,'categories' => $categories, 'imgcategories' => $imgcategories ])->__toString()  !!}
+					<div class="content-bloc">
+						{!! view('frontend/newsletter/content/'.$bloc->type->partial)->with(
+							 [
+								'bloc' => $bloc ,
+								'site' => $site ,
+								'categories'    => $categories,
+								'imgcategories' => $imgcategories
+							]
+						)->__toString()  !!}
+					</div>
 				@endforeach
 			@endif
 

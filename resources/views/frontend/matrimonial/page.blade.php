@@ -9,10 +9,10 @@
 			</div>
 		</div>
 
-		@if(!$page->blocs->isEmpty())
-			<?php $styles = $page->blocs->groupBy('type'); ?>
-			@foreach($styles as $style => $blocs)
-				@include('frontend.matrimonial.partials.'.$style, ['blocs' => $blocs])
+		@if(!$page->contents->isEmpty())
+			<?php $styles = $page->contents->groupBy('type'); ?>
+			@foreach($styles as $style => $contents)
+				@include('frontend.matrimonial.partials.'.$style, ['contents' => $contents])
 			@endforeach
 		@endif
 

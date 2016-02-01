@@ -30,6 +30,7 @@ class ContentServiceProvider extends ServiceProvider
         $this->registerGroupeService();
         $this->registerUploadService();
         $this->registerContentService();
+        $this->registerBlocService();
     }
 
     /**
@@ -109,4 +110,16 @@ class ContentServiceProvider extends ServiceProvider
             return new \App\Droit\Content\Repo\ContentEloquent( new \App\Droit\Content\Entities\Content );
         });
     }
+
+    /**
+     * Bloc service
+     */
+    protected function registerBlocService(){
+
+        $this->app->singleton('App\Droit\Bloc\Repo\BlocInterface', function()
+        {
+            return new \App\Droit\Bloc\Repo\BlocEloquent( new \App\Droit\Bloc\Entities\Bloc );
+        });
+    }
+
 }

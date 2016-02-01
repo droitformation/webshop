@@ -63,6 +63,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Type de contenu</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" name="template">
+                                <option value="page">Page</option>
+                                <option value="index">Page d'accueil</option>
+                                <option value="newsletter">Contenu généré newsletter</option>
+                                <option value="jurisprudence">Contenu généré jurisprudence</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
                         <div class="col-sm-1">
                             {!! Form::text('rang', null , array('class' => 'form-control') ) !!}

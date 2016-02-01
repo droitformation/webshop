@@ -47,11 +47,11 @@
                     </a>
                 </h5>
             </div>
-            <div class="collapse" id="collapseNewsletter">
+            <div class="collapse {{ Request::is('matrimonial/page/newsletter') || Request::is('matrimonial/page/newsletter/*') ? 'in' : '' }}" id="collapseNewsletter">
                 @if(!$newsletters->isEmpty())
                 <ul class="menu">
                     @foreach($newsletters as $newsletter_id => $newsletter)
-                        <li><a href="{{ url('matrimonial/newsletter/'.$newsletter_id) }}">{{ str_replace('Droit matrimonial - ','',$newsletter) }}</a></li>
+                        <li><a href="{{ url('matrimonial/page/newsletter/'.$newsletter_id) }}">{{ str_replace('Droit matrimonial - ','',$newsletter) }}</a></li>
                     @endforeach
                 </ul>
                 @endif
@@ -60,12 +60,12 @@
             <div class="margeBottom">
                 <div class="color-bloc">
                     <h5>
-                        <a href="{{ url('matrimonial/jurisprudence') }}">
+                        <a href="{{ url('matrimonial/page/jurisprudence') }}">
                             Jurisprudence <i class="pull-right fa fa-arrow-circle-right {{ Request::is('matrimonial/jurisprudence') ? 'fa-arrow-circle-down': '' }}"></i>
                         </a>
                     </h5>
                 </div>
-                @if( Request::is('matrimonial/jurisprudence') )
+                @if( Request::is('matrimonial/page/jurisprudence') )
                     <div id="masterFilter"><!--END jusriprudence-->
 
                         <div class="widget list categories clear">

@@ -17,7 +17,7 @@ class ContentEloquent implements ContentInterface{
 
     public function getAll(){
 
-        return $this->content->all();
+        return $this->content->with(['page'])->get();
     }
 
 	public function find($id){

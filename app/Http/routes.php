@@ -226,12 +226,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('arret',     'Backend\Content\ArretController');
     Route::resource('analyse',   'Backend\Content\AnalyseController');
     Route::resource('categorie', 'Backend\Content\CategorieController');
-    Route::resource('contenu',   'Backend\Content\ContentController');
     Route::resource('author',    'Backend\Content\AuthorController');
     Route::resource('page',      'Backend\PageController');
+    Route::resource('bloc',      'Backend\BlocController');
 
-    Route::get('content/{type}/{page}',   'Backend\ContentController@index');
-    Route::resource('content', 'Backend\ContentController');
+    Route::get('pagecontent/{type}/{page}','Backend\PageContentController@index');
+    Route::resource('pagecontent', 'Backend\PageContentController');
 
     /*
   |--------------------------------------------------------------------------

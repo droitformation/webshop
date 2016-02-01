@@ -1,60 +1,67 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Content;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Droit\Content\Repo\ContentInterface;
+use App\Droit\Bloc\Repo\BlocInterface;
 use App\Droit\Service\UploadInterface;
+use App\Droit\Page\Repo\PageInterface;
+use App\Droit\Site\Repo\SiteInterface;
 
-use App\Http\Requests\ContentRequest;
-
-class ContentController extends Controller
+class BlocController extends Controller
 {
-    protected $content;
+    protected $bloc;
     protected $upload;
+    protected $page;
+    protected $site;
 
-    public function __construct(ContentInterface $content, UploadInterface $upload )
+    public function __construct(BlocInterface $bloc, UploadInterface $upload , PageInterface $page, SiteInterface  $site)
     {
-        $this->content   = $content;
-        $this->upload    = $upload;
+        $this->bloc    = $bloc;
+        $this->upload  = $upload;
+        $this->page    = $page;
+        $this->site    = $site;
 
-       view()->share('positions', ['sidebar' => 'Barre latérale', 'home-bloc' => 'Accueil bloc plein', 'home-colonne' => 'Accueil bloc colonne']);
+       view()->share('positions', ['sidebar' => 'Barre latérale', 'page' => 'Dans page']);
     }
 
     /**
      * Display a listing of the resource.
-     * GET /content
+     * GET /bloc
      *
      * @return Response
      */
     public function index()
     {
-        $content  = $this->content->getAll();
+        $blocs = $this->bloc->getAll();
+        $sites = $this->site->getAll();
 
-        return view('backend.content.index')->with(['content' => $content]);
+        return view('backend.bloc.index')->with(['blocs' => $blocs, 'sites' => $sites]);
     }
 
     /**
      * Show the form for creating a new resource.
-     * GET /content/create
+     * GET /bloc/create
      *
      * @return Response
      */
     public function create()
     {
-        return view('backend.content.create');
+        $sites = $this->site->getAll();
+
+        return view('backend.bloc.create',['sites' => $sites]);
     }
 
     /**
      * Store a newly created resource in storage.
-     * POST /content
+     * POST /bloc
      *
      * @return Response
      */
-    public function store(ContentRequest $request)
+    public function store(Request $request)
     {
         $data  = $request->except('file');
         $_file = $request->file('file', null);
@@ -67,33 +74,33 @@ class ContentController extends Controller
             $data['image'] = $file['name'];
         }
 
-        $content = $this->content->create( $data );
+        $bloc = $this->bloc->create( $data );
 
-        return redirect('admin/contenu/'.$content->id)->with(['status' => 'success' , 'message' => 'Contenu crée']);
+        return redirect('admin/bloc/'.$bloc->id)->with(['status' => 'success' , 'message' => 'Contenu crée']);
     }
 
     /**
      * Display the specified resource.
-     * GET /content/{id}
+     * GET /bloc/{id}
      *
      * @param  int  $id
      * @return Response
      */
     public function show($id)
     {
-        $contenu = $this->content->find($id);
+        $contenu = $this->bloc->find($id);
 
-        return view('backend.content.show')->with(['contenu' => $contenu]);
+        return view('backend.bloc.show')->with(['contenu' => $contenu]);
     }
 
     /**
      * Update the specified resource in storage.
-     * PUT /content/{id}
+     * PUT /bloc/{id}
      *
      * @param  int  $id
      * @return Response
      */
-    public function update(ContentRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $data  = $request->except('file');
         $_file = $request->file('file', null);
@@ -106,20 +113,20 @@ class ContentController extends Controller
             $data['image'] = $file['name'];
         }
 
-        $content = $this->content->update( $data );
+        $bloc = $this->bloc->update( $data );
 
-        return redirect('admin/contenu/'.$content->id)->with(['status' => 'success' , 'message' => 'Contenu mis à jour']);
+        return redirect('admin/bloc/'.$bloc->id)->with(['status' => 'success' , 'message' => 'Contenu mis à jour']);
     }
 
     /**
      * Remove the specified resource from storage.
-     * DELETE /content
+     * DELETE /bloc
      *
      * @return Response
      */
     public function destroy($id)
     {
-        $this->content->delete($id);
+        $this->bloc->delete($id);
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'Contenu supprimée']);
     }
