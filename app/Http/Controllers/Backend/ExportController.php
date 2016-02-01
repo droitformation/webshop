@@ -62,15 +62,39 @@ class ExportController extends Controller
         \Excel::create('Export inscriptions', function($excel) use ($id,$order) {
 
             $excel->sheet('Export', function($sheet) use ($id,$order) {
-
-                $colloque = $this->colloque->find($id);
-
-                $inscriptions = $this->generator->init($colloque, ['order' => $order]);
-                $options      = $this->generator->getMainOptions();
-                $groupes      = $this->generator->getGroupeOptions();
-
                 $sheet->setOrientation('landscape');
-                $sheet->loadView('backend.export.inscription', ['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);
+
+                $colloque     = $this->colloque->find($id);
+                
+/*                $inscriptions = $this->generator->init($colloque, ['order' => $order]);
+                $options      = $this->generator->getMainOptions();
+                $groupes      = $this->generator->getGroupeOptions();*/
+
+                $inscriptions = $colloque->inscriptions;
+
+                $converted = $inscriptions->map(function($inscription)
+                {
+                    $convert = new \App\Droit\Helper\Convert();
+
+                    $user = $inscription->inscrit;
+                    $name = ($user ? $user->name : '');
+
+                    $convert->setAttribute('Nom',$name);
+                    $convert->setAttribute('Numéro',$inscription->inscription_no);
+                    $convert->setAttribute('Prix',$inscription->price_cents);
+                    $convert->setAttribute('Status',$inscription->status);
+
+                    return $convert;
+                });
+
+                $converted = $converted->toArray();
+
+                foreach($converted as $inscription)
+                {
+                    $sheet->appendRow($inscription);
+                }
+                
+                //$sheet->loadView('backend.export.inscription', ['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);
 
             });
 
