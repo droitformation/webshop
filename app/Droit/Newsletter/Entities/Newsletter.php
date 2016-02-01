@@ -21,6 +21,11 @@ class Newsletter extends Model {
         return 'newsletter/'.$this->header;
     }
 
+    public function scopeSites($query,$site)
+    {
+        if ($site) $query->where('site_id','=',$site);
+    }
+
     public function campagnes()
     {
         return $this->hasMany('\App\Droit\Newsletter\Entities\Newsletter_campagnes');

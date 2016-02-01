@@ -66,6 +66,16 @@ return [
             'root'   => public_path('uploads'),
         ],
 
+		'fileuploads' => [
+			'driver' => 'local',
+			'root'   => public_path('files/uploads/docs'),
+		],
+
+        'imageuploads' => [
+            'driver' => 'local',
+            'root'   => public_path('files/uploads/images'),
+        ],
+
         'pictos' => [
             'driver' => 'local',
             'root'   => public_path('pictos'),

@@ -1,4 +1,4 @@
-@extends('layouts.matrimonial.master')
+@extends('frontend.matrimonial.layouts.master')
 @section('content')
 	
 	 <div id="content" class="inner">

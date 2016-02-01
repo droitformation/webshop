@@ -4,7 +4,11 @@
 
         <!--Logo unine -->
         <div class="sidebar-bloc">
-            <p class="text-right"><a href="http://www.unine.ch" target="_blank"><img src="{{ asset('/images/matrimonial/unine.png') }}" alt=""></a></p>
+            <p class="text-right">
+                <a href="http://www.unine.ch" target="_blank">
+                    <img height="60" src="{{ asset('/logos/unine-matrimonial.svg') }}" alt="">
+                </a>
+            </p>
         </div>
         <!-- Bloc recherche -->
 
@@ -13,8 +17,8 @@
 
             <!-- Bloc inscription newsletter -->
             <div class="color-bloc">
-                <h5>Inscription à la newsletter</h5>
-                <form method="post" action="{{ url('bail/subscribe') }}">
+                <h4>Inscription à la newsletter</h4>
+                <form method="post" action="{{ url('matrimonial/subscribe') }}">
                     <input type="hidden" name="list_id" value="2">
                     <div class="input-group">
                         <input name="email" type="email" class="form-control" placeholder="Votre adresse email">
@@ -37,23 +41,31 @@
             </div>
 
             <div class="color-bloc">
-                <h5><a href="#" aria-controls="newslettersLists" data-toggle="collapse" href="#newslettersLists">Newsletter <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                <div class="collapse" id="newslettersLists">
-                    <ul class="menu">
-                        <li><a href="index.php?id=108&amp;uid=364">Newsletter décembre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=357">Newsletter novembre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=354">Newsletter octobre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=349">Newsletter septembre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=344">Newsletter août 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=343">Newsletter juillet 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=338">Newsletter juin 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=330">Newsletter mai 2013</a></li>
-                    </ul>
-                </div>
+                <h5>
+                    <a href="#" data-toggle="collapse" data-target="#collapseNewsletter" aria-expanded="false" aria-controls="collapseNewsletter">
+                        Newsletter <i class="pull-right fa fa-arrow-circle-right"></i>
+                    </a>
+                </h5>
             </div>
-            <div class="color-bloc">
-                <h5><a href="{{ url('bail/jurisprudence') }}">Jurisprudence <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                @if( Request::is('bail/jurisprudence') )
+            <div class="collapse" id="collapseNewsletter">
+                @if(!$newsletters->isEmpty())
+                <ul class="menu">
+                    @foreach($newsletters as $newsletter_id => $newsletter)
+                        <li><a href="{{ url('matrimonial/newsletter/'.$newsletter_id) }}">{{ str_replace('Droit matrimonial - ','',$newsletter) }}</a></li>
+                    @endforeach
+                </ul>
+                @endif
+            </div>
+
+            <div class="margeBottom">
+                <div class="color-bloc">
+                    <h5>
+                        <a href="{{ url('matrimonial/jurisprudence') }}">
+                            Jurisprudence <i class="pull-right fa fa-arrow-circle-right {{ Request::is('matrimonial/jurisprudence') ? 'fa-arrow-circle-down': '' }}"></i>
+                        </a>
+                    </h5>
+                </div>
+                @if( Request::is('matrimonial/jurisprudence') )
                     <div id="masterFilter"><!--END jusriprudence-->
 
                         <div class="widget list categories clear">
@@ -83,6 +95,21 @@
                 @endif
             </div>
 
+            <div class="color-bloc">
+                <div class="bloc-soutien">
+                    <h5>Avec le soutien de</h5>
+                    <a href="http://www.helbing.ch" target="_blank">
+                        <img src="{{ asset('/images/matrimonial/logo_helbing.png') }}" alt="">
+                    </a>
+                </div>
+                <div class="bloc-soutien">
+                    <h5>Commentaire pratique</h5>
+                    <a href="http://www.helbing.ch" target="_blank" class="text-center">
+                        <img style="max-width: 100px" src="{{ asset('/files/uploads/images/commentaire_pratique.jpg') }}" alt="">
+                    </a>
+                </div>
+            </div>
+
             @if(!$menus->isEmpty())
                 <?php $menu = $menus->whereLoose('position','sidebar')->sortBy('rang'); ?>
                 @if(!$menu->isEmpty())
@@ -96,6 +123,7 @@
             @endif
         </div>
         <!-- End main sidebar -->
+
 
     </div><!-- End sidebar div-->
 </div>

@@ -45,7 +45,7 @@ Route::group(['prefix' => 'matrimonial'], function () {
     Route::get('/', array('uses' => 'MatrimonialController@index'));
     Route::get('page/{slug}/{var?}', array('uses' => 'MatrimonialController@page'));
     Route::get('jurisprudence', array('uses' => 'MatrimonialController@jurisprudence'));
-
+    Route::get('newsletter/{id?}', array('uses' => 'MatrimonialController@newsletter'));
 });
 
 Route::group(['middleware' => 'auth'], function () {

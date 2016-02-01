@@ -26,19 +26,25 @@
 
             <div id="rightmenu">
 
-                <h5><a href="#" aria-controls="newslettersLists" data-toggle="collapse" href="#newslettersLists">Newsletter <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                <div class="collapse" id="newslettersLists">
-                    <ul class="menu">
-                        <li><a href="index.php?id=108&amp;uid=364">Newsletter décembre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=357">Newsletter novembre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=354">Newsletter octobre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=349">Newsletter septembre 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=344">Newsletter août 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=343">Newsletter juillet 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=338">Newsletter juin 2013</a></li>
-                        <li><a href="index.php?id=108&amp;uid=330">Newsletter mai 2013</a></li>
-                    </ul>
-                </div>
+
+                    <h5>
+                        <a href="#" data-toggle="collapse" data-target="#collapseNewsletter" aria-expanded="false" aria-controls="collapseNewsletter">
+                            Newsletter <i class="pull-right fa fa-arrow-circle-right"></i>
+                        </a>
+                    </h5>
+                    <div class="collapse" id="collapseNewsletter">
+                        <ul class="menu">
+                            <li><a href="index.php?id=108&amp;uid=364">Newsletter décembre 2013</a></li>
+                            <li><a href="index.php?id=108&amp;uid=357">Newsletter novembre 2013</a></li>
+                            <li><a href="index.php?id=108&amp;uid=354">Newsletter octobre 2013</a></li>
+                            <li><a href="index.php?id=108&amp;uid=349">Newsletter septembre 2013</a></li>
+                            <li><a href="index.php?id=108&amp;uid=344">Newsletter août 2013</a></li>
+                            <li><a href="index.php?id=108&amp;uid=343">Newsletter juillet 2013</a></li>
+                            <li><a href="index.php?id=108&amp;uid=338">Newsletter juin 2013</a></li>
+                            <li><a href="index.php?id=108&amp;uid=330">Newsletter mai 2013</a></li>
+                        </ul>
+                    </div>
+
 
                 <h5><a href="{{ url('bail/jurisprudence') }}">Jurisprudence <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
                 @if( Request::is('bail/jurisprudence') )

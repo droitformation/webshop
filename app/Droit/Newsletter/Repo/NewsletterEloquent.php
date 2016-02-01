@@ -11,10 +11,10 @@ class NewsletterEloquent implements NewsletterInterface{
 	{
 		$this->newsletter = $newsletter;
 	}
-	
-	public function getAll(){
-		
-		return $this->newsletter->with(['campagnes','site'])->get();
+
+	public function getAll($site = null)
+	{
+		return $this->newsletter->sites($site)->with(['campagnes','site'])->get();
 	}
 
 	public function find($id){

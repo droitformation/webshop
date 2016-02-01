@@ -15,6 +15,10 @@ use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Arret\Worker\JurisprudenceWorker;
 
+use App\Droit\Newsletter\Repo\NewsletterInterface;
+use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
+use App\Droit\Newsletter\Worker\CampagneInterface;
+
 class MatrimonialController extends Controller
 {
     protected $arret;
@@ -25,6 +29,10 @@ class MatrimonialController extends Controller
     protected $site_id;
     protected $site;
 
+    protected $newsletter;
+    protected $campagne;
+    protected $worker;
+
     public function __construct(
         ArretInterface $arret,
         CategorieInterface $categorie,
@@ -32,7 +40,10 @@ class MatrimonialController extends Controller
         AuthorInterface $author,
         JurisprudenceWorker $jurisprudence,
         PageInterface $page,
-        SiteInterface $site
+        SiteInterface $site,
+        NewsletterInterface $newsletter,
+        NewsletterCampagneInterface $campagne,
+        CampagneInterface $worker
     )
     {
         $this->site_id  = 3;
@@ -51,6 +62,13 @@ class MatrimonialController extends Controller
 
         $menus = $this->site->find(3);
 
+        $this->campagne   = $campagne;
+        $this->worker     = $worker;
+        $this->newsletter = $newsletter;
+
+        $newsletters = $this->newsletter->getAll(3);
+
+        view()->share('newsletters',$newsletters->first()->campagnes->pluck('sujet','id') );
         view()->share('menus',$menus->menus);
         view()->share('years',$years);
         view()->share('categories',$categories);
@@ -83,12 +101,30 @@ class MatrimonialController extends Controller
 
     public function jurisprudence()
     {
-        $arrets     = $this->arret->getAll($this->site_id);
-        $analyses   = $this->analyse->getAll($this->site_id);
+        $arrets     = $this->arret->getAll($this->site_id)->take(10);
+        $analyses   = $this->analyse->getAll($this->site_id)->take(10);
 
         $arrets     = $this->jurisprudence->preparedArrets($arrets);
         $analyses   = $this->jurisprudence->preparedAnalyses($analyses);
 
         return view('frontend.matrimonial.jurisprudence')->with(['arrets' => $arrets , 'analyses' => $analyses]);
+    }
+
+    public function newsletters($id = null)
+    {
+        if($id)
+        {
+            $campagne = $this->campagne->find($id);
+            $content  = $this->worker->prepareCampagne($id);
+        }
+        else
+        {
+
+        }
+
+        $categories    = $this->worker->getCategoriesArrets();
+        $imgcategories = $this->worker->getCategoriesImagesArrets();
+
+        return view('frontend.matrimonial.newsletter')->with(['arrets' => $arrets , 'analyses' => $analyses]);
     }
 }

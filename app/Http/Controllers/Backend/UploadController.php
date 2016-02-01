@@ -80,12 +80,29 @@ class UploadController extends Controller
 
     public function uploadRedactor(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , 'files' );
+        $files = $this->upload->upload( $request->file('file') , 'files/uploads/images/' );
 
         if($files)
         {
             $array = [
-                'filelink' => url('/').'/files/uploads/'.$files['name'],
+                'filelink' => url('/').'/files/uploads/images/'.$files['name'],
+                'filename' => $files['name']
+            ];
+
+            return response()->json($array,200 );
+        }
+
+        return false;
+    }
+
+    public function uploadFileRedactor(Request $request)
+    {
+        $files = $this->upload->upload( $request->file('file') , 'files/uploads/docs/' );
+
+        if($files)
+        {
+            $array = [
+                'filelink' => url('/').'/files/uploads/docs/'.$files['name'],
                 'filename' => $files['name']
             ];
 
@@ -97,7 +114,7 @@ class UploadController extends Controller
 
     public function imageJson()
     {
-        $files = \Storage::disk('uploads')->files();
+        $files = \Storage::disk('imageuploads')->files();
         $data   = [];
         $except = ['.DS_Store'];
 
@@ -107,7 +124,7 @@ class UploadController extends Controller
             {
                 if(!in_array($file,$except))
                 {
-                    $data[] = ['image' => url('/') . 'files/uploads/' . $file, 'thumb' => url('/') . '/uploads/' . $file, 'title' => $file];
+                    $data[] = ['image' => url('/') . '/files/uploads/images/' . $file, 'thumb' => url('/') . '/files/uploads/images/' . $file, 'title' => $file];
                 }
             }
         }
@@ -117,7 +134,7 @@ class UploadController extends Controller
 
     public function fileJson()
     {
-        $files  = \Storage::disk('files')->files();
+        $files  = \Storage::disk('fileuploads')->files();
         $data   = [];
         $except = ['.DS_Store'];
 
@@ -127,7 +144,7 @@ class UploadController extends Controller
             {
                 if(!in_array($file,$except))
                 {
-                    $data[] = ['name' => $file, 'link' => url('/').'/files/uploads/'.$file, 'title' => $file];
+                    $data[] = ['name' => $file, 'link' => url('/').'/files/uploads/docs/'.$file, 'title' => $file];
                 }
             }
         }

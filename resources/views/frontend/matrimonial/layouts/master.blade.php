@@ -11,7 +11,6 @@
      ================================================== -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 		  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="<?php echo asset('css/jquery-ui.min.css'); ?>" type="text/css"  />
 	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/css/chosen.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/css/structure.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('css/matrimonial/main.css');?>">
@@ -26,11 +25,6 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 	<script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
 	<script type="text/javascript" src="<?php echo asset('frontend/js/chosen.jquery.js');?>"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-			integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-    <script src="<?php echo asset('js/matrimonial/main.js');?>"></script>
-    <script src="<?php echo asset('js/bail/arrets.js');?>"></script>
 
 	</head>
 	<body>
@@ -89,6 +83,12 @@
             </footer>
 
         </div>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+                integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <script src="<?php echo asset('js/matrimonial/main.js');?>"></script>
+        <script src="<?php echo asset('js/bail/arrets.js');?>"></script>
 
 	</body>
 </html>
