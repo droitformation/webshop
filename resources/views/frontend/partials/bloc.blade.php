@@ -10,15 +10,15 @@
 <div class="bloc-content">
 
     @if(!empty($bloc->url) && !empty($bloc->image))
-        <a href="{{ $bloc->url }}" target="_blank">
+        <a style="float: left; margin-right: 10px;" href="{{ $bloc->url }}" target="_blank">
             <img style="max-width: 100px" src="{{ asset('/files/uploads/'.$bloc->image) }}" alt="">
         </a>
     @elseif(!empty($bloc->image))
-        <p><img style="max-width: 100px" src="{{ asset('/files/uploads/'.$bloc->image) }}" alt=""></p>
+        <img style="max-width: 100px; float: left; margin-right: 10px;" src="{{ asset('/files/uploads/'.$bloc->image) }}" alt="">
     @endif
 
     @if(!empty($bloc->content))
-        <h5>{!! $bloc->content !!}}</h5>
+        {!! $bloc->content !!}
     @endif
-
+    <div class="clearfix"></div>
 </div>

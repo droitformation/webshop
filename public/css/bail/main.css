@@ -28,6 +28,19 @@ a:visited {
     border-bottom: 1px solid #cb2629;
 }
 
+.revue-content h3{
+    border-bottom: 1px solid #cb2629;
+    line-height: 30px;
+}
+
+.revue-content p{
+    text-align: justify;
+}
+
+.revue-title{
+    margin-top: 40px;
+}
+
 .agenda{
     padding: 15px;
     background: #cb2629;
@@ -141,6 +154,10 @@ a:visited {
     background: #cb2629;
     -webkit-box-shadow:inset 6px 0 5px -2px #750000;
     box-shadow:inset 6px 0 5px -2px #750000;
+}
+
+.menu li a.active{
+    color: #cb2629;
 }
 
 #rightmenu h5 a{

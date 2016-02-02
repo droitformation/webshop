@@ -30,8 +30,8 @@ class ProductEloquent implements ProductInterface{
             ->paginate($nbr);
     }
 
-    public function getByCategorie($id){
-
+    public function getByCategorie($id)
+    {
         return $this->product->with(array('authors','attributs','categories'))->whereHas('categories', function($query) use ($id)
         {
             $query->where('categorie_id', '=' ,$id);

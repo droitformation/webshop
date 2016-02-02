@@ -46,6 +46,9 @@
         <li class="<?php echo (Request::is('admin/product') || Request::is('admin/product/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/products') }}"><i class="fa fa-book"></i> <span>Livres</span></a>
         </li>
+        <li class="<?php echo (Request::is('admin/theme') || Request::is('admin/theme/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/theme') }}"><i class="fa fa-star-half-o"></i> <span>Thèmes</span></a>
+        </li>
         <li class="<?php echo (Request::is('admin/orders') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/orders') }}"><i class="fa fa-shopping-cart"></i> <span>Commandes</span></a>
         </li>

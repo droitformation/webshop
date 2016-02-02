@@ -12,9 +12,14 @@ class CategorieEloquent implements CategorieInterface{
         $this->categorie = $categorie;
     }
 
-    public function getAll(){
-
+    public function getAll()
+    {
         return $this->categorie->where('parent_id','>',0)->orderBy('title', 'ASC')->get();
+    }
+
+    public function getParents()
+    {
+        return $this->categorie->where('parent_id','=',0)->orderBy('title', 'ASC')->get();
     }
 
     public function find($id){

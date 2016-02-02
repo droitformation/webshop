@@ -185,7 +185,7 @@
                 </div>
             </div>
 
-            @include('backend.products.partials.item',['title' => 'Catégorie', 'items' => $categories, 'types' => 'categories'])
+            @include('backend.products.partials.item',['title' => 'Thème', 'items' => $categories, 'types' => 'categories'])
             @include('backend.products.partials.item',['title' => 'Auteur',    'items' => $authors,    'types' => 'authors'])
             @include('backend.products.partials.item',['title' => 'Domaine',   'items' => $domains,    'types' => 'domains'])
 

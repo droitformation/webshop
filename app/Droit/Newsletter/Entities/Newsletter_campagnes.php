@@ -11,8 +11,13 @@ class Newsletter_campagnes extends Model {
 
     protected $dates = ['deleted_at'];
 
-    public function newsletter(){
+    public function getSujetAttribute($value)
+    {
+        return str_replace('Droit matrimonial - ','',$value);
+    }
 
+    public function newsletter()
+    {
         return $this->belongsTo('App\Droit\Newsletter\Entities\Newsletter', 'newsletter_id', 'id');
     }
 

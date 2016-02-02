@@ -47,14 +47,12 @@
                         <h6>Par année</h6>
                         <ul id="seminaireannees" class="list annees clear">
                             <?php
-
-                            if(!empty($bsyears))
-                            {
-                                foreach($bsyears as $id => $bsyear){
-                                    echo '<li><a rel="y'.$id.'" href="#">Paru en '.$bsyear.'</a></li>';
+                                if(!empty($bsyears))
+                                {
+                                    foreach($bsyears as $id => $bsyear){
+                                        echo '<li><a rel="y'.$id.'" href="#">Paru en '.$bsyear.'</a></li>';
+                                    }
                                 }
-                            }
-
                             ?>
                         </ul>
                         <h6>Par auteur</h6>
@@ -75,25 +73,6 @@
                 </div>
                 @endif
 
-                <h5><a href="#" data-toggle="collapse" href="#revueList">Revues <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                <div class="collapse" id="revueList">
-                    <ul class="menu">
-                        <li><a href="index.php?id=97#DB1989">DB 1/1989</a></li>
-                        <li><a href="index.php?id=97#DB1990">DB 2/1990</a></li>
-                        <li><a href="index.php?id=97#DB1991">DB 3/1991</a></li>
-                        <li><a href="index.php?id=97#DB1992">DB 4/1992</a></li>
-                        <li><a href="index.php?id=97#DB1993">DB 5/1993</a></li>
-                        <li><a href="index.php?id=97#DB1994">DB 6/1994</a></li>
-                        <li><a href="index.php?id=97#DB1995">DB 7/1995</a></li>
-                        <li><a href="index.php?id=97#DB1996">DB 8/1996</a></li>
-                        <li><a href="index.php?id=97#DB1997">DB 9/1997</a></li>
-                        <li><a href="index.php?id=97#DB1998">DB 10/1998</a></li>
-                        <li><a href="index.php?id=97#DB1999">DB 11/1999</a></li>
-                        <li><a href="index.php?id=97#DB2000">DB 12/2000</a></li>
-                        <li><a href="index.php?id=97#DB2001">DB 13/2001</a></li>
-                    </ul>
-                </div>
-
                 @if(!$menus->isEmpty())
                     <?php $menu = $menus->whereLoose('position','sidebar')->sortBy('rang'); ?>
                     @if(!$menu->isEmpty())
@@ -102,32 +81,16 @@
                             @foreach($menu->pages as $page)
 
                                 @if($page->template == 'newsletter')
+                                    @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters])
 
-                                    <h5>
-                                        <a href="#" data-toggle="collapse" data-target="#collapse{{ $page->template }}">
-                                            {{ $page->title }}<i class="pull-right fa fa-arrow-circle-right"></i>
-                                        </a>
-                                    </h5>
-                                    <div class="collapse" id="collapse{{ $page->template }}">
-                                        @if(!$newsletters->isEmpty())
-                                            <ul class="menu">
-                                                @foreach($newsletters as $newsletter_id => $newsletter)
-                                                    <li>
-                                                        <a href="{{ url($site->slug.'/page/newsletter/'.$newsletter_id) }}">
-                                                            {{ str_replace('Droit matrimonial - ','',$newsletter) }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </div>
+                                @elseif($page->template == 'revue')
+                                    @include('frontend.partials.list', ['page' => $page, 'lists' => $revues])
 
                                 @elseif($page->template == 'jurisprudence')
 
                                     <h5><a href="{{ url($site->slug.'/page/jurisprudence') }}">Jurisprudence <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
                                     @if( Request::is($site->slug.'/page/jurisprudence') )
                                         <div id="masterFilter"><!--END jusriprudence-->
-
                                             <div class="widget list categories clear">
                                                 <h3 class="title"><i class="icon-tasks"></i> &nbsp;Catégories</h3>
                                                 @if(!$categories->isEmpty())
@@ -138,7 +101,6 @@
                                                     </select>
                                                 @endif
                                             </div><!--END WIDGET-->
-
                                             <div class="widget list annees clear">
                                                 <h3 class="title"><i class="icon-calendar"></i> &nbsp;Années</h3>
                                                 @if(!empty($years))
@@ -151,7 +113,6 @@
                                             </div><!--END WIDGET-->
                                         </div><!--END jusriprudence-->
                                     @endif
-
                                 @else
                                     <h5><a href="{{ url($site->slug.'/page/'.$page->slug) }}">{{ $page->menu_title }} <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
                                 @endif

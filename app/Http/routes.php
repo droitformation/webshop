@@ -167,6 +167,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::resource('coupon', 'Backend\Shop\CouponController');
     Route::resource('shipping', 'Backend\Shop\ShippingController');
+    Route::resource('theme', 'Backend\Shop\ThemeController');
 
     Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
     Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');
@@ -227,8 +228,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('analyse',   'Backend\Content\AnalyseController');
     Route::resource('categorie', 'Backend\Content\CategorieController');
     Route::resource('author',    'Backend\Content\AuthorController');
-    Route::resource('page',      'Backend\PageController');
     Route::resource('bloc',      'Backend\BlocController');
+    Route::resource('page',      'Backend\PageController');
+
+    Route::post('page/sorting','Backend\PageController@sorting');
 
     Route::get('pagecontent/{type}/{page}','Backend\PageContentController@index');
     Route::resource('pagecontent', 'Backend\PageContentController');

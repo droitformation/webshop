@@ -25,8 +25,11 @@ use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\CampagneInterface;
 
+use App\Droit\Shop\Product\Repo\ProductInterface;
+
 class BailController extends Controller
 {
+    protected $page;
     protected $arret;
     protected $categorie;
     protected $analyse;
@@ -37,6 +40,7 @@ class BailController extends Controller
     protected $site_id;
     protected $site;
     protected $calculette;
+    protected $product;
 
     protected $newsletter;
     protected $campagne;
@@ -53,6 +57,7 @@ class BailController extends Controller
         FaqQuestionInterface $question,
         FaqCategorieInterface $faqcat,
         CalculetteWorkerInterface $calculette,
+        ProductInterface $product,
         NewsletterInterface $newsletter,
         NewsletterCampagneInterface $campagne,
         CampagneInterface $worker
@@ -73,6 +78,7 @@ class BailController extends Controller
         $this->campagne      = $campagne;
         $this->worker        = $worker;
         $this->newsletter    = $newsletter;
+        $this->product       = $product;
 
         $years      = $this->arret->annees(2);
         $categories = $this->categorie->getAll($this->site_id);
@@ -82,8 +88,10 @@ class BailController extends Controller
         $faqcantons = [ 'be'=>'Berne','fr'=>'Fribourg', 'ge'=>'Genève', 'ju'=>'Jura', 'ne'=>'Neuchâtel', 'vs'=>'Valais', 'vd'=>'Vaud'];
 
         $newsletters = $this->newsletter->getAll(2);
+        $revues      = $this->product->getByCategorie(25);
 
         view()->share('newsletters',$newsletters->first()->campagnes->pluck('sujet','id') );
+        view()->share('revues',$revues->pluck('title','id') );
 
         view()->share('menus',$sites->menus);
         view()->share('site',$sites);
@@ -113,6 +121,7 @@ class BailController extends Controller
         $page = $this->page->getBySlug($this->site_id,$slug);
 
         $data['page'] = $page;
+        $data['var']  = $var;
 
         if($slug == 'faq')
         {
@@ -134,6 +143,11 @@ class BailController extends Controller
             $data['analyses'] = $this->jurisprudence->preparedAnalyses($analyses);
         }
 
+        if($slug == 'revues')
+        {
+            $data['revue'] = $this->product->find($var);
+        }
+
         if($slug == 'newsletter')
         {
             if($var)
@@ -153,7 +167,6 @@ class BailController extends Controller
 
             $data['categories']    = $this->worker->getCategoriesArrets();
             $data['imgcategories'] = $this->worker->getCategoriesImagesArrets();
-
         }
 
         return view('frontend.bail.'.$page->template)->with($data);

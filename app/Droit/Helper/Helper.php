@@ -639,12 +639,12 @@ class Helper {
         if( $node->isLeaf() )
         {
             return '<li class="dd-item" data-id="'.$node->id.'" id="page_rang_'.$node->id.'"><div class="dd-handle">
-                    <i class="fa fa-crosshairs"></i> &nbsp; <a href="admin/page/'.$node->id.'">' . $node->title . '</a>'.$form.'</div></li>';
+                    <i class="fa fa-crosshairs"></i> &nbsp; <a href="admin/page/'.$node->id.'">' . $node->menu_title . '</a>'.$form.'</div></li>';
         }
         else
         {
             $html  = '<li class="dd-item" data-id="'.$node->id.'"><div class="dd-handle">';
-            $html .= '<a href="admin/page/'.$node->id.'">' . $node->title.'</a>';
+            $html .= '<a href="admin/page/'.$node->id.'">' . $node->menu_title.'</a>';
             $html .= $form;
             $html .= '</div>';
             $html .= '<ol class="dd-list">';

@@ -26,6 +26,7 @@ class PageController extends Controller
         $this->menu   = $menu;
 
         view()->share('templates',config('template'));
+        view()->share('menus',$this->menu->getAll()->pluck('title','id')->toArray());
     }
 
     /**
@@ -115,8 +116,7 @@ class PageController extends Controller
         $data = $request->all();
 
         $pages = $this->page->updateSorting($data['page_rang']);
-
-        print_r($data);
+        echo 'ok';die();
     }
 
     public function hierarchy(Request $request)
@@ -126,9 +126,7 @@ class PageController extends Controller
         $tree = $this->worker->prepareTree($data);
        // $new  = $this->page->buildTree($tree);
 
-        echo '<pre>';
-        print_r($tree);
-        echo '</pre>';
+        echo 'ok';die();
 
     }
 }
