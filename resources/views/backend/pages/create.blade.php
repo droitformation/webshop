@@ -52,10 +52,14 @@
                         <label for="message" class="col-sm-3 control-label">Menu</label>
                         <div class="col-sm-5">
                             @if(!$menus->isEmpty())
+                                <?php $menu_sites = $menus->groupBy('site_id'); ?>
                                 <select class="form-control" name="menu_id">
-                                    <option value="">Choix</option>
-                                    @foreach($menus as $menu)
-                                        <option value="{{ $menu->id }}">{{ $menu->title }}</option>
+                                    @foreach($menu_sites as $site_id => $menu_site)
+                                        <optgroup label="{{ $sites->find($site_id)->nom }}">
+                                            @foreach($menu_site as $menu)
+                                                <option value="{{ $menu->id }}">{{ $menu->title }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             @endif
@@ -70,6 +74,8 @@
                                 <option value="index">Page d'accueil</option>
                                 <option value="newsletter">Contenu généré newsletter</option>
                                 <option value="jurisprudence">Contenu généré jurisprudence</option>
+                                <option value="doctrine">Contenu généré doctrine</option>
+                                <option value="revue">Contenu généré revues</option>
                             </select>
                         </div>
                     </div>

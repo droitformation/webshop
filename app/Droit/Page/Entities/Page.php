@@ -68,6 +68,11 @@ class Page extends Node {
         return $this->hasMany('App\Droit\Content\Entities\Content');
     }
 
+    public function blocs()
+    {
+        return $this->belongsToMany('App\Droit\Bloc\Entities\Bloc','bloc_pages','page_id','bloc_id')->orderBy('blocs.rang','ASC');
+    }
+
     public function menu()
     {
         return $this->belongsTo('App\Droit\Menu\Entities\Menu');

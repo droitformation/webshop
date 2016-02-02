@@ -405,3 +405,7 @@ a:hover, a:active, a:focus {
 .selects p {
     margin-bottom: 0;
 }
+
+select[multiple] {
+    height: 150px;
+}

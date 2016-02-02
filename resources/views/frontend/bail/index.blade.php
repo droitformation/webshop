@@ -1,4 +1,4 @@
-@extends('layouts.bail.master')
+@extends('frontend.bail.layouts.master')
 @section('content')
 		      				     
 	 <!-- Illustration -->

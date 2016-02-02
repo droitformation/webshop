@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\CreateBloc;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Bloc\Repo\BlocInterface;
@@ -61,7 +62,7 @@ class BlocController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateBloc $request)
     {
         $data  = $request->except('file');
         $_file = $request->file('file', null);
@@ -69,7 +70,7 @@ class BlocController extends Controller
         // Image upload
         if(isset($_file) )
         {
-            $file = $this->upload->upload( $request->file('file') , 'files');
+            $file = $this->upload->upload( $request->file('file') , 'files/uploads');
 
             $data['image'] = $file['name'];
         }
@@ -88,9 +89,10 @@ class BlocController extends Controller
      */
     public function show($id)
     {
-        $contenu = $this->bloc->find($id);
+        $bloc  = $this->bloc->find($id);
+        $sites = $this->site->getAll();
 
-        return view('backend.bloc.show')->with(['contenu' => $contenu]);
+        return view('backend.bloc.show')->with(['bloc' => $bloc, 'sites' => $sites]);
     }
 
     /**
@@ -108,7 +110,7 @@ class BlocController extends Controller
         // Image upload
         if(isset($_file) )
         {
-            $file = $this->upload->upload( $request->file('file') , 'files');
+            $file = $this->upload->upload( $request->file('file') , 'files/uploads');
 
             $data['image'] = $file['name'];
         }

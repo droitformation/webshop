@@ -21,6 +21,10 @@ use App\Droit\Arret\Worker\JurisprudenceWorker;
 
 use App\Droit\Calculette\Worker\CalculetteWorkerInterface;
 
+use App\Droit\Newsletter\Repo\NewsletterInterface;
+use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
+use App\Droit\Newsletter\Worker\CampagneInterface;
+
 class BailController extends Controller
 {
     protected $arret;
@@ -34,6 +38,10 @@ class BailController extends Controller
     protected $site;
     protected $calculette;
 
+    protected $newsletter;
+    protected $campagne;
+    protected $worker;
+
     public function __construct(
         ArretInterface $arret,
         CategorieInterface $categorie,
@@ -44,7 +52,10 @@ class BailController extends Controller
         SiteInterface $site,
         FaqQuestionInterface $question,
         FaqCategorieInterface $faqcat,
-        CalculetteWorkerInterface $calculette
+        CalculetteWorkerInterface $calculette,
+        NewsletterInterface $newsletter,
+        NewsletterCampagneInterface $campagne,
+        CampagneInterface $worker
     )
     {
         $this->site_id  = 2;
@@ -59,15 +70,23 @@ class BailController extends Controller
         $this->faqcat        = $faqcat;
         $this->site          = $site;
         $this->calculette    = $calculette;
+        $this->campagne      = $campagne;
+        $this->worker        = $worker;
+        $this->newsletter    = $newsletter;
 
         $years      = $this->arret->annees(2);
         $categories = $this->categorie->getAll($this->site_id);
         $authors    = $this->author->getAll();
 
-        $menus = $this->site->find(2);
+        $sites = $this->site->find(2);
         $faqcantons = [ 'be'=>'Berne','fr'=>'Fribourg', 'ge'=>'Genève', 'ju'=>'Jura', 'ne'=>'Neuchâtel', 'vs'=>'Valais', 'vd'=>'Vaud'];
 
-        view()->share('menus',$menus->menus);
+        $newsletters = $this->newsletter->getAll(2);
+
+        view()->share('newsletters',$newsletters->first()->campagnes->pluck('sujet','id') );
+
+        view()->share('menus',$sites->menus);
+        view()->share('site',$sites);
         view()->share('years',$years);
         view()->share('categories',$categories);
         view()->share('authors',$authors);
@@ -104,6 +123,37 @@ class BailController extends Controller
             $data['questions'] = $questions;
             $data['faqcats']   = $faqcats;
             $data['current']   = $categorie;
+        }
+
+        if($slug == 'jurisprudence')
+        {
+            $arrets     = $this->arret->getAll($this->site_id)->take(10);
+            $analyses   = $this->analyse->getAll($this->site_id)->take(10);
+
+            $data['arrets']   = $this->jurisprudence->preparedArrets($arrets);
+            $data['analyses'] = $this->jurisprudence->preparedAnalyses($analyses);
+        }
+
+        if($slug == 'newsletter')
+        {
+            if($var)
+            {
+                $data['campagne'] = $this->campagne->find($var);
+                $data['content']  = $this->worker->prepareCampagne($var);
+            }
+            else
+            {
+                $newsletters = $this->newsletter->getAll($this->site_id)->first();
+                if(!$newsletters->campagnes->isEmpty())
+                {
+                    $data['campagne'] = $newsletters->campagnes->first();
+                    $data['content']  = $this->worker->prepareCampagne($newsletters->campagnes->first()->id);
+                }
+            }
+
+            $data['categories']    = $this->worker->getCategoriesArrets();
+            $data['imgcategories'] = $this->worker->getCategoriesImagesArrets();
+
         }
 
         return view('frontend.bail.'.$page->template)->with($data);

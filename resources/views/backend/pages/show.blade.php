@@ -73,6 +73,8 @@
                                 <option {{ $page->template == 'index' ? 'selected' : '' }} value="index">Page d'accueil</option>
                                 <option {{ $page->template == 'newsletter' ? 'selected' : '' }} value="newsletter">Contenu généré newsletter</option>
                                 <option {{ $page->template == 'jurisprudence' ? 'selected' : '' }} value="jurisprudence">Contenu généré jurisprudence</option>
+                                <option {{ $page->template == 'doctrine' ? 'selected' : '' }} value="doctrine">Contenu généré doctrine</option>
+                                <option {{ $page->template == 'revue' ? 'selected' : '' }} value="revue">Contenu généré revues</option>
                             </select>
                         </div>
                     </div>

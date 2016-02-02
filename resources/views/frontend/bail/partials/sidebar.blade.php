@@ -26,58 +26,8 @@
 
             <div id="rightmenu">
 
-
-                    <h5>
-                        <a href="#" data-toggle="collapse" data-target="#collapseNewsletter" aria-expanded="false" aria-controls="collapseNewsletter">
-                            Newsletter <i class="pull-right fa fa-arrow-circle-right"></i>
-                        </a>
-                    </h5>
-                    <div class="collapse" id="collapseNewsletter">
-                        <ul class="menu">
-                            <li><a href="index.php?id=108&amp;uid=364">Newsletter décembre 2013</a></li>
-                            <li><a href="index.php?id=108&amp;uid=357">Newsletter novembre 2013</a></li>
-                            <li><a href="index.php?id=108&amp;uid=354">Newsletter octobre 2013</a></li>
-                            <li><a href="index.php?id=108&amp;uid=349">Newsletter septembre 2013</a></li>
-                            <li><a href="index.php?id=108&amp;uid=344">Newsletter août 2013</a></li>
-                            <li><a href="index.php?id=108&amp;uid=343">Newsletter juillet 2013</a></li>
-                            <li><a href="index.php?id=108&amp;uid=338">Newsletter juin 2013</a></li>
-                            <li><a href="index.php?id=108&amp;uid=330">Newsletter mai 2013</a></li>
-                        </ul>
-                    </div>
-
-
-                <h5><a href="{{ url('bail/jurisprudence') }}">Jurisprudence <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                @if( Request::is('bail/jurisprudence') )
-                    <div id="masterFilter"><!--END jusriprudence-->
-
-                        <div class="widget list categories clear">
-                            <h3 class="title"><i class="icon-tasks"></i> &nbsp;Catégories</h3>
-                            @if(!$categories->isEmpty())
-                                <select id="arret-chosen" name="chosen-select" data-placeholder="Choisir une ou plusieurs catégories" style="width:100%" multiple class="chosen-select category">
-                                    @foreach($categories as $categorie)
-                                        <option value="c{{ $categorie->id }}">{{ $categorie->title }}</option>
-                                    @endforeach
-                                </select>
-                            @endif
-
-                        </div><!--END WIDGET-->
-
-                        <div class="widget list annees clear">
-                            <h3 class="title"><i class="icon-calendar"></i> &nbsp;Années</h3>
-                            @if(!empty($years))
-                                <ul id="arret-annees" class="list annees clear">
-                                    @foreach($years as $year)
-                                        <li><a rel="y{{ $year }}" href="#">Paru en {{ $year }}</a></li>
-                                    @endforeach
-                                </ul>
-                            @endif
-                        </div><!--END WIDGET-->
-
-                    </div><!--END jusriprudence-->
-                @endif
-
-                <h5><a href="{{ url('bail/doctrine') }}" title="Articles de doctrine">Articles de doctrine <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                @if( Request::is('bail/seminaire') )
+                <h5><a href="{{ url('bail/page/doctrine') }}" title="Articles de doctrine">Articles de doctrine <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
+                @if( Request::is('bail/page/doctrine') )
                 <div class="seminaire">
 
                     <div class="filtre">
@@ -150,7 +100,62 @@
                         <?php $menu = $menu->first()->load('pages'); ?>
                         @if(!$menu->pages->isEmpty())
                             @foreach($menu->pages as $page)
-                                <h5><a href="{{ url('bail/page/'.$page->slug) }}">{{ $page->menu_title }} <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
+
+                                @if($page->template == 'newsletter')
+
+                                    <h5>
+                                        <a href="#" data-toggle="collapse" data-target="#collapse{{ $page->template }}">
+                                            {{ $page->title }}<i class="pull-right fa fa-arrow-circle-right"></i>
+                                        </a>
+                                    </h5>
+                                    <div class="collapse" id="collapse{{ $page->template }}">
+                                        @if(!$newsletters->isEmpty())
+                                            <ul class="menu">
+                                                @foreach($newsletters as $newsletter_id => $newsletter)
+                                                    <li>
+                                                        <a href="{{ url($site->slug.'/page/newsletter/'.$newsletter_id) }}">
+                                                            {{ str_replace('Droit matrimonial - ','',$newsletter) }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </div>
+
+                                @elseif($page->template == 'jurisprudence')
+
+                                    <h5><a href="{{ url($site->slug.'/page/jurisprudence') }}">Jurisprudence <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
+                                    @if( Request::is($site->slug.'/page/jurisprudence') )
+                                        <div id="masterFilter"><!--END jusriprudence-->
+
+                                            <div class="widget list categories clear">
+                                                <h3 class="title"><i class="icon-tasks"></i> &nbsp;Catégories</h3>
+                                                @if(!$categories->isEmpty())
+                                                    <select id="arret-chosen" name="chosen-select" data-placeholder="Choisir une ou plusieurs catégories" style="width:100%" multiple class="chosen-select category">
+                                                        @foreach($categories as $categorie)
+                                                            <option value="c{{ $categorie->id }}">{{ $categorie->title }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @endif
+                                            </div><!--END WIDGET-->
+
+                                            <div class="widget list annees clear">
+                                                <h3 class="title"><i class="icon-calendar"></i> &nbsp;Années</h3>
+                                                @if(!empty($years))
+                                                    <ul id="arret-annees" class="list annees clear">
+                                                        @foreach($years as $year)
+                                                            <li><a rel="y{{ $year }}" href="#">Paru en {{ $year }}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </div><!--END WIDGET-->
+                                        </div><!--END jusriprudence-->
+                                    @endif
+
+                                @else
+                                    <h5><a href="{{ url($site->slug.'/page/'.$page->slug) }}">{{ $page->menu_title }} <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
+                                @endif
+
                             @endforeach
                         @endif
                     @endif
@@ -159,10 +164,13 @@
             </div>
 
             <!-- Bloc Soutiens -->
-            <h5 class="color-bloc">Avec le soutien de</h5>
-            <div class="sidebar-bloc">
-                <a href="http://www.helbing.ch/" target="_blank"><img src="{{ asset('/images/bail/HLV_Logo.png') }}" alt=""></a>
-            </div>
+            @if(!$page->blocs->isEmpty())
+                @foreach($page->blocs as $bloc)
+                    <div class="sidebar-content-bloc">
+                        @include('frontend.partials.bloc', ['bloc' => $bloc])
+                    </div>
+                @endforeach
+            @endif
 
             <!-- Bloc inscription newsletter -->
             <h5 class="color-bloc">Calculateur</h5>

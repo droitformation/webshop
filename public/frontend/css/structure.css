@@ -204,10 +204,6 @@ h3.link {
     margin-bottom: 0;
 }
 
-.form-bloc{
-    padding:5px 10px;
-}
-
 .color-bloc {
     color: #fff;
     font-size: 12px;
@@ -223,6 +219,10 @@ h3.link {
     font-size: 12px;
     font-weight: bold;
     font-style: italic;
+}
+
+.color-bloc.form-bloc{
+    padding:5px 10px;
 }
 
 .sidebar-bloc{

@@ -60,7 +60,7 @@ class MatrimonialController extends Controller
         $categories = $this->categorie->getAll($this->site_id);
         $authors    = $this->author->getAll();
 
-        $menus = $this->site->find(3);
+        $sites = $this->site->find(3);
 
         $this->campagne   = $campagne;
         $this->worker     = $worker;
@@ -69,11 +69,11 @@ class MatrimonialController extends Controller
         $newsletters = $this->newsletter->getAll(3);
 
         view()->share('newsletters',$newsletters->first()->campagnes->pluck('sujet','id') );
-        view()->share('menus',$menus->menus);
+        view()->share('menus',$sites->menus);
+        view()->share('site',$sites);
         view()->share('years',$years);
         view()->share('categories',$categories);
         view()->share('authors',$authors);
-        view()->share('site',$menus);
 
         setlocale(LC_ALL, 'fr_FR');
     }
@@ -115,7 +115,7 @@ class MatrimonialController extends Controller
             }
             else
             {
-                $newsletters = $this->newsletter->getAll(3)->first();
+                $newsletters = $this->newsletter->getAll($this->site_id)->first();
                 if(!$newsletters->campagnes->isEmpty())
                 {
                     $data['campagne'] = $newsletters->campagnes->first();

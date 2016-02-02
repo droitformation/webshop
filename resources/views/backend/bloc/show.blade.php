@@ -9,7 +9,7 @@
 <!-- start row -->
 <div class="row">
 
-    @if (!empty($bloc) )
+    @if ($bloc)
 
     <div class="col-md-12">
         <div class="panel panel-midnightblue">
@@ -25,16 +25,56 @@
             <div class="panel-body event-info">
 
                 <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Titre</label>
-                    <div class="col-sm-4">
-                        {!! Form::text('titre', $bloc->titre , array('class' => 'form-control') ) !!}
+                    <label for="message" class="col-sm-3 control-label">Rang</label>
+                    <div class="col-sm-2">
+                        {!! Form::text('rang', $bloc->rang , ['class' => 'form-control'] ) !!}
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="bloc" class="col-sm-3 control-label">Bloc</label>
-                    <div class="col-sm-7">
-                        {!! Form::textarea('bloc', $bloc->bloc , array('class' => 'form-control  redactor', 'cols' => '50' , 'rows' => '4' )) !!}
+                    <label for="type" class="col-sm-3 control-label">Type de contenu</label>
+                    <div class="col-sm-2">
+                        {!! Form::select('type', ['pub' => 'Publicité', 'text' => 'Texte', 'soutien' => 'Soutien'] , $bloc->type , ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="position" class="col-sm-3 control-label">Position</label>
+                    <div class="col-sm-2">
+                        {!! Form::select('position', $positions, $bloc->position , ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Afficher sur les pages du site</label>
+                    <div class="col-sm-4">
+                        @if(!$sites->isEmpty())
+                            <select multiple class="form-control" name="page_id[]" style="height: 180px;">
+                                @foreach($sites as $site)
+                                    <optgroup label="{{ $site->nom }}">
+                                        @if(!$site->pages->isEmpty())
+                                            @foreach($site->pages as $page)
+                                                <option {{ in_array($page->id,$bloc->pages->pluck('id')->toArray()) ? 'selected' : '' }} value="{{ $page->id }}">{{ $page->title }}</option>
+                                            @endforeach
+                                        @endif
+                                    </optgroup>
+                                @endforeach
+                            </select>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Titre</label>
+                    <div class="col-sm-6">
+                        {!! Form::text('title', $bloc->title  , array('class' => 'form-control') ) !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contenu" class="col-sm-3 control-label">Contenu</label>
+                    <div class="col-sm-6">
+                        {!! Form::textarea('content', $bloc->content , array('class' => 'form-control  redactor', 'cols' => '50' , 'rows' => '4' )) !!}
                     </div>
                 </div>
 
@@ -42,54 +82,20 @@
                     <label for="url" class="col-sm-3 control-label">Lien<br/>
                         <small class="text-muted">Sur l'image</small>
                     </label>
-                    <div class="col-sm-7">
-                        {!! Form::text('url', $bloc->url  , array('class' => 'form-control') ) !!}
+                    <div class="col-sm-6">
+                        {!! Form::text('url', $bloc->url , array('class' => 'form-control') ) !!}
                     </div>
                 </div>
 
-                @if(!empty($bloc->image ))
                 <div class="form-group">
-                    <label for="image" class="col-sm-3 control-label">Ajouter une image<br/>
+                    <label for="file" class="col-sm-3 control-label">Image<br/>
                         <small class="text-muted">Pour pub ou soutien</small>
                     </label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
+                        <p><img style="max-height:120px;" src="{{ asset('files/uploads/'.$bloc->image) }}"></p>
                         <div class="list-group">
-                            <div class="list-group-item text-center">
-                                <a href="#"><img height="120" src="{{ asset('files/'.$bloc->image) }}" alt="{{ $bloc->titre }}" /></a>
-                            </div>
+                            <div class="list-group-item">{!! Form::file('file') !!}</div>
                         </div>
-                    </div>
-                </div>
-                @endif
-                <div class="form-group">
-                    <label for="file" class="col-sm-3 control-label">Changer l'image</label>
-                    <div class="col-sm-4">
-                        <div class="list-group">
-                            <div class="list-group-item">
-                                {!! Form::file('file') !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="type" class="col-sm-3 control-label">Type de bloc</label>
-                    <div class="col-sm-4">
-                       {!! Form::select('type', ['pub' => 'Publicité','texte' => 'Texte','soutien' => 'Soutien'], $bloc->type, array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="position" class="col-sm-3 control-label">Position</label>
-                    <div class="col-sm-4">
-                        {!! Form::select('position', $positions ,$bloc->position, array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Rang</label>
-                    <div class="col-sm-2">
-                        {!! Form::text('rang', $bloc->rang , array('class' => 'form-control') ) !!}
                     </div>
                 </div>
 

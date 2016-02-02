@@ -15,39 +15,36 @@ class BlocEloquent implements BlocInterface{
 		$this->bloc = $bloc;
 	}
 
-    public function getAll(){
-
-        return $this->bloc->all();
+    public function getAll()
+	{
+        return $this->bloc->orderBy('rang','ASC')->get();
     }
 
-	public function find($id){
-				
+	public function find($id)
+	{
 		return $this->bloc->find($id);
 	}
 
-    public function findyByPosition(array $positions){
-
+    public function findyByPosition(array $positions)
+	{
         return $this->bloc->whereIn('position', $positions)->orderBy('rang','ASC')->get();
     }
 
-	public function findyByType($type){
-
+	public function findyByType($type)
+	{
 		return $this->bloc->where('type','=',$type)->orderBy('rang','ASC')->get();
 	}
 
-	public function create(array $data){
-
+	public function create(array $data)
+	{
 		$bloc = $this->bloc->create([
 			'title'      => (isset($data['title']) ? $data['title'] : ''),
 			'content'    => $data['content'],
 			'image'      => (isset($data['image']) ? $data['image'] : ''),
 			'url'        => (isset($data['url']) ? $data['url'] : ''),
-			'slug'       => $data['slug'],
 			'rang'       => (isset($data['rang']) ? $data['rang'] : 0),
-			'site_id'    => $data['site_id'],
 			'type'       => $data['type'],
 			'position'   => $data['position'],
-			'page_id'    => $data['page_id'],
 			'created_at' => date('Y-m-d G:i:s'),
 			'updated_at' => date('Y-m-d G:i:s')
 		]);
@@ -56,9 +53,14 @@ class BlocEloquent implements BlocInterface{
 		{
 			return false;
 		}
-		
-		return $bloc;
-		
+
+        // pages
+        if(isset($data['page_id']))
+        {
+            $bloc->pages()->attach($data['page_id']);
+        }
+
+        return $bloc;
 	}
 	
 	public function update(array $data){
@@ -77,6 +79,12 @@ class BlocEloquent implements BlocInterface{
             $bloc->image = $data['image'];
         }
 
+        // pages
+        if(isset($data['page_id']))
+        {
+            $bloc->pages()->sync($data['page_id']);
+        }
+
 		$bloc->updated_at = date('Y-m-d G:i:s');
 
 		$bloc->save();
@@ -89,7 +97,6 @@ class BlocEloquent implements BlocInterface{
         $bloc = $this->bloc->find($id);
 
 		return $bloc->delete();
-
 	}
 
 }

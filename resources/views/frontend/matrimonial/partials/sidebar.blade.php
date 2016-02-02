@@ -49,11 +49,11 @@
             </div>
             <div class="collapse {{ Request::is('matrimonial/page/newsletter') || Request::is('matrimonial/page/newsletter/*') ? 'in' : '' }}" id="collapseNewsletter">
                 @if(!$newsletters->isEmpty())
-                <ul class="menu">
-                    @foreach($newsletters as $newsletter_id => $newsletter)
-                        <li><a href="{{ url('matrimonial/page/newsletter/'.$newsletter_id) }}">{{ str_replace('Droit matrimonial - ','',$newsletter) }}</a></li>
-                    @endforeach
-                </ul>
+                    <ul class="menu">
+                        @foreach($newsletters as $newsletter_id => $newsletter)
+                            <li><a href="{{ url('matrimonial/page/newsletter/'.$newsletter_id) }}">{{ str_replace('Droit matrimonial - ','',$newsletter) }}</a></li>
+                        @endforeach
+                    </ul>
                 @endif
             </div>
 
@@ -95,20 +95,13 @@
                 @endif
             </div>
 
-            <div class="color-bloc">
-                <div class="bloc-soutien">
-                    <h5>Avec le soutien de</h5>
-                    <a href="http://www.helbing.ch" target="_blank">
-                        <img src="{{ asset('/images/matrimonial/logo_helbing.png') }}" alt="">
-                    </a>
-                </div>
-                <div class="bloc-soutien">
-                    <h5>Commentaire pratique</h5>
-                    <a href="http://www.helbing.ch" target="_blank" class="text-center">
-                        <img style="max-width: 100px" src="{{ asset('/files/uploads/images/commentaire_pratique.jpg') }}" alt="">
-                    </a>
-                </div>
-            </div>
+            @if(!$page->blocs->isEmpty())
+                @foreach($page->blocs as $bloc)
+                    <div class="sidebar-content-bloc">
+                        @include('frontend.partials.bloc', ['bloc' => $bloc])
+                    </div>
+                @endforeach
+            @endif
 
             @if(!$menus->isEmpty())
                 <?php $menu = $menus->whereLoose('position','sidebar')->sortBy('rang'); ?>

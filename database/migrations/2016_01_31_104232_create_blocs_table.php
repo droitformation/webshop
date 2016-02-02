@@ -19,17 +19,13 @@ class CreateBlocsTable extends Migration {
 			$table->text('content')->nullable();
 			$table->string('image')->nullable();
 			$table->string('url')->nullable();
-			$table->string('slug')->nullable();
             $table->integer('rang')->default(0);
-			$table->integer('page_id');
-			$table->integer('site_id')->nullable();
 			$table->enum('type', ['soutien','pub','text']);
 			$table->enum('position', ['sidebar','page']);
 			$table->timestamps();
             $table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.

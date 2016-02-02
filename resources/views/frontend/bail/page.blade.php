@@ -1,4 +1,4 @@
-@extends('layouts.bail.master')
+@extends('frontend.bail.layouts.master')
 @section('content')
 
 	<div id="content" class="inner">

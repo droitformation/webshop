@@ -24,18 +24,27 @@
             </ul>
             <div class="tab-content">
                 @if(!$sites->isEmpty())
+
                     @foreach($sites as $site)
-                        <?php $site_pages = $site->pages->pluck('id')->toArray(); ?>
+                        <?php $site_pages[$site->id] = $site->pages->pluck('id')->toArray(); ?>
+                    @endforeach
+
+                    @foreach($sites as $site)
                         <div id="site{{ $site->id }}" class="tab-pane {{ $site->id == 1 ? 'active' : '' }}" style="min-height: 150px">
 
+                            <?php
+                                $pages    = $site_pages[$site->id];
+                                $filtered = $blocs->filter(function ($bloc, $key) use ($pages)
+                                {
+                                    $has   = $bloc->pages->pluck('id')->toArray();
+                                    $exist = array_intersect($pages,$has);
+
+                                    return count($exist) > 0 ? $bloc : false;
+                                });
+                            ?>
+
                             @if(!$blocs->isEmpty())
-                                <?php $pages = $blocs->groupBy('page_id'); ?>
-                                @foreach($pages as $page_id => $page)
-                                    @if(in_array($page_id,$site_pages))
-                                        <h4>{{ $page->first()->page->title }}</h4>
-                                        @include('backend.bloc.partials.type',['bloc' => $page])
-                                    @endif
-                                @endforeach
+                                @include('backend.bloc.partials.type',['bloc' => $filtered])
                             @endif
 
                         </div>

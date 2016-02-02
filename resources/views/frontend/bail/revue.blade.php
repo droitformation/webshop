@@ -8,5 +8,7 @@
 				{!! $page->content !!}
 			</div>
 		</div>
-	</div>
+
+
+	 </div>
 @stop

@@ -7,7 +7,7 @@ class Bloc extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['title','content','image','url','slug','rang','site_id','type','position','page_id'];
+	protected $fillable = ['title','content','image','url','rang','type','position'];
 
     protected $table = 'blocs';
 
@@ -48,9 +48,9 @@ class Bloc extends Model {
         return substr($s, 0, $l = min(strlen($s),  $l + $i)) . (count($tags = array_reverse($tags)) ? '' : '') . (strlen($s) > $l ? $e : '');
     }
 
-    public function page()
+    public function pages()
     {
-        return $this->belongsTo('App\Droit\Page\Entities\Page');
+        return $this->belongsToMany('App\Droit\Page\Entities\Page','bloc_pages','bloc_id','page_id');
     }
 
 }
