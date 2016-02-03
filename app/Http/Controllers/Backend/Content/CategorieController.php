@@ -7,20 +7,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CategorieRequest;
 
 use App\Droit\Categorie\Repo\CategorieInterface;
-use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Service\UploadInterface;
 
 class CategorieController extends Controller {
 
     protected $categorie;
     protected $upload;
-    protected $site;
 
-    public function __construct( CategorieInterface $categorie, UploadInterface $upload, SiteInterface  $site)
+    public function __construct( CategorieInterface $categorie, UploadInterface $upload)
     {
         $this->categorie = $categorie;
         $this->upload    = $upload;
-        $this->site      = $site;
     }
 
     /**
@@ -29,12 +26,11 @@ class CategorieController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index($site)
     {
-        $categories = $this->categorie->getAll();
-        $sites      = $this->site->getAll();
+        $categories = $this->categorie->getAll($site);
 
-        return view('backend.categories.index')->with(['categories' => $categories, 'sites' => $sites]);
+        return view('backend.categories.index')->with(['categories' => $categories, 'current' => $site]);
     }
 
 	/**
@@ -43,11 +39,9 @@ class CategorieController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($site)
 	{
-        $sites = $this->site->getAll();
-
-        return view('backend.categories.create')->with(['sites' => $sites]);
+        return view('backend.categories.create')->with(['site' => $site]);
 	}
 
 	/**
@@ -78,9 +72,8 @@ class CategorieController extends Controller {
 	public function show($id)
 	{
         $categorie = $this->categorie->find($id);
-        $sites     = $this->site->getAll();
 
-        return view('backend.categories.show')->with(['categorie' => $categorie, 'sites' => $sites]);
+        return view('backend.categories.show')->with(['categorie' => $categorie]);
 	}
 
 	/**

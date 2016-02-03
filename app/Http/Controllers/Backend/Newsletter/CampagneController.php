@@ -41,6 +41,8 @@ class CampagneController extends Controller
         $this->groupe   = $groupe;
         $this->mailjet  = $mailjet;
         $this->helper   = $helper;
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /**

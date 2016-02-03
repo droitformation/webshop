@@ -83,6 +83,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('search', 'Backend\SearchController@search');
 
+    Route::resource('faq', 'Backend\FaqController');
+    Route::get('question/create/{categorie}', 'Backend\QuestionController@create');
+    Route::resource('question', 'Backend\QuestionController');
+
     /*
     |--------------------------------------------------------------------------
     | User and Adresse Backend Routes
@@ -168,6 +172,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('coupon', 'Backend\Shop\CouponController');
     Route::resource('shipping', 'Backend\Shop\ShippingController');
     Route::resource('theme', 'Backend\Shop\ThemeController');
+    Route::resource('domain', 'Backend\Shop\DomainController');
 
     Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
     Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');
@@ -226,12 +231,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::resource('arret',     'Backend\Content\ArretController');
     Route::resource('analyse',   'Backend\Content\AnalyseController');
+
+    Route::get('categories/{site}','Backend\Content\CategorieController@index');
+    Route::get('categorie/create/{site}','Backend\Content\CategorieController@create');
     Route::resource('categorie', 'Backend\Content\CategorieController');
+
     Route::resource('author',    'Backend\Content\AuthorController');
     Route::resource('bloc',      'Backend\BlocController');
-    Route::resource('page',      'Backend\PageController');
 
     Route::post('page/sorting','Backend\PageController@sorting');
+    Route::resource('page',      'Backend\PageController');
 
     Route::get('pagecontent/{type}/{page}','Backend\PageContentController@index');
     Route::resource('pagecontent', 'Backend\PageContentController');

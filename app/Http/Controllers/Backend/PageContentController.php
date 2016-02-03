@@ -9,21 +9,18 @@ use App\Http\Controllers\Controller;
 use App\Droit\Content\Repo\ContentInterface;
 use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Page\Repo\PageInterface;
-use App\Droit\Site\Repo\SiteInterface;
 
 class PageContentController extends Controller
 {
     protected $content;
     protected $categorie;
     protected $page;
-    protected $site;
 
-    public function __construct(ContentInterface $content, CategorieInterface $categorie, PageInterface $page, SiteInterface  $site)
+    public function __construct(ContentInterface $content, CategorieInterface $categorie, PageInterface $page)
     {
         $this->content   = $content;
         $this->categorie = $categorie;
         $this->page      = $page;
-        $this->site      = $site;
     }
 
     /**

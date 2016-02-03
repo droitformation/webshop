@@ -38,9 +38,8 @@ class PageController extends Controller
     {
         $pages = $this->page->getAll();
         $root  = $this->page->getRoot();
-        $sites = $this->site->getAll();
 
-        return view('backend.pages.index')->with(array( 'pages' => $pages, 'root' => $root , 'sites' => $sites));
+        return view('backend.pages.index')->with(array( 'pages' => $pages, 'root' => $root));
     }
 
     /**
@@ -51,10 +50,9 @@ class PageController extends Controller
     public function create()
     {
         $pages    = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
-        $sites    = $this->site->getAll();
         $menus    = $this->menu->getAll();
 
-        return view('backend.pages.create')->with(['pages' => $pages, 'sites' => $sites, 'menus' => $menus]);
+        return view('backend.pages.create')->with(['pages' => $pages,'menus' => $menus]);
     }
 
     /**
@@ -79,10 +77,9 @@ class PageController extends Controller
     {
         $page  = $this->page->find($id);
         $pages = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
-        $sites = $this->site->getAll();
         $menus = $this->menu->getAll();
 
-        return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages, 'sites' => $sites, 'menus' => $menus));
+        return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages, 'menus' => $menus));
     }
 
     /**

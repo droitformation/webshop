@@ -40,7 +40,7 @@
             <label for="message" class="control-label">Style de bloc</label>
             <select class="form-control" name="style">
                 <option value="">Choisir</option>
-                <option value="agenda">Bloc agenda rouge</option>
+                <option {{ $content->style == 'agenda' ? 'selected' : '' }} value="agenda">Bloc agenda rouge</option>
             </select>
         </div>
     @endif
@@ -53,6 +53,6 @@
     <input name="id" value="{{ $content->id }}" type="hidden">
     <input name="type" value="{{ $content->type }}" type="hidden">
     <input name="page_id" value="{{ $content->page_id }}" type="hidden">
-    <button type="button" class="btn btn-magenta btn-sm edit-bloc-btn">&Eacute;diter</button>
+    <button type="button" class="btn btn-primary edit-bloc-btn">&Eacute;diter</button>
 
 </form>

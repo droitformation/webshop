@@ -18,6 +18,7 @@ class CreateFaqCategoriesTable extends Migration
             $table->integer('site_id');
             $table->integer('rang');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

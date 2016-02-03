@@ -14,7 +14,7 @@ class FaqCategorieEloquent implements FaqCategorieInterface{
 
     public function getAll($site = null)
     {
-        return $this->categorie->sites($site)->orderBy('rang', 'ASC')->get();
+        return $this->categorie->sites($site)->with(['questions'])->orderBy('rang', 'ASC')->get();
     }
 
     public function find($id){

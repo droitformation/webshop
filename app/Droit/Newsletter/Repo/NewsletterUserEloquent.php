@@ -56,10 +56,7 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
         {
             if($sortCol == 4)
             {
-                $data = $this->user->with(['subscriptions' => function($query) use ($sortDir)
-                {
-                    $query->orderBy('newsletter_id', $sortDir);
-                }])->take($length)->skip($start)->get();
+                $data = $this->user->with(['subscriptions'])->take($length)->skip($start)->get();
             }
             else
             {

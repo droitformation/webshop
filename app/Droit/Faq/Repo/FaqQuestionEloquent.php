@@ -39,6 +39,12 @@ class FaqQuestionEloquent implements FaqQuestionInterface{
             return false;
         }
 
+        // categories
+        if(isset($data['categorie_id']))
+        {
+            $question->categories()->attach($data['categorie_id']);
+        }
+
         return $question;
 
     }
@@ -56,6 +62,12 @@ class FaqQuestionEloquent implements FaqQuestionInterface{
 
         $question->updated_at = date('Y-m-d G:i:s');
         $question->save();
+
+        // categories
+        if(isset($data['categorie_id']))
+        {
+            $question->categories()->sync($data['categorie_id']);
+        }
 
         return $question;
     }

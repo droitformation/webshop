@@ -1,12 +1,14 @@
 @if(!$page->contents->isEmpty())
     <?php $grouped = $page->contents->groupBy('type'); ?>
+    <?php $icons = ['text' => 'align-justify','autorite' => 'university', 'loi' => 'gavel', 'lien' => 'link', 'faq' => 'question-circle']; ?>
     @foreach($grouped as $groupe => $blocs)
-        <h5>{{ ucfirst($groupe) }}</h5>
+        <h5><i class="fa fa-{{ $icons[$groupe] }}"></i> &nbsp;{{ ucfirst($groupe) }}</h5>
         <ul class="list-group">
             @foreach($blocs as $bloc)
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-9">
+                            <i id="msgEditOk" class="fa fa-check"></i>
                             {!! !empty($bloc->name) ? $bloc->name : $bloc->content !!}
                         </div>
                         <div class="col-md-3">

@@ -13,7 +13,9 @@
 
     @if (!empty($page) )
 
-    <div class="col-md-6">
+    <?php $template = ($page->template == 'page' || $page->template == 'index' ? true : false); ?>
+
+    <div class="col-md-{{ $template ? 6 : 12 }}">
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
@@ -123,38 +125,33 @@
         </div>
     </div>
 
+    @if($template)
+        <div class="col-md-6">
+            <div class="panel panel-midnightblue">
+                <div class="panel-body event-info">
+                    <div class="form-group">
 
-    <div class="col-md-6">
-        <div class="panel panel-midnightblue">
+                        <h4>Blocs de contenu</h4>
+                        <div id="listBlocs">
+                            @include('backend.pages.partials.list')
+                        </div>
 
-            <div class="panel-body event-info">
-                <div class="form-group">
+                        <hr/>
+                        <h4>Ajouter un bloc de contenu</h4>
+                        <div id="content-bloc-wrapper" data-page="{{ $page->id }}">
+                            <a href="#" data-type="text" class="new-bloc-content btn btn-primary btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc texte</a>
+                            <a href="#" data-type="lois" class="new-bloc-content btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lois</a>
+                            <a href="#" data-type="autorite" class="new-bloc-content btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc autorité</a>
+                            <a href="#" data-type="lien" class="new-bloc-content btn btn-orange btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lien</a>
+                            <a href="#" data-type="faq" class="new-bloc-content btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc FAQ</a>
+                            <div id="bloc-wrapper" data-page="{{ $page->id }}"></div>
+                        </div>
 
-                    <h4>Blocs de contenu</h4>
-
-                    <div id="content-bloc-wrapper" data-page="{{ $page->id }}">
-
-                        <a href="#" data-type="text" class="new-bloc-content btn btn-primary btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc texte</a>
-                        <a href="#" data-type="lois" class="new-bloc-content btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lois</a>
-                        <a href="#" data-type="autorite" class="new-bloc-content btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc autorité</a>
-                        <a href="#" data-type="lien" class="new-bloc-content btn btn-orange btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lien</a>
-                        <a href="#" data-type="faq" class="new-bloc-content btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc FAQ</a>
-
-                        <div id="bloc-wrapper" data-page="{{ $page->id }}"></div>
                     </div>
-
-                    <hr/>
-
-                    <div id="listBlocs">
-                        @include('backend.pages.partials.list')
-                    </div>
-
                 </div>
             </div>
-
         </div>
-    </div>
-
+        @endif
     @endif
 
 </div>

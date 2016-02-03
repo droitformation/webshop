@@ -49,6 +49,9 @@
         <li class="<?php echo (Request::is('admin/theme') || Request::is('admin/theme/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/theme') }}"><i class="fa fa-star-half-o"></i> <span>Thèmes</span></a>
         </li>
+        <li class="<?php echo (Request::is('admin/domain') || Request::is('admin/domain/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/domain') }}"><i class="fa fa-shield"></i> <span>Collections</span></a>
+        </li>
         <li class="<?php echo (Request::is('admin/orders') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/orders') }}"><i class="fa fa-shopping-cart"></i> <span>Commandes</span></a>
         </li>
@@ -62,6 +65,7 @@
         <li class="<?php echo (Request::is('admin/shipping') || Request::is('admin/shipping/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/shipping') }}"><i class="fa fa-truck"></i> <span>Frais de port</span></a>
         </li>
+
         <li class="nav-title">Sites</li>
         <li class="<?php echo (Request::is('admin/bloc') ? 'active' : '' ); ?>"><a href="{{ url('admin/bloc') }}"><i class="fa fa-reorder"></i> <span>Contenus</span></a></li>
         <li class="<?php echo (Request::is('admin/page') || Request::is('admin/page/*') ? 'active' : '' ); ?>">
@@ -69,9 +73,22 @@
         </li>
 
         <li class="<?php echo (Request::is('admin/author') ? 'active' : '' ); ?>"><a href="{{ url('admin/author') }}"><i class="fa fa-user"></i> <span>Auteurs</span></a></li>
+
         <li class="<?php echo (Request::is('admin/arret/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/arret')  }}"><i class="fa fa-edit"></i> <span>Arrêts</span></a></li>
         <li class="<?php echo (Request::is('admin/analyse/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/analyse')  }}"><i class="fa fa-dot-circle-o"></i> <span>Analyses</span></a></li>
-        <li class="<?php echo (Request::is('admin/categorie/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/categorie')  }}"><i class="fa fa-tasks"></i> <span>Categories</span></a></li>
+
+        <li class="<?php echo (Request::is('admin/categories/*') ? 'active' : '' ); ?>">
+            <a href="javascript:;"><i class="fa fa-tasks"></i><span>Catégories</span></a>
+            <ul class="acc-menu">
+                @if(!$sites->isEmpty())
+                    @foreach($sites as $site)
+                        <li class="<?php echo (Request::is('admin/categories/'.$site->id) ? 'active' : '' ); ?>">
+                            <a href="{{ url('admin/categories/'.$site->id)  }}">{{ $site->nom }}</a>
+                        </li>
+                    @endforeach
+                @endif
+            </ul>
+        </li>
 
         <li class="nav-title">Envois</li>
 

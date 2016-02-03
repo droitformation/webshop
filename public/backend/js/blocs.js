@@ -80,8 +80,6 @@ $( function() {
                 map[$(this).attr("name")] = $(this).val();
             });
 
-            console.log(map);
-
             $.ajax({
                 type : "POST",
                 url  : base_url + "admin/pagecontent/" + id,
@@ -90,6 +88,7 @@ $( function() {
                 {
                     self.closest('.bloc-content').remove();
                     $('#listBlocs').empty().append(data);
+                    $('#msgEditOk').show(500).delay(3000).hide(500);
                 },
                 error: function(){alert('problème avec l\'édition du bloc');}
             });
@@ -104,7 +103,7 @@ $( function() {
 
             $.get( "admin/pagecontent/" + id, function( data ) {
 
-                var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right remove-bloc-btn">x</a>' + data + '</div>';
+                var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-inverse btn-xs pull-right remove-bloc-btn">Fermer</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
 
                 $('.redactorBlocSimple').redactor({
@@ -135,8 +134,7 @@ $( function() {
 
             var id      = $(this).data('id');
             var page_id = $(this).data('page');
-
-            var answer = confirm('Voulez-vous vraiment supprimer : le bloc ?');
+            var answer  = confirm('Voulez-vous vraiment supprimer : le bloc ?');
 
             if (answer)
             {

@@ -10,6 +10,7 @@ use App\Droit\Pays\Repo\PaysInterface;
 use App\Droit\Specialisation\Repo\SpecialisationInterface;
 use App\Droit\Member\Repo\MemberInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
+use App\Droit\Site\Repo\SiteInterface;
 
 class LabelComposer
 {
@@ -18,6 +19,7 @@ class LabelComposer
     protected $pays;
     protected $specialisation;
     protected $member;
+    protected $site;
 
     /**
      * Create a new profile composer.
@@ -30,7 +32,8 @@ class LabelComposer
         PaysInterface $pays,
         CantonInterface $canton,
         MemberInterface $member,
-        SpecialisationInterface $specialisation
+        SpecialisationInterface $specialisation,
+        SiteInterface $site
     )
     {
         $this->profession     = $profession;
@@ -38,6 +41,7 @@ class LabelComposer
         $this->pays           = $pays;
         $this->member         = $member;
         $this->specialisation = $specialisation;
+        $this->site           = $site;
     }
 
     /**
@@ -53,7 +57,9 @@ class LabelComposer
         $pays            = $this->pays->getAll();
         $members         = $this->member->getAll();
         $specialisations = $this->specialisation->getAll();
+        $sites           = $this->site->getAll();
 
+        $view->with('sites',$sites);
         $view->with('pays',$pays);
         $view->with('cantons',$cantons);
         $view->with('professions',$professions);

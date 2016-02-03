@@ -10,21 +10,18 @@ use App\Http\Controllers\Controller;
 use App\Droit\Bloc\Repo\BlocInterface;
 use App\Droit\Service\UploadInterface;
 use App\Droit\Page\Repo\PageInterface;
-use App\Droit\Site\Repo\SiteInterface;
 
 class BlocController extends Controller
 {
     protected $bloc;
     protected $upload;
     protected $page;
-    protected $site;
 
-    public function __construct(BlocInterface $bloc, UploadInterface $upload , PageInterface $page, SiteInterface  $site)
+    public function __construct(BlocInterface $bloc, UploadInterface $upload , PageInterface $page)
     {
         $this->bloc    = $bloc;
         $this->upload  = $upload;
         $this->page    = $page;
-        $this->site    = $site;
 
        view()->share('positions', ['sidebar' => 'Barre latérale', 'page' => 'Dans page']);
     }
@@ -38,9 +35,8 @@ class BlocController extends Controller
     public function index()
     {
         $blocs = $this->bloc->getAll();
-        $sites = $this->site->getAll();
 
-        return view('backend.bloc.index')->with(['blocs' => $blocs, 'sites' => $sites]);
+        return view('backend.bloc.index')->with(['blocs' => $blocs]);
     }
 
     /**
@@ -90,9 +86,8 @@ class BlocController extends Controller
     public function show($id)
     {
         $bloc  = $this->bloc->find($id);
-        $sites = $this->site->getAll();
 
-        return view('backend.bloc.show')->with(['bloc' => $bloc, 'sites' => $sites]);
+        return view('backend.bloc.show')->with(['bloc' => $bloc]);
     }
 
     /**

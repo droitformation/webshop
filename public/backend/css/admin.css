@@ -409,3 +409,13 @@ a:hover, a:active, a:focus {
 select[multiple] {
     height: 150px;
 }
+
+#msgEditOk{
+    color: green;
+    display: none;
+    float: left;
+    font-size: 11px;
+    margin-left: -8px;
+    margin-right: 5px;
+    padding-top: 6px;
+}
