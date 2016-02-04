@@ -151,7 +151,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::resource('document', 'Backend\Colloque\DocumentController');
 
-    Route::get('export/inscription/{id}', 'Backend\ExportController@inscription');
+    Route::post('export/inscription', 'Backend\ExportController@inscription');
     Route::get('export/view', 'Backend\ExportController@view');
     Route::get('export/generate', 'Backend\ExportController@generate');
     Route::match(['get', 'post'],'export/search', 'Backend\ExportController@search');

@@ -3,7 +3,7 @@
 interface InscriptionInterface {
 
     public function getAll($nbr = null);
-    public function getByColloque($id, $type = false);
+    public function getByColloque($id,$type = false,$paginate = false);
     public function getByUser($colloque_id,$user_id);
     public function getByColloqueTrashed($id);
     public function getByGroupe($groupe_id);

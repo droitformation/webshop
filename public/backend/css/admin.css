@@ -419,3 +419,31 @@ select[multiple] {
     margin-right: 5px;
     padding-top: 6px;
 }
+
+.media-left img,
+.media-right img,
+.media-body img{
+    max-width: 100%;
+}
+
+.media-heading{
+    font-size: 15px;
+}
+.media-left, .media > .pull-left {
+    padding-right: 15px;
+}
+
+.panel-colloque{
+    min-height:170px;
+}
+
+.no-colloque{
+    display: block;
+    color: #8f8f8f;
+    font-size: 12px;
+    border: 1px solid #d4d4d4;
+    padding: 5px;
+    width: 30px;
+    margin-bottom: 5px;
+    text-align: center;
+}

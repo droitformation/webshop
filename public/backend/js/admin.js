@@ -378,6 +378,9 @@ $( function() {
         $prev.find(".fa").removeClass("fa-arrow-circle-down").addClass("fa-arrow-circle-right");
     });
 
+    $('.collapseArchive').on('show.bs.collapse', function () {
+        $('.collapseArchive.in').collapse('hide');
+    });
 
     $( "#selectPays" ).change(function() {
         console.log('sv');

@@ -16,28 +16,31 @@
                                 @endif
                             </a>
                         </div>
-                        <div class="col-md-5 panel-list">
+                        <div class="col-md-7 panel-list">
                             <h4><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
                             <small>{{ $colloque->event_date }}</small>
                         </div>
                         <div class="col-md-2 text-right">
-                            <a class="btn btn-inverse btn-block" href="{{ url('admin/export/inscription/'.$colloque->id) }}"><i class="fa fa-download"></i> &nbsp;Exporter</a>
+                            <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
+                                <input type="hidden" name="_method" value="POST">
+                                {!! csrf_field() !!}
+                                <input type="hidden" name="id" value="{{ $colloque->id }}">
+                                <button type="submit" class="btn btn-inverse btn-block"><i class="fa fa-download"></i> &nbsp;Exporter</button>
+                                <div class="checkbox text-left">
+                                    <label><input type="checkbox" name="sort" value="1">Tri par options</label>
+                                </div>
+                            </form>
                         </div>
                         <div class="col-md-2 text-right">
                             <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success btn-block"><i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <a class="btn btn-warning btn-block" data-toggle="collapse" href="#desinscriptionTable" aria-expanded="false" aria-controls="desinscriptionTable">Désinscriptions</a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-tasks"></i> &nbsp;Inscriptions</h4>
-                </div>
                 <div class="panel-body">
+                    <h4><i class="fa fa-tasks"></i> &nbsp;Inscriptions</h4>
                     <div class="table-responsive">
 
                         <table class="table" style="margin-bottom: 0px;"><!-- Start inscriptions -->
@@ -70,6 +73,8 @@
                     </div>
                 </div>
             </div>
+
+            <a class="btn btn-warning btn-block" data-toggle="collapse" href="#desinscriptionTable" aria-expanded="false" aria-controls="desinscriptionTable">Désinscriptions</a>
 
             <div class="collapse" id="desinscriptionTable">
 

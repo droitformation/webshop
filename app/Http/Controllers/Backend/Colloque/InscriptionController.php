@@ -61,7 +61,7 @@ class InscriptionController extends Controller
     public function colloque($id)
     {
         $colloque     = $this->colloque->find($id);
-        $inscriptions = $this->inscription->getByColloque($id);
+        $inscriptions = $this->inscription->getByColloque($id,false,true);
 
         //$inscriptions    = $this->helper->groupInscriptionCollection($inscriptions);
         $desinscriptions = $this->inscription->getByColloqueTrashed($id);

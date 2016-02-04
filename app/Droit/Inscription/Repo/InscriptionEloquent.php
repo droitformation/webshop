@@ -17,16 +17,25 @@ class InscriptionEloquent implements InscriptionInterface{
         return $this->inscription->with(['price','colloque','user'])->take($nbr)->get();
     }
 
-    public function getByColloque($id,$type = false)
+    public function getByColloque($id,$type = false,$paginate = false)
     {
-        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user','participant','groupe']);
+        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user_options.option_groupe','user.adresses' => function($query)
+        {
+            $query->where('adresses.type','=',1);
+
+        },'participant','groupe']);
 
         if($type)
         {
             $inscription->$type;
         }
 
-        return $inscription->groupBy('id')->paginate(20);
+        if($paginate)
+        {
+            return $inscription->groupBy('id')->paginate(20);
+        }
+
+        return $inscription->groupBy('id')->get();
     }
 
     public function getByColloqueTrashed($id)

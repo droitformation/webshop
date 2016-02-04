@@ -45,56 +45,109 @@ class ExportController extends Controller
      *
      * @return Response
      */
-    public function inscription($id)
+    public function inscription(Request $request)
     {
-        $order    = false;
-/*
-        $colloque = $this->colloque->find($id);
+        $sort = $request->input('sort',false);
+        $id   = $request->input('id');
 
-        $inscriptions = $this->generator->init($colloque, ['order' => $order]);
-        $options      = $this->generator->getMainOptions();
-        $groupes      = $this->generator->getGroupeOptions();
+        \Excel::create('Export inscriptions', function($excel) use ($id,$sort) {
 
-        return view('export.inscription')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);*/
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-
-        \Excel::create('Export inscriptions', function($excel) use ($id,$order) {
-
-            $excel->sheet('Export', function($sheet) use ($id,$order) {
+            $excel->sheet('Export', function($sheet) use ($id,$sort) {
                 $sheet->setOrientation('landscape');
 
-                $colloque     = $this->colloque->find($id);
-                
-/*                $inscriptions = $this->generator->init($colloque, ['order' => $order]);
-                $options      = $this->generator->getMainOptions();
-                $groupes      = $this->generator->getGroupeOptions();*/
+                $colloque  = $this->colloque->find($id);
+                $options   = $colloque->options->whereLoose('type','choix')->pluck('title','id')->toArray();
+                $groupes   = $colloque->groupes->pluck('text','id')->toArray();
 
-                $inscriptions = $colloque->inscriptions;
+                $inscriptions = $this->inscription->getByColloque($id);
 
-                $converted = $inscriptions->map(function($inscription)
+                if(!$inscriptions->isEmpty())
                 {
-                    $convert = new \App\Droit\Helper\Convert();
+                    foreach($inscriptions as $inscription)
+                    {
+                        $user = $inscription->inscrit;
 
-                    $user = $inscription->inscrit;
-                    $name = ($user ? $user->name : '');
+                        // Adresse
+                        if($user && !$user->adresses->isEmpty())
+                        {
+                            $company = $user->adresses->first()->company;
+                            $adresse = $user->adresses->first()->adresse;
+                            $npa     = $user->adresses->first()->npa;
+                            $ville   = $user->adresses->first()->ville;
+                        }
 
-                    $convert->setAttribute('Nom',$name);
-                    $convert->setAttribute('Numéro',$inscription->inscription_no);
-                    $convert->setAttribute('Prix',$inscription->price_cents);
-                    $convert->setAttribute('Status',$inscription->status);
+                        $data['Numéro']      = $inscription->inscription_no;
+                        $data['Nom']         = ($user ? $user->name : '');
+                        $data['Participant'] = ($inscription->group_id > 0 ? $inscription->participant->name : '');
+                        $data['Company']     = (isset($company) ? $company : '');
+                        $data['Email']       = ($user ? $user->email : '');
 
-                    return $convert;
-                });
+                        $data['Adresse'] = (isset($adresse) ? $adresse : '');
+                        $data['NPA']     = (isset($npa) ? $npa : '');
+                        $data['Ville']   = (isset($ville) ? $ville : '');
+                        $data['Prix']    = $inscription->price_cents;
+                        $data['Status']  = $inscription->status_name['status'];
+                        $data['Date']    = $inscription->created_at->format('m/d/Y');
 
-                $converted = $converted->toArray();
+                        if($sort && !empty($groupes))
+                        {
+                            $user_options = $inscription->user_options->toArray();
 
-                foreach($converted as $inscription)
-                {
-                    $sheet->appendRow($inscription);
+                            foreach($user_options as $option)
+                            {
+                                if(in_array( $option['option_id'],array_keys($options) ))
+                                {
+                                   $converted[$option['option_id']][$option['groupe_id']][] = $data;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            $converted[] = $data;
+                        }
+                    }
                 }
-                
-                //$sheet->loadView('backend.export.inscription', ['inscriptions' => $inscriptions, 'colloque' => $colloque, 'order' => $order, 'options' => $options, 'groupes' => $groupes]);
+
+                if($sort && !empty($groupes))
+                {
+                    foreach($converted as $option_id => $option)
+                    {
+                        $sheet->appendRow([ 'Options', $options[$option_id] ]);
+
+                        $sheet->row($sheet->getHighestRow(), function ($row) {
+                            $row->setFontWeight('bold');
+                            $row->setFontSize(16);
+                        });
+                        $sheet->appendRow(['']);
+
+                        foreach($option as $group_id => $group)
+                        {
+                            $sheet->appendRow(['']);
+                            $sheet->appendRow([ 'Choix', $groupes[$group_id] ]);
+                            $sheet->row($sheet->getHighestRow(), function ($row) {
+                                $row->setFontWeight('bold');
+                                $row->setFontSize(14);
+                            });
+                            $sheet->appendRow(['']);
+
+                            $sheet->appendRow(['Numéro','Nom','Participant','Entreprise','Email','Adresse','NPA','Ville','Prix','Status','Date']);
+                            $sheet->row($sheet->getHighestRow(), function ($row) {
+                                $row->setFontWeight('bold');
+                                $row->setFontSize(14);
+                            });
+                            $sheet->rows($group);
+                        }
+                    }
+                }
+                else
+                {
+                    $sheet->appendRow(['Numéro','Nom','Participant','Entreprise','Email','Adresse','NPA','Ville','Prix','Status','Date']);
+                    $sheet->row($sheet->getHighestRow(), function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setFontSize(14);
+                    });
+                    $sheet->rows($converted);
+                }
 
             });
 
@@ -162,8 +215,27 @@ class ExportController extends Controller
             {
                 $columns = ['civilite_title','name','email','profession_title','company','telephone','mobile','adresse','cp','complement','npa','ville','canton_title','pays_title'];
 
-                $sheet->setOrientation('landscape');
-                $sheet->loadView('backend.export.adresse', ['adresses' => $adresses, 'columns' => $columns]);
+                $converted = $adresses->map(function($adresse) use ($columns)
+                {
+                    $convert = new \App\Droit\Helper\Convert();
+
+                    foreach($columns as $column)
+                    {
+                        $convert->setAttribute($column,$adresse->$column);
+                    }
+
+                    return $convert;
+                });
+
+                $sheet->appendRow(['Civilité','Nom','Email','Profession','Entreprise','Téléphone','Mobile','Adresse','CP','Complèment','NPA','Ville','Canton','Pays']);
+                $sheet->row($sheet->getHighestRow(), function ($row) {
+                    $row->setFontWeight('bold');
+                    $row->setFontSize(14);
+                });
+                $sheet->rows($converted->toArray());
+
+               // $sheet->setOrientation('landscape');
+                //$sheet->loadView('backend.export.adresse', ['adresses' => $adresses, 'columns' => $columns]);
             });
         });
 
