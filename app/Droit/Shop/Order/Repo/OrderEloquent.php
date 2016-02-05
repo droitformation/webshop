@@ -12,6 +12,11 @@ class OrderEloquent implements OrderInterface{
         $this->order = $order;
     }
 
+    public function getLast($nbr)
+    {
+        return $this->order->with(['products','user'])->orderBy('created_at','DESC')->take($nbr)->get();
+    }
+
     public function getPeriod($start, $end, $status = null, $onlyfree = null)
     {
         return $this->order->with(['products','user' ,'coupon','shipping'])

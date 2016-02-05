@@ -20,4 +20,25 @@ class Site extends Model{
     {
         return $this->hasMany('App\Droit\Page\Entities\Page');
     }
+
+    public function arrets()
+    {
+        return $this->hasMany('App\Droit\Arret\Entities\Arret');
+    }
+
+    public function analyses()
+    {
+        return $this->hasMany('App\Droit\Analyse\Entities\Analyse');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany('App\Droit\Categorie\Entities\Categorie');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany('App\Droit\Faq\Entities\Faq_question');
+    }
+
 }

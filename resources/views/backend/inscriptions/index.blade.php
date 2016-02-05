@@ -24,13 +24,9 @@
                         </tr>
                         </thead>
                         <tbody class="selects">
-
                             @if(!empty($inscriptions))
                                 @foreach($inscriptions as $inscription)
-
-                                    <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); ?>
-
-                                    <tr {!! $style !!}>
+                                    <tr {!! ($inscription->group_id > 0 ? 'class="isGoupe"' : '') !!}>
                                         <td><a class="btn btn-sky btn-xs btn-block" href="{{ url('admin/inscription/'.$inscription->id) }}">&Eacute;diter</a></td>
                                         <td>{{ $inscription->colloque->titre }}</td>
                                         <td>
@@ -41,16 +37,14 @@
                                             ?>
                                         </td>
                                         <td>{{ $inscription->adresse_facturation->email }}</td>
-                                        <td><?php echo ($inscription->group_id > 0 ? $inscription->participant->name :''); ?>
-                                        </td>
+                                        <td><?php echo ($inscription->group_id > 0 ? $inscription->participant->name :''); ?></td>
                                         <td><strong>{{ $inscription->inscription_no }}</strong></td>
                                         <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
                                     </tr>
                                 @endforeach
                             @endif
-
                         </tbody>
-                    </table><!-- End inscriptions -->
+                    </table>
                 </div>
             </div>
         </div>

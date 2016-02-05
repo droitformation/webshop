@@ -8160,14 +8160,14 @@ footer #back-to-top {
 }
 #page-heading h1,#page-heading h2 {
   margin: 0;
-  padding: 20px 20px 20px 20px;
+  padding: 15px 20px 10px 20px;
   float: left;
   line-height: 30px;
   font-weight: 300;
   font-size: 42px;
 }
 #page-heading h2 {
-    font-size: 32px;
+    font-size: 24px;
 }
 #page-heading .options {
   display: inline;

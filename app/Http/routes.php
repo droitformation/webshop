@@ -169,6 +169,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     |--------------------------------------------------------------------------
     */
 
+    Route::resource('site', 'Backend\SiteController');
     Route::resource('coupon', 'Backend\Shop\CouponController');
     Route::resource('shipping', 'Backend\Shop\ShippingController');
     Route::resource('theme', 'Backend\Shop\ThemeController');

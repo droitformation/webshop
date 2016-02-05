@@ -447,3 +447,46 @@ select[multiple] {
     margin-bottom: 5px;
     text-align: center;
 }
+
+.shortcut-tiles .tiles-body p{
+    font-size: 15px;
+    line-height: 28px;
+    margin-bottom: 0;
+}
+
+.tiles-body.tiles-simple{
+    padding-bottom:7px;
+}
+
+.color-site{
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.color-site:hover{
+    color: #fff;
+}
+
+.color-pubdroit{
+    background: #1e4b78;
+    color: #fff;
+}
+
+.color-bail{
+    background: #b71817;
+    color: #fff;
+}
+
+.color-matrimonial{
+    color: #e6408f;
+    background: #333333;
+}
+
+.panel-body > .list-admin{
+    margin: -20px;
+}
+
+.btn-block-left{
+    display: block;
+    width: 100%;
+}

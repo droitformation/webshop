@@ -2,6 +2,7 @@
 
 interface OrderInterface {
 
+    public function getLast($nbr);
     public function getPeriod($start,$end,$status = null, $onlyfree = null);
     public function lastYear();
 	public function find($data);

@@ -35,7 +35,6 @@
 
     @endif
 
-
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/vendor/redactor/redactor.css'); ?>">
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen.css');?>">
@@ -91,7 +90,9 @@
     <div id="page-content">
         <div id='wrap'>
 
-            <div id="page-heading"><h2>{{ $pageTitle or 'HUB Droit Formation' }} <small>Administration</small></h2></div>
+            <div id="page-heading">
+                <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
+            </div>
 
             <div class="container">
 
