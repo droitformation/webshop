@@ -31,6 +31,8 @@ class OrderWorker implements OrderWorkerInterface{
         $this->worker    = $worker;
         $this->user      = $user;
         $this->generator = $generator;
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     public function make($shipping,$coupon = null, $admin = null)

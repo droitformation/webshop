@@ -74,7 +74,7 @@
                 </li>
                 <li class="userlinks">
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('logout') }}"><i class="pull-right fa  fa-power-off"></i> Logout</a></li>
+                        <li><a href="{{ url('auth/logout') }}"><i class="pull-right fa  fa-power-off"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -91,7 +91,27 @@
         <div id='wrap'>
 
             <div id="page-heading">
-                <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
+                    </div>
+                    @if(!$sites->isEmpty())
+                        @foreach($sites as $site)
+                            <div class="col-md-2">
+                                <a class="shortcut-tiles color-{{ $site->slug }} color-site" href="{{ url('admin/site/'.$site->id) }}">
+                                    <div class="tiles-body tiles-simple">
+                                        <div class="pull-left"><i class="fa fa-home"></i></div>
+                                        <div class="pull-right">
+                                            <p>{{ $site->nom }}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+
             </div>
 
             <div class="container">

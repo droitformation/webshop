@@ -1,9 +1,8 @@
-@extends('layouts.auth')
+@extends('auth.layouts.master')
 @section('content')
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-
             <p><a class="btn btn-info" href="{{ url('profil') }}"><i class="fa fa-user"></i> &nbsp;Retour à mon compte</a></p>
 
             <div class="panel panel-default">

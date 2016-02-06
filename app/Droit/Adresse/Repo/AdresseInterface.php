@@ -14,6 +14,7 @@ interface AdresseInterface {
     public function search($term);
     public function searchSimple($terms);
     public function searchMultiple($terms, $each = false);
+	public function duplicates();
 	
 	// function for gather infos on adresse to show
 	public function show($id);

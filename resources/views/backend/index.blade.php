@@ -43,19 +43,12 @@
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td>
                                         <?php
-
                                             echo ($inscription->group_id > 0 ? '<span class="label label-default">Groupe '.$inscription->group_id.'</span>' : '');
-
                                             if($inscription->inscrit)
                                             {
-                                                if($inscription->inscrit->company != '')
-                                                {
-                                                    echo '<p><strong>'.$inscription->adresse_facturation->company.'</strong></p>';
-                                                }
-
+                                                echo ($inscription->inscrit->company != '' ? '<p><strong>'.$inscription->adresse_facturation->company.'</strong></p>' : '');
                                                 echo '<p>'.($inscription->group_id > 0 ? $inscription->participant->name : $inscription->inscrit->name).'</p>';
                                             }
-
                                         ?>
                                     </td>
                                     <td><strong>{{ $inscription->inscription_no }}</strong></td>

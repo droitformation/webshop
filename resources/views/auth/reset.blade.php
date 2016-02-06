@@ -1,59 +1,43 @@
-@extends('layouts.auth')
-
+@extends('auth.layouts.master')
 @section('content')
 
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Reset Password</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> {{ trans('message.problem') }}<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+	<form class="form-horizontal" role="form" method="POST" action="{{ url('password/reset') }}">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		<input type="hidden" name="token" value="{{ $token }}">
 
-					<form class="form-horizontal" role="form" method="POST" action="/password/reset">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-						<input type="hidden" name="token" value="{{ $token }}">
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Confirm Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password_confirmation">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Reset Password
-								</button>
-							</div>
-						</div>
-					</form>
+		<div class="panel-body">
+			<h4 class="text-center" style="margin-bottom: 25px;">Définir un nouveau mot de passe</h4>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input type="password" class="form-control" id="password" name="password" placeholder="mot de passe">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="confirmer le mot de passe">
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="panel-footer">
+			<div class="pull-right">
+				<a href="{{ url('/') }}" class="btn btn-default">Retour au site</a>
+				<button type="submit" class="btn btn-primary">Envoyer</button>
+			</div>
+		</div>
+	</form>
 
-@endsection
+@stop

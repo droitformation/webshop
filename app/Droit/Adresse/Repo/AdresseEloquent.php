@@ -66,6 +66,14 @@ class AdresseEloquent implements AdresseInterface{
         }
     }
 
+	public function duplicates()
+	{
+		$duplicates = DB::table('adresses')
+			->select('adresses.id', 'adresses.email')
+			->havingRaw('COUNT(*) > 1')
+			->get();
+	}
+
     public function getPaginate()
     {
         return $this->adresse->where('user_id','=',0)->orderBy('created_at','DESC')->take(5)->get();
