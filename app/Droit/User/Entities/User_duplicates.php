@@ -83,4 +83,22 @@ class User_duplicates extends Model {
     {
         return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id');
     }
+
+
+    public function orders()
+    {
+        return $this->hasMany('App\Droit\Shop\Order\Entities\Order','user_id', 'user_id');
+    }
+
+    public function inscriptions()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription','user_id', 'user_id');
+    }
+
+    public function user()
+    {
+        return $this->hasMany('App\Droit\User\Entities\User','email', 'email');
+    }
+
+
 }

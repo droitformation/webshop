@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\User\Repo\UserInterface;
+use App\Droit\User\Repo\DuplicateInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 
 use App\Http\Requests\SearchRequest;
@@ -14,13 +15,15 @@ use App\Http\Requests\SearchRequest;
 class SearchController extends Controller
 {
     protected $user;
+    protected $duplicate;
     protected $adresse;
 
-    public function __construct(UserInterface $user, AdresseInterface $adresse)
+    public function __construct(UserInterface $user, AdresseInterface $adresse, DuplicateInterface $duplicate)
     {
-        $this->user    = $user;
-        $this->adresse = $adresse;
-        $this->helper  = new \App\Droit\Helper\Helper();
+        $this->user      = $user;
+        $this->duplicate = $duplicate;
+        $this->adresse   = $adresse;
+        $this->helper    = new \App\Droit\Helper\Helper();
     }
 
     /**
@@ -29,7 +32,9 @@ class SearchController extends Controller
      */
     public function form()
     {
-        return view('backend.results');
+        $duplicates = $this->duplicate->getAll();
+
+        return view('backend.results')->with(['duplicates' => $duplicates]);
     }
 
     /**

@@ -98,6 +98,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('users', 'Backend\User\UserController@users');
     Route::resource('user', 'Backend\User\UserController');
 
+    Route::resource('duplicate', 'Backend\User\DuplicateController');
     /*
     |--------------------------------------------------------------------------
     | Ajax specialisations Routes

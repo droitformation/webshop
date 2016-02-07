@@ -411,6 +411,16 @@ Route::get('dispatchcolloque', function()
 
 });
 
+Route::get('duplicates', function () {
+
+    $model   = new \App\Droit\Adresse\Entities\Adresse();
+    $results = $model->select('email')->groupBy('email')->havingRaw('count(*) > 1')->get();
+
+    echo '<pre>';
+    print_r($results);
+    echo '</pre>';exit;
+});
+
 Event::listen('illuminate.query', function($query, $bindings, $time, $name)
 {
     $data = compact('bindings', 'time', 'name');

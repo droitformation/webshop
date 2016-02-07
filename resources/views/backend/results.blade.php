@@ -6,12 +6,6 @@
 
             <h3>Utilisateur/Adresse</h3>
 
-            <div class="options text-right" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/user/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-                </div>
-            </div>
-
             <div class="row">
 
                 <div class="col-md-3">
@@ -38,6 +32,39 @@
                 </div>
 
                 <div class="col-md-9">
+
+                    @if(!$duplicates->isEmpty())
+                        <div class="panel panel-warning">
+                            <div class="panel-body">
+                                <h4><i class="fa fa-users"></i> &nbsp;Duplicatas</h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-sm-1">Action</th>
+                                        <th class="col-sm-4">Nom</th>
+                                        <th class="col-sm-4">Email</th>
+                                        <th class="col-sm-3"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="selects">
+                                    @foreach($duplicates as $duplicate)
+                                        <tr>
+                                            <td><a class="btn btn-sky btn-sm" href="{{ url('admin/duplicate/'.$duplicate->id) }}">&Eacute;diter</a></td>
+                                            <td><strong>{{ $duplicate->name }}</strong></td>
+                                            <td>{{ $duplicate->email }}</td>
+                                            <td class="text-right">
+                                                {!! Form::open(array('route' => array('admin.duplicate.destroy', $duplicate->id), 'method' => 'delete')) !!}
+                                                <button data-action="{{ $duplicate->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                                {!! Form::close() !!}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
 
                     @if(isset($users) && !$users->isEmpty())
                         <div class="panel panel-midnightblue">
