@@ -13,10 +13,10 @@
 
 	<!-- All css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/bs.css');?>">
+	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/style.css');?>">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 	<!-- Css Files Start -->
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/style.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/skins/red.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/update-responsive.css');?>">
 
@@ -27,6 +27,8 @@
 	<!--[if lte IE 10]><link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/customIE.css');?>"><![endif]-->
 	<!-- Booklet Css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/jquery.booklet.latest.css');?>">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation/parsley.css');?>" media="screen" />
 
 	<noscript>
 		<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/noJS.css');?>">
@@ -52,70 +54,86 @@
 								<li><a href="contact.html">Contact</a></li>
 							</ul>
 						</section>
-						<section class="col-md-6 e-commerce-list">
-							<ul>
-								<li>Bienvenue! <a href="checkout.html">Login</a> or <a href="checkout.html">Créer un compte</a></li>
-								<li class="p-category"><a href="#">eng</a> <a href="#">de</a> <a href="#">fr</a></li>
-							</ul>
-							<div class="c-btn">
-								<a href="cart.html" class="cart-btn">Panier</a>
-								<div class="btn-group">
-									<button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">0 item(s) - 0.00 CHF<span class="caret"></span></button>
-									<ul class="dropdown-menu">
-										<li><a href="#">Voir</a></li>
-										<li><a href="#">Supprimer</a></li>
-									</ul>
-								</div>
-							</div>
+						<section class="col-md-6 e-commerce-list text-right">
+                            @if (!Auth::check())
+                                <div class="btn-group">
+                                    <a href="{{ url('auth/login')}}" class="btn btn-info navbar-btn">{{ trans('message.login') }}</a>
+                                    <a href="{{ url('auth/register')}}" class="btn btn-success navbar-btn">{{ trans('message.register') }}</a>
+                                </div>
+                            @endif
+                            @if (Auth::check())
+                                <ul class="top-nav2 pull-right">
+                                    <li>Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</li>
+                                    <li><a href="{{ url('profil') }}">Mon compte</a></li>
+                                    <li><a href="{{ url('auth/logout') }}">Déconnexion</a></li>
+                                </ul>
+                            @endif
 						</section>
 					</section>
 				</section>
 			</section>
 			<!-- End Top Nav Bar -->
-			<header id="main-header">
-				<section class="container-fluid container">
-					<section class="row-fluid">
+
+            <header id="main-header">
+				<section class="container">
+
+                    @include('partials.message')
+
+					<section class="row">
 						<section class="col-md-4">
 							<h1 id="logo">
 								<a href="{{ url('/') }}">
-									<img style="height: 75px; width:380px;" src="frontend/pubdroit/images/logo.svg" />
+									<img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
 								</a>
 							</h1>
 						</section>
 						<section class="col-md-8">
-							<ul class="top-nav2">
-								<li><a href="checkout.html">Mon compte</a></li>
-								<li><a href="cart.html">Panier</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
-							</ul>
-							<div class="search-bar">
-								<input name="" type="text" value="Rechercher sur le site..." />
-								<input name="" type="button" value="Rechercher" />
-							</div>
+                            <div class="c-btn">
+                                <a href="cart.html" class="cart-btn">Panier</a>
+                                <div class="btn-group">
+                                    <a href="{{ url('checkout/resume') }}" class="btn btn-mini dropdown-toggle">
+                                        @if(!Cart::content()->isEmpty())
+                                            {{ Cart::count() }} {{ Cart::count() > 1 ? 'articles': 'article'}} - {{ number_format((float)Cart::total(), 2, '.', '') }} CHF
+                                        @else
+                                            0 article(s) - 0.00 CHF
+                                        @endif
+                                    </a>
+                                </div>
+                            </div>
 						</section>
 					</section>
 				</section>
 				<!-- Start Main Nav Bar -->
 
-				<nav id="nav">
-					<div class="navbar">
-						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<div class="nav-collapse collapse in">
-							<ul class="nav">
-								<li><a href="{{ url('categorie/1') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
-								<li><a href="{{ url('domaines') }}"><i class="fa fa-bookmark"></i> &nbsp; Collections</a></li>
-								<li><a href="{{ url('categories') }}"><i class="fa fa-tags"></i> &nbsp;Thèmes</a></li>
-								<li><a href="{{ url('authors') }}"><i class="fa fa-users"></i> &nbsp;Auteurs</a></li>
-							</ul>
-						</div>
-					</div>
-				</nav><!-- /.navbar -->
+                <nav id="nav">
+                    <section class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="navbar">
+                                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <div class="nav-collapse collapse in">
+                                        <ul class="nav">
+                                            <li><a href="{{ url('categorie/1') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
+                                            <li><a href="{{ url('domaines') }}"><i class="fa fa-bookmark"></i> &nbsp; Collections</a></li>
+                                            <li><a href="{{ url('categories') }}"><i class="fa fa-tags"></i> &nbsp;Thèmes</a></li>
+                                            <li><a href="{{ url('authors') }}"><i class="fa fa-users"></i> &nbsp;Auteurs</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="search-bar">
+                                        <input name="" type="text" value="Rechercher sur le site..." />
+                                        <input name="" type="button" class="button-default" value="ok" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </nav><!-- /.navbar -->
 
-				<!-- End Main Nav Bar -->
+                <!-- End Main Nav Bar -->
 			</header>
 			<!-- End Main Header -->
 
@@ -272,6 +290,12 @@
 
 		<!-- Javascript Files
     	================================================== -->
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
+        <script src="<?php echo asset('js/validation/parsley.js');?>"></script>
+        <script src="<?php echo asset('js/validation/fr.js');?>"></script>
+
 		<script src="<?php echo asset('frontend/pubdroit/js/lib.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/modernizr.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/easing.js');?>"></script>
@@ -283,7 +307,9 @@
 		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/bookblock.js');?>"></script>
 		<script src="<?php echo asset('frontend/js/jquery.slimscroll.min.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/custom.js');?>"></script>
+        <script src="<?php echo asset('frontend/pubdroit/js/interaction.js');?>"></script>
+        <script src="<?php echo asset('frontend/pubdroit/js/custom.js');?>"></script>
+        <script src="<?php echo asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/jquery.booklet.latest.js');?>"></script>
 
 	</body>

@@ -1,5 +1,4 @@
-@extends('layouts.pubdroit.master')
-
+@extends('frontend.pubdroit.layouts.master')
 @section('content')
 
     <section class="row-fluid">
@@ -29,7 +28,8 @@
                                     <a href="{{ url('colloque/'.$colloque->id) }}">
                                         <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
                                     </a>
-                                    <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span> </div>
+                                    <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span>
+                                </div>
                                 <div class="post-det">
                                     <h3><a href="{{ url('colloque/'.$colloque->id) }}"><strong>{{ $colloque->titre }}</strong></a></h3>
                                     <span class="comments-num">{{ $colloque->soustitre }}</span>
@@ -46,8 +46,8 @@
                 @endforeach
             @endif
 
-            <div class="b-post-bottom">
-                <a class="more-btn" href="blog-detail.html">Archives</a>
+            <div class="b-post-bottom text-right">
+                <a class="text-danger" href="blog-detail.html"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
             </div>
 
         </section>
@@ -70,8 +70,12 @@
                             <h3><a href="{{ asset('files/products/'.$product->image) }}">{{ $product->title }}</a></h3>
                             <p>{!! $product->teaser !!}</p>
                             <div class="cart-price">
-                                <a href="cart.html" class="cart-btn2">Ajouter au panier</a>
+                                {!! Form::open(array('url' => 'cart/addProduct')) !!}
+                                {!! Form::hidden('_token', csrf_token()) !!}
+                                <button type="submit" class="cart-btn2">Ajouter au panier</button>
                                 <span class="price">{{ $product->price_cents }} CHF</span>
+                                {!! Form::hidden('product_id', $product->id) !!}
+                                {!! Form::close() !!}
                             </div>
                         </article>
                         <div class="clearfix"></div>

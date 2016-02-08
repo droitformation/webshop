@@ -26,7 +26,7 @@ Route::get('campagne/{id}', 'Frontend\CampagneController@show');
 Route::post('unsubscribe', 'Backend\Newsletter\InscriptionController@unsubscribe');
 Route::post('subscribe', 'Backend\Newsletter\InscriptionController@subscribe');
 Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activation');
-
+Route::post('check/email', 'AjaxController@check');
 
 Route::group(['prefix' => 'bail'], function () {
 
@@ -314,6 +314,7 @@ Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::get('auth/admin', 'Auth\AuthController@getAdmin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
@@ -330,6 +331,7 @@ Route::post('password/define', 'Auth\PasswordController@postDefine');
 Route::get('login', 'Auth\AuthController@login');
 
 Route::get('auth/droithub', 'Auth\AuthController@redirectToProvider');
+
 //Route::get('auth/droithub/callback', 'Auth\AuthController@handleProviderCallback');
 
 /* *

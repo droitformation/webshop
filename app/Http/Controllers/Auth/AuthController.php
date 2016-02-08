@@ -36,6 +36,37 @@ class AuthController extends Controller {
 	}
 
     /**
+     * Show the admin login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAdmin()
+    {
+        return view('auth.login')->with(['admin' => true]);
+    }
+
+    /**
+     * Redirect user role
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        $user = \Auth::user();
+        $user->load('roles');
+
+        $roles = $user->roles->lists('id')->all();
+
+        // Logic that determines where to send the user
+        if (!in_array(1,$roles))
+        {
+            return '/admin';
+        }
+
+        return '/profile';
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data

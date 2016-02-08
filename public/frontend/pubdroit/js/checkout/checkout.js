@@ -40,6 +40,7 @@
 
         $('#updateAdresse').on('submit', function(e) {
             e.preventDefault(); //prevent form from submitting
+            e.stopPropagation(); //prevent form from submitting
 
             var data = $( this ).serializeArray();
             var id   = $('#updateSubmit').data('id');

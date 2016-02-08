@@ -5,6 +5,7 @@ interface UserInterface {
     public function getAll();
     public function getPaginate();
     public function find($data);
+    public function findByEmail($email);
     public function search($term);
     public function searchSimple($terms);
     public function create(array $data);

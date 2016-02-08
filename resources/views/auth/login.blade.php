@@ -1,6 +1,16 @@
 @extends('auth.layouts.master')
 @section('content')
 
+    <h1 class="auth-logo text-center">
+        <a class="text-inverse" href="{{ url('/') }}">
+            @if(isset($admin))
+                Droit Formation | <span class="text-danger">Administration</span>
+            @else
+                <img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
+            @endif
+        </a>
+    </h1>
+    <p><a href="{{ url('/') }}" class="text-danger"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a></p>
 	<form class="form-horizontal form-validation" role="form" method="POST" action="/auth/login">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="panel-body">
@@ -26,10 +36,9 @@
 			</div>
 		</div>
 		<div class="panel-footer">
-			<a href="{{ url('password/email') }}" class="pull-left btn btn-link" style="padding-left:0">Mot de passe perdu?</a>
+			<a href="{{ url('password/email') }}" class="pull-left text-inverse" style="padding-left:0">Mot de passe perdu?</a>
 			<div class="pull-right">
-				<a href="{{ url('/') }}" class="btn btn-default">Retour au site</a>
-				<button type="submit" class="btn btn-primary">Envoyer</button>
+				<button type="submit" class="btn btn-inverse">Envoyer</button>
 			</div>
 			<div class="clearfix"></div>
 		</div>

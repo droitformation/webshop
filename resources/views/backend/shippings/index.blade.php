@@ -34,7 +34,7 @@
                                     <td><a href="{{ url('admin/shipping/'.$shipping->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                     <td>{{ $shipping->title }}</td>
                                     <td>{{ $shipping->weight }} grammes</td>
-                                    <td>{{ $shipping->price_cents }}</td>
+                                    <td>{{ $shipping->price_cents  }}</td>
                                     <td>{{ $shipping->type }}</td>
                                     <td class="text-right">
                                         @if($shipping->orders->isEmpty())

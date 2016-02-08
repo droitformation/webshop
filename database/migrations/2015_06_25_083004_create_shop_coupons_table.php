@@ -15,7 +15,7 @@ class CreateShopCouponsTable extends Migration {
         Schema::create('shop_coupons', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->string('title');
             $table->enum('type', ['global', 'product','shipping'])->default('global');
             $table->dateTime('expire_at');

@@ -1,0 +1,20 @@
+label.error{
+    border-left: 1px solid #ccc;
+    color: red;
+    font-size: 13px;
+    line-height: 28px;
+    margin-bottom: 0;
+    padding: 5px 0 0 7px;
+}
+
+.form-control.error{
+    border-color: red;
+    background: url("../images/error.png") no-repeat right;
+    padding-right: 25px;
+}
+
+.form-control.valid{
+    border-color: #0db444;
+    background: url("../images/check.png") no-repeat right;
+    padding-right: 25px;
+}

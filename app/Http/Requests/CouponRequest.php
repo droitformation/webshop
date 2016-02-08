@@ -30,7 +30,7 @@ class CouponRequest extends Request
     {
         return [
             'title'     => 'required',
-            'value'     => 'required',
+            'value'     => 'required_if:type,product,global',
             'expire_at' => 'required|date|date_format:Y-m-d|after:yesterday',
             'type'      => 'required'
         ];

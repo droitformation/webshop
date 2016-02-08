@@ -1,5 +1,4 @@
-@extends('layouts.pubdroit')
-
+@extends('frontend.pubdroit.layouts.master')
 @section('content')
 	
     <div id="events" class="inner">

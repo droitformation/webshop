@@ -38,7 +38,7 @@ class CouponEloquent implements CouponInterface{
 
         $coupon = $this->coupon->create(array(
             'title'      => $data['title'],
-            'value'      => $data['value'],
+            'value'      => (isset($data['value']) ? $data['value'] : null),
             'type'       => $data['type'],
             'expire_at'  => $data['expire_at']
         ));

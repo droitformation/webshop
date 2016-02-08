@@ -52,7 +52,7 @@ class CheckoutController extends Controller {
 
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('shop.checkout.resume')->with(compact('user','pays','cantons','professions','coupon'));
+        return view('frontend.pubdroit.checkout.resume')->with(compact('user','pays','cantons','professions','coupon'));
 	}
 
     /**
@@ -69,7 +69,7 @@ class CheckoutController extends Controller {
 
         $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
 
-        return view('shop.checkout.confirm')->with(compact('user','shipping','coupon','total','payments'));
+        return view('frontend.pubdroit.checkout.confirm')->with(compact('user','shipping','coupon','total','payments'));
     }
 
     /**
