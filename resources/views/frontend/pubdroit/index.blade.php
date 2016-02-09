@@ -9,7 +9,6 @@
     </section>
 
     <section class="row">
-
         <section class="col-md-8">
 
             <div class="heading-bar">

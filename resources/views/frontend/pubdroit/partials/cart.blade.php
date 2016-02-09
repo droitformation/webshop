@@ -16,7 +16,7 @@
                     <img style="max-height:80px;" src="{{ asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
                 </td>
                 <td valign="top">{{ $item->name }}</td>
-                <td align="center" valign="top">{{ $item->price }} CHF</td>
+                <td align="center" valign="top">{{ $item->product->price_cents }} CHF</td>
                 <td align="center" valign="top">
                     <form method="post" action="{{ url('cart/quantityProduct') }}" class="form-inline">{!! csrf_field() !!}
                         <div class="input-group">

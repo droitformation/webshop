@@ -32,7 +32,7 @@ class CartController extends Controller {
 	{
         $item = $this->product->find($request->input('product_id'));
 
-        \Cart::add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
+        \Cart::associate('Product','App\Droit\Shop\Product\Entities')->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
 
         return redirect()->back();
 	}

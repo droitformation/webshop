@@ -34,7 +34,7 @@
                                 <img style="max-height:80px;" src="{{ asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
                             </td>
                             <td width="48%" align="left"><a href="{{ url('product/'.$item->id) }}">{{ $item->name }}</a></td>
-                            <td align="center" width="23%">{{ $item->price }} CHF</td>
+                            <td align="center" width="23%">{{  $item->product->price_cents }} CHF</td>
                             <td align="center" width="15%">{{ $item->qty }}</td>
                             <td align="right" width="16%">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>
                         </tr>
