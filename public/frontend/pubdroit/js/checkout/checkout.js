@@ -36,7 +36,7 @@
          *   Update user infos during checkout
          *****************************************************************/
 
-        $('#updateAdresse').parsley();
+       /* $('#updateAdresse').parsley();
 
         $('#updateAdresse').on('submit', function(e) {
             e.preventDefault(); //prevent form from submitting
@@ -59,7 +59,7 @@
                 }
             });
 
-        });
+        });*/
 
         /****************************************************************/
 

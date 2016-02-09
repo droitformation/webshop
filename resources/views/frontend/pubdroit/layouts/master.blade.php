@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation/parsley.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/checkout/checkout.css');?>">
 	<noscript>
 		<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/noJS.css');?>">
 	</noscript>
@@ -101,7 +102,7 @@
                             <div class="c-btn">
                                 <a href="cart.html" class="cart-btn">Panier</a>
                                 <div class="btn-group">
-                                    <a href="{{ url('checkout/billing') }}" class="btn btn-mini dropdown-toggle">
+                                    <a href="{{ url('checkout/cart') }}" class="btn btn-mini dropdown-toggle">
                                         @if(!Cart::content()->isEmpty())
                                             {{ Cart::count() }} {{ Cart::count() > 1 ? 'articles': 'article'}} - {{ number_format((float)Cart::total(), 2, '.', '') }} CHF
                                         @else
@@ -212,61 +213,11 @@
 					<section class="row-fluid">
 						<figure class="col-md-4">
 							<h4>BestSellers</h4>
-							<ul class="f2-img-list">
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image19.jpg" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">fields</a></strong> <span class="by-author">by Arnold Grey</span> <span class="f-price">$127.55</span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image31.jpg" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Garfield</a></strong> <span class="by-author">by Arnold Grey</span> <span class="f-price">$127.55</span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image32.jpg" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Penselviniya</a></strong> <span class="by-author">by Arnold Grey</span> <span class="f-price">$127.55</span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image33.jpg" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Exemption</a></strong> <span class="by-author">by Arnold Grey</span> <span class="f-price">$127.55</span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image34.jpg" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Penfield</a></strong> <span class="by-author">by Arnold Grey</span> <span class="f-price">$127.55</span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image32.jpg" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Doors</a></strong> <span class="by-author">by Arnold Grey</span> <span class="f-price">$127.55</span> </div>
-								</li>
-							</ul>
+
 						</figure>
 						<figure class="col-md-4">
 							<h4>Top Rated Books</h4>
-							<ul class="f2-img-list">
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image35.jpg" alt=""/></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">A little rain</a></strong> <span class="by-author">by Arnold Grey</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image33.jpg" alt="" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Son of Arabia</a></strong> <span class="by-author">by Arnold Grey</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image32.jpg" alt="" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Serpents</a></strong> <span class="by-author">by Arnold Grey</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image34.jpg" alt="" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Guns</a></strong> <span class="by-author">by Arnold Grey</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image19.jpg" alt=""/></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Garfield</a></strong> <span class="by-author">by Arnold Grey</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-								</li>
-								<li>
-									<div class="left"><a href="book-detail.html"><img src="frontend/pubdroit/images/image35.jpg" alt="" /></a></div>
-									<div class="right"> <strong class="title"><a href="book-detail.html">Wolfman</a></strong> <span class="by-author">by Arnold Grey</span> <span class="rating-bar"><img src="frontend/pubdroit/images/rating-star.png" alt="Rating Star"/></span> </div>
-								</li>
-							</ul>
+
 						</figure>
 						<figure class="col-md-4">
 							<h4>From the blog</h4>

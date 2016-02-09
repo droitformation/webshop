@@ -4,11 +4,10 @@
         <figure class="col-md-4 first">
             <div class="cart-option-box">
                 <h4><i class="fa fa-money"></i> RABAIS</h4>
-                <p>Entrer votre code</p>
                 {!! Form::open(array('url' => 'cart/applyCoupon')) !!}
-
+                <p>Entrer votre code</p>
                 <div class="input-group">
-                    <input type="text" value="" name="coupon" id="inputDiscount" class="form-control" placeholder="Code">
+                    <input type="text" value="" name="coupon" id="inputDiscount" class="form-control" placeholder="">
                     <span class="input-group-btn">
                         <button class="more-btn" type="submit">Appliquer</button>
                     </span>
@@ -37,7 +36,9 @@
                         <td align="right"><h4>{{ number_format((float)Cart::total(), 2, '.', '') }} CHF</h4></td>
                     </tr>
                 </table>
-                <p class="text-right"><a href="{{ url('checkout/confirm') }}" class="more-btn">Aller au checkout</a></p>
+                <p class="text-right">
+                    <a href="{{ url('checkout/billing') }}" class="more-btn">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
+                </p>
             </div>
         </figure>
     </div>

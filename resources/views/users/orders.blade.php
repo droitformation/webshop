@@ -79,7 +79,6 @@
 
                                             @if($order->coupon_id > 0)
                                                 @if( $order->coupon->type == 'shipping')
-                                                    <?php $order->coupon_id->load('coupon'); ?>
                                                     <p class="text-right text-muted">Frais de port offerts</p>
                                                 @else
                                                     <p class="text-right">- {{ $order->coupon->value }}%</p>

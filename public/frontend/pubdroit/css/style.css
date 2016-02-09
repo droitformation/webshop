@@ -551,7 +551,7 @@ margin-bottom:0;
 .post-nav li{ float:left; margin-right:15px; background:url(../images/post-nav-sep.png) no-repeat left; padding-left:20px;}
 .post-nav li a{ color:#323232;}
 
-.more-btn{ float:right; background:#98b827; padding:4px 14px; font-size:12px; color:#fff; border:0; text-transform:uppercase;}
+.more-btn{ float:right; background:#b01d22; padding:6px 14px; font-size:12px; color:#fff; border:0; text-transform:uppercase;}
 .more-btn:hover{ text-decoration:none; color: #ffdfe0;}
 .more-btn.left{ float:left; margin-right:10px;}
 
@@ -632,9 +632,9 @@ margin-bottom:0;
 .left-sec{ float:left; width:29.8%;}
 .right-sec{ float:left; width:70%; border-left:1px solid #dcdcdc;}
 .right-sec.r-border{border-right:1px solid #dcdcdc;min-height: 400px; padding: 3%; width: 64%;}
-.r-title-bar{ background:#fafafa; padding:8px 10px; font-size:18px; color:#000; border-bottom:1px solid #dcdcdc; margin-bottom:20px;}
+.r-title-bar{ background:#fafafa; padding:8px 10px; font-size:18px; color:#000; border:1px solid #dcdcdc;}
 .r-title-bar strong{ font-weight:normal;}
-.review-list{ list-style:none; margin:0 20px 0 0; padding:0 20px; font-size:12px;}
+.review-list{ list-style:none; padding:20px; font-size:12px; border: 1px solid #dcdcdc;  margin:0;}
 .review-list em{ display:block; margin:0 0 10px; color:#98b827; font-style:normal;}
 .review-list li{ margin:0 0 10px; padding:0 0 10px; border-bottom:1px dotted #dcdcdc;}
 .review-list li p{ margin:0; color:#000;}
@@ -659,7 +659,6 @@ margin-bottom:0;
 .checkout-holder .accordion-group{ border-left:0; border-top:0;}
 .checkout-holder .accordion{ margin:0;}
 .checkout-holder [class*="span"]{ margin-bottom:0 !important;}
-.review-list{ margin:0 20px 0 0; list-style:none;}
 .review-list a{ color:#000; display:block;}
 .checkout-holder .row-fluid .span3{ width:25.6%;}
 
@@ -677,11 +676,10 @@ margin-bottom:0;
 
 /* Start Billing Info Section */
 .billing-form{
-    padding-top:20px;
-    padding-bottom: 20px;
-    margin:0px -15px -20px 0;
+    padding:20px;
     list-style:none;
-    border-right: 1px solid #dcdcdc;
+    border: 1px solid #dcdcdc;
+    margin: 0;
 }
 
 .billing-form .form-group{
@@ -748,7 +746,7 @@ margin-bottom:0;
 /* Start Cart Section */
 .cart-holder .heading-bar{ overflow:hidden;}
 .cart-holder .heading-bar h2{ float:left;}
-.cart-table-holder{ padding:20px; background:#f9f9f9; border:1px solid #efefef; margin-bottom:70px;}
+.cart-table-holder{ padding:0 20px 20px 20px; background:#f9f9f9; border:1px solid #efefef; margin-bottom:70px;}
 .cart-table-holder table td, .cart-table-holder table th {
     padding: 8px;
 }
@@ -766,9 +764,8 @@ margin-bottom:0;
 .product-detail i{ font-size:18px;}
 .product-detail td{ border-right:1px solid #efefef;}
 .cart-option-box{ border:1px solid #e5e5e5; padding:20px; color:#000;}
-.cart-option-box i{color:#98b827; font-size:28px;}
-.cart-option-box h4{ text-transform:uppercase; font-size:24px;}
-.cart-option-box .more-btn{ float:none; font-size:16px;}
+.cart-option-box h4{ text-transform:uppercase; font-size:24px;margin-top: 0;}
+.cart-option-box .more-btn{ float:none; font-size:15px;}
 .cart-option-box form{ margin:0;}
 .cart-option-box-checkout p{
     margin-bottom: 0;
@@ -815,7 +812,7 @@ button, input, select, textarea {
 .slide-inner .price{ float:none; display:inline-block; border-left:1px solid #5a5a5a; font-size:24px;}
 .book-detail{ text-align:left;}
 .book-detail h2{ font-size:30px; color:#232323; margin:0 0 10px;}
-.book-detail .title{color:#98b827; font-size:20px; display: block; margin:0 0 10px;}
+.book-detail .title{color:#b01d22; font-size:20px; display: block; margin:0 0 10px;}
 .shop-btn{ background:url(../images/shop-btn.png) no-repeat; width:130px; height:42px; text-align:center; display:inline-block; line-height:40px; color:#fff; margin:25px 0 43px;}
 .cap-holder{ padding:50px 0 0;}
 .cap-holder a{ color:#fff; font-weight:bold; border-top:2px solid #fff; display:inline-block; padding:7px 0 0;}
@@ -837,7 +834,7 @@ h3.sub-heading-404{ font-size: 26px; text-align: center;}
 /*----------- Drop Capes -----------*/
 .dropcap { background: #fcfcfc; color: #666; display: inline-block; float: left; font-size: 23px; font-weight: 600; height: 36px; line-height: 36px; margin: 0 7px 0 0; text-align: center; width: 36px; border: 1px solid #f6f6f6; font-family: 'AgencyFB-Bold'; }
 .dropcap.dark { background: #3a3a3a; color: #fff; }
-.dropcap.color { background: #98b827; color: #fff; }
+.dropcap.color { background: #b01d22; color: #fff; }
 /*----------- End Drop Capes -----------*/
 
 
@@ -939,12 +936,13 @@ a.navbar-btn.navbar-register:focus{
     color: #fff;
 }
 
-.r-title-bar.title-right{
-    margin-left: -15px;
+.checkout-wrapper{
+    padding: 20px;
 }
 
-.r-title-bar.title-left{
-    margin-right: -15px;
-    border-right: 1px solid #dcdcdc;
-    margin-bottom: 0;
+.cart-resume{
+    border:  1px solid #e5e5e5;
+}
+.cart-resume th, .cart-resume td{
+    padding: 12px;
 }

@@ -46,16 +46,30 @@ class CheckoutController extends Controller {
     }
 
     /**
-     * Display checkout
+     * Display cart
+     *
+     * @return Response
+     */
+    public function cart()
+    {
+        $user   = $this->user->find(\Auth::user()->id);
+        $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
+
+        return view('frontend.pubdroit.checkout.cart')->with(compact('user','coupon'));
+    }
+
+    /**
+     * Display billing form
      *
      * @return Response
      */
     public function billing()
     {
-        $user = $this->user->find(\Auth::user()->id);
+        $user   = $this->user->find(\Auth::user()->id);
 
         return view('frontend.pubdroit.checkout.billing')->with(compact('user'));
     }
+
 
     /**
      * Display checkout
@@ -64,13 +78,20 @@ class CheckoutController extends Controller {
      */
     public function resume(Request $request)
     {
-        $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
+        $data = $request->all();
 
-        $adresse = $this->adresse->create([$request->all()]);
+        if(!empty($data))
+        {
+            $this->adresse->create($data);
+        }
 
-        $user = $this->user->find(\Auth::user()->id);
+        $shipping  = $this->checkout->totalShipping();
+        $total     = $this->checkout->totalCartWithShipping();
+        $payments  = $this->payment->getAll();
+        $user      = $this->user->find(\Auth::user()->id);
+        $coupon    = (\Session::has('coupon') ? \Session::get('coupon') : false);
 
-        return view('frontend.pubdroit.checkout.resume')->with(compact('user','pays','cantons','professions','coupon'));
+        return view('frontend.pubdroit.checkout.resume')->with(compact('user','coupon','shipping','coupon','total','payments'));
     }
 
     /**

@@ -24,8 +24,6 @@
 figure{
     position: relative;
     padding: 5px;
-    -webkit-box-shadow: 0 1px 4px 1px #4F4F4F;
-    box-shadow: 0 1px 4px 1px #4F4F4F;
 }
 
 figure img{
@@ -135,6 +133,13 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
 
+#termsAndConditions{
+    margin-top: -3px;
+}
+
+.terms{
+    margin: 10px 0;
+}
 /*
     Toogle radio button
 */

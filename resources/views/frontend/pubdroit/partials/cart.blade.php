@@ -4,17 +4,16 @@
     <div class="cart-table-holder">
         <table width="100%" border="0" cellpadding="10">
             <tr>
-                <th width="10%" class="mobile-hidden">&nbsp;</th>
-                <th width="37%" align="left">Nom</th>
-                <th width="15%">Prix par unité</th>
-                <th width="12%">Quantité</th>
-                <th width="15%">Sous-total</th>
+                <th width="47%" align="left" colspan="2">Ouvrage</th>
+                <th width="15%" style="text-align: center;">Prix par unité</th>
+                <th width="12%" style="text-align: center;">Quantité</th>
+                <th width="15%" style="text-align: right;">Sous-total</th>
                 <th width="5%" class="mobile-hidden">&nbsp;</th>
             </tr>
             @foreach($cart as $item)
             <tr bgcolor="#FFFFFF" class="product-detail">
-                <td valign="top" class="mobile-hidden">
-                    <img style="max-width:90px;" src="{{ asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
+                <td valign="top" class="mobile-hidden" align="center">
+                    <img style="max-height:80px;" src="{{ asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
                 </td>
                 <td valign="top">{{ $item->name }}</td>
                 <td align="center" valign="top">{{ $item->price }} CHF</td>
@@ -29,7 +28,7 @@
                         <input type="hidden" name="rowid" value="{{ $item->rowid }}">
                     </form>
                 </td>
-                <td align="center" valign="top">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>
+                <td align="right" valign="top">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>
                 <td align="center" valign="top" class="mobile-hidden">
                     <form method="post" action="{{ url('cart/quantityProduct') }}" class="form-inline">
                         <input type="hidden" name="qty" value="0">
