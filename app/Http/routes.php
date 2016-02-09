@@ -299,17 +299,15 @@ Route::group(['middleware' => ['auth','pending','cart']], function () {
     Route::match(['get', 'post'],'checkout/resume', 'Frontend\Shop\CheckoutController@resume');
     Route::get('checkout/confirm',  'Frontend\Shop\CheckoutController@confirm');
     Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
-
-    /* *
-     * Cart routes for frontend shop
-     * */
-    Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
-    Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
-    Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
-    Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
-
 });
 
+/* *
+ * Cart routes for frontend shop
+ * */
+Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
+Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
+Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
+Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
 //Route::get('home', 'HomeController@index');
 

@@ -33,7 +33,7 @@
                     @endif
                     <tr>
                         <td align="left"><h4>TOTAL</h4></td>
-                        <td align="right"><h4>{{ number_format((float)Cart::total(), 2, '.', '') }} CHF</h4></td>
+                        <td align="right"><h4>{{ number_format((float)$total, 2, '.', '') }} CHF</h4></td>
                     </tr>
                 </table>
                 <p class="text-right">

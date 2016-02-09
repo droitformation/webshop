@@ -54,8 +54,9 @@ class CheckoutController extends Controller {
     {
         $user   = $this->user->find(\Auth::user()->id);
         $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
+        $total  = $this->checkout->totalCart();
 
-        return view('frontend.pubdroit.checkout.cart')->with(compact('user','coupon'));
+        return view('frontend.pubdroit.checkout.cart')->with(compact('user','coupon','total'));
     }
 
     /**
