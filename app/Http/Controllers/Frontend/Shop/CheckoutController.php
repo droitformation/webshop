@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\User\Repo\UserInterface;
+use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Pays\Repo\PaysInterface;
 use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
@@ -21,14 +22,21 @@ class CheckoutController extends Controller {
     protected $checkout;
     protected $order;
     protected $payment;
+    protected $adresse;
 
-    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, CartWorkerInterface $checkout, OrderWorkerInterface $order, PaymentInterface $payment)
+    public function __construct(
+        UserInterface $user,
+        CantonInterface $canton,
+        PaysInterface $pays,
+        ProfessionInterface $profession,
+        CartWorkerInterface $checkout,
+        OrderWorkerInterface $order,
+        PaymentInterface $payment,
+        AdresseInterface $adresse
+    )
     {
-        $this->middleware('auth');
-        $this->middleware('pending');
-        $this->middleware('cart');
-
         $this->user       = $user;
+        $this->adresse    = $adresse;
         $this->pays       = $pays;
         $this->canton     = $canton;
         $this->profession = $profession;
@@ -38,22 +46,32 @@ class CheckoutController extends Controller {
     }
 
     /**
-	 * Display checkout
-	 *
-	 * @return Response
-	 */
-	public function resume()
-	{
-        $cantons     = $this->canton->getAll();
-        $professions = $this->profession->getAll();
-        $pays        = $this->pays->getAll();
+     * Display checkout
+     *
+     * @return Response
+     */
+    public function billing()
+    {
+        $user = $this->user->find(\Auth::user()->id);
 
+        return view('frontend.pubdroit.checkout.billing')->with(compact('user'));
+    }
+
+    /**
+     * Display checkout
+     *
+     * @return Response
+     */
+    public function resume(Request $request)
+    {
         $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
+
+        $adresse = $this->adresse->create([$request->all()]);
 
         $user = $this->user->find(\Auth::user()->id);
 
         return view('frontend.pubdroit.checkout.resume')->with(compact('user','pays','cantons','professions','coupon'));
-	}
+    }
 
     /**
      * Display checkout

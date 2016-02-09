@@ -109,10 +109,6 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     background-color: inherit;
     color: #b01d22;
 }
-.btn.navbar-btn{
-    padding:7px 12px;
-    border-radius: 0;
-}
 /* Start Main menu css */
 #main-header #nav { background:rgba(37, 36, 36); background:rgba(37, 36, 36, 0.1); border-top: 1px solid rgba(37, 36, 36, 0.1); margin-top: 20px;}
 #main-header .navbar-inverse .navbar-inner { background:none; border:0; -webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, .0), 0 0 0 rgba(0, 0, 0, .0); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 rgba(0, 0, 0, .0); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 rgba(0, 0, 0, .0); padding:0; }
@@ -202,7 +198,12 @@ margin-bottom:0;
 /* Start Content Css */
 
 /* Start WellCome Msg Css */
-.row-fluid [class*="span"].wellcome-msg {border-bottom:9px solid #809f14;background:#f7f6f6;padding:30px;line-height:28px;}
+.wellcome-msg {
+    border-bottom:9px solid #b01d22;
+    background:#f7f6f6;
+    padding:30px;
+    line-height:28px;
+}
 .wellcome-msg h2 {
     color: #000;
     font-family: calibri;
@@ -210,17 +211,21 @@ margin-bottom:0;
     font-weight: normal;
     margin: 0 0 10px;
 }
-.wellcome-msg p { color:#98b827; margin:0; font-size:20px; line-height:23px; }
+.wellcome-msg p { color:#b01d22; margin:0; font-size:20px; line-height:23px; }
 /* End WellCome Msg Css */
 
 /* Start Sale Bar Css */
-.s-product { padding:14px 24px; border:1px solid #dee4e4; position:relative; }
-.s-product-det { float:left; width:65%; margin-left: 5%}
-.s-product-det h3 {
+.s-product { padding:10px; border:1px solid #dee4e4; position:relative; margin-bottom: 20px;}
+.s-product article {position: relative;min-height: 130px;}
+.s-product article h3 {
     color: #809f14;
     font-size: 15px;
-    line-height: 16px;
+    line-height: 15px;
     margin: 0 0 5px;
+}
+.s-product article p {
+    font-size: 13px;
+    line-height: 16px;
 }
 .s-product-det p { color:#3d3d3d; line-height:16px; margin-bottom:8px; }
 .s-product-det a{ color:#000; }
@@ -230,14 +235,38 @@ margin-bottom:0;
 .cart-btn2 { background:url(../images/cart-icon.png) 0 5px no-repeat; border: none; text-indent:-999px; width:25px; height:27px; overflow:hidden; float:left; margin-right:10px; }
 .cart-price { overflow:hidden; }
 .price { float: left; margin-top: 4px; padding-left: 10px; border-left:1px solid #ababab; font-size:18px; color:#000; }
-.sale-icon { background:url(../images/sale-icon.png) no-repeat; width:78px; height:78px; position:absolute; left:0; top:0; text-indent:-999px; overflow:hidden; }
-
+.sale-icon { background:url(../images/sale-icon.png) no-repeat; width:78px; height:78px; position:absolute; left:0; top:0; text-indent:-999px; overflow:hidden; z-index: 50}
+.cart-price {
+    overflow: hidden;
+}
+.s-product .cart-price {
+    bottom: -5px;
+    position: absolute;
+}
+.cart-price span.cart {
+    background:url(../images/cart-icon2.png) no-repeat left top;
+    line-height:23px;
+    width:27px;
+    height:23px;
+    float:left;
+    margin:0 9px 0 72px;
+}
+.cart-price strong.price {
+    font-size:24px;
+    color:#000;
+    float:left;
+    line-height:23px;
+    border-left:1px solid #5a5a5a;
+    padding:0 0 0 10px;
+}
 .product-image{
     max-height: 337px;
     margin-bottom: 30px;
     overflow: hidden;
     display: block;
 }
+
+
 /* End Sale Bar Css */
 
 .morelink{
@@ -459,7 +488,7 @@ margin-bottom:0;
 /* End Main Footer */
 
 /* Start Side Bar Styling */
-.side-holder { margin:0 0 35px; }
+.side-holder { margin:0 0 35px 0; }
 .side-holder .title { color:#98b827; display:block; margin:5px 0 5px; }
 .side-inner-holder { background:#fcfcfc; border:1px solid #e5e5e5; border-top:0; padding:16px; }
 .side-holder h2 { background:#98b827; font-size:18px; color:#fefefe; line-height:20px; padding:10px; margin:0; }
@@ -605,7 +634,7 @@ margin-bottom:0;
 .right-sec.r-border{border-right:1px solid #dcdcdc;min-height: 400px; padding: 3%; width: 64%;}
 .r-title-bar{ background:#fafafa; padding:8px 10px; font-size:18px; color:#000; border-bottom:1px solid #dcdcdc; margin-bottom:20px;}
 .r-title-bar strong{ font-weight:normal;}
-.review-list{ list-style:none; margin:0; padding:0 20px; font-size:12px;}
+.review-list{ list-style:none; margin:0 20px 0 0; padding:0 20px; font-size:12px;}
 .review-list em{ display:block; margin:0 0 10px; color:#98b827; font-style:normal;}
 .review-list li{ margin:0 0 10px; padding:0 0 10px; border-bottom:1px dotted #dcdcdc;}
 .review-list li p{ margin:0; color:#000;}
@@ -630,7 +659,7 @@ margin-bottom:0;
 .checkout-holder .accordion-group{ border-left:0; border-top:0;}
 .checkout-holder .accordion{ margin:0;}
 .checkout-holder [class*="span"]{ margin-bottom:0 !important;}
-.review-list{ margin:0; list-style:none;}
+.review-list{ margin:0 20px 0 0; list-style:none;}
 .review-list a{ color:#000; display:block;}
 .checkout-holder .row-fluid .span3{ width:25.6%;}
 
@@ -647,7 +676,18 @@ margin-bottom:0;
 
 
 /* Start Billing Info Section */
-.billing-form{ margin:20px 0 0 0; list-style:none;}
+.billing-form{
+    padding-top:20px;
+    padding-bottom: 20px;
+    margin:0px -15px -20px 0;
+    list-style:none;
+    border-right: 1px solid #dcdcdc;
+}
+
+.billing-form .form-group{
+    margin-bottom: 10px;
+}
+
 .billing-form li{ overflow:hidden;}
 .billing-form li label{
     display: block;
@@ -854,4 +894,57 @@ input[type="color"],
 
 .modal .form-group.row{
     margin-bottom: 5px;
+}
+
+.navbar-btn{
+    padding:7px 12px;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #000;
+    margin-bottom: 8px;
+    margin-left: 5px;
+    margin-top: 8px;
+}
+
+.navbar-btn:hover,
+.navbar-btn:active,
+.navbar-btn:focus{
+    text-decoration: none;
+    color: #fff;
+}
+
+.navbar-login{
+    background: #f7f6f6;
+    border: 1px solid #ccc;
+}
+
+a.navbar-btn.navbar-login:hover,
+a.navbar-btn.navbar-login:active,
+a.navbar-btn.navbar-login:focus{
+    background: #ccc;
+    color: #000;
+}
+
+.navbar-register{
+    background-color: #4f8edc;
+    border-color: #4f8edc;
+    color: #ffffff;
+}
+
+a.navbar-btn.navbar-register:hover,
+a.navbar-btn.navbar-register:active,
+a.navbar-btn.navbar-register:focus{
+    background: #4f8edc;
+    color: #fff;
+}
+
+.r-title-bar.title-right{
+    margin-left: -15px;
+}
+
+.r-title-bar.title-left{
+    margin-right: -15px;
+    border-right: 1px solid #dcdcdc;
+    margin-bottom: 0;
 }

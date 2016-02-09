@@ -288,29 +288,35 @@ Route::get('/', 'Frontend\Shop\ShopController@index');
 Route::get('shop', 'Frontend\Shop\ShopController@index');
 Route::get('shop/product/{id}', 'Frontend\Shop\ShopController@show');
 
-/* *
- * Checkout routes for frontend shop
- * */
 
-Route::get('checkout/resume', 'Frontend\Shop\CheckoutController@resume');
-Route::get('checkout/confirm', 'Frontend\Shop\CheckoutController@confirm');
-Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
+Route::group(['middleware' => ['auth','pending','cart']], function () {
+
+    /* *
+     * Checkout routes for frontend shop
+     * */
+    Route::get('checkout/billing',  'Frontend\Shop\CheckoutController@billing');
+    Route::get('checkout/resume',  'Frontend\Shop\CheckoutController@resume');
+    Route::match(['get', 'post'],'checkout/confirm', 'Frontend\Shop\CheckoutController@confirm');
+    Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
+
+    /* *
+     * Cart routes for frontend shop
+     * */
+    Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
+    Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
+    Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
+    Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
+
+});
+
+
+//Route::get('home', 'HomeController@index');
 
 /* *
  * Update user adresse via ajax
  * */
 Route::resource('adresse', 'Frontend\User\AdresseController');
 Route::post('ajax/adresse/{id}', 'Frontend\User\AdresseController@ajaxUpdate');
-
-/* *
- * Cart routes for frontend shop
- * */
-Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
-Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
-Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
-Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
-
-//Route::get('home', 'HomeController@index');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

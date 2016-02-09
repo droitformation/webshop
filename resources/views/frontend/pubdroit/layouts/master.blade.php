@@ -29,10 +29,16 @@
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/jquery.booklet.latest.css');?>">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation/parsley.css');?>" media="screen" />
-
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation.css');?>">
 	<noscript>
 		<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/noJS.css');?>">
 	</noscript>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
+    <script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
+    <script src="<?php echo asset('js/validation.js');?>"></script>
 
 </head>
 	<body>
@@ -56,9 +62,13 @@
 						</section>
 						<section class="col-md-6 e-commerce-list text-right">
                             @if (!Auth::check())
-                                <div class="btn-group">
-                                    <a href="{{ url('auth/login')}}" class="btn btn-info navbar-btn">{{ trans('message.login') }}</a>
-                                    <a href="{{ url('auth/register')}}" class="btn btn-success navbar-btn">{{ trans('message.register') }}</a>
+                                <div>
+                                    <a href="{{ url('auth/login')}}" class="navbar-btn navbar-login">
+										<i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}
+									</a>
+                                    <a href="{{ url('auth/register')}}" class="navbar-btn navbar-register">
+										<i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}
+									</a>
                                 </div>
                             @endif
                             @if (Auth::check())
@@ -91,7 +101,7 @@
                             <div class="c-btn">
                                 <a href="cart.html" class="cart-btn">Panier</a>
                                 <div class="btn-group">
-                                    <a href="{{ url('checkout/resume') }}" class="btn btn-mini dropdown-toggle">
+                                    <a href="{{ url('checkout/billing') }}" class="btn btn-mini dropdown-toggle">
                                         @if(!Cart::content()->isEmpty())
                                             {{ Cart::count() }} {{ Cart::count() > 1 ? 'articles': 'article'}} - {{ number_format((float)Cart::total(), 2, '.', '') }} CHF
                                         @else
@@ -290,11 +300,6 @@
 
 		<!-- Javascript Files
     	================================================== -->
-
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
-        <script src="<?php echo asset('js/validation/parsley.js');?>"></script>
-        <script src="<?php echo asset('js/validation/fr.js');?>"></script>
 
 		<script src="<?php echo asset('frontend/pubdroit/js/lib.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/modernizr.js');?>"></script>

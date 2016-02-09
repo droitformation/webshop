@@ -1,16 +1,16 @@
 @extends('frontend.pubdroit.layouts.master')
 @section('content')
 
-    <section class="row-fluid">
-        <section class="span12 wellcome-msg m-bottom first">
+    <section class="row">
+        <section class="col-md-12 wellcome-msg m-bottom first">
             <h2>BIENVENUE sur publications-droit.ch.</h2>
             <p>Portail des divers publications de la Faculté de droit de l'Université de Neuchâtel</p>
         </section>
     </section>
 
-    <section class="row-fluid">
+    <section class="row">
 
-        <section class="span8">
+        <section class="col-md-8">
 
             <div class="heading-bar">
                 <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Evénements</h2>
@@ -20,10 +20,10 @@
             @if(!$colloques->isEmpty())
                 <?php $chunks = $colloques->chunk(1); ?>
                 @foreach($chunks as $chunk)
-                    <section class="row-fluid">
+                    <section class="row">
                         @foreach($chunk as $colloque)
 
-                            <div class="event-post span12">
+                            <div class="event-post col-md-12">
                                 <div class="post-img">
                                     <a href="{{ url('colloque/'.$colloque->id) }}">
                                         <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
@@ -52,7 +52,7 @@
 
         </section>
 
-        <section id="nouveautes" class="span4">
+        <section id="nouveautes" class="col-md-4">
 
             <div class="heading-bar">
                 <h2><i class="fa fa-heart"></i> &nbsp;Coups de coeur</h2>
@@ -62,24 +62,7 @@
             @if(!$nouveautes->isEmpty())
                 <?php $chunks = $nouveautes->take(4); ?>
                 @foreach($chunks as $product)
-                    <figure class="s-product">
-                        <div class="s-product-img">
-                            <a href="{{ url('product/'.$product->id) }}"><img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/></a>
-                        </div>
-                        <article class="s-product-det">
-                            <h3><a href="{{ asset('files/products/'.$product->image) }}">{{ $product->title }}</a></h3>
-                            <p>{!! $product->teaser !!}</p>
-                            <div class="cart-price">
-                                {!! Form::open(array('url' => 'cart/addProduct')) !!}
-                                {!! Form::hidden('_token', csrf_token()) !!}
-                                <button type="submit" class="cart-btn2">Ajouter au panier</button>
-                                <span class="price">{{ $product->price_cents }} CHF</span>
-                                {!! Form::hidden('product_id', $product->id) !!}
-                                {!! Form::close() !!}
-                            </div>
-                        </article>
-                        <div class="clearfix"></div>
-                    </figure>
+                        @include('frontend.pubdroit.partials.product', ['product' => $product, 'news' => false])
                 @endforeach
             @endif
 
@@ -94,36 +77,23 @@
     @if(!$nouveautes->isEmpty())
     <?php $chunks = $nouveautes->chunk(3); ?>
         @foreach($chunks as $chunk)
-            <section class="row-fluid">
+            <section class="row">
                 @foreach($chunk as $product)
-                <figure class="span4 s-product">
-                    <div class="s-product-img">
-                        <a href="{{ url('product/'.$product->id) }}">
-                            <img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
-                        </a>
+                    <div class="col-md-4">
+                       @include('frontend.pubdroit.partials.product', ['product' => $product, 'news' => true])
                     </div>
-                    <article class="s-product-det">
-                        <h3><a href="{{ asset('files/products/'.$product->image) }}">{{ $product->title }}</a></h3>
-                        <p>{!! $product->teaser !!}</p>
-                        <div class="cart-price">
-                            <a href="cart.html" class="cart-btn2">Ajouter au panier</a>
-                            <span class="price">{{ $product->price_cents }} CHF</span>
-                        </div>
-                        <span class="sale-icon">Sale</span>
-                    </article>
-                </figure>
                 @endforeach
             </section>
         @endforeach
     @endif
 
-    <section class="row-fluid">
+    <section class="row">
         <div class="heading-bar">
             <h2>Publications</h2>
             <span class="h-line"></span>
         </div>
         <!-- Start Main Content -->
-        <section class="span9 first">
+        <section class="col-md-9">
             <!-- Start Ad Slider Section -->
             <div class="blog-sec-slider">
                 <div class="slider5">
@@ -174,10 +144,10 @@
                     @foreach($products as $product)
 
                         <article class="item-holder">
-                            <div class="span2">
+                            <div class="col-md-2">
                                 <a href="{{ url('product/'.$product->id) }}"><img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" /></a>
                             </div>
-                            <div class="span10">
+                            <div class="col-md-10">
                                 <div class="title-bar">
                                     <a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a>
                                     <span>{!! $product->teaser !!}</span>
@@ -209,7 +179,7 @@
         <!-- End Main Content -->
 
         <!-- Start Main Side Bar -->
-        <section class="span3">
+        <section class="col-md-3">
             <div class="side-holder">
                 <article class="banner-ad">
                     <img src="frontend/pubdroit/images/ad.jpg" alt="Helbing" />

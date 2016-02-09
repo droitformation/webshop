@@ -4,24 +4,15 @@
     <!-- Start Main Content -->
     <section class="row" id="livraison">
         <div class="col-md-12">
-            <h4>Adresse de livraison</h4>
 
-            <address id="userAdresse">
-                @include('frontend.pubdroit.partials.user-livraison')
-            </address>
-            <p><a data-toggle="modal" data-target="#userFormModal" class="btn btn-default" href="#">Modifier votre adresse</a></p>
+           <p><a href="{{ url('shop') }}"><span aria-hidden="true">&larr;</span> Retour au shop</a></p>
+
+            <div class="heading-bar">
+                <h2>Confirmation</h2>
+                <span class="h-line"></span>
+            </div>
+
         </div>
     </section>
-    <!-- End Main Content -->
-    <div class="row">
-        <section class="col-md-12">
-            <!-- Start Accordian Section -->
-            @include('frontend.pubdroit.partials.cart')
-        </section>
-    </div>
-    <!-- End Main Content -->
-
-    <!-- User form for update  -->
-    @include('frontend.pubdroit.partials.user-form')
 
 @stop
