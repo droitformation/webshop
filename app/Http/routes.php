@@ -285,9 +285,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
  * Shop routes for frontend shop
  * */
 Route::get('/', 'Frontend\Shop\ShopController@index');
-Route::get('shop', 'Frontend\Shop\ShopController@index');
-Route::get('shop/product/{id}', 'Frontend\Shop\ShopController@show');
+Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
+Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
 
+Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
 
 Route::group(['middleware' => ['auth','pending','cart']], function () {
 

@@ -29,7 +29,7 @@
                 <td>{{ $order->order_adresse ? $order->order_adresse->name : 'Admin' }}</td>
                 <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                 <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
-                <td class="text-right">{{ $order->price_cents }} CHF</td>
+                <td class="text-right">{{ $order->total_with_shipping }} CHF</td>
                 <td class="text-right"><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
                 <td class="text-right"><?php echo ($order->facture ? '<a target="_blank" href="'.$order->facture.'" class="btn btn-xs btn-default">Facture en pdf</a>' : ''); ?></td>
                 <td class="text-right">{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>

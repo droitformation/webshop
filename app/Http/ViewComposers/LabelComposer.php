@@ -4,44 +4,24 @@ namespace App\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
 
-use App\Droit\Profession\Repo\ProfessionInterface;
-use App\Droit\Canton\Repo\CantonInterface;
-use App\Droit\Pays\Repo\PaysInterface;
-use App\Droit\Specialisation\Repo\SpecialisationInterface;
-use App\Droit\Member\Repo\MemberInterface;
-use App\Droit\Adresse\Repo\AdresseInterface;
-use App\Droit\Site\Repo\SiteInterface;
+use App\Droit\Shop\Categorie\Repo\CategorieInterface;
+use App\Droit\Shop\Attribute\Repo\AttributeInterface;
+use App\Droit\Author\Repo\AuthorInterface;
+use App\Droit\Domain\Repo\DomainInterface;
 
 class LabelComposer
 {
-    protected $profession;
-    protected $canton;
-    protected $pays;
-    protected $specialisation;
-    protected $member;
-    protected $site;
+    protected $categorie;
+    protected $attribute;
+    protected $author;
+    protected $domain;
 
-    /**
-     * Create a new profile composer.
-     *
-     * @param  UserRepository  $users
-     * @return void
-     */
-    public function __construct(
-        ProfessionInterface $profession,
-        PaysInterface $pays,
-        CantonInterface $canton,
-        MemberInterface $member,
-        SpecialisationInterface $specialisation,
-        SiteInterface $site
-    )
+    public function __construct(CategorieInterface $categorie, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain )
     {
-        $this->profession     = $profession;
-        $this->canton         = $canton;
-        $this->pays           = $pays;
-        $this->member         = $member;
-        $this->specialisation = $specialisation;
-        $this->site           = $site;
+        $this->categorie = $categorie;
+        $this->attribute = $attribute;
+        $this->author    = $author;
+        $this->domain    = $domain;
     }
 
     /**
@@ -52,18 +32,9 @@ class LabelComposer
      */
     public function compose(View $view)
     {
-        $professions     = $this->profession->getAll();
-        $cantons         = $this->canton->getAll();
-        $pays            = $this->pays->getAll();
-        $members         = $this->member->getAll();
-        $specialisations = $this->specialisation->getAll();
-        $sites           = $this->site->getAll();
-
-        $view->with('sites',$sites);
-        $view->with('pays',$pays);
-        $view->with('cantons',$cantons);
-        $view->with('professions',$professions);
-        $view->with('members',$members);
-        $view->with('specialisations',$specialisations);
+        $view->with('categories', $this->categorie->getAll());
+        $view->with('attributes', $this->attribute->getAll());
+        $view->with('authors',    $this->author->getAll());
+        $view->with('domains',    $this->domain->getAll());
     }
 }

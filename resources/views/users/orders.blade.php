@@ -25,7 +25,7 @@
                     <tr>
                         <td>{{ $order->order_no }}</td>
                         <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
-                        <td>{{ $order->price_cents }}</td>
+                        <td>{{ $order->total_with_shipping }}</td>
                         <td><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
                         <td class="text-right">
                             <a data-toggle="collapse" href="#order_no_{{ $order->id }}" aria-expanded="false" aria-controls="order_no_{{ $order->id }}">Voir la commande</a>
@@ -85,7 +85,7 @@
                                                 @endif
                                             @endif
                                             <p class="text-right">{{ $order->shipping->price_cents }} CHF</p>
-                                            <p class="text-right">{{ $order->price_cents }} CHF</p>
+                                            <p class="text-right">{{ $order->total_with_shipping }} CHF</p>
                                         </div>
                                     </div>
 

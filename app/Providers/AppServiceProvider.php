@@ -21,7 +21,8 @@ class AppServiceProvider extends ServiceProvider {
         );
 
         //view()->composer('*', 'App\Http\ViewComposers\LabelComposer');
-        view()->composer('*', 'App\Http\ViewComposers\LabelComposer');
+        view()->composer('*', 'App\Http\ViewComposers\UserAttributeComposer');
+        view()->composer('frontend.pubdroit.partials.label', 'App\Http\ViewComposers\LabelComposer');
 	}
 
 	/**

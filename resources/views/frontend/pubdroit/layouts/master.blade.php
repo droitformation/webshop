@@ -19,6 +19,7 @@
 	<!-- Css Files Start -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/skins/red.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/update-responsive.css');?>">
+    <link rel="stylesheet" href="<?php echo asset('frontend/css/selectric.css');?>">
 
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/main-slider.css');?>">
@@ -53,7 +54,6 @@
 					<section class="row">
 						<section class="col-md-6">
 							<ul class="top-nav">
-								<li><a href="index.html" class="active">Accueil</a></li>
 								<li><a href="grid-view.html">Newsletter</a></li>
 								<li><a href="blog.html">Bachelors en droit</a></li>
 								<li><a href="shortcodes.html">Masters</a></li>
@@ -93,9 +93,7 @@
 					<section class="row">
 						<section class="col-md-4">
 							<h1 id="logo">
-								<a href="{{ url('/') }}">
-									<img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
-								</a>
+								<a href="{{ url('/') }}"><img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" /></a>
 							</h1>
 						</section>
 						<section class="col-md-8">
@@ -127,12 +125,7 @@
                                         <span class="icon-bar"></span>
                                     </button>
                                     <div class="nav-collapse collapse in">
-                                        <ul class="nav">
-                                            <li><a href="{{ url('categorie/1') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
-                                            <li><a href="{{ url('domaines') }}"><i class="fa fa-bookmark"></i> &nbsp; Collections</a></li>
-                                            <li><a href="{{ url('categories') }}"><i class="fa fa-tags"></i> &nbsp;Thèmes</a></li>
-                                            <li><a href="{{ url('authors') }}"><i class="fa fa-users"></i> &nbsp;Auteurs</a></li>
-                                        </ul>
+										@include('frontend.pubdroit.partials.label')
                                     </div>
                                     <div class="search-bar">
                                         <input name="" type="text" value="Rechercher sur le site..." />
@@ -252,7 +245,8 @@
 		<!-- Javascript Files
     	================================================== -->
 
-		<script src="<?php echo asset('frontend/pubdroit/js/lib.js');?>"></script>
+        <script src="<?php echo asset('frontend/pubdroit/js/lib.js');?>"></script>
+        <script src="<?php echo asset('frontend/js/jquery.selectric.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/modernizr.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/easing.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/bs.js');?>"></script>

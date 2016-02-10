@@ -5,39 +5,21 @@ use Illuminate\Http\Request;
 
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
-use App\Droit\Shop\Categorie\Repo\CategorieInterface;
-use App\Droit\Shop\Attribute\Repo\AttributeInterface;
-use App\Droit\Author\Repo\AuthorInterface;
-use App\Droit\Domain\Repo\DomainInterface;
 
 class ShopController extends Controller {
 
 	protected $colloque;
 	protected $product;
-	protected $categorie;
-	protected $attribute;
-	protected $author;
-	protected $domain;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ColloqueInterface $colloque,ProductInterface $product,  CategorieInterface $categorie, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain)
+	public function __construct(ColloqueInterface $colloque,ProductInterface $product)
 	{
 		$this->colloque  = $colloque;
         $this->product   = $product;
-		$this->categorie = $categorie;
-		$this->attribute = $attribute;
-		$this->author    = $author;
-		$this->domain    = $domain;
-
-		view()->share('categories', $this->categorie->getAll()->pluck('title','id'));
-		view()->share('attributes', $this->attribute->getAll()->pluck('title','id'));
-		view()->share('authors', $this->author->getAll()->pluck('name','id'));
-		view()->share('domains', $this->domain->getAll()->pluck('title','id'));
-
 	}
 
 	/**
@@ -54,6 +36,19 @@ class ShopController extends Controller {
 		return view('frontend.pubdroit.index')->with(['products' => $products, 'nouveautes' => $nouveautes, 'colloques' => $colloques]);
 	}
 
+	public function products(Request $request)
+	{
+		$search = $request->input('search',null);
+
+		if($search)
+		{
+			$search = array_filter($search);
+		}
+
+		$products    = $this->product->getAll($search);
+		return view('frontend.pubdroit.index')->with(['products' => $products]);
+	}
+
     /**
      *
      * @return Response
@@ -63,6 +58,26 @@ class ShopController extends Controller {
         $product = $this->product->find($id);
 
         return view('shop.show')->with(['product' => $product]);
+    }
+
+    public function sort(Request $request)
+    {
+        $search = $request->input('search',null);
+
+        if($search)
+        {
+            $title  = $request->input('title','');
+            $label  = $request->input('label',null);
+            $label  = $label ? $this->$label->find($search[$label.'_id'])->title : '';
+
+            $products = $this->product->getAll($search);
+        }
+        else
+        {
+            return redirect('/');
+        }
+
+        return view('frontend.pubdroit.products')->with(['products' => $products, 'title' => $title, 'label' => $label]);
     }
 
 }

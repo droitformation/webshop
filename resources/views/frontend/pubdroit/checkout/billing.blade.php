@@ -112,6 +112,8 @@
                                     <input name="user_id" value="{{ $user->id }}" type="hidden">
                                     <input name="pays_id" value="208" type="hidden">
 
+                                    {!! $adresse ? '<input type="hidden" name="id" value="'.$adresse->id.'">' : '' !!}
+
                                     <cite class="text-danger"><small>* Champs requis</small></cite>
                                     <button type="submit" class="more-btn">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                                 </div>

@@ -23,7 +23,7 @@
                                 @include('backend.products.partials.sort',['title' => 'Auteurs',    'items' => $authors, 'types' => 'authors', 'type' => 'author_id'])
                             </div>
                             <div class="col-md-2">
-                                @include('backend.products.partials.sort',['title' => 'Domaines',   'items' => $domains,    'types' => 'domains', 'type' => 'domain_id'])
+                                @include('backend.products.partials.sort',['title' => 'Domaines',   'items' => $domains,  'types' => 'domains', 'type' => 'domain_id'])
                             </div>
                             <div class="col-md-2">
                                 <label>&nbsp;</label><br/>

@@ -37,7 +37,12 @@ class User extends Authenticatable {
         {
             $livraison = $this->adresses->filter(function($adresse)
             {
-                if ($adresse->livraison == 1) {
+                if ($adresse->livraison == 1)
+                {
+                    return true;
+                }
+                elseif ($adresse->type == 1)
+                {
                     return true;
                 }
             });

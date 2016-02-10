@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Droit\Pays\Repo\PaysInterface;
-use App\Droit\Canton\Repo\CantonInterface;
-use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\CreateAdresse;
@@ -16,20 +13,13 @@ use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
-    protected $pays;
-    protected $canton;
-    protected $profession;
     protected $adresse;
     protected $user;
     protected $format;
 
-    public function __construct(AdresseInterface $adresse, UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession)
+    public function __construct(AdresseInterface $adresse, UserInterface $user)
     {
         $this->middleware('auth');
-
-        $this->pays       = $pays;
-        $this->canton     = $canton;
-        $this->profession = $profession;
 
         $this->adresse = $adresse;
         $this->user    = $user;
@@ -44,13 +34,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $cantons     = $this->canton->getAll();
-        $professions = $this->profession->getAll();
-        $pays        = $this->pays->getAll();
 
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('users.index')->with(compact('user','pays','cantons','professions'));
+        return view('frontend.pubdroit.profil.index')->with(compact('user'));
     }
 
     /**
@@ -75,7 +62,7 @@ class ProfileController extends Controller
     {
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('users.orders')->with(compact('user'));
+        return view('frontend.pubdroit.profil.orders')->with(compact('user'));
     }
 
     /**
@@ -87,7 +74,7 @@ class ProfileController extends Controller
     {
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('users.colloques')->with(compact('user'));
+        return view('frontend.pubdroit.profil.colloques')->with(compact('user'));
     }
 
     /**
@@ -99,7 +86,7 @@ class ProfileController extends Controller
     {
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('users.colloques')->with(compact('user'));
+        return view('frontend.pubdroit.profil.colloques')->with(compact('user'));
     }
 
     /**
@@ -114,7 +101,7 @@ class ProfileController extends Controller
         $inscription->user_options->load('option');
         $inscription->colloque->load('location','centres','compte');
 
-        return view('users.inscription')->with(compact('user','id','inscription'));
+        return view('frontend.pubdroit.profil.inscription')->with(compact('user','id','inscription'));
     }
 
 }

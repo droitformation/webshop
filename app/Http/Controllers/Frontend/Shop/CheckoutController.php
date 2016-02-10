@@ -66,7 +66,7 @@ class CheckoutController extends Controller {
      */
     public function billing()
     {
-        $user   = $this->user->find(\Auth::user()->id);
+        $user = $this->user->find(\Auth::user()->id);
 
         return view('frontend.pubdroit.checkout.billing')->with(compact('user'));
     }
@@ -83,7 +83,13 @@ class CheckoutController extends Controller {
 
         if(!empty($data))
         {
-            $this->adresse->create($data);
+            if(isset($data['id']))
+            {
+                $this->adresse->update($data);
+            }
+            else{
+                $this->adresse->create($data);
+            }
         }
 
         $shipping  = $this->checkout->totalShipping();

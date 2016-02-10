@@ -102,41 +102,6 @@
             <!-- End Ad Slider Section -->
 
             <!-- Start Grid View Section -->
-            <div class="product_sort">
-                <div class="row-1">
-                    <div class="left">
-                        <span class="s-title">Sort by</span>
-                        <span class="list-nav">
-                            <select name="">
-                                <option>Position</option>
-                                <option>Position 2</option>
-                                <option>Position 3</option>
-                                <option>Position 4</option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class="right">
-                        <span>Show</span>
-                        <span>
-                            <select name="">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </span>
-                        <span>per page</span>
-                    </div>
-                </div>
-                <div class="row-2">
-                    <span class="left">Items 1 to 9 of 15 total</span>
-                    <ul class="product_view">
-                        <li>View as:</li>
-                        <li><a class="grid-view" href="grid-view.html">Grid View</a></li>
-                        <li><a class="list-view" href="list-view.html">List View</a></li>
-                    </ul>
-                </div>
-            </div>
             <section class="list-holder">
 
                 @if(!$products->isEmpty())
@@ -153,12 +118,11 @@
                                 </div>
                                 <div class="readmore">{!! $product->description !!}</div>
                                 <div class="cart-price">
-                                    {!! Form::open(array('url' => 'cart/addProduct')) !!}
-                                    {!! Form::hidden('_token', csrf_token()) !!}
-                                    <button type="submit" class="cart-btn2"><i class="fa fa-shopping-cart"></i></button>
-                                    <span class="price">{{ $product->price_cents }} CHF</span>
-                                    {!! Form::hidden('product_id', $product->id) !!}
-                                    {!! Form::close() !!}
+                                    <form method="post" action="{{ url('cart/addProduct') }}" class="form-inline">{!! csrf_field() !!}
+                                        <button type="submit" class="cart-btn2">Ajouter au panier</button>
+                                        <span class="price">{{ $product->price_cents }} CHF</span>
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    </form>
                                 </div>
                             </div>
                         </article>
