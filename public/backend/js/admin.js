@@ -472,5 +472,16 @@ $( function() {
 
     $('.editableOption').editable();
     $('.editablePrice').editable();
-    $('.editablePayementDate').editable();
+    $('.editablePayementDate').editable({
+        emptytext : '',
+        success: function(response, newValue)
+        {
+            $(this).closest('.input-group').find('.input-group-addon').text(response.etat).addClass('bg-'+ response.color);
+
+            if(!response.success)
+            {
+                return response.msg;
+            }
+        }
+    });
 });

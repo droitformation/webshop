@@ -306,10 +306,10 @@ class InscriptionController extends Controller
 
         if($inscription)
         {
-            return response('OK', 200);
+            return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'warning' : 'success')]);
         }
 
-        return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+        return response()->json(['status' => 'error','msg' => 'problème']);
     }
 
     /**

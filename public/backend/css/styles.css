@@ -4091,7 +4091,6 @@ a.list-group-item.active > .badge,
   }
 }
 .input-group {
-  position: relative;
   display: table;
   border-collapse: separate;
 }

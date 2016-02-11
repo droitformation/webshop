@@ -2,6 +2,7 @@
 
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Entities\Inscription as M;
+use Carbon\Carbon;
 
 class InscriptionEloquent implements InscriptionInterface{
 
@@ -74,7 +75,7 @@ class InscriptionEloquent implements InscriptionInterface{
     {
         $days  = \Registry::get('inscription.days');
 
-        $today = \Carbon\Carbon::now()->subDays($days);
+        $today = Carbon::now()->subDays($days);
 
         $notpayed = $this->inscription->where('status','!=','free')->whereNull('payed_at')
             ->where(function ($query) use ($user_id)
@@ -144,19 +145,34 @@ class InscriptionEloquent implements InscriptionInterface{
 
         $inscription = $this->inscription->findOrFail($data['id']);
 
-        if( ! $inscription )
+        if(! $inscription)
         {
             return false;
         }
 
         $inscription->fill($data);
-        $inscription->save();
 
-        $inscription->options()->detach();
+        if(isset($data['payed_at']) && !empty($data['payed_at']))
+        {
+            $valid = (Carbon::createFromFormat('Y-d-m', $data['payed_at']) !== false);
+
+            $inscription->status = !$valid || null ? 'pending' : 'payed';
+            $inscription->payed_at = $data['payed_at'];
+        }
+
+        if(empty($data['payed_at']))
+        {
+            $inscription->status   = 'pending';
+            $inscription->payed_at = null;
+        }
+
+        $inscription->save();
 
         // Options
         if(isset($data['options']))
         {
+            $inscription->options()->detach();
+
             foreach($data['options'] as $option)
             {
                 $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);
