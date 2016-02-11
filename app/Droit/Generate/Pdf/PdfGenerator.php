@@ -38,6 +38,8 @@ class PdfGenerator implements PdfGeneratorInterface
 
     public function __construct(OrderInterface $order, UserInterface $user)
     {
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+
         $this->order = $order;
         $this->user  = $user;
 
@@ -48,8 +50,6 @@ class PdfGenerator implements PdfGeneratorInterface
             'taux_reduit' => \Registry::get('shop.infos.taux_reduit'),
             'taux_normal' => \Registry::get('shop.infos.taux_normal')
         ];
-
-        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /*
@@ -108,7 +108,7 @@ class PdfGenerator implements PdfGeneratorInterface
             'date'      => $this->now
         ];
 
-        $facture = \PDF::loadView('shop.templates.facture', $data)->setPaper('a4');
+        $facture = \PDF::loadView('templates.shop.facture', $data)->setPaper('a4');
 
         $generate = ($this->stream ? 'stream' : 'save');
 
@@ -145,7 +145,7 @@ class PdfGenerator implements PdfGeneratorInterface
             'date'        => $this->now
         ];
 
-        $bon = \PDF::loadView('colloques.templates.bon', $data)->setPaper('a4');
+        $bon = \PDF::loadView('templates.colloque.bon', $data)->setPaper('a4');
 
         $generate = ($this->stream ? 'stream' : 'save');
 
@@ -168,7 +168,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'annexes'     => $this->inscription->annexe
             ];
 
-            $facture  = \PDF::loadView('colloques.templates.facture', $data)->setPaper('a4');
+            $facture  = \PDF::loadView('templates.colloque.facture', $data)->setPaper('a4');
 
             $generate = ($this->stream ? 'stream' : 'save');
 
@@ -194,7 +194,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'annexes'      => $groupe->colloque->annexe
             ];
 
-            $facture  = \PDF::loadView('colloques.templates.groupe', $data)->setPaper('a4');
+            $facture  = \PDF::loadView('templates.colloque.groupe', $data)->setPaper('a4');
 
             $generate = ($this->stream ? 'stream' : 'save');
 
@@ -215,7 +215,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'groupe'       => $groupe,
             ];
 
-            $bv = \PDF::loadView('colloques.templates.bvgroupe', $data)->setPaper('a4');
+            $bv = \PDF::loadView('templates.colloque.bvgroupe', $data)->setPaper('a4');
 
             $generate = ($this->stream ? 'stream' : 'save');
 
@@ -232,7 +232,7 @@ class PdfGenerator implements PdfGeneratorInterface
         {
             $data = ['inscription' => $this->inscription];
 
-            $bv = \PDF::loadView('colloques.templates.bv', $data)->setPaper('a4');
+            $bv = \PDF::loadView('templates.colloque.bv', $data)->setPaper('a4');
 
             $generate = ($this->stream ? 'stream' : 'save');
 
@@ -280,7 +280,7 @@ class PdfGenerator implements PdfGeneratorInterface
             'rappel'   => $rappel
         ];
 
-        $template = \PDF::loadView('backend.abonnements.templates.facture', $data)->setPaper('a4');
+        $template = \PDF::loadView('templates.abonnement.facture', $data)->setPaper('a4');
 
         $generate   = ($this->stream ? 'stream' : 'save');
         $filename   = ($rappel ? 'rappel' : 'facture');

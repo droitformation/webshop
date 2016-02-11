@@ -24,6 +24,7 @@ class CreateInscriptionDocs extends Job implements SelfHandling, ShouldQueue
     public function __construct(Inscription $inscription)
     {
         $this->inscription = $inscription;
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /**

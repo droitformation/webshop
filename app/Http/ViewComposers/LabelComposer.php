@@ -5,23 +5,24 @@ namespace App\Http\ViewComposers;
 use Illuminate\Contracts\View\View;
 
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
-use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 use App\Droit\Author\Repo\AuthorInterface;
 use App\Droit\Domain\Repo\DomainInterface;
+
+use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 
 class LabelComposer
 {
     protected $categorie;
-    protected $attribute;
     protected $author;
     protected $domain;
+    protected $attribute;
 
     public function __construct(CategorieInterface $categorie, AttributeInterface $attribute, AuthorInterface $author, DomainInterface $domain )
     {
         $this->categorie = $categorie;
-        $this->attribute = $attribute;
         $this->author    = $author;
         $this->domain    = $domain;
+        $this->attribute = $attribute;
     }
 
     /**

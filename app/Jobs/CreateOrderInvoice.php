@@ -23,6 +23,7 @@ class CreateOrderInvoice extends Job implements SelfHandling, ShouldQueue
     public function __construct(Order $order)
     {
         $this->order = $order;
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /**

@@ -362,9 +362,16 @@ a:hover, a:active, a:focus {
     padding: 0;
 }
 
-.editable-click, a.editable-click, a.editable-click:hover {
+ a.editable-click, a.editable-click:hover {
     text-decoration: none;
     border: 0;
+}
+
+.editable-click{
+    border: 1px solid #aaa;
+    color: #666;
+    font-style: normal;
+    padding: 5px;
 }
 
 .nestable_list{

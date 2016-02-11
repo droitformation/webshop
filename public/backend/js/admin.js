@@ -472,5 +472,5 @@ $( function() {
 
     $('.editableOption').editable();
     $('.editablePrice').editable();
-
+    $('.editablePayementDate').editable();
 });

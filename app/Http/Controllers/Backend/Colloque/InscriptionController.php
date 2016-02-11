@@ -299,6 +299,19 @@ class InscriptionController extends Controller
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été mise à jour' ));
     }
 
+    public function edit(Request $request)
+    {
+        $name        = $request->input('name');
+        $inscription = $this->inscription->update([ 'id' => $request->input('pk'), $name =>  $request->input('value')]);
+
+        if($inscription)
+        {
+            return response('OK', 200);
+        }
+
+        return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

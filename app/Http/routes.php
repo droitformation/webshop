@@ -132,6 +132,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
     Route::get('inscription/groupe/{id}', 'Backend\Colloque\InscriptionController@groupe');
     Route::post('inscription/type', 'Backend\Colloque\InscriptionController@inscription');
+    Route::post('inscription/edit', 'Backend\Colloque\InscriptionController@edit');
     Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
     Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
     Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');

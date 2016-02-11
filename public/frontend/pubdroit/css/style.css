@@ -1084,6 +1084,7 @@ a.navbar-btn.navbar-register:focus{
 .profil-info{
     padding: 20px;
     border: 1px solid #e5e5e5;
+    margin-bottom: 20px;
 }
 
 .profil-wrapper{
@@ -1099,6 +1100,23 @@ a.navbar-btn.navbar-register:focus{
     padding: 0 20px;
 }
 
+.profil-wrapper h4.bg-success{
+    background-color: #85c744;
+    border-color: #85c744;
+    color: #ffffff;
+}
+
 .profil-info form{
     margin-bottom: 0;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+    text-decoration: none;
+    color: #000;
+}
+
+.btn{
+    border-radius: 0;
+    -moz-border-radius: 0;
 }

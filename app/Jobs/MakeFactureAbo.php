@@ -28,6 +28,8 @@ class MakeFactureAbo extends Job implements ShouldQueue
         $this->all        = $all;
         $this->abos       = $abos;
         $this->product_id = $product_id;
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /**

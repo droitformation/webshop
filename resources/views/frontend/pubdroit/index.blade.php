@@ -152,7 +152,7 @@
             <!-- Start Shop by Section -->
             <div class="side-holder">
                 <article class="shop-by-list">
-                    <h2>Trouver par</h2>
+                    {{--<h2>Trouver par</h2>
                     <div class="side-inner-holder">
                         @if(!$categories->isEmpty())
                             <strong class="title">Collections</strong>
@@ -178,7 +178,7 @@
                                 @endforeach
                             </ul>
                         @endif
-                    </div>
+                    </div>--}}
                 </article>
             </div>
             <!-- End Shop by Section -->

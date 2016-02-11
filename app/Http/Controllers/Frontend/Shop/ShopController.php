@@ -5,21 +5,30 @@ use Illuminate\Http\Request;
 
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
+use App\Droit\Shop\Categorie\Repo\CategorieInterface;
+use App\Droit\Author\Repo\AuthorInterface;
+use App\Droit\Domain\Repo\DomainInterface;
 
 class ShopController extends Controller {
 
 	protected $colloque;
 	protected $product;
+	protected $categorie;
+	protected $author;
+	protected $domain;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ColloqueInterface $colloque,ProductInterface $product)
+	public function __construct(ColloqueInterface $colloque,ProductInterface $product,CategorieInterface $categorie, AuthorInterface $author, DomainInterface $domain)
 	{
 		$this->colloque  = $colloque;
         $this->product   = $product;
+		$this->categorie = $categorie;
+		$this->author    = $author;
+		$this->domain    = $domain;
 	}
 
 	/**

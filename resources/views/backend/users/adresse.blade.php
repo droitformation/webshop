@@ -32,15 +32,12 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Titre</label>
         <div class="col-sm-7">
-            <label class="radio-inline">
-                &nbsp;<input type="radio" data-parsley-required name="civilite_id" {{ $adresse->civilite_id == 1 ? 'checked' : ''}} value="1"> Monsieur&nbsp;
-            </label>
-            <label class="radio-inline">
-                &nbsp;<input type="radio" data-parsley-required name="civilite_id" {{ $adresse->civilite_id == 2 ? 'checked' : ''}} value="2"> Madame&nbsp;
-            </label>
-            <label class="radio-inline">
-                <input type="radio" data-parsley-required name="civilite_id" {{ $adresse->civilite_id == 3 ? 'checked' : ''}} value="3"> Me
-            </label>
+            <select name="civilite_id" class="form-control">
+                <option {{ $adresse && $adresse->civilite_id == 4 || !$adresse  ? 'selected' : '' }} data-parsley-required value="4"></option>
+                <option {{ $adresse && $adresse->civilite_id == 1 ? 'selected' : '' }} data-parsley-required value="1">Monsieur</option>
+                <option {{ $adresse && $adresse->civilite_id == 2 ? 'selected' : '' }} data-parsley-required value="2">Madame</option>
+                <option {{ $adresse && $adresse->civilite_id == 3 ? 'selected' : '' }} data-parsley-required value="3">Me</option>
+            </select>
         </div>
     </div>
     <div class="form-group">

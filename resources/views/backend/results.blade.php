@@ -33,7 +33,7 @@
 
                 <div class="col-md-9">
 
-                    @if(!$duplicates->isEmpty())
+                    @if(isset($duplicates) && !$duplicates->isEmpty())
                         <div class="panel panel-warning">
                             <div class="panel-body">
                                 <h4><i class="fa fa-users"></i> &nbsp;Duplicatas</h4>

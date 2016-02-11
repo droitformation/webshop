@@ -19,13 +19,12 @@ class ProfileController extends Controller
 
     public function __construct(AdresseInterface $adresse, UserInterface $user)
     {
-        $this->middleware('auth');
-
         $this->adresse = $adresse;
         $this->user    = $user;
         $this->format  = new \App\Droit\Helper\Format();
-    }
 
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+    }
 
     /**
      * Display a listing of the resource.
@@ -34,10 +33,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        $user    = $this->user->find(\Auth::user()->id);
+        $current = '/';
 
-        $user = $this->user->find(\Auth::user()->id);
-
-        return view('frontend.pubdroit.profil.index')->with(compact('user'));
+        return view('frontend.pubdroit.profil.account')->with(compact('user','current'));
     }
 
     /**
@@ -48,9 +47,21 @@ class ProfileController extends Controller
      */
     public function update(UpdateAdresse $request)
     {
-        $this->adresse->update($request->all());
+        $data = $request->all();
 
-        return redirect('profil');
+        if(!empty($data))
+        {
+            if(isset($data['id']))
+            {
+                $this->adresse->update($data);
+            }
+            else
+            {
+                $this->adresse->create($data);
+            }
+        }
+
+        return redirect('profil')->with(['status' => 'success', 'message' => 'Adresses mise à jour']);;
     }
 
     /**
@@ -74,19 +85,7 @@ class ProfileController extends Controller
     {
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('frontend.pubdroit.profil.colloques')->with(compact('user'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function colloque($id)
-    {
-        $user = $this->user->find(\Auth::user()->id);
-
-        return view('frontend.pubdroit.profil.colloques')->with(compact('user'));
+        return view('frontend.pubdroit.profil.inscriptions')->with(compact('user'));
     }
 
     /**
