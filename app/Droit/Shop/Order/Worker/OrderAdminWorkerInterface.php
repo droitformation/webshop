@@ -9,4 +9,6 @@ interface OrderAdminWorkerInterface{
     public function total($commande, $proprety = 'price');
     public function insertOrder($commande);
     public function productIdFromForm($commande);
+    public function getCountProducts($order);
+    public function resetQty($order,$operator);
 }

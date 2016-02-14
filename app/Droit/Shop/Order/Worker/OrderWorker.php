@@ -2,7 +2,7 @@
 
 namespace App\Droit\Shop\Order\Worker;
 
-use App\Droit\Shop\Order\Worker\OrderWorkerInterface;
+use App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface;
 
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
@@ -20,17 +20,19 @@ class OrderWorker implements OrderWorkerInterface{
     protected $order;
     protected $cart;
     protected $worker;
+    protected $orderworker;
     protected $user;
     protected $generator;
     protected $product;
 
-    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator)
+    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator, OrderAdminWorkerInterface $orderworker)
     {
-        $this->order     = $order;
-        $this->cart      = $cart;
-        $this->worker    = $worker;
-        $this->user      = $user;
-        $this->generator = $generator;
+        $this->order       = $order;
+        $this->cart        = $cart;
+        $this->worker      = $worker;
+        $this->orderworker = $orderworker;
+        $this->user        = $user;
+        $this->generator   = $generator;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -52,7 +54,7 @@ class OrderWorker implements OrderWorkerInterface{
         // Order global
         $order = $this->insertOrder($commande);
         // Adjust Qty
-        $this->worker->resetQty($order,'-');
+        $this->orderworker->resetQty($order,'-');
         // Create invoice for order
         $job = (new CreateOrderInvoice($order));
         $this->dispatch($job);

@@ -2,8 +2,6 @@
 
 namespace App\Droit\Shop\Order\Worker;
 
-use App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface;
-
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
@@ -24,16 +22,25 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
     protected $shipping;
     protected $adresse;
 
-    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator, ProductInterface $product, ShippingInterface $shipping, AdresseInterface $adresse)
+    public function __construct(
+        OrderInterface $order,
+        CartWorkerInterface $worker,
+        UserInterface $user,
+        CartInterface $cart,
+        PdfGeneratorInterface $generator,
+        ProductInterface $product,
+        ShippingInterface $shipping,
+        AdresseInterface $adresse
+    )
     {
-        $this->order     = $order;
-        $this->cart      = $cart;
-        $this->worker    = $worker;
-        $this->user      = $user;
-        $this->product   = $product;
-        $this->shipping  = $shipping;
-        $this->generator = $generator;
-        $this->adresse   = $adresse;
+        $this->order       = $order;
+        $this->cart        = $cart;
+        $this->worker      = $worker;
+        $this->user        = $user;
+        $this->product     = $product;
+        $this->shipping    = $shipping;
+        $this->generator   = $generator;
+        $this->adresse     = $adresse;
     }
 
     public function prepare($commande)
@@ -203,7 +210,7 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         // Order global
         $order = $this->order->create($commande);
         // Adjust Qty
-        $this->worker->resetQty($order,'-');
+        $this->resetQty($order,'-');
 
         if(!$order)
         {
