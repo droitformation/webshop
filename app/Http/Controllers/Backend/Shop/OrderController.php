@@ -69,10 +69,6 @@ class OrderController extends Controller {
             $this->export($orders,$details);
         }
 
-   /*     echo '<pre>';
-        print_r($orders);
-        echo '</pre>';exit;*/
-
 		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names, 'onlyfree' => $onlyfree, 'details' => $details]);
 	}
 
@@ -149,10 +145,6 @@ class OrderController extends Controller {
             return redirect()->back()->withErrors($validator)->with('old_products', $products)->withInput();
         }
 
-  /*      echo '<pre>';
-        print_r($request->all());
-        echo '</pre>';exit;*/
-
         $order = $this->worker->make($request->all());
 
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
@@ -167,7 +159,10 @@ class OrderController extends Controller {
      */
     public function destroy($id)
     {
-        $this->order->delete($id);
+        $order = $this->order->find($id);
+
+        $this->worker->resetQty($order,'-');
+        $order->delete();
 
         return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));
     }

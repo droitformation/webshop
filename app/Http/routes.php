@@ -278,6 +278,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('subscriber', 'Backend\Newsletter\SubscriberController');
     Route::get('subscribers', ['uses' => 'Backend\Newsletter\SubscriberController@subscribers']);
 
+    Route::resource('import', 'Backend\Newsletter\ImportController');
     Route::resource('statistics', 'Backend\Newsletter\StatsController');
 
 });

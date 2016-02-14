@@ -117,6 +117,7 @@ $factory->define(App\Droit\Shop\Product\Entities\Product::class, function (Faker
     ];
 });
 
+
 $factory->define(App\Droit\Shop\Order\Entities\Order::class, function (Faker\Generator $faker) {
     return [
         'id'          => 100,

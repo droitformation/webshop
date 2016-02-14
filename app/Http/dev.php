@@ -6,47 +6,47 @@
 Route::get('cartworker', function()
 {
 
+    /*
+        $adresse_specialisation = new \App\Droit\Adresse\Entities\Adresse_specialisation();
 
-    $adresse_specialisation = new \App\Droit\Adresse\Entities\Adresse_specialisation();
+        $specialisations = $adresse_specialisation->where('adresse_id','=',1)->whereIn('specialisation_id',[1,71])-et();
+        /*
+            $query = 'SELECT adresse_id, COUNT(specialisation_id)
+                        FROM adresse_specialisations
+                        WHERE
+                             (adresse_id = 1 AND specialisation_id = 1)
+                          OR (adresse_id = 1 AND specialisation_id = 70)
+                           OR (adresse_id = 1 AND specialisation_id = 71)
+                        GROUP by adresse_id
+                        HAVING COUNT(specialisation_id) > 1';
 
-    $specialisations = $adresse_specialisation->where('adresse_id','=',1)->whereIn('specialisation_id',[1,71])->get();
+            $query = 'SELECT d.adresse_id, d.specialisation_id
+                        FROM   adresse_specialisations d
+                        JOIN   adresse_specialisations x ON d.adresse_id = x.adresse_id
+                        JOIN   adresse_specialisations y ON d.adresse_id = y.adresse_id
+                        WHERE  x.specialisation_id = 1
+                        AND    y.specialisation_id = 70';
 
-    $query = 'SELECT adresse_id, COUNT(specialisation_id)
-                FROM adresse_specialisations
-                WHERE
-                     (adresse_id = 1 AND specialisation_id = 1)
-                  OR (adresse_id = 1 AND specialisation_id = 70)
-                   OR (adresse_id = 1 AND specialisation_id = 71)
-                GROUP by adresse_id
-                HAVING COUNT(specialisation_id) > 1';
-
-    $query = 'SELECT d.adresse_id, d.specialisation_id
-                FROM   adresse_specialisations d
-                JOIN   adresse_specialisations x ON d.adresse_id = x.adresse_id
-                JOIN   adresse_specialisations y ON d.adresse_id = y.adresse_id
-                WHERE  x.specialisation_id = 1
-                AND    y.specialisation_id = 70';
-
-    $users =  DB::select( DB::raw($query) );
+            $users =  DB::select( DB::raw($query)
 
 
-    echo '<pre>';
-    print_r($users);
-    echo '</pre>';exit;
-/*
-    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+            echo '<pre>';
+            print_r($users);
+            echo '</pre>';exit;
+        /*
+            $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+            $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-    $item = $inscription->find(105);
+            $item = $inscription->find(105);
 
-    $item->load('colloque');
-    $annexes = $item->colloque->annexe;
+            $item->load('colloque');
+            $annexes = $item->colloque->annexe;
 
-    // Generate annexes if any
-    if(empty($item->documents) && !empty($annexes))
-    {
-        $generator->setInscription($item)->generate($annexes);
-    }*/
+            // Generate annexes if any
+            if(empty($item->documents) && !empty($annexes))
+            {
+                $generator->setInscription($item)->generate($annexes);
+            }*/
 
 //    $repo      = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
 //    $item      = $repo->find(82);
@@ -71,7 +71,22 @@ Route::get('cartworker', function()
 
     $worker->merge($files, 'binding');*/
 
-    exit;
+    $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $item  = $order->find(2908);
+
+    $products = $item->products->groupBy('id');
+
+    foreach($products as $id => $product)
+    {
+        $count[$id] = $product->sum(function ($item) {
+            return count($item['id']);
+        });
+    }
+
+
+    echo '<pre>';
+    print_r($count);
+    echo '</pre>';exit;
 
     /*
         $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');

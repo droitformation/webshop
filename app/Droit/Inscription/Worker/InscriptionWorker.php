@@ -26,8 +26,8 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $this->helper  = new \App\Droit\Helper\Helper();
     }
 
-    public function register($data,$colloque_id, $simple = false){
-
+    public function register($data,$colloque_id, $simple = false)
+    {
         if($simple)
         {
             $already = $this->inscription->getByUser($colloque_id,$data['user_id']);
@@ -43,6 +43,9 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         // Prepare data
         $data        = $data + ['inscription_no' => $inscription_no];
         $inscription = $this->inscription->create($data);
+
+        // Update counter
+        $this->colloque->increment($colloque_id);
 
         return $inscription;
     }

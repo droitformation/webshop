@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class InscriptionTest extends TestCase
+class NewsletterInscriptionTest extends TestCase
 {
     protected $mock;
     protected $subscription;

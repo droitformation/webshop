@@ -174,7 +174,7 @@ class InscriptionController extends Controller
         // if type simple
         if($type == 'simple')
         {
-            $inscription = $this->register->register($request->all(),$colloque, true);
+            $inscription = $this->register->register($request->all(), $colloque, true);
 
             event(new InscriptionWasCreated($inscription));
         }

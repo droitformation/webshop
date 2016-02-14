@@ -104,9 +104,9 @@ class InscriptionTest extends TestCase {
 
         $this->worker->shouldReceive('register')->once()->andReturn($inscription);
 
-        $response = $this->call('POST', '/admin/inscription', $input);
+        $response = $this->call('POST', 'registration', $input);
 
-        $this->assertRedirectedTo('/inscription/71');
+        $this->assertRedirectedTo('colloque');
 
     }
 

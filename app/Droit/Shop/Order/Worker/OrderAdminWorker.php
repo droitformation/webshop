@@ -202,6 +202,8 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
 
         // Order global
         $order = $this->order->create($commande);
+        // Adjust Qty
+        $this->worker->resetQty($order,'+');
 
         if(!$order)
         {
@@ -209,6 +211,47 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         }
 
         return $order;
+    }
+
+    public function getCountProducts($order)
+    {
+        $products = $order->products->groupBy('id');
+
+        foreach($products as $id => $product)
+        {
+            $count[$id] = $product->sum(function ($item) {
+                return count($item['id']);
+            });
+        }
+
+        return $count;
+    }
+
+    public function resetQty($order,$operator)
+    {
+        $products = $this->getCountProducts($order);
+
+        if(!empty($products))
+        {
+            foreach($products as $product_id => $qty)
+            {
+                $product = $this->product->find($product_id);
+
+                switch($operator)
+                {
+                    case "+":
+                        $result = $product->sku + $qty;
+                        break;
+
+                    case "-";
+                        $result = $product->sku - $qty;
+                        break;
+                }
+
+                $product->sku = $result;
+                $product->save();
+            }
+        }
     }
 
 }

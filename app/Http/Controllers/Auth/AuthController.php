@@ -63,7 +63,7 @@ class AuthController extends Controller {
             return '/admin';
         }
 
-        return '/profile';
+        return '/profil';
     }
 
     /**

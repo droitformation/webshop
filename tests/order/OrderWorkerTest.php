@@ -114,7 +114,6 @@ class OrderWorkerTest extends TestCase {
 
     }
 
-
     /* Order Worker for administration
      * */
     /**
@@ -245,4 +244,5 @@ class OrderWorkerTest extends TestCase {
 
         $this->assertEquals($expected,$result);
     }
+
 }

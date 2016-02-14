@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Colloque;
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
+use App\Droit\Inscription\Worker\InscriptionWorkerInterface;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionRequest;
 use App\Http\Controllers\Controller;
@@ -14,16 +15,18 @@ class InscriptionController extends Controller
 {
     protected $inscription;
     protected $colloque;
+    protected $register;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription)
+    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, InscriptionWorkerInterface $register)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
+        $this->register    = $register;
     }
 
     /**
@@ -46,15 +49,7 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
-        $colloque = $this->colloque->find($request->input('colloque_id'));
-        $inscription_no  = $this->colloque->getNewNoInscription($colloque->id);
-
-        // Prepare data
-        $data        = $request->all() + ['inscription_no' => $inscription_no];
-        $inscription = $this->inscription->create($data);
-
-        // Update counter
-        $this->colloque->increment($colloque->id);
+        $inscription = $this->register->register($request->all(), $request->input('colloque_id'), true);
 
         event(new InscriptionWasRegistered($inscription));
 
