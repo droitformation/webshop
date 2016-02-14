@@ -52,7 +52,7 @@ class OrderWorker implements OrderWorkerInterface{
         // Order global
         $order = $this->insertOrder($commande);
         // Adjust Qty
-        $this->worker->resetQty($order,'+');
+        $this->worker->resetQty($order,'-');
         // Create invoice for order
         $job = (new CreateOrderInvoice($order));
         $this->dispatch($job);

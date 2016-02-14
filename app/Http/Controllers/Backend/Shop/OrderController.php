@@ -161,7 +161,7 @@ class OrderController extends Controller {
     {
         $order = $this->order->find($id);
 
-        $this->worker->resetQty($order,'-');
+        $this->worker->resetQty($order,'+');
         $order->delete();
 
         return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));

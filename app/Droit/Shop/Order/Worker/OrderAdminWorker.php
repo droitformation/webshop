@@ -203,7 +203,7 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         // Order global
         $order = $this->order->create($commande);
         // Adjust Qty
-        $this->worker->resetQty($order,'+');
+        $this->worker->resetQty($order,'-');
 
         if(!$order)
         {
