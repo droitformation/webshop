@@ -23,7 +23,7 @@ class BlocController extends Controller
         $this->upload  = $upload;
         $this->page    = $page;
 
-       view()->share('positions', ['sidebar' => 'Barre latérale', 'page' => 'Dans page']);
+        view()->share('positions', ['sidebar' => 'Barre latérale', 'page' => 'Dans page']);
     }
 
     /**

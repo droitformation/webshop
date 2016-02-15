@@ -249,6 +249,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('bloc/create/{site}','Backend\BlocController@create');
     Route::resource('bloc',      'Backend\BlocController');
 
+    Route::get('menus/{site}','Backend\MenuController@index');
+    Route::get('menu/create/{site}','Backend\MenuController@create');
+    Route::resource('menu', 'Backend\MenuController');
+
     Route::resource('author',    'Backend\Content\AuthorController');
 
     Route::get('pages/{site}','Backend\PageController@index');
