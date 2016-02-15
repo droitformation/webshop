@@ -516,8 +516,12 @@ select[multiple] {
 }
 
 .site-dropdown {
-    padding: 10px 15px;
+    padding: 10px 5px;
     width: 240px;
+}
+
+.dropdown-menu > li.site-dropdown{
+    margin-bottom: 5px;
 }
 
 .site-dropdown ul{
@@ -528,4 +532,9 @@ select[multiple] {
 
 .navbar-inverse .navbar-nav > li.sitedrop a{
     color: #fff;
+    margin-bottom: 5px;
  }
+
+.navbar-inverse .navbar-nav > li.sitedrop a:hover{
+    background: none;
+}

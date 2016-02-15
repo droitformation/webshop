@@ -1,19 +1,27 @@
 @extends('backend.layouts.master')
 @section('content')
 
+<?php $site = $sites->find($current); ?>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Analyses</h3>
+    </div>
+    <div class="col-md-6">
+        <div class="options text-right" style="margin-bottom: 10px;">
+            <div class="btn-toolbar">
+                <a href="{{ url('admin/analyse/create/'.$site->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
 
-        <div class="options text-right" style="margin-bottom: 10px;">
-            <div class="btn-toolbar">
-                <a href="{{ url('admin/analyse/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-            </div>
-        </div>
+        <h4><img height="100%" style="width: 150px;" src="{{ asset('logos/'.$site->logo) }}" alt="{{ $site->nom }}" /></h4>
 
         <div class="panel panel-midnightblue">
-            <div class="panel-heading">
-                <h4><i class="fa fa-edit"></i> &nbsp;Analyses</h4>
-            </div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table" style="margin-bottom: 0px;" id="generic">
@@ -27,29 +35,28 @@
                         </tr>
                         </thead>
                         <tbody class="selects">
-                        <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
-                        @if(!empty($analyses))
-                            @foreach($analyses as $analyse)
-                            <tr>
-                                <td><a class="btn btn-sky btn-sm" href="{{ url('admin/analyse/'.$analyse->id) }}">éditer</a></td>
-                                <td>
-                                    @if(isset($analyse->analyse_authors))
-                                        @foreach($analyse->analyse_authors as $analyse_authors)
-                                            <p><strong>{{ $analyse_authors->name }}</strong></p>
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td>{{ $analyse->pub_date->formatLocalized('%d %B %Y') }}</td>
-                                <td>{{ $analyse->abstract }}</td>
-                                <td>
-                                    <form action="{{ url('admin/analyse/'.$analyse->id) }}" method="POST" class="form-horizontal">
-                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                        <button data-what="supprimer" data-action="analyse" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        @endif
+                            @if(!empty($analyses))
+                                @foreach($analyses as $analyse)
+                                <tr>
+                                    <td><a class="btn btn-sky btn-sm" href="{{ url('admin/analyse/'.$analyse->id) }}">éditer</a></td>
+                                    <td>
+                                        @if(isset($analyse->analyse_authors))
+                                            @foreach($analyse->analyse_authors as $analyse_authors)
+                                                <p><strong>{{ $analyse_authors->name }}</strong></p>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td>{{ $analyse->pub_date->formatLocalized('%d %B %Y') }}</td>
+                                    <td>{{ $analyse->abstract }}</td>
+                                    <td>
+                                        <form action="{{ url('admin/analyse/'.$analyse->id) }}" method="POST" class="form-horizontal">
+                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                            <button data-what="supprimer" data-action="analyse" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @endif
 
                         </tbody>
                     </table>

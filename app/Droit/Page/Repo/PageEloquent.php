@@ -12,13 +12,13 @@ class PageEloquent implements PageInterface{
         $this->page = $page;
     }
 
-    public function getAll($site = null){
-
+    public function getAll($site = null)
+    {
         return $this->page->site($site)->orderBy('rang')->get();
     }
 
-    public function getTree($key = null, $seperator = '  '){
-
+    public function getTree($key = null, $seperator = '  ',$site = null)
+    {
         return $this->page->getNestedList('title', $key, $seperator);
     }
 
@@ -27,9 +27,9 @@ class PageEloquent implements PageInterface{
         return $this->page->where('content','LIKE', '%'.$term.'%')->get();
     }
 
-    public function getRoot(){
-
-        return $this->page->where('parent_id','=',0)->orderBy('rang')->get();
+    public function getRoot($site = null)
+    {
+        return $this->page->site($site)->where('parent_id','=',0)->orderBy('rang')->get();
     }
 
     public function find($id){

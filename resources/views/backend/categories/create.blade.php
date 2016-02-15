@@ -34,8 +34,8 @@
                         @if(!$sites->isEmpty())
                             <select class="form-control" name="site_id">
                                 <option value="">Appartient au site</option>
-                                @foreach($sites as $site)
-                                    <option value="{{ $site->id }}">{{ $site->nom }}</option>
+                                @foreach($sites as $select)
+                                    <option {{ $select->id == $site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
                                 @endforeach
                             </select>
                         @endif
@@ -58,6 +58,7 @@
                 <div class="col-sm-3">
                     <input type="hidden" name="hideOnSite" value="0">
                     <input type="hidden" name="ismain" value="0">
+                    <input type="hidden" name="site_id" value="{{ $site }}">
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary" type="submit">Envoyer</button>

@@ -3,8 +3,8 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p class="pull-left"><a class="btn btn-default" href="{{ url('admin/page') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
-        <p class="pull-right"><a href="{{ url('admin/page/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une page</a></p>
+        <p class="pull-left"><a class="btn btn-default" href="{{ url('admin/pages/'.$page->site_id) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p class="pull-right"><a href="{{ url('admin/page/create/'.$page->site_id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une page</a></p>
     </div>
 </div>
 

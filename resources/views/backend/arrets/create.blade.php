@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{!! url('admin/arret') !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{!! url('admin/arrets/'.$site) !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 
@@ -28,8 +28,8 @@
                         @if(!$sites->isEmpty())
                             <select class="form-control" name="site_id">
                                 <option value="">Appartient au site</option>
-                                @foreach($sites as $site)
-                                    <option value="{{ $site->id }}">{{ $site->nom }}</option>
+                                @foreach($sites as $select)
+                                    <option {{ $select->id == $site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
                                 @endforeach
                             </select>
                         @endif
@@ -109,7 +109,7 @@
             </div>
             <div class="panel-footer mini-footer ">
                 <div class="col-sm-3">
-                    {!! Form::hidden('user_id', \Auth::user()->id )!!}
+                    <input type="hidden" name="site_id" value="{{ $site }}">
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary" type="submit">Envoyer </button>

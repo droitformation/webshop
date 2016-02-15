@@ -32,24 +32,22 @@ class BlocController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($site)
     {
-        $blocs = $this->bloc->getAll();
+        $blocs = $this->bloc->getAll($site);
 
-        return view('backend.bloc.index')->with(['blocs' => $blocs]);
+        return view('backend.bloc.index')->with(['blocs' => $blocs, 'current' => $site]);
     }
 
     /**
      * Show the form for creating a new resource.
-     * GET /bloc/create
+     * GET /categorie/create
      *
      * @return Response
      */
-    public function create()
+    public function create($site)
     {
-        $sites = $this->site->getAll();
-
-        return view('backend.bloc.create',['sites' => $sites]);
+        return view('backend.bloc.create')->with(['site' => $site]);
     }
 
     /**

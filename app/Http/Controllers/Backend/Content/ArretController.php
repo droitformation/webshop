@@ -33,12 +33,12 @@ class ArretController extends Controller {
 	 * @return Response
 	 */
 
-    public function index()
+    public function index($site)
     {
-        $arrets     = $this->arret->getAll();
+        $arrets     = $this->arret->getAll($site);
         $categories = $this->categorie->getAll();
 
-        return view('backend.arrets.index')->with(['arrets' => $arrets , 'categories' => $categories]);
+        return view('backend.arrets.index')->with(['arrets' => $arrets , 'categories' => $categories, 'current' => $site]);
     }
 
     /**
@@ -56,14 +56,15 @@ class ArretController extends Controller {
 
     /**
      * Show the form for creating a new resource.
-     *
+     * GET /categorie/create
+     * IsNewsletter for multiselect list scripts
      * @return Response
      */
-    public function create()
+    public function create($site)
     {
         $categories = $this->categorie->getAll();
 
-        return view('backend.arrets.create')->with([ 'isNewsletter' => true, 'categories' => $categories]);
+        return view('backend.arrets.create')->with(['isNewsletter' => true, 'site' => $site, 'categories' => $categories ]);
     }
 
     /**

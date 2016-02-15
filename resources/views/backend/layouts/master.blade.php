@@ -80,74 +80,70 @@
                     <a href="#" class="dropdown-toggle tooltips color-{{ $site->slug }}" data-toggle="dropdown">{{ $site->nom }}</a>
                     <ul class="dropdown-menu arrow dropdown-menu-form site-dropdown">
                         <li>
-                            <ul>
-                                <li>
-                                    <a class="shortcut-tiles tiles-sky" href="{{ url('admin/menus/'.$site->id) }}">
-                                        <div class="tiles-body">
-                                            <div class="pull-left"><i class="fa fa-list"></i></div>
-                                        </div>
-                                        <div class="tiles-footer">Menus</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="shortcut-tiles tiles-orange" href="{{ url('admin/pages/'.$site->id) }}">
-                                        <div class="tiles-body">
-                                            <div class="pull-left"><i class="fa fa-file"></i></div>
-                                        </div>
-                                        <div class="tiles-footer">Pages</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="shortcut-tiles tiles-primary" href="{{ url('admin/blocs/'.$site->id) }}">
-                                        <div class="tiles-body">
-                                            <div class="pull-left"><i class="fa fa-list"></i></div>
-                                        </div>
-                                        <div class="tiles-footer">Bloc de contenus</div>
-                                    </a>
-                                </li>
-                                @if($site->id == 1)
-                                    <li>
-                                        <a class="shortcut-tiles tiles-inverse" href="{{ url('admin/orders') }}">
-                                            <div class="tiles-body">
-                                                <div class="pull-left"><i class="fa fa-shopping-cart"></i></div>
-                                            </div>
-                                            <div class="tiles-footer">Commandes</div>
-                                        </a>
-                                    </li>
-                                   <li>
-                                       <a class="shortcut-tiles tiles-indigo" href="{{ url('admin/inscriptions') }}">
-                                           <div class="tiles-body">
-                                               <div class="pull-left"><i class="fa fa-calendar"></i></div>
-                                           </div>
-                                           <div class="tiles-footer">Inscriptions</div>
-                                       </a>
-                                   </li>
-                                @endif
-
-                                @if(!$site->arrets->isEmpty())
-                                    <li>
-                                        <a class="shortcut-tiles tiles-success" href="{{ url('admin/arrets/'.$site->id) }}">
-                                            <div class="tiles-body">
-                                                <div class="pull-left"><i class="fa fa-edit"></i></div>
-                                            </div>
-                                            <div class="tiles-footer">Arrêts</div>
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if(!$site->analyses->isEmpty())
-                                    <li>
-                                        <a class="shortcut-tiles tiles-magenta" href="{{ url('admin/analyses/'.$site->id) }}">
-                                            <div class="tiles-body">
-                                                <div class="pull-left"><i class="fa fa-dot-circle-o"></i></div>
-                                            </div>
-                                            <div class="tiles-footer">Analyses</div>
-                                        </a>
-                                    </li>
-                                @endif
-
-                            </ul>
+                            <a class="shortcut-tiles tiles-sky" href="{{ url('admin/menus/'.$site->id) }}">
+                                <div class="tiles-body">
+                                    <div class="pull-left"><i class="fa fa-list"></i></div>
+                                </div>
+                                <div class="tiles-footer">Menus</div>
+                            </a>
                         </li>
+                        <li>
+                            <a class="shortcut-tiles tiles-orange" href="{{ url('admin/pages/'.$site->id) }}">
+                                <div class="tiles-body">
+                                    <div class="pull-left"><i class="fa fa-file"></i></div>
+                                </div>
+                                <div class="tiles-footer">Pages</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="shortcut-tiles tiles-primary" href="{{ url('admin/blocs/'.$site->id) }}">
+                                <div class="tiles-body">
+                                    <div class="pull-left"><i class="fa fa-list"></i></div>
+                                </div>
+                                <div class="tiles-footer">Bloc de contenus</div>
+                            </a>
+                        </li>
+                        @if($site->id == 1)
+                            <li>
+                                <a class="shortcut-tiles tiles-inverse" href="{{ url('admin/orders') }}">
+                                    <div class="tiles-body">
+                                        <div class="pull-left"><i class="fa fa-shopping-cart"></i></div>
+                                    </div>
+                                    <div class="tiles-footer">Commandes</div>
+                                </a>
+                            </li>
+                           <li>
+                               <a class="shortcut-tiles tiles-indigo" href="{{ url('admin/inscriptions') }}">
+                                   <div class="tiles-body">
+                                       <div class="pull-left"><i class="fa fa-calendar"></i></div>
+                                   </div>
+                                   <div class="tiles-footer">Inscriptions</div>
+                               </a>
+                           </li>
+                        @endif
+
+                        @if(!$site->arrets->isEmpty())
+                            <li>
+                                <a class="shortcut-tiles tiles-success" href="{{ url('admin/arrets/'.$site->id) }}">
+                                    <div class="tiles-body">
+                                        <div class="pull-left"><i class="fa fa-edit"></i></div>
+                                    </div>
+                                    <div class="tiles-footer">Arrêts</div>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if(!$site->analyses->isEmpty())
+                            <li>
+                                <a class="shortcut-tiles tiles-magenta" href="{{ url('admin/analyses/'.$site->id) }}">
+                                    <div class="tiles-body">
+                                        <div class="pull-left"><i class="fa fa-dot-circle-o"></i></div>
+                                    </div>
+                                    <div class="tiles-footer">Analyses</div>
+                                </a>
+                            </li>
+                        @endif
+
                     </ul>
                 </li>
             @endforeach

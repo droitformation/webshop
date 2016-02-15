@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/analyse') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{{ url('admin/analyses/'.$site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 
@@ -32,14 +32,14 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Auteurs</label>
                     <div class="col-sm-3">
-                        <select multiple class="form-control" id="author" name="author_id[]">
-                            <option value="">Choisir</option>
-                            @if(!empty($auteurs))
-                                @foreach($auteurs as $auteur)
-                                    <option value="{{ $auteur->id }}">{{ $auteur->name }}</option>
+                        @if(!$sites->isEmpty())
+                            <select class="form-control" name="site_id">
+                                <option value="">Appartient au site</option>
+                                @foreach($sites as $select)
+                                    <option {{ $select->id == $site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
                                 @endforeach
-                            @endif
-                        </select>
+                            </select>
+                        @endif
                     </div>
                 </div>
 
@@ -119,7 +119,7 @@
             </div>
             <div class="panel-footer mini-footer ">
                 <div class="col-sm-3">
-                    {!! Form::hidden('user_id', \Auth::user()->id )!!}
+                    <input type="hidden" name="site_id" value="{{ $site }}">
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary" type="submit">Envoyer </button>

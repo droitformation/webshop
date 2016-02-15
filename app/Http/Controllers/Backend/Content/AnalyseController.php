@@ -41,12 +41,12 @@ class AnalyseController extends Controller {
 	 * @return Response
 	 */
 
-    public function index()
+    public function index($site)
     {
-        $analyses   = $this->analyse->getAll();
-        $categories = $this->categorie->getAll();
+        $analyses   = $this->analyse->getAll($site);
+        $categories = $this->categorie->getAll($site);
 
-        return view('backend.analyses.index')->with(['analyses' => $analyses , 'categories' => $categories]);
+        return view('backend.analyses.index')->with(['analyses' => $analyses , 'categories' => $categories, 'current' => $site]);
     }
 
     /**
@@ -69,13 +69,13 @@ class AnalyseController extends Controller {
      *
      * @return Response
      */
-    public function create()
+    public function create($site)
     {
-        $arrets     = $this->arret->getAll();
-        $categories = $this->categorie->getAll();
+        $arrets     = $this->arret->getAll($site);
+        $categories = $this->categorie->getAll($site);
         $auteurs    = $this->author->getAll();
 
-        return view('backend.analyses.create')->with(['isNewsletter' => true, 'arrets' => $arrets, 'categories' => $categories, 'auteurs' => $auteurs]);
+        return view('backend.analyses.create')->with(['isNewsletter' => true, 'arrets' => $arrets, 'categories' => $categories, 'auteurs' => $auteurs, 'site' => $site]);
     }
 
     /**

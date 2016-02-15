@@ -34,12 +34,12 @@ class PageController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($site)
     {
-        $pages = $this->page->getAll();
-        $root  = $this->page->getRoot();
+        $pages = $this->page->getAll($site);
+        $root  = $this->page->getRoot($site);
 
-        return view('backend.pages.index')->with(array( 'pages' => $pages, 'root' => $root));
+        return view('backend.pages.index')->with(['pages' => $pages, 'root' => $root, 'current' => $site]);
     }
 
     /**
@@ -47,12 +47,11 @@ class PageController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($site)
     {
-        $pages    = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
-        $menus    = $this->menu->getAll();
+        $menus = $this->menu->getAll($site);
 
-        return view('backend.pages.create')->with(['pages' => $pages,'menus' => $menus]);
+        return view('backend.pages.create')->with(['menus' => $menus, 'site' => $site]);
     }
 
     /**
@@ -76,10 +75,9 @@ class PageController extends Controller
     public function show($id)
     {
         $page  = $this->page->find($id);
-        $pages = $this->page->getTree('id', '&nbsp;&nbsp;&nbsp;');
         $menus = $this->menu->getAll();
 
-        return view('backend.pages.show')->with(array( 'page' => $page ,'pages' => $pages, 'menus' => $menus));
+        return view('backend.pages.show')->with(array( 'page' => $page , 'menus' => $menus));
     }
 
     /**

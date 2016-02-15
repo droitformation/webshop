@@ -15,9 +15,11 @@ class BlocEloquent implements BlocInterface{
 		$this->bloc = $bloc;
 	}
 
-    public function getAll()
+    public function getAll($site = null)
 	{
-        return $this->bloc->orderBy('rang','ASC')->get();
+        return $this->bloc->with(['pages'])->whereHas('pages', function ($query) use ($site) {
+			$query->where('pages.site_id', '=', $site);
+		})->orderBy('rang','ASC')->get();
     }
 
 	public function find($id)

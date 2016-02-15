@@ -24,6 +24,17 @@ class Bloc extends Model {
         }
     }
 
+    /**
+     * Scope a query to only include arrets for site
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+
+    public function scopeSites($query,$site)
+    {
+        if ($site) $query->where('site_id','=',$site);
+    }
+     */
+
     public function truncate($s, $l, $e = '...', $isHTML = false)
     {
         $i    = 0;

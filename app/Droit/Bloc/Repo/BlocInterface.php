@@ -2,7 +2,7 @@
 
 interface BlocInterface {
 
-    public function getAll();
+	public function getAll($site = null);
 	public function find($id);
     public function findyByPosition(array $positions);
 	public function findyByType($type);

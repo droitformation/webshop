@@ -3,6 +3,8 @@
 interface PageInterface {
 
     public function getAll($site = null);
+    public function getRoot($site = null);
+    public function getTree($key = null, $seperator = '  ',$site = null);
     public function find($id);
     public function search($term);
     public function buildTree($data);

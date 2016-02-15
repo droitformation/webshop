@@ -233,16 +233,26 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     |--------------------------------------------------------------------------
     */
 
+    Route::get('arrets/{site}','Backend\Content\ArretController@index');
+    Route::get('arret/create/{site}','Backend\Content\ArretController@create');
     Route::resource('arret',     'Backend\Content\ArretController');
+
+    Route::get('analyses/{site}','Backend\Content\AnalyseController@index');
+    Route::get('analyse/create/{site}','Backend\Content\AnalyseController@create');
     Route::resource('analyse',   'Backend\Content\AnalyseController');
 
     Route::get('categories/{site}','Backend\Content\CategorieController@index');
     Route::get('categorie/create/{site}','Backend\Content\CategorieController@create');
     Route::resource('categorie', 'Backend\Content\CategorieController');
 
-    Route::resource('author',    'Backend\Content\AuthorController');
+    Route::get('blocs/{site}','Backend\BlocController@index');
+    Route::get('bloc/create/{site}','Backend\BlocController@create');
     Route::resource('bloc',      'Backend\BlocController');
 
+    Route::resource('author',    'Backend\Content\AuthorController');
+
+    Route::get('pages/{site}','Backend\PageController@index');
+    Route::get('page/create/{site}','Backend\PageController@create');
     Route::post('page/sorting','Backend\PageController@sorting');
     Route::resource('page',      'Backend\PageController');
 
