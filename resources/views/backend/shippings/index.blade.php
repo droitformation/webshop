@@ -2,21 +2,21 @@
 @section('content')
 
     <div class="row">
+        <div class="col-md-10">
+            <h3>Frais de port</h3>
+        </div>
+        <div class="col-md-2 text-right">
+            <a href="{{ url('admin/shipping/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
 
-            <div class="options text-right" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/shipping/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-                </div>
-            </div>
-
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Frais de port</h4>
-                </div>
                 <div class="panel-body">
 
-                    <table class="table" id="arrets">
+                    <table class="table simple-table">
                         <thead>
                             <tr>
                                 <th>Action</th>

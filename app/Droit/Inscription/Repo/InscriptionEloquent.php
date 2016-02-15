@@ -15,12 +15,12 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getAll($nbr = null){
 
-        return $this->inscription->with(['price','colloque','user'])->take($nbr)->orderBy('created_at','DESC')->get();
+        return $this->inscription->with(['price','colloque','user','duplicate'])->take($nbr)->orderBy('created_at','DESC')->get();
     }
 
     public function getByColloque($id,$type = false,$paginate = false)
     {
-        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user_options.option_groupe','user.adresses' => function($query)
+        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','duplicate','user_options.option_groupe','user.adresses' => function($query)
         {
             $query->where('adresses.type','=',1);
 
@@ -41,7 +41,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByColloqueTrashed($id)
     {
-        return $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user','participant','groupe'])->onlyTrashed()->groupBy('id')->get();
+        return $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user','participant','groupe','duplicate'])->onlyTrashed()->groupBy('id')->get();
     }
 
     public function getByUser($colloque_id,$user_id)

@@ -1,6 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
     <?php $helper = new \App\Droit\Helper\Helper(); ?>
+
     <div class="row">
         <div class="col-md-12">
 
@@ -40,9 +41,8 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
-                    <h4><i class="fa fa-tasks"></i> &nbsp;Inscriptions</h4>
                     <div class="table-responsive">
-
+                        <h3>Inscriptions</h3>
                         <table class="table" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                             <thead>
                             <tr>

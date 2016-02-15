@@ -162,7 +162,7 @@ class Inscription extends Model
 
     public function duplicate()
     {
-        return $this->belongsTo('App\Droit\User\Entities\User_duplicates', 'user_id', 'user_id');
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse', 'duplicate_id', 'user_id');
     }
 
     public function groupe()

@@ -43,6 +43,8 @@ class SpecialisationController extends Controller {
         {
             return response()->json( $data, 200 );
         }
+
+        return view('backend.specialisations.index')->with(['specialisations' => $specialisations]);
 	}
 
     public function search(Request $request)
@@ -65,43 +67,71 @@ class SpecialisationController extends Controller {
             return response()->json( $data, 200 );
         }
     }
+
+    public function create()
+    {
+        return view('backend.specialisations.create');
+    }
+
+    public function show($id)
+    {
+        $specialisation = $this->specialisation->find($id);
+
+        return view('backend.specialisations.show')->with(['specialisation' => $specialisation]);
+    }
+
+    public function update(Request $request)
+    {
+        $specialisation = $this->specialisation->update($request->all());
+
+        return redirect('admin/specialisation')->with(['status' => 'success' , 'message' => 'Spécialisations mise à jour']);
+    }
 	
 	public function store(Request $request)
 	{
-        $id             = $request->input('id');
-		$specialisation = $request->input('specialisation');
-        $model          = $request->input('model');
-		$find           = $this->specialisation->search($specialisation);
-
-		// If specialisation not found	
-    	if(!$find)
-		{
-			$find = $this->specialisation->create(['title' => $specialisation, $model.'_id' => $id]);
-		}
-
-        $item = $this->$model->find($id);
-        $item->specialisations()->attach($find->id);
-
         if($request->ajax())
         {
+            $id             = $request->input('id');
+            $specialisation = $request->input('specialisation');
+            $model          = $request->input('model');
+            $find           = $this->specialisation->search($specialisation);
+
+            // If specialisation not found
+            if(!$find)
+            {
+                $find = $this->specialisation->create(['title' => $specialisation, $model.'_id' => $id]);
+            }
+
+            $item = $this->$model->find($id);
+            $item->specialisations()->attach($find->id);
+
             return response()->json( $find , 200 );
         }
+
+        $specialisation = $this->specialisation->create($request->all());
+
+        return redirect('admin/specialisation')->with(['status' => 'success' , 'message' => 'Spécialisations crée']);
 	}
 		
 	public function destroy(Request $request)
 	{
-        $id             = $request->input('id');
-		$specialisation = $request->input('specialisation');
-        $model          = $request->input('model');
-        $find           = $this->specialisation->search($specialisation);
-
-        $item   = $this->$model->find($id);
-        $item->specialisations()->detach($find->id);
+        $id = $request->input('id');
 
         if($request->ajax())
         {
+            $specialisation = $request->input('specialisation');
+            $model          = $request->input('model');
+            $find           = $this->specialisation->search($specialisation);
+
+            $item   = $this->$model->find($id);
+            $item->specialisations()->detach($find->id);
+
             return response()->json( $specialisation, 200 );
         }
+
+        $this->specialisation->delete($id);
+
+        return redirect('admin/specialisation')->with(['status' => 'success' , 'message' => 'Spécialisations supprimé']);
 	}
 
 

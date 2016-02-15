@@ -4,12 +4,6 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="options text-right" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/product/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-                </div>
-            </div>
-
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form class="form-horizontal" action="{{ url('admin/products') }}" method="post">
@@ -29,6 +23,10 @@
                                 <label>&nbsp;</label><br/>
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-filter"></i> &nbsp;Trier</button>
                                 <a class="btn btn-default" href="{{ url('admin/products') }}">Tous</a>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <label>&nbsp;</label><br/>
+                                <a href="{{ url('admin/product/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
                             </div>
                         </div>
                     </form>
@@ -102,9 +100,9 @@
                                     <div class="col-md-2 text-right">
                                         <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
+                                            <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-sm btn-info">&nbsp;éditer&nbsp;</a>
                                             @if($product->orders->count() == 0)
-                                            <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-xs deleteAction">&nbsp; x &nbsp;</button>
+                                            <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-sm deleteAction">&nbsp; x &nbsp;</button>
                                             @endif
                                         </form>
                                     </div>

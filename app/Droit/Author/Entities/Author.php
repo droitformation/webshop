@@ -18,7 +18,6 @@ class Author extends Model {
         return $this->first_name.' '.$this->last_name.', '.$this->occupation;
     }
 
-
     public function getTitleAttribute()
     {
         return $this->first_name.' '.$this->last_name;

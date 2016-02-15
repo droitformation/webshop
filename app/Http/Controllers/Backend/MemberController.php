@@ -40,7 +40,21 @@ class MemberController extends Controller {
         {
             return response()->json( $data, 200 );
         }
+
+        return view('backend.members.index')->with(['members' => $members]);
 	}
+
+    public function create()
+    {
+        return view('backend.members.create');
+    }
+
+    public function show($id)
+    {
+        $member = $this->member->find($id);
+
+        return view('backend.members.show')->with(['member' => $member]);
+    }
 
     public function search(Request $request)
     {
@@ -65,32 +79,41 @@ class MemberController extends Controller {
 	
 	public function store(Request $request)
 	{
-        $id     = $request->input('id');
-		$member = $request->input('member');
-		$find   = $this->member->search($member);
-
-        $adresse = $this->adresse->find($id);
-        $adresse->members()->attach($find->id);
-
         if($request->ajax())
         {
+            $id     = $request->input('id');
+            $member = $request->input('member');
+            $find   = $this->member->search($member);
+
+            $adresse = $this->adresse->find($id);
+            $adresse->members()->attach($find->id);
+
             return response()->json( $find , 200 );
         }
+
+        $member = $this->member->create($request->all());
+
+        return redirect('admin/member')->with(['status' => 'success' , 'message' => 'Membre crée']);
 	}
 		
 	public function destroy(Request $request)
 	{
-        $id     = $request->input('id');
-		$member = $request->input('member');
-        $find   = $this->member->search($member);
-
-        $adresse   = $this->adresse->find($id);
-        $adresse->members()->detach($find->id);
+        $id = $request->input('id');
 
         if($request->ajax())
         {
+            $member = $request->input('member');
+            $find   = $this->member->search($member);
+
+            $adresse   = $this->adresse->find($id);
+            $adresse->members()->detach($find->id);
+
             return response()->json( $member, 200 );
         }
+
+        $this->member->delete($id);
+
+        return redirect('admin/member')->with(['status' => 'success' , 'message' => 'Membre supprimé']);
 	}
 
 
