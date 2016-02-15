@@ -14371,3 +14371,22 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .input-group-addon:not(:first-child) {
   border-left: 0;
 }
+
+.line-delimiter{
+  padding: 40px 0;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 15px;
+}
+
+.line-delimiter:before{
+  content: '—';
+  padding-right: 10px;
+}
+
+.line-delimiter:after{
+  content: '—';
+  padding-left: 10px;
+}

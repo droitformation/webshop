@@ -185,6 +185,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('product', 'Backend\Shop\ProductController');
 
     Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
+    Route::post('order/edit', 'Backend\Shop\OrderController@edit');
     Route::post('order/export', 'Backend\Shop\OrderController@export');
     Route::resource('order', 'Backend\Shop\OrderController');
 

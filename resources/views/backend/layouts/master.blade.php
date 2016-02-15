@@ -65,13 +65,8 @@
 
     <ul class="nav navbar-nav pull-right toolbar">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
-               <span class="hidden-xs">&nbsp;{{ $current_user }}<i class="fa fa-caret-down"></i></span>
-            </a>
+            <a href="#" class="dropdown-toggle tooltips" data-toggle="dropdown">{{ $current_user }}</a>
             <ul class="dropdown-menu userinfo arrow">
-                <li class="username">
-                    <a href="#"><div class="pull-right"><h5>Bonjour, {{ $current_user }}!</h5></div></a>
-                </li>
                 <li class="userlinks">
                     <ul class="dropdown-menu">
                         <li><a href="{{ url('auth/logout') }}"><i class="pull-right fa  fa-power-off"></i> Logout</a></li>
@@ -79,6 +74,84 @@
                 </li>
             </ul>
         </li>
+        @if(!$sites->isEmpty())
+            @foreach($sites as $site)
+                <li class="dropdown demodrop sitedrop">
+                    <a href="#" class="dropdown-toggle tooltips color-{{ $site->slug }}" data-toggle="dropdown">{{ $site->nom }}</a>
+                    <ul class="dropdown-menu arrow dropdown-menu-form site-dropdown">
+                        <li>
+                            <ul>
+                                <li>
+                                    <a class="shortcut-tiles tiles-sky" href="{{ url('admin/menus/'.$site->id) }}">
+                                        <div class="tiles-body">
+                                            <div class="pull-left"><i class="fa fa-list"></i></div>
+                                        </div>
+                                        <div class="tiles-footer">Menus</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="shortcut-tiles tiles-orange" href="{{ url('admin/pages/'.$site->id) }}">
+                                        <div class="tiles-body">
+                                            <div class="pull-left"><i class="fa fa-file"></i></div>
+                                        </div>
+                                        <div class="tiles-footer">Pages</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="shortcut-tiles tiles-primary" href="{{ url('admin/blocs/'.$site->id) }}">
+                                        <div class="tiles-body">
+                                            <div class="pull-left"><i class="fa fa-list"></i></div>
+                                        </div>
+                                        <div class="tiles-footer">Bloc de contenus</div>
+                                    </a>
+                                </li>
+                                @if($site->id == 1)
+                                    <li>
+                                        <a class="shortcut-tiles tiles-inverse" href="{{ url('admin/orders') }}">
+                                            <div class="tiles-body">
+                                                <div class="pull-left"><i class="fa fa-shopping-cart"></i></div>
+                                            </div>
+                                            <div class="tiles-footer">Commandes</div>
+                                        </a>
+                                    </li>
+                                   <li>
+                                       <a class="shortcut-tiles tiles-indigo" href="{{ url('admin/inscriptions') }}">
+                                           <div class="tiles-body">
+                                               <div class="pull-left"><i class="fa fa-calendar"></i></div>
+                                           </div>
+                                           <div class="tiles-footer">Inscriptions</div>
+                                       </a>
+                                   </li>
+                                @endif
+
+                                @if(!$site->arrets->isEmpty())
+                                    <li>
+                                        <a class="shortcut-tiles tiles-success" href="{{ url('admin/arrets/'.$site->id) }}">
+                                            <div class="tiles-body">
+                                                <div class="pull-left"><i class="fa fa-edit"></i></div>
+                                            </div>
+                                            <div class="tiles-footer">Arrêts</div>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if(!$site->analyses->isEmpty())
+                                    <li>
+                                        <a class="shortcut-tiles tiles-magenta" href="{{ url('admin/analyses/'.$site->id) }}">
+                                            <div class="tiles-body">
+                                                <div class="pull-left"><i class="fa fa-dot-circle-o"></i></div>
+                                            </div>
+                                            <div class="tiles-footer">Analyses</div>
+                                        </a>
+                                    </li>
+                                @endif
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endforeach
+        @endif
     </ul>
 </header>
 
@@ -91,27 +164,7 @@
         <div id='wrap'>
 
             <div id="page-heading">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
-                    </div>
-                    @if(!$sites->isEmpty())
-                        @foreach($sites as $site)
-                            <div class="col-md-2">
-                                <a class="shortcut-tiles color-{{ $site->slug }} color-site" href="{{ url('admin/site/'.$site->id) }}">
-                                    <div class="tiles-body tiles-simple">
-                                        <div class="pull-left"><i class="fa fa-home"></i></div>
-                                        <div class="pull-right">
-                                            <p>{{ $site->nom }}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-
+                <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
             </div>
 
             <div class="container">

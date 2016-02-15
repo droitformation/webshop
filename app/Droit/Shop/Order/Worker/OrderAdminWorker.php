@@ -95,7 +95,7 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
             'shipping_id' => $prepared['shipping_id'],
             'payement_id' => 1,
             'products'    => $prepared['products'],
-            'admin'       => true
+            'admin'       => 1
         ];
 
         // Order global

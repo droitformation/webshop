@@ -11,10 +11,7 @@
         </a>
     </h1>
 
-	@if(!isset($admin))
-		<p><a href="{{ url('auth/register') }}" class="btn btn-block btn-primary">Je n'ai pas encore de compte</a></p>
-		<br/>
-	@endif
+    <p><a href="{{ url('/') }}" class="text-danger"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a></p>
 	<form class="form-horizontal form-validation" role="form" method="POST" action="/auth/login">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="panel-body">
@@ -47,7 +44,11 @@
 			<div class="clearfix"></div>
 		</div>
 	</form>
-	<br/>
-	<p><a href="{{ url('/') }}" class="text-danger"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a></p>
 
+    <p class="line-delimiter">Ou</p>
+
+	@if(!isset($admin))
+		<p><a href="{{ url('auth/register') }}" class="btn btn-block btn-inverse">Je n'ai pas encore de compte</a></p>
+		<br/>
+	@endif
 @stop

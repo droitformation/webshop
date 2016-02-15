@@ -369,13 +369,13 @@ $( function() {
     $('.customCollapse').on('shown.bs.collapse', function () {
         var $row = $(this).closest('tr');
         var $prev = $row.prev();
-        $prev.find(".fa").removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-down");
+        $prev.find(".fa-order").removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-down");
     });
 
     $('.customCollapse').on('hidden.bs.collapse', function () {
         var $row = $(this).closest('tr');
         var $prev = $row.prev();
-        $prev.find(".fa").removeClass("fa-arrow-circle-down").addClass("fa-arrow-circle-right");
+        $prev.find(".fa-order").removeClass("fa-arrow-circle-down").addClass("fa-arrow-circle-right");
     });
 
     $('.collapseArchive').on('show.bs.collapse', function () {

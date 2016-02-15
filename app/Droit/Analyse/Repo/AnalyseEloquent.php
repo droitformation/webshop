@@ -27,6 +27,11 @@ class AnalyseEloquent implements AnalyseInterface{
         return $analyse->orderBy('pub_date', 'DESC')->get();
     }
 
+    public function getLast($nbr,$site)
+    {
+        return $this->analyse->with(['analyse_authors','analyses_categories','analyses_arrets'])->site($site)->orderBy('id', 'ASC')->take(5)->get();
+    }
+
 	public function find($id){
 				
 		return $this->analyse->with(array('analyse_authors','analyses_categories','analyses_arrets'))->find($id);

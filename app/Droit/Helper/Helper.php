@@ -523,8 +523,8 @@ class Helper {
                 $data[] = [
                     'label'   => $result->name ,
                     'desc'    => $result->email,
-                    'adresse' => ($isType == 'user' ? $result->adresse_facturation : $result->load('canton','profession','specialisations','civilite')),
-                    'cp'      => ($isType == 'user' ? $result->adresse_facturation->cp_trim : $result->cp_trim),
+                    'adresse' => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation : $result->adresse),
+                    'cp'      => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation->cp_trim : $result->cp_trim),
                     'value'   => $result->id
                 ];
             }

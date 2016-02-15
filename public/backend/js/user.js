@@ -14,8 +14,6 @@ $('input.search-adresse').each(function()
     var adresse = $input.data('adresse');
     var type    = $input.data('type');
 
-    console.log(type);
-
     if(adresse)
     {
         $.get( "admin/adresse/" + adresse , function( data )

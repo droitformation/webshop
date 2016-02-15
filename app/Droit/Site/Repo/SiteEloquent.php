@@ -14,7 +14,7 @@ class SiteEloquent implements SiteInterface{
 
     public function getAll(){
 
-        return $this->site->all();
+        return $this->site->orderBy('id','desc')->get();
     }
 
     public function find($id){

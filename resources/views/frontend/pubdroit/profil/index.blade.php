@@ -18,7 +18,9 @@
                 </ul>
             </aside>
             <div class="col-md-9">
-                @yield('profil')
+
+
+
             </div>
         </section>
 

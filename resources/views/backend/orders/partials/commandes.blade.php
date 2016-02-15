@@ -7,13 +7,12 @@
         <thead>
             <tr>
                 <th>Commande n°</th>
-                <th>Par</th>
+                <th class="col-md-2">Client</th>
                 <th>Date</th>
+                <th>Montant</th>
+                <th>Facture</th>
                 <th>Payé le</th>
-                <th class="text-right">Montant</th>
-                <th class="text-right">Statut</th>
-                <th class="text-right">Facture</th>
-                <th class="text-right">Via admin</th>
+                <th>Via admin</th>
                 <th class="text-right">Annuler</th>
             </tr>
         </thead>
@@ -22,17 +21,27 @@
             <tr class="mainRow">
                 <td>
                     <a class="collapse_anchor" data-toggle="collapse" href="#order_no_{{ $order->id }}">
-                        <i class="fa fa-arrow-circle-right"></i>
+                        <i class="fa fa-order fa-arrow-circle-right"></i>
                         {{ $order->order_no }}
                     </a>
                 </td>
                 <td>{{ $order->order_adresse ? $order->order_adresse->name : 'Admin' }}</td>
                 <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
-                <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
-                <td class="text-right">{{ $order->total_with_shipping }} CHF</td>
-                <td class="text-right"><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
-                <td class="text-right"><?php echo ($order->facture ? '<a target="_blank" href="'.$order->facture.'" class="btn btn-xs btn-default">Facture en pdf</a>' : ''); ?></td>
-                <td class="text-right">{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>
+                <td>{{ $order->total_with_shipping }} CHF</td>
+                <td><?php echo ($order->facture ? '<a target="_blank" href="'.$order->facture.'" class="btn btn-xs btn-default">Facture en pdf</a>' : ''); ?></td>
+                <td>
+                    <div class="input-group">
+                        <div class="form-control editablePayementDate"
+                             data-name="payed_at" data-type="date" data-pk="{{ $order->id }}"
+                             data-url="admin/order/edit" data-title="Date de payment">
+                            {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}
+                        </div>
+                        <span class="input-group-addon bg-{{ $order->payed_at ? 'success' : '' }}">
+                            {{ $order->payed_at ? 'payé' : 'en attente' }}
+                        </span>
+                    </div>
+                </td>
+                <td>{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>
                 <td class="text-right">
                     <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
                         <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}

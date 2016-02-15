@@ -10,6 +10,7 @@ use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
+use App\Droit\Shop\Shipping\Repo\ShippingInterface;
 
 class OrderController extends Controller {
 
@@ -27,13 +28,14 @@ class OrderController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order, OrderAdminWorkerInterface $worker, AdresseInterface $adresse)
+	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order, OrderAdminWorkerInterface $worker, AdresseInterface $adresse, ShippingInterface $shipping)
 	{
         $this->product   = $product;
         $this->categorie = $categorie;
         $this->order     = $order;
         $this->worker    = $worker;
         $this->adresse   = $adresse;
+        $this->shipping  = $shipping;
 
         $this->generator = new \App\Droit\Generate\Excel\ExcelGenerator();
         $this->helper    = new \App\Droit\Helper\Helper();
@@ -98,9 +100,10 @@ class OrderController extends Controller {
      */
     public function show($id)
     {
-        $product = $this->product->find($id);
+        $shippings = $this->shipping->getAll();
+        $order     = $this->order->find($id);
 
-        return view('backend.orders.show')->with(['product' => $product]);
+        return view('backend.orders.show')->with(['order' => $order,'shippings' => $shippings]);
     }
 
     /**
@@ -150,6 +153,24 @@ class OrderController extends Controller {
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
     }
 
+    /**
+     * Update resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request)
+    {
+        $name  = $request->input('name');
+        $order = $this->order->update([ 'id' => $request->input('pk'), $name =>  $request->input('value')]);
+
+        if($order)
+        {
+            return response()->json(['OK' => 200, 'etat' => ($order->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($order->status == 'pending' ? 'warning' : 'success')]);
+        }
+
+        return response()->json(['status' => 'error','msg' => 'problème']);
+    }
 
     /**
      * Remove the specified resource from storage.

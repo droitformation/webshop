@@ -514,3 +514,18 @@ select[multiple] {
     display: block;
     width: 100%;
 }
+
+.site-dropdown {
+    padding: 10px 15px;
+    width: 240px;
+}
+
+.site-dropdown ul{
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-inverse .navbar-nav > li.sitedrop a{
+    color: #fff;
+ }

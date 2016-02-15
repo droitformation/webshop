@@ -32,13 +32,20 @@
                             @foreach($analyses as $analyse)
                             <tr>
                                 <td><a class="btn btn-sky btn-sm" href="{{ url('admin/analyse/'.$analyse->id) }}">éditer</a></td>
-                                <td><strong>{{ $analyse->authors }}</strong></td>
+                                <td>
+                                    @if(isset($analyse->analyse_authors))
+                                        @foreach($analyse->analyse_authors as $analyse_authors)
+                                            <p><strong>{{ $analyse_authors->name }}</strong></p>
+                                        @endforeach
+                                    @endif
+                                </td>
                                 <td>{{ $analyse->pub_date->formatLocalized('%d %B %Y') }}</td>
                                 <td>{{ $analyse->abstract }}</td>
                                 <td>
-                                    {!! Form::open(array('route' => array('admin.analyse.destroy', $analyse->id), 'method' => 'delete')) !!}
-                                    <button data-action="arrêt {{ $analyse->reference }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                    {!! Form::close() !!}
+                                    <form action="{{ url('admin/analyse/'.$analyse->id) }}" method="POST" class="form-horizontal">
+                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                        <button data-what="supprimer" data-action="analyse" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

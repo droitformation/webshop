@@ -140,6 +140,21 @@ class OrderEloquent implements OrderInterface{
 
         $order->fill($data);
 
+
+        if(isset($data['payed_at']) && !empty($data['payed_at']))
+        {
+            $valid = (\Carbon\Carbon::createFromFormat('Y-d-m', $data['payed_at']) !== false);
+
+            $order->status = !$valid || null ? 'pending' : 'payed';
+            $order->payed_at = $data['payed_at'];
+        }
+
+        if(empty($data['payed_at']))
+        {
+            $order->status   = 'pending';
+            $order->payed_at = null;
+        }
+
         $order->save();
 
         return $order;
