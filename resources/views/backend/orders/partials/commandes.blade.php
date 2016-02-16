@@ -13,40 +13,64 @@
                 <th>Facture</th>
                 <th>Payé le</th>
                 <th>Via admin</th>
-                <th class="text-right">Annuler</th>
+                <th class="text-right"></th>
             </tr>
         </thead>
         <tbody>
         @foreach($orders as $order)
             <tr class="mainRow">
                 <td>
-                    <a class="collapse_anchor" data-toggle="collapse" href="#order_no_{{ $order->id }}">
-                        <i class="fa fa-order fa-arrow-circle-right"></i>
-                        {{ $order->order_no }}
-                    </a>
+                    <a class="collapse_anchor" data-toggle="collapse" href="#order_no_{{ $order->id }}"><i class="fa fa-order fa-arrow-circle-right"></i>{{ $order->order_no }}</a>
                 </td>
                 <td>{{ $order->order_adresse ? $order->order_adresse->name : 'Admin' }}</td>
                 <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                 <td>{{ $order->total_with_shipping }} CHF</td>
-                <td><?php echo ($order->facture ? '<a target="_blank" href="'.$order->facture.'" class="btn btn-xs btn-default">Facture en pdf</a>' : ''); ?></td>
                 <td>
-                    <div class="input-group">
-                        <div class="form-control editablePayementDate"
-                             data-name="payed_at" data-type="date" data-pk="{{ $order->id }}"
-                             data-url="admin/order/edit" data-title="Date de payment">
-                            {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}
+
+                    @if($order->facture)
+                        <a target="_blank" href="{{ $order->facture }}" class="btn btn-xs btn-default">Facture en pdf</a>
+                    @else
+                        <form action="{{ url('admin/order/generate') }}" method="POST">
+                            <input type="hidden" name="id" value="{{ $order->id }}">{!! csrf_field() !!}
+                            <button class="btn btn-default btn-sm">Générer</button>
+                        </form>
+                    @endif
+
+                </td>
+                <td>
+
+                    @if($cancelled)
+                        {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}&nbsp;
+                        <span class="label label-{{ $order->payed_at ? 'success' : '' }}">{{ $order->payed_at ? 'payé' : 'en attente' }}</span>
+                    @else
+                        <div class="input-group">
+                            <div class="form-control editablePayementDate"
+                                 data-name="payed_at" data-type="date" data-pk="{{ $order->id }}"
+                                 data-url="admin/order/edit" data-title="Date de payment">
+                                {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}
+                            </div>
+                            <span class="input-group-addon bg-{{ $order->payed_at ? 'success' : '' }}">
+                                {{ $order->payed_at ? 'payé' : 'en attente' }}
+                            </span>
                         </div>
-                        <span class="input-group-addon bg-{{ $order->payed_at ? 'success' : '' }}">
-                            {{ $order->payed_at ? 'payé' : 'en attente' }}
-                        </span>
-                    </div>
+                    @endif
+
                 </td>
                 <td>{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>
                 <td class="text-right">
-                    <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
-                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                        <button data-what="Annuler" data-action="{{ $order->order_no }}" class="btn btn-danger btn-xs deleteAction">annuler</button>
-                    </form>
+
+                    @if($cancelled)
+                        <form action="{{ url('admin/order/restore/'.$order->id) }}" method="POST" class="form-horizontal">
+                            <input type="hidden" name="id" value="{{ $order->id }}">{!! csrf_field() !!}
+                            <button data-what="Restaurer" data-action="{{ $order->order_no }}" class="btn btn-warning btn-sm deleteAction">Restaurer</button>
+                        </form>
+                    @else
+                        <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
+                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                            <button data-what="Annuler" data-action="{{ $order->order_no }}" class="btn btn-danger btn-sm deleteAction">Annuler</button>
+                        </form>
+                    @endif
+
                 </td>
             </tr>
             @if(!empty($order->products))
@@ -55,8 +79,8 @@
                 <tr>
                     <td colspan="9" class="nopadding">
                         <div class="collapse customCollapse" id="order_no_{{ $order->id }}">
+                            <!-- Details of order -->
                             <div class="inscription_wrapper">
-
                                 <div class="row">
                                     <div class="col-md-3">
                                         <address class="well well-sm">
@@ -88,16 +112,11 @@
                                             @foreach($grouped as $product)
 
                                                 <?php
-
                                                     $money = new \App\Droit\Shop\Product\Entities\Money;
                                                     // Is the product free?
-                                                    $price_sum = $product->reject(function ($item) {
-                                                        return $item->pivot->isFree;
-                                                    })->sum('price_cents');
+                                                    $price_sum = $product->reject(function ($item) { return $item->pivot->isFree; })->sum('price_cents');
 
-                                                    $prod_free = $product->filter(function ($item) {
-                                                        return $item->pivot->isFree;
-                                                    });
+                                                    $prod_free = $product->filter(function ($item) { return $item->pivot->isFree; });
                                                 ?>
                                                 <tr>
                                                     <td width="10%" valign="top"><p class="text-left" style="width:70px;margin-right: 20px;">{{ $product->count() }} x</p></td>
@@ -149,6 +168,7 @@
                                 </div>
 
                             </div>
+                            <!-- end details of order -->
 
                         </div>
                     </td>

@@ -1,6 +1,8 @@
 @extends('backend.layouts.master')
 @section('content')
 
+    <?php $helper = new \App\Droit\Helper\Helper(); ?>
+
     <div class="row">
         <div class="col-md-12">
 
@@ -70,7 +72,7 @@
                                 @foreach($names as $key => $name)
                                     <div class="checkbox-inline checkbox-border">
                                         <label>
-                                            <input class="checkbox_all" {{ in_array($key,$columns) ? 'checked' : '' }} value="{{ $key }}" name="columns[]" type="checkbox"> {{ $name }}
+                                            <input class="checkbox_all" {{ in_array($key,$columns) ? 'checked' : '' }} value="{{ $name }}" name="columns[{{ $key }}]" type="checkbox"> {{ $name }}
                                         </label>
                                     </div>
                                 @endforeach
@@ -86,10 +88,24 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
-                    <?php $helper = new \App\Droit\Helper\Helper(); ?>
+
                     <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
 
-                    @include('backend.orders.partials.commandes', ['orders' => $orders])
+                    @include('backend.orders.partials.commandes', ['orders' => $orders, 'cancelled' => false])
+
+                    <a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#cancelTable">Désinscriptions</a>
+                </div>
+            </div>
+
+            <div id="cancelTable" class="collapse">
+                <div class="panel panel-warning">
+                    <div class="panel-body">
+
+                        <h3><i class="fa fa-times"></i> &nbsp;Commandes annulés du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
+
+                        @include('backend.orders.partials.commandes', ['orders' => $cancelled, 'cancelled' => true])
+
+                    </div>
                 </div>
             </div>
 

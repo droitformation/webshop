@@ -12,13 +12,18 @@ class ProductEloquent implements ProductInterface{
         $this->product = $product;
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $nbr = null)
     {
-        return $this->product
-            ->with(array('categories','authors','domains','attributs','orders','abos'))
+        $products = $this->product->with(array('categories','authors','domains','attributs','orders','abos'))
             ->search($search)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+            ->orderBy('created_at', 'DESC');
+
+        if($nbr)
+        {
+            return $products->paginate($nbr);
+        }
+
+        return $products->get();
     }
 
     public function getNbr($nbr = null, $reject = null)

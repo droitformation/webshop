@@ -3,6 +3,7 @@
 interface OrderInterface {
 
     public function getLast($nbr);
+    public function getTrashed($start, $end);
     public function getPeriod($start,$end,$status = null, $onlyfree = null);
     public function lastYear();
 	public function find($data);
@@ -12,4 +13,5 @@ interface OrderInterface {
 	public function create(array $data);
 	public function update(array $data);
 	public function delete($id);
+    public function restore($id);
 }

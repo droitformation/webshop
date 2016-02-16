@@ -140,7 +140,8 @@ class ShopServiceProvider extends ServiceProvider {
                 \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface'),
                 \App::make('App\Droit\User\Repo\UserInterface'),
                 \App::make('App\Droit\Shop\Cart\Repo\CartInterface'),
-                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface')
+                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
+                \App::make('App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface')
             );
         });
     }

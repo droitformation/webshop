@@ -64,19 +64,27 @@ class ProductController extends Controller {
 	{
         $search = $request->input('search',null);
 
+        // results for search
         if($search)
         {
-            $search = array_filter($search);
+            $paginate = false;
+            $search   = array_filter($search);
+            $products = $this->product->getAll($search);
         }
-
-        $products    = $this->product->getAll($search);
+        else // pagination
+        {
+            $products = $this->product->getNbr(20);
+            $paginate = true;
+        }
 
         $attributes  = $this->attribute->getAll();
         $categories  = $this->categorie->getAll();
         $authors     = $this->author->getAll();
         $domains     = $this->domain->getAll();
 
-		return view('backend.products.index')->with(['products' => $products,'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains]);
+		return view('backend.products.index')->with(
+            ['products' => $products, 'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains, 'paginate' => $paginate, 'search' => $search]
+        );
 	}
 
     /**

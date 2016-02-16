@@ -288,8 +288,21 @@ a:hover, a:active, a:focus {
     background: #f9f9f9 none repeat scroll 0 0;
     border: 1px solid #eaeaea;
     line-height: 16px;
-    margin-bottom: 5px;
+    margin: 0 0 20px 0;
     padding: 10px;
+    display: table;
+    width: 100%;
+}
+
+.card p{
+    margin: 0;
+}
+
+.card p a{
+    font-size: 16px;
+    display: table-cell;
+    vertical-align: middle;
+    height: 50px;
 }
 
 .form-required{

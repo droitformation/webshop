@@ -11,6 +11,7 @@ use App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Shop\Shipping\Repo\ShippingInterface;
+use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
 class OrderController extends Controller {
 
@@ -18,6 +19,7 @@ class OrderController extends Controller {
     protected $categorie;
     protected $order;
     protected $generator;
+    protected $pdfgenerator;
     protected $worker;
     protected $adresse;
     protected $shipping;
@@ -28,14 +30,23 @@ class OrderController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product, CategorieInterface $categorie, OrderInterface $order, OrderAdminWorkerInterface $worker, AdresseInterface $adresse, ShippingInterface $shipping)
+	public function __construct(
+        ProductInterface $product,
+        CategorieInterface $categorie,
+        OrderInterface $order,
+        OrderAdminWorkerInterface $worker,
+        AdresseInterface $adresse,
+        ShippingInterface $shipping,
+        PdfGeneratorInterface $pdfgenerator
+    )
 	{
-        $this->product   = $product;
-        $this->categorie = $categorie;
-        $this->order     = $order;
-        $this->worker    = $worker;
-        $this->adresse   = $adresse;
-        $this->shipping  = $shipping;
+        $this->product       = $product;
+        $this->categorie     = $categorie;
+        $this->order         = $order;
+        $this->worker        = $worker;
+        $this->adresse       = $adresse;
+        $this->shipping      = $shipping;
+        $this->pdfgenerator  = $pdfgenerator;
 
         $this->generator = new \App\Droit\Generate\Excel\ExcelGenerator();
         $this->helper    = new \App\Droit\Helper\Helper();
@@ -50,8 +61,7 @@ class OrderController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-
-        $names   = config('columns.names');
+        $names    = $request->input('columns',config('columns.names'));
 
         $period   = $request->all();
         $status   = $request->input('status',null);
@@ -68,10 +78,14 @@ class OrderController extends Controller {
         if($export)
         {
             $this->generator->setColumns($columns);
-            $this->export($orders,$details);
+            $this->export($orders,$names,$period,$details);
         }
 
-		return view('backend.orders.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'], 'columns' => $columns, 'names' => $names, 'onlyfree' => $onlyfree, 'details' => $details]);
+        $cancelled = $this->order->getTrashed($period['start'],$period['end']);
+
+		return view('backend.orders.index')->with(
+            ['orders' => $orders,'start' => $period['start'],'end' => $period['end'],'columns' => config('columns.names'),'names' => $names,'onlyfree' => $onlyfree, 'details' => $details, 'cancelled' => $cancelled]
+        );
 	}
 
     /**
@@ -79,17 +93,83 @@ class OrderController extends Controller {
      *
      * @return Response
      */
-    public function export($orders, $details = null)
+    public function export($orders, $names, $period = null, $details = null)
     {
-        \Excel::create('Export Commandes', function($excel) use ($orders,$details)
+        \Excel::create('Export Commandes', function($excel) use ($orders,$period,$details,$names)
         {
-            $excel->sheet('Export_Commandes', function($sheet) use ($orders,$details)
+            $excel->sheet('Export_Commandes', function($sheet) use ($orders,$period,$details,$names)
             {
-                $names  = config('columns.names');
-                $view   = (isset($details) ? 'details' : 'orders');
+                $columns = array_keys($names);
 
-                $sheet->setOrientation('landscape');
-                $sheet->loadView('backend.export.'.$view , ['orders' => $orders , 'generator' => $this->generator, 'names' => $names]);
+                if(!$orders->isEmpty())
+                {
+                    foreach($orders as $order)
+                    {
+                        $info['Numero']  = $order->order_no;
+                        $info['Montant'] = $order->price_cents.' CHF';
+                        $info['Date']    = $order->created_at->formatLocalized('%d %B %Y');
+                        $info['Paye']    = $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '';
+                        $info['Status']  = $order->status_code['status'];
+
+                        if($details)
+                        {
+                            $grouped = $order->products->groupBy('id');
+
+                            foreach($grouped as $product)
+                            {
+                                $data['title']  = $product->first()->title;
+                                $data['qty']    = $product->count();
+                                $data['prix']   = $product->first()->price_cents;
+                                $data['free']   = $product->first()->pivot->isFree ? 'Oui' : '';
+                                $data['rabais'] = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
+
+                                $converted[] = $info + $data;
+                            }
+                        }
+                        else
+                        {
+                            if($order->user && !$order->user->adresses->isEmpty())
+                            {
+                                foreach($columns as $column)
+                                {
+                                    $data[$column] = $order->user->adresses->first()->$column;
+                                }
+
+                                $converted[] = $info + $data;
+                            }
+                        }
+
+                    }
+                }
+
+                // Columns
+                $names = ($details ? ['Numero','Montant','Date','Paye','Status','Titre','Quantité','Prix','Gratuit','Rabais'] : (['Numero','Montant','Date','Paye','Status'] + $names));
+
+                // Set header
+                $sheet->row(1, ['Commandes du '.$this->helper->formatTwoDates($period['start'],$period['end'])]);
+                $sheet->row(1,function($row) {
+                    $row->setFontWeight('bold');
+                    $row->setFontSize(14);
+                });
+
+                // Set Columns
+                $sheet->row(2,['']);
+                $sheet->row(3, $names);
+                $sheet->row(3,function($row) {
+                    $row->setFontWeight('bold');
+                    $row->setFontSize(12);
+                });
+
+                // Set Orders list
+                $sheet->rows($converted);
+                $sheet->appendRow(['']);
+                $sheet->appendRow(['Total', $orders->sum('price_cents').' CHF']);
+                $sheet->row($sheet->getHighestRow(), function ($row)
+                {
+                    $row->setFontWeight('bold');
+                    $row->setFontSize(13);
+                });
+
             });
         })->export('xls');
     }
@@ -106,6 +186,14 @@ class OrderController extends Controller {
         return view('backend.orders.show')->with(['order' => $order,'shippings' => $shippings]);
     }
 
+    public function generate(Request $request)
+    {
+        $order = $this->order->find($request->input('id'));
+
+        $this->pdfgenerator->factureOrder($order->id);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été regénéré' ));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -186,6 +274,19 @@ class OrderController extends Controller {
         $order->delete();
 
         return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));
+    }
+
+    /**
+     * Restore the inscription
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function restore($id)
+    {
+        $this->order->restore($id);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'La commande a été restauré' ));
     }
 
 }

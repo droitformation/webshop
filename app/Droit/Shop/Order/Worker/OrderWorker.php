@@ -25,7 +25,14 @@ class OrderWorker implements OrderWorkerInterface{
     protected $generator;
     protected $product;
 
-    public function __construct(OrderInterface $order, CartWorkerInterface $worker, UserInterface $user, CartInterface $cart, PdfGeneratorInterface $generator, OrderAdminWorkerInterface $orderworker)
+    public function __construct(
+        OrderInterface $order,
+        CartWorkerInterface $worker,
+        UserInterface $user,
+        CartInterface $cart,
+        PdfGeneratorInterface $generator,
+        OrderAdminWorkerInterface $orderworker
+    )
     {
         $this->order       = $order;
         $this->cart        = $cart;

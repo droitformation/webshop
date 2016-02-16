@@ -17,6 +17,11 @@ class OrderEloquent implements OrderInterface{
         return $this->order->with(['products','user'])->orderBy('created_at','DESC')->take($nbr)->get();
     }
 
+    public function getTrashed($start, $end)
+    {
+        return $this->order->with(['products','user'])->whereBetween('created_at', [$start, $end])->onlyTrashed()->orderBy('created_at','DESC')->get();
+    }
+
     public function getPeriod($start, $end, $status = null, $onlyfree = null)
     {
         return $this->order->with(['products','user' ,'coupon','shipping'])
@@ -165,6 +170,11 @@ class OrderEloquent implements OrderInterface{
         $order = $this->order->find($id);
 
         return $order->delete();
+    }
+
+    public function restore($id)
+    {
+        return $this->order->withTrashed()->find($id)->restore();
     }
 
 }

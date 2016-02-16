@@ -176,6 +176,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('shipping', 'Backend\Shop\ShippingController');
     Route::resource('theme', 'Backend\Shop\ThemeController');
     Route::resource('domain', 'Backend\Shop\DomainController');
+    Route::resource('attribut', 'Backend\Shop\AttributController');
 
     Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
     Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');
@@ -187,6 +188,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
     Route::post('order/edit', 'Backend\Shop\OrderController@edit');
     Route::post('order/export', 'Backend\Shop\OrderController@export');
+    Route::post('order/restore/{id}', 'Backend\Shop\OrderController@restore');
+    Route::post('order/generate', 'Backend\Shop\OrderController@generate');
     Route::resource('order', 'Backend\Shop\OrderController');
 
     /*

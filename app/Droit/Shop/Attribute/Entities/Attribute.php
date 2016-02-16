@@ -11,10 +11,15 @@ class Attribute extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = array('title');
+    protected $fillable = ['title'];
     /**
      * Set timestamps off
      */
     public $timestamps = false;
+
+    public function attributs()
+    {
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_product_attributes', 'attribute_id','product_id');
+    }
 
 }

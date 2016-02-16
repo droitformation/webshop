@@ -128,6 +128,7 @@ class ExportController extends Controller
                                 $row->setFontWeight('bold');
                                 $row->setFontSize(14);
                             });
+
                             $sheet->appendRow(['']);
 
                             $sheet->appendRow(['Numéro','Nom','Participant','Entreprise','Email','Adresse','NPA','Ville','Prix','Status','Date']);
@@ -142,7 +143,8 @@ class ExportController extends Controller
                 else
                 {
                     $sheet->appendRow(['Numéro','Nom','Participant','Entreprise','Email','Adresse','NPA','Ville','Prix','Status','Date']);
-                    $sheet->row($sheet->getHighestRow(), function ($row) {
+                    $sheet->row($sheet->getHighestRow(), function ($row)
+                    {
                         $row->setFontWeight('bold');
                         $row->setFontSize(14);
                     });

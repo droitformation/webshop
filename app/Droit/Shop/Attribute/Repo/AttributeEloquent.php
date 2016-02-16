@@ -14,7 +14,7 @@ class AttributeEloquent implements AttributeInterface{
 
     public function getAll(){
 
-        return $this->attribute->all();
+        return $this->attribute->with(['attributs'])->get();
     }
 
     public function find($id){

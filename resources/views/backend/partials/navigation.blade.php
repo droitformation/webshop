@@ -65,6 +65,9 @@
         <li class="<?php echo (Request::is('admin/domain') || Request::is('admin/domain/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/domain') }}"><i class="fa fa-shield"></i> <span>Collections</span></a>
         </li>
+        <li class="<?php echo (Request::is('admin/attribut') || Request::is('admin/attribut/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/attribut') }}"><i class="fa fa-flag"></i> <span>Attributs</span></a>
+        </li>
 
         <li class="nav-title">Contenus</li>
         <li class="<?php echo (Request::is('admin/author') || Request::is('admin/author/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/author') }}"><i class="fa fa-user"></i> <span>Auteurs</span></a></li>
