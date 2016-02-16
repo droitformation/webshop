@@ -6,12 +6,12 @@ composer.lock
 .idea/
 /public/logos/
 
-/public/files/products/
-/public/files/arrets/
-/public/files/analyses/
-/public/dispatch/
-/public/files/uploads/
+public/files/products/
+public/files/arrets
+public/files/analyses
+public/files/uploads
 public/files/colloques
 public/files/pictos
 storage/excel/exports/
+public/dispatch/
 

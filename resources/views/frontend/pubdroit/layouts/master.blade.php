@@ -214,11 +214,7 @@
 						</figure>
 						<figure class="col-md-4">
 							<h4>From the blog</h4>
-							<ul class="f2-pots-list">
-								<li> <span class="post-date2">28 APR</span> <a href="blog-detail.html">Corso completo di grafica web completo di grafi dare...</a> <span class="comments-num">6 comments</span> </li>
-								<li> <span class="post-date2">28 APR</span> <a href="blog-detail.html">Corso completo di grafica web completo di grafi dare...</a> <span class="comments-num">6 comments</span> </li>
-								<li> <span class="post-date2">28 APR</span> <a href="blog-detail.html">Corso completo di grafica web completo di grafi dare...</a> <span class="comments-num">6 comments</span> </li>
-							</ul>
+
 						</figure>
 					</section>
 				</section>

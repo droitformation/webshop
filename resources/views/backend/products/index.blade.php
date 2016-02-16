@@ -100,7 +100,7 @@
                                     <div class="col-md-2 text-right">
                                         <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-sm btn-info">&nbsp;éditer&nbsp;</a>
+                                            <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
                                             @if($product->orders->count() == 0)
                                             <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-sm deleteAction">&nbsp; x &nbsp;</button>
                                             @endif

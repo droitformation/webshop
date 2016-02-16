@@ -19,7 +19,9 @@
             </aside>
             <div class="col-md-9">
 
-
+                <!-- Contenu -->
+                @yield('profil')
+                <!-- Fin contenu -->
 
             </div>
         </section>
