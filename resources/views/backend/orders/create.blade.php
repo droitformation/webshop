@@ -17,24 +17,19 @@
                     <div class="panel-body">
                         <h3>Créer une commande</h3>
 
-                        <?php
-                            $adresse = old('adresse');
-
-                            unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
-
-                            $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
-                        ?>
-
                         <div id="adresseParent">
                             <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher un utilisateur</a>
                             <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter une adresse</a>
 
-                            <div class="collapse" id="adresseFind">
+                            <div class="collapse" id="adresseFind" style="width: 400px;">
                                 <div class="form-group">
-                                    <input id="searchUser" class="form-control" placeholder="Chercher une adresse..." type="text">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"></span>
+                                        <input id="searchUser" class="form-control" placeholder="Chercher une adresse..." type="text">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="collapse {{ !empty($adresse) ? 'in' : '' }}" id="adresseMake">
+                            <div class="collapse {{ !empty(Session::get('adresse')) ? 'in' : '' }}" id="adresseMake">
                                 <div class="row">
                                     @include('backend.orders.partials.adresse')
                                 </div>
@@ -47,16 +42,19 @@
                         <div id="wrapper_clone_order">
                             @if(Session::has('old_products'))
                                 <?php
-                                    $old_products = Session::get('old_products');
-                                    $first = array_shift($old_products);
+                                    // wee want to repopulate the form with all the products and only assign an id to the first one
+                                    // the others are just clones fileds with jquery
+                                    $old_products  = Session::get('old_products');
+                                    $first_product = array_shift($old_products);
                                 ?>
-                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'old_product' => $first])
+                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'old_product' => $first_product, 'index' => ''])
 
-                                @foreach($old_products as $old_product)
-                                    @include('backend.orders.partials.product', ['id' => '', 'old_product' => $old_product])
+                                @foreach($old_products as $index => $old_product)
+                                    <?php $index = isset($index) ? $index + 1 : 1; ?>
+                                    @include('backend.orders.partials.product', ['id' => '', 'old_product' => $old_product, 'index' => $index])
                                 @endforeach
                             @else
-                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order'])
+                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'index' => ''])
                             @endif
                         </div>
 
@@ -76,11 +74,11 @@
                                 <label><i class="fa fa-dollar"></i>&nbsp; Modifier les taux de tva</label><br/>
 
                                 <div class="form-group input-group">
-                                    <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ old('tva[taux_reduit]') }}" placeholder="Réduit">
+                                    <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ old('tva.taux_reduit') }}" placeholder="Réduit">
                                     <span class="input-group-addon">%</span>
                                 </div><!-- /input-group -->
                                 <div class="input-group">
-                                    <input class="form-control" type="text" name="tva[taux_normal]" value="{{ old('tva[taux_normal]') }}" placeholder="Normal">
+                                    <input class="form-control" type="text" name="tva[taux_normal]" value="{{ old('tva.taux_normal') }}" placeholder="Normal">
                                     <span class="input-group-addon">%</span>
                                 </div><!-- /input-group -->
                             </div>
@@ -89,11 +87,11 @@
                                 <label><i class="fa fa-info-circle"></i>&nbsp; Phrases d'informations</label><br/>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[warning]" value="{{ old('message[warning]') }}" placeholder="Ajouter une phrase d'information">
+                                    <input class="form-control" type="text" name="message[warning]" value="{{ old('message.warning') }}" placeholder="Ajouter une phrase d'information">
                                 </div>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[special]" value="{{ old('message[special]') }}" placeholder="Information pour librairies">
+                                    <input class="form-control" type="text" name="message[special]" value="{{ old('message.special') }}" placeholder="Information pour librairies">
                                 </div>
                             </div>
                         </fieldset>

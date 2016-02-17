@@ -111,6 +111,8 @@ class OrderController extends Controller {
                         $info['Paye']    = $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '';
                         $info['Status']  = $order->status_code['status'];
 
+                        // Only details of each order
+                        // Group by product in orde, count qty
                         if($details)
                         {
                             $grouped = $order->products->groupBy('id');
@@ -128,6 +130,7 @@ class OrderController extends Controller {
                         }
                         else
                         {
+                            // Get columns requested from user adresse
                             if($order->user && !$order->user->adresses->isEmpty())
                             {
                                 foreach($columns as $column)
@@ -142,7 +145,7 @@ class OrderController extends Controller {
                     }
                 }
 
-                // Columns
+                // Columns add columns requested if we want user and not details
                 $names = ($details ? ['Numero','Montant','Date','Paye','Status','Titre','Quantité','Prix','Gratuit','Rabais'] : (['Numero','Montant','Date','Paye','Status'] + $names));
 
                 // Set header
@@ -186,6 +189,13 @@ class OrderController extends Controller {
         return view('backend.orders.show')->with(['order' => $order,'shippings' => $shippings]);
     }
 
+    /**
+     * Generate the invoice
+     * if we changed something in user infos or product we can remake the invoice
+     * Or if something went wrong the first time
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function generate(Request $request)
     {
         $order = $this->order->find($request->input('id'));
@@ -194,6 +204,7 @@ class OrderController extends Controller {
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été regénéré' ));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -214,15 +225,13 @@ class OrderController extends Controller {
      */
     public function store(Request $request)
     {
-        $order    = $request->input('order');
-        $products = $this->helper->convertProducts($order);
-
+        // Validate the adresse if any
         $validator = \Validator::make($request->all(), [
-            'adresse.first_name'  => 'required_without:user_id',
-            'adresse.last_name'   => 'required_without:user_id',
-            'adresse.adresse'     => 'required_without:user_id',
-            'adresse.npa'         => 'required_without:user_id',
-            'adresse.ville'       => 'required_without:user_id',
+            'adresse.first_name'     => 'required_without:user_id',
+            'adresse.last_name'      => 'required_without:user_id',
+            'adresse.adresse'        => 'required_without:user_id',
+            'adresse.npa'            => 'required_without:user_id',
+            'adresse.ville'          => 'required_without:user_id',
         ], [
             'adresse.first_name.required_without'  => 'Une adresse (prénom) est requise sans utilisateur',
             'adresse.last_name.required_without'   => 'Une adresse (nom) est requise sans utilisateur',
@@ -231,9 +240,37 @@ class OrderController extends Controller {
             'adresse.ville.required_without'       => 'Une adresse (ville) est requise sans utilisateur',
         ]);
 
+        $products = array_filter($request->input('order.products'));
+
+        $validator->after(function($validator) use ($products) {
+            if(empty($products))
+            {
+                $validator->errors()->add('order.products', 'Au moins un livre est requis');
+            }
+        });
+
+        // Resend products along to refill form
         if ($validator->fails())
         {
-            return redirect()->back()->withErrors($validator)->with('old_products', $products)->withInput();
+            // resend adress if any
+            $adresse = $request->input('adresse',[]);
+
+            if(!empty($adresse))
+            {
+                // unset defaults, we can now test if we had other infos present, if not dont show form in view
+                unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
+
+                $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
+            }
+
+            $order = $request->input('order',[]);
+
+            if(!empty($order))
+            {
+                $products = $this->helper->convertProducts($order);
+            }
+
+            return redirect()->back()->withErrors($validator)->with(['old_products' => $products, 'adresse' => $adresse])->withInput();
         }
 
         $order = $this->worker->make($request->all());

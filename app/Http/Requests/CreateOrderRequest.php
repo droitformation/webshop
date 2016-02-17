@@ -28,8 +28,17 @@ class CreateOrderRequest extends Request
      */
     public function rules()
     {
-        return [
-            'user_id' => 'required_without_all:first_name,last_name,email',
+        $rules = [
+            'user_id' => 'required_without|',
         ];
+
+        foreach($this->request->get('order.products') as $key => $val)
+        {
+            $rules['order.products.product'] = 'required|numeric';
+            $rules['order.products.qty']     = 'required|numeric';
+            $rules['order.products.rabais']  = 'numeric';
+        }
+
+        return $rules;
     }
 }

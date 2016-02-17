@@ -9,6 +9,11 @@ var base_url = location.protocol + "//" + location.host+"/";
 $( "#searchUser" ).autocomplete({
     source: base_url + 'admin/search',
     minLength: 3,
+    search    : function (event, ui) {
+        var $addon =  $('#searchUser').prev('.input-group-addon');
+        $addon.html('<img style="width: 20px; height: 18px;" src="' + base_url + '/images/default.svg" />');
+        console.log($addon);
+    },
     select: function( event, ui )
     {
         $('#inputUser').html('<input type="hidden" value="' + ui.item.value + '" name="user_id">');
@@ -34,6 +39,9 @@ $( "#searchUser" ).autocomplete({
         return false;
     }
 }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+
+    var $addon =  $('#searchUser').prev('.input-group-addon').html('');
+
     return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span></a>").appendTo(ul);
 };
 
@@ -104,49 +112,4 @@ $('#formInscription').on('submit', function (e) {
         },
         error: function(){alert('problème avec la séléction de l\'utilisateur');}
     });
-});
-
-
-/*
- * Product add to new order
- * */
-
-$('.chosen-select').chosen();
-
-$('body').on("click", '#cloneBtnOrder' ,function(e) {
-
-    var $wrapper_clone  = $('#wrapper_clone_order');
-    var $fieldset_clone = $('#fieldset_clone_order');
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    var length = $('.field_clone_order').length;
-    var clone  = $fieldset_clone.clone();
-
-    clone.find('input[type="text"]').val('');
-
-    // Checkbox
-    var $checkbox = clone.find('input[type="checkbox"]');
-    var name      = $checkbox.attr('name');
-    name          = name.replace('order[gratuit][]', 'order[gratuit][' + length + ']');
-
-    $checkbox.attr('name', name);
-    $checkbox.attr('checked', false);
-
-    var select = clone.find('.chosen-select');
-
-    $(select).removeClass("chzn-done").removeAttr("id").css("display", "block").next().remove();
-
-    clone.attr('id', '');
-    clone.appendTo($wrapper_clone);
-
-    select.chosen();
-
-});
-
-$('body').on("click", '.remove_order' ,function(e) {
-    e.preventDefault(); e.stopPropagation();
-
-    $(this).closest('fieldset').remove();
 });

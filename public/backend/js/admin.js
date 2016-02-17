@@ -415,13 +415,6 @@ $( function() {
         }
     });
 
-/*    $('.checkbox').on('click',function(){
-        if($('.checkbox:checked').length == $('.checkbox_all').length){
-            $('#select_all').prop('checked',true);o
-        }else{
-            $('#select_all').prop('checked',false);
-        }
-    });*/
 
     var $adresse = $('#adresseParent');
 
@@ -438,6 +431,7 @@ $( function() {
         //Expand or collapse this panel
         $('#'+$toggle).slideToggle('fast');
         //Hide the other panels
+        $(".collapse.in").not( $('#'+$toggle) ).removeClass('in');
         $(".collapse").not( $('#'+$toggle) ).slideUp('fast');
     });
 
@@ -448,7 +442,7 @@ $( function() {
         }
     });
 
-    var fuzzyOptions = {
+/*    var fuzzyOptions = {
         searchClass: "fuzzy-search",
         location: 0,
         distance: 100,
@@ -464,7 +458,7 @@ $( function() {
         ]
     };
 
-    var userList = new List('search-list', options);
+    var userList = new List('search-list', options);*/
 
     /*
      Inline edit for prices and options colloques

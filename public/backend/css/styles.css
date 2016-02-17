@@ -7985,6 +7985,7 @@ body.static-header {
 #page-container {
   background: #e6e7e8;
   overflow: hidden;
+  position: relative;
 }
 #page-content {
   min-height: 650px;
