@@ -77,6 +77,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('config/colloque', 'Backend\ConfigController@colloque');
     Route::resource('config', 'Backend\ConfigController');
 
+    Route::get('reminder/create/{type}','Backend\ReminderController@create');
+    Route::resource('reminder', 'Backend\ReminderController');
+
     Route::get('search/form', 'Backend\SearchController@form');
     Route::post('search/user', 'Backend\SearchController@user');
     Route::get('search/adresse', 'Backend\SearchController@adresse');

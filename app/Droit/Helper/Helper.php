@@ -51,6 +51,29 @@ class Helper {
         $d = DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) == $date;
     }
+
+    public function addInterval($date,$interval)
+    {
+        switch ($interval) {
+            case 'week':
+                $date->addWeek();
+                break;
+            case 'month':
+                $date->addMonth();
+                break;
+            case 'trimester':
+                $date->addMonths(3);
+                break;
+            case 'semester':
+                $date->addMonths(6);
+                break;
+            case 'year':
+                $date->addYear();
+                break;
+        }
+
+        return $date;
+    }
     
     /*
 	 * Files functions

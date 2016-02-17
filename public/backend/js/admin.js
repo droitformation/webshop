@@ -419,7 +419,6 @@ $( function() {
     var $adresse = $('#adresseParent');
 
     $adresse.on('show','.collapse', function() {
-        console.log($(this));
         $adresse.find('.collapse.in').collapse('hide');
     });
 

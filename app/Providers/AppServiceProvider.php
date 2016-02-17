@@ -60,6 +60,7 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerSpecialisationService();
         $this->registerMemberService();
         $this->registerUploadService();
+        $this->registerReminderService();
 
         $this->registerFileWorkerService();
         $this->registerPageService();
@@ -297,6 +298,17 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->bind('App\Droit\Service\FileWorkerInterface', function()
         {
             return new \App\Droit\Service\FileWorker();
+        });
+    }
+
+    /**
+     * Reminder
+     */
+    protected function registerReminderService(){
+
+        $this->app->singleton('App\Droit\Reminder\Repo\ReminderInterface', function()
+        {
+            return new \App\Droit\Reminder\Repo\ReminderEloquent(new \App\Droit\Reminder\Entities\Reminder);
         });
     }
 

@@ -16,6 +16,11 @@
                 <li class="<?php echo (Request::is('admin/config/colloque') ? 'active' : '' ); ?>"><a href="{{ url('admin/config/colloque')  }}">Colloque</a></li>
             </ul>
         </li>
+        <li class="<?php echo (Request::is('jobs') || Request::is('jobs/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('jobs') }}">
+                <i class="fa fa-bolt"></i> <span>Rappels</span>
+            </a>
+        </li>
         <li class="nav-title">Comptes</li>
         <li class="<?php echo (Request::is('admin/search/form') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/search/form') }}">
