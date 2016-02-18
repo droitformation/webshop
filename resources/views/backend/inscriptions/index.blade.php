@@ -47,7 +47,11 @@
                                             ?>
                                         </td>
                                         <td>{!! ($inscription->inscrit ? $inscription->inscrit->email : '<span class="label label-warning">Duplicata</span>') !!}</td>
-                                        <td>{{ $inscription->group_id ? $inscription->group_id.'<br/>'.$inscription->participant->name   : '' }}</td>
+                                        <td>
+                                            @if($inscription->group_id)
+                                                {!! $inscription->group_id.'<br/>'.$inscription->participant->name  !!}
+                                            @endif
+                                        </td>
                                         <td><strong>{{ $inscription->inscription_no }}</strong></td>
                                         <td>{{ $inscription->price->price_cents }} CHF</td>
                                         <td>

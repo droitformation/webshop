@@ -9,10 +9,16 @@
             echo '<p><strong>'.($inscription->inscrit && $inscription->adresse_facturation ? $inscription->adresse_facturation->civilite_title : '').'</strong></p>';
             echo '<p>'.($inscription->inscrit ? $inscription->inscrit->name : '<span class="label label-warning">Duplicata</span>').'<br/></p>';
         ?>
+            @if($inscription->group_id)
+                <a class="btn btn-info btn-xs" href="admin/inscription/groupe/{{ $inscription->group_id  }}">Changer le détenteur</a>
+            @endif
     </td>
     <td>{!! ($inscription->inscrit ? $inscription->inscrit->email : '<span class="label label-warning">Duplicata</span>') !!}</td>
     <td>
-        {{ $inscription->group_id ? $inscription->group_id.'<br/>'.$inscription->participant->name   : '' }}
+        @if($inscription->group_id)
+            {!! $inscription->participant->name  !!}
+            <a class="btn btn-success btn-xs" href="admin/inscription/add/{{ $inscription->group_id }}">Ajouter un participant</a>
+        @endif
     </td>
     <td><strong>{{ $inscription->inscription_no }}</strong></td>
     <td>{{ $inscription->price->price_cents }} CHF</td>

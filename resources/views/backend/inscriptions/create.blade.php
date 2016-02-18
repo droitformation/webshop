@@ -43,7 +43,10 @@
 
                     <div class="form-group">
                         <label><strong>Rechercher un utilisateur</strong></label>
-                        <input id="searchUser" class="form-control" placeholder="Chercher un utilisateur..." type="text">
+                        <div class="input-group">
+                            <span class="input-group-addon"></span>
+                            <input id="searchUser" class="form-control" placeholder="Chercher un utilisateur..." type="text">
+                        </div>
                     </div>
 
                     <div id="inputUser"></div>

@@ -38,8 +38,8 @@
                 <i class="fa fa-flag"></i> <span>Colloques</span>
             </a>
         </li>
-        <li class="<?php echo (Request::is('admin/inscription') || Request::is('admin/inscription/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/inscription') }}">
+        <li class="<?php echo (Request::is('admin/inscription/create') || Request::is('admin/inscription/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/inscription/create') }}">
                 <i class="fa fa-table"></i> <span>Inscription</span>
             </a>
         </li>
