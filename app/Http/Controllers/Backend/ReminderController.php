@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,6 +18,8 @@ class ReminderController extends Controller
     protected $product;
     protected $attribute;
     protected $colloque;
+    protected $helper;
+    protected $types;
 
     public function __construct(ReminderInterface $reminder, ProductInterface $product, ColloqueInterface $colloque, AttributeInterface $attribute)
     {
@@ -24,19 +27,32 @@ class ReminderController extends Controller
         $this->product   = $product;
         $this->attribute = $attribute;
         $this->colloque  = $colloque;
+        $this->types     = array_keys(config('jobs'));
+
+        $this->helper  = new \App\Droit\Helper\Helper();
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     public function index()
     {
         $reminders = $this->reminder->getAll();
+        $trashed   = $this->reminder->trashed();
 
-        return view('backend.reminders.index')->with(['reminders' => $reminders]);
+        return view('backend.reminders.index')->with(['reminders' => $reminders, 'trashed' => $trashed]);
     }
 
     public function create($type)
     {
-        $active = ($type == 'colloque' ? true : null); // products getall pass search
-        $items  = $this->$type->getAll($active);
+        if($type != 'rappel')
+        {
+            $active = ($type == 'colloque' ? true : null); // products getall pass search
+            $items  = $this->$type->getAll($active);
+        }
+        else
+        {
+            $items = null;
+        }
 
         return view('backend.reminders.create')->with(['type' => $type, 'items' => $items]);
     }
@@ -49,15 +65,25 @@ class ReminderController extends Controller
      */
     public function store(Request $request)
     {
-        $id    = $request->input('model_id');
-        $date  = $request->input('send_at');
-        $type  = $request->input('type');
-        $model = $this->$type->find($id);
+        $id       = $request->input('model_id',null);
+        $data     = $request->all();
+        $start    = $request->input('send_at');
 
-        $send_at  = $model->$date;
+        if($id)
+        {
+            $type      = $request->input('type');
 
-        $data = $request->all();
-        $data['send_at'] = $send_at;
+            $model     = $this->$type->find($id);
+            $send_at   = $model->$start;
+
+            $data['send_at'] = $this->helper->addInterval($send_at, $request->input('interval'));
+        }
+        else
+        {
+            $data['send_at'] = $this->helper->addInterval(Carbon::now(), $request->input('interval'));
+        }
+
+        $data['start'] = $start;
 
         $reminder = $this->reminder->create( $data );
 
@@ -74,9 +100,17 @@ class ReminderController extends Controller
     public function show($id)
     {
         $reminder  = $this->reminder->find($id);
-        $type   = $reminder->type;
-        $active = ($type == 'colloque' ? true : null); // products getall pass search
-        $items  = $this->$type->getAll($active);
+        $type      = $reminder->type;
+
+        if($type != 'rappel')
+        {
+            $active = ($type == 'colloque' ? true : null); // products getall  search
+            $items  = $this->$type->getAll($active);
+        }
+        else
+        {
+            $items = null;
+        }
 
         return view('backend.reminders.show')->with(['reminder' => $reminder, 'items' => $items]);
     }
@@ -90,7 +124,27 @@ class ReminderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $reminder = $this->reminder->update( $request->all() );
+        $id       = $request->input('model_id',null);
+        $data     = $request->all();
+        $start    = $request->input('send_at');
+
+        if($id)
+        {
+            $type      = $request->input('type');
+
+            $model     = $this->$type->find($id);
+            $send_at   = $model->$start;
+
+            $data['send_at'] = $this->helper->addInterval($send_at, $request->input('interval'));
+        }
+        else
+        {
+            $data['send_at'] = $this->helper->addInterval(Carbon::now(), $request->input('interval'));
+        }
+
+        $data['start'] = $start;
+
+        $reminder = $this->reminder->update( $data );
 
         return redirect('admin/reminder/'.$reminder->id)->with(['status' => 'success' , 'message' => 'Rappel mis à jour']);
     }

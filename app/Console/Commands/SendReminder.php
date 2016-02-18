@@ -3,9 +3,14 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Droit\Reminder\Repo\ReminderInterface;
+use App\Jobs\SendReminderEmail;
 
 class SendReminder extends Command
 {
+     use DispatchesJobs;
+
     /**
      * The name and signature of the console command.
      *
@@ -20,14 +25,20 @@ class SendReminder extends Command
      */
     protected $description = 'Send reminder emails';
 
+    protected $reminder;
+    protected $job;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ReminderInterface $reminder, SendReminderEmail $job)
     {
         parent::__construct();
+
+        $this->reminder = $reminder;
+        $this->job      = $job;
     }
 
     /**
@@ -37,6 +48,16 @@ class SendReminder extends Command
      */
     public function handle()
     {
-        //
+        // reminders to send today
+        $reminders = $this->reminder->toSend();
+
+        if(!$reminders->isEmpty())
+        {
+            foreach($reminders as $reminder)
+            {
+                $this->dispatch( (new SendReminderEmail($reminder)) );
+            }
+        }
+
     }
 }

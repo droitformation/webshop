@@ -46,7 +46,7 @@
 
                 <div class="form-group">
 
-                    <label for="message" class="col-sm-3 control-label">Intervale</label>
+                    <label for="message" class="col-sm-3 control-label">Interval</label>
                     <div class="col-sm-7">
                         <select class="form-control" name="interval">
                             <option value="">Choix</option>
@@ -64,10 +64,10 @@
                     <label for="message" class="col-sm-3 control-label">Email de rappel pour {{ $config['name'] }}</label>
                     <div class="col-sm-7">
 
-                        @if(!$items->isEmpty())
+                        @if($items && !$items->isEmpty())
                             <select class="form-control" name="model_id">
                                 @foreach($items as $item)
-                                    <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->title or $item->titre }}</option>
                                 @endforeach
                             </select>
                         @endif
@@ -85,7 +85,9 @@
             </div>
             <div class="panel-footer mini-footer ">
                 <div class="col-sm-3">
-                    <input type="hidden" name="model" value="{{ $config['model'] }}">
+                    @if(isset($config['model']))
+                        <input type="hidden" name="model" value="{{ $config['model'] }}">
+                    @endif
                     <input type="hidden" name="type" value="{{ $type }}">
                 </div>
                 <div class="col-sm-9">

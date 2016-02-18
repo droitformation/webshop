@@ -14,6 +14,7 @@ class CreateRemindersTable extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('start');
             $table->date('send_at');
             $table->string('title');
             $table->string('type');
@@ -24,6 +25,7 @@ class CreateRemindersTable extends Migration
             $table->string('relation')->nullable();
             $table->integer('relation_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

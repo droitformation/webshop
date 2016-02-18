@@ -24,21 +24,21 @@
 
 <div class="row">
     <div class="col-md-6 col-xs-12">
-        <?php
-        echo '<pre>';
-        print_r(config('jobs'));
-        echo '</pre>';
-        ?>
+
         @if(!$reminders->isEmpty())
 
             <div class="panel panel-primary">
                 <div class="panel-body">
+
+                    <h4>A envoyer</h4>
 
                     <table class="table">
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
                             <th class="col-sm-3">Titre</th>
+                            <th class="col-sm-2">Type</th>
+                            <th class="col-sm-2">Date d'envoie</th>
                             <th class="col-sm-2 no-sort"></th>
                         </tr>
                         </thead>
@@ -48,6 +48,8 @@
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/reminder/'.$reminder->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td><strong>{{ $reminder->title }}</strong></td>
+                                    <td>{{ $items[$reminder->type]['name'] }}</td>
+                                    <td><strong>{{ $reminder->send_at->formatLocalized('%d %B %Y') }}</strong></td>
                                     <td class="text-right">
                                         <form action="{{ url('admin/reminder/'.$reminder->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
@@ -59,6 +61,46 @@
 
                         </tbody>
                     </table>
+
+                    {!! $reminders->links() !!}
+
+                </div>
+            </div>
+
+        @endif
+
+    </div>
+    <div class="col-md-6 col-xs-12">
+
+        @if(!$trashed->isEmpty())
+
+            <div class="panel panel-inverse">
+                <div class="panel-body">
+
+                    <h4>Terminés</h4>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="col-sm-3">Titre</th>
+                            <th class="col-sm-2">Type</th>
+                            <th class="col-sm-3">Date d'envoi</th>
+                        </tr>
+                        </thead>
+                        <tbody class="selects">
+
+                        @foreach($trashed as $trash)
+                            <tr>
+                                <td><strong>{{ $trash->title }}</strong></td>
+                                <td>{{ $items[$reminder->type]['name'] }}</td>
+                                <td><strong>{{ $trash->send_at->formatLocalized('%d %B %Y') }}</strong></td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+
+                    {!! $trashed->links() !!}
 
                 </div>
             </div>

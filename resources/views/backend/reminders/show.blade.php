@@ -4,13 +4,13 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{!! url('admin/domain') !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{!! url('admin/reminder') !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 <!-- start row -->
 <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="panel panel-midnightblue">
 
             <?php $config = config('jobs.'.$reminder->type); ?>
@@ -48,7 +48,7 @@
 
                     <div class="form-group">
 
-                        <label for="message" class="col-sm-3 control-label">Intervale</label>
+                        <label for="message" class="col-sm-3 control-label">Interval</label>
                         <div class="col-sm-7">
                             <select class="form-control" name="interval">
                                 <option value="">Choix</option>
@@ -65,10 +65,10 @@
 
                         <label for="message" class="col-sm-3 control-label">Email de rappel pour {{ $config['name'] }}</label>
                         <div class="col-sm-7">
-                            @if(!$items->isEmpty())
+                            @if($items && !$items->isEmpty())
                                 <select class="form-control" name="model_id">
                                     @foreach($items as $item)
-                                        <option {{ $reminder->model_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title }}</option>
+                                        <option {{ $reminder->model_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->titre }}</option>
                                     @endforeach
                                 </select>
                             @endif

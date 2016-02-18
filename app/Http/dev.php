@@ -256,13 +256,26 @@ Route::get('convert', function()
 
 Route::get('testproduct', function()
 {
-    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
-    $abonnement = $abo->find(155);
+    $reminders  = \App::make('App\Droit\Reminder\Repo\ReminderInterface');
+    $list = $reminders->toSend();
 
+    foreach($list as $reminder)
+    {
+        $model = new $reminder->model;
 
-    echo '<pre>';
-    print_r($abonnement->abo_no);
-    echo '</pre>';exit;
+        if ($model instanceof Illuminate\Database\Eloquent\Model)
+        {
+            $model_id = $reminder->model_id;
+            $item     = $model->find($model_id);
+
+      /*      echo '<pre>';
+            print_r($item);
+            echo '</pre>';exit;*/
+
+            return View::make('emails.reminder', ['reminder' => $reminder, 'item' => $item]);
+            exit;
+        }
+    }
 
 });
 

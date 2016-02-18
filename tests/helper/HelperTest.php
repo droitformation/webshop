@@ -54,4 +54,12 @@ class HelperTest extends TestCase {
 
         $this->assertFalse($result);
     }
+
+    public function testAddInterval()
+    {
+        $expect = [1];
+        $result = $this->helper->addInterval($date,$interval);
+
+        $this->assertFalse($result);
+    }
 }

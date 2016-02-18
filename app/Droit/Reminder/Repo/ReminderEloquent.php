@@ -3,6 +3,8 @@
 use App\Droit\Reminder\Repo\ReminderInterface;
 use App\Droit\Reminder\Entities\Reminder as M;
 
+use Carbon\Carbon;
+
 class ReminderEloquent implements ReminderInterface{
 
     protected $reminder;
@@ -12,9 +14,19 @@ class ReminderEloquent implements ReminderInterface{
         $this->reminder = $reminder;
     }
 
-    public function getAll(){
+    public function getAll()
+    {
+        return $this->reminder->orderBy('send_at')->paginate(20);
+    }
 
-        return $this->reminder->all();
+    public function trashed()
+    {
+        return $this->reminder->onlyTrashed()->orderBy('send_at')->paginate(20);
+    }
+
+    public function toSend()
+    {
+        return $this->reminder->where('send_at','=', Carbon::now()->format('Y-m-d'))->get();
     }
 
     public function find($id){
@@ -28,6 +40,7 @@ class ReminderEloquent implements ReminderInterface{
             'send_at'     => $data['send_at'],
             'title'       => $data['title'],
             'type'        => $data['type'],
+            'start'       => $data['start'],
             'interval'    => $data['interval'],
             'text'        => (isset($data['text']) ? $data['text'] : null),
             'model_id'    => (isset($data['model_id']) ? $data['model_id'] : null),
