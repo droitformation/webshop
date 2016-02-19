@@ -81,7 +81,7 @@ class User_duplicates extends Model {
 
     public function adresses()
     {
-        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id');
+        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'user_id');
     }
 
 
@@ -97,8 +97,7 @@ class User_duplicates extends Model {
 
     public function user()
     {
-        return $this->hasMany('App\Droit\User\Entities\User','email', 'email');
+        return $this->hasOne('App\Droit\User\Entities\User','id', 'user_id');
     }
-
 
 }

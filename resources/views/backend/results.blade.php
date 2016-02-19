@@ -41,8 +41,9 @@
                                     <thead>
                                     <tr>
                                         <th class="col-sm-1">Action</th>
-                                        <th class="col-sm-4">Nom</th>
-                                        <th class="col-sm-4">Email</th>
+                                        <th class="col-sm-3">Nom</th>
+                                        <th class="col-sm-3">Email</th>
+                                        <th class="col-sm-2">Original</th>
                                         <th class="col-sm-3"></th>
                                     </tr>
                                     </thead>
@@ -52,9 +53,10 @@
                                             <td><a class="btn btn-sky btn-sm" href="{{ url('admin/duplicate/'.$duplicate->id) }}">&Eacute;diter</a></td>
                                             <td><strong>{{ $duplicate->name }}</strong></td>
                                             <td>{{ $duplicate->email }}</td>
+                                            <td><button type="button" class="btn btn-sm btn-warning" data-toggle="popover" title="{{ isset($duplicate->user) ? $duplicate->user->name : 'beuh' }}" data-content="{{ isset($duplicate->user) ? $duplicate->user->email : '' }}">Original</button></td>
                                             <td class="text-right">
                                                 {!! Form::open(array('route' => array('admin.duplicate.destroy', $duplicate->id), 'method' => 'delete')) !!}
-                                                <button data-action="{{ $duplicate->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                                <button data-action="{{ $duplicate->name }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                                 {!! Form::close() !!}
                                             </td>
                                         </tr>

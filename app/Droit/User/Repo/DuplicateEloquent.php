@@ -14,7 +14,7 @@ class DuplicateEloquent implements DuplicateInterface{
 
     public function getAll()
     {
-        return $this->user->all();
+        return $this->user->with(['user'])->get();
     }
 
     public function find($id){

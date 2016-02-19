@@ -2,6 +2,8 @@ $( function() {
 
     var base_url = location.protocol + "//" + location.host+"/";
 
+    $('[data-toggle="popover"]').popover();
+
     $('.redactor').redactor({
         minHeight  : 250,
         maxHeight: 450,
