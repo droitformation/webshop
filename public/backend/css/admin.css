@@ -561,3 +561,7 @@ select[multiple] {
     position: absolute;
     width: 1px;
 }
+
+.duplicate{
+    background: #f5f5f5;
+}

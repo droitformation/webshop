@@ -14,12 +14,12 @@ class DuplicateEloquent implements DuplicateInterface{
 
     public function getAll()
     {
-        return $this->user->with(['user'])->get();
+        return $this->user->with(['user','adresse','originaladresse'])->paginate(20);
     }
 
     public function find($id){
 
-        return $this->user->with(['adresses','orders','inscriptions','user'])->findOrFail($id);
+        return $this->user->withTrashed()->with(['adresse','orders','inscriptions','user','originaladresse'])->find($id);
     }
 
     public function search($term){

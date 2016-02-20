@@ -107,7 +107,7 @@
                             @foreach($orders as $order)
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/order/'.$order->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td>{{ $order->order_adresse->name }}</td>
+                                    <td>{{ isset($order->order_adresse) ? $order->order_adresse->name : 'NA' }}</td>
                                     <td><strong>{{ $order->order_no }}</strong></td>
                                     <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                                 </tr>

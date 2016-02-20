@@ -2,7 +2,10 @@ $( function() {
 
     var base_url = location.protocol + "//" + location.host+"/";
 
-    $('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').popover({
+        html : true,
+        trigger : 'hover'
+    });
 
     $('.redactor').redactor({
         minHeight  : 250,

@@ -48,6 +48,7 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->registerUserService();
         $this->registerDuplicateService();
+        $this->registerDuplicateWorkerService();
         $this->registerAdresseService();
 
         $this->registerPaysService();
@@ -176,6 +177,17 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\User\Repo\DuplicateInterface', function()
         {
             return new \App\Droit\User\Repo\DuplicateEloquent(new \App\Droit\User\Entities\User_duplicates());
+        });
+    }
+
+    /**
+     * Duplicate worker
+     */
+    protected function registerDuplicateWorkerService(){
+
+        $this->app->singleton('App\Droit\User\Worker\DuplicateWorkerInterface', function()
+        {
+            return new \App\Droit\User\Worker\DuplicateWorker();
         });
     }
 

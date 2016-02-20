@@ -71,7 +71,7 @@ Route::get('cartworker', function()
 
     $worker->merge($files, 'binding');*/
 
-    $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+/*    $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $item  = $order->find(2908);
 
     $products = $item->products->groupBy('id');
@@ -81,11 +81,11 @@ Route::get('cartworker', function()
         $count[$id] = $product->sum(function ($item) {
             return count($item['id']);
         });
-    }
-
-
+    }*/
+    $duplicates = \App::make('App\Droit\User\Repo\DuplicateInterface');
+    $duplicate  = $duplicates->find(762);
     echo '<pre>';
-    print_r($count);
+    print_r($duplicate);
     echo '</pre>';exit;
 
     /*

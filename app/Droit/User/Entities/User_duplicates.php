@@ -22,7 +22,7 @@ class User_duplicates extends Model {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['id','first_name','last_name', 'username','email', 'oldpassword'];
+	protected $fillable = ['id','first_name','last_name', 'username','email', 'oldpassword','old_id'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -31,43 +31,23 @@ class User_duplicates extends Model {
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
-    public function getAdresseLivraisonAttribute()
+    public function getAdressePrincipaleAttribute()
     {
-        if(isset($this->adresses))
+        $this->load('originaladresse');
+
+        if(isset($this->originaladresse))
         {
-            $livraison = $this->adresses->filter(function($adresse)
+            $principale = $this->originaladresse->filter(function($adresse)
             {
-                if ($adresse->livraison == 1) {
+                if ($adresse->type == 1) {
                     return true;
                 }
             });
 
-            return $livraison->first();
+            return $principale->first();
         }
 
-        return [];
-    }
-
-    public function getAdresseFacturationAttribute()
-    {
-        $this->load('adresses');
-
-        if(isset($this->adresses))
-        {
-            $contact = $this->adresses->filter(function($adresse)
-            {
-                if ($adresse->type == 1)
-                {
-                    $adresse->load('canton','profession','specialisations','civilite');
-
-                    return true;
-                }
-            });
-
-            return $contact->first();
-        }
-
-        return false;
+        return null;
     }
 
     public function getNameAttribute()
@@ -79,25 +59,29 @@ class User_duplicates extends Model {
      * Relations
      * */
 
-    public function adresses()
+    public function adresse()
     {
-        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'user_id');
+        return $this->hasOne('App\Droit\Adresse\Entities\Adresse','duplicate_id', 'id');
     }
 
+    public function originaladresse()
+    {
+        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'user_id')->withTrashed();
+    }
 
     public function orders()
     {
-        return $this->hasMany('App\Droit\Shop\Order\Entities\Order','user_id', 'user_id');
+        return $this->hasMany('App\Droit\Shop\Order\Entities\Order','user_id', 'old_id');
     }
 
     public function inscriptions()
     {
-        return $this->hasMany('App\Droit\Inscription\Entities\Inscription','user_id', 'user_id');
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription','user_id', 'old_id');
     }
 
     public function user()
     {
-        return $this->hasOne('App\Droit\User\Entities\User','id', 'user_id');
+        return $this->belongsTo('App\Droit\User\Entities\User','user_id', 'id')->withTrashed();
     }
 
 }

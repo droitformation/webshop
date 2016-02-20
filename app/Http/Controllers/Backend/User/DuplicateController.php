@@ -11,19 +11,22 @@ use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
 
 use App\Droit\User\Repo\DuplicateInterface;
+use App\Droit\User\Worker\DuplicateWorkerInterface;
 use App\Http\Requests\CreateDuplicate;
 use App\Http\Requests\UpdateDuplicate;
 
 class DuplicateController extends Controller {
 
     protected $duplicate;
+    protected $worker;
     protected $pays;
     protected $canton;
     protected $profession;
 
-    public function __construct(DuplicateInterface $duplicate, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession)
+    public function __construct(DuplicateInterface $duplicate, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession, DuplicateWorkerInterface $worker)
     {
         $this->duplicate  = $duplicate;
+        $this->worker     = $worker;
         $this->pays       = $pays;
         $this->canton     = $canton;
         $this->profession = $profession;
@@ -66,6 +69,19 @@ class DuplicateController extends Controller {
         $pays        = $this->pays->getAll();
 
         return view('backend.duplicates.create')->with(compact('pays','cantons','professions'));
+    }
+
+    public function assign(Request $request)
+    {
+        $duplicate_id = $request->input('duplicate_id');
+        $user_id      = $request->input('user_id');
+        $duplicate    = $this->duplicate->find($duplicate_id);
+
+        if($duplicate)
+        {
+            //$this->worker->assign($user_id, $duplicate->orders);
+            //$this->worker->assign($user_id, $duplicate->inscriptions);
+        }
     }
 
     /**
