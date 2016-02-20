@@ -79,9 +79,11 @@ class DuplicateController extends Controller {
 
         if($duplicate)
         {
-            //$this->worker->assign($user_id, $duplicate->orders);
-            //$this->worker->assign($user_id, $duplicate->inscriptions);
+            $this->worker->assign($user_id, $duplicate->orders);
+            $this->worker->assign($user_id, $duplicate->inscriptions);
         }
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'terminé']);
     }
 
     /**
