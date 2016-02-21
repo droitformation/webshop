@@ -93,7 +93,7 @@
 
                     @include('backend.orders.partials.commandes', ['orders' => $orders, 'cancelled' => false])
 
-                    <a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#cancelTable">Désinscriptions</a>
+                    <a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#cancelTable">Annulations</a>
                 </div>
             </div>
 
