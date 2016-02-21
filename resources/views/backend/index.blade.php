@@ -83,6 +83,18 @@
                     </div>--}}
                     <!-- TREEVIEW CODE -->
 
+                    @inject('fileWorker', 'App\Droit\Service\FileWorkerInterface')
+
+                    <?php $files = $fileWorker->listDirectoryFiles('files'); ?>
+
+                    @if(!empty($files))
+                        <?php
+                            echo '<pre>';
+                            print_r( $fileWorker->treeDirectories($files,'files'));
+                            echo '</pre>';
+                        ?>
+                    @endif
+
 
                 </div>
             </div>

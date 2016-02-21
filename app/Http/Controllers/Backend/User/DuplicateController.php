@@ -75,12 +75,24 @@ class DuplicateController extends Controller {
     {
         $duplicate_id = $request->input('duplicate_id');
         $user_id      = $request->input('user_id');
+
         $duplicate    = $this->duplicate->find($duplicate_id);
 
         if($duplicate)
         {
             $this->worker->assign($user_id, $duplicate->orders);
             $this->worker->assign($user_id, $duplicate->inscriptions);
+
+            if($duplicate->adresse)
+            {
+                $adresse         = $duplicate->adresse;
+                $specialisations = $adresse->specialisations;
+                $members         = $adresse->members;
+
+                $this->worker->assign($user_id, $adresse);
+                $this->worker->assign($user_id, $specialisations);
+                $this->worker->assign($user_id, $members);
+            }
         }
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'terminé']);

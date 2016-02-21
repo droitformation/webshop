@@ -8,6 +8,9 @@ $( function() {
     {
         var $manager  = $('#fileManager');
         var $tree     = $('#fileManagerTree');
+        var $gallery  = $('#gallery');
+
+        $gallery.html('<li style="width: 100%; height: 300px;line-height: 300px;text-align: center;"><img style="width: 60px; height: 60px;" src="' + base_url + '/images/default.svg" /></li>');
 
         $.post( "admin/files", { path: 'files/uploads' }).done(function( data ){
             $manager.empty().append(data);
@@ -151,7 +154,11 @@ $( function() {
         cropper.destroy();
 
         var $manager  = $('#fileManager');
+        var $gallery  = $('#gallery');
+
         var path      = $(this).attr('href');
+
+        $gallery.html('<li style="width: 100%; height: 300px;line-height: 300px;text-align: center;"><img style="width: 60px; height: 60px;" src="' + base_url + '/images/default.svg" /></li>');
 
         $.post( "admin/files", { path: path }).done(function( data )
         {

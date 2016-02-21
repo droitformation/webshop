@@ -9,6 +9,7 @@ return [
 
     'abos',
     'arrets',
+    'analyses',
     'colloques',
     'shop'
 ];

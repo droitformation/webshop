@@ -6,12 +6,20 @@ class DuplicateWorker implements DuplicateWorkerInterface
 {
     public function assign($user_id, $data)
     {
-        if(isset($data) && !$data->isEmpty())
+        if(isset($data))
         {
-            foreach($data as $model)
+            if(is_a($data, 'Illuminate\Database\Eloquent\Collection') && !$data->isEmpty())
             {
-                $model->user_id = $user_id;
-                $model->save();
+                foreach($data as $model)
+                {
+                    $model->user_id = $user_id;
+                    $model->save();
+                }
+            }
+            else
+            {
+                $data->user_id = $user_id;
+                $data->save();
             }
         }
     }

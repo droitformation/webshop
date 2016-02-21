@@ -77,10 +77,12 @@ class UploadController extends Controller
         return false;
     }
 
-
     public function uploadRedactor(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , 'files/uploads/images/' );
+        // thumb for redactor filemanager
+        $this->upload->upload( $request->file('file') , 'files/uploads/thumbs/', 'thumbs');
+
+        $files = $this->upload->upload( $request->file('file') , 'files/uploads/' );
 
         if($files)
         {
@@ -97,12 +99,12 @@ class UploadController extends Controller
 
     public function uploadFileRedactor(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , 'files/uploads/docs/' );
+        $files = $this->upload->upload( $request->file('file') , 'files/uploads/' );
 
         if($files)
         {
             $array = [
-                'filelink' => url('/').'/files/uploads/docs/'.$files['name'],
+                'filelink' => url('/').'/files/uploads/'.$files['name'],
                 'filename' => $files['name']
             ];
 
@@ -116,15 +118,16 @@ class UploadController extends Controller
     {
         $files = \Storage::disk('imageuploads')->files();
         $data   = [];
-        $except = ['.DS_Store'];
 
         if(!empty($files))
         {
             foreach($files as $file)
             {
-                if(!in_array($file,$except))
+                $mime = \File::mimeType(public_path('files/uploads/'.$file));
+
+                if(substr($mime, 0, 5) == 'image')
                 {
-                    $data[] = ['image' => url('/') . '/files/uploads/images/' . $file, 'thumb' => url('/') . '/files/uploads/images/' . $file, 'title' => $file];
+                    $data[] = ['image' => asset('files/uploads/'.$file), 'thumb' => asset('files/uploads/thumbs/'.$file), 'title' => $file];
                 }
             }
         }
@@ -136,15 +139,16 @@ class UploadController extends Controller
     {
         $files  = \Storage::disk('fileuploads')->files();
         $data   = [];
-        $except = ['.DS_Store'];
 
         if(!empty($files))
         {
             foreach($files as $file)
             {
-                if(!in_array($file,$except))
+                $mime = \File::mimeType(public_path('files/uploads/'.$file));
+
+                if(substr($mime, 0, 5) != 'image')
                 {
-                    $data[] = ['name' => $file, 'link' => url('/').'/files/uploads/docs/'.$file, 'title' => $file];
+                    $data[] = ['name' => $file, 'link' => asset('files/uploads/'.$file) , 'title' => $file];
                 }
             }
         }

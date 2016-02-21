@@ -79,7 +79,7 @@ class FileWorker implements FileWorkerInterface{
         {
             if(is_array($subdir))
             {
-                echo '<li>'.$name.'';
+                echo '<li class="sub">'.$name.'';
                 $this->listFiles($subdir);
                 echo '</li>';
             }
@@ -101,7 +101,7 @@ class FileWorker implements FileWorkerInterface{
     public function treeDirectories($directories, $path = '')
     {
         $key   = key($directories);
-        $exist = (is_array( $directories[$key] ) ? true : false);
+        $exist = (isset($directories[$key]) && is_array( $directories[$key] ) ? true : false);
 
         echo ($exist ? '<ul>' : '' );
 
@@ -115,6 +115,7 @@ class FileWorker implements FileWorkerInterface{
 
                     echo '<li>
                         <a class="'.$active.' node file-folder" href="'.$path.$name.'"><i class="fa fa-folder-o"></i> &nbsp;'.$name.'</a>';
+                        $this->treeDirectories($subdir, $path.$name.'/');
                     echo '</li>';
                 }
             }

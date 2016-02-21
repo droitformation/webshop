@@ -124,7 +124,7 @@
 
 #fileManager {
     overflow-y: auto;
-    max-height: 95%;
+    max-height: 550px;
 }
 
 .modal-footer {
@@ -212,6 +212,14 @@
 /*
 FILE MANAGER
 */
+
+#treeMenu{
+    min-height: 550px;
+}
+
+#uploadModal .modal-body{
+    min-height: 400px;
+}
 
 #fileManager img {
     max-width:  100px;

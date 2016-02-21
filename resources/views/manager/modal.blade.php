@@ -10,14 +10,15 @@
 
                 <div class="row">
                     <div class="col-md-2">
+                        <div id="treeMenu">
 
-                        <div class="tree">
-                            <h4>Dossiers</h4>
-                            <div id="fileManagerTree"></div>
+                            <div class="tree">
+                                <h4>Dossiers</h4>
+                                <div id="fileManagerTree"></div>
+                            </div>
+
+                            <div id="dropzone" class="dropzone"></div>
                         </div>
-
-                        <div id="dropzone" class="dropzone"></div>
-                        <div id="cropManager"></div>
                     </div>
                     <div class="col-md-10">
                         <div id="fileManager" data-path="uploads"></div>
