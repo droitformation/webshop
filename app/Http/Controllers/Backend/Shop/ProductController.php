@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Service\UploadInterface;
+use App\Droit\Reminder\Worker\ReminderWorkerInterface;
 
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
@@ -26,6 +27,7 @@ class ProductController extends Controller {
     protected $abo;
     protected $order;
     protected $helper;
+    protected $reminder;
 
 	/**
 	 * Create a new controller instance.
@@ -40,7 +42,8 @@ class ProductController extends Controller {
         AuthorInterface $author,
         DomainInterface $domain,
         UploadInterface $upload,
-        AboInterface $abo
+        AboInterface $abo,
+        ReminderWorkerInterface $reminder
     )
 	{
         $this->product   = $product;
@@ -50,6 +53,7 @@ class ProductController extends Controller {
         $this->author    = $author;
         $this->domain    = $domain;
         $this->upload    = $upload;
+        $this->reminder  = $reminder;
         $this->abo       = $abo;
 
         $this->helper    = new \App\Droit\Helper\Helper();
@@ -188,6 +192,14 @@ class ProductController extends Controller {
     public function addAttribut($id, Request $request)
     {
         $product = $this->product->find($id);
+
+        // See if attribute is a rappel
+        $attribute = $this->attribute->find($request->input('attribute_id'));
+
+        if($attribute->reminder)
+        {
+            $this->reminder->add($attribute, $product, $request->input('value'), $attribute->interval);
+        }
 
         $product->attributs()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);
 

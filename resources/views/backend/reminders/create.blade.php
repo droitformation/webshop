@@ -12,7 +12,7 @@
     <div class="col-md-8">
         <div class="panel panel-midnightblue">
 
-            <?php $config = config('jobs.'.$type); ?>
+            <?php $config = config('reminder.'.$type); ?>
 
             <!-- form start -->
             <form action="{!!  url('admin/reminder')!!}" method="POST" class="validate-form form-horizontal" data-validate="parsley">

@@ -2,7 +2,7 @@
 
 interface AttributeInterface {
 
-    public function getAll();
+    public function getAll($admin = false);
 	public function find($data);
 	public function create(array $data);
 	public function update(array $data);

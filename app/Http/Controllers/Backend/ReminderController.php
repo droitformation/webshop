@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Reminder\Repo\ReminderInterface;
+use App\Droit\Reminder\Worker\ReminderWorkerInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
@@ -15,19 +16,21 @@ use App\Droit\Colloque\Repo\ColloqueInterface;
 class ReminderController extends Controller
 {
     protected $reminder;
+    protected $worker;
     protected $product;
     protected $attribute;
     protected $colloque;
     protected $helper;
     protected $types;
 
-    public function __construct(ReminderInterface $reminder, ProductInterface $product, ColloqueInterface $colloque, AttributeInterface $attribute)
+    public function __construct(ReminderInterface $reminder, ProductInterface $product, ColloqueInterface $colloque, AttributeInterface $attribute, ReminderWorkerInterface $worker)
     {
         $this->reminder  = $reminder;
+        $this->worker    = $worker;
         $this->product   = $product;
         $this->attribute = $attribute;
         $this->colloque  = $colloque;
-        $this->types     = array_keys(config('jobs'));
+        $this->types     = array_keys(config('reminder'));
 
         $this->helper  = new \App\Droit\Helper\Helper();
 
@@ -36,17 +39,18 @@ class ReminderController extends Controller
 
     public function index()
     {
-        $reminders = $this->reminder->getAll();
-        $trashed   = $this->reminder->trashed();
+        $reminders  = $this->reminder->getAll();
+        $attributes = $this->attribute->getAll();
+        $trashed    = $this->reminder->trashed();
 
-        return view('backend.reminders.index')->with(['reminders' => $reminders, 'trashed' => $trashed]);
+        return view('backend.reminders.index')->with(['reminders' => $reminders, 'trashed' => $trashed, 'attributes' => $attributes]);
     }
 
     public function create($type)
     {
         if($type != 'rappel')
         {
-            $active = ($type == 'colloque' ? true : null); // products getall pass search
+            $active = ($type == 'colloque' || $type == 'attribute' ? true : null); // products getall pass search
             $items  = $this->$type->getAll($active);
         }
         else
@@ -104,7 +108,7 @@ class ReminderController extends Controller
 
         if($type != 'rappel')
         {
-            $active = ($type == 'colloque' ? true : null); // products getall  search
+            $active = ($type == 'colloque' || $type == 'attribute' ? true : null); // products getall pass search
             $items  = $this->$type->getAll($active);
         }
         else

@@ -69,7 +69,16 @@ class FileWorker implements FileWorkerInterface{
 
     public function listDirectoryFiles($dir)
     {
-        return $this->tree($dir);
+        $tree = $this->tree($dir);
+        foreach($tree as $index => $file)
+        {
+            if(!is_array($file))
+            {
+                $files[] = $file;
+            }
+        }
+
+        return isset($files) ? $files : [];
     }
 
     public function listActionFiles($dir)

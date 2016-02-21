@@ -9,7 +9,7 @@
 
                     <form>
                         <div class="file-upload-wrapper" data-name="file">
-                            <button type="button" class="btn btn-default" id="file" data-toggle="modal" data-target="#uploadModal">Chercher</button>
+                            <button type="button" class="btn btn-default" id="image" data-toggle="modal" data-target="#uploadModal">Chercher</button>
                             <div class="file-input"></div>
                             @include('manager.modal')
                         </div>
@@ -82,19 +82,6 @@
                         </div>
                     </div>--}}
                     <!-- TREEVIEW CODE -->
-
-                    @inject('fileWorker', 'App\Droit\Service\FileWorkerInterface')
-
-                    <?php $files = $fileWorker->listDirectoryFiles('files'); ?>
-
-                    @if(!empty($files))
-                        <?php
-                            echo '<pre>';
-                            print_r( $fileWorker->treeDirectories($files,'files'));
-                            echo '</pre>';
-                        ?>
-                    @endif
-
 
                 </div>
             </div>

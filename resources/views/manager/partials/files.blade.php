@@ -20,12 +20,10 @@
                     <?php $withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file); ?>
                     <p>{{ $withoutExt }}</p>
                 </li>
-            @else
-                <li>Aucun fichier à ce niveau</li>
             @endif
         @endforeach
     @else
-        <li>Aucun fichier à ce niveau</li>
+        <li style="width: 100%">Aucun fichier à ce niveau</li>
     @endif
 </ul>
 

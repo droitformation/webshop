@@ -51,7 +51,7 @@ class AttributController extends Controller
     {
         $attribut = $this->attribu->create( $request->all() );
 
-        return redirect()->back()->with(['status' => 'success' , 'message' => 'Attribut crée']);
+        return redirect('admin/attribut')->with(['status' => 'success' , 'message' => 'Attribut crée']);
     }
 
     /**

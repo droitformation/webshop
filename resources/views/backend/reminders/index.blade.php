@@ -9,7 +9,7 @@
         <div class="options text-right" style="margin-bottom: 10px;">
             <div class="btn-toolbar">
 
-                <?php $items = config('jobs'); ?>
+                <?php $items = config('reminder'); ?>
 
                 @if(!empty($items))
                     @foreach($items as $type => $title)
@@ -43,21 +43,21 @@
                         </tr>
                         </thead>
                         <tbody class="selects">
-                       
-                            @foreach($reminders as $reminder)
-                                <tr>
-                                    <td><a class="btn btn-sky btn-sm" href="{{ url('admin/reminder/'.$reminder->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td><strong>{{ $reminder->title }}</strong></td>
-                                    <td>{{ $items[$reminder->type]['name'] }}</td>
-                                    <td><strong>{{ $reminder->send_at->formatLocalized('%d %B %Y') }}</strong></td>
-                                    <td class="text-right">
-                                        <form action="{{ url('admin/reminder/'.$reminder->id) }}" method="POST" class="form-horizontal">
-                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-what="Supprimer" data-action="{{ $reminder->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+
+                        @foreach($reminders as $reminder)
+                            <tr>
+                                <td><a class="btn btn-sky btn-sm" href="{{ url('admin/reminder/'.$reminder->id) }}"><i class="fa fa-edit"></i></a></td>
+                                <td><strong>{{ $reminder->title }}</strong></td>
+                                <td>{{ $items[$reminder->type]['name'] }}</td>
+                                <td><strong>{{ $reminder->send_at->formatLocalized('%d %B %Y') }}</strong></td>
+                                <td class="text-right">
+                                    <form action="{{ url('admin/reminder/'.$reminder->id) }}" method="POST" class="form-horizontal">
+                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                        <button data-what="Supprimer" data-action="{{ $reminder->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>
@@ -68,46 +68,44 @@
             </div>
 
         @endif
-
     </div>
     <div class="col-md-6 col-xs-12">
 
-        @if(!$trashed->isEmpty())
+            @if(!$trashed->isEmpty())
 
-            <div class="panel panel-inverse">
-                <div class="panel-body">
+                <div class="panel panel-inverse">
+                    <div class="panel-body">
 
-                    <h4>Terminés</h4>
+                        <h4>Terminés</h4>
 
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th class="col-sm-3">Titre</th>
-                            <th class="col-sm-2">Type</th>
-                            <th class="col-sm-3">Date d'envoi</th>
-                        </tr>
-                        </thead>
-                        <tbody class="selects">
-
-                        @foreach($trashed as $trash)
+                        <table class="table">
+                            <thead>
                             <tr>
-                                <td><strong>{{ $trash->title }}</strong></td>
-                                <td>{{ $items[$reminder->type]['name'] }}</td>
-                                <td><strong>{{ $trash->send_at->formatLocalized('%d %B %Y') }}</strong></td>
+                                <th class="col-sm-3">Titre</th>
+                                <th class="col-sm-2">Type</th>
+                                <th class="col-sm-3">Date d'envoi</th>
                             </tr>
-                        @endforeach
+                            </thead>
+                            <tbody class="selects">
+                            @foreach($trashed as $trash)
+                                <tr>
+                                    <td><strong>{{ $trash->title }}</strong></td>
+                                    <td>{{ $items[$reminder->type]['name'] }}</td>
+                                    <td><strong>{{ $trash->send_at->formatLocalized('%d %B %Y') }}</strong></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
 
-                        </tbody>
-                    </table>
+                        {!! $trashed->links() !!}
 
-                    {!! $trashed->links() !!}
-
+                    </div>
                 </div>
-            </div>
 
-        @endif
+            @endif
 
     </div>
+
 </div>
 
 

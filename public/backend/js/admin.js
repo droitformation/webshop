@@ -22,7 +22,7 @@ $( function() {
 
     $('.redactorSimple').redactor({
         minHeight: 50,
-        maxHeight: 100,
+        maxHeight: 150,
         focus    : true,
         lang: 'fr',
         buttons  : ['formatting','bold','italic','link','|','unorderedlist']

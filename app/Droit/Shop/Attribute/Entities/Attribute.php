@@ -11,11 +11,17 @@ class Attribute extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title'];
+    protected $fillable = ['title','admin','text','interval'];
+
     /**
      * Set timestamps off
      */
     public $timestamps = false;
+
+    public function scopeReminder($query, $reminder)
+    {
+        if ($reminder) $query->where('reminder', '=' ,1);
+    }
 
     public function attributs()
     {

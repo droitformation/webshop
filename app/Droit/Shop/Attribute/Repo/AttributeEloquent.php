@@ -12,9 +12,9 @@ class AttributeEloquent implements AttributeInterface{
         $this->attribute = $attribute;
     }
 
-    public function getAll(){
-
-        return $this->attribute->with(['attributs'])->get();
+    public function getAll($reminder = false)
+    {
+        return $this->attribute->reminder($reminder)->with(['attributs'])->get();
     }
 
     public function find($id){
@@ -25,7 +25,9 @@ class AttributeEloquent implements AttributeInterface{
     public function create(array $data){
 
         $attribute = $this->attribute->create(array(
-            'title' => $data['title']
+            'title'    => $data['title'],
+            'reminder' => (isset($data['reminder']) && !empty($data['reminder']) ? 1 : null),
+            'text'     => (isset($data['text']) ? $data['text'] : null)
         ));
 
         if( ! $attribute )
@@ -46,7 +48,7 @@ class AttributeEloquent implements AttributeInterface{
             return false;
         }
 
-        $attribute->title = $data['title'];
+        $attribute->fill($data);
 
         $attribute->save();
 

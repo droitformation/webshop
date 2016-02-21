@@ -7,7 +7,7 @@
 
     <div style="font-family: arial, sans-serif;">
 
-        <?php $config = config('jobs.'.$reminder->type); ?>
+        <?php $config = config('reminder.'.$reminder->type); ?>
 
         <h3 style="color: #252f73;font-size: 18px;font-weight: 300;letter-spacing: 0;line-height: 30px;">{{ $reminder->title }}</h3>
         <p style="color: #000;font-size: 18px;letter-spacing: 0;line-height: 30px;">

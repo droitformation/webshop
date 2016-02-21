@@ -13,7 +13,7 @@
     <div class="col-md-8">
         <div class="panel panel-midnightblue">
 
-            <?php $config = config('jobs.'.$reminder->type); ?>
+            <?php $config = config('reminder.'.$reminder->type); ?>
 
             <!-- form start -->
             <form action="{!! url('admin/reminder/'.$reminder->id) !!}" method="POST" class="validate-form form-horizontal" data-validate="parsley">
@@ -47,7 +47,6 @@
                     </div>
 
                     <div class="form-group">
-
                         <label for="message" class="col-sm-3 control-label">Interval</label>
                         <div class="col-sm-7">
                             <select class="form-control" name="interval">

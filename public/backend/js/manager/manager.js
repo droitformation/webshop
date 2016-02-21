@@ -6,11 +6,13 @@ $( function() {
 
     $('body').on('show.bs.modal','#uploadModal', function ()
     {
-        var $manager  = $('#fileManager');
-        var $tree     = $('#fileManagerTree');
         var $gallery  = $('#gallery');
 
         $gallery.html('<li style="width: 100%; height: 300px;line-height: 300px;text-align: center;"><img style="width: 60px; height: 60px;" src="' + base_url + '/images/default.svg" /></li>');
+
+
+        var $manager  = $('#fileManager');
+        var $tree     = $('#fileManagerTree');
 
         $.post( "admin/files", { path: 'files/uploads' }).done(function( data ){
             $manager.empty().append(data);
@@ -78,8 +80,7 @@ $( function() {
         e.preventDefault();
         e.stopPropagation();
 
-        var cropper = new Croppic('cropManager');
-        cropper.destroy();
+        console.log('choooose');
 
         var exts   = ['jpg','jpeg','png','gif'];
         var target = $(this).data('targetid');

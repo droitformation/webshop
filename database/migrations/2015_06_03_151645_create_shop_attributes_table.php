@@ -16,6 +16,9 @@ class CreateShopAttributesTable extends Migration {
         {
             $table->increments('id');
             $table->string('title');
+            $table->string('intervals');
+			$table->tinyInteger('reminder')->nullable();
+            $table->text('text')->nullable();
             $table->softDeletes();
         });
 	}
