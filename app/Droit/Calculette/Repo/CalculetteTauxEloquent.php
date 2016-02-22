@@ -3,7 +3,7 @@
 use App\Droit\Calculette\Repo\CalculetteInterface;
 use App\Droit\Calculette\Entities\Calculette_taux as M;
 
-class CalculetteTauxEloquent implements CalculetteInterface{
+class CalculetteTauxEloquent implements CalculetteTauxInterface{
 
 	protected $calculette;
 
@@ -14,7 +14,7 @@ class CalculetteTauxEloquent implements CalculetteInterface{
 
 	public function getAll(){
 
-		return $this->calculette->all();
+		return $this->calculette->orderBy('start_at','DES')->get();
 	}
 
 	public function find($id){

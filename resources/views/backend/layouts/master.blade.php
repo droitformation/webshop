@@ -122,6 +122,25 @@
                            </li>
                         @endif
 
+                        @if($site->id == 2)
+                            <li>
+                                <a class="shortcut-tiles tiles-magenta" href="{{ url('admin/calculette/taux') }}">
+                                    <div class="tiles-body">
+                                        <div class="pull-left"><i class="fa fa-percent"></i></div>
+                                    </div>
+                                    <div class="tiles-footer">Calculette Taux</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="shortcut-tiles tiles-green" href="{{ url('admin/calculette/ipc') }}">
+                                    <div class="tiles-body">
+                                        <div class="pull-left"><i class="fa fa-sort-numeric-asc"></i></div>
+                                    </div>
+                                    <div class="tiles-footer">Calculette IPC</div>
+                                </a>
+                            </li>
+                        @endif
+
                         @if(!$site->arrets->isEmpty())
                             <li>
                                 <a class="shortcut-tiles tiles-success" href="{{ url('admin/arrets/'.$site->id) }}">

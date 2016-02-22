@@ -90,6 +90,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('question/create/{categorie}', 'Backend\QuestionController@create');
     Route::resource('question', 'Backend\QuestionController');
 
+    Route::resource('calculette/ipc', 'Backend\CalculetteIpcController');
+    Route::resource('calculette/taux', 'Backend\CalculetteTauxController');
     /*
     |--------------------------------------------------------------------------
     | User and Adresse Backend Routes

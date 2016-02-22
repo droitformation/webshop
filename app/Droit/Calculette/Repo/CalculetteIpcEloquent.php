@@ -3,7 +3,7 @@
 use App\Droit\Calculette\Repo\CalculetteInterface;
 use App\Droit\Calculette\Entities\Calculette_ipc as M;
 
-class CalculetteIpcEloquent implements CalculetteInterface{
+class CalculetteIpcEloquent implements CalculetteIpcInterface{
 
 	protected $calculette;
 
@@ -14,7 +14,7 @@ class CalculetteIpcEloquent implements CalculetteInterface{
 
 	public function getAll(){
 
-		return $this->calculette->all();
+		return $this->calculette->orderBy('start_at','DES')->get();
 	}
 
 	public function find($id){

@@ -5,6 +5,8 @@
     <div class="row">
         <div class="col-md-12">
 
+            <p><a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
@@ -22,11 +24,10 @@
                             </h4>
                         </div>
                         <div class="col-md-2 text-right">
-                            <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success btn-block"><i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
+                            <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
                         </div>
                     </div>
                     <hr/>
-                    <h4>Filtres</h4>
                     <div class="row">
                         <div class="col-md-12">
                             <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
@@ -35,27 +36,31 @@
                                 {!! csrf_field() !!}
 
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
+                                        <h4>Infos</h4>
                                         @if(!empty($names))
+                                            <?php $i = 1; ?>
                                             @foreach($names as $key => $name)
                                                 <div class="checkbox-inline checkbox-border">
-                                                    <label>
-                                                        <input class="checkbox_all" value="{{ $name }}" name="columns[{{ $key }}]" type="checkbox"> {{ $name }}
-                                                    </label>
+                                                    <label><input class="checkbox_all" value="{{ $name }}" name="columns[{{ $key }}]" type="checkbox"> {{ $name }}</label>
                                                 </div>
+                                                <?php $i++; ?>
+                                                {!! $i == 7 ? '<div class="clearfix"></div>' : '' !!}
                                             @endforeach
                                         @endif
-                                        <p style="margin-top: 10px;"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
-
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="checkbox"><label><input type="checkbox" name="sort" value="1">Tri par options</label></div>
-                                    </div>
-                                    <div class="col-md-2 text-right">
-                                        <button type="submit" class="btn btn-inverse"><i class="fa fa-download"></i> &nbsp;Exporter</button>
+                                    <div class="col-md-3">
+                                        <h4>Tri</h4>
+                                        <div class="radio">
+                                            <label><input type="radio" name="sort" value="" checked> Normal</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio" name="sort" value="1"> Par options</label>
+                                        </div>
                                     </div>
                                 </div>
-
+                                <p style="margin-top: 10px;" class="pull-left"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
+                                <button type="submit" class="btn btn-inverse pull-right"><i class="fa fa-download"></i> &nbsp;Exporter la liste</button>
                             </form>
                         </div>
                     </div>

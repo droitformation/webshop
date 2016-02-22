@@ -40,29 +40,9 @@ class ColloqueController extends Controller
             return response()->json($colloques);
         }
 
-        return view('colloques.index')->with(['colloques' => $colloques]);
+        return view('frontend.pubdroit.colloque.index')->with(['colloques' => $colloques]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -79,6 +59,8 @@ class ColloqueController extends Controller
         {
             return view('colloques.partials.details')->with(['colloque' => $colloque]);
         }
+
+        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque]);
     }
 
     /**

@@ -11,7 +11,7 @@
             </div>
             <div class="media-body">
                 <h4 class="media-heading">{{ $colloque->titre }}<br/>{{ $colloque->soustitre }}</h4>
-                <p><strong>{{ $colloque->event_date }}</strong> </p>
+                <p><strong>{{ $colloque->event_date }}</strong></p>
                 {{-- <hr/>
                 <p><strong>Lieu:</strong> {{ $colloque->location->name }}, {{ $colloque->location->adresse }}</p>
                 <p><strong>Délai d'inscription:</strong> {{ $colloque->registration_at->formatLocalized('%d %B %Y') }}</p>--}}

@@ -603,7 +603,7 @@ margin-bottom:0;
 .book-d-nav ul{ margin:0; list-style:none;}
 .book-d-nav ul li{display:inline-block; margin-left:10px;}
 .book-d-nav ul li a{ color:#000;}
-.book-i-caption{ padding:15px; overflow:hidden; margin-bottom:50px;}
+.book-i-caption{ padding:15px; overflow:hidden; margin-bottom:0px;}
 .book-i-caption .title{color:#98b827; margin:0 0 15px; display:block; font-size:18px;}
 .comm-nav{ overflow:hidden; margin-top:50px;}
 .comm-nav .title2{ display:block; margin:0 0 5px;}
@@ -611,7 +611,7 @@ margin-bottom:0;
 .comm-nav ul li{ float:left; margin-right:10px;}
 .comm-nav ul li.b-price{ font-size:18px; color:#000;}
 .comm-nav ul li input[type="text"]{ width:60px;}
-.b-img-holder{border:1px solid #e5e5e5; padding:25px 10px; text-align:center;}
+.b-img-holder{border:1px solid #e5e5e5; padding:25px; text-align:center; background: #f3f3f3}
 /* End Book Detail Section */
 
 /* Start Related Books Section */
@@ -1119,4 +1119,8 @@ a.navbar-btn.navbar-register:focus{
 .btn{
     border-radius: 0;
     -moz-border-radius: 0;
+}
+
+.colloque-centers{
+    padding-bottom: 20px;
 }
