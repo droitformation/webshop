@@ -5,35 +5,58 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="panel">
+            <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-1">
-                            <a href="#">
+                        <div class="col-md-10">
+                            <h4>
                                 @if($colloque->illustration)
-                                    <img style="height: 50px; float:left;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
+                                    <img style="height: 50px; float:left; margin-right: 15px;margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
                                 @else
-                                    <img style="height: 50px; float:left;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
+                                    <img style="height: 50px; float:left;margin-right: 15px; margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
                                 @endif
-                            </a>
-                        </div>
-                        <div class="col-md-7 panel-list">
-                            <h4><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
-                            <small>{{ $colloque->event_date }}</small>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
-                                <input type="hidden" name="_method" value="POST">
-                                {!! csrf_field() !!}
-                                <input type="hidden" name="id" value="{{ $colloque->id }}">
-                                <button type="submit" class="btn btn-inverse btn-block"><i class="fa fa-download"></i> &nbsp;Exporter</button>
-                                <div class="checkbox text-left">
-                                    <label><input type="checkbox" name="sort" value="1">Tri par options</label>
-                                </div>
-                            </form>
+                                <p>
+                                    <a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a><br/>
+                                    <small>{{ $colloque->event_date }}</small>
+                                </p>
+                            </h4>
                         </div>
                         <div class="col-md-2 text-right">
                             <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success btn-block"><i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h4>Filtres</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
+                                <input type="hidden" name="_method" value="POST">
+                                <input type="hidden" name="id" value="{{ $colloque->id }}">
+                                {!! csrf_field() !!}
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        @if(!empty($names))
+                                            @foreach($names as $key => $name)
+                                                <div class="checkbox-inline checkbox-border">
+                                                    <label>
+                                                        <input class="checkbox_all" value="{{ $name }}" name="columns[{{ $key }}]" type="checkbox"> {{ $name }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        <p style="margin-top: 10px;"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="checkbox"><label><input type="checkbox" name="sort" value="1">Tri par options</label></div>
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <button type="submit" class="btn btn-inverse"><i class="fa fa-download"></i> &nbsp;Exporter</button>
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
                 </div>

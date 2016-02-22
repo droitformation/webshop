@@ -457,6 +457,10 @@ select[multiple] {
     padding-top: 6px;
 }
 
+.media {
+    margin-top: 0;
+}
+
 .media-left img,
 .media-right img,
 .media-body img{
@@ -472,16 +476,24 @@ select[multiple] {
 
 .panel-colloque{
     min-height:170px;
+    position: relative;
+}
+
+.panel-colloque h4.media-heading a{
+    display: block;
+    padding-right: 15px;
 }
 
 .no-colloque{
+    position: absolute;
+    top: 5px;
+    right: 5px;
     display: block;
-    color: #8f8f8f;
+    color: #7b7b7b;
     font-size: 12px;
     border: 1px solid #d4d4d4;
-    padding: 5px;
-    width: 30px;
-    margin-bottom: 5px;
+    padding: 3px;
+    width: 24px;
     text-align: center;
 }
 
@@ -564,4 +576,10 @@ select[multiple] {
 
 .duplicate{
     background: #f5f5f5;
+}
+
+.btn-success .badge {
+    padding: 3px 6px;
+    color: #578b25;
+    font-weight: normal;
 }

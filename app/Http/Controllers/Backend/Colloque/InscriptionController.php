@@ -66,7 +66,7 @@ class InscriptionController extends Controller
         //$inscriptions    = $this->helper->groupInscriptionCollection($inscriptions);
         $desinscriptions = $this->inscription->getByColloqueTrashed($id);
 
-        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions]);
+        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions, 'names' => config('columns.names')]);
     }
 
     /**
@@ -147,7 +147,6 @@ class InscriptionController extends Controller
 
     public function change(Request $request)
     {
-
         $groupe = $this->groupe->update([
             'id'      => $request->input('group_id'),
             'user_id' => $request->input('user_id')

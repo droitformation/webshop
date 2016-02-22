@@ -84,7 +84,7 @@ class OrderController extends Controller {
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
 
 		return view('backend.orders.index')->with(
-            ['orders' => $orders,'start' => $period['start'],'end' => $period['end'],'columns' => config('columns.names'),'names' => $names,'onlyfree' => $onlyfree, 'details' => $details, 'cancelled' => $cancelled]
+            ['orders' => $orders,'start' => $period['start'],'end' => $period['end'], 'columns' => config('columns.names'), 'names' => $names, 'onlyfree' => $onlyfree, 'details' => $details, 'cancelled' => $cancelled]
         );
 	}
 

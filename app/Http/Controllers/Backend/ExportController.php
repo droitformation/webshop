@@ -47,12 +47,13 @@ class ExportController extends Controller
      */
     public function inscription(Request $request)
     {
-        $sort = $request->input('sort',false);
-        $id   = $request->input('id');
+        $names = $request->input('columns',config('columns.names'));
+        $sort  = $request->input('sort',false);
+        $id    = $request->input('id');
 
-        \Excel::create('Export inscriptions', function($excel) use ($id,$sort) {
+        \Excel::create('Export inscriptions', function($excel) use ($id,$sort,$names) {
 
-            $excel->sheet('Export', function($sheet) use ($id,$sort) {
+            $excel->sheet('Export', function($sheet) use ($id,$sort,$names) {
                 $sheet->setOrientation('landscape');
 
                 $colloque  = $this->colloque->find($id);
@@ -67,27 +68,20 @@ class ExportController extends Controller
                     {
                         $user = $inscription->inscrit;
 
+                        $data['Numéro']      = $inscription->inscription_no;
+                        $data['Prix']        = $inscription->price_cents;
+                        $data['Status']      = $inscription->status_name['status'];
+                        $data['Date']        = $inscription->created_at->format('m/d/Y');
+                        $data['Participant'] = ($inscription->group_id > 0 ? $inscription->participant->name : '');
+
                         // Adresse
                         if($user && !$user->adresses->isEmpty())
                         {
-                            $company = $user->adresses->first()->company;
-                            $adresse = $user->adresses->first()->adresse;
-                            $npa     = $user->adresses->first()->npa;
-                            $ville   = $user->adresses->first()->ville;
+                            foreach($names as $column => $title)
+                            {
+                                $data[$title] = $user->adresses->first()->$column;
+                            }
                         }
-
-                        $data['Numéro']      = $inscription->inscription_no;
-                        $data['Nom']         = ($user ? $user->name : '');
-                        $data['Participant'] = ($inscription->group_id > 0 ? $inscription->participant->name : '');
-                        $data['Company']     = (isset($company) ? $company : '');
-                        $data['Email']       = ($user ? $user->email : '');
-
-                        $data['Adresse'] = (isset($adresse) ? $adresse : '');
-                        $data['NPA']     = (isset($npa) ? $npa : '');
-                        $data['Ville']   = (isset($ville) ? $ville : '');
-                        $data['Prix']    = $inscription->price_cents;
-                        $data['Status']  = $inscription->status_name['status'];
-                        $data['Date']    = $inscription->created_at->format('m/d/Y');
 
                         if($sort && !empty($groupes))
                         {
@@ -131,7 +125,7 @@ class ExportController extends Controller
 
                             $sheet->appendRow(['']);
 
-                            $sheet->appendRow(['Numéro','Nom','Participant','Entreprise','Email','Adresse','NPA','Ville','Prix','Status','Date']);
+                            $sheet->appendRow(['Numéro','Prix','Status','Date','Participant'] + $names);
                             $sheet->row($sheet->getHighestRow(), function ($row) {
                                 $row->setFontWeight('bold');
                                 $row->setFontSize(14);
@@ -142,7 +136,7 @@ class ExportController extends Controller
                 }
                 else
                 {
-                    $sheet->appendRow(['Numéro','Nom','Participant','Entreprise','Email','Adresse','NPA','Ville','Prix','Status','Date']);
+                    $sheet->appendRow(['Numéro','Prix','Status','Date','Participant'] + $names);
                     $sheet->row($sheet->getHighestRow(), function ($row)
                     {
                         $row->setFontWeight('bold');
