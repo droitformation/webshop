@@ -262,7 +262,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('menu/create/{site}','Backend\MenuController@create');
     Route::resource('menu', 'Backend\MenuController');
 
-    Route::resource('author',    'Backend\Content\AuthorController');
+    Route::resource('author', 'Backend\Content\AuthorController');
+    Route::resource('location',    'Backend\Colloque\LocationController');
 
     Route::get('pages/{site}','Backend\PageController@index');
     Route::get('page/create/{site}','Backend\PageController@create');
@@ -313,6 +314,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 Route::get('/', 'Frontend\Shop\ShopController@index');
 Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
 Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
+Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
 
 Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
 

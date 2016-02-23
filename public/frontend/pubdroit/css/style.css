@@ -81,8 +81,9 @@ textarea { font-family:Arial, Helvetica, sans-serif; font-size:1em; vertical-ali
 /* End form defaults */
 
 .h4, h4 {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 15px;
+    margin-top: 0;
 }
 /* Start Links defaults style */
 a { text-decoration:none; outline:none;
@@ -615,8 +616,17 @@ margin-bottom:0;
 .comm-nav ul li{ float:left; margin-right:10px;}
 .comm-nav ul li.b-price{ font-size:18px; color:#000;}
 .comm-nav ul li input[type="text"]{ width:60px;}
-.b-img-holder{border:1px solid #e5e5e5; padding:25px; text-align:center; background: #f3f3f3}
+.b-img-holder{border:1px solid #e5e5e5; padding:25px; text-align:center; background: #f3f3f3;; margin-bottom: 20px}
 /* End Book Detail Section */
+
+.btn{
+    white-space: normal;
+}
+
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse:visited
+{
+    color: #fff;
+}
 
 /* Start Related Books Section */
 .related-book {padding:15px;}
@@ -1155,13 +1165,32 @@ a.navbar-btn.navbar-register:focus{
  Princig tables
 ===================*/
 
-#pricing input[type=radio],
-#pricing input[type=checkbox]{
-    display:none;
+#colloque-dependence .wrapper{
+    padding-bottom: 20px;
 }
 
-#pricing input[type=radio] + label,
-#pricing input[type=checkbox] + label {
+#colloque-dependence .wrapper .error{
+    margin-bottom: 10px;
+    color: #ad5e09;
+    background: #fcf8e3;
+    padding: 3px 10px;
+    margin-top: 15px;
+}
+
+#colloque-dependence input[type=radio],
+#colloque-dependence input[type=checkbox]
+{
+    height: 0;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+    width: 0;
+    border: 0;
+}
+
+#colloque-dependence input[type=radio] + label,
+#colloque-dependence input[type=checkbox] + label {
     display:table;
     margin:-2px;
     padding: 4px 6px;
@@ -1173,8 +1202,6 @@ a.navbar-btn.navbar-register:focus{
     text-shadow: 0 1px 1px rgba(255,255,255,0.75);
     vertical-align: middle;
     cursor: pointer;
-    width: 180px;
-    height: 180px;
     border-radius: 7px;
     background-color: #fff;
     border:2px solid #d9d9d9;
@@ -1182,62 +1209,94 @@ a.navbar-btn.navbar-register:focus{
     float: left;
 }
 
-#pricing input[type=radio]:checked + label,
-#pricing input[type=checkbox]:checked  + label{
+#colloque-dependence input[type=radio]:checked + label,
+#colloque-dependence input[type=checkbox]:checked  + label{
     outline: 0;
-    width: 180px;
-    height: 180px;
     background-color:#fff;
-    border:2px solid #b01d22;
+    border:2px solid #424242;
     position: relative;
 }
 
-#pricing input[type=radio]:checked + label:before,
-#pricing input[type=checkbox]:checked + label:before
+#colloque-dependence input[type=radio].prices + label,
+#colloque-dependence input[type=checkbox].prices + label,
+#colloque-dependence input[type=radio].prices:checked + label,
+#colloque-dependence input[type=checkbox]:checked.prices  + label
+{
+    width: 180px;
+    height: 180px;
+}
+
+#colloque-dependence input[type=radio].options + label,
+#colloque-dependence input[type=checkbox].options + label,
+#colloque-dependence input[type=radio]:checked.options + label,
+#colloque-dependence input[type=checkbox]:checked.options  + label
+{
+    width: 30%;
+    height: 100px;
+    padding: 5px 10px;
+}
+
+#colloque-dependence input[type=radio]:checked + label:before,
+#colloque-dependence input[type=checkbox]:checked + label:before
 {
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 52px 52px 0 0;
-    border-color: #b01d22 transparent transparent transparent;
+    border-color: #424242 transparent transparent transparent;
     position: absolute;
     left: 0;
     top: 0;
     content: "";
 }
-#pricing input[type=radio]:checked + label:after ,
-#pricing input[type=checkbox]:checked + label:after{
+#colloque-dependence input[type=radio]:checked + label:after ,
+#colloque-dependence input[type=checkbox]:checked + label:after{
     font-family: "FontAwesome";
     content: "\f00c";
     color: white;
     position: absolute;
     left: 9px;
     top: 6px;
-    text-shadow: 0 0 2px #b01d22;
+    font-weight: normal;
     font-size: 1.4rem;
 }
 
-#pricing {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    color: #9f9f9f;
+#colloque-dependence input[type=radio]:checked.options + label:before,
+#colloque-dependence input[type=checkbox]:checked.options + label:before
+{
+    border-width: 38px 38px 0 0;
+}
+#colloque-dependence input[type=radio]:checked.options + label:after ,
+#colloque-dependence input[type=checkbox]:checked.options + label:after{
+    left: 5px;
+    top: 2px;
+    font-size: 1rem;
+}
+
+#colloque-dependence {
     font-size: 15px;
     margin-bottom: 20px;
 }
-#pricing  .package {
+#colloque-dependence  .package {
     box-sizing: border-box;
     text-align: center;
     vertical-align: middle;
     display:table-cell;
 }
 
-#pricing .name {
+#colloque-dependence .name {
     color: #b01d22;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 15px;
     display: block;
 }
-#pricing .price_cents {
+
+#colloque-dependence .name.option_name {
+    font-size: 14px;
+    line-height: 17px;
+}
+
+#colloque-dependence .price_cents {
     margin-top: 15px;
     font-size: 15px;
     font-weight: bold;
@@ -1246,15 +1305,19 @@ a.navbar-btn.navbar-register:focus{
     height:30px;
 }
 
-#pricing p {
+#colloque-dependence p {
     font-size: 13px;
     font-weight: 600;
     color: #414141;
     display: block;
 }
 
-#pricing hr{
+#colloque-dependence hr{
     margin: 5px 0;
+}
+
+#colloque-dependence .errorTxt{
+   color: red;
 }
 
 .b-detail-holder hr{

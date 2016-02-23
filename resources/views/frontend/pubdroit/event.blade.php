@@ -1,4 +1,4 @@
-@@extends('frontend.pubdroit.layouts.master')
+@extends('frontend.pubdroit.layouts.master')
 @section('content')
 
 	<section class="row">

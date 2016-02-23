@@ -57,5 +57,17 @@ jQuery(document).ready(function($){
             }
         });
     }
+
+    $( "#colloque-inscription" ).validate({
+        errorElement : 'div',
+        errorPlacement: function(error, element)
+        {
+            if (element.is(":radio") || element.is(":checkbox")) {
+                error.prependTo(element.parent());
+            } else { // This is the default behavior of the script for all fields
+                error.insertAfter(element);
+            }
+        }
+    });
 });
 

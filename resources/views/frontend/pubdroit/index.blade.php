@@ -46,7 +46,7 @@
             @endif
 
             <div class="b-post-bottom text-right">
-                <a class="text-danger" href="blog-detail.html"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
+                <a class="text-danger" href="{{ url('archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
             </div>
 
         </section>

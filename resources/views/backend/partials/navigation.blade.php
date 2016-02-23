@@ -21,6 +21,11 @@
                 <i class="fa fa-bolt"></i> <span>Rappels</span>
             </a>
         </li>
+        <li class="<?php echo (Request::is('admin/location') || Request::is('admin/location/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/location') }}">
+                <i class="fa fa-map-marker"></i> <span>Lieux</span>
+            </a>
+        </li>
         <li class="nav-title">Comptes</li>
         <li class="<?php echo (Request::is('admin/search/form') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/search/form') }}">

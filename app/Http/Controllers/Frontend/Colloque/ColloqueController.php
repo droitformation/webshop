@@ -43,6 +43,12 @@ class ColloqueController extends Controller
         return view('frontend.pubdroit.colloque.index')->with(['colloques' => $colloques]);
     }
 
+    public function archives()
+    {
+        $colloques  = $this->colloque->getAll();
+
+        return view('frontend.pubdroit.colloque.archives')->with(['colloques' => $colloques]);
+    }
 
     /**
      * Display the specified resource.

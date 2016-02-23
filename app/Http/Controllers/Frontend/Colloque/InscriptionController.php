@@ -53,7 +53,7 @@ class InscriptionController extends Controller
 
         event(new InscriptionWasRegistered($inscription));
 
-        return redirect('colloque')->with(array('status' => 'success', 'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));
+        return redirect('/')->with(array('status' => 'success', 'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ));
     }
 
     /**

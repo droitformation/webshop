@@ -6,7 +6,7 @@ class Location extends Model{
 
     protected $table = 'locations';
 
-    protected $fillable = array('name','adresse','url','map');
+    protected $fillable = ['name','adresse','url','map'];
 
     public $timestamps = false;
 
