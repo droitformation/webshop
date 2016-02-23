@@ -469,7 +469,9 @@ $( function() {
     */
 
     $('.editableOption').editable();
-    $('.editablePrice').editable();
+    $('.editablePrice').editable({
+        emptytext : '',
+    });
     $('.editablePayementDate').editable({
         emptytext : '',
         success: function(response, newValue)

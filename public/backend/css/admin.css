@@ -144,6 +144,8 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 .list-group-item {
     padding: 5px 15px 5px 15px;
     line-height: 23px;
+    min-height: 35px;
+    height:auto;
 }
 
 .list-group-item .form-group {
@@ -387,27 +389,45 @@ a:hover, a:active, a:focus {
     padding: 0;
 }
 
- a.editable-click, a.editable-click:hover {
+a.editable-click{
     text-decoration: none;
     border: 0;
+    padding: 5px;
+}
+a.editable-click:hover {
+
 }
 
 .editable-click{
-    border: 1px solid #d2d3d6;
+    border: 1px solid #dfdfdf;
+    min-height: 28px;
+    line-height: 24px;
+    margin-bottom: 3px;
+    padding: 0 5px;
     color: #666;
     font-style: normal;
-    padding: 5px;
     float: left;
-    margin-bottom: 0;
-    width: 100%;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
+    width: 70%;
     display: table-cell;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.016) inset !important;
-    height: 34px;
-    background-color: #ffffff;
-    background-image: none;
-    line-height: 1.42857;
+    background: transparent;
+}
+
+.editablePrice.editable-click{
+    width: 100%;
+}
+
+.editable-click.editable-empty{
+    background: #f5f5f5;
+}
+
+.price-list dt{
+    width: 100px;
+    text-align: left;
+}
+
+.price-list dd{
+    margin-left: 110px;
 }
 
 .nestable_list{

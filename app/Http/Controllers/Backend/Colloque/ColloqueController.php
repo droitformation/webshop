@@ -199,7 +199,7 @@ class ColloqueController extends Controller
      */
     public function editprice(Request $request)
     {
-        $price = $this->price->update([ 'id' => $request->input('pk'), 'description' =>  $request->input('value')]);
+        $price = $this->price->update([ 'id' => $request->input('pk'), $request->input('name') =>  $request->input('value')]);
 
         if($price)
         {

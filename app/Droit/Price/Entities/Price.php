@@ -6,7 +6,7 @@ class Price extends Model{
 
     protected $table = 'colloque_prices';
 
-    protected $fillable = array('colloque_id','price','type','description','rang');
+    protected $fillable = array('colloque_id','price','type','description','rang','remarque');
 
     public $timestamps = false;
 

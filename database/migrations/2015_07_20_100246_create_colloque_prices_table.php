@@ -16,6 +16,7 @@ class CreateColloquePricesTable extends Migration
             $table->increments('id');
             $table->integer('colloque_id');
             $table->integer('price');
+            $table->text('remarque')->nullable();
             $table->enum('type', ['public', 'admin'])->default('public');
             $table->string('description');
         });

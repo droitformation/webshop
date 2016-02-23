@@ -7,26 +7,48 @@
 
 <div class="form-group">
     <label class="col-sm-3 control-label">{{ $title }}</label>
-    <div class="col-sm-6">
+    <div class="col-sm-8">
         <ul class="list-group">
             @if(!$prices->isEmpty())
                 @foreach($prices as $prix)
                     <li class="list-group-item">
-                        <span class="label label-default">{{ $prix->price_cents }} CHF</span>&nbsp;
-                        <a class="editablePrice" data-name="description" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la description">
-                            {{ $prix->description }}
-                        </a>
-                        <button class="btn btn-xs btn-danger pull-right removePrice" data-id="{{ $prix->id }}" type="button">&nbsp;<i class="fa fa-times"></i>&nbsp;</button>
+
+                        <div class="row">
+                            <div class="col-md-2"><span class="label label-default">{{ $prix->price_cents }} CHF</span>&nbsp;</div>
+                            <div class="col-md-9">
+                                <dl class="dl-horizontal price-list">
+                                    <dt> Description:</dt>
+                                    <dd>
+                                        <a class="editablePrice" data-name="description" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la description">
+                                            {{ $prix->description }}
+                                        </a>
+                                    </dd>
+                                    <dt> Remarque:</dt>
+                                    <dd>
+                                        <a class="editablePrice" data-name="remarque" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la remarque">
+                                            {{ $prix->remarque }}
+                                        </a>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-xs btn-danger pull-right removePrice" data-id="{{ $prix->id }}" type="button">&nbsp;<i class="fa fa-times"></i>&nbsp;</button>
+                            </div>
+                        </div>
+
                     </li>
                 @endforeach
             @endif
         </ul>
         <div class="collapse" id="price{{ $type }}">
             <div class="row price">
-                <div class="col-md-6">
-                    <input class="form-control" type="text" name="description" value="" placeholder="Remarque / Profession">
+                <div class="col-md-4">
+                    <input class="form-control" type="text" name="description" value="" placeholder="Description / Profession">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <input class="form-control" type="text" name="remarque" value="" placeholder="Remarque">
+                </div>
+                <div class="col-md-4">
                     <div class="input-group">
                         <input type="text" class="form-control"  name="price" placeholder="Prix">
                         <input type="hidden" name="type" value="{{ $type }}">
@@ -39,7 +61,7 @@
             </div><hr/>
         </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-1">
         <button class="btn btn-xs btn-info" data-toggle="collapse" data-target="#price{{ $type }}" type="button">&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp;</button>
     </div>
 </div>

@@ -16,35 +16,119 @@
                 <div class="book-i-caption">
                     <!-- Strat Book Image Section -->
                     <div class="col-md-3 b-img-holder">
-                        <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span>
                         <span class='zoom' id='ex1'> <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" height="219" width="300" id='jack' alt=''/></span>
                     </div>
-                    <!-- Strat Book Image Section -->
 
-                    <!-- Strat Book Overview Section -->
-                    <div class="col-md-9">
-                        <strong class="title">{{ $colloque->titre }}</strong>
+                    <div class="col-md-9 colloque-inscription">
+
+                        <h4><strong class="title">{{ $colloque->titre }}</strong></h4>
                         {!! !empty($colloque->soustitre) ? '<p class="text-muted">'.$colloque->soustitre.'</p>' : '' !!}
                         {!! $colloque->remarques !!}
 
-                        <h4>{{ $colloque->event_date }}</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="calltoaction">
+                                    <p><i class="fa fa-calendar"></i>&nbsp; {{ $colloque->event_date }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="calltoaction calltored">
+                                    <p><strong><i class="fa fa-clock-o"></i></strong>  &nbsp;Délai d'inscription: {{ $colloque->registration_at->formatLocalized('%d %B %Y') }}</p>
+                                </div>
+                            </div>
+                        </div>
 
-                        <h5><strong><i class="fa fa-clock-o"></i> &nbsp;Délai d'inscription </strong> le {{ $colloque->registration_at->formatLocalized('%d %B %Y') }}</h5>
+                        <hr/>
 
-                        <h4>Prix</h4>
+                        <h4>Prix applicable</h4>
 
-                        <?php $prices = $colloque->prices->whereLoose('type','public'); ?>
-                        @if(!$prices->isEmpty())
-                            <dl>
-                                @foreach($prices as $price)
-                                    <dt>{{ $price->description }}</dt>
-                                    <dd>{{ $price->price_cents }} CHF</dd>
+                        <div id="pricing">
+                            <div class='wrapper'>
+
+                                <?php $prices = $colloque->prices->whereLoose('type','public'); ?>
+                                @if(!$prices->isEmpty())
+                                    @foreach($prices as $price)
+                                        <input type="radio" id="price_{{ $price->id }}" name="price_id" value="{{ $price->id }}">
+                                        <label for="price_{{ $price->id }}">
+                                            <div class='package'>
+                                                <div class='name'>{{ $price->description }}</div>
+                                                <div class='price_cents'>{{ $price->price_cents }} CHF</div>
+
+                                                @if(!empty($price->remarque))
+                                                    <hr/><p>{{ $price->remarque }}</p>
+                                                @endif
+
+                                            </div>
+                                        </label>
+                                    @endforeach
+                                @endif
+
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <?php $types = $colloque->options->groupBy('type');
+                    /*        echo '<pre>';
+                            print_r($types);
+                            echo '</pre>';*/
+                            ?>
+                            @if(!$types->isEmpty())
+                                @foreach($types as $type => $options)
+
+                                    <h4>Merci de préciser</h4>
+
+                                    @if($type == 'checkbox')
+                                        <?php
+                                            $check =  'checkbox';
+                                            $titre =  'Options';
+                                        ?>
+
+                                        <div class='wrapper'>
+                                            @foreach($options as $option)
+                                                <input type="{{ $check }}" id="option_{{ $option->id }}" name="option_id" value="{{ $option->id }}">
+                                                <label for="option_{{ $option->id }}">
+                                                    <div class='package'>
+                                                        <div class='name'>{{ $option->title }}</div>
+                                                    </div>
+                                                </label>
+                                            @endforeach
+                                        </div>
+
+                                        <div class="clearfix"></div>
+
+                                    @else
+                                        <?php
+                                            $check =  'radio';
+                                            $titre =  'Options à choix';
+                                        ?>
+                                        @foreach($options as $option)
+                                            <div class='wrapper'>
+                                                <h4>{{ $option->title }}</h4>
+                                                @foreach($option->groupe as $group)
+                                                    <input type="{{ $check }}" id="group_{{ $group->id }}" name="option_id[{{ $option->id }}][]" value="{{ $group->id }}">
+                                                    <label for="group_{{ $group->id }}">
+                                                        <div class='package'>
+                                                            <div class='name'>{{ $group->text }}</div>
+                                                        </div>
+                                                    </label>
+                                                @endforeach
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        @endforeach
+
+                                    @endif
+
+
+
+
                                 @endforeach
-                            </dl>
-                        @endif
+                            @endif
+                        </div>
+
+                        <div class="colloque-send">
+                            <a href="#" class="more-btn">Envoyer</a>
+                        </div>
 
                     </div>
-                    <!-- End Book Overview Section -->
                 </div>
 
                 <hr/>
