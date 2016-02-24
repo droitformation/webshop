@@ -9,7 +9,7 @@ class OptionGroupe extends Model
 
     public $timestamps = false;
 
-    protected $fillable = array('text','colloque_id','option_id');
+    protected $fillable = ['text','colloque_id','option_id'];
 
     public function colloque()
     {

@@ -11,34 +11,31 @@
                 <span class="h-line"></span>
             </div>
 
-            @if(!$colloques->isEmpty())
-                <?php $chunks = $colloques->chunk(2); ?>
-                @foreach($chunks as $chunk)
-                    <section class="row">
-                        @foreach($chunk as $colloque)
+            <div class="year-holder">
+                @if(!$colloques->isEmpty())
 
-                            <div class="event-post col-md-6">
-                                <div class="post-img">
-                                    <a href="{{ url('colloque/'.$colloque->id) }}">
-                                        <?php $illustraton = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
-                                        <img src="{{ asset('files/colloques/illustration/'.$illustraton) }}" alt=""/>
-                                    </a>
-                                </div>
-                                <div class="post-det">
-                                    <h3><a href="{{ url('colloque/'.$colloque->id) }}"><strong>{{ $colloque->titre }}</strong></a></h3>
-                                    <span class="comments-num">{{ $colloque->soustitre }}</span>
-                                    <p><i class="fa fa-calendar"></i> &nbsp;{{ $colloque->event_date }}</p>
-                                    <p><strong>Lieu: </strong>
-                                        {{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? $colloque->location->adresse : '' }}</p>
-                                    {!! $colloque->remarque !!}
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
+                    <?php
+                        $years = $colloques->groupBy(function ($colloque, $key) {
+                            return $colloque->start_at->format('Y');
+                        });
+                    ?>
 
-                        @endforeach
-                    </section>
-                @endforeach
-            @endif
+                    @foreach($years as $annee => $year)
+                        <h2>{{ $annee }}</h2>
+                        <div class="side-inner-holder">
+                            <?php $chunks = $year->chunk(2); ?>
+                            @foreach($chunks as $chunk)
+                                <section class="row">
+                                    @foreach($chunk as $colloque)
+                                        @include('frontend.pubdroit.colloque.partials.event', ['colloque' => $colloque])
+                                    @endforeach
+                                </section>
+                            @endforeach
+                        </div>
+                    @endforeach
+                @endif
+
+            </div>
 
         </div>
     </section>

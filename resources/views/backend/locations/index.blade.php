@@ -26,10 +26,10 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
-                            <th class="col-sm-3">Carte</th>
-                            <th class="col-sm-3">Nom</th>
-                            <th class="col-sm-3">Adresse</th>
-                            <th class="col-sm-2 no-sort"></th>
+                            <th class="col-sm-2">Carte</th>
+                            <th class="col-sm-4">Nom</th>
+                            <th class="col-sm-4">Adresse</th>
+                            <th class="col-sm-1 no-sort"></th>
                         </tr>
                         </thead>
                         <tbody class="selects">
@@ -37,7 +37,15 @@
                             @foreach($locations as $location)
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/location/'.$location->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td><img style="height: 40px;" src="{{ asset($location->location_map) }}" alt="Pas de carte"></td>
+                                    <td>
+                                        @if($location->location_map)
+                                            <a href="{{ asset($location->location_map) }}" target="_blank">
+                                                <img style="height: 40px;" src="{{ asset($location->location_map) }}" alt="{{ $location->name }}">
+                                            </a>
+                                        @else
+                                            <p>Pas de carte</p>
+                                        @endif
+                                    </td>
                                     <td><strong>{{ $location->name }}</strong></td>
                                     <td>{!! $location->adresse !!}</td>
                                     <td class="text-right">

@@ -2,7 +2,7 @@
 
 interface ColloqueInterface {
 
-    public function getAll($active = false);
+    public function getAll($active = false, $archives = false);
     public function find($data);
     public function getNewNoInscription($colloque_id);
     public function increment($colloque_id);

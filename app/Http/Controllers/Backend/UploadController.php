@@ -21,23 +21,30 @@ class UploadController extends Controller
 
     public function uploadFile(Request $request)
     {
-        $path  = $request->input('path').'/'.$request->input('type');
-        $files = $this->upload->upload( $request->file('file') ,$path);
+        $_file = $request->file('file',null);
 
-        if($files)
+        if($_file)
         {
-            $this->document->create(
-                [
-                    'colloque_id' => $request->input('colloque_id'),
-                    'type'        => $request->input('type'),
-                    'path'        => $files['name'],
-                    'titre'       => $request->input('titre')
-                ]);
+            $path  = $request->input('path').'/'.$request->input('type');
+            $files = $this->upload->upload( $request->file('file') ,$path, 'illustration');
 
-            return redirect()->back()->with(array('status' => 'success', 'message' => 'Document ajouté'));
+            if($files)
+            {
+                $this->document->create(
+                    [
+                        'colloque_id' => $request->input('colloque_id'),
+                        'type'        => $request->input('type'),
+                        'path'        => $files['name'],
+                        'titre'       => $request->input('titre')
+                    ]);
+
+                return redirect()->back()->with(array('status' => 'success', 'message' => 'Document ajouté'));
+            }
+
+            return redirect()->back()->with(array('status' => 'danger', 'message' => 'Problème avec le document'));
         }
 
-        return redirect()->back()->with(array('status' => 'danger', 'message' => 'Problème avec le document'));
+        return redirect()->back()->with(array('status' => 'danger', 'message' => 'Veuillez choisir un document'));
     }
 
     public function upload(Request $request)

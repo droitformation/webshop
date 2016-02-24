@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Backend\Colloque;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\UpdateLocationRequest;
+use App\Http\Requests\CreateLocationRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Location\Repo\LocationInterface;
@@ -43,7 +44,7 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateLocationRequest $request)
     {
         $data = $request->except('file');
         $file = $this->upload->upload( $request->file('file') , 'files/colloques/cartes' , 'map');
@@ -75,7 +76,7 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLocationRequest $request, $id)
     {
         $data  = $request->except('file');
         $_file = $request->file('file',null);

@@ -11,6 +11,7 @@ use App\Droit\Organisateur\Repo\OrganisateurInterface;
 use App\Droit\Compte\Repo\CompteInterface;
 use App\Droit\Price\Repo\PriceInterface;
 use App\Droit\Option\Repo\OptionInterface;
+use App\Droit\Option\Repo\GroupOptionInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -24,6 +25,7 @@ class ColloqueController extends Controller
     protected $organisateur;
     protected $price;
     protected $option;
+    protected $group;
 
     /**
      * Create a new controller instance.
@@ -38,7 +40,8 @@ class ColloqueController extends Controller
         OrganisateurInterface $organisateur,
         DocumentWorker $document,
         PriceInterface $price,
-        OptionInterface $option
+        OptionInterface $option,
+        GroupOptionInterface $group
     )
     {
         $this->colloque     = $colloque;
@@ -49,6 +52,7 @@ class ColloqueController extends Controller
         $this->organisateur = $organisateur;
         $this->price        = $price;
         $this->option       = $option;
+        $this->group        = $group;
     }
 
     /**
@@ -115,9 +119,9 @@ class ColloqueController extends Controller
     public function update(Request $request, $id)
     {
         $colloque     = $this->colloque->update($request->all());
-        $illustration = $request->input('illustration');
+        $illustration = $request->input('illustration',null);
 
-        if(isset($illustration) && !empty($illustration))
+        if($illustration && !empty($illustration))
         {
             $this->document->updateColloqueDoc($id, ['illustration' => $illustration]);
         }
@@ -232,7 +236,26 @@ class ColloqueController extends Controller
     public function addoption(Request $request)
     {
         parse_str($request->input('data'), $data);
+
+        // Create option
         $option = $this->option->create($data);
+
+        // is it's a multichoice
+        if(isset($data['group']))
+        {
+            $choices = explode(PHP_EOL, $data['group']);
+            if(!empty($choices))
+            {
+                foreach($choices as $choice)
+                {
+                    $this->group->create([
+                        'text'        => $choice,
+                        'colloque_id' => $data['colloque_id'],
+                        'option_id'   => $option->id
+                    ]);
+                }
+            }
+        }
 
         $colloque = $this->colloque->find($data['colloque_id']);
 
@@ -244,9 +267,13 @@ class ColloqueController extends Controller
      */
     public function editoption(Request $request)
     {
-         $option = $this->option->update([ 'id' => $request->input('pk'), 'title' =>  $request->input('value')]);
+         $model = $request->input('model');
+echo '<pre>';
+print_r($model);
+echo '</pre>';exit;
+         $item  = $this->$model->update([ 'id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
 
-         if($option)
+         if($item)
          {
              return response('OK', 200);
          }

@@ -402,7 +402,6 @@ a.editable-click:hover {
     border: 1px solid #dfdfdf;
     min-height: 28px;
     line-height: 24px;
-    margin-bottom: 3px;
     padding: 0 5px;
     color: #666;
     font-style: normal;
@@ -419,6 +418,10 @@ a.editable-click:hover {
 
 .editable-click.editable-empty{
     background: #f5f5f5;
+}
+
+[data-model="option"] {
+    font-weight: bold;
 }
 
 .price-list dt{
@@ -608,4 +611,12 @@ select[multiple] {
     padding: 3px 6px;
     color: #578b25;
     font-weight: normal;
+}
+
+.colloque-doc-item{
+    margin-bottom: 5px;
+}
+
+#optionGroupe{
+    margin: 5px 0;
 }

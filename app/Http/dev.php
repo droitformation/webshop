@@ -82,10 +82,14 @@ Route::get('cartworker', function()
             return count($item['id']);
         });
     }*/
-    $duplicates = \App::make('App\Droit\User\Repo\DuplicateInterface');
-    $duplicate  = $duplicates->find(762);
+   // $duplicates = \App::make('App\Droit\User\Repo\DuplicateInterface');
+   // $duplicate  = $duplicates->find(762);
+
+    $colloques = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $colloque  = $colloques->find(39);
+
     echo '<pre>';
-    print_r($duplicate);
+    print_r($colloque);
     echo '</pre>';exit;
 
     /*

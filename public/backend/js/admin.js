@@ -166,9 +166,10 @@ $( function() {
         });
     });
 
-    $('.addOption').on("click",function(e) {
+    $('body').on("click",'.addOption',function(e) {
 
-        e.preventDefault();e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
         var $form = $(this).closest('div.option');
         var $main = $(this).closest('.form-group');
@@ -484,4 +485,17 @@ $( function() {
             }
         }
     });
+
+
+    $(document).on('change', '#selectTypeOption', function (e){
+
+        var $type         = $(this).val();
+        var $optionGroupe = $('#optionGroupe');
+        if($type == 'choix')
+        {
+            $optionGroupe.show();
+        }
+
+    });
+
 });

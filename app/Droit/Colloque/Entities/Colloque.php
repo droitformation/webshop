@@ -89,14 +89,12 @@ class Colloque extends Model
 
     public function scopeActive($query,$status)
     {
-        if($status)
-        {
-            return $query->where('registration_at','>',date('Y-m-d'));
-        }
-        else
-        {
-            return $query->where('registration_at','<=',date('Y-m-d'));
-        }
+        if($status) $query->where('registration_at','>',date('Y-m-d'));
+    }
+
+    public function scopeArchives($query,$status)
+    {
+        if($status) $query->where('registration_at','<=',date('Y-m-d'));
     }
 
     public function specialisations()

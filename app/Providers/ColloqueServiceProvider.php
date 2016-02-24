@@ -31,6 +31,7 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerDocumentService();
         $this->registerGroupeService();
         $this->registerOptionService();
+        $this->registerGroupOptionService();
         $this->registerPriceService();
 
 	}
@@ -146,6 +147,17 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Option\Repo\OptionInterface', function()
         {
             return new \App\Droit\Option\Repo\OptionEloquent(new \App\Droit\Option\Entities\Option);
+        });
+    }
+
+    /**
+     * GroupOption
+     */
+    protected function registerGroupOptionService(){
+
+        $this->app->singleton('App\Droit\Option\Repo\GroupOptionInterface', function()
+        {
+            return new \App\Droit\Option\Repo\GroupOptionEloquent(new \App\Droit\Option\Entities\OptionGroupe());
         });
     }
 

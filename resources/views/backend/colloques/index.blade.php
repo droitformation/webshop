@@ -20,13 +20,13 @@
         <?php
 
             $actives = $colloques->filter(function ($colloque) {
-                return $colloque->end_at > date('Y-m-d');
+                return $colloque->start_at > date('Y-m-d');
             });
 
             $active_chunks = $actives->chunk(4);
 
             $archives = $colloques->filter(function ($colloque) {
-                return $colloque->end_at <= date('Y-m-d');
+                return $colloque->start_at <= date('Y-m-d');
             });
 
             $years = $archives->groupBy(function ($archive, $key) {

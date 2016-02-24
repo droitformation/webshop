@@ -189,11 +189,13 @@
 
                     <h4>Programme</h4>
                     @if($colloque->programme)
-                        <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
-                        <form action="{{ url('admin/document/'.$colloque->programme->id) }}" method="POST" class="pull-right">
-                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                            <button data-action="Programme" class="btn btn-danger btn-sm deleteAction">x</button>
-                        </form><hr/>
+                        <div class="colloque-doc-item">
+                            <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
+                            <form action="{{ url('admin/document/'.$colloque->programme->id) }}" method="POST" class="pull-right">
+                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                <button data-action="Programme" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
+                            </form>
+                        </div>
                     @else
                         @include('backend.colloques.partials.upload', ['type' => 'programme', 'name' => 'Programme'])
                     @endif
@@ -203,11 +205,13 @@
                         @if($colloque->documents)
                             @foreach($colloque->documents as $document)
                                 @if($document->type == 'document')
-                                    <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
-                                    <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
-                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                        <button data-action="{{ $document->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
-                                    </form>
+                                    <div class="colloque-doc-item">
+                                        <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
+                                        <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
+                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                            <button data-action="{{ $document->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
+                                        </form>
+                                    </div>
                                 @endif
                             @endforeach
                         @endif
