@@ -124,7 +124,6 @@
         </tbody>
     </table>
 
-
 @else
     <p>Encore aucune inscription</p>
 @endif
