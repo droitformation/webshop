@@ -43,7 +43,14 @@
                                         <td>
                                             <?php
                                                 echo '<p><strong>'.($inscription->inscrit && $inscription->adresse_facturation ? $inscription->adresse_facturation->civilite_title : '').'</strong></p>';
-                                                echo '<p>'.($inscription->inscrit ? $inscription->inscrit->name : '<span class="label label-warning">Duplicata</span>').'<br/></p>';
+                                                if($inscription->inscrit)
+                                                {
+                                                    echo '<p><a class="text-info" href="'.url('admin/user/'.$inscription->inscrit->id).'">'. $inscription->inscrit->name.'</a></p>';
+                                                }
+                                                else
+                                                {
+                                                    echo '<p><span class="label label-warning">Duplicata</span></p>';
+                                                }
                                             ?>
                                         </td>
                                         <td>{!! ($inscription->inscrit ? $inscription->inscrit->email : '<span class="label label-warning">Duplicata</span>') !!}</td>

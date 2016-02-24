@@ -102,7 +102,7 @@ class LocationController extends Controller
     {
         $this->location->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Location supprimée']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Lieu supprimée']);
     }
 
 }

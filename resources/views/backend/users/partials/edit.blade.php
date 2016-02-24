@@ -22,11 +22,11 @@
                         @endif
 
                         @if(!$inscription->colloque->prices->isEmpty())
-                            @include('colloques.partials.prices', ['select' => 'price_id', 'price_current' => $inscription->price->id, 'colloque' => $inscription->colloque])
+                            @include('backend.inscriptions.partials.prices', ['select' => 'price_id', 'price_current' => $inscription->price->id, 'colloque' => $inscription->colloque])
                         @endif
 
                         @if(!$inscription->colloque->options->isEmpty())
-                            @include('colloques.partials.options', ['select' => 'groupes', 'colloque' => $inscription->colloque])
+                            @include('backend.inscriptions.partials.options', ['select' => 'groupes', 'colloque' => $inscription->colloque])
                         @endif
 
                         <?php $user = ($inscription->group_id ? 'group_id' : 'user_id'); ?>

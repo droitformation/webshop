@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Backend\Colloque;
 
-use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Worker\InscriptionWorkerInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
+
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionCreateRequest;
 use App\Http\Controllers\Controller;
+
 use App\Events\InscriptionWasCreated;
 use App\Events\GroupeInscriptionWasRegistered;
+
 use App\Jobs\SendConfirmationInscriptionEmail;
 
 class InscriptionController extends Controller
@@ -35,6 +38,7 @@ class InscriptionController extends Controller
         $this->register    = $register;
         $this->user        = $user;
         $this->groupe      = $groupe;
+
         $this->generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->helper      = new \App\Droit\Helper\Helper();
 

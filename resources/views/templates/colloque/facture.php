@@ -51,7 +51,15 @@
 
     <div class="content">
 
-        <h1 class="title blue">FACTURE <?php echo $inscription->inscription_no; ?></h1>
+        <h1 class="title blue">
+            <?php
+                if($rappel)
+                {
+                    echo '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span> ';
+                }
+            ?>
+            FACTURE <?php echo $inscription->inscription_no; ?>
+        </h1>
 
         <table class="content-table content-wide" valign="top">
             <tr valign="top">

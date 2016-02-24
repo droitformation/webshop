@@ -90,6 +90,10 @@ class UserController extends Controller {
     {
         $user = $this->user->find($id);
 
+        echo '<pre>';
+        print_r($user);
+        echo '</pre>';exit;
+
         return view('backend.users.show')->with(compact('user'));
     }
 

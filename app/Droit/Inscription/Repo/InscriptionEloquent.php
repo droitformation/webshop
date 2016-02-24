@@ -20,7 +20,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByColloque($id,$type = false,$paginate = false)
     {
-        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','duplicate','user_options.option_groupe','user.adresses' => function($query)
+        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','duplicate','rappels','user_options.option_groupe','user.adresses' => function($query)
         {
             $query->where('adresses.type','=',1);
 
@@ -46,7 +46,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByUser($colloque_id,$user_id)
     {
-        $inscription = $this->inscription->where('colloque_id','=',$colloque_id)->where('user_id','=',$user_id)->get();
+        $inscription = $this->inscription->with('rappels')->where('colloque_id','=',$colloque_id)->where('user_id','=',$user_id)->get();
 
         if(!$inscription->isEmpty())
         {
@@ -63,7 +63,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function find($id){
 
-        return $this->inscription->with(['price','colloque','user','groupe'])->find($id);
+        return $this->inscription->with(['price','colloque','user','groupe','rappels'])->find($id);
     }
 
     public function restore($id)
@@ -184,6 +184,8 @@ class InscriptionEloquent implements InscriptionInterface{
         {
             foreach($data['groupes'] as $option_id => $groupe_id)
             {
+                $inscription->options()->detach($option_id);
+
                 $inscription->options()->attach($option_id, ['groupe_id' => $groupe_id, 'inscription_id' => $inscription->id]);
             }
         }

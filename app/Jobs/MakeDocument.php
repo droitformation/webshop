@@ -6,13 +6,12 @@ use App\Jobs\Job;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Droit\Inscription\Entities\Inscription;
 
-class MakeDocument extends Job implements SelfHandling, ShouldQueue
+class MakeDocument extends Job
 {
-    use InteractsWithQueue, SerializesModels;
+    use SerializesModels;
 
     protected $inscription;
 
@@ -35,7 +34,6 @@ class MakeDocument extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
         $this->inscription->load('colloque');

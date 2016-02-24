@@ -85,12 +85,21 @@ Route::get('cartworker', function()
    // $duplicates = \App::make('App\Droit\User\Repo\DuplicateInterface');
    // $duplicate  = $duplicates->find(762);
 
-    $colloques = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $colloque  = $colloques->find(39);
+    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $inscription  = $inscriptions->find(7859);
+
+    //$inscription->options()->detach();
 
     echo '<pre>';
-    print_r($colloque);
-    echo '</pre>';exit;
+    print_r($inscription->user_options);
+    echo '</pre>';
+
+    //$inscription->options()->detach();
+    echo '<pre>';
+   // print_r($inscription->options);
+    echo '</pre>';
+
+    exit;
 
     /*
         $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');

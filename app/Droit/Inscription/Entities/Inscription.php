@@ -185,4 +185,9 @@ class Inscription extends Model
         return $this->belongsToMany('App\Droit\Option\Entities\Option' , 'colloque_option_users', 'inscription_id', 'option_id');
     }
 
+    public function rappels()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Rappel');
+    }
+
 }

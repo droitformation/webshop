@@ -144,6 +144,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
 
+    Route::resource('inscription/rappel','Backend\Colloque\RappelController');
+
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
     Route::get('colloque/location/{id}', 'Backend\Colloque\ColloqueController@location');
     Route::get('colloque/adresse/{id}', 'Backend\Colloque\ColloqueController@adresse');

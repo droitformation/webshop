@@ -140,6 +140,11 @@ class User extends Authenticatable {
         return $this->hasMany('App\Droit\Inscription\Entities\Inscription','user_id', 'id');
     }
 
+    public function inscription_groupes()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Groupe');
+    }
+
     public function roles()
     {
         return $this->belongsToMany('App\Droit\User\Entities\Role', 'user_roles', 'user_id', 'role_id');

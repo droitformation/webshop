@@ -20,11 +20,11 @@
             </div>
 
             @if(!$colloque->prices->isEmpty())
-                @include('colloques.partials.prices', ['select' => 'price_id[]'])
+                @include('backend.inscriptions.partials.prices', ['select' => 'price_id[]'])
             @endif
 
             @if(!$colloque->options->isEmpty())
-                @include('colloques.partials.options', ['select' => 'groupes[0]'])
+                @include('backend.inscriptions..partials.options', ['select' => 'groupes[0]'])
             @endif
         </fieldset>
     </div>

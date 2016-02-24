@@ -268,9 +268,7 @@ class ColloqueController extends Controller
     public function editoption(Request $request)
     {
          $model = $request->input('model');
-echo '<pre>';
-print_r($model);
-echo '</pre>';exit;
+
          $item  = $this->$model->update([ 'id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
 
          if($item)

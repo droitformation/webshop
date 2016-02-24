@@ -60,6 +60,7 @@ return array(
     'CreateCategoriesTable' => $baseDir . '/database/migrations/content/2014_09_24_090223_create_categories_table.php',
     'CreateCivilitesTable' => $baseDir . '/database/migrations/2015_06_04_121744_create_civilites_table.php',
     'CreateColloqueDocumentsTable' => $baseDir . '/database/migrations/2015_07_20_100808_create_colloque_documents_table.php',
+    'CreateColloqueInscriptionRappelsTable' => $baseDir . '/database/migrations/2016_02_24_150419_create_colloque_inscription_rappels_table.php',
     'CreateColloqueInscriptionsGroupesTable' => $baseDir . '/database/migrations/2015_08_18_145111_create_colloque_inscriptions_groupes_table.php',
     'CreateColloqueInscriptionsParticipantsTable' => $baseDir . '/database/migrations/2015_08_17_145111_create_colloque_inscriptions_participants_table.php',
     'CreateColloqueInscriptionsTable' => $baseDir . '/database/migrations/2015_07_20_085759_create_colloque_inscriptions_table.php',

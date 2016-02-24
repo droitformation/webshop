@@ -30,12 +30,12 @@
                         @endif
 
                         @if(!$colloque->prices->isEmpty())
-                            @include('colloques.partials.prices', ['select' => 'price_id', 'price_current' => $inscription->price->id])
+                            @include('backend.inscriptions.partials.prices', ['select' => 'price_id', 'price_current' => $inscription->price->id])
                         @endif
 
                         @if(!$colloque->options->isEmpty())
                             <h4>Merci de préciser</h4>
-                            @include('colloques.partials.options', ['select' => 'groupes'])
+                            @include('backend.inscriptions.partials.options', ['select' => 'groupes'])
                         @endif
 
                         <?php $user = ($inscription->group_id ? 'group_id' : 'user_id'); ?>

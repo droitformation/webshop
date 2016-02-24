@@ -58,152 +58,7 @@ $( function() {
         return false;
     });
 
-    /*
-     * Choice of location for event
-     * */
-    if($('#endroitSelect').length && $('#endroitSelect').val() != "") {
-        getEndroit($('#endroitSelect').val());
-    }
 
-    $(document).on('change', '#endroitSelect' , function (e){
-        e.preventDefault();
-        getEndroit($(this).val());
-    });
-
-    function getEndroit(id){
-        $.ajax({
-            type: "GET",
-            url : base_url + "admin/colloque/location/" + id,
-            success: function(data) {
-                if(data)
-                {
-                    var map = (data.map ? '<img style="width:100%;" src="files/colloques/cartes/'+ data.map +'" alt="Map"><small>La carte du bon</small>' : '<span style="display: block;" class="text-danger">il n\'existe pas de carte</span>');
-                    var html = '<div class="thumbnail"><div class="row"><div class="col-md-3">'
-                        + map
-                        + '</div>'
-                        + '<div class="col-md-8">'
-                        + '<h4>'+ data.name + '</h4>'
-                        + '<p>' + data.adresse + '</p>'
-                        + '</div></div>'
-                        + '</div>';
-
-                    $('#showEndroit').html(html);
-                }
-            },
-            error: function(){ alert('problème avec la séléction de l\'endroit'); }
-        });
-    }
-
-    /*
-     * Choice of adresse for event
-     * */
-    if($('#adresseSelect').length && $('#adresseSelect').val() != "") {
-        getAdresse($('#adresseSelect').val());
-    }
-
-    $(document).on('change', '#adresseSelect' , function (e) {
-        e.preventDefault();
-        getAdresse($(this).val());
-    });
-
-    function getAdresse(id){
-        $.ajax({
-            type: "GET",
-            url : base_url + "admin/colloque/adresse/" + id,
-            success: function(data) {
-                if(data)
-                {
-                    var logo = (data.logo ? '<img style="max-width:100%;max-height:100px;" src="files/logos/'+ data.logo +'" alt="Logo">' : '<span class="text-danger">il n\'existe pas de logo</span>');
-                    var html = '<div class="row"><div class="col-md-3">' + logo + '</div>'
-                        + '<div class="col-md-8">'
-                        + '<p>' + data.adresse + '</p>'
-                        + '</div></div>';
-                    $('#showAdresse').html(html);
-                }
-            },
-            error: function(){ alert('problème avec la séléction de l\'adresse'); }
-        });
-    }
-
-    /*
-    * Colloques options and prices
-    */
-    $('body').on("click",".addPrice",function(e) {
-
-        e.preventDefault();e.stopPropagation();
-
-        var $form = $(this).closest('div.price');
-        var $main = $(this).closest('.form-group');
-        var data  = $form.find("select,textarea,input").serialize();
-
-        $.ajax({
-            type : "POST",
-            url  : base_url + "admin/colloque/addprice",
-            data : { data: data, _token: $("meta[name='_token']").attr('content') },
-            success: function(data) {
-                $main.find('.priceWrapper').empty();
-                $main.replaceWith(data);
-            },
-            error: function(){alert('problème avec l\'ajout du prix');}
-        });
-    });
-
-    $('body').on("click",'.removePrice', function(e) {
-
-        e.preventDefault();e.stopPropagation();
-
-        var price = $(this).data('id');
-        var $main = $(this).closest('.form-group');
-
-        $.ajax({
-            type : "POST",
-            url  : base_url + "admin/colloque/removeprice",
-            data : { id: price, _token: $("meta[name='_token']").attr('content') },
-            success: function(data) {
-                $main.replaceWith(data);
-            },
-            error: function(){alert('problème avec la suppresion du prix');}
-        });
-    });
-
-    $('body').on("click",'.addOption',function(e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        var $form = $(this).closest('div.option');
-        var $main = $(this).closest('.form-group');
-        var data  = $form.find("select,textarea,input").serialize();
-
-        $.ajax({
-            type : "POST",
-            url  : base_url + "admin/colloque/addoption",
-            data : { data: data, _token: $("meta[name='_token']").attr('content') },
-            success: function(data) {
-                $main.find('.priceWrapper').empty();
-                $main.replaceWith(data);
-            },
-            error: function(){alert('problème avec l\'ajout de \'option');}
-        });
-    });
-
-    $('body').on("click",'.removeOption', function(e) {
-
-        e.preventDefault();e.stopPropagation();
-
-        var price = $(this).data('id');
-        var $main = $(this).closest('.form-group');
-
-        $.ajax({
-            type : "POST",
-            url  : base_url + "admin/colloque/removeoption",
-            data : { id: price, _token: $("meta[name='_token']").attr('content') },
-            success: function(data) {
-                $main.replaceWith(data);
-            },
-            error: function(){alert('problème avec la suppresion de \'option');}
-        });
-    });
 
     /*
     * Inscription form clones
@@ -388,8 +243,8 @@ $( function() {
         $('.collapseArchive.in').collapse('hide');
     });
 
-    $( "#selectPays" ).change(function() {
-        console.log('sv');
+
+    $("#selectPays").change(function() {
         var optionSelected = $("option:selected", this);
         var valueSelected  = optionSelected.val();
 
@@ -403,24 +258,18 @@ $( function() {
     });
 
     /*
-    * checkboxes
+    * Select columns for export
     * */
 
     $('#select_all').on('click',function(){
-        if(this.checked)
-        {
-            $('.checkbox_all').each(function(){
-                this.checked = true;
-            });
-        }
-        else
-        {
-            $('.checkbox_all').each(function(){
-                this.checked = false;
-            });
-        }
+        var checked = this.checked ? true : false;
+        $('.checkbox_all').each(function(){ this.checked = checked; });
     });
 
+
+    /*
+     * Custom toggle btn div
+     * */
 
     var $adresse = $('#adresseParent');
 
@@ -431,8 +280,6 @@ $( function() {
     $('#adresseParent').find('.accordion-toggle').click(function()
     {
         var $toggle = $(this).data('toggle');
-
-        console.log($toggle);
         //Expand or collapse this panel
         $('#'+$toggle).slideToggle('fast');
         //Hide the other panels
@@ -440,62 +287,5 @@ $( function() {
         $(".collapse").not( $('#'+$toggle) ).slideUp('fast');
     });
 
-    $('#selectAbos').ddslick({
-        selectText: "Select your favorite social network",
-        onSelected: function (data) {
-            console.log(data);
-        }
-    });
-
-/*    var fuzzyOptions = {
-        searchClass: "fuzzy-search",
-        location: 0,
-        distance: 100,
-        threshold: 0.4,
-        multiSearch: true
-    };
-    var options = {
-        valueNames: [ 'title', 'ISBN', 'author','Référence', 'Éditeur', 'domain', 'categorie' ],
-        //page: 20,
-        plugins: [
-            ListFuzzySearch(),
-            //ListPagination({})
-        ]
-    };
-
-    var userList = new List('search-list', options);*/
-
-    /*
-     Inline edit for prices and options colloques
-    */
-
-    $('.editableOption').editable();
-    $('.editablePrice').editable({
-        emptytext : '',
-    });
-    $('.editablePayementDate').editable({
-        emptytext : '',
-        success: function(response, newValue)
-        {
-            $(this).closest('.input-group').find('.input-group-addon').text(response.etat).addClass('bg-'+ response.color);
-
-            if(!response.success)
-            {
-                return response.msg;
-            }
-        }
-    });
-
-
-    $(document).on('change', '#selectTypeOption', function (e){
-
-        var $type         = $(this).val();
-        var $optionGroupe = $('#optionGroupe');
-        if($type == 'choix')
-        {
-            $optionGroupe.show();
-        }
-
-    });
 
 });

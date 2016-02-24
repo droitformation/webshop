@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             @foreach($user->inscriptions as $inscription)
-                <?php $inscription->load('colloque'); ?>
+                <?php $inscription->load('colloque','rappels'); ?>
                 <tr class="mainRow">
                     <td>
                         <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $inscription->id }}">
@@ -81,13 +81,24 @@
                                     <div class="col-md-2">
                                         @if(!$inscription->payed_at)
                                             <hr/>
-                                            <a href="{{ url('/') }}" class="btn btn-sm btn-warning"><i class="fa fa-paperclip"></i> &nbsp;Générer un rappel</a>
+                                            <form action="{{ url('admin/inscription/rappel') }}" method="POST">{!! csrf_field() !!}
+                                                <input type="hidden" name="id" value="{{ $inscription->id }}">
+                                                <button class="btn btn-inverse btn-sm"><i class="fa fa-paperclip"></i> &nbsp;Générer un rappel</button>
+                                            </form>
+
+                                            @if(!$inscription->rappels->isEmpty())
+                                                <ol class="list-group">
+                                                    @foreach($inscription->rappels as $rappel)
+                                                        <li class="list-group-item">Rappel {{ $rappel->created_at->format('d/m/Y') }}</li>
+                                                    @endforeach
+                                                </ol>
+                                            @endif
                                         @endif
                                     </div>
                                     <div class="col-md-5">
-                                        @if(!empty($inscription->documents))
+                                        @if(!empty($inscription->colloque->annexe))
                                             <hr/>
-                                            <a href="{{ url('/') }}" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i> &nbsp;Regénérer les documents</a>
+                                            <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i> &nbsp;Regénérer les documents</a>
                                             <a href="{{ url('/') }}" class="btn btn-sm btn-success"><i class="fa fa-trophy"></i> &nbsp;Attestation</a>
                                         @endif
                                     </div>
