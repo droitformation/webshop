@@ -251,14 +251,14 @@ class PdfGenerator implements PdfGeneratorInterface
 
         if($this->inscription->group_id && $toGenereate)
         {
-            $this->bonEvent($this->inscription);
+            $this->bonEvent();
         }
         else
         {
             foreach($annexes as $annexe)
             {
                 $doc = $annexe.'Event';
-                $this->$doc($this->inscription);
+                $this->$doc();
             }
         }
     }

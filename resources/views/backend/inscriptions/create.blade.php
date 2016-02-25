@@ -52,7 +52,7 @@
                     <div id="inputUser"></div>
                     <div id="inputolloque"></div>
 
-                    <button type="submit" class="btn btn-info pull-right">Ok</button>
+                    <button type="submit" class="btn btn-info pull-right">Suivant</button>
                 </form>
             </div>
         </div>

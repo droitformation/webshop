@@ -172,8 +172,6 @@ class InscriptionController extends Controller
         $type     = $request->input('type');
         $colloque = $request->input('colloque_id');
 
-       // $colloque = $this->colloque->find($request->input('colloque_id'));
-
         // if type simple
         if($type == 'simple')
         {
@@ -370,7 +368,7 @@ class InscriptionController extends Controller
         $user     = $this->user->find($request->input('user_id'));
         $type     = $request->input('type');
 
-        echo view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type]);
+        echo view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type])->__toString();
     }
 
 }

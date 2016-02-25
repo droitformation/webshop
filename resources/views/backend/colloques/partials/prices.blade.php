@@ -14,7 +14,13 @@
                     <li class="list-group-item">
 
                         <div class="row">
-                            <div class="col-md-2"><span class="label label-default">{{ $prix->price_cents }} CHF</span>&nbsp;</div>
+                            <div class="col-md-2">
+                                <span class="label label-default">
+                                     <a class="editablePrice" data-name="price" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer le prix">
+                                         {{ $prix->price_cents }}
+                                     </a> CHF
+                                </span>
+                            </div>
                             <div class="col-md-9">
                                 <dl class="dl-horizontal price-list">
                                     <dt> Description:</dt>

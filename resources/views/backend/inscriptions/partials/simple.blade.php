@@ -4,12 +4,12 @@
     <fieldset>
 
         @if(!$colloque->prices->isEmpty())
-            @include('colloques.partials.prices', ['select' => 'price_id'])
+            @include('backend.inscriptions.partials.prices', ['select' => 'price_id'])
         @endif
 
         <h4>Merci de préciser</h4>
         @if(!$colloque->options->isEmpty())
-            @include('colloques.partials.options', ['select' => 'groupes'])
+            @include('backend.inscriptions.partials.options', ['select' => 'groupes'])
         @endif
 
         <input name="user_id" value="{{ $user_id }}" type="hidden">

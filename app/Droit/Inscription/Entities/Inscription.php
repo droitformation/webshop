@@ -109,7 +109,7 @@ class Inscription extends Model
     {
         $this->load('user','groupe','participant');
 
-        if($this->group_id > 0)
+        if($this->group_id)
         {
             $this->groupe->load('user');
             $this->groupe->user->load('adresses');

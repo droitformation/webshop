@@ -10,6 +10,10 @@ a{
     cursor: pointer;
 }
 
+h3, .h3{
+    font-size: 22px;
+}
+
 .panel-group .panel {
     margin-bottom: 20px;
 }
@@ -174,11 +178,14 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .list-group-item .label {
-    font-size: 90%;
-    line-height: 20px;
     display: inline-block;
-    min-width: 85px;
+    font-size: 85%;
+    height: 25px;
+    line-height: 24px;
     margin-right: 5px;
+    min-width: 85px;
+    padding: 0 10px;
+    color: #f8f8f8;
 }
 
 .list-group-item-title:last-child {
@@ -404,8 +411,10 @@ a.editable-click:hover {
     background: transparent;
 }
 
-.editablePrice.editable-click{
-    width: 100%;
+.editablePrice.editable-click[data-name="price"] {
+    color: #fff;
+    line-height: 24px;
+    padding-right: 5px;
 }
 
 .editable-click.editable-empty{
@@ -615,4 +624,27 @@ select[multiple] {
 
 #optionGroupe{
     margin: 5px 0;
+}
+
+.line-spacer:before{
+    border-bottom: 1px solid #e6e7e8;
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.table{
+    margin-bottom: 0;
+}
+
+.inscription_wrapper .table-inscriptions tbody tr{
+    border-top: 1px solid #e6e7e8;
+}
+
+.inscription_wrapper .table-inscriptions tbody td{
+    padding-top: 15px;
+    padding-bottom: 5px;
+    vertical-align: top;
 }

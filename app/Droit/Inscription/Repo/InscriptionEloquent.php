@@ -169,10 +169,11 @@ class InscriptionEloquent implements InscriptionInterface{
         $inscription->save();
 
         // Options
+        // Remove all and re-attach if any
+        $inscription->options()->detach();
+
         if(isset($data['options']))
         {
-            $inscription->options()->detach();
-
             foreach($data['options'] as $option)
             {
                 $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);

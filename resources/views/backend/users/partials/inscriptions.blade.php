@@ -3,11 +3,11 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="col-md-5">Colloque</th>
+                <th class="col-md-4">Colloque</th>
                 <th class="col-md-1">N°</th>
                 <th class="col-md-2">Date</th>
                 <th class="col-md-2">Envoyé le</th>
-                <th class="text-right col-md-1">Montant</th>
+                <th class="text-right col-md-2">Montant</th>
                 <th class="text-right col-md-1">Statut</th>
             </tr>
         </thead>
@@ -17,16 +17,14 @@
                 <tr class="mainRow">
                     <td>
                         <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $inscription->id }}">
-                            <i class="fa fa-arrow-circle-right"></i>
-                            {{ $inscription->colloque->titre }}
+                            <i class="fa fa-arrow-circle-right"></i>{{ $inscription->colloque->titre }}
                         </a>
                     </td>
                     <td><strong>{{ $inscription->inscription_no }}</strong></td>
                     <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
                     <td>
                         @if($inscription->send_at)
-                            <span class="fa fa-paper-plane"></span>
-                            {{ $inscription->send_at->formatLocalized('%d %b %Y') }}
+                            <span class="fa fa-paper-plane"></span> &nbsp;{{ $inscription->send_at->formatLocalized('%d %b %Y') }}
                         @endif
                     </td>
                     <td class="text-right">{{ $inscription->price_cents }} CHF</td>
@@ -35,9 +33,11 @@
                 <tr>
                     <td colspan="6" class="nopadding">
 
+                        <!-- Inscription details -->
                         <div class="collapse customCollapse" id="inscription_no_{{ $inscription->id }}">
-
                             <div class="inscription_wrapper">
+
+                                <!-- Inscription dependences -->
                                 <div class="row">
                                     <div class="col-md-2">
                                         <h4>Payement</h4>
@@ -49,43 +49,23 @@
                                     </div>
                                     <div class="col-md-5">
                                         <h4>Documents</h4>
-                                        @if(!empty($inscription->documents))
-                                            <div class="btn-group">
-                                                @foreach($inscription->documents as $type => $annexe)
-                                                    <?php
-                                                    $file = config('documents.colloque.'.$type).$annexe['name'];
-                                                    echo '<a target="_blank" href="'.$file.'" class="btn btn-default">'.strtoupper($type).'</a>';
-                                                    ?>
-                                                @endforeach
-                                            </div>
-                                        @endif
+                                        @include('backend.users.inscription.documents')
                                     </div>
                                     <div class="col-md-5">
                                         <h4>Options</h4>
-                                        @if(!$inscription->user_options->isEmpty())
-                                            <ol>
-                                                @foreach($inscription->user_options as $user_options)
-                                                    <li>{{ $user_options->option->title }}
-                                                        @if($user_options->option->type == 'choix')
-                                                            <?php $user_options->load('option_groupe'); ?>
-                                                            <p class="text-info">{{ $user_options->option_groupe->text }}</p>
-                                                        @endif
-                                                    </li>
-                                                @endforeach
-                                            </ol>
-                                        @endif
+                                        @include('backend.users.inscription.options')
                                     </div>
                                 </div>
+                                <!--END Inscription dependences -->
 
+                                <!-- Inscription edit,send,rappels -->
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 line-spacer">
                                         @if(!$inscription->payed_at)
-                                            <hr/>
                                             <form action="{{ url('admin/inscription/rappel') }}" method="POST">{!! csrf_field() !!}
                                                 <input type="hidden" name="id" value="{{ $inscription->id }}">
                                                 <button class="btn btn-inverse btn-sm"><i class="fa fa-paperclip"></i> &nbsp;Générer un rappel</button>
                                             </form>
-
                                             @if(!$inscription->rappels->isEmpty())
                                                 <ol class="list-group">
                                                     @foreach($inscription->rappels as $rappel)
@@ -95,15 +75,13 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-5 line-spacer">
                                         @if(!empty($inscription->colloque->annexe))
-                                            <hr/>
                                             <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i> &nbsp;Regénérer les documents</a>
                                             <a href="{{ url('/') }}" class="btn btn-sm btn-success"><i class="fa fa-trophy"></i> &nbsp;Attestation</a>
                                         @endif
                                     </div>
-                                    <div class="col-md-5">
-                                        <hr/>
+                                    <div class="col-md-5 line-spacer">
                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
                                             <i class="fa fa-star"></i> &nbsp;&Eacute;diter l'inscription
                                         </button>
@@ -112,11 +90,14 @@
                                         </button>
                                     </div>
                                 </div>
+                                <!-- END Inscription edit,send,rappels -->
 
-                                @include('backend.users.partials.send', ['inscription' => $inscription])
-                                @include('backend.users.partials.edit', ['inscription' => $inscription])
+                                @include('backend.users.partials.send', ['inscription' => $inscription]) <!-- Modal send inscription -->
+                                @include('backend.users.partials.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
+
                             </div>
                         </div>
+                        <!-- END Inscription details -->
 
                     </td>
                 </tr>
