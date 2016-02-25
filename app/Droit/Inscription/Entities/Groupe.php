@@ -23,6 +23,24 @@ class Groupe extends Model
 
         return $this->user->name;
     }
+
+    public function getPriceAttribute()
+    {
+        $this->load('inscriptions');
+
+        $somme = 0;
+
+        if(!$this->inscriptions->isEmpty())
+        {
+            foreach($this->inscriptions as $inscription)
+            {
+                $somme += $inscription->price_cents;
+            }
+        }
+
+        return $somme;
+    }
+
     public function getDocumentsAttribute()
     {
         $docs = [];

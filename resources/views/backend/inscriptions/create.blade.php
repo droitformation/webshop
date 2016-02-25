@@ -41,16 +41,10 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label><strong>Rechercher un utilisateur</strong></label>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <input id="searchUser" class="form-control" placeholder="Chercher un utilisateur..." type="text">
-                        </div>
-                    </div>
+                    <!-- Search user autocomplete -->
+                    @include('backend.partials.search-user')
 
-                    <div id="inputUser"></div>
-                    <div id="inputolloque"></div>
+                    <div id="inputColloque"></div>
 
                     <button type="submit" class="btn btn-info pull-right">Suivant</button>
                 </form>

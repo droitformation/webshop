@@ -2,11 +2,11 @@
 // The url to the application
 var base_url = location.protocol + "//" + location.host+"/";
 
-
 /*
 * User interactivity
 * */
 $( "#searchUser" ).autocomplete({
+    appendTo  : "#searchUserWrapper",
     source: base_url + 'admin/search',
     minLength: 3,
     search    : function (event, ui) {
@@ -93,7 +93,7 @@ $( "#colloqueSelection" ).change(function()
     var valueSelected  = optionSelected.val();
     var textSelected   = optionSelected.text();
 
-    $("#inputolloque").html('<input type="hidden" value="' + valueSelected + '" name="colloque_id">');
+    $("#inputColloque").html('<input type="hidden" value="' + valueSelected + '" name="colloque_id">');
     $("#choiceColloque").html('<h4><strong>Colloque:</strong></h4><p>' + textSelected + '</p>');
 });
 

@@ -29,6 +29,8 @@ class Inscription extends Model
         {
             return ['bon' => 'bon de participation à présenter à l\'entrée'];
         }
+
+        return null;
     }
 
     public function getStatusNameAttribute()
@@ -46,6 +48,26 @@ class Inscription extends Model
         }
 
         return $status;
+    }
+
+    public function getDocBonAttribute()
+    {
+        $this->load('groupe');
+
+        if(isset($this->groupe) && !empty($this->groupe) && $this->annexe)
+        {
+            $this->groupe->load('user');
+
+            $user = $this->groupe->user;
+            $path = config('documents.colloque.bon');
+
+            if (\File::exists(public_path($path.'bon'.'_'.$this->colloque->id.'-'.$user->id.'.pdf')))
+            {
+                return $path.'bon_'.$this->colloque->id.'-'.$user->id.'.pdf';
+            }
+        }
+
+        return null;
     }
 
     public function getDocumentsAttribute()
@@ -78,6 +100,7 @@ class Inscription extends Model
                     $name = $annexe.'_'.$this->colloque->id.'-'.$user->id.'.pdf';
 
                     $docs[$annexe]['file'] = $file;
+                    $docs[$annexe]['link'] = $path.$name;
                     $docs[$annexe]['name'] = $name;
                 }
             }

@@ -31,13 +31,8 @@
                         <p>{{ $groupe->colloque->titre }}</p>
                     </div>
 
-                    <div class="form-group">
-                        <label><strong>Rechercher un utilisateur</strong></label>
-                        <input id="searchUser" class="form-control" placeholder="Chercher un utilisateur..." type="text">
-                    </div>
-
-                    <div id="inputUser"></div>
-                    <div id="choiceUser"></div>
+                    <!-- Search user autocomplete -->
+                    @include('backend.partials.search-user')
 
                     <button type="submit" class="btn btn-info pull-right">Changer</button>
                 </form>

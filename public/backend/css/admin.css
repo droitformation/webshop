@@ -648,3 +648,12 @@ select[multiple] {
     padding-bottom: 5px;
     vertical-align: top;
 }
+
+.inscription_wrapper ol{
+    padding: 0;
+    margin-top: 10px;
+}
+
+.inscription_wrapper ol li{
+    margin-top: 2px;
+}

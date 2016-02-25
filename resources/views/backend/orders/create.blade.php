@@ -22,12 +22,8 @@
                             <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter une adresse</a>
 
                             <div class="collapse" id="adresseFind" style="width: 400px;">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input id="searchUser" class="form-control" placeholder="Chercher une adresse..." type="text">
-                                    </div>
-                                </div>
+                                <!-- Search user autocomplete -->
+                                @include('backend.partials.search-user')
                             </div>
                             <div class="collapse {{ !empty(Session::get('adresse')) ? 'in' : '' }}" id="adresseMake">
                                 <div class="row">
@@ -35,9 +31,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div id="inputUser" data-user="{{ old('user_id') }}"></div>
-                        <div id="choiceUser"></div>
 
                         <div id="wrapper_clone_order">
                             @if(Session::has('old_products'))

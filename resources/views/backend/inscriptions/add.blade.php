@@ -31,12 +31,12 @@
                     </div>
 
                     @if(!$colloque->prices->isEmpty())
-                        @include('colloques.partials.prices', ['select' => 'price_id'])
+                        @include('backend.inscriptions.partials.prices', ['select' => 'price_id'])
                     @endif
 
                     @if(!$colloque->options->isEmpty())
                         <h4>Merci de préciser</h4>
-                        @include('colloques.partials.options', ['select' => 'groupes', 'add' => true])
+                        @include('backend.inscriptions.partials.options', ['select' => 'groupes', 'add' => true])
                     @endif
 
                     <button type="submit" class="btn btn-info pull-right">Ok</button>

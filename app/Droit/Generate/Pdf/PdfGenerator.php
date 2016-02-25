@@ -154,8 +154,10 @@ class PdfGenerator implements PdfGeneratorInterface
         return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$this->inscription->colloque->id.'-'.$part.'.pdf');
     }
 
-    public function factureEvent($rappel = null)
+    public function factureEvent($nbr = null, $rappel = null)
     {
+        // Pass rappel as array ['nbr','rappel']
+
         if($this->inscription->price->price > 0)
         {
             $data = [
@@ -166,21 +168,22 @@ class PdfGenerator implements PdfGeneratorInterface
                 'signature'   => $this->signature,
                 'tva'         => $this->tva,
                 'annexes'     => $this->inscription->annexe,
-                'rappel'      => $rappel
+                'nbr'         => $nbr
             ];
 
             $facture  = \PDF::loadView('templates.colloque.facture', $data)->setPaper('a4');
 
             $generate = ($this->stream ? 'stream' : 'save');
             $folder   = ($rappel ? 'rappel': 'facture');
+            $name     = ($rappel ? 'rappel_'.$rappel->id: 'facture');
 
-            return $facture->$generate(public_path().'/files/colloques/'.$folder.'/facture_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.'.pdf');
+            return $facture->$generate(public_path().'/files/colloques/'.$folder.'/'.$name.'_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.'.pdf');
         }
 
         return true;
     }
 
-    public function factureGroupeEvent($groupe,$inscriptions,$price,$rappel = null)
+    public function factureGroupeEvent($groupe,$inscriptions,$price,$nbr = null, $rappel = null)
     {
         if($price > 0)
         {
@@ -193,15 +196,16 @@ class PdfGenerator implements PdfGeneratorInterface
                 'signature'    => $this->signature,
                 'tva'          => $this->tva,
                 'annexes'      => $groupe->colloque->annexe,
-                'rappel'       => $rappel
+                'nbr'          => $nbr
             ];
 
             $facture  = \PDF::loadView('templates.colloque.groupe', $data)->setPaper('a4');
 
             $generate = ($this->stream ? 'stream' : 'save');
             $folder   = ($rappel ? 'rappel': 'facture');
+            $name     = ($rappel ? 'rappel_'.$rappel->id: 'facture');
 
-            return $facture->$generate(public_path().'/files/colloques/'.$folder.'/facture_'.$groupe->colloque_id.'-'.$groupe->id.'.pdf');
+            return $facture->$generate(public_path().'/files/colloques/'.$folder.'/'.$name.'_'.$groupe->colloque_id.'-'.$groupe->id.'.pdf');
 
         }
 
@@ -210,7 +214,6 @@ class PdfGenerator implements PdfGeneratorInterface
 
     public function bvGroupeEvent($groupe,$inscriptions,$price)
     {
-
         if($price > 0)
         {
             $data = [

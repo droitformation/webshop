@@ -32,9 +32,10 @@ class RappelController extends Controller
             'user_id'        => $inscription->user_id,
         ]);
 
-        $rappels = $inscription->rappels->count();
+        $nbr = $inscription->rappels->count() + 1;
 
-        $this->generator->factureEvent($rappels);
+        $this->generator->setInscription($inscription);
+        $this->generator->factureEvent($nbr, $rappel);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Le rappel a été crée'));
     }

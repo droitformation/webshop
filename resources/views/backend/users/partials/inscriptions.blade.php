@@ -7,7 +7,7 @@
                 <th class="col-md-1">N°</th>
                 <th class="col-md-2">Date</th>
                 <th class="col-md-2">Envoyé le</th>
-                <th class="text-right col-md-2">Montant</th>
+                <th class="col-md-2">Montant</th>
                 <th class="text-right col-md-1">Statut</th>
             </tr>
         </thead>
@@ -27,7 +27,7 @@
                             <span class="fa fa-paper-plane"></span> &nbsp;{{ $inscription->send_at->formatLocalized('%d %b %Y') }}
                         @endif
                     </td>
-                    <td class="text-right">{{ $inscription->price_cents }} CHF</td>
+                    <td>{{ $inscription->price_cents }} CHF</td>
                     <td class="text-right"><span class="label label-{{ $inscription->status_name['color'] }}">{{ $inscription->status_name['status'] }}</span></td>
                 </tr>
                 <tr>
@@ -66,13 +66,6 @@
                                                 <input type="hidden" name="id" value="{{ $inscription->id }}">
                                                 <button class="btn btn-inverse btn-sm"><i class="fa fa-paperclip"></i> &nbsp;Générer un rappel</button>
                                             </form>
-                                            @if(!$inscription->rappels->isEmpty())
-                                                <ol class="list-group">
-                                                    @foreach($inscription->rappels as $rappel)
-                                                        <li class="list-group-item">Rappel {{ $rappel->created_at->format('d/m/Y') }}</li>
-                                                    @endforeach
-                                                </ol>
-                                            @endif
                                         @endif
                                     </div>
                                     <div class="col-md-5 line-spacer">
@@ -82,8 +75,8 @@
                                         @endif
                                     </div>
                                     <div class="col-md-5 line-spacer">
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
-                                            <i class="fa fa-star"></i> &nbsp;&Eacute;diter l'inscription
+                                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
+                                            <i class="fa fa-edit"></i>
                                         </button>
                                         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
                                             <i class="fa fa-send-o"></i> &nbsp;Envoyer l'inscription
@@ -92,8 +85,8 @@
                                 </div>
                                 <!-- END Inscription edit,send,rappels -->
 
-                                @include('backend.users.partials.send', ['inscription' => $inscription]) <!-- Modal send inscription -->
-                                @include('backend.users.partials.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
+                                @include('backend.users.modals.send', ['inscription' => $inscription]) <!-- Modal send inscription -->
+                                @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
 
                             </div>
                         </div>

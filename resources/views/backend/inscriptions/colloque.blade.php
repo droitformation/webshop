@@ -17,10 +17,7 @@
                                 @else
                                     <img style="height: 50px; float:left;margin-right: 15px; margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
                                 @endif
-                                <p>
-                                    <a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a><br/>
-                                    <small>{{ $colloque->event_date }}</small>
-                                </p>
+                                <p><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a><br/><small>{{ $colloque->event_date }}</small></p>
                             </h4>
                         </div>
                         <div class="col-md-2 text-right">
