@@ -1,9 +1,9 @@
 Money
 =====
 
-[![Build Status](https://api.travis-ci.org/mathiasverraes/money.png?branch=master)](http://travis-ci.org/mathiasverraes/money)
+[![Build Status](https://api.travis-ci.org/moneyphp/money.png?branch=master)](http://travis-ci.org/moneyphp/money)
 
-PHP 5.3+ library to make working with money safer, easier, and fun!
+PHP 5.4+ library to make working with money safer, easier, and fun!
 
 > "If I had a dime for every time I've seen someone use FLOAT to store currency, I'd have $999.997634" -- [Bill Karwin](https://twitter.com/billkarwin/status/347561901460447232)
 
@@ -35,26 +35,28 @@ Install the library using [composer][1]. Add the following to your `composer.jso
 ```json
 {
     "require": {
-        "mathiasverraes/money": "dev-master"
+        "mathiasverraes/money": "~3.0"
     },
-    "minimum-stability": "dev"    
 }
 ```
 
-Now run the `install` command.
+Features
+------------
 
-```sh
-$ composer.phar install
-```
+- JSON Serialization
+- Big integer support utilizing different, transparent calculation logic upon availability (bcmath, gmp, plain php)
+- Money formatting (including intl formatter)
+- Currency repositories (ISO currencies included)
+- Money exchange (including Swap implementation)
 
 Integration
 -----------
 
-See [`MoneyBundle`][2] or [`TbbcMoneyBundle`][4] for [Symfony integration][3] or [`DoctrineMoneyModule`][5] for [`Zend Framework 2`][6].
+See [`MoneyBundle`][2] or [`TbbcMoneyBundle`][4] for [Symfony integration][3].
+
+A description of how to use Doctrine with the library is available under the ``doc`` directory.
 
 [1]: http://getcomposer.org/
 [2]: https://github.com/pink-tie/MoneyBundle/
 [3]: http://symfony.com/
 [4]: https://github.com/TheBigBrainsCompany/TbbcMoneyBundle
-[5]: https://github.com/zfbrasil/doctrine-money-module
-[6]: http://framework.zend.com/

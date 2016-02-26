@@ -80,7 +80,7 @@ class Groupe extends Model
         $docs = [];
         $part = ($part ? '-'.$part : '');
         $path = config('documents.colloque.'.$annexe.'');
-        $file = public_path().$path.$annexe.'_'.$colloque_id.'-'.$user_id.$part.'.pdf';
+        $file = public_path($path.$annexe.'_'.$colloque_id.'-'.$user_id.$part.'.pdf');
 
         if (\File::exists($file))
         {

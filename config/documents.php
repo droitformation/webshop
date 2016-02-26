@@ -13,13 +13,13 @@
 return array(
 
     'shop' => [
-        'facture' => '/files/shop/factures/'
+        'facture' => 'files/shop/factures/'
     ],
     'colloque' => [
-        'bon'     => '/files/colloques/bon/',
-        'facture' => '/files/colloques/facture/',
-        'bv'      => '/files/colloques/bv/',
-        'rappel'  => '/files/colloques/rappel/'
+        'bon'     => 'files/colloques/bon/',
+        'facture' => 'files/colloques/facture/',
+        'bv'      => 'files/colloques/bv/',
+        'rappel'  => 'files/colloques/rappel/'
     ],
     'emails' => [
         'iban' => 'CH11 0900 0000 2000 4130 2',

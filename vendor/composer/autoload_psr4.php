@@ -36,6 +36,7 @@ return array(
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'Omnipay\\Stripe\\' => array($vendorDir . '/omnipay/stripe/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Money\\' => array($vendorDir . '/mathiasverraes/money/src'),
     'LucaDegasperi\\OAuth2Server\\' => array($vendorDir . '/lucadegasperi/oauth2-server-laravel/src'),
     'League\\OAuth2\\Server\\' => array($vendorDir . '/league/oauth2-server/src'),
     'League\\OAuth1\\' => array($vendorDir . '/league/oauth1-client/src'),

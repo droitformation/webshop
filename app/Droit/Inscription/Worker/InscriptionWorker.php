@@ -50,4 +50,6 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         return $inscription;
     }
 
+
+
 }

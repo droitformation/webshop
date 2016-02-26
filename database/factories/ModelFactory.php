@@ -42,6 +42,18 @@ $factory->define(App\Droit\Option\Entities\Option::class, function (Faker\Genera
     ];
 });
 
+$factory->define(App\Droit\Price\Entities\Price::class, function (Faker\Generator $faker) {
+    return [
+        'id'          => 1,
+        'colloque_id' => 1,
+        'price'       => 4000,
+        'type'        => 'public',
+        'description' => 'test',
+        'rang'        => 1,
+        'remarque'    => 'test',
+    ];
+});
+
 $factory->define(App\Droit\Option\Entities\OptionGroupe::class, function (Faker\Generator $faker){
     return [
         'id'          => 1,
@@ -57,6 +69,7 @@ $factory->define(App\Droit\Option\Entities\OptionUser::class, function (Faker\Ge
         'option_id'        => 1,
         'inscription_id'   => 1,
         'groupe_id'        => 1,
+        'reponse'          => '',
     ];
 });
 
@@ -66,6 +79,13 @@ $factory->define(App\Droit\User\Entities\User::class, function (Faker\Generator 
         'last_name'  => $faker->lastName,
         'email'      => $faker->email,
         'password'   => bcrypt(str_random(10))
+    ];
+});
+
+$factory->define(App\Droit\Inscription\Entities\Participant::class, function (Faker\Generator $faker) {
+    return [
+        'name'           => 'Cindy Leschaud',
+        'inscription_id' => '10-2016/2'
     ];
 });
 

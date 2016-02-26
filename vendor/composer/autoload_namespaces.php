@@ -15,7 +15,6 @@ return array(
     'PhpSpec' => array($vendorDir . '/phpspec/phpspec/src'),
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'Omnipay\\Common\\' => array($vendorDir . '/omnipay/common/src'),
-    'Money' => array($vendorDir . '/mathiasverraes/money/lib'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
     'Laravel\\Cashier\\' => array($vendorDir . '/laravel/cashier/src'),

@@ -69,7 +69,10 @@ class Handler extends ExceptionHandler {
             return redirect('/')->with(array('status' => 'warning' , 'message' => 'Erreur avec la suppression de l\'abonnés sur mailjet'));
 
         if ($e instanceof \App\Exceptions\UserNotExistException)
-            return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Cet email n\'existe pas'));
+            return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Cet utilisateur n\'existe pas'));
+
+		if ($e instanceof \App\Exceptions\AdresseNotExistException)
+			return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Aucune adresse pour cet utilisateur'));
 
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)
             return redirect()->to('admin');
