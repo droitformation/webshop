@@ -9,7 +9,7 @@
 
 <!-- start row -->
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-7">
         <div class="panel panel-magenta">
             <div class="panel-body">
                 <h3>Créer une Inscription</h3>
@@ -45,23 +45,16 @@
                     @include('backend.partials.search-user')
 
                     <div id="inputColloque"></div>
+                    <div id="choiceColloque"></div>
 
                     <button type="submit" class="btn btn-info pull-right">Suivant</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-md-7">
-        <!-- Panel -->
-        <div class="panel panel-info">
-            <div class="panel-body">
-                <div id="choiceUser"></div>
-                <div id="choiceColloque"></div>
+                </form>
+
                 <div id="selectInscription"></div>
+
             </div>
         </div>
-        <!-- END panel -->
     </div>
 
 </div>

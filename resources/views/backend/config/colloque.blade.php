@@ -56,8 +56,25 @@
                         <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <h4><i class="fa fa-paper-plane"></i> &nbsp;Emails</h4>
+                <div class="panel panel-green">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label><strong>Message par défaut</strong></label>
+                            <textarea name="inscription[emails][default]" class="form-control redactorSimple">{!! Registry::get('inscription.emails.default') !!}</textarea>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                    </div>
+                </div>
                 
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-6">
                 
                 <h4><i class="fa fa-flag"></i> &nbsp;Messages d'erreur inscription</h4>
@@ -76,7 +93,10 @@
                         <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
                     </div>
                 </div>
-                
+
+            </div>
+            <div class="col-md-6">
+
                 <h4><i class="fa fa-ban"></i> &nbsp;Restrictions</h4>
                 <div class="panel panel-warning">
                     <div class="panel-body">

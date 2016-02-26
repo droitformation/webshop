@@ -24,6 +24,7 @@
             @endif
 
             @if(!$colloque->options->isEmpty())
+                <h4>Merci de préciser</h4>
                 @include('backend.inscriptions..partials.options', ['select' => 'groupes[0]'])
             @endif
         </fieldset>

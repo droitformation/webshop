@@ -1,10 +1,5 @@
 <?php $group = $colloque->options->groupBy('type'); ?>
-<?php
-    if(isset($inscription))
-    {
-        $groupe_choix = $inscription->user_options->groupBy('option_id');
-    }
-?>
+<?php if(isset($inscription)) { $groupe_choix = $inscription->user_options->groupBy('option_id'); } ?>
 
 @foreach($group as $type => $options)
 
@@ -40,8 +35,7 @@
                         ?>
                         <div class="radio">
                             <label>
-                                <input type="radio" {{ $checked }} required class="group-input" name="{{ $select }}[{{ $option->id }}]" value="{{ $groupe->id }}">
-                                {{ $groupe->text }}
+                                <input type="radio" {{ $checked }} required class="group-input" name="{{ $select }}[{{ $option->id }}]" value="{{ $groupe->id }}">{{ $groupe->text }}
                             </label>
                         </div>
                     @endforeach

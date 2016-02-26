@@ -38,9 +38,7 @@ class MenuController extends Controller
      */
     public function create($site)
     {
-        $menus = $this->menu->getAll($site);
-
-        return view('backend.menus.create')->with(['menus' => $menus, 'site' => $site]);
+        return view('backend.menus.create')->with(['current' => $site]);
     }
 
     /**

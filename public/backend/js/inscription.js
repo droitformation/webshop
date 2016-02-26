@@ -87,6 +87,8 @@ if($inputUser.length)
 * Colloques interactivity
 * */
 
+$("#colloqueSelection").chosen();
+
 $( "#colloqueSelection" ).change(function()
 {
     var optionSelected = $("option:selected", this);

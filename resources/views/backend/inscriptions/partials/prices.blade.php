@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="control-label">Choix du prix applicable</label>
+    <label class="control-label"><h4>Choix du prix applicable</h4></label>
     <!-- Only public prices -->
     <?php  $filtered = $colloque->prices->reject(function ($item) {return $item->type == 'admin'; });?>
     <select required name="{{ $select }}" class="form-control">

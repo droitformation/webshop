@@ -67,7 +67,7 @@
                                                 <td class="col-md-2">{{ $inscription->price_cents }} CHF</td>
                                                 <td class="col-md-2">
                                                     @if($inscription->doc_bon)
-                                                        <a target="_blank" href="{{ asset($inscription->documents['bon']['link']) }}" class="btn btn-default btn-sm">Bon</a>
+                                                        <a target="_blank" href="{{ asset($inscription->doc_bon) }}" class="btn btn-default btn-sm">Bon</a>
                                                     @endif
                                                 </td>
                                                 <td class="col-md-5">@include('backend.users.inscription.options')</td>
