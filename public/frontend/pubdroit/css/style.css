@@ -562,6 +562,16 @@ margin-bottom:0;
 .more-btn{ float:right; background:#b01d22; padding:6px 14px; font-size:12px; color:#fff; border:0; text-transform:uppercase; cursor: pointer;}
 .more-btn:hover{ text-decoration:none; color: #ffdfe0;}
 .more-btn.left{ float:left; margin-right:10px;}
+.submit-btn{
+    background:#b01d22;
+    color: #fff;
+    border: 1px solid #a3161b;
+}
+
+.submit-btn:hover,.submit-btn:focus,.submit-btn:active,.submit-btn:visited{
+    background:#a3161b;
+    color: #fff;
+}
 
 .slimScrollDiv{
     padding-bottom: 10px;
@@ -576,7 +586,7 @@ margin-bottom:0;
 .blog-detail .b-post-bottom{ margin:0 0 20px;}
 .blog-detail i{ font-size:20px; margin-right:10px;}
 .blog-quote p{ color:#aaa;}
-.form-horizontal textarea{ max-width:60%; min-width:60%; min-height:150px; max-height:150px;}
+.form-horizontal textarea{ min-height:150px; max-height:150px;}
 /* Start Blog Detail Styling */
 
 /* Start Sort list Section */

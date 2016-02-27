@@ -17,24 +17,24 @@
 				<div class="col-md-8">
 					<form action="{{ url('sendMessage') }}" class="form-horizontal" method="post">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Nom</label>
-							<div class="col-sm-10">
+							<label class="col-md-2 control-label">Nom</label>
+							<div class="col-md-10">
 								<input type="text" name="nom" class="form-control" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Email</label>
-							<div class="col-sm-10">
+							<label class="col-md-2 control-label">Email</label>
+							<div class="col-md-10">
 								<input type="email" name="email" class="form-control" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Remarque</label>
-							<div class="col-sm-10">
+							<label class="col-md-2 control-label">Remarque</label>
+							<div class="col-md-10">
 								<textarea name="remarque" required class="form-control" rows="3"></textarea>
 							</div>
 						</div>
-						<input value="Envoyer" class="btn btn-default" type="submit" />
+						<input value="Envoyer" class="btn btn-default submit-btn" type="submit" />
 					</form><!--END CONTACT FORM-->
 				</div>
 				<div class="col-md-4">
