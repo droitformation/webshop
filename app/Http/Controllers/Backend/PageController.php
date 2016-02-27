@@ -7,7 +7,7 @@ use App\Droit\Page\Worker\PageWorker;
 use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Menu\Repo\MenuInterface;
-use App\Http\Requests\CreatePage;
+use App\Http\Requests\PageCreateRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -51,7 +51,7 @@ class PageController extends Controller
     {
         $menus = $this->menu->getAll($site);
 
-        return view('backend.pages.create')->with(['menus' => $menus, 'site' => $site]);
+        return view('backend.pages.create')->with(['menus' => $menus, 'current' => $site]);
     }
 
     /**
@@ -59,7 +59,7 @@ class PageController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(PageCreateRequest $request)
     {
         $page = $this->page->create($request->all());
 

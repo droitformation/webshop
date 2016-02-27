@@ -8,6 +8,7 @@ use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Author\Repo\AuthorInterface;
 use App\Droit\Domain\Repo\DomainInterface;
+use App\Droit\Site\Repo\SiteInterface;
 
 class ShopController extends Controller {
 
@@ -16,19 +17,26 @@ class ShopController extends Controller {
 	protected $categorie;
 	protected $author;
 	protected $domain;
+    protected $site;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ColloqueInterface $colloque,ProductInterface $product,CategorieInterface $categorie, AuthorInterface $author, DomainInterface $domain)
+	public function __construct(ColloqueInterface $colloque,ProductInterface $product,CategorieInterface $categorie, AuthorInterface $author, DomainInterface $domain, SiteInterface $site)
 	{
 		$this->colloque  = $colloque;
         $this->product   = $product;
 		$this->categorie = $categorie;
 		$this->author    = $author;
 		$this->domain    = $domain;
+        $this->site      = $site;
+
+        $sites = $this->site->find(1);
+
+		view()->share('menus',$sites->menus);
+        view()->share('site',$sites);
 	}
 
 	/**

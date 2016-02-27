@@ -20,7 +20,7 @@ class Page extends Node {
     protected $table = 'pages';
 
     protected $dates    = ['deleted_at'];
-    protected $fillable = ['title','menu_title','content','rang','menu_id','template','slug','parent_id','lft','rgt','depth','hidden','site_id'];
+    protected $fillable = ['title','menu_title','content','rang','menu_id','template','slug','parent_id','lft','rgt','depth','hidden','site_id','url','isExternal'];
 
     protected $orderColumn = 'rang';
 
@@ -29,7 +29,7 @@ class Page extends Node {
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSite($query,$site)
+    public function scopeSites($query,$site)
     {
         if ($site) $query->where('site_id','=',$site);
     }
@@ -39,8 +39,17 @@ class Page extends Node {
         return $this->truncate($this->content,350);
     }
 
-    public function truncate($s, $l, $e = '...', $isHTML = false){
+    public function getPageUrlAttribute()
+    {
+        $page_url = ($this->isExternal ? $this->url : $this->site->slug.'/page/'.$this->slug);
 
+        $linked   = ($this->isExternal ? 'target="_blank"' : 'class="'.\Request::is('/page/'.$this->slug).'"');
+
+        return '<a '.$linked.' href="'.$page_url.'">'.$this->menu_title.'</a>';
+    }
+
+    public function truncate($s, $l, $e = '...', $isHTML = false)
+    {
         $i    = 0;
         $tags = [];
 
@@ -76,6 +85,11 @@ class Page extends Node {
     public function menu()
     {
         return $this->belongsTo('App\Droit\Menu\Entities\Menu');
+    }
+
+    public function site()
+    {
+        return $this->belongsTo('\App\Droit\Site\Entities\Site');
     }
 
 }

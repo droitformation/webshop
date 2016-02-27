@@ -54,11 +54,22 @@
 					<section class="row">
 						<section class="col-md-6">
 							<ul class="top-nav">
+
+								@if(!$menus->isEmpty())
+									<?php $menu = $menus->whereLoose('position','main'); ?>
+									@if(!$menu->isEmpty())
+										<?php $menu = $menu->first()->load('pages'); ?>
+										@if(!$menu->pages->isEmpty())
+											@foreach($menu->pages as $page)
+												<li>{!! $page->page_url !!}</li>
+											@endforeach
+										@endif
+									@endif
+								@endif
+
 								<li><a href="grid-view.html">Newsletter</a></li>
-								<li><a href="blog.html">Bachelors en droit</a></li>
-								<li><a href="shortcodes.html">Masters</a></li>
-								<li><a href="blog-detail.html">CAS/MAS/DAS</a></li>
 								<li><a href="contact.html">Contact</a></li>
+
 							</ul>
 						</section>
 						<section class="col-md-6 e-commerce-list text-right">

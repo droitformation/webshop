@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Visible sur le site</label>
                         <div class="col-sm-5">
-                            <label class="radio-inline"><input type="radio" value="0" {{ !$page->hidden ? 'checked' : '' }}  name="hidden" checked=""> Oui</label>
+                            <label class="radio-inline"><input type="radio" value="0" {{ !$page->hidden ? 'checked' : '' }} name="hidden"> Oui</label>
                             <label class="radio-inline"><input type="radio" value="1" {{ $page->hidden ? 'checked' : '' }} name="hidden"> Non</label>
                         </div>
                     </div>
@@ -68,20 +68,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Type de contenu</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" name="template">
-                                <option {{ $page->template == 'page' ? 'selected' : '' }} value="page">Page</option>
-                                <option {{ $page->template == 'index' ? 'selected' : '' }} value="index">Page d'accueil</option>
-                                <option {{ $page->template == 'newsletter' ? 'selected' : '' }} value="newsletter">Contenu généré newsletter</option>
-                                <option {{ $page->template == 'jurisprudence' ? 'selected' : '' }} value="jurisprudence">Contenu généré jurisprudence</option>
-                                <option {{ $page->template == 'doctrine' ? 'selected' : '' }} value="doctrine">Contenu généré doctrine</option>
-                                <option {{ $page->template == 'revue' ? 'selected' : '' }} value="revue">Contenu généré revues</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Menu</label>
                         <div class="col-sm-5">
                             @if(!$menus->isEmpty())
@@ -97,25 +83,63 @@
 
                     <hr/>
 
-                    <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Titre</label>
-                        <div class="col-sm-8">
-                            {!! Form::text('title', $page->title , array('class' => 'form-control') ) !!}
-                        </div>
-                    </div>
+                    @if(!$page->isExternal)
 
-                    <div class="form-group">
-                        <label for="contenu" class="col-sm-3 control-label">Contenu</label>
-                        <div class="col-sm-8">
-                            {!! Form::textarea('content', $page->content , array('class' => 'form-control  redactor' )) !!}
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Type de contenu</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="template">
+                                    <option {{ $page->template == 'page' ? 'selected' : '' }} value="page">Page</option>
+                                    <option {{ $page->template == 'index' ? 'selected' : '' }} value="index">Page d'accueil</option>
+                                    <option {{ $page->template == 'contact' ? 'selected' : '' }} value="contact">Page de contact</option>
+                                    <option {{ $page->template == 'newsletter' ? 'selected' : '' }} value="newsletter">Contenu généré newsletter</option>
+                                    <option {{ $page->template == 'jurisprudence' ? 'selected' : '' }} value="jurisprudence">Contenu généré jurisprudence</option>
+                                    <option {{ $page->template == 'doctrine' ? 'selected' : '' }} value="doctrine">Contenu généré doctrine</option>
+                                    <option {{ $page->template == 'revue' ? 'selected' : '' }} value="revue">Contenu généré revues</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Titre</label>
+                            <div class="col-sm-8">
+                                {!! Form::text('title', $page->title , array('class' => 'form-control') ) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contenu" class="col-sm-3 control-label">Contenu</label>
+                            <div class="col-sm-8">
+                                {!! Form::textarea('content', $page->content , array('class' => 'form-control  redactor' )) !!}
+                            </div>
+                        </div>
+                    @else
+                        <div class="well">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Ceci est un lien externe</label>
+                                <div class="col-sm-5">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" {{ $page->isExternal ? 'checked' : '' }} name="isExternal"> Oui
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="0" {{ !$page->isExternal ? 'checked' : '' }} name="isExternal"> Non
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contenu" class="col-sm-3 control-label">Lien</label>
+                                <div class="col-sm-7">
+                                    {!! Form::text('url', $page->url, array('class' => 'form-control' )) !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="panel-footer mini-footer ">
-                    {!! Form::hidden('parent_id', 0) !!}
-                    {!! Form::hidden('id', $page->id ) !!}
-                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                        {!! Form::hidden('parent_id', 0) !!}
+                        {!! Form::hidden('id', $page->id ) !!}
+                    </div>
                     <div class="col-sm-9">
                         <button class="btn btn-primary" type="submit">Envoyer </button>
                     </div>
@@ -125,7 +149,7 @@
         </div>
     </div>
 
-    @if($template)
+    @if($template && !$page->isExternal)
         <div class="col-md-6">
             <div class="panel panel-midnightblue">
                 <div class="panel-body event-info">

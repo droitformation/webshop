@@ -58,8 +58,6 @@ $( function() {
         return false;
     });
 
-
-
     /*
     * Inscription form clones
     */
@@ -287,5 +285,10 @@ $( function() {
         $(".collapse").not( $('#'+$toggle) ).slideUp('fast');
     });
 
+    $('input[name="intervaltype"]').click(function () {
+        //jQuery handles UI toggling correctly when we apply "data-target" attributes and call .tab('show')
+        //on the <li> elements' immediate children, e.g the <label> elements:
+        $(this).closest('label').tab('show');
+    });
 
 });

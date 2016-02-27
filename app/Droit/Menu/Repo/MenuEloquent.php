@@ -48,8 +48,7 @@ class MenuEloquent implements MenuInterface{
             return false;
         }
 
-        $menu->title = $data['title'];
-        $menu->code  = $data['code'];
+        $menu->fill($data);
 
         $menu->save();
 

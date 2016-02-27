@@ -14,7 +14,7 @@ class PageEloquent implements PageInterface{
 
     public function getAll($site = null)
     {
-        return $this->page->site($site)->orderBy('rang')->get();
+        return $this->page->sites($site)->orderBy('pages.rang')->get();
     }
 
     public function getTree($key = null, $seperator = '  ',$site = null)
@@ -29,7 +29,7 @@ class PageEloquent implements PageInterface{
 
     public function getRoot($site = null)
     {
-        return $this->page->site($site)->where('parent_id','=',0)->orderBy('rang')->get();
+        return $this->page->sites($site)->where('parent_id','=',0)->orderBy('rang')->get();
     }
 
     public function find($id){
@@ -50,16 +50,17 @@ class PageEloquent implements PageInterface{
     public function create(array $data){
 
         $page = $this->page->create(array(
-            'rang'        => (isset($data['rang']) ? $data['rang'] : ''),
-            'title'       => $data['title'],
-            'content'     => $data['content'],
-            'template'    => $data['template'],
+            'title'       => (isset($data['title']) ? $data['title'] : null),
+            'content'     => (isset($data['content']) ? $data['content'] : null),
+            'template'    => (isset($data['template']) ? $data['template'] : null),
             'site_id'     => $data['site_id'],
             'menu_title'  => $data['menu_title'],
             'slug'        => (isset($data['slug']) && !empty($data['slug']) ? $data['slug'] : \Str::slug($data['menu_title'])),
             'rang'        => (isset($data['rang']) ? $data['rang'] : 0),
             'menu_id'     => (isset($data['menu_id']) ? $data['menu_id'] : null),
-            'hidden'      => $data['hidden'] ? 1 : null,
+            'url'         => (isset($data['url']) ? $data['url'] : null),
+            'isExternal'  => (isset($data['isExternal']) && $data['isExternal'] > 0 ? 1 : null),
+            'hidden'      => (isset($data['hidden']) ? 1 : null),
             'created_at'  => date('Y-m-d G:i:s'),
             'updated_at'  => date('Y-m-d G:i:s')
         ));

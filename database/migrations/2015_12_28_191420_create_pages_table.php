@@ -26,15 +26,19 @@ class CreatePagesTable extends Migration
 
             // Add needed columns here (f.ex: name, slug, path, etc.)
 
-            $table->string('title');
-            $table->longText('content');
+            $table->string('title')->nullable();
+            $table->longText('content')->nullable();
             $table->string('slug');
             $table->string('menu_title');
             $table->integer('rang')->nullable();
             $table->integer('menu_id')->nullable();
             $table->integer('hidden')->nullable();
             $table->integer('site_id')->nullable();
-            $table->string('template');
+            $table->string('template')->nullable();
+
+            $table->text('url')->nullable();
+            $table->tinyInteger('isExternal')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

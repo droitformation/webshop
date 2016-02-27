@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/pages/'.$site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste des pages</a></p>
+        <p><a class="btn btn-default" href="{{ url('admin/pages/'.$current) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste des pages</a></p>
     </div>
 </div>
 <!-- start row -->
@@ -16,8 +16,12 @@
             <form data-validate-parsley action="{{ url('admin/page') }}" method="POST" class="form-horizontal" >
             {!! csrf_field() !!}
 
-            <div class="panel-heading"><h4>Ajouter une</h4></div>
+            <div class="panel-heading"><h4>Ajouter une page</h4></div>
                 <div class="panel-body event-info">
+
+                    <div class="row">
+                        <h4 class="col-sm-4">Général</h4>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Visible sur le site</label>
@@ -41,7 +45,7 @@
                                 <select class="form-control" name="site_id">
                                     <option value="">Appartient au site</option>
                                     @foreach($sites as $site)
-                                        <option value="{{ $site->id }}">{{ $site->nom }}</option>
+                                        <option {{ $site->id == $current ? 'selected' : '' }} value="{{ $site->id }}">{{ $site->nom }}</option>
                                     @endforeach
                                 </select>
                             @endif
@@ -67,11 +71,20 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
+                        <div class="col-sm-1">
+                            {!! Form::text('rang', null , array('class' => 'form-control') ) !!}
+                        </div>
+                        <div class="col-sm-2"><p class="help-block">Ordre croissant</p></div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Type de contenu</label>
                         <div class="col-sm-5">
                             <select class="form-control" name="template">
-                                <option value="page">Page</option>
+                                <option selected value="page">Page</option>
                                 <option value="index">Page d'accueil</option>
+                                <option value="contact">Page de contact</option>
                                 <option value="newsletter">Contenu généré newsletter</option>
                                 <option value="jurisprudence">Contenu généré jurisprudence</option>
                                 <option value="doctrine">Contenu généré doctrine</option>
@@ -80,14 +93,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
-                        <div class="col-sm-1">
-                            {!! Form::text('rang', null , array('class' => 'form-control') ) !!}
-                        </div>
-                        <div class="col-sm-2">
-                            <p class="help-block">Ordre croissant</p>
-                        </div>
+                    <hr/>
+
+                    <div class="row">
+                        <h4 class="col-sm-4">Contenus</h4>
                     </div>
 
                     <div class="form-group">
@@ -104,11 +113,27 @@
                         </div>
                     </div>
 
+                    <div class="well">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Ceci est un lien externe</label>
+                            <div class="col-sm-5">
+                                <label class="radio-inline"><input type="radio" value="1" name="isExternal"> Oui</label>
+                                <label class="radio-inline"><input type="radio" value="0" name="isExternal" checked> Non</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contenu" class="col-sm-3 control-label">Lien</label>
+                            <div class="col-sm-7">
+                                {!! Form::text('url', null, array('class' => 'form-control' )) !!}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="panel-footer mini-footer ">
                     <div class="col-sm-3">
+                        {!! Form::hidden('template', 'page') !!}
                         {!! Form::hidden('parent_id', 0) !!}
-                        <input type="hidden" name="template" value="page">
                     </div>
                     <div class="col-sm-6">
                         <button class="btn btn-primary" type="submit">Envoyer</button>
