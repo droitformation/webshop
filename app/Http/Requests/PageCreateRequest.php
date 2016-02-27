@@ -32,7 +32,7 @@ class PageCreateRequest extends Request
             'title'      => 'required_without:isExternal,url',
             'template'   => 'required_without:isExternal,url',
             'isExternal' => 'required_with:url',
-            'url'        => 'required_with:isExternal|url',
+            'url'        => 'required_if:isExternal,1|url',
             'menu_id'    => 'required',
             'site_id'    => 'required',
             'menu_title' => 'required',

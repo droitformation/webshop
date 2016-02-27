@@ -28,6 +28,13 @@ Route::post('subscribe', 'Backend\Newsletter\InscriptionController@subscribe');
 Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activation');
 Route::post('check/email', 'AjaxController@check');
 
+
+Route::group(['prefix' => 'pubdroit'], function () {
+
+    Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\Shop\ShopController@page'));
+
+});
+
 Route::group(['prefix' => 'bail'], function () {
 
     Route::get('/', array('uses' => 'BailController@index'));

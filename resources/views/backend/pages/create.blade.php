@@ -132,7 +132,6 @@
                 </div>
                 <div class="panel-footer mini-footer ">
                     <div class="col-sm-3">
-                        {!! Form::hidden('template', 'page') !!}
                         {!! Form::hidden('parent_id', 0) !!}
                     </div>
                     <div class="col-sm-6">

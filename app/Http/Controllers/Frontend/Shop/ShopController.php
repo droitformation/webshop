@@ -8,6 +8,7 @@ use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Author\Repo\AuthorInterface;
 use App\Droit\Domain\Repo\DomainInterface;
+use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Site\Repo\SiteInterface;
 
 class ShopController extends Controller {
@@ -17,21 +18,26 @@ class ShopController extends Controller {
 	protected $categorie;
 	protected $author;
 	protected $domain;
+    protected $page;
     protected $site;
+    protected $site_id;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ColloqueInterface $colloque,ProductInterface $product,CategorieInterface $categorie, AuthorInterface $author, DomainInterface $domain, SiteInterface $site)
+	public function __construct(ColloqueInterface $colloque,ProductInterface $product,CategorieInterface $categorie, AuthorInterface $author, DomainInterface $domain, PageInterface $page, SiteInterface $site)
 	{
 		$this->colloque  = $colloque;
         $this->product   = $product;
 		$this->categorie = $categorie;
 		$this->author    = $author;
 		$this->domain    = $domain;
+        $this->page      = $page;
         $this->site      = $site;
+
+        $this->site_id  = 1;
 
         $sites = $this->site->find(1);
 
@@ -97,4 +103,40 @@ class ShopController extends Controller {
         return view('frontend.pubdroit.products')->with(['products' => $products, 'title' => $title, 'label' => $label]);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $slug
+     * @return Response
+     */
+    public function page($slug,$var = null)
+    {
+        $page = $this->page->getBySlug($this->site_id,$slug);
+
+        $data['page'] = $page;
+        $data['var']  = $var;
+/*
+        if($slug == 'newsletter')
+        {
+            if($var)
+            {
+                $data['campagne'] = $this->campagne->find($var);
+                $data['content']  = $this->worker->prepareCampagne($var);
+            }
+            else
+            {
+                $newsletters = $this->newsletter->getAll($this->site_id)->first();
+                if(!$newsletters->campagnes->isEmpty())
+                {
+                    $data['campagne'] = $newsletters->campagnes->first();
+                    $data['content']  = $this->worker->prepareCampagne($newsletters->campagnes->first()->id);
+                }
+            }
+
+            $data['categories']    = $this->worker->getCategoriesArrets();
+            $data['imgcategories'] = $this->worker->getCategoriesImagesArrets();
+        }*/
+
+        return view('frontend.pubdroit.'.$page->template)->with($data);
+    }
 }
