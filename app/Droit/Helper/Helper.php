@@ -6,27 +6,10 @@ class Helper {
 
     protected $upload;
 
-    /**
-     * Construct a new SentryUser Object
-     */
-    public function __construct()
-    {
-
-    }
-
 	/*
 	 * Dates functions
+	 * For commandes period
 	*/
-
-	// localized date format
-    public static function formatDate($date) {
-    
-        $instance   = Carbon::createFromFormat('Y-m-d', $date); 
-		setlocale(LC_TIME, 'fr_FR'); 							                   
-		$formatDate = $instance->formatLocalized('%d %B %Y');
-	
-        return $formatDate;
-    }
 
     public function formatTwoDates($start,$end)
     {
@@ -38,20 +21,13 @@ class Helper {
 
         return $start->formatLocalized($format).' au '.$end->formatLocalized('%d %B %Y');
     }
-    
-    //created_at field in DB
-	public function getCreatedAtAttribute($value) { 
-        //return $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $value);	
-        return $carbonDate = date("d/m/Y", strtotime($value)); 
-        //return $value;
-    }
 
-    function validateDate($date, $format = 'Y-m-d H:i:s')
-    {
-        $d = DateTime::createFromFormat($format, $date);
-        return $d && $d->format($format) == $date;
-    }
-
+    /**
+     * Add interval of time for reminder
+     *
+     * @param  date,string
+     * @return date
+     */
     public function addInterval($date,$interval)
     {
         switch ($interval) {
@@ -74,101 +50,17 @@ class Helper {
 
         return $date;
     }
-    
-    /*
-	 * Files functions
-	*/
-    
-	public function fileExistFormatLink( $path , $user , $event , $view , $name , $class = NULL){
-		
-		$link = $path.$user.'/'.$view.'_'.$event.'-'.$user.'.pdf';
-		$url  = getcwd().'/'.$link;
-
-		$add  = '';
-		
-		if ( \File::exists($url) )
-		{
-			$asset = asset($link);
-
-			if($class){
-				$add = ' class="'.$class.'" ';
-			}
-			
-			return '<a target="_blank" href="'.$asset.'"'.$add.'>'.$name.'</a>';	
-		}
-		
-		return '';
-	}
-	
-	/* Get mime-type of file */
-	public function getMimeType($filename)
-	{
-	    $mimetype = false;
-	    
-	    if(function_exists('finfo_fopen')) 
-	    {
-	       $mimetype = finfo_fopen($filename);
-	    } 
-	    elseif(function_exists('getimagesize')) 
-	    {
-	       $mimetype = getimagesize($filename);
-	    } 
-	    elseif(function_exists('exif_imagetype')) 
-	    {
-	       $mimetype = exif_imagetype($filename);
-	    } 
-	    elseif(function_exists('mime_content_type')) 
-	    {
-	       $mimetype = mime_content_type($filename);
-	    }
-	    
-	    return $mimetype['mime'];
-	}
-
-    
-	public function fileExistFormatImage( $path , $width ){
-		
-		$url  = getcwd().$path;		
-		$add  = '';
-		
-		$ext = array('jpg','JPG','jpeg','JPEG','png','PNG','gif','GIF');
-		
-		if ( \File::exists($url) ){
-			
-			$extension = \File::extension($url);
-			
-			if ( in_array( $extension , $ext )  )
-			{
-				$asset = asset($path);
-				
-				return '<img src="'.$asset.'" alt="" width="'.$width.'px" />';	
-			}	
-		}
-	}
 	
 	/*
 	 * Misc functions
 	*/
-    
-    public static function ifExist(&$argument, $default="") {
-    
-	    if(!isset($argument)) {
-	       $argument = $default;
-	       return $argument;
-	    }
-	   
-	    $argument = trim($argument);
-	   
-	    return $argument;
-	}
-	
-	public static function preparePrice($price){
-		
-		$prepared = explode('.', $price);
-		
-		return $prepared;
-	}
-	
+
+    /**
+     * Limit number of words
+     *
+     * @param  string, int
+     * @return string
+     */
 	public function limit_words($string, $word_limit){
 	
 		$words = explode(" ",$string);
@@ -184,12 +76,11 @@ class Helper {
 	 *
 	 * @return string
 	 */			
-	public function format_name($string){
-	
+	public function format_name($string)
+    {
 			// liaisons word
-			$liaison = array('de','des','du','von','dela','del','le','les','la','sur');
-			$words   = array();
-			$final   = '';
+			$liaison = ['de','des','du','von','dela','del','le','les','la','sur'];
+			$words   = [];
 			// explode the name by space
 			$mots =  explode(' ', $string);
 						
@@ -249,7 +140,7 @@ class Helper {
 	   			$final = $string;
 			}
 			
-		return $final;
+		return trim($final);
 	}
 	
 	/*
@@ -257,8 +148,9 @@ class Helper {
 	 *
 	*/
 	
-	/*  Remove accents */
-	
+	/*
+	 * Remove accents
+	*/
 	public function _removeAccents ($text) {
 	    $alphabet = array(
 	        'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -279,9 +171,10 @@ class Helper {
 	}
 	
 	/*
-	 * remove html tags and non alphanumerics letters	
+	 * remove html tags and non alphanumerics letters replace by underscore and lowercase all
 	*/
-	public function _removeNonAlphanumericLetters($sString) {
+	public function _removeNonAlphanumericLetters($sString)
+    {
 	     //Conversion des majuscules en minuscule
 	     $string = strtolower(htmlentities($sString));
 	     //Listez ici tous les balises HTML que vous pourriez rencontrer
@@ -293,18 +186,11 @@ class Helper {
 	
 	/*
 	 * Array functions
-	*/	
-	
-	// add arrays together
-	public function addArrayToArray($array1 , $array2){
-		
-		return array_merge($array1,$array2);
-		
-	}
+	*/
 	
 	// Insert new pair key/value in array at first place
-	public function insertFirstInArray( $key , $value , $array ){
-		
+	public function insertFirstInArray( $key , $value , $array )
+    {
 		$insert = array( $key => $value );		
 		$new    = $insert + $array;
 		
@@ -369,7 +255,6 @@ class Helper {
         $href  = str_replace($strip, "", $link);
 
         return '<a href="'.$href.'" target="_blank">'.$text.'</a>';
-
     }
 
     /**
@@ -449,6 +334,12 @@ class Helper {
         return $url;
     }
 
+    /**
+     * Prepare categoriea with sorting
+     *
+     * @param  array
+     * @return array
+     */
     public function prepareCategories($data){
 
         $categories = [];
@@ -490,10 +381,12 @@ class Helper {
         return false;
     }
 
-    public function withEmpty($selectList, $emptyLabel = '') {
-        return array('' => $emptyLabel) + $selectList;
-    }
-
+    /**
+     * Prepare products to insert in DB
+     *
+     * @param
+     * @return
+     */
     public function convertProducts($data)
     {
         $products = [];
@@ -505,7 +398,7 @@ class Helper {
             $product['product'] = $data['products'][$x];
             $product['qty']     = $data['qty'][$x];
 
-            if(isset($data['rabais'][$x])  && !empty($data['rabais'][$x]))
+            if(isset($data['rabais'][$x]) && !empty($data['rabais'][$x]))
             {
                 $product['rabais'] = $data['rabais'][$x];
             }
@@ -521,20 +414,12 @@ class Helper {
         return $products;
     }
 
-    public function convertSerializedData($data){
-
-        $user = [];
-        if(!empty($data))
-        {
-            foreach($data as $info)
-            {
-                $user[$info['name']] = $info['value'];
-            }
-        }
-
-        return $user;
-    }
-
+    /**
+     * Search autocomplete in abos for adresse and tiers
+     *
+     * @param  collection, string
+     * @return array
+     */
     public function convertAutocomplete($results, $isType = 'user')
     {
         $data = [];
@@ -555,48 +440,12 @@ class Helper {
         return $data;
     }
 
-    public function groupInscriptionCollection($collection){
-
-        $grouped = [];
-
-        if(!$collection->isEmpty())
-        {
-            foreach($collection as $inscription)
-            {
-                if($inscription->group_id)
-                {
-                    $grouped[$inscription->group_id][] = $inscription;
-                }
-                else
-                {
-                    $grouped[] = $inscription;
-                }
-            }
-        }
-
-        return $grouped;
-    }
-
-
-    public function abos($abos)
-    {
-        if(!$abos->isEmpty())
-        {
-            foreach($abos as $abo)
-            {
-                $results[] = [
-                    'text'        => $abo->product->title,
-                    'value'       => $abo->id,
-                    'selected'    => false,
-                    'description' => $abo->plan_fr,
-                    'imageSrc'    => asset('files/products/'.$abo->product->image)
-                ];
-            }
-        }
-
-        return $results;
-    }
-
+    /**
+     * General render menu from pages
+     *
+     * @param  model
+     * @return string
+     */
     public function renderMenu($node)
     {
         $url = ($node->main ? '' : 'page/');
@@ -620,6 +469,12 @@ class Helper {
         return $html;
     }
 
+    /**
+     * General render sidebar from pages
+     *
+     * @param  model
+     * @return string
+     */
     public function renderSidebar($node, $page)
     {
         if( $node->isLeaf() )
@@ -651,6 +506,12 @@ class Helper {
         return json_encode($object);
     }
 
+    /**
+     * General render pages in admin
+     *
+     * @param  model
+     * @return string
+     */
     public function renderNode($node)
     {
         $form = '<form action="'.url('admin/page/'.$node->id).'" method="POST">

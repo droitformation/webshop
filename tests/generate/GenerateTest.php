@@ -157,23 +157,6 @@ class GenerateTest extends TestCase {
 
 		$this->assertEquals($response, $filename);
 
-		/*
-		$group        = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
-		$inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make();
-
-		$inscriptions = $inscriptions->map(function ($item, $key) {
-			$item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->make([ 'id' => $key ]);
-			return $item;
-		});
-
-		$group->inscriptions = $inscriptions;
-
-		$generate = new \App\Droit\Inscription\Entities\Generate($group);
-
-		$response = $generate->getFilename($annexe,$name);
-
-		$this->assertEquals($participants, $response);
-		*/
 	}
 
 	public function testGetFilenameGroup()

@@ -17,8 +17,9 @@ class AuthorTest extends TestCase {
         $this->author = Mockery::mock('App\Droit\Author\Repo\AuthorInterface');
         $this->app->instance('App\Droit\Author\Repo\AuthorInterface', $this->author);
 
-        $user = App\Droit\User\Entities\User::find(1);
-        $this->be($user);
+        $user = App\Droit\User\Entities\User::find(710);
+
+        $this->actingAs($user);
 
     }
 
@@ -78,9 +79,8 @@ class AuthorTest extends TestCase {
     {
         $this->author->shouldReceive('delete')->once();
 
-        $response = $this->action('DELETE','Backend\Content\AuthorController@destroy', [] ,['id' => '1']);
+        $response = $this->call('DELETE','admin/author/1', [] ,['id' => '1']);
 
         $this->assertRedirectedTo('admin/author');
-
     }
 }

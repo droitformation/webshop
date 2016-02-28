@@ -15,8 +15,9 @@ class AdresseTest extends TestCase {
         $this->adresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
         $this->app->instance('App\Droit\Adresse\Repo\AdresseInterface', $this->adresse);
 
-        $user = App\Droit\User\Entities\User::find(1);
-        $this->be($user);
+        $user = App\Droit\User\Entities\User::find(710);
+
+        $this->actingAs($user);
     }
 
     public function tearDown()

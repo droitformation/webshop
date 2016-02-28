@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -61,7 +61,7 @@ class SubscribeController extends Controller
                 $messages['resend'] = true;
             }
 
-            return redirect('/')->with($messages);
+            return redirect()->back()->with($messages);
         }
 
         // Subscribe user with activation token to website list and sync newsletter abos
@@ -101,6 +101,6 @@ class SubscribeController extends Controller
 
         $this->subscription->delete($abonne->email);
 
-        return redirect('/')->with(array('status' => 'success', 'message' => '<strong>Vous avez été désinscrit</strong>'));
+        return redirect()->back()->with(array('status' => 'success', 'message' => '<strong>Vous avez été désinscrit</strong>'));
     }
 }

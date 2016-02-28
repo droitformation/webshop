@@ -5,7 +5,6 @@
 |--------------------------------------------------------------------------
 */
 
-//Route::resource('product', 'ProductController');
 Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
 Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
 Route::get('code', 'CodeController@index');
@@ -15,19 +14,18 @@ Route::get('code', 'CodeController@index');
 | Subscriptions adn newsletter Routes
 |--------------------------------------------------------------------------
 */
-Route::get('campagne/{id}', 'Frontend\CampagneController@show');
+
+Route::post('unsubscribe', 'Frontend\SubscribeController@unsubscribe');
+Route::post('subscribe',   'Frontend\SubscribeController@subscribe');
+Route::get('activation/{token}', 'Frontend\SubscribeController@activation');
 
 /* Routes to implement  */
 /*
+    Route::get('campagne/{id}', 'Frontend\CampagneController@show');
     Route::get('newsletter', 'Frontend\NewsletterController@index');
     Route::resource('newsletter', 'Frontend\NewsletterController');
     Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
 */
-
-Route::post('unsubscribe', 'SubscribeController@unsubscribe');
-Route::post('subscribe',   'SubscribeController@subscribe');
-Route::get('activation/{token}', 'SubscribeController@activation');
-Route::post('check/email', 'AjaxController@check');
 
 Route::group(['prefix' => 'pubdroit'], function () {
 
@@ -151,6 +149,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
 
+    Route::get('inscription/rappels/{id}','Backend\Colloque\RappelController@rappels');
+    Route::get('inscription/rappel/make/{id}','Backend\Colloque\RappelController@make');
     Route::resource('inscription/rappel','Backend\Colloque\RappelController');
 
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
@@ -347,8 +347,6 @@ Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
 Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
 Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
-//Route::get('home', 'HomeController@index');
-
 /* *
  * Update user adresse via ajax
  * */
@@ -374,8 +372,12 @@ Route::post('password/define', 'Auth\PasswordController@postDefine');
 Route::get('login', 'Auth\AuthController@login');
 
 Route::get('auth/droithub', 'Auth\AuthController@redirectToProvider');
-
 //Route::get('auth/droithub/callback', 'Auth\AuthController@handleProviderCallback');
+
+/* *
+ * Ajax login validation
+ * */
+Route::post('check/email', 'AjaxController@check');
 
 /* *
  * Oauth 2 routes

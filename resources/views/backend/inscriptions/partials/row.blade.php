@@ -1,4 +1,4 @@
-<tr {!!  ($inscription->group_id ? 'class="isGoupe"' : ''); !!}>
+<tr {!! ($inscription->group_id ? 'class="isGoupe"' : '') !!}>
     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}"><i class="fa fa-edit"></i></a></td>
     <td>
         <p><strong>{{ ($inscription->inscrit && $inscription->adresse_facturation ? $inscription->adresse_facturation->civilite_title : '') }}</strong></p>
@@ -19,7 +19,6 @@
     <td>
         @if($inscription->group_id)
             {!! $inscription->participant->name  !!}
-
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a>
             @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque]) <!-- Modal add to group -->
         @endif
@@ -31,9 +30,8 @@
     </td>
     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
     <td class="text-right">
-        <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">
+        <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
             <input type="hidden" name="_method" value="DELETE">
-            {!! csrf_field() !!}
             <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">X</button>
         </form>
     </td>

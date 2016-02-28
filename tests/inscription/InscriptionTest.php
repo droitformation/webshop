@@ -106,7 +106,7 @@ class InscriptionTest extends TestCase {
 
         $response = $this->call('POST', 'registration', $input);
 
-        $this->assertRedirectedTo('colloque');
+        $this->assertRedirectedTo('/');
 
     }
 

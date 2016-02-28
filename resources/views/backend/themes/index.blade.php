@@ -22,7 +22,7 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
 
-                    <table class="table">
+                    <table class="table simple-table">
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
@@ -39,7 +39,7 @@
                                     <td class="text-right">
                                         <form action="{{ url('admin/theme/'.$theme->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-what="Supprimer" data-action="{{ $theme->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            <button data-what="Supprimer" data-action="{{ $theme->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                         </form>
                                     </td>
                                 </tr>

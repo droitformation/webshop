@@ -35,8 +35,6 @@ class HelperTest extends TestCase {
         ];
 
 		$result = $this->format->convertSerializedData($data);
-
-        //$this->assertEquals($expect, $result);
 	}
 
     public function testIsMulti()
@@ -55,11 +53,40 @@ class HelperTest extends TestCase {
         $this->assertFalse($result);
     }
 
-    public function testAddInterval()
+    public function testRemoveNonAlphaNumeric()
     {
-        $expect = [1];
-        $result = $this->helper->addInterval($date,$interval);
+        $string = 'Cindy#12';
+        $result = $this->helper->_removeNonAlphanumericLetters($string);
 
-        $this->assertFalse($result);
+        $this->assertEquals('cindy_12',$result);
     }
+
+    public function testInsertBeforeArray()
+    {
+        $key    = 'Cindy';
+        $value  = 2;
+        $data   = [0 => 'first',4 => 'second'];
+
+        $result = $this->helper->insertFirstInArray( $key , $value , $data );
+
+        $this->assertEquals(['Cindy' => 2, 0 => 'first',4 => 'second'],$result);
+    }
+
+    public function testFormatName()
+    {
+        $names = [
+            'Coralie von allmen'     => 'Coralie von Allmen',
+            'Sandra de monmoulin'    => 'Sandra de Monmoulin',
+            'sandra dela les chemin' => 'Sandra dela les Chemin',
+            'cindy leschaud'         => 'Cindy Leschaud'
+        ];
+
+        foreach($names as $input => $output)
+        {
+            $result = $this->helper->format_name($input);
+
+            $this->assertEquals($output, $result);
+        }
+    }
+
 }

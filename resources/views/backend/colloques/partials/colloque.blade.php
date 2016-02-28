@@ -25,6 +25,7 @@
                             <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions
                                 &nbsp; <span class="badge badge-success">{{ $colloque->inscriptions->count() }}</span>
                             </a>
+                            <a class="btn btn-warning btn-sm" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}">Rappels</a>
                         </div>
                         <form action="{{ url('admin/colloque/'.$colloque->id) }}" method="POST" class="pull-right">
                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}

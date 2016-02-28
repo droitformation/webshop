@@ -95,7 +95,7 @@
 
                         {!! $inscriptions->links() !!}
 
-                        <a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#desinscriptionTable">Désinscriptions</a>
+                        <p><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#desinscriptionTable">Désinscriptions</a></p>
                     </div>
                 </div>
             </div>

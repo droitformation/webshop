@@ -22,7 +22,7 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
 
-                    <table class="table">
+                    <table class="table simple-table">
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>

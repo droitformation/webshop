@@ -23,8 +23,9 @@ class CouponTest extends TestCase {
 
         $this->helper = Mockery::mock('App\Droit\Helper\Helper');
 
-        $user = App\Droit\User\Entities\User::find(1);
-        $this->be($user);
+        $user = App\Droit\User\Entities\User::find(710);
+
+        $this->actingAs($user);
 
     }
 
@@ -97,7 +98,7 @@ class CouponTest extends TestCase {
     {
         $this->coupon->shouldReceive('delete')->once();
 
-        $response = $this->action('DELETE','Backend\CouponController@destroy', [] ,['id' => '100']);
+        $response = $this->call('DELETE','admin/coupon/100', [] ,['id' => '100']);
 
         $this->assertRedirectedTo('admin/coupon');
 
