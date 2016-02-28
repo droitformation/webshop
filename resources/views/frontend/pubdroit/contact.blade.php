@@ -41,7 +41,7 @@
 
 					<h4>{!! Registry::get('shop.infos.nom') !!}</h4>
 					<p>{!! Registry::get('shop.infos.adresse') !!}</p>
-					<p><a href="mailto:{{ Registry::get('shop.infos.email') }}">{{ Registry::get('shop.infos.email') }}ag</a></p>
+					<p><a href="mailto:{{ Registry::get('shop.infos.email') }}">{{ Registry::get('shop.infos.email') }}</a></p>
 
 				</div>
 			</div>

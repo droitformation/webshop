@@ -72,41 +72,24 @@ class Inscription extends Model
 
     public function getDocumentsAttribute()
     {
-        $docs = [];
-
-        $this->load('user','groupe');
-
-        if(isset($this->groupe) && !empty($this->groupe))
-        {
-            $this->groupe->load('user');
-
-            $user = $this->groupe->user;
-        }
-        else
-        {
-            $user = $this->user;
-        }
-
-        if(!empty($this->colloque->annexe))
+        if(!empty($this->colloque->annexe) && $this->inscrit)
         {
             foreach($this->colloque->annexe as $id => $annexe)
             {
-                $path = config('documents.colloque.'.$annexe.'');
-
-                $file = public_path().$path.$annexe.'_'.$this->colloque->id.'-'.$user->id.'.pdf';
+                $name = $annexe.'_'.$this->colloque->id.'-'.$this->inscrit->id.'.pdf';
+                $path = config('documents.colloque.'.$annexe).$name;
+                $file = public_path($path);
 
                 if (\File::exists($file))
                 {
-                    $name = $annexe.'_'.$this->colloque->id.'-'.$user->id.'.pdf';
-
                     $docs[$annexe]['file'] = $file;
-                    $docs[$annexe]['link'] = $path.$name;
+                    $docs[$annexe]['link'] = $path;
                     $docs[$annexe]['name'] = $name;
                 }
             }
         }
 
-        return $docs;
+        return isset($docs) ? $docs : [];
     }
 
     public function getInscritAttribute()

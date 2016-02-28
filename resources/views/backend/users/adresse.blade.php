@@ -53,6 +53,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Profession</label>
+        <div class="col-sm-7">
+            {!! Form::select('profession_id', $professions->lists('title','id')->all() , null, ['class' => 'form-control form-required', 'placeholder' => 'Choix profession']) !!}
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Adresse</label>
         <div class="col-sm-7">
             <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="{{ $adresse->adresse }}" placeholder="Adresse">
@@ -92,13 +98,6 @@
         <label class="col-sm-4 control-label">Pays</label>
         <div class="col-sm-7">
             {!! Form::select('pays_id', $pays->lists('title','id')->all() , $adresse->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Pays']) !!}
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Profession</label>
-        <div class="col-sm-7">
-            {!! Form::select('profession_id', $professions->lists('title','id')->all() , $adresse->profession_id, ['class' => 'form-control form-required', 'placeholder' => 'Profession_id']) !!}
         </div>
     </div>
 

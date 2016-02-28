@@ -112,41 +112,36 @@ class InscriptionController extends Controller
     public function push(Request $request)
     {
         // Get all infos for inscription/participant
-        $participant  = $request->input('participant');
-        $price_id     = $request->input('price_id');
-        $options      = $request->input('options');
-        $groupes      = $request->input('groupes');
-        $group_id     = $request->input('group_id');
-
-        $colloque    = $this->colloque->find($request->input('colloque_id'));
+        $options     = $request->input('options',null);
+        $groupes     = $request->input('groupes',null);
 
         $data = [
-            'group_id'    => $group_id,
-            'colloque_id' => $colloque->id,
-            'participant' => $participant,
-            'price_id'    => $price_id
+            'group_id'    => $request->input('group_id'),
+            'colloque_id' => $request->input('colloque_id'),
+            'participant' => $request->input('participant'),
+            'price_id'    => $request->input('price_id')
         ];
 
         // choosen options for participants
         if(isset($options))
         {
-            $data['options'] = $options;
+            $data['options'] = $request->input('options');
         }
 
         // choosen groupe of options for participants
         if(isset($groupes))
         {
-            $data['groupes'] = $groupes;
+            $data['groupes'] = $request->input('groupes');
         }
 
         // Register a new inscription
-        $this->register->register($data,$colloque->id);
+        $this->register->register($data,$request->input('colloque_id'));
         
-        $group_user = $this->groupe->find($group_id);
+        $group_user = $this->groupe->find($request->input('group_id'));
 
         event(new GroupeInscriptionWasRegistered($group_user));
 
-        return redirect('admin/inscription/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
     }
 
     public function change(Request $request)

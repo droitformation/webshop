@@ -9,7 +9,6 @@
          {!! csrf_field() !!}
 
         <div class="row">
-
             <div class="col-md-6">
                 <h4><i class="fa fa-home"></i> &nbsp;Adresse générale pour facture shop</h4>
                 <div class="panel panel-primary">
@@ -49,28 +48,16 @@
                                 <label><strong>Adresse</strong></label>
                                 <textarea name="shop[infos][adresse]" class="form-control redactorSimple">{!! Registry::get('shop.infos.adresse') !!}</textarea>
                             </div>
+
                             <div class="form-group">
-                                <label><strong>Compte postal vente livres</strong></label>
-                                <input type="text" class="form-control" name="shop[compte][livre]" value="{!! Registry::get('shop.compte.livre')!!}">
+                                <label><strong>Téléphone</strong></label>
+                                <input type="text" class="form-control" name="shop[infos][telephone]" value="{!! Registry::get('shop.infos.telephone')!!}">
                             </div>
                             <div class="form-group">
-                                <label><strong>N° de TVA</strong></label>
-                                <input type="text" class="form-control" name="shop[infos][tva]" value="{!! Registry::get('shop.infos.tva')!!}">
+                                <label><strong>Fax</strong></label>
+                                <input type="text" class="form-control" name="shop[infos][fax]" value="{!! Registry::get('shop.infos.fax')!!}">
                             </div>
-                            <div class="form-group">
-                                <label><strong>TVA taux réduit</strong></label>
-                                <div class="input-group col-md-3">
-                                    <input type="text" class="form-control" name="shop[infos][taux_reduit]" value="{!! Registry::get('shop.infos.taux_reduit')!!}">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label><strong>TVA taux normal</strong></label>
-                                <div class="input-group col-md-3">
-                                    <input type="text" class="form-control" name="shop[infos][taux_normal]" value="{!! Registry::get('shop.infos.taux_normal')!!}">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -79,11 +66,48 @@
                 </div>
             </div>
             <div class="col-md-6">
+
+                <h4><i class="fa fa-money"></i> &nbsp;Factures</h4>
+                <div class="panel panel-green">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label><strong>Compte postal vente livres</strong></label>
+                            <input type="text" class="form-control" name="shop[compte][livre]" value="{!! Registry::get('shop.compte.livre')!!}">
+                        </div>
+                        <div class="form-group">
+                            <label><strong>N° de TVA</strong></label>
+                            <input type="text" class="form-control" name="shop[infos][tva]" value="{!! Registry::get('shop.infos.tva')!!}">
+                        </div>
+                        <div class="form-group">
+                            <label><strong>TVA taux réduit</strong></label>
+                            <div class="input-group col-md-3">
+                                <input type="text" class="form-control" name="shop[infos][taux_reduit]" value="{!! Registry::get('shop.infos.taux_reduit')!!}">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>TVA taux normal</strong></label>
+                            <div class="input-group col-md-3">
+                                <input type="text" class="form-control" name="shop[infos][taux_normal]" value="{!! Registry::get('shop.infos.taux_normal')!!}">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
                 <h4><i class="fa fa-ban"></i> &nbsp;Restrictions</h4>
                 <div class="panel panel-warning">
                     <div class="panel-body">
                         <div class="form-group">
-                            <label><strong>Empêcher les mauvais payeur de continuer à s'inscrire</strong></label></br>
+                            <label><strong>Empêcher les mauvais payeur de continuer à commander</strong></label></br>
                             <?php $restrict = Registry::get('shop.restrict'); ?>
                             <label class="radio-inline">
                                 <input type="radio" {{ ($restrict ? 'checked' : '') }} name="shop[restrict]" value="1"> oui &nbsp;
@@ -105,7 +129,8 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-6">
+            </div>
         </div>
 
     </form>

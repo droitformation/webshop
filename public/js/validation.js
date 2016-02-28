@@ -22,6 +22,28 @@ jQuery(document).ready(function($){
         }
     });
 
+    $( "#subscribe" ).validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        errorElement : 'div',
+        errorPlacement: function(error, element)
+        {
+            if (element.is(":text"))
+            {
+                error.prependTo(element.closest('.form'));
+            }
+            else
+            { // This is the default behavior of the script for all fields
+                error.insertAfter(element);
+            }
+        }
+    });
+
+
     var $billing = $("#billing");
 
     if($billing.length){

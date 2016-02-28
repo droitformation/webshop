@@ -313,7 +313,7 @@ a:hover, a:active, a:focus {
 }
 
 .form-required{
-    border:1px solid #ffaeae;
+    border:1px solid #859dec;
 }
 
 #adresseParent{
@@ -374,6 +374,20 @@ a:hover, a:active, a:focus {
 .modal-body{
     overflow-y: scroll;
     position: relative;
+}
+
+.modal-content h4{
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.modal-content .form-group{
+    margin-bottom: 15px;
+}
+
+.modal-content .form-group label{
+    margin-bottom: 5px;
+    line-height: 17px;
 }
 
 .list{
@@ -579,6 +593,20 @@ select[multiple] {
     width: 240px;
 }
 
+.info-tiles, .shortcut-tiles{
+    margin-bottom: 10px;
+}
+
+.shortcut-tiles .tiles-body.tiles-body-menu {
+    font-size: 18px;
+    line-height: 20px;
+    padding: 10px;
+}
+
+.shortcut-tiles .tiles-body p{
+   margin-bottom: 7px;
+}
+
 .dropdown-menu > li.site-dropdown{
     margin-bottom: 5px;
 }
@@ -651,9 +679,24 @@ select[multiple] {
 
 .inscription_wrapper ol{
     padding: 0;
+    padding-left: 15px;
+    padding-top: 5px;
     margin-top: 10px;
 }
 
 .inscription_wrapper ol li{
     margin-top: 2px;
+}
+
+.inscription_wrapper ol li a{
+    line-height: 22px;
+}
+
+.inscription_wrapper ol li button{
+   padding: 3px 6px;
+    margin-top: -3px;
+}
+
+.newsletter-archives{
+    margin: 20px 0 0 0;
 }

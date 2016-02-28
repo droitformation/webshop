@@ -23,11 +23,11 @@ Route::get('campagne/{id}', 'Frontend\CampagneController@show');
     Route::resource('newsletter', 'Frontend\NewsletterController');
     Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
 */
-Route::post('unsubscribe', 'Backend\Newsletter\InscriptionController@unsubscribe');
-Route::post('subscribe', 'Backend\Newsletter\InscriptionController@subscribe');
-Route::get('activation/{token}', 'Backend\Newsletter\InscriptionController@activation');
-Route::post('check/email', 'AjaxController@check');
 
+Route::post('unsubscribe', 'SubscribeController@unsubscribe');
+Route::post('subscribe',   'SubscribeController@subscribe');
+Route::get('activation/{token}', 'SubscribeController@activation');
+Route::post('check/email', 'AjaxController@check');
 
 Route::group(['prefix' => 'pubdroit'], function () {
 

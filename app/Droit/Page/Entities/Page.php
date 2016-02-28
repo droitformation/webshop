@@ -45,7 +45,7 @@ class Page extends Node {
 
         $linked   = ($this->isExternal ? 'target="_blank"' : 'class="'.\Request::is('/page/'.$this->slug).'"');
 
-        return '<a '.$linked.' href="'.$page_url.'">'.$this->menu_title.'</a>';
+        return '<a '.$linked.' href="'.url($page_url).'">'.$this->menu_title.'</a>';
     }
 
     public function truncate($s, $l, $e = '...', $isHTML = false)

@@ -57,9 +57,11 @@
 
                                     @include('backend.newsletter.campagne.list',['campagnes' => $campagnes])
 
-                                    @foreach($annees as $annee_news)
-                                        <a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#collapseArchives_{{ $newsletter->id.'_'.$annee_news }}">Archives {{ $annee_news }}</a>
-                                    @endforeach
+                                    <div class="newsletter-archives">
+                                        @foreach($annees as $annee_news)
+                                            <a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#collapseArchives_{{ $newsletter->id.'_'.$annee_news }}">Archives {{ $annee_news }}</a>
+                                        @endforeach
+                                    </div>
 
                                     @foreach($years as $annee => $year)
                                         <div class="collapse margeUpDown" id="collapseArchives_{{  $newsletter->id.'_'.$annee }}">

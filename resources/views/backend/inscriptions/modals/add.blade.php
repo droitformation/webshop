@@ -38,7 +38,7 @@
                 <div class="modal-footer">
                     <input type="hidden" name="group_id" value="{{ $group->id}}" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-primary">Changer</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
                 </div>
             </form>
         </div>

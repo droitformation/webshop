@@ -104,11 +104,26 @@
                         </div>
                     </div>
                     <div class="row form-group">
+                        <label class="col-sm-4 control-label">Profession</label>
+                        <div class="col-sm-7">
+                            {!! Form::select('profession_id', $professions->pluck('title','id')->toArray() , $adresse->profession_id, ['class' => 'form-control', 'placeholder' => 'Choix']) !!}
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label class="col-sm-4 control-label">Entrprise</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="company" class="form-control form-required" value="{{ $adresse->company }}">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
                         <label class="col-sm-4 control-label">Adresse</label>
                         <div class="col-sm-7">
                             <input type="text" name="adresse" required class="form-control form-required" value="{{ $adresse->adresse }}">
                         </div>
                     </div>
+
                     <div class="row form-group">
                         <label class="col-sm-4 control-label">Complément d'adresse</label>
                         <div class="col-sm-7">
@@ -143,13 +158,6 @@
                         <label class="col-sm-4 control-label">Pays</label>
                         <div class="col-sm-7">
                             {!! Form::select('pays_id', $pays->lists('title','id')->all() , $adresse->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control', 'placeholder' => 'Choix']) !!}
-                        </div>
-                    </div>
-
-                    <div class="row form-group">
-                        <label class="col-sm-4 control-label">Profession</label>
-                        <div class="col-sm-7">
-                            {!! Form::select('profession_id', $professions->pluck('title','id')->toArray() , $adresse->profession_id, ['class' => 'form-control', 'placeholder' => 'Choix']) !!}
                         </div>
                     </div>
 

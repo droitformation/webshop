@@ -38,11 +38,6 @@ class ShopController extends Controller {
         $this->site      = $site;
 
         $this->site_id  = 1;
-
-        $sites = $this->site->find(1);
-
-		view()->share('menus',$sites->menus);
-        view()->share('site',$sites);
 	}
 
 	/**

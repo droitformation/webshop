@@ -46,8 +46,9 @@
                                         <tr class="row">
                                             <th class="col-md-1"></th>
                                             <th class="col-md-2"><h4>N°</h4></th>
+                                            <th class="col-md-2"><h4>Participant</h4></th>
                                             <th class="col-md-2"><h4>Prix</h4></th>
-                                            <th class="col-md-2"><h4>Bon</h4></th>
+                                            <th class="col-md-1"><h4>Bon</h4></th>
                                             <th class="col-md-5"><h4>Options</h4></th>
                                         </tr>
                                     </thead>
@@ -64,6 +65,7 @@
                                                     </button>
                                                 </td>
                                                 <td class="col-md-2"><p><strong>{{ $inscription->inscription_no }}</strong></p></td>
+                                                <td class="col-md-2"><p><strong>{{ $inscription->participant->name }}</strong></p></td>
                                                 <td class="col-md-2">{{ $inscription->price_cents }} CHF</td>
                                                 <td class="col-md-2">
                                                     @if($inscription->doc_bon)

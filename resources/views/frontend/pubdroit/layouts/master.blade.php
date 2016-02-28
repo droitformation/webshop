@@ -53,33 +53,13 @@
 				<section class="container">
 					<section class="row">
 						<section class="col-md-6">
-							<ul class="top-nav">
-
-								@if(!$menus->isEmpty())
-									<?php $menu = $menus->whereLoose('position','main'); ?>
-									@if(!$menu->isEmpty())
-										<?php $menu = $menu->first()->load('pages'); ?>
-										@if(!$menu->pages->isEmpty())
-											@foreach($menu->pages as $page)
-												<li>{!! $page->page_url !!}</li>
-											@endforeach
-										@endif
-									@endif
-								@endif
-
-								<li><a href="grid-view.html">Newsletter</a></li>
-
-							</ul>
+							@include('frontend.pubdroit.partials.menu')
 						</section>
 						<section class="col-md-6 e-commerce-list text-right">
                             @if (!Auth::check())
                                 <div>
-                                    <a href="{{ url('auth/login')}}" class="navbar-btn navbar-login">
-										<i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}
-									</a>
-                                    <a href="{{ url('auth/register')}}" class="navbar-btn navbar-register">
-										<i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}
-									</a>
+                                    <a href="{{ url('auth/login')}}" class="navbar-btn navbar-login"><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
+                                    <a href="{{ url('auth/register')}}" class="navbar-btn navbar-register"><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a>
                                 </div>
                             @endif
                             @if (Auth::check())
@@ -102,9 +82,7 @@
 
 					<section class="row">
 						<section class="col-md-4">
-							<h1 id="logo">
-								<a href="{{ url('/') }}"><img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" /></a>
-							</h1>
+							<h1 id="logo"><a href="{{ url('/') }}"><img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" /></a></h1>
 						</section>
 						<section class="col-md-8">
                             <div class="c-btn">
@@ -130,9 +108,7 @@
                             <div class="col-md-12">
                                 <div class="navbar">
                                     <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                                     </button>
                                     <div class="nav-collapse collapse in">
 										@include('frontend.pubdroit.partials.label')
@@ -153,98 +129,57 @@
 
 			<!-- Start Main Content Holder -->
 			<section id="content-holder" class="container-fluid container">
-
 				<!-- Contenu -->
 				@yield('content')
 				<!-- Fin contenu -->
-
 			</section>
 			<!-- End Main Content Holder -->
+
 			<!-- Start Footer Top 1 -->
-			<section class="container-fluid footer-top1">
+			<section class="footer-top1">
 				<section class="container">
-					<section class="row-fluid">
-						<figure class="col-md-3">
+					<section class="row">
+						<figure class="col-md-6">
 							<h4>Newsletter</h4>
-							<p>Subscribe to be the first to know about Best Deals and Exclusive Offers!</p>
-							<input name="" type="text" class="field-bg" value="Enter Your Email"/>
-							<input name="" type="submit" value="Subscribe" class="sub-btn" />
+							<p>Inscrivez simplement votre adresse email pour recevoir les nouveautés du site </p>
+
+							@include('frontend.partials.subscribe', ['newsletter_id' => $newsletter_id])
+
 						</figure>
-						<figure class="col-md-3">
-							<h4>Twitter</h4>
-							<ul class="tweets-list">
-								<li>Bookshoppe’- WooCommerce theme by crunchpress http<a href="#">://z.8o/XcexW23Q #envato</a></li>
-								<li>Bookshoppe’- WooCommerce theme by crunchpress http<a href="#">://z.8o/XcexW23Q #envato</a></li>
-							</ul>
-						</figure>
-						<figure class="col-md-3">
-							<h4>Location</h4>
-							<p>5/23, Loft Towers, Business Center, 6th Floor, Media City, Dubai.</p>
-          <span>
-          <ul class="phon-list">
-			  <li>(971) 438-555-314</li>
-			  <li>(971) 367-252-333</li>
-		  </ul>
-          </span> <span class="mail-list"> <a href="#">info@companyname</a><br />
-          <a href="#">jobs@companyname.com</a> </span> </figure>
-						<figure class="col-md-3">
-							<h4>Opening Time</h4>
-							<p>Monday-Friday ______8.00 to 18.00</p>
-							<p>Saturday ____________ 9.00 to 18.00</p>
-							<p>Sunday _____________10.00 to 16.00</p>
-							<p>Every 30 day of month Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<figure class="col-md-1"></figure>
+						<figure class="col-md-5">
+							<h4>Contact</h4>
+
+							<div class="row">
+								<div class="col-md-6">
+									<h5><strong>{!! Registry::get('shop.infos.nom') !!}</strong></h5>
+									{!! Registry::get('shop.infos.adresse') !!}
+								</div>
+								<div class="col-md-6">
+									<p><a href="mailto:{{ Registry::get('shop.infos.email') }}"> <i class="fa fa-envelope"></i> &nbsp;{{ Registry::get('shop.infos.email') }}</a></p>
+									<ul class="phon-list">
+									   <li>Tél: {!! Registry::get('shop.infos.telephone') !!}</li>
+									   <li>Fax: {!! Registry::get('shop.infos.fax') !!}</li>
+									</ul>
+								</div>
+							</div>
+
 						</figure>
 					</section>
 				</section>
 			</section>
 			<!-- End Footer Top 1 -->
-			<!-- Start Footer Top 2 -->
-			<section class="container-fluid footer-top2">
-				<section class="social-ico-bar">
-					<section class="container">
-						<section class="row-fluid">
-							<div id="socialicons" class="hidden-phone"> <a id="social_linkedin" class="social_active" href="#" title="Visit Google Plus page"><span></span></a> <a id="social_facebook" class="social_active" href="#" title="Visit Facebook page"><span></span></a> <a id="social_twitter" class="social_active" href="#" title="Visit Twitter page"><span></span></a> <a id="social_youtube" class="social_active" href="#" title="Visit Youtube"><span></span></a> <a id="social_vimeo" class="social_active" href="#" title="Visit Vimeo"><span></span></a> <a id="social_trumblr" class="social_active" href="#" title="Visit Vimeo"><span></span></a> <a id="social_google_plus" class="social_active" href="#" title="Visit Vimeo"><span></span></a> <a id="social_dribbble" class="social_active" href="#" title="Visit Vimeo"><span></span></a> <a id="social_pinterest" class="social_active" href="#" title="Visit Vimeo"><span></span></a> </div>
-							<ul class="footer2-link">
-								<li><a href="about-us.html">About Us</a></li>
-								<li><a href="contact.html">Customer Service</a></li>
-								<li><a href="order-recieved.html">Orders Tracking</a></li>
-							</ul>
-						</section>
-					</section>
-				</section>
-				<section class="container">
-					<section class="row-fluid">
-						<figure class="col-md-4">
-							<h4>BestSellers</h4>
 
-						</figure>
-						<figure class="col-md-4">
-							<h4>Top Rated Books</h4>
-
-						</figure>
-						<figure class="col-md-4">
-							<h4>From the blog</h4>
-
-						</figure>
-					</section>
-				</section>
-			</section>
-			<!-- End Footer Top 2 -->
 			<!-- Start Main Footer -->
-			<footer id="main-footer">
-				<section class="social-ico-bar">
-					<section class="container">
-						<section class="row-fluid">
-							<article class="col-md-6">
-								<p>© 2016  publications-droit.ch </p>
-							</article>
-							<article class="col-md-6 copy-right">
-							</article>
-						</section>
+			<footer id="main-footer" class="social-ico-bar">
+				<section class="container">
+					<section class="row">
+						<p class="col-md-6">© 2016  publications-droit.ch </p>
 					</section>
 				</section>
 			</footer>
 			<!-- End Main Footer -->
+
 		</div>
 		<!-- End Main Wrapper -->
 
