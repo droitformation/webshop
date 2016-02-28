@@ -52,7 +52,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <?php
                                             $facture = public_path('files/shop/factures/facture_'.$order->order_no.'.pdf');
 
@@ -62,7 +62,7 @@
                                             }
                                             ?>
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-5">
                                             @if(isset($order->coupon))
                                                 <p class="text-right"><strong>Rabais appliqué <small class="text-muted">{{ $order->coupon->title }}</small></strong></p>
                                             @endif
