@@ -58,7 +58,7 @@
 
                                             if ($order->facture)
                                             {
-                                                echo '<a target="_blank" href="'.$order->facture.'" class="btn btn-success">Facture en pdf</a>';
+                                                echo '<a target="_blank" href="'.asset($order->facture).'" class="btn btn-success">Facture en pdf</a>';
                                             }
                                             ?>
                                         </div>
