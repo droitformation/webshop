@@ -142,6 +142,23 @@ Route::get('cartworker', function()
     */
 });
 
+Route::get('messageadmin', function()
+{
+    $data = [
+        'name'      => 'Cindy Leschaud',
+        'email'     => 'cindy.leschaud@gmail.com',
+        'remarque'  => 'Quis consectetur  aenanm mié àc ornare fermentum cél leçtus vivérra séd, himenaeos
+                        interdum dapibus nulla ût nètus cursus consectetur lacinia curabitur suscipit dolor nibh mlius,
+                        rhoncüs donec égét. Platea sociosqu potentié proîn habitassé c\'est-a-dire curabitur lorem fermentum
+                        potenti ïpsum vulputaté primiés l\'sagittis interdùm phasellus quîs grâvida aenean témpor lilitoxic
+                        lacinia dicûm 19 605€ condimentum grâvida purus m\'amèt, Frînglilia porttitor curabitur proin est
+                        èiam convallis léo tincidunt ût ac métus vestibulum elementum consequat pulvinar.'
+    ];
+
+    return View::make('emails.notify', $data);
+
+});
+
 Route::get('notification', function()
 {
     setlocale(LC_ALL, 'fr_FR.UTF-8');

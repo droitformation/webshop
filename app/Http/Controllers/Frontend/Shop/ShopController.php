@@ -134,4 +134,24 @@ class ShopController extends Controller {
 
         return view('frontend.pubdroit.'.$page->template)->with($data);
     }
+
+
+    /**
+     * Send contact message
+     *
+     * @return Response
+     */
+    public function sendMessage(SendMessage $request){
+
+        $data = array('email' => $request->email, 'name' => $request->name, 'remarque' => $request->remarque );
+
+        Mail::send('emails.contact', $data, function ($message) use ($data) {
+
+            $message->from($data['email'], $data['name']);
+            $message->to('secretariat.droit@unine.ch')->subject('Message depuis le site www.publications-droit.ch');
+        });
+
+        return redirect('/')->with(array('status' => 'success', 'message' => '<strong>Merci pour votre message</strong><br/>Nous vous contacterons dès que possible.'));
+
+    }
 }

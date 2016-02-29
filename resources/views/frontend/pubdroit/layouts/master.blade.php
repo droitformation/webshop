@@ -58,8 +58,8 @@
 						<section class="col-md-6 e-commerce-list text-right">
                             @if (!Auth::check())
                                 <div>
-                                    <a href="{{ url('auth/login')}}" class="navbar-btn navbar-login"><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
-                                    <a href="{{ url('auth/register')}}" class="navbar-btn navbar-register"><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a>
+                                    <a href="{{ url('auth/login')}}" class="navbar-btn navbar-login btn-default"><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
+                                    <a href="{{ url('auth/register')}}" class="navbar-btn navbar-register btn-primary"><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a>
                                 </div>
                             @endif
                             @if (Auth::check())

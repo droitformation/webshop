@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -43,6 +44,28 @@ class AuthController extends Controller {
     public function getAdmin()
     {
         return view('auth.login')->with(['admin' => true]);
+    }
+
+    public function authenticated(Request $request, User $user )
+    {
+        $user->load('roles');
+
+        $returnPath = $request->input('returnPath',null);
+
+        $roles = $user->roles->lists('id')->all();
+
+        // Logic that determines where to send the user
+        if (!in_array(1,$roles))
+        {
+            return redirect()->intended('admin');
+        }
+
+        if($returnPath)
+        {
+            return redirect($returnPath);
+        }
+
+        return redirect()->intended('profil');
     }
 
     /**
@@ -117,26 +140,5 @@ class AuthController extends Controller {
     {
         return Socialite::driver('droithub')->redirect();
     }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return Response
-     */
-/*    public function handleProviderCallback()
-    {
-        $user = Socialite::driver('droithub')->user();
-
-        // stroing data to our use table and logging them in
-        $data = [
-            'name'  => $user->getName(),
-            'email' => $user->getEmail()
-        ];
-
-        Auth::login(\App\Droit\User\Entities\User::firstOrCreate($data));
-
-        //after login redirecting to home page
-        return redirect($this->redirectPath());
-    }*/
 
 }

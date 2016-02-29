@@ -43,7 +43,9 @@ class Page extends Node {
     {
         $page_url = ($this->isExternal ? $this->url : $this->site->slug.'/page/'.$this->slug);
 
-        $linked   = ($this->isExternal ? 'target="_blank"' : 'class="'.\Request::is('/page/'.$this->slug).'"');
+        $class    = \Request::is($page_url) ? 'active' : '';
+
+        $linked   = ($this->isExternal ? 'target="_blank"' : 'class="'.$class.'"');
 
         return '<a '.$linked.' href="'.url($page_url).'">'.$this->menu_title.'</a>';
     }
