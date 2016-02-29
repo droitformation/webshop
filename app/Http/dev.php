@@ -144,18 +144,22 @@ Route::get('cartworker', function()
 
 Route::get('messageadmin', function()
 {
+    $sites = new App\Droit\Site\Entities\Site();
+    $site  = $sites->find(1);
+
     $data = [
         'name'      => 'Cindy Leschaud',
+        'site'      => $site,
         'email'     => 'cindy.leschaud@gmail.com',
-        'remarque'  => 'Quis consectetur  aenanm mié àc ornare fermentum cél leçtus vivérra séd, himenaeos
+        'remarque'  => '<h3>Quis consectetur  aenanm mié àc ornare fermentum cél leçtus vivérra séd</h3><p> himenaeos
                         interdum dapibus nulla ût nètus cursus consectetur lacinia curabitur suscipit dolor nibh mlius,
-                        rhoncüs donec égét. Platea sociosqu potentié proîn habitassé c\'est-a-dire curabitur lorem fermentum
+                        rhoncüs donec égét.</p> <p>Platea sociosqu potentié proîn habitassé c\'est-a-dire curabitur lorem fermentum
                         potenti ïpsum vulputaté primiés l\'sagittis interdùm phasellus quîs grâvida aenean témpor lilitoxic
                         lacinia dicûm 19 605€ condimentum grâvida purus m\'amèt, Frînglilia porttitor curabitur proin est
-                        èiam convallis léo tincidunt ût ac métus vestibulum elementum consequat pulvinar.'
+                        èiam convallis léo tincidunt ût ac métus vestibulum elementum consequat pulvinar.</p>'
     ];
 
-    return View::make('emails.notify', $data);
+    return View::make('emails.contact', $data);
 
 });
 

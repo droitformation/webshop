@@ -619,7 +619,7 @@ a.more-btn:visited
 .blog-detail .b-post-bottom{ margin:0 0 20px;}
 .blog-detail i{ font-size:20px; margin-right:10px;}
 .blog-quote p{ color:#aaa;}
-.form-horizontal textarea{ min-height:150px; max-height:150px;}
+.form-horizontal textarea{ min-height:150px; }
 /* Start Blog Detail Styling */
 
 /* Start Sort list Section */

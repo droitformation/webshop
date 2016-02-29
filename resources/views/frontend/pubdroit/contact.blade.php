@@ -19,7 +19,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">Nom</label>
 							<div class="col-md-10">
-								<input type="text" name="nom" class="form-control" required>
+								<input type="text" name="name" class="form-control" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -34,6 +34,7 @@
 								<textarea name="remarque" required class="form-control" rows="3"></textarea>
 							</div>
 						</div>
+						<input type="hidden" name="site" value="{{ $site->id }}">
 						<input value="Envoyer" class="btn btn-default submit-btn" type="submit" />
 					</form><!--END CONTACT FORM-->
 				</div>

@@ -1,81 +1,15 @@
-<?php
-    $fontreset   = "font-family: Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em;";
-    $marginreset = "margin: 0; padding: 0;";
-    $paraeset = "font-size: 14px; font-weight: normal; margin: 0 0 10px; padding: 0;";
-?>
-
 <!DOCTYPE html>
-<html style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; {{ $marginreset }}">
+<html lang="en-US">
 <head>
-    <meta name="viewport" content="width=device-width">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Notification Droit Formation</title>
+    <meta charset="utf-8">
 </head>
-<body bgcolor="#f6f6f6" style="{{ $fontreset }} -webkit-font-smoothing: antialiased; height: 100%; -webkit-text-size-adjust: none; width: 100% !important; {{ $marginreset }}">
+<body style="font-family: arial, sans-serif;">
 
-    <!-- body -->
-    <table class="body-wrap" bgcolor="#f6f6f6" style="{{ $fontreset }} width: 100%; margin: 0; padding: 20px;">
-        <tr style="{{ $fontreset }} {{ $marginreset }}">
-            <td style="{{ $fontreset }} {{ $marginreset }}"></td>
-            <td class="container" bgcolor="#FFFFFF" style="{{ $fontreset }} clear: both !important; display: block !important; max-width: 600px !important; margin: 0 auto; padding: 20px; border: 1px solid #f0f0f0;">
+<div style="font-family: arial, sans-serif;">
+    <h2 style="color: #dd0330;font-size: 18px;font-weight: 300;letter-spacing: 0;line-height: 30px;">Notification</h2>
+    <p>{{ $text }}</p>
+    <p><a style="font-family: arial, sans-serif;color: #444; font-size: 13px;" href="{{ url('/') }}">Administration Droit Formation</a></p>
+</div>
 
-                <!-- content -->
-                <div class="content" style="{{ $fontreset }} display: block; max-width: 600px; margin: 0 auto; padding: 0;">
-                    <table style="{{ $fontreset }}  width: 100%; {{ $marginreset }}">
-                        <tr style="{{ $fontreset }} {{ $marginreset }}">
-                            <td style="{{ $fontreset }} {{ $marginreset }}" width="40">
-                                <img style="max-width: 100%; width: 90%;" src="{{ asset('files/logos/facdroit.png') }}" alt="publications-droit.ch">
-                            </td>
-                            <td style="{{ $fontreset }} {{ $marginreset }}" width="10"></td>
-                            <td style="{{ $fontreset }} {{ $marginreset }}" width="50">
-                                <h1 style="{{ $fontreset }} font-size: 24px; line-height: 1.2em; color: #111111; font-weight: 200; margin: 20px 0 10px; padding: 0;">
-                                    Demande depuis <br/><small style=" font-size: 20px; color: #1c4d79;">www.publications-droit.ch</small>
-                                </h1>
-                            </td>
-                        </tr>
-                        <tr style="{{ $fontreset }} {{ $marginreset }}">
-                            <td colspan="3" style="{{ $fontreset }} {{ $marginreset }} height:30px;"></td>
-                        </tr>
-                        <tr style="{{ $fontreset }} {{ $marginreset }}">
-                            <td colspan="3" style="{{ $fontreset }} {{ $marginreset }}">
-                                <p style="{{ $fontreset }} {{ $paraeset }}">{{ $remarque }}</p>
-                                <p style="{{ $fontreset }} {{ $paraeset }}"><strong>{{ $name }}</strong> - <a href="mailto:{{ $email }}">{{ $email }}</a></p>
-                            </td>
-                        </tr>
-                        <tr style="{{ $fontreset }} {{ $marginreset }}">
-                            <td colspan="3" style="{{ $fontreset }} {{ $marginreset }}">
-
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- /content -->
-
-            </td>
-            <td style="{{ $fontreset }} {{ $marginreset }}"></td>
-        </tr>
-    </table>
-    <!-- /body -->
-    <!-- footer -->
-    <table class="footer-wrap" style="{{ $fontreset }} clear: both !important; width: 100%; {{ $marginreset }}"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; {{ $marginreset }}">
-            <td style="{{ $fontreset }} {{ $marginreset }}"></td>
-            <td class="container" style="{{ $fontreset }} clear: both !important; display: block !important; max-width: 600px !important; margin: 0 auto; padding: 0;">
-                <!-- content -->
-                <div class="content" style="{{ $fontreset }} display: block; max-width: 600px; margin: 0 auto; padding: 0;">
-                    <table style="{{ $fontreset }} width: 100%; {{ $marginreset }}"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; {{ $marginreset }}">
-                            <td align="center" style="{{ $fontreset }} {{ $marginreset }}">
-                                <p style="{{ $fontreset }} font-size: 12px; color: #666666; font-weight: normal; margin: 0 0 10px; padding: 0;">
-                                    Droit Formation &copy; {{ date('Y') }}
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- /content -->
-            </td>
-            <td style="{{ $fontreset }} {{ $marginreset }}"></td>
-        </tr>
-    </table>
-    <!-- /footer -->
 </body>
 </html>

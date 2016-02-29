@@ -11,6 +11,14 @@ Route::get('code', 'CodeController@index');
 
 /*
 |--------------------------------------------------------------------------
+| Send message form contact
+|--------------------------------------------------------------------------
+*/
+
+Route::post('sendMessage','ContactController@sendMessage');
+
+/*
+|--------------------------------------------------------------------------
 | Subscriptions adn newsletter Routes
 |--------------------------------------------------------------------------
 */
@@ -321,6 +329,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
  * Shop routes for frontend shop
  * */
 Route::get('/', 'Frontend\Shop\ShopController@index');
+Route::get('/pubdroit', 'Frontend\Shop\ShopController@index');
 Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
 Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
 Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
