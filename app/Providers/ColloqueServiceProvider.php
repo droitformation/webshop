@@ -69,7 +69,8 @@ class ColloqueServiceProvider extends ServiceProvider {
             return new \App\Droit\Inscription\Worker\InscriptionWorker(
                 \App::make('App\Droit\Inscription\Repo\InscriptionInterface'),
                 \App::make('App\Droit\Colloque\Repo\ColloqueInterface'),
-                \App::make('App\Droit\Option\Repo\OptionInterface')
+                \App::make('App\Droit\Option\Repo\OptionInterface'),
+                \App::make('App\Droit\Inscription\Repo\GroupeInterface')
             );
         });
     }

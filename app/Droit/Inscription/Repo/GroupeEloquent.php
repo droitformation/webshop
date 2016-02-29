@@ -17,9 +17,16 @@ class GroupeEloquent implements GroupeInterface{
         return $this->groupe->with(['user'])->get();
     }
 
+    public function getRappels($id)
+    {
+        return $this->groupe->with(['inscriptions'])->where('colloque_id','=',$id)->whereHas('inscriptions', function ($query) {
+            $query->whereNull('payed_at');
+        })->paginate(20);
+    }
+
     public function find($id){
 
-        return $this->groupe->with(['user'])->find($id);
+        return $this->groupe->with(['user','inscriptions'])->find($id);
     }
 
     public function create(array $data){

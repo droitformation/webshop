@@ -3,6 +3,8 @@ namespace App\Droit\Inscription\Worker;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Option\Repo\OptionInterface;
+use App\Droit\Inscription\Repo\GroupeInterface;
+use Illuminate\Support\Collection;
 
 class InscriptionWorker implements InscriptionWorkerInterface{
 
@@ -14,14 +16,16 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     protected $inscription;
     protected $colloque;
     protected $option;
+    protected $group;
 
     public $dispatch = [];
 
-    public function __construct(InscriptionInterface $inscription, ColloqueInterface $colloque, OptionInterface $option)
+    public function __construct(InscriptionInterface $inscription, ColloqueInterface $colloque, OptionInterface $option, GroupeInterface $group)
     {
         $this->inscription = $inscription;
         $this->colloque    = $colloque;
         $this->option      = $option;
+        $this->group       = $group;
 
         $this->helper  = new \App\Droit\Helper\Helper();
     }
@@ -50,6 +54,9 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         return $inscription;
     }
 
+    public function pay($inscription)
+    {
 
+    }
 
 }

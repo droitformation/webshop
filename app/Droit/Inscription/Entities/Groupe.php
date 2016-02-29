@@ -114,4 +114,9 @@ class Groupe extends Model
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Inscription', 'group_id');
     }
+
+    public function rappels()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Rappel', 'group_id');
+    }
 }

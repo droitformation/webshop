@@ -18,6 +18,7 @@
     <td>{!! ($inscription->inscrit ? $inscription->inscrit->email : '<span class="label label-warning">Duplicata</span>') !!}</td>
     <td>
         @if($inscription->group_id)
+
             {!! $inscription->participant->name  !!}
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a>
             @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque]) <!-- Modal add to group -->
@@ -26,7 +27,9 @@
     <td><strong>{{ $inscription->inscription_no }}</strong></td>
     <td>{{ $inscription->price->price_cents }} CHF</td>
     <td>
-        @include('backend.inscriptions.partials.payed')
+        <?php $group = ($inscription->group_id ? 'group' : 'inscription'); ?>
+        <?php $item  = ($inscription->group_id ? $inscription->groupe : $inscription); ?>
+        @include('backend.inscriptions.partials.payed',['model' => $group, 'item' => $item])
     </td>
     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
     <td class="text-right">

@@ -178,6 +178,11 @@ $('.editablePrice').editable({
 
 $('.editablePayementDate').editable({
     emptytext : '',
+    params: function(params) {
+        // add additional params from data-attributes of trigger element
+        params.model = $(this).editable().data('model');
+        return params;
+    },
     success: function(response, newValue)
     {
         $(this).closest('.input-group').find('.input-group-addon').text(response.etat).addClass('bg-'+ response.color);

@@ -16,7 +16,7 @@ class CreateColloqueInscriptionRappelsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->nullable();
             $table->integer('group_id')->nullable();
-            $table->integer('inscription_id');
+            $table->integer('inscription_id')->nullable();
             $table->timestamps();
         });
     }

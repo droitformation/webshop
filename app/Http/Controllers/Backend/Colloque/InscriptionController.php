@@ -297,15 +297,28 @@ class InscriptionController extends Controller
 
     public function edit(Request $request)
     {
-        $name        = $request->input('name');
-        $inscription = $this->inscription->update([ 'id' => $request->input('pk'), $name =>  $request->input('value')]);
+        $name  = $request->input('name');
+        $model = $request->input('model');
 
-        if($inscription)
+        if($model == 'group')
         {
-            return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'warning' : 'success')]);
+            $group = $this->groupe->find($request->input('pk'));
+
+            if(!$group->inscriptions->isEmpty())
+            {
+                foreach($group->inscriptions as $inscription)
+                {
+                    $inscription = $this->inscription->update(['id' => $inscription->id , $name => $request->input('value')]);
+                }
+            }
+        }
+        else
+        {
+            $inscription = $this->inscription->update(['id' => $request->input('pk'), $name => $request->input('value')]);
         }
 
-        return response()->json(['status' => 'error','msg' => 'problème']);
+        return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'warning' : 'success')]);
+
     }
 
     /**

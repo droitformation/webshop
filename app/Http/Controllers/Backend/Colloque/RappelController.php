@@ -39,28 +39,35 @@ class RappelController extends Controller
     public function rappels($id)
     {
         $colloque     = $this->colloque->find($id);
-        $inscriptions = $this->inscription->getRappels($id);
 
-        return view('backend.rappels.index')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque]);
+        // Only simple inscriptions
+        $inscriptions = $this->inscription->getRappels($id);
+        // Group inscriptions
+        $groupes      = $this->group->getRappels($id);
+
+        return view('backend.rappels.index')->with(['inscriptions' => $inscriptions, 'groupes' => $groupes ,'colloque' => $colloque]);
     }
 
     public function make($id)
     {
         $inscriptions = $this->inscription->getRappels($id);
+        $groupes      = $this->group->getRappels($id);
 
         if(!$inscriptions->isEmpty())
         {
-            $simple = $inscriptions->filter(function ($value, $key) {
-                return !$value->group_id;
-            });
-
-            $group = $inscriptions->filter(function ($value, $key) {
-                return $value->group_id;
-            });
-
-            foreach($simple as $inscription)
+            // Simple rappels
+            foreach($inscriptions as $inscription)
             {
                 $this->generateSimple($inscription);
+            }
+        }
+
+        // group rappel
+        if(!$groupes->isEmpy())
+        {
+            foreach($groupes as $group)
+            {
+                $this->generateMultiple($group);
             }
         }
 
@@ -69,9 +76,22 @@ class RappelController extends Controller
 
     public function store(Request $request)
     {
-        $inscription = $this->inscription->find($request->input('id'));
+        $id       = $request->input('id',null);
+        $group_id = $request->input('group_id',null);
 
-        $this->generateSimple($inscription);
+        if($group_id)
+        {
+            $inscription = $this->group->find($group_id);
+
+            $this->generateMultiple($inscription->group);
+        }
+
+        if($id)
+        {
+            $inscription = $this->inscription->find($request->input('id'));
+
+            $this->generateSimple($inscription);
+        }
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Le rappel a été crée'));
     }
@@ -88,6 +108,22 @@ class RappelController extends Controller
 
         $this->generator->setInscription($inscription);
         $this->generator->factureEvent($nbr, $rappel);
+
+        return true;
+    }
+
+    public function generateMultiple($group)
+    {
+        $rappel = $this->rappel->create([
+            'inscription_id' => null,
+            'user_id'        => $group->user_id,
+            'group_id'       => $group->id,
+        ]);
+
+        $nbr = $group->rappels->count() + 1;
+
+        // For now put price bigger than 0 to trigger pdfgenerator
+        $this->generator->factureGroupeEvent($group, $group->inscriptions, 1, $nbr, $rappel);
 
         return true;
     }

@@ -89,18 +89,28 @@ Route::get('cartworker', function()
     $groupe = $gro->find(3);
     $groupe->load('colloque','user','inscriptions','inscriptions.participant');
 
-    $Inscriptions = new \App\Droit\Inscription\Entities\Inscription();
-    $inscription = $Inscriptions->find(9524);
-    $inscription->user_options->load('option');
-    //$inscription->options()->detach();
+    $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
+    $list = $Inscriptions->getByColloque(39);
+
+    $simple = $list->map(function ($value, $key) {
+        $simple = !$value->group_id ? true : false;
+    });
+
+    foreach($list as $item)
+    {
+        $simple = !$item->group_id ? $item : $item->groupe;
+        $collection[$simple->id] = $item;
+    }
+
+    $grouped = $list->filter(function ($value, $key) {
+        return $value->group_id;
+    })->groupBy('group_id')->map(function ($item, $key) {
+        return $item->first()->groupe->load('inscriptions');
+    })->values();
 
     echo '<pre>';
-    print_r($inscription->user_options);
-    echo '</pre>';
-
-    //$inscription->options()->detach();user_options
-    echo '<pre>';
-   // print_r($inscription->options);
+    print_r($collection);
     echo '</pre>';
 
     exit;
