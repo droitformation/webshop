@@ -19,13 +19,28 @@
     <td>
         @if($inscription->group_id)
 
-            {!! $inscription->participant->name  !!}
+            @if($inscription->groupe->inscriptions)
+                <dl>
+                    @foreach($inscription->groupe->inscriptions as $inscription)
+                        <dt>{!! $inscription->participant->name !!}</dt>
+                        <dd>{{ $inscription->inscription_no }}</dd>
+                    @endforeach
+                </dl>
+            @endif
+
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a>
             @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque]) <!-- Modal add to group -->
+        @else
+            <strong>{{ $inscription->inscription_no }}</strong>
         @endif
     </td>
-    <td><strong>{{ $inscription->inscription_no }}</strong></td>
-    <td>{{ $inscription->price->price_cents }} CHF</td>
+    <td>
+        @if($inscription->group_id)
+            {{ $inscription->groupe->price }} CHF
+        @else
+            {{ $inscription->price->price_cents }} CHF
+        @endif
+    </td>
     <td>
         <?php $group = ($inscription->group_id ? 'group' : 'inscription'); ?>
         <?php $item  = ($inscription->group_id ? $inscription->groupe : $inscription); ?>

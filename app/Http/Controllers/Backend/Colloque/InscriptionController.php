@@ -53,6 +53,10 @@ class InscriptionController extends Controller
     public function index()
     {
         $inscriptions = $this->inscription->getAll(5);
+        
+        echo '<pre>';
+        print_r($inscriptions->toArray());
+        echo '</pre>';exit;
 
         return view('backend.inscriptions.index')->with(['inscriptions' => $inscriptions]);
     }

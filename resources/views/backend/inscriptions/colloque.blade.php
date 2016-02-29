@@ -74,8 +74,7 @@
                                 <th class="col-sm-1">Action</th>
                                 <th class="col-sm-2">Déteteur</th>
                                 <th class="col-sm-2">Email</th>
-                                <th class="col-sm-1">Groupe et Participant</th>
-                                <th class="col-sm-1">No</th>
+                                <th class="col-sm-2">No</th>
                                 <th class="col-sm-1">Prix</th>
                                 <th class="col-sm-2">Status</th>
                                 <th class="col-sm-1">Date</th>
