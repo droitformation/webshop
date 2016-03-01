@@ -39,11 +39,7 @@ class RappelController extends Controller
     public function rappels($id)
     {
         $colloque     = $this->colloque->find($id);
-
-        // Only simple inscriptions
         $inscriptions = $this->inscription->getRappels($id);
-        // Group inscriptions
-       // $groupes      = $this->group->getRappels($id);
 
         return view('backend.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
     }
@@ -51,23 +47,20 @@ class RappelController extends Controller
     public function make($id)
     {
         $inscriptions = $this->inscription->getRappels($id);
-        $groupes      = $this->group->getRappels($id);
 
         if(!$inscriptions->isEmpty())
         {
-            // Simple rappels
             foreach($inscriptions as $inscription)
             {
-                $this->generateSimple($inscription);
-            }
-        }
-
-        // group rappel
-        if(!$groupes->isEmpy())
-        {
-            foreach($groupes as $group)
-            {
-                $this->generateMultiple($group);
+                // Simple rappels
+                if($inscription->group_id)
+                {
+                    $this->generateMultiple($inscription->groupe);
+                }
+                else   // Multiple rappels
+                {
+                    $this->generateSimple($inscription);
+                }
             }
         }
 
@@ -76,20 +69,14 @@ class RappelController extends Controller
 
     public function store(Request $request)
     {
-        $id       = $request->input('id',null);
-        $group_id = $request->input('group_id',null);
+        $inscription = $this->inscription->find($request->input('id'));
 
-        if($group_id)
+        if($inscription->group_id)
         {
-            $inscription = $this->group->find($group_id);
-
-            $this->generateMultiple($inscription->group);
+            $this->generateMultiple($inscription->groupe);
         }
-
-        if($id)
+        else
         {
-            $inscription = $this->inscription->find($request->input('id'));
-
             $this->generateSimple($inscription);
         }
 
@@ -99,12 +86,13 @@ class RappelController extends Controller
     public function generateSimple($inscription)
     {
         $rappel = $this->rappel->create([
+            'colloque_id'    => $inscription->colloque_id,
             'inscription_id' => $inscription->id,
             'user_id'        => $inscription->user_id,
             'group_id'       => $inscription->group_id,
         ]);
 
-        $nbr = $inscription->rappels->count() + 1;
+        $nbr = $inscription->rappels->count();
 
         $this->generator->setInscription($inscription);
         $this->generator->factureEvent($nbr, $rappel);
@@ -115,12 +103,13 @@ class RappelController extends Controller
     public function generateMultiple($group)
     {
         $rappel = $this->rappel->create([
+            'colloque_id'    => $group->colloque_id,
             'inscription_id' => null,
             'user_id'        => $group->user_id,
             'group_id'       => $group->id,
         ]);
 
-        $nbr = $group->rappels->count() + 1;
+        $nbr = $group->rappels->count();
 
         // For now put price bigger than 0 to trigger pdfgenerator
         $this->generator->factureGroupeEvent($group, $group->inscriptions, 1, $nbr, $rappel);

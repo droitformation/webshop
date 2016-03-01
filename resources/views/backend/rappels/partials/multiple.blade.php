@@ -1,7 +1,7 @@
 <tr>
     <td>
         <form action="{{ url('admin/inscription/rappel') }}" method="POST">{!! csrf_field() !!}
-            <input type="hidden" name="group_id" value="{{ $group->id }}">
+            <input type="hidden" name="id" value="{{ $id }}">
             <button class="btn btn-warning btn-sm">Générer un rappel</button>
         </form>
     </td>
@@ -13,21 +13,17 @@
         @else
             <p><span class="label label-warning">Duplicata</span></p>
         @endif
-
     </td>
     <td>
-
         @if($group->inscriptions)
             <dl>
-            @foreach($group->inscriptions as $inscription)
-                <dt>{!! $inscription->participant->name !!}</dt>
-                <dd>{{ $inscription->inscription_no }}</dd>
-            @endforeach
+                @foreach($group->inscriptions as $inscription)
+                    <dt>{!! $inscription->participant->name !!}</dt>
+                    <dd>{{ $inscription->inscription_no }}</dd>
+                @endforeach
             </dl>
         @endif
-
     </td>
-
     <td>{{ $group->price }} CHF</td>
     <td> @include('backend.inscriptions.partials.payed', ['inscription' => $group->inscriptions->first(), 'model' => 'group', 'item' => $group]) </td>
     <td>{{ $group->inscriptions->first()->created_at->formatLocalized('%d %B %Y') }}</td>

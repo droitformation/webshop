@@ -53,9 +53,9 @@
 
         <h1 class="title blue">
             <?php
-                if($rappel)
+                if(isset($nbr))
                 {
-                    echo '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span> ';
+                    echo '<span class="red">'.$nbr.''.($nbr > 1 ? 'ème' : 'ère').' Rappel</span> ';
                 }
             ?>
             FACTURE

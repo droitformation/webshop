@@ -14,6 +14,7 @@ class CreateColloqueInscriptionRappelsTable extends Migration
     {
         Schema::create('colloque_inscription_rappels', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('colloque_id');
             $table->integer('user_id')->nullable();
             $table->integer('group_id')->nullable();
             $table->integer('inscription_id')->nullable();

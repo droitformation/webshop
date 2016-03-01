@@ -73,11 +73,10 @@
                             <tr>
                                 <th class="col-sm-1">Action</th>
                                 <th class="col-sm-2">Déteteur</th>
-                                <th class="col-sm-2">Email</th>
                                 <th class="col-sm-2">No</th>
                                 <th class="col-sm-1">Prix</th>
-                                <th class="col-sm-2">Status</th>
                                 <th class="col-sm-1">Date</th>
+                                <th class="col-sm-2">Status</th>
                                 <th class="col-sm-1"></th>
                             </tr>
                             </thead>
@@ -94,7 +93,7 @@
 
                         {!! $inscriptions->links() !!}
 
-                        <p><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#desinscriptionTable">Désinscriptions</a></p>
+                        <p><br/><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#desinscriptionTable">Désinscriptions</a></p>
                     </div>
                 </div>
             </div>

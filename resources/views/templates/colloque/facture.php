@@ -53,7 +53,7 @@
 
         <h1 class="title blue">
             <?php
-                if($nbr)
+                if(isset($nbr))
                 {
                     echo '<span class="red">'.$nbr.''.($nbr > 1 ? 'ème' : 'ère').' Rappel</span> ';
                 }

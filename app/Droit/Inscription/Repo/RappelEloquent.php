@@ -25,7 +25,8 @@ class RappelEloquent implements RappelInterface{
     public function create(array $data){
 
         $rappel = $this->rappel->create(array(
-            'inscription_id' => $data['inscription_id'],
+            'colloque_id'    => $data['colloque_id'],
+            'inscription_id' => (isset($data['inscription_id']) ? $data['inscription_id'] : null),
             'user_id'        => (isset($data['user_id']) ? $data['user_id'] : null),
             'group_id'       => (isset($data['group_id']) ? $data['group_id'] : null)
         ));

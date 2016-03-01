@@ -36,7 +36,7 @@
                                 @if(!$inscriptions->isEmpty())
                                     @foreach($inscriptions as $inscription)
                                         @if($inscription->group_id)
-                                            @include('backend.rappels.partials.multiple', ['group' => $inscription->groupe])
+                                            @include('backend.rappels.partials.multiple', ['id' => $inscription->id,'group' => $inscription->groupe])
                                         @else
                                             @include('backend.rappels.partials.simple', ['inscription' => $inscription])
                                         @endif
