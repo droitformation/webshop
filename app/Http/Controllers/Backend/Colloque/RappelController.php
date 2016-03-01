@@ -43,9 +43,9 @@ class RappelController extends Controller
         // Only simple inscriptions
         $inscriptions = $this->inscription->getRappels($id);
         // Group inscriptions
-        $groupes      = $this->group->getRappels($id);
+       // $groupes      = $this->group->getRappels($id);
 
-        return view('backend.rappels.index')->with(['inscriptions' => $inscriptions, 'groupes' => $groupes ,'colloque' => $colloque]);
+        return view('backend.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
     }
 
     public function make($id)

@@ -35,7 +35,11 @@
 
                                 @if(!$inscriptions->isEmpty())
                                     @foreach($inscriptions as $inscription)
-                                        @include('backend.rappels.partials.simple', ['inscription' => $inscription])
+                                        @if($inscription->group_id)
+                                            @include('backend.rappels.partials.multiple', ['group' => $inscription->groupe])
+                                        @else
+                                            @include('backend.rappels.partials.simple', ['inscription' => $inscription])
+                                        @endif
                                     @endforeach
                                 @endif
 
@@ -43,39 +47,6 @@
                         </table><!-- End inscriptions -->
 
                         {!! $inscriptions->links() !!}
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-midnightblue">
-                <div class="panel-body">
-                    <h3>Rappels inscriptions multiples</h3>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th class="col-md-1"></th>
-                                <th class="col-sm-2">Déteteur</th>
-                                <th class="col-sm-2">Participant et N°</th>
-                                <th class="col-sm-1">Prix</th>
-                                <th class="col-sm-2">Status</th>
-                                <th class="col-sm-1">Date</th>
-                                <th class="col-md-3">Rappels</th>
-                            </tr>
-                            </thead>
-                            <tbody class="selects">
-
-                            @if(!$groupes->isEmpty())
-                                @foreach($groupes as $group)
-                                    @include('backend.rappels.partials.multiple', ['group' => $group])
-                                @endforeach
-                            @endif
-
-                            </tbody>
-                        </table><!-- End inscriptions -->
-
-                        {!! $groupes->links() !!}
 
                     </div>
                 </div>

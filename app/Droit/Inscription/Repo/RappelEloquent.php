@@ -14,7 +14,7 @@ class RappelEloquent implements RappelInterface{
 
     public function getAll(){
 
-        return $this->rappel->with(['inscription'])->get();
+        return $this->rappel->with(['inscription'])->groupBy('group_id')->get();
     }
 
     public function find($id){
