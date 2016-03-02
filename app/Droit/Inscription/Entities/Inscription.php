@@ -13,7 +13,7 @@ class Inscription extends Model
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'inscription_no', 'price_id', 'payed_at', 'send_at', 'status'];
+    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'inscription_no', 'price_id', 'payed_at', 'send_at', 'status','admin','present'];
 
     public function getPriceCentsAttribute()
     {

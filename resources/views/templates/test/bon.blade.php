@@ -11,9 +11,14 @@
     <div class="content">
         <table class="content-table">
             <tr>
-                <td colspan="2"><img height="80mm" src="<?php echo public_path('files/logos/facdroit.png'); ?>" alt="Unine logo" /></td>
+                <td><img height="80mm" src="<?php echo public_path('files/logos/facdroit.png'); ?>" alt="Unine logo" /></td>
+                <td align="right">
+                    <div class="visible-print">
+                        <img src="data:image/png;base64, {{ $code }}">
+                    </div>
+                </td>
             </tr>
-            <tr><td colspan="2" height="5">&nbsp;</td></tr>
+            <tr><td colspan="2" height="10">&nbsp;</td></tr>
             <tr align="top">
                 <td align="top" width="60%" valign="top">
                     @if(!empty($expediteur))
@@ -28,8 +33,8 @@
 
                     @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
 
-                    @if(isset($generate->participant))
-                        <p><strong>Participant: </strong>{{ $generate->participant }}</p>
+                    @if($generate->getParticipant())
+                        <p style="margin-top: 25px;"><strong>Participant: </strong>{{ $generate->getParticipant() }}</p>
                     @endif
 
                 </td>
@@ -69,10 +74,10 @@
    <?php if($generate->getColloque()->location->location_map){ ?>
     <div class="content">
         <table class="content-table" valign="top">
-            <tr><td height="25">&nbsp;</td></tr>
+            <tr><td height="15">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top" align="center">
-                    <img style="max-width: 120mm" src="<?php echo public_path($generate->getColloque()->location->location_map); ?>" alt="Carte" />
+                    <img style="max-width: 110mm" src="<?php echo public_path($generate->getColloque()->location->location_map); ?>" alt="Carte" />
                 </td>
             </tr>
         </table>

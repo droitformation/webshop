@@ -6,11 +6,10 @@ use App\Jobs\Job;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Droit\Inscription\Entities\Groupe;
 
-class MakeDocumentGroupe extends Job implements SelfHandling, ShouldQueue
+class MakeDocumentGroupe extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
@@ -26,6 +25,7 @@ class MakeDocumentGroupe extends Job implements SelfHandling, ShouldQueue
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $this->groupe = $groupe;
+        $this->groupe->load('colloque','inscriptions','user');
     }
 
     /**
@@ -36,29 +36,22 @@ class MakeDocumentGroupe extends Job implements SelfHandling, ShouldQueue
     public function handle()
     {
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-        $register  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
-        $this->groupe->load('colloque','user');
-        $user = $this->groupe->user;
-        $user->load('adresses');
-        $this->groupe->setAttribute('adresse_facturation',$user->adresse_facturation);
+        $annexes   = $this->groupe->colloque->annexe;
 
-        $annexes      = $this->groupe->colloque->annexe;
-        $inscriptions = $register->getByGroupe($this->groupe->id);
-
-        // Generate annexes if any
-        if(!$inscriptions->isEmpty())
+        // Make all bons
+        if(!$this->groupe->inscriptions->isEmpty() && in_array('bon',$annexes))
         {
-            foreach($inscriptions as $inscription)
+            foreach($this->groupe->inscriptions as $inscription)
             {
-                if(!empty($annexes))
-                {
-                    $generator->setInscription($inscription)->generate($annexes);
-                }
+                $generator->make('bon', $inscription);
             }
         }
 
-        $generator->factureGroupeEvent($this->groupe,$inscriptions,$inscriptions->first()->price->price);
-        $generator->bvGroupeEvent($this->groupe,$inscriptions,$inscriptions->first()->price->price);
+        if($this->groupe->price > 0)
+        {
+            $generator->make('facture', $this->groupe);
+            $generator->make('bv', $this->groupe);
+        }
     }
 }

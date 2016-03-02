@@ -99,3 +99,7 @@ h3{
 #facdroit li{
     font-size: 11px;
 }
+
+.visible-print {
+    display: block !important;
+}

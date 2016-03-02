@@ -54,9 +54,4 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         return $inscription;
     }
 
-    public function pay($inscription)
-    {
-
-    }
-
 }

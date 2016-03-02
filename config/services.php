@@ -55,6 +55,9 @@ return [
         'client_id'     => '1',
         'client_secret' => 'droitformation',
         'redirect'      => 'http://shop.local/auth/droithub', // http://hub.local/login/droithub
-    ]
+    ],
 
+   'qrcode' => [
+		'key' => '82Ic5P8O017X15dWdO1F2EfSWQ',
+	]
 ];

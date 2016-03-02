@@ -303,10 +303,12 @@ class PdfGenerator implements PdfGeneratorInterface
 
     public function make($document, $model)
     {
-        $data             = $this->getData($document);
-        $generate         = new \App\Droit\Generate\Entities\Generate($model);
+        $key      = config('services.qrcode.key');
+        $data     = $this->getData($document);
+        $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
+        $data['code']     = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate(url('presence/'.$model->id.'/'.$key)));
 
         $view     = \PDF::loadView('templates.test.'.$document, $data)->setPaper('a4');
         $state    = ($this->stream ? 'stream' : 'save');

@@ -110,4 +110,52 @@ class InscriptionTest extends TestCase {
 
     }
 
+    public function testGenerateDoc()
+    {
+        $annexes = ['bon','facture', 'bv'];
+
+        $inscription        = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
+        $inscription->price = factory(App\Droit\Price\Entities\Price::class)->make([
+            'price' => 10000
+        ]);
+
+        // make all documents
+        foreach($annexes as $annexe)
+        {
+            $result = $this->make($annexe,$inscription);
+            $this->assertTrue($result);
+        }
+    }
+
+    public function testGenerateDocFree()
+    {
+
+        $inscription        = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
+        $inscription->price = factory(App\Droit\Price\Entities\Price::class)->make([
+            'price' => 0
+        ]);
+
+        // No need to make facture or bv if the price is 0
+
+        $result = $this->make('bon',$inscription);
+        $this->assertTrue($result);
+
+        $result = $this->make('facture',$inscription);
+        $this->assertFalse($result);
+
+        $result = $this->make('bv',$inscription);
+        $this->assertFalse($result);
+
+    }
+
+    public function make($annexe,$inscription)
+    {
+        if($annexe == 'bon' || ($inscription->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

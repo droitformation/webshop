@@ -42,18 +42,27 @@ class Generate{
 
         if($this->model instanceof \App\Droit\Inscription\Entities\Inscription)
         {
+            $this->model->load('groupe','participant');
             return 'inscription';
         }
     }
 
     public function getAdresse()
     {
-        $this->model->load('user');
+        if($this->getType() == 'inscription' && $this->model->group_id)
+        {
+            $this->model->groupe->load('user');
 
-        $user = $this->model->user;
+            $user = $this->model->groupe->user;
+        }
+        else
+        {
+            $user = $this->model->user;
+        }
 
         // Test if user exist
-        if (!$user) {
+        if (!$user)
+        {
             throw new \App\Exceptions\UserNotExistException('No user');
         }
 
@@ -75,6 +84,11 @@ class Generate{
         return $this->getType() == 'group' ? $this->model->inscriptions->pluck('participant.name','inscription_no')->all() : $this->model->inscription_no;
     }
 
+    public function getId()
+    {
+        return $this->model->id;
+    }
+
     public function getPrice()
     {
         return $this->getType() == 'group' ? $this->model->price : $this->model->price->price_cents;
@@ -82,6 +96,8 @@ class Generate{
 
     public function getParticipant()
     {
+        $this->model->load('participant');
+
         return isset($this->model->participant) && !empty($this->model->participant) ? $this->model->participant->name : null;
     }
 

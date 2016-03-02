@@ -9,6 +9,8 @@ Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
 Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
 Route::get('code', 'CodeController@index');
 
+Route::get('presence/{id}/{key}', 'CodeController@presence');
+
 /*
 |--------------------------------------------------------------------------
 | Send message form contact

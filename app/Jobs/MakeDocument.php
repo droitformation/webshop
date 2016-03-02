@@ -25,6 +25,7 @@ class MakeDocument extends Job
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $this->inscription = $inscription;
+        $this->inscription->load('colloque');
     }
 
     /**
@@ -36,13 +37,19 @@ class MakeDocument extends Job
     {
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-        $this->inscription->load('colloque');
-        $annexes = $this->inscription->colloque->annexe;
+        $annexes   = $this->inscription->colloque->annexe;
 
         // Generate annexes if any
         if(!empty($annexes))
         {
-            $generator->setInscription($this->inscription)->generate($annexes);
+            foreach ($annexes as $annexe)
+            {
+                // Make the bon and the other docs if the price is not 0
+                if($annexe == 'bon' || ($this->inscription->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')))
+                {
+                    $generator->make($annexe, $this->inscription);
+                }
+            }
         }
     }
 }

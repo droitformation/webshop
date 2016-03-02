@@ -3,22 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\InscriptionWasCreated;
-use App\Jobs\MakeDocument;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Jobs\MakeDocument;
 
 class CreateDocumentsInscription
 {
     use DispatchesJobs;
-
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
