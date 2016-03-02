@@ -9,9 +9,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Droit\Inscription\Entities\Inscription;
 
-class MakeDocument extends Job
+class MakeDocument extends Job implements ShouldQueue
 {
-    use SerializesModels;
+    use InteractsWithQueue, SerializesModels;
 
     protected $inscription;
 

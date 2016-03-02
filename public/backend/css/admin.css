@@ -667,8 +667,21 @@ select[multiple] {
     margin-bottom: 0;
 }
 
+.inscription_wrapper .table-inscriptions{
+    margin-top: 10px;
+}
+
+.inscription_wrapper .table-inscriptions thead th{
+    background: #f7f8fa;
+}
+
 .inscription_wrapper .table-inscriptions tbody tr{
     border-top: 1px solid #e6e7e8;
+}
+
+.inscription_wrapper .table-inscriptions thead th{
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .inscription_wrapper .table-inscriptions tbody td{
@@ -699,4 +712,10 @@ select[multiple] {
 
 .newsletter-archives{
     margin: 20px 0 0 0;
+}
+
+.pay-inscription{
+    margin: 5px 0;
+    line-height: 30px;
+    padding-bottom: 5px;
 }

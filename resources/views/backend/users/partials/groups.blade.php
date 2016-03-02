@@ -40,16 +40,26 @@
                         <div class="collapse customCollapse" id="inscription_no_{{ $group->id }}">
                             <div class="inscription_wrapper">
 
+                                <div class="row pay-inscription">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">
+                                        @include('backend.inscriptions.partials.payed',['model' => 'group', 'item' => $group, 'inscription' => $group->inscriptions->first() ])
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <a target="_blank" href="{{ asset($group->doc_facture) }}" class="btn btn-default btn-midnightblue">Facture</a>
+                                    </div>
+                                </div>
+
                                 <!-- Inscription dependences -->
                                 <table class="table-inscriptions">
                                     <thead>
                                         <tr class="row">
                                             <th class="col-md-1"></th>
-                                            <th class="col-md-2"><h4>N°</h4></th>
-                                            <th class="col-md-2"><h4>Participant</h4></th>
-                                            <th class="col-md-2"><h4>Prix</h4></th>
-                                            <th class="col-md-1"><h4>Bon</h4></th>
-                                            <th class="col-md-5"><h4>Options</h4></th>
+                                            <th class="col-md-2">N°</th>
+                                            <th class="col-md-2">Participant</th>
+                                            <th class="col-md-2">Prix</th>
+                                            <th class="col-md-1">Bon</th>
+                                            <th class="col-md-5">Options</th>
                                         </tr>
                                     </thead>
                                     <tbody>

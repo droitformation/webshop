@@ -24,6 +24,19 @@ class Groupe extends Model
         return $this->user->name;
     }
 
+    public function getDocFactureAttribute()
+    {
+        $path = config('documents.colloque.facture');
+        $file = $path.'facture_'.$this->colloque_id.'-'.$this->user_id.'.pdf';
+
+        if (\File::exists(public_path($file)))
+        {
+            return $file;
+        }
+
+        return null;
+    }
+
     public function getPriceAttribute()
     {
         $this->load('inscriptions');
@@ -90,7 +103,7 @@ class Groupe extends Model
 
             if($part)
             {
-                $docs = ['file' => $file,'name' => $name];
+                $docs = ['file' => $file, 'name' => $name];
             }
             else
             {

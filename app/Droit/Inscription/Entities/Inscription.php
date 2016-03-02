@@ -58,12 +58,13 @@ class Inscription extends Model
         {
             $this->groupe->load('user');
 
-            $user = $this->groupe->user;
+            $user = $this->participant;
             $path = config('documents.colloque.bon');
+            $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->groupe->id.'-'.$user->id.'.pdf';
 
-            if (\File::exists(public_path($path.'bon'.'_'.$this->colloque->id.'-'.$user->id.'.pdf')))
+            if (\File::exists(public_path($file)))
             {
-                return $path.'bon_'.$this->colloque->id.'-'.$user->id.'.pdf';
+                return $file;
             }
         }
 
