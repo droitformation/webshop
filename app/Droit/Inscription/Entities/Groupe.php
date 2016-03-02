@@ -38,7 +38,9 @@ class Groupe extends Model
             }
         }
 
-        return $somme;
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        return $money->format($somme);
     }
 
     public function getDocumentsAttribute()

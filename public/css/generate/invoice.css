@@ -33,10 +33,11 @@ h3{
 #invoice-table{
     margin-top: 10px;
 }
-#invoice-table tr,
+#invoice-table tr
 {
     font-size: 12px;
 }
+
 #invoice-table th
 {
     padding: 5px 2px;
@@ -44,6 +45,7 @@ h3{
     color: #000;
     border-bottom: 2px solid #004c7c;
 }
+
 #invoice-table td
 {
     font-size: 11px;
@@ -254,7 +256,7 @@ small{
 
 .versement-bv li{
     font-size: 10px;
-    line-height: 13px;
+    line-height: 12px;
 }
 
 .versement-bv li.inscription_no{

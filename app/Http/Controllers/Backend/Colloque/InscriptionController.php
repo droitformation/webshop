@@ -64,10 +64,8 @@ class InscriptionController extends Controller
      */
     public function colloque($id)
     {
-        $colloque     = $this->colloque->find($id);
-        $inscriptions = $this->inscription->getByColloque($id,false,true);
-
-        //$inscriptions    = $this->helper->groupInscriptionCollection($inscriptions);
+        $colloque        = $this->colloque->find($id);
+        $inscriptions    = $this->inscription->getByColloque($id,false,true);
         $desinscriptions = $this->inscription->getByColloqueTrashed($id);
 
         return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions, 'names' => config('columns.names')]);

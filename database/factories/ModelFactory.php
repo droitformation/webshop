@@ -11,6 +11,26 @@
 |
 */
 
+$factory->define(App\Droit\Colloque\Entities\Colloque::class, function (Faker\Generator $faker) {
+    return [
+        'titre'           => 'My big event',
+        'soustitre'       => 'Sous-titre du colloque',
+        'sujet'           => 'sujet du colloque',
+        'remarques'       => '',
+        'start_at'        => \Carbon\Carbon::now(),
+        'end_at'          => null,
+        'registration_at' => \Carbon\Carbon::now(),
+        'active_at'       => null,
+        'organisateur'    => 'Cindy Leschaud',
+        'location_id'     => 1,
+        'compte_id'       => 1,
+        'visible'         => 1,
+        'bon'             => 1,
+        'facture'         => 1,
+        'adresse_id'      => 1,
+    ];
+});
+
 $factory->define(App\Droit\Inscription\Entities\Inscription::class, function (Faker\Generator $faker) {
     return [
         'colloque_id'    => 71,

@@ -299,6 +299,34 @@ class PdfGenerator implements PdfGeneratorInterface
         }
 
         return $template->$generate(public_path().'/files/abos/'.$filename.'/'.$facture->product_id.'/'.$filename.'_'.$facture->product->reference.'-'.$facture->abo_user_id.'_'.$facture->id.'.pdf');
+    }
 
+    public function make($document, $model)
+    {
+        $data             = $this->getData($document);
+        $generate         = new \App\Droit\Generate\Entities\Generate($model);
+
+        $data['generate'] = $generate;
+
+        $view     = \PDF::loadView('templates.test.'.$document, $data)->setPaper('a4');
+        $state    = ($this->stream ? 'stream' : 'save');
+        $filepath = $generate->getFilename($document, $document);
+
+        return $view->$state($filepath);
+    }
+
+    public function getData($document)
+    {
+        $data['expediteur']  = $this->expediteur;
+        $data['date']        = $this->now;
+
+        if($document == 'facture')
+        {
+             $data['messages']  = $this->messages;
+             $data['signature'] = $this->signature;
+             $data['tva']       = $this->tva;
+        }
+
+        return $data;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Droit\Inscription\Entities;
+namespace App\Droit\Generate\Entities;
 
 /**
  * Class for inscription docuemnt generator
@@ -54,17 +54,20 @@ class Generate{
 
         // Test if user exist
         if (!$user) {
-            throw new \App\Exceptions\UserNotExistException('No user', []);
+            throw new \App\Exceptions\UserNotExistException('No user');
         }
 
         $user->load('adresses');
 
-        // Test if adresse exist
-        if($user->adresse_facturation) {
-            throw new \App\Exceptions\AdresseNotExistException('No adresse', []);
-        }
+        return isset($user->adresse_facturation) ? $user->adresse_facturation : null;
+    }
 
-        return $user->adresse_facturation;
+    public function getColloque()
+    {
+        $this->model->load('colloque');
+        $this->model->colloque->load('location','compte');
+
+        return $this->model->colloque;
     }
 
     public function getNo()
@@ -74,7 +77,12 @@ class Generate{
 
     public function getPrice()
     {
-        return $this->getType() == 'group' ? $this->model->inscriptions->sum('price.price') : $this->model->price->price;
+        return $this->getType() == 'group' ? $this->model->price : $this->model->price->price_cents;
+    }
+
+    public function getParticipant()
+    {
+        return isset($this->model->participant) && !empty($this->model->participant) ? $this->model->participant->name : null;
     }
 
     public function getOptions()

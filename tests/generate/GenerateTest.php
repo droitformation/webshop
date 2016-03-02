@@ -12,12 +12,12 @@ class GenerateTest extends TestCase {
 		$inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 		$group       = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($inscription);
+		$generate = new \App\Droit\Generate\Entities\Generate($inscription);
 		$response = $generate->getType();
 
 		$this->assertEquals('inscription', $response);
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($group);
+		$generate = new \App\Droit\Generate\Entities\Generate($group);
 		$response = $generate->getType();
 
 		$this->assertEquals('group', $response);
@@ -29,7 +29,7 @@ class GenerateTest extends TestCase {
 			'inscription_no' => '10-2016/1'
 		]);
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($inscription);
+		$generate = new \App\Droit\Generate\Entities\Generate($inscription);
 		$response = $generate->getNo();
 
 		$this->assertEquals('10-2016/1', $response);
@@ -48,7 +48,7 @@ class GenerateTest extends TestCase {
 
 		$group->inscriptions = $inscriptions;
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($group);
+		$generate = new \App\Droit\Generate\Entities\Generate($group);
 		$response = $generate->getNo();
 
 		$participants = [
@@ -67,10 +67,10 @@ class GenerateTest extends TestCase {
 
 		$inscription->price = $price;
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($inscription);
+		$generate = new \App\Droit\Generate\Entities\Generate($inscription);
 		$response = $generate->getPrice();
 
-		$this->assertEquals(4000, $response);
+		$this->assertEquals(40.00, $response);
 
 		$group        = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
 		$inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make();
@@ -81,10 +81,10 @@ class GenerateTest extends TestCase {
 
 		$group->inscriptions = $inscriptions;
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($group);
+		$generate = new \App\Droit\Generate\Entities\Generate($group);
 		$response = $generate->getPrice();
 
-		$this->assertEquals(12000, $response);
+		$this->assertEquals(120.00, $response);
 	}
 
 	public function testGetOptiions()
@@ -119,7 +119,7 @@ class GenerateTest extends TestCase {
 
 		$inscription->user_options = new \Illuminate\Support\Collection([ $user_option1, $user_option2, $user_option3 ]);
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($inscription);
+		$generate = new \App\Droit\Generate\Entities\Generate($inscription);
 		$response = $generate->getOptions();
 
 		$options = [
@@ -140,7 +140,7 @@ class GenerateTest extends TestCase {
 			'colloque_id' => '12'
 		]);
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($inscription);
+		$generate = new \App\Droit\Generate\Entities\Generate($inscription);
 
 		$response = $generate->getFilename('bon','bon');
 		$filename = public_path('files/colloques/bon/bon_12-20.pdf');
@@ -178,7 +178,7 @@ class GenerateTest extends TestCase {
 
 		$group->inscriptions = $inscriptions;
 
-		$generate = new \App\Droit\Inscription\Entities\Generate($group);
+		$generate = new \App\Droit\Generate\Entities\Generate($group);
 
 		$response = $generate->getFilename('facture','facture');
 		$filename = public_path('files/colloques/facture/facture_12-20.pdf');
@@ -192,7 +192,7 @@ class GenerateTest extends TestCase {
 
 		foreach($group->inscriptions as $index => $inscription)
 		{
-			$generate = new \App\Droit\Inscription\Entities\Generate($inscription);
+			$generate = new \App\Droit\Generate\Entities\Generate($inscription);
 
 			$response = $generate->getFilename('bon','bon');
 
@@ -200,6 +200,58 @@ class GenerateTest extends TestCase {
 
 			$this->assertEquals($response, $filename);
 		}
-
 	}
+
+	public function testGetColloque()
+	{
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
+            'id'          => '10',
+            'user_id'     => '710',
+            'colloque_id' => '12'
+        ]);
+
+        $inscription->colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make(['id' => 12]);
+
+        $generate = new \App\Droit\Generate\Entities\Generate($inscription);
+        $response = $generate->getColloque();
+
+        $this->assertEquals($response->id, 12);
+
+        $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make([
+            'user_id'     => '20',
+            'colloque_id' => '12'
+        ]);
+
+        $group->colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make(['id' => 12]);
+
+        $generate = new \App\Droit\Generate\Entities\Generate($group);
+        $response = $generate->getColloque();
+
+        $this->assertEquals($response->id, 12);
+	}
+
+    public function testGetParticipant()
+    {
+        $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);
+
+        $inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make(['group_id' => '5', 'colloque_id' => '12'
+        ]);
+
+        $inscriptions = $inscriptions->map(function ($item, $key) {
+            $item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->make(['id' => $key ,'name' => 'Cindy_'.$key ]);
+            return $item;
+        });
+
+        $group->inscriptions = $inscriptions;
+
+        foreach($group->inscriptions as $index => $inscription)
+        {
+            $generate = new \App\Droit\Generate\Entities\Generate($inscription);
+
+            $response = $generate->getParticipant();
+
+            $this->assertEquals($response, 'Cindy_'.$index);
+        }
+
+    }
 }

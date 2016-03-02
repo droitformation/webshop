@@ -85,7 +85,7 @@ Route::get('cartworker', function()
    // $duplicates = \App::make('App\Droit\User\Repo\DuplicateInterface');
    // $duplicate  = $duplicates->find(762);
 
-    $gro = new \App\Droit\Inscription\Entities\Groupe();
+/*    $gro = new \App\Droit\Inscription\Entities\Groupe();
     $groupe = $gro->find(3);
     $groupe->load('colloque','user','inscriptions','inscriptions.participant');
 
@@ -107,10 +107,22 @@ Route::get('cartworker', function()
         return $value->group_id;
     })->groupBy('group_id')->map(function ($item, $key) {
         return $item->first()->groupe->load('inscriptions');
-    })->values();
+    })->values();*/
+
+    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $groupes       = new \App\Droit\Inscription\Entities\Groupe();
+    $inscription   = $inscriptions->find(9524);
+    $groupe        = $groupes->find(1);
+
+    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $generator->stream = true;
+
+
+
+    return $pdf = $generator->make('facture', $groupe);
 
     echo '<pre>';
-    print_r($collection);
+    //print_r($collection);
     echo '</pre>';
 
     exit;
