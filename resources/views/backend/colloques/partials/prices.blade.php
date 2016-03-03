@@ -31,7 +31,7 @@
                                     </dd>
                                     <dt> Remarque:</dt>
                                     <dd>
-                                        <a class="editablePrice" data-name="remarque" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la remarque">
+                                        <a class="editablePrice editablePriceRemarque" data-name="remarque" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la remarque">
                                             {{ $prix->remarque }}
                                         </a>
                                     </dd>

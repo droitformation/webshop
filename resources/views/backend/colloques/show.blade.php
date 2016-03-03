@@ -3,21 +3,13 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/colloque') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
-            </div>
+            <p><a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-8">
-
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Éditer un colloque</h4>
-                </div>
 
                 <?php $centers = $colloque->centres->lists('id')->all(); ?>
                     <div class="panel-body">
@@ -31,15 +23,18 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"><strong>Visible</strong></label>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-8">
                                         <label class="radio-inline"><input type="radio" {{ $colloque->visible ? 'checked' : '' }} name="visible" value="1"> Oui</label>
                                         <label class="radio-inline"><input type="radio" {{ !$colloque->visible ? 'checked' : '' }} name="visible" value="0"> Non</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="titre" class="col-sm-3 control-label">Adresse principale<br/><small>Indiqué sur bon, bv, facture</small></label>
-                                    <div class="col-sm-6">
+                                    <label for="titre" class="col-sm-3 control-label">
+                                        Adresse principale<br/><small>Indiqué sur bon, bv, facture</small>
+                                        <p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
+                                    </label>
+                                    <div class="col-sm-8">
                                         <div id="choixAdresse">
                                             <select class="form-control form-required required" autocomplete="off" name="adresse_id" id="adresseSelect">
                                                 <?php
@@ -59,43 +54,39 @@
                                             <div id="showAdresse">{!! $colloque->adresse->adresse !!}</div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
-                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="titre" class="col-sm-3 control-label">Titre</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         {!! Form::text('titre', $colloque->titre , array('class' => 'form-control form-required required' )) !!}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="soustitre" class="col-sm-3 control-label">Sous-titre</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         {!! Form::text('soustitre', $colloque->soustitre , array('class' => 'form-control' )) !!}
                                     </div>
-                                    <div class="col-sm-3"></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="sujet" class="col-sm-3 control-label">Sujet</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         {!! Form::text('sujet', $colloque->sujet , array('class' => 'form-control form-required required' )) !!}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="organisateur" class="col-sm-3 control-label">Organisateur</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         {!! Form::text('organisateur', $colloque->organisateur , array('class' => 'form-control form-required required' )) !!}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="organisateur" class="col-sm-3 control-label">Centres</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         @if(!$organisateurs->isEmpty())
                                             @foreach($organisateurs as $organisateur)
                                                 <label class="checkbox-inline centre">
@@ -108,7 +99,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Endroit</label>
-                                    <div class="col-sm-6 col-xs-6">
+                                    <div class="col-sm-8">
                                         <select class="form-control form-required required" name="location_id" id="endroitSelect">
                                             @if(!$locations->isEmpty())
                                                 <option value="">Choix</option>
@@ -124,7 +115,7 @@
 
                                 <div class="form-group">
                                     <label for="description" class="col-sm-3 control-label">Remarques</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->remarques }}</textarea>
                                     </div>
                                 </div>
@@ -167,10 +158,9 @@
         <div class="col-md-4">
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading"><i class="fa fa-file"></i> &nbsp;Documents</div>
                 <div class="panel-body">
-
-                    <h4>Vignette</h4>
+                    <h4><i class="fa fa-file"></i> &nbsp;Documents</h4>
+                    <h5>Vignette</h5>
                     @if($colloque->illustration)
                         <div class="thumbnail big">
                             <form action="{{ url('admin/document/'.$colloque->illustration->id) }}" method="POST" class="pull-right">
@@ -183,7 +173,7 @@
                         @include('backend.colloques.partials.upload', ['type' => 'illustration', 'name' => 'Illustration'])
                     @endif
 
-                    <h4>Programme</h4>
+                    <h5>Programme</h5>
                     @if($colloque->programme)
                         <div class="colloque-doc-item">
                             <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
@@ -196,7 +186,7 @@
                         @include('backend.colloques.partials.upload', ['type' => 'programme', 'name' => 'Programme'])
                     @endif
 
-                    <h4>Documents</h4>
+                    <h5>Documents</h5>
 
                         @if($colloque->documents)
                             @foreach($colloque->documents as $document)
@@ -231,8 +221,8 @@
             </div>
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading"><i class="fa fa-file-archive-o"></i> &nbsp;Spécialisation</div>
                 <div class="panel-body">
+                    <h4><i class="fa fa-file-archive-o"></i> &nbsp;Spécialisation</h4>
                     <ul id="specialisations" data-model="colloque" data-id="{{ $colloque->id }}">
                         @if(!$colloque->specialisations->isEmpty())
                             @foreach($colloque->specialisations as $specialisation)
@@ -244,8 +234,8 @@
             </div>
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading"><i class="fa fa-file"></i> &nbsp;Tester les documents</div>
                 <div class="panel-body">
+                    <h4><i class="fa fa-file"></i> &nbsp;Tester les documents</h4>
                     <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/colloque/generate/'.$colloque->id.'/bon') }}">Tester le bon</a>
                     <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/colloque/generate/'.$colloque->id.'/facture') }}">Tester la facture</a>
                     <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/colloque/generate/'.$colloque->id.'/bv') }}">Tester le bv</a>

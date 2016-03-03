@@ -34,10 +34,6 @@ class SearchController extends Controller
     {
         $duplicates = $this->duplicate->getAll();
 
-/*        echo '<pre>';
-        print_r($duplicates);
-        echo '</pre>';exit;*/
-
         return view('backend.results')->with(['duplicates' => $duplicates]);
     }
 

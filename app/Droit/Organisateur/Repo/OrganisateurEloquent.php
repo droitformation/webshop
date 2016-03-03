@@ -31,10 +31,12 @@ class OrganisateurEloquent implements OrganisateurInterface{
 
         $organisateur = $this->organisateur->create(array(
             'name'        => $data['name'],
-            'description' => $data['description'],
-            'url'         => $data['name'],
-            'logo'        => $data['logo'],
-            'centre'      => $data['centre']
+            'centre'      => $data['centre'],
+            'description' => isset($data['description']) ? $data['description'] : '',
+            'adresse'     => isset($data['adresse']) ? $data['adresse'] : '',
+            'tva'         => isset($data['tva']) ? $data['tva'] : '',
+            'url'         => isset($data['url']) ? $data['url'] : '',
+            'logo'        => isset($data['logo']) ? $data['logo'] : '',
         ));
 
         if( ! $organisateur )

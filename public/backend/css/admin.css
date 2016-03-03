@@ -430,15 +430,23 @@ a.editable-click:hover {
     background: transparent;
 }
 
-.editableOptionGroup{
+a.editable-click.editableOptionGroup{
+    background: #f5f5f5 none repeat scroll 0 0;
     line-height: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 2px 5px;
+    width: 100%;
 }
 
 .editablePrice.editable-click[data-name="price"] {
     color: #fff;
     line-height: 24px;
     padding-right: 5px;
+}
+
+a.editable-click.editablePriceRemarque{
+    width: 100%;
 }
 
 .editable-click.editable-empty{

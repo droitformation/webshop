@@ -164,7 +164,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('inscription/rappel','Backend\Colloque\RappelController');
 
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
-    Route::get('colloque/location/{id}', 'Backend\Colloque\ColloqueController@location');
     Route::get('colloque/adresse/{id}', 'Backend\Colloque\ColloqueController@adresse');
     Route::get('colloque/generate/{id}/{doc}', 'Backend\Colloque\ColloqueController@generate');
 
@@ -281,8 +280,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('menu/create/{site}','Backend\MenuController@create');
     Route::resource('menu', 'Backend\MenuController');
 
-    Route::resource('author', 'Backend\Content\AuthorController');
+    Route::resource('author',      'Backend\Content\AuthorController');
     Route::resource('location',    'Backend\Colloque\LocationController');
+    Route::resource('organisateur','Backend\Colloque\OrganisateurController');
 
     Route::get('pages/{site}','Backend\PageController@index');
     Route::get('page/create/{site}','Backend\PageController@create');

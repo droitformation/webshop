@@ -13,7 +13,7 @@ $(document).on('change', '#endroitSelect' , function (e){
 function getEndroit(id){
     $.ajax({
         type: "GET",
-        url : base_url + "admin/colloque/location/" + id,
+        url : base_url + "admin/location/" + id,
         success: function(data) {
             if(data)
             {

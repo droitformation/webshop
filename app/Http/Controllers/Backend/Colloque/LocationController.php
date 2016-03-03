@@ -62,9 +62,14 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $location   = $this->location->find($id);
+        $location = $this->location->find($id);
+
+        if($request->ajax())
+        {
+            return response()->json( $location, 200 );
+        }
 
         return view('backend.locations.show')->with(['location' => $location]);
     }

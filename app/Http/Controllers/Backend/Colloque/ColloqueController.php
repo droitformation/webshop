@@ -145,16 +145,6 @@ class ColloqueController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function location($id)
-    {
-        return $this->location->find($id);
-    }
-
-    /**
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function adresse($id)
     {
         return $this->organisateur->find($id);
@@ -179,8 +169,7 @@ class ColloqueController extends Controller
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $generator->stream = true;
 
-        $doc = $doc.'Event';
-        return $generator->setInscription($inscription)->$doc();
+        return $generator->make($doc, $inscription);
     }
 
     /**

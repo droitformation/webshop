@@ -15,9 +15,11 @@ class CreateOrganisateursTable extends Migration
         Schema::create('organisateurs', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->string('url');
-            $table->string('logo');
+            $table->text('description')->nullable();
+            $table->string('url')->nullable();
+            $table->string('logo')->nullable();
+            $table->text('adresse')->nullable();
+            $table->string('tva')->nullable();
             $table->tinyInteger('centre');
         });
     }
