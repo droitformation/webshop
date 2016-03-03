@@ -114,15 +114,16 @@ Route::get('cartworker', function()
     $inscription   = $inscriptions->find(9524);
     $groupe        = $groupes->find(1);
 
-    //$generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-    $job = new \App\Jobs\MakeDocumentGroupe($groupe);
-    $job->handle();
+    //$job = new \App\Jobs\MakeDocument($inscription);
+    //$job->handle();
+    $generator->stream = true;
 
-    //return $pdf = $generator->make('facture', $groupe);
+    return $generator->make('attestation', $inscription);
 
     echo '<pre>';
-    print_r($groupe);
+    print_r($inscription);
     echo '</pre>';
 
     exit;

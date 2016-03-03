@@ -74,7 +74,7 @@ class Generate{
     public function getColloque()
     {
         $this->model->load('colloque');
-        $this->model->colloque->load('location','compte');
+        $this->model->colloque->load('location','compte','attestation');
 
         return $this->model->colloque;
     }

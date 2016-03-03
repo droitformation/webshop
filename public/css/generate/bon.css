@@ -30,6 +30,22 @@
     margin-top: 10px;
 }
 
+.content-attestation{
+    line-height: 30px;
+}
+
+h4.colloque-attestation{
+    line-height: 20px;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    background: #f6f6f6;
+}
+
+.signature-attestation{
+    line-height: 20px;
+}
+
 .content-wide h1{
     font-size: 18px;
 }
