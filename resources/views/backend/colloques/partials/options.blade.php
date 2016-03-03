@@ -17,7 +17,7 @@
                                 <div class="col-md-6">
                                     @foreach($option->groupe as $group)
                                         <p>
-                                            <a class="editableOption" data-name="title" data-model="group" data-type="text" data-pk="{{ $group->id }}" data-url="admin/colloque/editoption" data-title="Modifier le choix">
+                                            <a class="editableOption editableOptionGroup" data-name="title" data-model="group" data-type="text" data-pk="{{ $group->id }}" data-url="admin/colloque/editoption" data-title="Modifier le choix">
                                                 {{ $group->text }}
                                             </a>
                                         </p>

@@ -18,9 +18,7 @@
 
                 <tr class="mainRow">
                     <td>
-                        <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $group->id }}">
-                            <i class="fa fa-arrow-circle-right"></i>{{ $group->colloque->titre }}
-                        </a>
+                        <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $group->id }}"><i class="fa fa-arrow-circle-right"></i>{{ $group->colloque->titre }}</a>
                     </td>
                     <td>{{ $group->inscriptions->first()->created_at->formatLocalized('%d %b %Y') }}</td>
                     <td>
@@ -38,17 +36,7 @@
                 <tr>
                     <td colspan="5" class="nopadding">
                         <div class="collapse customCollapse" id="inscription_no_{{ $group->id }}">
-                            <div class="inscription_wrapper">
-
-                                <div class="row pay-inscription">
-                                    <div class="col-md-5"></div>
-                                    <div class="col-md-5">
-                                        @include('backend.inscriptions.partials.payed',['model' => 'group', 'item' => $group, 'inscription' => $group->inscriptions->first() ])
-                                    </div>
-                                    <div class="col-md-2 text-right">
-                                        <a target="_blank" href="{{ asset($group->doc_facture) }}" class="btn btn-default btn-midnightblue">Facture</a>
-                                    </div>
-                                </div>
+                            <div class="inscription_wrapper inscription_wrapper_group">
 
                                 <!-- Inscription dependences -->
                                 <table class="table-inscriptions">
@@ -59,7 +47,7 @@
                                             <th class="col-md-2">Participant</th>
                                             <th class="col-md-2">Prix</th>
                                             <th class="col-md-1">Bon</th>
-                                            <th class="col-md-5">Options</th>
+                                            <th class="col-md-4">Options</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,12 +65,12 @@
                                                 <td class="col-md-2"><p><strong>{{ $inscription->inscription_no }}</strong></p></td>
                                                 <td class="col-md-2"><p><strong>{{ $inscription->participant->name }}</strong></p></td>
                                                 <td class="col-md-2">{{ $inscription->price_cents }} CHF</td>
-                                                <td class="col-md-2">
+                                                <td class="col-md-1">
                                                     @if($inscription->doc_bon)
-                                                        <a target="_blank" href="{{ asset($inscription->doc_bon) }}" class="btn btn-default btn-sm">Bon</a>
+                                                        <a target="_blank" href="{{ asset($inscription->doc_bon) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
                                                     @endif
                                                 </td>
-                                                <td class="col-md-5">@include('backend.users.inscription.options')</td>
+                                                <td class="col-md-4">@include('backend.users.inscription.options')</td>
                                             </tr>
 
                                             <!-- Modal edit inscription -->
@@ -95,25 +83,24 @@
                                 </table>
 
                                 <!-- Inscription updates buttons -->
-                                <div class="line-spacer">
-
-                                    <div class="btn-group">
-                                       <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#editGroup_{{ $group->id }}">Changer le détenteur</a>
-                                       <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#addToGroup_{{ $group->id }}">Ajouter un participant</a>
+                                <div class="row">
+                                    <div class="col-md-2 line-spacer">
+                                        <a target="_blank" href="{{ asset($group->doc_facture) }}" class="btn btn-default btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Facture</a>
                                     </div>
-
-                                    <div class="btn-group pull-right">
-                                        @if(!empty($group->colloque->annexe))
-                                            <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-primary">
-                                                <i class="fa fa-refresh"></i> &nbsp;Regénérer les documents
-                                            </a>
-                                        @endif
-                                        <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscriptionGroup_{{ $group->id }}">
-                                            <i class="fa fa-send-o"></i> &nbsp;Envoyer l'inscription
-                                        </button>
+                                    <div class="col-md-7 line-spacer">
+                                        <div class="btn-group">
+                                            <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#editGroup_{{ $group->id }}">Changer le détenteur</a>
+                                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#addToGroup_{{ $group->id }}">Ajouter un participant</a>
+                                            @if(!empty($group->colloque->annexe))
+                                                <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
+                                            @endif
+                                        </div>
                                     </div>
-
+                                    <div class="col-md-3 line-spacer text-right">
+                                        <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscriptionGroup_{{ $group->id }}">Envoyer l'inscription</button>
+                                    </div>
                                 </div>
+
                                 <!-- END Inscription updates buttons -->
                                 <!-- Modals add to and edit group -->
                                 @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque])

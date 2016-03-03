@@ -37,7 +37,7 @@ class Inscription extends Model
     {
         switch ($this->status) {
             case 'pending':
-                $status = [ 'status' => 'En attente', 'color' => 'warning' ];
+                $status = [ 'status' => 'En attente', 'color' => 'default' ];
                 break;
             case 'payed':
                 $status = [ 'status' => 'Payé', 'color' => 'success' ];
@@ -50,17 +50,25 @@ class Inscription extends Model
         return $status;
     }
 
+    /* *
+     * Get only bon doc
+     * */
     public function getDocBonAttribute()
     {
-        $this->load('groupe');
+        $this->load('groupe','user');
+        $path = config('documents.colloque.bon');
 
-        if(isset($this->groupe) && !empty($this->groupe) && $this->annexe)
+        if($this->annexe)
         {
-            $this->groupe->load('user');
-
-            $user = $this->participant;
-            $path = config('documents.colloque.bon');
-            $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->groupe->id.'-'.$user->id.'.pdf';
+            if(isset($this->groupe) && !empty($this->groupe))
+            {
+                $this->groupe->load('user');
+                $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->groupe->id.'-'.$this->participant->id.'.pdf';
+            }
+            else
+            {
+                $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+            }
 
             if (\File::exists(public_path($file)))
             {
@@ -71,6 +79,10 @@ class Inscription extends Model
         return null;
     }
 
+    /* *
+     * Used for admin list of documents ['link']
+     * Used for attachements for sending via email ['file']
+     * */
     public function getDocumentsAttribute()
     {
         if(!empty($this->colloque->annexe) && $this->inscrit)

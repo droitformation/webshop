@@ -48,42 +48,50 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
         // Generate annexes if any
         if(empty($this->inscription->documents) && !empty($annexes))
         {
-            $generator->setInscription($this->inscription)->generate($annexes);
+            foreach ($annexes as $annexe)
+            {
+                // Make the bon and the other docs if the price is not 0
+                if($annexe == 'bon' || ($this->inscription->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')))
+                {
+                    $generator->make($annexe, $this->inscription);
+                }
+            }
         }
 
-        $date   = \Carbon\Carbon::now()->formatLocalized('%d %B %Y');
-        $title  = 'Votre inscription sur publications-droit.ch';
-        $logo   = 'facdroit.png';
-
-        $user    = $this->inscription->user;
-        $annexes = $this->inscription->documents;
+        $user         = $this->inscription->user;
+        $attachements = $this->inscription->documents;
 
         $data = [
-            'title'       => $title,
-            'logo'        => $logo,
+            'title'       => 'Votre inscription sur publications-droit.ch',
+            'logo'        => 'facdroit.png',
             'concerne'    => 'Inscription',
             'annexes'     => $this->inscription->colloque->annexe,
             'inscription' => $this->inscription,
-            'date'        => $date,
+            'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 
-        $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user,$annexes) {
+        $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements) {
 
+            // Overwrite the email to send to?
             $email = ($this->email ? $this->email : $user->email);
 
             $message->to($email, $user->name)->subject('Confirmation d\'inscription');
 
-            if(!empty($annexes))
+            // Attach all documents
+            if(!empty($attachements))
             {
-                foreach($annexes as $annexe)
+                foreach($attachements as $attachement)
                 {
-                    $message->attach($annexe['file'], array('as' => $annexe['name'], 'mime' => 'application/pdf'));
+                    $message->attach($attachement['file'], array('as' => $attachement['name'], 'mime' => 'application/pdf'));
                 }
             }
         });
 
+        // Update the send date and add true if send via admin
         $this->inscription->send_at = date('Y-m-d');
+        $this->inscription->admin   = ($this->email ? 1 : null);
         $this->inscription->save();
+
     }
 
 }

@@ -20,7 +20,6 @@
                 Nous avons bien pris en compte votre inscription et vous remercions de votre intérêt.
             </p>
 
-
             <table style="{{$resetMargin}}{{ $resetPadding }}mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse;border-spacing: 0;" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr><td colspan="3" style="{{ $resetPadding }}{{ $resetMargin }}background-color: #fff; height: 10px;line-height: 0;">&nbsp;</td></tr>
                 <tr><td colspan="3" style="{{ $resetPadding }}{{ $resetMargin }}background-color: #f2f2f2;height: 8px;line-height: 0;">&nbsp;</td></tr>
@@ -30,7 +29,7 @@
                         <h4 style="font-size: 16px; color:#1a446e;"><?php echo $inscription->colloque->titre; ?></h4>
                         <p style="{{ $resetPadding }}{{ $resetMargin }}margin-bottom:5px; color: #2d2d2d;"><strong><?php echo $inscription->colloque->soustitre; ?></strong> </p>
                         <p style="{{ $resetPadding }}{{ $resetMargin }}color: #2d2d2d;"><strong>Date:</strong> <?php echo $inscription->colloque->event_date; ?></p>
-                        <p style="{{ $resetPadding }}{{ $resetMargin }}color: #2d2d2d;"><strong>Lieu:</strong> <?php echo $inscription->colloque->location->name.', '.$inscription->colloque->location->adresse; ?></p>
+                        <p style="{{ $resetPadding }}{{ $resetMargin }}color: #2d2d2d;"><strong>Lieu:</strong> <?php echo $inscription->colloque->location->name.', '.strip_tags($inscription->colloque->location->adresse); ?></p>
                     </td>
                     <td width="10px" style="background-color: #f2f2f2;">&nbsp;</td>
                 </tr>
@@ -57,22 +56,19 @@
                     </p>
 
                     <ul style="{{$resetMargin}}margin-bottom: 10px;margin-left: 15px;{{ $resetPadding }}">
-                        <li>IBAN :{{ config('documents.emails.iban') }}</li>
-                        <li>BIC :{{ config('documents.emails.bic') }}</li>
+                        <li>IBAN: {{ Registry::get('inscription.infos.iban') }}</li>
+                        <li>BIC: {{ Registry::get('inscription.infos.bic') }}</li>
                     </ul>
                 <?php  }  ?>
 
             <?php  }  ?>
 
             <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">
-                {!! config('documents.emails.desistement') !!}
+                {!! Registry::get('inscription.infos.desistement') !!}
             </p>
-            <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">
-                Nous restons à disposition pour tout renseignement et vous adressons nos meilleures salutations.
-            </p>
-            <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">
-                Le secrétariat de la Faculté de droit
-            </p>
+
+            <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">Nous restons à disposition pour tout renseignement et vous adressons nos meilleures salutations.</p>
+            <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">Le secrétariat de la Faculté de droit</p>
 
         </td>
         <!-- end .eBody-->

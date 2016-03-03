@@ -18,7 +18,7 @@ function getEndroit(id){
             if(data)
             {
                 var map = (data.map ? '<img style="width:100%;" src="files/colloques/cartes/'+ data.map +'" alt="Map"><small>La carte du bon</small>' : '<span style="display: block;" class="text-danger">il n\'existe pas de carte</span>');
-                var html = '<div class="thumbnail"><div class="row"><div class="col-md-3">'
+                var html = '<div class="thumbnail thumbnail-colloque"><div class="row"><div class="col-md-3">'
                     + map
                     + '</div>'
                     + '<div class="col-md-8">'

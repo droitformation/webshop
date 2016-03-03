@@ -41,11 +41,11 @@
                                     <label for="titre" class="col-sm-3 control-label">Adresse principale<br/><small>Indiqué sur bon, bv, facture</small></label>
                                     <div class="col-sm-6">
                                         <div id="choixAdresse">
-                                            <select class="form-control required" autocomplete="off" name="adresse_id" id="adresseSelect">
+                                            <select class="form-control form-required required" autocomplete="off" name="adresse_id" id="adresseSelect">
                                                 <?php
-                                                $adresses = $organisateurs->reject(function ($item) {
-                                                    return $item->adresse == '';
-                                                });
+                                                    $adresses = $organisateurs->reject(function ($item) {
+                                                        return $item->adresse == '';
+                                                    });
                                                 ?>
                                                 @if(!$adresses->isEmpty())
                                                     <option value="">Choix</option>
@@ -55,7 +55,7 @@
                                                 @endif
                                             </select>
                                         </div><br/>
-                                        <div class="thumbnail">
+                                        <div class="thumbnail thumbnail-colloque">
                                             <div id="showAdresse">{!! $colloque->adresse->adresse !!}</div>
                                         </div>
                                     </div>
@@ -67,9 +67,8 @@
                                 <div class="form-group">
                                     <label for="titre" class="col-sm-3 control-label">Titre</label>
                                     <div class="col-sm-6">
-                                        {!! Form::text('titre', $colloque->titre , array('class' => 'form-control required' )) !!}
+                                        {!! Form::text('titre', $colloque->titre , array('class' => 'form-control form-required required' )) !!}
                                     </div>
-                                    <div class="col-sm-3"><p class="help-block">Requis</p></div>
                                 </div>
 
                                 <div class="form-group">
@@ -83,17 +82,15 @@
                                 <div class="form-group">
                                     <label for="sujet" class="col-sm-3 control-label">Sujet</label>
                                     <div class="col-sm-6">
-                                        {!! Form::text('sujet', $colloque->sujet , array('class' => 'form-control required' )) !!}
+                                        {!! Form::text('sujet', $colloque->sujet , array('class' => 'form-control form-required required' )) !!}
                                     </div>
-                                    <div class="col-sm-3"><p class="help-block">Requis</p></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="organisateur" class="col-sm-3 control-label">Organisateur</label>
                                     <div class="col-sm-6">
-                                        {!! Form::text('organisateur', $colloque->organisateur , array('class' => 'form-control required' )) !!}
+                                        {!! Form::text('organisateur', $colloque->organisateur , array('class' => 'form-control form-required required' )) !!}
                                     </div>
-                                    <div class="col-sm-3"><p class="help-block">Requis</p></div>
                                 </div>
 
                                 <div class="form-group">
@@ -112,7 +109,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Endroit</label>
                                     <div class="col-sm-6 col-xs-6">
-                                        <select class="form-control required" name="location_id" id="endroitSelect">
+                                        <select class="form-control form-required required" name="location_id" id="endroitSelect">
                                             @if(!$locations->isEmpty())
                                                 <option value="">Choix</option>
                                                 @foreach($locations as $location)
@@ -123,7 +120,6 @@
                                         <br/>
                                         <div id="showEndroit"></div>
                                     </div>
-                                    <div class="col-sm-3"><p class="help-block">Requis</p></div>
                                 </div>
 
                                 <div class="form-group">

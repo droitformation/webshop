@@ -89,7 +89,6 @@ class InscriptionTest extends TestCase {
         $this->assertViewHas('inscriptions');
     }
 
-
     /**
      * Inscription from frontend
      * @return void
@@ -107,7 +106,6 @@ class InscriptionTest extends TestCase {
         $response = $this->call('POST', 'registration', $input);
 
         $this->assertRedirectedTo('/');
-
     }
 
     public function testGenerateDoc()
@@ -115,9 +113,7 @@ class InscriptionTest extends TestCase {
         $annexes = ['bon','facture', 'bv'];
 
         $inscription        = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
-        $inscription->price = factory(App\Droit\Price\Entities\Price::class)->make([
-            'price' => 10000
-        ]);
+        $inscription->price = factory(App\Droit\Price\Entities\Price::class)->make(['price' => 10000]);
 
         // make all documents
         foreach($annexes as $annexe)
@@ -129,11 +125,8 @@ class InscriptionTest extends TestCase {
 
     public function testGenerateDocFree()
     {
-
         $inscription        = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
-        $inscription->price = factory(App\Droit\Price\Entities\Price::class)->make([
-            'price' => 0
-        ]);
+        $inscription->price = factory(App\Droit\Price\Entities\Price::class)->make(['price' => 0]);
 
         // No need to make facture or bv if the price is 0
 
@@ -145,7 +138,6 @@ class InscriptionTest extends TestCase {
 
         $result = $this->make('bv',$inscription);
         $this->assertFalse($result);
-
     }
 
     public function make($annexe,$inscription)
@@ -156,6 +148,26 @@ class InscriptionTest extends TestCase {
         }
 
         return false;
+    }
+
+
+    /**
+     * Inscription regenerate documents
+     * @return void
+     */
+    public function testRegenerateDocumentsInscription()
+    {
+        $this->WithoutEvents();
+
+        $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
+
+        $this->worker->shouldReceive('register')->once()->andReturn($inscription);
+
+        $response = $this->call('GET', 'inscription/generate', $input);
+
+        $this->assertRedirectedTo('/');
     }
 
 }

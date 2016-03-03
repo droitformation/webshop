@@ -44,7 +44,7 @@
                                         @if($inscription->payed_at)
                                             <h1 class="label label-success" style="font-size: 90%;">Payé le {{ $inscription->payed_at->format('d/m/Y') }}</h1>
                                         @else
-                                            <h1 class="label label-warning" style="font-size: 90%;">En attente</h1>
+                                            <h1 class="label label-default" style="font-size: 90%;">En attente</h1>
                                         @endif
                                     </div>
                                     <div class="col-md-5">
@@ -61,25 +61,19 @@
                                 <!-- Inscription edit,send,rappels -->
                                 <div class="row">
                                     <div class="col-md-2 line-spacer">
-                                        @if(!$inscription->payed_at)
-                                            <form action="{{ url('admin/inscription/rappel') }}" method="POST">{!! csrf_field() !!}
-                                                <input type="hidden" name="id" value="{{ $inscription->id }}">
-                                                <button class="btn btn-inverse btn-sm"><i class="fa fa-paperclip"></i> &nbsp;Générer un rappel</button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-5 line-spacer">
-                                        @if(!empty($inscription->colloque->annexe))
-                                            <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i> &nbsp;Regénérer les documents</a>
-                                            <a href="{{ url('/') }}" class="btn btn-sm btn-success"><i class="fa fa-trophy"></i> &nbsp;Attestation</a>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-5 line-spacer">
                                         <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
                                             <i class="fa fa-edit"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
-                                            <i class="fa fa-send-o"></i> &nbsp;Envoyer l'inscription
+                                    </div>
+                                    <div class="col-md-5 line-spacer">
+                                        @if(!empty($inscription->colloque->annexe))
+                                            <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
+                                            <a href="{{ url('/') }}" class="btn btn-sm btn-green">Attestation</a>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-5 line-spacer text-right">
+                                        <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
+                                            Envoyer l'inscription
                                         </button>
                                     </div>
                                 </div>

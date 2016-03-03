@@ -13,10 +13,9 @@ use App\Http\Requests;
 use App\Http\Requests\InscriptionCreateRequest;
 use App\Http\Controllers\Controller;
 
-use App\Events\InscriptionWasCreated;
-use App\Events\GroupeInscriptionWasRegistered;
-
 use App\Jobs\SendConfirmationInscriptionEmail;
+use App\Jobs\MakeDocument;
+use App\Jobs\MakeDocumentGroupe;
 
 class InscriptionController extends Controller
 {
@@ -109,47 +108,25 @@ class InscriptionController extends Controller
 
     public function push(Request $request)
     {
-        // Get all infos for inscription/participant
-        $options     = $request->input('options',null);
-        $groupes     = $request->input('groupes',null);
-
-        $data = [
-            'group_id'    => $request->input('group_id'),
-            'colloque_id' => $request->input('colloque_id'),
-            'participant' => $request->input('participant'),
-            'price_id'    => $request->input('price_id')
-        ];
-
-        // choosen options for participants
-        if(isset($options))
-        {
-            $data['options'] = $request->input('options');
-        }
-
-        // choosen groupe of options for participants
-        if(isset($groupes))
-        {
-            $data['groupes'] = $request->input('groupes');
-        }
-
-        // Register a new inscription
-        $this->register->register($data,$request->input('colloque_id'));
+        // Register a new inscription for group
+        $this->register->register($request->all(), $request->input('colloque_id'));
         
-        $group_user = $this->groupe->find($request->input('group_id'));
+        $group = $this->groupe->find($request->input('group_id'));
 
-        event(new GroupeInscriptionWasRegistered($group_user));
+        $this->dispatch(new MakeDocumentGroupe($group));
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
     }
 
     public function change(Request $request)
     {
+        // Update user for group and remake docs
         $groupe = $this->groupe->update([
             'id'      => $request->input('group_id'),
             'user_id' => $request->input('user_id')
         ]);
 
-        event(new GroupeInscriptionWasRegistered($groupe));
+        $this->dispatch(new MakeDocumentGroupe($groupe));
 
         return redirect('admin/inscription/colloque/'.$groupe->colloque_id)->with(array('status' => 'success', 'message' => 'Le groupe a été modifié' ));
     }
@@ -170,45 +147,13 @@ class InscriptionController extends Controller
         {
             $inscription = $this->register->register($request->all(), $colloque, true);
 
-            event(new InscriptionWasCreated($inscription));
+            $this->dispatch(new MakeDocument($inscription));
         }
         else
         {
-            $group_user = $this->groupe->create(['colloque_id' => $colloque , 'user_id' => $request->input('user_id')]);
+            $group = $this->register->registerGroup($colloque, $request);
 
-            // Get all infos for inscriptions/participants
-            $participants = $request->input('participant');
-            $prices       = $request->input('price_id');
-            $options      = $request->input('options');
-            $groupes      = $request->input('groupes');
-
-            foreach($participants as $index => $participant)
-            {
-                $data = [
-                    'group_id'    => $group_user->id,
-                    'colloque_id' => $colloque,
-                    'participant' => $participant,
-                    'price_id'    => $prices[$index]
-                ];
-
-                // choosen options for participants
-                if(isset($options[$index]))
-                {
-                    $data['options'] = $options[$index];
-                }
-
-                // choosen groupe of options for participants
-                if(isset($groupes[$index]))
-                {
-                    $data['groupes'] = $groupes[$index];
-                }
-
-                // Register a new inscription
-                $this->register->register($data,$colloque);
-
-            }
-
-            event(new GroupeInscriptionWasRegistered($group_user));
+            $this->dispatch(new MakeDocumentGroupe($group));
         }
 
         return redirect('admin/inscription/colloque/'.$colloque)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
@@ -244,14 +189,9 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->find($id);
 
-        if($inscription->group_id)
-        {
-            event(new GroupeInscriptionWasRegistered($inscription->groupe));
-        }
-        else
-        {
-            event(new InscriptionWasCreated($inscription));
-        }
+        $job = ($inscription->group_id ? new MakeDocumentGroupe($inscription->groupe) : new MakeDocument($inscription));
+
+        $this->dispatch($job);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Les documents ont été mis à jour' ));
     }
@@ -331,10 +271,10 @@ class InscriptionController extends Controller
 
         $this->inscription->delete($id);
 
-        // Refresh the groupe invoice and bv
+        // If it's a group og inscription and we have deleted 11 refresh the groupe invoice and bv
         if($inscription->group_id > 0)
         {
-            event(new GroupeInscriptionWasRegistered($inscription->groupe));
+            $this->dispatch(new MakeDocumentGroupe($inscription->groupe));
         }
 
         return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(array('status' => 'success', 'message' => 'Désinscription effectué' ));
@@ -352,27 +292,23 @@ class InscriptionController extends Controller
 
         $inscription = $this->inscription->find($id);
 
-        if($inscription->group_id)
-        {
-            event(new GroupeInscriptionWasRegistered($inscription->groupe));
-        }
-        else
-        {
-            event(new InscriptionWasCreated($inscription));
-        }
+        // Remake the dosuments
+        $job = ($inscription->group_id ? new MakeDocumentGroupe($inscription->groupe) : new MakeDocument($inscription));
+
+        $this->dispatch($job);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été restauré' ));
     }
 
     /**
-     * Inscription partial
+     * Inscription partial via ajax
      * @return Response
      */
     public function inscription(Request $request){
 
         $colloque = $this->colloque->find($request->input('colloque_id'));
         $user     = $this->user->find($request->input('user_id'));
-        $type     = $request->input('type');
+        $type     = $request->input('type'); // simple or multiple
 
         echo view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type])->__toString();
     }

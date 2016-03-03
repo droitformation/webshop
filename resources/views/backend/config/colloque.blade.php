@@ -58,13 +58,25 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <h4><i class="fa fa-paper-plane"></i> &nbsp;Emails</h4>
+                <h4><i class="fa fa-paper-plane"></i> &nbsp;Infos email de confirmation</h4>
                 <div class="panel panel-green">
                     <div class="panel-body">
+
                         <div class="form-group">
-                            <label><strong>Message par défaut</strong></label>
-                            <textarea name="inscription[emails][default]" class="form-control redactorSimple">{!! Registry::get('inscription.emails.default') !!}</textarea>
+                            <label><strong>IBAN</strong></label>
+                            <input type="text" class="form-control" name="inscription[infos][iban]" value="{!! Registry::get('inscription.infos.iban') !!}">
                         </div>
+
+                        <div class="form-group">
+                            <label><strong>BIC</strong></label>
+                            <input type="text" class="form-control" name="inscription[infos][bic]" value="{!! Registry::get('inscription.infos.bic')!!}">
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Désistement</strong></label>
+                            <textarea name="inscription[infos][desistement]" class="form-control redactorSimple">{!! Registry::get('inscription.infos.desistement') !!}</textarea>
+                        </div>
+
                     </div>
                     <div class="panel-footer">
                         <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>

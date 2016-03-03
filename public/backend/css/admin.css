@@ -27,7 +27,7 @@ h3, .h3{
 }
 
 .inscription_wrapper table tr td{
-    line-height: 20px;
+    line-height: 18px;
     padding-top: 0;
     padding-bottom: 0;
 }
@@ -60,6 +60,11 @@ h3, .h3{
 
 .inscription_wrapper{
     padding: 10px 10px 15px 10px;
+}
+
+.thumbnail-colloque{
+    margin-bottom: 15px;
+    margin-top: -5px;
 }
 
 table.dataTable thead .sorting_asc::after{
@@ -425,6 +430,11 @@ a.editable-click:hover {
     background: transparent;
 }
 
+.editableOptionGroup{
+    line-height: 18px;
+    margin-bottom: 10px;
+}
+
 .editablePrice.editable-click[data-name="price"] {
     color: #fff;
     line-height: 24px;
@@ -712,6 +722,19 @@ select[multiple] {
 
 .newsletter-archives{
     margin: 20px 0 0 0;
+}
+
+.inscription_wrapper.inscription_wrapper_group{
+    padding: 0;
+}
+
+.inscription_wrapper.inscription_wrapper_group .table-inscriptions{
+    margin-top: 0;
+}
+
+.inscription_wrapper.inscription_wrapper_group .table-inscriptions th{
+    margin-top: 0;
+    background: #f7f8fa;
 }
 
 .pay-inscription{
