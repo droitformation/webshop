@@ -2,8 +2,15 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <p><a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+        <div class="col-md-6 text-right">
+            @if($colloque->attestation)
+                <p><a href="{{ url('admin/attestation/'.$colloque->attestation->id) }}" class="btn btn-magenta"><i class="fa fa-calendar-check-o"></i> &nbsp;Attestations</a></p>
+            @else
+                <p><a href="{{ url('admin/attestation/colloque/'.$colloque->id) }}" class="btn btn-magenta"><i class="fa fa-calendar-check-o"></i> &nbsp;Attestations</a></p>
+            @endif
         </div>
     </div>
 
@@ -205,15 +212,19 @@
                         <h5>Ajouter un document</h5>
                         <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="form-group">
-                                <div class="col-sm-10">
-                                    <p><input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier"></p>
+                                <div class="col-sm-12">
                                     <p><input type="file" required name="file"></p>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier">
+                                        <span class="input-group-btn">
+                                           <button type="submit" class="btn btn-info">Ajouter</button>
+                                        </span>
+                                    </div><!-- /input-group -->
+
                                     <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
                                     <input type="hidden" name="path" value="files/colloques">
                                     <input type="hidden" name="type" value="document">
-                                </div>
-                                <div class="col-sm-2 text-right">
-                                    <button type="submit" class="btn btn-info">Ajouter</button>
                                 </div>
                             </div>
                         </form>

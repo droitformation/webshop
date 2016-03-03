@@ -146,4 +146,9 @@ class Colloque extends Model
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Inscription');
     }
+
+    public function attestation()
+    {
+        return $this->hasone('App\Droit\Colloque\Entities\Colloque_attestation');
+    }
 }

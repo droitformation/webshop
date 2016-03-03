@@ -49,7 +49,7 @@ $(document).on('change', '#adresseSelect' , function (e) {
 function getAdresse(id){
     $.ajax({
         type: "GET",
-        url : base_url + "admin/colloque/adresse/" + id,
+        url : base_url + "admin/organisateur/" + id,
         success: function(data) {
             if(data)
             {

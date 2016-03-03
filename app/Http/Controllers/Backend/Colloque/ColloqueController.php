@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Backend\Colloque;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Document\Worker\DocumentWorker;
 use App\Droit\Inscription\Repo\InscriptionInterface;
@@ -12,8 +15,6 @@ use App\Droit\Compte\Repo\CompteInterface;
 use App\Droit\Price\Repo\PriceInterface;
 use App\Droit\Option\Repo\OptionInterface;
 use App\Droit\Option\Repo\GroupOptionInterface;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class ColloqueController extends Controller
 {
@@ -138,16 +139,6 @@ class ColloqueController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function adresse($id)
-    {
-        return $this->organisateur->find($id);
     }
 
     /**

@@ -26,6 +26,7 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerLocationService();
         $this->registerOrganisateurService();
         $this->registerCompteService();
+        $this->registerAttestationService();
         $this->registerInscriptionService();
         $this->registerInscriptionWorkerService();
         $this->registerRappelService();
@@ -138,6 +139,18 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Compte\Repo\CompteInterface', function()
         {
             return new \App\Droit\Compte\Repo\CompteEloquent(new \App\Droit\Compte\Entities\Compte);
+        });
+    }
+
+    /**
+     * Attestation
+     *
+     */
+    protected function registerAttestationService(){
+
+        $this->app->singleton('App\Droit\Colloque\Repo\AttestationInterface', function()
+        {
+            return new \App\Droit\Colloque\Repo\AttestationEloquent(new \App\Droit\Colloque\Entities\Colloque_attestation());
         });
     }
 
