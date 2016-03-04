@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                        <button type="submit" class="btn btn-info btn-sm pull-right">Mettre à jour</button>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer"><button type="submit" class="btn btn-info pull-right">Mettre à jour</button></div>
+                    <div class="panel-footer"><button type="submit" class="btn btn-info btn-sm pull-right">Mettre à jour</button></div>
                 </div>
 
             </div>

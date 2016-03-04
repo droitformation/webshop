@@ -8,17 +8,23 @@ use App\Http\Requests;
 use App\Http\Requests\CreateAttestation;
 use App\Http\Controllers\Controller;
 use App\Droit\Colloque\Repo\AttestationInterface;
+use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 
 class AttestationController extends Controller
 {
     protected $attestation;
     protected $colloque;
+    protected $inscription;
+    protected $generator;
 
-    public function __construct(AttestationInterface $attestation, ColloqueInterface $colloque)
+    public function __construct(AttestationInterface $attestation, ColloqueInterface $colloque, InscriptionInterface $inscription)
     {
         $this->attestation  = $attestation;
         $this->colloque     = $colloque;
+        $this->inscription  = $inscription;
+
+        $this->generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     }
 
     /**
@@ -31,6 +37,15 @@ class AttestationController extends Controller
         $colloque = $this->colloque->find($id);
 
         return view('backend.attestations.create')->with(['colloque' => $colloque]);
+    }
+
+    public function inscription($id)
+    {
+        $inscription = $this->inscription->find($id);
+
+        $this->generator->make('attestation', $inscription);
+
+        return redirect()->back()->with(['status' => 'success' , 'message' => 'Attestation crée pour l\'inscription']);
     }
 
     /**

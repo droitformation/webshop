@@ -109,10 +109,13 @@ Route::get('cartworker', function()
         return $item->first()->groupe->load('inscriptions');
     })->values();*/
 
+    $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $groupes       = new \App\Droit\Inscription\Entities\Groupe();
     $inscription   = $inscriptions->find(9524);
     $groupe        = $groupes->find(1);
+
+    $abofacture = $abofactures->find(939);
 
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
@@ -120,7 +123,7 @@ Route::get('cartworker', function()
     //$job->handle();
     $generator->stream = true;
 
-    return $generator->make('attestation', $inscription);
+    return $generator->makeAbo('facture', $abofacture);
 
     echo '<pre>';
     print_r($inscription);

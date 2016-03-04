@@ -59,8 +59,8 @@
                                     <tr>
                                         <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                         <td>{{ $abonnement->numero }}</td>
-                                        <td>{{ $abonnement->user->name }}</td>
-                                        <td>{{ $abonnement->user->company }}</td>
+                                        <td>{{ $abonnement->user ? $abonnement->user->name : 'Duplicata' }}</td>
+                                        <td>{{ $abonnement->user ? $abonnement->user->company : 'Duplicata'  }}</td>
                                         <td>{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>
                                         <td class="text-right">
@@ -105,8 +105,8 @@
                                                 </form>
                                             </td>
                                             <td>{{ $abonnement->numero }}</td>
-                                            <td>{{ $abonnement->user->name }}</td>
-                                            <td>{{ $abonnement->user->company }}</td>
+                                            <td>{{ $abonnement->user ? $abonnement->user->name : 'Duplicata'  }}</td>
+                                            <td>{{ $abonnement->user ? $abonnement->user->company  :'Duplicata' }}</td>
                                             <td>Résilié</td>
                                         </tr>
                                     @endforeach

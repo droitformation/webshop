@@ -21,7 +21,7 @@ class Abo_factures extends Model{
             return $file;
         }
 
-        return false;
+        return null;
     }
 
     public function abonnement()

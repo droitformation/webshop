@@ -68,7 +68,9 @@
                                     <div class="col-md-5 line-spacer">
                                         @if(!empty($inscription->colloque->annexe))
                                             <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
-                                            <a href="{{ url('/') }}" class="btn btn-sm btn-green">Attestation</a>
+                                        @endif
+                                        @if(!$inscription->doc_attestation)
+                                            <a href="{{ url('admin/attestation/inscription/'.$inscription->id) }}" class="btn btn-sm btn-green">Attestation</a>
                                         @endif
                                     </div>
                                     <div class="col-md-5 line-spacer text-right">

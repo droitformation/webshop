@@ -58,6 +58,6 @@ return [
     ],
 
    'qrcode' => [
-		'key' => '82Ic5P8O017X15dWdO1F2EfSWQ',
+		'key' => '82Ic5P8O017X15dWdO1F2EfSWQ'
 	]
 ];

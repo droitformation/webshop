@@ -282,3 +282,42 @@ $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Genera
         'rang'       => 1
     ];
 });
+
+$factory->define(App\Droit\Abo\Entities\Abo::class, function (Faker\Generator $faker) {
+    return [
+        'title' => 'Test',
+        'plan'  => 'month',
+        'logo'  => 'logo.png',
+        'name'  => 'Test'
+    ];
+});
+
+$factory->define(App\Droit\Abo\Entities\Abo_users::class, function (Faker\Generator $faker) {
+    return [
+        'abo_id'         => 1,
+        'numero'         => 123,
+        'exemplaires'    => 1,
+        'adresse_id'     => '',
+        'tiers_id'       => '',
+        'price'          => 1000,
+        'reference'      => '',
+        'remarque'       => '',
+        'status'         => '',
+        'renouvellement' => ''
+    ];
+});
+
+$factory->define(App\Droit\Abo\Entities\Abo_factures::class, function (Faker\Generator $faker) {
+    return [
+        'abo_user_id' => 1,
+        'product_id'  => 1,
+        'payed_at'    => null
+    ];
+});
+
+$factory->define(App\Droit\Shop\Attribute\Entities\Attribute::class, function (Faker\Generator $faker) {
+    return [
+        'id'    => 3,
+        'title' => 'REF'
+    ];
+});

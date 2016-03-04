@@ -193,6 +193,12 @@ class InscriptionController extends Controller
 
         $this->dispatch($job);
 
+        // remake attestation
+        if($inscription->doc_attestation)
+        {
+            $this->generator->make('attestation', $inscription);
+        }
+
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Les documents ont été mis à jour' ));
     }
 

@@ -14,7 +14,9 @@
                 <td><img height="80mm" src="<?php echo public_path('files/logos/facdroit.png'); ?>" alt="Unine logo" /></td>
                 <td align="right">
                     <div class="visible-print">
-                        <img src="data:image/png;base64, {{ $code }}">
+                        @if(isset($code))
+                            <img src="data:image/png;base64, {{ $code }}">
+                        @endif
                     </div>
                 </td>
             </tr>

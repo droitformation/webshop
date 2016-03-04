@@ -230,12 +230,27 @@ class GenerateTest extends TestCase {
         $this->assertEquals($response->id, 12);
 	}
 
+    public function testGetAdresse()
+    {
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
+            'id'          => '10',
+            'user_id'     => '710',
+            'colloque_id' => '12'
+        ]);
+
+        $inscription->user = App\Droit\User\Entities\User::find(710);
+
+        $generate = new \App\Droit\Generate\Entities\Generate($inscription);
+        $response = $generate->getAdresse();
+
+        $this->assertEquals($response->name, 'Cindy Leschaud');
+    }
+
     public function testGetParticipant()
     {
         $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);
 
-        $inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make(['group_id' => '5', 'colloque_id' => '12'
-        ]);
+        $inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make(['group_id' => '5', 'colloque_id' => '12']);
 
         $inscriptions = $inscriptions->map(function ($item, $key) {
             $item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->make(['id' => $key ,'name' => 'Cindy_'.$key ]);
@@ -253,5 +268,69 @@ class GenerateTest extends TestCase {
             $this->assertEquals($response, 'Cindy_'.$index);
         }
 
+    }
+
+	public function testGetAbo()
+	{
+		$abo         = factory(\App\Droit\Abo\Entities\Abo::class)->make(['id' => 1]);
+		$abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
+		$abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['abo_user_id' => 1 ,'product_id' => 1]);
+
+        $user = App\Droit\Adresse\Entities\Adresse::find(4674);
+
+		$abo_user->abo  = $abo;
+        $abo_user->user = $user;
+
+		$abo_facture->abonnement = $abo_user;
+
+		$generate = new \App\Droit\Generate\Entities\Generate($abo_facture);
+		$response = $generate->getAbo();
+
+        $this->assertEquals($response->numero, 123);
+	}
+
+    public function testGetAboAdresse()
+    {
+        $abo         = factory(\App\Droit\Abo\Entities\Abo::class)->make(['id' => 1]);
+        $abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
+        $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['abo_user_id' => 1 ,'product_id' => 1]);
+
+        $user = App\Droit\Adresse\Entities\Adresse::find(4674);
+
+        $abo_user->abo  = $abo;
+        $abo_user->user = $user;
+
+        $abo_facture->abonnement = $abo_user;
+
+        $generate = new \App\Droit\Generate\Entities\Generate($abo_facture);
+        $response = $generate->getAdresse();
+
+        $this->assertEquals($response->name, 'Cindy Leschaud');
+    }
+
+    public function testGetAboFilename()
+    {
+        // Using real product bad bad...
+        $product     = App\Droit\Shop\Product\Entities\Product::find(290);
+
+        $abo         = factory(\App\Droit\Abo\Entities\Abo::class)->make(['id' => 1]);
+        $abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
+        $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['id' => 1,'abo_user_id' => 1 ,'product_id' => 1]);
+
+        // Using real adresse bad bad...
+        $user = App\Droit\Adresse\Entities\Adresse::find(4674);
+
+        $abo_facture->product = $product;
+        $abo_user->abo        = $abo;
+        $abo_user->user       = $user;
+
+        $abo_facture->abonnement = $abo_user;
+
+        $generate = new \App\Droit\Generate\Entities\Generate($abo_facture);
+        $response = $generate->getFilename('facture',$abo_facture);
+
+        $file = 'files/abos/facture/1/facture_REV-1_1.pdf';
+
+        $this->assertEquals($response, public_path($file));
     }
 }

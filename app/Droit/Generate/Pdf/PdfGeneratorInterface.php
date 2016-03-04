@@ -6,12 +6,7 @@ interface PdfGeneratorInterface
 {
     public function setMsg($message,$type);
     public function factureOrder($order_id);
-    public function setInscription($inscription);
-    public function bonEvent();
-    public function factureEvent($nbr = null, $rappel = null);
-    public function factureGroupeEvent($groupe,$inscriptions,$price,$nbr = null, $rappel = null);
-    public function bvGroupeEvent($groupe,$inscriptions,$price);
-    public function bvEvent();
     public function factureAbo($abo_id,$facture_id,$rappel = null);
-    public function generate($annexes);
+    public function make($document, $model);
+    public function getData($document);
 }

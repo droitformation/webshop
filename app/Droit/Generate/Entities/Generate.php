@@ -40,6 +40,12 @@ class Generate{
             return 'group';
         }
 
+        if($this->model instanceof \App\Droit\Abo\Entities\Abo_factures)
+        {
+            $this->model->load('abonnement');
+            return 'abo';
+        }
+
         if($this->model instanceof \App\Droit\Inscription\Entities\Inscription)
         {
             $this->model->load('groupe','participant');
@@ -49,6 +55,13 @@ class Generate{
 
     public function getAdresse()
     {
+        if($this->getType() == 'abo')
+        {
+            $this->model->abonnement->load('user','tiers');
+
+            return $this->model->abonnement->tiers_id ? $this->model->abonnement->tiers : $this->model->abonnement->user;
+        }
+
         if($this->getType() == 'inscription' && $this->model->group_id)
         {
             $this->model->groupe->load('user');
@@ -77,6 +90,17 @@ class Generate{
         $this->model->colloque->load('location','compte','attestation');
 
         return $this->model->colloque;
+    }
+
+    public function getAbo()
+    {
+        $this->model->load('abonnement');
+        return $this->model->abonnement;
+    }
+
+    public function getFacture()
+    {
+        return $this->model;
     }
 
     public function getNo()
@@ -138,6 +162,13 @@ class Generate{
         if($annexe == 'bon')
         {
             return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$part.'.pdf');
+        }
+
+        if($this->getType() == 'abo')
+        {
+            $file = 'files/abos/facture/'.$this->model->product_id.'/facture_'.$this->model->product->reference.'-'.$this->model->abo_user_id.'_'.$this->model->id.'.pdf';
+
+            return public_path($file);
         }
 
         return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$this->model->user_id.'.pdf');

@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                        <button type="submit" class="btn btn-info btn-sm  pull-right">Mettre à jour</button>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
 
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                        <button type="submit" class="btn btn-info btn-sm  pull-right">Mettre à jour</button>
                     </div>
                 </div>
                 
@@ -87,27 +87,21 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                
-                <h4><i class="fa fa-flag"></i> &nbsp;Messages d'erreur inscription</h4>
-                <div class="panel panel-danger">
+            <div class="col-md-5">
+                <h4><i class="fa fa-qrcode"></i> &nbsp;Ajouter un QRcode</h4>
+                <div class="panel panel-green">
                     <div class="panel-body">
                         <div class="form-group">
-                            <label><strong>Déjà inscrit</strong></label>
-                            <textarea name="inscription[messages][registered]" class="form-control redactorSimple">{!! Registry::get('inscription.messages.registered')!!}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label><strong>N'a pas payé les factures</strong></label>
-                            <textarea name="inscription[messages][pending]" class="form-control redactorSimple">{!! Registry::get('inscription.messages.pending') !!}</textarea>
+                            <label><strong>Pour scanner les participants</strong></label></br>
+                            <?php $qrcode = Registry::get('inscription.qrcode'); ?>
+                            <label class="radio-inline"><input type="radio" {{ ($qrcode ? 'checked' : '') }} name="inscription[qrcode]" value="1"> oui &nbsp;</label>
+                            <label class="radio-inline"><input type="radio" {{ (!$qrcode ? 'checked' : '') }} name="inscription[qrcode]" value="0"> non</label>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                        <button type="submit" class="btn btn-info btn-sm  pull-right">Mettre à jour</button>
                     </div>
                 </div>
-
-            </div>
-            <div class="col-md-6">
 
                 <h4><i class="fa fa-ban"></i> &nbsp;Restrictions</h4>
                 <div class="panel panel-warning">
@@ -131,7 +125,27 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-info pull-right">Mettre à jour</button>
+                        <button type="submit" class="btn btn-info btn-sm  pull-right">Mettre à jour</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-7">
+                
+                <h4><i class="fa fa-flag"></i> &nbsp;Messages d'erreur inscription</h4>
+                <div class="panel panel-danger">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label><strong>Déjà inscrit</strong></label>
+                            <textarea name="inscription[messages][registered]" class="form-control redactorSimple">{!! Registry::get('inscription.messages.registered')!!}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>N'a pas payé les factures</strong></label>
+                            <textarea name="inscription[messages][pending]" class="form-control redactorSimple">{!! Registry::get('inscription.messages.pending') !!}</textarea>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-info btn-sm  pull-right">Mettre à jour</button>
                     </div>
                 </div>
 

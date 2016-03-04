@@ -58,25 +58,28 @@ class Inscription extends Model
         $this->load('groupe','user');
         $path = config('documents.colloque.bon');
 
-        if($this->annexe)
+        if(isset($this->groupe) && !empty($this->groupe))
         {
-            if(isset($this->groupe) && !empty($this->groupe))
-            {
-                $this->groupe->load('user');
-                $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->groupe->id.'-'.$this->participant->id.'.pdf';
-            }
-            else
-            {
-                $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
-            }
-
-            if (\File::exists(public_path($file)))
-            {
-                return $file;
-            }
+            $this->groupe->load('user');
+            $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->groupe->id.'-'.$this->participant->id.'.pdf';
+        }
+        else
+        {
+            $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
         }
 
-        return null;
+        return ($this->annexe && \File::exists(public_path($file)) ? $file : null);
+    }
+
+    /* *
+     * Get only attestation doc
+     * */
+    public function getDocAttestationAttribute()
+    {
+        $path = config('documents.colloque.attestation');
+        $file = $path.'attestation'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+
+        return (\File::exists(public_path($file)) ? $file : null);
     }
 
     /* *

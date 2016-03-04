@@ -1,9 +1,21 @@
 @if(!empty($inscription->documents))
-    <div class="btn-group">
-        @foreach($inscription->documents as $type => $annexe)
-            <a target="_blank" href="{{ asset($annexe['link']) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;{{ strtoupper($type) }}</a>
-        @endforeach
-    </div>
+    <p>
+        <div class="btn-group">
+            @foreach($inscription->documents as $type => $annexe)
+                <a target="_blank" href="{{ asset($annexe['link']) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm">
+                    <i class="fa fa-file"></i> &nbsp;{{ strtoupper($type) }}
+                </a>
+            @endforeach
+        </div>
+    </p>
+@endif
+
+@if($inscription->doc_attestation)
+   <br/>
+   <p><a target="_blank" href="{{ asset($inscription->doc_attestation) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm">
+           <i class="fa fa-file"></i> &nbsp;Attestation
+       </a>
+   </p>
 @endif
 
 @if(!$inscription->rappels->isEmpty())

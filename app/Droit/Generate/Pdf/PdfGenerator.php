@@ -116,137 +116,7 @@ class PdfGenerator implements PdfGeneratorInterface
 
     }
 
-    /* *
-     * Inscriptions colloques
-     * Prépare inscription with infos
-     * */
 
-    public function setInscription($inscription)
-    {
-        $inscription->load('user_options','groupe','participant');
-        $inscription->user_options->load('option');
-        $inscription->colloque->load('location','centres','compte');
-
-        $user = $inscription->inscrit;
-        $user->load('adresses');
-
-        $inscription->setAttribute('adresse_facturation',$user->adresse_facturation);
-
-        $this->inscription = $inscription;
-
-        return $this;
-    }
-
-    public function bonEvent()
-    {
-        $data = [
-            'expediteur'  => $this->expediteur,
-            'inscription' => $this->inscription,
-            'date'        => $this->now
-        ];
-
-        $bon = \PDF::loadView('templates.colloque.bon', $data)->setPaper('a4');
-
-        $generate = ($this->stream ? 'stream' : 'save');
-
-        $part = (isset($this->inscription->participant) ? $this->inscription->group_id.'-'.$this->inscription->participant->id : $this->inscription->user_id);
-
-        return $bon->$generate(public_path().'/files/colloques/bon/bon_'.$this->inscription->colloque->id.'-'.$part.'.pdf');
-    }
-
-    public function factureEvent($nbr = null, $rappel = null)
-    {
-        // Pass rappel as array ['nbr','rappel']
-
-        if($this->inscription->price->price > 0)
-        {
-            $data = [
-                'messages'    => $this->messages,
-                'expediteur'  => $this->expediteur,
-                'inscription' => $this->inscription,
-                'date'        => $this->now,
-                'signature'   => $this->signature,
-                'tva'         => $this->tva,
-                'annexes'     => $this->inscription->annexe,
-                'nbr'         => $nbr
-            ];
-
-            $facture  = \PDF::loadView('templates.colloque.facture', $data)->setPaper('a4');
-
-            $generate = ($this->stream ? 'stream' : 'save');
-            $folder   = ($rappel ? 'rappel': 'facture');
-            $name     = ($rappel ? 'rappel_'.$rappel->id: 'facture');
-
-            return $facture->$generate(public_path().'/files/colloques/'.$folder.'/'.$name.'_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.'.pdf');
-        }
-
-        return true;
-    }
-
-    public function factureGroupeEvent($groupe,$inscriptions,$price,$nbr = null, $rappel = null)
-    {
-        if($price > 0)
-        {
-            $data = [
-                'messages'     => $this->messages,
-                'expediteur'   => $this->expediteur,
-                'inscriptions' => $inscriptions,
-                'groupe'       => $groupe,
-                'date'         => $this->now,
-                'signature'    => $this->signature,
-                'tva'          => $this->tva,
-                'annexes'      => $groupe->colloque->annexe,
-                'nbr'          => $nbr
-            ];
-
-            $facture  = \PDF::loadView('templates.colloque.groupe', $data)->setPaper('a4');
-
-            $generate = ($this->stream ? 'stream' : 'save');
-            $folder   = ($rappel ? 'rappel': 'facture');
-            $name     = ($rappel ? 'rappel_'.$rappel->id: 'facture');
-
-            return $facture->$generate(public_path().'/files/colloques/'.$folder.'/'.$name.'_'.$groupe->colloque_id.'-'.$groupe->id.'.pdf');
-
-        }
-
-        return true;
-    }
-
-    public function bvGroupeEvent($groupe,$inscriptions,$price)
-    {
-        if($price > 0)
-        {
-            $data = [
-                'inscriptions' => $inscriptions,
-                'groupe'       => $groupe,
-            ];
-
-            $bv = \PDF::loadView('templates.colloque.bvgroupe', $data)->setPaper('a4');
-
-            $generate = ($this->stream ? 'stream' : 'save');
-
-            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$groupe->colloque_id.'-'.$groupe->id.'.pdf');
-
-        }
-
-        return true;
-    }
-
-    public function bvEvent()
-    {
-        if($this->inscription->price->price > 0)
-        {
-            $data = ['inscription' => $this->inscription];
-
-            $bv = \PDF::loadView('templates.colloque.bv', $data)->setPaper('a4');
-
-            $generate = ($this->stream ? 'stream' : 'save');
-
-            return $bv->$generate(public_path().'/files/colloques/bv/bv_'.$this->inscription->colloque->id.'-'.$this->inscription->inscrit->id.'.pdf');
-        }
-
-        return true;
-    }
 
     public function generate($annexes)
     {
@@ -301,17 +171,55 @@ class PdfGenerator implements PdfGeneratorInterface
         return $template->$generate(public_path().'/files/abos/'.$filename.'/'.$facture->product_id.'/'.$filename.'_'.$facture->product->reference.'-'.$facture->abo_user_id.'_'.$facture->id.'.pdf');
     }
 
+
+    public function makeAbo($document, $model)
+    {
+        $data     = $this->getData('abo');
+        $generate = new \App\Droit\Generate\Entities\Generate($model);
+
+        $data['generate'] = $generate;
+
+        $view = \PDF::loadView('templates.abonnement.test', $data)->setPaper('a4');
+
+        // Do wee need to stream or save the pdf
+        $state    = ($this->stream ? 'stream' : 'save');
+
+        // Path for saving document
+        $filepath = $generate->getFilename($document, $document);
+
+        return $view->$state($filepath);
+    }
+
+    /*
+     * Generate documents for inscription
+     * Bon, Facture, BV, Attestation
+     *
+     * Create a Generate object and retrieve data for template type
+     * Inject qrcode for Bon => inscription validation via :
+     * inscription id and security key
+     * Route::get('presence/{id}/{key}', 'CodeController@presence');
+     *
+     * For abo pass facture and get abo via Generate object
+     * */
     public function make($document, $model)
     {
-        $key      = config('services.qrcode.key');
         $data     = $this->getData($document);
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
-        $data['code']     = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate(url('presence/'.$model->id.'/'.$key)));
 
-        $view     = \PDF::loadView('templates.test.'.$document, $data)->setPaper('a4');
+        // Qrcode for bon
+        if(\Registry::get('inscription.qrcode'))
+        {
+            $data['code'] = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate(url('presence/'.$model->id.'/'.config('services.qrcode.key'))));
+        }
+
+        $view = \PDF::loadView('templates.colloque.'.$document, $data)->setPaper('a4');
+
+        // Do wee need to stream or save the pdf
         $state    = ($this->stream ? 'stream' : 'save');
+
+        // Path for saving document
         $filepath = $generate->getFilename($document, $document);
 
         return $view->$state($filepath);
@@ -327,6 +235,16 @@ class PdfGenerator implements PdfGeneratorInterface
              $data['messages']  = $this->messages;
              $data['signature'] = $this->signature;
              $data['tva']       = $this->tva;
+        }
+
+        if($document == 'abo')
+        {
+            $data['messages']  = $this->messages;
+            $data['versement'] = $this->versement;
+            $data['signature'] = $this->signature;
+            $data['tva']       = ['taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres'];
+            $data['msgTypes']  = ['warning','special','remarque','signature'];
+            $data['compte']    = \Registry::get('shop.compte.abo');
         }
 
         return $data;

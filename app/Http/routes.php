@@ -176,6 +176,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('document', 'Backend\Colloque\DocumentController');
 
     Route::get('attestation/colloque/{id}', 'Backend\Colloque\AttestationController@colloque');
+    Route::get('attestation/inscription/{id}', 'Backend\Colloque\AttestationController@inscription');
     Route::resource('attestation', 'Backend\Colloque\AttestationController');
 
     Route::post('export/inscription', 'Backend\ExportController@inscription');
