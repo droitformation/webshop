@@ -19,11 +19,15 @@
         <tr><td colspan="2" height="10">&nbsp;</td></tr>
         <tr align="top">
             <td align="top" width="60%" valign="top">
+
                 @if(!empty($expediteur))
                     <ul id="facdroit">
                         @foreach($expediteur as $line)
                             <li>{{ $line }}</li>
                         @endforeach
+
+                        <?php $telephone = !empty($colloque->attestation->telephone) ? $colloque->attestation->telephone : \Registry::get('shop.infos.telephone'); ?>
+                        <li>Tél. {{ $telephone }}</li>
                     </ul>
                 @endif
 
@@ -44,9 +48,14 @@
             <td width="20%"></td>
             <td width="80%" class="content-attestation">
                 <h1 class="title blue">{{ strtoupper('attestation') }}</h1>
-                <p>{{ $colloque->attestation->organisateur }} atteste que</p>
+
+                <?php $organisateur =  $colloque->attestation->organisateur ? $colloque->attestation->organisateur : $colloque->organisateur; ?>
+
+                <p>{{ $organisateur }} atteste que<</p>
+
 
                 <?php $adresse = $generate->getAdresse(); ?>
+
                 @if($adresse)
                     <p><strong>{!! $adresse->civilite_title.' '.$adresse->name !!}</strong></p>
                 @endif
@@ -56,15 +65,26 @@
         </tr>
         <tr>
             <td width="20%"></td>
-            <td width="80%">
-                <h4 class="colloque-attestation"><?php echo $colloque->titre; ?></h4>
-            </td>
+            <td width="80%"><h4 class="colloque-attestation">&laquo; {{ $colloque->titre }} &raquo;</h4></td>
         </tr>
-        <tr><td colspan="2" height="10">&nbsp;</td></tr>
         <tr>
             <td width="20%"></td>
             <td width="80%">
-                {!! $colloque->attestation->comment  !!}
+                @if($colloque->attestation->lieu)
+                    <p>{{ $colloque->attestation->lieu }}</p>
+                @else
+                    <p><strong>Lieu:</strong> {{ $colloque->location->name }} {{ strip_tags($colloque->location->adresse) }}</p>
+                @endif
+            </td>
+        </tr>
+        <tr><td colspan="2" height="20">&nbsp;</td></tr>
+        <tr>
+            <td width="20%"></td>
+            <td width="80%" class="comment-attestation">
+                @if($colloque->attestation->comment)
+                    <p><strong>Thèmes:</strong></p>
+                    {!! $colloque->attestation->comment !!}
+                @endif
             </td>
         </tr>
         <tr><td colspan="2" height="50">&nbsp;</td></tr>

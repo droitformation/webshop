@@ -6,11 +6,8 @@
             <p><a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
         <div class="col-md-6 text-right">
-            @if($colloque->attestation)
-                <p><a href="{{ url('admin/attestation/'.$colloque->attestation->id) }}" class="btn btn-magenta"><i class="fa fa-calendar-check-o"></i> &nbsp;Attestations</a></p>
-            @else
-                <p><a href="{{ url('admin/attestation/colloque/'.$colloque->id) }}" class="btn btn-magenta"><i class="fa fa-calendar-check-o"></i> &nbsp;Attestations</a></p>
-            @endif
+            <?php $path =  $colloque->attestation ? url('admin/attestation/'.$colloque->attestation->id) : url('admin/attestation/colloque/'.$colloque->id); ?>
+            <p><a href="{{ $path }}" class="btn btn-magenta"><i class="fa fa-calendar-check-o"></i> &nbsp;Attestation</a></p>
         </div>
     </div>
 

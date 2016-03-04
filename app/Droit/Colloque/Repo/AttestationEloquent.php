@@ -25,12 +25,12 @@ class AttestationEloquent implements AttestationInterface{
     public function create(array $data){
 
         $attestation = $this->attestation->create(array(
-            'title'           => $data['title'],
-            'lieu'            => $data['lieu'],
             'colloque_id'     => $data['colloque_id'],
+            'title'           => $data['title'],
+            'signature'       => $data['signature'],
+            'lieu'            => (isset($data['lieu']) ? $data['lieu'] : null),
             'telephone'       => (isset($data['telephone']) ? $data['telephone'] : null),
             'organisateur'    => (isset($data['organisateur']) ? $data['organisateur'] : null),
-            'signature'       => (isset($data['signature']) ? $data['signature'] : null),
             'comment'         => (isset($data['comment']) ? $data['comment'] : null),
             'created_at'      => \Carbon\Carbon::now(),
             'updated_at'      => \Carbon\Carbon::now()

@@ -8,7 +8,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <form action="{{ url('admin/attestation') }}" method="POST" class="form-horizontal">
                 {!! csrf_field() !!}
 
@@ -21,45 +21,47 @@
                         <hr/>
                         <div class="form-group">
                             <label for="titre" class="col-sm-3 control-label">Titre du responsable</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 {!! Form::text('title', '' , ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
-                            <div class="col-sm-3"><p class="help-block">Requis</p></div>
+                            <div class="col-sm-4"><p class="help-block">Requis</p></div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Signature</label>
-                            <div class="col-sm-6">
-                                {!! Form::text('signature', '' , ['class' => 'form-control']) !!}
+                            <div class="col-sm-5">
+                                {!! Form::text('signature', '' , ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
+                            <div class="col-sm-4"><p class="help-block">Requis</p></div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Téléphone</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 {!! Form::text('telephone', '' , ['class' => 'form-control' ]) !!}
                             </div>
+                            <div class="col-sm-4"><p class="help-block">La valeur par défaut est celui indiqué dans la configuration du shop</p></div>
                         </div>
 
                         <div class="form-group">
-                            <label for="soustitre" class="col-sm-3 control-label">Lieu</label>
-                            <div class="col-sm-6">
-                                {!! Form::text('lieu', '' , ['class' => 'form-control', 'required' => 'required']) !!}
+                            <label class="col-sm-3 control-label">Lieu</label>
+                            <div class="col-sm-5">
+                                {!! Form::text('lieu', '' , ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-sm-3"><p class="help-block">Requis</p></div>
+                            <div class="col-sm-4"><p class="help-block">La valeur par défaut est celui indiqué dans le colloque</p></div>
                         </div>
 
                         <div class="form-group">
-                            <label for="sujet" class="col-sm-3 control-label">Organisateur</label>
-                            <div class="col-sm-6">
-                                {!! Form::text('organisateur', '' , ['class' => 'form-control', 'required' => 'required']) !!}
+                            <label class="col-sm-3 control-label">Organisateur</label>
+                            <div class="col-sm-5">
+                                {!! Form::text('organisateur', '' , ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-sm-3"><p class="help-block">Requis</p></div>
+                            <div class="col-sm-4"><p class="help-block">La valeur par défaut est celui indiqué dans le colloque</p></div>
                         </div>
 
                         <div class="form-group">
                             <label for="comment" class="col-sm-3 control-label">Remarques</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <textarea name="comment" cols="50" rows="4" class="redactorSimple form-control"></textarea>
                             </div>
                         </div>

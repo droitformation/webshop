@@ -29,9 +29,8 @@ class CreateAttestation extends Request
     public function rules()
     {
         return [
-            'title'         => 'required',
-            'lieu'          => 'required',
-            'organisateur'  => 'required'
+            'title'     => 'required',
+            'signature' => 'required'
         ];
     }
 }
