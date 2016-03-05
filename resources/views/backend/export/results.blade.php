@@ -69,7 +69,7 @@
                                     </tbody>
                                 </table>
 
-                                {!! $adresses->setPath('admin/export/global')->render() !!}
+                                {!! $adresses->setPath('admin/export/search')->render() !!}
 
                             @endif
 
