@@ -57,9 +57,24 @@ class Generate{
     {
         if($this->getType() == 'abo')
         {
-            $this->model->abonnement->load('user','tiers');
+            $this->model->abonnement->load('user','tiers','originaluser','originaltiers');
 
-            return $this->model->abonnement->tiers_id ? $this->model->abonnement->tiers : $this->model->abonnement->user;
+            if($this->model->abonnement->tiers_id > 0)
+            {
+                return $this->model->abonnement->tiers ? $this->model->abonnement->tiers : $this->model->abonnement->originaltiers;
+            }
+
+            if($this->model->abonnement->user)
+            {
+                return $this->model->abonnement->user;
+            }
+
+            if($this->model->abonnement->originaluser)
+            {
+                return $this->model->abonnement->originaluser;
+            }
+
+            return null;
         }
 
         if($this->getType() == 'inscription' && $this->model->group_id)
@@ -166,7 +181,14 @@ class Generate{
 
         if($this->getType() == 'abo')
         {
-            $file = 'files/abos/facture/'.$this->model->product_id.'/facture_'.$this->model->product->reference.'-'.$this->model->abo_user_id.'_'.$this->model->id.'.pdf';
+            $path = 'files/abos/'.$annexe.'/'.$this->model->product_id;
+
+            if (!\File::exists(public_path($path)))
+            {
+                \File::makeDirectory(public_path($path));
+            }
+
+            $file = $path.'/'.$annexe.'_'.$this->model->product->reference.'-'.$this->model->abo_user_id.'_'.$this->model->id.'.pdf';
 
             return public_path($file);
         }

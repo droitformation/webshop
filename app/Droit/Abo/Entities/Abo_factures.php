@@ -24,6 +24,13 @@ class Abo_factures extends Model{
         return null;
     }
 
+    public function getProdReferenceAttribute()
+    {
+        $this->load('product');
+
+        return $this->product->reference;
+    }
+
     public function abonnement()
     {
         return $this->belongsTo('App\Droit\Abo\Entities\Abo_users','abo_user_id')->withTrashed();

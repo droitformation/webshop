@@ -36,7 +36,7 @@ class AboWorker implements AboWorkerInterface{
         // All abonnements for the product
         if(!$abo->abonnements->isEmpty())
         {
-            $chunks = $abo->abonnements->chunk(30);
+            $chunks = $abo->abonnements->chunk(20);
 
             foreach($chunks as $chunk)
             {
@@ -55,7 +55,6 @@ class AboWorker implements AboWorkerInterface{
         $rappels = null;
 
         $facture = $this->facture->find($facture_id);
-        $abo     = $this->abo->find($facture->abo_user_id);
 
         if($rappel)
         {
@@ -63,7 +62,7 @@ class AboWorker implements AboWorkerInterface{
             $rappels = $rappels->count();
         }
 
-        $this->generator->factureAbo($abo ,$facture, $rappels);
+        $this->generator->makeAbo('facture', $facture, $rappels);
     }
 
     /**
@@ -104,7 +103,7 @@ class AboWorker implements AboWorkerInterface{
             {
                 if($abonnement->status == 'abonne')
                 {
-                    $this->generator->factureAbo($abonnement ,$facture);
+                    $this->generator->makeAbo('facture', $facture);
                 }
                 else
                 {

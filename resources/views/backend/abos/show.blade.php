@@ -59,8 +59,24 @@
                                     <tr>
                                         <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                         <td>{{ $abonnement->numero }}</td>
-                                        <td>{{ $abonnement->user ? $abonnement->user->name : 'Duplicata' }}</td>
-                                        <td>{{ $abonnement->user ? $abonnement->user->company : 'Duplicata'  }}</td>
+                                        <td>
+                                            @if($abonnement->user)
+                                                {{ $abonnement->user->name }}
+                                            @elseif($abonnement->originaluser)
+                                                {{ $abonnement->originaluser->name }}
+                                            @else
+                                                <p><span class="label label-warning">Duplicata</span></p>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($abonnement->user)
+                                                {{ $abonnement->user->company }}
+                                            @elseif($abonnement->originaluser)
+                                                {{ $abonnement->originaluser->company }}
+                                            @else
+                                                <p><span class="label label-warning">Duplicata</span></p>
+                                            @endif
+                                        </td>
                                         <td>{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>
                                         <td class="text-right">
@@ -105,8 +121,24 @@
                                                 </form>
                                             </td>
                                             <td>{{ $abonnement->numero }}</td>
-                                            <td>{{ $abonnement->user ? $abonnement->user->name : 'Duplicata'  }}</td>
-                                            <td>{{ $abonnement->user ? $abonnement->user->company  :'Duplicata' }}</td>
+                                            <td>
+                                                @if($abonnement->user)
+                                                    {{ $abonnement->user->name }}
+                                                @elseif($abonnement->originaluser)
+                                                    {{ $abonnement->originaluser->name }}
+                                                @else
+                                                    <p><span class="label label-warning">Duplicata</span></p>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($abonnement->user)
+                                                    {{ $abonnement->user->company }}
+                                                @elseif($abonnement->originaluser)
+                                                    {{ $abonnement->originaluser->company }}
+                                                @else
+                                                    <p><span class="label label-warning">Duplicata</span></p>
+                                                @endif
+                                            </td>
                                             <td>Résilié</td>
                                         </tr>
                                     @endforeach

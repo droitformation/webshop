@@ -116,70 +116,15 @@ class PdfGenerator implements PdfGeneratorInterface
 
     }
 
-
-
-    public function generate($annexes)
-    {
-        $toGenereate = (count(array_intersect($annexes, ['bon','facture'])) == count(['bon','facture']) ? true : false);
-
-        if($this->inscription->group_id && $toGenereate)
-        {
-            $this->bonEvent();
-        }
-        else
-        {
-            foreach($annexes as $annexe)
-            {
-                $doc = $annexe.'Event';
-                $this->$doc();
-            }
-        }
-    }
-
-    public function factureAbo($abo, $facture, $rappel = null)
-    {
-        $adresse  = ($abo->tiers_id ? $abo->tiers : $abo->user);
-        $msgTypes = ['warning','special','remarque','signature'];
-
-        $data = [
-            'expediteur' => $this->expediteur,
-            'messages'   => $this->messages,
-            'tva' => [
-                'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres'
-            ],
-            'compte'   => \Registry::get('shop.compte.abo'),
-            'abo'      => $abo,
-            'facture'  => $facture,
-            'adresse'  => $adresse,
-            'msgTypes' => $msgTypes,
-            'date'     => $this->now,
-            'rappel'   => $rappel
-        ];
-
-        $template = \PDF::loadView('templates.abonnement.facture', $data)->setPaper('a4');
-
-        $generate   = ($this->stream ? 'stream' : 'save');
-        $filename   = ($rappel ? 'rappel' : 'facture');
-
-        $dir = public_path().'/files/abos/'.$filename.'/'.$facture->product_id;
-
-        if (!\File::exists($dir))
-        {
-            \File::makeDirectory($dir);
-        }
-
-        return $template->$generate(public_path().'/files/abos/'.$filename.'/'.$facture->product_id.'/'.$filename.'_'.$facture->product->reference.'-'.$facture->abo_user_id.'_'.$facture->id.'.pdf');
-    }
-
-
-    public function makeAbo($document, $model)
+    public function makeAbo($document, $model, $rappel = null)
     {
         $data     = $this->getData('abo');
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
+        $data['rappel']   = $rappel;
 
-        $view = \PDF::loadView('templates.abonnement.test', $data)->setPaper('a4');
+        $view = \PDF::loadView('templates.abonnement.facture', $data)->setPaper('a4');
 
         // Do wee need to stream or save the pdf
         $state    = ($this->stream ? 'stream' : 'save');
@@ -201,12 +146,13 @@ class PdfGenerator implements PdfGeneratorInterface
      *
      * For abo pass facture and get abo via Generate object
      * */
-    public function make($document, $model)
+    public function make($document, $model, $rappel = null)
     {
         $data     = $this->getData($document);
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
+        $data['rappel']   = $rappel;
 
         // Qrcode for bon
         if(\Registry::get('inscription.qrcode'))

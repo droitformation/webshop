@@ -3,8 +3,8 @@
     <style type="text/css">
         @page { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: auto;}
     </style>
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/generate/common.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/generate/bon.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo public_path('css/generate/common.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo public_path('css/generate/bon.css');?>" media="screen" />
 </head>
 <body>
 
@@ -36,7 +36,7 @@
 
         <?php $rappel = (isset($nbr) ? '<span class="red">'.$nbr.''.($nbr > 1 ? 'ème' : 'ère').' Rappel</span>' : ''); ?>
         <h1 class="title blue">
-            {{ $rappel }}FACTURE {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
+            {!! $rappel !!} FACTURE {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
         </h1>
 
         @if(is_array($generate->getNo()))

@@ -59,18 +59,11 @@ class MakeFactureAbo extends Job implements ShouldQueue
                     ]);
                 }
 
-                // If we want all afctures to be remade or made if none exist
-                if($this->all)
+                // If we want all factures to be remade or made if none exist
+                // does an pdf already exist? if not make one
+                if($this->all || ($facture && !$facture->abo_facture))
                 {
-                    $generator->factureAbo($facture->abonnement, $facture);
-                }
-                else
-                {
-                    // does an pdf already exist? if not make one
-                    if($facture && !$facture->abo_facture)
-                    {
-                        $generator->factureAbo($facture->abonnement, $facture);
-                    }
+                    $generator->makeAbo('facture', $facture);
                 }
             }
         }

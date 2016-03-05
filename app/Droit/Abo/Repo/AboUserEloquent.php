@@ -25,7 +25,7 @@ class AboUserEloquent implements AboUserInterface{
 
     public function find($id)
     {
-        return $this->abo_user->with(['tiers','user','abo','factures'])->find($id);
+        return $this->abo_user->with(['tiers','user','abo','factures','originaltiers','originaluser'])->find($id);
     }
 
     public function create(array $data){

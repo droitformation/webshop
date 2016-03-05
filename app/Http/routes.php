@@ -248,11 +248,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('abonnement/export', 'Backend\Abo\AboController@export');
     Route::post('abonnement/restore/{id}', 'Backend\Abo\AboUserController@restore');
     Route::resource('abonnement', 'Backend\Abo\AboUserController');
-    Route::resource('rappel', 'Backend\Abo\AboFactureController');
-    Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');
 
+    Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');
     Route::get('facture/generate/{id}', 'Backend\Abo\AboFactureController@generate');
 
+    Route::resource('rappel', 'Backend\Abo\AboRappelController');
     Route::resource('facture', 'Backend\Abo\AboFactureController');
     Route::resource('abo', 'Backend\Abo\AboController');
 

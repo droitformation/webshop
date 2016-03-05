@@ -52,6 +52,13 @@ class Abo_users extends Model{
         return explode('.',$this->price_cents);
     }
 
+    public function getAdresseAttribute()
+    {
+        $this->load('originaluser','user');
+
+        return $this->originaluser ? $this->originaluser : $this->user;
+    }
+
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
@@ -70,9 +77,19 @@ class Abo_users extends Model{
         return $this->belongsTo('App\Droit\Abo\Entities\Abo','abo_id');
     }
 
+    public function originaluser()
+    {
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id','old_id')->withTrashed();
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id')->withTrashed();
+    }
+
+    public function originaltiers()
+    {
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','tiers_id','old_id')->withTrashed();
     }
 
     public function tiers()

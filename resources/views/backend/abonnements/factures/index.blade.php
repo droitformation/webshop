@@ -77,7 +77,15 @@
                                 <tr>
                                     <td><a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                     <td>{{ $facture->abonnement->numero }}</td>
-                                    <td>{{ $facture->abonnement->user->name }}</td>
+                                    <td>
+                                        @if($facture->abonnement->user)
+                                            {{ $facture->abonnement->user->name }}
+                                        @elseif($facture->abonnement->originaluser)
+                                            {{ $facture->abonnement->originaluser->name }}
+                                        @else
+                                            <p><span class="label label-warning">Duplicata</span></p>
+                                        @endif
+                                    </td>
                                     <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
                                     <td>
                                         @if($facture->abo_facture)

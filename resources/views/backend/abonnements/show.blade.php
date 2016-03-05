@@ -157,7 +157,7 @@
 
                                     @if(isset($groupes[$product->id]))
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                             @foreach($groupes[$product->id] as $facture)
 
                                                 <?php $facture->load('rappels'); ?>
@@ -194,9 +194,8 @@
 
                                                     <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer payé</a>
 
-                                                    <form action="{{ url('admin/facture') }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                                                    <form action="{{ url('admin/rappel') }}" method="POST" class="pull-right">{!! csrf_field() !!}
                                                         <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">
-                                                        <input type="hidden" value="rappel" name="type">
                                                         <button class="btn btn-sm btn-warning" type="submit">Créer un rappel</button>
                                                     </form>
 
@@ -218,14 +217,17 @@
                                             </div>
 
                                             @if(!$facture->rappels->isEmpty())
-                                                <div class="col-md-6">
+
+                                                <div class="col-md-5">
 
                                                     <!-- Rappels -->
                                                     @foreach($facture->rappels as $rappel)
                                                         <div class="row">
                                                             <div class="col-md-9">
-                                                                <span class="label label-warning"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
-                                                                <strong>Rappel le {!! $rappel->created_at->formatLocalized('%d %B %Y') !!}</strong>
+                                                                <p><span class="label label-warning"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Rappel le {!! $rappel->created_at->formatLocalized('%d %B %Y') !!}</strong></p>
+                                                                @if($rappel->abo_rappel)
+                                                                   <?php $abo_rappel =  asset($rappel->abo_rappel); ?>
+                                                                @endif
                                                             </div>
                                                             <div class="col-md-3">
                                                                 @include('backend.abonnements.partials.payement', ['payement' => $rappel, 'type' => 'rappel'])
@@ -233,9 +235,10 @@
                                                         </div>
                                                     @endforeach
 
-                                                    @if($facture->rappels->first()->abo_rappel)
-                                                        <p><a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->rappels->first()->abo_rappel) }}"><i class="fa fa-file"></i> &nbsp;Rappel pdf</a></p>
+                                                    @if(isset($abo_rappel))
+                                                        <p><a class="btn btn-sm btn-default" target="_blank" href="{{ $abo_rappel }}"><i class="fa fa-file"></i> &nbsp;Rappel pdf</a></p>
                                                     @endif
+
                                                     <!-- End Rappels -->
 
                                                 </div>

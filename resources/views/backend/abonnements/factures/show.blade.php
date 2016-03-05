@@ -3,11 +3,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/factures/'.$facture->product_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
-            </div>
+            <p><a href="{{ url('admin/factures/'.$facture->product_id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
     </div>
 

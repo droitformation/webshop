@@ -12,16 +12,16 @@ class Abo_rappels extends Model{
 
     public function getAboRappelAttribute()
     {
-        $this->load('facture');
+        $this->load('facture','facture.abonnement');
 
-        $file = 'files/abos/rappel/'.$this->facture->abonnement->abo_product.'/rappel_'.$this->facture->abonnement->abo_ref.'_'.$this->facture->id.'.pdf';
+        $file = 'files/abos/rappel/'.$this->facture->abonnement->abo_product.'/rappel_'.$this->facture->product->reference.'-'.$this->facture->abo_user_id.'_'.$this->facture->id.'.pdf';
 
-        if (\File::exists($file))
+        if (\File::exists(public_path($file)))
         {
             return $file;
         }
 
-        return false;
+        return null;
     }
 
     public function facture()
