@@ -12,6 +12,7 @@
                 <div class="panel-body">
                     <h4>Rechercher par</h4>
                     <form action="{{ url('admin/search/user') }}" method="post">
+                        {!! csrf_field() !!}
                         <div class="form-group">
                             <label>Prénom</label>
                             <input type="text" name="first_name" class="form-control" placeholder="Prénom">

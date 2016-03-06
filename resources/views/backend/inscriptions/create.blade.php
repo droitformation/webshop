@@ -14,7 +14,7 @@
             <div class="panel-body">
                 <h3>Créer une Inscription</h3>
                 <form id="formInscription" class="validate-form" data-validate="parsley">
-
+                    {!! csrf_field() !!}
                     @if(isset($group_id))
                         <input type="hidden" name="group_id" value="{{ $group_id }}" />
                         <h4>Détenteur: {!! $groupe->name !!}</h4>

@@ -1,4 +1,4 @@
-@if(!$sites->isEmpty())
+@if(isset($sites) && !$sites->isEmpty())
     @foreach($sites as $site)
         <li class="dropdown demodrop sitedrop">
             <a href="#" class="dropdown-toggle tooltips color-{{ $site->slug }}" data-toggle="dropdown">{{ $site->nom }}</a>

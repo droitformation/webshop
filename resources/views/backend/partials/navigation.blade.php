@@ -99,7 +99,7 @@
                 <li class="<?php echo (Request::is('admin/import') ? 'active' : '' ); ?>"><a href="{{ url('admin/import')  }}">Importer une liste</a></li>
             </ul>
         </li>
-        <li><a href="{{ url('auth/register') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur admin</span></a></li>
+        <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur admin</span></a></li>
     </ul>
     <!-- END SIDEBAR MENU -->
 </nav>

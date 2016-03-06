@@ -32,11 +32,5 @@ class UserTest extends TestCase {
 		$this->visit('/')->click('Mon compte')->seePageIs('/profil');
 	}
 
-	/**
-	 * @return void
-	 */
-	public function testAdmin()
-	{
-		$this->visit('/admin')->see('Admin');;
-	}
+
 }
