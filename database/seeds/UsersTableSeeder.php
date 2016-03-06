@@ -40,18 +40,6 @@ class UsersTableSeeder extends \Illuminate\Database\Seeder  {
             'livraison'     => 1,
         ));
 
-        $users = factory(App\Droit\User\Entities\User::class, 10)->create();
-
-        foreach($users as $user)
-        {
-            $addresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
-                'user_id'    => $user->id,
-                'first_name' => $user->firstName,
-                'last_name'  => $user->lastName,
-                'email'      => $user->email,
-            ]);
-        }
-
 		// Uncomment the below to run the seeder
 		//DB::table('users')->insert($users);
 	}

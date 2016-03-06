@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => env('DB_CONNECTION', 'mysql'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -50,6 +50,20 @@ return [
 			'driver'   => 'sqlite',
 			'database' => storage_path().'/database.sqlite',
 			'prefix'   => '',
+		],
+
+		'testing' => [
+			'driver'      => 'mysql',
+			'host'        => 'localhost',
+			'database'    => 'testing',
+			'username'    => 'root',
+			'password'    => 'root',
+			'unix_socket' => env('DB_SOCKET', ''),
+			'unix_socket' => '/Applications/MAMP/tmp/mysql/mysql.sock',
+			'charset'     => 'utf8',
+			'collation'   => 'utf8_unicode_ci',
+			'prefix'      => '',
+			'strict'      => false,
 		],
 
 		'mysql' => [

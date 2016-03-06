@@ -22,8 +22,10 @@
                     <div class="panel-footer">
                         <div class="btn-group">
                             <a class="btn btn-sky btn-sm" href="{{ url('admin/colloque/'.$colloque->id) }}">&Eacute;diter</a>
-                            <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions
-                                &nbsp; <span class="badge badge-success">{{ $colloque->inscriptions->count() }}</span>
+                            <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions &nbsp;
+                                <span class="badge badge-success">
+                                    {{ $colloque->inscriptions->count() }}
+                                </span>
                             </a>
                             <a class="btn btn-warning btn-sm" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}">Rappels</a>
                         </div>

@@ -85,6 +85,10 @@ $('body').on("click",".addPrice",function(e) {
             $main.replaceWith(data);
             $('.editablePrice').editable({
                 emptytext : '',
+                params: function(params) {
+                    params._token = $("meta[name='_token']").attr('content');
+                    return params;
+                }
             });
         },
         error: function(){alert('problème avec l\'ajout du prix');}
@@ -106,6 +110,10 @@ $('body').on("click",'.removePrice', function(e) {
             $main.replaceWith(data);
             $('.editablePrice').editable({
                 emptytext : '',
+                params: function(params) {
+                    params._token = $("meta[name='_token']").attr('content');
+                    return params;
+                }
             });
         },
         error: function(){alert('problème avec la suppresion du prix');}
@@ -130,7 +138,8 @@ $('body').on("click",'.addOption',function(e) {
             $('.editableOption').editable({
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
-                    params.model = $(this).editable().data('model');
+                    params.model  = $(this).editable().data('model');
+                    params._token = $("meta[name='_token']").attr('content');
                     return params;
                 }
             });
@@ -155,7 +164,8 @@ $('body').on("click",'.removeOption', function(e) {
             $('.editableOption').editable({
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
-                    params.model = $(this).editable().data('model');
+                    params.model  = $(this).editable().data('model');
+                    params._token = $("meta[name='_token']").attr('content');
                     return params;
                 }
             });
@@ -168,24 +178,32 @@ $('.editableOption').editable({
     params: function(params) {
         // add additional params from data-attributes of trigger element
         params.model = $(this).editable().data('model');
+        params._token = $("meta[name='_token']").attr('content');
         return params;
     }
 });
 
 $('.editablePrice').editable({
     emptytext : '',
+    params: function(params) {
+        params._token = $("meta[name='_token']").attr('content');
+        return params;
+    }
 });
 
 $('.editablePayementDate').editable({
     emptytext : '',
     params: function(params) {
         // add additional params from data-attributes of trigger element
-        params.model = $(this).editable().data('model');
+        params.model  = $(this).editable().data('model');
+        params._token = $("meta[name='_token']").attr('content');
         return params;
     },
     success: function(response, newValue)
     {
-        $(this).closest('.input-group').find('.input-group-addon').text(response.etat).addClass('bg-'+ response.color);
+        var $input = $(this).closest('.input-group').find('.input-group-addon').text(response.etat);
+        $input.removeClass('bg-default bg-success');
+        $input.addClass('bg-'+ response.color);
 
         if(!response.success)
         {

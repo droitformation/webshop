@@ -20,11 +20,12 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByColloque($id, $type = false, $paginate = false)
     {
-        $inscription = $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','duplicate','rappels','user_options.option_groupe','user.adresses' => function($query)
-        {
-            $query->where('adresses.type','=',1);
-
-        },'participant','groupe']);
+        $inscription = $this->inscription
+            ->where('colloque_id','=',$id)
+            ->with(['price','colloque','participant','groupe','duplicate','rappels','user_options.option_groupe','user.adresses' => function($query)
+                    {
+                        $query->where('adresses.type','=',1);
+                    }]);
 
         if($type)
         {
@@ -33,10 +34,10 @@ class InscriptionEloquent implements InscriptionInterface{
 
         if($paginate)
         {
-            return $inscription->groupBy('group_id')->paginate(20);
+            return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->paginate(20);
         }
 
-        return $inscription->groupBy('id')->get();
+        return $inscription->get();
     }
 
     public function getByColloqueTrashed($id)

@@ -18,11 +18,6 @@ class AddDeletedAtToOptions extends Migration {
             $table->softDeletes();
         });
 
-        Schema::table('colloque_inscriptions_groupes', function($table)
-        {
-            $table->softDeletes();
-        });
-
         Schema::table('colloque_option_users', function($table)
         {
             $table->softDeletes();
@@ -44,10 +39,6 @@ class AddDeletedAtToOptions extends Migration {
         Schema::table('colloque_options', function(Blueprint $table) {
             $table->dropColumn('created_at');
             $table->dropColumn('updated_at');
-            $table->dropColumn('deleted_at');
-        });
-
-        Schema::table('colloque_inscriptions_groupes', function(Blueprint $table) {
             $table->dropColumn('deleted_at');
         });
 

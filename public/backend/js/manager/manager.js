@@ -10,11 +10,10 @@ $( function() {
 
         $gallery.html('<li style="width: 100%; height: 300px;line-height: 300px;text-align: center;"><img style="width: 60px; height: 60px;" src="' + base_url + '/images/default.svg" /></li>');
 
-
         var $manager  = $('#fileManager');
         var $tree     = $('#fileManagerTree');
 
-        $.post( "admin/files", { path: 'files/uploads' }).done(function( data ){
+        $.post( "admin/files", { path: 'files/uploads', _token: $("meta[name='_token']").attr('content') }).done(function( data ){
             $manager.empty().append(data);
             $manager.data('path','files/uploads');
 
@@ -47,7 +46,7 @@ $( function() {
             var $manager  = $('#fileManager');
             var path      =  $manager.data('path');
 
-            $.post( "admin/files", { path: path }).done(function( data ){
+            $.post( "admin/files", { path: path, _token: $("meta[name='_token']").attr('content') }).done(function( data ){
                 $manager.empty().append(data);
                 $manager.data('path',path);
 
@@ -129,7 +128,7 @@ $( function() {
             var src    = $(this).data('src');
             var button = $(this);
 
-            $.post( "admin/files/delete", { src: src }).done(function( data )
+            $.post( "admin/files/delete", { src: src , _token: $("meta[name='_token']").attr('content')}).done(function( data )
             {
                 if(data)
                 {
@@ -161,7 +160,7 @@ $( function() {
 
         $gallery.html('<li style="width: 100%; height: 300px;line-height: 300px;text-align: center;"><img style="width: 60px; height: 60px;" src="' + base_url + '/images/default.svg" /></li>');
 
-        $.post( "admin/files", { path: path }).done(function( data )
+        $.post( "admin/files", { path: path , _token: $("meta[name='_token']").attr('content')}).done(function( data )
         {
             $manager.empty().append(data);
             $manager.data('path',path);

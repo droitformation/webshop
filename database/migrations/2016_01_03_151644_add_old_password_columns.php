@@ -14,7 +14,7 @@ class AddOldPasswordColumns extends Migration {
 	{
 		Schema::table('users', function(Blueprint $table)
 		{
-			$table->string('oldpassword', 60);
+			$table->string('oldpassword', 60)->nullable();
 		});
 	}
 

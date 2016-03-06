@@ -13,7 +13,7 @@ class FileWorker implements FileWorkerInterface{
         return $authorised;
     }
 
-    public function tree($source_dir, $directory_depth = 0, $hidden = FALSE)
+    public function tree($source_dir, $directory_depth = 0, $hidden = FALSE, $onlydir = TRUE)
     {
         if ($fp = @opendir($source_dir))
         {
@@ -35,7 +35,10 @@ class FileWorker implements FileWorkerInterface{
                 }
                 else
                 {
-                    $filedata[] = $file;
+                    if($onlydir)
+                    {
+                        $filedata[] = $file;
+                    }
                 }
             }
 
@@ -51,7 +54,7 @@ class FileWorker implements FileWorkerInterface{
     {
         $authorisized = $this->authorisized();
 
-        $all = $this->tree('files');
+        $all = $this->tree('files',0,false,false);
 
         if(!empty($all))
         {
@@ -64,12 +67,13 @@ class FileWorker implements FileWorkerInterface{
             }
         }
 
-        return $files;
+        return isset($files) ? $files : [];
     }
 
     public function listDirectoryFiles($dir)
     {
         $tree = $this->tree($dir);
+
         foreach($tree as $index => $file)
         {
             if(!is_array($file))

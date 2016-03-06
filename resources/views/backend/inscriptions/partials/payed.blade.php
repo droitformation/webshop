@@ -8,7 +8,7 @@
          data-title="Date de payment">
         {{ $inscription->payed_at ? $inscription->payed_at->format('Y-m-d') : '' }}
     </div>
-    <span class="input-group-addon bg-{{ $inscription->payed_at ? 'success' : '' }}">
+    <span class="input-group-addon bg-{{ $inscription->payed_at ? 'success' : 'default' }}">
         {{ $inscription->payed_at ? 'payé' : 'en attente' }}
     </span>
 </div>

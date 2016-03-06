@@ -261,7 +261,7 @@ class InscriptionController extends Controller
             $inscription = $this->inscription->update(['id' => $request->input('pk'), $name => $request->input('value')]);
         }
 
-        return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'warning' : 'success')]);
+        return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'default' : 'success')]);
 
     }
 

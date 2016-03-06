@@ -5,12 +5,8 @@
     <div class="col-md-6">
         <h3>Colloques</h3>
     </div>
-    <div class="col-md-6">
-        <div class="options text-right" style="margin-bottom: 10px;">
-            <div class="btn-toolbar">
-                <a href="{{ url('admin/colloque/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-            </div>
-        </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ url('admin/colloque/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
     </div>
 </div>
 
@@ -51,7 +47,6 @@
 
                 <?php $active_chunks = $year->chunk(4); ?>
                 @include('backend.colloques.partials.colloque', ['colloques' => $active_chunks, 'color' => 'warning'])
-
             </div>
         @endforeach
 

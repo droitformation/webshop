@@ -48,12 +48,8 @@
                                     </div>
                                     <div class="col-md-3">
                                         <h4>Tri</h4>
-                                        <div class="radio">
-                                            <label><input type="radio" name="sort" value="" checked> Normal</label>
-                                        </div>
-                                        <div class="radio">
-                                            <label><input type="radio" name="sort" value="1"> Par options</label>
-                                        </div>
+                                        <div class="radio"><label><input type="radio" name="sort" value="" checked> Normal</label></div>
+                                        <div class="radio"><label><input type="radio" name="sort" value="1"> Par options</label></div>
                                     </div>
                                 </div>
                                 <p style="margin-top: 10px;" class="pull-left"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
@@ -82,7 +78,7 @@
                             </thead>
                             <tbody class="selects">
 
-                            @if(!empty($inscriptions))
+                            @if(!$inscriptions->isEmpty())
                                 @foreach($inscriptions as $inscription)
                                     @include('backend.inscriptions.partials.row', ['inscription' => $inscription])
                                 @endforeach

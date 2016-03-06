@@ -264,7 +264,6 @@ $( function() {
         $('.checkbox_all').each(function(){ this.checked = checked; });
     });
 
-
     /*
      * Custom toggle btn div
      * */
