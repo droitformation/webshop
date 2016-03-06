@@ -13,16 +13,12 @@
         <div class="col-md-6">
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Editer abonnement</h4>
-                </div>
-                <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
 
-                    <input type="hidden" name="_method" value="PUT">
-                    {!! csrf_field() !!}
+                <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
+                    <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                     <div class="panel-body">
-
+                        <h4><i class="fa fa-edit"></i> &nbsp;Editer abonnement</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
                             <div class="col-sm-4 col-xs-5">
@@ -34,19 +30,8 @@
                             <label class="col-sm-3 col-xs-12 control-label">Adresse</label>
                             <div class="col-sm-8 col-xs-12">
 
-                                <!-- Autocomplete for adresse -->
-                                <div class="autocomplete-wrapper">
-                                    <div class="input-adresse" data-adresse="{{ $abonnement->adresse_id }}" data-type="adresse_id">
-                                        <input type="hidden" class="form-control" value="{{ $abonnement->adresse_id }}" name="adresse_id">
-                                    </div>
-                                    <div class="choice-adresse"></div>
-                                    <div class="collapse adresse-find">
-                                        <div class="form-group">
-                                            <input id="search-adresse1" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Autocomplete for adresse -->
+                                <!-- Autocomplete for user adresse -->
+                                @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->adresse_id, 'type' => 'adresse_id'])
 
                             </div>
                         </div>
@@ -54,21 +39,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tiers payant</label>
                             <div class="col-sm-4 col-xs-5">
-
                                 <!-- Autocomplete for tiers adresse -->
-                                <div class="autocomplete-wrapper">
-                                    <div class="input-adresse" data-adresse="{{ $abonnement->tiers_id }}" data-type="tiers_id">
-                                        <input type="hidden" class="form-control" value="{{ $abonnement->tiers_id }}" name="tiers_id">
-                                    </div>
-                                    <div class="choice-adresse"></div>
-                                    <div class="collapse in adresse-find">
-                                        <div class="form-group">
-                                            <input id="search-adresse2" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Autocomplete for tiers adresse -->
-
+                                @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->tiers_id, 'type' => 'tiers_id'])
                             </div>
                         </div>
 
@@ -76,8 +48,7 @@
                             <label class="col-sm-3 control-label">Prix spécial</label>
                             <div class="col-sm-4 col-xs-5">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ $abonnement->price }}" name="price">
-                                    <span class="input-group-addon">CHF</span>
+                                    <input type="text" class="form-control" value="{{ $abonnement->price }}" name="price"><span class="input-group-addon">CHF</span>
                                 </div>
                             </div>
                         </div>
@@ -146,111 +117,37 @@
                             <?php $groupes = $abonnement->factures->groupBy('product_id'); ?>
                         @endif
 
-                        <?php $abonnement->abo->load('products'); ?>
-
                         @if(isset($abonnement->abo->products))
                             <?php $products = $abonnement->abo->products->sortByDesc('created_at'); ?>
                             @foreach($products as $product)
 
+                                <!-- Start factures for product-->
                                 <div class="well well-sm">
-                                    <h4><i class="fa fa-stop-circle-o"></i> &nbsp;{{ $product->title }}</h4>
 
-                                    @if(isset($groupes[$product->id]))
-                                        <div class="row">
-                                            <div class="col-md-7">
+                                    <h4>
+                                        <a class="collapse_anchor" data-toggle="collapse" href="#facture_{{ $product->id }}">
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;{{ $product->title }}
+                                        </a>
+                                    </h4>
+                                    <div class="collapse" id="facture_{{ $product->id }}">
+                                        @if(isset($groupes[$product->id]))
                                             @foreach($groupes[$product->id] as $facture)
-
-                                                <?php $facture->load('rappels'); ?>
-
-                                                <!-- Payed -->
-                                                @if($facture->payed_at)
-
-                                                    <div class="row">
-                                                        <div class="col-md-9">
-                                                            <p>
-                                                                <span class="label label-success"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
-                                                                <strong>Payé le {!! $facture->payed_at->formatLocalized('%d %B %Y') !!}</strong>
-                                                            </p>
-                                                            @if($facture->abo_facture)
-                                                                <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
-                                                            @endif
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            @include('backend.abonnements.partials.payement', ['payement' => $facture, 'type' => 'facture'])
-                                                        </div>
-                                                    </div>
-
-                                                @else
-                                                    <p>
-                                                        <span class="label label-default"><i class="fa fa-star"></i></span>&nbsp;&nbsp;
-                                                        <strong>En attente: {{ $facture->created_at->formatLocalized('%d %B %Y') }}</strong>
-                                                    </p>
-
-                                                    @if($facture->abo_facture)
-                                                        <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
-                                                    @endif
-
-                                                    <a href="{{ url('admin/facture/'.$facture->id ) }}" class="btn btn-primary btn-sm">éditer</a>
-
-                                                    <a data-toggle="collapse" href="#payInvoice_{{ $facture->id }}" class="btn btn-info btn-sm">Marquer payé</a>
-
-                                                    <form action="{{ url('admin/rappel') }}" method="POST" class="pull-right">{!! csrf_field() !!}
-                                                        <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">
-                                                        <button class="btn btn-sm btn-warning" type="submit">Créer un rappel</button>
-                                                    </form>
-
-                                                    <div class="collapse" id="payInvoice_{{ $facture->id }}">
-                                                        <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST">
-                                                            <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
-                                                            <input type="hidden" value="{{ $facture->id }}" name="id">
-                                                            <div class="form-group input-group">
-                                                                <input type="text" class="form-control datePicker" name="payed_at" placeholder="Payé le">
-                                                                <span class="input-group-btn"><button class="btn btn-info" type="submit">Ok</button></span>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-
-                                                @endif
-                                                <!-- End Payed -->
-
+                                                @include('backend.abonnements.partials.facture', ['facture' => $facture])
                                             @endforeach
-                                            </div>
 
                                             @if(!$facture->rappels->isEmpty())
-
-                                                <div class="col-md-5">
-
-                                                    <!-- Rappels -->
-                                                    @foreach($facture->rappels as $rappel)
-                                                        <div class="row">
-                                                            <div class="col-md-9">
-                                                                <p><span class="label label-warning"><i class="fa fa-star"></i></span>&nbsp;&nbsp;<strong>Rappel le {!! $rappel->created_at->formatLocalized('%d %B %Y') !!}</strong></p>
-                                                                @if($rappel->abo_rappel)
-                                                                   <?php $abo_rappel =  asset($rappel->abo_rappel); ?>
-                                                                @endif
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                @include('backend.abonnements.partials.payement', ['payement' => $rappel, 'type' => 'rappel'])
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-
-                                                    @if(isset($abo_rappel))
-                                                        <p><a class="btn btn-sm btn-default" target="_blank" href="{{ $abo_rappel }}"><i class="fa fa-file"></i> &nbsp;Rappel pdf</a></p>
-                                                    @endif
-
-                                                    <!-- End Rappels -->
-
-                                                </div>
+                                                @include('backend.abonnements.partials.rappels', ['rappels' => $facture->rappels])
                                             @endif
+                                        @endif
+                                    </div>
 
-                                        </div>
-                                    @endif
                                 </div>
+                                <!-- End factures for product-->
+
                             @endforeach
                         @endif
 
-                        <hr/>
+
                         <h4>Créer une facture</h4>
                         <form action="{{ url('admin/facture') }}" method="POST">
                             {!! csrf_field() !!}

@@ -39,7 +39,7 @@ class AboFactureEloquent implements AboFactureInterface{
         $facture = $this->facture->create(array(
             'abo_user_id' => $data['abo_user_id'],
             'product_id'  => $data['product_id'],
-            'created_at'  => $data['created_at']
+            'created_at'  => \Carbon\Carbon::now(),
         ));
 
         if( ! $facture )
@@ -60,8 +60,7 @@ class AboFactureEloquent implements AboFactureInterface{
         }
 
         $facture->fill($data);
-        $facture->created_at = $data['created_at'];
-        $facture->payed_at   = (isset($data['payed_at']) && !empty($data['payed_at']) ? $data['payed_at'] : null);
+        $facture->payed_at = (isset($data['payed_at']) && !empty($data['payed_at']) ? $data['payed_at'] : null);
         $facture->save();
 
         return $facture;

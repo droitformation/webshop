@@ -431,7 +431,7 @@ class Helper {
                 $data[] = [
                     'label'   => $result->name ,
                     'desc'    => $result->email,
-                    'adresse' => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation : $result->adresse),
+                    'adresse' => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation : $result),
                     'cp'      => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation->cp_trim : $result->cp_trim),
                     'value'   => $result->id
                 ];

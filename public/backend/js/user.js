@@ -33,19 +33,20 @@ $('input.search-adresse').each(function()
 
              $input.html('<input type="hidden" value="' + data.id + '" name="' + type + '">');
 
-             var html = template(data);
-             $choice.html(html);
+             var html = template(data, type);
 
+             $choice.html(html);
              $find.removeClass('in');
 
-            //$(this).val('');
-            return false;
+             return false;
         }
-    }).autocomplete( "instance" )._renderItem = function( ul, item ){ return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span></a>").appendTo(ul); };
+    }).autocomplete( "instance" )._renderItem = function( ul, item ){
+        return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span></a>").appendTo(ul);
+    };
 
 });
 
-function template(data)
+function template(data, type)
 {
     var company  = data.company ? data.company + '<br/>' : '';
     var cp       = data.cp ? data.cp + '<br/>' : '';
@@ -71,4 +72,10 @@ $('body').on('click','.remove-adresse', function(e) {
 
     $wrapper.find('.input-adresse, .choice-adresse').html('');
     $wrapper.find('.adresse-find').addClass('in');
+
+    var $input = $wrapper.find('.input-adresse');
+    var type   = $input.data('type');
+
+    $input.html('<input type="hidden" value="" name="' + type + '">');
+
 });

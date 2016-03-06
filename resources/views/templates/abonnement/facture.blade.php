@@ -43,7 +43,7 @@
     <table class="content-table">
         <tr>
             <td width="33%" align="middle" class="misc-infos">
-                <h4><strong>{{ $abo->abo_no }}</strong></h4>
+                <h4><strong>{{ $facture->abo_ref }}</strong></h4>
             </td>
             <td width="1%"  align="top"></td>
             <td width="30%" align="middle" style="text-align: center;" class="misc-infos">

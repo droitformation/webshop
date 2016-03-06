@@ -24,11 +24,25 @@ class Abo_factures extends Model{
         return null;
     }
 
+    public function getAboRefAttribute()
+    {
+        $this->load('product','abonnement');
+
+        return $this->product->reference.'-'.$this->abonnement->numero.'-'.$this->product->edition;
+    }
+
     public function getProdReferenceAttribute()
     {
         $this->load('product');
 
         return $this->product->reference;
+    }
+
+    public function getProdIdAttribute()
+    {
+        $this->load('product');
+
+        return $this->product->id;
     }
 
     public function abonnement()
