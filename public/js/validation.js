@@ -22,6 +22,7 @@ jQuery(document).ready(function($){
         }
     });
 
+
     $( "#subscribe" ).validate({
         rules: {
             email: {

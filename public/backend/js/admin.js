@@ -291,4 +291,24 @@ $( function() {
         $(this).closest('label').tab('show');
     });
 
+
+    $( "#register" ).validate({
+        rules: {
+            password: "required",
+            first_name: "required",
+            last_name: "required",
+            email: {
+                required: true,  email: true,
+                remote: {
+                    url: base_url + "check/email",
+                    type: "post",
+                    data: {
+                        email: function() {
+                            return $( "#email" ).val();
+                        }
+                    }
+                }
+            },
+        }
+    });
 });

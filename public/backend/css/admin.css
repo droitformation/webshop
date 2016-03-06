@@ -750,3 +750,10 @@ select[multiple] {
     line-height: 30px;
     padding-bottom: 5px;
 }
+
+label.error{
+    line-height: 24px;
+    color: red;
+    font-size: 12px;
+    margin-bottom: 0;
+}

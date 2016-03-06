@@ -62,6 +62,11 @@ class UserEloquent implements UserInterface{
             'updated_at'     => date('Y-m-d G:i:s')
         ));
 
+        if(isset($data['role']))
+        {
+            $user->roles()->attach($data['role']);
+        }
+
         if( ! $user )
         {
             return false;
@@ -85,6 +90,11 @@ class UserEloquent implements UserInterface{
         if(!empty($data['password']))
         {
             $user->password = bcrypt($data['password']);
+        }
+
+        if(isset($data['role']))
+        {
+            $user->roles()->sync([$data['role']]);
         }
 
         $user->updated_at = date('Y-m-d G:i:s');

@@ -34,6 +34,11 @@
                               <form action="{{ url('admin/user/'.$user->id) }}" enctype="multipart/form-data" data-validate="parsley" method="POST" class="validate-form">
                                   <input type="hidden" name="_method" value="PUT">
                                   {!! csrf_field() !!}
+                                  @if(!$user->roles->isEmpty())
+                                      @foreach($user->roles as $role)
+                                          <span class="label label-info pull-right">{{ $role->name }}</span>
+                                      @endforeach
+                                  @endif
                                   <h3><i class="fa fa-user"></i> &nbsp;Compte</h3>
                                   <div class="form-group">
                                       <label for="message" class="control-label">Prénom</label>
@@ -60,7 +65,7 @@
                                   </div>
 
                                   {!! Form::hidden('id', $user->id ) !!}
-                                  <button class="btn btn-primary pull-right" type="submit">Enregistrer</button>
+                                  <button class="btn btn-primary btn-sm pull-right" type="submit">Enregistrer</button>
                               </form>
                           </div>
                       </div>
@@ -116,17 +121,18 @@
                           </div>
                       </div>
 
-                      <div class="panel panel-midnightblue">
-                          <div class="panel-body">
-                              <h3><i class="fa fa-table"></i> &nbsp;Inscriptions groupés</h3>
-                              @include('backend.users.partials.groups')
+                      @if(isset($user->inscription_groupes) && !$user->inscription_groupes->isEmpty())
+                          <div class="panel panel-midnightblue">
+                              <div class="panel-body">
+                                  <h3><i class="fa fa-table"></i> &nbsp;Inscriptions groupés</h3>
+                                  @include('backend.users.partials.groups')
+                              </div>
                           </div>
-                      </div>
+                      @endif
 
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
                               <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes</h3>
-
                               @include('backend.users.partials.commandes', ['orders' => $user->orders])
                           </div>
                       </div>
