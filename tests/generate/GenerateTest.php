@@ -162,6 +162,7 @@ class GenerateTest extends TestCase {
 	public function testGetFilenameGroup()
 	{
 		$group = factory(App\Droit\Inscription\Entities\Groupe::class)->make([
+			'id'          => '2',
 			'user_id'     => '20',
 			'colloque_id' => '12'
 		]);
@@ -181,7 +182,7 @@ class GenerateTest extends TestCase {
 		$generate = new \App\Droit\Generate\Entities\Generate($group);
 
 		$response = $generate->getFilename('facture','facture');
-		$filename = public_path('files/colloques/facture/facture_12-20.pdf');
+		$filename = public_path('files/colloques/facture/facture_12-2-20.pdf');
 
 		$this->assertEquals($response, $filename);
 

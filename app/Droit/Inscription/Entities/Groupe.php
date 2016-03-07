@@ -24,10 +24,30 @@ class Groupe extends Model
         return $this->user->name;
     }
 
+    public function getParticipantListAttribute()
+    {
+        $this->load('inscriptions.participant');
+
+        return $this->inscriptions->pluck('participant.name','inscription_no')->all();
+    }
+
     public function getDocFactureAttribute()
     {
         $path = config('documents.colloque.facture');
-        $file = $path.'facture_'.$this->colloque_id.'-'.$this->user_id.'.pdf';
+        $file = $path.'facture_'.$this->colloque_id.'-'.$this->id.'-'.$this->user_id.'.pdf';
+
+        if (\File::exists(public_path($file)))
+        {
+            return $file;
+        }
+
+        return null;
+    }
+
+    public function getDocBvAttribute()
+    {
+        $path = config('documents.colloque.bv');
+        $file = $path.'bv_'.$this->colloque_id.'-'.$this->id.'-'.$this->user_id.'.pdf';
 
         if (\File::exists(public_path($file)))
         {
@@ -60,7 +80,7 @@ class Groupe extends Model
     {
         $docs = [];
 
-        $this->load('user','colloque','inscriptions');
+        $this->load('user','colloque','inscriptions','inscriptions.participant');
 
         if(!empty($this->colloque->annexe))
         {
@@ -68,51 +88,37 @@ class Groupe extends Model
 
             if(in_array('bon',$annexes))
             {
-                $inscriptions = $this->inscriptions;
-
-                foreach($inscriptions as $inscription)
+                foreach($this->inscriptions as $inscription)
                 {
-                    $inscription->load('participant');
-                    $bons = $this->getFile('bon',$this->colloque->id,$this->id,$inscription->participant->id);
-                    $docs['groupe'][] = $bons;
+                    $docs[] = $this->getFile('bon',$inscription->participant->id);
                 }
-
-                unset($annexes['bon']);
             }
 
-            foreach($this->colloque->annexe as $id => $annexe)
+            if(in_array('facture',$annexes))
             {
-                $new =  $this->getFile($annexe,$this->colloque->id,$this->id);
-                $docs = array_merge($new,$docs);
+                $docs[] = $this->getFile('facture');
+                $docs[] = $this->getFile('bv');
             }
         }
 
         return $docs;
     }
 
-    public function getFile($annexe,$colloque_id,$user_id,$part = null)
+    public function getFile($annexe,$part = false)
     {
-        $docs = [];
         $part = ($part ? '-'.$part : '');
-        $path = config('documents.colloque.'.$annexe.'');
-        $file = public_path($path.$annexe.'_'.$colloque_id.'-'.$user_id.$part.'.pdf');
+        $path = config('documents.colloque.'.$annexe);
+
+        $name = ($annexe == 'bon' ? $annexe.'_'.$this->colloque_id.'-'.$this->id.$part.'.pdf' : $annexe.'_'.$this->colloque_id.'-'.$this->id.'-'.$this->user_id.$part.'.pdf');
+
+        $file = public_path($path.$name);
 
         if (\File::exists($file))
         {
-            $name = $annexe.'_'.$colloque_id.'-'.$user_id.$part.'.pdf';
-
-            if($part)
-            {
-                $docs = ['file' => $file, 'name' => $name];
-            }
-            else
-            {
-                $docs[$annexe]['file'] = $file;
-                $docs[$annexe]['name'] = $name;
-            }
+            return ['file' => $file, 'name' => $name];
         }
 
-        return $docs;
+        return null;
     }
 
     public function user()

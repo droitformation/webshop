@@ -61,18 +61,24 @@ class ColloqueController extends Controller
         $colloque = $this->colloque->find($id);
         $colloque->load('location');
 
-        $user = \Auth::user();
-        $restrict_colloque = \Registry::get('inscription.restrict');
+        $registered = false;
+        $pending    = false;
 
-        $notpayed = $restrict_colloque && !$this->inscription->hasPayed($user->id) ? true : false;
-        $inscrit  = $user->inscriptions->contains('colloque_id',$id);
+        if(\Auth::check())
+        {
+            $user = \Auth::user();
+            $restrict_colloque = \Registry::get('inscription.restrict');
+
+            $pending    = $restrict_colloque && !$this->inscription->hasPayed($user->id) ? 'pending' : false;
+            $registered = $user->inscriptions->contains('colloque_id',$id) ? 'registered' : false;
+        }
 
         if ($request->ajax())
         {
             return view('colloques.partials.details')->with(['colloque' => $colloque]);
         }
 
-        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque, 'inscrit' => $inscrit, 'notpayed' => $notpayed]);
+        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque, 'registered' => $registered, 'pending' => $pending]);
     }
 
     /**

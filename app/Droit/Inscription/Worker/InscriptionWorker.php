@@ -57,7 +57,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     public function registerGroup($colloque, $request)
     {
         // create new group
-        $group = $this->groupe->create(['colloque_id' => $colloque , 'user_id' => $request->input('user_id')]);
+        $group = $this->group->create(['colloque_id' => $colloque , 'user_id' => $request->input('user_id')]);
 
         // Get all infos for inscriptions/participants
         $participants = $request->input('participant');
@@ -88,7 +88,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             }
 
             // Register a new inscription
-            $this->register->register($data,$colloque);
+            $this->register($data,$colloque);
 
         }
 

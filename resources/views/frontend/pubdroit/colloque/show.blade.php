@@ -59,23 +59,23 @@
 
                         @if($colloque->is_active)
 
-                            @if(Auth::check() && $notpayed)
-                                <p><strong><i class="fa fa-exclamation-triangle"></i></strong> {!! strip_tags(Registry::get('inscription.messages.pending')) !!}</p>
-                            @elseif(Auth::check() && !$inscrit)
-                                @include('frontend.pubdroit.colloque.partials.register')
-                            @elseif(Auth::check() && $inscrit)
-                                <p><strong><i class="fa fa-exclamation-triangle"></i></strong> {!! strip_tags(Registry::get('inscription.messages.registered')) !!}</p>
+                            @if(Auth::check())
+                                @if(!$pending && !$registered)
+                                    @include('frontend.pubdroit.colloque.partials.register')
+                                @else
+                                    <?php $message = ($registered ? Registry::get('inscription.messages.registered') : Registry::get('inscription.messages.pending')); ?>
+                                    <p><strong><i class="fa fa-exclamation-triangle"></i></strong> {!! strip_tags($message) !!}</p>
+                                @endif
                             @else
                                 <div class="login-form">
                                     <div class="panel panel-inverse">
                                         @include('auth.partials.login-form', ['returnPath' => Request::url()])
                                     </div>
-
                                     <p class="line-delimiter">Ou</p>
-
                                     <p><a href="{{ url('auth/register') }}" class="btn btn-block btn-primary">Je n'ai pas encore de compte</a></p>
                                 </div>
                              @endif
+
                         @else
                             <p>Les inscriptiont sont terminées</p>
                         @endif

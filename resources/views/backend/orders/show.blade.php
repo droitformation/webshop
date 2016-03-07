@@ -2,24 +2,21 @@
 @section('content')
 
     <div class="row">
+        <div class="col-md-12">
+            <p><a href="{{ url('admin/orders') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-7">
 
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/orders') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
-            </div>
-
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Editer la commande</h4>
-                </div>
                 <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
-
+                        <h4><i class="fa fa-edit"></i> &nbsp;Editer la commande</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">N°</label>
                             <div class="col-sm-5 col-xs-8">

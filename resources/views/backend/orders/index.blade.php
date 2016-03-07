@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form class="form-horizontal" action="{{ url('admin/orders') }}" method="post">
-
+                        {!! csrf_field() !!}
                         <h4>Période</h4>
                         <div class="row">
                             <div class="col-lg-2 col-md-3 col-xs-12">
@@ -29,10 +29,9 @@
                                     <span class="input-group-addon">Statut</span>
                                     <select class="form-control" name="status">
                                         <option value="">Tous</option>
-                                        <option {{ old('status') == 'pending' ? 'selected' : '' }} value="pending">En attente</option>
-                                        <option {{ old('status') == 'payed' ? 'selected' : '' }} value="payed">Payé</option>
-                                        <option {{ old('status') == 'cancelled' ? 'selected' : '' }} value="cancelled">Annulé</option>
-                                        <option {{ old('status') == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
+                                        <option {{ old('status') == 'pending'  || $status == 'pending' ? 'selected' : '' }} value="pending">En attente</option>
+                                        <option {{ old('status') == 'payed'    || $status == 'payed'? 'selected' : '' }} value="payed">Payé</option>
+                                        <option {{ old('status') == 'gratuit'  || $status == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
                                     </select>
                                 </div>
                             </div>
@@ -90,10 +89,15 @@
                 <div class="panel-body">
 
                     <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
+                    @if($status)
+                        <h4>Status {{ $status_list[$status] }}</h4>
+                    @endif
 
                     @include('backend.orders.partials.commandes', ['orders' => $orders, 'cancelled' => false])
 
-                    <a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#cancelTable">Annulations</a>
+                    <hr/>
+
+                    <p><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#cancelTable">Annulations</a></p>
                 </div>
             </div>
 

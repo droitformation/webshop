@@ -66,7 +66,8 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
             'logo'        => 'facdroit.png',
             'concerne'    => 'Inscription',
             'annexes'     => $this->inscription->colloque->annexe,
-            'inscription' => $this->inscription,
+            'colloque'    => $this->inscription->colloque,
+            'user'        => $this->inscription->user,
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 

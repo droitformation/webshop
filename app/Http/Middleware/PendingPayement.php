@@ -37,24 +37,10 @@ class PendingPayement
         {
             if( $restrict_shop && !$this->order->hasPayed(\Auth::user()->id) )
             {
-                return redirect('shop')->with(array('status' => 'warning', 'message' => $message ));
+                return redirect('/')->with(array('status' => 'warning', 'message' => $message ));
             }
         }
 
         return $next($request);
-    }
-
-    public function terminate($request, $response)
-    {
-        $restrict_colloque = \Registry::get('inscription.restrict');
-
-        if (\Auth::check() && $request->is('colloque/*'))
-        {
-            if($restrict_colloque && !$this->inscription->hasPayed(\Auth::user()->id))
-            {
-                session(['pending' => 'value']);
-            }
-        }
-
     }
 }

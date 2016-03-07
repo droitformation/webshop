@@ -18,6 +18,15 @@ h3, .h3{
     margin-bottom: 20px;
 }
 
+.modal-title dl{
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.panel .modal-title dd{
+    margin-bottom: 0;
+}
+
 .navbar-fixed-top {
     z-index: 1080;
 }

@@ -52,6 +52,8 @@ class OrderController extends Controller {
         $this->helper    = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+        view()->share('status_list',['pending' => 'En attente', 'payed' => 'Payé', 'gratuit' => 'Gratuit']);
 	}
 
 	/**
@@ -84,7 +86,17 @@ class OrderController extends Controller {
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
 
 		return view('backend.orders.index')->with(
-            ['orders' => $orders,'start' => $period['start'],'end' => $period['end'], 'columns' => config('columns.names'), 'names' => $names, 'onlyfree' => $onlyfree, 'details' => $details, 'cancelled' => $cancelled]
+            [
+                'orders'    => $orders,
+                'start'     => $period['start'],
+                'end'       => $period['end'],
+                'columns'   => config('columns.names'),
+                'names'     => $names,
+                'onlyfree'  => $onlyfree,
+                'details'   => $details,
+                'cancelled' => $cancelled,
+                'status'    => $status
+            ]
         );
 	}
 

@@ -14,6 +14,7 @@ use App\Http\Requests\InscriptionCreateRequest;
 use App\Http\Controllers\Controller;
 
 use App\Jobs\SendConfirmationInscriptionEmail;
+use App\Jobs\SendConfirmationGroupInscriptionEmail;
 use App\Jobs\MakeDocument;
 use App\Jobs\MakeDocumentGroupe;
 
@@ -204,12 +205,21 @@ class InscriptionController extends Controller
      */
     public function send(Request $request)
     {
-        $id    = $request->input('id');
-        $email = $request->input('email',null);
+        $id       = $request->input('id',null);
+        $group_id = $request->input('group_id',null);
+        $email    = $request->input('email',null);
 
-        $inscription = $this->inscription->find($id);
+        $model    = $group_id ? 'groupe' : 'inscription';
+        $model_id = $group_id ? $group_id : $id;
+        $item     = $this->$model->find($model_id);
 
-        $job = (new SendConfirmationInscriptionEmail($inscription,$email))->delay(5);
+
+        echo '<pre>';
+        print_r($item->documents);
+        echo '</pre>';exit;
+
+
+        $job = ($group_id ? new SendConfirmationGroupInscriptionEmail($item,$email) : new SendConfirmationInscriptionEmail($item,$email));
 
         $this->dispatch($job);
 

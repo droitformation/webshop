@@ -7,12 +7,13 @@
 Route::get('testing', function() {
     
     $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $groups  = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-    $item = $inscription->hasPayed(710);
+    $item = $groups->find(1);
     
     echo '<pre>';
-    print_r($item);
+    print_r($item->documents);
     echo '</pre>';
 });
 
@@ -279,15 +280,30 @@ Route::get('registration', function()
     $logo   = 'facdroit.png';
 
     $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $inscrit     = $inscription->find(9524);
+    $groups      = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
+
+    $inscrit     = $inscription->find(9533);
+    $group       = $groups->find(3);
 
     $data = [
-        'title'       => $title,
-        'concerne'    => 'Inscription',
-        'logo'        => $logo,
-        'inscription' => $inscrit,
-        'annexes'     => $inscrit->colloque->annexe,
-        'date'        => $date,
+        'title'        => $title,
+        'concerne'     => 'Inscription',
+        'logo'         => $logo,
+        'annexes'      => $inscrit->colloque->annexe,
+        'colloque'     => $inscrit->colloque,
+        'user'         => $inscrit->user,
+        'date'         => $date,
+    ];
+
+    $data1 = [
+        'title'        => $title,
+        'concerne'     => 'Inscription',
+        'logo'         => $logo,
+        'annexes'      => $group->colloque->annexe,
+        'colloque'     => $group->colloque,
+        'user'         => $group->user,
+        'participants' => $group->participant_list,
+        'date'         => $date,
     ];
 
     return View::make('emails.colloque.confirmation', $data);

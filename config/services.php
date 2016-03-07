@@ -19,6 +19,11 @@ return [
 		'secret' => '',
 	],
 
+	'mailtrap' => [
+		'username' => '026952ad486fcf',
+		'password' => '6711aa260444a1',
+	],
+
 	'mandrill' => [
 		'secret' => '',
 	],

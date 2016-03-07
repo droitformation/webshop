@@ -68,6 +68,9 @@
                                                 @if($inscription->doc_bon)
                                                     <a target="_blank" href="{{ asset($inscription->doc_bon) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
                                                 @endif
+                                                    @if($inscription->doc_bv)
+                                                        <a target="_blank" href="{{ asset($inscription->doc_bv) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;BV</a>
+                                                    @endif
                                             </td>
                                             <td class="col-md-4">@include('backend.users.inscription.options')</td>
                                         </tr>
@@ -101,11 +104,13 @@
                             </div>
 
                             <!-- END Inscription updates buttons -->
+
                             <!-- Modals add to and edit group -->
                             @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque])
                             @include('backend.inscriptions.modals.change', ['group' => $group])
-
+                            @include('backend.users.modals.sendgroup', ['group' => $inscription->groupe]) <!-- Modal send inscription -->
                             <!--END Inscription dependences -->
+
                         </div>
                     </div>
                 </td>
