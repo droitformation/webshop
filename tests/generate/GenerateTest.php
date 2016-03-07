@@ -186,6 +186,11 @@ class GenerateTest extends TestCase {
 
 		$this->assertEquals($response, $filename);
 
+		$response = $generate->getFilename('bv','bv');
+		$filename = public_path('files/colloques/bv/bv_12-2-20.pdf');
+
+		$this->assertEquals($response, $filename);
+
 		$response = $generate->getFilename('rappel','rappel_7');
 		$filename = public_path('files/colloques/rappel/rappel_7_12-20.pdf');
 

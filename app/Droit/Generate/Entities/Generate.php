@@ -179,7 +179,7 @@ class Generate{
             return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$part.'.pdf');
         }
 
-        if($annexe == 'facture' && $this->getType() == 'group')
+        if( ($annexe == 'facture' || $annexe == 'bv') && $this->getType() == 'group')
         {
             return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$this->model->id.'-'.$this->model->user_id.'.pdf');
         }

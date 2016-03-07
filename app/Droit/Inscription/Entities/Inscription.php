@@ -76,8 +76,9 @@ class Inscription extends Model
      * */
     public function getDocAttestationAttribute()
     {
+        $user = (!$this->group_id ? $this->user : $this->groupe->user);
         $path = config('documents.colloque.attestation');
-        $file = $path.'attestation'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+        $file = $path.'attestation'.'_'.$this->colloque_id.'-'.$user->id.'.pdf';
 
         return (\File::exists(public_path($file)) ? $file : null);
     }

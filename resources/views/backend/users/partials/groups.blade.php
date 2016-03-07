@@ -68,9 +68,6 @@
                                                 @if($inscription->doc_bon)
                                                     <a target="_blank" href="{{ asset($inscription->doc_bon) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
                                                 @endif
-                                                    @if($inscription->doc_bv)
-                                                        <a target="_blank" href="{{ asset($inscription->doc_bv) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;BV</a>
-                                                    @endif
                                             </td>
                                             <td class="col-md-4">@include('backend.users.inscription.options')</td>
                                         </tr>
@@ -87,7 +84,12 @@
                             <!-- Inscription updates buttons -->
                             <div class="row">
                                 <div class="col-md-2 line-spacer">
-                                    <a target="_blank" href="{{ asset($group->doc_facture) }}" class="btn btn-default btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Facture</a>
+                                    @if($group->doc_facture)
+                                        <a target="_blank" href="{{ asset($group->doc_facture) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Facture</a>
+                                    @endif
+                                    @if($group->doc_bv)
+                                        <a target="_blank" href="{{ asset($group->doc_bv) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;BV</a>
+                                    @endif
                                 </div>
                                 <div class="col-md-7 line-spacer">
                                     <div class="btn-group">

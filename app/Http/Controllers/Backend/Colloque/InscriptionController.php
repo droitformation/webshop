@@ -213,12 +213,6 @@ class InscriptionController extends Controller
         $model_id = $group_id ? $group_id : $id;
         $item     = $this->$model->find($model_id);
 
-
-        echo '<pre>';
-        print_r($item->documents);
-        echo '</pre>';exit;
-
-
         $job = ($group_id ? new SendConfirmationGroupInscriptionEmail($item,$email) : new SendConfirmationInscriptionEmail($item,$email));
 
         $this->dispatch($job);
