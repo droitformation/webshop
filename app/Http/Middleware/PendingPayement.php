@@ -31,7 +31,6 @@ class PendingPayement
     public function handle($request, Closure $next)
     {
         $message           = \Registry::get('inscription.messages.pending');
-        $restrict_colloque = \Registry::get('inscription.restrict');
         $restrict_shop     = \Registry::get('shop.restrict');
 
         if ($request->is('checkout/*'))
@@ -42,14 +41,20 @@ class PendingPayement
             }
         }
 
-        if ($request->is('colloque/inscription/*'))
+        return $next($request);
+    }
+
+    public function terminate($request, $response)
+    {
+        $restrict_colloque = \Registry::get('inscription.restrict');
+
+        if (\Auth::check() && $request->is('colloque/*'))
         {
             if($restrict_colloque && !$this->inscription->hasPayed(\Auth::user()->id))
             {
-                return redirect('colloque')->with(array('status' => 'warning', 'message' => $message ));
+                session(['pending' => 'value']);
             }
         }
 
-        return $next($request);
     }
 }

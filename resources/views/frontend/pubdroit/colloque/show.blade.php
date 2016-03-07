@@ -58,6 +58,7 @@
                         <hr/>
 
                         @if($colloque->is_active)
+
                             @if(Auth::check() && $notpayed)
                                 <p><strong><i class="fa fa-exclamation-triangle"></i></strong> {!! strip_tags(Registry::get('inscription.messages.pending')) !!}</p>
                             @elseif(Auth::check() && !$inscrit)
