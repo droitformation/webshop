@@ -92,10 +92,11 @@ class RappelController extends Controller
             'group_id'       => $inscription->group_id,
         ]);
 
-        $nbr = $inscription->rappels->count();
+        $inscription->load('rappels');
 
-        $this->generator->setInscription($inscription);
-        $this->generator->factureEvent($nbr, $rappel);
+        $rappels = $inscription->rappels->count();
+
+        $this->generator->make('facture', $inscription, $rappels);
 
         return true;
     }
@@ -109,10 +110,10 @@ class RappelController extends Controller
             'group_id'       => $group->id,
         ]);
 
-        $nbr = $group->rappels->count();
+        $group->load('rappels');
+        $rappels = $group->rappels->count();
 
-        // For now put price bigger than 0 to trigger pdfgenerator
-        $this->generator->factureGroupeEvent($group, $group->inscriptions, 1, $nbr, $rappel);
+        $this->generator->make('facture', $group, $rappels);
 
         return true;
     }

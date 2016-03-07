@@ -164,9 +164,10 @@ class PdfGenerator implements PdfGeneratorInterface
 
         // Do wee need to stream or save the pdf
         $state    = ($this->stream ? 'stream' : 'save');
+        $name     = ($rappel ? 'rappel' : $document);
 
         // Path for saving document
-        $filepath = $generate->getFilename($document, $document);
+        $filepath = $generate->getFilename($document, $name);
 
         return $view->$state($filepath);
     }

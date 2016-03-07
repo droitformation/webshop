@@ -170,9 +170,15 @@ class Generate{
 
     public function getFilename($annexe,$name)
     {
-        $path = config('documents.colloque.'.$annexe);
+        $annexe = ($name == 'rappel' ? 'rappel' : $annexe);
+        $path   = config('documents.colloque.'.$annexe);
 
         $part = (isset($this->model->participant) ? $this->model->group_id.'-'.$this->model->participant->id : $this->model->user_id);
+
+        if($annexe == 'bon')
+        {
+            return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$part.'.pdf');
+        }
 
         if($annexe == 'bon')
         {
