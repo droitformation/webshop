@@ -53,7 +53,7 @@ class ShopController extends Controller {
 	{
         $nouveautes = $this->product->getByCategorie(5)->take(6);
 		$products   = $this->product->getNbr(10,[5]);
-        $colloques  = $this->colloque->getAll(true);
+        $colloques  = $this->colloque->getCurrent(true);
 
 		return view('frontend.pubdroit.index')->with(['products' => $products, 'nouveautes' => $nouveautes, 'colloques' => $colloques]);
 	}

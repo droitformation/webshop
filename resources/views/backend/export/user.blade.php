@@ -10,7 +10,7 @@
 
                 <div class="col-md-12">
                     <form action="{{ url('admin/export/search') }}" method="post">
-
+                        {!! csrf_field() !!}
                         <div class="panel panel-midnightblue">
                             <div class="panel-body">
 

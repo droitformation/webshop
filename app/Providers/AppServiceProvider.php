@@ -21,12 +21,12 @@ class AppServiceProvider extends ServiceProvider {
         );
 
         //view()->composer('*', 'App\Http\ViewComposers\LabelComposer');
-        view()->composer('backend.user.*', 'App\Http\ViewComposers\UserAttributeComposer');
-        view()->composer('backend.users.adresse', 'App\Http\ViewComposers\UserAttributeComposer');
         view()->composer('backend.partials.sites', 'App\Http\ViewComposers\SiteComposer');
-        //view()->composer('frontend.pubdroit.partials.label', 'App\Http\ViewComposers\LabelComposer');
-        view()->composer('frontend.pubdroit.partials.menu', 'App\Http\ViewComposers\PubdroitComposer');
-        view()->composer('frontend.pubdroit.layouts.master', 'App\Http\ViewComposers\PubdroitComposer');
+
+        view()->composer(['backend.user.*','backend.users.adresse','frontend.pubdroit.profil.account','backend.export.user','frontend.pubdroit.checkout.billing'], 'App\Http\ViewComposers\UserAttributeComposer');
+        view()->composer(['frontend.pubdroit.partials.label','backend.export.user'], 'App\Http\ViewComposers\LabelComposer');
+
+        view()->composer(['frontend.pubdroit.partials.menu','frontend.pubdroit.layouts.master'], 'App\Http\ViewComposers\PubdroitComposer');
 	}
 
 	/**

@@ -14,6 +14,7 @@
                 </div>
 
                 <form class="form" method="post" action="{{ url('checkout/resume') }}" id="billing">
+                    {!! csrf_field() !!}
                     <ul class="billing-form">
 
                         <!-- if adresse exist -->

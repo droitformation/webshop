@@ -2,11 +2,16 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <h3>Colloques</h3>
     </div>
-    <div class="col-md-6 text-right">
-        <a href="{{ url('admin/colloque/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+    <div class="col-md-8 text-right">
+        <a href="{{ url('admin/colloque/create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un colloque</a>
+        <div class="btn-group">
+            @foreach($years as $year)
+                <a class="btn btn-primary btn-sm" href="{{ url('admin/colloque/archive/'.$year) }}">Archives {{ $year }}</a>
+            @endforeach
+        </div>
     </div>
 </div>
 
@@ -14,41 +19,14 @@
     <div class="col-md-12">
 
         <?php
-
             $actives = $colloques->filter(function ($colloque) {
                 return $colloque->start_at > date('Y-m-d');
             });
 
             $active_chunks = $actives->chunk(4);
-
-            $archives = $colloques->filter(function ($colloque) {
-                return $colloque->start_at <= date('Y-m-d');
-            });
-
-            $years = $archives->groupBy(function ($archive, $key) {
-                return $archive->start_at->year;
-            });
-
-            $annees = array_keys($years->toArray());
-
         ?>
 
         @include('backend.colloques.partials.colloque', ['colloques' => $active_chunks, 'color' => 'primary'])
-
-        <hr/>
-
-        @foreach($annees as $annee_news)
-            <a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#collapseArchives_{{ $annee_news }}">Archives {{ $annee_news }}</a>
-        @endforeach
-
-        @foreach($years as $annee => $year)
-            <div class="collapse collapseArchive margeUpDown" id="collapseArchives_{{ $annee }}">
-                <br/><h4><strong>Archive {{ $annee }}</strong></h4>
-
-                <?php $active_chunks = $year->chunk(4); ?>
-                @include('backend.colloques.partials.colloque', ['colloques' => $active_chunks, 'color' => 'warning'])
-            </div>
-        @endforeach
 
     </div>
 </div>

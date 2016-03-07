@@ -14,7 +14,22 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function getAll($active = false, $archives = false)
     {
-        return $this->colloque->active($active)->archives($archives)->with(['location','centres','compte','prices','documents'])->orderBy('start_at','DESC')->get();
+        return $this->colloque->active($active)->archives($archives)->orderBy('start_at','DESC')->get();
+    }
+
+    public function getCurrent($registration = false, $finished = false)
+    {
+        return $this->colloque->registration($registration)->finished($finished)->orderBy('start_at','DESC')->get();
+    }
+
+    public function getByYear($year)
+    {
+        return $this->colloque->whereRaw('YEAR(`start_at`) = ?', [$year])->orderBy('start_at','DESC')->get();
+    }
+
+    public function getYears()
+    {
+        return $this->colloque->select('start_at')->archives(true)->orderBy('start_at','DESC')->get();
     }
 
     public function find($id){

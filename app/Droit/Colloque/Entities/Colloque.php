@@ -2,6 +2,7 @@
 
 namespace App\Droit\Colloque\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -51,6 +52,11 @@ class Colloque extends Model
         return false;
     }
 
+    public function getIsActiveAttribute()
+    {
+        return $this->registration_at >= \Carbon\Carbon::today() ? true : false;
+    }
+
     public function getEventDateAttribute()
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -89,10 +95,20 @@ class Colloque extends Model
 
     public function scopeActive($query,$status)
     {
-        if($status) $query->where('registration_at','>',date('Y-m-d'));
+        if($status) $query->where('start_at','>',date('Y-m-d'));
     }
 
     public function scopeArchives($query,$status)
+    {
+        if($status) $query->where('start_at','<=',date('Y-m-d'));
+    }
+
+    public function scopeRegistration($query,$status)
+    {
+        if($status) $query->where('registration_at','>',date('Y-m-d'));
+    }
+
+    public function scopeFinished($query,$status)
     {
         if($status) $query->where('registration_at','<=',date('Y-m-d'));
     }

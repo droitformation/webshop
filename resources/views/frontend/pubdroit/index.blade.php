@@ -34,7 +34,7 @@
                                     <span class="comments-num">{{ $colloque->soustitre }}</span>
                                     <p><i class="fa fa-calendar"></i>&nbsp; {{ $colloque->event_date }}</p>
                                     <p><strong>Lieu: </strong>
-                                    {{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? $colloque->location->adresse : '' }}</p>
+                                    {{ $colloque->location ? $colloque->location->name : '' }}, {!! $colloque->location ? strip_tags($colloque->location->adresse) : '' !!}</p>
                                     {!! $colloque->remarque !!}
                                     <p><a class="more-btn btn-sm" href="{{ url('colloque/'.$colloque->id) }}">Inscription</a></p>
                                 </div>

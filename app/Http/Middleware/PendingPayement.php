@@ -46,7 +46,6 @@ class PendingPayement
         {
             if($restrict_colloque && !$this->inscription->hasPayed(\Auth::user()->id))
             {
-
                 return redirect('colloque')->with(array('status' => 'warning', 'message' => $message ));
             }
         }

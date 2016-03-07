@@ -3,6 +3,19 @@
  * Test routes
  ============================================ */
 
+
+Route::get('testing', function() {
+    
+    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    $item = $inscription->hasPayed(710);
+    
+    echo '<pre>';
+    print_r($item);
+    echo '</pre>';
+});
+
 Route::get('cartworker', function()
 {
 

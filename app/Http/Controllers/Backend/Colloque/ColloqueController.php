@@ -63,9 +63,30 @@ class ColloqueController extends Controller
      */
     public function index()
     {
-        $colloques = $this->colloque->getAll();
+        $colloques = $this->colloque->getAll(true);
+        $years     = $this->colloque->getYears();
 
-        return view('backend.colloques.index')->with(['colloques' => $colloques]);
+        $years = $years->groupBy(function ($archive, $key) {
+            return $archive->start_at->year;
+        });
+
+        $years = array_keys($years->toArray());
+
+        return view('backend.colloques.index')->with(['colloques' => $colloques, 'years' => $years]);
+    }
+
+    public function archive($year)
+    {
+        $colloques = $this->colloque->getByYear($year);
+        $years     = $this->colloque->getYears();
+
+        $years = $years->groupBy(function ($archive, $key) {
+            return $archive->start_at->year;
+        });
+
+        $years = array_keys($years->toArray());
+
+        return view('backend.colloques.archive')->with(['colloques' => $colloques, 'years' => $years, 'current' => $year]);
     }
 
     /**

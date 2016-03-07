@@ -169,12 +169,7 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->find($id);
 
-        $inscription->load('colloque','user_options','groupe','participant');
-
-        if(isset($inscription->user_options))
-        {
-            $inscription->user_options->load('option');
-        }
+        $inscription->load('colloque','user_options','user_options.option','groupe','participant');
 
         return view('backend.inscriptions.show')->with(['inscription' => $inscription, 'colloque' => $inscription->colloque, 'user' => $inscription->inscrit]);
     }
@@ -232,9 +227,9 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->update($request->all());
 
-        $annexes     = $inscription->colloque->annexe;
+        $job = ($inscription->group_id ? new MakeDocumentGroupe($inscription->groupe) : new MakeDocument($inscription));
 
-        $this->generator->setInscription($inscription)->generate($annexes);
+        $this->dispatch($job);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été mise à jour' ));
     }

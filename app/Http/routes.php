@@ -166,7 +166,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('inscription/rappel/make/{id}','Backend\Colloque\RappelController@make');
         Route::resource('inscription/rappel','Backend\Colloque\RappelController');
 
-        Route::resource('colloque', 'Backend\Colloque\ColloqueController');
         Route::get('colloque/generate/{id}/{doc}', 'Backend\Colloque\ColloqueController@generate');
         Route::post('colloque/addprice', 'Backend\Colloque\ColloqueController@addprice');
         Route::post('colloque/removeprice', 'Backend\Colloque\ColloqueController@removeprice');
@@ -175,6 +174,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
         Route::post('colloque/removeoption', 'Backend\Colloque\ColloqueController@removeoption');
         Route::post('colloque/editoption', 'Backend\Colloque\ColloqueController@editoption');
+        Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
+        Route::resource('colloque', 'Backend\Colloque\ColloqueController');
 
         Route::resource('document', 'Backend\Colloque\DocumentController');
 

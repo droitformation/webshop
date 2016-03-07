@@ -49,6 +49,10 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';exit;
+
         $inscription = $this->register->register($request->all(), $request->input('colloque_id'), true);
 
         event(new InscriptionWasRegistered($inscription));

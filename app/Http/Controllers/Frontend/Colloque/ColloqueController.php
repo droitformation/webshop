@@ -45,7 +45,7 @@ class ColloqueController extends Controller
 
     public function archives()
     {
-        $colloques  = $this->colloque->getAll(false,true);
+        $colloques  = $this->colloque->getCurrent(false,true);
 
         return view('frontend.pubdroit.colloque.archives')->with(['colloques' => $colloques]);
     }
@@ -61,12 +61,18 @@ class ColloqueController extends Controller
         $colloque = $this->colloque->find($id);
         $colloque->load('location');
 
+        $user = \Auth::user();
+        $restrict_colloque = \Registry::get('inscription.restrict');
+
+        $notpayed = $restrict_colloque && !$this->inscription->hasPayed($user->id) ? true : false;
+        $inscrit  = $user->inscriptions->contains('colloque_id',$id);
+
         if ($request->ajax())
         {
             return view('colloques.partials.details')->with(['colloque' => $colloque]);
         }
 
-        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque]);
+        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque, 'inscrit' => $inscrit, 'notpayed' => $notpayed]);
     }
 
     /**
@@ -83,14 +89,4 @@ class ColloqueController extends Controller
         return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
