@@ -27,6 +27,7 @@ class ColloqueController extends Controller
     protected $price;
     protected $option;
     protected $group;
+    protected $helper;
 
     /**
      * Create a new controller instance.
@@ -54,6 +55,8 @@ class ColloqueController extends Controller
         $this->price        = $price;
         $this->option       = $option;
         $this->group        = $group;
+
+        $this->helper  = new \App\Droit\Helper\Helper();
     }
 
     /**
@@ -225,10 +228,13 @@ class ColloqueController extends Controller
      */
     public function removeprice(Request $request)
     {
-        $price    = $this->price->find($request->input('id'));
-        $oldprice = $price;
+        $price       = $this->price->find($request->input('id'));
+        $colloque_id = $price->colloque_id;
+
         $this->price->delete($price->id);
-        $colloque = $this->colloque->find($oldprice->colloque_id);
+
+        // Has to be called after the delete so we have the updates prices
+        $colloque = $this->colloque->find($colloque_id);
 
         return view('backend.colloques.partials.prices')->with(['type' => $oldprice->type, 'title' => 'Prix '.$oldprice->type, 'colloque' => $colloque]);
     }
@@ -248,7 +254,8 @@ class ColloqueController extends Controller
         // is it's a multichoice
         if(isset($data['group']))
         {
-            $choices = explode(PHP_EOL, $data['group']);
+            $choices = $this->helper->contentExplode($data['group']);
+
             if(!empty($choices))
             {
                 foreach($choices as $choice)
@@ -261,6 +268,21 @@ class ColloqueController extends Controller
                 }
             }
         }
+
+        $colloque = $this->colloque->find($data['colloque_id']);
+
+        return view('backend.colloques.partials.options')->with(['colloque' => $colloque]);
+    }
+
+    public function addGroup(Request $request)
+    {
+        parse_str($request->input('data'), $data);
+
+        $this->group->create([
+            'text'        => $data['text'],
+            'colloque_id' => $data['colloque_id'],
+            'option_id'   => $data['option_id']
+        ]);
 
         $colloque = $this->colloque->find($data['colloque_id']);
 
@@ -291,12 +313,34 @@ class ColloqueController extends Controller
      */
     public function removeoption(Request $request)
     {
-        $option    = $this->option->find($request->input('id'));
-        $oldoption = $option;
+        $option      = $this->option->find($request->input('id'));
+        $colloque_id = $option->colloque_id;
+
         $this->option->delete($option->id);
-        $colloque = $this->colloque->find($oldoption->colloque_id);
+
+        // Has to be called after the delete so we have the updates options
+        $colloque    = $this->colloque->find($colloque_id);
 
         return view('backend.colloques.partials.options')->with(['colloque' => $colloque]);
     }
+
+    /**
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function removeGroup(Request $request)
+    {
+        $group       = $this->group->find($request->input('id'));
+        $colloque_id = $group->colloque_id;
+
+        $this->group->delete($group->id);
+
+        // Has to be called after the delete so we have the updates options
+        $colloque = $this->colloque->find($colloque_id);
+
+        return view('backend.colloques.partials.options')->with(['colloque' => $colloque]);
+    }
+
 
 }

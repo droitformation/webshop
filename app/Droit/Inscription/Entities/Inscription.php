@@ -190,7 +190,7 @@ class Inscription extends Model
 
     public function groupe()
     {
-        return $this->belongsTo('App\Droit\Inscription\Entities\Groupe', 'group_id', 'id');
+        return $this->belongsTo('App\Droit\Inscription\Entities\Groupe', 'group_id', 'id')->withTrashed();
     }
 
     public function participant()

@@ -26,8 +26,10 @@
                     <li>
                         <form action="{{ url('admin/inscription/rappel/'.$rappel->id) }}" method="POST">
                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                            <a target="_blank" href="{{ asset($rappel->doc_rappel) }}">Rappel {{ $rappel->created_at->format('d/m/Y') }}</a> &nbsp;
-                            <button data-what="Supprimer" data-action="le rappel" class="btn btn-danger btn-sm deleteAction pull-right"><i class="fa fa-times"></i></button>
+                            <div class="form-group" style="margin-bottom: 6px;">
+                                <a target="_blank" href="{{ asset($rappel->doc_rappel) }}">Rappel {{ $rappel->created_at->format('d/m/Y') }}</a> &nbsp;
+                                <button data-what="Supprimer" data-action="le rappel" class="btn btn-danger btn-xs pull-right deleteAction"><i class="fa fa-times"></i></button>
+                            </div>
                         </form>
                     </li>
                 @endforeach

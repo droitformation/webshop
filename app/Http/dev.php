@@ -10,10 +10,27 @@ Route::get('testing', function() {
     $groups  = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
+    $inscriptio = $inscription->find(9537);
     $item = $groups->find(1);
+
+    $options   = $inscriptio->colloque->options->toArray();
+    $options   = $inscriptio->colloque->options->whereLoose('type','checkbox')->pluck('title','id')->toArray();
+    $groupes   = $inscriptio->colloque->groupes->pluck('text','id')->toArray();
+    $user_options = $inscriptio->user_options->toArray();
+
+    $generator     = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+
+    $generator->stream = true;
+
+    //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
+
+    return $generator->make('bon', $inscriptio);
     
     echo '<pre>';
-    print_r($item->documents);
+    print_r($options);
+    print_r($user_options);
+    print_r($groupes);
     echo '</pre>';
 });
 

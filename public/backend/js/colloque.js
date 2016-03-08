@@ -148,6 +148,37 @@ $('body').on("click",'.addOption',function(e) {
     });
 });
 
+$('body').on("click",'.addGroupBtn',function(e) {
+    $(this).next('div.addGroupWrapper').toggle();
+});
+
+$('body').on("click",'.addGroup',function(e) {
+
+    e.preventDefault(); e.stopPropagation();
+
+    var $form = $(this).closest('.addGroupForm');
+    var data  = $form.find("input").serialize();
+    var $main = $(this).closest('.form-group');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/colloque/addGroup",
+        data : { data: data, _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+            $main.replaceWith(data);
+            $('.editableOption').editable({
+                params: function(params) {
+                    // add additional params from data-attributes of trigger element
+                    params.model  = $(this).editable().data('model');
+                    params._token = $("meta[name='_token']").attr('content');
+                    return params;
+                }
+            });
+        },
+        error: function(){alert('problème avec l\'ajout du group');}
+    });
+});
+
 $('body').on("click",'.removeOption', function(e) {
 
     e.preventDefault();e.stopPropagation();
@@ -173,6 +204,35 @@ $('body').on("click",'.removeOption', function(e) {
         error: function(){alert('problème avec la suppresion de \'option');}
     });
 });
+
+$('body').on("click",'.removeGroup', function(e) {
+
+    e.preventDefault();e.stopPropagation();
+
+    var group = $(this).data('id');
+    var $main = $(this).closest('.form-group');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/colloque/removeGroup",
+        data : { id: group, _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+
+            $main.replaceWith(data);
+
+            $('.editableOption').editable({
+                params: function(params) {
+                    // add additional params from data-attributes of trigger element
+                    params.model  = $(this).editable().data('model');
+                    params._token = $("meta[name='_token']").attr('content');
+                    return params;
+                }
+            });
+        },
+        error: function(){alert('problème avec la suppresion du choix');}
+    });
+});
+
 
 $('.editableOption').editable({
     params: function(params) {

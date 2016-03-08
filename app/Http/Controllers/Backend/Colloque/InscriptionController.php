@@ -276,13 +276,29 @@ class InscriptionController extends Controller
 
         $this->inscription->delete($id);
 
-        // If it's a group og inscription and we have deleted 11 refresh the groupe invoice and bv
+        // If it's a group inscription and we have deleted refresh the groupe invoice and bv
         if($inscription->group_id > 0)
         {
             $this->dispatch(new MakeDocumentGroupe($inscription->groupe));
         }
 
         return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(array('status' => 'success', 'message' => 'Désinscription effectué' ));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroygroup($id)
+    {
+        $group = $this->groupe->find($id);
+
+        $group->inscriptions()->delete();
+        $this->groupe->delete($id);
+
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'Suppression du groupe effectué' ));
     }
 
     /**

@@ -442,10 +442,9 @@ a.editable-click:hover {
 a.editable-click.editableOptionGroup{
     background: #f5f5f5 none repeat scroll 0 0;
     line-height: 18px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin-bottom: 7px;
     padding: 2px 5px;
-    width: 100%;
+    width: 90%;
 }
 
 .editablePrice.editable-click[data-name="price"] {
@@ -468,6 +467,11 @@ a.editable-click.editablePriceRemarque{
 
 [data-model="option"] {
     font-weight: bold;
+}
+
+.btn-xs.removeGroup, .btn-xs.addGroupBtn{
+    padding: 1px 4px;
+    margin-right: 5px;
 }
 
 .price-list dt{

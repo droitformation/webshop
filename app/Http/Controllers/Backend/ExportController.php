@@ -106,7 +106,7 @@ class ExportController extends Controller
                 {
                     foreach($converted as $option_id => $option)
                     {
-                        $sheet->appendRow([ 'Options', $options[$option_id] ]);
+                        $sheet->appendRow(['Options', $options[$option_id] ]);
 
                         $sheet->row($sheet->getHighestRow(), function ($row) {
                             $row->setFontWeight('bold');
@@ -117,7 +117,7 @@ class ExportController extends Controller
                         foreach($option as $group_id => $group)
                         {
                             $sheet->appendRow(['']);
-                            $sheet->appendRow([ 'Choix', $groupes[$group_id] ]);
+                            $sheet->appendRow(['Choix', $groupes[$group_id] ]);
                             $sheet->row($sheet->getHighestRow(), function ($row) {
                                 $row->setFontWeight('bold');
                                 $row->setFontSize(14);

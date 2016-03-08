@@ -89,4 +89,18 @@ class HelperTest extends TestCase {
         }
     }
 
+    public function testExplodeContent()
+    {
+        $text = 'Quis consectetur aenean dictumst proîn ïd prétium namé mattisé llä'."\n".'Est ornare convallis dïam £at platéa per tellus class cubliâ hac'."\n".'';
+
+        $output = [
+            'Quis consectetur aenean dictumst proîn ïd prétium namé mattisé llä',
+            'Est ornare convallis dïam £at platéa per tellus class cubliâ hac'
+        ];
+
+        $result = $this->helper->contentExplode($text);
+
+        $this->assertEquals($output, $result);
+    }
+
 }

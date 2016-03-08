@@ -8,20 +8,37 @@
                     <li class="list-group-item">
                         <div class="row">
                             <?php $type = $option->type == 'choix' ? true : false; ?>
-                            <div class="col-md-{{ $type ? 5 : 11 }}">
-                                <a class="editableOption" data-name="title" data-model="option" data-type="text" data-pk="{{ $option->id }}" data-url="admin/colloque/editoption" data-title="Changer le titre">
-                                    {{ $option->title }}
+                            <div class="col-md-{{ $type ? 4 : 11 }}">
+                                <a class="editableOption" data-name="title" data-model="option" data-type="text"
+                                   data-pk="{{ $option->id }}" data-url="admin/colloque/editoption" data-title="Changer le titre">{{ $option->title }}
                                 </a>
                             </div>
                             @if($type && !$option->groupe->isEmpty())
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     @foreach($option->groupe as $group)
-                                        <p>
-                                            <a class="editableOption editableOptionGroup" data-name="title" data-model="group" data-type="text" data-pk="{{ $group->id }}" data-url="admin/colloque/editoption" data-title="Modifier le choix">
-                                                {{ $group->text }}
+                                        <p class="clearfix">
+                                            <button class="btn btn-xs btn-warning pull-left removeGroup" data-id="{{ $group->id }}" type="button"><i class="fa fa-times"></i></button>
+                                            <a class="editableOption editableOptionGroup"
+                                               data-name="title" data-model="group" data-type="text" data-pk="{{ $group->id }}"
+                                               data-url="admin/colloque/editoption" data-title="Modifier le choix">{{ $group->text }}
                                             </a>
                                         </p>
                                     @endforeach
+
+                                    <button class="btn btn-xs btn-default addGroupBtn" type="button"><i class="fa fa-plus"></i></button>
+                                    <div class="addGroupWrapper" style="display: none;">
+                                        <div class="addGroupForm">
+                                            <input type="hidden" value="{{ $option->id }}" name="option_id">
+                                            <input type="hidden" value="{{ $colloque->id }}" name="colloque_id">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="text">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-info addGroup" type="button">Ajouter</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             @endif
                             <div class="col-md-1">

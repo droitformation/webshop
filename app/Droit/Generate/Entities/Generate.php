@@ -150,10 +150,11 @@ class Generate{
 
                 $choice['title'] = $option->option->title;
 
-                if($option->option->type == 'choix')
+                if($option->option->type == 'choix' && $option->option_groupe)
                 {
                     $choice['choice'] = $option->option_groupe->text;
                 }
+
                 if($option->option->type == 'text')
                 {
                     $choice['choice'] = $option->reponse;
@@ -170,15 +171,8 @@ class Generate{
 
     public function getFilename($annexe,$name)
     {
-        $annexe = ($name == 'rappel' ? 'rappel' : $annexe);
-        $path   = config('documents.colloque.'.$annexe);
-
+        $path = config('documents.colloque.'.$annexe);
         $part = (isset($this->model->participant) ? $this->model->group_id.'-'.$this->model->participant->id : $this->model->user_id);
-
-        if($annexe == 'bon')
-        {
-            return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$part.'.pdf');
-        }
 
         if($annexe == 'bon')
         {
@@ -188,6 +182,11 @@ class Generate{
         if( ($annexe == 'facture' || $annexe == 'bv') && $this->getType() == 'group')
         {
             return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$this->model->id.'-'.$this->model->user_id.'.pdf');
+        }
+
+        if($annexe == 'rappel')
+        {
+            return public_path($path.$name.'.pdf');
         }
 
         if($this->getType() == 'abo')

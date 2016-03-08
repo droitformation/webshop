@@ -506,6 +506,12 @@ class Helper {
         return json_encode($object);
     }
 
+    public function contentExplode($text)
+    {
+        $content = array_map("rtrim", explode("\n", $text));
+        return array_filter($content);
+    }
+
     /**
      * General render pages in admin
      *

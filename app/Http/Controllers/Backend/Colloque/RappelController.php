@@ -92,11 +92,7 @@ class RappelController extends Controller
             'group_id'       => $inscription->group_id,
         ]);
 
-        $inscription->load('rappels');
-
-        $rappels = $inscription->rappels->count();
-
-        $this->generator->make('facture', $inscription, $rappels);
+        $this->generator->make('facture', $inscription, $rappel);
 
         return true;
     }
@@ -110,10 +106,7 @@ class RappelController extends Controller
             'group_id'       => $group->id,
         ]);
 
-        $group->load('rappels');
-        $rappels = $group->rappels->count();
-
-        $this->generator->make('facture', $group, $rappels);
+        $this->generator->make('facture', $group, $rappel);
 
         return true;
     }

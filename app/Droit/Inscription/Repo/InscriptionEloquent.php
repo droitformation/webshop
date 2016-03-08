@@ -22,7 +22,7 @@ class InscriptionEloquent implements InscriptionInterface{
     {
         $inscription = $this->inscription
             ->where('colloque_id','=',$id)
-            ->with(['price','colloque','participant','groupe','duplicate','rappels','user_options.option_groupe','user.adresses' => function($query)
+            ->with(['price','colloque','participant','groupe','duplicate','user.adresses' => function($query)
                     {
                         $query->where('adresses.type','=',1);
                     }]);

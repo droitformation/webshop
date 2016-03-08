@@ -82,13 +82,15 @@
                                 @foreach($inscriptions as $inscription)
                                     @include('backend.inscriptions.partials.row', ['inscription' => $inscription])
                                 @endforeach
+                            @else
+                                <tr><td colspan="7"><p>Aucune inscriptions pour le moment</p></td></tr>
                             @endif
 
                             </tbody>
                         </table><!-- End inscriptions -->
 
                         {!! $inscriptions->links() !!}
-
+                        <hr/>
                         <p><br/><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#desinscriptionTable">Désinscriptions</a></p>
                     </div>
                 </div>

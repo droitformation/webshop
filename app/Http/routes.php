@@ -159,6 +159,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('inscription/generate/{id}', 'Backend\Colloque\InscriptionController@generate');
         Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
         Route::get('inscription/groupe/{id}', 'Backend\Colloque\InscriptionController@groupe');
+        Route::post('inscription/destroygroup/{id}', 'Backend\Colloque\InscriptionController@destroygroup');
         Route::post('inscription/type', 'Backend\Colloque\InscriptionController@inscription');
         Route::post('inscription/edit', 'Backend\Colloque\InscriptionController@edit');
         Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
@@ -174,7 +175,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('colloque/addprice', 'Backend\Colloque\ColloqueController@addprice');
         Route::post('colloque/removeprice', 'Backend\Colloque\ColloqueController@removeprice');
         Route::post('colloque/editprice', 'Backend\Colloque\ColloqueController@editprice');
-
+        Route::post('colloque/addGroup', 'Backend\Colloque\ColloqueController@addGroup');
+        Route::post('colloque/removeGroup', 'Backend\Colloque\ColloqueController@removeGroup');
         Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
         Route::post('colloque/removeoption', 'Backend\Colloque\ColloqueController@removeoption');
         Route::post('colloque/editoption', 'Backend\Colloque\ColloqueController@editoption');

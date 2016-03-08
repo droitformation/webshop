@@ -67,6 +67,10 @@
                 <input type="hidden" name="_method" value="DELETE">
                 <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">X</button>
             </form>
+        @else
+            <form action="{{ url('admin/inscription/destroygroup/'.$inscription->groupe->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+                <button data-what="Supprimer" data-action="le groupe et ses inscriptions" class="btn btn-danger btn-sm deleteAction">X</button>
+            </form>
         @endif
     </td>
 </tr>

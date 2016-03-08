@@ -152,10 +152,10 @@ class PdfGenerator implements PdfGeneratorInterface
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
-        $data['rappel']   = $rappel;
+        $data['rappel']   = $model->load('rappels')->rappels->count();
 
         // Qrcode for bon
-        if(\Registry::get('inscription.qrcode'))
+        if(\Registry::get('inscription.qrcode') && $document == 'bon')
         {
             $data['code'] = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate(url('presence/'.$model->id.'/'.config('services.qrcode.key'))));
         }
@@ -164,7 +164,8 @@ class PdfGenerator implements PdfGeneratorInterface
 
         // Do wee need to stream or save the pdf
         $state    = ($this->stream ? 'stream' : 'save');
-        $name     = ($rappel ? 'rappel' : $document);
+        $document = ($rappel ? 'rappel' : $document);
+        $name     = ($rappel ? 'rappel_'.$rappel->id : $document);
 
         // Path for saving document
         $filepath = $generate->getFilename($document, $name);
