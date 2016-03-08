@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider {
                 'backend.inscriptions.colloque'
             ], 'App\Http\ViewComposers\UserAttributeComposer');
 
-        view()->composer(['frontend.pubdroit.partials.label','backend.export.user','backend.inscriptions.colloque'], 'App\Http\ViewComposers\LabelComposer');
+        view()->composer(['frontend.pubdroit.partials.label','backend.export.user'], 'App\Http\ViewComposers\LabelComposer');
         view()->composer(['frontend.pubdroit.partials.menu','frontend.pubdroit.layouts.master'], 'App\Http\ViewComposers\PubdroitComposer');
 	}
 

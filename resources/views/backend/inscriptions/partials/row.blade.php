@@ -7,7 +7,20 @@
     </td>
     <td>
 
-        <?php $user = $inscription->user ? $inscription->user : $inscription->groupe->user; ?>
+        <?php
+            if(isset($inscription->user))
+            {
+                $user = $inscription->user;
+            }
+            elseif(isset($inscription->groupe->user))
+            {
+                $user = $inscription->groupe->user;
+            }
+            else{
+                $user = null;
+            }
+        ?>
+
 
         @if(isset($user))
             <?php $adresse = $user->adresses->whereLoose('type',1)->first();?>
@@ -26,9 +39,9 @@
     </td>
     <td>
         @if($inscription->group_id)
-
-            @if($inscription->groupe->inscriptions)
-                @foreach($inscription->groupe->inscriptions as $inscription)
+            <?php $group = $inscription->groupe; ?>
+            @if($group->inscriptions)
+                @foreach($group->inscriptions as $inscription)
                     <div class="media">
                         <div class="media-left">
                             <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
@@ -54,16 +67,16 @@
     </td>
     <td>
         @if($inscription->group_id)
-            {{ $inscription->groupe->price }} CHF
+            {{ $group->price }} CHF
         @else
-            {{ $inscription->price->price_cents }} CHF
+            {{ $inscription->price_cents }} CHF
         @endif
     </td>
     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
     <td>
-        <?php $group = ($inscription->group_id ? 'group' : 'inscription'); ?>
+        <?php $model = ($inscription->group_id ? 'group' : 'inscription'); ?>
         <?php $item  = ($inscription->group_id ? $inscription->groupe : $inscription); ?>
-        @include('backend.inscriptions.partials.payed',['model' => $group, 'item' => $item])
+        @include('backend.inscriptions.partials.payed',['model' => $model, 'item' => $item])
     </td>
     <td class="text-right">
         @if(!$inscription->group_id)

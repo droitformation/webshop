@@ -9,10 +9,7 @@
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
-
-    Route::group(['middleware' => ['pending']], function () {
-        Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
-    });
+    Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
 
     Route::get('code', 'CodeController@index');
 

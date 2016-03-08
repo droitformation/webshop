@@ -4,6 +4,7 @@ namespace App\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
 
+use App\Droit\Civilite\Repo\CiviliteInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Pays\Repo\PaysInterface;
@@ -12,6 +13,7 @@ use App\Droit\Member\Repo\MemberInterface;
 
 class UserAttributeComposer
 {
+    protected $civilite;
     protected $profession;
     protected $canton;
     protected $pays;
@@ -25,6 +27,7 @@ class UserAttributeComposer
      * @return void
      */
     public function __construct(
+        CiviliteInterface $civilite,
         ProfessionInterface $profession,
         PaysInterface $pays,
         CantonInterface $canton,
@@ -32,6 +35,7 @@ class UserAttributeComposer
         SpecialisationInterface $specialisation
     )
     {
+        $this->civilite       = $civilite;
         $this->profession     = $profession;
         $this->canton         = $canton;
         $this->pays           = $pays;
@@ -47,12 +51,14 @@ class UserAttributeComposer
      */
     public function compose(View $view)
     {
+
         $professions     = $this->profession->getAll();
         $cantons         = $this->canton->getAll();
         $pays            = $this->pays->getAll();
         $members         = $this->member->getAll();
         $specialisations = $this->specialisation->getAll();
 
+        $view->with('civilites',  $this->civilite->getAll());
         $view->with('pays',$pays);
         $view->with('cantons',$cantons);
         $view->with('professions',$professions);
