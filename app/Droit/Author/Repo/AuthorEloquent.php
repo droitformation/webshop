@@ -12,9 +12,9 @@ class AuthorEloquent implements AuthorInterface{
         $this->author = $author;
     }
 
-    public function getAll(){
-
-        return $this->author->with(['analyses'])->orderBy('last_name', 'asc')->get();
+    public function getAll()
+    {
+        return $this->author->orderBy('last_name', 'asc')->get();
     }
 
     public function find($id){

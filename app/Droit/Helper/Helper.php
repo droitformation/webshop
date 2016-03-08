@@ -429,11 +429,12 @@ class Helper {
             foreach($results as $result)
             {
                 $data[] = [
-                    'label'   => $result->name ,
-                    'desc'    => $result->email,
-                    'adresse' => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation : $result),
-                    'cp'      => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation->cp_trim : $result->cp_trim),
-                    'value'   => $result->id
+                    'label'    => $result->name ,
+                    'desc'     => $result->email,
+                    'adresse'  => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation : $result),
+                    'civilite' => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation->civilite_title : $result->civilite_title),
+                    'cp'       => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation->cp_trim : $result->cp_trim),
+                    'value'    => $result->id
                 ];
             }
         }

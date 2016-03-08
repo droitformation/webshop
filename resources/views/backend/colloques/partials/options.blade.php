@@ -25,20 +25,19 @@
                                         </p>
                                     @endforeach
 
-                                    <button class="btn btn-xs btn-default addGroupBtn" type="button"><i class="fa fa-plus"></i></button>
-                                    <div class="addGroupWrapper" style="display: none;">
+                                    <div id="addGroupWrapper_{{ $option->id }}" style="display: none;">
                                         <div class="addGroupForm">
                                             <input type="hidden" value="{{ $option->id }}" name="option_id">
                                             <input type="hidden" value="{{ $colloque->id }}" name="colloque_id">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="text">
+                                                <input type="text" autocomplete="off" class="form-control" name="text">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-info addGroup" type="button">Ajouter</button>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <button class="btn btn-xs btn-info addGroupBtn" data-id="{{ $option->id }}" type="button"><i class="fa fa-plus"></i></button>
                                 </div>
                             @endif
                             <div class="col-md-1">

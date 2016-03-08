@@ -83,6 +83,19 @@ class ExportController extends Controller
                             }
                         }
 
+                        if(!$inscription->user_options->isEmpty())
+                        {
+                            $html = '';
+                            $groupe_choix = $inscription->user_options->whereLoose('groupe_id',null);
+
+                            foreach($groupe_choix as $choix)
+                            {
+                                $html .= $choix->option->title.PHP_EOL;
+                            }
+
+                            $data['checkbox'] = $html;
+                        }
+
                         if($sort && !empty($groupes))
                         {
                             $user_options = $inscription->user_options->toArray();
@@ -97,10 +110,30 @@ class ExportController extends Controller
                         }
                         else
                         {
+                            if(!$inscription->user_options->isEmpty())
+                            {
+                                $html = '';
+                                $groupe_choix = $inscription->user_options->groupBy('option_id');
+
+                                foreach($groupe_choix as $type)
+                                {
+                                    foreach ($type as $choix)
+                                    {
+                                        $html .= $choix->option->title;
+                                        $html .= $choix->groupe_id ? ':' : ';';
+                                        $html .= ($choix->groupe_id ? $choix->option_groupe->text : '');
+                                    }
+                                }
+
+                                $data['checkbox'] = $html;
+                            }
+
                             $converted[] = $data;
                         }
                     }
                 }
+
+                $names['option_title'] = 'Choix';
 
                 if($sort && !empty($groupes))
                 {
@@ -142,6 +175,7 @@ class ExportController extends Controller
                         $row->setFontWeight('bold');
                         $row->setFontSize(14);
                     });
+
                     $sheet->rows($converted);
                 }
 
@@ -183,9 +217,6 @@ class ExportController extends Controller
         }
 
         $adresses = $this->adresse->searchMultiple($terms, $each, 20);
-
-        //$toExport = $this->adresse->searchMultiple($request->all(), $each);
-        //$download = $this->doExport($toExport);
 
         $terms = $this->label->nameTerms($terms);
         $count = $adresses->total();
@@ -230,8 +261,6 @@ class ExportController extends Controller
                 });
                 $sheet->rows($converted->toArray());
 
-               // $sheet->setOrientation('landscape');
-                //$sheet->loadView('backend.export.adresse', ['adresses' => $adresses, 'columns' => $columns]);
             });
         });
 
@@ -239,21 +268,11 @@ class ExportController extends Controller
         {
             $export->store('xls', storage_path('excel/exports'));
         }
-        else{
+        else
+        {
             $export->download('xls');
         }
 
-        //return 'Export_Adresses_'.date('dmy').'.xls';
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 }

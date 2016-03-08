@@ -127,6 +127,8 @@ class ColloqueController extends Controller
     public function show($id,Request $request)
     {
         $colloque      = $this->colloque->find($id);
+        $colloque->load('location','adresse','specialisations','centres','compte','prices','documents','options.groupe');
+
         $locations     = $this->location->getAll();
         $comptes       = $this->compte->getAll();
         $organisateurs = $this->organisateur->centres();

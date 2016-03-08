@@ -18,10 +18,13 @@
 
                     <h4>Détenteur actuel</h4>
                     <address>
-                        {{ $group->user->adresse_facturation->company }}<br/>
-                        {{ $group->name }}<br>
-                        {{ $group->user->adresse_facturation->adresse }}<br/>
-                        {{ $group->user->adresse_facturation->npa }} {{ $group->user->adresse_facturation->ville }}
+                        @if(isset($user))
+                            <?php $adresse = $user->adresses->whereLoose('type',1)->first();?>
+                            {{ $adresse->company }}<br/>
+                            {{ $adresse->name }}<br>
+                            {{ $adresse->adresse }}<br/>
+                            {{ $adresse->npa }} {{ $adresse->ville }}
+                        @endif
                     </address>
 
                     <div class="form-group">

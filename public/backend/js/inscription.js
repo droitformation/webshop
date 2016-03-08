@@ -27,7 +27,7 @@ $( "#searchUser" ).autocomplete({
             '<h4><strong>Utilisateur</strong></h4>'
             + '<p><a id="removeUser" class="btn btn-danger btn-xs">Retirer</a></p>'
             + '<address>'
-            +  ui.item.adresse.civilite.title + '<br/>'
+            +  ui.item.civilite + '<br/>'
             +  company
             +  ui.item.label + '<br/>'
             +  ui.item.adresse.adresse + '<br/>'

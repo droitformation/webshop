@@ -6,10 +6,14 @@
         @endif
     </td>
     <td>
-        <p><strong>{{ ($inscription->inscrit && $inscription->adresse_facturation ? $inscription->adresse_facturation->civilite_title : '') }}</strong></p>
-        @if($inscription->inscrit)
-            <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $inscription->inscrit->name }}</a></p>
-            <p>{{  $inscription->inscrit->email }}</p>
+
+        <?php $user = $inscription->user ? $inscription->user : $inscription->groupe->user; ?>
+
+        @if(isset($user))
+            <?php $adresse = $user->adresses->whereLoose('type',1)->first();?>
+            {!! isset($civilites[$adresse->civilite_id]) ? '<p><strong>'.$civilites[$adresse->civilite_id].'</strong></p>' : '' !!}
+            <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse->name }}</a></p>
+            <p>{{ $user->email }}</p>
         @else
             <p><span class="label label-warning">Duplicata</span></p>
         @endif

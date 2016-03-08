@@ -149,13 +149,15 @@ $('body').on("click",'.addOption',function(e) {
 });
 
 $('body').on("click",'.addGroupBtn',function(e) {
-    $(this).next('div.addGroupWrapper').toggle();
+    var group = $(this).data('id');
+    $('#addGroupWrapper_' + group).toggle();
 });
 
 $('body').on("click",'.addGroup',function(e) {
 
     e.preventDefault(); e.stopPropagation();
 
+    var group = $(this).data('id');
     var $form = $(this).closest('.addGroupForm');
     var data  = $form.find("input").serialize();
     var $main = $(this).closest('.form-group');

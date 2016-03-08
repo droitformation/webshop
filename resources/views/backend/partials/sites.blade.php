@@ -58,7 +58,7 @@
                     </li>
                 @endif
 
-                @if(!$site->arrets->isEmpty())
+                @if(isset($site->arrets))
                     <li>
                         <a class="shortcut-tiles tiles-success" href="{{ url('admin/arrets/'.$site->id) }}">
                             <div class="tiles-body tiles-body-menu">
@@ -68,7 +68,7 @@
                     </li>
                 @endif
 
-                @if(!$site->analyses->isEmpty())
+                @if(isset($site->analyses))
                     <li>
                         <a class="shortcut-tiles tiles-brown" href="{{ url('admin/analyses/'.$site->id) }}">
                             <div class="tiles-body tiles-body-menu">

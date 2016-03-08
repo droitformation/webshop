@@ -63,8 +63,6 @@ class User extends Authenticatable {
             {
                 if ($adresse->type == 1)
                 {
-                    $adresse->load('civilite');
-
                     return true;
                 }
             });
@@ -85,8 +83,6 @@ class User extends Authenticatable {
             {
                 if ($adresse->type == 1)
                 {
-                    $adresse->load('canton','profession','specialisations','civilite');
-
                     return true;
                 }
             });

@@ -111,8 +111,6 @@ class Inscription extends Model
 
     public function getInscritAttribute()
     {
-        $this->load('user','groupe','participant');
-
         if(isset($this->groupe) && !empty($this->group_id))
         {
             $this->groupe->load('user');
@@ -130,8 +128,6 @@ class Inscription extends Model
 
     public function getAdresseFacturationAttribute()
     {
-        $this->load('user','groupe','participant');
-
         if($this->group_id)
         {
             $this->groupe->load('user');

@@ -1,6 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
-    <?php $helper = new \App\Droit\Helper\Helper(); ?>
+
+    <?php $civilites = $civilites->pluck('title','id')->all(); ?>
 
     <div class="row">
         <div class="col-md-12">

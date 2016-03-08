@@ -107,7 +107,7 @@
     <footer role="contentinfo">
         <div class="clearfix">
             <ul class="list-unstyled list-inline pull-left">
-                <li>HUB Droit Formation &copy; <?php echo date('Y'); ?></li>
+                <li>Droit Formation &copy; <?php echo date('Y'); ?></li>
             </ul>
             <button class="pull-right btn btn-inverse-alt btn-xs hidden-print" id="back-to-top"><i class="fa fa-arrow-up"></i></button>
         </div>
@@ -164,7 +164,7 @@
 
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
-<script src="<?php echo asset('js/colloque/inscription.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('js/colloque/inscription.js');?>"></script>
 
 <script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragula.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragdrop.js');?>"></script>

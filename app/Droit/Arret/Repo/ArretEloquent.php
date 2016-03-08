@@ -17,6 +17,11 @@ class ArretEloquent implements ArretInterface{
         return $this->arret->with(['arrets_categories','arrets_analyses'])->site($site)->orderBy('reference', 'ASC')->get();
     }
 
+    public function getCount($site = null)
+    {
+        return $this->arret->site($site)->select('id')->get();
+    }
+
     public function getLast($nbr,$site)
     {
         return $this->arret->with(['arrets_categories','arrets_analyses'])->site($site)->orderBy('id', 'ASC')->take(5)->get();

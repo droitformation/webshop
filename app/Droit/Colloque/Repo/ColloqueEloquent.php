@@ -34,7 +34,7 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function find($id){
 
-        return $this->colloque->with(['location','adresse','specialisations','centres','compte','prices','documents','options.groupe','attestation'])->find($id);
+        return $this->colloque->with(['documents'])->find($id);
     }
 
     public function increment($colloque_id)

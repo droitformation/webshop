@@ -10,28 +10,35 @@ Route::get('testing', function() {
     $groups  = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-    $inscriptio = $inscription->find(9537);
-    $item = $groups->find(1);
-
-    $options   = $inscriptio->colloque->options->toArray();
-    $options   = $inscriptio->colloque->options->whereLoose('type','checkbox')->pluck('title','id')->toArray();
-    $groupes   = $inscriptio->colloque->groupes->pluck('text','id')->toArray();
-    $user_options = $inscriptio->user_options->toArray();
-
-    $generator     = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-
-
     $generator->stream = true;
-
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
+    //return $generator->make('bon', $inscriptio);
 
-    return $generator->make('bon', $inscriptio);
-    
-    echo '<pre>';
-    print_r($options);
-    print_r($user_options);
-    print_r($groupes);
-    echo '</pre>';
+    $inscriptio = $inscription->find(9538);
+    $item = $groups->find(1);
+    $groupes   = $inscriptio->colloque->groupes->pluck('text','id')->toArray();
+
+    $user_checkbox  = $inscriptio->user_options->pluck('option_id')->toArray();
+    $user_choix     = $inscriptio->user_options->pluck('groupe_id','option_id')->toArray();
+
+    $option_checkbox = $inscriptio->colloque->options->whereLoose('type','checkbox')->pluck('title','id')->toArray();
+    $option_choix    = $inscriptio->colloque->options->whereLoose('type','choix')->pluck('title','id')->toArray();
+    $option_groupe   = $inscriptio->colloque->groupes;
+
+    $groupe_choix = $inscriptio->user_options->groupBy('option_id');
+
+    $html = '';
+    foreach($groupe_choix as $type)
+    {
+        foreach ($type as $choix)
+        {
+            $html .= '<p><strong>'.$choix->option->title.'</strong></p>';
+            $html .= ($choix->groupe_id ? '<p>'.$choix->option_groupe->text.'</p>' : '') ;
+        }
+    }
+
+    echo $html;
+
 });
 
 Route::get('cartworker', function()

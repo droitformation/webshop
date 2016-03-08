@@ -17,7 +17,7 @@ class AnalyseEloquent implements AnalyseInterface{
 
     public function getAll($site = null,$include = []){
 
-        $analyse = $this->analyse->site($site)->with( array('analyse_authors','analyses_categories','analyses_arrets'));
+        $analyse = $this->analyse->site($site)->with( ['analyse_authors','analyses_categories','analyses_arrets']);
 
         if(!empty($include))
         {
@@ -25,6 +25,11 @@ class AnalyseEloquent implements AnalyseInterface{
         }
 
         return $analyse->orderBy('pub_date', 'DESC')->get();
+    }
+
+    public function getCount($site = null)
+    {
+        return $this->analyse->site($site)->select('id')->get();
     }
 
     public function getLast($nbr,$site)
@@ -125,7 +130,6 @@ class AnalyseEloquent implements AnalyseInterface{
         $analyse = $this->analyse->find($id);
 
 		return $analyse->delete();
-		
 	}
 
 }
