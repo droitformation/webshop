@@ -44,8 +44,17 @@ class SearchController extends Controller
      */
     public function user(Request $request)
     {
-        $users    = $this->user->search($request->input('term'));
-        $adresses = $this->adresse->search($request->input('term'));
+        $term = $request->input('term',session()->get('term', null));
+
+        if(!$term)
+        {
+            return view('backend.results');
+        }
+
+        session(['term' => $request->input('term')]);
+
+        $users    = $this->user->search($term);
+        $adresses = $this->adresse->search($term);
 
         return view('backend.results')->with(['users' => $users, 'adresses' => $adresses]);
     }

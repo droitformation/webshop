@@ -4,7 +4,7 @@ $marginreset = "margin: 0; padding: 0;";
 $paraeset = "font-size: 14px; font-weight: normal; margin: 0 0 10px; padding: 0;";
 ?>
 
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; {{ $marginreset }}">
 <head>
     <meta name="viewport" content="width=device-width">

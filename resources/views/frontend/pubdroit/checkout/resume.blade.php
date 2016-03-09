@@ -114,7 +114,7 @@
                             <h4 class="modal-title" id="myModalLabel">Payer</h4>
                         </div>
                         <div class="modal-body">
-                            @include('shop.gateways.stripe')
+                            @include('frontend.pubdroit.gateways.stripe')
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Annuler</button>

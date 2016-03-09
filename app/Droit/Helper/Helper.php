@@ -428,13 +428,24 @@ class Helper {
         {
             foreach($results as $result)
             {
+                if($result instanceof \App\Droit\User\Entities\User)
+                {
+                    $result->load('adresses');
+                    $adresse = $result->adresse_contact ? $result->adresse_contact : '';
+                }
+
+                if($result instanceof \App\Droit\Adresse\Entities\Adresse)
+                {
+                    $adresse = $result;
+                }
+
                 $data[] = [
                     'label'    => $result->name ,
                     'desc'     => $result->email,
-                    'adresse'  => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation : $result),
-                    'civilite' => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation->civilite_title : $result->civilite_title),
-                    'cp'       => ($isType == 'user' && $result->adresse_facturation ? $result->adresse_facturation->cp_trim : $result->cp_trim),
-                    'value'    => $result->id
+                    'value'    => $result->id,
+                    'adresse'  => $adresse,
+                    'civilite' => $adresse->civilite_title,
+                    'cp'       => $adresse->cp_trim
                 ];
             }
         }

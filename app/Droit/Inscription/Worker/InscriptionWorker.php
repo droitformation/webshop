@@ -95,4 +95,115 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         return $group;
     }
 
+    public function sendEmail($model, $email)
+    {
+        // Update documents if they don't exist
+        $this->makeDocuments($model);
+        // Send prepared data and documents, update inscription with send date for admin
+        $this->send($this->prepareData($model), $model->user, $model->documents, $email);
+        $this->updateInscription($model);
+
+        return true;
+    }
+
+    public function send($data, $user, $attachements, $email)
+    {
+        \Mail::send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements,$email) {
+
+            // Overwrite the email to send to?
+            $email = ($email ? $email : $user->email);
+
+            $message->to($email, $user->name)->subject('Confirmation d\'inscription');
+
+            if(!empty($attachements))
+            {
+                // Attach all documents
+                foreach($attachements as $attachement)
+                {
+                    $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
+                }
+            }
+        });
+    }
+
+    public function prepareData($model)
+    {
+        $data = [
+            'title'       => 'Votre inscription sur publications-droit.ch',
+            'logo'        => 'facdroit.png',
+            'concerne'    => 'Inscription',
+            'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+        ];
+
+        if($model instanceof \App\Droit\Inscription\Entities\Groupe)
+        {
+            $data['annexes']      = $model->colloque->annexe;
+            $data['colloque']     = $model->colloque;
+            $data['user']         = $model->user;
+            $data['participants'] = $model->participant_list;
+        }
+
+        if($model instanceof \App\Droit\Inscription\Entities\Inscription)
+        {
+            $data['annexes']  = $model->colloque->annexe;
+            $data['colloque'] = $model->colloque;
+            $data['user']     = $model->user;
+        }
+
+        return $data;
+    }
+
+    public function updateInscription($model)
+    {
+        // Update the send date and add true if send via admin
+        if($model instanceof \App\Droit\Inscription\Entities\Groupe)
+        {
+            foreach($model->inscriptions as $inscription)
+            {
+                $this->inscription->update(['id' => $inscription->id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
+            }
+        }
+        else
+        {
+            $this->inscription->update(['id' => $model->id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
+        }
+    }
+
+    public function makeDocuments($model)
+    {
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+        $annexes   = $model->colloque->annexe;
+
+        // Generate annexes if any
+        if(empty($model->documents) && !empty($annexes))
+        {
+            // Update the send date and add true if send via admin
+            if($model instanceof \App\Droit\Inscription\Entities\Groupe)
+            {
+                foreach($model->inscriptions as $inscription)
+                {
+                    foreach($annexes as $annexe)
+                    {
+                        // Make the bon and the other docs if the price is not 0
+                        if($annexe == 'bon' || ($model->price > 0 && ($annexe == 'facture' || $annexe == 'bv')))
+                        {
+                            $generator->make($annexe, $inscription);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach($annexes as $annexe)
+                {
+                    // Make the bon and the other docs if the price is not 0
+                    if($annexe == 'bon' || ($model->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')))
+                    {
+                        $generator->make($annexe, $model);
+                    }
+                }
+            }
+        }
+    }
+
 }

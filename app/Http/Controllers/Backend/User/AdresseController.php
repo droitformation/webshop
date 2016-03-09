@@ -118,9 +118,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->update($request->all());
 
-        $url = ($adresse->user_id > 0 ? 'user/'.$adresse->user_id : 'adresse/'.$adresse->id);
-
-        return redirect('admin/'.$url)->with(array('status' => 'success', 'message' => 'Adresse mise à jour' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Adresse mise à jour']);
     }
 
     /**
@@ -129,11 +127,14 @@ class AdresseController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->adresse->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Adresse supprimé' ));
+        $url = $request->input('url',null);
+        $url = $url ? $url : 'admin';
+
+        return redirect($url)->with(array('status' => 'success', 'message' => 'Adresse supprimé' ));
     }
 
 }

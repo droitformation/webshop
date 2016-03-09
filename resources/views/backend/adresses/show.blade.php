@@ -3,13 +3,14 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-6"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/adresse') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{{ redirect()->getUrlGenerator()->previous() }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
     <div class="col-md-6 text-right"><!-- col -->
         <div class="options">
             <div class="btn-toolbar">
                 <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                    <input type="hidden" name="url" value="{{ redirect()->getUrlGenerator()->previous() }}">
                     <div class="btn-group">
                         <button data-what="Supprimer" data-action="{{ $adresse->name }}" class="btn btn-danger deleteAction" type="submit">
                             <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer l'adresse

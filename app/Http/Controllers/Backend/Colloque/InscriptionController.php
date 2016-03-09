@@ -223,11 +223,11 @@ class InscriptionController extends Controller
 
         $model    = $group_id ? 'groupe' : 'inscription';
         $model_id = $group_id ? $group_id : $id;
+
+        // Fins model inscription or group
         $item     = $this->$model->find($model_id);
 
-        $job = ($group_id ? new SendConfirmationGroupInscriptionEmail($item,$email) : new SendConfirmationInscriptionEmail($item,$email));
-
-        $this->dispatch($job);
+        $this->register->sendEmail($item, $email);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Email envoyé'));
     }
@@ -341,7 +341,9 @@ class InscriptionController extends Controller
 
         $colloque = $this->colloque->find($request->input('colloque_id'));
         $user     = $this->user->find($request->input('user_id'));
-        $type     = $request->input('type'); // simple or multiple
+
+        // simple or multiple
+        $type     = $request->input('type');
 
         echo view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type])->__toString();
     }

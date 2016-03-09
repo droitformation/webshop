@@ -90,7 +90,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Profession</label>
         <div class="col-sm-7">
-            {!! Form::select('profession_id', $professions->lists('title','id')->all() , $adresse->profession_id, ['class' => 'form-control form-required', 'placeholder' => 'Profession_id']) !!}
+            {!! Form::select('profession_id', $professions->lists('title','id')->all() , $adresse->profession_id, ['class' => 'form-control', 'placeholder' => 'Choix']) !!}
         </div>
     </div>
 

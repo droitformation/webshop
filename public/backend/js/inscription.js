@@ -16,25 +16,15 @@ $( "#searchUser" ).autocomplete({
     },
     select: function( event, ui )
     {
+        console.log(ui.item);
+
+        var data = ui.item.adresse;
+
         $('#inputUser').html('<input type="hidden" value="' + ui.item.value + '" name="user_id">');
-        $(this).val('');
 
-        var company = ui.item.adresse.company ? ui.item.adresse.company + '<br/>' : '';
-        var cp      = ui.item.cp ? ui.item.cp + '<br/>' : '';
-        var compl   = ui.item.adresse.complement ? ui.item.adresse.complement + '<br/>' : '';
+        var html = template(data);
 
-        $('#choiceUser').html(
-            '<h4><strong>Utilisateur</strong></h4>'
-            + '<p><a id="removeUser" class="btn btn-danger btn-xs">Retirer</a></p>'
-            + '<address>'
-            +  ui.item.civilite + '<br/>'
-            +  company
-            +  ui.item.label + '<br/>'
-            +  ui.item.adresse.adresse + '<br/>'
-            +  compl + cp
-            +  ui.item.adresse.npa + ' ' + ui.item.adresse.ville
-            + '</address>'
-        );
+        $('#choiceUser').html(html);
 
         return false;
     }
@@ -44,6 +34,25 @@ $( "#searchUser" ).autocomplete({
 
     return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span></a>").appendTo(ul);
 };
+
+function template(data)
+{
+    var company  = data.company ? data.company + '<br/>' : '';
+    var cp       = data.cp ? data.cp + '<br/>' : '';
+    var compl    = data.complement ? data.complement + '<br/>' : '';
+    var civilite = data.civilite ? data.civilite.title : '';
+
+    var html = '<p><a class="btn btn-danger btn-xs remove-adresse">Changer</a></p>'
+        + '<address>'
+        +  company
+        +  civilite + ' '
+        +  data.first_name + ' ' + data.last_name + '<br/>'
+        +  data.adresse + '<br/>' +  compl + cp
+        +  data.npa + ' ' + data.ville
+        + '</address>';
+
+    return html;
+}
 
 $('body').on('click','#removeUser', function(e) {
     e.preventDefault();

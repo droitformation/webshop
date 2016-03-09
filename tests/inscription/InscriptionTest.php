@@ -41,8 +41,9 @@ class InscriptionTest extends TestCase {
 	public function testRegisterNewInscription()
 	{
         $this->WithoutEvents();
+        $this->withoutJobs();
 
-        $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
@@ -50,7 +51,7 @@ class InscriptionTest extends TestCase {
 
         $response = $this->call('POST', '/admin/inscription', $input);
 
-        $this->assertRedirectedTo('/admin/inscription/colloque/71');
+        $this->assertRedirectedTo('/admin/inscription/colloque/39');
 
 	}
 
@@ -61,18 +62,18 @@ class InscriptionTest extends TestCase {
     public function testRegisterMultipleNewInscription()
     {
         $this->WithoutEvents();
+        $this->withoutJobs();
 
-        $input = ['type' => 'multiple', 'colloque_id' => 71, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
+        $input = ['type' => 'multiple', 'colloque_id' => 39, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
 
         $group       = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
-        $this->groupe->shouldReceive('create')->once()->andReturn($group);
-        $this->worker->shouldReceive('register')->twice()->andReturn($inscription);
+        $this->worker->shouldReceive('registerGroup')->once()->andReturn($group);
 
         $response = $this->call('POST', '/admin/inscription',$input);
 
-        $this->assertRedirectedTo('/admin/inscription/colloque/71');
+        $this->assertRedirectedTo('/admin/inscription/colloque/39');
 
     }
 
@@ -96,8 +97,9 @@ class InscriptionTest extends TestCase {
     public function testRegisterInscription()
     {
         $this->WithoutEvents();
+        $this->withoutJobs();
 
-        $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
@@ -149,25 +151,4 @@ class InscriptionTest extends TestCase {
 
         return false;
     }
-
-
-    /**
-     * Inscription regenerate documents
-     * @return void
-     */
-    public function testRegenerateDocumentsInscription()
-    {
-        $this->WithoutEvents();
-
-        $input = ['type' => 'simple', 'colloque_id' => 71, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
-
-        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
-
-        $this->worker->shouldReceive('register')->once()->andReturn($inscription);
-
-        $response = $this->call('GET', 'inscription/generate', $input);
-
-        $this->assertRedirectedTo('/');
-    }
-
 }

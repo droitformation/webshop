@@ -17,19 +17,15 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
 
     protected $inscription;
     protected $mailer;
-    protected $email;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Inscription $inscription, $email = null)
+    public function __construct(Inscription $inscription)
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
-
-        // Allow us to pass another email to the job
-        $this->email       = $email;
         $this->inscription = $inscription;
     }
 
@@ -73,10 +69,7 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
 
         $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements) {
 
-            // Overwrite the email to send to?
-            $email = ($this->email ? $this->email : $user->email);
-
-            $message->to($email, $user->name)->subject('Confirmation d\'inscription');
+            $message->to($user->email, $user->name)->subject('Confirmation d\'inscription');
 
             // Attach all documents
             if(!empty($attachements))

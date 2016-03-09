@@ -41,7 +41,7 @@ class DuplicateController extends Controller {
      */
     public function index()
     {
-        $duplicates = $this->duplicate->getPaginate();
+        $duplicates = $this->duplicate->getAll();
 
         return view('backend.duplicates.index')->with(['duplicates' => $duplicates]);
     }
