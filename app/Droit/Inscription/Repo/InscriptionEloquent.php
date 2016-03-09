@@ -15,7 +15,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getAll($nbr = null){
 
-        return $this->inscription->with(['price','colloque','user','duplicate'])->take($nbr)->groupBy('group_id')->orderBy('created_at','DESC')->get();
+        return $this->inscription->take($nbr)->groupBy('group_id')->orderBy('created_at','DESC')->get();
     }
 
     public function getByColloque($id, $type = false, $paginate = false)

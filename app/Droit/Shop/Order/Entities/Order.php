@@ -23,12 +23,8 @@ class Order extends Model{
 
     public function getOrderAdresseAttribute()
     {
-        $this->load('user','adresse');
-
         if( $this->user )
         {
-            $this->user->load('adresses');
-            $this->user->adresse_livraison->load(['pays','civilite']);
             return $this->user->adresse_livraison;
         }
 
@@ -37,7 +33,6 @@ class Order extends Model{
             $adresse = $this->adresse;
             if($adresse)
             {
-                $adresse->load(['pays','civilite']);
                 return $adresse;
             }
         }

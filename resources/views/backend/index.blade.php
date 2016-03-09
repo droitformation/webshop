@@ -6,7 +6,6 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
-
                     <form>
                         <div class="file-upload-wrapper" data-name="file">
                             <button type="button" class="btn btn-default" id="image" data-toggle="modal" data-target="#uploadModal">Chercher</button>
@@ -14,7 +13,6 @@
                             @include('manager.modal')
                         </div>
                     </form>
-
                 </div>
             </div>
 
@@ -42,14 +40,14 @@
                                 <tr {!! ($inscription->group_id > 0 ? 'class="isGoupe"' : '') !!}>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td>
-                                        <?php
-                                            echo ($inscription->group_id > 0 ? '<span class="label label-default">Groupe '.$inscription->group_id.'</span>' : '');
-                                            if($inscription->inscrit)
-                                            {
-                                                echo ($inscription->inscrit->company != '' ? '<p><strong>'.$inscription->adresse_facturation->company.'</strong></p>' : '');
-                                                echo '<p>'.($inscription->group_id > 0 ? $inscription->participant->name : $inscription->inscrit->name).'</p>';
-                                            }
-                                        ?>
+                                        @if(isset($inscription->inscrit))
+                                            <?php $adresse = $inscription->inscrit->adresses->whereLoose('type',1)->first();?>
+                                            {!! isset($civilites[$adresse->civilite_id]) ? '<p><strong>'.$civilites[$adresse->civilite_id].'</strong></p>' : '' !!}
+                                            <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse->name }}</a></p>
+                                            <p>{{ $inscription->inscrit->email }}</p>
+                                        @else
+                                            <p><span class="label label-warning">Duplicata</span></p>
+                                        @endif
                                     </td>
                                     <td><strong>{{ $inscription->inscription_no }}</strong></td>
                                     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
