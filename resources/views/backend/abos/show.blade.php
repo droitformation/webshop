@@ -10,11 +10,9 @@
             <h3 style="margin-bottom: 0;">Abo</h3>
             <h4 style="margin: 0;">{{ $abo->title }}</h4>
         </div>
-        <div class="col-md-2">
-            <p class="text-right"><a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a></p>
-        </div>
-        <div class="col-md-2">
-            <a class="btn btn-warning btn-block" data-toggle="collapse" href="#desinscriptionTable" aria-expanded="false" aria-controls="desinscriptionTable">Désinscriptions</a>
+        <div class="col-md-4 text-right">
+            <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
+            <a class="btn btn-warning" data-toggle="collapse" href="#desinscriptionTable" aria-expanded="false" aria-controls="desinscriptionTable">Désinscriptions</a>
         </div>
     </div>
 
@@ -45,38 +43,24 @@
                     <table class="table" id="generic">
                         <thead>
                         <tr>
-                            <th>Action</th><th>Numéro</th><th>Nom</th><th>Entreprise</th><th>Exemplaires</th><th>Status</th><th></th>
+                            <th>Action</th>
+                            <th>Numéro</th>
+                            <th>Nom</th>
+                            <th>Entreprise</th>
+                            <th>Exemplaires</th>
+                            <th>Status</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                             @if(!$abo->abonnements->isEmpty())
-                                <?php
-                                    $abonnes = $abo->abonnements->reject(function ($abonne) {
-                                        return $abonne->status == 'resilie';
-                                    });
-                                ?>
-                                @foreach($abonnes as $abonnement)
+                                @foreach($abo->abonnements as $abonnement)
+                                    <?php $user = $abonnement->user_adresse; ?>
                                     <tr>
                                         <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                         <td>{{ $abonnement->numero }}</td>
-                                        <td>
-                                            @if($abonnement->user)
-                                                {{ $abonnement->user->name }}
-                                            @elseif($abonnement->originaluser)
-                                                {{ $abonnement->originaluser->name }}
-                                            @else
-                                                <p><span class="label label-warning">Duplicata</span></p>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($abonnement->user)
-                                                {{ $abonnement->user->company }}
-                                            @elseif($abonnement->originaluser)
-                                                {{ $abonnement->originaluser->company }}
-                                            @else
-                                                <p><span class="label label-warning">Duplicata</span></p>
-                                            @endif
-                                        </td>
+                                        <td>{!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}</td>
+                                        <td>{!! $user ? $user->company : '<p><span class="label label-warning">Duplicata</span></p>' !!}</td>
                                         <td>{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>
                                         <td class="text-right">

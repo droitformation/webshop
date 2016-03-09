@@ -151,6 +151,7 @@ Route::group(['middleware' => ['web']], function () {
         */
 
         Route::get('inscription/colloque/{id}', 'Backend\Colloque\InscriptionController@colloque');
+        Route::get('inscription/desinscription/{id}', 'Backend\Colloque\InscriptionController@desinscription');
         Route::get('inscription/create/{id?}', 'Backend\Colloque\InscriptionController@create');
         Route::get('inscription/add/{group_id}', 'Backend\Colloque\InscriptionController@add');
         Route::get('inscription/generate/{id}', 'Backend\Colloque\InscriptionController@generate');

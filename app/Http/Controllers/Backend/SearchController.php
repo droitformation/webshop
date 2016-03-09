@@ -42,10 +42,10 @@ class SearchController extends Controller
      *
      * @return Response
      */
-    public function user(SearchRequest $request)
+    public function user(Request $request)
     {
-        $users    = $this->user->searchSimple($request->all());
-        $adresses = $this->adresse->searchSimple($request->all());
+        $users    = $this->user->search($request->input('term'));
+        $adresses = $this->adresse->search($request->input('term'));
 
         return view('backend.results')->with(['users' => $users, 'adresses' => $adresses]);
     }

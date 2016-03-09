@@ -7,26 +7,11 @@
     </td>
     <td>
 
-        <?php
-            if(isset($inscription->user))
-            {
-                $user = $inscription->user;
-            }
-            elseif(isset($inscription->groupe->user))
-            {
-                $user = $inscription->groupe->user;
-            }
-            else{
-                $user = null;
-            }
-        ?>
-
-
-        @if(isset($user))
-            <?php $adresse = $user->adresses->whereLoose('type',1)->first();?>
+        @if(isset($inscription->inscrit))
+            <?php $adresse = $inscription->inscrit->adresses->whereLoose('type',1)->first();?>
             {!! isset($civilites[$adresse->civilite_id]) ? '<p><strong>'.$civilites[$adresse->civilite_id].'</strong></p>' : '' !!}
             <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse->name }}</a></p>
-            <p>{{ $user->email }}</p>
+            <p>{{ $inscription->inscrit->email }}</p>
         @else
             <p><span class="label label-warning">Duplicata</span></p>
         @endif
@@ -65,13 +50,7 @@
             <strong>{{ $inscription->inscription_no }}</strong>
         @endif
     </td>
-    <td>
-        @if($inscription->group_id)
-            {{ $group->price }} CHF
-        @else
-            {{ $inscription->price_cents }} CHF
-        @endif
-    </td>
+    <td>{{ $inscription->group_id ? $group->price : $inscription->price_cents }} CHF</td>
     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
     <td>
         <?php $model = ($inscription->group_id ? 'group' : 'inscription'); ?>

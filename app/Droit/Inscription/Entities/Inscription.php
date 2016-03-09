@@ -55,12 +55,11 @@ class Inscription extends Model
      * */
     public function getDocBonAttribute()
     {
-        $this->load('groupe','user');
+        $this->load('groupe','user','groupe.user');
         $path = config('documents.colloque.bon');
 
         if(isset($this->groupe) && !empty($this->groupe))
         {
-            $this->groupe->load('user');
             $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->groupe->id.'-'.$this->participant->id.'.pdf';
         }
         else
@@ -113,8 +112,6 @@ class Inscription extends Model
     {
         if(isset($this->groupe) && !empty($this->group_id))
         {
-            $this->groupe->load('user');
-
             return $this->groupe->user;
         }
 
@@ -123,15 +120,14 @@ class Inscription extends Model
             return $this->user;
         }
 
-        return false;
+        return null;
     }
 
     public function getAdresseFacturationAttribute()
     {
         if($this->group_id)
         {
-            $this->groupe->load('user');
-            $this->groupe->user->load('adresses');
+            $this->groupe->load('user','user.adresses');
 
             return $this->groupe->user->adresse_contact;
         }

@@ -39,7 +39,7 @@ class Abo extends Model{
 
     public function abonnements()
     {
-        return $this->hasMany('App\Droit\Abo\Entities\Abo_users','abo_id')->withTrashed();
+        return $this->hasMany('App\Droit\Abo\Entities\Abo_users','abo_id');
     }
 
     public function resilie()

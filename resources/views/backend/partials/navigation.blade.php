@@ -3,7 +3,7 @@
     <!-- BEGIN SIDEBAR MENU -->
     <ul class="acc-menu" id="sidebar">
         <!-- Recherche globale -->
-       <!-- @include('backend.partials.search')-->
+        @include('backend.partials.search')
 
         <li class="<?php echo (Request::is('admin') ? 'active' : '' ); ?>"><a href="{{ url('admin') }}">
             <i class="fa fa-home"></i> <span>Accueil</span></a>

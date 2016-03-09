@@ -66,9 +66,21 @@ class InscriptionController extends Controller
     {
         $colloque        = $this->colloque->find($id);
         $inscriptions    = $this->inscription->getByColloque($id,false,true);
+
+        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'names' => config('columns.names')]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function desinscription($id)
+    {
+        $colloque        = $this->colloque->find($id);
         $desinscriptions = $this->inscription->getByColloqueTrashed($id);
 
-        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'desinscriptions' => $desinscriptions, 'names' => config('columns.names')]);
+        return view('backend.inscriptions.desinscription')->with(['colloque' => $colloque, 'desinscriptions' => $desinscriptions]);
     }
 
     /**

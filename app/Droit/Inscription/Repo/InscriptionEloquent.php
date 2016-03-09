@@ -21,11 +21,7 @@ class InscriptionEloquent implements InscriptionInterface{
     public function getByColloque($id, $type = false, $paginate = false)
     {
         $inscription = $this->inscription
-            ->where('colloque_id','=',$id)
-            ->with(['price','colloque','participant','groupe','duplicate','user.adresses' => function($query)
-                    {
-                        $query->where('adresses.type','=',1);
-                    }]);
+            ->where('colloque_id','=',$id);
 
         if($type)
         {
@@ -42,7 +38,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByColloqueTrashed($id)
     {
-        return $this->inscription->where('colloque_id','=',$id)->with(['price','colloque','user','participant','groupe','duplicate'])->onlyTrashed()->groupBy('id')->get();
+        return $this->inscription->where('colloque_id','=',$id)->onlyTrashed()->groupBy('id')->get();
     }
 
     public function getRappels($id)

@@ -52,11 +52,11 @@ class Abo_users extends Model{
         return explode('.',$this->price_cents);
     }
 
-    public function getAdresseAttribute()
+    public function getUserAdresseAttribute()
     {
-        $this->load('originaluser','user');
+        $user = isset($this->originaluser) ? $this->originaluser : $this->user;
 
-        return $this->originaluser ? $this->originaluser : $this->user;
+        return isset($user) ? $user : null;
     }
 
     public function getPriceCentsAttribute()

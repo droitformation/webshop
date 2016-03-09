@@ -5,8 +5,7 @@
         <div class="modal-content">
             <!-- form start -->
             <form data-validate-parsley action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form" >
-                <input type="hidden" name="_method" value="PUT">
-                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

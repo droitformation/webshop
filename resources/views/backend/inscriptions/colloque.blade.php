@@ -13,11 +13,8 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h4>
-                                @if($colloque->illustration)
-                                    <img style="height: 50px; float:left; margin-right: 15px;margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
-                                @else
-                                    <img style="height: 50px; float:left;margin-right: 15px; margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/illu.png') }}" />
-                                @endif
+                                <?php $illustration = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
+                                <img style="height: 50px; float:left;margin-right: 15px; margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/'.$illustration.'') }}" />
                                 <p><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a><br/><small>{{ $colloque->event_date }}</small></p>
                             </h4>
                         </div>
@@ -30,8 +27,7 @@
                         <div class="col-md-12">
                             <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
                                 <input type="hidden" name="_method" value="POST">
-                                <input type="hidden" name="id" value="{{ $colloque->id }}">
-                                {!! csrf_field() !!}
+                                <input type="hidden" name="id" value="{{ $colloque->id }}">{!! csrf_field() !!}
 
                                 <div class="row">
                                     <div class="col-md-7">
@@ -91,61 +87,9 @@
                         </table><!-- End inscriptions -->
 
                         {!! $inscriptions->links() !!}
+
                         <hr/>
-                        <p><br/><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#desinscriptionTable">Désinscriptions</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="collapse" id="desinscriptionTable">
-
-                <div class="panel panel-warning">
-                    <div class="panel-body">
-                        <table class="table" id="generic" style="margin-bottom: 0px;"><!-- Start inscriptions -->
-                            <thead>
-                            <tr>
-                                <th class="col-sm-1">Action</th>
-                                <th class="col-sm-2">Nom</th>
-                                <th class="col-sm-2">Email</th>
-                                <th class="col-sm-2">Participant</th>
-                                <th class="col-sm-2">No</th>
-                                <th class="col-sm-2">Date</th>
-                            </tr>
-                            </thead>
-                            <tbody class="selects">
-
-                            @if(!empty($desinscriptions))
-                                @foreach($desinscriptions as $inscription)
-
-                                    <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
-                                    <tr {!! $style !!}>
-                                        <td>
-                                            <form action="{{ url('admin/inscription/restore/'.$inscription->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="POST">
-                                                {!! csrf_field() !!}
-                                                <button data-what="Restaurer" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-warning btn-xs deleteAction">Restaurer</button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            echo ($inscription->group_id > 0 ? '<span class="label label-default">Groupe '.$inscription->group_id.'</span>' : '');
-                                            echo ($inscription->adresse_facturation->company != '' ? '<p><strong>'.$inscription->adresse_facturation->company.'</strong><br/></p>' : '');
-                                            echo '<p>'.$inscription->adresse_facturation->civilite_title.' '.$inscription->adresse_facturation->name.'</p>';
-                                            ?>
-                                        </td>
-                                        <td>{{ $inscription->adresse_facturation->email }}</td>
-                                        <td><?php echo ($inscription->group_id > 0 ? $inscription->participant->name :''); ?>
-                                        </td>
-                                        <td><strong>{{ $inscription->inscription_no }}</strong></td>
-                                        <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
-                                    </tr>
-
-                                @endforeach
-                            @endif
-
-                            </tbody>
-                        </table><!-- End desinscriptions -->
-
+                        <p><br/><a class="btn btn-warning btn-sm pull-right" href="{{ url('admin/inscription/desinscription/'.$colloque->id) }}">Désinscriptions</a></p>
                     </div>
                 </div>
             </div>

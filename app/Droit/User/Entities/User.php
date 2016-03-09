@@ -55,8 +55,6 @@ class User extends Authenticatable {
 
     public function getAdresseContactAttribute()
     {
-        $this->load('adresses');
-
         if(isset($this->adresses))
         {
             $contact = $this->adresses->filter(function($adresse)
@@ -75,8 +73,6 @@ class User extends Authenticatable {
 
     public function getAdresseFacturationAttribute()
     {
-        $this->load('adresses');
-
         if(isset($this->adresses))
         {
             $contact = $this->adresses->filter(function($adresse)
