@@ -23,18 +23,16 @@ class Order extends Model{
 
     public function getOrderAdresseAttribute()
     {
-        if( $this->user )
+        if(isset($this->user))
         {
+            $this->user->load('adresses');
+
             return $this->user->adresse_livraison;
         }
 
-        if( $this->adresse )
+        if(isset($this->adresse))
         {
-            $adresse = $this->adresse;
-            if($adresse)
-            {
-                return $adresse;
-            }
+            return $this->adresse;
         }
     }
 
@@ -58,6 +56,7 @@ class Order extends Model{
     public function getPriceTotalExplodeAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
+
         $total = $this->amount + $this->shipping->price;
         $price = $total / 100;
         $price = $money->format($price);

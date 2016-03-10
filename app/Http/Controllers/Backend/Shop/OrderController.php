@@ -309,6 +309,30 @@ class OrderController extends Controller {
         return response()->json(['status' => 'error','msg' => 'problème']);
     }
 
+    public function update($id, Request $request)
+    {
+        $order   = $this->order->update($request->all());
+        $message = array_filter($request->input('message'));
+        $tva     = array_filter($request->input('tva'));
+
+        if(!empty($tva))
+        {
+            $this->pdfgenerator->setTva($tva);
+        }
+
+        if(!empty($message))
+        {
+            foreach($message as $type => $message)
+            {
+                $this->pdfgenerator->setMsg($message,$type);
+            }
+        }
+
+        $this->pdfgenerator->factureOrder($order->id);
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'La commande a été mise à jour']);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

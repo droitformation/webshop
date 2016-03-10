@@ -115,7 +115,7 @@ class Inscription extends Model
             return $this->groupe->user;
         }
 
-        if($this->user)
+        if(isset($this->user))
         {
             return $this->user;
         }

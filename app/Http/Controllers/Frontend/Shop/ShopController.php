@@ -32,8 +32,8 @@ class ShopController extends Controller {
 		$this->colloque  = $colloque;
         $this->product   = $product;
 		$this->categorie = $categorie;
-		$this->author    = $author;
 		$this->domain    = $domain;
+        $this->author    = $author;
         $this->page      = $page;
         $this->site      = $site;
 
@@ -67,7 +67,8 @@ class ShopController extends Controller {
 			$search = array_filter($search);
 		}
 
-		$products    = $this->product->getAll($search);
+		$products = $this->product->getAll($search);
+
 		return view('frontend.pubdroit.index')->with(['products' => $products]);
 	}
 
@@ -79,8 +80,20 @@ class ShopController extends Controller {
     {
         $product = $this->product->find($id);
 
-        return view('shop.show')->with(['product' => $product]);
+        return view('frontend.pubdroit.product')->with(['product' => $product]);
     }
+
+    /**
+     *
+     * @return Response
+     */
+    public function categorie($id)
+    {
+        $products = $this->product->getByCategorie($id);
+
+        return view('frontend.pubdroit.products')->with(['products' => $products, 'title' => 'Catégorie', 'label' => 'Nouveautés']);
+    }
+
 
     public function sort(Request $request)
     {
@@ -90,6 +103,7 @@ class ShopController extends Controller {
         {
             $title  = $request->input('title','');
             $label  = $request->input('label',null);
+
             $label  = $label ? $this->$label->find($search[$label.'_id'])->title : '';
 
             $products = $this->product->getAll($search);
@@ -100,6 +114,18 @@ class ShopController extends Controller {
         }
 
         return view('frontend.pubdroit.products')->with(['products' => $products, 'title' => $title, 'label' => $label]);
+    }
+
+    public function search(Request $request)
+    {
+        $term = $request->input('term',null);
+
+        $colloques  = $this->colloque->search($term);
+        $products   = $this->product->search($term);
+        $categories = $this->categorie->search($term);
+        $domains    = $this->domain->search($term);
+
+        return view('frontend.pubdroit.results')->with(['term' => $term, 'products' => $products, 'categories' => $categories, 'domains' => $domains, 'colloques' => $colloques]);
     }
 
     /**

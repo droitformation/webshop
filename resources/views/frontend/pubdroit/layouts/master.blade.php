@@ -114,8 +114,10 @@
 										@include('frontend.pubdroit.partials.label')
                                     </div>
                                     <div class="search-bar">
-                                        <input name="" type="text" value="Rechercher sur le site..." />
-                                        <input name="" type="button" class="button-default" value="ok" />
+										<form action="{{ url('search') }}" method="post">{!! csrf_field() !!}
+											<input name="term" type="text" value="Rechercher sur le site..." />
+											<button type="submit" class="button-default">ok</button>
+										</form>
                                     </div>
                                 </div>
                             </div>

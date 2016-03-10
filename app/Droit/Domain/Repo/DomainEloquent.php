@@ -17,6 +17,11 @@ class DomainEloquent implements DomainInterface{
         return $this->domain->all();
     }
 
+    public function search($term)
+    {
+        return $this->domain->where('title', 'like', '%'.$term.'%')->get();
+    }
+
     public function find($id){
 
         return $this->domain->find($id);

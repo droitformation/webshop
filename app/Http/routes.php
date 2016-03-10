@@ -341,8 +341,10 @@ Route::group(['middleware' => ['web']], function () {
      * Shop routes for frontend shop
      * */
     Route::get('/', 'Frontend\Shop\ShopController@index');
-    Route::get('/pubdroit', 'Frontend\Shop\ShopController@index');
+    Route::get('pubdroit', 'Frontend\Shop\ShopController@index');
     Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
+    Route::match(['get', 'post'], 'search', 'Frontend\Shop\ShopController@search');
+    Route::get('categorie/{id}', 'Frontend\Shop\ShopController@categorie');
     Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
     Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
 

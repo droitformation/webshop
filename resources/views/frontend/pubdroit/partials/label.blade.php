@@ -1,5 +1,5 @@
 <ul class="nav">
-    <li><a href="{{ url('categorie/1') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
+    <li><a href="{{ url('categorie/5') }}"><i class="fa fa-star"></i> &nbsp; Nouveautés</a></li>
     @if(!$domains->isEmpty())
         <li>
             <form action="{{ url('sort')}}" method="post">{!! csrf_field() !!}

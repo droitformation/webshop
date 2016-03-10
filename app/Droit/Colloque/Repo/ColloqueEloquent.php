@@ -17,6 +17,11 @@ class ColloqueEloquent implements ColloqueInterface{
         return $this->colloque->active($active)->archives($archives)->orderBy('start_at','DESC')->get();
     }
 
+    public function search($term)
+    {
+        return $this->colloque->where('titre', 'like', '%'.$term.'%')->orWhere('sujet', 'like', '%'.$term.'%')->orWhere('soustitre', 'like', '%'.$term.'%')->get();
+    }
+
     public function getCurrent($registration = false, $finished = false)
     {
         return $this->colloque->registration($registration)->finished($finished)->orderBy('start_at','DESC')->get();

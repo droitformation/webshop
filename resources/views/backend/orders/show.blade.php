@@ -17,9 +17,19 @@
 
                     <div class="panel-body">
                         <h4><i class="fa fa-edit"></i> &nbsp;Editer la commande</h4>
+
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">N°</label>
-                            <div class="col-sm-5 col-xs-8">
+                            <label class="col-sm-3 col-xs-12 control-label"></label>
+                            <div class="col-sm-4 col-xs-12">
+                                @if($order->facture )
+                                    <a target="_blank" href="{{ $order->facture }}?{{ rand(1,1000) }}" class="btn btn-sm btn-default"><i class="fa fa-file-pdf-o"></i> &nbsp;Facture en pdf</a>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">N°</label>
+                            <div class="col-sm-5 col-xs-12">
                                 <input type="text" class="form-control" disabled value="{{ $order->order_no }}" name="order_no">
                             </div>
                         </div>
@@ -33,11 +43,12 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Client</label>
-                            <div class="col-sm-5 col-xs-8">
+                            <div class="col-sm-6 col-xs-8">
 
                                 <!-- Autocomplete for adresse -->
                                 <div class="autocomplete-wrapper">
-                                    <div class="input-adresse" data-adresse="{{ $order->order_adresse->id }}" data-type="adresse">
+
+                                    <div class="input-adresse" data-adresse="{{ $order->order_adresse->id }}" data-type="adresse_id">
                                         <input type="hidden" class="form-control" value="{{ $order->order_adresse->id }}" name="adresse_id">
                                     </div>
                                     <div class="choice-adresse"></div>
@@ -55,7 +66,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Date de la facture</label>
                             <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control datePicker" value="{{ $order->created_at->format('Y-m-d') }}" name="payed_at">
+                                <input type="text" class="form-control datePicker" value="{{ $order->created_at->format('Y-m-d') }}" name="created_at">
                             </div>
                         </div>
 
@@ -69,6 +80,40 @@
                                         @endforeach
                                     </select>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><i class="fa fa-dollar"></i>&nbsp; Modifier les taux de tva</label>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ old('tva.taux_reduit') }}" placeholder="Réduit"><span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="tva[taux_normal]" value="{{ old('tva.taux_normal') }}" placeholder="Normal"><span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><i class="fa fa-info-circle"></i>&nbsp; Phrase d'information</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
+                                    <input class="form-control" type="text" name="message[warning]" value="{{ old('message.warning') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><i class="fa fa-info-circle"></i>&nbsp; Information pour librairies</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
+                                    <input class="form-control" type="text" name="message[special]" value="{{ old('message.special') }}">
+                                </div>
                             </div>
                         </div>
 

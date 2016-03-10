@@ -75,7 +75,7 @@ class OrderEloquent implements OrderInterface{
 
     public function find($id){
 
-        return $this->order->with(['products','user','coupon','shipping'])->find($id);
+        return $this->order->with(['products','user','coupon','shipping','user.adresses','adresse'])->find($id);
     }
 
     public function newOrderNumber()
@@ -145,6 +145,8 @@ class OrderEloquent implements OrderInterface{
 
         $order->fill($data);
 
+        $order->adresse_id = null;
+        $order->user_id    = null;
 
         if(isset($data['payed_at']) && !empty($data['payed_at']))
         {
@@ -158,6 +160,21 @@ class OrderEloquent implements OrderInterface{
         {
             $order->status   = 'pending';
             $order->payed_at = null;
+        }
+
+        if(isset($data['created_at']))
+        {
+            $order->created_at = \Carbon\Carbon::createFromFormat('Y-d-m', $data['created_at']);
+        }
+
+        if(isset($data['user_id']))
+        {
+            $order->user_id    = $data['user_id'];
+        }
+
+        if(isset($data['adresse_id']))
+        {
+            $order->adresse_id = $data['adresse_id'];
         }
 
         $order->save();

@@ -17,6 +17,11 @@ class CategorieEloquent implements CategorieInterface{
         return $this->categorie->where('parent_id','>',0)->where('parent_id','!=',2)->orderBy('title', 'ASC')->get();
     }
 
+    public function search($term)
+    {
+        return $this->categorie->where('title', 'like', '%'.$term.'%')->get();
+    }
+
     public function getParents()
     {
         return $this->categorie->where('parent_id','=',0)->orderBy('title', 'ASC')->get();

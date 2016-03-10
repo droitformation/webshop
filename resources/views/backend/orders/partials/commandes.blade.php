@@ -6,14 +6,14 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Commande n°</th>
+                <th class="col-md-1">Commande n°</th>
                 <th class="col-md-2">Client</th>
-                <th>Date</th>
-                <th>Montant</th>
-                <th>Facture</th>
-                <th>Payé le</th>
-                <th>Via admin</th>
-                <th class="text-right"></th>
+                <th class="col-md-2">Date</th>
+                <th class="col-md-1">Montant</th>
+                <th class="col-md-1">Facture</th>
+                <th class="col-md-2">Payé le</th>
+                <th class="col-md-1">Via admin</th>
+                <th class="text-right col-md-1"></th>
             </tr>
         </thead>
         <tbody>

@@ -37,11 +37,15 @@ class ProductEloquent implements ProductInterface{
 
     public function getByCategorie($id)
     {
-        return $this->product->with(array('authors','attributs','categories'))->whereHas('categories', function($query) use ($id)
-        {
-            $query->where('categorie_id', '=' ,$id);
+        return $this->product
+            ->with(array('authors','attributs','categories'))
+            ->whereHas('categories', function($query) use ($id)
+            {
+                $query->where('categorie_id', '=' ,$id);
 
-        })->orderBy('created_at', 'DESC')->get();
+            })
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
 
     public function find($id){
@@ -52,6 +56,11 @@ class ProductEloquent implements ProductInterface{
     public function getSome($ids){
 
         return $this->product->whereIn('id', $ids)->get();
+    }
+
+    public function search($term)
+    {
+        return $this->product->where('title', 'like', '%'.$term.'%')->orWhere('description', 'like', '%'.$term.'%')->get();
     }
 
     public function create(array $data){

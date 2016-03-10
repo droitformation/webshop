@@ -9,7 +9,7 @@
             </a>
         </div>
         <article class="col-md-8">
-            <h3><a href="{{ asset('files/products/'.$product->image) }}">{{ $product->title }}</a></h3>
+            <h3><a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a></h3>
             <p>{!! $product->teaser !!}</p>
             <div class="cart-price">
                 <form method="post" action="{{ url('cart/addProduct') }}" class="form-inline">{!! csrf_field() !!}
