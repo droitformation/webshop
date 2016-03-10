@@ -25,8 +25,6 @@ class Order extends Model{
     {
         if(isset($this->user))
         {
-            $this->user->load('adresses');
-
             return $this->user->adresse_livraison;
         }
 

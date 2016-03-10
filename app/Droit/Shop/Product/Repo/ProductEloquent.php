@@ -14,9 +14,7 @@ class ProductEloquent implements ProductInterface{
 
     public function getAll($search = null, $nbr = null)
     {
-        $products = $this->product->with(array('categories','authors','domains','attributs','orders','abos'))
-            ->search($search)
-            ->orderBy('created_at', 'DESC');
+        $products = $this->product->search($search)->orderBy('created_at', 'DESC');
 
         if($nbr)
         {
@@ -28,11 +26,7 @@ class ProductEloquent implements ProductInterface{
 
     public function getNbr($nbr = null, $reject = null)
     {
-        return $this->product
-            ->with(array('categories','authors','domains','attributs','abos'))
-            ->reject($reject)
-            ->orderBy('created_at', 'DESC')
-            ->paginate($nbr);
+        return $this->product->reject($reject)->orderBy('created_at', 'DESC')->paginate($nbr);
     }
 
     public function getByCategorie($id)

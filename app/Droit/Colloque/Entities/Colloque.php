@@ -22,8 +22,6 @@ class Colloque extends Model
 
     public function getIllustrationAttribute()
     {
-        $this->load('documents');
-
         $illustration = $this->documents->filter(function ($item){
             return $item->type == 'illustration';
         });
@@ -38,8 +36,6 @@ class Colloque extends Model
 
     public function getProgrammeAttribute()
     {
-        $this->load('documents');
-
         $programme = $this->documents->filter(function ($item){
             return $item->type == 'programme';
         });

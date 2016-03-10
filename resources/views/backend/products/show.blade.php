@@ -2,12 +2,16 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/product') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <p><a href="{{ url('admin/product') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+        <div class="col-md-6 text-right">
+            <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
+                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                @if($product->orders->count() == 0)
+                    <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger deleteAction">Supprimer</button>
+                @endif
+            </form>
         </div>
     </div>
 

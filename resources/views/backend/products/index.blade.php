@@ -58,24 +58,11 @@
                                         <div class="col-md-9">
                                             <p>
                                                 <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
-                                                <a href="{{ url('admin/product/'.$product->id) }}">
-                                                    <span class="title">{{ $product->title }}</span>
-                                                    @if(!$product->attributs->isEmpty())
-                                                        @foreach($product->attributs as $attribute)
-                                                            <span class="{{ $attribute->title }} text-hide" style="height: 0;">{{ $attribute->pivot->value }}</span>
-                                                        @endforeach
-                                                    @endif
-                                                </a>
+                                                <a href="{{ url('admin/product/'.$product->id) }}"><span class="title">{{ $product->title }}</span></a>
                                             </p>
                                         </div>
                                         <div class="col-md-3 text-right">
-                                            <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
-                                                @if($product->orders->count() == 0)
-                                                <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger btn-xs deleteAction">&nbsp; x &nbsp;</button>
-                                                @endif
-                                            </form>
+                                            <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
                                         </div>
                                     </div>
                                 </div>
