@@ -88,6 +88,8 @@ class Inscription extends Model
      * */
     public function getDocumentsAttribute()
     {
+        $this->load('colloque');
+
         if(!empty($this->colloque->annexe) && $this->inscrit)
         {
             foreach($this->colloque->annexe as $id => $annexe)
@@ -110,12 +112,12 @@ class Inscription extends Model
 
     public function getInscritAttribute()
     {
-        if(isset($this->groupe) && !empty($this->group_id))
+        if($this->groupe && !empty($this->group_id))
         {
             return $this->groupe->user;
         }
 
-        if(isset($this->user))
+        if($this->user)
         {
             return $this->user;
         }
