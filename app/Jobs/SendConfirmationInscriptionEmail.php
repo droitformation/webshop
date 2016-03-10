@@ -83,7 +83,6 @@ class SendConfirmationInscriptionEmail extends Job implements SelfHandling, Shou
 
         // Update the send date and add true if send via admin
         $this->inscription->send_at = date('Y-m-d');
-        $this->inscription->admin   = ($this->email ? 1 : null);
         $this->inscription->save();
 
     }
