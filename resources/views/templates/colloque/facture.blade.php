@@ -34,7 +34,7 @@
 
     <div class="content">
 
-        <?php $rappel = (isset($rappel) ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span>' : ''); ?>
+        <?php $rappel = (isset($rappel) && $rappel > 0 ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span>' : ''); ?>
         <h1 class="title blue">
             {!! $rappel !!} FACTURE {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
         </h1>

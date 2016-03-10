@@ -23,6 +23,8 @@ class Order extends Model{
 
     public function getOrderAdresseAttribute()
     {
+        $this->load('adresse','user','user.adresses');
+
         if(isset($this->user))
         {
             return $this->user->adresse_livraison;
