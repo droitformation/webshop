@@ -33,8 +33,6 @@ $(function() {
 			 data: { loyer:loyer, date:date, canton:canton , _token: $("meta[name='_token']").attr('content') },
 			 success: function(data) {
 
-			 	console.log(data);
-
 			 	if(data)
 			 	{
 		 			var newLoyer = '<div class="lines result">\

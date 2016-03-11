@@ -36,6 +36,8 @@ class CalculetteWorker implements CalculetteWorkerInterface {
 
 		$taux_date = Carbon::parse($taux_date)->formatLocalized('%B %Y');
 		$ipc_date  = Carbon::parse($ipc_date)->formatLocalized('%B %Y');
+
+		$ipc_date = preg_match('!!u', $ipc_date) ? $ipc_date : utf8_encode($ipc_date);
 		
 		$calcul = array(
 			'taux_depart' => $taux_depart,
