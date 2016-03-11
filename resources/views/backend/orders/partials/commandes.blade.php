@@ -29,7 +29,7 @@
                 <td>
 
                     @if($order->facture)
-                        <a target="_blank" href="{{ $order->facture }}" class="btn btn-xs btn-default">Facture en pdf</a>
+                        <a target="_blank" href="{{ $order->facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
                     @else
                         <form action="{{ url('admin/order/generate') }}" method="POST">
                             <input type="hidden" name="id" value="{{ $order->id }}">{!! csrf_field() !!}
