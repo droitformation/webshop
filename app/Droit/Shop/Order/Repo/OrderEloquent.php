@@ -14,7 +14,7 @@ class OrderEloquent implements OrderInterface{
 
     public function getLast($nbr)
     {
-        return $this->order->with(['products','user','user.adresses'])->orderBy('created_at','DESC')->take($nbr)->get();
+        return $this->order->with(['products','user','user.adresses','adresse'])->orderBy('created_at','DESC')->take($nbr)->get();
     }
 
     public function getTrashed($start, $end)

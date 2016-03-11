@@ -77,6 +77,11 @@ class Handler extends ExceptionHandler {
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)
             return redirect()->to('admin');
 
+		if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)
+		{
+			return response()->view('404', [], 404);
+		}
+
 		return parent::render($request, $e);
 	}
 

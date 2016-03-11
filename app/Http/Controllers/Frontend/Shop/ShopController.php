@@ -140,29 +140,18 @@ class ShopController extends Controller {
 
         $data['page'] = $page;
         $data['var']  = $var;
-/*
-        if($slug == 'newsletter')
-        {
-            if($var)
-            {
-                $data['campagne'] = $this->campagne->find($var);
-                $data['content']  = $this->worker->prepareCampagne($var);
-            }
-            else
-            {
-                $newsletters = $this->newsletter->getAll($this->site_id)->first();
-                if(!$newsletters->campagnes->isEmpty())
-                {
-                    $data['campagne'] = $newsletters->campagnes->first();
-                    $data['content']  = $this->worker->prepareCampagne($newsletters->campagnes->first()->id);
-                }
-            }
-
-            $data['categories']    = $this->worker->getCategoriesArrets();
-            $data['imgcategories'] = $this->worker->getCategoriesImagesArrets();
-        }*/
 
         return view('frontend.pubdroit.'.$page->template)->with($data);
+    }
+
+    public function subscribe()
+    {
+        return view('frontend.pubdroit.subscribe');
+    }
+
+    public function unsubscribe()
+    {
+        return view('frontend.pubdroit.unsubscribe');
     }
 
 }

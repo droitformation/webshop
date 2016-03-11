@@ -35,6 +35,16 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 		return !$user->isEmpty() ? $user->first() : null;
 	}
 
+    public function findSubscription($newsletter_id,$email)
+    {
+        $user = $this->user->whereHas('subscriptions', function($query) use ($newsletter_id)
+        {
+            $query->where('newsletter_id', '=',$newsletter_id);
+        })->where('email','=',$email)->get();
+
+        return !$user->isEmpty() ? $user->first() : null;
+    }
+
     public function get_ajax($draw, $start, $length, $sortCol, $sortDir, $search){
 
         $columns = ['id','activated_at','activated_at','email','newsletter_id'];
@@ -129,6 +139,8 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
 		$user = $this->user->create([
             'email'            => $data['email'],
+            'user_id'          => (isset($data['user_id']) ? $data['user_id'] : null),
+            'adresse_id'       => (isset($data['adresse_id']) ? $data['adresse_id'] : null),
             'activation_token' => (isset($data['activation_token']) ? $data['activation_token'] : null),
             'activated_at'     => (isset($data['activated_at']) ? $data['activated_at'] : null),
             'created_at'       => date('Y-m-d G:i:s'),

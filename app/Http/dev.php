@@ -335,32 +335,17 @@ Route::get('registration', function()
 });
 
 
-Route::get('factory', function()
+Route::get('confirmation_newsletter', function()
 {
+    $sites = new App\Droit\Site\Entities\Site();
+    $site  = $sites->find(1);
 
-    $fakerobj = new Faker\Factory;
-    $faker = $fakerobj::create();
+    $data = [
+        'site' => $site,
+        'token' => '<xcdsfgreqewfwdb'
+    ];
 
-    $repo = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
-
-    for( $x = 1 ; $x < 11; $x++ )
-    {
-        $product = $repo->create(array(
-            'title'           => $faker->sentence,
-            'teaser'          => $faker->paragraph,
-            'description'     => $faker->text,
-            'image'           => 'img'.$x.'.jpg',
-            'price'           => $faker->numberBetween(2000, 40000),
-            'weight'          => $faker->numberBetween(200, 1000),
-            'sku'             => $faker->numberBetween(5, 50),
-            'is_downloadable' => (($x % 2) == 0 ? 1 : 0)
-        ));
-
-        echo '<pre>';
-        print_r($product);
-        echo '</pre>';
-    }
-
+    return View::make('emails.confirmation', $data);
 });
 
 Route::get('convert', function()

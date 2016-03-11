@@ -71,7 +71,7 @@ $paraeset = "font-size: 14px; font-weight: normal; margin: 0 0 10px; padding: 0;
                 <table style="{{ $fontreset }} width: 100%; {{ $marginreset }}"><tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; {{ $marginreset }}">
                         <td align="center" style="{{ $fontreset }} {{ $marginreset }}">
                             <p style="{{ $fontreset }} font-size: 12px; color: #666666; font-weight: normal; margin: 0 0 10px; padding: 0;">
-                                Droit Formation &copy; {{ date('Y') }}
+                                &copy; Droit Formation {{ date('Y') }}
                             </p>
                         </td>
                     </tr>

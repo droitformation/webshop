@@ -67,6 +67,8 @@ class ProductController extends Controller {
 	public function index(Request $request)
 	{
         $search = $request->input('search',null);
+        $search = $search ? array_filter($search) : null;
+        $term   = $request->input('term',null);
 
         // results for search
         if($search)
@@ -74,6 +76,11 @@ class ProductController extends Controller {
             $paginate = false;
             $search   = array_filter($search);
             $products = $this->product->getAll($search);
+        }
+        elseif($term)
+        {
+            $products = $this->product->search($term);
+            $paginate = false;
         }
         else // pagination
         {
@@ -87,7 +94,7 @@ class ProductController extends Controller {
         $domains     = $this->domain->getAll();
 
 		return view('backend.products.index')->with(
-            ['products' => $products, 'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains, 'paginate' => $paginate, 'search' => $search]
+            ['products' => $products, 'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains, 'paginate' => $paginate, 'search' => $search, 'term' => $term]
         );
 	}
 

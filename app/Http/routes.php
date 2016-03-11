@@ -347,6 +347,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('categorie/{id}', 'Frontend\Shop\ShopController@categorie');
     Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
     Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
+    Route::get('subscribe', 'Frontend\Shop\ShopController@subscribe');
+    Route::get('unsubscribe', 'Frontend\Shop\ShopController@unsubscribe');
 
     Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
 

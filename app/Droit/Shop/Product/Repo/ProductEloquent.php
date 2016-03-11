@@ -54,7 +54,11 @@ class ProductEloquent implements ProductInterface{
 
     public function search($term)
     {
-        return $this->product->where('title', 'like', '%'.$term.'%')->orWhere('description', 'like', '%'.$term.'%')->get();
+        return $this->product->join('shop_product_attributes', 'shop_products.id', '=', 'shop_product_attributes.product_id')
+            ->where('shop_product_attributes.value', 'like', '%'.$term.'%')
+            ->orWhere('shop_products.title', 'like', '%'.$term.'%')
+            ->select('shop_products.*','shop_product_attributes.value')
+            ->get();
     }
 
     public function create(array $data){

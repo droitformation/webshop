@@ -20,7 +20,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
 
             <div class="panel panel-info">
                 <div class="panel-body">
@@ -30,62 +30,80 @@
                         <tr>
                             <th class="col-sm-1">Action</th>
                             <th class="col-sm-3">Déteteur</th>
-                            <th class="col-sm-2">No</th>
+                            <th class="col-sm-4">No</th>
+                            <th class="col-sm-2">Prix</th>
                             <th class="col-sm-2">Date</th>
                         </tr>
                         </thead>
                         <tbody class="selects">
-                        @if(!empty($inscriptions))
-                            @foreach($inscriptions as $inscription)
-                                <tr {!! ($inscription->group_id > 0 ? 'class="isGoupe"' : '') !!}>
-                                    <td><a class="btn btn-sky btn-sm" href="{{ url('admin/inscription/'.$inscription->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td>
-                                        @if(isset($inscription->inscrit))
-                                            <?php $adresse = $inscription->inscrit->adresses->whereLoose('type',1)->first();?>
-                                            {!! isset($civilites[$adresse->civilite_id]) ? '<p><strong>'.$civilites[$adresse->civilite_id].'</strong></p>' : '' !!}
-                                            <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse->name }}</a></p>
-                                            <p>{{ $inscription->inscrit->email }}</p>
-                                        @else
-                                            <p><span class="label label-warning">Duplicata</span></p>
-                                        @endif
-                                    </td>
-                                    <td><strong>{{ $inscription->inscription_no }}</strong></td>
-                                    <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
-                                </tr>
-                            @endforeach
-                        @endif
+                            @if(!empty($inscriptions))
+                                @foreach($inscriptions as $inscription)
+                                    <tr>
+                                        <td>
+                                            @if(!$inscription->group_id)
+                                                <a class="btn btn-sky btn-sm" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}"><i class="fa fa-edit"></i></a>
+                                                @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
+                                            @endif
+                                        </td>
+                                        <td>
+
+                                            @if(isset($inscription->inscrit))
+                                                <?php $adresse = $inscription->inscrit->adresses->whereLoose('type',1)->first();?>
+                                                {!! isset($civilites[$adresse->civilite_id]) ? '<p><strong>'.$civilites[$adresse->civilite_id].'</strong></p>' : '' !!}
+                                                <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse->name }}</a></p>
+                                                <p>{{ $inscription->inscrit->email }}</p>
+                                            @else
+                                                <p><span class="label label-warning">Duplicata</span></p>
+                                            @endif
+
+                                            @if($inscription->group_id)
+                                                <br/><a class="btn btn-info btn-xs" data-toggle="modal" data-target="#editGroup_{{ $inscription->groupe->id }}">Changer le détenteur</a>
+                                                @include('backend.inscriptions.modals.change', ['group' => $inscription->groupe]) <!-- Modal edit group -->
+                                            @endif
+
+                                        </td>
+                                        <td>
+                                            @if($inscription->group_id)
+                                                <?php $group = $inscription->groupe; ?>
+                                                @if($group->inscriptions)
+                                                    @foreach($group->inscriptions as $inscription)
+                                                        <div class="media">
+                                                            <div class="media-left">
+                                                                <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+                                                                    <input type="hidden" name="_method" value="DELETE">
+                                                                    <a class="btn btn-sky btn-xs" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}"><i class="fa fa-edit"></i></a>
+                                                                    <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-xs deleteAction">X</button>
+                                                                </form>
+                                                                @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <p><strong>{!! $inscription->participant->name !!}</strong></p>
+                                                                <p>{{ $inscription->inscription_no }}</p>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+
+                                                <br/><a class="btn btn-success btn-xs" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a>
+                                                @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque]) <!-- Modal add to group -->
+                                            @else
+                                                <strong>{{ $inscription->inscription_no }}</strong>
+                                            @endif
+                                        </td>
+                                        <td>{{ $inscription->group_id ? $group->price : $inscription->price_cents }} CHF</td>
+                                        <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
+                                    </tr>
+
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
-
-                    {{--
-                    <div class='examples'>
-                        <div class='parent'>
-                            <div class='wrapper'>
-                                <div id='middle-defaults' class='wide'>
-                                    <div>You can move these ele containers</div>
-                                    <div>Moviossible</div>
-                                </div>
-                            </div>
-                            <div class='wrapper'>
-                                <div id='left-defaults' class='container_dd'>
-                                    <div>You can move these elements between these two containers</div>
-                                    <div>Anything can be moved around. That includes images, <a href='https://github.com/bevacqua/dragula'>links</a>, or any other nested elements.</div>
-                                </div>
-                                <div id='right-defaults' class='container_dd'>
-                                    <div>There's also the possibility of moving elements around in the same container, changing their position</div>
-                                    <div>Moving <code>&lt;input/&gt;</code> elements works just fine. You can still focus them, too. <input placeholder='See?' /></div>
-                                    <div>Make sure to check out the <a href='https://github.com/bevacqua/dragula#readme'>documentation on GitHub!</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>--}}
-                    <!-- TREEVIEW CODE -->
 
                 </div>
             </div>
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
 
             <div class="panel panel-info">
                 <div class="panel-body">

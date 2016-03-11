@@ -23,11 +23,9 @@ class Order extends Model{
 
     public function getOrderAdresseAttribute()
     {
-        $this->load('adresse','user','user.adresses');
-
         if(isset($this->user))
         {
-            return $this->user->adresse_livraison;
+            return $this->user->adresses->whereLoose('type',1)->first();
         }
 
         if(isset($this->adresse))

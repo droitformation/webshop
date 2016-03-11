@@ -13,6 +13,7 @@ interface AdresseInterface {
 	public function getLast($nbr);
     public function search($term);
     public function searchSimple($terms);
+	public function findByEmail($email);
     public function searchMultiple($terms, $each = false);
 	public function duplicates();
 	

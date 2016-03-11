@@ -24,7 +24,16 @@
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-filter"></i> &nbsp;Trier</button>
                                 <a class="btn btn-default" href="{{ url('admin/products') }}">Tous</a>
                             </div>
-                            <div class="col-md-4 text-right">
+                            <div class="col-md-3">
+                                <label>Rechercher</label>
+                                <div class="input-group">
+                                    <input type="text" name="term" class="form-control" placeholder="ISBN, titre">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">Ok</button>
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-md-1 text-right">
                                 <label>&nbsp;</label><br/>
                                 <a href="{{ url('admin/product/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
                             </div>
@@ -38,7 +47,7 @@
                 <div class="panel-body">
 
                     <?php 
-                        if(isset($search))
+                        if(isset($search) && !empty($search))
                         {
                             $key  = key($search);
                             $name = str_replace('_id','',$key).'s';

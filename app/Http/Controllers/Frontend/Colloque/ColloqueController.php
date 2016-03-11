@@ -31,7 +31,7 @@ class ColloqueController extends Controller
      */
     public function index(Request $request)
     {
-        $colloques = $this->colloque->getAll();
+        $colloques = $this->colloque->getCurrent(true);
 
         if ($request->ajax())
         {

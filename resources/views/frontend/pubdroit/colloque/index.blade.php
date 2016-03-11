@@ -1,4 +1,4 @@
-@@extends('frontend.pubdroit.layouts.master')
+@extends('frontend.pubdroit.layouts.master')
 @section('content')
 
     <section class="row">
@@ -7,17 +7,17 @@
             <p><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
 
             <div class="heading-bar">
-                <h2>Colloque</h2>
+                <h2>Colloques</h2>
                 <span class="h-line"></span>
             </div>
 
             @if(!$colloques->isEmpty())
-                <?php $chunks = $colloques->chunk(3); ?>
+                <?php $chunks = $colloques->chunk(2); ?>
                 @foreach($chunks as $chunk)
                     <section class="row">
                         @foreach($chunk as $colloque)
 
-                            <div class="event-post col-md-4">
+                            <div class="event-post col-md-6">
                                 <div class="post-img">
                                     <a href="{{ url('colloque/'.$colloque->id) }}">
                                         <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
@@ -28,7 +28,7 @@
                                     <h3><a href="{{ url('colloque/'.$colloque->id) }}"><strong>{{ $colloque->titre }}</strong></a></h3>
                                     <span class="comments-num">{{ $colloque->soustitre }}</span>
                                     <p><strong>Lieu: </strong>
-                                        {{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? $colloque->location->adresse : '' }}</p>
+                                        {{ $colloque->location ? $colloque->location->name : '' }}, {{ $colloque->location ? strip_tags($colloque->location->adresse) : '' }}</p>
                                     {!! $colloque->remarque !!}
                                     <p><a class="more-btn btn-sm" href="{{ url('colloque/'.$colloque->id) }}">Inscription</a></p>
                                 </div>
@@ -39,6 +39,10 @@
                     </section>
                 @endforeach
             @endif
+
+            <div class="b-post-bottom text-right">
+                <a class="text-danger" href="{{ url('archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
+            </div>
 
         </div>
     </section>

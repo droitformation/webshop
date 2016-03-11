@@ -9,15 +9,25 @@ use App\Http\Requests\SubscribeRequest;
 
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Worker\MailjetInterface;
+use App\Droit\Site\Repo\SiteInterface;
+use App\Droit\User\Repo\UserInterface;
+use App\Droit\Adresse\Repo\AdresseInterface;
 
 class SubscribeController extends Controller
 {
     protected $subscription;
+    protected $site;
+    protected $worker;
+    protected $user;
+    protected $adresse;
 
-    public function __construct(MailjetInterface $worker, NewsletterUserInterface $subscription)
+    public function __construct(MailjetInterface $worker, NewsletterUserInterface $subscription,  SiteInterface $site, UserInterface $user, AdresseInterface $adresse)
     {
         $this->worker        = $worker;
         $this->subscription  = $subscription;
+        $this->site          = $site;
+        $this->user          = $user;
+        $this->adresse       = $adresse;
     }
 
     /**
@@ -50,7 +60,7 @@ class SubscribeController extends Controller
      */
     public function subscribe(SubscribeRequest $request)
     {
-        $email = $this->subscription->findByEmail($request->email);
+        $email = $this->subscription->findSubscription($request->newsletter_id,$request->email);
 
         if($email)
         {
@@ -63,13 +73,19 @@ class SubscribeController extends Controller
 
             return redirect()->back()->with($messages);
         }
+        
+        $data = ['email' => $request->input('email'), 'activation_token' => md5($request->email.\Carbon\Carbon::now())];
+        $user = $this->findUserExist($email);
+        $data = $user ? $data + $user : $data;
 
         // Subscribe user with activation token to website list and sync newsletter abos
-        $suscribe = $this->subscription->create(['email' => $request->email, 'activation_token' => md5($request->email.\Carbon\Carbon::now()) ]);
+        $suscribe = $this->subscription->create($data);
 
         $suscribe->subscriptions()->attach($request->newsletter_id);
 
-        \Mail::send('emails.confirmation', array('token' => $suscribe->activation_token), function($message) use ($suscribe)
+        $site = $this->site->find($request->site_id);
+
+        \Mail::send('emails.confirmation', ['token' => $suscribe->activation_token, 'site' => $site], function($message) use ($suscribe)
         {
             $message->to($suscribe->email, $suscribe->email)->subject('Inscription!');
         });
@@ -102,5 +118,22 @@ class SubscribeController extends Controller
         $this->subscription->delete($abonne->email);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => '<strong>Vous avez été désinscrit</strong>'));
+    }
+
+    public function findUserExist($email)
+    {
+        $user    = $this->user->findByEmail($email);
+        $adresse = $this->adresse->findByEmail($email);
+
+        if($user){
+            return ['user_id' => $user->id];
+        }
+
+        if($adresse){
+            return ['adresse_id' => $adresse->id];
+        }
+
+        return null;
+
     }
 }

@@ -130,7 +130,7 @@
 			<!-- End Main Header -->
 
 			<!-- Start Main Content Holder -->
-			<section id="content-holder" class="container-fluid container">
+			<section id="content-holder" class="container">
 				<!-- Contenu -->
 				@yield('content')
 				<!-- Fin contenu -->

@@ -6,6 +6,7 @@ interface NewsletterUserInterface {
     public function getAllNbr($nbr);
 	public function find($id);
 	public function findByEmail($email);
+	public function findSubscription($newsletter_id,$email);
     public function get_ajax($draw, $start, $length, $sortCol, $sortDir, $search);
     public function activate($token);
 	public function create(array $data);
