@@ -152,7 +152,10 @@ class PdfGenerator implements PdfGeneratorInterface
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
-        $data['rappel']   = $model->load('rappels')->rappels->count();
+
+        if($rappel){
+            $data['rappel']   = $model->load('rappels')->rappels->count();
+        }
 
         // Qrcode for bon
         if(\Registry::get('inscription.qrcode') && $document == 'bon')
