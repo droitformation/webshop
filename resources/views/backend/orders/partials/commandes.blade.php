@@ -6,7 +6,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="col-md-1">Commande n°</th>
+                <th class="col-md-2">Commande n°</th>
                 <th class="col-md-2">Client</th>
                 <th class="col-md-2">Date</th>
                 <th class="col-md-1">Montant</th>
@@ -20,6 +20,7 @@
         @foreach($orders as $order)
             <tr class="mainRow">
                 <td>
+                    <a class="btn btn-sky btn-xs" href="{{ url('admin/order/'.$order->id) }}"><i class="fa fa-edit"></i></a>&nbsp;
                     <a class="collapse_anchor" data-toggle="collapse" href="#order_no_{{ $order->id }}"><i class="fa fa-order fa-arrow-circle-right"></i>{{ $order->order_no }}</a>
                 </td>
                 <td>{{ $order->order_adresse ? $order->order_adresse->name : 'Admin' }}</td>
