@@ -30,7 +30,7 @@ $(function() {
 		// Post all infos to controller
 		$.ajax({
 			 type: 'post',
-			 data: { loyer:loyer, date:date, canton:canton },
+			 data: { loyer:loyer, date:date, canton:canton , _token: $("meta[name='_token']").attr('content') },
 			 success: function(data) {
 
 			 	console.log(data);

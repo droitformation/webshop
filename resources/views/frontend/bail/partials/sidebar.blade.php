@@ -140,6 +140,7 @@
                 <p>Calculez les hausses et baisses de loyer en un clic</p>
 
                 <form action="{{ url('bail/calcul') }}" id="calculette">
+                    {!! csrf_field() !!}
                     <label>Votre canton</label>
                     <select class="form-control" name="canton" id="input-canton" required>
                         <option value="">Choix</option>
@@ -165,6 +166,7 @@
             <h5 class="color-bloc">Inscription à la newsletter</h5>
             <div class="sidebar-bloc">
                 <form method="post" action="{{ url('bail/subscribe') }}">
+                    {!! csrf_field() !!}
                     <input type="hidden" name="list_id" value="2">
                     <div class="input-group">
                         <input name="email" type="email" class="form-control" placeholder="Votre adresse email">

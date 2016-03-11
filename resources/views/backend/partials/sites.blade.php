@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="shortcut-tiles tiles-indigo" href="{{ url('admin/inscriptions') }}">
+                        <a class="shortcut-tiles tiles-indigo" href="{{ url('admin/inscription') }}">
                             <div class="tiles-body tiles-body-menu">
                                 <i class="fa fa-calendar"></i><p class="pull-right">Inscriptions</p>
                             </div>

@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider {
             }
         );
 
-        view()->composer('backend.partials.sites', 'App\Http\ViewComposers\SiteComposer');
+        view()->composer(['backend.partials.sites','backend.menus.*','backend.pages.*','backend.bloc.*','backend.arrets.*','backend.analyses.*'], 'App\Http\ViewComposers\SiteComposer');
 
         view()->composer(
             [

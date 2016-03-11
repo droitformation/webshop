@@ -5,7 +5,7 @@
 	
 	<meta name="description" content="Bail">
 	<meta name="author" content="Cindy Leschaud | @DesignPond">
-
+    <meta name="_token" content="<?php echo csrf_token(); ?>">
     <!-- CSS Files
     ================================================== -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"

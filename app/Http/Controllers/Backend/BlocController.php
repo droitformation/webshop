@@ -83,7 +83,7 @@ class BlocController extends Controller
      */
     public function show($id)
     {
-        $bloc  = $this->bloc->find($id);
+        $bloc = $this->bloc->find($id);
 
         return view('backend.bloc.show')->with(['bloc' => $bloc]);
     }

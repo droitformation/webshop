@@ -87,14 +87,16 @@ class UploadController extends Controller
     public function uploadRedactor(Request $request)
     {
         // thumb for redactor filemanager
-        $this->upload->upload( $request->file('file') , 'files/uploads/thumbs/', 'thumbs');
+        //$this->upload->upload( $request->file('file') , 'files/uploads/thumbs', 'thumbs');
 
-        $files = $this->upload->upload( $request->file('file') , 'files/uploads/' );
+        $files = $this->upload->upload( $request->file('file') , 'files/uploads' );
+
+        \File::copy(public_path('/files/uploads/'.$files['name']), public_path('/files/uploads/thumbs/'.$files['name']));
 
         if($files)
         {
             $array = [
-                'filelink' => url('/').'/files/uploads/images/'.$files['name'],
+                'filelink' => url('/').'/files/uploads/'.$files['name'],
                 'filename' => $files['name']
             ];
 
@@ -106,7 +108,7 @@ class UploadController extends Controller
 
     public function uploadFileRedactor(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , 'files/uploads/' );
+        $files = $this->upload->upload( $request->file('file') , 'files/uploads' );
 
         if($files)
         {

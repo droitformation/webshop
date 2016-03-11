@@ -6,6 +6,7 @@
 	<meta name="description" content="Droit matrimonial">
 	<meta name="author" content="Cindy Leschaud | @DesignPond">
 	<meta name="viewport" content="width=device-width">
+    <meta name="_token" content="<?php echo csrf_token(); ?>">
 
 	<!-- CSS Files
      ================================================== -->
