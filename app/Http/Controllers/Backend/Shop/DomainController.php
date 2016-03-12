@@ -37,9 +37,7 @@ class DomainController extends Controller
      */
     public function create()
     {
-        $sites = $this->site->getAll();
-
-        return view('backend.domains.create')->with(['sites' => $sites]);
+        return view('backend.domains.create');
     }
 
     /**

@@ -20,7 +20,15 @@ class AppServiceProvider extends ServiceProvider {
             }
         );
 
-        view()->composer(['backend.partials.sites','backend.menus.*','backend.pages.*','backend.bloc.*','backend.arrets.*','backend.analyses.*'], 'App\Http\ViewComposers\SiteComposer');
+        view()->composer([
+            'backend.partials.sites',
+            'backend.menus.*',
+            'backend.pages.*',
+            'backend.bloc.*',
+            'backend.arrets.*',
+            'backend.analyses.*',
+            'backend.domains.*'
+        ], 'App\Http\ViewComposers\SiteComposer');
 
         view()->composer(
             [
@@ -35,7 +43,12 @@ class AppServiceProvider extends ServiceProvider {
             ], 'App\Http\ViewComposers\UserAttributeComposer');
 
         view()->composer(['frontend.pubdroit.partials.label','backend.export.user'], 'App\Http\ViewComposers\LabelComposer');
-        view()->composer(['frontend.pubdroit.partials.menu','frontend.pubdroit.layouts.master','frontend.pubdroit.subscribe','frontend.pubdroit.unsubscribe'], 'App\Http\ViewComposers\PubdroitComposer');
+        view()->composer([
+            'frontend.pubdroit.partials.menu',
+            'frontend.pubdroit.layouts.master',
+            'frontend.pubdroit.subscribe',
+            'frontend.pubdroit.unsubscribe'
+        ], 'App\Http\ViewComposers\PubdroitComposer');
 	}
 
 	/**

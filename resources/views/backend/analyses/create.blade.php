@@ -133,6 +133,3 @@
 <!-- end row -->
 
 @stop
-	
-    	
-@stop

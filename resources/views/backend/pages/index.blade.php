@@ -6,6 +6,7 @@
 
 <div class="row">
     <div class="col-md-6">
+        <h4>Pages</h4>
         <p class="help-block"><i class="fa fa-crosshairs"></i> &nbsp;Cliquez-glissez les pages pour changer l'ordre dans le menu</p>
     </div>
     <div class="col-md-6 text-right">
@@ -15,9 +16,7 @@
 <hr/>
 <div class="row">
     <div class="col-md-12">
-
         <p><img height="40" src="{{ asset('logos/'.$site->logo) }}" alt="logo"></p>
-
         <div class="panel panel-primary">
             <div class="panel-body">
                 @if(!$pages->isEmpty())
