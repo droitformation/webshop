@@ -60,7 +60,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <h3>Inscriptions</h3>
+                        <h3>Inscriptions  <a class="btn btn-warning btn-sm pull-right" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}">Rappels</a></h3>
                         <table class="table" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                             <thead>
                             <tr>
