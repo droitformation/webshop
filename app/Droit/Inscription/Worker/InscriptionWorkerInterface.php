@@ -9,7 +9,7 @@ interface InscriptionWorkerInterface{
 
     // Send via admin
     public function prepareData($model);
-    public function makeDocuments($model);
+    public function makeDocuments($model,$refresh = false);
     public function sendEmail($model, $email);
     public function updateInscription($model);
 }

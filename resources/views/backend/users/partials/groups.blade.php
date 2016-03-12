@@ -66,7 +66,7 @@
                                             <td class="col-md-2">{{ $inscription->price_cents }} CHF</td>
                                             <td class="col-md-1">
                                                 @if($inscription->doc_bon)
-                                                    <a target="_blank" href="{{ asset($inscription->doc_bon) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
+                                                    <a target="_blank" href="{{ asset($inscription->doc_bon) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
                                                 @endif
                                             </td>
                                             <td class="col-md-4">@include('backend.users.inscription.options')</td>
@@ -85,10 +85,10 @@
                             <div class="row">
                                 <div class="col-md-2 line-spacer">
                                     @if($group->doc_facture)
-                                        <a target="_blank" href="{{ asset($group->doc_facture) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Facture</a>
+                                        <a target="_blank" href="{{ asset($group->doc_facture) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Facture</a>
                                     @endif
                                     @if($group->doc_bv)
-                                        <a target="_blank" href="{{ asset($group->doc_bv) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;BV</a>
+                                        <a target="_blank" href="{{ asset($group->doc_bv) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;BV</a>
                                     @endif
                                 </div>
                                 <div class="col-md-7 line-spacer">

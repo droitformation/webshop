@@ -93,6 +93,10 @@ class UploadController extends Controller
 
         \File::copy(public_path('/files/uploads/'.$files['name']), public_path('/files/uploads/thumbs/'.$files['name']));
 
+        $sizes = \Config::get('size.thumbs');
+
+        $this->upload->resize(  public_path('/files/uploads/thumbs/'.$files['name']), '', $sizes['width'], $sizes['height']);
+
         if($files)
         {
             $array = [
@@ -125,7 +129,7 @@ class UploadController extends Controller
 
     public function imageJson()
     {
-        $files = \Storage::disk('imageuploads')->files();
+        $files = \Storage::disk('fileuploads')->files();
         $data   = [];
 
         if(!empty($files))

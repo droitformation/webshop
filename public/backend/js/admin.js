@@ -15,8 +15,8 @@ $( function() {
         plugins: ['advanced','imagemanager','filemanager'],
         fileUpload : 'admin/uploadFileRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-        imageManagerJson: 'admin/imageJson',
-        fileManagerJson: 'admin/fileJson',
+        imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
+        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
         buttons    : ['html','|','formatting','bold','italic','|','unorderedlist','orderedlist','outdent','indent','|','image','file','link','alignment']
     });
 

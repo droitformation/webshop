@@ -238,7 +238,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('uploadRedactor', 'Backend\UploadController@uploadRedactor');
 
         Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
-        Route::get('fileJson/{id?}', ['uses' => 'Backend\UploadController@fileJson']);
+        Route::get('fileJson/{id?}',  ['uses' => 'Backend\UploadController@fileJson']);
 
         Route::post('files', ['uses' => 'Backend\FileController@files']);
         Route::get('tree', ['uses' => 'Backend\FileController@tree']);

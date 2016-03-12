@@ -169,27 +169,35 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         }
     }
 
-    public function makeDocuments($model)
+    public function makeDocuments($model,$refresh = false)
     {
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $annexes   = $model->colloque->annexe;
 
+        // Force refresh of documents, only if we need to
+        // Else we only test if there are no docs
+        $refresh = $refresh ? true : empty($model->documents);
+
         // Generate annexes if any
-        if(empty($model->documents) && !empty($annexes))
+        if($refresh && !empty($annexes))
         {
             // Update the send date and add true if send via admin
             if($model instanceof \App\Droit\Inscription\Entities\Groupe)
             {
                 foreach($model->inscriptions as $inscription)
                 {
-                    foreach($annexes as $annexe)
+                    // Make the bon if we want one
+                    if(in_array('bon',$annexes))
                     {
-                        // Make the bon and the other docs if the price is not 0
-                        if($annexe == 'bon' || ($model->price > 0 && ($annexe == 'facture' || $annexe == 'bv')))
-                        {
-                            $generator->make($annexe, $inscription);
-                        }
+                        $generator->make('bon', $inscription);
                     }
+                }
+
+                // Make the facture andbv if the price is not 0
+                if($model->price > 0 && in_array('facture',$annexes))
+                {
+                    $generator->make('facture', $model);
+                    $generator->make('bv', $model);
                 }
             }
             else

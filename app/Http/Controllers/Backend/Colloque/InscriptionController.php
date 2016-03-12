@@ -126,7 +126,7 @@ class InscriptionController extends Controller
         
         $group = $this->groupe->find($request->input('group_id'));
 
-        $this->dispatch(new MakeDocumentGroupe($group));
+        $this->register->makeDocuments($group, true);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
     }
@@ -139,7 +139,7 @@ class InscriptionController extends Controller
             'user_id' => $request->input('user_id')
         ]);
 
-        $this->dispatch(new MakeDocumentGroupe($groupe));
+        $this->register->makeDocuments($groupe, true);
 
         return redirect('admin/inscription/colloque/'.$groupe->colloque_id)->with(array('status' => 'success', 'message' => 'Le groupe a été modifié' ));
     }
@@ -160,13 +160,13 @@ class InscriptionController extends Controller
         {
             $inscription = $this->register->register($request->all(), $colloque, true);
 
-            $this->dispatch(new MakeDocument($inscription));
+            $this->register->makeDocuments($inscription, true);
         }
         else
         {
             $group = $this->register->registerGroup($colloque, $request);
 
-            $this->dispatch(new MakeDocumentGroupe($group));
+            $this->register->makeDocuments($group, true);
         }
 
         return redirect('admin/inscription/colloque/'.$colloque)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
@@ -197,9 +197,9 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->find($id);
 
-        $job = ($inscription->group_id ? new MakeDocumentGroupe($inscription->groupe) : new MakeDocument($inscription));
+        $model = $inscription->group_id ? $inscription->groupe : $inscription;
 
-        $this->dispatch($job);
+        $this->register->makeDocuments($model, true);
 
         // remake attestation
         if($inscription->doc_attestation)
@@ -243,9 +243,9 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->update($request->all());
 
-        $job = ($inscription->group_id ? new MakeDocumentGroupe($inscription->groupe) : new MakeDocument($inscription));
+        $model = $inscription->group_id ? $inscription->groupe : $inscription;
 
-        $this->dispatch($job);
+        $this->register->makeDocuments($model, true);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été mise à jour' ));
     }
