@@ -18,3 +18,22 @@ label.error{
     background: url("../images/check.png") no-repeat right;
     padding-right: 25px;
 }
+
+
+@media (max-width: 768px) {
+
+    .verticalcenter{
+        padding: 20px;
+    }
+    .verticalcenter,.focusedform .panel{
+        width: 100%;
+    }
+    .auth-logo{
+        font-size: 20px;
+    }
+    .focusedform .verticalcenter{
+        margin: 0;
+    }
+}
+
+
