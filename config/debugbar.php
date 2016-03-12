@@ -12,7 +12,7 @@ return array(
      |
      */
 
-    'enabled' => true,
+    'enabled' => env('APP_ENV') == 'local' ? true : false,
 
     /*
      |--------------------------------------------------------------------------
