@@ -1,4 +1,5 @@
 <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+    {!! csrf_field() !!}
     <div class="form-group">
         <div class="col-sm-10">
             <div class="form-group">

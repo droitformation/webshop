@@ -25,8 +25,9 @@ class UploadController extends Controller
 
         if($_file)
         {
-            $path  = $request->input('path').'/'.$request->input('type');
-            $files = $this->upload->upload( $request->file('file') ,$path, 'illustration');
+            $path   = $request->input('path').'/'.$request->input('type');
+            $resize = $request->input('type') == 'illustration' ? 'illustration' : null;
+            $files  = $this->upload->upload( $request->file('file') ,$path, $resize);
 
             if($files)
             {

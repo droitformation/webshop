@@ -78,11 +78,11 @@ class Handler extends ExceptionHandler {
             return redirect()->to('admin');
 
 		if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)
-		{
 			return response()->view('404', [], 404);
-		}
+
+		if ($e instanceof \Illuminate\Session\TokenMismatchException)
+			return redirect('auth/login');
 
 		return parent::render($request, $e);
 	}
-
 }

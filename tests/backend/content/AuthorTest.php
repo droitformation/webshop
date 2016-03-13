@@ -23,20 +23,6 @@ class AuthorTest extends TestCase {
 
     }
 
-	/**
-	 * @return void
-	 */
-	public function testAuthorList()
-	{
-        $author  = factory(App\Droit\Author\Entities\Author::class)->make();
-        $authors = new \Illuminate\Support\Collection([$author]);
-
-        $this->author->shouldReceive('getAll')->once()->andReturn($authors);
-
-        $this->visit('admin/author');
-        $this->assertViewHas('authors');
-	}
-
     /**
      * @return void
      */
@@ -50,13 +36,6 @@ class AuthorTest extends TestCase {
         $this->assertViewHas('author');
     }
 
-    /**
-     * @return void
-     */
-    public function testAuthorCreate()
-    {
-        $this->visit('admin/author/create')->see('Ajouter un auteur');
-    }
 
     /**
      * @return void

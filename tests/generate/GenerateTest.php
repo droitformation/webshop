@@ -153,7 +153,7 @@ class GenerateTest extends TestCase {
 		$this->assertEquals($response, $filename);
 
 		$response = $generate->getFilename('rappel','rappel_5');
-		$filename = public_path('files/colloques/rappel/rappel_5_12-20.pdf');
+		$filename = public_path('files/colloques/rappel/rappel_5.pdf');
 
 		$this->assertEquals($response, $filename);
 
@@ -339,4 +339,23 @@ class GenerateTest extends TestCase {
 
         $this->assertEquals($response, public_path($file));
     }
+
+	public function testTempBon()
+	{
+		$inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([]);
+		$generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+        $annexes = ['bon','facture','bv'];
+
+        foreach($annexes as $annexe)
+        {
+            $generator->make($annexe, $inscription);
+
+            $file = storage_path('test/test.pdf');
+
+            $this->assertTrue(\File::exists($file));
+
+            \File::delete($file);
+        }
+	}
 }

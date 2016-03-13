@@ -208,6 +208,7 @@
                         <br/> <br/>
                         <h5>Ajouter un document</h5>
                         <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            {!! csrf_field() !!}
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <p><input type="file" required name="file"></p>

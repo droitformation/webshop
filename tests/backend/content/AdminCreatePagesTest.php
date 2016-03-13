@@ -13,7 +13,6 @@ class AdminCreatePagesTest extends TestCase {
         $user = App\Droit\User\Entities\User::find(710);
 
         $this->actingAs($user);
-
     }
 
 	/**
@@ -23,6 +22,14 @@ class AdminCreatePagesTest extends TestCase {
 	{
         $this->visit('admin/domain/create')->see('Ajouter une collection');
 	}
+
+    /**
+     * @return void
+     */
+    public function testIndexAuthor()
+    {
+        $this->visit('admin/author/create')->see('Ajouter un auteur');
+    }
 
     /**
      * @return void
@@ -106,16 +113,10 @@ class AdminCreatePagesTest extends TestCase {
         foreach($sites as $site)
         {
             $this->visit('admin/page/create/'.$site)->see('Ajouter une page');
-
             $this->visit('admin/menu/create/'.$site)->see('Ajouter un menu');
-
             $this->visit('admin/arret/create/'.$site)->see('Créer arrêt');
-
             $this->visit('admin/analyse/create/'.$site)->see('Créer analyse');
-
             $this->visit('admin/bloc/create/'.$site)->see('Ajouter un bloc');
-
         }
-
     }
 }

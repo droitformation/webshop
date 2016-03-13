@@ -173,7 +173,13 @@ class PdfGenerator implements PdfGeneratorInterface
         // Path for saving document
         $filepath = $generate->getFilename($document, $name);
 
+        if( env('APP_ENV') == 'testing' )
+        {
+            $filepath =  storage_path('test/test.pdf');
+        }
+
         return $view->$state($filepath);
+
     }
 
     public function getData($document)

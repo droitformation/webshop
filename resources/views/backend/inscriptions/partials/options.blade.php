@@ -22,7 +22,6 @@
         @foreach($options as $option)
             <div class="form-group group-choix type-choix">
                 <label class="control-label"><strong>{{ $option->title }}</strong></label>
-                <?php $option->load('groupe'); ?>
                 @if(!$option->groupe->isEmpty())
                     @foreach($option->groupe as $groupe)
                         <?php

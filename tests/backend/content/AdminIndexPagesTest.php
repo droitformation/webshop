@@ -28,6 +28,15 @@ class AdminIndexPagesTest extends TestCase {
     /**
      * @return void
      */
+    public function testIndexAuthor()
+    {
+        $this->visit('admin/author')->see('Auteurs');
+        $this->assertViewHas('authors');
+    }
+
+    /**
+     * @return void
+     */
     public function testIndexTheme()
     {
         $this->visit('admin/theme')->see('Thèmes');
