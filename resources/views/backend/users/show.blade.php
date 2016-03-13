@@ -3,21 +3,18 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-6"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/user') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
     <div class="col-md-6 text-right"><!-- col -->
-        <div class="options">
-            <div class="btn-toolbar">
-                <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
-                    <div class="btn-group">
-                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                        <button data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger deleteAction" type="submit">
-                            <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer le compte
-                        </button>
-                    </div>
-                </form>
+        <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
+            <div class="form-group">
+                <div class="btn-group">
+                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                    <button data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger deleteAction" type="submit">
+                        <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer le compte
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <!-- start row -->
