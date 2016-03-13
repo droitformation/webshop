@@ -15,7 +15,7 @@ class Product extends Model{
 
     public function getReferenceAttribute()
     {
-        $this->load('attributs');
+       // $this->load('attributs');
 
         $attribute = $this->attributs->where('id',3);
 
@@ -24,7 +24,7 @@ class Product extends Model{
 
     public function getEditionAttribute()
     {
-        $this->load('attributs');
+        //$this->load('attributs');
         $attribute = $this->attributs->where('id',4);
 
         return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';

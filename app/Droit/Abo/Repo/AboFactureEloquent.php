@@ -14,12 +14,12 @@ class AboFactureEloquent implements AboFactureInterface{
 
     public function getAll($product_id)
     {
-        return $this->facture->where('product_id','=',$product_id)->get();
+        return $this->facture->with(['abonnement','abonnement.user','abonnement.originaluser','product','product.attributs','abonnement.abo','rappels'])->where('product_id','=',$product_id)->get();
     }
 
     public function find($id){
 
-        return $this->facture->with(['abonnement','product'])->find($id);
+        return $this->facture->with(['abonnement','abonnement.user','abonnement.originaluser','product','product.attributs','abonnement.abo','rappels'])->find($id);
     }
 
     public function findByUserAndProduct($abo_user_id, $product_id)

@@ -17,7 +17,7 @@
                     <section class="row">
                         @foreach($chunk as $colloque)
 
-                            <div class="event-post col-md-6">
+                            <div class="event-post col-md-6 col-xs-12">
                                 <div class="post-img">
                                     <a href="{{ url('colloque/'.$colloque->id) }}">
                                         <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>

@@ -11,7 +11,7 @@
     </section>
 
     <section class="row">
-        <section class="col-md-8">
+        <section class="col-md-8 col-xs-12">
 
             <div class="heading-bar">
                 <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Événements</h2>
@@ -54,7 +54,7 @@
 
         </section>
 
-        <section id="nouveautes" class="col-md-4">
+        <section id="nouveautes" class="col-md-4 col-xs-12">
 
             <div class="heading-bar">
                 <h2><i class="fa fa-heart"></i> &nbsp;Coups de coeur</h2>
@@ -95,7 +95,7 @@
             <span class="h-line"></span>
         </div>
         <!-- Start Main Content -->
-        <section class="col-md-9">
+        <section class="col-md-9 col-xs-12">
             <!-- Start Ad Slider Section -->
             <div class="blog-sec-slider">
                 <div class="slider5">
@@ -145,47 +145,12 @@
         <!-- End Main Content -->
 
         <!-- Start Main Side Bar -->
-        <section class="col-md-3">
+        <section class="col-md-3 col-xs-12">
             <div class="side-holder">
                 <article class="banner-ad">
                     <img src="frontend/pubdroit/images/ad.jpg" alt="Helbing" />
                 </article>
             </div>
-
-            <!-- Start Shop by Section -->
-            <div class="side-holder">
-                <article class="shop-by-list">
-                    {{--<h2>Trouver par</h2>
-                    <div class="side-inner-holder">
-                        @if(!$categories->isEmpty())
-                            <strong class="title">Collections</strong>
-                            <ul class="side-list">
-                                @foreach($categories as $categorie_id => $categorie)
-                                    <li><a href="{{ url('categorie/'.$categorie_id) }}">{{ $categorie }}</a></li>
-                                @endforeach
-                            </ul>
-                        @endif
-                        @if(!$domains->isEmpty())
-                            <strong class="title">Thèmes</strong>
-                            <ul class="side-list">
-                                @foreach($domains as $domain_id => $domain)
-                                    <li><a href="{{ url('domain/'.$domain_id) }}">{{ $domain }}</a></li>
-                                @endforeach
-                            </ul>
-                        @endif
-                        @if(!$authors->isEmpty())
-                            <strong class="title">Auteur</strong>
-                            <ul class="side-list">
-                                @foreach($authors as $author_id => $author)
-                                    <li><a href="{{ url('domain/'.$author_id) }}">{{ $author }}</a></li>
-                                @endforeach
-                            </ul>
-                        @endif
-                    </div>--}}
-                </article>
-            </div>
-            <!-- End Shop by Section -->
-
         </section>
         <!-- End Main Side Bar -->
     </section>

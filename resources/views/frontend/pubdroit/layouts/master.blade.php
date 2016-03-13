@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/bs.css');?>">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/style.css');?>">
+	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/responsive.css');?>">
 
 	<!-- Css Files Start -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/skins/red.css');?>">
@@ -81,10 +82,10 @@
                     @include('partials.message')
 
 					<section class="row">
-						<section class="col-md-4">
+						<section class="col-md-4 col-xs-12">
 							<h1 id="logo"><a href="{{ url('/') }}"><img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" /></a></h1>
 						</section>
-						<section class="col-md-8">
+						<section class="col-md-8 col-xs-12">
                             <div class="c-btn">
                                 <a href="{{ url('checkout/cart') }}" class="cart-btn">Panier</a>
                                 <div class="btn-group">
@@ -107,10 +108,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="navbar">
-                                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#labels">
                                         <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                                     </button>
-                                    <div class="nav-collapse collapse in">
+                                    <div class="nav-collapse collapse in" id="labels">
 										@include('frontend.pubdroit.partials.label')
                                     </div>
                                     <div class="search-bar">

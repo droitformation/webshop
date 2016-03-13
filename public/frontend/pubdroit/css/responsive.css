@@ -1,0 +1,106 @@
+
+@media (max-width: 768px) {
+
+    .c-btn{
+        margin: 10px auto;
+        padding: 10px;
+        position: relative;
+        right: auto;
+        width: 100%;
+    }
+
+    .cart-btn{
+        padding-right: 15px;
+    }
+
+    .c-btn .btn-group a{
+        margin-bottom: 0;
+    }
+
+    .search-bar{
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #main-header input[type="text"] {
+        height: 32px;
+        width: 80% !important;
+    }
+
+    .navbar .btn-navbar{
+        margin-right: 0;
+        padding: 7px 8px;
+    }
+
+    #main-header button.button-default {
+        float: right;
+        padding: 5px 10px;
+    }
+
+    .item-colloque{
+        border: none;
+    }
+
+    .selectric .label {
+        text-align: left;
+    }
+
+    .banner-ad{
+        margin-top: 20px;
+    }
+
+    #main-header .container{
+        width: 100%;
+    }
+
+    .e-commerce-list li::before {
+        content: "";
+        margin-right: 0;
+    }
+
+    .top-nav-bar ul{
+        margin: 5px 0;
+    }
+
+    .e-commerce-list li:first-child{
+       float: none;
+        width: 100%;
+    }
+
+    .e-commerce-list li:last-child{
+        text-align: right;
+    }
+
+    .top-nav{
+        border-bottom: 1px solid #ccc;
+    }
+
+    .top-nav2{
+        border: none;
+    }
+
+    .e-commerce-list li {
+        float: left;
+        line-height: 20px;
+        margin: 5px 0;
+        padding-left: 0;
+        text-align: left;
+        width: 50%;
+    }
+
+    .event-post .post-img {
+        float: none;
+        margin: 0;
+        position: relative;
+        width: 100%;
+    }
+
+    .event-post .post-det {
+        float: none;
+        width: 100%;
+    }
+
+    .heading-bar h2 {
+        font-size: 18px;
+    }
+}

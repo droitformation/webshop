@@ -110,7 +110,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 
 /* Start main Header css */
 #main-header { background:#f5f5f5 repeat; padding:20px 0 0; margin:0 0 30px; }
-#logo { margin:0; float:left; }
+#logo { margin:0; }
 #logo a { display:block; height:100%; }
 #main-header input[type="text"] { font-size:13px; color:#5a5a5a; height:36px; float:left; margin:0; border: 1px solid #dadada;}
 #main-header input[type="button"] { border:0; font-size:14px; color:#fff; padding:7px 20px 8px 20px; float:left; background:#98b827; cursor:pointer; transition: width 1s; -moz-transition: 1s; /* Firefox 4 */ -webkit-transition: 1s; /* Safari and Chrome */ -o-transition: 1s; /* Opera */ }

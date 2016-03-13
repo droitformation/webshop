@@ -52,10 +52,10 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="control-label" for="">Profession</label>
-                                <select name="canton_id" class="form-control">
+                                <select name="profession_id" class="form-control">
                                     <option value="">Choix</option>
                                     @foreach($professions as $profession)
-                                        <option value="{{ $profession->id }}">{{ $profession->title }}</option>
+                                        <option {{ $profession->id ==  $adresse->profession_id ? 'selected' : '' }}  value="{{ $profession->id }}">{{ $profession->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -93,7 +93,7 @@
                                 <select name="canton_id" class="form-control">
                                     <option value="">Choix</option>
                                     @foreach($cantons as $canton)
-                                        <option value="{{ $canton->id }}">{{ $canton->title }}</option>
+                                        <option {{ $canton->id ==  $adresse->canton_id ? 'selected' : '' }} value="{{ $canton->id }}">{{ $canton->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
