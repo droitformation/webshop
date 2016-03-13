@@ -53,6 +53,12 @@
                                       {!! Form::text('email', $user->email , array('class' => 'form-control') ) !!}
                                   </div>
 
+                                  <div class="form-group">
+                                      <label class="control-label">Administrateur</label>&nbsp;
+                                      <label class="radio"><input {{ $user->role_admin ? 'checked' : '' }} type="radio" name="role" value="1"> Oui</label>
+                                      <label class="radio"><input {{ !$user->role_admin ? 'checked' : '' }} type="radio" name="role" value="0"> Non</label>
+                                  </div>
+
                                   <a class="text-danger" data-toggle="collapse" href="#changePassword" href="#">
                                       <i class="fa fa-exclamation-circle"></i>&nbsp;Modifier le mot de passe
                                   </a>
