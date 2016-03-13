@@ -63,6 +63,9 @@
             <a href="{{ url('admin/order/create') }}"><i class="fa fa-plus-circle"></i> <span>Nouvelle commande</span></a>
         </li>
         <li class="divider"></li>
+        <li class="<?php echo (Request::is('admin/compte') || Request::is('admin/compte/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/compte') }}"><i class="fa fa-calculator"></i> <span>Comptes</span></a>
+        </li>
         <li class="<?php echo (Request::is('admin/coupon') || Request::is('admin/coupon/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/coupon') }}"><i class="fa fa-star"></i> <span>Coupons</span></a>
         </li>

@@ -58,7 +58,7 @@
                     </li>
                 @endif
 
-                @if(isset($site->arrets))
+                @if(isset($site->arrets) && $site->id  > 1)
                     <li>
                         <a class="shortcut-tiles tiles-success" href="{{ url('admin/arrets/'.$site->id) }}">
                             <div class="tiles-body tiles-body-menu">
@@ -68,7 +68,7 @@
                     </li>
                 @endif
 
-                @if(isset($site->analyses))
+                @if(isset($site->analyses) && $site->id  > 1)
                     <li>
                         <a class="shortcut-tiles tiles-brown" href="{{ url('admin/analyses/'.$site->id) }}">
                             <div class="tiles-body tiles-body-menu">

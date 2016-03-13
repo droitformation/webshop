@@ -14,8 +14,8 @@ class CreateComptesTable extends Migration
     {
         Schema::create('comptes', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('motif');
-            $table->string('adresse');
+            $table->text('motif');
+            $table->text('adresse');
             $table->string('compte');
         });
     }

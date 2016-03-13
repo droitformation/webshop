@@ -211,6 +211,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('theme', 'Backend\Shop\ThemeController');
         Route::resource('domain', 'Backend\Shop\DomainController');
         Route::resource('attribut', 'Backend\Shop\AttributController');
+        Route::resource('compte', 'Backend\CompteController');
 
         Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
         Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');

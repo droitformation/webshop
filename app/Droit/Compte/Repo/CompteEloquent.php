@@ -25,10 +25,9 @@ class CompteEloquent implements CompteInterface{
     public function create(array $data){
 
         $compte = $this->compte->create(array(
-            'name'    => $data['name'],
+            'motif'   => $data['motif'],
             'adresse' => $data['adresse'],
-            'url'     => $data['name'],
-            'map'     => $data['map']
+            'compte'  => $data['compte']
         ));
 
         if( ! $compte )

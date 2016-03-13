@@ -6,7 +6,7 @@ class Compte extends Model{
 
     protected $table = 'comptes';
 
-    protected $fillable = array('motif','adresse','compte');
+    protected $fillable = ['motif','adresse','compte'];
 
     public $timestamps = false;
 
