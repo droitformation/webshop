@@ -55,7 +55,7 @@ class AuthController extends Controller {
         $roles = $user->roles->lists('id')->all();
 
         // Logic that determines where to send the user
-        if (!in_array(1,$roles))
+        if (in_array(1,$roles))
         {
             return redirect()->intended('admin');
         }

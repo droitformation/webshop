@@ -3,7 +3,7 @@
 
     <h1 class="auth-logo text-center">
         <a class="text-inverse" href="{{ url('/') }}">
-            @if(isset($admin))
+            @if(session()->has('admin'))
                 Droit Formation | <span class="text-danger">Administration</span>
             @else
                 <img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
@@ -15,9 +15,8 @@
 
 	@include('auth.partials.login-form')
 
-    <p class="line-delimiter">Ou</p>
-
-	@if(!isset($admin))
+	@if(!session()->has('admin'))
+        <p class="line-delimiter">Ou</p>
 		<p><a href="{{ url('auth/register') }}" class="btn btn-block btn-primary">Je n'ai pas encore de compte</a></p>
 		<br/>
 	@endif

@@ -13,9 +13,13 @@ class InscriptionEloquent implements InscriptionInterface{
         $this->inscription = $inscription;
     }
 
-    public function getAll($nbr = null){
-
-        return $this->inscription->with(['groupe','groupe.user','groupe.user.adresses','user','user.adresses','duplicate','price','colloque.options','colloque.prices','user_options'])->take($nbr)->groupBy('group_id')->orderBy('created_at','DESC')->get();
+    public function getAll($nbr = null)
+    {
+        return $this->inscription->with(['groupe','groupe.user','groupe.user.adresses','user','user.adresses','duplicate','price','colloque.options','colloque.prices','user_options'])
+            ->take($nbr)
+            ->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))
+            ->orderBy('created_at','DESC')
+            ->get();
     }
 
     public function getByColloque($id, $type = false, $paginate = false)

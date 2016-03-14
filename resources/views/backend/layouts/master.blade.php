@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/responsive.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dropzone.css?=13321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/croppic.css');?>">

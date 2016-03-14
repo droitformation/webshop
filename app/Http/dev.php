@@ -532,7 +532,7 @@ Route::get('dispatchnewsletter', function()
 
 Route::get('dispatchcolloque', function()
 {
-    $model  =  App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $model  = App::make('App\Droit\Colloque\Repo\ColloqueInterface');
 
     $models = $model->getAll();
 
@@ -588,6 +588,43 @@ Route::get('duplicates', function () {
     echo '<pre>';
     print_r($results);
     echo '</pre>';exit;
+});
+
+
+Route::get('convertfiles', function()
+{
+    $path   = public_path('dispatch/newsletter_images');
+    $search = File::allFiles($path);
+
+    foreach($files as $path)
+    {
+        $file = explode(',', $path);
+
+        foreach($file as $item){
+            $tosearch[] = $item;
+        }
+    }
+
+    foreach($search as $find)
+    {
+        $file = explode('/', $find);
+        $file = end($file);
+        echo $file;
+        echo '<br/>';
+
+        if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
+        {
+            $target = public_path('files').'/uploads/'.$file;
+            File::copy( $find, $target );
+        }
+    }
+
+    echo '<pre>';
+    //print_r($files);
+    echo '</pre>';
+
+    exit;
+
 });
 
 Event::listen('illuminate.query', function($query, $bindings, $time, $name)

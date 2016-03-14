@@ -246,6 +246,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('files/delete', ['uses' => 'Backend\FileController@delete']);
         Route::post('files/crop', ['uses' => 'Backend\FileController@crop']);
 
+        Route::get('convert', ['uses' => 'Backend\FileController@convert']);
+
         /*
         |--------------------------------------------------------------------------
         | Abonnements Routes

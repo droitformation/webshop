@@ -40,6 +40,14 @@ class Authenticate {
 			}
 			else
 			{
+                $path = $request->getRequestUri();
+                $path = str_replace('/','',$path);
+
+                if($path == 'admin')
+                {
+                    return redirect('auth/login')->with(['admin' => true]);
+                }
+
 				return redirect()->guest('auth/login');
 			}
 		}
