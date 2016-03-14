@@ -593,19 +593,24 @@ Route::get('duplicates', function () {
 
 Route::get('convertfiles', function()
 {
-    $path   = public_path('dispatch/newsletter_images');
+    $type = 'bv';
+
+    $path   = public_path('dispatch/pdfs/'.$type);
     $search = File::allFiles($path);
 
-    foreach($files as $path)
+    foreach($search as $filepath)
     {
-        $file = explode(',', $path);
 
-        foreach($file as $item){
-            $tosearch[] = $item;
-        }
+        $file   = explode('_', $filepath);
+        $target = public_path('files/colloques/'.$type.'/'.$type.'_'.$file[1]);
+        File::copy( $filepath, $target );
+
+        //$part[] = $file[1];
+        $part[] = $target;
+
     }
 
-    foreach($search as $find)
+/*    foreach($search as $find)
     {
         $file = explode('/', $find);
         $file = end($file);
@@ -617,10 +622,10 @@ Route::get('convertfiles', function()
             $target = public_path('files').'/uploads/'.$file;
             File::copy( $find, $target );
         }
-    }
+    }*/
 
     echo '<pre>';
-    //print_r($files);
+    print_r($part);
     echo '</pre>';
 
     exit;

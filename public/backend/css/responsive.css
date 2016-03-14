@@ -1,8 +1,19 @@
-@media all and (min-width: 1024px) and (max-width: 1280px){
+@media all and (min-width: 1480px) and (max-width: 1920px){
 
+    .btn-group.btn-group-colloque .btn.btn-danger{
+        float: right;
+    }
 }
 
-@media screen and (max-width: 1024px)
+@media screen and (max-width: 1480px)
 {
+    .btn-group-colloque .btn{
+        padding-left: 6px;
+        padding-right: 6px;
+    }
 
+    .btn-group-colloque .btn.btn-danger{
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 }

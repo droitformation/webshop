@@ -20,18 +20,18 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <div class="btn-group">
-                            <a class="btn btn-sky btn-sm" href="{{ url('admin/colloque/'.$colloque->id) }}">&Eacute;diter</a>
-                            <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions &nbsp;
+                        <form action="{{ url('admin/colloque/'.$colloque->id) }}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                            <div class="btn-group btn-group-colloque">
+                                <a class="btn btn-sky btn-sm" href="{{ url('admin/colloque/'.$colloque->id) }}">&Eacute;diter</a>
+                                <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions &nbsp;
                                 <span class="badge badge-success">
                                     {{ $colloque->inscriptions->count() }}
                                 </span>
-                            </a>
-                            <a class="btn btn-warning btn-sm" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}">Rappels</a>
-                        </div>
-                        <form action="{{ url('admin/colloque/'.$colloque->id) }}" method="POST" class="pull-right">
-                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                            <button data-action="{{ $colloque->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                </a>
+                                <a class="btn btn-warning btn-sm" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}">Rappels</a>
+                                <button data-action="{{ $colloque->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                            </div>
                         </form>
                     </div>
                 </div>

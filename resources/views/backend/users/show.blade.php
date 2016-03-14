@@ -3,6 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-6"><!-- col -->
+        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-default">Retour</a>
     </div>
     <div class="col-md-6 text-right"><!-- col -->
         <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">

@@ -32,6 +32,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('unsubscribe', 'Frontend\SubscribeController@unsubscribe');
     Route::post('subscribe',   'Frontend\SubscribeController@subscribe');
     Route::get('activation/{token}', 'Frontend\SubscribeController@activation');
+    Route::get('campagne/{id}', 'Frontend\CampagneController@show');
 
     /* Routes to implement  */
     /*
