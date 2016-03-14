@@ -16,9 +16,8 @@
             <form data-validate-parsley action="{{ url('admin/page') }}" method="POST" class="form-horizontal" >
             {!! csrf_field() !!}
 
-            <div class="panel-heading"><h4>Ajouter une page</h4></div>
                 <div class="panel-body event-info">
-
+                    <h4>Ajouter une page</h4>
                     <div class="row">
                         <h4 class="col-sm-4">Général</h4>
                     </div>

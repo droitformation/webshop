@@ -68,6 +68,7 @@ class ExportController extends Controller
                     {
                         $user = $inscription->inscrit;
 
+                        $data['Present']     = $inscription->present ? 'Oui' : '';
                         $data['Numéro']      = $inscription->inscription_no;
                         $data['Prix']        = $inscription->price_cents;
                         $data['Status']      = $inscription->status_name['status'];
@@ -158,7 +159,7 @@ class ExportController extends Controller
 
                             $sheet->appendRow(['']);
 
-                            $sheet->appendRow(['Numéro','Prix','Status','Date','Participant'] + $names);
+                            $sheet->appendRow(['Présent','Numéro','Prix','Status','Date','Participant'] + $names);
                             $sheet->row($sheet->getHighestRow(), function ($row) {
                                 $row->setFontWeight('bold');
                                 $row->setFontSize(14);
@@ -169,7 +170,7 @@ class ExportController extends Controller
                 }
                 else
                 {
-                    $sheet->appendRow(['Numéro','Prix','Status','Date','Participant'] + $names);
+                    $sheet->appendRow(['Présent','Numéro','Prix','Status','Date','Participant'] + $names);
                     $sheet->row($sheet->getHighestRow(), function ($row)
                     {
                         $row->setFontWeight('bold');

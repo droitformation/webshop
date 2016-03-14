@@ -141,4 +141,14 @@ class AuthController extends Controller {
         return Socialite::driver('droithub')->redirect();
     }
 
+    /**
+     * Show the application login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getBeta()
+    {
+        return view('auth.beta');
+    }
+
 }

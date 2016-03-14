@@ -17,11 +17,9 @@
             <form action="{{ url('admin/analyse') }}" enctype="multipart/form-data" method="POST" class="validate-form form-horizontal" data-validate="parsley">
                 {{ csrf_field() }}
 
-            <div class="panel-heading">
-                <h4>Créer analyse</h4>
-            </div>
+           
             <div class="panel-body event-info" ng-app="selection">
-
+                <h4>Créer analyse</h4>
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Auteurs</label>
                     <div class="col-sm-3">

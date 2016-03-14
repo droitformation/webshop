@@ -778,3 +778,7 @@ label.error{
 .btn-group-colloque{
     width: 100%;
 }
+
+#search form .search-query{
+    background: #fff;
+}

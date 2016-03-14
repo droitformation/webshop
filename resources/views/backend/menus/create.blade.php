@@ -16,11 +16,8 @@
             <form action="{{ url('admin/menu') }}" enctype="multipart/form-data" method="POST" class="validate-form form-horizontal" data-validate="parsley">
                 {!! csrf_field() !!}
 
-                <div class="panel-heading">
-                    <h4>Ajouter un menu</h4>
-                </div>
                 <div class="panel-body event-info">
-
+                    <h4>Ajouter un menu</h4>
                     <div class="form-group">
                         <label for="type" class="col-sm-3 control-label">Titre</label>
                         <div class="col-sm-5">

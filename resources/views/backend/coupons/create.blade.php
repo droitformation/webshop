@@ -11,14 +11,11 @@
             </div>
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Ajouter coupon</h4>
-                </div>
                 <form action="{{ url('admin/coupon') }}" method="POST" class="form-horizontal">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
-
+                        <h4><i class="fa fa-edit"></i> &nbsp;Ajouter coupon</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Type de rabais</label>
                             <div class="col-sm-5 col-xs-8">

@@ -23,11 +23,8 @@
                 <input type="hidden" name="_method" value="PUT">
                 {!! csrf_field() !!}
 
-                <div class="panel-heading">
-                    <h4>&Eacute;diter {{ $page->titre }}</h4>
-                </div>
                 <div class="panel-body event-info">
-
+                    <h4>&Eacute;diter {{ $page->titre }}</h4>
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
                         <div class="col-sm-2">

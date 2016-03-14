@@ -4,7 +4,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{!! url('admin/analyse')  !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{!! url('admin/analyses/'.$analyse->site_id)  !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 <!-- start row -->
@@ -20,11 +20,8 @@
                 <input type="hidden" name="_method" value="PUT">
                 {!! csrf_field() !!}
 
-            <div class="panel-heading">
-                <h4>&Eacute;diter l'analyse de {!! $analyse->authors  !!}</h4>
-            </div>
             <div class="panel-body event-info" ng-app="selection">
-
+                <h4>&Eacute;diter l'analyse de {!! $analyse->authors  !!}</h4>
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Auteurs</label>
                     <div class="col-sm-3">

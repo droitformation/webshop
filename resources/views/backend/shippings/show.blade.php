@@ -11,14 +11,12 @@
             </div>
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Editer le frais de port</h4>
-                </div>
                 <form action="{{ url('admin/shipping/'.$shipping->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
+                        <h4><i class="fa fa-edit"></i> &nbsp;Editer le frais de port</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Calcul du prix</label>
                             <div class="col-sm-3 col-xs-5">

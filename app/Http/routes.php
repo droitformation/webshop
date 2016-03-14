@@ -8,11 +8,13 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
-    Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
-
     Route::get('code', 'CodeController@index');
 
+    /*
+    |--------------------------------------------------------------------------
+    | Validate presence for inscriptions
+    |--------------------------------------------------------------------------
+    */
     Route::get('presence/{id}/{key}', 'CodeController@presence');
 
     /*
@@ -68,6 +70,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('newsletter/{id?}', array('uses' => 'MatrimonialController@newsletter'));
     });
 
+    /* *
+      * Colloques
+      * */
+    Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
+    Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
+
     Route::group(['middleware' => 'auth'], function () {
 
         /* *
@@ -85,8 +93,48 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('profil/colloques', 'ProfileController@colloques');
         Route::get('profil/inscription/{id}', 'ProfileController@inscription');
 
+        /* Update user adresse via ajax  */
+        Route::resource('adresse', 'Frontend\User\AdresseController');
+        Route::post('ajax/adresse/{id}', 'Frontend\User\AdresseController@ajaxUpdate');
+
     });
 
+
+    /* *
+     * Shop routes for frontend shop
+     * */
+    Route::get('/', 'Frontend\Shop\ShopController@index');
+    Route::get('pubdroit', 'Frontend\Shop\ShopController@index');
+    Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
+    Route::match(['get', 'post'], 'search', 'Frontend\Shop\ShopController@search');
+    Route::get('categorie/{id}', 'Frontend\Shop\ShopController@categorie');
+    Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
+    Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
+    Route::get('subscribe', 'Frontend\Shop\ShopController@subscribe');
+    Route::get('unsubscribe', 'Frontend\Shop\ShopController@unsubscribe');
+
+    Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
+
+    Route::group(['middleware' => ['auth','pending','cart']], function () {
+
+        /* Checkout routes for frontend shop  */
+        Route::get('checkout/cart',  'Frontend\Shop\CheckoutController@cart');
+        Route::get('checkout/billing',  'Frontend\Shop\CheckoutController@billing');
+        Route::match(['get', 'post'],'checkout/resume', 'Frontend\Shop\CheckoutController@resume');
+        Route::get('checkout/confirm',  'Frontend\Shop\CheckoutController@confirm');
+        Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
+    });
+
+    /* Cart routes for frontend shop  */
+    Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
+    Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
+    Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
+    Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
+
+
+    /* *
+    * Administration routes
+    * */
     Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], function () {
 
         Route::get('/', 'Backend\AdminController@index');
@@ -307,10 +355,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('pagecontent', 'Backend\PageContentController');
 
         /*
-      |--------------------------------------------------------------------------
-      | Backend subscriptions, newsletters and campagnes Routes
-      |--------------------------------------------------------------------------
-      */
+        |--------------------------------------------------------------------------
+        | Backend subscriptions, newsletters and campagnes Routes
+        |--------------------------------------------------------------------------
+        */
 
         Route::post('sorting', 'Backend\Newsletter\CampagneController@sorting');
         Route::post('sortingGroup', 'Backend\Newsletter\CampagneController@sortingGroup');
@@ -341,52 +389,16 @@ Route::group(['middleware' => ['web']], function () {
 
     });
 
-    /* *
-     * Shop routes for frontend shop
-     * */
-    Route::get('/', 'Frontend\Shop\ShopController@index');
-    Route::get('pubdroit', 'Frontend\Shop\ShopController@index');
-    Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
-    Route::match(['get', 'post'], 'search', 'Frontend\Shop\ShopController@search');
-    Route::get('categorie/{id}', 'Frontend\Shop\ShopController@categorie');
-    Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
-    Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
-    Route::get('subscribe', 'Frontend\Shop\ShopController@subscribe');
-    Route::get('unsubscribe', 'Frontend\Shop\ShopController@unsubscribe');
-
-    Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
-
-    Route::group(['middleware' => ['auth','pending','cart']], function () {
-
-        /* *
-         * Checkout routes for frontend shop
-         * */
-        Route::get('checkout/cart',  'Frontend\Shop\CheckoutController@cart');
-        Route::get('checkout/billing',  'Frontend\Shop\CheckoutController@billing');
-        Route::match(['get', 'post'],'checkout/resume', 'Frontend\Shop\CheckoutController@resume');
-        Route::get('checkout/confirm',  'Frontend\Shop\CheckoutController@confirm');
-        Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
-    });
-
-    /* *
-     * Cart routes for frontend shop
-     * */
-    Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
-    Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
-    Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
-    Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
-
-    /* *
-     * Update user adresse via ajax
-     * */
-    Route::resource('adresse', 'Frontend\User\AdresseController');
-    Route::post('ajax/adresse/{id}', 'Frontend\User\AdresseController@ajaxUpdate');
-
-    // Authentication routes...
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication routes...
+    |--------------------------------------------------------------------------
+    */
     Route::get('auth/login', 'Auth\AuthController@getLogin');
     Route::get('auth/admin', 'Auth\AuthController@getAdmin');
     Route::post('auth/login', 'Auth\AuthController@postLogin');
     Route::get('auth/logout', 'Auth\AuthController@getLogout');
+    Route::get('auth/beta', 'Auth\AuthController@getBeta');
 
     Route::group(['middleware' => ['auth','administration']], function () {
         // Registration routes...
@@ -407,14 +419,18 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/droithub', 'Auth\AuthController@redirectToProvider');
     //Route::get('auth/droithub/callback', 'Auth\AuthController@handleProviderCallback');
 
-    /* *
-     * Ajax login validation
-     * */
+    /*
+    |--------------------------------------------------------------------------
+    | Ajax login validation
+    |--------------------------------------------------------------------------
+    */
     Route::post('check/email', 'AjaxController@check');
 
-    /* *
-     * Oauth 2 routes
-     * */
+    /*
+    |--------------------------------------------------------------------------
+    |  Oauth 2 routes
+    |--------------------------------------------------------------------------
+    */
     Route::get('oauth/authorize', ['as' => 'oauth.authorize.get','middleware' => ['check-authorization-params', 'auth'], function() {
         // display a form where the user can authorize the client to access it's data
         $authParams = Authorizer::getAuthCodeRequestParams();
