@@ -219,6 +219,13 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('inscription/rappel','Backend\Colloque\RappelController');
 
         Route::get('colloque/generate/{id}/{doc}', 'Backend\Colloque\ColloqueController@generate');
+        Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
+
+        // Add, edit, delete items for colloque
+        Route::post('colloque/addItem',    'Backend\Colloque\ColloqueController@addItem');
+        Route::post('colloque/editItem',   'Backend\Colloque\ColloqueController@editItem');
+        Route::post('colloque/removeItem', 'Backend\Colloque\ColloqueController@removeItem');
+
         Route::post('colloque/addprice', 'Backend\Colloque\ColloqueController@addprice');
         Route::post('colloque/removeprice', 'Backend\Colloque\ColloqueController@removeprice');
         Route::post('colloque/editprice', 'Backend\Colloque\ColloqueController@editprice');
@@ -227,7 +234,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
         Route::post('colloque/removeoption', 'Backend\Colloque\ColloqueController@removeoption');
         Route::post('colloque/editoption', 'Backend\Colloque\ColloqueController@editoption');
-        Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
+
         Route::resource('colloque', 'Backend\Colloque\ColloqueController');
 
         Route::resource('document', 'Backend\Colloque\DocumentController');

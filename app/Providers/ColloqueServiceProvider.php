@@ -35,6 +35,7 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerOptionService();
         $this->registerGroupOptionService();
         $this->registerPriceService();
+        $this->registerOccurrenceService();
 
 	}
 
@@ -184,6 +185,17 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Option\Repo\GroupOptionInterface', function()
         {
             return new \App\Droit\Option\Repo\GroupOptionEloquent(new \App\Droit\Option\Entities\OptionGroupe());
+        });
+    }
+
+    /**
+     * Occurrence
+     */
+    protected function registerOccurrenceService(){
+
+        $this->app->singleton('App\Droit\Occurrence\Repo\OccurrenceInterface', function()
+        {
+            return new \App\Droit\Occurrence\Repo\OccurrenceEloquent(new \App\Droit\Occurrence\Entities\Occurrence());
         });
     }
 

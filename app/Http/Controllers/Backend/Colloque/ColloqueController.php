@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Document\Worker\DocumentWorker;
-use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Location\Repo\LocationInterface;
 use App\Droit\Organisateur\Repo\OrganisateurInterface;
 use App\Droit\Compte\Repo\CompteInterface;
+use App\Droit\Occurrence\Repo\OccurrenceInterface;
 use App\Droit\Price\Repo\PriceInterface;
 use App\Droit\Option\Repo\OptionInterface;
 use App\Droit\Option\Repo\GroupOptionInterface;
@@ -24,6 +25,7 @@ class ColloqueController extends Controller
     protected $inscription;
     protected $location;
     protected $organisateur;
+    protected $occurrence;
     protected $price;
     protected $option;
     protected $group;
@@ -39,6 +41,7 @@ class ColloqueController extends Controller
         CompteInterface $compte,
         InscriptionInterface $inscription,
         LocationInterface $location,
+        OccurrenceInterface $occurrence,
         OrganisateurInterface $organisateur,
         DocumentWorker $document,
         PriceInterface $price,
@@ -51,6 +54,7 @@ class ColloqueController extends Controller
         $this->document     = $document;
         $this->inscription  = $inscription;
         $this->location     = $location;
+        $this->occurrence   = $occurrence;
         $this->organisateur = $organisateur;
         $this->price        = $price;
         $this->option       = $option;
@@ -194,11 +198,67 @@ class ColloqueController extends Controller
      * @param  int  $id
      * @return Response
      */
+    public function addItem(Request $request)
+    {
+        parse_str($request->input('data'), $data);
+
+        $model = $request->input('model');
+        $view  = $request->input('view');
+
+        $new      = $this->$model->create($data);
+        $colloque = $this->colloque->find($data['colloque_id']);
+
+        return view('backend.colloques.partials.'.$view)->with(['colloque' => $colloque]);
+    }
+
+    /**
+     * @return Response
+     */
+    public function editItem(Request $request)
+    {
+        $model = $request->input('model');
+        $item  = $this->$model->update(['id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
+
+        if($item)
+        {
+            return response('OK', 200);
+        }
+
+        return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+    }
+
+    /**
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function removeItem(Request $request)
+    {
+        $model = $request->input('model');
+        $view  = $request->input('view');
+
+        // find model to delete
+        $item     = $this->$model->find($request->input('id'));
+        // Find corresponding colloque
+        $colloque = $this->colloque->find($item->colloque_id);
+
+        // delete item
+        $this->$model->delete($item->id);
+
+        return view('backend.colloques.partials.'.$view)->with(['colloque' => $colloque]);
+    }
+
+
+    /**
+     *
+     * @param  int  $id
+     * @return Response
+     */
     public function addprice(Request $request)
     {
         parse_str($request->input('data'), $data);
-        $price = $this->price->create($data);
 
+        $price    = $this->price->create($data);
         $colloque = $this->colloque->find($data['colloque_id']);
 
         return view('backend.colloques.partials.prices')->with(['type' => $price->type, 'title' => 'Prix '.$price->type, 'colloque' => $colloque]);
@@ -231,6 +291,7 @@ class ColloqueController extends Controller
     public function removeprice(Request $request)
     {
         $price       = $this->price->find($request->input('id'));
+        $oldprice    = $price;
         $colloque_id = $price->colloque_id;
 
         $this->price->delete($price->id);

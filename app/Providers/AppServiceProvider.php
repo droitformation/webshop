@@ -30,6 +30,11 @@ class AppServiceProvider extends ServiceProvider {
             'backend.domains.*'
         ], 'App\Http\ViewComposers\SiteComposer');
 
+        view()->composer([
+            'backend.colloques.show',
+            'backend.colloques.partials.occurrences',
+        ], 'App\Http\ViewComposers\ColloqueComposer');
+
         view()->composer(
             [
                 'backend.users.adresse',
@@ -39,7 +44,7 @@ class AppServiceProvider extends ServiceProvider {
                 'backend.orders.partials.adresse',
                 'backend.inscriptions.colloque',
                 'backend.inscriptions.desinscription',
-                'backend/adresses/adresse'
+                'backend.adresses.adresse'
             ], 'App\Http\ViewComposers\UserAttributeComposer');
 
         view()->composer(['frontend.pubdroit.partials.label','backend.export.user'], 'App\Http\ViewComposers\LabelComposer');

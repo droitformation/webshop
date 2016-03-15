@@ -127,11 +127,12 @@
                             </fieldset>
 
                             <fieldset title="Dates">
-
                                 <legend>Dates</legend>
                                 @include('backend.colloques.partials.dates')
 
+                                @include('backend.colloques.partials.occurrences')
                             </fieldset>
+
                             <fieldset title="Prix">
 
                                 <legend>Prix</legend>

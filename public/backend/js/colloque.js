@@ -253,6 +253,14 @@ $('.editablePrice').editable({
     }
 });
 
+$('.editableItem').editable({
+    emptytext : '',
+    params: function(params) {
+        params._token = $("meta[name='_token']").attr('content');
+        return params;
+    }
+});
+
 $('.editablePayementDate').editable({
     emptytext : '',
     params: function(params) {
@@ -274,13 +282,96 @@ $('.editablePayementDate').editable({
     }
 });
 
+
+/* ******************************************
+* Add option, price, group or occurrence
+* *******************************************/
+
+$('body').on("click",'.addItem',function(e) {
+
+    // Prevent default behavior of anchor
+    e.preventDefault();e.stopPropagation();
+
+    // get the main form-group
+    var $main = $(this).closest('.form-group');
+    // get the main item div wrapper
+    var $form = $(this).closest('div.itemWrapper');
+    // Get all data from form and serialize
+    var data  = $form.find("select,textarea,input").serialize();
+
+    // get other data to post to controller (ColloqueController)
+    var model = $(this).data('model');
+    var view  = $(this).data('view');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/colloque/addItem",
+        data : { data: data, view: view, model : model , _token: $("meta[name='_token']").attr('content') },
+        success: function(data)
+        {
+            $main.replaceWith(data); // replace view with new html
+
+            model = (model.charAt(0).toUpperCase() + model.slice(1));
+
+            // editable inplace reattach to dom
+            $('.datePicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'fr'
+            });
+            $('.editableItem').editable({
+                params: function(params) {
+                    // add additional params from data-attributes of trigger element
+                    params.model  = $(this).editable().data('model');
+                    params._token = $("meta[name='_token']").attr('content');
+                    return params;
+                }
+            });
+
+        },
+        error: function(){alert('problème avec l\'ajout de');}
+    });
+});
+
+$('body').on("click",'.removeItem', function(e) {
+
+    // Prevent default behavior of anchor
+    e.preventDefault();e.stopPropagation();
+
+    var id    = $(this).data('id');
+    var $main = $(this).closest('.form-group');
+    var model = $(this).data('model');
+    var view  = $(this).data('view');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/colloque/removeItem",
+        data : { id: id, model:model , view : view, _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+
+            $main.replaceWith(data); // replace view with new html
+
+            model = (model.charAt(0).toUpperCase() + model.slice(1));
+
+            // editable inplace reattach to dom
+            $('.datePicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'fr'
+            });
+            $('.editableItem').editable({
+                params: function(params) {
+                    // add additional params from data-attributes of trigger element
+                    params.model  = $(this).editable().data('model');
+                    params._token = $("meta[name='_token']").attr('content');
+                    return params;
+                }
+            });
+        },
+        error: function(){alert('problème avec la suppression');}
+    });
+});
+/********************************************/
+
 $(document).on('change', '#selectTypeOption', function (e){
-
     var $type         = $(this).val();
-    var $optionGroupe = $('#optionGroupe');
-    if($type == 'choix')
-    {
-        $optionGroupe.show();
-    }
-
+    var $optionGroupe = $type == 'choix' ? $('#optionGroupe').show() : $('#optionGroupe').hide();
 });
