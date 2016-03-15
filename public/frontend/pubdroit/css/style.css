@@ -1246,9 +1246,7 @@ a.navbar-btn.navbar-register:focus{
 #colloque-dependence input[type=radio] + label,
 #colloque-dependence input[type=checkbox] + label {
     display:table;
-    margin:-2px;
     padding: 4px 6px;
-    margin-bottom: 0;
     font-size: 14px;
     line-height: 20px;
     color: #333;
@@ -1259,7 +1257,7 @@ a.navbar-btn.navbar-register:focus{
     border-radius: 7px;
     background-color: #fff;
     border:2px solid #d9d9d9;
-    margin-right: 15px;
+    margin: 5px;
     float: left;
 }
 
@@ -1287,6 +1285,16 @@ a.navbar-btn.navbar-register:focus{
 {
     width: 30%;
     height: 100px;
+    padding: 5px 10px;
+}
+
+#colloque-dependence input[type=radio].occurrences + label,
+#colloque-dependence input[type=checkbox].occurrences + label,
+#colloque-dependence input[type=radio]:checked.occurrences + label,
+#colloque-dependence input[type=checkbox]:checked.occurrences  + label
+{
+    width: 30%;
+    height: 130px;
     padding: 5px 10px;
 }
 
@@ -1350,13 +1358,27 @@ a.navbar-btn.navbar-register:focus{
     line-height: 17px;
 }
 
-#colloque-dependence .price_cents {
+#colloque-dependence .price_cents{
     margin-top: 15px;
     font-size: 15px;
     font-weight: bold;
     display: block;
     width: 100%;
     height:30px;
+}
+
+#colloque-dependence .occurrence_date{
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    height:auto;
+}
+
+#colloque-dependence .occurrence_location{
+    color: #00b3ee;
+    font-weight: normal;
 }
 
 #colloque-dependence p {

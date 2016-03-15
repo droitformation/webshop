@@ -37,7 +37,7 @@
                         <div class="col-sm-5">
                             <div class="list-group">
                                 <div class="list-group-item">
-                                    {!! Form::file('file', ['required' => 'required']) !!}
+                                    {!! Form::file('file') !!}
                                 </div>
                             </div>
                         </div>

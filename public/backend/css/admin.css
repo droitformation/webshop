@@ -416,6 +416,10 @@ a:hover, a:active, a:focus {
     padding: 0;
 }
 
+.form-horizontal .editable.editableItem, a#locations {
+    width: 90%;
+}
+
 a.editable-click{
     text-decoration: none;
     border: 0;

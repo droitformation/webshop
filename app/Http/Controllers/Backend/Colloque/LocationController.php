@@ -47,9 +47,13 @@ class LocationController extends Controller
     public function store(CreateLocationRequest $request)
     {
         $data = $request->except('file');
-        $file = $this->upload->upload( $request->file('file') , 'files/colloques/cartes' , 'map');
+        $_file = $request->file('file',null);
 
-        $data['map'] = $file['name'];
+        if($_file)
+        {
+            $file = $this->upload->upload( $request->file('file') , 'files/colloques/cartes' , 'map');
+            $data['map'] = $file['name'];
+        }
 
         $location = $this->location->create($data);
 

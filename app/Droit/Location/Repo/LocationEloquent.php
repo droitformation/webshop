@@ -28,7 +28,7 @@ class LocationEloquent implements LocationInterface{
             'name'    => $data['name'],
             'adresse' => $data['adresse'],
             'url'     => $data['url'],
-            'map'     => $data['map']
+            'map'     => isset($data['map']) ? $data['map'] : null
         ));
 
         if( ! $location )

@@ -4,8 +4,9 @@
     <h4>Prix applicable</h4>
 
     <div id="colloque-dependence">
-        <div class='wrapper'>
 
+        <!-- Prices -->
+        <div class='wrapper'>
             <?php $prices = $colloque->prices->whereLoose('type','public'); ?>
             @if(!$prices->isEmpty())
                 @foreach($prices as $price)
@@ -14,11 +15,7 @@
                         <div class='package'>
                             <div class='name'>{{ $price->description }}</div>
                             <div class='price_cents'>{{ $price->price_cents }} CHF</div>
-
-                            @if(!empty($price->remarque))
-                                <hr/><p>{{ $price->remarque }}</p>
-                            @endif
-
+                            {!! !empty($price->remarque) ? '<hr/><p>'.$price->remarque.'</p>' : '' !!}
                         </div>
                     </label>
                 @endforeach
@@ -28,8 +25,27 @@
 
         <hr/>
 
-        <?php $types = $colloque->options->groupBy('type'); ?>
+        <!-- Occurence if any -->
+        @if(!$colloque->occurrences->isEmpty())
+        <div class='wrapper'>
+            <br/><h4>Merci de préciser</h4>
+            @foreach($colloque->occurrences as $occurrence)
+                <input class="options occurrences" required type="checkbox" id="occurrence_{{ $occurrence->id }}" name="occurrences[]" value="{{ $occurrence->id }}">
+                <label for="occurrence_{{ $occurrence->id }}">
+                    <div class='package'>
+                        <div class='name'>{{ $occurrence->title }}</div>
+                        <div class='occurrence_date'>Date: {{ $occurrence->start_at->formatLocalized('%d %B %Y') }}</div>
+                        <div class='occurrence_date occurrence_location'>{{ $occurrence->location->name }}</div>
+                    </div>
+                </label>
+            @endforeach
 
+            <div class="clearfix"></div>
+        </div><hr/>
+        @endif
+
+        <!-- Options -->
+        <?php $types = $colloque->options->groupBy('type'); ?>
         @if(!$types->isEmpty())
             @foreach($types as $type => $options)
 
@@ -38,7 +54,7 @@
                     <?php $check = 'checkbox'; ?>
                     <div class='wrapper'>
                         @foreach($options as $option)
-                            <input class="options" type="{{ $check }}" id="option_{{ $option->id }}" name="option_id" value="{{ $option->id }}">
+                            <input class="options" type="{{ $check }}" id="option_{{ $option->id }}" name="options[]" value="{{ $option->id }}">
                             <label for="option_{{ $option->id }}">
                                 <div class='package'>
                                     <div class='name option_name'>{{ $option->title }}</div>
@@ -56,7 +72,7 @@
                             <p>{{ $option->title }} &nbsp;<div class="errorTxt"></div></p>
 
                             @foreach($option->groupe as $group)
-                                <input class="options" type="{{ $check }}" required id="group_{{ $group->id }}" name="option_id[{{ $option->id }}][]" value="{{ $group->id }}">
+                                <input class="options" type="{{ $check }}" required id="group_{{ $group->id }}" name="options[{{ $option->id }}][]" value="{{ $group->id }}">
                                 <label for="group_{{ $group->id }}">
                                     <div class='package'>
                                         <div class='name option_name'>{{ $group->text }}</div>

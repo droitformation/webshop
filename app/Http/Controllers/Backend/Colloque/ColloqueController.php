@@ -405,5 +405,4 @@ class ColloqueController extends Controller
         return view('backend.colloques.partials.options')->with(['colloque' => $colloque]);
     }
 
-
 }

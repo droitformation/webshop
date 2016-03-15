@@ -140,6 +140,13 @@ class Generate{
         return isset($this->model->participant) && !empty($this->model->participant) ? $this->model->participant->name : null;
     }
 
+    public function getOccurrences()
+    {
+        $this->model->load('occurrences');
+
+        return isset($this->model->occurrences) && !$this->model->occurrences->isEmpty() ? $this->model->occurrences : null;
+    }
+
     public function getOptions()
     {
         if(!$this->model->user_options->isEmpty())

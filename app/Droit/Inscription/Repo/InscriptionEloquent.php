@@ -130,6 +130,15 @@ class InscriptionEloquent implements InscriptionInterface{
             }
         }
 
+        // Occurrences
+        if(isset($data['occurrences']))
+        {
+            foreach($data['occurrences'] as $occurrence)
+            {
+                $inscription->occurrences()->attach($occurrence, ['inscription_id' => $inscription->id]);
+            }
+        }
+
         // Options groupes
         if(isset($data['groupes']))
         {

@@ -53,6 +53,9 @@
 
             @include('templates.partials.colloque',['colloque' => $generate->getColloque()])
 
+            @include('templates.partials.occurrences',['occurrences' => $generate->getOccurrences()])
+
+
             <tr><td height="5">&nbsp;</td></tr>
 
             <?php $options = $generate->getOptions(); ?>
@@ -73,7 +76,8 @@
         </table>
     </div>
 
-   <?php if($generate->getColloque()->location->location_map){ ?>
+
+   <?php if($generate->getColloque()->location->location_map && !$generate->getOccurrences()){ ?>
     <div class="content">
         <table class="content-table" valign="top">
             <tr><td height="15">&nbsp;</td></tr>

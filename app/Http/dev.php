@@ -14,30 +14,22 @@ Route::get('testing', function() {
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
     //return $generator->make('bon', $inscriptio);
 
-    $inscriptio = $inscription->find(9538);
-    $item = $groups->find(1);
-    $groupes   = $inscriptio->colloque->groupes->pluck('text','id')->toArray();
+    $inscriptio = $inscription->find(9547);
 
-    $user_checkbox  = $inscriptio->user_options->pluck('option_id')->toArray();
-    $user_choix     = $inscriptio->user_options->pluck('groupe_id','option_id')->toArray();
+    //$today = Carbon::today();
+    $today = \Carbon\Carbon::today();
+    $today = \Carbon\Carbon::parse('2016-09-16');
 
-    $option_checkbox = $inscriptio->colloque->options->whereLoose('type','checkbox')->pluck('title','id')->toArray();
-    $option_choix    = $inscriptio->colloque->options->whereLoose('type','choix')->pluck('title','id')->toArray();
-    $option_groupe   = $inscriptio->colloque->groupes;
 
-    $groupe_choix = $inscriptio->user_options->groupBy('option_id');
+    $presence = $inscriptio->occurrences->filter(function ($value, $key) use ($today){
+        return $value->start_at == $today;
+    });
 
-    $html = '';
-    foreach($groupe_choix as $type)
-    {
-        foreach ($type as $choix)
-        {
-            $html .= '<p><strong>'.$choix->option->title.'</strong></p>';
-            $html .= ($choix->groupe_id ? '<p>'.$choix->option_groupe->text.'</p>' : '') ;
-        }
-    }
+    $inscriptio->occurrences()->updateExistingPivot($presence->first()->id, ['present' => 1]);
 
-    echo $html;
+    echo '<pre>';
+    print_r($inscriptio->occurrences);
+    echo '</pre>';
 
 });
 
@@ -74,9 +66,6 @@ Route::get('cartworker', function()
 
     }
 
-    echo '<pre>';
-    print_r(tree('files'));
-    echo '</pre>';exit;
     
     /*
         $adresse_specialisation = new \App\Droit\Adresse\Entities\Adresse_specialisation();
@@ -185,12 +174,12 @@ Route::get('cartworker', function()
     $abousers      = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $groupes       = new \App\Droit\Inscription\Entities\Groupe();
-    $inscription   = $inscriptions->find(9524);
-    $groupe        = $groupes->find(1);
+    $inscription   = $inscriptions->find(9547);
+/*    $groupe        = $groupes->find(1);
 
 
     $abofacture    = $abofactures->find(939);
-    $abouser   = $abousers->find(531);
+    $abouser   = $abousers->find(531);*/
 
     $generator     = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
@@ -200,7 +189,7 @@ Route::get('cartworker', function()
 
     //$generate = new \App\Droit\Generate\Entities\Generate($abofacture);
 
-   return $generator->makeAbo('facture', $abofacture ,2);
+    return $generator->make('bon', $inscription);
 
     echo '<pre>';
     print_r($abouser);

@@ -257,6 +257,7 @@ $('.editableItem').editable({
     emptytext : '',
     params: function(params) {
         params._token = $("meta[name='_token']").attr('content');
+        params.model  = $(this).editable().data('model');
         return params;
     }
 });
@@ -369,6 +370,8 @@ $('body').on("click",'.removeItem', function(e) {
         error: function(){alert('problème avec la suppression');}
     });
 });
+
+
 /********************************************/
 
 $(document).on('change', '#selectTypeOption', function (e){

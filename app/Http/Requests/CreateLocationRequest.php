@@ -31,7 +31,7 @@ class CreateLocationRequest extends Request
         return [
             'name'    => 'required',
             'adresse' => 'required',
-            'file'    => 'required|mimes:jpeg,jpg,gif,png'
+            'file'    => 'mimes:jpeg,jpg,gif,png'
         ];
     }
 }

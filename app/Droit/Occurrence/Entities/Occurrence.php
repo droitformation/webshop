@@ -17,4 +17,9 @@ class Occurrence extends Model{
     {
         return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');
     }
+
+    public function location()
+    {
+        return $this->belongsTo('App\Droit\Location\Entities\Location');
+    }
 }

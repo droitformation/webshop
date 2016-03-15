@@ -52,6 +52,16 @@
                                         @include('backend.users.inscription.documents')
                                     </div>
                                     <div class="col-md-5">
+                                        <!-- Occurences -->
+                                        @if(!$inscription->occurrences->isEmpty())
+                                            <h4>Conférences</h4>
+                                            <ol>
+                                                @foreach($inscription->occurrences as $occurrences)
+                                                    <li>{{ $occurrences->title }}</li>
+                                                @endforeach
+                                            </ol>
+                                        @endif
+
                                         <h4>Options</h4>
                                         @include('backend.users.inscription.options')
                                     </div>

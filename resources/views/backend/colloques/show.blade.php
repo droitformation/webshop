@@ -129,8 +129,13 @@
                             <fieldset title="Dates">
                                 <legend>Dates</legend>
                                 @include('backend.colloques.partials.dates')
+                            </fieldset>
 
+                            <fieldset title="Occurrence">
+
+                                <legend>Conférences</legend>
                                 @include('backend.colloques.partials.occurrences')
+
                             </fieldset>
 
                             <fieldset title="Prix">

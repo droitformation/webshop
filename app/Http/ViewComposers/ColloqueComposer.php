@@ -32,8 +32,15 @@ class ColloqueComposer
         $organisateurs = $this->organisateur->getAll();
         $comptes       = $this->compte->getAll();
 
-        $view->with('locations', $locations);
-        $view->with('organisateurs', $organisateurs);
+        foreach($locations as $index => $location)
+        {
+            $locations_json[$index]['value'] = $location->id;
+            $locations_json[$index]['text']  = htmlspecialchars($location->name);
+        }
+
+        $view->with('locations_colloque', $locations);
+        //$view->with('organisateurs', $organisateurs);
         $view->with('comptes', $comptes);
+        $view->with('locations_json', $locations_json);
     }
 }

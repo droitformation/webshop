@@ -42,7 +42,38 @@ class CodeController extends Controller
             $inscription->save();
         }
 
-        return view('auth.presence')->with(['message' => 'Présence validé!']);
+        return view('auth.presence')->with(['status' => 'success' ,'message' => 'Présence validé!']);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function occurrence($id,$key)
+    {
+        $valid = config('services.qrcode.key');
+
+        if ($key != $valid) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $inscription = $this->inscription->find($id);
+
+        $today = \Carbon\Carbon::today();
+
+        $presence = $inscription->occurrences->filter(function ($value, $key) use ($today) {
+            return $value->start_at == $today;
+        });
+
+        if(!$presence->isEmpty())
+        {
+            $inscription->occurrences()->updateExistingPivot($presence->first()->id, ['present' => 1]);
+
+            return view('auth.presence')->with(['status' => 'success' ,'message' => 'Présence validé!']);
+        }
+
+        return view('auth.presence')->with(['status' => 'danger' ,'message' => 'La personnes n\'est pas inscrite à cette conférence']);
     }
 
     /**

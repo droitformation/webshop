@@ -160,7 +160,10 @@ class PdfGenerator implements PdfGeneratorInterface
         // Qrcode for bon
         if(\Registry::get('inscription.qrcode') && $document == 'bon')
         {
-            $data['code'] = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate(url('presence/'.$model->id.'/'.config('services.qrcode.key'))));
+            // url for qrcode if there is occurrences
+            $occurrence   = $generate->getOccurrences() ? 'occurrence/' : '';
+            $url          = url('presence/'.$occurrence.$model->id.'/'.config('services.qrcode.key'));
+            $data['code'] = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate($url));
         }
 
         $view = \PDF::loadView('templates.colloque.'.$document, $data)->setPaper('a4');

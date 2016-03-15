@@ -7,6 +7,6 @@
         </a>
     </h1>
 
-    <div class="alert alert-success" role="alert">{{ $message }}</div>
+    <div class="alert alert-{{ $status }}" role="alert">{{ $message }}</div>
 
 @stop

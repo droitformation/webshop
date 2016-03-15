@@ -252,6 +252,24 @@ class GenerateTest extends TestCase {
         $this->assertEquals($response->name, 'Cindy Leschaud');
     }
 
+	public function testGetOccurences()
+	{
+		$inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
+			'id'          => '10',
+			'user_id'     => '710',
+			'colloque_id' => '12'
+		]);
+
+
+        $occurrences = factory( App\Droit\Occurrence\Entities\Occurrence::class,2)->make();
+		$inscription->occurrences = $occurrences;
+
+		$generate = new \App\Droit\Generate\Entities\Generate($inscription);
+		$response = $generate->getOccurrences();
+
+		$this->assertEquals($occurrences, $response);
+	}
+
     public function testGetParticipant()
     {
         $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);

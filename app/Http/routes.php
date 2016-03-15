@@ -16,7 +16,7 @@ Route::group(['middleware' => ['web']], function () {
     |--------------------------------------------------------------------------
     */
     Route::get('presence/{id}/{key}', 'CodeController@presence');
-
+    Route::get('presence/occurrence/{id}/{key}', 'CodeController@occurrence');
     /*
     |--------------------------------------------------------------------------
     | Send message form contact

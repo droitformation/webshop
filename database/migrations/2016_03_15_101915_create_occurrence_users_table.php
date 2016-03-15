@@ -12,9 +12,11 @@ class CreateOccurrenceUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('occurrence_users', function (Blueprint $table) {
+        Schema::create('colloque_occurrence_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer('inscription_id');
+            $table->integer('occurrence_id');
+            $table->tinyInteger('present')->nullable();
         });
     }
 
@@ -25,6 +27,6 @@ class CreateOccurrenceUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('occurrence_users');
+        Schema::drop('colloque_occurrence_users');
     }
 }

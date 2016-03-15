@@ -5,13 +5,13 @@
 
     <!-- Options checkboxes -->
     @if($type == 'checkbox')
-        @foreach($options as $option)
+        @foreach($options as $index => $option)
             <div class="form-group type-choix">
                 <?php $checked = (isset($groupe_choix) && isset($groupe_choix[$option->id])) ? 'checked' : '' ?>
                 @if(isset($inscription) || isset($add))
                     <input type="checkbox" {{ $checked }} class="option-input" name="options[]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
                 @else
-                    <input type="checkbox" {{ $checked }} class="option-input" name="options[0][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+                    <input type="checkbox" {{ $checked }} class="option-input" name="options[{{ $index }}]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
                 @endif
             </div>
         @endforeach

@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h3>Archives colloques annéée: {{ $current }}</h3>
+        <h3>Archives colloques année: {{ $current }}</h3>
         <p><a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
     </div>
     <div class="col-md-8 text-right">
