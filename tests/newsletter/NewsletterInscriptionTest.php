@@ -47,12 +47,12 @@ class NewsletterInscriptionTest extends TestCase
         $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
         $user->subscriptions = factory(App\Droit\Newsletter\Entities\Newsletter_subscriptions::class)->make();
 
-        $this->subscription->shouldReceive('findByEmail')->once()->andReturn(null);
+        $this->subscription->shouldReceive('findSubscription')->once()->andReturn(null);
         $this->subscription->shouldReceive('create')->once()->andReturn($user);
 
         Mail::shouldReceive('send')->once();
 
-        $response = $this->call('POST', 'subscribe', ['email' => 'info@leschaud.ch']);
+        $response = $this->call('POST', 'subscribe', ['newsletter_id' => 1,'email' => 'info@leschaud.ch']);
 
         $this->assertRedirectedTo('/');
 

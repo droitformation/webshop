@@ -42,7 +42,9 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerCampagneWorkerService();
         $this->registerInscriptionService();
         $this->registerSubscribeService();
-
+        $this->registerListService();
+        $this->registerEmailService();
+        $this->registerImportService();
     }
 
     /**
@@ -122,7 +124,6 @@ class NewsletterServiceProvider extends ServiceProvider
         });
     }
 
-
     /**
      * Newsletter user abo service
      */
@@ -142,6 +143,44 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterSubscriptionInterface', function()
         {
             return new \App\Droit\Newsletter\Repo\NewsletterSubscriptionEloquent( new \App\Droit\Newsletter\Entities\Newsletter_subscriptions );
+        });
+    }
+
+    /**
+     * Newsletter list
+     */
+    protected function registerListService(){
+
+        $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterListInterface', function()
+        {
+            return new \App\Droit\Newsletter\Repo\NewsletterListEloquent( new \App\Droit\Newsletter\Entities\Newsletter_lists() );
+        });
+    }
+
+    /**
+     * Newsletter list emails
+     */
+    protected function registerEmailService(){
+
+        $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterEmailInterface', function()
+        {
+            return new \App\Droit\Newsletter\Repo\NewsletterEmailEloquent( new \App\Droit\Newsletter\Entities\Newsletter_emails() );
+        });
+    }
+
+    /**
+     * Newsletter Import worker
+     */
+    protected function registerImportService(){
+
+        $this->app->singleton('App\Droit\Newsletter\Worker\ImportWorkerInterface', function()
+        {
+            return new \App\Droit\Newsletter\Worker\ImportWorker(
+                \App::make('App\Droit\Newsletter\Worker\MailjetInterface'),
+                \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
+                \App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
+                \App::make('Maatwebsite\Excel\Excel')
+            );
         });
     }
 

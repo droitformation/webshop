@@ -5,25 +5,21 @@ namespace App\Http\Controllers\Backend\Newsletter;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Service\UploadInterface;
-use App\Droit\Newsletter\Worker\MailjetInterface;
-use App\Droit\Newsletter\Repo\NewsletterUserInterface;
+use App\Droit\Newsletter\Repo\NewsletterInterface;
+use App\Droit\Newsletter\Worker\ImportWorkerInterface;
 
 class ImportController extends Controller
 {
     protected $newsletter;
     protected $upload;
-    protected $mailjet;
-    protected $subscriber;
+    protected $worker;
 
-    public function __construct( UploadInterface $upload, MailjetInterface $mailjet, NewsletterUserInterface $subscriber, NewsletterInterface $newsletter)
+    public function __construct( UploadInterface $upload, NewsletterInterface $newsletter, ImportWorkerInterface $worker)
     {
         $this->newsletter = $newsletter;
         $this->upload     = $upload;
-        $this->mailjet    = $mailjet;
-        $this->subscriber = $subscriber;
+        $this->worker     = $worker;
     }
 
     /**
@@ -40,54 +36,33 @@ class ImportController extends Controller
 
     public function store(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , 'files' );
-        $list  = $request->input('newsletter_id');
+        $file = $this->upload->upload( $request->file('file') , 'files' );
+        $list  = $request->input('newsletter_id',null);
 
-        if($files)
+        if($file)
         {
-            // path to csv
-            $path = public_path('files/'.$files['name']);
+            // path to xls
+            $path = public_path('files/'.$file['name']);
 
-            $result = \Excel::load($path, function($reader) {
-                $reader->ignoreEmpty();
-                $reader->setSeparator('\r\n');
-            })->get();
+            // Read uploded xls
+            $results = $this->worker->read($path);
 
-            foreach($result as $email)
+            // If the upload is not formatted correctly redirect back
+            if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') )
             {
-                $subscriber = $this->subscriber->findByEmail($email->email);
-
-                if(!$subscriber)
-                {
-                    $subscriber = $this->subscriber->create([
-                        'email'         => $email->email,
-                        'activated_at'  => \Carbon\Carbon::now(),
-                        'newsletter_id' => $list
-                    ]);
-                }
-
-                $relation = $subscriber->subscriptions()->lists('newsletter_id');
-                $contains = $relation->contains($list);
-
-                if(!$contains)
-                {
-                    $subscriber->subscriptions()->attach($list);
-                }
+                return redirect()->back()->with(['status' => 'danger', 'message' => 'Le fichier est vide ou mal formaté']);
             }
 
-            // Convert to csv
-            \Excel::load($path)->store('csv', public_path('files/import'));
+            // Subscribe the new emails
+            $this->worker->subscribe($results,$list);
 
-            // Import csv to mailjet
-            $newsletter =  $this->newsletter->find($list);
-            $this->mailjet->setList($newsletter->list_id); // testing list
+            // Store imported file as csv for mailjet sync
+            $this->worker->store($path);
 
-            $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $files['name']);
+            // Mailjet sync
+            $this->worker->sync($file,$list);
 
-            $dataID   = $this->mailjet->uploadCSVContactslistData(file_get_contents(public_path('files/import/'.$filename.'.csv')));
-            $response = $this->mailjet->importCSVContactslistData($dataID->ID);
-
-            return redirect()->back()->with(array('status' => 'success', 'message' => 'Import terminé' ));
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Import terminé']);
         }
     }
 

@@ -85,6 +85,8 @@ return array(
     'CreateMenusTable' => $baseDir . '/database/migrations/2016_01_23_145831_create_menus_table.php',
     'CreateNewsletterCampagnesTable' => $baseDir . '/database/migrations/newsletter/2014_08_05_104751_create_newsletter_campagnes_table.php',
     'CreateNewsletterContentsTable' => $baseDir . '/database/migrations/newsletter/2014_08_05_105041_create_newsletter_contents_table.php',
+    'CreateNewsletterListEmailsTable' => $baseDir . '/database/migrations/2016_03_16_135210_create_newsletter_list_emails_table.php',
+    'CreateNewsletterListsTable' => $baseDir . '/database/migrations/2016_03_16_133440_create_newsletter_lists_table.php',
     'CreateNewsletterSubscriptionsTable' => $baseDir . '/database/migrations/newsletter/2014_08_12_090834_create_newsletter_subscriptions_table.php',
     'CreateNewsletterTypesTable' => $baseDir . '/database/migrations/newsletter/2014_08_05_105320_create_newsletter_types_table.php',
     'CreateNewsletterUsersTable' => $baseDir . '/database/migrations/newsletter/2014_08_05_113929_create_newsletter_users_table.php',

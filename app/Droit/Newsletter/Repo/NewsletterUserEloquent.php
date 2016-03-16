@@ -160,10 +160,28 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
 		return $user;
 	}
+
+    public function subscribe($id,$newsletter_id)
+    {
+        $user = $this->user->find($id);
+
+        if( ! $user )
+        {
+            return false;
+        }
+
+        $relation = $user->subscriptions()->lists('newsletter_id');
+        $contains = $relation->contains($newsletter_id);
+
+        if(!$contains)
+        {
+            $user->subscriptions()->attach($newsletter_id);
+        }
+    }
 	
 	public function update(array $data){
 
-        $user = $this->user->findOrFail($data['id']);
+        $user = $this->user->find($data['id']);
 		
 		if( ! $user )
 		{
