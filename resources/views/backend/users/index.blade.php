@@ -17,25 +17,14 @@
              <div class="col-md-3">
                  <div class="panel panel-midnightblue">
                      <div class="panel-body">
-                        <h4>Rechercher par</h4>
-                         <form action="{{ url('admin/user/search') }}" method="post">
-                             <div class="form-group">
-                                 <label>Prénom</label>
-                                 <input type="first_name" class="form-control" placeholder="Prénom">
-                             </div>
-                             <div class="form-group">
-                                 <label>Nom</label>
-                                 <input type="last_name" class="form-control" placeholder="Nom">
-                             </div>
-                             <div class="form-group">
-                                 <label>Email</label>
-                                 <input type="email" class="form-control" placeholder="Email">
-                             </div>
-                             <div class="form-group">
-                                 <label>Entreprise</label>
-                                 <input type="company" class="form-control" placeholder="Entreprise">
-                             </div>
-                             <button type="submit" class="btn btn-default">Rechercher</button>
+                         <h4>Rechercher</h4>
+                         <form action="{{ url('admin/search/user') }}" method="post">{!! csrf_field() !!}
+                             <div class="input-group">
+                                 <input type="text" class="form-control" name="term" placeholder="Recherche...">
+                              <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-info"><i class="fa fa-search"></i></button>
+                              </span>
+                             </div><!-- /input-group -->
                          </form>
                      </div>
                  </div>
