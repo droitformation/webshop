@@ -134,7 +134,7 @@ return [
         Illuminate\Encryption\EncryptionServiceProvider::class,
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        Illuminate\Hashing\HashServiceProvider::class,
+        //Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
@@ -163,6 +163,7 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
+		App\Providers\TransitionalHashProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -172,6 +173,7 @@ return [
         App\Providers\ShopServiceProvider::class,
         App\Providers\ColloqueServiceProvider::class,
         App\Providers\CalculetteServiceProvider::class,
+
 	],
 
 	/*

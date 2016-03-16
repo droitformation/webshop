@@ -3,23 +3,19 @@
  * Test routes
  ============================================ */
 
-
 Route::get('testing', function() {
     
     $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $groups  = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-    $generator->stream = true;
+    //$generator->stream = true;
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
     //return $generator->make('bon', $inscriptio);
-
     $inscriptio = $inscription->find(9547);
 
-    //$today = Carbon::today();
     $today = \Carbon\Carbon::today();
     $today = \Carbon\Carbon::parse('2016-09-16');
-
 
     $presence = $inscriptio->occurrences->filter(function ($value, $key) use ($today){
         return $value->start_at == $today;
@@ -27,10 +23,7 @@ Route::get('testing', function() {
 
     $inscriptio->occurrences()->updateExistingPivot($presence->first()->id, ['present' => 1]);
 
-    echo '<pre>';
-    print_r($inscriptio->occurrences);
-    echo '</pre>';
-
+    echo md5('cindy');
 });
 
 Route::get('cartworker', function()

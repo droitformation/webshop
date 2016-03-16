@@ -46,6 +46,9 @@
         <testsuite name="generate">
             <directory>./tests/generate/</directory>
         </testsuite>
+        <testsuite name="frontend">
+            <directory>./tests/frontend/</directory>
+        </testsuite>
     </testsuites>
     <php>
         <env name="APP_ENV" value="testing"/>
