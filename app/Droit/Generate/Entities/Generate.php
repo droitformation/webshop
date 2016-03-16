@@ -133,6 +133,11 @@ class Generate{
         return $this->getType() == 'group' ? $this->model->price : $this->model->price->price_cents;
     }
 
+    public function getPriceName()
+    {
+        return $this->getType() == 'group' ? $this->model->inscriptions->pluck('price.description')->all() : $this->model->price->description;
+    }
+
     public function getParticipant()
     {
         $this->model->load('participant');

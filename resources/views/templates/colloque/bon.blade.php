@@ -55,7 +55,6 @@
 
             @include('templates.partials.occurrences',['occurrences' => $generate->getOccurrences()])
 
-
             <tr><td height="5">&nbsp;</td></tr>
 
             <?php $options = $generate->getOptions(); ?>

@@ -33,6 +33,7 @@
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<?php $attributs = $product->attributs->filter(function ($value, $key) {return in_array($value->id, [1,2]); }); ?>
+
 								@if(!$attributs->isEmpty())
 									@foreach($attributs as $attribute)
 										<p><strong>{{ $attribute->title }} :</strong>{{ $attribute->pivot->value }} </p>

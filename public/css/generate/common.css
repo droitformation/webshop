@@ -36,6 +36,11 @@ h3{
     padding-bottom: 5px;
 }
 
+ol li{
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
 .organisateur{
     font-size: 11px;
 }

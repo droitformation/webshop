@@ -41,8 +41,10 @@
                                 </div>
                                 <div class="b-post-bottom">
                                     <ul class="post-nav">
-                                        @if(!$product->attributs->isEmpty())
-                                            @foreach($product->attributs as $attribute)
+                                        <?php $attributs = $product->attributs->filter(function ($value, $key) {return in_array($value->id, [1,2]); }); ?>
+
+                                        @if(!$attributs->isEmpty())
+                                            @foreach($attributs as $attribute)
                                                 <li><strong>{{ $attribute->title }}</strong> {{ $attribute->pivot->value }}</li>
                                             @endforeach
                                         @endif

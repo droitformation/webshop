@@ -87,6 +87,37 @@ class GenerateTest extends TestCase {
 		$this->assertEquals(120.00, $response);
 	}
 
+	public function testGetPriceNames()
+	{
+		$price        = factory(App\Droit\Price\Entities\Price::class)->make(['description' => 'Prix normal']);
+		$inscription  = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
+
+		$inscription->price = $price;
+
+		$generate = new \App\Droit\Generate\Entities\Generate($inscription);
+		$response1 = $generate->getPrice();
+		$response2 = $generate->getPriceName();
+
+		$this->assertEquals(40.00, $response1);
+		$this->assertEquals('Prix normal', $response2);
+
+		$group        = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
+		$inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make();
+		$inscriptions = $inscriptions->map(function ($item, $key) {
+			$item->price = factory(\App\Droit\Price\Entities\Price::class)->make(['description' => 'Prix normal '.$key]);
+			return $item;
+		});
+
+		$group->inscriptions = $inscriptions;
+
+		$generate = new \App\Droit\Generate\Entities\Generate($group);
+		$response1 = $generate->getPrice();
+        $response2 = $generate->getPriceName();
+
+		$this->assertEquals(120.00, $response1);
+        $this->assertEquals(['Prix normal 0','Prix normal 1','Prix normal 2'], $response2);
+	}
+
 	public function testGetOptiions()
 	{
 		$inscription  = factory(App\Droit\Inscription\Entities\Inscription::class)->make();

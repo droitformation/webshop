@@ -121,7 +121,7 @@ class ShopController extends Controller {
         $term = $request->input('term',null);
 
         $colloques  = $this->colloque->search($term);
-        $products   = $this->product->search($term);
+        $products   = $this->product->search(trim($term));
         $categories = $this->categorie->search($term);
         $domains    = $this->domain->search($term);
 

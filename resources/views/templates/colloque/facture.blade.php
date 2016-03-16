@@ -58,6 +58,10 @@
 
         <table class="content-table content-wide" valign="top">
             @include('templates.partials.colloque',['colloque' => $generate->getColloque()])
+
+            @include('templates.partials.occurrences',['occurrences' => $generate->getOccurrences()])
+
+            <tr><td height="5">&nbsp;</td></tr>
         </table>
 
     </div>
@@ -72,7 +76,7 @@
                                 {!! !is_array($generate->getNo()) ? ' <p>Le montant de l\'inscription est de:</p>' : ' <p>Le montant des inscriptions est de:</p>' !!}
                             </td>
                             <td width="60%" valign="top">
-                                <p><strong>{{ $generate->getPrice() }} CHF</strong></p>
+                                <p><strong>{{ $generate->getPrice() }} CHF</strong> &nbsp; ({{ $generate->getPriceName() }})</p>
                                 <small>(montant non-soumis à la TVA)</small>
                             </td>
                         </tr>

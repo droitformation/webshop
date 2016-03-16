@@ -79,7 +79,7 @@ class ProductController extends Controller {
         }
         elseif($term)
         {
-            $products = $this->product->search($term);
+            $products = $this->product->search(trim($term));
             $paginate = false;
         }
         else // pagination
