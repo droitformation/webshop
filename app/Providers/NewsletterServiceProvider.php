@@ -179,7 +179,9 @@ class NewsletterServiceProvider extends ServiceProvider
                 \App::make('App\Droit\Newsletter\Worker\MailjetInterface'),
                 \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
                 \App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
-                \App::make('Maatwebsite\Excel\Excel')
+                \App::make('Maatwebsite\Excel\Excel'),
+                \App::make('App\Droit\Newsletter\Repo\NewsletterCampagneInterface'),
+                \App::make('App\Droit\Newsletter\Worker\CampagneInterface')
             );
         });
     }

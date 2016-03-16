@@ -5,6 +5,8 @@ namespace App\Droit\Newsletter\Worker;
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Worker\MailjetInterface;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
+use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
+use App\Droit\Newsletter\Worker\CampagneInterface;
 use Maatwebsite\Excel\Excel;
 
 class ImportWorker implements ImportWorkerInterface
@@ -13,13 +15,25 @@ class ImportWorker implements ImportWorkerInterface
     protected $subscriber;
     protected $newsletter;
     protected $excel;
+    protected $campagne;
+    protected $worker;
 
-    public function __construct(MailjetInterface $mailjet , NewsletterUserInterface $subscriber, NewsletterInterface $newsletter, Excel $excel)
+    public function __construct(
+        MailjetInterface $mailjet ,
+        NewsletterUserInterface $subscriber,
+        NewsletterInterface $newsletter,
+        Excel $excel,
+        NewsletterCampagneInterface $campagne,
+        CampagneInterface $worker
+    )
     {
         $this->mailjet    = $mailjet;
         $this->newsletter = $newsletter;
         $this->subscriber = $subscriber;
         $this->excel      = $excel;
+        $this->campagne   = $campagne;
+        $this->worker     = $worker;
+        $this->mailjet    = $mailjet;
     }
 
     public function subscribe($results,$list = null)
@@ -65,5 +79,19 @@ class ImportWorker implements ImportWorkerInterface
 
         $dataID   = $this->mailjet->uploadCSVContactslistData(file_get_contents(public_path('files/import/'.$filename.'.csv')));
         $response = $this->mailjet->importCSVContactslistData($dataID->ID);
+    }
+
+    public function send($campagne_id,$list_id)
+    {
+        $campagne = $this->campagne->find($campagne_id);
+
+        // GET html
+        $html = $this->worker->html($campagne->id);
+
+        \Mail::send([], [], function ($message) use ($campagne,$html,$email)
+        {
+            $message->to($email, '')->subject($campagne->sujet);
+            $message->setBody($html, 'text/html');
+        });
     }
 }
