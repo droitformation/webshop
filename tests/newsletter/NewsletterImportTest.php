@@ -26,8 +26,8 @@ class NewsletterImportTest extends TestCase
         $this->subscription = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterUserInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterUserInterface', $this->subscription);
 
-        $this->newsletter = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterUserInterface');
-        $this->app->instance('App\Droit\Newsletter\Repo\NewsletterUserInterface', $this->newsletter);
+        $this->newsletter = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterInterface');
+        $this->app->instance('App\Droit\Newsletter\Repo\NewsletterInterface', $this->newsletter);
 
         $model = new \App\Droit\User\Entities\User();
 
@@ -94,21 +94,52 @@ class NewsletterImportTest extends TestCase
         $worker->subscribe($results);
     }
 
-
     /**
      *
      * @return void
      */
     public function testSyncToMailjet()
     {
-        $worker     = App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
-        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
+        $worker       = App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+        $newsletter   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
 
         $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
-        $this->subscription->shouldReceive('create')->twice()->andReturn($user);
-        $this->subscription->shouldReceive('subscribe')->twice();
+        $this->worker->shouldReceive('setList')->with(1)->once()->andReturn(true);
 
-        $results = $worker->read($file);
-        $worker->subscribe($results);
+        $dataID     = new stdClass();
+        $dataID->ID = 1;
+
+        $this->worker->shouldReceive('uploadCSVContactslistData')->once()->andReturn($dataID);
+        $this->worker->shouldReceive('importCSVContactslistData')->once();
+
+        $worker->sync('test.xlsx',1);
+
+    }
+
+    public function testImportListNewsletter()
+    {
+        $file   = storage_path('excel/test.xlsx');
+        $upload = $this->prepareFileUpload($file);
+
+        $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
+
+        $mock->shouldReceive('import')->once();
+
+        $response = $this->call('POST', 'admin/import', ['title' => 'Titre', 'newsletter_id' => 3], [], ['file' => $upload]);
+
+        $this->assertRedirectedTo('admin/import');
+    }
+
+    // Put this function in a helpers.php or a class (can be called statically) or anywhere you like
+    function prepareFileUpload($path)
+    {
+        TestCase::assertFileExists($path);
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+        $mime = finfo_file($finfo, $path);
+
+        return new \Symfony\Component\HttpFoundation\File\UploadedFile ($path, null, $mime, null, null, true);
     }
 }

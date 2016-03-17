@@ -8,6 +8,7 @@
 
             <div class="panel-body">
                 <h4>Importer une liste</h4>
+
                 <div class="form-group">
                     <label for="type" class="col-sm-3 control-label">Titre de la liste</label>
                     <div class="col-sm-8">

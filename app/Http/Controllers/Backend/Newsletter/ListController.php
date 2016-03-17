@@ -6,31 +6,21 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
-use App\Droit\Newsletter\Worker\CampagneInterface;
-
+use App\Droit\Newsletter\Worker\ImportWorkerInterface;
 use App\Droit\Newsletter\Repo\NewsletterListInterface;
 use App\Droit\Newsletter\Repo\NewsletterEmailInterface;
 
-use App\Droit\Helper\Helper;
-use App\Http\Requests\SendTestRequest;
-
 class ListController extends Controller
 {
-    protected $campagne;
-    protected $worker;
-    protected $helper;
-
     protected $list;
+    protected $import;
     protected $emails;
 
-    public function __construct(NewsletterCampagneInterface $campagne, NewsletterListInterface $list, NewsletterEmailInterface $emails,CampagneInterface $worker, Helper $helper)
+    public function __construct( NewsletterListInterface $list, NewsletterEmailInterface $emails, ImportWorkerInterface $import)
     {
-        $this->campagne = $campagne;
-        $this->worker   = $worker;
         $this->list     = $list;
         $this->emails   = $emails;
-        $this->helper   = $helper;
+        $this->import   = $import;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -65,19 +55,14 @@ class ListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function test(SendTestRequest $request)
+    public function send(Request $request)
     {
-        $id       = $request->input('id');
-        $campagne = $this->campagne->find($id);
-        $sujet    = ($campagne->status == 'brouillon' ? $campagne->sujet : $campagne->sujet );
+        $list_id     = $request->input('list_id');
+        $campagne_id = $request->input('campagne_id');
 
-        // GET html
-        $html = $this->worker->html($campagne->id);
+        $this->import->send($campagne_id,$list_id);
 
-        // Send the email
-        $this->mailjet->sendTest($request->input('email'),$html,$sujet);
-
-        return redirect('admin/campagne/'.$campagne->id)->with( ['status' => 'success' , 'message' => 'Email de test envoyé!'] );
+        return redirect('admin/campagne/'.$campagne_id)->with( ['status' => 'success' , 'message' => 'Campagne envoyé à la liste!'] );
     }
 
 }

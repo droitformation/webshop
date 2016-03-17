@@ -7,6 +7,7 @@ use App\Droit\Newsletter\Worker\MailjetInterface;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\CampagneInterface;
+use App\Droit\Service\UploadInterface;
 use Maatwebsite\Excel\Excel;
 
 class ImportWorker implements ImportWorkerInterface
@@ -17,6 +18,7 @@ class ImportWorker implements ImportWorkerInterface
     protected $excel;
     protected $campagne;
     protected $worker;
+    protected $upload;
 
     public function __construct(
         MailjetInterface $mailjet ,
@@ -24,7 +26,8 @@ class ImportWorker implements ImportWorkerInterface
         NewsletterInterface $newsletter,
         Excel $excel,
         NewsletterCampagneInterface $campagne,
-        CampagneInterface $worker
+        CampagneInterface $worker,
+        UploadInterface $upload
     )
     {
         $this->mailjet    = $mailjet;
@@ -34,6 +37,45 @@ class ImportWorker implements ImportWorkerInterface
         $this->campagne   = $campagne;
         $this->worker     = $worker;
         $this->mailjet    = $mailjet;
+        $this->upload     = $upload;
+    }
+
+    public function import($request)
+    {
+        $file = $this->upload->upload( $request->file('file') , 'files' );
+        $newsletter_id = $request->input('newsletter_id',null);
+
+        if(!$file)
+        {
+            throw new \App\Exceptions\FileUploadException('Upload failed');
+        }
+
+        // path to xls
+        $path = public_path('files/'.$file['name']);
+
+        // Read uploded xls
+        $results = $this->read($path);
+
+        // If the upload is not formatted correctly redirect back
+        if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') )
+        {
+            return redirect()->back()->with(['status' => 'danger', 'message' => 'Le fichier est vide ou mal formaté']);
+        }
+
+        // we want to import in one of the newsletter subscriber's list
+        if($newsletter_id)
+        {
+            // Subscribe the new emails
+            $this->subscribe($results,$newsletter_id);
+
+            // Store imported file as csv for mailjet sync
+            $this->store($path);
+
+            // Mailjet sync
+            $this->sync($file['name'], $newsletter_id);
+        }
+
+        return true;
     }
 
     public function subscribe($results,$list = null)
@@ -75,7 +117,7 @@ class ImportWorker implements ImportWorkerInterface
         $newsletter = $this->newsletter->find($list);
         $this->mailjet->setList($newsletter->list_id); // testing list
 
-        $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file['name']);
+        $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file);
 
         $dataID   = $this->mailjet->uploadCSVContactslistData(file_get_contents(public_path('files/import/'.$filename.'.csv')));
         $response = $this->mailjet->importCSVContactslistData($dataID->ID);
@@ -83,15 +125,21 @@ class ImportWorker implements ImportWorkerInterface
 
     public function send($campagne_id,$list_id)
     {
+        $list  = $this->list->find($list_id);
+
         $campagne = $this->campagne->find($campagne_id);
+        $html     = $this->worker->html($campagne_id);
 
-        // GET html
-        $html = $this->worker->html($campagne->id);
-
-        \Mail::send([], [], function ($message) use ($campagne,$html,$email)
+        if(!$list->emails->isEmpty())
         {
-            $message->to($email, '')->subject($campagne->sujet);
-            $message->setBody($html, 'text/html');
-        });
+            foreach($list->emails as $email)
+            {
+                \Mail::send([], [], function ($message) use ($campagne,$html,$email)
+                {
+                    $message->to($email, '')->subject($campagne->sujet);
+                    $message->setBody($html, 'text/html');
+                });
+            }
+        }
     }
 }

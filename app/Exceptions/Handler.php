@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler {
             return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Problème avec la création du contenu pour la campagne'));
 
         if ($e instanceof \App\Exceptions\FileUploadException)
-            return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Problème avec l\'upload '.$e->getMessage() ));
+            return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Problème avec le téléchargement du fichier '.$e->getMessage() ));
 
         if ($e instanceof \App\Exceptions\SubscribeUserException)
             return redirect('/')->with(array('status' => 'warning' , 'message' => 'Erreur synchronisation email vers mailjet'));

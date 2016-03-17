@@ -12,7 +12,7 @@ Route::get('testing', function() {
     //$generator->stream = true;
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
     //return $generator->make('bon', $inscriptio);
-    $inscriptio = $inscription->find(9547);
+/*    $inscriptio = $inscription->find(9547);
 
     $today = \Carbon\Carbon::today();
     $today = \Carbon\Carbon::parse('2016-09-16');
@@ -21,9 +21,13 @@ Route::get('testing', function() {
         return $value->start_at == $today;
     });
 
-    $inscriptio->occurrences()->updateExistingPivot($presence->first()->id, ['present' => 1]);
+    $inscriptio->occurrences()->updateExistingPivot($presence->first()->id, ['present' => 1]);*/
 
-    echo md5('cindy');
+    //echo md5('cindy');
+
+    $file = storage_path('excel/test.xlsx');
+
+    echo \File::mimeType($file);
 });
 
 Route::get('cartworker', function()
