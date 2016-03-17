@@ -34,7 +34,10 @@ class ImportController extends Controller
 
     public function store(ImportRequest $request)
     {
-        $this->worker->import($request);
+        $data = $request->all();
+        $file = $request->file('file');
+
+        $this->worker->import($data,$file);
 
         return redirect('admin/import')->with(['status' => 'success', 'message' => 'Fichier importé!']);
     }

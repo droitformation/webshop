@@ -10,6 +10,7 @@ class NewsletterImportTest extends TestCase
     protected $subscription;
     protected $worker;
     protected $newsletter;
+    protected $upload;
 
     use WithoutMiddleware;
 
@@ -28,6 +29,9 @@ class NewsletterImportTest extends TestCase
 
         $this->newsletter = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterInterface', $this->newsletter);
+
+        $this->upload = Mockery::mock('App\Droit\Service\UploadInterface');
+        $this->app->instance('App\Droit\Service\UploadInterface', $this->upload);
 
         $model = new \App\Droit\User\Entities\User();
 
@@ -131,15 +135,69 @@ class NewsletterImportTest extends TestCase
         $this->assertRedirectedTo('admin/import');
     }
 
+    /**
+     *
+     * @return void
+     */
+    public function testImportWithNewsletterId()
+    {
+        $worker = App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+
+        $file   = storage_path('excel/test.xlsx');
+        $upload = $this->prepareFileUpload($file);
+        $file   = ['name' => 'test.xlsx'];
+        $dataID     = new stdClass();
+        $dataID->ID = 1;
+
+        $user       = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
+
+        $mock = \Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+
+        $this->upload->shouldReceive('upload')->once()->andReturn($file);
+        $this->subscription->shouldReceive('findByEmail')->twice()->andReturn(null);
+        $this->subscription->shouldReceive('create')->twice()->andReturn($user);
+        $this->subscription->shouldReceive('subscribe')->twice();
+        $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
+        $this->worker->shouldReceive('setList')->with(1)->once()->andReturn(true);
+        $this->worker->shouldReceive('uploadCSVContactslistData')->once()->andReturn($dataID);
+        $this->worker->shouldReceive('importCSVContactslistData')->once();
+
+        $results = $worker->import(['title' => 'Titre', 'newsletter_id' => 3],$upload);
+    }
+
+    /**
+     *
+     * @return void
+     */
+    public function testImportWithoutNewsletterId()
+    {
+        $worker = App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+
+        $file   = storage_path('excel/test.xlsx');
+        $upload = $this->prepareFileUpload($file);
+        $file   = ['name' => 'test.xlsx'];
+        $dataID     = new stdClass();
+        $dataID->ID = 1;
+
+        $user       = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
+
+        $mock = \Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+
+        $this->upload->shouldReceive('upload')->once()->andReturn($file);
+
+        $results = $worker->import(['title' => 'Titre'],$upload);
+    }
+
     // Put this function in a helpers.php or a class (can be called statically) or anywhere you like
     function prepareFileUpload($path)
     {
         TestCase::assertFileExists($path);
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $path);
 
-        $mime = finfo_file($finfo, $path);
-
-        return new \Symfony\Component\HttpFoundation\File\UploadedFile ($path, null, $mime, null, null, true);
+        return new \Symfony\Component\HttpFoundation\File\UploadedFile($path, null, $mime, null, null, true);
     }
 }

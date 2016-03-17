@@ -29,8 +29,7 @@ class ImportRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required',
-           // 'file'  => 'required|mimes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel, xls, xlsx'
+            'title' => 'required'
         ];
     }
 }

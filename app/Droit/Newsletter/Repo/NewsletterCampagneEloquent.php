@@ -29,7 +29,7 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 
 	public function find($id){
 				
-		return $this->campagne->with(array('newsletter','content'))->findOrFail($id);
+		return $this->campagne->with(array('newsletter','content'))->find($id);
 	}
 
 	public function create(array $data){

@@ -58,9 +58,10 @@ class ListController extends Controller
     public function send(Request $request)
     {
         $list_id     = $request->input('list_id');
+        $list        = $this->list->find($list_id);
         $campagne_id = $request->input('campagne_id');
 
-        $this->import->send($campagne_id,$list_id);
+        $this->import->send($campagne_id,$list);
 
         return redirect('admin/campagne/'.$campagne_id)->with( ['status' => 'success' , 'message' => 'Campagne envoyé à la liste!'] );
     }

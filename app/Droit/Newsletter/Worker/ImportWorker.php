@@ -40,10 +40,10 @@ class ImportWorker implements ImportWorkerInterface
         $this->upload     = $upload;
     }
 
-    public function import($request)
+    public function import($data,$file)
     {
-        $file = $this->upload->upload( $request->file('file') , 'files' );
-        $newsletter_id = $request->input('newsletter_id',null);
+        $file          = $this->upload->upload( $file , 'files' );
+        $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
 
         if(!$file)
         {
@@ -123,12 +123,14 @@ class ImportWorker implements ImportWorkerInterface
         $response = $this->mailjet->importCSVContactslistData($dataID->ID);
     }
 
-    public function send($campagne_id,$list_id)
+    public function send($campagne_id,$list)
     {
-        $list  = $this->list->find($list_id);
-
         $campagne = $this->campagne->find($campagne_id);
         $html     = $this->worker->html($campagne_id);
+
+        echo '<pre>';
+        print_r($html);
+        echo '</pre>';exit;
 
         if(!$list->emails->isEmpty())
         {

@@ -10,37 +10,30 @@ class UploadWorker implements UploadInterface {
 	*/	
 	public function upload( $file , $destination , $type = null ){
 
-        try
+        $name = $file->getClientOriginalName();
+        $ext  = $file->getClientOriginalExtension();
+
+        $image_name =  basename($name,'.'.$ext);
+
+        $string  = \Str::slug($image_name);
+        $newname = $string.'.'.$ext;
+
+        // Get the name first because after moving, the file doesn't exist anymore
+        $new  = $file->move($destination,$newname);
+        $size = $new->getSize();
+        $mime = $new->getMimeType();
+        $path = $new->getRealPath();
+
+        //resize
+        if($type)
         {
-            $name = $file->getClientOriginalName();
-            $ext  = $file->getClientOriginalExtension();
-
-            $image_name =  basename($name,'.'.$ext);
-
-            $string  = \Str::slug($image_name);
-            $newname = $string.'.'.$ext;
-
-            // Get the name first because after moving, the file doesn't exist anymore
-            $new  = $file->move($destination,$newname);
-            $size = $new->getSize();
-            $mime = $new->getMimeType();
-            $path = $new->getRealPath();
-
-            //resize
-            if($type)
-            {
-                $sizes = \Config::get('size.'.$type);
-                $this->resize( $path, $newname, $sizes['width'], $sizes['height']);
-            }
-
-            $newfile = array( 'name' => $newname ,'ext' => $ext ,'size' => $size ,'mime' => $mime ,'path' => $path  );
-
-            return $newfile;
+            $sizes = \Config::get('size.'.$type);
+            $this->resize( $path, $newname, $sizes['width'], $sizes['height']);
         }
-        catch(Exception $e)
-        {
-            //throw new \Droit\Exceptions\FileUploadException('Upload failed', $e->getError() );
-        }
+
+        $newfile = array( 'name' => $newname ,'ext' => $ext ,'size' => $size ,'mime' => $mime ,'path' => $path  );
+
+        return $newfile;
 
 	}
 	
