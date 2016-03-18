@@ -9,18 +9,22 @@ use App\Http\Controllers\Controller;
 use App\Droit\Newsletter\Worker\ImportWorkerInterface;
 use App\Droit\Newsletter\Repo\NewsletterListInterface;
 use App\Droit\Newsletter\Repo\NewsletterEmailInterface;
+use App\Droit\Service\UploadInterface;
+use App\Http\Requests\ImportRequest;
 
 class ListController extends Controller
 {
     protected $list;
     protected $import;
     protected $emails;
+    protected $upload;
 
-    public function __construct( NewsletterListInterface $list, NewsletterEmailInterface $emails, ImportWorkerInterface $import)
+    public function __construct( NewsletterListInterface $list, NewsletterEmailInterface $emails, ImportWorkerInterface $import, UploadInterface $upload )
     {
         $this->list     = $list;
         $this->emails   = $emails;
         $this->import   = $import;
+        $this->upload   = $upload;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -58,12 +62,39 @@ class ListController extends Controller
     public function send(Request $request)
     {
         $list_id     = $request->input('list_id');
-        $list        = $this->list->find($list_id);
         $campagne_id = $request->input('campagne_id');
+        $list        = $this->list->find($list_id);
 
         $this->import->send($campagne_id,$list);
 
         return redirect('admin/campagne/'.$campagne_id)->with( ['status' => 'success' , 'message' => 'Campagne envoyé à la liste!'] );
     }
 
+    public function store(ImportRequest $request)
+    {
+        $data = $request->all();
+        $file = $request->file('file');
+
+        $file    = $this->upload->upload( $file , 'files');
+
+        if(!$file)
+        {
+            throw new \App\Exceptions\FileUploadException('Upload failed');
+        }
+
+        // path to xls
+        $path = public_path('files/'.$file['name']);
+
+        // Read uploded xls
+        $results = $this->import->read($path);
+        $emails  = $results->lists('emails')->all();
+        $list    = $this->list->create(['title' => $request->input('title')]);
+
+        foreach($emails as $email)
+        {
+            $list->emails()->save(new \App\Droit\Newsletter\Entities\Newsletter_emails(['list_id' => $list->id, 'email' => $email]));
+        }
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Fichier importé!']);
+    }
 }

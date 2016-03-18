@@ -3,7 +3,7 @@
     @parent
 
     <div class="panel panel-primary">
-        <form action="{{ url('admin/import') }}" data-validate="parsley" method="POST" enctype="multipart/form-data" class="validate-form form-horizontal">
+        <form action="{{ url('admin/liste') }}" data-validate="parsley" method="POST" enctype="multipart/form-data" class="validate-form form-horizontal">
             {!! csrf_field() !!}
 
             <div class="panel-body">

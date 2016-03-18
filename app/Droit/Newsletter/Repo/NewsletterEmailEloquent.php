@@ -26,9 +26,7 @@ class NewsletterEmailEloquent implements NewsletterEmailInterface{
 
         $email = $this->email->create(array(
             'email'        => $data['email'],
-            'list_id'      => $data['list_id'],
-            'created_at'   => date('Y-m-d G:i:s'),
-            'updated_at'   => date('Y-m-d G:i:s')
+            'list_id'      => $data['list_id']
         ));
 
         if( ! $email )

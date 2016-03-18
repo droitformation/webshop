@@ -75,7 +75,7 @@ class ImportWorker implements ImportWorkerInterface
             $this->sync($file['name'], $newsletter_id);
         }
 
-        return true;
+        return $results;
     }
 
     public function subscribe($results,$list = null)
@@ -127,10 +127,6 @@ class ImportWorker implements ImportWorkerInterface
     {
         $campagne = $this->campagne->find($campagne_id);
         $html     = $this->worker->html($campagne_id);
-
-        echo '<pre>';
-        print_r($html);
-        echo '</pre>';exit;
 
         if(!$list->emails->isEmpty())
         {
