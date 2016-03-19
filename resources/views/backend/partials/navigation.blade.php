@@ -92,9 +92,10 @@
         <li class="<?php echo (Request::is('admin/newsletter/*') || Request::is('admin/campagne/*') || Request::is('admin/subscriber/*') ? 'active' : '' ); ?>">
             <a href="javascript:;"><i class="fa fa-envelope"></i><span>Newsletters</span></a>
             <ul class="acc-menu">
-                <li class="<?php echo (Request::is('admin/newsletter/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/newsletter')  }}">Liste des newsletters</a></li>
+                <li class="<?php echo (Request::is('admin/newsletter/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/newsletter')  }}">Liste des campagnes</a></li>
                 <li class="<?php echo (Request::is('admin/subscriber/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/subscriber')  }}">Abonnées</a></li>
                 <li class="<?php echo (Request::is('admin/import') ? 'active' : '' ); ?>"><a href="{{ url('admin/import')  }}">Importer une liste</a></li>
+                <li class="<?php echo (Request::is('admin/liste') ? 'active' : '' ); ?>"><a href="{{ url('admin/liste')  }}">Liste hors campagnes</a></li>
             </ul>
         </li>
         <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur admin</span></a></li>

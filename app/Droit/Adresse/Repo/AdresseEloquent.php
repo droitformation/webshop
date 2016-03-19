@@ -256,8 +256,13 @@ class AdresseEloquent implements AdresseInterface{
         $adresse->fill($data);
 		// Général
 
-		$adresse->first_name  = $this->format->format_name($data['first_name']);
-		$adresse->last_name   = $this->format->format_name($data['last_name']);
+		if(isset($data['first_name'])){
+			$adresse->first_name  = $this->format->format_name($data['first_name']);
+		}
+		if(isset($data['last_name'])){
+			$adresse->last_name   = $this->format->format_name($data['last_name']);
+		}
+
 		$adresse->updated_at  = date('Y-m-d G:i:s');
 		
 		$adresse->save();	

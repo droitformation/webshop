@@ -10,6 +10,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
+
                     <div class="row">
                         <div class="col-md-10">
                             <h4>
@@ -23,23 +24,23 @@
                         </div>
                     </div>
                     <hr/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
-                                <input type="hidden" name="_method" value="POST">
-                                <input type="hidden" name="id" value="{{ $colloque->id }}">{!! csrf_field() !!}
 
+                    <div class="row">
+                        <div class="col-md-10">
+                            <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
                                 <div class="row">
-                                    <div class="col-md-7">
+                                    <input type="hidden" name="_method" value="POST">
+                                    <input type="hidden" name="id" value="{{ $colloque->id }}">{!! csrf_field() !!}
+                                    <div class="col-md-8">
                                         <h4>Infos</h4>
+                                        <p><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
                                         @if(!empty($names))
                                             <?php $i = 1; ?>
                                             @foreach($names as $key => $name)
                                                 <div class="checkbox-inline checkbox-border">
                                                     <label><input class="checkbox_all" value="{{ $name }}" name="columns[{{ $key }}]" type="checkbox"> {{ $name }}</label>
                                                 </div>
-                                                <?php $i++; ?>
-                                                {!! $i == 7 ? '<div class="clearfix"></div>' : '' !!}
+                                                <?php $i++; ?>{!! $i == 7 ? '<div class="clearfix"></div>' : '' !!}
                                             @endforeach
                                         @endif
                                     </div>
@@ -48,12 +49,33 @@
                                         <div class="radio"><label><input type="radio" name="sort" value="" checked> Normal</label></div>
                                         <div class="radio"><label><input type="radio" name="sort" value="1"> Par options</label></div>
                                     </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-inverse pull-right"><i class="fa fa-download"></i> &nbsp;Exporter la liste</button>
+                                    </div>
                                 </div>
-                                <p style="margin-top: 10px;" class="pull-left"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
-                                <button type="submit" class="btn btn-inverse pull-right"><i class="fa fa-download"></i> &nbsp;Exporter la liste</button>
+                            </form>
+                        </div>
+                        <div class="col-md-2">
+                            <form action="{{ url('admin/export/badges') }}" method="POST" class="form-horizontal">
+                                <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">{!! csrf_field() !!}
+                                <div class="input-group">
+                                    <select class="form-control" name="format">
+                                        @if($badges)
+                                            <optgroup label="Etiquettes">
+                                                @foreach($badges as $code => $config)
+                                                    <option value="pdf|{{$code}}">{{ $config['etiquettes'] }} par page</option>
+                                                @endforeach
+                                            </optgroup>
+                                        @endif
+                                    </select>
+                                    <span class="input-group-btn">&nbsp;
+                                        <button type="submit" class="btn btn-inverse pull-right"><i class="fa fa-files-o"></i> &nbsp;Badges</button>
+                                    </span>
+                                </div><!-- /input-group -->
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
 

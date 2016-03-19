@@ -52,22 +52,22 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::group(['prefix' => 'bail'], function () {
 
-        Route::get('/', array('uses' => 'BailController@index'));
-        Route::get('page/{slug}/{var?}', array('uses' => 'BailController@page'));
-        Route::get('lois', array('uses' => 'BailController@lois'));
-        Route::get('jurisprudence', array('uses' => 'BailController@jurisprudence'));
-        Route::get('doctrine', array('uses' => 'BailController@doctrine'));
-        Route::get('calcul', array('uses' => 'BailController@calcul'));
-        Route::post('loyer', array('uses' => 'BailController@loyer'));
+        Route::get('/', array('uses' => 'Frontend\BailController@index'));
+        Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\BailController@page'));
+        Route::get('lois', array('uses' => 'Frontend\BailController@lois'));
+        Route::get('jurisprudence', array('uses' => 'Frontend\BailController@jurisprudence'));
+        Route::get('doctrine', array('uses' => 'Frontend\BailController@doctrine'));
+        Route::get('calcul', array('uses' => 'Frontend\BailController@calcul'));
+        Route::post('loyer', array('uses' => 'Frontend\BailController@loyer'));
 
     });
 
     Route::group(['prefix' => 'matrimonial'], function () {
 
-        Route::get('/', array('uses' => 'MatrimonialController@index'));
-        Route::get('page/{slug}/{var?}', array('uses' => 'MatrimonialController@page'));
-        Route::get('jurisprudence', array('uses' => 'MatrimonialController@jurisprudence'));
-        Route::get('newsletter/{id?}', array('uses' => 'MatrimonialController@newsletter'));
+        Route::get('/', array('uses' => 'Frontend\MatrimonialController@index'));
+        Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\MatrimonialController@page'));
+        Route::get('jurisprudence', array('uses' => 'Frontend\MatrimonialController@jurisprudence'));
+        Route::get('newsletter/{id?}', array('uses' => 'Frontend\MatrimonialController@newsletter'));
     });
 
     /* *
@@ -87,15 +87,15 @@ Route::group(['middleware' => ['web']], function () {
         /* *
          * User profile routes
          * */
-        Route::get('profil', 'ProfileController@index');
-        Route::match(['put', 'post'],'profil/update', 'ProfileController@update');
-        Route::get('profil/orders', 'ProfileController@orders');
-        Route::get('profil/colloques', 'ProfileController@colloques');
-        Route::get('profil/inscription/{id}', 'ProfileController@inscription');
+        Route::get('profil', 'Frontend\ProfileController@index');
+        Route::match(['put', 'post'],'profil/update', 'Frontend\ProfileController@update');
+        Route::get('profil/orders', 'Frontend\ProfileController@orders');
+        Route::get('profil/colloques', 'Frontend\ProfileController@colloques');
+        Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
 
         /* Update user adresse via ajax  */
-        Route::resource('adresse', 'Frontend\User\AdresseController');
-        Route::post('ajax/adresse/{id}', 'Frontend\User\AdresseController@ajaxUpdate');
+        Route::resource('adresse', 'Api\User\AdresseController');
+        Route::post('ajax/adresse/{id}', 'Api\User\AdresseController@ajaxUpdate');
 
     });
 
@@ -154,12 +154,12 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('search', 'Backend\SearchController@search');
 
-        Route::resource('faq', 'Backend\FaqController');
-        Route::get('question/create/{categorie}', 'Backend\QuestionController@create');
-        Route::resource('question', 'Backend\QuestionController');
+        Route::resource('faq', 'Backend\Bail\FaqController');
+        Route::get('question/create/{categorie}', 'Backend\Bail\QuestionController@create');
+        Route::resource('question', 'Backend\Bail\QuestionController');
 
-        Route::resource('calculette/ipc', 'Backend\CalculetteIpcController');
-        Route::resource('calculette/taux', 'Backend\CalculetteTauxController');
+        Route::resource('calculette/ipc', 'Backend\Bail\CalculetteIpcController');
+        Route::resource('calculette/taux', 'Backend\Bail\CalculetteTauxController');
         /*
         |--------------------------------------------------------------------------
         | User and Adresse Backend Routes
@@ -179,9 +179,9 @@ Route::group(['middleware' => ['web']], function () {
         |--------------------------------------------------------------------------
         */
 
-        Route::get('specialisation/search', 'Backend\SpecialisationController@search');
-        Route::delete('specialisation/destroy', 'Backend\SpecialisationController@destroy');
-        Route::resource('specialisation', 'Backend\SpecialisationController');
+        Route::get('specialisation/search', 'Backend\User\SpecialisationController@search');
+        Route::delete('specialisation/destroy', 'Backend\User\SpecialisationController@destroy');
+        Route::resource('specialisation', 'Backend\User\SpecialisationController');
 
         /*
         |--------------------------------------------------------------------------
@@ -189,9 +189,9 @@ Route::group(['middleware' => ['web']], function () {
         |--------------------------------------------------------------------------
         */
 
-        Route::get('member/search', 'Backend\MemberController@search');
-        Route::delete('member/destroy', 'Backend\MemberController@destroy');
-        Route::resource('member', 'Backend\MemberController');
+        Route::get('member/search', 'Backend\User\MemberController@search');
+        Route::delete('member/destroy', 'Backend\User\MemberController@destroy');
+        Route::resource('member', 'Backend\User\MemberController');
 
         /*
         |--------------------------------------------------------------------------
@@ -238,12 +238,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('colloque', 'Backend\Colloque\ColloqueController');
 
         Route::resource('document', 'Backend\Colloque\DocumentController');
+        Route::resource('compte', 'Backend\Colloque\CompteController');
 
         Route::get('attestation/colloque/{id}', 'Backend\Colloque\AttestationController@colloque');
         Route::get('attestation/inscription/{id}', 'Backend\Colloque\AttestationController@inscription');
         Route::resource('attestation', 'Backend\Colloque\AttestationController');
 
         Route::post('export/inscription', 'Backend\ExportController@inscription');
+        Route::post('export/badges', 'Backend\ExportController@badges');
         Route::get('export/view', 'Backend\ExportController@view');
         Route::get('export/generate', 'Backend\ExportController@generate');
         Route::match(['get', 'post'],'export/search', 'Backend\ExportController@search');
@@ -261,13 +263,16 @@ Route::group(['middleware' => ['web']], function () {
         |--------------------------------------------------------------------------
         */
 
+        Route::get('menus/{site}','Backend\MenuController@index');
+        Route::get('menu/create/{site}','Backend\MenuController@create');
+        Route::resource('menu', 'Backend\MenuController');
+
         Route::resource('site', 'Backend\SiteController');
         Route::resource('coupon', 'Backend\Shop\CouponController');
         Route::resource('shipping', 'Backend\Shop\ShippingController');
         Route::resource('theme', 'Backend\Shop\ThemeController');
         Route::resource('domain', 'Backend\Shop\DomainController');
         Route::resource('attribut', 'Backend\Shop\AttributController');
-        Route::resource('compte', 'Backend\CompteController');
 
         Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
         Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');
@@ -341,25 +346,21 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('categorie/create/{site}','Backend\Content\CategorieController@create');
         Route::resource('categorie', 'Backend\Content\CategorieController');
 
-        Route::get('blocs/{site}','Backend\BlocController@index');
-        Route::get('bloc/create/{site}','Backend\BlocController@create');
-        Route::resource('bloc',      'Backend\BlocController');
+        Route::get('blocs/{site}','Backend\Content\BlocController@index');
+        Route::get('bloc/create/{site}','Backend\Content\BlocController@create');
+        Route::resource('bloc',      'Backend\Content\BlocController');
 
-        Route::get('menus/{site}','Backend\MenuController@index');
-        Route::get('menu/create/{site}','Backend\MenuController@create');
-        Route::resource('menu', 'Backend\MenuController');
+        Route::get('pages/{site}','Backend\Content\PageController@index');
+        Route::get('page/create/{site}','Backend\Content\PageController@create');
+        Route::post('page/sorting','Backend\Content\PageController@sorting');
+        Route::resource('page',      'Backend\Content\PageController');
+
+        Route::get('pagecontent/{type}/{page}','Backend\Content\PageContentController@index');
+        Route::resource('pagecontent', 'Backend\Content\PageContentController');
 
         Route::resource('author',      'Backend\Content\AuthorController');
         Route::resource('location',    'Backend\Colloque\LocationController');
         Route::resource('organisateur','Backend\Colloque\OrganisateurController');
-
-        Route::get('pages/{site}','Backend\PageController@index');
-        Route::get('page/create/{site}','Backend\PageController@create');
-        Route::post('page/sorting','Backend\PageController@sorting');
-        Route::resource('page',      'Backend\PageController');
-
-        Route::get('pagecontent/{type}/{page}','Backend\PageContentController@index');
-        Route::resource('pagecontent', 'Backend\PageContentController');
 
         /*
         |--------------------------------------------------------------------------
@@ -434,7 +435,7 @@ Route::group(['middleware' => ['web']], function () {
     | Ajax login validation
     |--------------------------------------------------------------------------
     */
-    Route::post('check/email', 'AjaxController@check');
+    Route::post('check/email', 'Api\ValidationController@check');
 
     /*
     |--------------------------------------------------------------------------

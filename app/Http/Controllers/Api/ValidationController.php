@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 
@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\User\Repo\UserInterface;
 
-class AjaxController extends Controller
+class ValidationController extends Controller
 {
     protected $user;
 

@@ -53,6 +53,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Email</label>
+        <div class="col-sm-7">
+            <input type="text" name="email" class="form-control" value="{{ $adresse->email }}" placeholder="Email">
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Profession</label>
         <div class="col-sm-7">
             {!! Form::select('profession_id', $professions->lists('title','id')->all() , null, ['class' => 'form-control form-required', 'placeholder' => 'Choix profession']) !!}

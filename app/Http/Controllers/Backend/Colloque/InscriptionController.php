@@ -42,6 +42,8 @@ class InscriptionController extends Controller
         $this->generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->helper      = new \App\Droit\Helper\Helper();
 
+        view()->share('badges', config('badge'));
+
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\Content;
 
 use Illuminate\Http\Request;
 use App\Droit\Page\Worker\PageWorker;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\Bail;
 
 use Illuminate\Http\Request;
 
@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Faq\Repo\FaqCategorieInterface;
 use App\Droit\Faq\Repo\FaqQuestionInterface;
 
-class FaqController extends Controller
+class QuestionController extends Controller
 {
     protected $faqcat;
     protected $question;
@@ -22,21 +22,17 @@ class FaqController extends Controller
         $this->site_id  = 2;
     }
 
-    public function index()
-    {
-        $cats = $this->faqcat->getAll();
-
-        return view('backend.faq.index')->with(['cats' => $cats]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('backend.faq.create');
+        $current    = $this->faqcat->find($id);
+        $categories = $this->faqcat->getAll($current->site_id);
+
+        return view('backend.questions.create')->with(['current' => $current, 'categories' => $categories]);
     }
 
     /**
@@ -47,9 +43,9 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
-        $categorie = $this->faqcat->create( $request->all() );
+        $question = $this->question->create( $request->all() );
 
-        return redirect('admin/faq')->with(['status' => 'success' , 'message' => 'Catégorie crée']);
+        return redirect('admin/question/'.$question->id)->with(['status' => 'success' , 'message' => 'Question crée']);
     }
 
     /**
@@ -60,9 +56,10 @@ class FaqController extends Controller
      */
     public function show($id)
     {
-        $categorie = $this->faqcat->find($id);
+        $question   = $this->question->find($id);
+        $categories = $this->faqcat->getAll($question->site_id);
 
-        return view('backend.faq.create')->with(['categorie' => $categorie]);
+        return view('backend.questions.show')->with(['question' => $question, 'categories' => $categories]);
     }
 
     /**
@@ -74,9 +71,9 @@ class FaqController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categorie = $this->faqcat->update( $request->all() );
+        $question = $this->question->update( $request->all() );
 
-        return redirect()->back()->with(['status' => 'success' , 'message' => 'Catégorie mise à jour']);
+        return redirect('admin/question/'.$question->id)->with(['status' => 'success' , 'message' => 'Question mise à jour']);
     }
 
     /**
@@ -87,9 +84,9 @@ class FaqController extends Controller
      */
     public function destroy($id)
     {
-        $this->faqcat->delete($id);
+        $this->question->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Catégorie supprimée']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Question supprimée']);
     }
 
 }

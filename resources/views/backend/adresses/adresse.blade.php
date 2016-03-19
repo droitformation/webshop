@@ -45,6 +45,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Email</label>
+        <div class="col-sm-7">
+            <input type="text" name="email" class="form-control" value="{{ $adresse->email }}" placeholder="Email">
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Adresse</label>
         <div class="col-sm-7">
             <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="{{ $adresse->adresse }}" placeholder="Adresse">
