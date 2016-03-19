@@ -160,8 +160,8 @@
                     @endif
 
                     <h4>Ajouter un attribut</h4>
-                    <form action="{{ url('admin/product/addAttribut/'.$product->id) }}" method="POST">
-                        {!! csrf_field() !!}
+
+                    <form action="{{ url('admin/product/addAttribut/'.$product->id) }}" method="POST">{!! csrf_field() !!}
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>Type</label>
@@ -178,14 +178,12 @@
                                 <label>Valeur</label>
                                 <div class="input-group">
                                     <input type="text" name="value" class="form-control" placeholder="Valeur">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-info" type="submit">Ajouter</button>
-                                    </span>
+                                    <span class="input-group-btn"><button class="btn btn-info" type="submit">Ajouter</button></span>
                                 </div><!-- /input-group -->
                             </div>
                         </div>
-                     
                     </form>
+
                 </div>
             </div>
 

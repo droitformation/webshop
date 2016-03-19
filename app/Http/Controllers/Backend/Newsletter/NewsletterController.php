@@ -10,6 +10,7 @@ use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Service\UploadWorker;
 use App\Droit\Newsletter\Worker\MailjetInterface;
 use App\Droit\Site\Repo\SiteInterface;
+use App\Droit\Newsletter\Repo\NewsletterListInterface;
 
 class NewsletterController extends Controller
 {
@@ -17,13 +18,15 @@ class NewsletterController extends Controller
     protected $upload;
     protected $mailjet;
     protected $site;
+    protected $list;
 
-    public function __construct(NewsletterInterface $newsletter, UploadWorker $upload, MailjetInterface $mailjet, SiteInterface $site)
+    public function __construct(NewsletterInterface $newsletter, UploadWorker $upload, MailjetInterface $mailjet, SiteInterface $site, NewsletterListInterface $list)
     {
         $this->newsletter = $newsletter;
         $this->upload     = $upload;
         $this->mailjet    = $mailjet;
         $this->site       = $site;
+        $this->list       = $list;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -37,8 +40,9 @@ class NewsletterController extends Controller
     {
         $newsletters = $this->newsletter->getAll();
         $sites       = $this->site->getAll();
+        $listes      = $this->list->getAll();
 
-        return view('backend.newsletter.template.index')->with(['isNewsletter' => true, 'newsletters' => $newsletters, 'sites' => $sites]);
+        return view('backend.newsletter.template.index')->with(['isNewsletter' => true, 'newsletters' => $newsletters, 'sites' => $sites, 'listes' => $listes]);
     }
 
     /**

@@ -71,7 +71,7 @@ class UploadController extends Controller
 
     public function uploadJS(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , 'uploads', 'newsletter');
+        $files = $this->upload->upload( $request->file('file') , 'files/uploads', 'newsletter');
 
         if($files)
         {

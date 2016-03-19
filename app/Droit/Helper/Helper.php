@@ -1,10 +1,16 @@
 <?php namespace App\Droit\Helper;
 
 use Carbon\Carbon;
+use App\Droit\Service\UploadWorker;
 
 class Helper {
 
     protected $upload;
+
+    public function __construct()
+    {
+        $this->upload = new UploadWorker();
+    }
 
 	/*
 	 * Dates functions
@@ -379,6 +385,18 @@ class Helper {
         $rv = array_filter($a,'is_array');
         if(count($rv)>0) return true;
         return false;
+    }
+
+    public function resizeImage($image,$type){
+
+        $toResize = array(3,4);
+
+        if(in_array($type,$toResize))
+        {
+            $this->upload->resize( public_path('files/uploads/'.$image), $image , 130);
+        }
+
+        return true;
     }
 
     /**

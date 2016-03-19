@@ -97,4 +97,18 @@ class ListController extends Controller
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'Fichier importé!']);
     }
+
+
+    /**
+     * Remove the specified resource from storage.
+     * DELETE /list
+     *
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $this->list->delete($id);
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Liste supprimée']);
+    }
 }

@@ -134,7 +134,7 @@ class ImportWorker implements ImportWorkerInterface
             {
                 \Mail::send([], [], function ($message) use ($campagne,$html,$email)
                 {
-                    $message->to($email, '')->subject($campagne->sujet);
+                    $message->to($email->email, $email->email)->subject($campagne->sujet);
                     $message->setBody($html, 'text/html');
                 });
             }

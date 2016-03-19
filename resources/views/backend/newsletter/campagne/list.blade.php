@@ -5,7 +5,8 @@
             <th class="col-md-2">Sujet</th>
             <th class="col-md-3">Auteurs</th>
             <th class="col-md-1">Status</th>
-            <th class="col-md-3"></th>
+            <th class="col-md-2"></th>
+            <th class="col-md-1"></th>
             <th class="col-md-2"></th>
             <th class="col-md-1"></th>
         </tr>
@@ -43,6 +44,10 @@
                     @else
                         Envoyé le {{ $campagne->updated_at->formatLocalized('%d %b %Y') }} à {{ $campagne->updated_at->toTimeString() }}
                     @endif
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#sendToList">Envoyer à une liste</button>
+                    @include('backend.newsletter.template.partials.send', ['campagne' => $campagne])
                 </td>
                 <td class="text-right">
                     <form action="{{ url('admin/campagne/'.$campagne->id) }}" method="POST">

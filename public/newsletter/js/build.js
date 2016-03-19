@@ -102,7 +102,6 @@ App.factory('Arrets', ['$http', '$q', function($http, $q) {
     };
 }]);
 
-
 /**
  * Form controller, controls the form for creating new content blocs
  */
@@ -119,7 +118,6 @@ App.controller("CreateController",['$scope','$http','myService', function($scope
     });
 
 }]);
-
 
 /**
  * Form controller, controls the form for creating new content blocs

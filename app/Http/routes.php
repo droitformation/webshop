@@ -393,6 +393,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('liste/send', 'Backend\Newsletter\ListController@send');
         Route::resource('liste', 'Backend\Newsletter\ListController');
+        Route::resource('emails', 'Backend\Newsletter\EmailController');
         Route::resource('import', 'Backend\Newsletter\ImportController');
         Route::resource('statistics', 'Backend\Newsletter\StatsController');
 
