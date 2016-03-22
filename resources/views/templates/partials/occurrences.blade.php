@@ -5,7 +5,7 @@
             <h4>Conférences:</h4>
             <ol style="margin-left: 20px; margin-top: 10px;">
                 @foreach($occurrences as $occurrence)
-                    <li>Le {{ $occurrence->start_at->formatLocalized('%d %B %Y') }}: <br/><strong>{{ $occurrence->title }}</strong></li>
+                    <li>Le {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}: <br/><strong>{{ $occurrence->title }}</strong></li>
                 @endforeach
             </ol>
         </td>

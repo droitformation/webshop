@@ -9,9 +9,9 @@ class Occurrence extends Model{
 
     protected $table = 'colloque_occurrences';
 
-    protected $dates = ['deleted_at','start_at'];
+    protected $dates = ['deleted_at','starting_at'];
 
-    protected $fillable = ['colloque_id','title','location_id','start_at'];
+    protected $fillable = ['colloque_id','title','location_id','starting_at'];
 
     public function colloque()
     {

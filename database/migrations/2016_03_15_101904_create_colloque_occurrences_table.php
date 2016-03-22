@@ -15,7 +15,7 @@ class CreateColloqueOccurrencesTable extends Migration
         Schema::create('colloque_occurrences', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->date('start_at');
+            $table->date('starting_at');
             $table->integer('colloque_id');
             $table->integer('location_id');
             $table->timestamps();

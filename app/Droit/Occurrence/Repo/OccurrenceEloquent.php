@@ -28,7 +28,7 @@ class OccurrenceEloquent implements OccurrenceInterface{
             'colloque_id' => $data['colloque_id'],
             'title'       => $data['title'],
             'location_id' => $data['location_id'],
-            'start_at'    => $data['start_at']
+            'starting_at' => $data['starting_at']
         ));
 
         if( ! $occurrence )

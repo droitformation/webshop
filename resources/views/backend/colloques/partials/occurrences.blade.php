@@ -21,10 +21,10 @@
                             <div class="col-md-3">
                                 <p><strong>Date</strong></p>
                                 <a class="editableItem"
-                                   data-name="start_at"
+                                   data-name="starting_at"
                                    data-model="occurrence" data-type="date"
                                    data-pk="{{ $occurrence->id }}" data-url="admin/colloque/editItem"
-                                   data-title="Changer le titre">{{ $occurrence->start_at->format('Y-m-d') }}
+                                   data-title="Changer le titre">{{ $occurrence->starting_at->format('Y-m-d') }}
                                 </a>
                             </div>
                             <div class="col-md-1 text-right">
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-5">
                         <label>Date</label>
-                        <input type="text" name="start_at" class="form-control datePicker required" value="">
+                        <input type="text" name="starting_at" class="form-control datePicker required" value="">
                     </div>
                 </div><br/>
                 <div class="row">
