@@ -8,6 +8,7 @@ interface ProductInterface {
 	public function getByCategorie($id);
 	public function search($term);
 	public function find($data);
+	public function sku($product_id, $qty, $operator);
 	public function create(array $data);
 	public function update(array $data);
 	public function delete($id);

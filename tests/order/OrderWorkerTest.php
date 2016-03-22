@@ -19,8 +19,8 @@ class OrderWorkerTest extends TestCase {
         $this->user = Mockery::mock('App\Droit\User\Repo\UserInterface');
         $this->app->instance('App\Droit\User\Repo\UserInterface', $this->user);
 
-        $this->order = Mockery::mock('App\Droit\Shop\Order\Repo\OrderInterface');
-        $this->app->instance('App\Droit\Shop\Order\Repo\OrderInterface', $this->order);
+        $this->order = Mockery::mock('App\Droit\Shop\Order\Repo\OrderAdminInterface');
+        $this->app->instance('App\Droit\Shop\Order\Repo\OrderAdminInterface', $this->order);
 
         $this->cart = Mockery::mock('App\Droit\Shop\Cart\Repo\CartInterface');
         $this->app->instance('App\Droit\Shop\Cart\Repo\CartInterface', $this->cart);
@@ -66,24 +66,38 @@ class OrderWorkerTest extends TestCase {
      */
     public function testMakeNewOrder()
     {
-
         $worker = \App::make('App\Droit\Shop\Order\Worker\OrderWorkerInterface');
 
         // Price 2.00 chf
         \Cart::add(55, 'Uno', 1, '100' , array('weight' => 155));
         \Cart::add(56, 'Duo', 1, '100' , array('weight' => 25));
 
-        //$coupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
         $order = factory( App\Droit\Shop\Order\Entities\Order::class)->make([
             'order_no' => '2015-00000003'
         ]);
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'id'     => 1,
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'id'     => 2,
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
+        $order->products = new Illuminate\Database\Eloquent\Collection([$product1,$product2]);
 
         $shipping = factory(App\Droit\Shop\Shipping\Entities\Shipping::class)->make();
         $user     = factory(App\Droit\User\Entities\User::class)->make();
 
         $this->user->shouldReceive('find')->once()->andReturn($user);
-        $this->order->shouldReceive('newOrderNumber')->once()->andReturn('2015-00000003');
-        $this->order->shouldReceive('create')->once()->andReturn($order);
+/*        $this->order->shouldReceive('newOrderNumber')->once()->andReturn('2015-00000003');
+        $this->order->shouldReceive('create')->once()->andReturn($order);*/
+       // $this->order->shouldReceive('resetQty')->with($order,'-')->once();
+        $this->product->shouldReceive('find')->twice()->andReturn($product2);
 
         $this->expectsJobs(App\Jobs\CreateOrderInvoice::class);
 
@@ -105,10 +119,17 @@ class OrderWorkerTest extends TestCase {
         $cart     = factory(App\Droit\Shop\Cart\Entities\Cart::class)->make();
         $user     = factory(App\Droit\User\Entities\User::class)->make();
 
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'id'     => 2,
+            'weight' => 100,
+            'price'  => 100,
+        ]);
+
         $this->user->shouldReceive('find')->once()->andReturn($user);
-        $this->order->shouldReceive('newOrderNumber')->once()->andReturn('2015-00000003');
+        $this->product->shouldReceive('find')->twice()->andReturn($product2);
+/*        $this->order->shouldReceive('newOrderNumber')->once()->andReturn('2015-00000003');
         $this->order->shouldReceive('create')->once()->andReturn(null);
-        $this->cart->shouldReceive('create')->once()->andReturn($cart);
+        $this->cart->shouldReceive('create')->once()->andReturn($cart);*/
 
         $result = $worker->make($shipping);
 
