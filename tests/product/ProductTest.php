@@ -131,8 +131,9 @@ class ProductTest extends \TestCase {
         $expect = [0 => 55, 1 => 55, 2 => 56, 3 => 57];
 
         $this->assertEquals($expect, $ids);
-    }
 
+        \Cart::destroy();
+    }
 
     /*
          $shop_shipping = [
@@ -206,10 +207,10 @@ class ProductTest extends \TestCase {
         // Beware array index start from 0, rabais is for the second product, gratuit for the first
 
         $expected = [
-            [1 => ['isFree' => 1]],
-            [2 => ['isFree' => null,'rabais' => 10]],
-            [2 => ['isFree' => null,'rabais' => 10]],
-            [3 => ['isFree' => null]]
+            ['id' => 1, 'isFree' => 1, 'rabais' => null],
+            ['id' => 2, 'isFree' => null, 'rabais' => 10],
+            ['id' => 2, 'isFree' => null, 'rabais' => 10],
+            ['id' => 3, 'isFree' => null, 'rabais' => null]
         ];
 
         $result = $make->getProducts($order);
@@ -241,10 +242,10 @@ class ProductTest extends \TestCase {
         $this->mock->shouldReceive('find')->twice()->andReturn($prod2);
 
         $products = [
-            [22 => ['isFree' => null, 'rabais' => 25]],
-            [22 => ['isFree' => null, 'rabais' => 25]],
-            [12 => ['isFree' => 1]],
-            [12 => ['isFree' => 1]]
+            ['id' => 22, 'isFree' => null, 'rabais' => 25],
+            ['id' => 22, 'isFree' => null, 'rabais' => 25],
+            ['id' => 12, 'isFree' => 1, 'rabais' => null],
+            ['id' => 12, 'isFree' => 1, 'rabais' => null]
         ];
 
         $data = [
@@ -277,10 +278,10 @@ class ProductTest extends \TestCase {
             'payement_id' => 1,
             'products'    => $products =
                 [
-                    [22 => ['isFree' => null, 'rabais' => 25]],
-                    [22 => ['isFree' => null, 'rabais' => 25]],
-                    [12 => ['isFree' => 1]],
-                    [12 => ['isFree' => 1]]
+                    ['id' => 22, 'isFree' => null, 'rabais' => 25],
+                    ['id' => 22, 'isFree' => null, 'rabais' => 25],
+                    ['id' => 12, 'isFree' => 1, 'rabais' => null],
+                    ['id' => 12, 'isFree' => 1, 'rabais' => null]
                 ]
         ];
 

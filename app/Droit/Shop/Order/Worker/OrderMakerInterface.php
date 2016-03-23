@@ -16,7 +16,7 @@ interface OrderMakerInterface
     * Prepare data for order
     * From frontend and backend
     * */
-    public function prepare($order, $shipping = null, $coupon = null);
+    public function prepare($order = null, $shipping = null, $coupon = null);
 
     /*
     * Insert new order

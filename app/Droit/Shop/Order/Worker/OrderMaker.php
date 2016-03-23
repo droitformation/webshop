@@ -38,6 +38,7 @@ class OrderMaker implements OrderMakerInterface{
     public function make($commande, $shipping = null, $coupon = null)
     {
         $data  = $this->prepare($commande, $shipping, $coupon);
+
         $order = $this->insert($data);
 
         // Update Qty of products
@@ -45,10 +46,10 @@ class OrderMaker implements OrderMakerInterface{
 
         // Create invoice for order
         if(isset($commande['tva']) && !empty(array_filter($commande['tva'])))
-            $this->generator->setTva($commande['tva']);
+            $this->generator->setTva(array_filter($commande['tva']));
 
         if(isset($commande['message']) && !empty(array_filter($commande['message'])))
-            $this->generator->setMsg($commande['message']);
+            $this->generator->setMsg(array_filter($commande['message']));
 
         $this->generator->factureOrder($order->id);
 
@@ -59,13 +60,13 @@ class OrderMaker implements OrderMakerInterface{
     * Prepare data for order
     * From frontend and backend
     * */
-    public function prepare($order, $shipping = null, $coupon = null)
+    public function prepare($order = null, $shipping = null, $coupon = null)
     {
         $data = [
             'order_no'    => $this->order->newOrderNumber(),
             'amount'      => isset($order['admin']) ? $this->total($order['order']) : \Cart::total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
-            'shipping_id' => isset($shipping) ? $shipping->id : $this->getShipping($order),
+            'shipping_id' => isset($order['admin']) ? $this->getShipping($order) : $shipping->id,
             'payement_id' => 1,
             'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::content())
         ];
@@ -222,15 +223,12 @@ class OrderMaker implements OrderMakerInterface{
 
         $products->map(function($product,$index) use (&$ids, $data)
         {
-            $list = (isset($data['gratuit'][$index]) ? [$product => ['isFree' => 1]] : [$product => ['isFree' => null]]);
-
-            if(isset($data['rabais'][$index]))
-            {
-                $list[$product]['rabais'] = $data['rabais'][$index];
-            }
-
             for($x = 0; $x < $data['qty'][$index]; $x++)
             {
+                $list['id']     = $product;
+                $list['isFree'] = (isset($data['gratuit'][$index]) ? 1 : null);
+                $list['rabais'] = (isset($data['rabais'][$index]) ? $data['rabais'][$index] : null);
+
                 $ids[] = $list;
             }
         });
@@ -267,7 +265,7 @@ class OrderMaker implements OrderMakerInterface{
             }
         });
 
-        return ceil($total);
+        return $total;
     }
 
     /*

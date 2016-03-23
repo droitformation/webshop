@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Backend\Shop;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateOrderRequest;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
-use App\Droit\Shop\Order\Worker\OrderAdminWorkerInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Shop\Shipping\Repo\ShippingInterface;
@@ -38,7 +36,6 @@ class OrderController extends Controller {
         ProductInterface $product,
         CategorieInterface $categorie,
         OrderInterface $order,
-        OrderAdminWorkerInterface $worker,
         AdresseInterface $adresse,
         ShippingInterface $shipping,
         PdfGeneratorInterface $pdfgenerator,
@@ -48,7 +45,6 @@ class OrderController extends Controller {
         $this->product       = $product;
         $this->categorie     = $categorie;
         $this->order         = $order;
-        $this->worker        = $worker;
         $this->adresse       = $adresse;
         $this->shipping      = $shipping;
         $this->pdfgenerator  = $pdfgenerator;
@@ -317,22 +313,13 @@ class OrderController extends Controller {
 
     public function update($id, Request $request)
     {
-        $order   = $this->order->update($request->all());
-        $message = array_filter($request->input('message'));
-        $tva     = array_filter($request->input('tva'));
+        $order = $this->order->update($request->all());
 
-        if(!empty($tva))
-        {
-            $this->pdfgenerator->setTva($tva);
-        }
+        if(!empty(array_filter($request->input('tva',[]))))
+            $this->pdfgenerator->setTva(array_filter($request->input('tva')));
 
-        if(!empty($message))
-        {
-            foreach($message as $type => $message)
-            {
-                $this->pdfgenerator->setMsg($message,$type);
-            }
-        }
+        if(!empty(array_filter($request->input('message',[]))))
+            $this->pdfgenerator->setMsg(array_filter($request->input('message')));
 
         $this->pdfgenerator->factureOrder($order->id);
 
@@ -349,7 +336,7 @@ class OrderController extends Controller {
     {
         $order = $this->order->find($id);
 
-        $this->worker->resetQty($order,'+');
+        $this->ordermaker->resetQty($order,'+');
         $order->delete();
 
         return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));

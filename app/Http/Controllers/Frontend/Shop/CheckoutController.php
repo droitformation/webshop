@@ -8,7 +8,8 @@ use App\Droit\Pays\Repo\PaysInterface;
 use App\Droit\Canton\Repo\CantonInterface;
 use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
-use App\Droit\Shop\Order\Worker\OrderWorkerInterface;
+use App\Droit\Shop\Order\Worker\OrderMakerInterface; // new implementation
+
 use App\Droit\Shop\Payment\Repo\PaymentInterface;
 use App\Events\OrderWasPlaced;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class CheckoutController extends Controller {
         PaysInterface $pays,
         ProfessionInterface $profession,
         CartWorkerInterface $checkout,
-        OrderWorkerInterface $order,
+        OrderMakerInterface $order,
         PaymentInterface $payment,
         AdresseInterface $adresse
     )
@@ -128,7 +129,7 @@ class CheckoutController extends Controller {
         $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
         $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
 
-        $order    = $this->order->make($shipping,$coupon);
+        $order    = $this->order->make($request->all(),$shipping,$coupon);
 
         $order->load('user');
 

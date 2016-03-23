@@ -116,12 +116,13 @@ class OrderEloquent implements OrderInterface{
         }
 
         // All products for order isFree
-
         if(!empty($data['products']))
         {
             foreach($data['products'] as $product)
             {
-                $order->products()->attach($product);
+                $id = array_pull($product, 'id');
+
+                $order->products()->attach([$id => $product]);
             }
         }
 
@@ -158,7 +159,7 @@ class OrderEloquent implements OrderInterface{
 
         if(isset($data['created_at']))
         {
-            $order->created_at = \Carbon\Carbon::createFromFormat('Y-d-m', $data['created_at']);
+            $order->created_at = \Carbon\Carbon::createFromFormat('Y-m-d', $data['created_at']);
         }
 
         if(isset($data['user_id']))
