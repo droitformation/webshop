@@ -174,6 +174,67 @@
 
             </div>
             @endforeach
+        @else
+            <p><a href="#addAdress" data-toggle="collapse">Ajouter une adresse</a></p>
+            <div class="collapse" id="addAdress">
+                <form action="{{ url('profil/create') }}" method="POST" class="form">
+                    {!! csrf_field() !!}
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <select name="civilite_id" class="form-control">
+                            <option {{ old('civilite_id') == 4 ? 'selected' : '' }} value="4">Choix</option>
+                            <option {{ old('civilite_id') == 1 ? 'selected' : '' }} value="1">Monsieur</option>
+                            <option {{ old('civilite_id') == 2 ? 'selected' : '' }} value="2">Madame</option>
+                            <option {{ old('civilite_id') == 3 ? 'selected' : '' }} value="3">Me</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prénom</label>
+                        <input type="text" class="form-control form-required" autocomplete="off" name="first_name" value="{{ old('first_name') }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control form-required" autocomplete="off" name="last_name" value="{{ old('last_name') }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control form-required" autocomplete="off" id="email" name="email" value="{{ old('email') }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Entreprise</label>
+                        <input type="text" class="form-control" autocomplete="off" name="company" value="{{ old('company') }}">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <label>NPA</label>
+                            <input type="text" class="form-control form-required"  name="npa" value="{{ old('npa') }}">
+                        </div>
+                        <div class="col-sm-8">
+                            <label>Adresse</label>
+                            <input type="text" class="form-control form-required" name="adresse" value="{{ old('adresse') }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <label>Case Postale</label>
+                            <input type="text" class="form-control" name="cp" value="{{ old('cp') }}">
+                        </div>
+                        <div class="col-sm-8">
+                            <label>Complément d'adresse</label>
+                            <input type="text" class="form-control" name="complement" value="{{ old('complement') }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ville</label>
+                        <input type="text" class="form-control form-required" name="ville" value="{{ old('ville') }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Canton</label>
+                        {!! Form::select('canton_id', $cantons->lists('title','id')->all() , null, ['class' => 'form-control', 'placeholder' => 'Choix']) !!}
+                    </div>
+                </form>
+            </div>
+
         @endif
 
     </div>
