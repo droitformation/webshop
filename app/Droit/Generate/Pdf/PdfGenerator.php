@@ -56,9 +56,12 @@ class PdfGenerator implements PdfGeneratorInterface
      * Set messages
      * Type: warning,special,message,remerciements
      */
-    public function setMsg($message,$type)
+    public function setMsg($messages)
     {
-        $this->messages[$type] = $message;
+        foreach($messages as $type => $message)
+        {
+            $this->messages[$type] = $message;
+        }
     }
 
     /*

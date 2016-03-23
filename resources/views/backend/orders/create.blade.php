@@ -17,6 +17,9 @@
                     <div class="panel-body">
                         <h3>Créer une commande</h3>
 
+                        <!-- Indicate it's from admin -->
+                        <input type="hidden" name="admin" value="1">
+
                         <div id="adresseParent">
                             <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher un utilisateur</a>
                             <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter une adresse</a>

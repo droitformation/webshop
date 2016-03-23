@@ -2,7 +2,11 @@
 
 class ProductTest extends \TestCase {
 
-    protected $product;
+    protected $mock;
+    protected $mockship;
+    protected $mockcart;
+    protected $mockorder;
+    protected $generator;
 
     public function setUp()
     {
@@ -10,6 +14,17 @@ class ProductTest extends \TestCase {
 
         $this->mock = Mockery::mock('App\Droit\Shop\Product\Repo\ProductInterface');
         $this->app->instance('App\Droit\Shop\Product\Repo\ProductInterface', $this->mock);
+
+        $this->mockship = \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface');
+
+        $this->mockcart = Mockery::mock('App\Droit\Shop\Cart\Repo\CartInterface');
+        $this->app->instance('App\Droit\Shop\Cart\Repo\CartInterface', $this->mockcart);
+
+        $this->mockorder = Mockery::mock('App\Droit\Shop\Order\Repo\OrderInterface');
+        $this->app->instance('App\Droit\Shop\Order\Repo\OrderInterface', $this->mockorder);
+
+        $this->generator = Mockery::mock('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+        $this->app->instance('App\Droit\Generate\Pdf\PdfGeneratorInterface', $this->generator);
 
     }
 
@@ -21,7 +36,7 @@ class ProductTest extends \TestCase {
 	 */
 	public function testCountProducts()
 	{
-        $product = new \App\Droit\Shop\Order\Worker\Order($this->mock);
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
 		$order = factory( App\Droit\Shop\Order\Entities\Order::class)->make([
 			'order_no'    => '2016-00200003',
@@ -40,7 +55,7 @@ class ProductTest extends \TestCase {
 
 		$order->products = new Illuminate\Database\Eloquent\Collection([$product1,$product2,$product3,$product4]);
 
-        $count = $product->getQty($order);
+        $count = $make->getQty($order);
 
         $this->assertEquals($expect, $count->toArray());
 
@@ -48,7 +63,7 @@ class ProductTest extends \TestCase {
 
     public function testMapProducts()
     {
-        $product = new \App\Droit\Shop\Order\Worker\Order($this->mock);
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
         $order = [
             'products' => [0 => 2, 1 => 291],
@@ -67,14 +82,14 @@ class ProductTest extends \TestCase {
         $this->mock->shouldReceive('find')->once()->andReturn($prod1);
         $this->mock->shouldReceive('find')->once()->andReturn($prod2);
 
-        $total = $product->total($order, $proprety = 'price');
+        $total = $make->total($order, $proprety = 'price');
 
         $this->assertEquals('1500', $total);
     }
 
     public function testMapWeightProducts()
     {
-        $product = new \App\Droit\Shop\Order\Worker\Order($this->mock);
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
         $order = [
             'products' => [0 => 2, 1 => 291],
@@ -93,7 +108,7 @@ class ProductTest extends \TestCase {
         $this->mock->shouldReceive('find')->once()->andReturn($prod1);
         $this->mock->shouldReceive('find')->once()->andReturn($prod2);
 
-        $totalweight = $product->total($order, $proprety = 'weight');
+        $totalweight = $make->total($order, $proprety = 'weight');
 
         $this->assertEquals('400', $totalweight);
     }
@@ -109,13 +124,209 @@ class ProductTest extends \TestCase {
 
         $cart = \Cart::content();
 
-        $product = new \App\Droit\Shop\Order\Worker\Order($this->mock);
+        $product = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
-        $ids = $product->getProductsId($cart);
+        $ids = $product->getProductsCart($cart);
 
         $expect = [0 => 55, 1 => 55, 2 => 56, 3 => 57];
 
         $this->assertEquals($expect, $ids);
     }
 
+
+    /*
+         $shop_shipping = [
+          ['id' => '1','title' => 'Envoi par Poste <2kg','value' => '2000','price' => '1000','type' => 'poids'],
+          ['id' => '2','title' => 'Envoi par Poste <5kg','value' => '5000','price' => '1100','type' => 'poids'],
+          ['id' => '3','title' => 'Envoi par Poste <10kg','value' => '10000','price' => '1400','type' => 'poids'],
+          ['id' => '4','title' => 'Envoi par Poste <20kg','value' => '20000','price' => '1900','type' => 'poids'],
+          ['id' => '5','title' => 'Envoi par Poste <30kg','value' => '30000','price' => '2600','type' => 'poids'],
+          ['id' => '6','title' => 'Frais de port gratuit','value' => '0','price' => '0','type' => 'gratuit']
+    ];
+    */
+    public function testCalculateShipping()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $order = [
+            'order' => [
+                'products' => [0 => 22, 1 => 12],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
+            ]
+        ];
+
+        // Calculations products weight: 4000 => id: 2
+        $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000,]);
+        $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 2000,]);
+
+        $this->mock->shouldReceive('find')->once()->andReturn($prod1);
+        $this->mock->shouldReceive('find')->once()->andReturn($prod2);
+
+        // 4000gr
+        $shipping = $make->getShipping($order);
+
+        $this->assertEquals(2, $shipping);
+    }
+
+
+    public function testCalculateFreeShipping()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $order = [
+            'order' => [
+                'products' => [0 => 22, 1 => 12],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
+            ],
+            'free' => 1
+        ];
+
+        // Calculations products weight: 4000 => id: 2
+        $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000,]);
+        $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 2000,]);
+
+        $this->mock->shouldReceive('find')->once()->andReturn($prod1);
+        $this->mock->shouldReceive('find')->once()->andReturn($prod2);
+
+        // Free
+        $shipping = $make->getShipping($order);
+
+        $this->assertEquals(6, $shipping);
+    }
+
+    public function testProductLoopWithGratuit()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $order = ['products' => [1,2,3], 'qty' => [1,2,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true]];
+        // Beware array index start from 0, rabais is for the second product, gratuit for the first
+
+        $expected = [
+            [1 => ['isFree' => 1]],
+            [2 => ['isFree' => null,'rabais' => 10]],
+            [2 => ['isFree' => null,'rabais' => 10]],
+            [3 => ['isFree' => null]]
+        ];
+
+        $result = $make->getProducts($order);
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testPrepareOrderDataFromAdmin()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $order = [
+            'user_id' => 710,
+            'order'   => [
+                'products' => [0 => 22, 1 => 12],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
+            ],
+            //'free' => 1,
+            'admin' => 1
+        ];
+
+        // Calculations products weight: 4000 => id: 2
+        $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000,]);
+        $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 2000,]);
+
+        $this->mock->shouldReceive('find')->twice()->andReturn($prod1);
+        $this->mock->shouldReceive('find')->twice()->andReturn($prod2);
+
+        $products = [
+            [22 => ['isFree' => null, 'rabais' => 25]],
+            [22 => ['isFree' => null, 'rabais' => 25]],
+            [12 => ['isFree' => 1]],
+            [12 => ['isFree' => 1]]
+        ];
+
+        $data = [
+            'user_id'     => 710,
+            'order_no'    => '2016-00020003',
+            'amount'      => '1500',
+            'coupon_id'   => null,
+            'shipping_id' => 2,
+            'payement_id' => 1,
+            'products'    => $products
+        ];
+
+        $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
+
+        $result = $make->prepare($order);
+
+        $this->assertEquals($data,$result);
+    }
+
+    public function testInsertOrderFromAdmin()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $data = [
+            'user_id'     => 710,
+            'order_no'    => '2016-00020003',
+            'amount'      => '1500',
+            'coupon_id'   => null,
+            'shipping_id' => 6,
+            'payement_id' => 1,
+            'products'    => $products =
+                [
+                    [22 => ['isFree' => null, 'rabais' => 25]],
+                    [22 => ['isFree' => null, 'rabais' => 25]],
+                    [12 => ['isFree' => 1]],
+                    [12 => ['isFree' => 1]]
+                ]
+        ];
+
+        $this->mockorder->shouldReceive('create')->once();
+
+        $make->insert($data);
+
+    }
+
+    public function testMakeOrderFromAdmin()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $order = factory(App\Droit\Shop\Order\Entities\Order::class)->make([
+            'user_id'     => 710,
+            'order_no'    => '2016-00020003',
+            'amount'      => '1500',
+            'coupon_id'   => null,
+            'shipping_id' => 6,
+            'payement_id' => 1,
+        ]);
+
+        $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['id' => 22, 'weight' => 1000, 'price'  => 1000,]);
+        $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['id' => 12, 'weight' => 1000, 'price'  => 2000,]);
+
+        $order->products = new Illuminate\Database\Eloquent\Collection([$prod1,$prod2,$prod1,$prod2]);
+
+        $data = [
+            'user_id' => 710,
+            'order'   => [
+                'products' => [0 => 22, 1 => 12],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
+            ],
+            'admin' => 1
+        ];
+
+        $this->mock->shouldReceive('find')->twice()->andReturn($prod1);
+        $this->mock->shouldReceive('find')->twice()->andReturn($prod2);
+        $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
+        $this->mockorder->shouldReceive('create')->once()->andReturn($order);
+        $this->mock->shouldReceive('sku')->times(2);
+        $this->generator->shouldReceive('factureOrder')->once();
+
+        $make->make($data);
+
+    }
 }

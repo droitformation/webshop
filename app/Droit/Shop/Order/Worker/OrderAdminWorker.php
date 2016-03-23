@@ -43,8 +43,26 @@ class OrderAdminWorker implements OrderAdminWorkerInterface{
         $this->adresse     = $adresse;
     }
 
+    /*
+     *  Get the user or make new adresse
+     * */
+    public function getUser($order)
+    {
+        if(!isset($order['user_id']))
+        {
+            $adresse = $this->adresse->create($order['adresse']);
+            return ['adresse_id' => $adresse->id];
+        }
+        else
+        {
+            return ['user_id' => $order['user_id']];
+        }
+    }
+
     public function prepare($commande)
     {
+        $data = $this->getUser($commande);
+
         if(!isset($commande['user_id']))
         {
             $adresse = $this->adresse->create($commande['adresse']);

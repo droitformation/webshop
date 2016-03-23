@@ -32,6 +32,7 @@ class ShopServiceProvider extends ServiceProvider {
 
         $this->registerOrderWorkerService();
         $this->registerOrderAdminWorkerService();
+        $this->registerOrderMakerService();
         $this->registerCartWorkerService();
         $this->registerPdfGeneratorService();
 
@@ -162,6 +163,24 @@ class ShopServiceProvider extends ServiceProvider {
                 \App::make('App\Droit\Shop\Product\Repo\ProductInterface'),
                 \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface'),
                 \App::make('App\Droit\Adresse\Repo\AdresseInterface')
+            );
+        });
+    }
+
+    /**
+     * OrderMaker
+     */
+    protected function registerOrderMakerService(){
+
+        $this->app->singleton('App\Droit\Shop\Order\Worker\OrderMakerInterface', function()
+        {
+            return new \App\Droit\Shop\Order\Worker\OrderMaker(
+                \App::make('App\Droit\Shop\Order\Repo\OrderInterface'),
+                \App::make('App\Droit\Shop\Product\Repo\ProductInterface'),
+                \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface'),
+                \App::make('App\Droit\Adresse\Repo\AdresseInterface'),
+                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
+                \App::make('App\Droit\Shop\Cart\Repo\CartInterface')
             );
         });
     }

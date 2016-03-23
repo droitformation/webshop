@@ -13,6 +13,8 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Shop\Shipping\Repo\ShippingInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
+use App\Droit\Shop\Order\Worker\OrderMakerInterface; // new implementation
+
 class OrderController extends Controller {
 
 	protected $product;
@@ -24,6 +26,8 @@ class OrderController extends Controller {
     protected $adresse;
     protected $shipping;
     protected $helper;
+
+    protected $ordermaker;
 
 	/**
 	 * Create a new controller instance.
@@ -37,7 +41,8 @@ class OrderController extends Controller {
         OrderAdminWorkerInterface $worker,
         AdresseInterface $adresse,
         ShippingInterface $shipping,
-        PdfGeneratorInterface $pdfgenerator
+        PdfGeneratorInterface $pdfgenerator,
+        OrderMakerInterface $ordermaker
     )
 	{
         $this->product       = $product;
@@ -47,6 +52,7 @@ class OrderController extends Controller {
         $this->adresse       = $adresse;
         $this->shipping      = $shipping;
         $this->pdfgenerator  = $pdfgenerator;
+        $this->ordermaker    = $ordermaker;
 
         $this->generator = new \App\Droit\Generate\Excel\ExcelGenerator();
         $this->helper    = new \App\Droit\Helper\Helper();
@@ -285,7 +291,7 @@ class OrderController extends Controller {
             return redirect()->back()->withErrors($validator)->with(['old_products' => $products, 'adresse' => $adresse])->withInput();
         }
 
-        $order = $this->worker->make($request->all());
+        $order = $this->ordermaker->make($request->all());
 
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
     }
