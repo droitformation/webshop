@@ -99,7 +99,6 @@ Route::group(['middleware' => ['web']], function () {
 
     });
 
-
     /* *
      * Shop routes for frontend shop
      * */
@@ -115,7 +114,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
 
-    Route::group(['middleware' => ['auth','pending','cart']], function () {
+    Route::group(['middleware' => ['auth','pending','cart','checkout']], function () {
 
         /* Checkout routes for frontend shop  */
         Route::get('checkout/cart',  'Frontend\Shop\CheckoutController@cart');
@@ -411,11 +410,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/logout', 'Auth\AuthController@getLogout');
     Route::get('auth/beta', 'Auth\AuthController@getBeta');
 
-    Route::group(['middleware' => ['auth','administration']], function () {
-        // Registration routes...
-        Route::get('auth/register', 'Auth\AuthController@getRegister');
-        Route::post('auth/register', 'Auth\AuthController@postRegister');
-    });
+    // Registration routes...
+    Route::get('auth/register', 'Auth\AuthController@getRegister');
+    Route::post('auth/register', 'Auth\AuthController@postRegister');
 
     // Password reset link request routes...
     Route::get('password/email', 'Auth\PasswordController@getEmail');

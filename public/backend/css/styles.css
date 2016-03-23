@@ -8209,25 +8209,41 @@ footer #back-to-top {
 }
 
 .auth-logo{
-  font-size: 25px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 420px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .focusedform .panel {
   width: 400px;
 }
+
+.focusedform .verticalcenterregister .panel {
+    width: 100%;
+}
+
 .focusedform .brand {
   display: block;
   padding-bottom: 40px;
   margin: 0 auto;
   width: 224px;
 }
+
 .verticalcenter {
-  width:420px;
-  margin-left:auto;
+    width:420px;
+    margin-left:auto;
     margin-right:auto;
 }
+
+.verticalcenterregister{
+    max-width:1170px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 @media (max-width: 767px) {
   .focusedform .panel {
     width: 320px;
@@ -8236,6 +8252,7 @@ footer #back-to-top {
     margin-left: -160px;
   }
 }
+
 /*Horizontal Navigation*/
 .navbar {
   box-shadow: inset 0px -1px 0px 0 rgba(0, 0, 0, 0.1);

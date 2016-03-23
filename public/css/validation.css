@@ -13,12 +13,16 @@ label.error{
     padding-right: 25px;
 }
 
-.form-control.valid{
+.form-control.valid,
+.form-control.form-required.valid {
     border-color: #0db444;
     background: url("../images/check.png") no-repeat right;
     padding-right: 25px;
 }
 
+.form-control.form-required{
+    border-color: #5f78f9;
+}
 
 @media (max-width: 768px) {
 

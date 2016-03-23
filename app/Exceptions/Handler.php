@@ -80,7 +80,7 @@ class Handler extends ExceptionHandler {
             return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Cet utilisateur n\'existe pas'));
 
 		if ($e instanceof \App\Exceptions\AdresseNotExistException)
-			return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Aucune adresse pour cet utilisateur'));
+			return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Aucune adresse de livraison, veuillez indiquer une adresse valide'));
 
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)
             return redirect()->to('admin');

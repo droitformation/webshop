@@ -7,24 +7,41 @@
     <meta name="author" content="@Designpond | Cindy Leschaud">
     <title>Droit Formation | Administration</title>
     <meta name="description" content="Administration">
+    <meta name="_token" content="<?php echo csrf_token(); ?>">
+
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation.css');?>">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
     <script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
     <script src="<?php echo asset('js/validation.js');?>"></script>
 </head>
 <body class="focusedform">
-    <div class="verticalcenter">
+    <div class="{{ !Request::is('auth/register') ? 'verticalcenter' : 'verticalcenterregister' }}">
 
         <!-- messages and errors -->
         @include('backend.partials.message')
 
         <div class="panel panel-inverse">
+
+            <h1 class="auth-logo text-center">
+                <a class="text-inverse" href="{{ url('/') }}">
+                    @if(session()->has('admin'))
+                        Droit Formation | <span class="text-danger">Administration</span>
+                    @else
+                        <img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
+                    @endif
+                </a>
+            </h1>
+
+            <p><a href="{{ url('/') }}" class="text-danger"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a></p>
+
             <!-- Contenu -->
             @yield('content')
-           <!-- Fin contenu -->
+            <!-- Fin contenu -->
+
         </div>
 
     </div>

@@ -15,7 +15,34 @@ jQuery(document).ready(function($){
                     data: {
                         email: function() {
                             return $( "#email" ).val();
-                        }
+                        },
+                        _token: $("meta[name='_token']").attr('content')
+                    }
+                }
+            },
+        }
+    });
+
+    $( "#registeraccount" ).validate({
+        rules: {
+            first_name: "required",
+            last_name: "required",
+            adresse: "required",
+            ville: "required",
+            npa: "required",
+            password: "required",
+            password_confirmation: {equalTo: "#password"},
+            email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: base_url + "check/email",
+                    type: "post",
+                    data: {
+                        email: function() {
+                            return $( "#email" ).val();
+                        },
+                        _token: $("meta[name='_token']").attr('content')
                     }
                 }
             },
@@ -73,7 +100,8 @@ jQuery(document).ready(function($){
                         data: {
                             email: function() {
                                 return $( "#email" ).val();
-                            }
+                            },
+                            _token: $("meta[name='_token']").attr('content')
                         }
                     }
                 }

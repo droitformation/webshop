@@ -44,7 +44,8 @@ class AppServiceProvider extends ServiceProvider {
                 'backend.orders.partials.adresse',
                 'backend.inscriptions.colloque',
                 'backend.inscriptions.desinscription',
-                'backend.adresses.adresse'
+                'backend.adresses.adresse',
+                'auth.register'
             ], 'App\Http\ViewComposers\UserAttributeComposer');
 
         view()->composer(['frontend.pubdroit.partials.label','backend.export.user'], 'App\Http\ViewComposers\LabelComposer');

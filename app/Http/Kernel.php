@@ -45,6 +45,7 @@ class Kernel extends HttpKernel {
 		'auth' => 'App\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
+		'checkout' => 'App\Http\Middleware\CheckoutMiddleware',
         'cart' => 'App\Http\Middleware\CartMiddleware',
         'oauth' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware',
         'oauth-owner' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthOwnerMiddleware',

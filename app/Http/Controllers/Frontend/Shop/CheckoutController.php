@@ -2,11 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Droit\User\Repo\UserInterface;
+
 use App\Droit\Adresse\Repo\AdresseInterface;
-use App\Droit\Pays\Repo\PaysInterface;
-use App\Droit\Canton\Repo\CantonInterface;
-use App\Droit\Profession\Repo\ProfessionInterface;
 use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 use App\Droit\Shop\Order\Worker\OrderMakerInterface; // new implementation
 
@@ -17,30 +14,14 @@ use Illuminate\Http\Request;
 class CheckoutController extends Controller {
 
     protected $user;
-    protected $pays;
-    protected $canton;
-    protected $profession;
     protected $checkout;
     protected $order;
     protected $payment;
     protected $adresse;
 
-    public function __construct(
-        UserInterface $user,
-        CantonInterface $canton,
-        PaysInterface $pays,
-        ProfessionInterface $profession,
-        CartWorkerInterface $checkout,
-        OrderMakerInterface $order,
-        PaymentInterface $payment,
-        AdresseInterface $adresse
-    )
+    public function __construct(CartWorkerInterface $checkout, OrderMakerInterface $order, PaymentInterface $payment, AdresseInterface $adresse)
     {
-        $this->user       = $user;
         $this->adresse    = $adresse;
-        $this->pays       = $pays;
-        $this->canton     = $canton;
-        $this->profession = $profession;
         $this->checkout   = $checkout;
         $this->order      = $order;
         $this->payment    = $payment;
@@ -53,7 +34,7 @@ class CheckoutController extends Controller {
      */
     public function cart()
     {
-        $user   = $this->user->find(\Auth::user()->id);
+        $user   = \Auth::user();
         $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
         $total  = $this->checkout->totalCart();
 
@@ -67,11 +48,8 @@ class CheckoutController extends Controller {
      */
     public function billing()
     {
-        $user = $this->user->find(\Auth::user()->id);
-
-        return view('frontend.pubdroit.checkout.billing')->with(compact('user'));
+        return view('frontend.pubdroit.checkout.billing')->with(['user' => \Auth::user()]);
     }
-
 
     /**
      * Display checkout
@@ -96,7 +74,7 @@ class CheckoutController extends Controller {
         $shipping  = $this->checkout->totalShipping();
         $total     = $this->checkout->totalCartWithShipping();
         $payments  = $this->payment->getAll();
-        $user      = $this->user->find(\Auth::user()->id);
+        $user      = \Auth::user();
         $coupon    = (\Session::has('coupon') ? \Session::get('coupon') : false);
 
         return view('frontend.pubdroit.checkout.resume')->with(compact('user','coupon','shipping','coupon','total','payments'));
@@ -109,7 +87,7 @@ class CheckoutController extends Controller {
      */
     public function confirm()
     {
-        $user      = $this->user->find(\Auth::user()->id);
+        $user      = \Auth::user();
         $shipping  = $this->checkout->totalShipping();
         $total     = $this->checkout->totalCartWithShipping();
         $payments  = $this->payment->getAll();
@@ -120,7 +98,7 @@ class CheckoutController extends Controller {
     }
 
     /**
-     * Display checkout
+     * Place order
      *
      * @return Response
      */
@@ -150,9 +128,11 @@ class CheckoutController extends Controller {
         event(new OrderWasPlaced($order));
 
         return redirect('/')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
-
     }
 
+    /**
+     * Pay via stripe API
+     */
     public function viaStripe($token,$order){
 
         \Stripe\Stripe::setApiKey("sk_test_ryko0RINfRXTIq65ATCIAPAV");
@@ -176,13 +156,14 @@ class CheckoutController extends Controller {
         }
     }
 
-    public function cleanUp(){
-
-        // Destroy cart
+    /*
+     * Destroy cart
+     * */
+    public function cleanUp()
+    {
         \Cart::destroy();
         session()->forget('noShipping');
         session()->forget('coupon');
-
     }
 
 }

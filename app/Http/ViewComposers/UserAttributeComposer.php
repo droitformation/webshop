@@ -51,7 +51,6 @@ class UserAttributeComposer
      */
     public function compose(View $view)
     {
-
         $professions     = $this->profession->getAll();
         $cantons         = $this->canton->getAll();
         $pays            = $this->pays->getAll();

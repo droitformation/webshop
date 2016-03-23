@@ -209,8 +209,8 @@ class AdresseEloquent implements AdresseInterface{
 		return $infos->type;			
 	}
 
-	public function create(array $data){
-
+	public function create(array $data)
+	{
 		$adresse = $this->adresse->create(array(
 			'civilite_id'   => $data['civilite_id'],
 			'first_name'    => $this->format->format_name($data['first_name']),
@@ -227,7 +227,7 @@ class AdresseEloquent implements AdresseInterface{
 			'npa'           => $data['npa'],
 			'ville'         => $data['ville'],
 			'canton_id'     => (isset($data['canton_id']) ? $data['canton_id'] : null),
-			'pays_id'       => $data['pays_id'],
+			'pays_id'       => (isset($data['pays_id']) ? $data['pays_id'] : 208),
 			'type'          => (isset($data['type']) ? $data['type'] : 1),
 			'user_id'       => (isset($data['user_id']) ? $data['user_id'] : 0),
 			'livraison'     => (isset($data['livraison']) ? $data['livraison'] : 1),

@@ -18,7 +18,7 @@
                     <ul class="billing-form">
 
                         <!-- if adresse exist -->
-                        <?php $adresse = $user->adresse_livraison ? $user->adresse_livraison : null; ?>
+                        <?php $adresse = $user->load('adresses')->adresse_livraison ? $user->adresse_livraison : null; ?>
 
                         <li class="form-group">
                             <div class="col-md-6">
