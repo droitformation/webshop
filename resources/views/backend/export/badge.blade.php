@@ -42,7 +42,7 @@
                         <tr class="normalize">
                         @foreach($row as $name)
                             <td width="'.$width.'" height="'.$height.'" class="normalize height">
-                               <div style="width: 80%;margin: 0 auto; display: block;text-align: left;"
+                               <div style="width: 80%;margin: 0 auto; display: block;text-align: left;">
                                    <?php $logo = Registry::get('inscription.infos.logo'); ?>
                                    <img style="max-height: 50px" src="{{ asset('files/main/'.$logo) }}" />
                                    {!! !empty($name) ? '<span>'.$name.'</span>' : '' !!}

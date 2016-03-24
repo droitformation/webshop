@@ -147,9 +147,17 @@ class Generate{
 
     public function getOccurrences()
     {
-        $this->model->load('occurrences');
+        if($this->getType() == 'group')
+        {
+            //return isset($this->model->occurrence_list) && !$this->model->occurrence_list->isEmpty() ? $this->model->occurrence_list : null;
+            return null;
+        }
+        else
+        {
+            $this->model->load('occurrences');
 
-        return isset($this->model->occurrences) && !$this->model->occurrences->isEmpty() ? $this->model->occurrences : null;
+            return isset($this->model->occurrences) && !$this->model->occurrences->isEmpty() ? $this->model->occurrences : null;
+        }
     }
 
     public function getOptions()

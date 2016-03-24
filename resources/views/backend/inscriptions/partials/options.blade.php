@@ -1,24 +1,28 @@
 <?php $group = $colloque->options->groupBy('type'); ?>
 <?php if(isset($inscription)) { $groupe_choix = $inscription->user_options->groupBy('option_id'); } ?>
 
-@foreach($group as $type => $options)
+@foreach($group as $input => $options)
 
     <!-- Options checkboxes -->
-    @if($type == 'checkbox')
+    @if($input == 'checkbox')
         @foreach($options as $index => $option)
             <div class="form-group type-choix">
                 <?php $checked = (isset($groupe_choix) && isset($groupe_choix[$option->id])) ? 'checked' : '' ?>
                 @if(isset($inscription) || isset($add))
                     <input type="checkbox" {{ $checked }} class="option-input" name="options[]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
                 @else
-                    <input type="checkbox" {{ $checked }} class="option-input" name="options[{{ $index }}]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+                  @if($type == 'multiple')
+                      <input type="checkbox" {{ $checked }} class="option-input" name="options[{{ $index }}][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+                  @else
+                      <input type="checkbox" {{ $checked }} class="option-input" name="options[{{ $index }}]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+                  @endif
                 @endif
             </div>
         @endforeach
     @endif
 
     <!-- Options radio -->
-    @if($type == 'choix')
+    @if($input == 'choix')
         @foreach($options as $option)
             <div class="form-group group-choix type-choix">
                 <label class="control-label"><strong>{{ $option->title }}</strong></label>

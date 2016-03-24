@@ -31,6 +31,23 @@ class Groupe extends Model
         return $this->inscriptions->pluck('participant.name','inscription_no')->all();
     }
 
+    public function getOccurrenceListAttribute()
+    {
+        $occurrences = new \Illuminate\Database\Eloquent\Collection();
+
+        $this->load('inscriptions');
+
+        if(!$this->inscriptions->isEmpty())
+        {
+            foreach($this->inscriptions as $inscription)
+            {
+                $occurrences = $occurrences->merge($inscription->occurrences);
+            }
+        }
+
+        return $occurrences;
+    }
+
     public function getDocFactureAttribute()
     {
         $path = config('documents.colloque.facture');
