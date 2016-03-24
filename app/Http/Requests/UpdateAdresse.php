@@ -29,7 +29,9 @@ class UpdateAdresse extends Request {
         return [
             'first_name' => 'required',
             'last_name'  => 'required',
-            'email'      => 'required_without_all:first_name,last_name',
+            'adresse'    => 'required',
+			'npa'        => 'required',
+			'ville'      => 'required',
         ];
 	}
 

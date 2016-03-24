@@ -64,6 +64,7 @@ class ProfileController extends Controller
         return redirect('profil')->with(['status' => 'success', 'message' => 'Adresses mise à jour']);;
     }
 
+
     /**
      * Show the form for creating a new resource.
      *

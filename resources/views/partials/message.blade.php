@@ -1,7 +1,7 @@
 @if( isset($errors) && $errors->has() || Session::has('status'))
 
     <?php $class  = ($errors->has() ? 'warning' : Session::get('status')); ?>
-    <?php $status = ( $class == 'danger' || $class == 'success' ? $class : 'warning' ); ?>
+    <?php $status = ($class == 'danger' || $class == 'success' ? $class : 'warning' ); ?>
 
     <div class="row">
         <div class="col-md-12">
@@ -14,6 +14,10 @@
 
                 @if(Session::has('message'))
                     {!! Session::get('message') !!}
+                @endif
+
+                @if(Session::has('link'))
+                  <a href="{{ url(Session::get('link')) }}">Votre profil</a>
                 @endif
 
                 @if( $class != 'danger' && $class != 'success' &&  $class != 'warning' )
