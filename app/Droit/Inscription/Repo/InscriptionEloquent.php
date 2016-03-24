@@ -186,6 +186,18 @@ class InscriptionEloquent implements InscriptionInterface{
 
         $inscription->save();
 
+
+        // occurrences
+        // Remove all and re-attach if any
+        $inscription->occurrences()->detach();
+        if(isset($data['occurrences']))
+        {
+            foreach($data['occurrences'] as $occurrence)
+            {
+                $inscription->occurrences()->attach($occurrence, ['inscription_id' => $inscription->id]);
+            }
+        }
+
         // Options
         // Remove all and re-attach if any
         $inscription->options()->detach();

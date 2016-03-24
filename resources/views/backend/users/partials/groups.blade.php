@@ -33,7 +33,7 @@
 
             <!-- Inscription details -->
             <tr>
-                <td colspan="5" class="nopadding">
+                <td colspan="6" class="nopadding">
                     <div class="collapse customCollapse" id="inscription_no_{{ $group->id }}">
                         <div class="inscription_wrapper inscription_wrapper_group">
 
@@ -69,7 +69,19 @@
                                                     <a target="_blank" href="{{ asset($inscription->doc_bon) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
                                                 @endif
                                             </td>
-                                            <td class="col-md-4">@include('backend.users.inscription.options')</td>
+                                            <td class="col-md-4">
+                                                <!-- Occurences -->
+                                                @if(!$inscription->occurrences->isEmpty())
+                                                    <h4>Conférences</h4>
+                                                    <ol>
+                                                        @foreach($inscription->occurrences as $occurrences)
+                                                            <li>{{ $occurrences->title }}</li>
+                                                        @endforeach
+                                                    </ol>
+                                                @endif
+
+                                                @include('backend.users.inscription.options')
+                                            </td>
                                         </tr>
 
                                         <!-- Modal edit inscription -->

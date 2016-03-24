@@ -24,7 +24,14 @@
                             @include('backend.inscriptions.partials.prices', ['select' => 'price_id', 'price_current' => $inscription->price->id, 'colloque' => $inscription->colloque])
                         @endif
 
+                        <!-- Occurence if any -->
+                        @if(!$inscription->colloque->occurrences->isEmpty())
+                            <h4>Conférences</h4>
+                            @include('backend.inscriptions..partials.occurrences', ['select' => 'occurrences[]', 'colloque' => $inscription->colloque])
+                        @endif
+
                         @if(!$inscription->colloque->options->isEmpty())
+                            <h4>Merci de préciser</h4>
                             @include('backend.inscriptions.partials.options', ['select' => 'groupes', 'colloque' => $inscription->colloque])
                         @endif
 

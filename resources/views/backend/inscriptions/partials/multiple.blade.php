@@ -23,10 +23,17 @@
                 @include('backend.inscriptions.partials.prices', ['select' => 'price_id[]'])
             @endif
 
+            <!-- Occurence if any -->
+            @if(!$colloque->occurrences->isEmpty())
+                <h4>Conférences</h4>
+                @include('backend.inscriptions..partials.occurrences', ['select' => 'occurrences[0]'])
+            @endif
+
             @if(!$colloque->options->isEmpty())
                 <h4>Merci de préciser</h4>
                 @include('backend.inscriptions..partials.options', ['select' => 'groupes[0]'])
             @endif
+
         </fieldset>
     </div>
 

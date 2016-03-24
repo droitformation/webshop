@@ -34,7 +34,7 @@
                 <label for="occurrence_{{ $occurrence->id }}">
                     <div class='package'>
                         <div class='name'>{{ $occurrence->title }}</div>
-                        <div class='occurrence_date'>Date: {{ $occurrence->start_at->formatLocalized('%d %B %Y') }}</div>
+                        <div class='occurrence_date'>Date: {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}</div>
                         <div class='occurrence_date occurrence_location'>{{ $occurrence->location->name }}</div>
                     </div>
                 </label>

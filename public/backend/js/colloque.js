@@ -122,8 +122,7 @@ $('body').on("click",'.removePrice', function(e) {
 
 $('body').on("click",'.addOption',function(e) {
 
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault();e.stopPropagation();
 
     var $form = $(this).closest('div.option');
     var $main = $(this).closest('.form-group');
@@ -137,7 +136,6 @@ $('body').on("click",'.addOption',function(e) {
             $main.replaceWith(data);
             $('.editableOption').editable({
                 params: function(params) {
-                    // add additional params from data-attributes of trigger element
                     params.model  = $(this).editable().data('model');
                     params._token = $("meta[name='_token']").attr('content');
                     return params;

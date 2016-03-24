@@ -63,6 +63,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $participants = $request->input('participant');
         $prices       = $request->input('price_id');
         $options      = $request->input('options');
+        $occurrences  = $request->input('occurrences');
         $groupes      = $request->input('groupes');
 
         // Make inscription for each participant
@@ -79,6 +80,12 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             if(isset($options[$index]))
             {
                 $data['options'] = $options[$index];
+            }
+
+            // choosen occurrences for participants
+            if(isset($occurrences[$index]))
+            {
+                $data['occurrences'] = $occurrences[$index];
             }
 
             // choosen groupe of options for participants

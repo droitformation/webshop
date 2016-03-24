@@ -300,18 +300,13 @@ class GenerateTest extends TestCase {
 		$this->assertEquals($occurrences, $response);
 	}
 
-	public function testGetOccurencesGroupe()
+/*	public function testGetOccurencesGroupe()
 	{
-		$group = factory(App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);
-
+		$group        = factory(App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);
 		$inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make(['group_id' => '5', 'colloque_id' => '12']);
-
 		$inscriptions = $inscriptions->map(function ($item, $key) {
-            $occurrences = factory( App\Droit\Occurrence\Entities\Occurrence::class,2)->make(
-                ['title' => 'Titre_'.$key]
-            );
+            $occurrences = factory( App\Droit\Occurrence\Entities\Occurrence::class,2)->make(['title' => 'Titre_'.$key]);
             $item->occurrences = $occurrences;
-
 			return $item;
 		});
 
@@ -321,8 +316,7 @@ class GenerateTest extends TestCase {
         $response = $generate->getOccurrences();
 
         $this->assertEquals($response, $group->occurrence_list);
-
-	}
+	}*/
 
     public function testGetParticipant()
     {

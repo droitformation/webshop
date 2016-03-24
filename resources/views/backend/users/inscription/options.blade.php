@@ -1,4 +1,5 @@
 @if(!$inscription->user_options->isEmpty())
+    <h4>Options</h4>
     <ol>
         @foreach($inscription->user_options as $user_options)
             <li>{{ $user_options->option->title }}

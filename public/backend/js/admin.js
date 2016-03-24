@@ -70,12 +70,12 @@ $( function() {
 
         var clone = $fieldset_clone.clone();
 
-        var length   = $('.field_clone').length;
-        var $options = clone.find('.option-input');
-        var $radios  = clone.find('.group-input');
+        var length       = $('.field_clone').length;
+        var $options     = clone.find('.option-input');
+        var $occurrences = clone.find('.occurrence-input');
+        var $radios      = clone.find('.group-input');
 
         $radios.each(function(){
-
             var name = $(this).attr('name');
             var name = name.replace('groupes[0]', 'groupes[' + length + ']');
             $(this).attr('name', name);
@@ -84,6 +84,12 @@ $( function() {
         $options.each(function(){
             var oname = $(this).attr('name');
             var oname = oname.replace('options[0]', 'options[' + length + ']');
+            $(this).attr('name', oname);
+        });
+
+        $occurrences.each(function(){
+            var oname = $(this).attr('name');
+            var oname = oname.replace('occurrences[0]', 'occurrences[' + length + ']');
             $(this).attr('name', oname);
         });
 
