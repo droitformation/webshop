@@ -712,6 +712,7 @@ select[multiple] {
 
 .inscription_wrapper .table-inscriptions{
     margin-top: 10px;
+    width: 100%;
 }
 
 .inscription_wrapper .table-inscriptions thead th{

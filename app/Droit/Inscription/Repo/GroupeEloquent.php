@@ -60,6 +60,11 @@ class GroupeEloquent implements GroupeInterface{
         return $groupe;
     }
 
+    public function restore($id)
+    {
+        return $this->groupe->withTrashed()->find($id)->restore();
+    }
+
     public function delete($id){
 
         $groupe = $this->groupe->find($id);

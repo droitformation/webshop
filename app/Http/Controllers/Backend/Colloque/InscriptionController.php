@@ -337,7 +337,7 @@ class InscriptionController extends Controller
 
         $this->dispatch($job);
 
-        if($inscription->group_id > 0)
+        if($inscription->group_id > 0 && $inscription->groupe)
         {
             $this->groupe->restore($inscription->group_id);
         }

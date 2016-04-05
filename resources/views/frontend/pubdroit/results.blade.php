@@ -51,8 +51,30 @@
 					@endif
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					@if(!$authors->isEmpty())
 
-		</div>
+						<h4>Auteurs</h4>
+
+						@foreach($authors as $author)
+							<article class="row result-item">
+								<a href="{{ url('colloque/'.$colloque->id) }}" class="col-md-2">
+									<img width="60" class="thumbnail" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
+								</a>
+								<div class="col-md-10">
+									<h4><a href="{{ url('colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
+									<p>{{ $colloque->soustitre }}</p>
+									<p>{{ $colloque->sujet }}</p>
+								</div>
+							</article>
+						@endforeach
+					@endif
+
+				</div>
+			</div>
+
+		</article>
 	</section>
 
 @stop
