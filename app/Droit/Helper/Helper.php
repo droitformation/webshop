@@ -449,7 +449,7 @@ class Helper {
                 if($result instanceof \App\Droit\User\Entities\User)
                 {
                     $result->load('adresses');
-                    $adresse = $result->adresse_contact ? $result->adresse_contact : '';
+                    $adresse = $result->adresse_livraison ? $result->adresse_livraison : '';
                 }
 
                 if($result instanceof \App\Droit\Adresse\Entities\Adresse)
@@ -457,14 +457,18 @@ class Helper {
                     $adresse = $result;
                 }
 
-                $data[] = [
-                    'label'    => $result->name ,
-                    'desc'     => $result->email,
-                    'value'    => $result->id,
-                    'adresse'  => $adresse,
-                    'civilite' => $adresse->civilite_title,
-                    'cp'       => $adresse->cp_trim
-                ];
+                if(!empty($adresse))
+                {
+                    $data[] = [
+                        'label'    => $result->name ,
+                        'desc'     => $result->email,
+                        'value'    => $result->id,
+                        'adresse'  => $adresse,
+                        'civilite' => $adresse->civilite_title,
+                        'cp'       => $adresse->cp_trim
+                    ];
+                }
+
             }
         }
         return $data;

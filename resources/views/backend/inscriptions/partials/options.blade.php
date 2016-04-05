@@ -11,11 +11,8 @@
                 @if(isset($inscription) || isset($add))
                     <input type="checkbox" {{ $checked }} class="option-input" name="options[]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
                 @else
-                  @if($type == 'multiple')
-                      <input type="checkbox" {{ $checked }} class="option-input" name="options[{{ $index }}][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
-                  @else
-                      <input type="checkbox" {{ $checked }} class="option-input" name="options[{{ $index }}]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
-                  @endif
+                    <?php $name = ($type == 'multiple' ? 'options['.$index.'][]' : 'options['.$index.']'); ?>
+                    <input type="checkbox" {{ $checked }} class="option-input" name="{{ $name }}" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
                 @endif
             </div>
         @endforeach

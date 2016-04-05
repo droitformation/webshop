@@ -89,9 +89,18 @@ class Colloque extends Model
         return $annexes;
     }
 
+    public function scopeVisible($query,$visible)
+    {
+        if($visible) $query->where('visible','=',1);
+    }
+
     public function scopeActive($query,$status)
     {
-        if($status) $query->where('start_at','>',date('Y-m-d'));
+        //if($status) $query->addSelect('*',\DB::Raw('COALESCE(end_at,start_at) as start_at'))->where('start_at','>',date('Y-m-d'));
+
+        if($status) $query->where(function ($query) {
+            $query->whereNotNull('end_at')->where('end_at','>',date('Y-m-d'));
+        })->orWhere('start_at','>',date('Y-m-d'));
     }
 
     public function scopeArchives($query,$status)

@@ -34,11 +34,12 @@
                                 <td colspan="5" class="nopadding">
 
                                     <div class="collapse" id="order_no_{{ $order->id }}">
-                                        <div class="well">
+
+                                        <div id="orders-items">
                                             @foreach($grouped as $product)
                                                 <div class="row order-item">
                                                     <div class="col-md-1">
-                                                        <a href="#"><img height="40" src="{{ asset('files/products/'.$product->first()->image) }}" alt=""></a>
+                                                        <a href="{{ url('product/'.$product->first()->id) }}"><img height="35" src="{{ asset('files/products/'.$product->first()->image) }}" alt=""></a>
                                                     </div>
                                                     <div class="col-md-8">{{ $product->first()->title }}</div>
                                                     <div class="col-md-1"><p class="text-right">{{ $product->count() }} x</p></div>
@@ -59,7 +60,7 @@
 
                                                 if ($order->facture)
                                                 {
-                                                    echo '<a target="_blank" href="'.asset($order->facture).'" class="btn btn-success">Facture en pdf</a>';
+                                                    echo '<a target="_blank" href="'.asset($order->facture).'" class="btn btn-sm btn-default"><i class="fa fa-file"></i> &nbsp;Facture en pdf</a>';
                                                 }
                                                 ?>
                                             </div>

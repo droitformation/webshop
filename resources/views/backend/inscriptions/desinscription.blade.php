@@ -43,13 +43,15 @@
                             @if(!empty($desinscriptions))
                                 @foreach($desinscriptions as $inscription)
 
-                                    <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
+                                    <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); ?>
                                     <tr {!! $style !!}>
                                         <td>
+
                                             <form action="{{ url('admin/inscription/restore/'.$inscription->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                                                 <button data-what="Restaurer" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-warning btn-xs deleteAction">Restaurer</button>
                                             </form>
+
                                         </td>
                                         <td>
 
@@ -65,7 +67,7 @@
                                         </td>
                                         <td><?php echo ($inscription->group_id > 0 ? $inscription->participant->name :''); ?></td>
                                         <td><strong>{{ $inscription->inscription_no }}</strong></td>
-                                        <td>{{ $inscription->group_id ? $group->price : $inscription->price_cents }} CHF</td>
+                                        <td>{{ $inscription->group_id ? $inscription->groupe->price : $inscription->price_cents }} CHF</td>
                                         <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
                                     </tr>
 

@@ -61,8 +61,6 @@
                                                 @endforeach
                                             </ol>
                                         @endif
-
-                                        <h4>Options</h4>
                                         @include('backend.users.inscription.options')
                                     </div>
                                 </div>

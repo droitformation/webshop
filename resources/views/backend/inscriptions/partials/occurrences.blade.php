@@ -2,7 +2,8 @@
 
 @foreach($colloque->occurrences as $index => $occurrence)
     <div class="form-group type-choix">
-        <input type="checkbox" {{ isset($occurrences_choix) && in_array($occurrence->id ,$occurrences_choix) ? 'checked' : '' }} class="occurrence-input" name="{{ $select }}" value="{{ $occurrence->id }}" />
+        <?php $name = (isset($type) && $type == 'multiple' ? 'occurrences['.$index.'][]' : 'occurrences['.$index.']'); ?>
+        <input type="checkbox" {{ isset($occurrences_choix) && in_array($occurrence->id ,$occurrences_choix) ? 'checked' : '' }} class="occurrence-input" name="{{ $name }}" value="{{ $occurrence->id }}" />
         {{ $occurrence->title }}
         Date: {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}
     </div>

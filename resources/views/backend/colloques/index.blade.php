@@ -18,13 +18,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <?php
-            $actives = $colloques->filter(function ($colloque) {
-                return $colloque->start_at > date('Y-m-d');
-            });
-
-            $active_chunks = $actives->chunk(4);
-        ?>
+        <?php $active_chunks = $colloques->chunk(4); ?>
 
         @include('backend.colloques.partials.colloque', ['colloques' => $active_chunks, 'color' => 'primary'])
 

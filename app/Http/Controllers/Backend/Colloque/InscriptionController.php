@@ -229,9 +229,14 @@ class InscriptionController extends Controller
         // Fins model inscription or group
         $item     = $this->$model->find($model_id);
 
-        $this->register->sendEmail($item, $email);
+        if($item)
+        {
+            $this->register->sendEmail($item, $email);
+            return redirect()->back()->with(array('status' => 'success', 'message' => 'Email envoyé'));
+        }
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Email envoyé'));
+        return redirect()->back()->with(array('status' => 'warning', 'message' => 'Aucune inscription trouvé, problème'));
+
     }
 
     /**
@@ -331,6 +336,11 @@ class InscriptionController extends Controller
         $job = ($inscription->group_id ? new MakeDocumentGroupe($inscription->groupe) : new MakeDocument($inscription));
 
         $this->dispatch($job);
+
+        if($inscription->group_id > 0)
+        {
+            $this->groupe->restore($inscription->group_id);
+        }
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été restauré' ));
     }
