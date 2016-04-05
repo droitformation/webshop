@@ -91,6 +91,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::match(['put', 'post'],'profil/update', 'Frontend\ProfileController@update');
         Route::get('profil/orders', 'Frontend\ProfileController@orders');
         Route::get('profil/colloques', 'Frontend\ProfileController@colloques');
+        Route::get('profil/subscriptions', 'Frontend\ProfileController@subscriptions');
         Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
 
         /* Update user adresse via ajax  */

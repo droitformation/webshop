@@ -36,7 +36,7 @@
 
 								@if(!$attributs->isEmpty())
 									@foreach($attributs as $attribute)
-										<p><strong>{{ $attribute->title }} :</strong>{{ $attribute->pivot->value }} </p>
+										<p><strong>{{ $attribute->title }} : </strong> {{ $attribute->pivot->value }} </p>
 									@endforeach
 								@endif
 							</div>

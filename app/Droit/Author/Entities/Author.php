@@ -33,5 +33,10 @@ class Author extends Model {
         return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyse_authors', 'analyse_id', 'author_id');
     }
 
+    public function products()
+    {
+        return $this->belongsToMany('\App\Droit\Shop\Product\Entities\Product', 'shop_product_authors', 'author_id', 'product_id');
+    }
+
 }
 

@@ -58,16 +58,20 @@
 						<h4>Auteurs</h4>
 
 						@foreach($authors as $author)
-							<article class="row result-item">
-								<a href="{{ url('colloque/'.$colloque->id) }}" class="col-md-2">
-									<img width="60" class="thumbnail" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
-								</a>
-								<div class="col-md-10">
-									<h4><a href="{{ url('colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
-									<p>{{ $colloque->soustitre }}</p>
-									<p>{{ $colloque->sujet }}</p>
-								</div>
-							</article>
+							<h3>{{ $author->name }}</h3>
+							@if(!$author->products->isEmpty())
+							@foreach($author->products as $product)
+								<article class="row result-item">
+									<a href="{{ url('product/'.$product->id) }}" class="col-md-2">
+										<img width="60" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
+									</a>
+									<div class="col-md-10">
+										<h4><a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a></h4>
+										<p>{{ strip_tags($product->teaser) }}</p>
+									</div>
+								</article>
+							@endforeach
+							@endif
 						@endforeach
 					@endif
 

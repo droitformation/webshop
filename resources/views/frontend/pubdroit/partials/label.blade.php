@@ -43,5 +43,5 @@
         </li>
     @endif
     <li class="item-colloque"><a href="{{ url('colloque') }}"><i class="fa fa-calendar"></i> &nbsp; Colloques</a></li>
-    <li class="item-colloque"><a href="{{ url('subscribe') }}"><i class="fa fa-plane"></i> &nbsp; Newsletter</a></li>
+    <li class="item-colloque"><a href="{{ url('subscribe') }}"><i class="fa fa-paper-plane"></i> &nbsp; Newsletter</a></li>
 </ul>

@@ -124,8 +124,9 @@ class ShopController extends Controller {
         $products   = $this->product->search(trim($term));
         $categories = $this->categorie->search($term);
         $domains    = $this->domain->search($term);
+        $authors    = $this->author->search($term);
 
-        return view('frontend.pubdroit.results')->with(['term' => $term, 'products' => $products, 'categories' => $categories, 'domains' => $domains, 'colloques' => $colloques]);
+        return view('frontend.pubdroit.results')->with(['term' => $term, 'products' => $products, 'categories' => $categories, 'domains' => $domains, 'colloques' => $colloques, 'authors' => $authors]);
     }
 
     /**

@@ -10,7 +10,7 @@ class Newsletter_subscriptions extends Model {
 
     public function newsletter()
     {
-        return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter');
+        return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter','id','newsletter_id');
     }
 
 }

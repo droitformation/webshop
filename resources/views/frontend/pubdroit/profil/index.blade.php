@@ -15,6 +15,7 @@
                     <li class="{{ Request::is('profil') ? 'active' : '' }}"><a href="{{ url('profil') }}"><i class="fa fa-home"></i> &nbsp;Données</a></li>
                     <li class="{{ Request::is('profil/orders') ? 'active' : '' }}"><a href="{{ url('profil/orders') }}"><i class="fa fa-shopping-cart"></i> &nbsp;Commandes</a></li>
                     <li class="{{ Request::is('profil/colloques') || Request::is('profil/inscription/*') ? 'active' : '' }}"><a href="{{ url('profil/colloques') }}"><i class="fa fa-calendar"></i> &nbsp;Inscriptions</a></li>
+                    <li class="{{ Request::is('profil/subscriptions') ? 'active' : '' }}"><a href="{{ url('profil/subscriptions') }}"><i class="fa fa-paper-plane"></i> &nbsp;Abonnements aux newsletter</a></li>
                 </ul>
             </aside>
             <div class="col-md-9">

@@ -33,7 +33,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user    = $this->user->find(\Auth::user()->id);
+        $user = $this->user->find(\Auth::user()->id);
         $current = '/';
 
         return view('frontend.pubdroit.profil.account')->with(compact('user','current'));
@@ -102,6 +102,13 @@ class ProfileController extends Controller
         $inscription->colloque->load('location','centres','compte');
 
         return view('frontend.pubdroit.profil.inscription')->with(compact('user','id','inscription'));
+    }
+
+    public function subscriptions()
+    {
+        $user = $this->user->find(\Auth::user()->id);
+
+        return view('frontend.pubdroit.profil.subscription')->with(compact('user','id'));
     }
 
 }

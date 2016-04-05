@@ -153,4 +153,9 @@ class User extends Authenticatable {
     {
         return $this->belongsToMany('App\Droit\User\Entities\Role', 'user_roles', 'user_id', 'role_id');
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_subscriptions', 'user_id', 'id');
+    }
 }
