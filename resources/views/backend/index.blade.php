@@ -20,7 +20,7 @@
     </div>--}}
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-12">
 
             <div class="panel panel-info">
                 <div class="panel-body">
@@ -29,8 +29,9 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
+                            <th class="col-sm-2">Colloque</th>
                             <th class="col-sm-3">Déteteur</th>
-                            <th class="col-sm-4">No</th>
+                            <th class="col-sm-2">No</th>
                             <th class="col-sm-2">Prix</th>
                             <th class="col-sm-2">Date</th>
                         </tr>
@@ -43,6 +44,14 @@
                                             @if(!$inscription->group_id)
                                                 <a class="btn btn-sky btn-sm" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}"><i class="fa fa-edit"></i></a>
                                                 @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($inscription->group_id)
+                                                <?php $group = $inscription->groupe; ?>
+                                                {{ $group->colloque->titre }}
+                                            @else
+                                                {{ $inscription->colloque->titre }}
                                             @endif
                                         </td>
                                         <td>
@@ -103,7 +112,9 @@
             </div>
 
         </div>
-        <div class="col-md-5">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
 
             <div class="panel panel-info">
                 <div class="panel-body">
