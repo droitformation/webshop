@@ -286,7 +286,15 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('order/export', 'Backend\Shop\OrderController@export');
         Route::post('order/restore/{id}', 'Backend\Shop\OrderController@restore');
         Route::post('order/generate', 'Backend\Shop\OrderController@generate');
-        Route::resource('order', 'Backend\Shop\OrderController');
+
+        Route::post('order', ['middleware' => 'strip', 'uses' => 'Backend\Shop\OrderController@store']);
+        Route::get('order','Backend\Shop\OrderController@index');
+        Route::get('order/create','Backend\Shop\OrderController@create');
+        Route::get('order/{id}','Backend\Shop\OrderController@show');
+        Route::put('order/{id}','Backend\Shop\OrderController@update');
+        Route::delete('order/{id}','Backend\Shop\OrderController@destroy');
+
+        //Route::resource('order', 'Backend\Shop\OrderController');
 
         /*
         |--------------------------------------------------------------------------

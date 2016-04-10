@@ -16,13 +16,11 @@ $( "#searchUser" ).autocomplete({
     },
     select: function( event, ui )
     {
-        console.log(ui.item);
-
         var data = ui.item.adresse;
 
         $('#inputUser').html('<input type="hidden" value="' + ui.item.value + '" name="user_id">');
 
-        var html = template(data);
+        var html = templating(data);
 
         $('#choiceUser').html(html);
 
@@ -35,14 +33,14 @@ $( "#searchUser" ).autocomplete({
     return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span></a>").appendTo(ul);
 };
 
-function template(data)
+function templating(data)
 {
     var company  = data.company ? data.company + '<br/>' : '';
     var cp       = data.cp ? data.cp + '<br/>' : '';
     var compl    = data.complement ? data.complement + '<br/>' : '';
     var civilite = data.civilite ? data.civilite.title : '';
 
-    var html = '<p><a class="btn btn-danger btn-xs remove-adresse">Changer</a></p>'
+    var html = '<p><a id="removeUser" class="btn btn-danger btn-xs">Changer</a></p>'
         + '<address>'
         +  company
         +  civilite + ' '

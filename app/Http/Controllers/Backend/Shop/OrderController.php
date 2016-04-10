@@ -81,7 +81,7 @@ class OrderController extends Controller {
 
         if($export)
         {
-            $this->generator->setColumns($columns);
+            //$this->generator->setColumns($columns);
             $this->export($orders,$names,$period,$details);
         }
 
@@ -239,54 +239,6 @@ class OrderController extends Controller {
      */
     public function store(Request $request)
     {
-        // Validate the adresse if any
-        $validator = \Validator::make($request->all(), [
-            'adresse.first_name'     => 'required_without:user_id',
-            'adresse.last_name'      => 'required_without:user_id',
-            'adresse.adresse'        => 'required_without:user_id',
-            'adresse.npa'            => 'required_without:user_id',
-            'adresse.ville'          => 'required_without:user_id',
-        ], [
-            'adresse.first_name.required_without'  => 'Une adresse (prénom) est requise sans utilisateur',
-            'adresse.last_name.required_without'   => 'Une adresse (nom) est requise sans utilisateur',
-            'adresse.adresse.required_without'     => 'Une adresse (adresse) est requise sans utilisateur',
-            'adresse.npa.required_without'         => 'Une adresse (npa) est requise sans utilisateur',
-            'adresse.ville.required_without'       => 'Une adresse (ville) est requise sans utilisateur',
-        ]);
-
-        $products = array_filter($request->input('order.products'));
-
-        $validator->after(function($validator) use ($products) {
-            if(empty($products))
-            {
-                $validator->errors()->add('order.products', 'Au moins un livre est requis');
-            }
-        });
-
-        // Resend products along to refill form
-        if ($validator->fails())
-        {
-            // resend adress if any
-            $adresse = $request->input('adresse',[]);
-
-            if(!empty($adresse))
-            {
-                // unset defaults, we can now test if we had other infos present, if not dont show form in view
-                unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
-
-                $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
-            }
-
-            $order = $request->input('order',[]);
-
-            if(!empty($order))
-            {
-                $products = $this->helper->convertProducts($order);
-            }
-
-            return redirect()->back()->withErrors($validator)->with(['old_products' => $products, 'adresse' => $adresse])->withInput();
-        }
-
         $order = $this->ordermaker->make($request->all());
 
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
