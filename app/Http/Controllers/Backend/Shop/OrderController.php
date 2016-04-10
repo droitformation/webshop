@@ -71,7 +71,6 @@ class OrderController extends Controller {
         $status   = $request->input('status',null);
         $onlyfree = $request->input('onlyfree',null);
         $details  = $request->input('details',null);
-        $columns  = $request->input('columns',$this->generator->columns);
         $export   = $request->input('export',null);
 
         $period['start'] = (!isset($period['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($period['start']) );
@@ -81,8 +80,9 @@ class OrderController extends Controller {
 
         if($export)
         {
-            //$this->generator->setColumns($columns);
-            $this->export($orders,$names,$period,$details);
+            // $this->generator->setColumns($columns);
+            //$this->export($orders,$names,$period,$details);
+            $this->generator->exportOrder($orders,$names,$period,$details);
         }
 
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
@@ -125,8 +125,7 @@ class OrderController extends Controller {
                         $info['Paye']    = $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '';
                         $info['Status']  = $order->status_code['status'];
 
-                        // Only details of each order
-                        // Group by product in orde, count qty
+                        // Only details of each order, Group by product in order, count qty
                         if($details)
                         {
                             $grouped = $order->products->groupBy('id');
@@ -155,7 +154,6 @@ class OrderController extends Controller {
                                 $converted[] = $info + $data;
                             }
                         }
-
                     }
                 }
 

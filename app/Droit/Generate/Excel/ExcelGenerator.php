@@ -44,256 +44,109 @@
 
      public function __construct()
      {
-         $this->inscription_worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorker');
-         $this->helper             = new \App\Droit\Helper\Helper();
+         $this->helper = new \App\Droit\Helper\Helper();
+
          setlocale(LC_ALL, 'fr_FR.UTF-8');
      }
 
-     public function init($colloque, $options = []){
+     /*
+      * column names
+      * period dates
+      * if we want all details
+      * */
+     public function exportOrder($orders, $names, $period = null, $details = null)
+     {
+         // Title and sum of all orders
+         $title = 'Commandes du '.$this->helper->formatTwoDates($period['start'],$period['end']);
+         $sum   = $orders->sum('price_cents');
 
-         $this->setColloque($colloque);
+         // prepare orders
+         $prepared = $this->prepareOrder($orders, $names, $details);
 
-         if(isset($options['order']) && $options['order'])
+         // Columns add columns requested if we want user and not details
+         $names = ($details ? ['Numero','Montant','Date','Paye','Status','Titre','Quantité','Prix','Gratuit','Rabais'] : (['Numero','Montant','Date','Paye','Status'] + $names));
+
+         \Excel::create('Export Commandes', function($excel) use ($prepared, $sum, $title, $names)
          {
-             $this->setSort($options['order']);
-         }
-
-         if(!$this->inscriptions->isEmpty())
-         {
-             $this->sort();
-             return $this->toRow($this->inscriptions);
-         }
-
-         return false;
-     }
-
-     /*
-      * Set the current colloque and set options and inscriptions
-      **/
-     public function setColloque($colloque)
-     {
-         $colloque->options->load('groupe');
-
-         $this->colloque     = $colloque;
-         $this->options      = $this->colloque->options;
-         $this->inscriptions = $this->colloque->inscriptions;
-
-         return $this;
-     }
-
-     /*
-      * Override default sort type
-      **/
-     public function setSort($sort)
-     {
-         $this->sort = $sort;
-
-         return $this;
-     }
-
-     /*
-     * Override default columns
-     **/
-     public function setColumns($columns)
-     {
-         $this->columns = $columns;
-
-         return $this;
-     }
-
-     /*
-      * Prepare one row for inscription with all infos
-      **/
-     public function row($inscription)
-     {
-         $row  = $this->user($inscription);
-         $row['participant'] = ($inscription->group_id > 0 ? $inscription->participant->name : '');
-
-         $sort = array_merge(array_slice($this->columns, 0, 2), ['participant'], array_slice($this->columns, 2));
-         $row  = $this->helper->sortArrayByArray($row,$sort);
-
-         $row['numero'] = $inscription->inscription_no;
-         $row['date']   = $inscription->created_at->format('d/m/Y');
-
-         $filtered = $inscription->options->filter(function ($item) {  return $item->type == 'checkbox';  });
-         $row['options'] = implode('\n',$filtered->lists('title')->all());
-
-         array_walk($row, array($this, 'makeRow'));
-
-         return $row;
-     }
-
-     public function toRow($inscriptions)
-     {
-         $data = [];
-         
-         foreach($inscriptions as $key => $inscription)
-         {
-             if(is_array($inscription))
+             $excel->sheet('Export_Commandes', function($sheet) use ($prepared, $sum, $title, $names)
              {
-                 foreach($inscription as $option => $value)
+                 // Set header
+                 $sheet->row(1, [$title]);
+                 $sheet->row(1,function($row) {
+                     $row->setFontWeight('bold');
+                     $row->setFontSize(14);
+                 });
+
+                 // Set Columns
+                 $sheet->row(2,['']);
+                 $sheet->row(3, $names);
+                 $sheet->row(3,function($row) {
+                     $row->setFontWeight('bold');
+                     $row->setFontSize(12);
+                 });
+
+                 // Set Orders list
+                 $sheet->rows($prepared);
+                 $sheet->appendRow(['']);
+                 $sheet->appendRow(['Total', $sum.' CHF']);
+                 $sheet->row($sheet->getHighestRow(), function ($row)
                  {
-                     if(is_array($value))
-                     {
-                         foreach ($value as $final)
-                         {
-                             $data[$key][$option][] = $this->row($final);
-                         }
-                     }
-                     else
-                     {
-                         $data[$key][] = $this->row($value);
-                     }
-                 }
-             }
-             else
+                     $row->setFontWeight('bold');
+                     $row->setFontSize(13);
+                 });
+
+             });
+         })->export('xls');
+     }
+
+     public function prepareOrder($orders, $names, $details)
+     {
+         if(!$orders->isEmpty())
+         {
+             foreach($orders as $order)
              {
-                 $data[] = $this->row($inscription);
-             }
-         }
+                 $info['Numero']  = $order->order_no;
+                 $info['Montant'] = $order->price_cents.' CHF';
+                 $info['Date']    = $order->created_at->formatLocalized('%d %B %Y');
+                 $info['Paye']    = $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '';
+                 $info['Status']  = $order->status_code['status'];
 
-         return $data;
-     }
-
-     /*
-     * Get user infos
-     **/
-     public function user($model)
-     {
-         foreach($this->columns as $column)
-         {
-             $user[$column] = (isset($model->adresse_facturation->$column) ? trim($model->adresse_facturation->$column) : '');
-         }
-
-         return $user;
-     }
-
-     /*
-     * Each table row
-     **/
-     public function makeRow(&$item,$key)
-     {
-         $item = '<td>'.$item.'</td>';
-     }
-
-     /*
-      * Dispatch inscription by sort
-      **/
-     public function sort()
-     {
-         if($this->sort == 'checkbox')
-         {
-             $options = $this->getMainOptions();
-         }
-
-         if($this->sort == 'choix')
-         {
-             $options = $this->getGroupeOptions();
-         }
-
-         if(!empty($options))
-         {
-            $this->dispatch($this->inscriptions,$options);
-            $this->inscriptions = $this->dispatch;
-         }
-
-         return $this;
-     }
-
-     /*
-      * Get simple options
-      **/
-     public function getMainOptions()
-     {
-         if(!$this->options->isEmpty())
-         {
-             if($this->sort == 'checkbox')
-             {
-                 $options = $this->options->where('type','checkbox');
-             }
-             else
-             {
-                 $options = $this->options;
-             }
-
-             return $options->lists('title','id')->all();
-         }
-
-         return [];
-     }
-
-     /*
-     * Get grouped options
-     **/
-     public function getGroupeOptions()
-     {
-         if(!$this->options->isEmpty())
-         {
-             foreach($this->options as $option)
-             {
-                 if(isset($option->groupe) && !$option->groupe->isEmpty())
+                 // Only details of each order
+                 // Group by product in orde, count qty
+                 if($details)
                  {
-                     foreach($option->groupe as $groupe)
+                     $grouped = $order->products->groupBy('id');
+
+                     foreach($grouped as $product)
                      {
-                         $groupes[$option->id][$groupe->id] = $groupe->text;
+                         $data['title']  = $product->first()->title;
+                         $data['qty']    = $product->count();
+                         $data['prix']   = $product->first()->price_cents;
+                         $data['free']   = $product->first()->pivot->isFree ? 'Oui' : '';
+                         $data['rabais'] = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
+
+                         $converted[] = $info + $data;
                      }
-                 }
-             }
-         }
-
-         return (isset($groupes) ? $groupes : []);
-     }
-
-     public function dispatch($inscriptions, $options)
-     {
-         foreach($inscriptions as $inscription)
-         {
-             $groupe_choix = $inscription->user_options->groupBy('option_id');
-
-             foreach($options as $option_id => $option)
-             {
-                 if(isset($groupe_choix[$option_id]))
-                 {
-                     $current = $groupe_choix[$option_id];
-
-                     $this->optionDispatch($option,$option_id,$current,$inscription);
                  }
                  else
                  {
-                     $this->dispatch[0][] = $inscription;
+                     // Get columns requested from user adresse
+                     if($order->user && !$order->user->adresses->isEmpty())
+                     {
+                         $columns = array_keys($names);
+
+                         foreach($columns as $column)
+                         {
+                             $data[$column] = $order->user->adresses->first()->$column;
+                         }
+
+                         $converted[] = $info + $data;
+                     }
                  }
+
              }
+
+             return $converted;
          }
      }
-
-     public function optionDispatch($option,$option_id,$current,$inscription)
-     {
-         if(is_array($option))
-         {
-             $key = key($option);
-
-             if($current->contains('groupe_id', $key))
-             {
-                 $this->dispatch[$option_id][$key][] = $inscription;
-             }
-         }
-         else
-         {
-             $this->dispatch[$option_id][] = $inscription;
-         }
-     }
-
-     /*
-      * Order functions
-      * */
-
-     /* Each user row */
-     public function toRowUser($user)
-     {
-         $user = $this->user($user);
-         array_walk($user, array($this, 'makeRow'));
-
-         return implode('',$user);
-     }
-
  }

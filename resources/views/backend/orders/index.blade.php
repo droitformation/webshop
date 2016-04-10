@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+ @extends('backend.layouts.master')
 @section('content')
 
     <?php $helper = new \App\Droit\Helper\Helper(); ?>
