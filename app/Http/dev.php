@@ -41,7 +41,7 @@ Route::get('mapped', function () {
 
     if ($cindy && !$cindy->adresses->isEmpty())
     {
-        $names = [
+        $names = collect([
             'civilite_title'   => 'Civilité',
             'name'             => 'Nom et prénom',
             'email'            => 'E-mail',
@@ -56,15 +56,16 @@ Route::get('mapped', function () {
             'ville'            => 'Ville',
             'canton_title'     => 'Canton',
             'pays_title'       => 'Pays'
-        ];
+        ]);
 
-        foreach($names as $column => $title) {
-            $data[$title] = $user->adresses->first()->$column;
-        }
+        $prep = $names->map(function ($item, $key) use ($cindy) {
+            return $cindy->adresses->first()->$key;
+        });
+
     }
 
     echo '<pre>';
-    print_r($multiplied);
+    print_r($prep);
     echo '</pre>';
 
 });

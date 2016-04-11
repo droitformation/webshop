@@ -124,6 +124,20 @@ class Inscription extends Model
         return null;
     }
 
+    public function getNameInscriptionAttribute()
+    {
+        if($this->group_id > 0)
+        {
+            return $this->participant->name;
+        }
+        else
+        {
+            return $this->user->name;
+        }
+
+        return null;
+    }
+
     public function getAdresseFacturationAttribute()
     {
         if($this->group_id)

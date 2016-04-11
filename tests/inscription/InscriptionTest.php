@@ -48,6 +48,7 @@ class InscriptionTest extends TestCase {
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
         $this->worker->shouldReceive('register')->once()->andReturn($inscription);
+        $this->worker->shouldReceive('makeDocuments')->once();
 
         $response = $this->call('POST', '/admin/inscription', $input);
 
@@ -66,10 +67,10 @@ class InscriptionTest extends TestCase {
 
         $input = ['type' => 'multiple', 'colloque_id' => 39, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
 
-        $group       = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
-        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
+        $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
 
         $this->worker->shouldReceive('registerGroup')->once()->andReturn($group);
+        $this->worker->shouldReceive('makeDocuments')->once();
 
         $response = $this->call('POST', '/admin/inscription',$input);
 
@@ -80,7 +81,7 @@ class InscriptionTest extends TestCase {
     public function testLastInscriptions()
     {
         $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make([
-            'user_id' => 710 // thats a real user else the load method for the inscription will throw an error
+            'user_id' => 710 // that's a real user else the load method for the inscription will throw an error
         ]);
 
         $this->mock->shouldReceive('getAll')->with(5)->once()->andReturn($inscriptions);
@@ -108,6 +109,65 @@ class InscriptionTest extends TestCase {
         $response = $this->call('POST', 'registration', $input);
 
         $this->assertRedirectedTo('/');
+    }
+
+
+    /**
+     * Inscription update from admin
+     * @return void
+     */
+    public function testUpdateInscription()
+    {
+        $input = ['id' => 3, 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make($input);
+
+        $this->mock->shouldReceive('update')->once()->andReturn($inscription);
+        $this->worker->shouldReceive('makeDocuments')->once();
+
+        $this->visit('/admin/user/710');
+
+        $response = $this->call('PUT', 'admin/inscription/3', $input);
+
+        $this->assertRedirectedTo('/admin/user/710');
+    }
+
+    /**
+     * Send Inscription from admin
+     * @return void
+     */
+    public function testSendInscription()
+    {
+        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
+            'id' => 3, 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290
+        ]);
+
+        $this->mock->shouldReceive('find')->once()->andReturn($inscription);
+        $this->worker->shouldReceive('sendEmail')->once();
+
+        $this->visit('/admin/user/710');
+
+        $response = $this->call('POST', 'admin/inscription/send', ['id' => 3, 'email' => 'cindy.leschaud@gmail.com']);
+
+        $this->assertRedirectedTo('/admin/user/710');
+    }
+
+    /**
+     * Send Group inscription from admin
+     * @return void
+     */
+    public function testSendGroupInscription()
+    {
+        $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
+
+        $this->groupe->shouldReceive('find')->once()->andReturn($group);
+        $this->worker->shouldReceive('sendEmail')->once();
+
+        $this->visit('/admin/user/710');
+
+        $response = $this->call('POST', 'admin/inscription/send', ['id' => 3, 'group_id' => 3 ,'email' => 'cindy.leschaud@gmail.com']);
+
+        $this->assertRedirectedTo('/admin/user/710');
     }
 
     public function testGenerateDoc()

@@ -11,12 +11,8 @@ use App\Droit\Inscription\Repo\GroupeInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionCreateRequest;
+use App\Http\Requests\SendAdminInscriptionRequest;
 use App\Http\Controllers\Controller;
-
-use App\Jobs\SendConfirmationInscriptionEmail;
-use App\Jobs\SendConfirmationGroupInscriptionEmail;
-use App\Jobs\MakeDocument;
-use App\Jobs\MakeDocumentGroupe;
 
 class InscriptionController extends Controller
 {
@@ -125,9 +121,11 @@ class InscriptionController extends Controller
     {
         // Register a new inscription for group
         $this->register->register($request->all(), $request->input('colloque_id'));
-        
+
+        // Get the group
         $group = $this->groupe->find($request->input('group_id'));
 
+        // Remake docs
         $this->register->makeDocuments($group, true);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
@@ -143,7 +141,7 @@ class InscriptionController extends Controller
 
         $this->register->makeDocuments($groupe, true);
 
-        return redirect('admin/inscription/colloque/'.$groupe->colloque_id)->with(array('status' => 'success', 'message' => 'Le groupe a été modifié' ));
+        return redirect('admin/inscription/colloque/'.$groupe->colloque_id)->with(['status' => 'success', 'message' => 'Le groupe a été modifié']);
     }
 
     /**
@@ -171,7 +169,7 @@ class InscriptionController extends Controller
             $this->register->makeDocuments($group, true);
         }
 
-        return redirect('admin/inscription/colloque/'.$colloque)->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
+        return redirect('admin/inscription/colloque/'.$colloque)->with(['status' => 'success', 'message' => 'L\'inscription à bien été crée']);
     }
 
     /**
@@ -183,8 +181,6 @@ class InscriptionController extends Controller
     public function show($id)
     {
         $inscription = $this->inscription->find($id);
-
-        $inscription->load('colloque','user_options','user_options.option','groupe','participant');
 
         return view('backend.inscriptions.show')->with(['inscription' => $inscription, 'colloque' => $inscription->colloque, 'user' => $inscription->inscrit]);
     }
@@ -201,6 +197,7 @@ class InscriptionController extends Controller
 
         $model = $inscription->group_id ? $inscription->groupe : $inscription;
 
+        // remake docs
         $this->register->makeDocuments($model, true);
 
         // remake attestation
@@ -209,7 +206,7 @@ class InscriptionController extends Controller
             $this->generator->make('attestation', $inscription);
         }
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Les documents ont été mis à jour' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Les documents ont été mis à jour']);
     }
 
     /**
@@ -217,25 +214,23 @@ class InscriptionController extends Controller
      *
      * @return Response
      */
-    public function send(Request $request)
+    public function send(SendAdminInscriptionRequest $request)
     {
-        $id       = $request->input('id',null);
         $group_id = $request->input('group_id',null);
-        $email    = $request->input('email',null);
-
         $model    = $group_id ? 'groupe' : 'inscription';
-        $model_id = $group_id ? $group_id : $id;
+        $model_id = $group_id ? $group_id : $request->input('id');
 
-        // Fins model inscription or group
-        $item     = $this->$model->find($model_id);
+        // Find model inscription or group
+        $item = $this->$model->find($model_id);
 
         if($item)
         {
-            $this->register->sendEmail($item, $email);
-            return redirect()->back()->with(array('status' => 'success', 'message' => 'Email envoyé'));
+            $this->register->sendEmail($item, $request->input('email',null));
+
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Email envoyé']);
         }
 
-        return redirect()->back()->with(array('status' => 'warning', 'message' => 'Aucune inscription trouvé, problème'));
+        return redirect()->back()->with(['status' => 'warning', 'message' => 'Aucune inscription trouvé, problème']);
 
     }
 
@@ -248,18 +243,19 @@ class InscriptionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Update inscription
         $inscription = $this->inscription->update($request->all());
 
         $model = $inscription->group_id ? $inscription->groupe : $inscription;
 
+        // Remake the documents
         $this->register->makeDocuments($model, true);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été mise à jour' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'inscription a été mise à jour']);
     }
 
     public function edit(Request $request)
     {
-        $name  = $request->input('name');
         $model = $request->input('model');
 
         if($model == 'group')
@@ -270,13 +266,13 @@ class InscriptionController extends Controller
             {
                 foreach($group->inscriptions as $inscription)
                 {
-                    $inscription = $this->inscription->update(['id' => $inscription->id , $name => $request->input('value')]);
+                    $inscription = $this->inscription->update(['id' => $inscription->id , $request->input('name') => $request->input('value')]);
                 }
             }
         }
         else
         {
-            $inscription = $this->inscription->update(['id' => $request->input('pk'), $name => $request->input('value')]);
+            $inscription = $this->inscription->update(['id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
         }
 
         return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'default' : 'success')]);
@@ -298,10 +294,10 @@ class InscriptionController extends Controller
         // If it's a group inscription and we have deleted refresh the groupe invoice and bv
         if($inscription->group_id > 0)
         {
-            $this->dispatch(new MakeDocumentGroupe($inscription->groupe));
+            $this->register->makeDocuments($inscription->groupe, true);
         }
 
-        return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(array('status' => 'success', 'message' => 'Désinscription effectué' ));
+        return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(['status' => 'success', 'message' => 'Désinscription effectué']);
     }
 
     /**
@@ -314,10 +310,13 @@ class InscriptionController extends Controller
     {
         $group = $this->groupe->find($id);
 
+        // Delete all inscriptions for group
         $group->inscriptions()->delete();
+
+        // Delete the group
         $this->groupe->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Suppression du groupe effectué' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Suppression du groupe effectué']);
     }
 
     /**
@@ -332,17 +331,18 @@ class InscriptionController extends Controller
 
         $inscription = $this->inscription->find($id);
 
-        // Remake the dosuments
-        $job = ($inscription->group_id ? new MakeDocumentGroupe($inscription->groupe) : new MakeDocument($inscription));
+        // Remake the documents
+        $model = ($inscription->group_id ? $inscription->groupe : $inscription);
 
-        $this->dispatch($job);
+        $this->register->makeDocuments($model, true);
 
+        // If the inscription was in a group, restore the group
         if($inscription->group_id > 0 && $inscription->groupe)
         {
             $this->groupe->restore($inscription->group_id);
         }
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription a été restauré' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'inscription a été restauré']);
     }
 
     /**

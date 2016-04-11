@@ -72,7 +72,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function find($id){
 
-        return $this->inscription->with(['price','colloque','user','groupe','rappels'])->find($id);
+        return $this->inscription->with(['price','colloque','user','rappels','user_options','user_options.option','groupe','participant'])->find($id);
     }
 
     public function restore($id)
