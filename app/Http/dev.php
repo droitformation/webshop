@@ -3,6 +3,73 @@
  * Test routes
  ============================================ */
 
+
+Route::get('mapped', function () {
+
+    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $user         = \App::make('App\Droit\User\Repo\UserInterface');
+
+    $data = $inscription->find(9538);
+    $cindy = $user->find(710);
+
+    if (!$data->user_options->isEmpty())
+    {
+        $html = '';
+        $groupe_choix = $data->user_options->load('option')->groupBy('option_id');
+
+        foreach ($groupe_choix as $type)
+        {
+            foreach ($type as $choix) {
+                $html .= $choix->option->title;
+                $html .= $choix->groupe_id ? ':' : ';';
+                $html .= ($choix->groupe_id ? $choix->option_groupe->text : '');
+            }
+        }
+
+        $multiplied = $groupe_choix->map(function ($group, $key)
+        {
+            return $group->map(function ($item, $key) {
+                $html  = $item->option->title;
+                $html .= $item->groupe_id ? ':' : '';
+                $html .= ($item->groupe_id ? $item->option_groupe->text : '');
+
+                return $html;
+            });
+        })->flatten()->implode(';');
+
+    }
+
+    if ($cindy && !$cindy->adresses->isEmpty())
+    {
+        $names = [
+            'civilite_title'   => 'Civilité',
+            'name'             => 'Nom et prénom',
+            'email'            => 'E-mail',
+            'profession_title' => 'Profession',
+            'company'          => 'Entrprise',
+            'telephone'        => 'Téléphone',
+            'mobile'           => 'Mobile',
+            'adresse'          => 'Adresse',
+            'cp'               => 'CP',
+            'complement'       => 'Complément d\'adresse',
+            'npa'              => 'NPA',
+            'ville'            => 'Ville',
+            'canton_title'     => 'Canton',
+            'pays_title'       => 'Pays'
+        ];
+
+        foreach($names as $column => $title) {
+            $data[$title] = $user->adresses->first()->$column;
+        }
+    }
+
+    echo '<pre>';
+    print_r($multiplied);
+    echo '</pre>';
+
+});
+
+
 Route::get('testing', function() {
     
     $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');

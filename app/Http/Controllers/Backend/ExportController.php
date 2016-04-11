@@ -55,6 +55,13 @@ class ExportController extends Controller
         $sort = $request->input('sort', false);
         $id = $request->input('id');
 
+        $colloque = $this->colloque->find($request->input('id'));
+
+        $options  = $colloque->options->whereLoose('type', 'choix')->pluck('title', 'id')->toArray();
+        $groupes  = $colloque->groupes->pluck('text', 'id')->toArray();
+
+        $inscriptions = $this->inscription->getByColloque($request->input('id'));
+
         \Excel::create('Export inscriptions', function ($excel) use ($id, $sort, $names) {
 
             $excel->sheet('Export', function ($sheet) use ($id, $sort, $names) {

@@ -1,46 +1,12 @@
 <?php
  namespace App\Droit\Generate\Excel;
  
- class ExcelGenerator{
+ class ExcelOrder{
 
      /*
      * Helper class for misc functions
      **/
      protected $helper;
-
-     /*
-      * Inscription Worker
-      * Register or manipulate inscription lists
-      **/
-     protected $inscription_worker;
-
-     /*
-      * Default no sort
-      **/
-     protected $sort = false;
-
-     /*
-      * Default columns
-      **/
-     public $columns = [
-         'civilite_title' ,'name', 'email', 'profession_title','company', 'telephone','mobile', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_title','pays_title'
-     ];
-
-     /*
-      * The current colloque
-      * The options for the colloque
-      * All the inscriptions for the colloque
-      **/
-     public $colloque;
-     public $options;
-     public $inscriptions;
-
-     /*
-     * Simple options checkboxes
-     * Grouped options radio inputs
-     **/
-     public $parent_options;
-     public $groupe_options;
 
      public function __construct()
      {

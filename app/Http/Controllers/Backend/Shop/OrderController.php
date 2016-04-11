@@ -18,7 +18,7 @@ class OrderController extends Controller {
 	protected $product;
     protected $categorie;
     protected $order;
-    protected $generator;
+    protected $export;
     protected $pdfgenerator;
     protected $worker;
     protected $adresse;
@@ -50,8 +50,8 @@ class OrderController extends Controller {
         $this->pdfgenerator  = $pdfgenerator;
         $this->ordermaker    = $ordermaker;
 
-        $this->generator = new \App\Droit\Generate\Excel\ExcelGenerator();
-        $this->helper    = new \App\Droit\Helper\Helper();
+        $this->export = new \App\Droit\Generate\Excel\ExcelOrder();
+        $this->helper = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
@@ -80,9 +80,7 @@ class OrderController extends Controller {
 
         if($export)
         {
-            // $this->generator->setColumns($columns);
-            //$this->export($orders,$names,$period,$details);
-            $this->generator->exportOrder($orders,$names,$period,$details);
+            $this->export->exportOrder($orders,$names,$period,$details);
         }
 
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
@@ -101,93 +99,6 @@ class OrderController extends Controller {
             ]
         );
 	}
-
-    /**
-     * Show the application welcome screen to the user.
-     *
-     * @return Response
-     */
-    public function export($orders, $names, $period = null, $details = null)
-    {
-        \Excel::create('Export Commandes', function($excel) use ($orders,$period,$details,$names)
-        {
-            $excel->sheet('Export_Commandes', function($sheet) use ($orders,$period,$details,$names)
-            {
-                $columns = array_keys($names);
-
-                if(!$orders->isEmpty())
-                {
-                    foreach($orders as $order)
-                    {
-                        $info['Numero']  = $order->order_no;
-                        $info['Montant'] = $order->price_cents.' CHF';
-                        $info['Date']    = $order->created_at->formatLocalized('%d %B %Y');
-                        $info['Paye']    = $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '';
-                        $info['Status']  = $order->status_code['status'];
-
-                        // Only details of each order, Group by product in order, count qty
-                        if($details)
-                        {
-                            $grouped = $order->products->groupBy('id');
-
-                            foreach($grouped as $product)
-                            {
-                                $data['title']  = $product->first()->title;
-                                $data['qty']    = $product->count();
-                                $data['prix']   = $product->first()->price_cents;
-                                $data['free']   = $product->first()->pivot->isFree ? 'Oui' : '';
-                                $data['rabais'] = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
-
-                                $converted[] = $info + $data;
-                            }
-                        }
-                        else
-                        {
-                            // Get columns requested from user adresse
-                            if($order->user && !$order->user->adresses->isEmpty())
-                            {
-                                foreach($columns as $column)
-                                {
-                                    $data[$column] = $order->user->adresses->first()->$column;
-                                }
-
-                                $converted[] = $info + $data;
-                            }
-                        }
-                    }
-                }
-
-                // Columns add columns requested if we want user and not details
-                $names = ($details ? ['Numero','Montant','Date','Paye','Status','Titre','Quantité','Prix','Gratuit','Rabais'] : (['Numero','Montant','Date','Paye','Status'] + $names));
-
-                // Set header
-                $sheet->row(1, ['Commandes du '.$this->helper->formatTwoDates($period['start'],$period['end'])]);
-                $sheet->row(1,function($row) {
-                    $row->setFontWeight('bold');
-                    $row->setFontSize(14);
-                });
-
-                // Set Columns
-                $sheet->row(2,['']);
-                $sheet->row(3, $names);
-                $sheet->row(3,function($row) {
-                    $row->setFontWeight('bold');
-                    $row->setFontSize(12);
-                });
-
-                // Set Orders list
-                $sheet->rows($converted);
-                $sheet->appendRow(['']);
-                $sheet->appendRow(['Total', $orders->sum('price_cents').' CHF']);
-                $sheet->row($sheet->getHighestRow(), function ($row)
-                {
-                    $row->setFontWeight('bold');
-                    $row->setFontSize(13);
-                });
-
-            });
-        })->export('xls');
-    }
 
     /**
      *
