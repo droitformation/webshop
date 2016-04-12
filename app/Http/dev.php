@@ -73,9 +73,40 @@ Route::get('mapped', function () {
 
 Route::get('testing', function() {
     
-    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $groups  = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
+    $worker  = \App::make('App\Droit\Inscription\Worker\InscriptionWorker');
+    $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $users        = \App::make('App\Droit\User\Repo\UserInterface');
+
+    $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+
+    $colloque = $colloques->find(39);
+    $adresse  = $adresses->find(4674);
+    $user     = $users->find(710);
+
+
+    if(!$colloque->specialisations->isEmpty())
+    {
+        $specialisations = $colloque->specialisations->lists('id')->all();
+
+        echo '<pre>';
+        print_r($specialisations);
+        echo '</pre>';
+
+        $worker->specialisation(39, $user);
+
+        echo '<pre>';
+        print_r($user->adresse_contact);
+        echo '</pre>';exit;
+
+        $add =  array_unique(array_merge($exist,$specialisations));
+
+        echo '<pre>';
+        print_r($add);
+        echo '</pre>';
+
+    }
 
     //$generator->stream = true;
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
@@ -93,9 +124,6 @@ Route::get('testing', function() {
 
     //echo md5('cindy');
 
-    $file = storage_path('excel/test.xlsx');
-
-    echo \File::mimeType($file);
 });
 
 Route::get('cartworker', function()

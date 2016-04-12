@@ -3,6 +3,8 @@
 class InscriptionWorkerTest extends TestCase {
 
     protected $inscription;
+    protected $colloque;
+    protected $adresse;
 
     public function setUp()
     {
@@ -10,6 +12,12 @@ class InscriptionWorkerTest extends TestCase {
 
         $this->inscription = Mockery::mock('App\Droit\Inscription\Repo\InscriptionInterface');
         $this->app->instance('App\Droit\Inscription\Repo\InscriptionInterface', $this->inscription);
+
+        $this->colloque = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
+        $this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->colloque);
+
+        $this->adresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
+        $this->app->instance('App\Droit\Adresse\Repo\AdresseInterface', $this->adresse);
 
         $user = App\Droit\User\Entities\User::find(710);
 
@@ -39,7 +47,7 @@ class InscriptionWorkerTest extends TestCase {
         $inscription->colloque = $colloque;
         $inscription->user     = \App\Droit\User\Entities\User::find(710);
 
-        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
 
         $result = $worker->prepareData($inscription);
 
@@ -148,4 +156,36 @@ class InscriptionWorkerTest extends TestCase {
         $worker->updateInscription($group);
 
     }
+
+    public function testAddSpecialisationToUser()
+    {
+        $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+
+        $spec_colloque = factory(App\Droit\Specialisation\Entities\Specialisation::class,2)->make();
+        $spec_colloque = $spec_colloque->map(function ($item, $key) {
+            $item->id = $key + 3;
+            return $item;
+        }); // 3,4
+
+        $user     = factory(App\Droit\User\Entities\User::class)->make();
+        $adresse  = factory(App\Droit\Adresse\Entities\Adresse::class)->make(['type' => 1]);
+
+        $specialisation  = factory(App\Droit\Specialisation\Entities\Specialisation::class,3)->make();
+        $specialisation = $specialisation->map(function ($item, $key) {
+            $item->id = $key + 1;
+            return $item;
+        }); // 1,2,3
+
+        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make(['id' => 12]);
+        $colloque->specialisations = $spec_colloque;
+
+        $this->colloque->shouldReceive('find')->once()->andReturn($colloque);
+        $this->adresse->shouldReceive('setSpecialisation')->once();
+
+        $adresse->specialisations = $specialisation;
+        $user->adresses = new Illuminate\Database\Eloquent\Collection([$adresse]);
+
+        $worker->specialisation(12, $user);
+    }
+
 }

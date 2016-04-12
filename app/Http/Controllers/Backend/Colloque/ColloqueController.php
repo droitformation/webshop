@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\ColloqueRequest;
+
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Document\Worker\DocumentWorker;
@@ -147,7 +149,7 @@ class ColloqueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ColloqueRequest $request, $id)
     {
         $colloque     = $this->colloque->update($request->all());
         $illustration = $request->input('illustration',null);

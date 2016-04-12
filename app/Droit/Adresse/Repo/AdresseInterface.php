@@ -16,6 +16,7 @@ interface AdresseInterface {
 	public function findByEmail($email);
     public function searchMultiple($terms, $each = false);
 	public function duplicates();
+	public function setSpecialisation($adresse_id,$data);
 	
 	// function for gather infos on adresse to show
 	public function show($id);

@@ -197,6 +197,14 @@ class AdresseEloquent implements AdresseInterface{
 		return $infos->user_id;			
 	}
 
+	public function setSpecialisation($adresse_id,$data)
+	{
+		$adresse = $this->adresse->find($adresse_id);
+        $exist   = $adresse->specialisations->lists('id')->all();
+
+        $adresse->specialisations()->sync(array_unique(array_merge($exist,$data)));
+	}
+
 	/**
 	 * Return type of adresse
 	 *

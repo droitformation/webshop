@@ -1,9 +1,11 @@
 <?php
 namespace App\Droit\Inscription\Worker;
+
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Option\Repo\OptionInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
+use App\Droit\Adresse\Repo\AdresseInterface;
 use Illuminate\Support\Collection;
 
 class InscriptionWorker implements InscriptionWorkerInterface{
@@ -15,15 +17,17 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
     protected $inscription;
     protected $colloque;
+    protected $adresse;
     protected $option;
     protected $group;
 
     public $dispatch = [];
 
-    public function __construct(InscriptionInterface $inscription, ColloqueInterface $colloque, OptionInterface $option, GroupeInterface $group)
+    public function __construct(InscriptionInterface $inscription, ColloqueInterface $colloque, AdresseInterface $adresse ,OptionInterface $option, GroupeInterface $group)
     {
         $this->inscription = $inscription;
         $this->colloque    = $colloque;
+        $this->adresse     = $adresse;
         $this->option      = $option;
         $this->group       = $group;
 
@@ -47,6 +51,11 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         // Prepare data
         $data        = $data + ['inscription_no' => $inscription_no];
         $inscription = $this->inscription->create($data);
+
+        // Attach specialisations
+        $user = ($inscription->group_id > 0 ? $inscription->groupe->user : $inscription->user);
+
+        $this->specialisation($colloque_id, $user);
 
         // Update counter
         $this->colloque->increment($colloque_id);
@@ -100,6 +109,18 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         }
 
         return $group;
+    }
+
+    public function specialisation($colloque_id, $user)
+    {
+        $user->load('adresses');
+        $colloque = $this->colloque->find($colloque_id);
+
+        if(!$colloque->specialisations->isEmpty() && $user->adresse_contact)
+        {
+            $data = $colloque->specialisations->lists('id')->all();
+            $this->adresse->setSpecialisation($user->adresse_contact->id, $data);
+        }
     }
 
     public function sendEmail($model, $email)
