@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a href="{{ url('admin/inscription/colloque/'.$colloque->id) }}" class="btn btn-default pull-left"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                    <a href="{{ url('admin/inscription/rappel/make/'.$colloque->id) }}" class="btn btn-warning pull-right"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</a>
+                    <a href="{{ url('admin/inscription/rappel/make/'.$colloque->id) }}" class="btn btn-brown pull-right"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</a>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
-                    <h3>Rappels inscriptions simples</h3>
+                    <h3>Rappel inscriptions</h3>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>

@@ -20,7 +20,7 @@
                     {!! csrf_field() !!}
 
                     <div class="panel-body event-info">
-                        <h4>Ajouter un organisateur</h4>
+                        <h4>&Eacute;diter un organisateur</h4>
                         <div class="form-group">
                             <label for="message" class="col-sm-3 control-label">Nom</label>
                             <div class="col-sm-7">
@@ -49,7 +49,7 @@
                         @endif
 
                         <div class="form-group">
-                            <label for="file" class="col-sm-3 control-label">Changer la carte</label>
+                            <label for="file" class="col-sm-3 control-label">Changer le logo</label>
                             <div class="col-sm-5">
                                 <div class="list-group">
                                     <div class="list-group-item">

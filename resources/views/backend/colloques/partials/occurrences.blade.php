@@ -24,7 +24,7 @@
                                    data-name="starting_at"
                                    data-model="occurrence" data-type="date"
                                    data-pk="{{ $occurrence->id }}" data-url="admin/colloque/editItem"
-                                   data-title="Changer le titre">{{ $occurrence->starting_at->format('Y-m-d') }}
+                                   data-title="Changer la date">{{ $occurrence->starting_at->format('Y-m-d') }}
                                 </a>
                             </div>
                             <div class="col-md-1 text-right">

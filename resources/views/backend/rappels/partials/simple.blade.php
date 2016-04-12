@@ -2,7 +2,7 @@
     <td>
         <form action="{{ url('admin/inscription/rappel') }}" method="POST">{!! csrf_field() !!}
             <input type="hidden" name="id" value="{{ $inscription->id }}">
-            <button class="btn btn-warning btn-sm">Générer un rappel</button>
+            <button class="btn btn-brown btn-sm">Générer un rappel</button>
         </form>
     </td>
     <td>

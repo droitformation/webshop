@@ -6,7 +6,10 @@
     <div class="row">
         <div class="col-md-12">
 
-            <p><a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+            <p>
+                <a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                <a class="btn btn-brown pull-right" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}"><i class="fa fa-exclamation-triangle"></i> &nbsp; Tous les rappels</a>
+            </p>
 
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -26,7 +29,7 @@
                     <hr/>
 
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <form action="{{ url('admin/export/inscription') }}" method="POST" class="form-horizontal">
                                 <div class="row">
                                     <input type="hidden" name="_method" value="POST">
@@ -44,34 +47,32 @@
                                             @endforeach
                                         @endif
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4" style="border-right: 1px solid #e6e7e8; padding-right: 15px;">
                                         <h4>Tri</h4>
                                         <div class="radio"><label><input type="radio" name="sort" value="" checked> Normal</label></div>
                                         <div class="radio"><label><input type="radio" name="sort" value="1"> Par options</label></div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="submit" class="btn btn-inverse pull-right"><i class="fa fa-download"></i> &nbsp;Exporter la liste</button>
+                                        <button type="submit" class="btn btn-inverse pull-right" style="margin-top: 5px;"><i class="fa fa-download"></i> &nbsp;Exporter la liste</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <form action="{{ url('admin/export/badges') }}" method="POST" class="form-horizontal">
                                 <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">{!! csrf_field() !!}
-                                <div class="input-group">
-                                    <select class="form-control" name="format">
-                                        @if($badges)
-                                            <optgroup label="Etiquettes">
-                                                @foreach($badges as $code => $config)
-                                                    <option value="pdf|{{$code}}">{{ $config['etiquettes'] }} par page</option>
-                                                @endforeach
-                                            </optgroup>
-                                        @endif
-                                    </select>
-                                    <span class="input-group-btn">&nbsp;
-                                        <button type="submit" class="btn btn-inverse pull-right"><i class="fa fa-files-o"></i> &nbsp;Badges</button>
-                                    </span>
-                                </div><!-- /input-group -->
+                                <h4>Badges</h4>
+
+                                <select class="form-control" name="format">
+                                    @if($badges)
+                                        <optgroup label="Etiquettes">
+                                            @foreach($badges as $code => $config)
+                                                <option value="pdf|{{$code}}">{{ $config['etiquettes'] }} badges par page</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endif
+                                </select>
+                                <br/>
+                                <button type="submit" class="btn btn-primary pull-right" style="margin-top: 5px;"><i class="fa fa-files-o"></i> &nbsp;Générer</button>
+
                             </form>
                         </div>
                     </div>
@@ -82,7 +83,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <h3>Inscriptions  <a class="btn btn-warning btn-sm pull-right" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}">Rappels</a></h3>
+                        <h3>Inscriptions</h3>
                         <table class="table" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                             <thead>
                             <tr>

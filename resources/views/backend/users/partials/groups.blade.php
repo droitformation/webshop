@@ -94,7 +94,7 @@
                             </table>
 
                             <!-- Inscription updates buttons -->
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 10px;">
                                 <div class="col-md-2 line-spacer">
                                     @if($group->doc_facture)
                                         <a target="_blank" href="{{ asset($group->doc_facture) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Facture</a>
