@@ -190,4 +190,9 @@ class Adresse extends Model {
     {
         return $query->where('user_id', '=', $user_id)->where('type', '=', 1);
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Droit\Shop\Order\Entities\Order','adresse_id', 'id');
+    }
 }

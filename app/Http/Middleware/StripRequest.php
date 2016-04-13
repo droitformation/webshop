@@ -19,11 +19,11 @@ class StripRequest
 
         // Validate the adresse if any
         $validator = \Validator::make($request->all(), [
-            'adresse.first_name'     => 'required_without:user_id',
-            'adresse.last_name'      => 'required_without:user_id',
-            'adresse.adresse'        => 'required_without:user_id',
-            'adresse.npa'            => 'required_without:user_id',
-            'adresse.ville'          => 'required_without:user_id',
+            'adresse.first_name'     => 'required_without_all:user_id,adresse_id',
+            'adresse.last_name'      => 'required_without_all:user_id,adresse_id',
+            'adresse.adresse'        => 'required_without_all:user_id,adresse_id',
+            'adresse.npa'            => 'required_without_all:user_id,adresse_id',
+            'adresse.ville'          => 'required_without_all:user_id,adresse_id',
         ], [
             'adresse.first_name.required_without'  => 'Une adresse (prénom) est requise sans utilisateur',
             'adresse.last_name.required_without'   => 'Une adresse (nom) est requise sans utilisateur',

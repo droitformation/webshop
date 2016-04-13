@@ -108,14 +108,21 @@ class OrderMaker implements OrderMakerInterface{
      * */
     public function getUser($order)
     {
-        if(!isset($order['user_id']))
+        if(isset($order['user_id']) || isset($order['adresse_id']))
         {
-            $adresse = $this->adresse->create($order['adresse']);
-            return ['adresse_id' => $adresse->id];
+            if(isset($order['user_id']))
+            {
+                return ['user_id' => $order['user_id']];
+            }
+            else
+            {
+                return ['adresse_id' => $order['adresse_id']];
+            }
         }
         else
         {
-            return ['user_id' => $order['user_id']];
+            $adresse = $this->adresse->create($order['adresse']);
+            return ['adresse_id' => $adresse->id];
         }
     }
 

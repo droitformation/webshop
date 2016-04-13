@@ -24,9 +24,22 @@
                             <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher un utilisateur</a>
                             <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter une adresse</a>
 
-                            <div class="collapse" id="adresseFind" style="width: 400px;">
-                                <!-- Search user autocomplete -->
-                                @include('backend.partials.search-user')
+                            <div class="collapse {{ !empty(old('type')) ? 'in' : '' }}" id="adresseFind" style="width: 400px;">
+
+                                <!-- Autocomplete for adresse -->
+                                <div class="autocomplete-wrapper">
+                                    <?php $type = old('type'); ?>
+                                    <?php $uid  = !empty($type) ? old(old('type')) : ''; ?>
+                                    <div class="input-adresse" data-uid="{{ $uid }}" data-type="{{ old('type') }}"></div>
+                                    <div class="choice-adresse"></div>
+                                    <div class="adresse-find">
+                                        <div class="form-group">
+                                            <input id="search-adresse1" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Autocomplete for adresse -->
+
                             </div>
                             <div class="collapse {{ !empty(Session::get('adresse')) ? 'in' : '' }}" id="adresseMake">
                                 <div class="row">

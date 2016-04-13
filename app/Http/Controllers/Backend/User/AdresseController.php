@@ -58,7 +58,6 @@ class AdresseController extends Controller {
         return redirect('adresse/'.$adresse->id);
     }
 
-
     public function convert(Request $request)
     {
         $adresse = $this->adresse->find($request->input('id'));
@@ -85,6 +84,12 @@ class AdresseController extends Controller {
         $user = $this->user->create($data);
 
         $this->adresse->update(['id' => $adresse->id, 'user_id' => $user->id, 'livraison' => 1]);
+
+        // Assign all orders to new user
+        if(!$adresse->orders->isEmpty())
+        {
+
+        }
 
         return redirect('admin/user/'.$user->id);
 

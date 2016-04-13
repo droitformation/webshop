@@ -64,9 +64,14 @@ class AdresseController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $adresse = $this->adresse->find($id);
+
+        if($request->ajax())
+        {
+            return response()->json($adresse);
+        }
 
         return view('adresse.show')->with(array( 'adresse' => $adresse ));
     }
@@ -92,13 +97,11 @@ class AdresseController extends Controller {
      */
     public function ajaxUpdate($id,Request $request)
     {
-
         $data    = $this->format->convertSerializedData($request->all());
         $adresse = $this->adresse->update($data);
         $user    = $this->user->find($data['user_id']);
 
         echo view('shop.partials.user-livraison', ['user' => $user]);
-
     }
 
     /**
@@ -112,6 +115,15 @@ class AdresseController extends Controller {
         $this->adresse->delete($id);
 
         return redirect('/')->with(array('status' => 'success', 'message' => 'Adresse supprimé' ));
+    }
+
+    public function getAdresse($id)
+    {
+        $adresse = $this->adresse->find($id);
+
+        return $adresse;
+
+        die();
     }
 
 }

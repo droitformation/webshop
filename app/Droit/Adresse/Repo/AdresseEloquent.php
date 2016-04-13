@@ -155,7 +155,7 @@ class AdresseEloquent implements AdresseInterface{
 	 */
 	public function find($id){
 				
-		return $this->adresse->where('id','=',$id)->with(array('user'))->get()->first();
+		return $this->adresse->with(['user','orders'])->find($id);
 	}
 	
 	/**

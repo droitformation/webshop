@@ -14,7 +14,7 @@ $('input.search-adresse').each(function()
     var adresse = $input.data('adresse');
     var type    = $input.data('type');
 
-    if(adresse)
+  /*  if(adresse)
     {
         $.get( "admin/adresse/" + adresse , function( data )
         {
@@ -22,7 +22,7 @@ $('input.search-adresse').each(function()
             $find.removeClass('in');
             $input.find('input').val(adresse);
         });
-    }
+    }*/
 
     $( "#" + idAutocomplete ).autocomplete({
         source    : base_url + 'admin/search/adresse',
@@ -31,7 +31,7 @@ $('input.search-adresse').each(function()
         {
              var data = ui.item.adresse;
 
-             $input.html('<input type="hidden" value="' + data.id + '" name="' + type + '">');
+             $input.html('<input type="hidden" value="' + ui.item.value + '" name="' + ui.item.type + '"><input type="hidden" value="' + ui.item.type + '" name="type">');
 
              var html = template(data, type);
 
@@ -64,6 +64,32 @@ function template(data, type)
 
     return html;
 }
+
+var $search = $('.input-adresse');
+
+if($search.length)
+{
+    var $wrapper = $search.closest('.autocomplete-wrapper');
+    var $choice  = $wrapper.find('.choice-adresse');
+
+    var uid  = $search.data('uid');
+    var type = $search.data('type');
+
+    var res  = type.replace("_id", "");
+
+    console.log('admin/' + res + '/getAdresse/' + uid);
+
+    if(uid)
+    {
+        $.get( 'admin/' + res + '/getAdresse/' + uid , function( data )
+        {
+            console.log(data);
+            $choice.html(template(data));
+            $search.html('<input type="hidden" value="' + uid + '" name="' + type + '"><input type="hidden" value="' + type + '" name="type">');
+        });
+    }
+}
+
 
 $('body').on('click','.remove-adresse', function(e) {
     e.preventDefault();

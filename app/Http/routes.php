@@ -154,6 +154,9 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('search', 'Backend\SearchController@search');
 
+        Route::get('user/getAdresse/{id}', 'Api\User\UserController@getAdresse');
+        Route::get('adresse/getAdresse/{id}', 'Api\User\AdresseController@getAdresse');
+
         Route::resource('faq', 'Backend\Bail\FaqController');
         Route::get('question/create/{categorie}', 'Backend\Bail\QuestionController@create');
         Route::resource('question', 'Backend\Bail\QuestionController');

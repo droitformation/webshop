@@ -462,7 +462,8 @@ class Helper {
                     $data[] = [
                         'label'    => $result->name ,
                         'desc'     => $result->email,
-                        'value'    => $result->id,
+                        'value'    => ($adresse->user_id > 0 ? $adresse->user_id : $adresse->id),
+                        'type'     => ($adresse->user_id > 0 ? 'user_id' : 'adresse_id'),
                         'adresse'  => $adresse,
                         'civilite' => $adresse->civilite_title,
                         'cp'       => $adresse->cp_trim

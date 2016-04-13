@@ -7,6 +7,7 @@ class ProductTest extends \TestCase {
     protected $mockcart;
     protected $mockorder;
     protected $generator;
+    protected $adresse;
 
     public function setUp()
     {
@@ -25,6 +26,9 @@ class ProductTest extends \TestCase {
 
         $this->generator = Mockery::mock('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->app->instance('App\Droit\Generate\Pdf\PdfGeneratorInterface', $this->generator);
+
+        $this->adresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
+        $this->app->instance('App\Droit\Adresse\Repo\AdresseInterface', $this->adresse);
 
     }
 
@@ -328,6 +332,32 @@ class ProductTest extends \TestCase {
         $this->generator->shouldReceive('factureOrder')->once();
 
         $make->make($data);
+
+    }
+
+    public function testGetUserOrCreateAdresseFromOrder()
+    {
+        $make    = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->make(['id' => 2]);
+
+        // Create a new adresse
+        $data = ['adresse' => []];
+
+        $this->adresse->shouldReceive('create')->once()->andReturn($adresse);
+
+        $make->getUser($data);
+
+        // Adresse id
+        $data2    = ['adresse_id' => 12];
+        $response = $make->getUser($data2);
+
+        $this->assertEquals($data2, $response);
+
+        // User id
+        $data3    = ['user_id' => 12];
+        $response = $make->getUser($data3);
+
+        $this->assertEquals($data3, $response);
 
     }
 }

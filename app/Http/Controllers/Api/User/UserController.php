@@ -59,9 +59,14 @@ class UserController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $user = $this->user->find($id);
+
+        if($request->ajax())
+        {
+            return response()->json($user);
+        }
 
         return view('users.show')->with(array( 'user' => $user ));
     }
@@ -94,4 +99,12 @@ class UserController extends Controller {
         return redirect('/')->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
     }
 
+    public function getAdresse($id)
+    {
+        $user    = $this->user->find($id);
+        $adresse = $user->adresse_livraison ? $user->adresse_livraison : '';
+
+        return $adresse;
+        die();
+    }
 }
