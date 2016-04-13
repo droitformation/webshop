@@ -38,11 +38,9 @@
 
                                 <!-- Autocomplete for adresse -->
                                 <div class="autocomplete-wrapper">
-                                    <div class="input-adresse" data-adresse="{{ old('adresse_id') }}" data-type="adresse_id">
-                                        <input type="hidden" class="form-control" value="" name="adresse_id">
-                                    </div>
+                                    <div class="input-adresse" data-adresse="{{ old('adresse_id') }}" data-type="adresse_id"></div>
                                     <div class="choice-adresse"></div>
-                                    <div class="collapse in adresse-find">
+                                    <div class="collapse in adresse-find adresse-find-abo">
                                         <div class="form-group">
                                             <input id="search-adresse1" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
                                         </div>
@@ -59,11 +57,9 @@
 
                                 <!-- Autocomplete for tiers adresse -->
                                 <div class="autocomplete-wrapper">
-                                    <div class="input-adresse" data-adresse="{{ old('tiers_id') }}" data-type="tiers_id">
-                                        <input type="hidden" class="form-control" value="" name="tiers_id">
-                                    </div>
+                                    <div class="input-adresse" data-adresse="{{ old('tiers_id') }}" data-type="tiers_id"></div>
                                     <div class="choice-adresse"></div>
-                                    <div class="collapse in adresse-find">
+                                    <div class="collapse in adresse-find adresse-find-abo">
                                         <div class="form-group">
                                             <input id="search-adresse2" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
                                         </div>

@@ -77,11 +77,17 @@ class AboFactureController extends Controller {
 
     public function update(Request $request, $id)
     {
-        $facture    = $this->facture->update($request->except('price'));
-        $abonnement = $this->abonnement->find($facture->abo_user_id);
+        $facture = $this->facture->update($request->except('price'));
 
-        $abonnement->price = $request->input('price') * 100;
-        $abonnement->save();
+        // update the price of the abo and remake invoice
+        $price = $request->input('price',null);
+
+        if($price)
+        {
+            $abonnement = $this->abonnement->find($facture->abo_user_id);
+            $abonnement->price = $request->input('price') * 100;
+            $abonnement->save();
+        }
 
         $this->worker->make($facture->id);
 
@@ -104,4 +110,19 @@ class AboFactureController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => 'La création des factures est en cours' ));
     }
 
+    /**
+     * @return Response
+     */
+    public function editItem(Request $request)
+    {
+        $model = $request->input('model');
+        $item  = $this->$model->update(['id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
+
+        if($item)
+        {
+            return response('OK', 200);
+        }
+
+        return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+    }
 }

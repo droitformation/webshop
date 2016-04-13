@@ -82,7 +82,7 @@
             <tr>
                 <td width="10%"></td>
                 <td width="80%" align="middle">
-                    <small>Conditions de paiement {{ \Registry::get('shop.abo.days') }} jours net</small>
+                    <small>Conditions de paiement {{ \Registry::get('abo.days') }} jours net</small>
                 </td>
                 <td width="10%"></td>
             </tr>

@@ -14,16 +14,6 @@ $('input.search-adresse').each(function()
     var adresse = $input.data('adresse');
     var type    = $input.data('type');
 
-  /*  if(adresse)
-    {
-        $.get( "admin/adresse/" + adresse , function( data )
-        {
-            $choice.html(template(data));
-            $find.removeClass('in');
-            $input.find('input').val(adresse);
-        });
-    }*/
-
     $( "#" + idAutocomplete ).autocomplete({
         source    : base_url + 'admin/search/adresse',
         minLength : 3,
@@ -31,9 +21,12 @@ $('input.search-adresse').each(function()
         {
              var data = ui.item.adresse;
 
-             $input.html('<input type="hidden" value="' + ui.item.value + '" name="' + ui.item.type + '"><input type="hidden" value="' + ui.item.type + '" name="type">');
+             var uid  = type == 'adresse_id' || 'tiers_id' ? data.id : ui.item.value;
+             var name = type == 'adresse_id' || 'tiers_id' ? type : 'user_id'
 
-             var html = template(data, type);
+             $input.html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + name + '" name="type">');
+
+             var html = template(data, ui.item.type);
 
              $choice.html(html);
              $find.removeClass('in');

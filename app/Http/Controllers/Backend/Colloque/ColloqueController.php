@@ -370,7 +370,7 @@ class ColloqueController extends Controller
 
          return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
     }
-    
+
     /**
      *
      * @param  int  $id

@@ -147,7 +147,6 @@
                             @endforeach
                         @endif
 
-
                         <h4>Créer une facture</h4>
                         <form action="{{ url('admin/facture') }}" method="POST">
                             {!! csrf_field() !!}
