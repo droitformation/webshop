@@ -36,7 +36,8 @@ class AboWorker implements AboWorkerInterface{
         // All abonnements for the product
         if(!$abo->abonnements->isEmpty())
         {
-            $chunks = $abo->abonnements->chunk(20);
+            $abonnes = $abo->abonnements->whereIn('status',['abonne']);
+            $chunks  = $abonnes->chunk(20);
 
             foreach($chunks as $chunk)
             {

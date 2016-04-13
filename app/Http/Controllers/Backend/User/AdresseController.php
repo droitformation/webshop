@@ -81,14 +81,21 @@ class AdresseController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Create user account
         $user = $this->user->create($data);
 
+        // update adresse with user_id
         $this->adresse->update(['id' => $adresse->id, 'user_id' => $user->id, 'livraison' => 1]);
 
         // Assign all orders to new user
         if(!$adresse->orders->isEmpty())
         {
-
+            foreach($adresse->orders as $order)
+            {
+                $order->adresse_id = null;
+                $order->user_id    = $user->id;
+                $order->save();
+            }
         }
 
         return redirect('admin/user/'.$user->id);

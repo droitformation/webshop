@@ -218,7 +218,7 @@ class Generate{
                 \File::makeDirectory(public_path($path));
             }
 
-            $file = $path.'/'.$annexe.'_'.$this->model->product->reference.'-'.$this->model->abo_user_id.'_'.$this->model->id.'.pdf';
+            $file = $path.'/'.$annexe.'_'.$this->model->product->reference.'-'.$this->model->abo_user_id.'_'.$this->model->product_id.'.pdf';
 
             return public_path($file);
         }

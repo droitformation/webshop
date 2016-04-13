@@ -82,31 +82,21 @@ Route::get('testing', function() {
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
 
     $colloque = $colloques->find(39);
-    $adresse  = $adresses->find(4674);
+    $adresse  = $adresses->find(6005);
     $user     = $users->find(710);
 
-
-    if(!$colloque->specialisations->isEmpty())
+    if(!$adresse->orders->isEmpty())
     {
-        $specialisations = $colloque->specialisations->lists('id')->all();
+        foreach($adresse->orders as $order)
+        {
+            echo '<pre>';
+            print_r($order);
+            echo '</pre>';
 
-        echo '<pre>';
-        print_r($specialisations);
-        echo '</pre>';
-
-        $worker->specialisation(39, $user);
-
-        echo '<pre>';
-        print_r($user->adresse_contact);
-        echo '</pre>';exit;
-
-        $add =  array_unique(array_merge($exist,$specialisations));
-
-        echo '<pre>';
-        print_r($add);
-        echo '</pre>';
-
+        }
     }
+
+
 
     //$generator->stream = true;
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
