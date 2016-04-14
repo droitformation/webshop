@@ -206,7 +206,16 @@ class Generate{
 
         if($annexe == 'rappel')
         {
-            return public_path($path.$name.'.pdf');
+            $path = 'files/abos/'.$annexe.'/'.$this->model->product_id;
+
+            if (!\File::exists(public_path($path)))
+            {
+                \File::makeDirectory(public_path($path));
+            }
+
+            $file = $path.'/'.$name.'_'.$this->model->id.'.pdf';
+
+            return public_path($file);
         }
 
         if($this->getType() == 'abo')

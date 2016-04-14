@@ -22,7 +22,7 @@ $('input.search-adresse').each(function()
              var data = ui.item.adresse;
 
              var uid  = type == 'adresse_id' || 'tiers_id' ? data.id : ui.item.value;
-             var name = type == 'adresse_id' || 'tiers_id' ? type : 'user_id'
+             var name = type == 'adresse_id' || 'tiers_id' ? type : 'user_id';
 
              $input.html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + name + '" name="type">');
 
@@ -62,25 +62,26 @@ var $search = $('.input-adresse');
 
 if($search.length)
 {
-    var $wrapper = $search.closest('.autocomplete-wrapper');
-    var $choice  = $wrapper.find('.choice-adresse');
-
-    var uid  = $search.data('uid');
-    var type = $search.data('type');
-
-    var res  = type.replace("_id", "");
-
-    console.log('admin/' + res + '/getAdresse/' + uid);
-
-    if(uid)
+    $search.each(function()
     {
-        $.get( 'admin/' + res + '/getAdresse/' + uid , function( data )
+        var $wrapper = $(this).closest('.autocomplete-wrapper');
+        var $choice  = $wrapper.find('.choice-adresse');
+
+        var uid  = $(this).data('uid');
+        var type = $(this).data('type');
+        var name = type == 'adresse_id' || 'tiers_id' ? 'adresse_id' : 'user_id';
+        var res  = name.replace("_id", "");
+
+        if(uid)
         {
-            console.log(data);
-            $choice.html(template(data));
-            $search.html('<input type="hidden" value="' + uid + '" name="' + type + '"><input type="hidden" value="' + type + '" name="type">');
-        });
-    }
+            $.get( 'admin/' + res + '/getAdresse/' + uid , function( data )
+            {
+                $choice.html(template(data));
+                $(this).html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + name + '" name="type">');
+                $wrapper.find('.adresse-find').removeClass('in');
+            });
+        }
+    });
 }
 
 

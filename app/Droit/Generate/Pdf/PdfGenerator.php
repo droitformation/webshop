@@ -119,7 +119,7 @@ class PdfGenerator implements PdfGeneratorInterface
 
     }
 
-    public function makeAbo($document, $model, $rappel = null)
+    public function makeAbo($document, $model, $rappel = null, $rappel_model = null)
     {
         $data     = $this->getData('abo');
         $generate = new \App\Droit\Generate\Entities\Generate($model);
@@ -131,9 +131,10 @@ class PdfGenerator implements PdfGeneratorInterface
 
         // Do wee need to stream or save the pdf
         $state    = ($this->stream ? 'stream' : 'save');
+        $name     = ($rappel ? 'rappel_'.$rappel_model->id : $document);
 
         // Path for saving document
-        $filepath = $generate->getFilename($document, $document);
+        $filepath = $generate->getFilename($document, $name);
 
         return $view->$state($filepath);
     }

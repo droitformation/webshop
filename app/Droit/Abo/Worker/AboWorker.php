@@ -63,7 +63,7 @@ class AboWorker implements AboWorkerInterface{
             $rappels = $rappels->count();
         }
 
-        $this->generator->makeAbo('facture', $facture, $rappels);
+        $this->generator->makeAbo('facture', $facture, $rappels, $rappel);
     }
 
     /**

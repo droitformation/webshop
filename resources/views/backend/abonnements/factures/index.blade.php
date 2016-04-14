@@ -88,10 +88,8 @@
                                     </td>
                                     <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
                                     <td>
-                                        <?php $file = $product->id.'/facture_'.$product->reference.'-'.$facture->abo_user_id.'_'.$facture->id.'.pdf'; ?>
-
-                                        @if(File::exists(public_path('files/abos/facture/'.$file)))
-                                            <a class="btn btn-sm btn-default" target="_blank" href="{{ asset('files/abos/facture/'.$file) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                        @if($facture->abo_facture)
+                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
                                         @endif
                                     </td>
                                     <td>

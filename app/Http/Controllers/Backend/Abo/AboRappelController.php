@@ -33,7 +33,7 @@ class AboRappelController extends Controller {
         $rappels = $this->rappel->findByFacture($request->abo_facture_id);
         $rappels = $rappels->count();
 
-        $this->generator->makeAbo('rappel', $rappel->facture, $rappels);
+        $this->generator->makeAbo('rappel', $rappel->facture, $rappels, $rappel);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'La rappel a été crée' ));
 	}

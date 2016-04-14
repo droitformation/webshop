@@ -29,10 +29,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 col-xs-12 control-label">Adresse</label>
                             <div class="col-sm-8 col-xs-12">
-
-                                <!-- Autocomplete for user adresse -->
+                                <!-- Autocomplete for tiers adresse -->
                                 @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->adresse_id, 'type' => 'adresse_id'])
-
                             </div>
                         </div>
 
@@ -123,7 +121,6 @@
 
                                 <!-- Start factures for product-->
                                 <div class="well well-sm">
-
                                     <h4>
                                         <a class="collapse_anchor" data-toggle="collapse" href="#facture_{{ $product->id }}">
                                             <i class="fa fa-arrow-circle-right"></i>&nbsp;{{ $product->title }}
@@ -136,11 +133,11 @@
                                             @endforeach
 
                                             @if(!$facture->rappels->isEmpty())
+                                                <hr/>
                                                 @include('backend.abonnements.partials.rappels', ['rappels' => $facture->rappels])
                                             @endif
                                         @endif
                                     </div>
-
                                 </div>
                                 <!-- End factures for product-->
 

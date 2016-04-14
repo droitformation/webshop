@@ -64,7 +64,7 @@ class AboFactureController extends Controller {
 
         if($type == 'rappel')
         {
-            $this->worker->make($request->input('abo_facture_id'), true);
+            $this->worker->make($request->input('abo_facture_id'), $item);
         }
         else
         {
@@ -120,7 +120,7 @@ class AboFactureController extends Controller {
 
         if($item)
         {
-            return response('OK', 200);
+            return response()->json(['OK' => 200, 'etat' => ($item->payed_at ? 'Payé' : 'En attente'), 'color' => ($item->payed_at ? 'success' : 'default')]);
         }
 
         return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
