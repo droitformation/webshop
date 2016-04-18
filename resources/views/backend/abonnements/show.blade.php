@@ -121,23 +121,17 @@
 
                                 <!-- Start factures for product-->
                                 <div class="well well-sm">
-                                    <h4>
-                                        <a class="collapse_anchor" data-toggle="collapse" href="#facture_{{ $product->id }}">
-                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;{{ $product->title }}
-                                        </a>
-                                    </h4>
-                                    <div class="collapse" id="facture_{{ $product->id }}">
-                                        @if(isset($groupes[$product->id]))
-                                            @foreach($groupes[$product->id] as $facture)
-                                                @include('backend.abonnements.partials.facture', ['facture' => $facture])
-                                            @endforeach
+                                    <h4><i class="fa fa-arrow-circle-right"></i>&nbsp;{{ $product->title }}</h4>
+                                    @if(isset($groupes[$product->id]))
+                                        @foreach($groupes[$product->id] as $facture)
+                                            @include('backend.abonnements.partials.facture', ['facture' => $facture])
+                                        @endforeach
 
-                                            @if(!$facture->rappels->isEmpty())
-                                                <hr/>
-                                                @include('backend.abonnements.partials.rappels', ['rappels' => $facture->rappels])
-                                            @endif
+                                        @if(!$facture->rappels->isEmpty())
+                                            <hr/>
+                                            @include('backend.abonnements.partials.rappels', ['rappels' => $facture->rappels])
                                         @endif
-                                    </div>
+                                    @endif
                                 </div>
                                 <!-- End factures for product-->
 

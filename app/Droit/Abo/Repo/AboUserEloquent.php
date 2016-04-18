@@ -68,12 +68,16 @@ class AboUserEloquent implements AboUserInterface{
         return $abo_user;
     }
 
+    public function restore($id)
+    {
+        return $this->abo_user->withTrashed()->find($id)->restore();
+    }
+
     public function delete($id){
 
         $abo_user = $this->abo_user->find($id);
 
         return $abo_user->delete();
-
     }
 
     public function makeFacture($data)

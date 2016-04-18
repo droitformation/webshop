@@ -141,4 +141,10 @@ class AboController extends Controller {
 
     }
 
+    public function desinscription($id)
+    {
+        $abo = $this->abo->find($id);
+
+        return view('backend.abos.desinscription')->with(['abo' => $abo]);
+    }
 }

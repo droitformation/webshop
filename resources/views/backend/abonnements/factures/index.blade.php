@@ -1,51 +1,46 @@
 @extends('backend.layouts.master')
 @section('content')
-
-    <div class="row" style="margin-bottom: 10px;">
-        <div class="col-md-2">
-            <p><a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
-        </div>
-        <div class="col-md-8">
-            <img class="thumbnail" style="height: 60px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
-            <h3 style="margin: 0;">{{ $abo->title }}</h3>
-            <p>&Eacute;dition {{ $product->reference }}</p>
-        </div>
-        <div class="col-md-2 text-right">
-            <p><a href="{{ url('admin/facture/generate/'.$product->id) }}" class="btn btn-warning">Generate</a></p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2 col-xs-12">
-            <div class="panel panel-midnightblue">
-                <div class="panel-body" style="padding-bottom: 5px;">
-
+    <p><a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+    <div class="panel panel-default">
+        <div class="panel-body" style="padding-bottom: 10px;">
+            <div class="row">
+                <div class="col-md-2">
+                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
+                    <h3 style="margin-bottom:0;line-height:24px">{{ $abo->title }}</h3>
+                    <p style="margin-bottom: 8px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
+                </div>
+                <div class="col-md-10 text-right">
                     <form action="{{ url('admin/abonnement/export') }}" method="POST" class="form-inline">{!! csrf_field() !!}
                         <input type="hidden" name="edition" value="{{ $product->edition }}">
                         <input type="hidden" name="reference" value="{{ $product->reference }}">
                         <input type="hidden" name="abo_id" value="{{ $abo->id }}">
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <p>
-                            <select class="form-control" style="width:100%" name="type">
+                            <select class="form-control" name="type">
                                 <option value="facture">Toutes les factures</option>
                                 <option value="rappel">Tous les rappels</option>
                             </select>
+                            <button class="btn btn-info"><i class="fa fa-download"></i> &nbsp;Exporter et lier</button>
+                            <span class="btn-left-space">|</span>
+                            <a href="{{ url('admin/facture/generate/'.$product->id) }}" class="btn btn-warning">Générer toutes les factures</a>
                         </p>
-                        <p><button class="btn btn-info btn-block"><i class="fa fa-download"></i> &nbsp;Exporter et lier</button></p>
                     </form>
-
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-xs-12">
+
             <div class="panel panel-midnightblue">
                 <div class="panel-body" style="padding-bottom: 0;">
-                    <h4 style="margin-top: 0;">Factures liés</h4>
+                    <h4 style="margin-bottom: 10px; margin-top: 0;">Factures liés</h4>
                     @if(!empty($files))
                         <div class="list-group">
                             @foreach($files as $file)
                                 <?php $name = explode('/',$file); ?>
-                                <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="list-group-item">
-                                    <i class="fa fa-download"></i>&nbsp; {{ end($name) }}
-                                </a>
+                                <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="list-group-item"><i class="fa fa-download"></i>&nbsp; {{ end($name) }}</a>
                             @endforeach
                         </div>
                     @endif
@@ -54,10 +49,8 @@
         </div>
         <div class="col-md-10 col-xs-12">
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-folder-open"></i> Factures</h4>
-                </div>
                 <div class="panel-body">
+                    <h3 style="margin-bottom: 30px;">Factures pour l'&eacute;dition {{ $product->reference.' '.$product->edition }}</h3>
                     <table class="table simple-table">
                         <thead>
                             <tr>
@@ -75,7 +68,7 @@
                         @if(!$factures->isEmpty())
                             @foreach($factures as $facture)
                                 <tr>
-                                    <td><a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-info">éditer</a></td>
+                                    <td><a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a></td>
                                     <td>{{ $facture->abonnement->numero }}</td>
                                     <td>
                                         @if($facture->abonnement->user)

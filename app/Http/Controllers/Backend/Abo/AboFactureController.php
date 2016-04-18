@@ -107,7 +107,7 @@ class AboFactureController extends Controller {
 
         $this->worker->generate($abo, $product_id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La création des factures est en cours' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'La création des factures est en cours. <br/> Un email vous sera envoyé dès que la génération des factures sera terminée.' ));
     }
 
     /**

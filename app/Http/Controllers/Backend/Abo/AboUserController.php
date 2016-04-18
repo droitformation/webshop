@@ -92,7 +92,7 @@ class AboUserController extends Controller {
     {
         $this->abonnement->restore($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonnemebt a été restauré' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonnement a été restauré' ));
     }
 
 }

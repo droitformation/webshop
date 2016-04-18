@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
         </div>
@@ -15,16 +15,13 @@
         <div class="col-md-9">
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Ajouter un abonné</h4>
-                </div>
                 <form action="{{ url('admin/abonnement') }}" method="POST" class="form-horizontal">
                     {!! csrf_field() !!}
 
                     <?php $numero = $abo->abonnements->max('numero') + 1; ?>
 
                     <div class="panel-body">
-
+                        <h4>Ajouter un abonné</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
                             <div class="col-sm-4 col-xs-5">

@@ -338,6 +338,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('rappel', 'Backend\Abo\AboRappelController');
         Route::post('facture/editItem', 'Backend\Abo\AboFactureController@editItem');
         Route::resource('facture', 'Backend\Abo\AboFactureController');
+
+        Route::get('abo/desinscription/{id}', 'Backend\Abo\AboController@desinscription');
         Route::resource('abo', 'Backend\Abo\AboController');
 
         /*
