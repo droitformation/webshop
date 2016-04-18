@@ -95,7 +95,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
 
         /* Update user adresse via ajax  */
-        Route::resource('adresse', 'Api\User\AdresseController');
         Route::post('ajax/adresse/{id}', 'Api\User\AdresseController@ajaxUpdate');
 
     });

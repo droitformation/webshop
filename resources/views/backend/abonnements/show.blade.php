@@ -18,7 +18,7 @@
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                     <div class="panel-body">
-                        <h4><i class="fa fa-edit"></i> &nbsp;Editer abonnement</h4>
+                        <h4><i class="fa fa-edit"></i> &nbsp;</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
                             <div class="col-sm-4 col-xs-5">
@@ -121,7 +121,7 @@
 
                                 <!-- Start factures for product-->
                                 <div class="well well-sm">
-                                    <h4><i class="fa fa-arrow-circle-right"></i>&nbsp;{{ $product->title }}</h4>
+                                    <h4><i class="fa fa-arrow-circle-right"></i>&nbsp;{{ $product->title }} {{ $product->reference }} {{ $product->edition }}</h4>
                                     @if(isset($groupes[$product->id]))
                                         @foreach($groupes[$product->id] as $facture)
                                             @include('backend.abonnements.partials.facture', ['facture' => $facture])

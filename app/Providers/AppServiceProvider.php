@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider {
                 'backend.orders.partials.adresse',
                 'backend.inscriptions.colloque',
                 'backend.inscriptions.desinscription',
-                'backend.adresses.adresse',
+                'backend.adresses.*',
                 'auth.register'
             ], 'App\Http\ViewComposers\UserAttributeComposer');
 

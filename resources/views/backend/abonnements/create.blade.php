@@ -12,7 +12,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
 
             <div class="panel panel-midnightblue">
                 <form action="{{ url('admin/abonnement') }}" method="POST" class="form-horizontal">
@@ -106,14 +106,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Réference</label>
-                            <div class="col-sm-8 col-xs-8">
+                            <div class="col-sm-7 col-xs-8">
                                 <input type="text" class="form-control" value="" name="reference">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Remarque</label>
-                            <div class="col-sm-8 col-xs-12">
+                            <div class="col-sm-7 col-xs-12">
                                 <textarea class="form-control redactorSimple" name="remarque"></textarea>
                             </div>
                         </div>

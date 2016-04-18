@@ -16,7 +16,7 @@
             <form action="{{ url('admin/user') }}" method="post" id="register" class="form-horizontal">
 
                 <div class="panel-body event-info">
-                    <h4>Ajouter un compte/utilisateur</h4>
+                    <h3>Ajouter un compte/utilisateur</h3>
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Prénom</label>
                         <div class="col-sm-6">

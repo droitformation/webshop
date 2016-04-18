@@ -8,6 +8,9 @@
         <li class="<?php echo (Request::is('admin') ? 'active' : '' ); ?>"><a href="{{ url('admin') }}">
             <i class="fa fa-home"></i> <span>Accueil</span></a>
         </li>
+        <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur (et admin)</span></a></li>
+        <li><a href="{{ url('admin/adresse/create') }}"><i class="fa fa-street-view"></i><span>Ajouter une adresse</span></a></li>
+
         <li class="<?php echo (Request::is('admin/config') || Request::is('admin/config/*') ? 'active' : '' ); ?>">
             <a href="javascript:;"><i class="fa fa-cog"></i><span>Configurations</span></a>
             <ul class="acc-menu">
@@ -19,16 +22,6 @@
         <li class="<?php echo (Request::is('admin/reminder') || Request::is('admin/reminder/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/reminder') }}">
                 <i class="fa fa-bolt"></i> <span>Rappels</span>
-            </a>
-        </li>
-        <li class="<?php echo (Request::is('admin/location') || Request::is('admin/location/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/location') }}">
-                <i class="fa fa-map-marker"></i> <span>Lieux</span>
-            </a>
-        </li>
-        <li class="<?php echo (Request::is('admin/organisateur') || Request::is('admin/organisateur/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/organisateur') }}">
-                <i class="fa fa-certificate"></i> <span>Organisateur</span>
             </a>
         </li>
         <li class="nav-title">Comptes</li>
@@ -46,6 +39,16 @@
         <li class="<?php echo (Request::is('admin/inscription/create') || Request::is('admin/inscription/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/inscription/create') }}">
                 <i class="fa fa-table"></i> <span>Inscription</span>
+            </a>
+        </li>
+        <li class="<?php echo (Request::is('admin/location') || Request::is('admin/location/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/location') }}">
+                <i class="fa fa-map-marker"></i> <span>Lieux</span>
+            </a>
+        </li>
+        <li class="<?php echo (Request::is('admin/organisateur') || Request::is('admin/organisateur/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/organisateur') }}">
+                <i class="fa fa-certificate"></i> <span>Organisateur</span>
             </a>
         </li>
         <li class="nav-title">Shop</li>
@@ -98,7 +101,6 @@
                 <li class="<?php echo (Request::is('admin/liste') ? 'active' : '' ); ?>"><a href="{{ url('admin/liste')  }}">Liste hors campagnes</a></li>
             </ul>
         </li>
-        <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur admin</span></a></li>
     </ul>
     <!-- END SIDEBAR MENU -->
 </nav>

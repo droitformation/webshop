@@ -11,15 +11,12 @@
         <div class="col-md-9">
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;&Eacute;diter facture</h4>
-                </div>
                 <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
-
+                        <h3>&Eacute;diter facture</h3>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Statut</label>
                             <div class="col-sm-3 col-xs-6">
@@ -42,13 +39,6 @@
                             <label class="col-sm-3 control-label">Date de payement</label>
                             <div class="col-sm-3 col-xs-6">
                                 <input type="text" class="form-control datePicker" value="{{ $facture->payed_at ? $facture->payed_at->format('Y-m-d') : '' }}" name="payed_at">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Prix</label>
-                            <div class="col-sm-3 col-xs-6">
-                                <input type="text" class="form-control" value="{{ $abonnement->price_cents }}" name="price">
                             </div>
                         </div>
 

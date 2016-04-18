@@ -34,6 +34,11 @@ class AboFactureEloquent implements AboFactureInterface{
         return null;
     }
 
+    public function findByProduct($product_id)
+    {
+        return $this->facture->where('product_id','=',$product_id)->whereNull('payed_at')->get();
+    }
+
     public function create(array $data){
 
         $facture = $this->facture->create(array(

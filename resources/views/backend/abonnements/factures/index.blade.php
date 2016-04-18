@@ -68,7 +68,7 @@
                         @if(!$factures->isEmpty())
                             @foreach($factures as $facture)
                                 <tr>
-                                    <td><a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a></td>
+                                    <td><a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-brown"><i class="fa fa-edit"></i></a></td>
                                     <td>{{ $facture->abonnement->numero }}</td>
                                     <td>
                                         @if($facture->abonnement->user)

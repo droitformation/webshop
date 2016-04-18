@@ -20,16 +20,13 @@
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Titre</label>
-        <div class="col-sm-7">
-            <label class="radio-inline">
-                &nbsp;<input type="radio" data-parsley-required name="civilite_id" {{ $adresse->civilite_id == 1 ? 'checked' : ''}} value="1"> Monsieur&nbsp;
-            </label>
-            <label class="radio-inline">
-                &nbsp;<input type="radio" data-parsley-required name="civilite_id" {{ $adresse->civilite_id == 2 ? 'checked' : ''}} value="2"> Madame&nbsp;
-            </label>
-            <label class="radio-inline">
-                <input type="radio" data-parsley-required name="civilite_id" {{ $adresse->civilite_id == 3 ? 'checked' : ''}} value="3"> Me
-            </label>
+        <div class="col-sm-4">
+            <select class="form-control" name="civilite_id">
+                <option {{ $adresse->type == 1 ? 'checked' : '' }} value="1">Monsieur</option>
+                <option {{ $adresse->type == 2 ? 'checked' : '' }} value="2">Madame</option>
+                <option {{ $adresse->type == 3 ? 'checked' : '' }} value="3">Me</option>
+                <option {{ $adresse->type == 4 ? 'checked' : '' }} value="4"></option>
+            </select>
         </div>
     </div>
     <div class="form-group">
@@ -63,15 +60,15 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-4 control-label">Case Postale</label>
+        <label class="col-sm-4 control-label">CP</label>
         <div class="col-sm-3 col-xs-6">
-            <input type="text" name="cp" class="form-control" value="{{ $adresse->cp }}" placeholder="Case Postale">
+            <input type="text" name="cp" class="form-control" value="{{ $adresse->cp }}" placeholder="CP">
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-4 control-label">Code postal</label>
+        <label class="col-sm-4 control-label">NPA</label>
         <div class="col-sm-3 col-xs-6">
-            <input type="text" name="npa" data-parsley-required class="form-control form-required" value="{{ $adresse->npa }}" placeholder="Code postal">
+            <input type="text" name="npa" data-parsley-required class="form-control form-required" value="{{ $adresse->npa }}" placeholder="NPA">
         </div>
     </div>
     <div class="form-group">

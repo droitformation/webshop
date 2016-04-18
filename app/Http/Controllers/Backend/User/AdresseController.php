@@ -55,7 +55,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->create($request->all());
 
-        return redirect('adresse/'.$adresse->id);
+        return redirect('admin/adresse/'.$adresse->id);
     }
 
     public function convert(Request $request)

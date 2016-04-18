@@ -8,6 +8,7 @@ use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Jobs\MakeFactureAbo;
+use App\Jobs\MakeRappelAbo;
 use App\Jobs\NotifyJobFinished;
 use Symfony\Component\Process\Process;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -31,6 +32,43 @@ class AboWorker implements AboWorkerInterface{
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
+    public function rappels($product_id, $abo_id)
+    {
+        $factures = $this->facture->findByProduct($product_id);
+
+        if(!$factures->isEmpty())
+        {
+            $chunks  = $factures->chunk(20);
+
+            foreach($chunks as $chunk)
+            {
+                $job = (new MakeRappelAbo($chunk, $product_id));
+                $this->dispatch($job);
+            }
+
+            $product  = $factures->first()->product;
+
+            // facture_RJN-155_939
+            // Name of the pdf file with all the invoices bound together for a particular edition
+            $name = 'rappels_'.$product->reference.'_'.$product->edition;
+
+            // Type : facture or rappel
+            // Directory for edition => product_id
+            $dir   = 'files/abos/rappel/'.$product_id;
+
+            // Get all files in directory
+            $files = \File::files($dir);
+
+            if(!empty($files))
+            {
+                $this->merge($files, $name, $abo_id);
+
+                $job = (new NotifyJobFinished('Les rappels ont été crées et attachés. Nom du fichier: '.$name));
+                $this->dispatch($job);
+            }
+        }
+    }
+
     public function generate($abo, $product_id, $all = false)
     {
         // All abonnements for the product
@@ -46,9 +84,30 @@ class AboWorker implements AboWorkerInterface{
             }
         }
 
-        $job = (new NotifyJobFinished('Les factures ont été crées'));
-        $this->dispatch($job);
+        $product = $abo->products->whereLoose('id', $product_id);
+        $product = !$product->isEmpty() ? $product->first() : null;
 
+        if($product)
+        {
+            // facture_RJN-155_939
+            // Name of the pdf file with all the invoices bound together for a particular edition
+            $name = 'factures_'.$product->reference.'_'.$product->edition;
+
+            // Type : facture or rappel
+            // Directory for edition => product_id
+            $dir   = 'files/abos/facture/'.$product_id;
+
+            // Get all files in directory
+            $files = \File::files($dir);
+
+            if(!empty($files))
+            {
+                $this->merge($files, $name, $abo->id);
+
+                $job = (new NotifyJobFinished('Les factures ont été crées et attachés. Nom du fichier: '.$name));
+                $this->dispatch($job);
+            }
+        }
     }
 
     public function make($facture_id, $rappel = false)
