@@ -5,6 +5,8 @@ interface AboRappelInterface {
     public function getAll();
     public function find($data);
     public function findByFacture($facture_id);
+    public function findByAllFacture($facture_id);
+    public function rappelsForFactures($facture_id);
     public function create(array $data);
     public function update(array $data);
     public function delete($id);

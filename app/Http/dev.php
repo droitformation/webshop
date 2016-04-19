@@ -80,23 +80,38 @@ Route::get('testing', function() {
     $users        = \App::make('App\Droit\User\Repo\UserInterface');
 
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+    $abos    = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
+    $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
     $user     = $users->find(710);
 
-    if(!$adresse->orders->isEmpty())
-    {
-        foreach($adresse->orders as $order)
-        {
-            echo '<pre>';
-            print_r($order);
-            echo '</pre>';
+    $rappels  = $factures->getFacturesAndRappels(292);
+/*
+    $collection = $rappels->map(function ($item, $key) {
+        $rappel = $item->rappels->sortByDesc('created_at')->first();
+        $pdf    = 'files/abos/rappel/292/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';
 
-        }
-    }
+        if(\File::exists($pdf)){ return $pdf; }
 
+    })->all();
 
+    $files = \File::files('files/abos/rappel/292');
+    $get   = array_intersect($collection,$files);
+
+    echo '<pre>';
+    print_r($collection);
+    print_r($files);
+    print_r($get);
+    echo '</pre>';*/
+
+    $dir   = './files/abos/bound/1/*_RJN_2014.pdf';
+    $files = \File::glob($dir);
+
+    echo '<pre>';
+    print_r($files);
+    echo '</pre>';
 
     //$generator->stream = true;
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);

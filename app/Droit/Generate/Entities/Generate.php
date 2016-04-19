@@ -204,16 +204,16 @@ class Generate{
             return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$this->model->id.'-'.$this->model->user_id.'.pdf');
         }
 
-        if($annexe == 'rappel')
+        if($this->getType() != 'abo' && $annexe == 'rappel')
         {
-            $path = 'files/abos/'.$annexe.'/'.$this->model->product_id;
+            $path = 'files/colloques/'.$annexe.'/'.$this->model->product_id;
 
             if (!\File::exists(public_path($path)))
             {
                 \File::makeDirectory(public_path($path));
             }
 
-            $file = $path.'/'.$name.'_'.$this->model->id.'.pdf';
+            $file = $path.$name.'_'.$this->model->id.'.pdf';
 
             return public_path($file);
         }
@@ -225,6 +225,11 @@ class Generate{
             if (!\File::exists(public_path($path)))
             {
                 \File::makeDirectory(public_path($path));
+            }
+
+            if($annexe == 'rappel')
+            {
+                return public_path($path.'/'.$name.'_'.$this->model->id.'.pdf');
             }
 
             $file = $path.'/'.$annexe.'_'.$this->model->product->reference.'-'.$this->model->abo_user_id.'_'.$this->model->product_id.'.pdf';

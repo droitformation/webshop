@@ -43,7 +43,7 @@ class MakeRappelAbo extends Job implements ShouldQueue
         {
             $exist = $this->rappel->findByFacture($facture->id);
 
-            // No ned to remake a rappel
+            // No need to remake a rappel
             if(!$exist)
             {
                 $rappel  = $this->rappel->create(['abo_facture_id' => $facture->id]);

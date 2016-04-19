@@ -73,7 +73,6 @@ class AboController extends Controller {
         return redirect('admin/abo')->with(array('status' => 'success', 'message' => 'L\'abo a été crée' ));
 	}
 
-
     /**
      * Update the specified resource in storage.
      *

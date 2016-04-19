@@ -333,10 +333,10 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');
         Route::get('facture/generate/{id}', 'Backend\Abo\AboFactureController@generate');
-
-        Route::resource('rappel', 'Backend\Abo\AboRappelController');
-        Route::post('facture/editItem', 'Backend\Abo\AboFactureController@editItem');
         Route::resource('facture', 'Backend\Abo\AboFactureController');
+
+        Route::get('rappel/generate/{id}', 'Backend\Abo\AboRappelController@generate');
+        Route::resource('rappel', 'Backend\Abo\AboRappelController');
 
         Route::get('abo/desinscription/{id}', 'Backend\Abo\AboController@desinscription');
         Route::resource('abo', 'Backend\Abo\AboController');

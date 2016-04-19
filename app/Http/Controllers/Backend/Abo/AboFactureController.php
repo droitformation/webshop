@@ -41,8 +41,8 @@ class AboFactureController extends Controller {
         $abo      = $this->abo->findAboByProduct($id);
         $product  = $this->product->find($id);
 
-        $dir      = './files/abos/bound/'.$abo->id;
-        $files    = \File::files($dir);
+        $dir      = 'files/abos/bound/'.$abo->id.'/*_'.$product->reference.'_'.$product->edition.'.pdf';
+        $files    = \File::glob($dir);
 
         return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
     }
@@ -101,28 +101,15 @@ class AboFactureController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été supprimé' ));
 	}
 
+    /*
+     * Generate all invoices and bind the all
+     * */
     public function generate($product_id)
     {
         $abo = $this->abo->findAboByProduct($product_id);
 
         $this->worker->generate($abo, $product_id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La création des factures est en cours. <br/> Un email vous sera envoyé dès que la génération des factures sera terminée.' ));
-    }
-
-    /**
-     * @return Response
-     */
-    public function editItem(Request $request)
-    {
-        $model = $request->input('model');
-        $item  = $this->$model->update(['id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
-
-        if($item)
-        {
-            return response()->json(['OK' => 200, 'etat' => ($item->payed_at ? 'Payé' : 'En attente'), 'color' => ($item->payed_at ? 'success' : 'default')]);
-        }
-
-        return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'La création des factures est en cours.<br/>Un email vous sera envoyé dès que la génération des factures sera terminée.']);
     }
 }

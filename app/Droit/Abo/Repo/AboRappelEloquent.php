@@ -22,9 +22,26 @@ class AboRappelEloquent implements AboRappelInterface{
         return $this->rappel->with(['facture'])->find($id);
     }
 
-    public function findByFacture($facture_id)
+    public function findByAllFacture($facture_id)
     {
         return $this->rappel->where('abo_facture_id','=',$facture_id)->get();
+    }
+
+    public function findByFacture($facture_id)
+    {
+        $rappel = $this->rappel->where('abo_facture_id','=',$facture_id)->groupBy('abo_facture_id')->orderBy('created_at', 'desc')->take(1)->get();
+
+        if(!$rappel->isEmpty())
+        {
+            return $rappel->first();
+        }
+
+        return null;
+    }
+
+    public function rappelsForFactures($facture_id)
+    {
+        return  $this->rappel->where('abo_facture_id','=',$facture_id)->groupBy('abo_facture_id')->orderBy('created_at', 'desc')->get();
     }
 
     public function create(array $data){

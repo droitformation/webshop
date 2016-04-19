@@ -10,21 +10,11 @@
                     <p style="margin-bottom: 8px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
                 <div class="col-md-10 text-right">
-                    <form action="{{ url('admin/abonnement/export') }}" method="POST" class="form-inline">{!! csrf_field() !!}
-                        <input type="hidden" name="edition" value="{{ $product->edition }}">
-                        <input type="hidden" name="reference" value="{{ $product->reference }}">
-                        <input type="hidden" name="abo_id" value="{{ $abo->id }}">
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <p>
-                            <select class="form-control" name="type">
-                                <option value="facture">Toutes les factures</option>
-                                <option value="rappel">Tous les rappels</option>
-                            </select>
-                            <button class="btn btn-info"><i class="fa fa-download"></i> &nbsp;Exporter et lier</button>
-                            <span class="btn-left-space">|</span>
-                            <a href="{{ url('admin/facture/generate/'.$product->id) }}" class="btn btn-warning">Générer toutes les factures</a>
-                        </p>
-                    </form>
+                    <p>
+                        <a href="{{ url('admin/facture/generate/'.$product->id) }}" class="btn btn-brown">Générer toutes les factures</a>
+                        <span class="btn-left-space">|</span>
+                        <a href="{{ url('admin/rappel/generate/'.$product->id) }}" class="btn btn-warning">Générer tous les rappels</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -35,7 +25,7 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body" style="padding-bottom: 0;">
-                    <h4 style="margin-bottom: 10px; margin-top: 0;">Factures liés</h4>
+                    <h4 style="margin-bottom: 10px; margin-top: 0;">Factures et rappels liés</h4>
                     @if(!empty($files))
                         <div class="list-group">
                             @foreach($files as $file)

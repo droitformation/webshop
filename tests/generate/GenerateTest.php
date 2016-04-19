@@ -184,7 +184,7 @@ class GenerateTest extends TestCase {
 		$this->assertEquals($response, $filename);
 
 		$response = $generate->getFilename('rappel','rappel_5');
-		$filename = public_path('files/colloques/rappel/rappel_5.pdf');
+		$filename = public_path('files/colloques/rappel/rappel_5_10.pdf');
 
 		$this->assertEquals($response, $filename);
 
@@ -223,7 +223,7 @@ class GenerateTest extends TestCase {
 		$this->assertEquals($response, $filename);
 
 		$response = $generate->getFilename('rappel','rappel_6');
-		$filename = public_path('files/colloques/rappel/rappel_6.pdf');
+		$filename = public_path('files/colloques/rappel/rappel_6_2.pdf');
 
 		$this->assertEquals($response, $filename);
 
@@ -300,24 +300,6 @@ class GenerateTest extends TestCase {
 		$this->assertEquals($occurrences, $response);
 	}
 
-/*	public function testGetOccurencesGroupe()
-	{
-		$group        = factory(App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);
-		$inscriptions = factory(App\Droit\Inscription\Entities\Inscription::class,3)->make(['group_id' => '5', 'colloque_id' => '12']);
-		$inscriptions = $inscriptions->map(function ($item, $key) {
-            $occurrences = factory( App\Droit\Occurrence\Entities\Occurrence::class,2)->make(['title' => 'Titre_'.$key]);
-            $item->occurrences = $occurrences;
-			return $item;
-		});
-
-        $group->inscriptions = $inscriptions;
-
-        $generate = new \App\Droit\Generate\Entities\Generate($group);
-        $response = $generate->getOccurrences();
-
-        $this->assertEquals($response, $group->occurrence_list);
-	}*/
-
     public function testGetParticipant()
     {
         $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);
@@ -339,7 +321,6 @@ class GenerateTest extends TestCase {
 
             $this->assertEquals($response, 'Cindy_'.$index);
         }
-
     }
 
 	public function testGetAbo()
@@ -405,6 +386,32 @@ class GenerateTest extends TestCase {
 
         $this->assertEquals($response, public_path($file));
     }
+
+	public function testGetAboRappelFilename()
+	{
+		// Using real product bad bad...
+		$product     = App\Droit\Shop\Product\Entities\Product::find(290);
+
+		$abo         = factory(\App\Droit\Abo\Entities\Abo::class)->make(['id' => 1]);
+		$abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
+		$abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['id' => 2,'abo_user_id' => 1 ,'product_id' => 1]);
+
+		// Using real adresse bad bad...
+		$user = App\Droit\Adresse\Entities\Adresse::find(4674);
+
+		$abo_facture->product = $product;
+		$abo_user->abo        = $abo;
+		$abo_user->user       = $user;
+
+		$abo_facture->abonnement = $abo_user;
+
+		$generate = new \App\Droit\Generate\Entities\Generate($abo_facture);
+		$response = $generate->getFilename('rappel','rappel_1');
+
+		$file = 'files/abos/rappel/1/rappel_1_2.pdf';
+
+		$this->assertEquals($response, public_path($file));
+	}
 
 	public function testTempBon()
 	{

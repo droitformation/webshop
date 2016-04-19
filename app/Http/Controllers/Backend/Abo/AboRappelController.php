@@ -4,23 +4,29 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
+use App\Droit\Abo\Worker\AboWorkerInterface;
+use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 
 class AboRappelController extends Controller {
 
+    protected $abo;
     protected $rappel;
     protected $facture;
     protected $product;
     protected $generator;
+    protected $worker;
 
-    public function __construct(AboRappelInterface $rappel, AboFactureInterface $facture, ProductInterface $product, PdfGeneratorInterface $generator)
+    public function __construct(AboInterface $abo, AboRappelInterface $rappel, AboFactureInterface $facture, ProductInterface $product, PdfGeneratorInterface $generator, AboWorkerInterface $worker)
     {
+        $this->abo       = $abo;
         $this->rappel    = $rappel;
         $this->facture   = $facture;
         $this->product   = $product;
         $this->generator = $generator;
+        $this->worker    = $worker;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
@@ -30,7 +36,7 @@ class AboRappelController extends Controller {
         $rappel  = $this->rappel->create($request->all());
         $rappel->load('facture');
 
-        $rappels = $this->rappel->findByFacture($request->abo_facture_id);
+        $rappels = $this->rappel->findByAllFacture($request->abo_facture_id);
         $rappels = $rappels->count();
 
         $this->generator->makeAbo('rappel', $rappel->facture, $rappels, $rappel);
@@ -51,7 +57,8 @@ class AboRappelController extends Controller {
 
         return redirect('admin/abo/'.$rappel->id)->with(array('status' => 'success', 'message' => 'La rappel a été mis à jour' ));
     }
-		
+
+
 	public function destroy($id, Request $request)
 	{
         $this->rappel->delete($id);
@@ -59,4 +66,15 @@ class AboRappelController extends Controller {
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Le rappel a été supprimé' ));
 	}
 
+    /*
+    * Generate all invoices and bind the all
+    * */
+    public function generate($product_id)
+    {
+        $abo = $this->abo->findAboByProduct($product_id);
+
+        $this->worker->rappels($product_id, $abo->id);
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération des rappels sera terminée.']);
+    }
 }
