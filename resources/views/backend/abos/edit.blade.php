@@ -16,15 +16,12 @@
         <div class="col-md-9">
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;&Eacute;diter abo</h4>
-                </div>
                 <form action="{{ url('admin/abo/'.$abo->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
-
+                        <h3>&Eacute;diter abo</h3>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
                             <div class="col-sm-3 col-xs-6">

@@ -10,11 +10,13 @@
                     <p style="margin-bottom: 8px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
                 <div class="col-md-10 text-right">
-                    <p>
+                    <div>
                         <a href="{{ url('admin/facture/generate/'.$product->id) }}" class="btn btn-brown">Générer toutes les factures</a>
+                        <a href="{{ url('admin/facture/bind/'.$product->id) }}" class="btn btn-default" title="Re-attacher toutes les factures"><i class="fa fa-link"></i></a>
                         <span class="btn-left-space">|</span>
                         <a href="{{ url('admin/rappel/generate/'.$product->id) }}" class="btn btn-warning">Générer tous les rappels</a>
-                    </p>
+                        <a href="{{ url('admin/rappel/bind/'.$product->id) }}" class="btn btn-default" title="Re-attacher tous les rappels"><i class="fa fa-link"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,9 +64,9 @@
                                     <td>{{ $facture->abonnement->numero }}</td>
                                     <td>
                                         @if($facture->abonnement->user)
-                                            {{ $facture->abonnement->user->name }}
+                                            <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->user->name }}</a>
                                         @elseif($facture->abonnement->originaluser)
-                                            {{ $facture->abonnement->originaluser->name }}
+                                            <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->originaluser->name }}</a>
                                         @else
                                             <p><span class="label label-warning">Duplicata</span></p>
                                         @endif

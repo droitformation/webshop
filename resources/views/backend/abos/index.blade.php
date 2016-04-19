@@ -31,7 +31,7 @@
                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                     <button data-what="Supprimer" data-action="{{ $abo->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                    <div class="btn-group pull-right">
-                                       <a href="{{ url('admin/abo/'.$abo->id) }}" class="btn btn-sm btn-success">&Eacute;diter</a>
+                                       <a href="{{ url('admin/abo/'.$abo->id) }}" class="btn btn-sm btn-inverse">&Eacute;diter</a>
                                        <a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-sm btn-info">Liste des abonnements</a>
                                    </div>
                                 </form>

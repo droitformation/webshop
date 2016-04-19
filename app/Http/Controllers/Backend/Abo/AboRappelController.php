@@ -3,6 +3,9 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Jobs\NotifyJobFinished;
+use App\Jobs\MergeRappels;
+
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Droit\Abo\Worker\AboWorkerInterface;
 use App\Droit\Abo\Repo\AboInterface;
@@ -76,5 +79,26 @@ class AboRappelController extends Controller {
         $this->worker->rappels($product_id, $abo->id);
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération des rappels sera terminée.']);
+    }
+
+    /*
+    * Generate all invoices
+    * */
+    public function bind($product_id)
+    {
+        $abo     = $this->abo->findAboByProduct($product_id);
+        $product = $this->product->find($product_id);
+
+        // Name of the pdf file with all the invoices bound together for a particular edition
+        $name = 'rappels_'.$product->reference.'_'.$product->edition;
+
+        // Job for merging documents
+        $merge = (new MergeRappels($product->id, $name, $abo->id));
+        $this->dispatch($merge);
+
+        $job = (new NotifyJobFinished('Les rappels ont été attachés. Nom du fichier: <strong>'.$name.'</strong>'));
+        $this->dispatch($job);
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Les rappels dont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.']);
     }
 }

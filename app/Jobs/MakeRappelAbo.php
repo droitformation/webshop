@@ -49,7 +49,7 @@ class MakeRappelAbo extends Job implements ShouldQueue
                 $rappel  = $this->rappel->create(['abo_facture_id' => $facture->id]);
                 $rappel->load('facture');
 
-                $rappels = $this->rappel->findByFacture($facture->id);
+                $rappels = $this->rappel->findByAllFacture($facture->id);
                 $rappels = $rappels->count();
 
                 $generator->makeAbo('rappel', $rappel->facture, $rappels, $rappel);

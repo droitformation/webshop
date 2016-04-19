@@ -8,7 +8,8 @@ use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Jobs\MakeFactureAbo;
-use App\Jobs\MergeDocuments;
+use App\Jobs\MergeFactures;
+use App\Jobs\MergeRappels;
 use App\Jobs\MakeRappelAbo;
 use App\Jobs\NotifyJobFinished;
 use Symfony\Component\Process\Process;
@@ -50,30 +51,14 @@ class AboWorker implements AboWorkerInterface{
             $product = $factures->first()->product;
 
             // Name of the pdf file with all the invoices bound together for a particular edition
-            $name  = 'rappels_'.$product->reference.'_'.$product->edition;
+            $name = 'rappels_'.$product->reference.'_'.$product->edition;
 
-            // Directory for edition => product_id
-            $dir   = 'files/abos/rappel/'.$product_id;
+            // Job for merging documents
+            $merge = (new MergeRappels($product->id, $name, $abo_id));
+            $this->dispatch($merge);
 
-            $rappels  = $this->facture->getFacturesAndRappels($product->id);
-
-            $lists = $rappels->map(function ($item, $key) use ($product_id){
-                $rappel = $item->rappels->sortByDesc('created_at')->first();
-                $pdf    = 'files/abos/rappel/292/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';
-                if(\File::exists($pdf)){ return $pdf; }
-            })->all();
-
-            // Get all files in directory
-            $files = \File::files($dir);
-            $files = array_intersect($lists,$files);
-
-            if(!empty($files))
-            {
-                $this->merge($files, $name, $abo_id);
-
-                $job = (new NotifyJobFinished('Les rappels ont été crées et attachés. Nom du fichier: <strong>'.$name.'</strong>'));
-                $this->dispatch($job);
-            }
+            $job = (new NotifyJobFinished('Les rappels ont été crées et attachés. Nom du fichier: <strong>'.$name.'</strong>'));
+            $this->dispatch($job);
         }
     }
 
@@ -100,7 +85,7 @@ class AboWorker implements AboWorkerInterface{
                 $name = 'factures_'.$product->reference.'_'.$product->edition;
 
                 // Job for merging documents
-                $merge = (new MergeDocuments($product->id, $name, $abo->id));
+                $merge = (new MergeFactures($product->id, $name, $abo->id));
                 $this->dispatch($merge);
 
                 $job = (new NotifyJobFinished('Les factures ont été crées et attachés. Nom du fichier: '.$name));
