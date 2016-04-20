@@ -126,7 +126,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 }
 
 .ms-container {
-    width: 550px;
+    width: 100%;
 }
 
 .single-dropzone .dz-image-preview, .dz-file-preview {

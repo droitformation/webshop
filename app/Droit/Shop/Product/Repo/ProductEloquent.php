@@ -12,9 +12,16 @@ class ProductEloquent implements ProductInterface{
         $this->product = $product;
     }
 
-    public function getAll($search = null, $nbr = null)
+    public function getAll($search = null, $nbr = null, $hidden = false)
     {
-        $products = $this->product->search($search)->orderBy('created_at', 'DESC');
+        $products = $this->product->search($search);
+
+        if(!$hidden)
+        {
+            $products->where('hidden','=',0);
+        }
+
+        $products->orderBy('created_at', 'DESC');
 
         if($nbr)
         {
@@ -24,15 +31,24 @@ class ProductEloquent implements ProductInterface{
         return $products->get();
     }
 
-    public function getNbr($nbr = null, $reject = null)
+    // For shop only
+    public function getNbr($nbr = null, $reject = null, $hidden = false)
     {
-        return $this->product->reject($reject)->orderBy('created_at', 'DESC')->paginate($nbr);
+        $products = $this->product->reject($reject);
+
+        if(!$hidden)
+        {
+            $products->where('hidden','=',0);
+        }
+
+        return $products->orderBy('created_at', 'DESC')->paginate($nbr);
     }
 
     public function getByCategorie($id)
     {
         return $this->product
             ->with(array('authors','attributs','categories'))
+            ->where('hidden','=',0)
             ->whereHas('categories', function($query) use ($id)
             {
                 $query->where('categorie_id', '=' ,$id);
@@ -77,13 +93,19 @@ class ProductEloquent implements ProductInterface{
         return $this->product->whereIn('id', $ids)->get();
     }
 
-    public function search($term)
+    public function search($term, $hidden = false)
     {
-        return $this->product->join('shop_product_attributes', 'shop_products.id', '=', 'shop_product_attributes.product_id')
+        $products = $this->product->join('shop_product_attributes', 'shop_products.id', '=', 'shop_product_attributes.product_id')
             ->where('shop_product_attributes.value', 'like', '%'.$term.'%')
             ->orWhere('shop_products.title', 'like', '%'.$term.'%')
-            ->select('shop_products.*','shop_product_attributes.value')
-            ->get();
+            ->select('shop_products.*','shop_product_attributes.value');
+
+        if(!$hidden)
+        {
+            $products->where('hidden','=',0);
+        }
+
+        return $products->get();
     }
 
     public function create(array $data){
@@ -139,9 +161,7 @@ class ProductEloquent implements ProductInterface{
     }
 
     public function delete($id){
-
         return $this->product->find($id)->delete();
-
     }
 
 }

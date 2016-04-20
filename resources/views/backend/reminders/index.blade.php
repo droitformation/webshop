@@ -38,7 +38,7 @@
                             <th class="col-sm-1">Action</th>
                             <th class="col-sm-3">Titre</th>
                             <th class="col-sm-2">Type</th>
-                            <th class="col-sm-2">Date d'envoie</th>
+                            <th class="col-sm-2">Date d'envoi</th>
                             <th class="col-sm-2 no-sort"></th>
                         </tr>
                         </thead>

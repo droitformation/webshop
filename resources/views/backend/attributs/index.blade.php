@@ -28,7 +28,7 @@
                             <th class="col-sm-1">Action</th>
                             <th class="col-sm-2">Titre</th>
                             <th class="col-sm-2">Interval</th>
-                            <th class="col-sm-2">Utilisé comme rappel</th>
+                            <th class="col-sm-2">Visible que dans admin et utilisé comme rappel</th>
                             <th class="col-sm-5">Texte</th>
                             <th class="col-sm-1 no-sort"></th>
                         </tr>

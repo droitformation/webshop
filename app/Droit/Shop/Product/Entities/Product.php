@@ -15,8 +15,6 @@ class Product extends Model{
 
     public function getReferenceAttribute()
     {
-       // $this->load('attributs');
-
         $attribute = $this->attributs->where('id',3);
 
         return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
@@ -24,7 +22,6 @@ class Product extends Model{
 
     public function getEditionAttribute()
     {
-        //$this->load('attributs');
         $attribute = $this->attributs->where('id',4);
 
         return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
@@ -81,6 +78,11 @@ class Product extends Model{
     public function scopeNbr($query,$nbr)
     {
         if ($nbr) $query->take($nbr);
+    }
+
+    public function scopeVisible($query,$visible)
+    {
+        if ($visible) $query->where('hidden','=',0);
     }
 
     public function categories()

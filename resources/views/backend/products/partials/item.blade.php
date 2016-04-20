@@ -15,6 +15,7 @@
                         <button data-action="{{ $type->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
                     </form>
                 </div>
+                <?php $choices[] = $type->id; ?>
             @endforeach
             <hr/>
         @endif
@@ -25,17 +26,13 @@
             <input type="hidden" name="type" value="{{ $types }}">
             <div class="form-group">
                 @if(!$items->isEmpty())
-                    <div class="input-group">
-                        <select class="form-control" name="type_id">
-                            <option value="">Choix</option>
-                            @foreach($items as $item)
-                                <option value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
-                            @endforeach
-                        </select>
-                        <span class="input-group-btn">
-                            <button class="btn btn-info" type="submit">Ajouter</button>
-                        </span>
-                    </div><!-- /input-group -->
+                    <p><select class="form-control multi-selection" name="type_id[]" multiple>
+                        <option value="">Choix</option>
+                        @foreach($items as $item)
+                            <option {{ isset($choices) && in_array($item->id, $choices) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
+                        @endforeach
+                    </select></p>
+                    <button class="btn btn-info" type="submit">Ajouter</button>
                 @endif
             </div>
         </form>

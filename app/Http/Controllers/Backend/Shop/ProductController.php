@@ -75,16 +75,16 @@ class ProductController extends Controller {
         {
             $paginate = false;
             $search   = array_filter($search);
-            $products = $this->product->getAll($search);
+            $products = $this->product->getAll($search, null, true);
         }
         elseif($term)
         {
-            $products = $this->product->search(trim($term));
+            $products = $this->product->search(trim($term),true);
             $paginate = false;
         }
         else // pagination
         {
-            $products = $this->product->getNbr(20);
+            $products = $this->product->getNbr(20, null, true);
             $paginate = true;
         }
 
@@ -227,9 +227,9 @@ class ProductController extends Controller {
         $product = $this->product->find($id);
         $types   = $request->input('type');
 
-        $product->$types()->attach($request->input('type_id'));
+        $product->$types()->sync($request->input('type_id'));
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Le type a été ajouté' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'objet a été ajouté' ));
     }
 
     public function removeType($id, Request $request)
@@ -239,6 +239,6 @@ class ProductController extends Controller {
 
         $product->$types()->detach($request->input('type_id'));
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'attribut a été supprimé' ));
+        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'objet été supprimé' ));
     }
 }

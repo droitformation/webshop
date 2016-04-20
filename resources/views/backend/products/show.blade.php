@@ -19,23 +19,20 @@
         <div class="col-md-7">
 
             <div class="panel panel-midnightblue">
-                <div class="panel-heading">
-                    <h4><i class="fa fa-edit"></i> &nbsp;Editer le produit</h4>
-                </div>
                 <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
                     <div class="panel-body">
-
+                        <h3>&Eacute;diter le livre</h3>
                         <div class="form-group">
                             <label for="file" class="col-sm-3 control-label">Visibilité</label>
                             <div class="col-sm-8">
-                                <label class="checkbox-inline">
-                                    <input {{ !$product->hidden ? 'checked' : '' }} type="checkbox" name="hidden" value="0"> Caché
+                                <label class="radio-inline">
+                                    <input {{ !$product->hidden ? 'checked' : '' }} type="radio" name="hidden" value="0"> Visible
                                 </label>
-                                <label class="checkbox-inline">
-                                    <input {{ $product->hidden ? 'checked' : '' }} type="checkbox" name="hidden" value="1"> Visible
+                                <label class="radio-inline">
+                                    <input {{ $product->hidden ? 'checked' : '' }} type="radio" name="hidden" value="1"> Caché
                                 </label>
                             </div>
                         </div>
@@ -121,7 +118,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-4 col-xs-12">
-                                <p class="text-danger">Attention indiquer la référence et l'édition dans les attributs pour la facture !</p>
+                                <p class="text-danger"><i class="fa fa-exclamation-triangle"></i> &nbsp; Attention indiquer la référence et l'édition dans les attributs pour la facture !</p>
                             </div>
                         </div>
 
