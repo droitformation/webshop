@@ -60,6 +60,7 @@ class CampagneController extends Controller
         $browser      = url('/campagne/'.$id);
 
         $infos         = $this->campagne->find($id);
+        $infos->newsletter->load('site');
         $campagne      = $this->worker->prepareCampagne($id);
         $categories    = $this->worker->getCategoriesArrets();
         $imgcategories = $this->worker->getCategoriesImagesArrets();

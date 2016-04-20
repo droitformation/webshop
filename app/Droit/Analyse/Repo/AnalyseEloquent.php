@@ -45,7 +45,7 @@ class AnalyseEloquent implements AnalyseInterface{
 	public function create(array $data){
 
 		$analyse = $this->analyse->create(array(
-			'user_id'    => $data['user_id'],
+			'user_id'    => (isset($data['user_id']) ? $data['user_id'] : null),
             'authors'    => $data['authors'],
             'pub_date'   => $data['pub_date'],
             'abstract'   => $data['abstract'],
@@ -53,6 +53,7 @@ class AnalyseEloquent implements AnalyseInterface{
             'categories' => (isset($data['categories']) ? count($data['categories']) : 0),
             'arrets'     => (isset($data['arrets']) ? count($data['arrets']) : 0),
             'site_id'    => (isset($data['site_id']) ? $data['site_id'] : null),
+            'title'      => (isset($data['title']) ? $data['title'] : null),
 			'created_at' => date('Y-m-d G:i:s'),
 			'updated_at' => date('Y-m-d G:i:s')
 		));
@@ -118,6 +119,11 @@ class AnalyseEloquent implements AnalyseInterface{
         if(isset($data['author_id']) && !empty($data['author_id']))
         {
             $analyse->analyse_authors()->sync($data['author_id']);
+        }
+
+        if(isset($data['title']))
+        {
+            $analyse->title = !empty($data['title']) ? $data['title'] : null;
         }
 
 		$analyse->save();

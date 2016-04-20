@@ -15,6 +15,8 @@ class AttributController extends Controller
     public function __construct( AttributeInterface $attribu )
     {
         $this->attribu = $attribu;
+
+        view()->share('intervals',['week' => '1 semaine', 'month' => '1 mois', 'trimester' => '3 mois', 'semester' => '6 mois' ,'year' => '1 an']);
     }
 
     /**

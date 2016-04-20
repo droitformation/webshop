@@ -22,6 +22,7 @@ class CreateAnalysesTable extends Migration {
             $table->text('file')->nullable();
             $table->integer('categories')->nullable();
             $table->integer('arrets')->nullable();
+			$table->string('title')->nullable();
 			$table->timestamps();
             $table->softDeletes();
 		});

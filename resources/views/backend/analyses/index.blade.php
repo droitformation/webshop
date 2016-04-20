@@ -28,7 +28,7 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
-                            <th class="col-sm-3">Auteur</th>
+                            <th class="col-sm-3">Auteur(s)</th>
                             <th class="col-sm-3">Date de publication</th>
                             <th class="col-sm-4">Résumé</th>
                             <th class="col-sm-1"></th>

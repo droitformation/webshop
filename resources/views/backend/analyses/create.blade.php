@@ -21,14 +21,35 @@
             <div class="panel-body event-info" ng-app="selection">
                 <h4>Créer analyse</h4>
                 <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Auteurs</label>
+                    <label for="message" class="col-sm-3 control-label">Tire auteurs</label>
                     <div class="col-sm-3">
                         {!! Form::text('authors', null , array('class' => 'form-control') ) !!}
                     </div>
                 </div>
 
                 <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Titre alternatif (remplace analyse de l'arrêt...)</label>
+                    <div class="col-sm-3">
+                        {!! Form::text('title', null , array('class' => 'form-control') ) !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Auteurs</label>
+                    <div class="col-sm-3">
+                        <select multiple class="form-control" id="author" name="author_id[]">
+                            <option value="">Choisir</option>
+                            @if(!empty($auteurs))
+                                @foreach($auteurs as $auteur)
+                                    <option value="{{ $auteur->id }}">{{ $auteur->name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Appartient au site</label>
                     <div class="col-sm-3">
                         @if(!$sites->isEmpty())
                             <select class="form-control" name="site_id">

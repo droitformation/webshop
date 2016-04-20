@@ -28,7 +28,6 @@ class AdminController extends Controller {
         $this->inscription = $inscription;
         $this->order       = $order;
 
-        view()->share('pageTitle','Accueil');
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 

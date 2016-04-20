@@ -34,12 +34,12 @@
                         </tr>
                         </thead>
                         <tbody class="selects">
-                       
+
                             @foreach($attributs as $attribut)
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/attribut/'.$attribut->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td><strong>{{ $attribut->title }}</strong></td>
-                                    <td>{{ $attribut->interval }}</td>
+                                    <td>{{ isset($intervals[$attribut->interval]) ? $intervals[$attribut->interval] : '' }}</td>
                                     <td><strong>{!! $attribut->reminder ? '<label class="label label-success">oui</label>' : '' !!}</strong></td>
                                     <td>{!! $attribut->text !!}</td>
                                     <td class="text-right">

@@ -46,7 +46,8 @@
 </table>
 <!-- End bloc -->
 
-@if(isset($bloc->analyses))
+@if(!$bloc->arrets_analyses->isEmpty())
+
     <!-- Bloc content-->
     <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
         <tr bgcolor="ffffff">
@@ -55,19 +56,25 @@
         <tr>
             <td valign="top" width="375" class="resetMarge contentForm">
                 <?php $i = 1; ?>
-                @foreach($bloc->analyses as $analyse)
+                @foreach($bloc->arrets_analyses as $analyse)
                     <table border="0" width="375" align="left" cellpadding="0" cellspacing="0" class="resetTable">
                         <tr>
                             <td valign="top" width="375" class="resetMarge contentForm">
                                 <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
-                                <h3 style="text-align: left;font-family: sans-serif;">Analyse de l'arrêt {{ $bloc->reference }}</h3>
 
-                                    @if(isset($analyse->analyse_authors))
+                                    @if(!empty($analyse->title))
+                                        <h3 style="text-align: left;">{{ $analyse->title }}</h3>
+                                    @else
+                                        <h3 style="text-align: left;">Analyse de l'arrêt {{ $bloc->reference }}</h3>
+                                    @endif
+
+                                    <?php $analyse->load('analyse_authors'); ?>
+                                    @if(!$analyse->analyse_authors->isEmpty())
                                         @foreach($analyse->analyse_authors as $analyse_authors)
                                             <table border="0" width="375" align="left" cellpadding="0" cellspacing="0" class="resetTable">
                                                 <tr>
                                                     <td valign="top" width="60" class="resetMarge">
-                                                        <img style="width: 60px;" width="60" border="0" alt="{{ $analyse_authors->name }}" src="{{ asset('files/authors/'.$analyse_authors->photo) }}">
+                                                        <img style="width: 60px;" width="60" border="0" alt="{{ $analyse_authors->name }}" src="{{ asset('files/authors/'.$analyse_authors->author_photo) }}">
                                                     </td>
                                                     <td valign="top" width="10" class="resetMarge"></td>
                                                     <td valign="top" width="305" class="resetMarge">
@@ -85,7 +92,7 @@
                             </td>
                         </tr>
 
-                        @if( $bloc->analyses->count() > 1 && $bloc->analyses->count() > $i)
+                        @if( $bloc->arrets_analyses->count() > 1 && $bloc->arrets_analyses->count() > $i)
                             <tr bgcolor="ffffff"><td colspan="3" height="35" class=""></td></tr><!-- space -->
                         @endif
 
@@ -96,7 +103,6 @@
             </td>
             <td width="25" class="resetMarge"></td><!-- space -->
             <td align="center" valign="top" width="160" class="resetMarge">
-                <?php $infos->newsletter->load('site'); ?>
                 <!-- Categories -->
                 <div class="resetMarge">
                     <a target="_blank" href="{{ url('jurisprudence') }}">
@@ -108,4 +114,5 @@
         <tr bgcolor="ffffff"><td colspan="3" height="35" class="blocBorder"></td></tr><!-- space -->
     </table>
     <!-- Bloc content-->
+
 @endif

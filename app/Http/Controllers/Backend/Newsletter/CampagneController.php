@@ -114,8 +114,8 @@ class CampagneController extends Controller
     {
         $blocs         = $this->types->getAll();
         $infos         = $this->campagne->find($id);
+        $infos->newsletter->load('site');
         $campagne      = $this->worker->prepareCampagne($id);
-
         $categories    = $this->worker->getCategoriesArrets();
         $imgcategories = $this->worker->getCategoriesImagesArrets();
 

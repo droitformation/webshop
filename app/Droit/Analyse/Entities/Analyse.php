@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Analyse extends Model {
 
     protected $table    = 'analyses';
-    protected $fillable = ['user_id','authors','pub_date','abstract','file','categories','arrets','site_id'];
+    protected $fillable = ['user_id','authors','pub_date','abstract','file','categories','arrets','site_id','title'];
     protected $dates    = ['pub_date','created_at','updated_at'];
 
     /**

@@ -23,9 +23,16 @@
             <div class="panel-body event-info" ng-app="selection">
                 <h4>&Eacute;diter l'analyse de {!! $analyse->authors  !!}</h4>
                 <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Auteurs</label>
+                    <label for="message" class="col-sm-3 control-label">Titre auteurs</label>
                     <div class="col-sm-3">
                         {!! Form::text('authors', $analyse->authors , array('class' => 'form-control') )  !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Titre alternatif (remplace analyse de l'arrêt...)</label>
+                    <div class="col-sm-3">
+                        {!! Form::text('title', $analyse->title , array('class' => 'form-control') ) !!}
                     </div>
                 </div>
 
@@ -42,6 +49,20 @@
                                 @endforeach
                             @endif
                         </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Appartient au site</label>
+                    <div class="col-sm-3">
+                        @if(!$sites->isEmpty())
+                            <select class="form-control" name="site_id">
+                                <option value="">Appartient au site</option>
+                                @foreach($sites as $select)
+                                    <option {{ $select->id == $analyse->site_id ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
+                                @endforeach
+                            </select>
+                        @endif
                     </div>
                 </div>
 
