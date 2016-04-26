@@ -36,6 +36,35 @@ class UserEloquent implements UserInterface{
 
     public function search($term){
 
+        $terms = explode(' ',trim($term));
+
+        if(count($terms) > 1)
+        {
+            return $this->user
+                ->where('email', 'like', '%'.$term.'%')
+                ->orWhere('first_name', 'like', '%'.$term.'%')
+                ->orWhere('last_name', 'like', '%'.$term.'%')
+                ->orWhere(function ($query) use($term,$terms) {
+                    if(count($terms) == 2)
+                    {
+                        $query->where(function ($query1) use ($terms) {
+                            $query1->where('first_name', 'like', '%'.$terms[0].'%')->where('last_name', 'like', '%'.$terms[1].'%');
+                        })->orWhere(function ($query2) use ($terms){
+                            $query2->where('first_name', 'like', '%'.$terms[1].'%')->where('last_name', 'like', '%'.$terms[0].'%');
+                        });
+                    }
+
+                    if(count($terms) == 3)
+                    {
+                        $query->where(function ($query1) use ($terms) {
+                            $query1->where('first_name', 'like', '%'.$terms[0].' '.$terms[1].'%')->where('last_name', 'like', '%'.$terms[2].'%');
+                        })->orWhere(function ($query2) use ($terms){
+                            $query2->where('first_name', 'like', '%'.$terms[0].'%')->where('last_name', 'like', '%'.$terms[1].' '.$terms[2].'%');
+                        });
+                    }
+                })->get();
+        }
+
         return $this->user->where('email', 'like', '%'.$term.'%')
             ->orWhere('first_name', 'like', '%'.$term.'%')
             ->orWhere('last_name', 'like', '%'.$term.'%')

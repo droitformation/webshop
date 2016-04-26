@@ -118,7 +118,7 @@ class UserController extends Controller {
     {
         $this->user->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
+        return redirect('admin/search/user')->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
     }
 
 }

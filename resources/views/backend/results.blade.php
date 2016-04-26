@@ -51,7 +51,7 @@
                             </thead>
                             <tbody class="selects">
                                 @foreach($users as $user)
-                                    <tr>
+                                    <tr class="mainRowSearch">
                                         <td><a class="btn btn-sky btn-sm" href="{{ url('admin/user/'.$user->id) }}">&Eacute;diter</a></td>
                                         <td><strong>{{ $user->name }}</strong></td>
                                         <td>{{ $user->email }}</td>
@@ -61,8 +61,17 @@
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>
+                                    @if(!$user->adresses->isEmpty())
+                                        @foreach($user->adresses as $adresse)
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>{{ $adresse->name }}</strong><br/>{{ $adresse->company }}</td>
+                                                <td>{{ $adresse->email }}</td>
+                                                <td>{{ $adresse->ville }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>

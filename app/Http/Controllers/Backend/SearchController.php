@@ -56,7 +56,12 @@ class SearchController extends Controller
         $users    = $this->user->search($term);
         $adresses = $this->adresse->search($term);
 
-        return view('backend.results')->with(['users' => $users, 'adresses' => $adresses]);
+        // reject non single adresses
+        $singles = $adresses->reject(function ($adresse, $key) {
+            return $adresse->user_id > 0;
+        });
+
+        return view('backend.results')->with(['users' => $users, 'adresses' => $singles]);
     }
 
     /**

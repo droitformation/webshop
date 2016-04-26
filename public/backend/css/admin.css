@@ -806,3 +806,7 @@ label.error{
 .btn-left-space{
     padding: 0 10px;
 }
+
+.mainRowSearch td{
+    background: #f5f5f5;
+}
