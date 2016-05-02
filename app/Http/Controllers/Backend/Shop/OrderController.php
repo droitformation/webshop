@@ -72,11 +72,12 @@ class OrderController extends Controller {
         $onlyfree = $request->input('onlyfree',null);
         $details  = $request->input('details',null);
         $export   = $request->input('export',null);
+        $order_no = $request->input('order_no',null);
 
         $period['start'] = (!isset($period['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($period['start']) );
         $period['end']   = (!isset($period['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($period['end']) );
 
-        $orders = $this->order->getPeriod($period['start'],$period['end'], $status, $onlyfree);
+        $orders = $this->order->getPeriod($period['start'],$period['end'], $status, $onlyfree, $order_no);
 
         if($export)
         {
@@ -94,6 +95,7 @@ class OrderController extends Controller {
                 'names'     => $names,
                 'onlyfree'  => $onlyfree,
                 'details'   => $details,
+                'order_no'  => $order_no,
                 'cancelled' => $cancelled,
                 'status'    => $status
             ]

@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/croppic.css');?>">
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     @if(isset($isNewsletter))
         <link rel="stylesheet" href="<?php echo asset('newsletter/css/backend/newsletter.css'); ?>">
@@ -123,6 +124,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
 <script src="<?php echo asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>
 
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/chosen/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>

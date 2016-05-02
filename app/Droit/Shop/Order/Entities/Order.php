@@ -108,6 +108,11 @@ class Order extends Model{
         if ($status) $query->where('status','=',$status);
     }
 
+    public function scopeSearch($query, $order_no)
+    {
+        if ($order_no) $query->where('order_no','=',$order_no);
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_order_products', 'order_id', 'product_id')->withTimestamps()->withPivot('isFree','rabais');

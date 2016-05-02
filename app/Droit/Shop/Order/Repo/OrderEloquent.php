@@ -22,8 +22,13 @@ class OrderEloquent implements OrderInterface{
         return $this->order->with(['products','user'])->whereBetween('created_at', [$start, $end])->onlyTrashed()->orderBy('created_at','DESC')->get();
     }
 
-    public function getPeriod($start, $end, $status = null, $onlyfree = null)
+    public function getPeriod($start, $end, $status = null, $onlyfree = null, $order_no = null)
     {
+        if($order_no)
+        {
+            return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])->search($order_no)->get();
+        }
+
         return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])
             ->whereBetween('created_at', [$start, $end])
             ->status($status)

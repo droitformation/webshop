@@ -18,7 +18,28 @@
 
         </div>
     </div>--}}
+    <div class="row">
+        <div class="col-md-12">
+            <?php $active_chunks = $colloques->chunk(4); ?>
+            @include('backend.colloques.partials.colloque', ['colloques' => $active_chunks, 'color' => 'primary'])
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
 
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <h4><i class="fa fa-shopping-cart"></i> &nbsp;Dernières commandes
+                        <a class="btn btn-sky btn-sm pull-right" href="{{ url('admin/orders') }}">Voir toutes les commandes</a>
+                    </h4>
+
+                    @include('backend.orders.partials.commandes', ['orders' => $orders, 'cancelled' => false])
+
+                </div>
+            </div>
+
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
 
@@ -113,39 +134,6 @@
 
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
 
-            <div class="panel panel-info">
-                <div class="panel-body">
-                    <h4><i class="fa fa-shopping-cart"></i> &nbsp;Dernières commandes</h4>
-                    <table class="table normalTable" id="" style="margin-bottom: 0px;"><!-- Start inscriptions -->
-                        <thead>
-                        <tr>
-                            <th class="col-sm-1">Action</th>
-                            <th class="col-sm-3">Déteteur</th>
-                            <th class="col-sm-3">No</th>
-                            <th class="col-sm-2">Date</th>
-                        </tr>
-                        </thead>
-                        <tbody class="selects">
-                        @if(!$orders->isEmpty())
-                            @foreach($orders as $order)
-                                <tr>
-                                    <td><a class="btn btn-sky btn-sm" href="{{ url('admin/order/'.$order->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td>{{ isset($order->order_adresse) ? $order->order_adresse->name : 'NA' }}</td>
-                                    <td><strong>{{ $order->order_no }}</strong></td>
-                                    <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
-                                </tr>
-                            @endforeach
-                        @endif
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
 
 @stop

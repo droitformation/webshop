@@ -61,7 +61,23 @@
                                                     <i class="fa fa-edit"></i>
                                                 </button>
                                             </td>
-                                            <td class="col-md-2"><p><strong>{{ $inscription->inscription_no }}</strong></p></td>
+                                            <td class="col-md-2">
+                                                <p>
+                                                    <strong>{{ $inscription->inscription_no }}</strong>&nbsp;
+                                                    @if($inscription->occurrences->isEmpty())
+                                                        @include('backend.partials.toggle', ['id' => $inscription->id])
+                                                    @endif
+                                                </p>
+
+                                                @if(!$inscription->occurrences->isEmpty())
+                                                    @foreach($inscription->occurrences as $occurrence)
+                                                        <small style="display: block;">
+                                                            Le {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}&nbsp;
+                                                            @include('backend.partials.toggle', ['id' => $inscription->id, 'inscription' => $occurrence->pivot])
+                                                        </small>
+                                                    @endforeach
+                                                @endif
+                                            </td>
                                             <td class="col-md-2"><p><strong>{{ $inscription->participant->name }}</strong></p></td>
                                             <td class="col-md-2">{{ $inscription->price_cents }} CHF</td>
                                             <td class="col-md-1">

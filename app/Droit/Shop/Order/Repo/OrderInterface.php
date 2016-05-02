@@ -4,7 +4,7 @@ interface OrderInterface {
 
     public function getLast($nbr);
     public function getTrashed($start, $end);
-    public function getPeriod($start,$end,$status = null, $onlyfree = null);
+    public function getPeriod($start,$end,$status = null, $onlyfree = null, $order_no = null);
     public function lastYear();
 	public function find($data);
     public function maxOrder($year);

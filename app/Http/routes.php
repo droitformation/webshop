@@ -214,6 +214,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
         Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
         Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
+        Route::post('inscription/presence', 'Backend\Colloque\InscriptionController@presence');
         Route::resource('inscription', 'Backend\Colloque\InscriptionController');
 
         Route::get('inscription/rappels/{id}','Backend\Colloque\RappelController@rappels');

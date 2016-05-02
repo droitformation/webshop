@@ -3,10 +3,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="col-md-4">Colloque</th>
-                <th class="col-md-1">N°</th>
+                <th class="col-md-3">Colloque</th>
+                <th class="col-md-2">N°</th>
                 <th class="col-md-2">Date</th>
-                <th class="col-md-2">Envoyé le</th>
+                <th class="col-md-2">Envoyé</th>
                 <th class="col-md-2">Montant</th>
                 <th class="text-right col-md-1">Statut</th>
             </tr>
@@ -20,7 +20,10 @@
                             <i class="fa fa-arrow-circle-right"></i>{{ $inscription->colloque->titre }}
                         </a>
                     </td>
-                    <td><strong>{{ $inscription->inscription_no }}</strong></td>
+                    <td>
+                        <strong>{{ $inscription->inscription_no }}</strong>&nbsp;
+                        @include('backend.partials.toggle', ['id' => $inscription->id])
+                    </td>
                     <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
                     <td>
                         @if($inscription->send_at)

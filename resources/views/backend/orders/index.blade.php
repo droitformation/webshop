@@ -8,8 +8,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" action="{{ url('admin/orders') }}" method="post">
-                        {!! csrf_field() !!}
+                    <form class="form-horizontal" action="{{ url('admin/orders') }}" method="post">{!! csrf_field() !!}
                         <h4>Période</h4>
                         <div class="row">
                             <div class="col-lg-2 col-md-3 col-xs-12">
@@ -38,6 +37,16 @@
                             <div class="col-lg-3 col-md-1 col-xs-12 text-left">
                                 <div class="btn-group">
                                     <button class="btn btn-default" type="submit"><i class="fa fa-filter"></i> &nbsp; Rechercher</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12" style="min-width:130px;">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="order_no" placeholder="Recherche...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +97,12 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
-                    <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
+                    @if($order_no)
+                        <h3><i class="fa fa-shopping-cart"></i> &nbsp;Recherche <span class="text-primary">{{ $order_no }}</span></h3>
+                    @else
+                        <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
+                    @endif
+
                     @if($status)
                         <h4>Status {{ $status_list[$status] }}</h4>
                     @endif

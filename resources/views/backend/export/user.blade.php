@@ -4,16 +4,34 @@
     <div class="row">
         <div class="col-md-12">
 
-            <h3>Exporter</h3>
+            <h3>Exporter ou rechercher</h3>
 
             <div class="row">
-
                 <div class="col-md-12">
-                    <form action="{{ url('admin/export/search') }}" method="post">
-                        {!! csrf_field() !!}
-                        <div class="panel panel-midnightblue">
-                            <div class="panel-body">
 
+                    <!-- START Export criteria -->
+                    <div class="panel panel-midnightblue">
+                        <fieldset class="panel-body">
+
+                            <!-- START search -->
+                            <h4><i class="fa fa-search"></i> &nbsp;Rechercher</h4>
+                            <form action="{{ url('admin/search/user') }}" method="post">{!! csrf_field() !!}
+                                <div class="form-group">
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="term" placeholder="Recherche...">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="clearfix"></div>
+                            <!-- END search -->
+                            <hr/>
+
+                            <form action="{{ url('admin/export/search') }}" method="post">{!! csrf_field() !!}
                                 <h4><i class="fa fa-globe"></i> &nbsp;Pays</h4>
                                 <fieldset class="container-export">
                                     <div class="form-group">
@@ -29,15 +47,12 @@
                                         @endif
                                     </div><br/>
                                 </fieldset>
-
                                 <div id="selectCantons">
                                     <h4><i class="fa fa-map"></i> &nbsp;Cantons</h4>
                                     <p class="text-right"><input type="checkbox" id="select_all" /> &nbsp;Séléctionner tous</p>
                                     @include('backend.export.partials.item', ['name' => 'cantons[]', 'items' => $cantons, 'class' => 'checkbox_all'])
                                 </div>
-
                                 <hr/>
-
                                 <h4><i class="fa fa-cubes"></i> &nbsp;Professions</h4>
                                 @include('backend.export.partials.item', ['name' => 'professions[]', 'items' => $professions])
 
@@ -51,50 +66,49 @@
                                     <div class="checkbox">
                                         <label><input name="each" value="1" type="checkbox">  <strong>Afficher les résultats de tous les critères</strong></label>
                                     </div>
-                                    <p class="help-block">Permet d'obtenir tous les utlisateurs et adresses qui ont tous les critères demandés sans recoupement.</p>
-                                    <br/>
+                                    <p class="help-block">Permet d'obtenir tous les utlisateurs et adresses qui ont tous les critères demandés sans recoupement.</p><br/>
                                 </div>
 
                                 <button type="submit" class="btn btn-lg btn-info">Rechercher</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Export criteria -->
+                    <!-- START results list -->
+                    @if(isset($persones) && !$persones->isEmpty())
+                        <div class="panel panel-midnightblue">
+                            <div class="panel-body">
+                                <h4>Résultats</h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-sm-1">Action</th>
+                                        <th class="col-sm-3">Nom</th>
+                                        <th class="col-sm-3">Email</th>
+                                        <th class="col-sm-2"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="selects">
+                                        @foreach($persones as $user)
+                                            <tr>
+                                                <td><a class="btn btn-sky btn-sm" href="{{ url('admin/user/'.$user->id) }}">&Eacute;diter</a></td>
+                                                <td><strong>{{ $user->name }}</strong></td>
+                                                <td>{{ $user->email }}</td>
+                                                <td class="text-right">
+                                                    {!! Form::open(array('route' => array('admin.user.destroy', $user->id), 'method' => 'delete')) !!}
+                                                    <button data-action="{{ $user->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                                    {!! Form::close() !!}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-
-                        @if(isset($persones) && !$persones->isEmpty())
-                            <div class="panel panel-midnightblue">
-                                <div class="panel-body">
-                                    <h4>Résultats</h4>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th class="col-sm-1">Action</th>
-                                            <th class="col-sm-3">Nom</th>
-                                            <th class="col-sm-3">Email</th>
-                                            <th class="col-sm-2"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="selects">
-                                            @foreach($persones as $user)
-                                                <tr>
-                                                    <td><a class="btn btn-sky btn-sm" href="{{ url('admin/user/'.$user->id) }}">&Eacute;diter</a></td>
-                                                    <td><strong>{{ $user->name }}</strong></td>
-                                                    <td>{{ $user->email }}</td>
-                                                    <td class="text-right">
-                                                        {!! Form::open(array('route' => array('admin.user.destroy', $user->id), 'method' => 'delete')) !!}
-                                                        <button data-action="{{ $user->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                                        {!! Form::close() !!}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        @endif
-
-                    </form>
+                    @endif
+                    <!-- END results list -->
 
                 </div>
-
             </div>
 
         </div>

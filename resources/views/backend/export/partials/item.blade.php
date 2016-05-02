@@ -14,7 +14,7 @@
                             <label>
                                 <input {!! isset($class) ? 'class="'.$class.'"' : '' !!} name="{{ $name }}" value="{{ $item->id }}" type="checkbox">
                                 <span class="item-content">{{ $item->title }}</span>
-                                <span class="label label-info pull-right">{{ $item->id }}</span>
+                                <span class="label label-inverse pull-right">{{ $item->id }}</span>
                             </label>
                         </div>
                     @endforeach

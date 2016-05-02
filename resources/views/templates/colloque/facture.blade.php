@@ -99,8 +99,14 @@
             <tr><td height="20">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top" style="margin-top: 20px;">
-                    @if(!empty($generate->getColloque()->annexe))
-                        <p class="red"><strong>Annexe{{ (count($generate->getColloque()->annexe) > 1 ? 's' : '') }}: {{ implode(',',$generate->getColloque()->annexe) }}</strong></p>
+                    @if(!empty($generate->getColloque()->annexe) && in_array('bon',$generate->getColloque()->annexe))
+
+                        @if(is_array($generate->getNo()))
+                            <p class="red"><strong>Annexes : bons de participation à présenter à l'entrée</strong></p>
+                        @else
+                            <p class="red"><strong>Annexe : bon de participation à présenter à l'entrée</strong></p>
+                        @endif
+
                     @endif
                 </td>
             </tr>

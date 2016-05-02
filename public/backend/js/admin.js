@@ -353,4 +353,18 @@ $( function() {
         }
     });
 
+    $('.toggle-presence').change(function() {
+
+        var presence = $(this).prop('checked');
+        var id       = $(this).data('id');
+
+        $.ajax({
+            type   : "POST",
+            url    : base_url + "admin/inscription/presence",
+            data   : { presence: presence, id : id,  _token: $("meta[name='_token']").attr('content') },
+            success: function(data) {},
+            error  : function(){ alert('problème'); }
+        });
+    })
+
 });
