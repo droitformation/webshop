@@ -1,6 +1,20 @@
 # Change Log
 
-## 3.0.0-alpha
+## 3.0.0-beta - 2016-03-01
+
+### Added
+
+- Bitcoin parser and formatter
+- Also checking tests folder for StyleCI
+
+### Fixed
+
+- Currencies are now included in the repo
+- Currency list generation moved to dev dependency: reduces repo size
+- BC Math calculator adding and subtracting failed when bcscale was set
+- Parsing zero for StringToUnitsParser
+
+## 3.0.0-alpha - 2016-02-04
 
 ### Added
 
@@ -15,6 +29,8 @@
 
 ### Changed
 
+- **[BC break]** Money::getAmount() returns a string instead of an int value
+- **[BC break]** Moved stringToUnits to StringToUnitsParser parser
 - Library requires at least PHP 5.4
 - Library uses PSR-4
 
@@ -24,9 +40,10 @@
 
 ### Removed
 
-- UnkownCurrency exception
-- Currency list is now provided by [umpirsky/currency-list](https://github.com/umpirsky/currency-list/)
-- RoundingMode class
+- **[BC break]** UnkownCurrency exception
+- **[BC break]** Currency list is now provided by [umpirsky/currency-list](https://github.com/umpirsky/currency-list/)
+- **[BC break]** RoundingMode class
+- **[BC break]** Announced deprecations are removed (Currency::getName, CurrencyPair::getRatio, Money::getUnits)
 
 
 ## Pre 3.0

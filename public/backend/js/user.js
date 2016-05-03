@@ -60,7 +60,7 @@ function template(data, type)
 
 var $search = $('.input-adresse');
 
-if($search.length)
+if($search.length && $(this).data('uid'))
 {
     $search.each(function()
     {

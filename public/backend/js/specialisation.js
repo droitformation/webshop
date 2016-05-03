@@ -10,7 +10,7 @@ $( function() {
                 fieldName          : "specialisation",
                 placeholderText    : "Ajouter une spécialisation",
                 removeConfirmation : true,
-                availableTags      : data,
+                tagSource      : data,
                 afterTagAdded: function(event, ui)
                 {
                     if(!ui.duringInitialization)

@@ -76,6 +76,7 @@ $(document).ready(function() {
     $('#abos-table').DataTable({
         initComplete: init,
         language: langues,
+        pageLength: 50,
         pagingType: 'simple',
         "columnDefs": [{
             "targets"  : 'no-sort',

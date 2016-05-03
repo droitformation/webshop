@@ -14,7 +14,7 @@ class ProfessionEloquent implements ProfessionInterface{
 
     public function getAll(){
 
-        return $this->profession->all();
+        return $this->profession->orderBy('title','ASC')->get();
     }
 
     public function find($id){

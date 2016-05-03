@@ -119,7 +119,7 @@
                                     <a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a>
                                     <span>{!! $product->teaser !!}</span>
                                 </div>
-                                <div class="readmore">{!! $product->description !!}</div>
+                                <div class="readmore product-description">{!! $product->description !!}</div>
                                 <div class="cart-price">
                                     <form method="post" action="{{ url('cart/addProduct') }}" class="form-inline">{!! csrf_field() !!}
                                         <button type="submit" class="cart-btn2">Ajouter au panier</button>

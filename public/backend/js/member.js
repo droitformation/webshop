@@ -11,7 +11,7 @@ $( function() {
                 fieldName          : "member",
                 placeholderText    : "Ajouter un membre",
                 removeConfirmation : true,
-                availableTags      : data,
+                tagSource      : data,
                 afterTagAdded: function(event, ui)
                 {
                     if(!ui.duringInitialization)

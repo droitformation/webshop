@@ -32,6 +32,11 @@ final class IntlMoneyParser implements MoneyParser
      */
     public function parse($money, $forceCurrency = null)
     {
+        if (!is_string($money)) {
+            throw new ParserException('Formatted raw money should be string, e.g. $1.00');
+        }
+
+        $currency = null;
         $decimal = $this->formatter->parseCurrency($money, $currency);
 
         if ($decimal === false) {

@@ -92,7 +92,7 @@ class Product extends Model{
 
     public function authors()
     {
-        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'shop_product_authors', 'product_id', 'author_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'shop_product_authors', 'product_id', 'author_id')->orderBy('last_name', 'asc')->withPivot('sorting');
     }
 
     public function domains()

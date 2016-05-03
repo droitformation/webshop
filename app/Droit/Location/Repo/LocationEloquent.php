@@ -14,7 +14,7 @@ class LocationEloquent implements LocationInterface{
 
     public function getAll(){
 
-        return $this->location->all();
+        return $this->location->orderBy('name','ASC')->get();
     }
 
     public function find($id){

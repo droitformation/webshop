@@ -3,12 +3,14 @@ Money
 
 [![Build Status](https://api.travis-ci.org/moneyphp/money.png?branch=master)](http://travis-ci.org/moneyphp/money)
 
-PHP 5.4+ library to make working with money safer, easier, and fun!
+PHP 5.5+ library to make working with money safer, easier, and fun!
 
 > "If I had a dime for every time I've seen someone use FLOAT to store currency, I'd have $999.997634" -- [Bill Karwin](https://twitter.com/billkarwin/status/347561901460447232)
 
 In short: You shouldn't represent monetary values by a float. Wherever
-you need to represent money, use this Money value object.
+you need to represent money, use this Money value object. Since version
+3.0 this library uses [strings internally](https://github.com/moneyphp/money/pull/136)
+in order to support unlimited integers.
 
 ```php
 <?php
@@ -36,7 +38,7 @@ Install the library using [composer][1]. Add the following to your `composer.jso
 {
     "require": {
         "mathiasverraes/money": "~3.0"
-    },
+    }
 }
 ```
 

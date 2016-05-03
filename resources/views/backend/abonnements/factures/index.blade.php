@@ -43,7 +43,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
                     <h3 style="margin-bottom: 30px;">Factures pour l'&eacute;dition {{ $product->reference.' '.$product->edition }}</h3>
-                    <table class="table simple-table">
+                    <table class="table" id="abos-table">
                         <thead>
                             <tr>
                                 <th width="20px;">Action</th>

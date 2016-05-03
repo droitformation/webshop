@@ -47,7 +47,7 @@ class ProductEloquent implements ProductInterface{
     public function getByCategorie($id)
     {
         return $this->product
-            ->with(array('authors','attributs','categories'))
+            ->with(['authors','attributs','categories'])
             ->where('hidden','=',0)
             ->whereHas('categories', function($query) use ($id)
             {

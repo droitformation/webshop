@@ -4,6 +4,8 @@ namespace Money;
 
 /**
  * Represents a numeric value.
+ *
+ * @author Frederik Bosch <f.bosch@genkgo.nl>
  */
 final class Number
 {
@@ -54,12 +56,8 @@ final class Number
             return false;
         }
 
-        $decimalPositions = strlen($this->number) - ($this->decimalSeparatorPosition + 1);
+        $decimalPositions = strlen(rtrim($this->number, '0')) - ($this->decimalSeparatorPosition + 1);
         if ($decimalPositions === 1) {
-            return true;
-        }
-
-        if (substr($this->number, $this->decimalSeparatorPosition + 2) === str_pad('', $decimalPositions - 1, '0')) {
             return true;
         }
 
@@ -114,5 +112,49 @@ final class Number
         }
 
         return new self(sprintf('%.8g', $floatingPoint));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNegative()
+    {
+        return $this->number[0] === '-';
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntegerPart()
+    {
+        if ($this->decimalSeparatorPosition === false) {
+            return $this->number;
+        }
+
+        return substr($this->number, 0, $this->decimalSeparatorPosition);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFractionalPart()
+    {
+        if ($this->decimalSeparatorPosition === false) {
+            return '';
+        }
+
+        return rtrim(substr($this->number, $this->decimalSeparatorPosition + 1), '0');
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntegerRoundingMultiplier()
+    {
+        if ($this->isNegative()) {
+            return '-1';
+        }
+
+        return '1';
     }
 }

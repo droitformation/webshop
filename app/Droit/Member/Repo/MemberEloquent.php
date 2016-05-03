@@ -14,7 +14,7 @@ class MemberEloquent implements MemberInterface{
 
     public function getAll(){
 
-        return $this->member->all();
+        return $this->member->orderBy('title','ASC')->get();
     }
 
     public function find($id){

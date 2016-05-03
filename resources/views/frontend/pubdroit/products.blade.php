@@ -35,7 +35,7 @@
                                         </ul>
                                     </div>
                                 @endif
-                                <div class="readmore">
+                                <div class="readmore product-description">
                                     <h4>Description</h4>
                                     {!! $product->description !!}
                                 </div>
