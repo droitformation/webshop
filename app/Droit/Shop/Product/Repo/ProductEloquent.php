@@ -160,7 +160,8 @@ class ProductEloquent implements ProductInterface{
         return $product;
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->product->find($id)->delete();
     }
 

@@ -46,8 +46,12 @@
                 <h4><strong>{{ $facture->abo_ref }}</strong></h4>
             </td>
             <td width="1%"  align="top"></td>
-            <td width="30%" align="middle" style="text-align: center;" class="misc-infos">
+            <td width="30%" align="left" style="text-align: left;" class="misc-infos">
                 <?php if(!empty($tva)) { echo \Registry::get('shop.infos.tva').' TVA'; } ?>
+                <div class="coordonnees">
+                    <h4>Coordonnées pour le paiement</h4>
+                    <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
+                </div>
             </td>
             <td width="1%" align="top" valign="top"></td>
             <td width="35%" align="top" valign="middle" class="misc-infos">

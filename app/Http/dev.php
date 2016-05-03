@@ -80,14 +80,21 @@ Route::get('testing', function() {
     $users        = \App::make('App\Droit\User\Repo\UserInterface');
 
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
-    $abos    = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
+    $abos        = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+
 
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
     $user     = $users->find(710);
 
     $rappels  = $factures->getFacturesAndRappels(292);
+
+    $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $item  = $order->find(2922);
+
+    $generator->stream = true;
+    return $generator->factureOrder(2922);
 /*
     $collection = $rappels->map(function ($item, $key) {
         $rappel = $item->rappels->sortByDesc('created_at')->first();
@@ -108,10 +115,6 @@ Route::get('testing', function() {
 
     $dir   = './files/abos/bound/1/*_RJN_2014.pdf';
     $files = \File::glob($dir);
-
-    echo '<pre>';
-    print_r($files);
-    echo '</pre>';
 
     //$generator->stream = true;
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
@@ -230,17 +233,17 @@ Route::get('cartworker', function()
 
     $worker->merge($files, 'binding');*/
 
-/*    $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $item  = $order->find(2908);
 
-    $products = $item->products->groupBy('id');
+    /*
 
-    foreach($products as $id => $product)
-    {
-        $count[$id] = $product->sum(function ($item) {
-            return count($item['id']);
-        });
-    }*/
+        $products = $item->products->groupBy('id');
+
+        foreach($products as $id => $product)
+        {
+            $count[$id] = $product->sum(function ($item) {
+                return count($item['id']);
+            });
+        }*/
    // $duplicates = \App::make('App\Droit\User\Repo\DuplicateInterface');
    // $duplicate  = $duplicates->find(762);
 
@@ -361,7 +364,7 @@ Route::get('notification', function()
     $logo   = 'facdroit.png';
     $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
 
-    $order = $orders->find(8);
+    $order = $orders->find(2922);
     $order->load('products','user','shipping','payement');
 
     $duDate = $order->created_at->addDays(30)->formatLocalized('%d %B %Y');

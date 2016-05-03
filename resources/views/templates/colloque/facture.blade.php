@@ -23,6 +23,10 @@
                         <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
                     </ul>
                     <p class="tva">{{ $tva['numero'] }}</p>
+                    <div class="coordonnees">
+                        <h4>Coordonnées pour le paiement</h4>
+                        <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
+                    </div>
                 </td>
                 <td align="top" width="40%" valign="top">
                     @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])

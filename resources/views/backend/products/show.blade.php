@@ -74,6 +74,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group well well-small">
+                            <label class="col-sm-3 control-label">Lien de commande externe</label>
+                            <div class="col-sm-7 col-xs-6">
+                                <input type="text" class="form-control" name="url" value="{{ $product->url }}" placeholder="http://">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Poids maximum</label>
                             <div class="col-sm-4 col-xs-8">

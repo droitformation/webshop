@@ -103,7 +103,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres',
                 'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
             ],
-            'compte'    => \Registry::get('shop.compte.colloque'),
+            'compte'    => \Registry::get('shop.compte.livre'),
             'order'     => $order,
             'adresse'   => $adresse,
             'products'  => $products,
@@ -208,7 +208,7 @@ class PdfGenerator implements PdfGeneratorInterface
             $data['signature'] = $this->signature;
             $data['tva']       = ['taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres'];
             $data['msgTypes']  = ['warning','special','remarque','signature'];
-            $data['compte']    = \Registry::get('shop.compte.abo');
+            $data['compte']    = \Registry::get('abo.compte');
         }
 
         return $data;
