@@ -33,6 +33,14 @@ class Inscription extends Model
         return null;
     }
 
+    public function getQrcodeAttribute()
+    {
+        $occurrence   = isset($this->occurrences) && !$this->occurrences->isEmpty() ? 'occurrence/' : '';
+        $url          = url('presence/'.$occurrence.$this->id.'/'.config('services.qrcode.key'));
+
+        return base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate($url));
+    }
+
     public function getStatusNameAttribute()
     {
         switch ($this->status) {

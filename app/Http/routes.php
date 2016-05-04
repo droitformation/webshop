@@ -251,6 +251,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('export/badges', 'Backend\ExportController@badges');
         Route::get('export/view', 'Backend\ExportController@view');
         Route::get('export/generate', 'Backend\ExportController@generate');
+        Route::get('export/qrcodes/{id}', 'Backend\ExportController@qrcodes');
         Route::match(['get', 'post'],'export/search', 'Backend\ExportController@search');
 
         Route::get('download/{file}', function($file)

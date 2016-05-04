@@ -4,11 +4,8 @@ namespace App\Droit\Generate\Pdf;
 
 class Qrcode
 {
-    public function export($colloque_id,$inscriptions,$badge)
+    public function export($inscriptions,$colloque_id)
     {
-        $data = $inscriptions->pluck('name_inscription')->all();
-
-
-        return \PDF::loadView('backend.export.qrcode', $data)->setPaper('a4')->stream('badges_' . $colloque_id . '.pdf');
+        return \PDF::loadView('backend.export.qrcode', ['inscriptions' => $inscriptions])->setPaper('a4')->stream('qrcodes_' . $colloque_id . '.pdf');
     }
 }

@@ -35,10 +35,12 @@ class AboEloquent implements AboInterface{
     public function create(array $data){
 
         $abo = $this->abo->create(array(
-            'title' => $data['title'],
-            'logo'  => (isset($data['logo']) ? $data['logo']: null),
-            'name'  => (isset($data['name']) ? $data['name']: null),
-            'plan'  => $data['plan']
+            'title'   => $data['title'],
+            'logo'    => (isset($data['logo']) ? $data['logo']: null),
+            'name'    => (isset($data['name']) ? $data['name']: null),
+            'compte'  => (isset($data['compte']) ? $data['compte']: null),
+            'adresse' => (isset($data['adresse']) ? $data['adresse']: null),
+            'plan'    => $data['plan']
         ));
 
         if( ! $abo )

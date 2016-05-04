@@ -38,7 +38,10 @@
                         </div>
                         <div class="media-body">
                             <p><strong>{!! $inscription->participant->name !!}</strong></p>
-                            <p>{{ $inscription->inscription_no }} {!! $inscription->present ? '&nbsp;<i class="text-success fa fa-check-circle-o"></i>' : '' !!}</p>
+                            <p>
+                                {{ $inscription->inscription_no }} &nbsp;
+                                @include('backend.partials.toggle', ['id' => $inscription->id])
+                            </p>
                         </div>
                     </div>
                 @endforeach

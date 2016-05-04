@@ -1,7 +1,7 @@
 <html>
     <head>
         <style type="text/css">
-            @page { margin: <?php echo $margin; ?>; }
+            @page { margin: 1em }
             * {
                 box-sizing: border-box;
             }
@@ -9,50 +9,28 @@
                 margin: 0;
                 padding: 0;
             }
-            .height{
-                height: <?php echo $height; ?>;
-                max-height: <?php echo $height; ?>;;
-                page-break-inside:avoid;
-                box-sizing: border-box;
-                position: relative;
-            }
-            div{
-                width: auto;
-                height: auto;
-                margin: auto;
-            }
-            span{
-                font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-                color: #000;
-                line-height: 20px;
-                font-size: 15px;
-                max-resolution: 0;
-                padding: 0;
-                display: block;
-            }
-
         </style>
     </head>
     <body>
 
-        @if(!empty($data))
-            @foreach($data as $table)
-                <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="ddd" style="page-break-after:always;">
-                   @foreach($table as $row)
-                        <tr class="normalize">
-                        @foreach($row as $name)
-                            <td width="'.$width.'" height="'.$height.'" class="normalize height">
-                               <div style="width: 80%;margin: 0 auto; display: block;text-align: left;">
-                                   <?php $logo = Registry::get('inscription.infos.logo'); ?>
-                                   <img style="max-height: 50px" src="{{ asset('files/main/'.$logo) }}" />
-                                   {!! !empty($name) ? '<span>'.$name.'</span>' : '' !!}
-                               </div>
-                            </td>
-                            @endforeach
-                        </tr>
-                       @endforeach
-                </table>
-            @endforeach
+        @if(!$inscriptions->isEmpty())
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <?php $chunks = $inscriptions->chunk(2); ?>
+                @foreach($chunks as $row)
+                    <tr class="normalize">
+                        @foreach($row as $code)
+                           <td width="50%">
+                               <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                   <tr>
+                                       <td width="30%"><img src="data:image/png;base64, {{ $code->qrcode }}"></td>
+                                       <td width="70%">{{ $code->name_inscription }}<br><small>{{ $code->inscription_no }}</small></td>
+                                   </tr>
+                               </table>
+                           </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </table>
         @endif
 
     </body>

@@ -135,16 +135,18 @@
             <table id="recu" valign="top">
                 <tr>
                     <td align="top" valign="center" height="43mm">
-                        @if(!empty($versement))
-                            <ul class="versement">
+                        <ul class="versement">
+                            @if(!empty($abo->abo->adresse))
+                                <li>{!! $abo->abo->adresse !!}</li>
+                            @elseif(!empty($versement))
                                 @foreach($versement as $line)
-                                    <li>{{ $line }}</li>
+                                    <li>{!! $line !!}</li>
                                 @endforeach
-                            </ul>
-                        @endif
+                            @endif
+                        </ul>
                     </td>
                 </tr>
-                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ $compte }}</td></tr>
+                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ !empty($abo->abo->compte) ? $abo->abo->compte : $compte }}</td></tr>
                 <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs">{{ $francs }}</span>{{ $centimes }}</td></tr>
             </table>
         </td>
@@ -152,16 +154,18 @@
             <table id="compte" valign="top">
                 <tr>
                     <td align="top" valign="center" height="43mm">
-                        @if(!empty($versement))
-                            <ul class="versement">
+                        <ul class="versement">
+                            @if(!empty($abo->abo->adresse))
+                                <li>{!! $abo->abo->adresse !!}</li>
+                            @elseif(!empty($versement))
                                 @foreach($versement as $line)
-                                    <li>{{ $line }}</li>
+                                    <li>{!! $line !!}</li>
                                 @endforeach
-                            </ul>
-                        @endif
+                            @endif
+                        </ul>
                     </td>
                 </tr>
-                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ $compte }}</td></tr>
+                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ !empty($abo->abo->compte) ? $abo->abo->compte : $compte }}</td></tr>
                 <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs">{{ $francs }}</span>{{ $centimes }}</td></tr>
             </table>
         </td>

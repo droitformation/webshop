@@ -249,6 +249,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 
 .checkbox-item .item-content{
     width: 80%;
+    display: inline-block;
 }
 
 #exportOptions{

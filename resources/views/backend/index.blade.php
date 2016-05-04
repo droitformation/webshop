@@ -108,7 +108,10 @@
                                                             </div>
                                                             <div class="media-body">
                                                                 <p><strong>{!! $inscription->participant->name !!}</strong></p>
-                                                                <p>{{ $inscription->inscription_no }}</p>
+                                                                <p>
+                                                                    {{ $inscription->inscription_no }}&nbsp;
+                                                                    @include('backend.partials.toggle', ['id' => $inscription->id])
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     @endforeach
@@ -117,7 +120,8 @@
                                                 <br/><a class="btn btn-success btn-xs" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a>
                                                 @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque]) <!-- Modal add to group -->
                                             @else
-                                                <strong>{{ $inscription->inscription_no }}</strong>
+                                                <strong>{{ $inscription->inscription_no }}</strong> &nbsp;
+                                                @include('backend.partials.toggle', ['id' => $inscription->id])
                                             @endif
                                         </td>
                                         <td>{{ $inscription->group_id ? $group->price : $inscription->price_cents }} CHF</td>

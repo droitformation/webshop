@@ -115,4 +115,11 @@ class ExportController extends Controller
 
         return $this->export_badge->export($request->input('colloque_id'), $inscriptions, $badge);
     }
+
+    public function qrcodes($id)
+    {
+        $inscriptions = $this->inscription->getByColloque($id,false,false);
+
+        return $this->export_qrcode->export($inscriptions, $id);
+    }
 }

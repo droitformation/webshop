@@ -6,7 +6,7 @@
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
         </div>
@@ -38,6 +38,26 @@
                             </div>
                             <div class="col-sm-3 col-xs-12">
                                 <p class="help-block">facultatif</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Compte pour BV</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" name="compte" value="{{ \Registry::get('abo.compte') }}">
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">Par défaut le compte est celui indiqué dans la configuration des abos</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Adresse pour BV</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <textarea class="form-control redactorSimple" name="adresse">{{ \Registry::get('abo.infos.adresse') }}</textarea>
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">Par défaut l'adresse est celle indiquée dans la configuration des abos</p>
                             </div>
                         </div>
 

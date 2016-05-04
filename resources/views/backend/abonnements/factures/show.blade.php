@@ -59,7 +59,7 @@
                             <label class="col-sm-3 control-label">Facture</label>
                             <div class="col-sm-3 col-xs-6">
                                 @if($facture->abo_facture)
-                                    <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                    <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}?{{ rand(100,10000) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
                                 @endif
                             </div>
                         </div>

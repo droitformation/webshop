@@ -6,7 +6,7 @@
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/abo') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
         </div>
@@ -24,14 +24,14 @@
                         <h3>&Eacute;diter abo</h3>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-4 col-xs-6">
                                 <input type="text" class="form-control" value="{{ $abo->title }}" name="title">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Centre/institut</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-4 col-xs-6">
                                 <input type="text" class="form-control" name="name" value="{{ $abo->name }}">
                             </div>
                             <div class="col-sm-3 col-xs-12">
@@ -40,8 +40,28 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Compte pour BV</label>
+                            <div class="col-sm-4 col-xs-6">
+                                <input type="text" class="form-control" name="compte" value="{{ $abo->compte }}" placeholder="facultatif">
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">Par défaut le compte est celui indiqué dans la configuration des abos</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Adresse pour BV</label>
+                            <div class="col-sm-4 col-xs-6">
+                                <textarea class="form-control redactorSimple" name="adresse">{{ \Registry::get('abo.infos.adresse') }}</textarea>
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">Par défaut l'adresse est celle indiquée dans la configuration des abos</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Récurrence</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-4 col-xs-6">
                                 <select class="form-control" name="plan">
                                     <option value=""></option>
                                     @foreach($plans as $name => $plan)
@@ -54,7 +74,7 @@
                         @if(!empty($abo->logo ))
                             <div class="form-group">
                                 <label for="file" class="col-sm-3 control-label">Fichier</label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <div class="list-group">
                                         <div class="list-group-item text-center">
                                             <a href="#"><img height="120" src="{!! asset('files/main/'.$abo->logo) !!}" alt="logo" /></a>
