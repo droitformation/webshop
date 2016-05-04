@@ -82,9 +82,10 @@
             <thead>
                 <tr>
                     <th width="7%" class="text-left">Qt</th>
-                    <th width="53%" class="text-left">Nom de l'ouvrage</th>
-                    <th width="20%" class="text-right">Prix à l'unité</th>
-                    <th width="20%" class="text-right">Total</th>
+                    <th width="45%" class="text-left">Nom de l'ouvrage</th>
+                    <th width="16%" class="text-right">Prix à l'unité</th>
+                    <th width="16%" class="text-right">Prix spécial</th>
+                    <th width="16%" class="text-right">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -92,28 +93,16 @@
                 @if(!empty($products))
                     @foreach($products as $product_id => $product)
 
-                        <?php
-                            $price_unit = $product->reject(function ($item) { // Is the product free?
-                                return $item->pivot->isFree;
-                            });
-
-                            $prod_free = $product->filter(function ($item) {
-                                return $item->pivot->isFree;
-                            });
-
-                            $qty = $product->count();
-                        ?>
+                        <?php $price_unit = $product->reject(function ($item) { return $item->pivot->isFree; }); ?>
+                        <?php $qty = $product->count();?>
 
                         <tr>
                             <td class="text-left" valign="top">{{ $qty }}</td>
-                            <td class="text-left" valign="top">{{ $product->first()->title }}
-
-                            @if(!$prod_free->isEmpty())
-                               <br/><small>Dont livres gratuits : {{ $prod_free->count() }}</small>
-                            @endif
-
+                            <td class="text-left" valign="top">
+                                {{ $product->first()->title }} {!! ($product->first()->isbn ? '<br/><small style="font-size:9px;">(ISBN: '.$product->first()->isbn.')</small>' : '') !!}
                             </td>
-                            <td class="text-right" valign="top">{{ (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit') }}</td>
+                            <td class="text-right" valign="top">{!! !$price_unit->isEmpty() ? $price_unit->first()->price_normal.' <span>CHF</span>' : 'gratuit' !!}</td>
+                            <td class="text-right" valign="top">{!! !$price_unit->isEmpty() ? $price_unit->first()->price_special.' CHF' : '' !!}</td>
                             <!-- Calculate price with quantitiy -->
                             <?php $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit') * $qty; ?>
                             <td class="text-right" valign="top">{{ number_format((float)$subtotal, 2, '.', '') }} <span>CHF</span></td>
@@ -157,7 +146,6 @@
                     <table width="100%" id="content-table" class="total_line" align="right" valign="top">
 
                         @if($order->coupon_id > 0)
-
                             <tr align="top" valign="top">
                             @if( $order->coupon->type == 'shipping')
                                 <td width="40%" align="top" valign="top" class="text-right">Frais de port offerts</td>
@@ -168,6 +156,7 @@
                             @endif
                             </tr>
                         @endif
+
                         <tr align="top" valign="top">
                             <td width="40%" align="top" valign="top" class="text-right"><strong>Sous-total:</strong></td>
                             <td width="60%" align="top" valign="top" class="text-right">{{ $order->price_cents }} CHF</td>

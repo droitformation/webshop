@@ -150,11 +150,11 @@ class OrderController extends Controller {
      */
     public function store(Request $request)
     {
-        echo '<pre>';
-        print_r($request->all());
-        echo '</pre>';exit;
-
         $order = $this->ordermaker->make($request->all());
+
+        // via admin
+        $order->admin = 1;
+        $order->save();
 
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
     }

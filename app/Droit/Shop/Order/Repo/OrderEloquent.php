@@ -169,7 +169,7 @@ class OrderEloquent implements OrderInterface{
 
         if(isset($data['user_id']))
         {
-            $order->user_id    = $data['user_id'];
+            $order->user_id = $data['user_id'];
         }
 
         if(isset($data['adresse_id']))

@@ -30,7 +30,7 @@
          $prepared = $this->prepareOrder($orders, $names, $details);
 
          // Columns add columns requested if we want user and not details
-         $names = ($details ? ['Numero','Montant','Date','Paye','Status','Titre','Quantité','Prix','Gratuit','Rabais'] : (['Numero','Montant','Date','Paye','Status'] + $names));
+         $names = ($details ? ['Numero','Montant','Date','Payé','Status','Titre','Quantité','Prix','Prix spécial','Gratuit','Rabais'] : (['Numero','Montant','Date','Paye','Status'] + $names));
 
          \Excel::create('Export Commandes', function($excel) use ($prepared, $sum, $title, $names)
          {
@@ -76,11 +76,12 @@
 
                      foreach($grouped as $product)
                      {
-                         $data['title']  = $product->first()->title;
-                         $data['qty']    = $product->count();
-                         $data['prix']   = $product->first()->price_cents;
-                         $data['free']   = $product->first()->pivot->isFree ? 'Oui' : '';
-                         $data['rabais'] = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
+                         $data['title']   = $product->first()->title;
+                         $data['qty']     = $product->count();
+                         $data['prix']    = $product->first()->price_normal.' CHF';
+                         $data['special'] = $product->first()->price_special ? $product->first()->price_special.' CHF' : '';
+                         $data['free']    = $product->first()->pivot->isFree ? 'Oui' : '';
+                         $data['rabais']  = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
 
                          $converted[] = $info + $data;
                      }

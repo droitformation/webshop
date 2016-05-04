@@ -18,6 +18,7 @@ class ExportController extends Controller
     protected $badges;
     protected $export_inscription;
     protected $export_adresse;
+    protected $export_qrcode;
 
     /**
      * Create a new controller instance.
@@ -35,6 +36,7 @@ class ExportController extends Controller
         $this->export_inscription = new \App\Droit\Generate\Excel\ExcelInscription();
         $this->export_adresse     = new \App\Droit\Generate\Excel\ExcelAdresse();
         $this->export_badge       = new \App\Droit\Generate\Pdf\PdfBadge();
+        $this->export_qrcode      = new \App\Droit\Generate\Pdf\Qrcode();
 
         $this->badges = config('badge');
     }

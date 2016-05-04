@@ -88,7 +88,7 @@ $factory->define(App\Droit\Option\Entities\OptionUser::class, function (Faker\Ge
         'user_id'          => 1,
         'option_id'        => 1,
         'inscription_id'   => 1,
-        'groupe_id'        => 1,
+        'groupe_id'        => null,
         'reponse'          => '',
     ];
 });

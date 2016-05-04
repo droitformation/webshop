@@ -91,6 +91,33 @@ class ProductTest extends \TestCase {
         $this->assertEquals('1500', $total);
     }
 
+    public function testMapProducts2()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $order = [
+            'products' => [0 => 2, 1 => 291],
+            'qty'      => [0 => 2, 1 => 2],
+            'rabais'   => [0 => 25],
+            'gratuit'  => [1 => 1],
+            'price'    => [0 => 20]
+        ];
+
+        // Calculations
+        // product 1: (new price * 2) / rabais 25% => 3000
+        // product 2 is free
+
+        $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 100, 'price'  => 1000,]);
+        $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 100, 'price'  => 2000,]);
+
+        $this->mock->shouldReceive('find')->once()->andReturn($prod1);
+        $this->mock->shouldReceive('find')->once()->andReturn($prod2);
+
+        $total = $make->total($order, $proprety = 'price');
+
+        $this->assertEquals('3000', $total);
+    }
+
     public function testMapWeightProducts()
     {
         $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
@@ -207,14 +234,14 @@ class ProductTest extends \TestCase {
     {
         $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
-        $order = ['products' => [1,2,3], 'qty' => [1,2,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true]];
+        $order = ['products' => [1,2,3], 'qty' => [1,2,1], 'rabais' => [1 => 10], 'gratuit' => [0 => true], 'price' => [0 => 20]];
         // Beware array index start from 0, rabais is for the second product, gratuit for the first
 
         $expected = [
-            ['id' => 1, 'isFree' => 1, 'rabais' => null],
-            ['id' => 2, 'isFree' => null, 'rabais' => 10],
-            ['id' => 2, 'isFree' => null, 'rabais' => 10],
-            ['id' => 3, 'isFree' => null, 'rabais' => null]
+            ['id' => 1, 'isFree' => 1, 'rabais' => null, 'price' => 20],
+            ['id' => 2, 'isFree' => null, 'rabais' => 10, 'price' => null],
+            ['id' => 2, 'isFree' => null, 'rabais' => 10, 'price' => null],
+            ['id' => 3, 'isFree' => null, 'rabais' => null, 'price' => null]
         ];
 
         $result = $make->getProducts($order);
@@ -246,10 +273,10 @@ class ProductTest extends \TestCase {
         $this->mock->shouldReceive('find')->twice()->andReturn($prod2);
 
         $products = [
-            ['id' => 22, 'isFree' => null, 'rabais' => 25],
-            ['id' => 22, 'isFree' => null, 'rabais' => 25],
-            ['id' => 12, 'isFree' => 1, 'rabais' => null],
-            ['id' => 12, 'isFree' => 1, 'rabais' => null]
+            ['id' => 22, 'isFree' => null, 'rabais' => 25, 'price' => null],
+            ['id' => 22, 'isFree' => null, 'rabais' => 25, 'price' => null],
+            ['id' => 12, 'isFree' => 1, 'rabais' => null, 'price' => null],
+            ['id' => 12, 'isFree' => 1, 'rabais' => null, 'price' => null]
         ];
 
         $data = [
@@ -282,10 +309,10 @@ class ProductTest extends \TestCase {
             'payement_id' => 1,
             'products'    => $products =
                 [
-                    ['id' => 22, 'isFree' => null, 'rabais' => 25],
-                    ['id' => 22, 'isFree' => null, 'rabais' => 25],
-                    ['id' => 12, 'isFree' => 1, 'rabais' => null],
-                    ['id' => 12, 'isFree' => 1, 'rabais' => null]
+                    ['id' => 22, 'isFree' => null, 'rabais' => 25, 'price' => null],
+                    ['id' => 22, 'isFree' => null, 'rabais' => 25, 'price' => null],
+                    ['id' => 12, 'isFree' => 1, 'rabais' => null, 'price' => null],
+                    ['id' => 12, 'isFree' => 1, 'rabais' => null, 'price' => null]
                 ]
         ];
 

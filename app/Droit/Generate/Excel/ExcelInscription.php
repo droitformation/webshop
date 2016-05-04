@@ -21,7 +21,7 @@
 
                  $options   = $colloque->options->whereLoose('type', 'choix')->pluck('title', 'id')->toArray();
                  $groupes   = $colloque->groupes->pluck('text', 'id')->toArray();
-                 $converted = $this->prepareInscription($inscriptions, $options , $names, $sort = null);
+                 $converted = $this->prepareInscription($inscriptions, $options , $names, $sort);
 
                  if ($sort && !empty($groupes))
                  {
@@ -40,11 +40,11 @@
                              $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
 
                              $sheet->appendRow(['']);
-
                              $sheet->appendRow(['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $names);
                              $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
                              $sheet->rows($group);
                          }
+                         $sheet->appendRow(['']);
                      }
                  }
                  else
@@ -94,7 +94,7 @@
                  }
 
                  // Do we need to sort, Sort by choix options
-                 if ($sort && !empty($groupes))
+                 if ($sort && !empty($options))
                  {
                      foreach($inscription->user_options as $option)
                      {
@@ -108,12 +108,7 @@
                      // String with the options
                      if (!$inscription->user_options->isEmpty())
                      {
-                         $html = $inscription->user_options->map(function ($group, $key)
-                         {
-                             return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '');
-                         })->implode(';');
-
-                         $data['checkbox'] = $html;
+                         $data['checkbox'] = $this->userOptionsHtml($inscription);
                      }
 
                      $converted[] = $data;
@@ -122,5 +117,13 @@
          }
 
          return $converted;
+     }
+
+     public function userOptionsHtml($inscription)
+     {
+         return $inscription->user_options->map(function ($group, $key)
+         {
+             return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '');
+         })->implode(';');
      }
  }
