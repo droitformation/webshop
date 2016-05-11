@@ -199,6 +199,7 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'one', function
     ];
 });
 
+
 $factory->define(App\Droit\Shop\Shipping\Entities\Shipping::class, function (Faker\Generator $faker) {
 
     return [

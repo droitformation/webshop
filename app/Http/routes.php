@@ -489,10 +489,15 @@ Route::group(['middleware' => ['web']], function () {
     }]);
 
     Route::post('oauth/access_token', function() {
+
+        echo '<pre>';
+        print_r($_POST);
+        echo '</pre>';exit;
+
         return Response::json(Authorizer::issueAccessToken());
     });
 
-    Route::get('api/user', ['middleware' => 'oauth', function(){
+    Route::get('oauth/user', ['middleware' => 'oauth', function(){
 
         $user_id = Authorizer::getResourceOwnerId();
         $user    = \App\Droit\User\Entities\User::find($user_id);

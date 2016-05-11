@@ -32,6 +32,14 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
+     /**
+      * Set a coupon and put in session
+      * IIT
+      * 
+      * @param \App\Droit\Shop\Coupon\Entities\Coupon
+      * @return void
+      * @throws \App\Exceptions\CouponException if coupon is not valid
+      * */
      public function setCoupon($coupon){
 
          $valide = $this->coupon->findByTitle($coupon);
@@ -55,6 +63,12 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
+     /**
+     * Set shipping
+     * We can set a free shipping coupon else get shipping with weight
+     * IIT
+     * @return void
+     * */
      public function setShipping()
      {
          $weight = (\Session::has('noShipping') ? null : $this->orderWeight);
@@ -64,6 +78,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
+     /**
+      * Get shipping from weight
+      * IIT
+      * @return \App\Droit\Shop\Shipping\Entities\Shipping
+      * */
      public function getShipping()
      {
          $shipping = $this->shipping->getShipping($this->orderWeight);
@@ -71,6 +90,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $shipping;
      }
 
+     /**
+      * Get total from weight
+      * IIT
+      * @return void
+      * */
      public function getTotalWeight(){
 
          $totalWeight = 0;
@@ -91,6 +115,10 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
+     /**
+      * Forget free coupon
+      * @return void
+      * */
      public function removeFreeShippingCoupon()
      {
          session()->forget('noShipping');
@@ -98,6 +126,10 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
+     /**
+      * Reset cart prices to normal
+      * @return void
+      * */
      public function reset()
      {
          $this->removeFreeShippingCoupon()->resetCartPrices();
@@ -105,6 +137,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $this;
      }
 
+     /**
+      * Apply coupon and calculate new price for products in cart
+      * IIT
+      * @return void
+      * */
      public function applyCoupon()
      {
          if($this->hasCoupon)
@@ -124,17 +161,23 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          }
      }
 
+    /**
+    * Calculate new price for products and update cart
+    * IIT
+    * @return void
+    * */
      public function couponForProduct()
      {
          if(isset($this->hasCoupon->products))
          {
-             foreach($this->hasCoupon->products as $product_id)
+             foreach($this->hasCoupon->products as $product)
              {
-                 $rowId = $this->searchItem($product_id->id);
+                 // search if product eligible for discount is in cart
+                 $rowId = $this->searchItem($product->id);
 
                  if(!empty($rowId))
                  {
-                     $newprice = $this->calculPriceWithCoupon($product_id->id);
+                     $newprice = $this->calculPriceWithCoupon($product);
 
                      \Cart::update($rowId[0], array('price' => $newprice));
                  }
@@ -142,6 +185,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          }
      }
 
+     /**
+     * Calculate new price for all products and update cart
+     * IIT
+     * @return void
+     * */
      public function couponGlobal()
      {
          $cart = \Cart::content();
@@ -154,6 +202,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          }
      }
 
+     /**
+     * Reset all prices to original from products
+     * IIT
+     * @return void
+     * */
      public function resetCartPrices()
      {
          $cart = \Cart::content();
@@ -169,18 +222,30 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          }
      }
 
-     public function calculPriceWithCoupon($product_id)
+     /**
+     * Calculat price from product and apply coupon discount
+     * IIT
+     * @return float
+     * */
+     public function calculPriceWithCoupon($product)
      {
-         $product = $this->product->find($product_id);
-
          return $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
      }
 
+     /**
+      *  Search in cart
+      * @return boolean
+     */
      public function searchItem($id)
      {
         return \Cart::search(array('id' => $id));
      }
 
+     /**
+     * Calculat price with shipping
+     * IIT through
+     * @return float
+     * */
      public function totalCartWithShipping()
      {
          $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
@@ -188,6 +253,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return \Cart::total() + $shipping->price_cents;
      }
 
+     /**
+     * Get price of shipping
+     * IIT through
+     * @return float
+     * */
      public function totalShipping()
      {
          $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
@@ -195,6 +265,10 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          return $shipping->price_cents;
      }
 
+     /**
+     * Get total cart price
+     * @return float
+     * */
      public function totalCart()
      {
          return \Cart::total();

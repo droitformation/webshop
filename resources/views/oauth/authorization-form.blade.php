@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('auth.layouts.master')
 @section('content')
 
     {!! Form::open(['method' => 'POST','class'=>'form-horizontal', 'url'=> route('oauth.authorize.post',$params)]) !!}
