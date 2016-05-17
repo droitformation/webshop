@@ -10,6 +10,11 @@ use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 
+use App\Droit\Generate\Excel\ExcelInscriptionInterface;
+use App\Droit\Generate\Excel\ExcelOrderInterface;
+use App\Droit\Generate\Pdf\PdfBadgeInterface;
+use App\Droit\Generate\Pdf\QrcodeInterface;
+
 class ExportController extends Controller
 {
     protected $inscription;
@@ -19,13 +24,22 @@ class ExportController extends Controller
     protected $export_inscription;
     protected $export_adresse;
     protected $export_qrcode;
+    protected $export_badge;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, AdresseInterface $adresse)
+    public function __construct(
+        ColloqueInterface $colloque,
+        InscriptionInterface $inscription,
+        AdresseInterface $adresse,
+        ExcelInscriptionInterface $export_inscription,
+        ExcelOrderInterface $export_adresse,
+        PdfBadgeInterface $export_badge,
+        QrcodeInterface $export_qrcode
+    )
     {
         $this->inscription = $inscription;
         $this->colloque    = $colloque;
@@ -33,10 +47,10 @@ class ExportController extends Controller
 
         $this->label = new \App\Droit\Helper\Label();
 
-        $this->export_inscription = new \App\Droit\Generate\Excel\ExcelInscription();
-        $this->export_adresse     = new \App\Droit\Generate\Excel\ExcelAdresse();
-        $this->export_badge       = new \App\Droit\Generate\Pdf\PdfBadge();
-        $this->export_qrcode      = new \App\Droit\Generate\Pdf\Qrcode();
+        $this->export_inscription = $export_inscription;
+        $this->export_adresse     = $export_adresse;
+        $this->export_badge       = $export_badge;
+        $this->export_qrcode      = $export_qrcode;
 
         $this->badges = config('badge');
     }
@@ -51,7 +65,7 @@ class ExportController extends Controller
         $colloque     = $this->colloque->find($request->input('id'));
         $inscriptions = $this->inscription->getByColloque($colloque->id);
 
-        $this->export_inscription->exportInscription($inscriptions,$colloque, $request->input('columns', config('columns.names')) , $request->input('sort', false));
+        $this->export_inscription->exportInscription($inscriptions, $colloque, $request->input('columns', config('columns.names')), $request->input('sort', false));
     }
 
     /**

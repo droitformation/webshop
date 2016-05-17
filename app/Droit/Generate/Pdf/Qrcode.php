@@ -2,7 +2,9 @@
 
 namespace App\Droit\Generate\Pdf;
 
-class Qrcode
+use App\Droit\Generate\Pdf\QrcodeInterface;
+
+class Qrcode implements QrcodeInterface
 {
     public function export($inscriptions,$colloque_id)
     {

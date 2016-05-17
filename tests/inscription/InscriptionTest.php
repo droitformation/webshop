@@ -80,13 +80,15 @@ class InscriptionTest extends TestCase {
 
     public function testLastInscriptions()
     {
-        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make([
-            'user_id' => 710 // that's a real user else the load method for the inscription will throw an error
-        ]);
+        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make(['user_id' => 710]);
+        $paginator = new \Illuminate\Pagination\Paginator($inscriptions, 2, 1);
 
-        $this->mock->shouldReceive('getAll')->with(5)->once()->andReturn($inscriptions);
+        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make(['id' => 39]);
 
-        $response = $this->call('GET', 'admin/inscription');
+        $this->colloque->shouldReceive('find')->once()->andReturn($colloque);
+        $this->mock->shouldReceive('getByColloque')->once()->andReturn($paginator);
+
+        $response = $this->call('GET', 'admin/inscription/colloque/39');
 
         $this->assertViewHas('inscriptions');
     }

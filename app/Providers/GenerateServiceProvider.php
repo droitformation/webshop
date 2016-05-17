@@ -23,11 +23,25 @@ class GenerateServiceProvider extends ServiceProvider
      */
     public function register()
     {
-/*
-        $this->app->singleton('App\Droit\Generate\Pdf\PdfGenerator', function()
-        {
-            return new \App\Droit\Shop\Order\Repo\OrderEloquent(new \App\Droit\Shop\Order\Entities\Order);
-        });*/
 
+        $this->app->singleton('App\Droit\Generate\Excel\ExcelInscriptionInterface', function()
+        {
+            return new \App\Droit\Generate\Excel\ExcelInscription();
+        });
+
+        $this->app->singleton('App\Droit\Generate\Excel\ExcelOrderInterface', function()
+        {
+            return new \App\Droit\Generate\Excel\ExcelOrder();
+        });
+
+        $this->app->singleton('App\Droit\Generate\Pdf\PdfBadgeInterface', function()
+        {
+            return new \App\Droit\Generate\Pdf\PdfBadge();
+        });
+
+        $this->app->singleton('App\Droit\Generate\Pdf\QrcodeInterface', function()
+        {
+            return new \App\Droit\Generate\Pdf\Qrcode();
+        });
     }
 }

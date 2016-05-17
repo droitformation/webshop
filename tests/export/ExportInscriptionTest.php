@@ -2,11 +2,40 @@
 
 class ExportInscriptionTest extends TestCase {
 
-	/**
-	 * A basic functional test example.
-	 *
-	 * @return void
-	 */
+    protected $mock;
+    protected $colloque;
+    protected $groupe;
+    protected $interface;
+    protected $worker;
+
+    protected $export_inscription;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->mock = Mockery::mock('App\Droit\Inscription\Repo\InscriptionInterface');
+        $this->app->instance('App\Droit\Inscription\Repo\InscriptionInterface', $this->mock);
+
+        $this->worker = Mockery::mock('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $this->app->instance('App\Droit\Inscription\Worker\InscriptionWorkerInterface', $this->worker);
+
+        $this->colloque = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
+        $this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->colloque);
+
+        $this->export_inscription = Mockery::mock('App\Droit\Generate\Excel\ExcelInscriptionInterface');
+        $this->app->instance('App\Droit\Generate\Excel\ExcelInscriptionInterface', $this->export_inscription);
+
+        $user = App\Droit\User\Entities\User::find(710);
+
+        $this->actingAs($user);
+    }
+
+    public function tearDown()
+    {
+        \Mockery::close();
+    }
+    
 	public function testTextUserOption()
 	{
 		$result = new \App\Droit\Generate\Excel\ExcelInscription();
@@ -32,6 +61,19 @@ class ExportInscriptionTest extends TestCase {
 
         $this->assertEquals($expect, $html);
 
+    }
+
+    public function testExportInscriptions()
+    {
+        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make(['id' => 1]);
+        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make(['user_id' => 710]);
+
+        $this->colloque->shouldReceive('find')->once()->andReturn($colloque);
+        $this->mock->shouldReceive('getByColloque')->once()->andReturn($inscriptions);
+
+        $this->export_inscription->shouldReceive('exportInscription')->once();
+
+        $response = $this->call('POST', 'admin/export/inscription');
     }
 
 }
