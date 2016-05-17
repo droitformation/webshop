@@ -65,9 +65,9 @@ class OrderController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-        $names    = $request->input('columns',config('columns.names'));
-
         $period   = $request->all();
+        
+        $names    = $request->input('columns',config('columns.names'));
         $status   = $request->input('status',null);
         $onlyfree = $request->input('onlyfree',null);
         $details  = $request->input('details',null);
@@ -190,7 +190,7 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order->id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'La commande a été mise à jour']);
+        return redirect('admin/order/'.$order->id)->with(['status' => 'success', 'message' => 'La commande a été mise à jour']);
     }
 
     /**
@@ -204,7 +204,7 @@ class OrderController extends Controller {
         $order = $this->order->find($id);
 
         $this->ordermaker->resetQty($order,'+');
-        $order->delete();
+        $this->order->delete($id);
 
         return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));
     }
@@ -219,7 +219,7 @@ class OrderController extends Controller {
     {
         $this->order->restore($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La commande a été restauré' ));
+        return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été restauré' ));
     }
 
 }

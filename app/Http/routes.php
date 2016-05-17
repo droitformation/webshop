@@ -489,11 +489,6 @@ Route::group(['middleware' => ['web']], function () {
     }]);
 
     Route::post('oauth/access_token', function() {
-
-        echo '<pre>';
-        print_r($_POST);
-        echo '</pre>';exit;
-
         return Response::json(Authorizer::issueAccessToken());
     });
 

@@ -103,4 +103,22 @@ class HelperTest extends TestCase {
         $this->assertEquals($output, $result);
     }
 
+    public function testConvertProductsForOrder()
+    {
+        $data = [
+            'products' => [0 => 22, 1 => 12],
+            'qty'      => [0 => 2,  1 => 1],
+            'rabais'   => [0 => 25],
+            'gratuit'  => [1 => 1]
+        ];
+
+        $expect = [
+            ['product' => 22, 'rabais' => 25,   'qty' => 2],
+            ['product' => 12, 'qty' => 1, 'gratuit' => 1],
+        ];
+
+        $result = $this->helper->convertProducts($data);
+
+        $this->assertEquals($expect, $result);
+    }
 }

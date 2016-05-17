@@ -9,8 +9,14 @@ class ColloqueTest extends TestCase {
     {
         parent::setUp();
 
-        $this->mock      = Mockery::mock('App\Droit\Inscription\Repo\InscriptionInterface');
-        $this->interface = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+        $this->mock      = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
+        $this->interface = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+
+        $model = new \App\Droit\User\Entities\User();
+
+        $user = $model->find(710);
+
+        $this->actingAs($user);
     }
 
     public function tearDown()
@@ -18,19 +24,21 @@ class ColloqueTest extends TestCase {
         Mockery::close();
     }
 
-	/**
-	 * A basic functional test example.
-	 *
-	 * @return void
-	 */
 	public function testIntersectAnnexes()
 	{
-
         $annexes = ['bon','facture','bv'];
         $result  = (count(array_intersect($annexes, ['bon','facture'])) == count(['bon','facture']) ? true : false);
 
         $this->assertTrue($result);
-
 	}
 
+    public function testCreateNewColloque()
+    {
+        $this->visit('/admin/colloque/create')->see('Ajouter un colloque');
+    }
+
+    public function testColloqueEditPage()
+    {
+        $this->visit('/admin/colloque/1')->see('Général');
+    }
 }

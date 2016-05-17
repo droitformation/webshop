@@ -62,7 +62,7 @@ class StripRequest
                 $products = $helper->convertProducts($order);
             }
 
-            return redirect()->back()->withErrors($validator)->with(['old_products' => $products, 'adresse' => $adresse])->withInput();
+            return redirect('admin/order/create')->withErrors($validator)->with(['old_products' => $products, 'adresse' => $adresse])->withInput();
         }
 
         return $next($request);
