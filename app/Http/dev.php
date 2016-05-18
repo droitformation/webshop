@@ -91,27 +91,44 @@ Route::get('testing', function() {
     $rappels  = $factures->getFacturesAndRappels(292);
 
     $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $item  = $order->find(2922);
-
-    $generator->stream = true;
-    return $generator->factureOrder(2922);
+    $items  = $order->getLast(2);
 /*
-    $collection = $rappels->map(function ($item, $key) {
-        $rappel = $item->rappels->sortByDesc('created_at')->first();
-        $pdf    = 'files/abos/rappel/292/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';
+    $generator->stream = true;
+    return $generator->factureOrder(2922);*/
 
-        if(\File::exists($pdf)){ return $pdf; }
 
-    })->all();
+    $one = $items->first();
 
-    $files = \File::files('files/abos/rappel/292');
-    $get   = array_intersect($collection,$files);
+    $sorted = $items->map(function ($item, $key) {
+
+        $item->products->reject(function ($product, $key) {
+            return !$product->pivot->isFree;
+        });
+
+        return $products;
+    });
 
     echo '<pre>';
-    print_r($collection);
-    print_r($files);
-    print_r($get);
-    echo '</pre>';*/
+    print_r($sorted->toArray());
+    echo '</pre>';
+
+    /*
+        $collection = $rappels->map(function ($item, $key) {
+            $rappel = $item->rappels->sortByDesc('created_at')->first();
+            $pdf    = 'files/abos/rappel/292/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';
+
+            if(\File::exists($pdf)){ return $pdf; }
+
+        })->all();
+
+        $files = \File::files('files/abos/rappel/292');
+        $get   = array_intersect($collection,$files);
+
+        echo '<pre>';
+        print_r($collection);
+        print_r($files);
+        print_r($get);
+        echo '</pre>';*/
 
     $dir   = './files/abos/bound/1/*_RJN_2014.pdf';
     $files = \File::glob($dir);
