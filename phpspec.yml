@@ -1,5 +1,17 @@
 suites:
-    main:
-        namespace: App
-        psr4_prefix: App
-        src_path: app
+    #main:
+        #namespace: App
+        #psr4_prefix: App
+        #src_path: app
+    droit_suites:
+        namespace: App\Droit
+        psr4_prefix: App\Droit
+        src_path: tests
+
+extensions:
+    - PhpSpec\Laravel\Extension\LaravelExtension
+
+laravel_extension:
+    testing_environment: 'testing'
+
+formatter.name: pretty

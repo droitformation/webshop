@@ -38,7 +38,7 @@ class ExportInscriptionTest extends TestCase {
     
 	public function testTextUserOption()
 	{
-		$result = new \App\Droit\Generate\Excel\ExcelInscription();
+		$result = new \App\Droit\Generate\Export\ExportInscription();
 
 		$inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make(['colloque_id' => '12']);
 
@@ -61,19 +61,6 @@ class ExportInscriptionTest extends TestCase {
 
         $this->assertEquals($expect, $html);
 
-    }
-
-    public function testExportInscriptions()
-    {
-        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make(['id' => 1]);
-        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class, 2)->make(['user_id' => 710]);
-
-        $this->colloque->shouldReceive('find')->once()->andReturn($colloque);
-        $this->mock->shouldReceive('getByColloque')->once()->andReturn($inscriptions);
-
-        $this->export_inscription->shouldReceive('exportInscription')->once();
-
-        $response = $this->call('POST', 'admin/export/inscription');
     }
 
 }

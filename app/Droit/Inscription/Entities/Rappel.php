@@ -20,7 +20,7 @@ class Rappel extends Model
             return $file;
         }
 
-        return $file;
+        return null;
     }
 
     public function inscription()

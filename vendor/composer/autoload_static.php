@@ -19,9 +19,9 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
     );
 
@@ -378,6 +378,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             'PhpSpec' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/phpspec/src',
+                1 => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src',
             ),
             'PHPExcel' => 
             array (
@@ -583,11 +584,16 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'App\\Droit\\Generate\\Excel\\ExcelGenerator' => __DIR__ . '/../..' . '/app/Droit/Generate/Excel/ExcelGenerator.php',
         'App\\Droit\\Generate\\Excel\\ExcelGeneratorOld' => __DIR__ . '/../..' . '/app/Droit/Generate/Excel/ExcelGeneratorOld.php',
         'App\\Droit\\Generate\\Excel\\ExcelInscription' => __DIR__ . '/../..' . '/app/Droit/Generate/Excel/ExcelInscription.php',
+        'App\\Droit\\Generate\\Excel\\ExcelInscriptionInterface' => __DIR__ . '/../..' . '/app/Droit/Generate/Excel/ExcelInscriptionInterface.php',
         'App\\Droit\\Generate\\Excel\\ExcelOrder' => __DIR__ . '/../..' . '/app/Droit/Generate/Excel/ExcelOrder.php',
-        'App\\Droit\\Generate\\Pdf\\PdfBadge' => __DIR__ . '/../..' . '/app/Droit/Generate/Pdf/PdfBadge.php',
+        'App\\Droit\\Generate\\Excel\\ExcelOrderInterface' => __DIR__ . '/../..' . '/app/Droit/Generate/Excel/ExcelOrderInterface.php',
+        'App\\Droit\\Generate\\Export\\ExportAdresse' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportAdresse.php',
+        'App\\Droit\\Generate\\Export\\ExportBadge' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportBadge.php',
+        'App\\Droit\\Generate\\Export\\ExportInscription' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportInscription.php',
+        'App\\Droit\\Generate\\Export\\ExportOrder' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportOrder.php',
+        'App\\Droit\\Generate\\Export\\ExportQrcode' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportQrcode.php',
         'App\\Droit\\Generate\\Pdf\\PdfGenerator' => __DIR__ . '/../..' . '/app/Droit/Generate/Pdf/PdfGenerator.php',
         'App\\Droit\\Generate\\Pdf\\PdfGeneratorInterface' => __DIR__ . '/../..' . '/app/Droit/Generate/Pdf/PdfGeneratorInterface.php',
-        'App\\Droit\\Generate\\Pdf\\Qrcode' => __DIR__ . '/../..' . '/app/Droit/Generate/Pdf/Qrcode.php',
         'App\\Droit\\Helper\\Convert' => __DIR__ . '/../..' . '/app/Droit/Helper/Convert.php',
         'App\\Droit\\Helper\\Format' => __DIR__ . '/../..' . '/app/Droit/Helper/Format.php',
         'App\\Droit\\Helper\\Helper' => __DIR__ . '/../..' . '/app/Droit/Helper/Helper.php',
@@ -4185,6 +4191,13 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'PhpSpec\\Formatter\\TapFormatter' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Formatter/TapFormatter.php',
         'PhpSpec\\Formatter\\Template' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Formatter/Template.php',
         'PhpSpec\\IO\\IOInterface' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/IO/IOInterface.php',
+        'PhpSpec\\Laravel\\Extension\\LaravelExtension' => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src/PhpSpec/Laravel/Extension/LaravelExtension.php',
+        'PhpSpec\\Laravel\\LaravelBehaviorInterface' => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src/PhpSpec/Laravel/LaravelBehaviorInterface.php',
+        'PhpSpec\\Laravel\\LaravelObjectBehavior' => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src/PhpSpec/Laravel/LaravelObjectBehavior.php',
+        'PhpSpec\\Laravel\\Listener\\LaravelListener' => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src/PhpSpec/Laravel/Listener/LaravelListener.php',
+        'PhpSpec\\Laravel\\Runner\\Maintainer\\LaravelMaintainer' => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src/PhpSpec/Laravel/Runner/Maintainer/LaravelMaintainer.php',
+        'PhpSpec\\Laravel\\Runner\\Maintainer\\PresenterMaintainer' => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src/PhpSpec/Laravel/Runner/Maintainer/PresenterMaintainer.php',
+        'PhpSpec\\Laravel\\Util\\Laravel' => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src/PhpSpec/Laravel/Util/Laravel.php',
         'PhpSpec\\Listener\\BootstrapListener' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Listener/BootstrapListener.php',
         'PhpSpec\\Listener\\ClassNotFoundListener' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Listener/ClassNotFoundListener.php',
         'PhpSpec\\Listener\\CollaboratorMethodNotFoundListener' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Listener/CollaboratorMethodNotFoundListener.php',
