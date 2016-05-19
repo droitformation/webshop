@@ -70,11 +70,9 @@ class FileController extends Controller
 
     }
 
-    public function convert()
+    public function export()
     {
-
-
-
+        return $this->file->treeDirectories(app_path());
     }
 
 }

@@ -2,11 +2,11 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/coupon') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/coupon') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
 
@@ -42,14 +42,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="title">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Valeur</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="value">
                                     <span class="input-group-addon">%</span>
@@ -59,7 +59,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Date d'expiration</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control datePicker" name="expire_at">
                             </div>
                         </div>

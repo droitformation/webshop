@@ -6,7 +6,7 @@
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/coupon') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/coupon') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
 
@@ -56,6 +56,9 @@
                                     <input type="text" class="form-control" value="{{ $coupon->value }}" name="value">
                                     <span class="input-group-addon">%</span>
                                 </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="help-block">Laisser vide avec frais de port gratuit</p>
                             </div>
                         </div>
 
