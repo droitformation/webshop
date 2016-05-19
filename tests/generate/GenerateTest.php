@@ -7,6 +7,11 @@ class GenerateTest extends TestCase {
 		parent::setUp();
 	}
 
+	public function tearDown()
+	{
+		Mockery::close();
+	}
+
 	public function testGetTypeOfModel()
 	{
 		$inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
@@ -184,7 +189,7 @@ class GenerateTest extends TestCase {
 		$this->assertEquals($response, $filename);
 
 		$response = $generate->getFilename('rappel','rappel_5');
-		$filename = public_path('files/colloques/rappel/rappel_5_10.pdf');
+		$filename = public_path('files/colloques/rappel/rappel_5_12.pdf');
 
 		$this->assertEquals($response, $filename);
 
@@ -223,7 +228,7 @@ class GenerateTest extends TestCase {
 		$this->assertEquals($response, $filename);
 
 		$response = $generate->getFilename('rappel','rappel_6');
-		$filename = public_path('files/colloques/rappel/rappel_6_2.pdf');
+		$filename = public_path('files/colloques/rappel/rappel_6_12.pdf');
 
 		$this->assertEquals($response, $filename);
 

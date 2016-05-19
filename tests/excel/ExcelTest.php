@@ -1,5 +1,5 @@
 <?php
-
+/*
 class ExcelTest extends TestCase {
 
     protected $mock;
@@ -21,10 +21,6 @@ class ExcelTest extends TestCase {
          \Mockery::close();
     }
 
-    /**
-	 *
-	 * @return void
-	 */
 	public function testSetColloqueAndOptions()
 	{
 
@@ -220,3 +216,4 @@ class ExcelTest extends TestCase {
     }
 
 }
+*/

@@ -15,6 +15,11 @@ class AdminCreatePagesTest extends TestCase {
         $this->actingAs($user);
     }
 
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+    
 	/**
 	 * @return void
 	 */

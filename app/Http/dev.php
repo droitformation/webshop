@@ -83,7 +83,7 @@ Route::get('testing', function() {
     $abos        = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
-
+/*
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
     $user     = $users->find(710);
@@ -91,26 +91,66 @@ Route::get('testing', function() {
     $rappels  = $factures->getFacturesAndRappels(292);
 
     $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $items  = $order->getLast(2);
-/*
-    $generator->stream = true;
-    return $generator->factureOrder(2922);*/
+    $items  = $order->getLast(2);*/
 
+    $inscrit  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $inscriptions = $inscrit->getByColloque(39,false, false);
 
-    $one = $items->first();
+    $names = collect([
+        'civilite_title'   => 'Civilité',
+        'name'             => 'Nom et prénom',
+        'email'            => 'E-mail',
+        'profession_title' => 'Profession',
+        'company'          => 'Entrprise',
+        'telephone'        => 'Téléphone',
+        'mobile'           => 'Mobile',
+        'adresse'          => 'Adresse',
+        'cp'               => 'CP',
+        'complement'       => 'Complément d\'adresse',
+        'npa'              => 'NPA',
+        'ville'            => 'Ville',
+        'canton_title'     => 'Canton',
+        'pays_title'       => 'Pays'
+    ]);
 
-    $sorted = $items->map(function ($item, $key) {
+    $users = $inscriptions->map(function ($inscription, $key) use ($names) {
+        $data = [
+            'Present'     => $inscription->present ? 'Oui' : '',
+            'Numéro'      => $inscription->inscription_no,
+            'Prix'        => $inscription->price_cents,
+            'Status'      => $inscription->status_name['status'],
+            'Date'        => $inscription->created_at->format('m/d/Y'),
+            'Participant' => ($inscription->group_id > 0 ? $inscription->participant->name : ''),
+        ];
 
-        $item->products->reject(function ($product, $key) {
-            return !$product->pivot->isFree;
-        });
+        $user = $inscription->inscrit;
 
-        return $products;
+        // Adresse columns
+        if($user && !$user->adresses->isEmpty())
+        {
+            $data += $names->map(function ($item, $key) use ($user) {
+                return $user->adresses->first()->$key;
+            })->toArray();
+        }
+
+        // Options checkbox
+        if(!$inscription->user_options->isEmpty())
+        {
+            $data['checkbox'] = $inscription->user_options->load('option')->whereLoose('groupe_id', null)->implode('option.title', PHP_EOL);
+        }
+
+        return $data;
     });
 
+
     echo '<pre>';
-    print_r($sorted->toArray());
+    print_r($users);
     echo '</pre>';
+
+    /*
+        $generator->stream = true;
+        return $generator->factureOrder(2922);*/
+
 
     /*
         $collection = $rappels->map(function ($item, $key) {
@@ -130,8 +170,6 @@ Route::get('testing', function() {
         print_r($get);
         echo '</pre>';*/
 
-    $dir   = './files/abos/bound/1/*_RJN_2014.pdf';
-    $files = \File::glob($dir);
 
     //$generator->stream = true;
     //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);

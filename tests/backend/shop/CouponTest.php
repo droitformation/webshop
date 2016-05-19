@@ -29,6 +29,11 @@ class CouponTest extends TestCase {
 
     }
 
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+    
 	/**
 	 * @return void
 	 */

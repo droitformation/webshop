@@ -5,6 +5,8 @@
 
      protected $columns = [];
      protected $sort = null;
+     public $options = null;
+     public $groupes = null;
 
      public function __construct()
      {
@@ -36,28 +38,29 @@
 
                  $sheet->setOrientation('landscape');
 
-                 $options   = $colloque->options->whereLoose('type', 'choix')->pluck('title', 'id')->toArray();
-                 $groupes   = $colloque->groupes->pluck('text', 'id')->toArray();
-                 $converted = $this->prepareInscription($inscriptions, $options, $this->columns, $this->sort);
+                 $this->options = $colloque->options->whereLoose('type', 'choix')->pluck('title', 'id')->toArray();
+                 $this->groupes = $colloque->groupes->pluck('text', 'id')->toArray();
 
-                 if ($this->sort && !empty($groupes))
+                 $converted = $this->prepareInscription($inscriptions);
+
+                 if ($this->sort && !empty($this->groupes))
                  {
                      $names['option_title'] = 'Choix';
 
                      foreach($converted as $option_id => $option)
                      {
-                         $sheet->appendRow(['Options', $options[$option_id]]);
+                         $sheet->appendRow(['Options', $this->options[$option_id]]);
                          $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16);});
                          $sheet->appendRow(['']);
 
-                         foreach ($option as $group_id => $group)
+                         foreach($option as $group_id => $group)
                          {
                              $sheet->appendRow(['']);
-                             $sheet->appendRow(['Choix', $groupes[$group_id]]);
+                             $sheet->appendRow(['Choix', $this->groupes[$group_id]]);
                              $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
 
                              $sheet->appendRow(['']);
-                             $sheet->appendRow(['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $names);
+                             $sheet->appendRow(['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $this->columns);
                              $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
                              $sheet->rows($group);
                          }
@@ -76,17 +79,14 @@
 
      }
 
-     public function prepareInscription($inscriptions, $options , $names, $sort = null)
+     public function prepareInscription($inscriptions)
      {
-         $names = collect($names);
-
          $converted = [];
 
          if(!$inscriptions->isEmpty())
          {
              foreach($inscriptions as $inscription)
              {
-                 $data = [];
                  $user = $inscription->inscrit;
 
                  $data['Present']     = $inscription->present ? 'Oui' : '';
@@ -99,6 +99,8 @@
                  // Adresse columns
                  if($user && !$user->adresses->isEmpty())
                  {
+                     $names = collect($this->columns);
+
                      $data += $names->map(function ($item, $key) use ($user) {
                          return $user->adresses->first()->$key;
                      })->toArray();
@@ -111,14 +113,9 @@
                  }
 
                  // Do we need to sort, Sort by choix options
-                 if ($sort && !empty($options))
+                 if ($this->sort && !empty($this->options))
                  {
-                     foreach($inscription->user_options as $option)
-                     {
-                         if (in_array($option->option_id, array_keys($options))){
-                             $converted[$option->option_id][$option->groupe_id][] = $data;
-                         }
-                     }
+                     $converted = $this->sortByOption($inscription, $data, $converted);
                  }
                  else
                  {
@@ -133,7 +130,22 @@
              }
          }
 
-         return $converted;
+         return isset($converted) ? $converted : [];
+     }
+
+     public function sortByOption($inscription, $data, $result)
+     {
+         // Filter the options that exist
+         $filter = $inscription->user_options->filter(function ($option, $key) {
+             return in_array($option->option_id, array_keys($this->options)) ? true : false;
+         })->toArray();
+
+         // Sort each person in each options
+         array_walk($filter, function (&$value,$key) use (&$result, $data) {
+             $result[$value['option_id']][$value['groupe_id']][] = $data;
+         });
+
+         return $result;
      }
 
      public function userOptionsHtml($inscription)

@@ -213,7 +213,7 @@ class Generate{
                 \File::makeDirectory(public_path($path));
             }
 
-            $file = $path.$name.'_'.$this->model->id.'.pdf';
+            $file = $path.$name.'_'.$this->model->colloque_id.'.pdf';
 
             return public_path($file);
         }
