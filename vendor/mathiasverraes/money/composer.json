@@ -1,7 +1,7 @@
 {
     "name": "mathiasverraes/money",
     "description": "PHP implementation of Fowler's Money pattern",
-    "keywords": ["Money", "Value Object", "Generic Sub-domain", "domain-driven design", "DDD"],
+    "keywords": ["money", "vo", "value object"],
     "homepage": "http://verraes.net/2011/04/fowler-money-pattern-in-php/",
     "license": "MIT",
     "authors": [
@@ -9,11 +9,18 @@
             "name": "Mathias Verraes",
             "email": "mathias@verraes.net",
             "homepage": "http://verraes.net"
+        },
+        {
+            "name": "Márk Sági-Kazár",
+            "email": "mark.sagi-kazar@gmail.com"
+        },
+        {
+            "name": "Frederik Bosch",
+            "email": "f.bosch@genkgo.nl"
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "umpirsky/currency-list": "^1.0"
+        "php": ">=5.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.5",
@@ -21,16 +28,19 @@
         "ext-gmp": "*",
         "ext-intl": "*",
         "florianv/swap": "^2.3",
-        "fabpot/php-cs-fixer": "^1.11"
+        "umpirsky/currency-list": "^1.0",
+        "psr/cache": "^1.0",
+        "cache/taggable-cache": "^0.4.0",
+        "phpspec/phpspec": "^2.5",
+        "henrikbjorn/phpspec-code-coverage": "^2.0.2",
+        "coduo/phpspec-data-provider-extension": "^1.0.3"
     },
     "suggest": {
-        "TheBigBrainsCompany/TbbcMoneyBundle": "Very complete Symfony2 bundle with support for Twig, Doctrine, Forms, ...",
-        "pink-tie/money-bundle": "Pink-Tie's Symfony2 integration with Money library",
-        "Sylius/SyliusMoneyBundle": "Sylius' Symfony2 integration with Money library",
         "ext-bcmath": "Calculate without integer limits",
         "ext-gmp": "Calculate without integer limits",
         "ext-intl": "Format Money objects with intl",
-        "florianv/swap": "Exchange rates library for PHP"
+        "florianv/swap": "Exchange rates library for PHP",
+        "psr/cache-implementation": "Used for Currency caching"
     },
     "autoload": {
         "psr-4": {
@@ -43,8 +53,9 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-ci": "vendor/bin/phpunit --coverage-text"
+        "test": "vendor/bin/phpspec run && vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpspec run -c phpspec.yml.ci && vendor/bin/phpunit --coverage-text",
+        "update-currencies": "cp vendor/umpirsky/currency-list/data/en/currency.php resources/"
     },
     "extra": {
         "branch-alias": {

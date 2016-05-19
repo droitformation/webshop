@@ -121,6 +121,14 @@ class ColloqueController extends Controller
     {
         $colloque = $this->colloque->create($request->all());
 
+        // illustration
+        $illustration = $request->input('illustration',null);
+
+        if($illustration && !empty($illustration))
+        {
+            $this->document->updateColloqueDoc($colloque->id, ['illustration' => $illustration]);
+        }
+
         return redirect('admin/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'Le colloque a été crée'));
     }
 
@@ -170,7 +178,9 @@ class ColloqueController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->colloque->delete($id);
+
+        return redirect('admin/colloque')->with(['status' => 'success', 'message' => 'Colloque supprimé']);
     }
 
     /**
@@ -406,5 +416,4 @@ class ColloqueController extends Controller
 
         return view('backend.colloques.partials.options')->with(['colloque' => $colloque]);
     }
-
 }

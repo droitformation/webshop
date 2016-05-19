@@ -27,8 +27,8 @@ class PdfGenerator implements PdfGeneratorInterface
     ];
 
     public $versement = [
-        'nom'     => 'Université de Neuchâtel',
-        'adresse' => 'Séminaire sur le droit du bail',
+        'nom'     => 'Faculté de droit',
+        'adresse' => 'Avenue du 1er-Mars 26',
         'ville'   => '2000 Neuchâtel'
     ];
 
@@ -49,6 +49,11 @@ class PdfGenerator implements PdfGeneratorInterface
             'numero'      => \Registry::get('shop.infos.tva'),
             'taux_reduit' => \Registry::get('shop.infos.taux_reduit'),
             'taux_normal' => \Registry::get('shop.infos.taux_normal')
+        ];
+
+        $this->versement = [
+            'nom'     => \Registry::get('shop.infos.nom'),
+            'adresse' => \Registry::get('shop.infos.adresse'),
         ];
     }
 
@@ -103,7 +108,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres',
                 'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
             ],
-            'compte'    => \Registry::get('shop.compte.colloque'),
+            'compte'    => \Registry::get('shop.compte.livre'),
             'order'     => $order,
             'adresse'   => $adresse,
             'products'  => $products,
@@ -208,7 +213,7 @@ class PdfGenerator implements PdfGeneratorInterface
             $data['signature'] = $this->signature;
             $data['tva']       = ['taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres'];
             $data['msgTypes']  = ['warning','special','remarque','signature'];
-            $data['compte']    = \Registry::get('shop.compte.abo');
+            $data['compte']    = \Registry::get('abo.compte');
         }
 
         return $data;

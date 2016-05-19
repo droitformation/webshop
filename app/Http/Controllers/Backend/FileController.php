@@ -74,5 +74,4 @@ class FileController extends Controller
     {
         return $this->file->treeDirectories(app_path());
     }
-
 }

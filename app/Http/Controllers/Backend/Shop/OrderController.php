@@ -65,39 +65,33 @@ class OrderController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-        $names    = $request->input('columns',config('columns.names'));
+        $data = $request->all();
 
-        $period   = $request->all();
-        $status   = $request->input('status',null);
-        $onlyfree = $request->input('onlyfree',null);
-        $details  = $request->input('details',null);
-        $export   = $request->input('export',null);
+        $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
+        $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
 
-        $period['start'] = (!isset($period['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($period['start']) );
-        $period['end']   = (!isset($period['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($period['end']) );
+        $orders = $this->order->getPeriod($period['start'],$period['end'], $request->input('status',null), $request->input('onlyfree',null), $request->input('order_no',null));
 
-        $orders = $this->order->getPeriod($period['start'],$period['end'], $status, $onlyfree);
-
-        if($export)
+        if($request->input('export',null))
         {
-            $this->export->exportOrder($orders,$names,$period,$details);
+            $exporter = new \App\Droit\Generate\Export\ExportOrder();
+
+            $exporter->setColumns($request->input('columns',config('columns.names')))
+                     ->setPeriod($period)
+                     ->setDetail($request->input('details',null))
+                     ->setFree($request->input('onlyfree',null));
+
+            $exporter->export($orders);
+
+            //$this->export->exportOrder($orders,$request->input('columns',config('columns.names')), $period, $request->input('details',null));
         }
 
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
 
-		return view('backend.orders.index')->with(
-            [
-                'orders'    => $orders,
-                'start'     => $period['start'],
-                'end'       => $period['end'],
-                'columns'   => config('columns.names'),
-                'names'     => $names,
-                'onlyfree'  => $onlyfree,
-                'details'   => $details,
-                'cancelled' => $cancelled,
-                'status'    => $status
-            ]
-        );
+        $request->flash();
+
+		return view('backend.orders.index')
+            ->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'],'columns' => config('columns.names'), 'cancelled' => $cancelled] + $data);
 	}
 
     /**
@@ -150,6 +144,10 @@ class OrderController extends Controller {
     {
         $order = $this->ordermaker->make($request->all());
 
+        // via admin
+        $order->admin = 1;
+        $order->save();
+
         return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
     }
 
@@ -184,7 +182,7 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order->id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'La commande a été mise à jour']);
+        return redirect('admin/order/'.$order->id)->with(['status' => 'success', 'message' => 'La commande a été mise à jour']);
     }
 
     /**
@@ -198,7 +196,7 @@ class OrderController extends Controller {
         $order = $this->order->find($id);
 
         $this->ordermaker->resetQty($order,'+');
-        $order->delete();
+        $this->order->delete($id);
 
         return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));
     }
@@ -213,7 +211,7 @@ class OrderController extends Controller {
     {
         $this->order->restore($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La commande a été restauré' ));
+        return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été restauré' ));
     }
 
 }

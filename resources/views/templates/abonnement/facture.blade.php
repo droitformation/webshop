@@ -46,8 +46,12 @@
                 <h4><strong>{{ $facture->abo_ref }}</strong></h4>
             </td>
             <td width="1%"  align="top"></td>
-            <td width="30%" align="middle" style="text-align: center;" class="misc-infos">
+            <td width="30%" align="left" style="text-align: left;" class="misc-infos">
                 <?php if(!empty($tva)) { echo \Registry::get('shop.infos.tva').' TVA'; } ?>
+                <div class="coordonnees">
+                    <h4>Coordonnées pour le paiement</h4>
+                    <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
+                </div>
             </td>
             <td width="1%" align="top" valign="top"></td>
             <td width="35%" align="top" valign="middle" class="misc-infos">
@@ -131,16 +135,18 @@
             <table id="recu" valign="top">
                 <tr>
                     <td align="top" valign="center" height="43mm">
-                        @if(!empty($versement))
-                            <ul class="versement">
+                        <ul class="versement">
+                            @if(!empty($abo->abo->adresse))
+                                <li>{!! $abo->abo->adresse !!}</li>
+                            @elseif(!empty($versement))
                                 @foreach($versement as $line)
-                                    <li>{{ $line }}</li>
+                                    <li>{!! $line !!}</li>
                                 @endforeach
-                            </ul>
-                        @endif
+                            @endif
+                        </ul>
                     </td>
                 </tr>
-                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ $compte }}</td></tr>
+                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ !empty($abo->abo->compte) ? $abo->abo->compte : $compte }}</td></tr>
                 <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs">{{ $francs }}</span>{{ $centimes }}</td></tr>
             </table>
         </td>
@@ -148,16 +154,18 @@
             <table id="compte" valign="top">
                 <tr>
                     <td align="top" valign="center" height="43mm">
-                        @if(!empty($versement))
-                            <ul class="versement">
+                        <ul class="versement">
+                            @if(!empty($abo->abo->adresse))
+                                <li>{!! $abo->abo->adresse !!}</li>
+                            @elseif(!empty($versement))
                                 @foreach($versement as $line)
-                                    <li>{{ $line }}</li>
+                                    <li>{!! $line !!}</li>
                                 @endforeach
-                            </ul>
-                        @endif
+                            @endif
+                        </ul>
                     </td>
                 </tr>
-                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ $compte }}</td></tr>
+                <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ !empty($abo->abo->compte) ? $abo->abo->compte : $compte }}</td></tr>
                 <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs">{{ $francs }}</span>{{ $centimes }}</td></tr>
             </table>
         </td>

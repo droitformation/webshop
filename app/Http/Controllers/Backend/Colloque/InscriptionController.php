@@ -360,4 +360,17 @@ class InscriptionController extends Controller
         echo view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type])->__toString();
     }
 
+    public function presence(Request $request)
+    {
+        $inscription = $this->inscription->find($request->input('id'));
+
+        if($inscription)
+        {
+            $inscription->present = $request->input('presence',null) ? 1 : null ;
+            $inscription->save();
+        }
+
+        echo 'ok';
+    }
+
 }

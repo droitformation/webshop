@@ -8,8 +8,6 @@
         <li class="<?php echo (Request::is('admin') ? 'active' : '' ); ?>"><a href="{{ url('admin') }}">
             <i class="fa fa-home"></i> <span>Accueil</span></a>
         </li>
-        <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur (et admin)</span></a></li>
-        <li><a href="{{ url('admin/adresse/create') }}"><i class="fa fa-street-view"></i><span>Ajouter une adresse</span></a></li>
 
         <li class="<?php echo (Request::is('admin/config') || Request::is('admin/config/*') ? 'active' : '' ); ?>">
             <a href="javascript:;"><i class="fa fa-cog"></i><span>Configurations</span></a>
@@ -24,10 +22,12 @@
                 <i class="fa fa-bolt"></i> <span>Rappels</span>
             </a>
         </li>
-        <li class="nav-title">Comptes</li>
+        <li class="nav-title">Utiliateurs et adresses</li>
+        <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur (et admin)</span></a></li>
+        <li><a href="{{ url('admin/adresse/create') }}"><i class="fa fa-street-view"></i><span>Ajouter une adresse</span></a></li>
         <li class="<?php echo (Request::is('admin/export/view') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/export/view') }}">
-                <i class="fa fa-cloud-download"></i> &nbsp;<span>Export</span>
+                <i class="fa fa-cloud-download"></i> &nbsp;<span>Export ou recherche</span>
             </a>
         </li>
         <li class="nav-title">Evenements</li>
@@ -51,10 +51,15 @@
                 <i class="fa fa-certificate"></i> <span>Organisateur</span>
             </a>
         </li>
+        <li class="<?php echo (Request::is('admin/compte') || Request::is('admin/compte/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/compte') }}"><i class="fa fa-calculator"></i> <span>Comptes</span></a>
+        </li>
+
         <li class="nav-title">Shop</li>
         <li class="<?php echo (Request::is('admin/abo') || Request::is('admin/abo/*') || Request::is('admin/abonnements/*') || Request::is('admin/abonnement/*') || Request::is('admin/facture/*') || Request::is('admin/factures/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/abo') }}"><i class="fa fa-bookmark"></i> <span>Abonnements</span></a>
         </li>
+
         <li class="divider"></li>
         <li class="<?php echo (Request::is('admin/product') || Request::is('admin/product/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/products') }}"><i class="fa fa-book"></i> <span>Livres</span></a>
@@ -65,10 +70,8 @@
         <li class="<?php echo (Request::is('admin/order/create') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/order/create') }}"><i class="fa fa-plus-circle"></i> <span>Nouvelle commande</span></a>
         </li>
+
         <li class="divider"></li>
-        <li class="<?php echo (Request::is('admin/compte') || Request::is('admin/compte/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/compte') }}"><i class="fa fa-calculator"></i> <span>Comptes</span></a>
-        </li>
         <li class="<?php echo (Request::is('admin/coupon') || Request::is('admin/coupon/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/coupon') }}"><i class="fa fa-star"></i> <span>Coupons</span></a>
         </li>
@@ -96,7 +99,7 @@
             <a href="javascript:;"><i class="fa fa-envelope"></i><span>Newsletters</span></a>
             <ul class="acc-menu">
                 <li class="<?php echo (Request::is('admin/newsletter/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/newsletter')  }}">Liste des campagnes</a></li>
-                <li class="<?php echo (Request::is('admin/subscriber/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/subscriber')  }}">Abonnées</a></li>
+                <li class="<?php echo (Request::is('admin/subscriber/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/subscriber')  }}">Abonnés</a></li>
                 <li class="<?php echo (Request::is('admin/import') ? 'active' : '' ); ?>"><a href="{{ url('admin/import')  }}">Importer une liste</a></li>
                 <li class="<?php echo (Request::is('admin/liste') ? 'active' : '' ); ?>"><a href="{{ url('admin/liste')  }}">Liste hors campagnes</a></li>
             </ul>

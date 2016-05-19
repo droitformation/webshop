@@ -21,8 +21,8 @@ $('input.search-adresse').each(function()
         {
              var data = ui.item.adresse;
 
-             var uid  = type == 'adresse_id' || 'tiers_id' ? data.id : ui.item.value;
-             var name = type == 'adresse_id' || 'tiers_id' ? type : 'user_id';
+             var uid  = (type == 'adresse_id') || (type == 'tiers_id') ? data.id : ui.item.value;
+             var name = (type == 'adresse_id') || (type == 'tiers_id') ? type : 'user_id';
 
              $input.html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + name + '" name="type">');
 
@@ -60,7 +60,7 @@ function template(data, type)
 
 var $search = $('.input-adresse');
 
-if($search.length)
+if($search.length && $(this).data('uid'))
 {
     $search.each(function()
     {

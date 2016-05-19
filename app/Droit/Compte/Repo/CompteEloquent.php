@@ -14,7 +14,7 @@ class CompteEloquent implements CompteInterface{
 
     public function getAll(){
 
-        return $this->compte->all();
+        return $this->compte->orderBy('compte', 'asc')->get();
     }
 
     public function find($id){

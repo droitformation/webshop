@@ -162,7 +162,6 @@
 									<p><a href="mailto:{{ Registry::get('shop.infos.email') }}"> <i class="fa fa-envelope"></i> &nbsp;{{ Registry::get('shop.infos.email') }}</a></p>
 									<ul class="phon-list">
 									   <li>Tél: {!! Registry::get('shop.infos.telephone') !!}</li>
-									   <li>Fax: {!! Registry::get('shop.infos.fax') !!}</li>
 									</ul>
 								</div>
 							</div>

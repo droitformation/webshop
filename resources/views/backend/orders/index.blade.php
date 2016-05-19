@@ -8,8 +8,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" action="{{ url('admin/orders') }}" method="post">
-                        {!! csrf_field() !!}
+                    <form class="form-horizontal" action="{{ url('admin/orders') }}" method="post">{!! csrf_field() !!}
                         <h4>Période</h4>
                         <div class="row">
                             <div class="col-lg-2 col-md-3 col-xs-12">
@@ -29,15 +28,25 @@
                                     <span class="input-group-addon">Statut</span>
                                     <select class="form-control" name="status">
                                         <option value="">Tous</option>
-                                        <option {{ old('status') == 'pending'  || $status == 'pending' ? 'selected' : '' }} value="pending">En attente</option>
-                                        <option {{ old('status') == 'payed'    || $status == 'payed'? 'selected' : '' }} value="payed">Payé</option>
-                                        <option {{ old('status') == 'gratuit'  || $status == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
+                                        <option {{ old('status') == 'pending' ? 'selected' : '' }} value="pending">En attente</option>
+                                        <option {{ old('status') == 'payed'  ? 'selected' : '' }} value="payed">Payé</option>
+                                        <option {{ old('status') == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-1 col-xs-12 text-left">
                                 <div class="btn-group">
                                     <button class="btn btn-default" type="submit"><i class="fa fa-filter"></i> &nbsp; Rechercher</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12" style="min-width:130px;">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="order_no" placeholder="Recherche...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +60,7 @@
                             <div class="col-md-2">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" {{ old('onlyfree') || $onlyfree == 1 ? 'checked' : '' }} name="onlyfree" value="1">
+                                        <input type="checkbox" {{ old('onlyfree') == 1 ? 'checked' : '' }} name="onlyfree" value="1">
                                         <i class="fa fa-star"></i>&nbsp;&nbsp;Que livres gratuits &nbsp;&nbsp;
                                     </label>
                                 </div>
@@ -59,7 +68,7 @@
                             <div class="col-md-2">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" {{ old('details') || $details == 1 ? 'checked' : '' }} name="details" value="1">
+                                        <input type="checkbox" {{ old('details') == 1 ? 'checked' : '' }} name="details" value="1">
                                         <i class="fa fa-list"></i>&nbsp;&nbsp;Détail des commandes &nbsp;&nbsp;
                                     </label>
                                 </div>
@@ -88,9 +97,14 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
-                    <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
-                    @if($status)
-                        <h4>Status {{ $status_list[$status] }}</h4>
+                    @if(old('order_no'))
+                        <h3><i class="fa fa-shopping-cart"></i> &nbsp;Recherche <span class="text-primary">{{ old('order_no') }}</span></h3>
+                    @else
+                        <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
+                    @endif
+
+                    @if(old('$status'))
+                        <h4>Status {{ $status_list[old('$status')] }}</h4>
                     @endif
 
                     @include('backend.orders.partials.commandes', ['orders' => $orders, 'cancelled' => false])

@@ -13,14 +13,14 @@ class Rappel extends Model
     public function getDocRappelAttribute()
     {
         $path  = config('documents.colloque.rappel');
-        $file  = $path.'rappel_'.$this->id.'.pdf';
+        $file  = $path.'rappel_'.$this->id.'_'.$this->inscription_id.'.pdf';
 
         if (\File::exists(public_path($file)))
         {
             return $file;
         }
 
-        return $file;
+        return null;
     }
 
     public function inscription()

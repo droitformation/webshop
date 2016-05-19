@@ -299,6 +299,10 @@ margin-bottom:0;
 
 /* End Sale Bar Css */
 
+.product-description{
+    text-align: justify;
+}
+
 .morelink{
     background: #f5f5f5 none repeat scroll 0 0;
     border-bottom: 1px solid #f1f1f1;

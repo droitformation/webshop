@@ -1,29 +1,20 @@
 <?php
-//
-//  FPDI - Version 1.5.2
-//
-//  Copyright 2004-2014 Setasign - Jan Slabon
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
-//
-//  itbz\fpdi
-//
-//  PLEASE NOT THAT THIS FILE IS PROCESSED PROGRAMMATICALLY FOR THE itbz\fpdi RELEASE
-//  BUG REPORTS AND SUGGESTED CHANGES SHOULD BE DIRECTED TO SETASIGN DIRECTLY
-//  BUGS RELATED TO THIS CONVERSION CAN BE REPORTED AT
-//
-//  https://github.com/hanneskod/fpdi/issues
-//
+/**
+ * This file is part of FPDI
+ *
+ * @package   FPDI
+ * @copyright Copyright (c) 2015 Setasign - Jan Slabon (http://www.setasign.com)
+ * @license   http://opensource.org/licenses/mit-license The MIT License
+ * @version   1.6.1
+ */
+
+/**
+* PLEASE NOTE THAT THIS FILE IS PROCESSED PROGRAMMATICALLY FOR THE itbz\fpdi
+* RELEASE BUG REPORTS AND SUGGESTED CHANGES SHOULD BE DIRECTED TO SETASIGN
+* DIRECTLY BUGS RELATED TO THIS CONVERSION CAN BE REPORTED AT
+* https://github.com/hanneskod/fpdi/issues
+*/
+
 namespace fpdi {
     class pdf_parser
     {
@@ -57,6 +48,8 @@ namespace fpdi {
                 throw new \InvalidArgumentException(sprintf('Cannot open %s !', $filename));
             }
             $this->getPdfVersion();
+            if (!class_exists('pdf_context')) {
+            }
             $this->_c = new \fpdi\pdf_context($this->_f);
             $this->_xref = array();
             $this->_readXref($this->_xref, $this->_findXref());
@@ -150,9 +143,12 @@ namespace fpdi {
                 throw new \Exception('Trailer keyword not found after xref table');
             }
             $data = ltrim(substr($data, 0, $trailerPos));
-            preg_match_all('/(
+            $found = preg_match_all('/(
 |
 |)/', substr($data, 0, 100), $m);
+            if ($found === 0) {
+                throw new \Exception('Xref table seems to be corrupted.');
+            }
             $differentLineEndings = count(array_unique($m[0]));
             if ($differentLineEndings > 1) {
                 $lines = preg_split('/(
@@ -283,6 +279,12 @@ namespace fpdi {
                     $tempPos = $c->getPos() - strlen($c->buffer);
                     $tempOffset = $c->offset;
                     $c->reset($startPos = $tempPos + $tempOffset);
+                    while ($c->buffer[0] !== chr(10) && $c->buffer[0] !== chr(13)) {
+                        $c->reset(++$startPos);
+                        if ($c->ensureContent() === false) {
+                            throw new \Exception('Unable to parse stream data. No newline followed the stream keyword.');
+                        }
+                    }
                     $e = 0;
                     if ($c->buffer[0] == chr(10) || $c->buffer[0] == chr(13)) {
                         $e++;
@@ -491,14 +493,20 @@ namespace fpdi {
                         }
                         break;
                     case '/LZWDecode':
+                        if (!class_exists('FilterLZW')) {
+                        }
                         $decoder = new \fpdi\FilterLZW();
                         $stream = $decoder->decode($stream);
                         break;
                     case '/ASCII85Decode':
+                        if (!class_exists('FilterASCII85')) {
+                        }
                         $decoder = new \fpdi\FilterASCII85();
                         $stream = $decoder->decode($stream);
                         break;
                     case '/ASCIIHexDecode':
+                        if (!class_exists('FilterASCIIHexDecode')) {
+                        }
                         $decoder = new \fpdi\FilterASCIIHexDecode();
                         $stream = $decoder->decode($stream);
                         break;

@@ -27,17 +27,51 @@ class Product extends Model{
         return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
     }
 
-    public function getPriceCentsAttribute()
+    public function getIsbnAttribute()
+    {
+        $attribute = $this->attributs->where('id',1);
+
+        return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
+    }
+
+    public function getPriceNormalAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        return $money->format($this->price / 100);
+    }
+
+    public function getPriceSpecialAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         if(isset($this->pivot) && $this->pivot->rabais)
         {
             $price = ($this->price - ($this->price * $this->pivot->rabais/100)) / 100;
+            return $money->format($price);
+        }
+
+        if(isset($this->pivot) && $this->pivot->price)
+        {
+            return $money->format($this->pivot->price / 100);
+        }
+
+        return null;
+    }
+
+    public function getPriceCentsAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        $normal = (isset($this->pivot) && $this->pivot->price ? $this->pivot->price : $this->price);
+
+        if(isset($this->pivot) && $this->pivot->rabais)
+        {
+            $price = ($normal - ($normal * $this->pivot->rabais/100)) / 100;
         }
         else
         {
-            $price = $this->price / 100;
+            return (isset($this->pivot) && $this->pivot->isFree ? 0 : $money->format($normal / 100));
         }
 
         return $money->format($price);
@@ -92,7 +126,7 @@ class Product extends Model{
 
     public function authors()
     {
-        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'shop_product_authors', 'product_id', 'author_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'shop_product_authors', 'product_id', 'author_id')->orderBy('last_name', 'asc')->withPivot('sorting');
     }
 
     public function domains()
@@ -110,7 +144,7 @@ class Product extends Model{
 
     public function orders()
     {
-        return $this->belongsToMany('App\Droit\Shop\Order\Entities\Order', 'shop_order_products','product_id', 'order_id')->withPivot('isFree','rabais');
+        return $this->belongsToMany('App\Droit\Shop\Order\Entities\Order', 'shop_order_products','product_id', 'order_id')->withPivot('isFree','rabais','price');
     }
 
     public function abos()

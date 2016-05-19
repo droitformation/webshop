@@ -227,6 +227,7 @@ class OrderMaker implements OrderMakerInterface{
         $data['qty']     = $this->removeEmpty($order['qty']);
         $data['gratuit'] = (isset($order['gratuit']) ? $this->removeEmpty($order['gratuit']) : []);
         $data['rabais']  = (isset($order['rabais']) ?  $this->removeEmpty($order['rabais'])  : []);
+        $data['price']   = (isset($order['price']) ?  $this->removeEmpty($order['price'])  : []);
 
         $products->map(function($product,$index) use (&$ids, $data)
         {
@@ -235,6 +236,7 @@ class OrderMaker implements OrderMakerInterface{
                 $list['id']     = $product;
                 $list['isFree'] = (isset($data['gratuit'][$index]) ? 1 : null);
                 $list['rabais'] = (isset($data['rabais'][$index]) ? $data['rabais'][$index] : null);
+                $list['price']  = (isset($data['price'][$index]) ? $data['price'][$index] * 100 : null);
 
                 $ids[] = $list;
             }
@@ -254,6 +256,7 @@ class OrderMaker implements OrderMakerInterface{
         $data['qty']     = $this->removeEmpty($commande['qty']);
         $data['gratuit'] = (isset($commande['gratuit']) ? $this->removeEmpty($commande['gratuit']) : []);
         $data['rabais']  = (isset($commande['rabais']) ?  $this->removeEmpty($commande['rabais'])  : []);
+        $data['price']   = (isset($commande['price']) ?  $this->removeEmpty($commande['price'])  : []);
 
         $products->map(function($product_id,$index) use (&$total, $data, $proprety)
         {
@@ -261,13 +264,18 @@ class OrderMaker implements OrderMakerInterface{
 
             for($x = 0; $x < $data['qty'][$index]; $x++)
             {
+                // Calculate final price for product
                 if($proprety == 'price' && !isset($data['gratuit'][$index]) && isset($data['rabais'][$index]))
                 {
-                    $total += $product->$proprety - ( $product->$proprety * ($data['rabais'][$index]/100) );
+                    $price = (isset($data['price'][$index]) ? $data['price'][$index] * 100 : $product->$proprety);
+
+                    $total += $price - ( $price * ($data['rabais'][$index]/100) );
                 }
                 elseif( ($proprety == 'price' && !isset($data['gratuit'][$index])) || $proprety != 'price')
                 {
-                    $total += $product->$proprety;
+                    $price = (isset($data['price'][$index]) && ($proprety == 'price') ? $data['price'][$index] * 100 : $product->$proprety);
+
+                    $total += $price;
                 }
             }
         });

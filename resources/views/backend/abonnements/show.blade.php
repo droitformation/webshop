@@ -46,7 +46,7 @@
                             <label class="col-sm-3 control-label">Prix spécial</label>
                             <div class="col-sm-4 col-xs-5">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ $abonnement->price }}" name="price"><span class="input-group-addon">CHF</span>
+                                    <input type="text" class="form-control" value="{{ $abonnement->price_cents }}" name="price"><span class="input-group-addon">CHF</span>
                                 </div>
                             </div>
                         </div>

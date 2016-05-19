@@ -214,6 +214,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
         Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
         Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
+        Route::post('inscription/presence', 'Backend\Colloque\InscriptionController@presence');
         Route::resource('inscription', 'Backend\Colloque\InscriptionController');
 
         Route::get('inscription/rappels/{id}','Backend\Colloque\RappelController@rappels');
@@ -250,6 +251,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('export/badges', 'Backend\ExportController@badges');
         Route::get('export/view', 'Backend\ExportController@view');
         Route::get('export/generate', 'Backend\ExportController@generate');
+        Route::get('export/qrcodes/{id}', 'Backend\ExportController@qrcodes');
         Route::match(['get', 'post'],'export/search', 'Backend\ExportController@search');
 
         Route::get('download/{file}', function($file)
@@ -491,7 +493,7 @@ Route::group(['middleware' => ['web']], function () {
         return Response::json(Authorizer::issueAccessToken());
     });
 
-    Route::get('api/user', ['middleware' => 'oauth', function(){
+    Route::get('oauth/user', ['middleware' => 'oauth', function(){
 
         $user_id = Authorizer::getResourceOwnerId();
         $user    = \App\Droit\User\Entities\User::find($user_id);

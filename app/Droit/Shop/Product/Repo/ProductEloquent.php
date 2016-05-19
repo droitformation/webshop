@@ -47,7 +47,7 @@ class ProductEloquent implements ProductInterface{
     public function getByCategorie($id)
     {
         return $this->product
-            ->with(array('authors','attributs','categories'))
+            ->with(['authors','attributs','categories'])
             ->where('hidden','=',0)
             ->whereHas('categories', function($query) use ($id)
             {
@@ -105,7 +105,7 @@ class ProductEloquent implements ProductInterface{
             $products->where('hidden','=',0);
         }
 
-        return $products->get();
+        return $products->groupBy('id')->get();
     }
 
     public function create(array $data){
@@ -160,7 +160,8 @@ class ProductEloquent implements ProductInterface{
         return $product;
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->product->find($id)->delete();
     }
 

@@ -106,31 +106,26 @@
                                                     <th>Qt</th>
                                                     <th>Titre</th>
                                                     <th class="text-right">Prix unité</th>
+                                                    <th class="text-right">Prix spécial</th>
                                                     <th class="text-right">Prix</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($grouped as $product)
 
-                                                <?php
-                                                    $money = new \App\Droit\Shop\Product\Entities\Money;
-                                                    // Is the product free?
-                                                    $price_sum = $product->reject(function ($item) { return $item->pivot->isFree; })->sum('price_cents');
+                                                <?php  $money     = new \App\Droit\Shop\Product\Entities\Money; ?>
+                                                <?php  $price_sum = $product->reject(function ($item) { return $item->pivot->isFree; })->sum('price_cents'); ?>
 
-                                                    $prod_free = $product->filter(function ($item) { return $item->pivot->isFree; });
-                                                ?>
                                                 <tr>
                                                     <td width="10%" valign="top"><p class="text-left" style="width:70px;margin-right: 20px;">{{ $product->count() }} x</p></td>
-                                                    <td width="60%" valign="top">
-                                                        <a href="{{ url('admin/product/'.$product->first()->id) }}">{{ $product->first()->title }}</a>
-                                                        @if(!$prod_free->isEmpty())
-                                                            <br/><small>Dont livres gratuits : {{ $prod_free->count() }}</small>
-                                                        @endif
+                                                    <td width="40%" valign="top">
+                                                        <a href="{{ url('admin/product/'.$product->first()->id) }}">
+                                                            {{ $product->first()->title }} {!! ($product->first()->isbn ? '&nbsp;<small>(ISBN: '.$product->first()->isbn.')</small>' : '') !!}
+                                                        </a>
                                                     </td>
-                                                    <td width="15%" valign="top" class="text-right">
-                                                        {{ $product->first()->price_cents }} CHF
-                                                    </td>
-                                                    <td width="15%" valign="top"><p class="text-right">{{ $money->format($price_sum) }} CHF</p></td>
+                                                    <td width="18%" valign="top" class="text-right">{{ $product->first()->price_normal }} CHF</td>
+                                                    <td width="18%" valign="top" class="text-right">{{ $product->first()->price_special ? $product->first()->price_special.' CHF' : '' }}</td>
+                                                    <td width="19%" valign="top"><p class="text-right">{{ $price_sum > 0 ? $money->format($price_sum).' CHF' : 'Gratuit' }} </p></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -160,7 +155,7 @@
                                             <tr><td colspan="2" style="line-height: 10px;">&nbsp;</td></tr>
                                             <tr>
                                                 <td width="85%" style="padding-top:5px;" class="text-right"><strong>Total</strong></td>
-                                                <td width="15%" style="border-top:1px solid #ddd;padding-top:5px;"><p class="text-right">{{ $order->price_cents }} CHF</p></td>
+                                                <td width="15%" style="border-top:1px solid #ddd;padding-top:5px;"><p class="text-right">{{ $order->total_with_shipping }} CHF</p></td>
                                             </tr>
                                             </tbody>
                                         </table>

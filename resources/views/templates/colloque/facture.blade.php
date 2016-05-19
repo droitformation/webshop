@@ -23,6 +23,10 @@
                         <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
                     </ul>
                     <p class="tva">{{ $tva['numero'] }}</p>
+                    <div class="coordonnees">
+                        <h4>Coordonnées pour le paiement</h4>
+                        <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
+                    </div>
                 </td>
                 <td align="top" width="40%" valign="top">
                     @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
@@ -99,8 +103,14 @@
             <tr><td height="20">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top" style="margin-top: 20px;">
-                    @if(!empty($generate->getColloque()->annexe))
-                        <p class="red"><strong>Annexe{{ (count($generate->getColloque()->annexe) > 1 ? 's' : '') }}: {{ implode(',',$generate->getColloque()->annexe) }}</strong></p>
+                    @if(!empty($generate->getColloque()->annexe) && in_array('bon',$generate->getColloque()->annexe))
+
+                        @if(is_array($generate->getNo()))
+                            <p class="red"><strong>Annexes : bons de participation à présenter à l'entrée</strong></p>
+                        @else
+                            <p class="red"><strong>Annexe : bon de participation à présenter à l'entrée</strong></p>
+                        @endif
+
                     @endif
                 </td>
             </tr>

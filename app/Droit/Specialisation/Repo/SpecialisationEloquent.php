@@ -14,7 +14,7 @@ class SpecialisationEloquent implements SpecialisationInterface{
 
     public function getAll(){
 
-        return $this->specialisation->all();
+        return $this->specialisation->orderBy('title','ASC')->get();
     }
 
     public function find($id){

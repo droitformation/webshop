@@ -201,6 +201,7 @@ $( function() {
 
     $("#tags").tagit({
         fieldName          : "specialisation",
+        allowSpaces        : true,
         placeholderText    : "Rechercher une spécialisation",
         removeConfirmation : true,
         afterTagAdded: function(event, ui) {
@@ -254,6 +255,7 @@ $( function() {
                     url      : base_url + 'admin/specialisation/search',
                     data: {  term: request.term , _token: $("meta[name='_token']").attr('content') },
                     success: function( data ) {
+                        console.log(data);
                         response( $.map( data, function( item ) {
                             return {
                                 label: item.label,
@@ -352,5 +354,19 @@ $( function() {
             },
         }
     });
+
+    $('.toggle-presence').change(function() {
+
+        var presence = $(this).prop('checked');
+        var id       = $(this).data('id');
+
+        $.ajax({
+            type   : "POST",
+            url    : base_url + "admin/inscription/presence",
+            data   : { presence: presence, id : id,  _token: $("meta[name='_token']").attr('content') },
+            success: function(data) {},
+            error  : function(){ alert('problème'); }
+        });
+    })
 
 });

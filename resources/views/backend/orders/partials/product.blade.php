@@ -1,6 +1,6 @@
 <fieldset class="field_clone_order" id="{{ $id }}">
     <div class="row">
-        <div class="col-lg-7 col-md-6 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-xs-12">
             <label>Produit</label>
             <select name="order[products][]" class="chosen-select form-control" data-placeholder="produits">
                 <option value="">Choix</option>
@@ -21,6 +21,10 @@
                 <input class="form-control" value="{{ isset($old_product['rabais']) ? $old_product['rabais'] : '' }}" type="text" name="order[rabais][{{ $index }}]">
                 <span class="input-group-addon">%</span>
             </div><!-- /input-group -->
+        </div>
+        <div class="col-lg-1 col-md-2 col-xs-12">
+            <label>Prix spécial</label>
+            <input class="form-control" value="{{ isset($old_product['price']) ? $old_product['price'] : '' }}" type="text" name="order[price][{{ $index }}]">
         </div>
         <div class="col-lg-2 col-md-1 col-xs-12">
             <label></label>

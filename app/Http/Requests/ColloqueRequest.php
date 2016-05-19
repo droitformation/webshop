@@ -29,7 +29,13 @@ class ColloqueRequest extends Request
     public function rules()
     {
         return [
-            'compte_id' => 'required_if:facture,1'
+            'titre'           => 'required',
+            'sujet'           => 'required',
+            'organisateur'    => 'required',
+            'location_id'     => 'required',
+            'start_at'        => 'required',
+            'registration_at' => 'required',
+            'compte_id'       => 'required_if:facture,1'
         ];
     }
 
