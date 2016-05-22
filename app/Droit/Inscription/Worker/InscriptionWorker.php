@@ -38,12 +38,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     {
         if($simple)
         {
-            $already = $this->inscription->getByUser($colloque_id,$data['user_id']);
-
-            if($already)
-            {
-                throw new \App\Exceptions\RegisterException('Register failed');
-            }
+            $this->existAlready($colloque_id, $data['user_id']);
         }
 
         $inscription_no = $this->colloque->getNewNoInscription($colloque_id);
@@ -109,6 +104,16 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         }
 
         return $group;
+    }
+
+    public function existAlready($colloque_id, $user_id)
+    {
+        $already = $this->inscription->getByUser($colloque_id,$user_id);
+
+        if($already)
+        {
+            throw new \App\Exceptions\RegisterException('Register failed');
+        }
     }
 
     public function specialisation($colloque_id, $user)

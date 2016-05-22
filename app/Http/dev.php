@@ -6,66 +6,24 @@
 
 Route::get('mapped', function () {
 
-    $inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $user         = \App::make('App\Droit\User\Repo\UserInterface');
+    $CampagneInterface = \App::make('App\Droit\Newsletter\Worker\CampagneInterface');
 
-    $data = $inscription->find(9538);
-    $cindy = $user->find(710);
+    $campagne = $CampagneInterface->getCampagne(1314);
 
-    if (!$data->user_options->isEmpty())
-    {
-        $html = '';
-        $groupe_choix = $data->user_options->load('option')->groupBy('option_id');
+    $arrets = $campagne->content->map(function ($content, $key) {
 
-        foreach ($groupe_choix as $type)
-        {
-            foreach ($type as $choix) {
-                $html .= $choix->option->title;
-                $html .= $choix->groupe_id ? ':' : ';';
-                $html .= ($choix->groupe_id ? $choix->option_groupe->text : '');
-            }
-        }
+        if($content->arret_id)
+            return $content->arret_id ;
 
-        $multiplied = $groupe_choix->map(function ($group, $key)
-        {
-            return $group->map(function ($item, $key) {
-                $html  = $item->option->title;
-                $html .= $item->groupe_id ? ':' : '';
-                $html .= ($item->groupe_id ? $item->option_groupe->text : '');
+        if($content->groupe_id > 0)
+           return $content->groupe->arrets_groupes->lists('id')->all();
 
-                return $html;
-            });
-        })->flatten()->implode(';');
-
-    }
-
-    if ($cindy && !$cindy->adresses->isEmpty())
-    {
-        $names = collect([
-            'civilite_title'   => 'Civilité',
-            'name'             => 'Nom et prénom',
-            'email'            => 'E-mail',
-            'profession_title' => 'Profession',
-            'company'          => 'Entrprise',
-            'telephone'        => 'Téléphone',
-            'mobile'           => 'Mobile',
-            'adresse'          => 'Adresse',
-            'cp'               => 'CP',
-            'complement'       => 'Complément d\'adresse',
-            'npa'              => 'NPA',
-            'ville'            => 'Ville',
-            'canton_title'     => 'Canton',
-            'pays_title'       => 'Pays'
-        ]);
-
-        $prep = $names->map(function ($item, $key) use ($cindy) {
-            return $cindy->adresses->first()->$key;
-        });
-
-    }
+    })->filter(function ($value, $key) {
+        return !empty($value);
+    });
 
     echo '<pre>';
-    print_r($prep);
+    print_r($arrets);
     echo '</pre>';
 
 });

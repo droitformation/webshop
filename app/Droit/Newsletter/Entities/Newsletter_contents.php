@@ -41,4 +41,9 @@ class Newsletter_contents extends Model {
         return $this->hasMany('App\Droit\Arret\Entities\Arret', 'id', 'arret_id');
     }
 
+    public function groupe()
+    {
+        return $this->hasMany('App\Droit\Arret\Entities\Groupe', 'id', 'groupe_id');
+    }
+
 }
