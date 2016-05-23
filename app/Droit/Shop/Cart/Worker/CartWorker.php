@@ -238,7 +238,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      */
      public function searchItem($id)
      {
-        return \Cart::search(array('id' => $id));
+        return \Cart::search(['id' => $id]);
      }
 
      /**

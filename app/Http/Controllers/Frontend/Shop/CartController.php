@@ -31,6 +31,25 @@ class CartController extends Controller {
     public function addProduct(Request $request)
 	{
         $item = $this->product->find($request->input('product_id'));
+        $qty  = 1;
+
+        // is there enough stock to add this product?
+        // Get qty of product already in cart
+        $rowId = \Cart::search(['id' => (int)$request->input('product_id')]);
+
+        if($rowId)
+        {
+            $already = \Cart::get($rowId[0]);
+            $qty     = $already ? $already->qty + 1 : $qty;
+        }
+
+        // Compare with sku of product
+        $sku = $item->sku - $qty;
+
+        // if not enough throw exception
+        if($sku < 0){
+            throw new \App\Exceptions\StockCartException('Plus assez de stocks pour cet article');
+        }
 
         \Cart::associate('Product','App\Droit\Shop\Product\Entities')->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
 

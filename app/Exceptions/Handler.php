@@ -79,6 +79,9 @@ class Handler extends ExceptionHandler {
         if ($e instanceof \App\Exceptions\UserNotExistException)
             return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Cet utilisateur n\'existe pas'));
 
+		if ($e instanceof \App\Exceptions\StockCartException)
+			return redirect()->back()->with(array('status' => 'warning' , 'message' => 'Il n\'y a plus assez de stock pour cet article'));
+
 		if ($e instanceof \App\Exceptions\AdresseNotExistException)
 			return redirect()
 				->back()
