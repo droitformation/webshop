@@ -60,7 +60,7 @@ class ProductEloquent implements ProductInterface{
 
     public function find($id){
 
-        return $this->product->with(['categories','authors','domains','attributs','abos'])->find($id);
+        return $this->product->with(['categories','authors','domains','attributs','abos','stocks'])->find($id);
     }
 
     public function sku($product_id, $qty, $operator)

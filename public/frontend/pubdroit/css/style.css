@@ -233,7 +233,7 @@ margin-bottom:0;
 }
 .wellcome-msg h2 {
     color: #000;
-    font-family: calibri;
+    font-family: Arial, sans serif;
     font-size: 28px;
     font-weight: normal;
     margin: 0 0 10px;
@@ -342,7 +342,7 @@ margin-bottom:0;
     border-bottom: 3px solid #98B827;
     display:inline-block;
     margin-bottom: -2px;
-    font-family: calibri;
+    font-family: Arial, sans serif;
     font-weight: normal;
 }
 .heading-bar a{ font-size:18px;}

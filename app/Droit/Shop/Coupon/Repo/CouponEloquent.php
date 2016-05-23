@@ -14,7 +14,7 @@ class CouponEloquent implements CouponInterface{
 
     public function getAll(){
 
-        return $this->coupon->with('orders')->get();
+        return $this->coupon->with(['orders'])->get();
     }
 
     public function find($id){

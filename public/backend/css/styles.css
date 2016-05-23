@@ -554,9 +554,15 @@ a.bg-info:hover {
 a.bg-warning:hover {
   background-color: #f9e8a0;
 }
-.bg-danger {
-  background-color: #fdf2f2;
+.input-group-addon.bg-danger {
+  background-color: #a81515;
+  color:#fff;
 }
+
+.bg-danger {
+  background-color: #a81515;
+}
+
 a.bg-danger:hover {
   background-color: #f8c4c4;
 }

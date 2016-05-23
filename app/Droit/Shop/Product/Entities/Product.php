@@ -152,4 +152,8 @@ class Product extends Model{
         return $this->belongsToMany('App\Droit\Abo\Entities\Abo', 'abo_products','product_id', 'abo_id');
     }
 
+    public function stocks()
+    {
+        return $this->hasMany('App\Droit\Shop\Stock\Entities\Stock');
+    }
 }

@@ -583,5 +583,20 @@ class Helper {
         return $html;
     }
 
+    public function calculSku($etat, $amount, $operator)
+    {
+        switch($operator)
+        {
+            case "+":
+                $result = $etat + $amount;
+                break;
+
+            case "-";
+                $result = $etat - $amount;
+                break;
+        }
+        
+        return $result;
+    }
 
 }

@@ -101,15 +101,22 @@
                             </div>
                         </div>
 
+                        <hr/>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Stock</label>
-                            <div class="col-sm-4 col-xs-6">
+                            <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="sku" value="{{ $product->sku }}">
+                                    <input type="text" class="form-control" disabled name="sku" value="{{ $product->sku }}">
                                     <span class="input-group-addon">livres</span>
                                 </div>
                             </div>
+                            <div class="col-sm-5 text-right">
+                                <!-- Button trigger modals -->
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#stockModal">Changer le stock</button>
+                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#stockHistory"><i class="fa fa-history"></i></button>
+                            </div>
                         </div>
+
                         <hr/>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Existe sous forme d'abonnement</label>
@@ -139,6 +146,12 @@
                         </div>
                     </div>
                 </form>
+
+                <!-- stock change modal outside of product form -->
+                @include('backend.stocks.partials.product')
+
+                <!-- stock history modal outside of product form -->
+                @include('backend.stocks.partials.history', ['stocks' => $product->stocks])
 
             </div>
         </div>

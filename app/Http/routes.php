@@ -285,6 +285,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::match(['get', 'post'], 'products', 'Backend\Shop\ProductController@index');
         Route::resource('product', 'Backend\Shop\ProductController');
 
+        Route::post('stock/change', 'Backend\Shop\StockController@update');
+        Route::get('stock/product/{id}', 'Backend\Shop\StockController@product');
+        Route::get('stock/export/{id}', 'Backend\Shop\StockController@export');
+
         Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
         Route::post('order/edit', 'Backend\Shop\OrderController@edit');
         Route::post('order/export', 'Backend\Shop\OrderController@export');

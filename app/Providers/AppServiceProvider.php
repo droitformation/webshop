@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider {
                 'auth.register'
             ], 'App\Http\ViewComposers\UserAttributeComposer');
 
-        view()->composer(['frontend.pubdroit.partials.label','backend.export.user'], 'App\Http\ViewComposers\LabelComposer');
+        view()->composer(['frontend.pubdroit.partials.label','backend.export.user','backend.products.create','backend.products.index','backend.products.show'], 'App\Http\ViewComposers\LabelComposer');
         view()->composer([
             'frontend.pubdroit.partials.menu',
             'frontend.pubdroit.layouts.master',

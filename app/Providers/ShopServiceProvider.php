@@ -28,6 +28,7 @@ class ShopServiceProvider extends ServiceProvider {
         $this->registerCouponService();
         $this->registerPaymentService();
         $this->registerCartService();
+        $this->registerStockService();
         $this->registerCategorieService();
 
         $this->registerOrderWorkerService();
@@ -126,6 +127,17 @@ class ShopServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Shop\Cart\Repo\CartInterface', function()
         {
             return new \App\Droit\Shop\Cart\Repo\CartEloquent(new \App\Droit\Shop\Cart\Entities\Cart);
+        });
+    }
+
+    /**
+     * Stock
+     */
+    protected function registerStockService(){
+
+        $this->app->singleton('App\Droit\Shop\Stock\Repo\StockInterface', function()
+        {
+            return new \App\Droit\Shop\Stock\Repo\StockEloquent(new \App\Droit\Shop\Stock\Entities\Stock);
         });
     }
 

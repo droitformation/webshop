@@ -9,10 +9,7 @@ use App\Droit\Service\UploadInterface;
 use App\Droit\Reminder\Worker\ReminderWorkerInterface;
 
 use App\Droit\Shop\Product\Repo\ProductInterface;
-use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Shop\Attribute\Repo\AttributeInterface;
-use App\Droit\Author\Repo\AuthorInterface;
-use App\Droit\Domain\Repo\DomainInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Abo\Repo\AboInterface;
 
@@ -20,13 +17,9 @@ class ProductController extends Controller {
 
     protected $upload;
 	protected $product;
-    protected $categorie;
     protected $attribute;
-    protected $author;
-    protected $domain;
     protected $abo;
     protected $order;
-    protected $helper;
     protected $reminder;
 
 	/**
@@ -34,29 +27,14 @@ class ProductController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(
-        ProductInterface $product,
-        CategorieInterface $categorie,
-        OrderInterface $order,
-        AttributeInterface $attribute,
-        AuthorInterface $author,
-        DomainInterface $domain,
-        UploadInterface $upload,
-        AboInterface $abo,
-        ReminderWorkerInterface $reminder
-    )
+	public function __construct(ProductInterface $product, OrderInterface $order, AttributeInterface $attribute, UploadInterface $upload, AboInterface $abo, ReminderWorkerInterface $reminder)
 	{
         $this->product   = $product;
-        $this->categorie = $categorie;
         $this->order     = $order;
         $this->attribute = $attribute;
-        $this->author    = $author;
-        $this->domain    = $domain;
         $this->upload    = $upload;
         $this->reminder  = $reminder;
         $this->abo       = $abo;
-
-        $this->helper    = new \App\Droit\Helper\Helper();
 	}
 
 	/**
@@ -74,7 +52,6 @@ class ProductController extends Controller {
         if($search)
         {
             $paginate = false;
-            $search   = array_filter($search);
             $products = $this->product->getAll($search, null, true);
         }
         elseif($term)
@@ -88,14 +65,7 @@ class ProductController extends Controller {
             $paginate = true;
         }
 
-        $attributes  = $this->attribute->getAll();
-        $categories  = $this->categorie->getAll();
-        $authors     = $this->author->getAll();
-        $domains     = $this->domain->getAll();
-
-		return view('backend.products.index')->with(
-            ['products' => $products, 'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains, 'paginate' => $paginate, 'search' => $search, 'term' => $term]
-        );
+		return view('backend.products.index')->with(['products' => $products, 'paginate' => $paginate, 'search' => $search, 'term' => $term]);
 	}
 
     /**
@@ -105,12 +75,7 @@ class ProductController extends Controller {
      */
     public function create()
     {
-        $attributes  = $this->attribute->getAll();
-        $categories  = $this->categorie->getAll();
-        $authors     = $this->author->getAll();
-        $domains     = $this->domain->getAll();
-
-        return view('backend.products.create')->with(['attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains]);
+        return view('backend.products.create');
     }
 
     /**
@@ -119,14 +84,10 @@ class ProductController extends Controller {
      */
     public function show($id)
     {
-        $product     = $this->product->find($id);
-        $attributes  = $this->attribute->getAll();
-        $categories  = $this->categorie->getAll();
-        $authors     = $this->author->getAll();
-        $domains     = $this->domain->getAll();
-        $abos        = $this->abo->getAll();
+        $product = $this->product->find($id);
+        $abos    = $this->abo->getAll();
 
-        return view('backend.products.show')->with(['product' => $product,'attributes' => $attributes, 'categories' => $categories, 'authors' => $authors, 'domains' => $domains, 'abos' => $abos]);
+        return view('backend.products.show')->with(['product' => $product, 'abos' => $abos]);
     }
 
     /**
@@ -193,7 +154,7 @@ class ProductController extends Controller {
     {
         $this->product->delete($id);
 
-        return redirect('admin/product')->with(array('status' => 'success' , 'message' => 'Le produit a été supprimé' ));
+        return redirect('admin/product')->with(['status' => 'success' , 'message' => 'Le produit a été supprimé']);
     }
 
     public function addAttribut($id, Request $request)
@@ -210,7 +171,7 @@ class ProductController extends Controller {
 
         $product->attributs()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'attribut a été ajouté' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'attribut a été ajouté']);
     }
 
     public function removeAttribut($id, Request $request)
@@ -219,7 +180,7 @@ class ProductController extends Controller {
 
         $product->attributs()->detach($request->input('attribute_id'));
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'attribut a été supprimé' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'attribut a été supprimé']);
     }
 
     public function addType($id, Request $request)
@@ -229,7 +190,7 @@ class ProductController extends Controller {
 
         $product->$types()->sync($request->input('type_id'));
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'objet a été ajouté' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'objet a été ajouté']);
     }
 
     public function removeType($id, Request $request)
@@ -239,6 +200,6 @@ class ProductController extends Controller {
 
         $product->$types()->detach($request->input('type_id'));
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'objet été supprimé' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'objet été supprimé']);
     }
 }
