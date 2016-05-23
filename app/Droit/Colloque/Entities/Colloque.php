@@ -17,7 +17,7 @@ class Colloque extends Model
 
     protected $fillable = [
         'titre', 'soustitre', 'sujet', 'remarques', 'start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
-        'location_id', 'compte_id', 'visible', 'bon', 'facture', 'adresse_id','created_at', 'updated_at'
+        'location_id', 'compte_id', 'visible', 'bon', 'facture', 'email' ,'adresse_id','created_at', 'updated_at'
     ];
 
     public function getIllustrationAttribute()

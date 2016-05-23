@@ -124,6 +124,13 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group well well-small" style="padding: 17px 0;">
+                                    <label class="col-sm-3 control-label">Envoyer les confirmations<br/> à un autre email</label>
+                                    <div class="col-sm-8 col-xs-6">
+                                        <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email }}">
+                                    </div>
+                                </div>
+
                             </fieldset>
 
                             <fieldset title="Dates">

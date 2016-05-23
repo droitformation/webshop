@@ -11,6 +11,7 @@ return array(
     'AddCashierColumns' => $baseDir . '/database/migrations/2015_06_03_151644_add_cashier_columns.php',
     'AddDeletedAtToOptions' => $baseDir . '/database/migrations/2015_09_08_141109_add_deleted_at_to_options.php',
     'AddDeletedAtToUsers' => $baseDir . '/database/migrations/2015_06_08_141109_add_deleted_at_to_users.php',
+    'AddEmailToColloquesTable' => $baseDir . '/database/migrations/2016_05_23_162639_add_email_to_colloques_table.php',
     'AddOldPasswordColumns' => $baseDir . '/database/migrations/2016_01_03_151644_add_old_password_columns.php',
     'AddPosteToAdressesTable' => $baseDir . '/database/migrations/2016_01_01_110756_add_poste_to_adresses_table.php',
     'Adobe_Font_Metrics' => $vendorDir . '/phenx/php-font-lib/classes/Adobe_Font_Metrics.php',
