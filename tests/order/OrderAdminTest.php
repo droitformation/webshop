@@ -11,6 +11,7 @@ class OrderAdminTest extends TestCase {
     protected $order;
     protected $product;
     protected $generator;
+    protected $stock;
 
     /**
      * @var \Illuminate\Session\SessionManager
@@ -35,6 +36,9 @@ class OrderAdminTest extends TestCase {
 
         $this->generator = Mockery::mock('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->app->instance('App\Droit\Generate\Pdf\PdfGeneratorInterface', $this->generator);
+
+        $this->stock = Mockery::mock('App\Droit\Shop\Stock\Repo\StockInterface');
+        $this->app->instance('App\Droit\Shop\Stock\Repo\StockInterface', $this->stock);
 
         // Avoid "Session store not set on request." - Exception!
         Session::setDefaultDriver('array');

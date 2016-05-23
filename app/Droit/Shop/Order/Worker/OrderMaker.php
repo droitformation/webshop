@@ -10,6 +10,7 @@ use App\Droit\Shop\Shipping\Repo\ShippingInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Droit\Shop\Cart\Repo\CartInterface;
+use App\Droit\Shop\Stock\Repo\StockInterface;
 
 class OrderMaker implements OrderMakerInterface{
 
@@ -19,8 +20,17 @@ class OrderMaker implements OrderMakerInterface{
     protected $adresse;
     protected $generator;
     protected $cart;
+    protected $stock;
 
-    public function __construct(OrderInterface $order, ProductInterface $product, ShippingInterface $shipping, AdresseInterface $adresse, PdfGeneratorInterface $generator, CartInterface $cart)
+    public function __construct(
+        OrderInterface $order,
+        ProductInterface $product,
+        ShippingInterface $shipping,
+        AdresseInterface $adresse,
+        PdfGeneratorInterface $generator,
+        CartInterface $cart,
+        StockInterface $stock
+    )
     {
         $this->order     = $order;
         $this->product   = $product;
@@ -28,6 +38,7 @@ class OrderMaker implements OrderMakerInterface{
         $this->adresse   = $adresse;
         $this->generator = $generator;
         $this->cart      = $cart;
+        $this->stock     = $stock;
     }
 
     /*
@@ -159,7 +170,7 @@ class OrderMaker implements OrderMakerInterface{
     }
 
     /*
-     * Reset qty of products when canceling order
+     * Reset qty of products
      * */
     public function resetQty($order,$operator)
     {
@@ -170,6 +181,10 @@ class OrderMaker implements OrderMakerInterface{
             foreach($products as $product_id => $qty)
             {
                 $this->product->sku($product_id, $qty, $operator);
+
+                // Insert entry for stock history
+                $motif = $operator == '+' ? 'Annulation commande ' : 'Commande ';
+                $this->stock->create(['product_id' => $product_id, 'amount' => $qty, 'motif' => $motif.$order->order_no, 'operator' => $operator]);
             }
         }
     }
@@ -201,7 +216,7 @@ class OrderMaker implements OrderMakerInterface{
         {
             for($x = 0; $x < $product->qty; $x++)
             {
-                $ids[] = $product->id;
+                $ids[] = ['id' => $product->id];
             }
         });
 

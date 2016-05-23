@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-12">
-           <p> <a href="{{ url('shop')}}" class="btn btn-sm btn-default">Retour à la liste</a></p>
+           <p> <a href="{{ url('admin/products')}}" class="btn btn-sm btn-default">Retour à la liste</a></p>
         </div>
     </div>
 
@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Stock</label>
                             <div class="col-sm-3 col-xs-6">
-                                <input type="text" class="form-control" name="sku">
+                                <input type="text" class="form-control" value="0" name="sku">
                             </div>
                         </div>
 

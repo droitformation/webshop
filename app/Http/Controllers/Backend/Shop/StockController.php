@@ -15,7 +15,7 @@ class StockController extends Controller
     protected $stock;
     protected $product;
 
-    public function __construct(StockInterface $stock,ProductInterface $product)
+    public function __construct(StockInterface $stock, ProductInterface $product)
     {
         $this->stock   = $stock;
         $this->product = $product;
@@ -43,7 +43,7 @@ class StockController extends Controller
         \Excel::create('Export historique stock', function($excel) use ($stocks) {
             $excel->sheet('Export_historique_stock', function($sheet) use ($stocks)
             {
-                $sheet->loadView('backend.stocks.export', ['stocks' => $stocks]);
+                $sheet->loadView('backend.stocks.modals.table', ['stocks' => $stocks]);
             });
         })->export('xls');
     }

@@ -370,3 +370,10 @@ $( function() {
     })
 
 });
+
+$(document).ready(ajustamodal);
+$(window).resize(ajustamodal);
+function ajustamodal() {
+    var altura = $(window).height() - 255; //value corresponding to the modal heading + footer
+    $(".ativa-scroll").css({"height":altura,"overflow-y":"auto"});
+}

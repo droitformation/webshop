@@ -148,10 +148,10 @@
                 </form>
 
                 <!-- stock change modal outside of product form -->
-                @include('backend.stocks.partials.product')
+                @include('backend.stocks.modals.product')
 
                 <!-- stock history modal outside of product form -->
-                @include('backend.stocks.partials.history', ['stocks' => $product->stocks])
+                @include('backend.stocks.modals.history', ['stocks' => $product->stocks, 'product' => $product])
 
             </div>
         </div>

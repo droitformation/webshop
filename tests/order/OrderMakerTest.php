@@ -8,6 +8,7 @@ class OrderMakerTest extends \TestCase {
     protected $mockorder;
     protected $generator;
     protected $adresse;
+    protected $stock;
 
     public function setUp()
     {
@@ -29,6 +30,9 @@ class OrderMakerTest extends \TestCase {
 
         $this->adresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
         $this->app->instance('App\Droit\Adresse\Repo\AdresseInterface', $this->adresse);
+
+        $this->stock = Mockery::mock('App\Droit\Shop\Stock\Repo\StockInterface');
+        $this->app->instance('App\Droit\Shop\Stock\Repo\StockInterface', $this->stock);
 
     }
 
@@ -360,6 +364,7 @@ class OrderMakerTest extends \TestCase {
         $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
         $this->mockorder->shouldReceive('create')->once()->andReturn($order);
         $this->mock->shouldReceive('sku')->times(2);
+        $this->stock->shouldReceive('create')->times(2);
         $this->generator->shouldReceive('factureOrder')->once();
 
         $make->make($data);

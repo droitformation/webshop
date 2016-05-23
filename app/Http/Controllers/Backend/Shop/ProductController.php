@@ -12,6 +12,7 @@ use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Abo\Repo\AboInterface;
+use App\Droit\Shop\Stock\Repo\StockInterface;
 
 class ProductController extends Controller {
 
@@ -21,13 +22,22 @@ class ProductController extends Controller {
     protected $abo;
     protected $order;
     protected $reminder;
+    protected $stock;
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductInterface $product, OrderInterface $order, AttributeInterface $attribute, UploadInterface $upload, AboInterface $abo, ReminderWorkerInterface $reminder)
+	public function __construct(
+        ProductInterface $product,
+        OrderInterface $order,
+        AttributeInterface $attribute,
+        UploadInterface $upload,
+        AboInterface $abo,
+        ReminderWorkerInterface $reminder,
+        StockInterface $stock
+    )
 	{
         $this->product   = $product;
         $this->order     = $order;
@@ -35,6 +45,7 @@ class ProductController extends Controller {
         $this->upload    = $upload;
         $this->reminder  = $reminder;
         $this->abo       = $abo;
+        $this->stock     = $stock;
 	}
 
 	/**
@@ -104,6 +115,9 @@ class ProductController extends Controller {
         $data['image'] = $file['name'];
 
         $product = $this->product->create($data);
+        
+        // Create a entry in stock history
+        $this->stock->create(['product_id' => $product->id, 'amount' => $product->sku, 'motif' => 'Stock initial', 'operator' => '+']);
 
         return redirect('admin/product/'.$product->id)->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
     }
