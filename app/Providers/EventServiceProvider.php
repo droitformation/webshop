@@ -12,21 +12,11 @@ class EventServiceProvider extends ServiceProvider {
 	 */
 	protected $listen = [
         'App\Events\OrderWasPlaced' => [
-            'App\Listeners\EmailPurchaseConfirmation',
-            'App\Listeners\NotifyAdminOfPurchase',
+            'App\Listeners\EmailOrderConfirmation'
         ],
         'App\Events\InscriptionWasRegistered' => [
-            'App\Listeners\EmailRegisterInscriptionConfirmation'
-        ],
-        'App\Events\InscriptionWasCreated' => [
-            'App\Listeners\CreateDocumentsInscription'
-        ],
-        'App\Events\GroupeInscriptionWasRegistered' => [
-            'App\Listeners\CreateDocumentsGroupeInscription'
-        ],
-		'App\Events\jobFinsished' => [
-			'App\Listeners\notifyAdmin',
-		],
+            'App\Listeners\EmailInscriptionConfirmation'
+        ]
 	];
 
 	/**

@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Mail\Mailer;
 use App\Droit\Inscription\Entities\Inscription;
 
-class SendConfirmationInscriptionEmail extends Job implements SelfHandling, ShouldQueue
+class SendConfirmationInscription extends Job implements SelfHandling, ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 

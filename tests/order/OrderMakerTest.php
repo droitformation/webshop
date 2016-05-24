@@ -167,7 +167,12 @@ class OrderMakerTest extends \TestCase {
 
         $ids = $product->getProductsCart($cart);
 
-        $expect = [0 => 55, 1 => 55, 2 => 56, 3 => 57];
+        $expect = [
+            ['id' => 55],
+            ['id' => 55],
+            ['id' => 56],
+            ['id' => 57]
+        ];
 
         $this->assertEquals($expect, $ids);
 

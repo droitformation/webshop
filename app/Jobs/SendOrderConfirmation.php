@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Mail\Mailer;
 use App\Droit\Shop\Order\Entities\Order;
 
-class SendConfirmationEmail extends Job implements ShouldQueue
+class SendOrderConfirmation extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
@@ -56,7 +56,7 @@ class SendConfirmationEmail extends Job implements ShouldQueue
             'duDate'    => $duDate
         ];
 
-        $facture = public_path().'/files/shop/factures/facture_'.$order->order_no.'.pdf';
+        $facture = public_path('/files/shop/factures/facture_'.$order->order_no.'.pdf');
         $name    = 'facture_'.$order->order_no.'.pdf';
 
         $mailer->send('emails.shop.confirmation', $data , function ($message) use ($user,$facture,$name) {
@@ -66,7 +66,6 @@ class SendConfirmationEmail extends Job implements ShouldQueue
             {
                 $message->attach($facture, array('as' => $name, 'mime' => 'application/pdf'));
             }
-
         });
     }
 }

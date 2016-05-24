@@ -437,6 +437,32 @@ Route::get('registration', function()
 
 });
 
+Route::get('notifyadmin', function()
+{
+
+    $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $inscrit     = $inscription->find(9567);
+
+    $orders = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order  = $orders->find(2930);
+
+    $inscritpt = [
+        'name' => $inscrit->inscrit->name,
+        'colloque' => $inscrit->colloque->titre,
+        'what' => 'inscription',
+        'link' => 'admin/inscription/colloque/'.$inscrit->colloque->id
+    ];
+
+    $ordered = [
+        'name'  => $order->user->name,
+        'what'  => 'commande',
+        'order' => $order->order_no,
+        'link'  => 'admin/orders'
+    ];
+
+    return View::make('emails.notification',$ordered);
+
+});
 
 Route::get('confirmation_newsletter', function()
 {
