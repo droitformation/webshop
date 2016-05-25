@@ -37,6 +37,9 @@
         <testsuite name="backendshop">
             <directory>./tests/backend/shop/</directory>
         </testsuite>
+        <testsuite name="create">
+            <directory>./tests/backend/create/</directory>
+        </testsuite>
         <testsuite name="content">
             <directory>./tests/backend/content/</directory>
         </testsuite>
