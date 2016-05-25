@@ -22,6 +22,11 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
         return $this->campagne->where('status','=','envoyé')->orderBy('id','DESC')->get();
     }
 
+	public function getNotSent()
+	{
+		return $this->campagne->where('status','=','brouillon')->get();
+	}
+
     public function getLastCampagne(){
 
         return $this->campagne->where('status','=','envoyé')->orderBy('id','DESC')->get();

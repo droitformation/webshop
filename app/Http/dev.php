@@ -6,24 +6,26 @@
 
 Route::get('mapped', function () {
 
-    $CampagneInterface = \App::make('App\Droit\Newsletter\Worker\CampagneInterface');
+    $CampagneInterface = \App::make('App\Droit\Newsletter\Repo\NewsletterCampagneInterface');
 
-    $campagne = $CampagneInterface->getCampagne(1314);
+    $campagnes = $CampagneInterface->getNotSent(2);
 
-    $arrets = $campagne->content->map(function ($content, $key) {
+    $arrets = $campagnes->flatMap(function ($campagne) {
+            return $campagne->content;
+        })->map(function ($content, $key) {
 
-        if($content->arret_id)
-            return $content->arret_id ;
+            if($content->arret_id)
+                return $content->arret_id ;
 
-        if($content->groupe_id > 0)
-           return $content->groupe->arrets_groupes->lists('id')->all();
+            if($content->groupe_id > 0)
+               return $content->groupe->arrets_groupes->lists('id')->all();
 
-    })->filter(function ($value, $key) {
-        return !empty($value);
+        })->filter(function ($value, $key) {
+            return !empty($value);
     });
 
     echo '<pre>';
-    print_r($arrets);
+    print_r($campagnes);
     echo '</pre>';
 
 });

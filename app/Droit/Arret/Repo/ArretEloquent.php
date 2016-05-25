@@ -97,7 +97,7 @@ class ArretEloquent implements ArretInterface{
 
 		$arret = $this->arret->create(array(
 			'site_id'    => $data['site_id'],
-            'user_id'    => $data['user_id'],
+            'user_id'    => isset($data['user_id']) ? $data['user_id'] : null,
             'reference'  => $data['reference'],
             'pub_date'   => $data['pub_date'],
             'abstract'   => $data['abstract'],
