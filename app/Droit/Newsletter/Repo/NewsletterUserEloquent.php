@@ -47,7 +47,7 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
     public function get_ajax($draw, $start, $length, $sortCol, $sortDir, $search){
 
-        $columns = ['id','activated_at','activated_at','email','newsletter_id'];
+        $columns = ['id','activated_at','activated_at','email'];
 
         $iTotal  = $this->user->all()->count();
 
@@ -92,8 +92,6 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
             $row = [];
 
             $row['id']                  = '<a class="btn btn-sky btn-sm" href="'.url('admin/subscriber/'.$abonne->id).'">&Eacute;diter</a>';
-           // $row['status']['display']   = ($abonne->activated_at ? '<span class="label label-success">Confirmé</span>' : '<span class="label label-default">Email non confirmé</span>');
-            //$row['status']['timestamp'] = $abonne->activated_at;
             $row['status']              = ($abonne->activated_at ? '<span class="label label-success">Confirmé</span>' : '<span class="label label-default">Email non confirmé</span>');
             $row['activated_at']        = ($abonne->activated_at ? $abonne->activated_at->formatLocalized('%d %B %Y') : '');
             $row['email']               = $abonne->email;
