@@ -16,6 +16,7 @@ class ExportBadge
         $inscriptions = $inscriptions->pluck('name_inscription')->all();
 
         $data   = $this->chunkData($inscriptions, $this->config['cols'], $this->config['etiquettes']);
+
         $config = $this->config + ['data' => $data];
 
         return \PDF::loadView('backend.export.badge', $config)->setPaper('a4')->stream('badges_' . $colloque->id . '.pdf');

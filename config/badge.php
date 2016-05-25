@@ -48,4 +48,13 @@ return array(
         'blocheight' => '24mm',
         'width'      => '50%'
     ],
+    'zweckform27' => [
+        'code'       => 'zweckform27',
+        'etiquettes' => '27',
+        'margin'     => '10mm 0mm 0mm 0mm',
+        'cols'       => '3',
+        'height'     => '30mm',
+        'blocheight' => '30mm',
+        'width'      => '63mm'
+    ],
 );

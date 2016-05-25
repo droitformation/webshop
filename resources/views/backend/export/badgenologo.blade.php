@@ -41,10 +41,8 @@
                    @foreach($table as $row)
                         <tr class="normalize">
                         @foreach($row as $name)
-                            <td width="{{ $width }}" height="{{ $height }}" class="normalize height">
-                               <div style="width: 80%;margin: 0 auto; display: block;text-align: left;">
-                                   <?php $logo = Registry::get('inscription.infos.logo'); ?>
-                                   <img style="max-height: 50px" src="{{ asset('files/main/'.$logo) }}" />
+                            <td width="{{ $width }}" height="{{ $height }}" class="normalize height" >
+                               <div style="width: 80%;margin: 0 auto; display: block;text-align: center; font-size: 14px;">
                                    {!! !empty($name) ? '<span>'.$name.'</span>' : '' !!}
                                </div>
                             </td>

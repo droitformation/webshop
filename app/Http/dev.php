@@ -722,38 +722,91 @@ Route::get('duplicates', function () {
 });
 
 
-Route::get('convertfiles', function()
-{
-    $type = 'bv';
+Route::get('merge', function () {
 
-    $path   = public_path('dispatch/pdfs/'.$type);
-    $search = File::allFiles($path);
+      // Export adresses
+    $exporter = new \App\Droit\Generate\Export\ExportAdresse();
+    $exporter->merge();
+    
+});
+Route::get('exporter', function () {
 
-    foreach($search as $filepath)
+    $adresses = [
+       [
+           [
+              0 => 'Ludivine <strong>FERREIRA BROQUET</strong>',
+              1 => 'Nicolas <strong>DE WECK</strong>',
+              2 => 'Daisy <strong>GODET</strong>',
+           ],
+           [
+               0 => 'Marlyse  <strong>GUINAND</strong>',
+               1 => 'Geneviève <strong>ROBERT-GRANDPIERRE</strong>',
+               2 => 'Marilyn <strong>DUCOMMUN</strong>',
+           ],
+           [
+               0 => 'Anne Elisabeth <strong>MICHEL</strong>',
+               1 => 'Annie <strong>ROCHAT PAUCHARD</strong>',
+               2 => 'Jacques <strong>ROSSAT</strong>',
+           ],
+           [
+               0 => 'Charlotte <strong>SANDOZ</strong>',
+               1 => 'Bruno <strong>AMSLER</strong>',
+               2 => 'Christiane <strong>TERRIER</strong>',
+           ],
+           [
+               0 => 'Alexandre <strong>BRODARD</strong>',
+               1 => '',
+               2 => '',
+           ],
+       ]
+    ];
+
+    $data = config('badge.zweckform27') + ['data' => $adresses];
+
+/*    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+    exit;*/
+
+
+    return \PDF::loadView('backend.export.badgenologo', $data)->setPaper('a4')->stream('badges_.pdf');
+
+});
+    
+    
+    
+    Route::get('convertfiles', function()
     {
-
-        $file   = explode('_', $filepath);
-        $target = public_path('files/colloques/'.$type.'/'.$type.'_'.$file[1]);
-        File::copy( $filepath, $target );
-
-        //$part[] = $file[1];
-        $part[] = $target;
-
-    }
-
-/*    foreach($search as $find)
-    {
-        $file = explode('/', $find);
-        $file = end($file);
-        echo $file;
-        echo '<br/>';
-
-        if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
+        $type = 'bv';
+    
+        $path   = public_path('dispatch/pdfs/'.$type);
+        $search = File::allFiles($path);
+    
+        foreach($search as $filepath)
         {
-            $target = public_path('files').'/uploads/'.$file;
-            File::copy( $find, $target );
+    
+            $file   = explode('_', $filepath);
+            $target = public_path('files/colloques/'.$type.'/'.$type.'_'.$file[1]);
+            File::copy( $filepath, $target );
+    
+            //$part[] = $file[1];
+            $part[] = $target;
+    
         }
-    }*/
+    
+    /*    foreach($search as $find)
+        {
+            $file = explode('/', $find);
+            $file = end($file);
+            echo $file;
+            echo '<br/>';
+    
+            if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
+            {
+                $target = public_path('files').'/uploads/'.$file;
+                File::copy( $find, $target );
+            }
+        }*/
 
     echo '<pre>';
     print_r($part);

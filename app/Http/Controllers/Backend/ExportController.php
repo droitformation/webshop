@@ -99,6 +99,8 @@ class ExportController extends Controller
         // Export adresses
         $exporter = new \App\Droit\Generate\Export\ExportAdresse();
         $exporter->export($adresses);
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'export est en cours']);
     }
 
     public function badges(Request $request)

@@ -214,73 +214,6 @@
         ]
     },
     {
-        "name": "mockery/mockery",
-        "version": "0.9.4",
-        "version_normalized": "0.9.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/padraic/mockery.git",
-            "reference": "70bba85e4aabc9449626651f48b9018ede04f86b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/padraic/mockery/zipball/70bba85e4aabc9449626651f48b9018ede04f86b",
-            "reference": "70bba85e4aabc9449626651f48b9018ede04f86b",
-            "shasum": ""
-        },
-        "require": {
-            "hamcrest/hamcrest-php": "~1.1",
-            "lib-pcre": ">=7.0",
-            "php": ">=5.3.2"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2015-04-02 19:54:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.9.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Mockery": "library/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Pádraic Brady",
-                "email": "padraic.brady@gmail.com",
-                "homepage": "http://blog.astrumfutura.com"
-            },
-            {
-                "name": "Dave Marshall",
-                "email": "dave.marshall@atstsolutions.co.uk",
-                "homepage": "http://davedevelopment.co.uk"
-            }
-        ],
-        "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
-        "homepage": "http://github.com/padraic/mockery",
-        "keywords": [
-            "BDD",
-            "TDD",
-            "library",
-            "mock",
-            "mock objects",
-            "mockery",
-            "stub",
-            "test",
-            "test double",
-            "testing"
-        ]
-    },
-    {
         "name": "fzaninotto/faker",
         "version": "v1.4.0",
         "version_normalized": "1.4.0.0",
@@ -4799,84 +4732,6 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "mathiasverraes/money",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/moneyphp/money.git",
-            "reference": "ffbdc0403e5ebff02e4c3024b67beccb9879c450"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/moneyphp/money/zipball/ffbdc0403e5ebff02e4c3024b67beccb9879c450",
-            "reference": "ffbdc0403e5ebff02e4c3024b67beccb9879c450",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5"
-        },
-        "require-dev": {
-            "cache/taggable-cache": "^0.4.0",
-            "coduo/phpspec-data-provider-extension": "^1.0.3",
-            "ext-bcmath": "*",
-            "ext-gmp": "*",
-            "ext-intl": "*",
-            "florianv/swap": "^2.3",
-            "henrikbjorn/phpspec-code-coverage": "^2.0.2",
-            "phpspec/phpspec": "^2.5",
-            "phpunit/phpunit": "^4.5",
-            "psr/cache": "^1.0",
-            "umpirsky/currency-list": "^1.0"
-        },
-        "suggest": {
-            "ext-bcmath": "Calculate without integer limits",
-            "ext-gmp": "Calculate without integer limits",
-            "ext-intl": "Format Money objects with intl",
-            "florianv/swap": "Exchange rates library for PHP",
-            "psr/cache-implementation": "Used for Currency caching"
-        },
-        "time": "2016-05-03 14:13:20",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Money\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Mathias Verraes",
-                "email": "mathias@verraes.net",
-                "homepage": "http://verraes.net"
-            },
-            {
-                "name": "Frederik Bosch",
-                "email": "f.bosch@genkgo.nl"
-            },
-            {
-                "name": "Márk Sági-Kazár",
-                "email": "mark.sagi-kazar@gmail.com"
-            }
-        ],
-        "description": "PHP implementation of Fowler's Money pattern",
-        "homepage": "http://verraes.net/2011/04/fowler-money-pattern-in-php/",
-        "keywords": [
-            "Value Object",
-            "money",
-            "vo"
-        ]
-    },
-    {
         "name": "laravel/framework",
         "version": "v5.2.32",
         "version_normalized": "5.2.32.0",
@@ -5577,6 +5432,151 @@
             "polyfill",
             "portable",
             "shim"
+        ]
+    },
+    {
+        "name": "mockery/mockery",
+        "version": "0.9.5",
+        "version_normalized": "0.9.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/padraic/mockery.git",
+            "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/padraic/mockery/zipball/4db079511a283e5aba1b3c2fb19037c645e70fc2",
+            "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2",
+            "shasum": ""
+        },
+        "require": {
+            "hamcrest/hamcrest-php": "~1.1",
+            "lib-pcre": ">=7.0",
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2016-05-22 21:52:33",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.9.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Mockery": "library/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Pádraic Brady",
+                "email": "padraic.brady@gmail.com",
+                "homepage": "http://blog.astrumfutura.com"
+            },
+            {
+                "name": "Dave Marshall",
+                "email": "dave.marshall@atstsolutions.co.uk",
+                "homepage": "http://davedevelopment.co.uk"
+            }
+        ],
+        "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
+        "homepage": "http://github.com/padraic/mockery",
+        "keywords": [
+            "BDD",
+            "TDD",
+            "library",
+            "mock",
+            "mock objects",
+            "mockery",
+            "stub",
+            "test",
+            "test double",
+            "testing"
+        ]
+    },
+    {
+        "name": "mathiasverraes/money",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/moneyphp/money.git",
+            "reference": "dc60d3c2a8bc8138a76cda7b5841156f7d8e7508"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/moneyphp/money/zipball/dc60d3c2a8bc8138a76cda7b5841156f7d8e7508",
+            "reference": "dc60d3c2a8bc8138a76cda7b5841156f7d8e7508",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5"
+        },
+        "require-dev": {
+            "cache/taggable-cache": "^0.4.0",
+            "coduo/phpspec-data-provider-extension": "^1.0.3",
+            "ext-bcmath": "*",
+            "ext-gmp": "*",
+            "ext-intl": "*",
+            "florianv/swap": "^2.3",
+            "henrikbjorn/phpspec-code-coverage": "^2.0.2",
+            "phpspec/phpspec": "^2.5",
+            "phpunit/phpunit": "^4.5",
+            "psr/cache": "^1.0",
+            "umpirsky/currency-list": "^1.0"
+        },
+        "suggest": {
+            "ext-bcmath": "Calculate without integer limits",
+            "ext-gmp": "Calculate without integer limits",
+            "ext-intl": "Format Money objects with intl",
+            "florianv/swap": "Exchange rates library for PHP",
+            "psr/cache-implementation": "Used for Currency caching"
+        },
+        "time": "2016-05-23 09:57:12",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Money\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mathias Verraes",
+                "email": "mathias@verraes.net",
+                "homepage": "http://verraes.net"
+            },
+            {
+                "name": "Frederik Bosch",
+                "email": "f.bosch@genkgo.nl"
+            },
+            {
+                "name": "Márk Sági-Kazár",
+                "email": "mark.sagi-kazar@gmail.com"
+            }
+        ],
+        "description": "PHP implementation of Fowler's Money pattern",
+        "homepage": "http://verraes.net/2011/04/fowler-money-pattern-in-php/",
+        "keywords": [
+            "Value Object",
+            "money",
+            "vo"
         ]
     }
 ]
