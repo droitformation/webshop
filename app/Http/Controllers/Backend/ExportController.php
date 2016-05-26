@@ -98,9 +98,24 @@ class ExportController extends Controller
 
         // Export adresses
         $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-        $exporter->export($adresses);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'export est en cours']);
+        $adresses = $exporter->export($adresses);
+
+        $filename = "file.csv";
+        $handle = fopen($filename, 'w+');
+
+        $columns = array_map("utf8_decode", array_values(config('columns.names')));
+
+        fputcsv($handle, $columns, ";",'"');
+
+        foreach($adresses as $row){
+            $row = array_map("utf8_decode", $row);
+            fputcsv($handle, $row, ";",'"');
+        }
+
+        fclose($handle);
+
+        return response()->download($filename, 'export_'.date("d-m-Y H:i").'.csv', ['Content-Type' => 'text/csv']);
     }
 
     public function badges(Request $request)

@@ -24,28 +24,9 @@
       * */
      public function export($adresses)
      {
-         // $converted = $this->prepareAdresse($adresses);
-         $converted = $adresses->chunk(100);
-
-         $path = storage_path('excel/exports/Export_Adresses_'.date('dmy').'.xls');
-
-         // Create file who will hold the data
-         $export = \Excel::create('Export_Adresses_'.date('dmy'), function ($excel) use ($adresses){
-             $excel->sheet('Export_Adresses', function ($sheet) use ($adresses){});
-         })->store('xls', storage_path('excel/exports'));
-
-         // add rows in batches
-         $converted->each(function ($adresses, $key) use ($path) {
-             $this->dispatch(new ExportBatchAdresse($path,$adresses));
-         });
-
-         // Format first row with header
-         $this->dispatch(new ExportAdresses($path));
-
-         if(!$this->store)
-         {
-            // \Excel::load($path, function($reader) {})->download('xls');
-         }
+         $adresses = $this->prepareAdresse($adresses);
+         
+         return $adresses->toArray();
      }
 
      public function prepareAdresse($adresses)
@@ -59,36 +40,4 @@
          });
      }
 
-     public function merge()
-     {
-         $filenames = array(storage_path('exports/one.xlsx'), storage_path('exports/two.xlsx'));
-
-         $bigExcel = new PHPExcel();
-         $bigExcel->removeSheetByIndex(0);
-
-         $reader = \PHPExcel_IOFactory::createReader('Excel5');
-
-         foreach ($filenames as $filename) {
-             $excel = $reader->load($filename);
-
-             foreach ($excel->getAllSheets() as $sheet) {
-                 $bigExcel->addExternalSheet($sheet);
-             }
-
-             foreach ($excel->getNamedRanges() as $namedRange) {
-                 $bigExcel->addNamedRange($namedRange);
-             }
-         }
-
-         $writer = \PHPExcel_IOFactory::createWriter($bigExcel, 'Excel5');
-
-         $file_creation_date = date("Y-m-d");
-
-         // name of file, which needs to be attached during email sending
-         $saving_name = "Report_Name" . $file_creation_date . '.xls';
-
-
-         // save file at some random location
-         $writer->save(storage_path('exports/'.$saving_name));
-     }
  }
