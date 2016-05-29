@@ -734,9 +734,9 @@ Route::get('exporter', function () {
     $adresses = [
        [
            [
-               0 => 'Rachel <strong>MÜLLER RIAT</strong>',
+               0 => '',
                1 => '',
-               2 => '',
+               2 => 'Béatrice <strong>WISEMAN</strong>',
            ],
 
           /* [
