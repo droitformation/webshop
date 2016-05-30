@@ -733,13 +733,7 @@ Route::get('exporter', function () {
 
     $adresses = [
        [
-           [
-               0 => '',
-               1 => '',
-               2 => 'Béatrice <strong>WISEMAN</strong>',
-           ],
-
-          /* [
+          [
                0 => 'Marlyse  <strong>GUINAND</strong>',
                1 => 'Geneviève <strong>ROBERT-GRANDPIERRE</strong>',
                2 => 'Marilyn <strong>DUCOMMUN</strong>',
@@ -756,9 +750,9 @@ Route::get('exporter', function () {
            ],
            [
                0 => 'Alexandre <strong>BRODARD</strong>',
-               1 => '',
-               2 => '',
-           ],*/
+               1 => 'Alexansddre <strong>BRODsv-fewfewfARD</strong>',
+               2 => 'Béatrice <strong>WISEMAN</strong>',
+           ],
        ]
     ];
 
@@ -770,7 +764,7 @@ Route::get('exporter', function () {
     exit;*/
 
 
-    return \PDF::loadView('backend.export.badgenologo', $data)->setPaper('a4')->stream('badges_.pdf');
+    return \PDF::loadView('backend.export.badge', $data)->setPaper('a4')->stream('badges_.pdf');
 
 });
     

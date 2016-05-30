@@ -2,9 +2,6 @@
  namespace App\Droit\Generate\Export;
 
  use Illuminate\Foundation\Bus\DispatchesJobs;
- use App\Jobs\ExportBatchAdresse;
- use App\Jobs\ExportAdresses;
- use PHPExcel;
 
  class ExportAdresse{
 
@@ -25,8 +22,25 @@
      public function export($adresses)
      {
          $adresses = $this->prepareAdresse($adresses);
-         
-         return $adresses->toArray();
+
+         $filename = "file.csv";
+
+         // Open handle
+         $handle   = fopen($filename, 'w+');
+
+         // Add columns names
+         fputcsv($handle, array_map("utf8_decode", array_values(config('columns.names'))), ";",'"');
+
+         // Put all adresses in csv
+         foreach($adresses as $row)
+         {
+             fputcsv($handle, $row->toArray() , ";",'"');
+         }
+
+         // Close handle
+         fclose($handle);
+
+         return $filename;
      }
 
      public function prepareAdresse($adresses)
@@ -35,7 +49,7 @@
 
          return $adresses->map(function ($adresse) use ($columns) {
              return $columns->map(function ($column) use ($adresse){
-                 return $adresse->$column;
+                 return utf8_decode($adresse->$column);
              });
          });
      }

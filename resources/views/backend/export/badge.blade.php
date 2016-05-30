@@ -24,8 +24,8 @@
             span{
                 font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
                 color: #000;
-                line-height: 20px;
-                font-size: 15px;
+                line-height: 16px;
+                font-size: 14px;
                 max-resolution: 0;
                 padding: 0;
                 display: block;
@@ -37,15 +37,24 @@
 
         @if(!empty($data))
             @foreach($data as $table)
-                <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="ddd" style="page-break-after:always;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="page-break-after:always;">
                    @foreach($table as $row)
                         <tr class="normalize">
                         @foreach($row as $name)
                             <td width="{{ $width }}" height="{{ $height }}" class="normalize height">
                                <div style="width: 80%;margin: 0 auto; display: block;text-align: left;">
-                                   <?php $logo = Registry::get('inscription.infos.logo'); ?>
-                                   <img style="max-height: 50px" src="{{ asset('files/main/'.$logo) }}" />
-                                   {!! !empty($name) ? '<span>'.$name.'</span>' : '' !!}
+
+                                   <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                       <tr class="normalize">
+                                           <td width="35%" class="normalize height">
+                                               <img style="max-height: 50px" src="{{ asset('files/main/'.Registry::get('inscription.infos.logo')) }}" />
+                                           </td>
+                                           <td width="65%" class="normalize height">
+                                               {!! !empty($name) ? '<span>'.$name.'</span>' : '' !!}
+                                           </td>
+                                       </tr>
+                                   </table>
+
                                </div>
                             </td>
                             @endforeach
