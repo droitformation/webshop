@@ -818,6 +818,14 @@ label.error{
     background: #f5f5f5;
 }
 
+.list_rappels{
+    margin-top: 20px;
+}
+
+.list_rappels ol{
+    padding-left: 20px;
+}
+
 .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px;  min-height: 20px;padding: 2px 7px;min-width: 25px;}
 .toggle.ios .toggle-handle { border-radius: 20px; }
 .toggle.ios .btn-xs
