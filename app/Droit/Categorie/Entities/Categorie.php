@@ -20,7 +20,7 @@ class Categorie extends Model {
         if ($site) $query->where('site_id','=',$site);
     }
 
-    public function categorie_arrets()
+    public function arrets()
     {
         return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', 'arret_categories', 'categories_id', 'arret_id');
     }

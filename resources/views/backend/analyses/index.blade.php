@@ -40,8 +40,8 @@
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/analyse/'.$analyse->id) }}">éditer</a></td>
                                     <td>
-                                        @if(isset($analyse->analyse_authors))
-                                            @foreach($analyse->analyse_authors as $analyse_authors)
+                                        @if(!$analyse->authors->isEmpty())
+                                            @foreach($analyse->authors as $analyse_authors)
                                                 <p><strong>{{ $analyse_authors->name }}</strong></p>
                                             @endforeach
                                         @endif

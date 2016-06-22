@@ -24,7 +24,9 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByColloque($id, $type = false, $paginate = false)
     {
-        $inscription = $this->inscription->with(['user','user.adresses','price','user_options','colloque.options','colloque.documents'])->where('colloque_id','=',$id);
+        $inscription = $this->inscription
+            ->with(['user','user.adresses','price','user_options','colloque.options','colloque.documents','inscription_groupes.inscriptions','inscription_groupes.colloque'])
+            ->where('colloque_id','=',$id);
 
         if($type)
         {

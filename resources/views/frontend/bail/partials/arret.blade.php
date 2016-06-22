@@ -2,9 +2,9 @@
 <div class="arret <?php echo $cats; ?> clear">
     <div class="row">
         <div class="col-md-3 listCat text-center">
-            @if(!$arret->arrets_categories->isEmpty())
-                @foreach($arret->arrets_categories as $categorie)
-                    <img style="max-width: 140px;" border="0" alt="{{ $categorie->title }}" src="<?php echo asset('files/pictos/bail/'.$categorie->image) ?>">
+            @if(!$arret->categories->isEmpty())
+                @foreach($arret->categories as $categorie)
+                    <img style="max-width: 140px;" border="0" alt="{{ $categorie->title }}" src="<?php echo asset('files/pictos/'.$categorie->image) ?>">
                     <p><small>{{ $categorie->title }}</small></p>
                 @endforeach
             @endif

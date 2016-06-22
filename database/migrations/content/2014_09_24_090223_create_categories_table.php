@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration {
             $table->string('title');
             $table->text('image');
             $table->integer('ismain')->nullable();
-			$table->integer('site_id');
+			$table->integer('site_id')->nullable();
             $table->tinyInteger('hideOnSite')->nullable();
             $table->timestamps();
             $table->softDeletes();

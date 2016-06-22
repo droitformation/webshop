@@ -3,7 +3,7 @@
        data-toggle="toggle"
        data-size="mini"
        data-on="&#10004;"
-       data-off="&#126;"
+       data-off="?"
        data-onstyle="success"
        data-width="25"
        data-height="18"

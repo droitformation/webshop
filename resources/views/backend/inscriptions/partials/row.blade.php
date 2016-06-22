@@ -4,7 +4,7 @@
             <a class="btn btn-sky btn-sm" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}"><i class="fa fa-edit"></i></a>
             @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
 
-            <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#singleInscription_{{ $inscription->id }}"><i class="fa fa-eye"></i></a>
+            <a class="btn btn-sky btn-sm" data-toggle="modal" data-target="#singleInscription_{{ $inscription->id }}"><i class="fa fa-eye"></i></a>
             @include('backend.users.modals.inscription', ['inscription' => $inscription])
 
         @endif

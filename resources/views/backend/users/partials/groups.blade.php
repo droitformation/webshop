@@ -1,34 +1,22 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th class="col-md-5">Colloque</th>
-            <th class="col-md-2">Date</th>
-            <th class="col-md-2">Envoyé le</th>
+            <th class="col-md-4">Colloque</th>
             <th class="col-md-2">Montant</th>
-            <th class="text-right col-md-1">Statut</th>
+            <th class="col-md-3">Payé</th>
         </tr>
     </thead>
     <tbody>
-
         <!-- Group start -->
         @foreach($user->inscription_groupes as $group)
-
-            <?php $group->load('inscriptions','colloque'); ?>
-
             <tr class="mainRow">
                 <td>
-                    <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $group->id }}"><i class="fa fa-arrow-circle-right"></i>{{ $group->colloque->titre }}</a>
-                </td>
-                <td>{{ $group->inscriptions->first()->created_at->formatLocalized('%d %b %Y') }}</td>
-                <td>
-                    @if($group->inscriptions->first()->send_at)
-                        <span class="fa fa-paper-plane"></span> &nbsp;{{ $group->inscriptions->first()->send_at->formatLocalized('%d %b %Y') }}
-                    @endif
+                    <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $group->id }}">
+                        <i class="fa fa-arrow-circle-right"></i>{{ $group->colloque->titre }}
+                    </a>
                 </td>
                 <td>{{ $group->price }} CHF</td>
-                <td class="text-right">
-                    <span class="label label-{{ $group->inscriptions->first()->status_name['color'] }}">{{ $group->inscriptions->first()->status_name['status'] }}</span>
-                </td>
+                <td>@include('backend.inscriptions.partials.payed',['model' => 'group', 'item' => $group, 'inscription' => $group->inscriptions->first()])</td>
             </tr>
 
             <!-- Inscription details -->
@@ -36,7 +24,6 @@
                 <td colspan="6" class="nopadding">
                     <div class="collapse customCollapse" id="inscription_no_{{ $group->id }}">
                         <div class="inscription_wrapper inscription_wrapper_group">
-
                             <!-- Inscription dependences -->
                             <table class="table-inscriptions">
                                 <thead>
@@ -55,50 +42,7 @@
 
                                         <?php $inscription->load('colloque','rappels'); ?>
 
-                                        <tr class="row">
-                                            <td class="col-md-1">
-                                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                            </td>
-                                            <td class="col-md-2">
-                                                <p>
-                                                    <strong>{{ $inscription->inscription_no }}</strong>&nbsp;
-                                                    @if($inscription->occurrences->isEmpty())
-                                                        @include('backend.partials.toggle', ['id' => $inscription->id])
-                                                    @endif
-                                                </p>
-
-                                                @if(!$inscription->occurrences->isEmpty())
-                                                    @foreach($inscription->occurrences as $occurrence)
-                                                        <small style="display: block;">
-                                                            Le {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}&nbsp;
-                                                            @include('backend.partials.toggle', ['id' => $inscription->id, 'inscription' => $occurrence->pivot])
-                                                        </small>
-                                                    @endforeach
-                                                @endif
-                                            </td>
-                                            <td class="col-md-2"><p><strong>{{ $inscription->participant->name }}</strong></p></td>
-                                            <td class="col-md-2">{{ $inscription->price_cents }} CHF</td>
-                                            <td class="col-md-1">
-                                                @if($inscription->doc_bon)
-                                                    <a target="_blank" href="{{ asset($inscription->doc_bon) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
-                                                @endif
-                                            </td>
-                                            <td class="col-md-4">
-                                                <!-- Occurences -->
-                                                @if(!$inscription->occurrences->isEmpty())
-                                                    <h4>Conférences</h4>
-                                                    <ol>
-                                                        @foreach($inscription->occurrences as $occurrences)
-                                                            <li>{{ $occurrences->title }}</li>
-                                                        @endforeach
-                                                    </ol>
-                                                @endif
-
-                                                @include('backend.users.inscription.options')
-                                            </td>
-                                        </tr>
+                                        @include('backend.users.partials.single-group', ['inscription' => $inscription])
 
                                         <!-- Modal edit inscription -->
                                         @include('backend.users.modals.edit', ['inscription' => $inscription])
@@ -110,29 +54,8 @@
                             </table>
 
                             <!-- Inscription updates buttons -->
-                            <div class="row" style="margin-bottom: 10px;">
-                                <div class="col-md-2 line-spacer">
-                                    @if($group->doc_facture)
-                                        <a target="_blank" href="{{ asset($group->doc_facture) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Facture</a>
-                                    @endif
-                                    @if($group->doc_bv)
-                                        <a target="_blank" href="{{ asset($group->doc_bv) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;BV</a>
-                                    @endif
-                                </div>
-                                <div class="col-md-7 line-spacer">
-                                    <div class="btn-group">
-                                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#editGroup_{{ $group->id }}">Changer le détenteur</a>
-                                        <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#addToGroup_{{ $group->id }}">Ajouter un participant</a>
-                                        @if(!empty($group->colloque->annexe))
-                                            <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-md-3 line-spacer text-right">
-                                    <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscriptionGroup_{{ $group->id }}">Envoyer l'inscription</button>
-                                </div>
-                            </div>
 
+                            @include('backend.users.partials.group-menu')
                             <!-- END Inscription updates buttons -->
 
                             <!-- Modals add to and edit group -->

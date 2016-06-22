@@ -35,10 +35,19 @@ h3, .h3{
     overflow: hidden;
 }
 
+.inscription_wrapper{
+    padding-bottom: 10px;
+}
+
 .inscription_wrapper table tr td{
     line-height: 18px;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.inscription_wrapper h4{
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .inscription_wrapper p{
@@ -704,13 +713,14 @@ select[multiple] {
     margin: 5px 0;
 }
 
-.line-spacer:before{
-    border-bottom: 1px solid #e6e7e8;
-    content: "";
+.line-spacer{
+    border-top: 1px solid #e6e7e8;
     display: block;
-    height: 1px;
-    margin-bottom: 20px;
-    padding: 10px 0;
+    margin: 20px 0;
+}
+
+.line-spacer div:last-child{
+    margin-top: 10px;
 }
 
 .table{
@@ -775,7 +785,7 @@ select[multiple] {
 
 .inscription_wrapper.inscription_wrapper_group .table-inscriptions th{
     margin-top: 0;
-    background: #f7f8fa;
+    background: #eeeeee;
 }
 
 .pay-inscription{

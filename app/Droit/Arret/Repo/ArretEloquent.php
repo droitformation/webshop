@@ -14,7 +14,7 @@ class ArretEloquent implements ArretInterface{
 
     public function getAll($site = null)
     {
-        return $this->arret->with(['arrets_categories','arrets_analyses'])->site($site)->orderBy('reference', 'ASC')->get();
+        return $this->arret->with(['categories','analyses'])->site($site)->orderBy('reference', 'ASC')->get();
     }
 
     public function getCount($site = null)
@@ -24,7 +24,7 @@ class ArretEloquent implements ArretInterface{
 
     public function getLast($nbr,$site)
     {
-        return $this->arret->with(['arrets_categories','arrets_analyses'])->site($site)->orderBy('id', 'ASC')->take(5)->get();
+        return $this->arret->with(['categories','analyses'])->site($site)->orderBy('id', 'ASC')->take(5)->get();
     }
 
     public function annees($site)
@@ -42,7 +42,7 @@ class ArretEloquent implements ArretInterface{
 
     public function getAllActives($include = [], $site = null)
     {
-        $arrets = $this->arret->where('site_id','=',$site)->with( array('arrets_categories','arrets_analyses'));
+        $arrets = $this->arret->where('site_id','=',$site)->with(['categories','analyses']);
 
         if(!empty($include))
         {
@@ -54,20 +54,18 @@ class ArretEloquent implements ArretInterface{
 
     public function getPaginate($nbr)
     {
-        return $this->arret->with( array('arrets_categories','arrets_analyses'))->orderBy('pub_date', 'DESC')->paginate($nbr);
+        return $this->arret->with(['categories','analyses'])->orderBy('pub_date', 'DESC')->paginate($nbr);
     }
 
     public function getLatest($include = []){
 
         if(!empty($include))
         {
-            $arrets = $this->arret
-                ->whereIn('id', $include)
-                ->with( array('arrets_analyses'))->orderBy('id', 'ASC')->get();
+            $arrets = $this->arret->whereIn('id', $include)->with(['analyses'])->orderBy('id', 'ASC')->get();
 
             $new = $arrets->filter(function($item)
             {
-                if (!$item->arrets_analyses->isEmpty()) {
+                if (!$item->analyses->isEmpty()) {
                     return true;
                 }
             });
@@ -82,10 +80,10 @@ class ArretEloquent implements ArretInterface{
 
         if(is_array($id))
         {
-            return $this->arret->trashed($trashed)->whereIn('id', $id)->with(['arrets_categories','arrets_analyses'])->get();
+            return $this->arret->trashed($trashed)->whereIn('id', $id)->with(['categories','analyses'])->get();
         }
 
-		return $this->arret->with(['arrets_categories','arrets_analyses'])->where('id','=',$id)->trashed($trashed)->get()->first();
+		return $this->arret->with(['categories','analyses'])->where('id','=',$id)->trashed($trashed)->get()->first();
 	}
 
     public function findyByImage($file){
@@ -102,7 +100,6 @@ class ArretEloquent implements ArretInterface{
             'pub_date'   => $data['pub_date'],
             'abstract'   => $data['abstract'],
             'pub_text'   => $data['pub_text'],
-            'categories' => (isset($data['categories']) ? count($data['categories']) : 0),
             'file'       => $data['file'],
             'dumois'     => (isset($data['dumois']) && $data['dumois'] == 1 ? 1 : 0),
 			'created_at' => date('Y-m-d G:i:s'),
@@ -117,7 +114,7 @@ class ArretEloquent implements ArretInterface{
         // Insert related categories
         if(isset($data['categories']))
         {
-            $arret->arrets_categories()->sync($data['categories']);
+            $arret->categories()->sync($data['categories']);
         }
 
 		return $arret;
@@ -140,17 +137,15 @@ class ArretEloquent implements ArretInterface{
             $arret->file = $data['file'];
         }
 
-        // Insert related categories
-        if(isset($data['categories']))
-        {
-            $arret->categories = count($data['categories']);
-            // Insert related categories
-            $arret->arrets_categories()->sync($data['categories']);
-        }
-
 		$arret->updated_at = date('Y-m-d G:i:s');
 
 		$arret->save();
+
+        // Insert related categories
+        if(isset($data['categories']))
+        {
+            $arret->categories()->sync($data['categories']);
+        }
 		
 		return $arret;
 	}

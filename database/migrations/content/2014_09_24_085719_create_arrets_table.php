@@ -16,14 +16,13 @@ class CreateArretsTable extends Migration {
 		{
 
             $table->increments('id')->unsigned();
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
+			$table->integer('site_id')->nullable();
             $table->string('reference');
             $table->dateTime('pub_date');
             $table->text('abstract')->nullable();
             $table->text('pub_text')->nullable();
             $table->text('file')->nullable();
-            $table->integer('categories')->nullable();
-            $table->text('analysis')->nullable();
             $table->boolean('dumois')->default(0);
 			$table->timestamps();
             $table->softDeletes();

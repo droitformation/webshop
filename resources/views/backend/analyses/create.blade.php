@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Tire auteurs</label>
                     <div class="col-sm-3">
-                        {!! Form::text('authors', null , array('class' => 'form-control') ) !!}
+                        {!! Form::text('author', null , array('class' => 'form-control') ) !!}
                     </div>
                 </div>
 

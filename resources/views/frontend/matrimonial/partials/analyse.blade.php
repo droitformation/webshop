@@ -11,16 +11,16 @@
                         <div class="post">
                             <div class="post-title">
                                 <a class="anchor_top" name="analyse_{{ $analyse->id }}"></a>
-                                <h3 class="title">Analyse de {{ $analyse->authors }}
-                                    @if(isset($analyse->analyse_authors))
-                                        <?php $authors = $analyse->analyse_authors->pluck('name')->toArray(); ?>
+                                <h3 class="title">Analyse de {{ $analyse->authors->implode('name', ', ') }}
+                                    @if(isset($analyse->authors))
+                                        <?php $authors = $analyse->authors->pluck('name')->toArray(); ?>
                                         <?php echo (!empty($authors) ? implode(',',$authors) : ''); ?>
                                     @endif
                                 </h3>
 
-                                @if(!$analyse->analyses_arrets->isEmpty())
+                                @if(!$analyse->arrets->isEmpty())
                                     <ul>
-                                        @foreach($analyse->analyses_arrets as $arret)
+                                        @foreach($analyse->arrets as $arret)
                                             <li>
                                                 <a href="#{{ $arret->reference }}">{{ $arret->reference.' du '.$arret->pub_date->formatLocalized('%d %B %Y') }}</a>
                                             </li>

@@ -29,7 +29,7 @@ class CategorieEloquent implements CategorieInterface{
 
     public function find($id){
 
-        return $this->categorie->with(array('categorie_arrets'))->findOrFail($id);
+        return $this->categorie->with(['arrets'])->findOrFail($id);
     }
 
     public function findyByImage($file){

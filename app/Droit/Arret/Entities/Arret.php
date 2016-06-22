@@ -7,7 +7,7 @@ class Arret extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['site_id','user_id','reference','pub_date','abstract','pub_text','file','categories'];
+	protected $fillable = ['site_id','user_id','reference','pub_date','abstract','pub_text','file'];
     protected $dates    = ['pub_date'];
 
     /**
@@ -25,12 +25,12 @@ class Arret extends Model {
         if ($trashed) $query->withTrashed();
     }
 
-    public function arrets_categories()
+    public function categories()
     {
         return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
-    public function arrets_analyses()
+    public function analyses()
     {
         return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyses_arret', 'arret_id', 'analyse_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }

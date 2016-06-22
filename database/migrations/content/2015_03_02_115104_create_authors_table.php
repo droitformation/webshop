@@ -16,7 +16,7 @@ class CreateAuthorsTable extends Migration {
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->text('occupation');
+            $table->text('occupation')->nullable();
             $table->text('bio')->nullable();
             $table->string('photo')->nullable();
             $table->integer('rang')->nullable();

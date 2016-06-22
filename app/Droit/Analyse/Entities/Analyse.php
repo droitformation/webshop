@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Analyse extends Model {
 
     protected $table    = 'analyses';
-    protected $fillable = ['user_id','authors','pub_date','abstract','file','categories','arrets','site_id','title'];
+    protected $fillable = ['user_id','author','pub_date','abstract','file','site_id','title'];
     protected $dates    = ['pub_date','created_at','updated_at'];
 
     /**
@@ -18,17 +18,17 @@ class Analyse extends Model {
         if ($site) $query->where('site_id','=',$site);
     }
 
-    public function analyses_categories()
+    public function categories()
     {
         return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'analyse_categories', 'analyse_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
     
-	public function analyses_arrets()
+	public function arrets()
     {     
         return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', 'analyses_arret', 'analyse_id', 'arret_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
-    public function analyse_authors()
+    public function authors()
     {
         return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'analyse_authors', 'analyse_id', 'author_id')->withPivot('sorting')->orderBy('last_name', 'asc');
     }

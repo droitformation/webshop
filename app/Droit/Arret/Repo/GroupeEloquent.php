@@ -6,10 +6,7 @@ use App\Droit\Arret\Entities\Groupe as M;
 class GroupeEloquent implements GroupeInterface{
 
 	protected $groupe;
-
-	/**
-	 * Construct a new SentryUser Object
-	 */
+	
 	public function __construct(M $groupe)
 	{
 		$this->groupe = $groupe;
@@ -17,12 +14,12 @@ class GroupeEloquent implements GroupeInterface{
 
     public function getAll(){
 
-        return $this->groupe->with(array('arrets_groupes'))->get();
+        return $this->groupe->with(['groupes'])->get();
     }
 
 	public function find($id){
 				
-		return $this->groupe->where('id', '=' ,$id)->with(array('arrets_groupes'))->get()->first();
+		return $this->groupe->where('id', '=' ,$id)->with(['groupes'])->get()->first();
 	}
 
     public function findAll($ids)

@@ -82,9 +82,9 @@ class JurisprudenceWorker{
             $arret->setAttribute('parsedText',$arret->pub_text);
 
             // categories for isotope
-            if(!$arret->arrets_categories->isEmpty())
+            if(!$arret->categories->isEmpty())
             {
-                foreach($arret->arrets_categories as $cat){ $cats[] = 'c'.$cat->id; }
+                foreach($arret->categories as $cat){ $cats[] = 'c'.$cat->id; }
 
                 $cats[]  = 'y'.$arret->pub_date->year;
                 $arret->setAttribute('allcats',$cats);
@@ -120,9 +120,9 @@ class JurisprudenceWorker{
         $prepared = $analyses->filter(function($analyse)
         {
             // categories for isotope
-            if(!$analyse->analyses_categories->isEmpty())
+            if(!$analyse->categories->isEmpty())
             {
-                foreach($analyse->analyses_categories as $cat){ $cats[] = 'c'.$cat->id; }
+                foreach($analyse->categories as $cat){ $cats[] = 'c'.$cat->id; }
 
                 $cats[]  = 'y'.$analyse->pub_date->year;
                 $analyse->setAttribute('allcats',$cats);
