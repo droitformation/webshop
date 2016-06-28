@@ -95,15 +95,16 @@
 
         <li class="nav-title">Envois</li>
 
-        <li class="<?php echo (Request::is('admin/newsletter/*') || Request::is('admin/campagne/*') || Request::is('admin/subscriber/*') ? 'active' : '' ); ?>">
+        <li class="<?php echo (Request::is('build/newsletter/*') || Request::is('build/campagne/*') || Request::is('build/subscriber/*') ? 'active' : '' ); ?>">
             <a href="javascript:;"><i class="fa fa-envelope"></i><span>Newsletters</span></a>
             <ul class="acc-menu">
-                <li class="<?php echo (Request::is('admin/newsletter/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/newsletter')  }}">Liste des campagnes</a></li>
-                <li class="<?php echo (Request::is('admin/subscriber/*') ? 'active' : '' ); ?>"><a href="{{ url('admin/subscriber')  }}">Abonnés</a></li>
-                <li class="<?php echo (Request::is('admin/import') ? 'active' : '' ); ?>"><a href="{{ url('admin/import')  }}">Importer une liste</a></li>
-                <li class="<?php echo (Request::is('admin/liste') ? 'active' : '' ); ?>"><a href="{{ url('admin/liste')  }}">Liste hors campagnes</a></li>
+                <li class="<?php echo (Request::is('build/newsletter/*') ? 'active' : '' ); ?>"><a href="{{ url('build/newsletter')  }}">Liste des campagnes</a></li>
+                <li class="<?php echo (Request::is('build/subscriber/*') ? 'active' : '' ); ?>"><a href="{{ url('build/subscriber')  }}">Abonnés</a></li>
+                <li class="<?php echo (Request::is('build/import') ? 'active' : '' ); ?>"><a href="{{ url('build/import')  }}">Importer une liste</a></li>
+                <li class="<?php echo (Request::is('build/liste') ? 'active' : '' ); ?>"><a href="{{ url('build/liste')  }}">Liste hors campagnes</a></li>
             </ul>
         </li>
+
     </ul>
     <!-- END SIDEBAR MENU -->
 </nav>

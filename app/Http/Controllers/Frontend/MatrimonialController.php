@@ -15,10 +15,6 @@ use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Arret\Worker\JurisprudenceWorker;
 
-use App\Droit\Newsletter\Repo\NewsletterInterface;
-use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
-use App\Droit\Newsletter\Worker\CampagneInterface;
-
 class MatrimonialController extends Controller
 {
     protected $arret;
@@ -29,10 +25,6 @@ class MatrimonialController extends Controller
     protected $site_id;
     protected $site;
 
-    protected $newsletter;
-    protected $campagne;
-    protected $worker;
-
     public function __construct(
         ArretInterface $arret,
         CategorieInterface $categorie,
@@ -40,10 +32,7 @@ class MatrimonialController extends Controller
         AuthorInterface $author,
         JurisprudenceWorker $jurisprudence,
         PageInterface $page,
-        SiteInterface $site,
-        NewsletterInterface $newsletter,
-        NewsletterCampagneInterface $campagne,
-        CampagneInterface $worker
+        SiteInterface $site
     )
     {
         $this->site_id  = 3;
@@ -62,13 +51,10 @@ class MatrimonialController extends Controller
 
         $sites = $this->site->find(3);
 
-        $this->campagne   = $campagne;
-        $this->worker     = $worker;
-        $this->newsletter = $newsletter;
+        $newsworker  = \App::make('newsworker');
+        $newsletters = $newsworker->siteNewsletter(2);
 
-        $newsletters = $this->newsletter->getAll(3);
-
-        view()->share('newsletters',$newsletters->first()->campagnes->pluck('sujet','id') );
+        view()->share('newsletters',$newsletters);
         view()->share('menus',$sites->menus);
         view()->share('site',$sites);
         view()->share('years',$years);
@@ -108,23 +94,6 @@ class MatrimonialController extends Controller
 
         if($slug == 'newsletter')
         {
-            if($var)
-            {
-                $data['campagne'] = $this->campagne->find($var);
-                $data['content']  = $this->worker->prepareCampagne($var);
-            }
-            else
-            {
-                $newsletters = $this->newsletter->getAll($this->site_id)->first();
-                if(!$newsletters->campagnes->isEmpty())
-                {
-                    $data['campagne'] = $newsletters->campagnes->first();
-                    $data['content']  = $this->worker->prepareCampagne($newsletters->campagnes->first()->id);
-                }
-            }
-
-            $data['categories']    = $this->worker->getCategoriesArrets();
-            $data['imgcategories'] = $this->worker->getCategoriesImagesArrets();
 
         }
 

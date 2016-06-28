@@ -40,13 +40,13 @@ class ArretEloquent implements ArretInterface{
         return array_reverse(array_keys($grouped->toArray()));
     }
 
-    public function getAllActives($include = [], $site = null)
+    public function getAllActives($exclude = [], $site = null)
     {
         $arrets = $this->arret->where('site_id','=',$site)->with(['categories','analyses']);
 
-        if(!empty($include))
+        if(!empty($exclude))
         {
-            $arrets->whereIn('id', $include);
+            $arrets->whereNotIn('id', $exclude);
         }
 
         return $arrets->orderBy('reference', 'ASC')->get();
@@ -57,11 +57,11 @@ class ArretEloquent implements ArretInterface{
         return $this->arret->with(['categories','analyses'])->orderBy('pub_date', 'DESC')->paginate($nbr);
     }
 
-    public function getLatest($include = []){
+    public function getLatest($exclude = []){
 
-        if(!empty($include))
+        if(!empty($exclude))
         {
-            $arrets = $this->arret->whereIn('id', $include)->with(['analyses'])->orderBy('id', 'ASC')->get();
+            $arrets = $this->arret->whereNotIn('id', $exclude)->with(['analyses'])->orderBy('id', 'ASC')->get();
 
             $new = $arrets->filter(function($item)
             {

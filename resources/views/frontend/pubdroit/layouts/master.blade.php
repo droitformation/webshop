@@ -146,7 +146,11 @@
 							<h4>Newsletter</h4>
 							<p>Inscrivez simplement votre adresse email pour recevoir les nouveautés du site </p>
 
-							@include('frontend.partials.subscribe', ['newsletter_id' => $newsletter_id])
+							@inject('newsworker', 'newsworker')
+							<?php $newsletters = $newsworker->siteNewsletter($site->id); ?>
+							@foreach($newsletters as $newsletter)
+								@include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter])
+							@endforeach
 
 						</figure>
 						<figure class="col-md-1"></figure>

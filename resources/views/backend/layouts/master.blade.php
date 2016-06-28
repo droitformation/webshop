@@ -18,26 +18,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
-    @if(isset($isNewsletter))
-        <link rel="stylesheet" href="<?php echo asset('newsletter/css/backend/newsletter.css'); ?>">
-        <link rel="stylesheet" href="<?php echo asset('newsletter/css/frontend/newsletter.css'); ?>">
-
-        @if(isset($infos))
-            <style type="text/css">
-                #StyleNewsletter h2, #StyleNewsletterCreate h2{
-                    color: {{ $infos->newsletter->color }};
-                }
-                #StyleNewsletter .contentForm h3,
-                #StyleNewsletterCreate .contentForm h3
-                {
-                    color: {{ $infos->newsletter->color }};
-                }
-            </style>
-        @endif
-
-    @endif
-
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/vendor/redactor/redactor.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/redactor/redactor.css'); ?>">
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/chosen-bootstrap.css');?>">
@@ -51,6 +32,11 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dragdrop.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/colloque/inscription.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/types.css');?>">
+
+    @if(isset($isNewsletter))
+        @include('newsletter::Style.main', ['campagne' => isset($campagne) ? : null])
+        @include('newsletter::Style.redactor')
+    @endif
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <base href="/">
@@ -120,7 +106,6 @@
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
 <script src="<?php echo asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>
 
@@ -138,11 +123,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.nicescroll.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/layouts/application.js');?>"></script>
 
-<!-- redactor -->
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/redactor.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/fr.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/imagemanager.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/redactor/filemanager.js');?>"></script>
+@include('backend.scripts.redactor')
 
 <!-- Form plugins -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
@@ -169,6 +150,11 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('js/colloque/inscription.js');?>"></script>
 
+@if(isset($isNewsletter))
+    @include('newsletter::Script.angular')
+    @include('newsletter::Script.main')
+@endif
+
 <script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragula.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/dragdrop/dragdrop.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
@@ -185,9 +171,6 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/blocs.js');?>"></script>
 
-@if(isset($isNewsletter))
-    @include('backend.newsletter.scripts')
-@endif
 
 </body>
 </html>

@@ -25,12 +25,8 @@ class PubdroitComposer
     {
         $sites = $this->site->find(1);
 
-        // Get first newsletter
-        $newsletter = $sites->newsletter->first()->id;
-
         $view->with('menus', $sites->menus);
         $view->with('site',  $sites);
-        $view->with('newsletter_id', $newsletter);
 
     }
 }

@@ -81,7 +81,7 @@
                             @foreach($menu->pages as $page)
 
                                 @if($page->template == 'newsletter')
-                                    @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters])
+                                    @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters->first()->campagnes->pluck('sujet','id')])
 
                                 @elseif($page->template == 'revue')
                                     @include('frontend.partials.list', ['page' => $page, 'lists' => $revues])
@@ -165,16 +165,13 @@
             <!-- Bloc inscription newsletter -->
             <h5 class="color-bloc">Inscription à la newsletter</h5>
             <div class="sidebar-bloc">
-                <form method="post" action="{{ url('bail/subscribe') }}">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="list_id" value="2">
-                    <div class="input-group">
-                        <input name="email" type="email" class="form-control" placeholder="Votre adresse email">
-                        <span class="input-group-btn">
-                            <button class="btn btn-danger" type="submit">Inscription</button>
-                        </span>
-                    </div>
-                </form>
+
+                @inject('newsworker', 'newsworker')
+                <?php $newsletters = $newsworker->siteNewsletter($site->id); ?>
+                @foreach($newsletters as $newsletter)
+                    @include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter])
+                @endforeach
+
             </div>
 
         </div><!-- End main sidebar -->

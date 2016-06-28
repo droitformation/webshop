@@ -31,13 +31,15 @@ Route::group(['middleware' => ['web']], function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::post('unsubscribe', 'Frontend\SubscribeController@unsubscribe');
-    Route::post('subscribe',   'Frontend\SubscribeController@subscribe');
-    Route::get('activation/{token}', 'Frontend\SubscribeController@activation');
-    Route::get('campagne/{id}', 'Frontend\CampagneController@show');
+
 
     /* Routes to implement  */
     /*
+     *
+     *  Route::post('unsubscribe', 'Frontend\SubscribeController@unsubscribe');
+        Route::post('subscribe',   'Frontend\SubscribeController@subscribe');
+        Route::get('activation/{token}', 'Frontend\SubscribeController@activation');
+        Route::get('campagne/{id}', 'Frontend\CampagneController@show');
         Route::get('campagne/{id}', 'Frontend\CampagneController@show');
         Route::get('newsletter', 'Frontend\NewsletterController@index');
         Route::resource('newsletter', 'Frontend\NewsletterController');
@@ -130,7 +132,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
     Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
-
     /* *
     * Administration routes
     * */
@@ -162,6 +163,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::resource('calculette/ipc', 'Backend\Bail\CalculetteIpcController');
         Route::resource('calculette/taux', 'Backend\Bail\CalculetteTauxController');
+
         /*
         |--------------------------------------------------------------------------
         | User and Adresse Backend Routes
@@ -175,6 +177,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
         Route::resource('duplicate', 'Backend\User\DuplicateController');
+
         /*
         |--------------------------------------------------------------------------
         | Ajax specialisations Routes
@@ -390,15 +393,14 @@ Route::group(['middleware' => ['web']], function () {
         |--------------------------------------------------------------------------
         */
 
-        Route::post('sorting', 'Backend\Newsletter\CampagneController@sorting');
-        Route::post('sortingGroup', 'Backend\Newsletter\CampagneController@sortingGroup');
-
         Route::get('ajax/arret/{id}',   'Backend\Content\ArretController@simple');
         Route::get('ajax/arrets/{id?}', 'Backend\Content\ArretController@arrets');
         Route::get('ajax/analyses/{id}','Backend\Content\AnalyseController@simple');
-        Route::get('ajax/categories',   'Backend\Content\CategorieController@categories');
+        Route::get('ajax/categories/{id?}',   'Backend\Content\CategorieController@categories');
         Route::post('ajax/categorie/arrets','Backend\Content\CategorieController@arrets');
 
+/*        Route::post('sorting', 'Backend\Newsletter\CampagneController@sorting');
+        Route::post('sortingGroup', 'Backend\Newsletter\CampagneController@sortingGroup');
         Route::resource('newsletter', 'Backend\Newsletter\NewsletterController');
 
         Route::post('campagne/send', 'Backend\Newsletter\CampagneController@send');
@@ -418,7 +420,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('liste', 'Backend\Newsletter\ListController');
         Route::resource('emails', 'Backend\Newsletter\EmailController');
         Route::resource('import', 'Backend\Newsletter\ImportController');
-        Route::resource('statistics', 'Backend\Newsletter\StatsController');
+        Route::resource('statistics', 'Backend\Newsletter\StatsController');*/
 
     });
 

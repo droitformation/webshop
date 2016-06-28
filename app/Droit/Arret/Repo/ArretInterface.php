@@ -6,9 +6,9 @@ interface ArretInterface {
     public function getCount($site = null);
     public function getLast($nbr,$site);
     public function annees($site);
-    public function getAllActives($include = [], $site = null);
+    public function getAllActives($exclude = [], $site = null);
     public function getPaginate($nbr);
-    public function getLatest($include = []);
+    public function getLatest($exclude = []);
     public function find($id, $trashed = null);
     public function findyByImage($file);
 	public function create(array $data);

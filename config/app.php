@@ -160,6 +160,7 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+		designpond\newsletter\newsletterServiceProvider::class,
 		/*
 		 * Application Service Providers...
 		 */
@@ -169,7 +170,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ContentServiceProvider::class,
-        App\Providers\NewsletterServiceProvider::class,
+        //App\Providers\NewsletterServiceProvider::class,
         App\Providers\ShopServiceProvider::class,
         App\Providers\ColloqueServiceProvider::class,
         App\Providers\CalculetteServiceProvider::class,
@@ -235,6 +236,7 @@ return [
         'QrCode'     => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Registry'   => Torann\Registry\Facades\Registry::class,
         'Socialite'  => Laravel\Socialite\Facades\Socialite::class,
+		'Campagne'   => designpond\newsletter\Facade\Campagne::class
 	],
 
 ];

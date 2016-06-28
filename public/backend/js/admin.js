@@ -6,28 +6,7 @@ $( function() {
         html : true,
         trigger : 'hover'
     });
-
-    $('.redactor').redactor({
-        minHeight  : 250,
-        maxHeight: 450,
-        focus: true,
-        lang: 'fr',
-        plugins: ['advanced','imagemanager','filemanager'],
-        fileUpload : 'admin/uploadFileRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-        imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-        imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
-        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
-        buttons    : ['html','|','formatting','bold','italic','|','unorderedlist','orderedlist','outdent','indent','|','image','file','link','alignment']
-    });
-
-    $('.redactorSimple').redactor({
-        minHeight: 50,
-        maxHeight: 270,
-        focus    : true,
-        lang: 'fr',
-        buttons  : ['formatting','bold','italic','link','|','unorderedlist']
-    });
-
+    
     $.fn.datepicker.dates['fr'] = {
         days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
         daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],

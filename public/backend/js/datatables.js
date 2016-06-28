@@ -108,7 +108,7 @@ $(document).ready(function() {
         }
     });
 
-    var table = $('.abonnes_table').DataTable({
+/*    var table = $('.abonnes_table').DataTable({
         "serverSide": true,
         "ajax": {
             "url": "admin/subscribers"
@@ -122,7 +122,7 @@ $(document).ready(function() {
             {data: 'delete'}
         ],
         language: langues
-    });
+    });*/
 
     var table = $('.users_table').DataTable({
         "serverSide": true,

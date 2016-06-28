@@ -119,9 +119,9 @@ class CategorieController extends Controller {
      *
      * @return response
      */
-    public function categories()
+    public function categories($site = null)
     {
-        $categories = $this->categorie->getAll();
+        $categories = $this->categorie->getAll($site);
 
         return response()->json( $categories, 200 );
     }

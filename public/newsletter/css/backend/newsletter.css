@@ -17,6 +17,7 @@
     width: 600px;
     padding:0 20px;
     background: #fff;
+    border: 1px solid #f5f5f5;
 }
 
 .component-menu{
@@ -361,7 +362,7 @@ div#fieldChooser,div#fieldChooser2 {
  * otherwise you can't drop to it once it's empty
  */
 .listArrets.forArrets ul[dnd-list] {
-    width: 250px;
+    width: 280px;
 }
 
 .listArrets.forArrets ul[dnd-list]:first-child {
@@ -398,7 +399,8 @@ div#fieldChooser,div#fieldChooser2 {
  */
 .listArrets ul[dnd-list] li {
     width: 100%;
-    height: 28px;
+    height: auto;
+    line-height: 18px;
     padding: 5px;
     cursor: pointer;
     box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);
@@ -421,4 +423,34 @@ div#fieldChooser,div#fieldChooser2 {
 
 .errorUpload{
     text-align: center !important;
+}
+
+.dataTables_filter{
+    float: right;
+}
+
+.dataTables_filter input{
+    margin-left: 5px;
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .row{
+    margin-right: 0;
+}
+
+.ui-state-highlight{
+    height:40px;
+    display: block;
+}
+
+#messageAlert{
+    display: none;
+}
+
+.campagne_brouillon td{
+    background: #f5f5f5;
+}
+
+.campagne_send td{
+
 }

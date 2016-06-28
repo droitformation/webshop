@@ -11,11 +11,6 @@ class Site extends Model{
     protected $table    = 'sites';
     protected $fillable = ['nom','url','logo','slug'];
 
-    public function newsletter()
-    {
-        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter');
-    }
-
     public function menus()
     {
         return $this->hasMany('App\Droit\Menu\Entities\Menu');

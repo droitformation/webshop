@@ -3,7 +3,6 @@
 use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Arret\Repo\ArretInterface;
 use App\Droit\Analyse\Repo\AnalyseInterface;
-use App\Droit\Newsletter\Worker\CampagneInterface;
 use App\Droit\Helper\Helper;
 
 class JurisprudenceWorker{
@@ -12,17 +11,17 @@ class JurisprudenceWorker{
     protected $arret;
     protected $analyse;
     protected $custom;
-    protected $campagne;
+    protected $newsworker;
 
     /* Inject dependencies */
-    public function __construct(CategorieInterface $categories, ArretInterface $arret, AnalyseInterface $analyse, CampagneInterface $campagne)
+    public function __construct(CategorieInterface $categories, ArretInterface $arret, AnalyseInterface $analyse)
     {
         $this->categories = $categories;
-        $this->campagne   = $campagne;
         $this->arret      = $arret;
         $this->analyse    = $analyse;
         $this->custom     = new \App\Droit\Helper\Helper();
-
+        $newsworker       = \App::make('newsworker');
+        
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
@@ -33,37 +32,24 @@ class JurisprudenceWorker{
      */
     public function preparedAnnees()
     {
-        $include  = $this->showArrets();
-        $arrets   = $this->arret->getAllActives($include);
-        $prepared = $arrets->lists('pub_date');
+        $exclude  = $this->newsworker->arretsToHide();
+        $arrets   = $this->arret->getAllActives($exclude);
 
-        foreach($prepared as $arret)
-        {
-            $years[] = $arret->year;
-        }
-
-        return array_reverse(array_unique(array_values($years)));
-
-    }
-
-    public function showArrets(){
-
-        $arrets = $this->campagne->getSentCampagneArrets();
-
-        return ($arrets ? $arrets : []);
+        return $arrets->groupBy(function ($archive, $key) {
+            return $archive->pub_date->year;
+        })->keys();
     }
 
     public function showAnalyses(){
 
-        $arrets = $this->showArrets();
-        $analyses = false;
+        $exclude  = $this->newsworker->arretsToHide();
 
-        if(!empty($arrets))
+        if(!empty($exclude))
         {
-            $analyses = \DB::table('analyses_arret')->whereIn('arret_id', $arrets)->lists('analyse_id');
+            $analyses = \DB::table('analyses_arret')->whereNotIn('arret_id', $exclude)->lists('analyse_id');
         }
 
-        return ($analyses ? $analyses : []);
+        return (isset($analyses) ? $analyses : []);
     }
 
     /**
@@ -73,9 +59,6 @@ class JurisprudenceWorker{
      */
     public function preparedArrets($arrets)
     {
-        //$include  = $this->showArrets();
-        //$arrets   = $this->arret->getAllActives($include);
-
         $prepared = $arrets->filter(function($arret)
         {
             $arret->setAttribute('humanTitle',$arret->reference.' du '.$arret->pub_date->formatLocalized('%d %B %Y'));
