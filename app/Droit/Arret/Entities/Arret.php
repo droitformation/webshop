@@ -10,6 +10,11 @@ class Arret extends Model {
 	protected $fillable = ['site_id','user_id','reference','pub_date','abstract','pub_text','file'];
     protected $dates    = ['pub_date'];
 
+    public function getDocumentAttribute()
+    {
+        return !empty($this->file ) && \File::exists(public_path('files/analyses/'.$this->file)) ? $this->file : null;
+    }
+    
     /**
      * Scope a query to only include arrets for site
      *

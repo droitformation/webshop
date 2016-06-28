@@ -27,7 +27,7 @@
         <li><a href="{{ url('admin/adresse/create') }}"><i class="fa fa-street-view"></i><span>Ajouter une adresse</span></a></li>
         <li class="<?php echo (Request::is('admin/export/view') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/export/view') }}">
-                <i class="fa fa-cloud-download"></i> &nbsp;<span>Export ou recherche</span>
+                <i class="fa fa-cloud-download"></i>&nbsp;<span>Export ou recherche</span>
             </a>
         </li>
         <li class="nav-title">Evenements</li>

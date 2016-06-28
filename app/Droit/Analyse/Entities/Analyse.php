@@ -8,6 +8,11 @@ class Analyse extends Model {
     protected $fillable = ['user_id','author','pub_date','abstract','file','site_id','title'];
     protected $dates    = ['pub_date','created_at','updated_at'];
 
+    public function getDocumentAttribute()
+    {
+        return !empty($this->file ) && \File::exists(public_path('files/analyses/'.$this->file)) ? $this->file : null;
+    }
+
     /**
      * Scope a query to only include arrets for site
      *

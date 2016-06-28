@@ -85,11 +85,11 @@ class MatrimonialController extends Controller
 
         if($slug == 'jurisprudence')
         {
-            $arrets     = $this->arret->getAll($this->site_id)->take(10);
-            $analyses   = $this->analyse->getAll($this->site_id)->take(10);
+            $data['arrets']   = $this->arret->getAll($this->site_id)->take(10);
+            $data['analyses'] = $this->analyse->getAll($this->site_id)->take(10);
 
-            $data['arrets']   = $this->jurisprudence->preparedArrets($arrets);
-            $data['analyses'] = $this->jurisprudence->preparedAnalyses($analyses);
+            //$data['arrets']   = $this->jurisprudence->preparedArrets($arrets);
+            //$data['analyses'] = $this->jurisprudence->preparedAnalyses($analyses);
         }
 
         if($slug == 'newsletter')
