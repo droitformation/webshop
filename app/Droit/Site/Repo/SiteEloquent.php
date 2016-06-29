@@ -22,6 +22,18 @@ class SiteEloquent implements SiteInterface{
         return $this->site->with(['menus'])->find($id);
     }
 
+    public function findBySlug($slug)
+    {
+        $site = $this->site->with(['menus'])->where('slug','=',$slug)->get();
+
+        if(!$site->isEmpty())
+        {
+            return $site->first();
+        }
+
+        return null;
+    }
+
     public function create(array $data){
 
         $site = $this->site->create(array(

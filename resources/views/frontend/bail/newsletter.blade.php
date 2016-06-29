@@ -19,20 +19,13 @@
 
 			<hr/>
 
-			@if(!empty($content))
-				@foreach($content as $bloc)
-					<div class="content-bloc">
-						{!! view('frontend/newsletter/content/'.$bloc->type->partial)->with(
-							 [
-								'bloc' => $bloc ,
-								'site' => $site ,
-								'categories'    => $categories,
-								'imgcategories' => $imgcategories
-							]
-						)->__toString()  !!}
-					</div>
-				@endforeach
-			@endif
+			<div id="newsletter">
+				@if(!$campagne->content->isEmpty())
+					@foreach($campagne->content as $bloc)
+						{!! view('newsletter::Frontend.content.'.$bloc->type->partial)->with(['bloc' => $bloc ])->__toString() !!}
+					@endforeach
+				@endif
+			</div>
 
 		</div>
 	</div>

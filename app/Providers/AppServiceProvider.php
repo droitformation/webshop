@@ -55,7 +55,11 @@ class AppServiceProvider extends ServiceProvider {
             'frontend.pubdroit.subscribe',
             'frontend.pubdroit.unsubscribe'
         ], 'App\Http\ViewComposers\PubdroitComposer');
-	}
+
+        view()->composer(['frontend.bail.*'], 'App\Http\ViewComposers\BailComposer');
+        view()->composer(['frontend.matrimonial.*'], 'App\Http\ViewComposers\MatrimonialComposer');
+
+    }
 
 	/**
 	 * Register any application services.

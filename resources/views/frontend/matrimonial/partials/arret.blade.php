@@ -1,5 +1,4 @@
-<?php $cats = $arret->categories->pluck('title')->implode('title', ', '); ?>
-<div class="arret <?php echo $cats; ?> clear">
+<div class="arret {{ $arret->filter }} y{{ $arret->pub_date->year }} clear">
     <div class="row">
         <div class="col-md-9">
             <div class="post">

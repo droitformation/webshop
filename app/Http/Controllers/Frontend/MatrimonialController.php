@@ -7,67 +7,41 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Arret\Repo\ArretInterface;
-use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Analyse\Repo\AnalyseInterface;
-use App\Droit\Author\Repo\AuthorInterface;
 
 use App\Droit\Page\Repo\PageInterface;
-use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Arret\Worker\JurisprudenceWorker;
+use App\Droit\Site\Repo\SiteInterface;
 
 class MatrimonialController extends Controller
 {
     protected $arret;
-    protected $categorie;
     protected $analyse;
-    protected $author;
+    protected $page;
     protected $jurisprudence;
     protected $site_id;
     protected $site;
     protected $newsworker;
 
-    public function __construct(
-        ArretInterface $arret,
-        CategorieInterface $categorie,
-        AnalyseInterface $analyse,
-        AuthorInterface $author,
-        JurisprudenceWorker $jurisprudence,
-        PageInterface $page,
-        SiteInterface $site
-    )
+    public function __construct(ArretInterface $arret, AnalyseInterface $analyse, PageInterface $page, JurisprudenceWorker $jurisprudence, SiteInterface $site)
     {
-        $this->site_id  = 3;
-
-        $this->arret         = $arret;
-        $this->categorie     = $categorie;
-        $this->analyse       = $analyse;
-        $this->author        = $author;
-        $this->page          = $page;
-        $this->jurisprudence = $jurisprudence;
         $this->site          = $site;
+        $this->arret         = $arret;
+        $this->analyse       = $analyse;
+        $this->page          = $page;
+        $this->site          = $site;
+        $this->jurisprudence = $jurisprudence;
+        $this->newsworker    = \App::make('newsworker');
 
-        $years      = $this->arret->annees(3);
-        $categories = $this->categorie->getAll($this->site_id);
-        $authors    = $this->author->getAll();
-
-        $sites = $this->site->find(3);
-
-        $this->newsworker  = \App::make('newsworker');
-        $newsletters = $this->newsworker->siteNewsletter(2);
-
-        view()->share('newsletters',$newsletters);
-        view()->share('menus',$sites->menus);
-        view()->share('site',$sites);
-        view()->share('years',$years);
-        view()->share('categories',$categories);
-        view()->share('authors',$authors);
+        $site = $this->site->findBySlug('matrimonial');
+        $this->site_id  = $site->id;
 
         setlocale(LC_ALL, 'fr_FR');
     }
 
     public function index()
     {
-        $page = $this->page->getBySlug(3,'home');
+        $page = $this->page->getBySlug($this->site_id,'home');
 
         return view('frontend.matrimonial.index')->with([ 'page' => $page ]);
     }
@@ -76,37 +50,38 @@ class MatrimonialController extends Controller
      * Display the specified resource.
      *
      * @param  int  $slug
+     * @param  int  $var
      * @return Response
      */
-    public function page($slug,$var = null)
+    public function page($slug, $var = null)
     {
-        $page = $this->page->getBySlug($this->site_id,$slug);
-
-        $data['page'] = $page;
+        $data['page'] = $this->page->getBySlug($this->site_id,$slug);
 
         if($slug == 'jurisprudence')
         {
-            $newsletters = $this->newsworker->siteNewsletter($this->site_id);
+            $newsletters = $this->newsworker->siteNewsletters($this->site_id);
             $exclude     = $this->newsworker->arretsToHide($newsletters->lists('id')->all());
 
             $data['arrets']   = $this->arret->getAll($this->site_id,$exclude)->take(10);
             $data['analyses'] = $this->analyse->getAll($this->site_id,$exclude)->take(10);
         }
 
-        return view('frontend.matrimonial.'.$page->template)->with($data);
+        if($slug == 'newsletter')
+        {
+            if($var)
+            {
+                $data['campagne'] = $this->newsworker->infos($var);
+            }
+            else
+            {
+                $newsletters = $this->newsworker->siteNewsletters($this->site_id);
+                $campagnes   = $this->newsworker->last($newsletters->lists('id'));
+
+                $data['campagne'] = $campagnes->first();
+            }
+        }
+
+        return view('frontend.matrimonial.'.$data['page']->template)->with($data);
     }
 
-    public function newsletters($id = null)
-    {
-        if($id)
-        {
-            $campagne = $this->campagne->find($id);
-        }
-        else
-        {
-            $newsletters = $this->newsworker->siteNewsletter($this->site_id);
-        }
-
-        return view('frontend.matrimonial.newsletter')->with(['arrets' => $arrets , 'analyses' => $analyses]);
-    }
 }

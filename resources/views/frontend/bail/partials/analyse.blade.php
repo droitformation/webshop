@@ -7,8 +7,7 @@
 
             @foreach($analyses as $analyse)
 
-                <?php $cats = $analyse->categories->pluck('title')->implode('title', ', '); ?>
-                <div class="analyse arret <?php echo $cats; ?> clear">
+                <div class="analyse arret {{ $analyse->filter }} y{{ $analyse->pub_date->year }} clear">
                     <div class="post">
                         <div class="post-title">
                             <a class="anchor_top" name="analyse_{{ $analyse->id }}"></a>

@@ -31,7 +31,7 @@ class CampagneWorker implements CampagneInterface{
 
                 if($content->groupe_id > 0)
                     return $content->groupe->arrets->lists('id')->all();
-
+            
             })->filter(function ($value, $key) {
                 return !empty($value);
             })->flatten()->toArray();
@@ -42,11 +42,28 @@ class CampagneWorker implements CampagneInterface{
         return $this->campagne->find($id);
     }
 
-    public function siteNewsletter($site_id)
+    public function last($newsletter_id = null)
+    {
+        return $this->campagne->getLastCampagne($newsletter_id);
+    }
+
+    public function siteNewsletters($site_id)
     {
         if(config('newsletter.multi'))
         {
             return $this->newsletter->getSite($site_id);
+        }
+
+        return null;
+    }
+
+    public function siteCampagnes($site_id)
+    {
+        if(config('newsletter.multi')) {
+            $newsletters = $this->newsletter->getSite($site_id);
+            return $newsletters->map(function ($newsletter, $key) {
+                return $newsletter->campagnes;
+            })->flatten(1);
         }
 
         return null;

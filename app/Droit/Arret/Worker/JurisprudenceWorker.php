@@ -31,7 +31,7 @@ class JurisprudenceWorker{
      */
     public function filter($site_id)
     {
-        $newsletters = $this->newsworker->siteNewsletter($site_id);
+        $newsletters = $this->newsworker->siteNewsletters($site_id);
         $exclude     = $this->newsworker->arretsToHide($newsletters->lists('id')->all());
 
         $analyses = $this->analyse->getAll($site_id,$exclude);

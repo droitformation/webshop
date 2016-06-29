@@ -16,6 +16,10 @@ h1, h2, h3, h4, h5 {
     margin: 0 0 10px 0;
 }
 
+h2 {
+    font-size: 25px;
+}
+
 /* line 19, main.scss */
 h3 {
     font-size: 1.2em;
@@ -95,6 +99,10 @@ select.form-control {
 
 .upMarge {
     margin-top: 15px;
+}
+
+#newsletter p{
+    text-align: justify;
 }
 
 /*======================================

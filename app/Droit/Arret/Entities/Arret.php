@@ -14,6 +14,13 @@ class Arret extends Model {
     {
         return !empty($this->file) && \File::exists(public_path('files/arrets/'.$this->file)) ? $this->file : null;
     }
+
+    public function getFilterAttribute()
+    {
+        return $this->categories->map(function ($categorie, $key) {
+            return 'c'.$categorie->id;
+        })->implode(' ');
+    }
     
     /**
      * Scope a query to only include arrets for site

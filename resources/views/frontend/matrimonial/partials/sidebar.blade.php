@@ -18,8 +18,6 @@
             <!-- Bloc inscription newsletter -->
             <div class="color-bloc">
                 <h4>Inscription à la newsletter</h4>
-                @inject('newsworker', 'newsworker')
-                <?php $newsletters = $newsworker->siteNewsletter($site->id); ?>
                 @foreach($newsletters as $newsletter)
                     @include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter])
                 @endforeach
@@ -44,7 +42,7 @@
                         @foreach($menu->pages as $page)
 
                             @if($page->template == 'newsletter')
-                                @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters->first()->campagnes->pluck('sujet','id')])
+                                @include('frontend.partials.list', ['page' => $page, 'lists' => $campagnes->whereLoose('status','envoyé')->pluck('sujet','id')])
 
                             @elseif($page->template == 'jurisprudence')
 

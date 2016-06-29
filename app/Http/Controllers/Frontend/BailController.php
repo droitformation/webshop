@@ -36,6 +36,7 @@ class BailController extends Controller
     protected $site;
     protected $calculette;
     protected $product;
+    protected $newsworker;
 
     public function __construct(
         ArretInterface $arret,
@@ -51,8 +52,6 @@ class BailController extends Controller
         ProductInterface $product
     )
     {
-        $this->site_id  = 2;
-
         $this->arret         = $arret;
         $this->categorie     = $categorie;
         $this->analyse       = $analyse;
@@ -65,27 +64,14 @@ class BailController extends Controller
         $this->calculette    = $calculette;
         $this->product       = $product;
 
-        $years      = $this->arret->annees(2);
-        $categories = $this->categorie->getAll($this->site_id);
-        $authors    = $this->author->getAll();
+        $site = $this->site->findBySlug('bail');
+        $this->site_id  = $site->id;
 
-        $sites = $this->site->find(2);
-        $faqcantons = [ 'be'=>'Berne','fr'=>'Fribourg', 'ge'=>'Genève', 'ju'=>'Jura', 'ne'=>'Neuchâtel', 'vs'=>'Valais', 'vd'=>'Vaud'];
+        $this->newsworker = \App::make('newsworker');
 
-        $newsworker  = \App::make('newsworker');
+        $revues = $this->product->getByCategorie(25);
 
-        $newsletters = $newsworker->siteNewsletter(2);
-        $revues      = $this->product->getByCategorie(25);
-
-        view()->share('newsletters',$newsletters);
         view()->share('revues',$revues->pluck('title','id') );
-
-        view()->share('menus',$sites->menus);
-        view()->share('site',$sites);
-        view()->share('years',$years);
-        view()->share('categories',$categories);
-        view()->share('authors',$authors);
-        view()->share('faqcantons',$faqcantons);
 
         setlocale(LC_ALL, 'fr_FR');
     }
@@ -101,6 +87,7 @@ class BailController extends Controller
      * Display the specified resource.
      *
      * @param  int  $slug
+     * @param  int  $var
      * @return Response
      */
     public function page($slug,$var = null)
@@ -123,11 +110,11 @@ class BailController extends Controller
 
         if($slug == 'jurisprudence')
         {
-            $arrets     = $this->arret->getAll($this->site_id)->take(10);
-            $analyses   = $this->analyse->getAll($this->site_id)->take(10);
+            $newsletters = $this->newsworker->siteNewsletters($this->site_id);
+            $exclude     = $this->newsworker->arretsToHide($newsletters->lists('id')->all());
 
-            $data['arrets']   = $this->jurisprudence->preparedArrets($arrets);
-            $data['analyses'] = $this->jurisprudence->preparedAnalyses($analyses);
+            $data['arrets']   = $this->arret->getAll($this->site_id,$exclude)->take(10);
+            $data['analyses'] = $this->analyse->getAll($this->site_id,$exclude)->take(10);
         }
 
         if($slug == 'revues')
@@ -137,38 +124,20 @@ class BailController extends Controller
 
         if($slug == 'newsletter')
         {
-       /*     if($var)
+            if($var)
             {
-                $data['campagne'] = $this->campagne->find($var);
-                $data['content']  = $this->worker->prepareCampagne($var);
+                $data['campagne'] = $this->newsworker->infos($var);
             }
             else
             {
-                $newsletters = $this->newsletter->getAll($this->site_id)->first();
-                if(!$newsletters->campagnes->isEmpty())
-                {
-                    $data['campagne'] = $newsletters->campagnes->first();
-                    $data['content']  = $this->worker->prepareCampagne($newsletters->campagnes->first()->id);
-                }
-            }
+                $newsletters = $this->newsworker->siteNewsletters($this->site_id);
+                $campagnes   = $this->newsworker->last($newsletters->lists('id'));
 
-            $data['categories']    = $this->worker->getCategoriesArrets();
-            $data['imgcategories'] = $this->worker->getCategoriesImagesArrets();
-            */
+                $data['campagne'] = $campagnes->first();
+            }
         }
 
         return view('frontend.bail.'.$page->template)->with($data);
-    }
-
-    public function jurisprudence()
-    {
-        $arrets     = $this->arret->getAll($this->site_id);
-        $analyses   = $this->analyse->getAll($this->site_id);
-
-        $arrets     = $this->jurisprudence->preparedArrets($arrets);
-        $analyses   = $this->jurisprudence->preparedAnalyses($analyses);
-
-        return view('frontend.bail.jurisprudence')->with(['arrets' => $arrets , 'analyses' => $analyses]);
     }
 
     public function loyer(Request $request)
