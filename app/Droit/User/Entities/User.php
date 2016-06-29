@@ -1,4 +1,4 @@
-<?php namespace App\Droit\User\Entities;
+<?PHP namespace App\Droit\User\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Cashier\Billable;

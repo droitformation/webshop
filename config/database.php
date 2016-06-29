@@ -55,7 +55,7 @@ return [
 		'testing' => [
 			'driver'      => 'mysql',
 			'host'        => 'localhost',
-			'database'    => 'testing',
+			'database'    => env('DB_DATABASE', 'forge'),
 			'username'    => 'root',
 			'password'    => 'root',
 			'unix_socket' => env('DB_SOCKET', ''),

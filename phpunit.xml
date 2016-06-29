@@ -31,9 +31,6 @@
         <testsuite name="helper">
             <directory>./tests/helper/</directory>
         </testsuite>
-        <testsuite name="newsletter">
-            <directory>./tests/newsletter/</directory>
-        </testsuite>
         <testsuite name="backendshop">
             <directory>./tests/backend/shop/</directory>
         </testsuite>

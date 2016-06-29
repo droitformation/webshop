@@ -24,7 +24,7 @@ class UserEloquent implements UserInterface{
 
     public function find($id){
 
-        return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes','subscriptions'])->findOrFail($id);
+        return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes'])->findOrFail($id);
     }
 
     public function findByEmail($email)

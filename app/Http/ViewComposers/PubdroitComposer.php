@@ -9,10 +9,12 @@ use App\Droit\Site\Repo\SiteInterface;
 class PubdroitComposer
 {
     protected $site;
+    protected $newsworker;
 
     public function __construct(SiteInterface $site )
     {
         $this->site = $site;
+        $this->newsworker  = \App::make('newsworker');
     }
 
     /**
@@ -23,10 +25,15 @@ class PubdroitComposer
      */
     public function compose(View $view)
     {
-        $sites = $this->site->find(1);
+        $site        = $this->site->findBySlug('bail');
+        $newsletters = $this->newsworker->siteNewsletters($site->id);
+        $campagnes   = $this->newsworker->siteCampagnes($site->id);
 
-        $view->with('menus', $sites->menus);
-        $view->with('site',  $sites);
+        $view->with('menus', $site->menus);
+        $view->with('site',  $site);
+
+        $view->with('campagnes',$campagnes);
+        $view->with('newsletters',$newsletters);
 
     }
 }
