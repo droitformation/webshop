@@ -15,13 +15,15 @@ class AnalyseEloquent implements AnalyseInterface{
 		$this->analyse = $analyse;
 	}
 
-    public function getAll($site = null,$include = []){
-
+    public function getAll($site = null, $exclude = [])
+    {
         $analyse = $this->analyse->site($site)->with(['authors','categories','arrets']);
 
-        if(!empty($include))
+        if(!empty($exclude))
         {
-            $analyse->whereIn('id', $include);
+            $analyse->whereHas('arrets', function ($query) use ($exclude) {
+                $query->whereNotIn('arrets.id', $exclude);
+            });
         }
 
         return $analyse->orderBy('pub_date', 'DESC')->get();

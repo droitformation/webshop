@@ -12,9 +12,16 @@ class ArretEloquent implements ArretInterface{
 		$this->arret = $arret;
 	}
 
-    public function getAll($site = null)
+    public function getAll($site = null, $exclude = null)
     {
-        return $this->arret->with(['categories','analyses'])->site($site)->orderBy('reference', 'ASC')->get();
+        $arrets = $this->arret->with(['categories','analyses'])->site($site);
+
+        if(!empty($exclude))
+        {
+            $arrets->whereNotIn('id', $exclude);
+        }
+
+        return $arrets->orderBy('reference', 'ASC')->get();
     }
 
     public function getCount($site = null)
@@ -29,15 +36,11 @@ class ArretEloquent implements ArretInterface{
 
     public function annees($site)
     {
-        $arrets   = $this->arret->where('site_id','=',$site)->get();
+        $arrets = $this->arret->where('site_id','=',$site)->get();
 
-        $prepared = $arrets->lists('pub_date');
-
-        $grouped = $prepared->groupBy(function ($item, $key) {
-            return $item->year;
-        });
-
-        return array_reverse(array_keys($grouped->toArray()));
+        return $arrets->groupBy(function ($archive, $key) {
+            return $archive->pub_date->year;
+        })->keys();
     }
 
     public function getAllActives($exclude = [], $site = null)

@@ -26,7 +26,7 @@
 
 						@if(!$arrets->isEmpty())
 							@foreach($arrets as $arret)
-								{{--@include('frontend.matrimonial.partials.arret')--}}
+								@include('frontend.matrimonial.partials.arret')
 							@endforeach
 						@endif
 

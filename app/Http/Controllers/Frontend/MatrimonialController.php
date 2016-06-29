@@ -24,6 +24,7 @@ class MatrimonialController extends Controller
     protected $jurisprudence;
     protected $site_id;
     protected $site;
+    protected $newsworker;
 
     public function __construct(
         ArretInterface $arret,
@@ -51,8 +52,8 @@ class MatrimonialController extends Controller
 
         $sites = $this->site->find(3);
 
-        $newsworker  = \App::make('newsworker');
-        $newsletters = $newsworker->siteNewsletter(2);
+        $this->newsworker  = \App::make('newsworker');
+        $newsletters = $this->newsworker->siteNewsletter(2);
 
         view()->share('newsletters',$newsletters);
         view()->share('menus',$sites->menus);
@@ -85,30 +86,14 @@ class MatrimonialController extends Controller
 
         if($slug == 'jurisprudence')
         {
-            $data['arrets']   = $this->arret->getAll($this->site_id)->take(10);
-            $data['analyses'] = $this->analyse->getAll($this->site_id)->take(10);
+            $newsletters = $this->newsworker->siteNewsletter($this->site_id);
+            $exclude     = $this->newsworker->arretsToHide($newsletters->lists('id')->all());
 
-            //$data['arrets']   = $this->jurisprudence->preparedArrets($arrets);
-            //$data['analyses'] = $this->jurisprudence->preparedAnalyses($analyses);
-        }
-
-        if($slug == 'newsletter')
-        {
-
+            $data['arrets']   = $this->arret->getAll($this->site_id,$exclude)->take(10);
+            $data['analyses'] = $this->analyse->getAll($this->site_id,$exclude)->take(10);
         }
 
         return view('frontend.matrimonial.'.$page->template)->with($data);
-    }
-
-    public function jurisprudence()
-    {
-        $arrets     = $this->arret->getAll($this->site_id)->take(10);
-        $analyses   = $this->analyse->getAll($this->site_id)->take(10);
-
-        $arrets     = $this->jurisprudence->preparedArrets($arrets);
-        $analyses   = $this->jurisprudence->preparedAnalyses($analyses);
-
-        return view('frontend.matrimonial.jurisprudence')->with(['arrets' => $arrets , 'analyses' => $analyses]);
     }
 
     public function newsletters($id = null)
@@ -116,15 +101,11 @@ class MatrimonialController extends Controller
         if($id)
         {
             $campagne = $this->campagne->find($id);
-            $content  = $this->worker->prepareCampagne($id);
         }
         else
         {
-
+            $newsletters = $this->newsworker->siteNewsletter($this->site_id);
         }
-
-        $categories    = $this->worker->getCategoriesArrets();
-        $imgcategories = $this->worker->getCategoriesImagesArrets();
 
         return view('frontend.matrimonial.newsletter')->with(['arrets' => $arrets , 'analyses' => $analyses]);
     }

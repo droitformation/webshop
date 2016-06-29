@@ -399,29 +399,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('ajax/categories/{id?}',   'Backend\Content\CategorieController@categories');
         Route::post('ajax/categorie/arrets','Backend\Content\CategorieController@arrets');
 
-/*        Route::post('sorting', 'Backend\Newsletter\CampagneController@sorting');
-        Route::post('sortingGroup', 'Backend\Newsletter\CampagneController@sortingGroup');
-        Route::resource('newsletter', 'Backend\Newsletter\NewsletterController');
-
-        Route::post('campagne/send', 'Backend\Newsletter\CampagneController@send');
-        Route::post('campagne/test', 'Backend\Newsletter\CampagneController@test');
-        Route::post('campagne/sorting', 'Backend\Newsletter\CampagneController@sorting');
-        Route::post('campagne/process', 'Backend\Newsletter\CampagneController@process');
-        Route::post('campagne/editContent', 'Backend\Newsletter\CampagneController@editContent');
-        Route::post('campagne/remove', 'Backend\Newsletter\CampagneController@remove');
-        Route::get('campagne/create/{newsletter}', 'Backend\Newsletter\CampagneController@create');
-        Route::get('campagne/simple/{id}', 'Backend\Newsletter\CampagneController@simple');
-        Route::resource('campagne', 'Backend\Newsletter\CampagneController');
-
-        Route::resource('subscriber', 'Backend\Newsletter\SubscriberController');
-        Route::get('subscribers', ['uses' => 'Backend\Newsletter\SubscriberController@subscribers']);
-
-        Route::post('liste/send', 'Backend\Newsletter\ListController@send');
-        Route::resource('liste', 'Backend\Newsletter\ListController');
-        Route::resource('emails', 'Backend\Newsletter\EmailController');
-        Route::resource('import', 'Backend\Newsletter\ImportController');
-        Route::resource('statistics', 'Backend\Newsletter\StatsController');*/
-
     });
 
     /*

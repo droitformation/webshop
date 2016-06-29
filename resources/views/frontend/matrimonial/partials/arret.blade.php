@@ -1,18 +1,22 @@
-<?php  $cats = implode(' ',$arret->allcats); ?>
+<?php $cats = $arret->categories->pluck('title')->implode('title', ', '); ?>
 <div class="arret <?php echo $cats; ?> clear">
     <div class="row">
         <div class="col-md-9">
             <div class="post">
                 <div class="post-title">
-                    <h3>{{ $arret->humanTitle }}</h3>
+                    <h3>{{ $arret->reference }} du {{ $arret->pub_date->formatLocalized('%d %B %Y') }}</h3>
                     <p>{{ $arret->abstract }}</p>
                 </div><!--END POST-TITLE-->
                 <div class="post-entry">
                     <a class="anchor" name="{{ $arret->reference }}"></a>
-                    {!! $arret->parsedText !!}
+                    {!! $arret->pub_text !!}
 
-                    @if(!empty($arret->file ) && File::exists(public_path('files/arrets/'.$arret->file)))
-                        <p><a target="_blank" href="{{ asset('files/arrets/'.$arret->file) }}">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a></p>
+                    @if($arret->document)
+                        <p>
+                            <a target="_blank" href="{{ asset('files/arrets/'.$arret->file) }}">
+                                Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
+                            </a>
+                        </p>
                     @endif
                 </div>
             </div><!--END POST-->

@@ -2,7 +2,7 @@
 
 interface ArretInterface {
 
-    public function getAll($site = null);
+    public function getAll($site = null, $exclude = null);
     public function getCount($site = null);
     public function getLast($nbr,$site);
     public function annees($site);

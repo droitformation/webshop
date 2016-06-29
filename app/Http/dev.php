@@ -575,14 +575,14 @@ Route::get('/calculette', function () {
 
 Route::get('dispatch', function()
 {
-    $document    = 'analyse';
+    $document    = 'arret';
     $interface   = ucfirst($document);
     $directorie  = 'arrets';
     $putinfolder = $document.'s';
 
     $model  =  App::make('App\Droit\\'.$interface.'\\Repo\\'.$interface.'Interface');
 
-    $models = $model->getAll(2);
+    $models = $model->getAll(3);
     $files  = $models->lists('file');
 
     foreach($files as $path)
@@ -593,7 +593,7 @@ Route::get('dispatch', function()
         $tosearch[] = $file;
     }
 
-    $path   = public_path('files').'/'.$directorie.'/dispatch';
+    $path   = public_path('files').'/dispatch';
     $search = File::allFiles($path);
 
     foreach($search as $find)
@@ -603,10 +603,10 @@ Route::get('dispatch', function()
 
         if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
         {
-            $target = public_path('files').'/'.$putinfolder.'/bail/'.$file;
+            $target = public_path('files').'/'.$putinfolder.'/matrimonial/'.$file;
 
             //File::copy( $find, $target );
-            echo $find;
+            echo $target;
             echo '<br/>';
         }
     }

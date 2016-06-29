@@ -18,9 +18,9 @@ class CampagneWorker implements CampagneInterface{
         $this->newsletter = $newsletter;
 	}
 
-    public function arretsToHide()
+    public function arretsToHide($newsletter_id = null)
     {
-        $campagnes = $this->campagne->getAll()->where('status','brouillon');
+        $campagnes = $this->campagne->getAll($newsletter_id)->where('status','brouillon');
 
         return $campagnes->flatMap(function ($campagne) {
                 return $campagne->content;
@@ -30,7 +30,7 @@ class CampagneWorker implements CampagneInterface{
                     return $content->arret_id ;
 
                 if($content->groupe_id > 0)
-                    return $content->groupe->arrets_groupes->lists('id')->all();
+                    return $content->groupe->arrets->lists('id')->all();
 
             })->filter(function ($value, $key) {
                 return !empty($value);

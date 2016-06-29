@@ -78,7 +78,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Catégories</label>
 
-                    <div class="col-sm-9" ng-app="selection">
+                    <div class="col-sm-9" id="main" ng-app="selection" data-site="{{ $site }}">
 
                         <div ng-controller="MultiSelectionController as selectcat">
                             <div class="listArrets forArrets" ng-init="typeItem='categories'">

@@ -5664,60 +5664,6 @@
         ]
     },
     {
-        "name": "designpond/newsletter",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/DesignPond/newsletter.git",
-            "reference": "74a216845ffe69c79bce70633e4ed2f4d6d46fd2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/74a216845ffe69c79bce70633e4ed2f4d6d46fd2",
-            "reference": "74a216845ffe69c79bce70633e4ed2f4d6d46fd2",
-            "shasum": ""
-        },
-        "require": {
-            "inlinestyle/inlinestyle": "1.*",
-            "intervention/image": "dev-master",
-            "maatwebsite/excel": "~2.0.0",
-            "php": "~5.5|~7.0"
-        },
-        "time": "2016-06-28 13:30:59",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "designpond\\newsletter\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Cindy Leschaud",
-                "email": "cindy.leschaud@gmail.com",
-                "homepage": "http://www.designpond.ch",
-                "role": "Developer"
-            }
-        ],
-        "description": "Newsletter building tool for UniNE websites",
-        "homepage": "https://github.com/designpond/newsletter",
-        "keywords": [
-            "designpond",
-            "laravel",
-            "newsletter"
-        ]
-    },
-    {
         "name": "lucadegasperi/oauth2-server-laravel",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -5784,6 +5730,60 @@
             "oauth",
             "oauth2",
             "server"
+        ]
+    },
+    {
+        "name": "designpond/newsletter",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/DesignPond/newsletter.git",
+            "reference": "f91c77a6cf1de6f30432b6070b610edf3cb038c0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/f91c77a6cf1de6f30432b6070b610edf3cb038c0",
+            "reference": "f91c77a6cf1de6f30432b6070b610edf3cb038c0",
+            "shasum": ""
+        },
+        "require": {
+            "inlinestyle/inlinestyle": "1.*",
+            "intervention/image": "dev-master",
+            "maatwebsite/excel": "~2.0.0",
+            "php": "~5.5|~7.0"
+        },
+        "time": "2016-06-29 09:31:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "designpond\\newsletter\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Cindy Leschaud",
+                "email": "cindy.leschaud@gmail.com",
+                "homepage": "http://www.designpond.ch",
+                "role": "Developer"
+            }
+        ],
+        "description": "Newsletter building tool for UniNE websites",
+        "homepage": "https://github.com/designpond/newsletter",
+        "keywords": [
+            "designpond",
+            "laravel",
+            "newsletter"
         ]
     }
 ]

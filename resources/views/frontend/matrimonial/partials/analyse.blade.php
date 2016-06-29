@@ -27,7 +27,7 @@
                         <div class="post-entry">
                             @if($analyse->document)
                                 <p>
-                                    <a target="_blank" href="{{ asset('files/analyses/'.$analyse->document) }}">
+                                    <a target="_blank" href="{{ asset('files/analyses/'.$analyse->file) }}">
                                         Télécharger cette analyse en PDF &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
                                     </a>
                                 </p>

@@ -12,7 +12,7 @@ class Arret extends Model {
 
     public function getDocumentAttribute()
     {
-        return !empty($this->file ) && \File::exists(public_path('files/analyses/'.$this->file)) ? $this->file : null;
+        return !empty($this->file) && \File::exists(public_path('files/arrets/'.$this->file)) ? $this->file : null;
     }
     
     /**

@@ -2,7 +2,11 @@ var App = angular.module('selection', ["dndLists"] , function($interpolateProvid
 {
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 
-}).service('myService',  function ($rootScope,$filter) {
+});
+
+App.constant('__env', window.__env);
+
+App.service('myService',  function ($rootScope,$filter) {
     return {
         convertDateArret: function(date){
             var jsonObject  = date.substr(0,10);
@@ -52,8 +56,8 @@ var App = angular.module('selection', ["dndLists"] , function($interpolateProvid
         },
         convertCategories: function(data, models, selected){
 
-            angular.forEach(data, function (value, key) {
-
+            angular.forEach(data, function (value, key)
+            {
                 var result = [];
 
                 if(selected){
@@ -110,11 +114,11 @@ App.filter('getById', function() {
 /**
  * Retrive all arrets blocs for bloc arret
  */
-App.factory('Arrets', ['$http', '$q', function($http, $q) {
+App.factory('Arrets', ['$http', '$q','__env', function($http, $q,__env) {
     return {
-        query: function() {
+        query: function(site_id) {
             var deferred = $q.defer();
-            $http.get(window.__env + 'arrets', { cache: true }).success(function(data) {
+            $http.get(__env.ajaxUrl + 'arrets/' + site_id, { cache: true }).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -123,7 +127,7 @@ App.factory('Arrets', ['$http', '$q', function($http, $q) {
         },
         simple: function(id) {
             var deferred = $q.defer();
-            $http.get(window.__env + 'arrets/'+ id).success(function(data) {
+            $http.get(__env.ajaxUrl + 'arret/'+ id).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -141,7 +145,7 @@ App.factory('Analyses', ['$http', '$q', function($http, $q) {
     return {
         simple: function(id) {
             var deferred = $q.defer();
-            $http.get(window.__env + 'analyses/'+ id).success(function(data) {
+            $http.get(__env.ajaxUrl + 'analyses/'+ id).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -156,9 +160,9 @@ App.factory('Analyses', ['$http', '$q', function($http, $q) {
  */
 App.factory('Categories', ['$http', '$q', function($http, $q) {
     return {
-        query: function() {
+        query: function(site_id) {
             var deferred = $q.defer();
-            $http.get( window.__env + 'categories').success(function(data) {
+            $http.get( __env.ajaxUrl + 'categories/' + site_id).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -188,18 +192,19 @@ App.controller("MultiSelectionController",['$scope',"$filter","Categories","Arre
 
         if( $scope.typeItem == 'categories'){
 
-            Categories.query()
+            var site_id = $('#main').data('site');
+            site_id = !site_id ? null : site_id;
+
+            Categories.query(site_id)
                 .then(function (data) {
-
                     self.items  = data;
-
                     if($scope.uidContent && $scope.itemContent)
                     {
                         if ($scope.itemContent == 'arrets')
                         {
                             Arrets.simple($scope.uidContent)
                                 .then(function (data) {
-                                    self.items_categories = data.arrets_categories;
+                                    self.items_categories = data.categories;
                                     self.models = myService.convertCategories(self.items, self.models, self.items_categories);
                                 });
                         }
@@ -208,7 +213,7 @@ App.controller("MultiSelectionController",['$scope',"$filter","Categories","Arre
                             /* Get the selected arret infos */
                             Analyses.simple($scope.uidContent)
                                 .then(function (data) {
-                                    self.items_categories = data.analyses_categories;
+                                    self.items_categories = data.categories;
                                     self.models = myService.convertCategories(self.items, self.models, self.items_categories);
                                 });
                         }
@@ -217,31 +222,27 @@ App.controller("MultiSelectionController",['$scope',"$filter","Categories","Arre
                     {
                         self.models = myService.convertCategories(self.items, self.models);
                     }
-
                 });
         }
 
         if( $scope.typeItem == 'arrets'){
 
-            Arrets.query()
+            Arrets.query(site_id)
                 .then(function (data) {
                     self.items  = data;
-                    console.log(self.items);
                     if($scope.uidContent && $scope.itemContent) {
 
                         /* Get the selected analyse infos */
                         Analyses.simple($scope.uidContent)
                             .then(function (data) {
-                                self.items_arrets = data.analyses_arrets;
+                                self.items_arrets = data.arrets;
                                 self.models = myService.convertArret(self.items, self.models, self.items_arrets);
-
                             });
                     }
                     else
                     {
                         self.models = myService.convertArret(self.items, self.models);
                     }
-
                 });
         }
 
