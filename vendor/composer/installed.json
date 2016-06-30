@@ -5739,12 +5739,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/DesignPond/newsletter.git",
-            "reference": "936b0a9d43e1b7db3db1293d0bfde58152145946"
+            "reference": "b983620494e8800d864ecb6e80a8d0ac88243de9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/936b0a9d43e1b7db3db1293d0bfde58152145946",
-            "reference": "936b0a9d43e1b7db3db1293d0bfde58152145946",
+            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/b983620494e8800d864ecb6e80a8d0ac88243de9",
+            "reference": "b983620494e8800d864ecb6e80a8d0ac88243de9",
             "shasum": ""
         },
         "require": {
@@ -5753,7 +5753,7 @@
             "maatwebsite/excel": "~2.0.0",
             "php": "~5.5|~7.0"
         },
-        "time": "2016-06-30 08:37:16",
+        "time": "2016-06-30 12:22:38",
         "type": "library",
         "extra": {
             "branch-alias": {

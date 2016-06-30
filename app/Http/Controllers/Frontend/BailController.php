@@ -126,7 +126,7 @@ class BailController extends Controller
         {
             if($var)
             {
-                $data['campagne'] = $this->newsworker->infos($var);
+                $data['campagne'] = $this->newsworker->getCampagne($var);
             }
             else
             {
