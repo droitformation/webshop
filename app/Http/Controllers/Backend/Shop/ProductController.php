@@ -153,7 +153,7 @@ class ProductController extends Controller {
             $data['image'] = $file['name'];
         }
 
-        $product  = $this->product->update($request->all());
+        $product  = $this->product->update($data);
 
         return redirect()->back()->with(array('status' => 'success', 'message' => 'Le produit a été mis à jour' ));
     }

@@ -13,7 +13,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="panel panel-midnightblue">
+            <div id="colloque_edit" class="panel panel-midnightblue">
 
                 <?php $centers = $colloque->centres->lists('id')->all(); ?>
                     <div class="panel-body">
@@ -124,10 +124,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group well well-small" style="padding: 17px 0;">
-                                    <label class="col-sm-3 control-label">Envoyer les email de confirmation<br/> à une autre adresse email</label>
-                                    <div class="col-sm-8 col-xs-6">
-                                        <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
+                                <div class="form-group">
+                                    <div class="row well">
+                                        <label class="col-sm-3 control-label">Envoyer les email de confirmation<br/> à une autre adresse email</label>
+                                        <div class="col-sm-8 col-xs-6">
+                                            <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
+                                        </div>
                                     </div>
                                 </div>
 

@@ -27,7 +27,7 @@ class OccurrenceEloquent implements OccurrenceInterface{
         $occurrence = $this->occurrence->create(array(
             'colloque_id' => $data['colloque_id'],
             'title'       => $data['title'],
-            'location_id' => $data['location_id'],
+            'lieux_id'    => $data['lieux_id'],
             'starting_at' => $data['starting_at']
         ));
 

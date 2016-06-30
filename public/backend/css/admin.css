@@ -159,6 +159,9 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     padding: 5px 10px;
 }
 
+#colloque_edit legend{
+    margin-top: 20px;
+}
 
 .panel-body > .list-group {
     margin: 0 -20px;
@@ -350,6 +353,10 @@ a:hover, a:active, a:focus {
 
 #adresseParent{
     margin: 5px 0 25px 0;
+}
+
+#adresseParent #adresseFind{
+    padding-bottom: 20px;
 }
 
 #adresseMake,#adresseFind, .adresse-find-abo{
@@ -717,6 +724,7 @@ select[multiple] {
     border-top: 1px solid #e6e7e8;
     display: block;
     margin: 20px 0;
+    padding-top: 20px;
 }
 
 .line-spacer div:last-child{

@@ -11,7 +11,7 @@ class Occurrence extends Model{
 
     protected $dates = ['deleted_at','starting_at'];
 
-    protected $fillable = ['colloque_id','title','location_id','starting_at'];
+    protected $fillable = ['colloque_id','title','lieux_id','starting_at'];
 
     public function colloque()
     {
@@ -20,6 +20,6 @@ class Occurrence extends Model{
 
     public function location()
     {
-        return $this->belongsTo('App\Droit\Location\Entities\Location');
+        return $this->belongsTo('App\Droit\Location\Entities\Location','lieux_id');
     }
 }
