@@ -1,15 +1,11 @@
-@extends('frontend.pubdroit.layouts.master')
+@extends('frontend.matrimonial.layouts.master')
 @section('content')
 
-	<section class="row">
+<div id="content" class="inner">
+	<div class="row">
 		<div class="col-md-12">
 
-			<p><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
-
-			<div class="heading-bar">
-				<h2>Newsletter</h2>
-				<span class="h-line"></span>
-			</div>
+			<h3 class="line up">Désinscription</h3>
 
 			<div class="row">
 				<div class="col-md-12">
@@ -19,7 +15,7 @@
 							@if(!$newsletters->isEmpty())
 								@foreach($newsletters as $newsletter)
 									<h4>{{ $newsletter->titre }}</h4>
-									@include('newsletter::Frontend.partials.unsubscribe', ['newsletter' => $newsletter, 'return_path' => '/'])
+									@include('newsletter::Frontend.partials.unsubscribe', ['newsletter' => $newsletter, 'return_path' => 'matrimonial'])
 								@endforeach
 							@endif
                         </div>
@@ -28,6 +24,7 @@
 			</div>
 
 		</div>
-	</section>
+	</div>
+</div>
 
 @stop

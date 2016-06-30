@@ -25,7 +25,7 @@ class PubdroitComposer
      */
     public function compose(View $view)
     {
-        $site        = $this->site->findBySlug('bail');
+        $site        = $this->site->findBySlug('pubdroit');
         $newsletters = $this->newsworker->siteNewsletters($site->id);
         $campagnes   = $this->newsworker->siteCampagnes($site->id);
 

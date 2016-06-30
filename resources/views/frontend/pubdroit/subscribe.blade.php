@@ -16,7 +16,12 @@
 					<h3>Inscrivez simplement votre adresse email pour recevoir les nouveautés du site.</h3>
                     <div class="row">
                         <div class="col-md-5 col-xs-12">
-                            @include('frontend.partials.subscribe', ['newsletter_id' => $newsletter_id])
+							@if(!$newsletters->isEmpty())
+								@foreach($newsletters as $newsletter)
+									<h4>{{ $newsletter->titre }}</h4>
+									@include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => '/'])
+								@endforeach
+							@endif
                         </div>
                     </div>
                     <p>Je souhaite me <a href="{{ url('unsubscribe') }}">désinscrire</a></p>

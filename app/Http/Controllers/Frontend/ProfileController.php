@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
-use App\Droit\Adresse\Repo\AdresseInterface;
-use App\Droit\User\Repo\UserInterface;
-use App\Http\Requests\CreateAdresse;
-use App\Http\Requests\UpdateAdresse;
-use App\Http\Requests\UpdateUser;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use App\Droit\Adresse\Repo\AdresseInterface;
+use App\Droit\User\Repo\UserInterface;
+use App\Http\Requests\UpdateAdresse;
 
 class ProfileController extends Controller
 {
     protected $adresse;
     protected $user;
-    protected $format;
+    protected $newsworker;
 
     public function __construct(AdresseInterface $adresse, UserInterface $user)
     {
-        $this->adresse = $adresse;
-        $this->user    = $user;
-        $this->format  = new \App\Droit\Helper\Format();
+        $this->adresse    = $adresse;
+        $this->user       = $user;
+        $this->newsworker = \App::make('newsworker');
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -108,7 +107,11 @@ class ProfileController extends Controller
     {
         $user = $this->user->find(\Auth::user()->id);
 
-        return view('frontend.pubdroit.profil.subscription')->with(compact('user','id'));
+        $emails = array_merge([$user->email], isset($user->adresses) ? $user->adresses->pluck('email')->all() : []);
+
+        $subscriptions = $this->newsworker->hasSubscriptions(array_unique($emails));
+
+        return view('frontend.pubdroit.profil.subscription')->with(compact('user','id','subscriptions'));
     }
 
 }

@@ -154,6 +154,11 @@ class BailController extends Controller
         return [];
     }
 
+    public function unsubscribe()
+    {
+        return view('frontend.bail.unsubscribe');
+    }
+
     /*    public function doctrine(){
 
             $subjects   = $this->subject->getAll();
@@ -175,6 +180,5 @@ class BailController extends Controller
 
 
     */
-
 
 }

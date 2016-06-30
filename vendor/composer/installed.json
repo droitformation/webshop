@@ -5096,63 +5096,6 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "stripe/stripe-php",
-        "version": "v3.14.3",
-        "version_normalized": "3.14.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/stripe/stripe-php.git",
-            "reference": "ca3523743f2865c942c80537b85079485ebd23dc"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/ca3523743f2865c942c80537b85079485ebd23dc",
-            "reference": "ca3523743f2865c942c80537b85079485ebd23dc",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-json": "*",
-            "ext-mbstring": "*",
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0",
-            "satooshi/php-coveralls": "~0.6.1",
-            "squizlabs/php_codesniffer": "~2.0"
-        },
-        "time": "2016-06-20 21:57:56",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Stripe\\": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Stripe and contributors",
-                "homepage": "https://github.com/stripe/stripe-php/contributors"
-            }
-        ],
-        "description": "Stripe PHP Library",
-        "homepage": "https://stripe.com/",
-        "keywords": [
-            "api",
-            "payment processing",
-            "stripe"
-        ]
-    },
-    {
         "name": "sebastian/exporter",
         "version": "1.2.2",
         "version_normalized": "1.2.2.0",
@@ -5733,18 +5676,75 @@
         ]
     },
     {
+        "name": "stripe/stripe-php",
+        "version": "v3.15.0",
+        "version_normalized": "3.15.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/stripe/stripe-php.git",
+            "reference": "6bc921a03af31387ef3f0a1fc233d432315ecb3a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/6bc921a03af31387ef3f0a1fc233d432315ecb3a",
+            "reference": "6bc921a03af31387ef3f0a1fc233d432315ecb3a",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-json": "*",
+            "ext-mbstring": "*",
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0",
+            "satooshi/php-coveralls": "~0.6.1",
+            "squizlabs/php_codesniffer": "~2.0"
+        },
+        "time": "2016-06-29 21:32:55",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Stripe\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Stripe and contributors",
+                "homepage": "https://github.com/stripe/stripe-php/contributors"
+            }
+        ],
+        "description": "Stripe PHP Library",
+        "homepage": "https://stripe.com/",
+        "keywords": [
+            "api",
+            "payment processing",
+            "stripe"
+        ]
+    },
+    {
         "name": "designpond/newsletter",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/DesignPond/newsletter.git",
-            "reference": "e3c960942a3170579b1fefb77c95a3e37b7a84f2"
+            "reference": "936b0a9d43e1b7db3db1293d0bfde58152145946"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/e3c960942a3170579b1fefb77c95a3e37b7a84f2",
-            "reference": "e3c960942a3170579b1fefb77c95a3e37b7a84f2",
+            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/936b0a9d43e1b7db3db1293d0bfde58152145946",
+            "reference": "936b0a9d43e1b7db3db1293d0bfde58152145946",
             "shasum": ""
         },
         "require": {
@@ -5753,7 +5753,7 @@
             "maatwebsite/excel": "~2.0.0",
             "php": "~5.5|~7.0"
         },
-        "time": "2016-06-29 12:59:20",
+        "time": "2016-06-30 08:37:16",
         "type": "library",
         "extra": {
             "branch-alias": {

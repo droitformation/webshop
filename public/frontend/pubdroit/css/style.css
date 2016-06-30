@@ -1176,6 +1176,11 @@ a.navbar-btn.navbar-register:focus{
     margin-bottom: 0;
 }
 
+.profil-info .list-group{
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
 .nav > li > a:hover,
 .nav > li > a:focus {
     text-decoration: none;

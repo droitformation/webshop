@@ -31,21 +31,6 @@ Route::group(['middleware' => ['web']], function () {
     |--------------------------------------------------------------------------
     */
 
-
-
-    /* Routes to implement  */
-    /*
-     *
-     *  Route::post('unsubscribe', 'Frontend\SubscribeController@unsubscribe');
-        Route::post('subscribe',   'Frontend\SubscribeController@subscribe');
-        Route::get('activation/{token}', 'Frontend\SubscribeController@activation');
-        Route::get('campagne/{id}', 'Frontend\CampagneController@show');
-        Route::get('campagne/{id}', 'Frontend\CampagneController@show');
-        Route::get('newsletter', 'Frontend\NewsletterController@index');
-        Route::resource('newsletter', 'Frontend\NewsletterController');
-        Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
-    */
-
     Route::group(['prefix' => 'pubdroit'], function () {
 
         Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\Shop\ShopController@page'));
@@ -61,6 +46,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('doctrine', array('uses' => 'Frontend\BailController@doctrine'));
         Route::get('calcul', array('uses' => 'Frontend\BailController@calcul'));
         Route::post('loyer', array('uses' => 'Frontend\BailController@loyer'));
+        Route::get('unsubscribe', 'Frontend\BailController@unsubscribe');
 
     });
 
@@ -70,6 +56,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\MatrimonialController@page'));
         Route::get('jurisprudence', array('uses' => 'Frontend\MatrimonialController@jurisprudence'));
         Route::get('newsletter/{id?}', array('uses' => 'Frontend\MatrimonialController@newsletter'));
+        Route::get('unsubscribe', 'Frontend\MatrimonialController@unsubscribe');
     });
 
     /* *

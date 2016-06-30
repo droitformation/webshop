@@ -1,5 +1,4 @@
-<form action="{{ url('unsubscribe') }}" method="POST" class="form" id="subscribe">
-    {!! csrf_field() !!}
+<form action="{{ url('unsubscribe') }}" method="POST" class="form" id="subscribe">{!! csrf_field() !!}
     <div class="form-group">
         <label class="control-label">Votre email</label>
         <div class="input-group">
@@ -9,7 +8,8 @@
             </span>
         </div><!-- /input-group -->
     </div>
-    <input type="hidden" name="newsletter_id" value="{{ $newsletter_id }}">
-    <input type="hidden" name="site_id" value="{{ $site->id }}">
+    <input type="hidden" name="newsletter_id" value="{{ $newsletter->id }}">
+    <input type="hidden" name="site_id" value="{{ $newsletter->site_id }}">
 </form>
+
 

@@ -166,9 +166,8 @@
             <h5 class="color-bloc">Inscription à la newsletter</h5>
             <div class="sidebar-bloc">
 
-                <h4>Inscription à la newsletter</h4>
                 @foreach($newsletters as $newsletter)
-                    @include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter])
+                    @include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'bail'])
                 @endforeach
 
             </div>

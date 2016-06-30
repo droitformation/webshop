@@ -84,4 +84,9 @@ class MatrimonialController extends Controller
         return view('frontend.matrimonial.'.$data['page']->template)->with($data);
     }
 
+    public function unsubscribe()
+    {
+        return view('frontend.matrimonial.unsubscribe');
+    }
+
 }
