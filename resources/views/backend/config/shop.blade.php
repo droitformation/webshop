@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="thumbnail big" ng-if="$flow.files.length">
                                     <img style="max-height: 180px;" flow-img="$flow.files[0]" />
-                                    <input type="hidden" name="shop[infos][logo]" id="shop_logo" value="">
+                                    <input type="hidden" name="shop[infos][logo]" id="shop_logo" value="{[{ $flow.files[0].name }]}">
                                 </div>
 
                                 <div class="thumbnail big" ng-if="!$flow.files.length">
