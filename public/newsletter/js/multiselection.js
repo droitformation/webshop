@@ -56,7 +56,7 @@ App.service('myService',  function ($rootScope,$filter) {
         },
         convertCategories: function(data, models, selected){
 
-            angular.forEach(data, function (value, key)
+            angular.forEach(data, function (value, key) 
             {
                 var result = [];
 
@@ -194,7 +194,7 @@ App.controller("MultiSelectionController",['$scope',"$filter","Categories","Arre
 
             var site_id = $('#main').data('site');
             site_id = !site_id ? null : site_id;
-
+            
             Categories.query(site_id)
                 .then(function (data) {
                     self.items  = data;
@@ -204,18 +204,18 @@ App.controller("MultiSelectionController",['$scope',"$filter","Categories","Arre
                         {
                             Arrets.simple($scope.uidContent)
                                 .then(function (data) {
-                                    self.items_categories = data.categories;
+                                    self.items_categories = data.arrets_categories;
                                     self.models = myService.convertCategories(self.items, self.models, self.items_categories);
-                                });
+                            });
                         }
                         else
                         {
                             /* Get the selected arret infos */
                             Analyses.simple($scope.uidContent)
                                 .then(function (data) {
-                                    self.items_categories = data.categories;
+                                    self.items_categories = data.analyses_categories;
                                     self.models = myService.convertCategories(self.items, self.models, self.items_categories);
-                                });
+                            });
                         }
                     }
                     else
@@ -235,9 +235,9 @@ App.controller("MultiSelectionController",['$scope',"$filter","Categories","Arre
                         /* Get the selected analyse infos */
                         Analyses.simple($scope.uidContent)
                             .then(function (data) {
-                                self.items_arrets = data.arrets;
+                                self.items_arrets = data.analyses_arrets;
                                 self.models = myService.convertArret(self.items, self.models, self.items_arrets);
-                            });
+                        });
                     }
                     else
                     {

@@ -12,7 +12,7 @@
             <tr bgcolor="ffffff"><td colspan="3" height="35"></td></tr><!-- space -->
             <tr bgcolor="ffffff" class="blocBorder">
                 <td width="400" align="left" class="resetMarge contentForm" valign="top">
-                    <h3 style="text-align: left;font-family: sans-serif;">{{ $bloc->groupe->categorie->title }}</h3>
+                    <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $bloc->groupe->categorie->title }}</h3>
                 </td>
                 <td width="160" align="center" valign="top" class="resetMarge">
                     <img width="130" border="0" src="{{ asset(config('newsletter.path.categorie').$bloc->groupe->categorie->image) }}" alt="{{ $bloc->groupe->categorie->title }}" />
@@ -26,7 +26,12 @@
             @foreach($bloc->groupe->arrets as $arret)
                 <!-- Bloc content-->
                 <table id="groupe_rang_{{ $arret->id }}" border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable groupe_rang">
-                    <tr bgcolor="ffffff"><td colspan="3" height="35"></td></tr><!-- space -->
+                    <tr bgcolor="ffffff">
+                        <td colspan="3"><span class="handleBlocs"><i class="fa fa-crosshairs"></i></span></td>
+                    </tr><!-- space -->
+                    <tr bgcolor="ffffff">
+                        <td colspan="3" height="35"></td>
+                    </tr><!-- space -->
                     <tr>
                         <td valign="top" width="375" class="resetMarge contentForm">
                             <div>

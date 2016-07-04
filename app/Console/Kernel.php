@@ -25,6 +25,13 @@ class Kernel extends ConsoleKernel {
 	{
 		$schedule->command('reminder')->everyMinute();
 
+/*		$schedule->call(function() {
+			\Mail::send('emails.notify', ['text' => 'hey'], function ($m)  {
+				$m->from('hello@app.com', 'Your Application');
+				$m->to('cindy.leschaud@gmail.com', 'Cindy Leschaud')->subject('Your Reminder!');
+			});
+		})->name('monitor_queue_listener')->everyMinute();*/
+
 		// Monitor queue listen
 /*		$path = base_path();
 		$schedule->call(function() use($path) {

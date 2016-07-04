@@ -186,6 +186,7 @@ App.controller("EditController",['$scope','$http','myService','__env', function(
 
         $( "#sortGroupe_" + groupe_id ).sortable({
             axis: 'y',
+            handle: '.handleBlocs',
             update: function (event, ui) {
                 var data = $(this).sortable('serialize') +"&groupe_id="+ groupe_id + "&_token=" + $("meta[name='_token']").attr('content');
                 // POST to server using $.post or $.ajax
@@ -198,7 +199,7 @@ App.controller("EditController",['$scope','$http','myService','__env', function(
         });
 
         $( "#sortGroupe_" + groupe_id ).sortable( "enable" );
-        $( "#sortGroupe_" + groupe_id).find('.groupe_rang').css('border','1px solid #bfe4ad');
+        $( "#sortGroupe_" + groupe_id).find('.groupe_rang').css('border','1px solid #ddd');
 
     };
 

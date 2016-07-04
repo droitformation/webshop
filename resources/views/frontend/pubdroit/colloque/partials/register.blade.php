@@ -29,6 +29,7 @@
         @if(!$colloque->occurrences->isEmpty())
         <div class='wrapper'>
             <br/><h4>Merci de préciser</h4>
+
             @foreach($colloque->occurrences as $occurrence)
                 <input class="options occurrences" required type="checkbox" id="occurrence_{{ $occurrence->id }}" name="occurrences[]" value="{{ $occurrence->id }}">
                 <label for="occurrence_{{ $occurrence->id }}">
