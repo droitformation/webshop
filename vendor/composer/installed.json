@@ -3878,130 +3878,6 @@
         ]
     },
     {
-        "name": "mathiasverraes/money",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/moneyphp/money.git",
-            "reference": "dc60d3c2a8bc8138a76cda7b5841156f7d8e7508"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/moneyphp/money/zipball/dc60d3c2a8bc8138a76cda7b5841156f7d8e7508",
-            "reference": "dc60d3c2a8bc8138a76cda7b5841156f7d8e7508",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5"
-        },
-        "require-dev": {
-            "cache/taggable-cache": "^0.4.0",
-            "coduo/phpspec-data-provider-extension": "^1.0.3",
-            "ext-bcmath": "*",
-            "ext-gmp": "*",
-            "ext-intl": "*",
-            "florianv/swap": "^2.3",
-            "henrikbjorn/phpspec-code-coverage": "^2.0.2",
-            "phpspec/phpspec": "^2.5",
-            "phpunit/phpunit": "^4.5",
-            "psr/cache": "^1.0",
-            "umpirsky/currency-list": "^1.0"
-        },
-        "suggest": {
-            "ext-bcmath": "Calculate without integer limits",
-            "ext-gmp": "Calculate without integer limits",
-            "ext-intl": "Format Money objects with intl",
-            "florianv/swap": "Exchange rates library for PHP",
-            "psr/cache-implementation": "Used for Currency caching"
-        },
-        "time": "2016-05-23 09:57:12",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Money\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Mathias Verraes",
-                "email": "mathias@verraes.net",
-                "homepage": "http://verraes.net"
-            },
-            {
-                "name": "Frederik Bosch",
-                "email": "f.bosch@genkgo.nl"
-            },
-            {
-                "name": "Márk Sági-Kazár",
-                "email": "mark.sagi-kazar@gmail.com"
-            }
-        ],
-        "description": "PHP implementation of Fowler's Money pattern",
-        "homepage": "http://verraes.net/2011/04/fowler-money-pattern-in-php/",
-        "keywords": [
-            "Value Object",
-            "money",
-            "vo"
-        ]
-    },
-    {
-        "name": "pusher/pusher-php-server",
-        "version": "v2.4.1",
-        "version_normalized": "2.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/pusher/pusher-http-php.git",
-            "reference": "b3984a9f6fd65e39b7d6de9bb7d67656ff286f0f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/b3984a9f6fd65e39b7d6de9bb7d67656ff286f0f",
-            "reference": "b3984a9f6fd65e39b7d6de9bb7d67656ff286f0f",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "php": ">=5.2"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4"
-        },
-        "time": "2016-05-27 08:42:18",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "lib/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "Library for interacting with the Pusher REST API",
-        "homepage": "https://github.com/pusher/pusher-php-server",
-        "keywords": [
-            "events",
-            "php-pusher-server",
-            "publish",
-            "pusher",
-            "realtime",
-            "rest",
-            "trigger"
-        ]
-    },
-    {
         "name": "vlucas/phpdotenv",
         "version": "v2.3.0",
         "version_normalized": "2.3.0.0",
@@ -5734,18 +5610,142 @@
         "homepage": "https://symfony.com"
     },
     {
+        "name": "pusher/pusher-php-server",
+        "version": "v2.4.2",
+        "version_normalized": "2.4.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pusher/pusher-http-php.git",
+            "reference": "1120029fa16bfc92da06971df4a370a1b69c74c1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/1120029fa16bfc92da06971df4a370a1b69c74c1",
+            "reference": "1120029fa16bfc92da06971df4a370a1b69c74c1",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "php": ">=5.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4"
+        },
+        "time": "2016-07-04 13:08:05",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Library for interacting with the Pusher REST API",
+        "homepage": "https://github.com/pusher/pusher-php-server",
+        "keywords": [
+            "events",
+            "php-pusher-server",
+            "publish",
+            "pusher",
+            "realtime",
+            "rest",
+            "trigger"
+        ]
+    },
+    {
+        "name": "mathiasverraes/money",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/moneyphp/money.git",
+            "reference": "d71d5e3a9f72abcd5fedbdd8c9bd793373c7c405"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/moneyphp/money/zipball/d71d5e3a9f72abcd5fedbdd8c9bd793373c7c405",
+            "reference": "d71d5e3a9f72abcd5fedbdd8c9bd793373c7c405",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5"
+        },
+        "require-dev": {
+            "cache/taggable-cache": "^0.4.0",
+            "coduo/phpspec-data-provider-extension": "^1.0.3",
+            "ext-bcmath": "*",
+            "ext-gmp": "*",
+            "ext-intl": "*",
+            "florianv/swap": "^2.3",
+            "henrikbjorn/phpspec-code-coverage": "^2.0.2",
+            "phpspec/phpspec": "^2.5",
+            "phpunit/phpunit": "^4.5",
+            "psr/cache": "^1.0",
+            "umpirsky/currency-list": "^1.0"
+        },
+        "suggest": {
+            "ext-bcmath": "Calculate without integer limits",
+            "ext-gmp": "Calculate without integer limits",
+            "ext-intl": "Format Money objects with intl",
+            "florianv/swap": "Exchange rates library for PHP",
+            "psr/cache-implementation": "Used for Currency caching"
+        },
+        "time": "2016-07-06 06:43:28",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Money\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mathias Verraes",
+                "email": "mathias@verraes.net",
+                "homepage": "http://verraes.net"
+            },
+            {
+                "name": "Frederik Bosch",
+                "email": "f.bosch@genkgo.nl"
+            },
+            {
+                "name": "Márk Sági-Kazár",
+                "email": "mark.sagi-kazar@gmail.com"
+            }
+        ],
+        "description": "PHP implementation of Fowler's Money pattern",
+        "homepage": "http://verraes.net/2011/04/fowler-money-pattern-in-php/",
+        "keywords": [
+            "Value Object",
+            "money",
+            "vo"
+        ]
+    },
+    {
         "name": "designpond/newsletter",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/DesignPond/newsletter.git",
-            "reference": "af8f527ff2df125e01c3298e244faca3b5db6c47"
+            "reference": "895f795a4548b4859a92d9c8de4aa9be2bcbf056"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/af8f527ff2df125e01c3298e244faca3b5db6c47",
-            "reference": "af8f527ff2df125e01c3298e244faca3b5db6c47",
+            "url": "https://api.github.com/repos/DesignPond/newsletter/zipball/895f795a4548b4859a92d9c8de4aa9be2bcbf056",
+            "reference": "895f795a4548b4859a92d9c8de4aa9be2bcbf056",
             "shasum": ""
         },
         "require": {
@@ -5754,7 +5754,7 @@
             "maatwebsite/excel": "~2.0.0",
             "php": "~5.5|~7.0"
         },
-        "time": "2016-07-04 09:19:16",
+        "time": "2016-07-06 09:00:34",
         "type": "library",
         "extra": {
             "branch-alias": {

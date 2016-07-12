@@ -87,7 +87,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <h4><i class="fa fa-qrcode"></i> &nbsp;Ajouter un QRcode</h4>
                 <div class="panel panel-green">
                     <div class="panel-body">
@@ -130,7 +130,7 @@
                 </div>
 
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 
                 <h4><i class="fa fa-flag"></i> &nbsp;Messages d'erreur inscription</h4>
                 <div class="panel panel-danger">

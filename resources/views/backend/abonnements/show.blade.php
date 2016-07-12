@@ -18,7 +18,7 @@
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                     <div class="panel-body">
-                        <h4><i class="fa fa-edit"></i> &nbsp;</h4>
+                        <h4><i class="fa fa-edit"></i> &nbsp;Abonnement</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
                             <div class="col-sm-4 col-xs-5">

@@ -367,7 +367,7 @@ a:hover, a:active, a:focus {
 }
 
 #adresseFind , .adresse-find{
-    padding-bottom: 0px;
+    padding-bottom: 20px;
 }
 
 #adresseParent .collapse.in{
@@ -833,7 +833,11 @@ label.error{
 }
 
 .mainRowSearch td{
-    background: #f5f5f5;
+    background: #f1f1f1;
+}
+
+.secondRowSearch td {
+    background: #fbfbfb none repeat scroll 0 0;
 }
 
 .list_rappels{

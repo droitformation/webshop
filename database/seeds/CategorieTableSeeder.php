@@ -1,0 +1,95 @@
+<?php
+
+class CategorieTableSeeder extends \Illuminate\Database\Seeder  {
+
+	public function run()
+	{
+		// Uncomment the below to wipe the table clean before populating
+		DB::table('categories')->truncate();
+
+		$categories = array(
+			array('id' => '1','title' => 'Loyer','image' => 'bail/loyer.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:12:28','updated_at' => '2011-11-30 15:12:28','deleted_at' => NULL),
+			array('id' => '2','title' => 'Analyse','image' => 'bail/analyse.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:54:26','updated_at' => '2012-04-10 16:44:48','deleted_at' => NULL),
+			array('id' => '3','title' => 'Général','image' => 'bail/general.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:55:13','updated_at' => '2011-11-30 15:57:09','deleted_at' => NULL),
+			array('id' => '4','title' => 'Défaut','image' => 'bail/defaut.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:55:42','updated_at' => '2011-11-30 15:55:42','deleted_at' => NULL),
+			array('id' => '5','title' => 'Sous-location','image' => 'bail/souslocation.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:56:39','updated_at' => '2011-11-30 15:56:39','deleted_at' => NULL),
+			array('id' => '6','title' => 'Résiliation','image' => 'bail/resiliation.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:57:53','updated_at' => '2011-11-30 15:57:53','deleted_at' => NULL),
+			array('id' => '7','title' => 'Procédure','image' => 'bail/procedure.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:58:22','updated_at' => '2011-11-30 15:58:22','deleted_at' => NULL),
+			array('id' => '8','title' => 'Prolongation','image' => 'bail/prolongation.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 15:59:09','updated_at' => '2011-11-30 15:59:09','deleted_at' => NULL),
+			array('id' => '9','title' => 'Logement de famille','image' => 'bail/logement-famille.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:00:14','updated_at' => '2011-11-30 16:00:14','deleted_at' => NULL),
+			array('id' => '10','title' => 'Destiné à la publication','image' => 'bail/destine-a-la-publication.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:00:39','updated_at' => '2011-11-30 16:00:39','deleted_at' => NULL),
+			array('id' => '11','title' => 'Archives','image' => 'bail/archive.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:01:14','updated_at' => '2012-04-10 16:44:51','deleted_at' => NULL),
+			array('id' => '12','title' => 'Prostitution','image' => 'bail/prostituee.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:01:55','updated_at' => '2011-11-30 16:01:55','deleted_at' => NULL),
+			array('id' => '13','title' => 'Insolvabilité-Faillite','image' => 'bail/faillite.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:02:25','updated_at' => '2014-05-14 13:25:23','deleted_at' => NULL),
+			array('id' => '14','title' => 'Législation','image' => 'bail/legislation.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:03:32','updated_at' => '2011-11-30 16:03:32','deleted_at' => NULL),
+			array('id' => '15','title' => 'Frais accessoires','image' => 'bail/accessoires.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:04:03','updated_at' => '2011-11-30 16:04:03','deleted_at' => NULL),
+			array('id' => '16','title' => 'Conclusion','image' => 'bail/conclusions.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:05:09','updated_at' => '2011-11-30 16:05:09','deleted_at' => NULL),
+			array('id' => '17','title' => 'Bail à ferme','image' => 'bail/ferme.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:05:56','updated_at' => '2011-11-30 16:05:56','deleted_at' => NULL),
+			array('id' => '18','title' => 'Diligence','image' => 'bail/diligence.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:06:45','updated_at' => '2011-11-30 16:06:45','deleted_at' => NULL),
+			array('id' => '19','title' => 'Vente','image' => 'bail/changement_proprietaire.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:09:07','updated_at' => '2011-11-30 16:09:07','deleted_at' => NULL),
+			array('id' => '20','title' => 'Expulsion','image' => 'bail/expulsion.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:09:47','updated_at' => '2011-11-30 16:09:47','deleted_at' => NULL),
+			array('id' => '21','title' => 'Changement de propriétaire','image' => 'bail/changement_proprietaire_01.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2011-11-30 16:11:12','updated_at' => '2014-04-10 11:11:23','deleted_at' => '2016-01-06 00:00:00'),
+			array('id' => '22','title' => 'Thème du mois','image' => 'matrimonial/themedumoisrose.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:03:23','updated_at' => '2011-12-22 15:47:42','deleted_at' => '2016-01-06 00:00:00'),
+			array('id' => '23','title' => 'Revenu hypothétique','image' => 'matrimonial/revenuhypothetique.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:03:48','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '24','title' => 'Arrêts commentés','image' => 'matrimonial/analyse_01.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:04:03','updated_at' => '2012-02-22 16:01:40','deleted_at' => NULL),
+			array('id' => '25','title' => 'Mariage','image' => 'matrimonial/mariage.jpg','ismain' => '1','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:04:24','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '26','title' => 'Etranger','image' => 'matrimonial/etranger.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:04:45','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '27','title' => 'Liquidation du régime matrimonial','image' => 'matrimonial/partagedesbiens.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:07:15','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '28','title' => 'Domicile conjugal','image' => 'matrimonial/domicileconjugal.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:07:30','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '29','title' => 'Mesures protectrices','image' => 'matrimonial/mesuresprotectrices_01.jpg','ismain' => '1','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 12:07:53','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '30','title' => 'Droit de garde','image' => 'matrimonial/gardedesenfants.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:50:08','updated_at' => '2012-01-03 09:24:40','deleted_at' => '2016-01-06 00:00:00'),
+			array('id' => '31','title' => 'Autorité parentale','image' => 'matrimonial/autoriteparentale.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:50:31','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '32','title' => 'Entretien','image' => 'matrimonial/entretien.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:51:03','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '33','title' => 'Divorce','image' => 'matrimonial/divorce.jpg','ismain' => '1','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:51:43','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '34','title' => 'Procédure','image' => 'matrimonial/tribunal.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:52:42','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '35','title' => 'Droit de visite','image' => 'matrimonial/droitdevisite.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:53:08','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '36','title' => 'Avis débiteur','image' => 'matrimonial/avis-debiteur.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:53:26','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '37','title' => 'Partage prévoyance','image' => 'matrimonial/prevoyance.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:53:52','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '38','title' => 'Législation','image' => 'matrimonial/legislation_01.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:54:37','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '39','title' => 'Publication prévue','image' => 'matrimonial/publicationprevue.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 13:55:02','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '40','title' => 'Garde des enfants','image' => 'matrimonial/gardedesenfants_01.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-16 14:33:42','updated_at' => '2011-12-21 17:14:39','deleted_at' => NULL),
+			array('id' => '41','title' => 'Modification du jugement de divorce','image' => 'matrimonial/modifjugementdivorce.jpg','ismain' => '1','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-21 17:15:44','updated_at' => '2011-12-21 17:15:44','deleted_at' => NULL),
+			array('id' => '42','title' => 'Couple non marié','image' => 'matrimonial/couplenonmarie.jpg','ismain' => '1','site_id' => '3','hideOnSite' => '0','created_at' => '2011-12-21 17:17:39','updated_at' => '2011-12-21 17:17:39','deleted_at' => NULL),
+			array('id' => '43','title' => 'Thème du mois','image' => 'matrimonial/themedumois.jpg','ismain' => '1','site_id' => '3','hideOnSite' => '0','created_at' => '2012-01-05 15:51:12','updated_at' => '2012-01-05 15:53:56','deleted_at' => '2016-01-06 00:00:00'),
+			array('id' => '44','title' => 'BailAFermeAgricole','image' => 'bail/bailaferme.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2012-03-14 15:21:59','updated_at' => '2012-03-14 15:22:34','deleted_at' => '2016-01-06 00:00:00'),
+			array('id' => '45','title' => 'Bail à ferme agricole','image' => 'bail/bailaferme_01.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2012-03-14 15:22:17','updated_at' => '2012-03-14 15:25:02','deleted_at' => NULL),
+			array('id' => '46','title' => 'Protection de l\'enfant','image' => 'matrimonial/protectionenfant.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 09:37:11','updated_at' => '2012-03-27 09:37:11','deleted_at' => NULL),
+			array('id' => '47','title' => 'Thème du mois','image' => 'matrimonial/themedumois_01.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 10:07:45','updated_at' => '2012-03-27 10:07:45','deleted_at' => NULL),
+			array('id' => '48','title' => 'Analyse','image' => 'matrimonial/analyse_02.jpg','ismain' => '1','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 10:08:28','updated_at' => '2013-01-30 10:58:43','deleted_at' => NULL),
+			array('id' => '49','title' => 'Partenariat','image' => 'matrimonial/partenariat.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 10:09:19','updated_at' => '2012-03-27 10:09:19','deleted_at' => NULL),
+			array('id' => '50','title' => 'Couple','image' => 'matrimonial/couple.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 10:09:57','updated_at' => '2012-03-27 10:09:57','deleted_at' => NULL),
+			array('id' => '51','title' => 'Nom de famille','image' => 'matrimonial/nomdefamille.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 10:10:32','updated_at' => '2012-03-27 10:10:32','deleted_at' => NULL),
+			array('id' => '52','title' => 'Violence conjugale','image' => 'matrimonial/violencsconjugale.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 10:11:08','updated_at' => '2012-03-27 10:11:08','deleted_at' => NULL),
+			array('id' => '53','title' => 'S.O.S.','image' => 'matrimonial/sos.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-03-27 10:11:32','updated_at' => '2012-03-27 10:11:32','deleted_at' => NULL),
+			array('id' => '54','title' => 'Congé','image' => 'bail/conge.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2012-06-13 09:22:38','updated_at' => '2012-06-13 09:24:38','deleted_at' => '2016-01-06 00:00:00'),
+			array('id' => '55','title' => 'Séquestre','image' => 'matrimonial/sequestre.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-06-27 10:22:13','updated_at' => '2012-06-27 10:22:13','deleted_at' => NULL),
+			array('id' => '56','title' => 'Audition enfant','image' => 'matrimonial/auditionenfant.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-08-29 13:30:49','updated_at' => '2012-08-29 13:30:49','deleted_at' => NULL),
+			array('id' => '57','title' => 'Contrat','image' => 'matrimonial/contrat.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-08-29 13:31:17','updated_at' => '2012-08-29 13:31:17','deleted_at' => NULL),
+			array('id' => '58','title' => 'Partage des biens','image' => 'matrimonial/partagedesbiens_01.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2012-08-29 13:32:38','updated_at' => '2012-08-29 13:32:38','deleted_at' => NULL),
+			array('id' => '59','title' => 'NoëlBail','image' => 'bail/noelBail.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2013-12-09 11:19:35','updated_at' => '2013-12-09 11:19:35','deleted_at' => NULL),
+			array('id' => '60','title' => 'NoelMatrimonial','image' => 'matrimonial/noelMatrimonial.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2013-12-09 11:21:12','updated_at' => '2013-12-09 11:21:12','deleted_at' => NULL),
+			array('id' => '61','title' => 'Commercial','image' => 'bail/commercial.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-09 15:08:34','updated_at' => '2014-04-09 15:08:34','deleted_at' => NULL),
+			array('id' => '62','title' => 'Congé','image' => 'bail/conge_01.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-09 15:09:15','updated_at' => '2014-04-09 15:09:15','deleted_at' => NULL),
+			array('id' => '63','title' => 'Décès','image' => 'bail/deces.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-09 15:28:18','updated_at' => '2014-04-09 15:28:18','deleted_at' => NULL),
+			array('id' => '64','title' => 'Sûretés','image' => 'bail/surete.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-09 15:28:59','updated_at' => '2014-04-09 15:28:59','deleted_at' => NULL),
+			array('id' => '65','title' => 'Base','image' => 'bail/base.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:12:06','updated_at' => '2014-04-10 11:12:06','deleted_at' => NULL),
+			array('id' => '66','title' => 'AMSL','image' => 'bail/amsl.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:12:41','updated_at' => '2014-04-10 11:12:41','deleted_at' => NULL),
+			array('id' => '67','title' => 'Délai','image' => 'bail/delai.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:14:07','updated_at' => '2014-04-10 11:14:07','deleted_at' => NULL),
+			array('id' => '68','title' => 'Droit public','image' => 'bail/droit-public.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:21:13','updated_at' => '2014-04-10 11:21:13','deleted_at' => NULL),
+			array('id' => '69','title' => 'Exemples','image' => 'bail/exemples.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:22:11','updated_at' => '2014-04-10 11:22:11','deleted_at' => NULL),
+			array('id' => '70','title' => 'Exercices','image' => 'bail/exercices.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:22:35','updated_at' => '2014-04-10 11:22:35','deleted_at' => NULL),
+			array('id' => '71','title' => 'Internet','image' => 'bail/internet.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:23:15','updated_at' => '2014-04-10 11:23:15','deleted_at' => NULL),
+			array('id' => '72','title' => 'Questions','image' => 'bail/questions2.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:24:03','updated_at' => '2014-04-10 11:24:03','deleted_at' => NULL),
+			array('id' => '73','title' => 'Rénovations','image' => 'bail/renovation.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:24:37','updated_at' => '2014-04-10 11:24:37','deleted_at' => NULL),
+			array('id' => '74','title' => 'Révision','image' => 'bail/revision.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:33:05','updated_at' => '2014-04-10 11:33:05','deleted_at' => NULL),
+			array('id' => '75','title' => 'Transfert','image' => 'bail/transfert.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2014-04-10 11:34:18','updated_at' => '2014-04-10 11:34:18','deleted_at' => NULL),
+			array('id' => '76','title' => 'Congé maternité','image' => 'matrimonial/congematernite.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2014-11-26 14:47:38','updated_at' => '2014-11-26 14:47:38','deleted_at' => NULL),
+			array('id' => '77','title' => 'Filiation','image' => 'matrimonial/filiation.jpg','ismain' => '0','site_id' => '3','hideOnSite' => '0','created_at' => '2014-11-26 14:48:04','updated_at' => '2014-11-26 14:48:04','deleted_at' => NULL),
+			array('id' => '78','title' => 'Pénal','image' => 'bail/penal.jpg','ismain' => '0','site_id' => '2','hideOnSite' => '0','created_at' => '2015-01-12 14:02:09','updated_at' => '2015-01-12 14:02:09','deleted_at' => NULL)
+		);
+
+		// Uncomment the below to run the seeder
+		DB::table('categories')->insert($categories);
+	}
+
+}

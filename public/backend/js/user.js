@@ -60,7 +60,7 @@ function template(data, type)
 
 var $search = $('.input-adresse');
 
-if($search.length && $(this).data('uid'))
+if($search.length && $search.data('uid'))
 {
     $search.each(function()
     {
@@ -71,7 +71,7 @@ if($search.length && $(this).data('uid'))
         var type = $(this).data('type');
         var name = type == 'adresse_id' || 'tiers_id' ? 'adresse_id' : 'user_id';
         var res  = name.replace("_id", "");
-
+        console.log(uid);
         if(uid)
         {
             $.get( 'admin/' + res + '/getAdresse/' + uid , function( data )

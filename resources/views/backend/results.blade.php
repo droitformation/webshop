@@ -32,6 +32,12 @@
                 </div>
             @endif
 
+            @if(!session()->has('term'))
+                <div class="alert alert-warning" role="alert">
+                    <p>Aucun terme de recherche indiqué</p>
+                </div>
+            @endif
+
         </div>
 
         <div class="col-md-9">
@@ -63,13 +69,14 @@
                                     </tr>
                                     @if(!$user->adresses->isEmpty())
                                         @foreach($user->adresses as $adresse)
-                                            <tr>
-                                                <td></td>
+                                            <tr class="secondRowSearch">
+                                                <td class="text-right"><h3><i class="fa fa-map-marker" aria-hidden="true"></i></h3></td>
                                                 <td><strong>{{ $adresse->name }}</strong><br/>{{ $adresse->company }}</td>
-                                                <td>{{ $adresse->email }}</td>
-                                                <td>{{ $adresse->ville }}</td>
+                                                <td>{{ $adresse->adresse }}</td>
+                                                <td>{{ $adresse->npa }} {{ $adresse->ville }}</td>
                                             </tr>
                                         @endforeach
+                                        <tr style="border:none; border-top:1px solid #b1b1b1;  "><td colspan="4"></td></tr>
                                     @endif
                                 @endforeach
                             </tbody>
@@ -117,12 +124,6 @@
             @if(isset($users) && $users->isEmpty() && isset($adresses) && $adresses->isEmpty())
                 <div class="alert alert-warning" role="alert">
                     <p>Rien trouvé</p>
-                </div>
-            @endif
-
-            @if(!session()->has('term'))
-                <div class="alert alert-warning" role="alert">
-                    <p>Aucun terme de recherche indiqué</p>
                 </div>
             @endif
 
