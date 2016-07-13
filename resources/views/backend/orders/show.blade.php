@@ -44,22 +44,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Client</label>
                             <div class="col-sm-6 col-xs-8">
-
-                                <!-- Autocomplete for adresse -->
-                                <div class="autocomplete-wrapper">
-
-                                    <div class="input-adresse" data-adresse="{{ $order->order_adresse->id }}" data-type="adresse_id">
-                                        <input type="hidden" class="form-control" value="{{ $order->order_adresse->id }}" name="adresse_id">
-                                    </div>
-                                    <div class="choice-adresse"></div>
-                                    <div class="collapse adresse-find">
-                                        <div class="form-group">
-                                            <input id="search-adresse" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Autocomplete for adresse -->
-
+                                @include('backend.partials.search-adresse', ['adresse_id' => $order->order_adresse->id, 'type' => 'adresse_id'])
                             </div>
                         </div>
 
@@ -118,7 +103,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Payé le</label>
+                            <label class="col-sm-3 control-label text-danger">Payé le</label>
                             <div class="col-sm-5 col-xs-8">
                                 <input type="text" class="form-control datePicker" value="{{ $order->payed_at ? $order->payed_at->format('Y-m-d') :'' }}" name="payed_at">
                             </div>

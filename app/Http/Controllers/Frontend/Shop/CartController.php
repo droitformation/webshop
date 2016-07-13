@@ -64,7 +64,7 @@ class CartController extends Controller {
     }
 
     public function quantityProduct(Request $request){
-
+        
         \Cart::update($request->input('rowid'), $request->input('qty'));
 
         return redirect()->back();

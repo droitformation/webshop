@@ -18,7 +18,7 @@
                 <td valign="top">{{ $item->name }}</td>
                 <td align="center" valign="top">{{ $item->product->price_cents }} CHF</td>
                 <td align="center" valign="top">
-                    <form method="post" action="{{ url('cart/quantityProduct') }}" class="form-inline">{!! csrf_field() !!}
+                    <form method="post" action="{{ url('cart/quantityProduct') }}" class="form-inline">
                         <div class="input-group">
                             <input type="text" class="form-control" name="qty" value="{{ $item->qty }}">
                             <span class="input-group-btn">
@@ -30,8 +30,7 @@
                 </td>
                 <td align="right" valign="top">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>
                 <td align="center" valign="top" class="mobile-hidden">
-                    <form method="post" action="{{ url('cart/quantityProduct') }}" class="form-inline">
-                        <input type="hidden" name="qty" value="0">
+                    <form method="post" action="{{ url('cart/removeProduct') }}" class="form-inline">{!! csrf_field() !!}
                         <input type="hidden" name="rowid" value="{{ $item->rowid }}">
                         <button type="submit"><i class="icon-trash"></i></button>
                     </form>

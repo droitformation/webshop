@@ -141,6 +141,19 @@
                           </div>
                       </div>
 
+                      @if(!$user->adresses->isEmpty())
+                          @foreach($user->adresses as $adresse)
+                              @if(!$adresse->orders->isEmpty())
+                                  <div class="panel panel-midnightblue">
+                                      <div class="panel-body">
+                                          <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes via adresse</h3>
+                                          @include('backend.users.partials.commandes', ['orders' => $adresse->orders])
+                                      </div>
+                                  </div>
+                              @endif
+                          @endforeach
+                      @endif
+
                   </div>
               </div>
 

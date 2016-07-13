@@ -103,35 +103,10 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     white-space: pre-wrap;
 }
 
-.ui-widget-content {
-    border: 1px solid #aaa;
-    color: #222;
-    background: #fff;
-    display: inline-block;
-    list-style: outside none none;
-    padding: 3px;
-    z-index: 1000;
-}
 
-.ui-widget-content li a span{
-    display: block;
-    font-size: 12px;
-}
 
 .normalTable p{
     margin-bottom: 0;
-}
-
-.ui-widget-content li a{
-    display: block;
-    margin: 2px 0;
-    padding: 2px 0;
-    text-decoration: none;
-}
-
-.ui-widget-content li.ui-state-focus{
-    background: #f5f5f5;
-    border: 1px solid transparent;
 }
 
 .ms-container {
@@ -357,6 +332,10 @@ a:hover, a:active, a:focus {
 
 #adresseParent #adresseFind{
     padding-bottom: 20px;
+}
+
+#formOrder #adresseParent #adresseFind{
+    padding-bottom: 0px;
 }
 
 #adresseMake,#adresseFind, .adresse-find-abo{
@@ -858,4 +837,54 @@ label.error{
 
 .toggle.off.ios .btn-xs{
     padding: 2px 6px 2px 12px;
+}
+
+.ui-widget-content {
+    border: 1px solid #aaa;
+    color: #222;
+    background: #fff;
+    display: inline-block;
+    list-style: outside none none;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+}
+
+.ui-widget-content li {
+    border: 1px solid transparent;
+}
+
+.ui-widget-content li:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+.ui-widget-content li a {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+    display: block;
+    padding: 3px;
+}
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus, .ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus{
+    background: none;
+    border: 1px solid transparent;
+}
+
+.ui-widget-content li a:hover {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+    padding: 3px;
+    background: #f8f8f8;
+}
+
+.ui-widget-content li a span{
+    font-size: 11px;
+    display: block;
+    font-weight: 400;
 }

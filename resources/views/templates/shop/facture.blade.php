@@ -102,7 +102,7 @@
                                 {{ $product->first()->title }} {!! ($product->first()->isbn ? '<br/><small style="font-size:9px;">(ISBN: '.$product->first()->isbn.')</small>' : '') !!}
                             </td>
                             <td class="text-right" valign="top">{!! !$price_unit->isEmpty() ? $price_unit->first()->price_normal.' <span>CHF</span>' : 'gratuit' !!}</td>
-                            <td class="text-right" valign="top">{!! !$price_unit->isEmpty() ? $price_unit->first()->price_special.' CHF' : '' !!}</td>
+                            <td class="text-right" valign="top">{!! !$price_unit->isEmpty() && $price_unit->first()->price_special ? $price_unit->first()->price_special.' CHF' : '' !!}</td>
                             <!-- Calculate price with quantitiy -->
                             <?php $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit') * $qty; ?>
                             <td class="text-right" valign="top">{{ number_format((float)$subtotal, 2, '.', '') }} <span>CHF</span></td>

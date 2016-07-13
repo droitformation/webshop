@@ -119,7 +119,7 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order->id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été regénéré' ));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'La facture a été regénéré']);
     }
 
     /**
