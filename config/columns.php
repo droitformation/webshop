@@ -17,7 +17,7 @@ return [
         'telephone'        => 'Téléphone',
         'mobile'           => 'Mobile',
         'adresse'          => 'Adresse',
-        'cp'               => 'CP',
+        'cp_trim'          => 'CP',
         'complement'       => 'Complément d\'adresse',
         'npa'              => 'NPA',
         'ville'            => 'Ville',

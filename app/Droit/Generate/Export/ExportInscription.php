@@ -88,6 +88,7 @@
              foreach($inscriptions as $inscription)
              {
                  $user = $inscription->inscrit;
+                 $data = [];
 
                  $data['Present']     = $inscription->present ? 'Oui' : '';
                  $data['Numéro']      = $inscription->inscription_no;
@@ -100,7 +101,6 @@
                  if($user && !$user->adresses->isEmpty())
                  {
                      $names = collect($this->columns);
-
                      $data += $names->map(function ($item, $key) use ($user) {
                          return $user->adresses->first()->$key;
                      })->toArray();

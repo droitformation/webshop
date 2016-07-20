@@ -24,22 +24,6 @@
                         </div>
                     </a>
                 </li>
-                @if($site->id == 1)
-                    <li>
-                        <a class="shortcut-tiles tiles-inverse" href="{{ url('admin/orders') }}">
-                            <div class="tiles-body tiles-body-menu">
-                                <i class="fa fa-shopping-cart"></i><p class="pull-right">Commandes</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="shortcut-tiles tiles-indigo" href="{{ url('admin/inscription') }}">
-                            <div class="tiles-body tiles-body-menu">
-                                <i class="fa fa-calendar"></i><p class="pull-right">Inscriptions</p>
-                            </div>
-                        </a>
-                    </li>
-                @endif
 
                 @if($site->id == 2)
                     <li>
@@ -53,6 +37,16 @@
                         <a class="shortcut-tiles tiles-green" href="{{ url('admin/calculette/ipc') }}">
                             <div class="tiles-body tiles-body-menu">
                                 <i class="fa fa-sort-numeric-asc"></i><p class="pull-right">Calculette IPC</p>
+                            </div>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($site->categories) && $site->id  > 1)
+                    <li>
+                        <a class="shortcut-tiles tiles-inverse" href="{{ url('admin/categories/'.$site->id) }}">
+                            <div class="tiles-body tiles-body-menu">
+                                <i class="fa fa-tags"></i><p class="pull-right">Catégories</p>
                             </div>
                         </a>
                     </li>

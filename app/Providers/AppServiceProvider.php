@@ -27,7 +27,8 @@ class AppServiceProvider extends ServiceProvider {
             'backend.bloc.*',
             'backend.arrets.*',
             'backend.analyses.*',
-            'backend.domains.*'
+            'backend.domains.*',
+            'backend.categories.*'
         ], 'App\Http\ViewComposers\SiteComposer');
 
         view()->composer([
@@ -35,20 +36,26 @@ class AppServiceProvider extends ServiceProvider {
             'backend.colloques.partials.occurrences',
         ], 'App\Http\ViewComposers\ColloqueComposer');
 
-        view()->composer(
-            [
-                'backend.users.adresse',
-                'frontend.pubdroit.profil.account',
-                'backend.export.user',
-                'frontend.pubdroit.checkout.billing',
-                'backend.orders.partials.adresse',
-                'backend.inscriptions.colloque',
-                'backend.inscriptions.desinscription',
-                'backend.adresses.*',
-                'auth.register'
-            ], 'App\Http\ViewComposers\UserAttributeComposer');
+        view()->composer([
+            'backend.users.adresse',
+            'frontend.pubdroit.profil.account',
+            'backend.export.user',
+            'frontend.pubdroit.checkout.billing',
+            'backend.orders.partials.adresse',
+            'backend.inscriptions.colloque',
+            'backend.inscriptions.desinscription',
+            'backend.adresses.*',
+            'auth.register'
+        ], 'App\Http\ViewComposers\UserAttributeComposer');
 
-        view()->composer(['frontend.pubdroit.partials.label','backend.export.user','backend.products.create','backend.products.index','backend.products.show'], 'App\Http\ViewComposers\LabelComposer');
+        view()->composer([
+            'frontend.pubdroit.partials.label',
+            'backend.export.user',
+            'backend.products.create',
+            'backend.products.index',
+            'backend.products.show'
+        ], 'App\Http\ViewComposers\LabelComposer');
+
         view()->composer([
             'frontend.pubdroit.partials.menu',
             'frontend.pubdroit.layouts.master',

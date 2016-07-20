@@ -157,6 +157,11 @@ class ProductEloquent implements ProductInterface{
             $product->abos()->sync($data['abo_id']);
         }
 
+        if(!isset($data['abo_id']) || (isset($data['abo_id']) && empty($data['abo_id'])))
+        {
+            $product->abos()->detach();
+        }
+
         return $product;
     }
 

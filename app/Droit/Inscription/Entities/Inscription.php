@@ -83,9 +83,15 @@ class Inscription extends Model
      * */
     public function getDocAttestationAttribute()
     {
-        $user = (!$this->group_id ? $this->user : $this->groupe->user);
         $path = config('documents.colloque.attestation');
-        $file = $path.'attestation'.'_'.$this->colloque_id.'-'.$user->id.'.pdf';
+
+        if(!$this->inscrit)
+        {
+            //throw new \App\Exceptions\AdresseNotExistException('ce user n\'existe pas pour l\'inscription:'.$this->id);
+            return null;
+        }
+
+        $file = $path.'attestation'.'_'.$this->colloque_id.'-'.$this->inscrit->id.'.pdf';
 
         return (\File::exists(public_path($file)) ? $file : null);
     }
@@ -138,12 +144,12 @@ class Inscription extends Model
         {
             return $this->participant->name;
         }
-        else
+        elseif(isset($this->user))
         {
             return $this->user->name;
         }
 
-        return null;
+        return $this->user_id;
     }
 
     public function getAdresseFacturationAttribute()

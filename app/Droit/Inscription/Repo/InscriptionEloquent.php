@@ -35,10 +35,10 @@ class InscriptionEloquent implements InscriptionInterface{
 
         if($paginate)
         {
-            return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->paginate(20);
+            return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->orderBy('created_at','DESC')->paginate(20);
         }
 
-        return $inscription->get();
+        return $inscription->orderBy('created_at','DESC')->get();
     }
 
     public function getByColloqueTrashed($id)
