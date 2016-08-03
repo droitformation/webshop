@@ -351,6 +351,16 @@ class MoneySpec extends ObjectBehavior
         $this->shouldThrow(\InvalidArgumentException::class)->duringAllocateTo('two');
     }
 
+    function it_throws_an_exception_when_allocate_target_is_empty()
+    {
+        $this->shouldThrow(\InvalidArgumentException::class)->duringAllocate([]);
+    }
+
+    function it_throws_an_exception_when_allocate_to_target_is_less_than_equals_zero()
+    {
+        $this->shouldThrow(\InvalidArgumentException::class)->duringAllocateTo(-1);
+    }
+
     /**
      * @dataProvider comparatorExamples
      */
@@ -376,6 +386,34 @@ class MoneySpec extends ObjectBehavior
             ['1', false, true, false],
             ['0', true, false, false],
             ['-1', false, false, true],
+        ];
+    }
+
+
+    /**
+     * @dataProvider absoluteExamples
+     */
+    function it_calculates_the_absolute_amount($amount, $result, Calculator $calculator)
+    {
+        $this->beConstructedWith($amount, new Currency(self::CURRENCY));
+
+        $calculator->absolute($amount)->willReturn($result);
+
+        $money = $this->absolute();
+
+        $money->shouldHaveType(Money::class);
+        $money->getAmount()->shouldBeLike($result);
+    }
+
+    function absoluteExamples()
+    {
+        return [
+            [1, 1],
+            [0, 0],
+            [-1, 1],
+            ['1', 1],
+            ['0', 0],
+            ['-1', 1],
         ];
     }
 }

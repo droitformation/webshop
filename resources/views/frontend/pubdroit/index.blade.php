@@ -15,6 +15,7 @@
 
             <div class="heading-bar">
                 <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Événements</h2>
+                <a class="text-danger pull-right" href="{{ url('archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
                 <span class="h-line"></span>
             </div>
 
@@ -50,16 +51,12 @@
                 @endforeach
             @endif
 
-            <div class="b-post-bottom text-right">
-                <a class="text-danger" href="{{ url('archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
-            </div>
-
         </section>
 
         <section id="nouveautes" class="col-md-4 col-xs-12">
 
             <div class="heading-bar">
-                <h2><i class="fa fa-heart"></i> &nbsp;Coups de coeur</h2>
+                <h2><i class="fa fa-star"></i> &nbsp;Nouveautés</h2>
                 <span class="h-line"></span>
             </div>
 
@@ -74,17 +71,17 @@
     </section>
 
     <div class="heading-bar">
-        <h2>Nouveautés</h2>
+        <h2>Abonnements</h2>
         <span class="h-line"></span>
     </div>
 
-    @if(!$nouveautes->isEmpty())
-    <?php $chunks = $nouveautes->chunk(3); ?>
+    @if(!$abos->isEmpty())
+    <?php $chunks = $abos->chunk(3); ?>
         @foreach($chunks as $chunk)
             <section class="row">
                 @foreach($chunk as $product)
                     <div class="col-md-4">
-                       @include('frontend.pubdroit.partials.product', ['product' => $product, 'news' => true])
+                       @include('frontend.pubdroit.partials.abo', ['product' => $product])
                     </div>
                 @endforeach
             </section>
@@ -92,12 +89,12 @@
     @endif
 
     <section class="row">
-        <div class="heading-bar">
-            <h2>Publications</h2>
-            <span class="h-line"></span>
-        </div>
         <!-- Start Main Content -->
         <section class="col-md-9 col-xs-12">
+            <div class="heading-bar">
+                <h2>Publications</h2>
+                <span class="h-line"></span>
+            </div>
             <!-- Start Ad Slider Section -->
             <div class="blog-sec-slider">
                 <div class="slider5">

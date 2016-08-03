@@ -52,9 +52,11 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
         if($search)
         {
+            $order = isset($columns[$sortCol]) ? $columns[$sortCol] : 'last_name';
+
             $data = $this->user->where('email','LIKE','%'.$search.'%')
                                 ->with(['subscriptions'])
-                                ->orderBy($columns[$sortCol], $sortDir)
+                                ->orderBy($order, $sortDir)
                                 ->take($length)
                                 ->skip($start)
                                 ->get();
@@ -94,8 +96,8 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
             $row = [];
 
             $row['id']            = '<a class="btn btn-info btn-sm" href="'.url('build/subscriber/'.$abonne->id).'">&Eacute;diter</a>';
-            $row['status']        = ($abonne->activated_at ? '<span class="label label-success">Confirmé</span>' : '<span class="label label-default">Email non confirmé</span>');
-            $row['activated_at']  = ($abonne->activated_at ? $abonne->activated_at->formatLocalized('%d %B %Y') : '');
+            $row['status']        = ($abonne->activated ? '<span class="label label-success">Confirmé</span>' : '<span class="label label-default">Email non confirmé</span>');
+            $row['activated_at']  = ($abonne->activated ? $abonne->activated->formatLocalized('%d %B %Y') : '');
             $row['email']         = $abonne->email;
             $row['abo']           = '';
 
@@ -107,7 +109,7 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
             $row['delete']  = '<form action="'.url('build/subscriber/'.$abonne->id).'" method="POST">'.csrf_field().'<input type="hidden" name="_method" value="DELETE">';
             $row['delete'] .= '<input type="hidden" name="email" value="'.$abonne->email.'">';
-            $row['delete'] .= '<button data-what="supprimer" data-action="Abonné '.$abonne->email.'" class="btn btn-danger btn-xs deleteActionNewsletter pull-right">Supprimer</button>';
+            $row['delete'] .= '<button data-what="supprimer" data-action="Abonné '.$abonne->email.'" class="btn btn-danger btn-xs deleteNewsAction pull-right">Supprimer</button>';
             $row['delete'] .= '</form>';
             $output['data'][] = $row;
         }
@@ -131,7 +133,6 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
         return $user;
 
     }
-
 
     public function subscribe($id,$newsletter_id)
     {

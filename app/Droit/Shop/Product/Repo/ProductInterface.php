@@ -5,6 +5,7 @@ interface ProductInterface {
 	public function getAll($search = null, $nbr = null, $hidden = false);
 	public function getNbr($nbr = null,$reject = null, $hidden = false);
     public function getSome($ids);
+	public function getAbos();
 	public function getByCategorie($id);
 	public function search($term, $hidden = false);
 	public function find($data);

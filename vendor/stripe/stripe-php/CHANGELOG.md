@@ -1,3 +1,19 @@
+### 3.19.0 2016-07-29
+
+* Opt requests directly into TLS 1.2 where OpenSSL >= 1.0.1 (see #277 for context)
+
+### 3.18.0 2016-07-28
+
+* Add new `STATUS_` constants for subscriptions
+
+### 3.17.1 2016-07-28
+
+* Fix auto-paging iterator so that it plays nicely with `iterator_to_array`
+
+### 3.17.0 2016-07-14
+
+* Add field annotations to model classes for better editor hinting
+
 ### 3.16.0 2016-07-12
 
 * Add `ThreeDSecure` model for 3-D secure payments

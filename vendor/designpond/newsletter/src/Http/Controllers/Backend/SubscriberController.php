@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 use designpond\newsletter\Newsletter\Repo\NewsletterInterface;
 use designpond\newsletter\Newsletter\Repo\NewsletterUserInterface;
-use designpond\newsletter\Newsletter\Worker\MailjetInterface;
+use designpond\newsletter\Newsletter\Worker\MailjetServiceInterface;
 
 use designpond\newsletter\Http\Requests\RemoveNewsletterUserRequest;
 
@@ -18,7 +18,7 @@ class SubscriberController extends Controller
     protected $newsletter;
     protected $worker;
 
-    public function __construct(NewsletterUserInterface $subscriber, NewsletterInterface $newsletter, MailjetInterface $worker)
+    public function __construct(NewsletterUserInterface $subscriber, NewsletterInterface $newsletter, MailjetServiceInterface $worker)
     {
         $this->subscriber = $subscriber;
         $this->newsletter = $newsletter;
@@ -126,6 +126,9 @@ class SubscriberController extends Controller
     public function update(RemoveNewsletterUserRequest $request, $id)
     {
         $activated_at = ($request->input('activation') ? date('Y-m-d G:i:s') : null);
+        $subscriber   = $this->subscriber->find($id);
+
+        $hadAbos = $subscriber->subscriptions->pluck('id')->all();
 
         $subscriber = $this->subscriber->update([
             'id'            => $id,
@@ -134,17 +137,17 @@ class SubscriberController extends Controller
             'activated_at'  => $activated_at
         ]);
 
-        $abos    = $request->input('newsletter_id', []);
-        $hadAbos = $subscriber->subscriptions->lists('newsletter_id')->all();
+        $hasAbos = $subscriber->subscriptions->pluck('id')->all();
 
-        $added   = array_diff($abos,$hadAbos);
-        $removed = array_diff($hadAbos,$abos);
+        $added   = array_filter(array_diff($hasAbos,$hadAbos));
+        $removed = array_filter(array_diff($hadAbos,$hasAbos));
 
         if(!empty($added) && $activated_at)
         {
             foreach($added as $list)
             {
                 $newsletter = $this->newsletter->find($list);
+
                 $this->worker->setList($newsletter->list_id);
                 $this->worker->subscribeEmailToList($subscriber->email);
             }
@@ -152,9 +155,10 @@ class SubscriberController extends Controller
 
         if(!empty($removed))
         {
-            foreach($added as $list)
+            foreach($removed as $list)
             {
                 $newsletter = $this->newsletter->find($list);
+                
                 $this->worker->setList($newsletter->list_id);
                 $this->worker->removeContact($subscriber->email);
             }

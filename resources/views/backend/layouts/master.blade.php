@@ -155,6 +155,7 @@
 @include('newsletter::Script.config')
 
 @if(isset($isNewsletter))
+    @include('newsletter::Script.date')
     @include('newsletter::Script.angular')
     @include('newsletter::Script.main')
 @endif

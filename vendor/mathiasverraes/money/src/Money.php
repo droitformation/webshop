@@ -349,6 +349,9 @@ final class Money implements \JsonSerializable
      */
     public function allocate(array $ratios)
     {
+        if (count($ratios) === 0) {
+            throw new \InvalidArgumentException('Cannot allocate to none');
+        }
         $remainder = $this->amount;
         $results = [];
         $total = array_sum($ratios);
@@ -382,6 +385,10 @@ final class Money implements \JsonSerializable
             throw new \InvalidArgumentException('Number of targets must be an integer');
         }
 
+        if ($n <= 0) {
+            throw new \InvalidArgumentException('Cannot allocate to none');
+        }
+
         return $this->allocate(array_fill(0, $n, 1));
     }
 
@@ -402,6 +409,14 @@ final class Money implements \JsonSerializable
         }
 
         return $this->getCalculator()->round($amount, $rounding_mode);
+    }
+
+    /**
+     * @return string
+     */
+    public function absolute()
+    {
+        return $this->newInstance($this->getCalculator()->absolute($this->amount));
     }
 
     /**

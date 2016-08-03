@@ -18,11 +18,12 @@ $ composer require designpond/newsletter
 "intervention/image": "dev-master",
 "inlinestyle/inlinestyle": "1.*",
 "maatwebsite/excel": "~2.0.0",
+"mailjet/mailjet-apiv3-php": "^1.1"
 ```
 
 ## Usage
 
-This package is used with Laravel 5.2.
+This package is used with Laravel 5.2 adn Mailjet API v3
 Created for multiple websites of La Faculté de droit de l'Université de Neuchâtel.
 The content is meant to be used with arrets, analyse, categories and multi sites
 
@@ -49,23 +50,64 @@ The content is meant to be used with arrets, analyse, categories and multi sites
 
 If you want routes with prefix set it in **env.js** in **newsletter/js**
 
+### Master layout dependencies
+
+Javascript and css
++ jquery.js v2.2
++ jquery-ui.js v1.11
++ bootstrap.css v3
++ bootstrap.js v3
+
+**Elements to add**
+
+In the head
+```php
+@if(isset($isNewsletter))
+    @include('newsletter::Style.main', ['campagne' => isset($campagne) ? : null])
+    @include('newsletter::Style.redactor')
+@endif
+```
+
+Before end of the body
+```php
+@include('newsletter::Script.config')
+     
+@if(isset($isNewsletter))
+    @include('newsletter::Script.date')
+    @include('newsletter::Script.redactor')
+    @include('newsletter::Script.angular')
+    @include('newsletter::Script.datatables')
+    @include('newsletter::Script.main')
+@endif
+```
+
 You have to implement upload routes for wysiwyg redactor.js
 
 ```php
-   Route::post('uploadRedactor', 'UploadController@uploadRedactor');
-   Route::post('uploadJS', 'UploadController@uploadJS');
-   Route::get('imageJson/{id?}', ['uses' => 'UploadController@imageJson']);
-   Route::get('fileJson/{id?}', ['uses' => 'UploadController@fileJson']);
+Route::post('uploadRedactor', 'UploadController@uploadRedactor');
+Route::post('uploadJS', 'UploadController@uploadJS');
+Route::get('imageJson/{id?}', ['uses' => 'UploadController@imageJson']);
+Route::get('fileJson/{id?}', ['uses' => 'UploadController@fileJson']);
 ```
 
 ### Usage with Arrets and Categories
 
 You have to Implement ajax routes:
 ``` php
-   Route::get('arret/{id}', 'ArretController@simple'); // build.js
-   Route::get('arrets/{id?}',     'ArretController@arrets'); // build.js
-   Route::get('categories/{id?}', 'CategorieController@categories'); // utils.js
+Route::get('arret/{id}', 'ArretController@simple'); // build.js
+Route::get('arrets/{id?}',     'ArretController@arrets'); // build.js
+Route::get('categories/{id?}', 'CategorieController@categories'); // utils.js
 ```
+
+And configure the path to you routes for angular`in newsletter/js/env.js
+
+```javascript
+// Admin url
+window.__env.adminUrl = 'http://dev.local/admin/';
+// Base url
+window.__env.ajaxUrl = 'http://dev.local/admin/ajax/';
+```
+
 
 ### Navigation menu items
 

@@ -44,6 +44,11 @@ class ProductEloquent implements ProductInterface{
         return $products->orderBy('created_at', 'DESC')->paginate($nbr);
     }
 
+    public function getAbos()
+    {
+        return $this->product->with(['abos'])->has('abos')->get();
+    }
+
     public function getByCategorie($id)
     {
         return $this->product
@@ -58,8 +63,8 @@ class ProductEloquent implements ProductInterface{
             ->get();
     }
 
-    public function find($id){
-
+    public function find($id)
+    {
         return $this->product->with(['categories','authors','domains','attributs','abos','stocks'])->find($id);
     }
 
@@ -133,7 +138,6 @@ class ProductEloquent implements ProductInterface{
         }
 
         return $product;
-
     }
 
     public function update(array $data){

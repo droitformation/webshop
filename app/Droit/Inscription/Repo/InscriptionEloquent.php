@@ -51,7 +51,7 @@ class InscriptionEloquent implements InscriptionInterface{
         return $this->inscription->where('colloque_id','=',$id)
             ->whereNull('payed_at')
             ->with(['price','colloque','user','participant','groupe','duplicate'])
-            ->groupBy('group_id')
+            ->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))
             ->paginate(20);
     }
 

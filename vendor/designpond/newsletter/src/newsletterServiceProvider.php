@@ -87,6 +87,7 @@ class newsletterServiceProvider extends ServiceProvider
         });
 
         $this->registerMailjetService();
+        $this->registerMailjetNewService();
         $this->registerNewsletterService();
         $this->registerContentService();
         $this->registerTypesService();
@@ -112,6 +113,20 @@ class newsletterServiceProvider extends ServiceProvider
                 new \designpond\newsletter\Newsletter\Service\Mailjet(
                     config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')
                 )
+            );
+        });
+    }
+
+    /**
+     * Newsletter Content service
+     */
+    protected function registerMailjetNewService(){
+
+        $this->app->bind('designpond\newsletter\Newsletter\Worker\MailjetServiceInterface', function()
+        {
+            return new \designpond\newsletter\Newsletter\Worker\MailjetService(
+                new \Mailjet\Client(config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')),
+                new \Mailjet\Resources()
             );
         });
     }
@@ -210,7 +225,7 @@ class newsletterServiceProvider extends ServiceProvider
         $this->app->singleton('designpond\newsletter\Newsletter\Worker\ImportWorkerInterface', function()
         {
             return new \designpond\newsletter\Newsletter\Worker\ImportWorker(
-                \App::make('designpond\newsletter\Newsletter\Worker\MailjetInterface'),
+                \App::make('designpond\newsletter\Newsletter\Worker\MailjetServiceInterface'),
                 \App::make('designpond\newsletter\Newsletter\Repo\NewsletterUserInterface'),
                 \App::make('designpond\newsletter\Newsletter\Repo\NewsletterInterface'),
                 \App::make('Maatwebsite\Excel\Excel'),

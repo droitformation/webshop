@@ -14,8 +14,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'edc6464955a37aa4d5fbf39d40fb6ee7' => __DIR__ . '/..' . '/symfony/polyfill-php55/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
+        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -396,8 +396,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             ),
             'PhpSpec' => 
             array (
-                0 => __DIR__ . '/..' . '/phpspec/phpspec/src',
-                1 => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src',
+                0 => __DIR__ . '/..' . '/benconstable/phpspec-laravel/src',
+                1 => __DIR__ . '/..' . '/phpspec/phpspec/src',
             ),
             'PHPExcel' => 
             array (
@@ -416,6 +416,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             'Mockery' => 
             array (
                 0 => __DIR__ . '/..' . '/mockery/mockery/library',
+            ),
+            'Mailjet' => 
+            array (
+                0 => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src',
             ),
             'Maatwebsite\\Excel\\' => 
             array (
@@ -2885,6 +2889,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'League\\Flysystem\\PluginInterface' => __DIR__ . '/..' . '/league/flysystem/src/PluginInterface.php',
         'League\\Flysystem\\Plugin\\AbstractPlugin' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/AbstractPlugin.php',
         'League\\Flysystem\\Plugin\\EmptyDir' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/EmptyDir.php',
+        'League\\Flysystem\\Plugin\\ForcedCopy' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/ForcedCopy.php',
+        'League\\Flysystem\\Plugin\\ForcedRename' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/ForcedRename.php',
         'League\\Flysystem\\Plugin\\GetWithMetadata' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/GetWithMetadata.php',
         'League\\Flysystem\\Plugin\\ListFiles' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/ListFiles.php',
         'League\\Flysystem\\Plugin\\ListPaths' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/ListPaths.php',
@@ -3019,6 +3025,11 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Maatwebsite\\Excel\\Readers\\LaravelExcelReader' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Readers/LaravelExcelReader.php',
         'Maatwebsite\\Excel\\Writers\\CellWriter' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Writers/CellWriter.php',
         'Maatwebsite\\Excel\\Writers\\LaravelExcelWriter' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Writers/LaravelExcelWriter.php',
+        'Mailjet\\Client' => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src/Mailjet/Client.php',
+        'Mailjet\\Config' => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src/Mailjet/Config.php',
+        'Mailjet\\Request' => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src/Mailjet/Request.php',
+        'Mailjet\\Resources' => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src/Mailjet/Resources.php',
+        'Mailjet\\Response' => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src/Mailjet/Response.php',
         'MembreTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MembreTableSeeder.php',
         'MenuTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MenuTableSeeder.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
@@ -4257,6 +4268,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'PhpSpec\\Process\\ReRunner\\PcntlReRunner' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Process/ReRunner/PcntlReRunner.php',
         'PhpSpec\\Process\\ReRunner\\PhpExecutableReRunner' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Process/ReRunner/PhpExecutableReRunner.php',
         'PhpSpec\\Process\\ReRunner\\PlatformSpecificReRunner' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Process/ReRunner/PlatformSpecificReRunner.php',
+        'PhpSpec\\Process\\ReRunner\\ProcOpenReRunner' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Process/ReRunner/ProcOpenReRunner.php',
         'PhpSpec\\Process\\ReRunner\\WindowsPassthruReRunner' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Process/ReRunner/WindowsPassthruReRunner.php',
         'PhpSpec\\Process\\Shutdown\\Shutdown' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Process/Shutdown/Shutdown.php',
         'PhpSpec\\Process\\Shutdown\\ShutdownActionInterface' => __DIR__ . '/..' . '/phpspec/phpspec/src/PhpSpec/Process/Shutdown/ShutdownActionInterface.php',
@@ -5225,8 +5237,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'designpond\\newsletter\\Exceptions\\ContentCreationException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/ContentCreationException.php',
         'designpond\\newsletter\\Exceptions\\DeleteUserException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/DeleteUserException.php',
         'designpond\\newsletter\\Exceptions\\FileUploadException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/FileUploadException.php',
+        'designpond\\newsletter\\Exceptions\\ListNotSetException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/ListNotSetException.php',
         'designpond\\newsletter\\Exceptions\\MultiSiteException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/MultiSiteException.php',
         'designpond\\newsletter\\Exceptions\\SubscribeUserException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/SubscribeUserException.php',
+        'designpond\\newsletter\\Exceptions\\TestSendException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/TestSendException.php',
         'designpond\\newsletter\\Exceptions\\UserNotExistException' => __DIR__ . '/..' . '/designpond/newsletter/src/Exceptions/UserNotExistException.php',
         'designpond\\newsletter\\Facade\\Campagne' => __DIR__ . '/..' . '/designpond/newsletter/src/Facade/Campagne.php',
         'designpond\\newsletter\\Http\\Controllers\\Backend\\CampagneController' => __DIR__ . '/..' . '/designpond/newsletter/src/Http/Controllers/Backend/CampagneController.php',
@@ -5285,6 +5299,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'designpond\\newsletter\\Newsletter\\Worker\\ImportWorker' => __DIR__ . '/..' . '/designpond/newsletter/src/Newsletter/Worker/ImportWorker.php',
         'designpond\\newsletter\\Newsletter\\Worker\\ImportWorkerInterface' => __DIR__ . '/..' . '/designpond/newsletter/src/Newsletter/Worker/ImportWorkerInterface.php',
         'designpond\\newsletter\\Newsletter\\Worker\\MailjetInterface' => __DIR__ . '/..' . '/designpond/newsletter/src/Newsletter/Worker/MailjetInterface.php',
+        'designpond\\newsletter\\Newsletter\\Worker\\MailjetService' => __DIR__ . '/..' . '/designpond/newsletter/src/Newsletter/Worker/MailjetService.php',
+        'designpond\\newsletter\\Newsletter\\Worker\\MailjetServiceInterface' => __DIR__ . '/..' . '/designpond/newsletter/src/Newsletter/Worker/MailjetServiceInterface.php',
         'designpond\\newsletter\\Newsletter\\Worker\\MailjetWorker' => __DIR__ . '/..' . '/designpond/newsletter/src/Newsletter/Worker/MailjetWorker.php',
         'designpond\\newsletter\\Newsletter\\Worker\\StatsWorker' => __DIR__ . '/..' . '/designpond/newsletter/src/Newsletter/Worker/StatsWorker.php',
         'designpond\\newsletter\\newsletterServiceProvider' => __DIR__ . '/..' . '/designpond/newsletter/src/newsletterServiceProvider.php',

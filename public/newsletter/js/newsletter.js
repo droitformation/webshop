@@ -22,7 +22,7 @@ jQuery(function($){
                 message.find('.alert p').html('Email de test en cours d\'envoi &nbsp;<i class="fa fa-spinner fa-spin"></i>').show();
 
                 $.ajax({
-                    url     : url + 'build/send/test',
+                    url     : url + 'build/send/forward',
                     data    : { id: campagneId , email: result, send_type : 'ajax', _token : $("meta[name='_token']").attr('content')},
                     type    : "POST",
                     success : function(data) {
@@ -43,35 +43,6 @@ jQuery(function($){
             }
         });
     });
-
-    $('#bootbox').click(function(){
-        var campagneId = $(this).data('campagne');
-        var sujet      = '';
-
-        /*  Get campagne infos */
-        $.get( url + 'build/campagne/simple/' + campagneId , function( campagne ) {
-            sujet = campagne.sujet;
-            console.log(sujet);
-        }) .always(function() {
-
-            /*  Modal */
-            bootbox.dialog({
-                message: "Etes-vous sûr de vouloir envoyer la campagne : <strong>" + sujet + "</strong>?",
-                title: "Envoyer la campagne",
-                buttons: {
-                    success: {
-                        label: "Oui!",
-                        className: "btn-success",
-                        callback: function() {
-                            $("#sendCampagneForm").submit();
-                        }
-                    },
-                    main: {
-                        label: "Annuler", className: "btn-default"
-                    }
-                }
-            });
-        });
-    });
+    
 
 });

@@ -109,7 +109,11 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 /* End Links defaults style */
 
 /* Start main Header css */
-#main-header { background:#f5f5f5 repeat; padding:20px 0 0; margin:0 0 30px; }
+#main-header {
+    background: #f5f5f5 none repeat scroll 0 0;
+    margin: 0 0 30px;
+    padding: 10px 0 0;
+}
 #logo { margin:0; }
 #logo a { display:block; height:100%; }
 #main-header input[type="text"] { font-size:13px; color:#5a5a5a; height:36px; float:left; margin:0; border: 1px solid #dadada;}
@@ -130,7 +134,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     color: #b01d22;
 }
 /* Start Main menu css */
-#main-header #nav { background:rgba(37, 36, 36); background:rgba(37, 36, 36, 0.1); border-top: 1px solid rgba(37, 36, 36, 0.1); margin-top: 15px;}
+#main-header #nav { background:rgba(37, 36, 36); background:rgba(37, 36, 36, 0.1); border-top: 1px solid rgba(37, 36, 36, 0.1); margin-top: 5px;}
 #main-header .navbar-inverse .navbar-inner { background:none; border:0; -webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, .0), 0 0 0 rgba(0, 0, 0, .0); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 rgba(0, 0, 0, .0); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 rgba(0, 0, 0, .0); padding:0; }
 #main-header .navbar .nav > li:first-child { background:none; }
 #main-header .navbar .nav > li { font-size:14px; padding-left:2px; }
@@ -186,19 +190,24 @@ margin-bottom:0;
 .e-commerce-list li.p-category a:hover { color:#fff; text-decoration:none; }
 .c-btn {
     background: #fff none repeat scroll 0 0;
-    padding: 0 10px;
-    margin-top: -8px;
+    padding: 5px 5px;
     position: absolute;
     right: 15px;
     text-align: center;
-    width: 180px;
+    width: 220px;
 }
 
 .c-btn .btn {
     background: #f5f5f5 none repeat scroll 0 0;
     border: 1px solid #ebebeb;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding-right: 10px;
+}
+
+.c-btn .cart-basket {
+    color: #b01d22;
+    line-height: 40px;
+    padding: 5px;
 }
 
 .c-btn .btn-mini .caret,
@@ -206,11 +215,18 @@ margin-bottom:0;
     margin-left: 8px;
     margin-top: 0;
 }
-.cart-btn { background:url(../images/cart-icon.png) no-repeat left;
+.cart-btn {
+    background:url(../images/cart-icon.png) no-repeat left;
     display: inline-block;
-    font-size: 18px;
-    line-height: 45px;
-    padding-left: 30px;}
+    font-size: 15px;
+    line-height: 42px;
+    padding-bottom: 3px;
+    padding-left: 30px;
+    padding-right: 5px;
+}
+.cart-btn .btn-group-vertical a{
+    margin-bottom: 0;
+}
 .cart-btn:hover { text-decoration:none; }
 .btn-group ul li { padding:0; background:none; margin:0; float:none; }
 /* End Top Nav Bar Css */

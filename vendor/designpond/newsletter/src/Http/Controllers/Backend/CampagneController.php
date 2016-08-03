@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use designpond\newsletter\Newsletter\Repo\NewsletterCampagneInterface;
 use designpond\newsletter\Newsletter\Repo\NewsletterTypesInterface;
 use designpond\newsletter\Newsletter\Repo\NewsletterContentInterface;
-use designpond\newsletter\Newsletter\Worker\MailjetInterface;
+use designpond\newsletter\Newsletter\Worker\MailjetServiceInterface;
 
 use designpond\newsletter\Newsletter\Helper\Helper;
 
@@ -20,7 +20,7 @@ class CampagneController extends Controller
     protected $content;
     protected $mailjet;
 
-    public function __construct(NewsletterCampagneInterface $campagne, NewsletterTypesInterface $type, NewsletterContentInterface $content, MailjetInterface $mailjet)
+    public function __construct(NewsletterCampagneInterface $campagne, NewsletterTypesInterface $type, NewsletterContentInterface $content, MailjetServiceInterface $mailjet)
     {
         $this->campagne = $campagne;
         $this->type     = $type;
@@ -58,6 +58,37 @@ class CampagneController extends Controller
     }
 
     /**
+     * Preview
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function preview($id)
+    {
+        $campagne = $this->campagne->find($id);
+        $data     = $this->mailjet->getHtml($campagne->api_campagne_id);
+
+        return response($data);
+    }
+
+    /**
+     * Preview
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel($id)
+    {
+        $campagne = $this->campagne->find($id);
+        $this->mailjet->updateCampagne($campagne->api_campagne_id,0);
+
+        // Update campagne status
+        $this->campagne->update(['id' => $campagne->id, 'status' => 'brouillon', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => null]);
+
+        return redirect('build/newsletter')->with(['status' => 'success' , 'message' => 'Envoi de la campagne annulé']);
+    }
+
+    /**
      * Campagne
      * AJAX
      * @param  int  $id
@@ -90,16 +121,18 @@ class CampagneController extends Controller
      */
     public function store(Request $request)
     {
-        $campagne = $this->campagne->create( ['sujet' => $request->input('sujet'), 'auteurs' => $request->input('auteurs'), 'newsletter_id' => $request->input('newsletter_id') ] );
+        $campagne = $this->campagne->create(['sujet' => $request->input('sujet'), 'auteurs' => $request->input('auteurs'), 'newsletter_id' => $request->input('newsletter_id') ] );
 
         $this->mailjet->setList($campagne->newsletter->list_id);
 
-        $created = $this->mailjet->createCampagne($campagne);
+        $created = $this->mailjet->createCampagne($campagne); // return Mailjet ID
 
         if(!$created)
         {
             throw new \designpond\newsletter\Exceptions\CampagneCreationException('Problème avec la création de campagne sur mailjet');
         }
+
+        $this->campagne->update(['id' => $campagne->id, 'api_campagne_id' => $created]);
 
         return redirect('build/campagne/'.$campagne->id)->with(['status' => 'success' , 'message' => 'Campagne crée']);
     }
@@ -128,6 +161,7 @@ class CampagneController extends Controller
     {
         $campagne = $this->campagne->find($id);
         $campagne->content()->delete();
+        
         $this->campagne->delete($id);
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'Campagne supprimée']);

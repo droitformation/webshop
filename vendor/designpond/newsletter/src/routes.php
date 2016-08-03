@@ -10,7 +10,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::post('unsubscribe', 'designpond\newsletter\Http\Controllers\Frontend\InscriptionController@unsubscribe');
     Route::post('subscribe', 'designpond\newsletter\Http\Controllers\Frontend\InscriptionController@subscribe');
-    Route::get('activation/{token}', 'designpond\newsletter\Http\Controllers\Frontend\InscriptionController@activation');
+    Route::get('activation/{token}/{newsletter_id}', 'designpond\newsletter\Http\Controllers\Frontend\InscriptionController@activation');
+    Route::post('resend', 'designpond\newsletter\Http\Controllers\Frontend\InscriptionController@resend');
 
     Route::get('campagne/{id}', 'designpond\newsletter\Http\Controllers\Frontend\CampagneController@show');
 
@@ -38,6 +39,8 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('campagne/create/{newsletter}', 'designpond\newsletter\Http\Controllers\Backend\CampagneController@create');
         Route::get('campagne/simple/{id}', 'designpond\newsletter\Http\Controllers\Backend\CampagneController@simple');
+        Route::get('campagne/preview/{id}', 'designpond\newsletter\Http\Controllers\Backend\CampagneController@preview');
+        Route::get('campagne/cancel/{id}', 'designpond\newsletter\Http\Controllers\Backend\CampagneController@cancel');
         Route::resource('campagne', 'designpond\newsletter\Http\Controllers\Backend\CampagneController');
 
         // Content building blocs
@@ -47,6 +50,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('send/campagne', 'designpond\newsletter\Http\Controllers\Backend\SendController@campagne');
         Route::post('send/test', 'designpond\newsletter\Http\Controllers\Backend\SendController@test');
+        Route::post('send/forward', 'designpond\newsletter\Http\Controllers\Backend\SendController@forward');
 
         Route::post('clipboard/copy', 'designpond\newsletter\Http\Controllers\Backend\ClipboardController@copy');
         Route::post('clipboard/paste', 'designpond\newsletter\Http\Controllers\Backend\ClipboardController@paste');

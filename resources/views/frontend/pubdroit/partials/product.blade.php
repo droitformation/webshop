@@ -1,5 +1,5 @@
 <figure class="s-product">
-    @if($news)
+    @if(isset($news))
         <span class="sale-icon">Sale</span>
     @endif
     <div class="row">
@@ -9,8 +9,10 @@
             </a>
         </div>
         <article class="col-md-8">
+
             <h3><a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a></h3>
             <p>{!! $product->teaser !!}</p>
+
             <!-- Product put in the basket button -->
             @include('frontend.pubdroit.partials.basket')
             <!-- END Product put in the basket button -->

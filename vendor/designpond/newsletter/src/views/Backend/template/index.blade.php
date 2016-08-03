@@ -40,15 +40,18 @@
                                 @if(!$newsletter->campagnes->isEmpty())
 
                                     <?php
-                                        $campagnes = $newsletter->campagnes->whereLoose('status','brouillon');
-                                        $archives  = $newsletter->campagnes->whereLoose('status','envoyé');
-                                        $years     = $archives->groupBy(function ($archive, $key) {
+                                        $years     = $newsletter->sent->groupBy(function ($archive, $key) {
                                             return $archive->created_at->year;
                                         })->keys();
                                     ?>
 
-                                    @include('newsletter::Backend.campagne.list',['campagnes' => $campagnes])
+                                    <h4>Brouillons</h4>
+                                    @include('newsletter::Backend.campagne.list',['campagnes' => $newsletter->draft])
 
+                                    <h4>En attente d'envoi</h4>
+                                    @include('newsletter::Backend.campagne.list',['campagnes' => $newsletter->pending])
+
+                                    <hr/>
                                     <div class="newsletter-archives">
                                         @foreach($years as $year)
                                             <a class="btn btn-primary btn-sm" href="{{ url('build/newsletter/archive/'.$newsletter->id.'/'.$year) }}">Archives {{ $year }}</a>
@@ -62,7 +65,7 @@
                             <div class="col-md-12 text-right">
                                 <form action="{{ url('build/newsletter/'.$newsletter->id) }}" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                    <button data-what="supprimer" data-action="newsletter {{ $newsletter->titre }}" class="btn btn-xs btn-danger btn-delete deleteActionNewsletter">Supprimer la newsletter</button>
+                                    <button data-what="supprimer" data-action="newsletter {{ $newsletter->titre }}" class="btn btn-xs btn-danger btn-delete deleteNewsAction">Supprimer la newsletter</button>
                                 </form>
                             </div>
                         </div>

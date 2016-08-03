@@ -35,20 +35,28 @@
                     </td>
                     <td>
                         @if($campagne->status == 'brouillon')
-                            <form action="{{ url('build/campagne/send') }}" id="sendCampagneForm" method="POST">{!! csrf_field() !!}
-                                <input name="id" value="{{ $campagne->id }}" type="hidden">
-                                <a href="javascript:;" data-campagne="{{ $campagne->id }}" class="btn btn-warning btn-sm" id="bootbox">
-                                    <i class="fa fa-exclamation"></i> &nbsp;Envoyer la campagne
-                                </a>
-                            </form>
+
+                            <a href="javascript:;" data-toggle="modal" data-target="#sendModal_{{ $campagne->id }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-exclamation"></i> &nbsp;Envoyer la campagne
+                            </a>
+
+                            @include('newsletter::Backend.campagne.partials.send',['campagne' => $campagne])
+
                         @else
-                            Envoyé le {{ $campagne->updated_at->formatLocalized('%d %b %Y') }} à {{ $campagne->updated_at->toTimeString() }}
+                            <p><strong>Envoyé le:</strong> <br/>{{ $campagne->updated_at->formatLocalized('%d %b %Y') }} à {{ $campagne->updated_at->toTimeString() }}</p>
+                            @if($campagne->send_at)
+                                <p><strong>Envoi prévu à:</strong> <br/>{{ $campagne->send_at->formatLocalized('%d %b %Y') }} à {{ $campagne->send_at->toTimeString() }}</p>
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-info" target="_blank" href="{{ url('build/campagne/preview/'.$campagne->id) }}">Voir le preview</a>
+                                    <a class="btn btn-warning" href="{{ url('build/campagne/cancel/'.$campagne->id) }}">Annuler l'envoi</a>
+                                </div>
+                            @endif
                         @endif
                     </td>
                     <td class="text-right">
                         <form action="{{ url('build/campagne/'.$campagne->id) }}" method="POST">
                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                            <button data-action="campagne {{ $campagne->sujet }}" data-what="Supprimer" class="btn btn-danger btn-xs deleteActionNewsletter"><i class="fa fa-remove"></i></button>
+                            <button type="submit" data-action="campagne {{ $campagne->sujet }}" data-what="Supprimer" class="btn btn-danger btn-xs deleteNewsAction"><i class="fa fa-remove"></i></button>
                         </form>
                     </td>
                 </tr>

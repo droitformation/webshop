@@ -87,7 +87,7 @@
 						</section>
 						<section class="col-md-8 col-xs-12">
                             <div class="c-btn">
-                                <a href="{{ url('checkout/cart') }}" class="cart-btn">Panier</a>
+                                <a href="{{ url('checkout/cart') }}" class="text-danger cart-basket"><i class="fa fa-shopping-basket"></i>&nbsp; Panier</a>
                                 <div class="btn-group">
                                     <a href="{{ url('checkout/cart') }}" class="btn btn-mini dropdown-toggle">
                                         @if(!Cart::content()->isEmpty())

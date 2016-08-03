@@ -1,4 +1,4 @@
-@if( isset($errors) && $errors->has() || Session::has('status'))
+@if( count($errors) > 0 || Session::has('status'))
 
     <?php $class  = ($errors->has() ? 'warning' : Session::get('status')); ?>
     <?php $status = ($class == 'danger' || $class == 'success' ? $class : 'warning' ); ?>

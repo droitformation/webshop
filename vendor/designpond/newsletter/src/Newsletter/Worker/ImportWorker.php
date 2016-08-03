@@ -3,7 +3,7 @@
 namespace designpond\newsletter\Newsletter\Worker;
 
 use designpond\newsletter\Newsletter\Repo\NewsletterInterface;
-use designpond\newsletter\Newsletter\Worker\MailjetInterface;
+use designpond\newsletter\Newsletter\Worker\MailjetServiceInterface;
 use designpond\newsletter\Newsletter\Repo\NewsletterUserInterface;
 use designpond\newsletter\Newsletter\Repo\NewsletterCampagneInterface;
 use designpond\newsletter\Newsletter\Worker\CampagneInterface;
@@ -21,7 +21,7 @@ class ImportWorker implements ImportWorkerInterface
     protected $upload;
 
     public function __construct(
-        MailjetInterface $mailjet ,
+        MailjetServiceInterface $mailjet ,
         NewsletterUserInterface $subscriber,
         NewsletterInterface $newsletter,
         Excel $excel,
@@ -120,7 +120,7 @@ class ImportWorker implements ImportWorkerInterface
         $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file);
 
         $dataID   = $this->mailjet->uploadCSVContactslistData(file_get_contents(public_path('files/import/'.$filename.'.csv')));
-        $response = $this->mailjet->importCSVContactslistData($dataID->ID);
+        $response = $this->mailjet->importCSVContactslistData($dataID);
     }
 
     public function send($campagne_id,$list)

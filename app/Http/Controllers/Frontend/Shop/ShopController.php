@@ -9,6 +9,7 @@ use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Author\Repo\AuthorInterface;
 use App\Droit\Domain\Repo\DomainInterface;
 use App\Droit\Page\Repo\PageInterface;
+use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Site\Repo\SiteInterface;
 
 class ShopController extends Controller {
@@ -19,6 +20,7 @@ class ShopController extends Controller {
 	protected $author;
 	protected $domain;
     protected $page;
+    protected $abo;
     protected $site;
     protected $site_id;
 
@@ -27,7 +29,16 @@ class ShopController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(ColloqueInterface $colloque,ProductInterface $product,CategorieInterface $categorie, AuthorInterface $author, DomainInterface $domain, PageInterface $page, SiteInterface $site)
+	public function __construct(
+        ColloqueInterface $colloque,
+        ProductInterface $product,
+        CategorieInterface $categorie,
+        AuthorInterface $author,
+        DomainInterface $domain,
+        PageInterface $page,
+        AboInterface $abo,
+        SiteInterface $site
+    )
 	{
 		$this->colloque  = $colloque;
         $this->product   = $product;
@@ -35,6 +46,7 @@ class ShopController extends Controller {
 		$this->domain    = $domain;
         $this->author    = $author;
         $this->page      = $page;
+        $this->abo       = $abo;
         $this->site      = $site;
 
         $this->site_id  = 1;
@@ -54,8 +66,13 @@ class ShopController extends Controller {
         $nouveautes = $this->product->getByCategorie(5)->take(6);
 		$products   = $this->product->getNbr(10,[5]);
         $colloques  = $this->colloque->getCurrent(true); // $registration = false, $finished = false, $visible = true
+        $abos       = $this->abo->getAll();
 
-		return view('frontend.pubdroit.index')->with(['products' => $products, 'nouveautes' => $nouveautes, 'colloques' => $colloques]);
+        $abos = $abos->map(function($abo, $key) {
+            return $abo->current_product->load('abos');
+        });
+
+		return view('frontend.pubdroit.index')->with(['products' => $products, 'abos' => $abos, 'nouveautes' => $nouveautes, 'colloques' => $colloques]);
 	}
 
 	public function products(Request $request)
