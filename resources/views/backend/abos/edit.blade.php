@@ -30,6 +30,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Prix</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" value="{{ $abo->price_cents }}" name="price">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Centre/institut</label>
                             <div class="col-sm-4 col-xs-6">
                                 <input type="text" class="form-control" name="name" value="{{ $abo->name }}">

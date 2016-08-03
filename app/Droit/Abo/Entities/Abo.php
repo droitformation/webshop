@@ -9,13 +9,21 @@ class Abo extends Model{
 
     protected $table = 'abos';
 
-    protected $fillable = ['title','plan','logo','name','compte','adresse'];
+    protected $fillable = ['title','plan','logo','name','compte','adresse','price'];
 
     public function getPlanFrAttribute()
     {
         $traduction = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
 
         return $traduction[$this->plan];
+    }
+
+    public function getPriceCentsAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $price = $this->price / 100;
+
+        return $money->format($price);
     }
 
     public function getCurrentProductAttribute()

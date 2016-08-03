@@ -14,11 +14,14 @@
                 <h3><a href="{{ url('product/'.$product->id) }}">Abonnement {{ $abo->title }}</a></h3>
                 <p>{{ $abo->plan_fr }}</p>
                 <p><strong>Dernière édition:</strong> <br/><i>{{ $product->title }}</i></p>
+
+                <form method="post" action="{{ url('cart/addAbo') }}" class="form-inline">{!! csrf_field() !!}
+                    <button type="submit" class="cart-btn2">Ajouter au panier</button>
+                    <span class="price">{{ $abo->price_cents }} CHF</span>
+                    <input type="hidden" name="abo_id" value="{{ $abo->id }}">
+                </form>
             @endforeach
 
-            <!-- Product put in the basket button -->
-            @include('frontend.pubdroit.partials.basket')
-            <!-- END Product put in the basket button -->
         </article>
     </div>
 </figure>
