@@ -1,41 +1,43 @@
-<?php namespace App\Providers;
+<?php
+
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ShopServiceProvider extends ServiceProvider {
+class ShopServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
 
-	/**
-	 * Bootstrap the application services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		//
-	}
-
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-        $this->registerShippingService();
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $this->registerProductService();
         $this->registerOrderService();
         $this->registerAttributeService();
+        $this->registerCategorieService();
+
         $this->registerCouponService();
+        $this->registerShippingService();
         $this->registerPaymentService();
         $this->registerCartService();
         $this->registerStockService();
-        $this->registerCategorieService();
-        
+
         $this->registerOrderMakerService();
         $this->registerCartWorkerService();
         $this->registerPdfGeneratorService();
-
-	}
+    }
 
     /**
      * Product
@@ -186,5 +188,4 @@ class ShopServiceProvider extends ServiceProvider {
             );
         });
     }
-
 }

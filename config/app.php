@@ -170,9 +170,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ContentServiceProvider::class,
-        App\Providers\ShopServiceProvider::class,
         App\Providers\ColloqueServiceProvider::class,
-        App\Providers\CalculetteServiceProvider::class,
+		App\Providers\UserServiceProvider::class,
+		App\Providers\ShopServiceProvider::class,
+		App\Providers\JurisprudenceServiceProvider::class,
+		App\Providers\ExtraServiceProvider::class,
+		App\Providers\AboServiceProvider::class,
 
 	],
 

@@ -28,7 +28,8 @@ class AppServiceProvider extends ServiceProvider {
             'backend.arrets.*',
             'backend.analyses.*',
             'backend.domains.*',
-            'backend.categories.*'
+            'backend.categories.*',
+            'newsletter::Backend.*',
         ], 'App\Http\ViewComposers\SiteComposer');
 
         view()->composer([

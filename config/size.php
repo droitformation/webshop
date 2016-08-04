@@ -7,4 +7,5 @@ return [
     'map'          => ['width' => 750, 'height' => 800],
     'logo'         => ['width' => 200, 'height' => 200],
     'illustration' => ['width' => 200, 'height' => 300],
+    'product'      => ['width' => 300, 'height' => 450],
 ];

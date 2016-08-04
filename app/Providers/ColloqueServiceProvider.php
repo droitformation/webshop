@@ -1,27 +1,28 @@
-<?php namespace App\Providers;
+<?php
+
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ColloqueServiceProvider extends ServiceProvider {
+class ColloqueServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
 
-	/**
-	 * Bootstrap the application services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		//
-	}
-
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $this->registerColloqueService();
         $this->registerLocationService();
         $this->registerOrganisateurService();
@@ -36,8 +37,7 @@ class ColloqueServiceProvider extends ServiceProvider {
         $this->registerGroupOptionService();
         $this->registerPriceService();
         $this->registerOccurrenceService();
-
-	}
+    }
 
     /**
      * Colloque
