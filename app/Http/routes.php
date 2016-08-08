@@ -327,7 +327,8 @@ Route::group(['middleware' => ['web']], function () {
         */
 
         Route::resource('seminaire', 'Backend\Content\SeminaireController');
-        
+        Route::resource('subject', 'Backend\Content\SubjectController');
+
         /*
         |--------------------------------------------------------------------------
         | Abonnements Routes

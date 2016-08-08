@@ -26,8 +26,8 @@ class SubjectEloquent implements SubjectInterface{
 
         $subject = $this->subject->create(array(
             'title'      => $data['title'],
-            'file'       => $data['file'],
-            'appendixes' => $data['appendixes'],
+            'file'       => isset($data['file']) ? $data['file'] : null,
+            'appendixes' => isset($data['appendixes']) ? $data['appendixes'] : null,
             'rang'       => $data['rang'],
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()
@@ -36,6 +36,18 @@ class SubjectEloquent implements SubjectInterface{
         if( ! $subject )
         {
             return false;
+        }
+
+        // Insert related categories
+        if(isset($data['categories']))
+        {
+            $subject->categories()->sync($data['categories']);
+        }
+
+        // Insert related authors
+        if(isset($data['authors']))
+        {
+            $subject->authors()->sync($data['authors']);
         }
 
         return $subject;
@@ -52,8 +64,19 @@ class SubjectEloquent implements SubjectInterface{
         }
 
         $subject->fill($data);
-
         $subject->save();
+
+        // Insert related categories
+        if(isset($data['categories']))
+        {
+            $subject->categories()->sync($data['categories']);
+        }
+
+        // Insert related authors
+        if(isset($data['authors']))
+        {
+            $subject->authors()->sync($data['authors']);
+        }
 
         return $subject;
     }

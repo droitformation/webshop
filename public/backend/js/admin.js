@@ -346,8 +346,8 @@ $( function() {
             success: function(data) {},
             error  : function(){ alert('problème'); }
         });
-    })
-
+    });
+    
 });
 
 $(document).ready(ajustamodal);

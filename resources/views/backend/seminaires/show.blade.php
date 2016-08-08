@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="{{ url('admin/seminaire') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+            <p><a href="{{ url('admin/seminaire') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
     </div>
 
@@ -94,32 +94,35 @@
                     <div id="listBlocs">
                         <h4><i class="fa fa-list"></i> &nbsp;Contributions au séminaire</h4>
                         @if(!$seminaire->subjects->isEmpty())
-                            <ul class="list-group">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 @foreach($seminaire->subjects as $subject)
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <p class="text-primary">{!! $subject->title !!}</p>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a class="btn btn-danger btn-xs pull-right"><i class="fa fa-times"></i></a>
-                                                <a data-toggle="collapse" href="#edit_subject_{{ $subject->id }}" class="btn btn-info btn-xs pull-right">éditer</a>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed pull-left" data-toggle="collapse" data-parent="#accordion" href="#edit_subject_{{ $subject->id }}">
+                                                    <strong>{!! $subject->title !!}</strong>
+                                                </a>
+                                                <form action="{{ url('admin/subject/'.$subject->id) }}" method="POST" class="subject-delete">
+                                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                    <button data-what="Supprimer" data-action="{{ $subject->title }}" class="btn btn-danger btn-sm btn-xs deleteAction"><i class="fa fa-times"></i></button>
+                                                </form>
+                                            </h4>
+                                        </div>
+                                        <div id="edit_subject_{{ $subject->id }}" class="panel-collapse collapse">
+                                            <div class="panel-body panel-noborder">
+                                                @include('backend.seminaires.partials.subject-edit', ['subject' => $subject, 'seminaire' => $seminaire])
                                             </div>
                                         </div>
-                                        <div class="row collapse subject_content" id="edit_subject_{{ $subject->id }}">
-                                            <div class="col-md-12">
-                                                @include('backend.seminaires.partials.subject-edit', ['subject' => $subject])
-                                            </div>
-                                        </div>
-                                    </li>
+                                    </div>
                                 @endforeach
-                            </ul>
+                            </div>
                         @endif
                     </div>
                     <hr/>
                     <a data-toggle="collapse" href="#add_subject" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter contribution</a>
                     <div class="well collapse subject_content" id="add_subject">
-                        @include('backend.seminaires.partials.subject-edit')
+                        <?php $max = $seminaire->subjects->max('rang'); ?>
+                        @include('backend.seminaires.partials.subject-create', ['max' => $max, 'seminaire' => $seminaire])
                     </div>
                 </div>
             </div>
