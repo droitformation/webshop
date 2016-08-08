@@ -7,7 +7,6 @@ $( function() {
 
     if($wrapper.length)
     {
-
         $('body').on("click", '.new-bloc-content' ,function(e) {
             e.preventDefault(); e.stopPropagation();
 
@@ -19,19 +18,14 @@ $( function() {
                 var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right remove-bloc-btn">x</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
 
-                $('.redactorBlocSimple').redactor({
-                    minHeight: 200,
-                    maxHeight: 300,
+                $('.redactorSimple').redactor({
+                    minHeight: 50,
+                    maxHeight: 270,
                     focus    : true,
-                    lang     : 'fr',
-                    plugins  : ['advanced','imagemanager','filemanager'],
-                    fileUpload       : 'uploadFileRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-                    imageUpload      : 'uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-                    imageManagerJson : 'imageJson',
-                    fileManagerJson  : 'fileJson',
-                    buttons          : ['html','|','formatting','bold','italic','|','unorderedlist','orderedlist','outdent','indent','|','image','file','link','alignment']
+                    lang: 'fr',
+                    plugins: ['iconic'],
+                    buttons  : ['format','bold','italic','link','|','lists']
                 });
-
             });
         });
 
@@ -105,20 +99,14 @@ $( function() {
 
                 var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-inverse btn-xs pull-right remove-bloc-btn">Fermer</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
-
-                $('.redactorBlocSimple').redactor({
-                    minHeight: 200,
-                    maxHeight: 300,
+                $('.redactorSimple').redactor({
+                    minHeight: 50,
+                    maxHeight: 270,
                     focus    : true,
-                    lang     : 'fr',
-                    plugins  : ['advanced','imagemanager','filemanager'],
-                    fileUpload       : 'uploadFileRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-                    imageUpload      : 'uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-                    imageManagerJson : 'imageJson',
-                    fileManagerJson  : 'fileJson',
-                    buttons          : ['html','|','formatting','bold','italic','|','unorderedlist','orderedlist','outdent','indent','|','image','file','link','alignment']
+                    lang: 'fr',
+                    plugins: ['iconic'],
+                    buttons  : ['format','bold','italic','link','|','lists']
                 });
-
             });
         });
 
@@ -149,11 +137,8 @@ $( function() {
                     error: function(){alert('problème avec la suppression du bloc');}
                 });
             }
-
             return false;
-
         });
-
     }
 
 });

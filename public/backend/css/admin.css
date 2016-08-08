@@ -35,6 +35,15 @@ h3, .h3{
     overflow: hidden;
 }
 
+.subject_content{
+    padding-bottom: 10px;
+}
+
+.subject_content label{
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+}
+
 .inscription_wrapper{
     padding-bottom: 10px;
 }

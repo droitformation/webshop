@@ -2,13 +2,13 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-12">
+            <a href="{{ url('admin/seminaire') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+        </div>
+    </div>
 
-            <div class="options text-left" style="margin-bottom: 10px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/seminaire') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-7">
 
             <div class="panel panel-midnightblue">
                 <form action="{{ url('admin/seminaire/'.$seminaire->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
@@ -86,6 +86,42 @@
                     </div>
                 </form>
 
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <div id="listBlocs">
+                        <h4><i class="fa fa-list"></i> &nbsp;Contributions au séminaire</h4>
+                        @if(!$seminaire->subjects->isEmpty())
+                            <ul class="list-group">
+                                @foreach($seminaire->subjects as $subject)
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <p class="text-primary">{!! $subject->title !!}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a class="btn btn-danger btn-xs pull-right"><i class="fa fa-times"></i></a>
+                                                <a data-toggle="collapse" href="#edit_subject_{{ $subject->id }}" class="btn btn-info btn-xs pull-right">éditer</a>
+                                            </div>
+                                        </div>
+                                        <div class="row collapse subject_content" id="edit_subject_{{ $subject->id }}">
+                                            <div class="col-md-12">
+                                                @include('backend.seminaires.partials.subject-edit', ['subject' => $subject])
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+                    <hr/>
+                    <a data-toggle="collapse" href="#add_subject" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter contribution</a>
+                    <div class="well collapse subject_content" id="add_subject">
+                        @include('backend.seminaires.partials.subject-edit')
+                    </div>
+                </div>
             </div>
         </div>
     </div>

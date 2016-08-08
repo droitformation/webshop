@@ -11,6 +11,20 @@ class Subject extends Model{
 
     protected $fillable = ['title','file','appendixes','rang'];
 
+    public function getFilePathAttribute()
+    {
+        $file = 'files/subjects/'.$this->file;
+
+        return ($this->file && \File::exists(public_path($file)) ? $file : null);
+    }
+
+    public function getAnnexePathAttribute()
+    {
+        $file = 'files/subjects/'.$this->appendixes;
+
+        return ($this->appendixes && \File::exists(public_path($file)) ? $file : null);
+    }
+
     public function seminaire()
     {
         return $this->belongsTo('App\Droit\Seminaire\Entities\Seminaire');
