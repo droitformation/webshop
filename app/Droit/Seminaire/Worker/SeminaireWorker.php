@@ -31,14 +31,35 @@ class SeminaireWorker implements SeminaireWorkerInterface
     {
         $subjects = $this->subject->getAll();
 
-        $categories = $subjects->map(function ($subject, $key) {
-            return !$subject->categories->isEmpty() ? $subject->categories->pluck('title') : false;
-        })->flatten()->unique()->filter(function ($value, $key) {
-            return !empty($value);
-        })->map(function($subject,$key){
+        return $subjects->map(function ($subject, $key) {
+            return !$subject->categories->isEmpty() ? $subject->categories->pluck('title','id') : false;
+        })->filter(function ($value, $key) {
+            return $value;
+        })->flattenWithKey()->map(function($subject,$key){
             return mb_strtolower($subject);
         })->sort();
+    }
 
-        return $categories;
+
+    public function authors()
+    {
+        $subjects = $this->subject->getAll();
+
+        return $subjects->map(function ($subject, $key) {
+            return !$subject->authors->isEmpty() ? $subject->authors->pluck('name','id') : false;
+        })->filter(function ($value, $key) {
+            return $value;
+        })->flattenWithKey()->sort();
+    }
+
+    public function years()
+    {
+        $subjects = $this->subject->getAll();
+
+        return $subjects->map(function ($subject, $key) {
+            return !$subject->seminaires->isEmpty() ? $subject->seminaire->year : false;
+        })->flatten()->unique()->filter(function ($value, $key) {
+            return $value;
+        })->sort()->reverse();
     }
 }

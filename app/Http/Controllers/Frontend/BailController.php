@@ -91,11 +91,8 @@ class BailController extends Controller
         {
             $data['doctrines'] = $this->seminaire->getSubjects();
             $data['order']     = $this->seminaire->categories();
-
-        /*    $pull = $data['doctrines']->pull('divers');
-            echo '<pre>';
-            print_r($pull);
-            echo '</pre>';exit();*/
+            $data['auteurs']   = $this->seminaire->authors();
+            $data['annees']    = $this->seminaire->years();
         }
 
         if($slug == 'newsletter')

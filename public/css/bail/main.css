@@ -216,7 +216,7 @@ a:visited {
   color: #000000;
   font-family: Arial,Verdana,Helvetica,sans-serif;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 16px;
 }
 
 #seminaires .sujets .col {
@@ -225,8 +225,17 @@ a:visited {
 }
 
 #seminaires .sujets .sujet {
-  border-bottom: 1px solid #B80E1D;
-  padding: 10px 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-bottom: 1px solid #B80E1D;
+}
+
+#seminaires .sujet .delimiter{
+    border-bottom: 1px solid #B80E1D;
+}
+
+#seminaires .titleRow {
+    margin-bottom: 10px;
 }
 
 #seminaires .sujets .category {
@@ -275,26 +284,45 @@ a:visited {
   width: 65px;
 }
 
-#doctrine > tbody > tr > th,
-#doctrine > tfoot > tr > th,
-#doctrine > thead > tr > th{
-    border-top:none;
-}
-
-#doctrine > tbody > tr > td,
-#doctrine > tfoot > tr > td,
-#doctrine > thead > tr > td{
+#doctrine .sujet{
     border-top:1px solid #cb2629;
 }
 
-#doctrine th{
+#seminaires .sujet > div{
     font-size: 13px;
-    padding: 7px;
 }
 
-#doctrine td{
-    font-size: 13px;
-    padding: 7px;
+#seminaires .sujet div p{
+    margin-bottom: 0;
+}
+
+#seminaireannees{
+    list-style: outside none none;
+    position: relative;
+}
+
+#seminaireannees li a {
+    background: rgba(0, 0, 0, 0) url("../../images/bail/check.png") no-repeat scroll 0 0;
+    display: block;
+    height: 15px;
+    margin-bottom: 6px;
+    padding: 0 0 0 20px;
+    text-decoration: none;
+}
+
+#seminaireannees li a.active {
+    background: rgba(0, 0, 0, 0) url("../../images/bail/check.png") no-repeat scroll 0 -26px;
+    color: #b80e1d;
+    text-decoration: underline;
+}
+
+.selectList{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.filtre h6{
+    margin-top: 15px;
 }
 
 /******************************************************

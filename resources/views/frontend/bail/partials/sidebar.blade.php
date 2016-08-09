@@ -32,13 +32,13 @@
 
                     <div class="filtre">
                         <h6>Par catégorie</h6>
-                        <div class="list categories clear">
-                            <select id="seminaire-chosen" class="seminaire-chosen chosen-select category" multiple data-placeholder="Filtrer par catégorie..." name="filter">
+                        <div class="list categories clear selectList">
+                            <select style="width: 230px;" id="seminaire-chosen" class="seminaire-chosen chosen-select category" multiple data-placeholder="Filtrer par catégorie..." name="filter">
                                 <?php
-                                    if(!empty($bscategories)){
-                                        foreach($bscategories as $bscategorie)
+                                    if(!empty($order)){
+                                        foreach($order as $key => $categorie)
                                         {
-                                            echo '<option value="c'.$bscategorie['id'].'">'.$bscategorie['title'].'</option>';
+                                            echo '<option value="c'.$key.'">'.ucfirst($categorie).'</option>';
                                         }
                                     }
                                 ?>
@@ -47,23 +47,24 @@
                         <h6>Par année</h6>
                         <ul id="seminaireannees" class="list annees clear">
                             <?php
-                                if(!empty($bsyears))
+                                if(!empty($annees))
                                 {
-                                    foreach($bsyears as $id => $bsyear){
-                                        echo '<li><a rel="y'.$id.'" href="#">Paru en '.$bsyear.'</a></li>';
+                                    foreach($annees as $annee)
+                                    {
+                                        echo '<li><a rel="y'.$annee.'" href="#">Paru en '.$annee.'</a></li>';
                                     }
                                 }
                             ?>
                         </ul>
                         <h6>Par auteur</h6>
-                        <div class="list auteurs clear">
-                            <select class="seminaire-chosen chosen-select author"  multiple data-placeholder="Filtrer par auteur..." name="filter">
+                        <div class="list auteurs clear selectList">
+                            <select style="width: 230px;" class="seminaire-chosen chosen-select author"  multiple data-placeholder="Filtrer par auteur..." name="filter">
                                 <?php
-                                    if(!$authors->isEmpty())
+                                    if(!$auteurs->isEmpty())
                                     {
-                                        foreach($authors as $author)
+                                        foreach($auteurs as $key => $author)
                                         {
-                                            echo '<option value="a'.$author->id.'">'.$author->name.'</option>';
+                                            echo '<option value="a'.$key.'">'.$author.'</option>';
                                         }
                                     }
                                 ?>

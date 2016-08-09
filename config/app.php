@@ -176,7 +176,7 @@ return [
 		App\Providers\JurisprudenceServiceProvider::class,
 		App\Providers\ExtraServiceProvider::class,
 		App\Providers\AboServiceProvider::class,
-
+		App\Providers\CollectionExtensions::class,
 	],
 
 	/*

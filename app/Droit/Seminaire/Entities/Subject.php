@@ -45,6 +45,13 @@ class Subject extends Model{
         return null;
     }
 
+    public function getAuthorsListAttribute()
+    {
+        return $this->authors->map(function ($author, $key) {
+            return 'a'.$author->id;
+        })->implode(' ');
+    }
+
     public function seminaires()
     {
         //return $this->belongsTo('App\Droit\Seminaire\Entities\Seminaire');
