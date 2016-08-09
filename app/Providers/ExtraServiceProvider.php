@@ -25,6 +25,7 @@ class ExtraServiceProvider extends ServiceProvider
     {
         $this->registerFaqQuestionService();
         $this->registerFaqCategorieService();
+        $this->registerFaqWorkerService();
 
         $this->registerCalculetteTauxService();
         $this->registerCalculetteIpcService();
@@ -32,6 +33,7 @@ class ExtraServiceProvider extends ServiceProvider
 
         $this->registerSeminaireService();
         $this->registerSubjectService();
+        $this->registerSeminaireWorkerService();
     }
 
     /**
@@ -92,6 +94,21 @@ class ExtraServiceProvider extends ServiceProvider
         });
     }
 
+
+    /**
+     * Faq Worker
+     */
+    protected function registerFaqWorkerService()
+    {
+        $this->app->singleton('App\Droit\Faq\Worker\FaqWorkerInterface', function()
+        {
+            return new \App\Droit\Faq\Worker\FaqWorker(
+                \App::make('App\Droit\Faq\Repo\FaqQuestionInterface'),
+                \App::make('App\Droit\Faq\Repo\FaqCategorieInterface')
+            );
+        });
+    }
+
     /**
      * Seminaire
      */
@@ -111,6 +128,17 @@ class ExtraServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Seminaire\Repo\SubjectInterface', function()
         {
             return new \App\Droit\Seminaire\Repo\SubjectEloquent(new \App\Droit\Seminaire\Entities\Subject);
+        });
+    }
+    
+    protected function registerSeminaireWorkerService()
+    {
+        $this->app->singleton('App\Droit\Seminaire\Worker\SeminaireWorkerInterface', function()
+        {
+            return new \App\Droit\Seminaire\Worker\SeminaireWorker(
+                \App::make('App\Droit\Seminaire\Repo\SeminaireInterface'),
+                \App::make('App\Droit\Seminaire\Repo\SubjectInterface')
+            );
         });
     }
 }

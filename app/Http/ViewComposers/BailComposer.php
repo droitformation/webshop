@@ -7,6 +7,7 @@ use App\Droit\Site\Repo\SiteInterface;
 use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Arret\Repo\ArretInterface;
 use App\Droit\Author\Repo\AuthorInterface;
+use App\Droit\Shop\Product\Repo\ProductInterface;
 
 class BailComposer
 {
@@ -14,14 +15,16 @@ class BailComposer
     protected $categorie;
     protected $arret;
     protected $author;
+    protected $product;
     protected $newsworker;
 
-    public function __construct(SiteInterface $site, CategorieInterface $categorie, ArretInterface $arret, AuthorInterface $author)
+    public function __construct(SiteInterface $site, CategorieInterface $categorie, ArretInterface $arret, AuthorInterface $author, ProductInterface $product)
     {
         $this->site      = $site;
         $this->categorie = $categorie;
         $this->arret     = $arret;
         $this->author    = $author;
+        $this->product   = $product;
 
         $this->newsworker  = \App::make('newsworker');
     }
@@ -34,8 +37,11 @@ class BailComposer
      */
     public function compose(View $view)
     {
+        setlocale(LC_ALL, 'fr_FR');
+        
         $site       = $this->site->findBySlug('bail');
         $categories = $this->categorie->getAll($site->id);
+        $revues     = $this->product->getByCategorie(25);
 
         $years      = $this->arret->annees($site->id);
 
@@ -46,6 +52,7 @@ class BailComposer
         $view->with('site',  $site);
         $view->with('authors', $this->author->getAll());
         $view->with('categories',  $categories);
+        $view->with('revues', $revues->pluck('title','id'));
         $view->with('years',  $years);
 
         $view->with('campagnes',$campagnes);

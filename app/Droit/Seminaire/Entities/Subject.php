@@ -25,9 +25,30 @@ class Subject extends Model{
         return ($this->appendixes && \File::exists(public_path($file)) ? $file : null);
     }
 
-    public function seminaire()
+    public function getMainCategorieAttribute()
     {
-        return $this->belongsTo('App\Droit\Seminaire\Entities\Seminaire');
+        if(!$this->categories->isEmpty())
+        {
+            return mb_strtolower($this->categories->first()->title);
+        }
+
+        return 'Général';
+    }
+
+    public function getSeminaireAttribute()
+    {
+        if(!$this->seminaires->isEmpty())
+        {
+            return $this->seminaires->first();
+        }
+
+        return null;
+    }
+
+    public function seminaires()
+    {
+        //return $this->belongsTo('App\Droit\Seminaire\Entities\Seminaire');
+        return $this->belongsToMany('App\Droit\Seminaire\Entities\Seminaire' , 'seminaire_subjects', 'subject_id', 'seminaire_id');
     }
 
     public function authors()

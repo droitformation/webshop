@@ -275,6 +275,28 @@ a:visited {
   width: 65px;
 }
 
+#doctrine > tbody > tr > th,
+#doctrine > tfoot > tr > th,
+#doctrine > thead > tr > th{
+    border-top:none;
+}
+
+#doctrine > tbody > tr > td,
+#doctrine > tfoot > tr > td,
+#doctrine > thead > tr > td{
+    border-top:1px solid #cb2629;
+}
+
+#doctrine th{
+    font-size: 13px;
+    padding: 7px;
+}
+
+#doctrine td{
+    font-size: 13px;
+    padding: 7px;
+}
+
 /******************************************************
 * Calculette
 ******************************************************/

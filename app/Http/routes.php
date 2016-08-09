@@ -45,7 +45,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('jurisprudence', array('uses' => 'Frontend\BailController@jurisprudence'));
         Route::get('doctrine', array('uses' => 'Frontend\BailController@doctrine'));
         Route::get('calcul', array('uses' => 'Frontend\BailController@calcul'));
-        Route::post('loyer', array('uses' => 'Frontend\BailController@loyer'));
+        Route::post('loyer', 'Frontend\Bail\CalculetteController@loyer');
         Route::get('unsubscribe', 'Frontend\BailController@unsubscribe');
 
     });

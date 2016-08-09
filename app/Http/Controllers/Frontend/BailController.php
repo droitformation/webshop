@@ -5,82 +5,49 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Arret\Repo\ArretInterface;
-use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Analyse\Repo\AnalyseInterface;
-use App\Droit\Author\Repo\AuthorInterface;
-use App\Droit\Faq\Repo\FaqQuestionInterface;
-use App\Droit\Faq\Repo\FaqCategorieInterface;
-
+use App\Droit\Faq\Worker\FaqWorkerInterface;
 use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Site\Repo\SiteInterface;
-use App\Droit\Arret\Worker\JurisprudenceWorker;
-
-use App\Droit\Calculette\Worker\CalculetteWorkerInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
+use App\Droit\Seminaire\Worker\SeminaireWorkerInterface;
 
 class BailController extends Controller
 {
     protected $page;
     protected $arret;
-    protected $categorie;
     protected $analyse;
-    protected $author;
-    protected $jurisprudence;
-    protected $question;
-    protected $faqcat;
+    protected $faq;
     protected $site_id;
     protected $site;
-    protected $calculette;
     protected $product;
     protected $newsworker;
+    protected $seminaire;
 
-    public function __construct(
-        ArretInterface $arret,
-        CategorieInterface $categorie,
-        AnalyseInterface $analyse,
-        AuthorInterface $author,
-        JurisprudenceWorker $jurisprudence,
-        PageInterface $page,
-        SiteInterface $site,
-        FaqQuestionInterface $question,
-        FaqCategorieInterface $faqcat,
-        CalculetteWorkerInterface $calculette,
-        ProductInterface $product
-    )
+    public function __construct(ArretInterface $arret, AnalyseInterface $analyse, PageInterface $page, SiteInterface $site, FaqWorkerInterface $faq, ProductInterface $product, SeminaireWorkerInterface $seminaire)
     {
-        $this->arret         = $arret;
-        $this->categorie     = $categorie;
-        $this->analyse       = $analyse;
-        $this->author        = $author;
-        $this->page          = $page;
-        $this->jurisprudence = $jurisprudence;
-        $this->question      = $question;
-        $this->faqcat        = $faqcat;
-        $this->site          = $site;
-        $this->calculette    = $calculette;
-        $this->product       = $product;
+        $this->arret     = $arret;
+        $this->analyse   = $analyse;
+        $this->page      = $page;
+        $this->faq       = $faq;
+        $this->site      = $site;
+        $this->product   = $product;
+        $this->seminaire = $seminaire;
 
         $site = $this->site->findBySlug('bail');
         $this->site_id  = $site->id;
 
         $this->newsworker = \App::make('newsworker');
-
-        $revues = $this->product->getByCategorie(25);
-
-        view()->share('revues',$revues->pluck('title','id') );
-
-        setlocale(LC_ALL, 'fr_FR');
     }
 
     public function index()
     {
-        $page = $this->page->getBySlug(2,'index');
+        $page = $this->page->getBySlug($this->site_id,'index');
 
-        return view('frontend.bail.index')->with([ 'page' => $page ]);
+        return view('frontend.bail.index')->with(['page' => $page]);
     }
 
     /**
@@ -99,13 +66,11 @@ class BailController extends Controller
 
         if($slug == 'faq')
         {
-            $faqcats   = $this->faqcat->getAll($this->site_id);
-            $categorie = ($var ? $var : $faqcats->first()->id);
-            $questions = $this->question->getAll($this->site_id,$categorie);
+            $this->faq->setSite($this->site_id)->setCategorie($var);
 
-            $data['questions'] = $questions;
-            $data['faqcats']   = $faqcats;
-            $data['current']   = $categorie;
+            $data['questions'] = $this->faq->getQuestions();;
+            $data['faqcats']   = $this->faq->getCategories();
+            $data['current']   = $this->faq->currentCategorie();
         }
 
         if($slug == 'jurisprudence')
@@ -120,6 +85,17 @@ class BailController extends Controller
         if($slug == 'revues')
         {
             $data['revue'] = $this->product->find($var);
+        }
+
+        if($slug == 'doctrine')
+        {
+            $data['doctrines'] = $this->seminaire->getSubjects();
+            $data['order']     = $this->seminaire->categories();
+
+        /*    $pull = $data['doctrines']->pull('divers');
+            echo '<pre>';
+            print_r($pull);
+            echo '</pre>';exit();*/
         }
 
         if($slug == 'newsletter')
@@ -140,45 +116,33 @@ class BailController extends Controller
         return view('frontend.bail.'.$page->template)->with($data);
     }
 
-    public function loyer(Request $request)
-    {
-        $data = $request->all();
-
-        if(!empty( $data ))
-        {
-            $date = Carbon::createFromFormat('d/m/Y', $request->input('date'))->toDateTimeString();
-
-            return $this->calculette->calculer($request->input('canton'), $date, $request->input('loyer'));
-        }
-
-        return [];
-    }
-
     public function unsubscribe()
     {
         return view('frontend.bail.unsubscribe');
     }
 
-    /*    public function doctrine(){
+   public function doctrine()
+   {
+        $seminaires = $this->seminaire->getSubjects();
 
-            $subjects   = $this->subject->getAll();
-            $categories = $this->subject->arrangeCategories($subjects);
-            $seminaires = $this->seminaire->getAll();
+        echo '<pre>';
+        print_r($seminaires);
+        echo '</pre>';exit();
 
-            return view('bail.doctrine')->with( array( 'seminaires' => $seminaires , 'subjects' => $subjects  ,'categories' => $categories ));
-        }
+        return view('bail.doctrine')->with(['seminaires' => $seminaires , 'subjects' => $subjects  ,'categories' => $categories]);
+    }
 
-
-        public function search(){
-
-            $query = Request::get('q');
-
-            $resultats = array();
-
-            return view('bail.search')->with( array( 'resultats' => $query ));
-        }
-
-
-    */
+    /*
+           public function search(){
+   
+               $query = Request::get('q');
+   
+               $resultats = array();
+   
+               return view('bail.search')->with( array( 'resultats' => $query ));
+           }
+   
+   
+       */
 
 }

@@ -14,12 +14,12 @@ class SubjectEloquent implements SubjectInterface{
 
     public function getAll(){
 
-        return $this->subject->with(['seminaire','authors','categories'])->get();
+        return $this->subject->with(['seminaires','authors','categories'])->get();
     }
 
     public function find($id){
 
-        return $this->subject->with(['seminaire','authors','categories'])->find($id);
+        return $this->subject->with(['seminaires','authors','categories'])->find($id);
     }
 
     public function create(array $data){
