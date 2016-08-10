@@ -28,6 +28,8 @@ class CheckoutController extends Controller {
         $this->order    = $order;
         $this->abo      = $abo;
         $this->payment  = $payment;
+
+        $this->middleware('abo', ['only' => ['billing']]);
     }
 
     /**
@@ -103,35 +105,38 @@ class CheckoutController extends Controller {
      */
     public function send(Request $request)
     {
-        $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
-        $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
+        if($this->checkout->orderShop())
+        {
+            $coupon   = (\Session::has('coupon') ? \Session::get('coupon') : false);
+            $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
+            $order    = $this->order->make($request->all(),$shipping,$coupon);
 
-        $order    = $this->order->make($request->all(),$shipping,$coupon);
+            $order->load('user');
+
+            // Payment
+            if($request->input('stripeToken'))
+            {
+                $charge = $this->viaStripe($request->input('stripeToken'),$order);
+
+                $order->payed_at       = \Carbon\Carbon::now();
+                $order->transaction_no = $charge->id;
+                $order->status         = 'payed';
+                $order->payement_id    = 2;
+                $order->save();
+            }
+
+            $this->cleanUp();
+
+            event(new OrderWasPlaced($order));
+        }
         
         if($this->checkout->orderAbo())
         {
-            
+            $data = $this->checkout->getAboData();
+            $this->abo->makeAbonnement($data);
+
+           // event(new OrderWasPlaced($order));
         }
-        // product_id
-        // $this->abo
-
-        $order->load('user');
-
-        // Payment
-        if($request->input('stripeToken'))
-        {
-            $charge = $this->viaStripe($request->input('stripeToken'),$order);
-
-            $order->payed_at       = \Carbon\Carbon::now();
-            $order->transaction_no = $charge->id;
-            $order->status         = 'payed';
-            $order->payement_id    = 2;
-            $order->save();
-        }
-
-        $this->cleanUp();
-
-        event(new OrderWasPlaced($order));
 
         return redirect('/')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
     }

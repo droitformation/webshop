@@ -154,13 +154,23 @@ Route::get('cartworker', function()
 
     $user   = Auth::user()->load('adresses');
     $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+    //$worker = \App::make('App\Droit\Abo\Worker\AboWorker');
 
-    $abos = $worker->getAboData();
+    $data[] = [
+        'abo_id'         => 1,
+        'exemplaires'    => 1,
+        'adresse_id'     => 2,
+        'status'         => 'abonne',
+        'renouvellement' => 'auto'
+    ];
+
+    $abos = $worker->getAboData($data);
+    //$abos = $abo->max(['abo_id' => 4]) +1;
 
     echo '<pre>';
     print_r($abos);
     echo '</pre>';exit();
-    
+
     /*
         $adresse_specialisation = new \App\Droit\Adresse\Entities\Adresse_specialisation();
 

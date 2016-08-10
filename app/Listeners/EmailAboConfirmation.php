@@ -2,17 +2,15 @@
 
 namespace App\Listeners;
 
-use App\Events\InscriptionWasRegistered;
+use App\Events\NewAboRequest;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Mail\Mailer;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\Jobs\SendConfirmationInscription;
-use App\Jobs\NotifyAdminNewInscription;
 
-class EmailInscriptionConfirmation
+class EmailAboConfirmation
 {
-
     use DispatchesJobs;
-
+    
     /**
      * Create the event listener.
      *
@@ -26,20 +24,19 @@ class EmailInscriptionConfirmation
     /**
      * Handle the event.
      *
-     * @param  OrderWasPlaced  $event
+     * @param  NewAboRequest  $event
      * @return void
      */
-    public function handle(InscriptionWasRegistered $event)
+    public function handle(NewAboRequest $event)
     {
         // Send email of confirmation to user
-        $job = (new SendConfirmationInscription($event->inscription))->delay(15);
+        $job = (new SendConfirmationAbo($event->abos))->delay(15);
 
         $this->dispatch($job);
 
         // Notify admin email of new inscription
-        $job = (new NotifyAdminNewInscription($event->inscription))->delay(15);
+        $job = (new NotifyAdminNewAbo($event->abos))->delay(15);
 
         $this->dispatch($job);
-
     }
 }

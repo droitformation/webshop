@@ -21,5 +21,6 @@
      public function totalCart();
      public function countCart();
      public function orderAbo();
+     public function orderShop();
      public function getAboData();
  }

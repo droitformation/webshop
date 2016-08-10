@@ -54,6 +54,7 @@ class Kernel extends HttpKernel {
         'pending' =>'App\Http\Middleware\PendingPayement',
         'registered' =>'App\Http\Middleware\Registered',
 		'strip' =>'App\Http\Middleware\StripRequest',
+		'abo' =>'App\Http\Middleware\OrderAbo',
 		//'beta' =>'App\Http\Middleware\Beta',
 	];
 

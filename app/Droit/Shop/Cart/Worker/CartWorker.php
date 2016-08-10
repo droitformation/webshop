@@ -315,6 +315,17 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
       * Do we want an abo
       * @return float
       * */
+     public function orderShop()
+     {
+         $abo = \Cart::instance('shop')->count();
+
+         return $abo > 0 ? true : false;
+     }
+
+     /**
+      * Do we want an abo
+      * @return float
+      * */
      public function orderAbo()
      {
          $abo = \Cart::instance('abonnement')->count();
@@ -333,19 +344,15 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
          $adresse_id = $user->adresse_livraison->id;
 
-         $abos = $order->map(function ($item, $key) use ($adresse_id) {
+         return $order->map(function ($item, $key) use ($adresse_id) {
              return [
                  'abo_id'         => $item->id,
+                 'product_id'     => $item->options->product_id,
                  'exemplaires'    => 1,
                  'adresse_id'     => $adresse_id,
                  'status'         => 'abonne',
                  'renouvellement' => 'auto'
              ];
          });
-
-         echo '<pre>';
-         print_r($abos);
-         echo '</pre>';exit();
-
      }
  }

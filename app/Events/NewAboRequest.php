@@ -4,23 +4,23 @@ namespace App\Events;
 
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use App\Droit\Shop\Order\Entities\Order;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use \Illuminate\Support\Collection;
 
-class OrderWasPlaced extends Event
+class NewAboRequest extends Event
 {
     use SerializesModels;
 
-    public $order;
+    public $abos;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(Collection $abos)
     {
-        $this->order = $order;
+        $this->abos = $abos;
     }
 
     /**

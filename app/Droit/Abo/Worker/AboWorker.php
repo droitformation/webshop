@@ -169,18 +169,27 @@ class AboWorker implements AboWorkerInterface{
      * @param  array
      * @return void
      */
-    public function makeAbonnement($data, $abo_id)
+    public function makeAbonnement($data)
     {
-        // find abo and max number
-        $abo = $this->abo->
-        //$numero = $abo->abonnements->max('numero') + 1;
-        // Create new abonnement
-        $abonnement = $this->abonnement->create($data);
+        $collection = new \Illuminate\Support\Collection();
 
-        // Create first invoice
-        $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $data['product_id']]);
+        foreach($data as $item)
+        {
+            // find abo and max number
+            $max = $this->abonnement->max($item['abo_id']) + 1;
 
-        // Generate first pdf invoice
-        $this->make($facture->id);
+            // Create new abonnement
+            $abonnement = $this->abonnement->create($item + ['numero' => $max]);
+
+            // Create first invoice
+            $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $item['product_id']]);
+
+            // Generate first pdf invoice
+            $this->make($facture->id);
+
+            $collection->push($abonnement);
+        }
+
+        return $collection;
     }
 }

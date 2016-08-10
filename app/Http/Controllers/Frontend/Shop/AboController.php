@@ -12,6 +12,8 @@ class AboController extends Controller {
     public function __construct(AboInterface $abo)
     {
         $this->abo = $abo;
+
+        $this->middleware('abo', ['only' => ['addAbo']]);
     }
 
     /**
