@@ -90,11 +90,15 @@
                                 <a href="{{ url('checkout/cart') }}" class="text-danger cart-basket"><i class="fa fa-shopping-basket"></i>&nbsp; Panier</a>
                                 <div class="btn-group">
                                     <a href="{{ url('checkout/cart') }}" class="btn btn-mini dropdown-toggle">
-                                        @if(!Cart::content()->isEmpty())
-                                            {{ Cart::count() }} {{ Cart::count() > 1 ? 'articles': 'article'}} - {{ number_format((float)Cart::total(), 2, '.', '') }} CHF
+
+										@inject('cart_worker', 'App\Droit\Shop\Cart\Worker\CartWorker')
+
+                                        @if($cart_worker->countCart() > 0)
+                                            {{ $cart_worker->countCart() }} {{ $cart_worker->countCart() > 1 ? 'articles': 'article'}} - {{ $cart_worker->totalCart() }} CHF
                                         @else
                                             0 article(s) - 0.00 CHF
                                         @endif
+
                                     </a>
                                 </div>
                             </div>

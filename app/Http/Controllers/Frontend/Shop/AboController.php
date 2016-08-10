@@ -28,7 +28,11 @@ class AboController extends Controller {
         $item = $this->abo->find($request->input('abo_id'));
 
         \Cart::instance('abonnement')->search(['id' => (int)$request->input('abo_id')]);
-        \Cart::instance('abonnement')->associate('Abo','App\Droit\Abo\Entities')->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->logo));
+        \Cart::instance('abonnement')
+            ->associate('Abo','App\Droit\Abo\Entities')
+            ->add($item->id, $item->title, 1, $item->price_cents , [
+                'image' => $item->logo, 'plan' => $item->plan_fr, 'product_id' => $item->current_product->id, 'product' => $item->current_product->title
+            ]);
 
         return redirect()->back();
 	}

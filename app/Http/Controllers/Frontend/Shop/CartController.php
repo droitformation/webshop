@@ -35,11 +35,11 @@ class CartController extends Controller {
 
         // is there enough stock to add this product?
         // Get qty of product already in cart
-        $rowId = \Cart::search(['id' => (int)$request->input('product_id')]);
+        $rowId = \Cart::instance('shop')->search(['id' => (int)$request->input('product_id')]);
 
         if($rowId)
         {
-            $already = \Cart::get($rowId[0]);
+            $already = \Cart::instance('shop')->get($rowId[0]);
             $qty     = $already ? $already->qty + 1 : $qty;
         }
 
@@ -51,21 +51,21 @@ class CartController extends Controller {
             throw new \App\Exceptions\StockCartException('Plus assez de stocks pour cet article');
         }
 
-        \Cart::associate('Product','App\Droit\Shop\Product\Entities')->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
+        \Cart::instance('shop')->associate('Product','App\Droit\Shop\Product\Entities')->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
 
         return redirect()->back();
 	}
 
     public function removeProduct(Request $request){
 
-        \Cart::remove($request->input('rowid'));
+        \Cart::instance('shop')->remove($request->input('rowid'));
 
         return redirect()->back();
     }
 
     public function quantityProduct(Request $request){
         
-        \Cart::update($request->input('rowid'), $request->input('qty'));
+        \Cart::instance('shop')->update($request->input('rowid'), $request->input('qty'));
 
         return redirect()->back();
     }

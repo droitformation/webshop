@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 use App\Droit\Shop\Order\Worker\OrderMakerInterface; // new implementation
+use App\Droit\Abo\Worker\AboWorkerInterface;
 
 use App\Droit\Shop\Payment\Repo\PaymentInterface;
 use App\Events\OrderWasPlaced;
@@ -16,15 +17,17 @@ class CheckoutController extends Controller {
     protected $user;
     protected $checkout;
     protected $order;
+    protected $abo;
     protected $payment;
     protected $adresse;
 
-    public function __construct(CartWorkerInterface $checkout, OrderMakerInterface $order, PaymentInterface $payment, AdresseInterface $adresse)
+    public function __construct(CartWorkerInterface $checkout, OrderMakerInterface $order, AboWorkerInterface $abo, PaymentInterface $payment, AdresseInterface $adresse)
     {
-        $this->adresse    = $adresse;
-        $this->checkout   = $checkout;
-        $this->order      = $order;
-        $this->payment    = $payment;
+        $this->adresse  = $adresse;
+        $this->checkout = $checkout;
+        $this->order    = $order;
+        $this->abo      = $abo;
+        $this->payment  = $payment;
     }
 
     /**
@@ -62,13 +65,9 @@ class CheckoutController extends Controller {
 
         if(!empty($data))
         {
-            if(isset($data['id']))
-            {
-                $this->adresse->update($data);
-            }
-            else{
-                $this->adresse->create($data);
-            }
+            $action = isset($data['id']) ? 'update' : 'create';
+            
+            $this->adresse->$action($data);
         }
 
         $shipping  = $this->checkout->totalShipping();
@@ -108,6 +107,13 @@ class CheckoutController extends Controller {
         $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
 
         $order    = $this->order->make($request->all(),$shipping,$coupon);
+        
+        if($this->checkout->orderAbo())
+        {
+            
+        }
+        // product_id
+        // $this->abo
 
         $order->load('user');
 

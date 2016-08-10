@@ -1,6 +1,6 @@
-@if(!Cart::content()->isEmpty())
+@if(!Cart::instance('shop')->content()->isEmpty())
 
-    <?php $cart  = Cart::content(); ?>
+    <?php $cart = Cart::instance('shop')->content(); ?>
     <div class="cart-table-holder">
         <table width="100%" border="0" cellpadding="10">
             <tr>
@@ -48,21 +48,23 @@
     <div class="cart-table-holder">
         <table width="100%" border="0" cellpadding="10">
             <tr>
-                <th width="47%" align="left">Nom</th>
-                <th width="15%" style="text-align: center;">Prix annuel</th>
+                <th width="15%" align="left">Nom</th>
+                <th width="32%" align="left">Nom</th>
+                <th width="15%" style="text-align: center;">Prix</th>
                 <th width="12%" style="text-align: center;">Quantité</th>
                 <th width="15%" style="text-align: right;">Sous-total</th>
                 <th width="5%" class="mobile-hidden">&nbsp;</th>
             </tr>
             @foreach($abos as $item)
                 <tr bgcolor="#FFFFFF" class="product-detail">
-                    <td valign="top">
-                        @foreach($item->options as $option)
-                            <img style="max-height: 60px;" src="{{ asset('files/main/'.$option) }}" />
-                        @endforeach
-                        Abonnement au {{ $item->name }}
+                    <td valign="middle" align="left">
+                        <img src="{{ asset('files/main/'.$item->options->image) }}" />
                     </td>
-                    <td class="text-center" valign="middle">{{ $item->price }} CHF</td>
+                    <td valign="middle" class="text-left">
+                        <p>Demande d'abonnement <strong>{{ $item->name }}</strong></p>
+                        <p>Une facture vous sera envoyé séparément avec l'ouvrage</p>
+                    </td>
+                    <td class="text-center" valign="middle">{{ $item->price }} CHF/{{ strtolower($item->options->plan) }}</td>
                     <td class="text-center" valign="middle">
                         <form method="post" action="{{ url('cart/quantityAbo') }}" class="form-inline">
                             <div class="input-group">

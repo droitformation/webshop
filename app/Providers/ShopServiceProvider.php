@@ -155,6 +155,7 @@ class ShopServiceProvider extends ServiceProvider
                 \App::make('App\Droit\Adresse\Repo\AdresseInterface'),
                 \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
                 \App::make('App\Droit\Shop\Cart\Repo\CartInterface'),
+                \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface'),
                 \App::make('App\Droit\Shop\Stock\Repo\StockInterface')
             );
         });

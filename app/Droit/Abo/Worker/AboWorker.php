@@ -6,6 +6,7 @@ use App\Droit\Abo\Worker\AboWorkerInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
+use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Jobs\MakeFactureAbo;
 use App\Jobs\MergeFactures;
@@ -22,14 +23,16 @@ class AboWorker implements AboWorkerInterface{
     protected $facture;
     protected $rappel;
     protected $abo;
+    protected $abonnement;
     protected $generator;
 
-    public function __construct(AboFactureInterface $facture, AboRappelInterface $rappel, PdfGeneratorInterface $generator, AboUserInterface $abo)
+    public function __construct(AboFactureInterface $facture, AboRappelInterface $rappel, PdfGeneratorInterface $generator, AboUserInterface $abonnement, AboInterface $abo)
     {
-        $this->facture   = $facture;
-        $this->rappel    = $rappel;
-        $this->abo       = $abo;
-        $this->generator = $generator;
+        $this->facture    = $facture;
+        $this->rappel     = $rappel;
+        $this->abo        = $abo;
+        $this->abonnement = $abonnement;
+        $this->generator  = $generator;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -158,5 +161,26 @@ class AboWorker implements AboWorkerInterface{
                 }
             }
         }
+    }
+
+    /**
+     * Make new abonnement for client
+     *
+     * @param  array
+     * @return void
+     */
+    public function makeAbonnement($data, $abo_id)
+    {
+        // find abo and max number
+        $abo = $this->abo->
+        //$numero = $abo->abonnements->max('numero') + 1;
+        // Create new abonnement
+        $abonnement = $this->abonnement->create($data);
+
+        // Create first invoice
+        $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $data['product_id']]);
+
+        // Generate first pdf invoice
+        $this->make($facture->id);
     }
 }

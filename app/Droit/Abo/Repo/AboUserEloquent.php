@@ -37,8 +37,8 @@ class AboUserEloquent implements AboUserInterface{
             'adresse_id'     => $data['adresse_id'],
             'tiers_id'       => isset($data['tiers_id']) && $data['tiers_id'] > 0 ? $data['tiers_id'] : null,
             'price'          => isset($data['price']) && $data['price'] > 0 ? $data['price'] : null,
-            'reference'      => $data['reference'],
-            'remarque'       => $data['remarque'],
+            'reference'      => isset($data['reference']) ? $data['reference'] : null,
+            'remarque'       => isset($data['remarque']) ? $data['remarque'] : null,
             'status'         => $data['status'],
             'renouvellement' => $data['renouvellement'],
         ));

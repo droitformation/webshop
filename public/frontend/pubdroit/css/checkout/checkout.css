@@ -234,3 +234,12 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 .credit-card-box .panel-heading img {
     min-width: 180px;
 }
+
+.order_abo td{
+    background: #eff4f6;
+}
+
+.product-detail img,
+.order_abo img{
+    max-height: 60px;
+}

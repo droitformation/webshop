@@ -48,7 +48,11 @@ class AboServiceProvider extends ServiceProvider
 
         $this->app->singleton('App\Droit\Abo\Repo\AboUserInterface', function()
         {
-            return new \App\Droit\Abo\Repo\AboUserEloquent(new \App\Droit\Abo\Entities\Abo_users, new \App\Droit\Abo\Entities\Abo_factures, new \App\Droit\Abo\Entities\Abo_rappels);
+            return new \App\Droit\Abo\Repo\AboUserEloquent(
+                new \App\Droit\Abo\Entities\Abo_users,
+                new \App\Droit\Abo\Entities\Abo_factures,
+                new \App\Droit\Abo\Entities\Abo_rappels
+            );
         });
     }
 
@@ -87,7 +91,8 @@ class AboServiceProvider extends ServiceProvider
                 \App::make('App\Droit\Abo\Repo\AboFactureInterface'),
                 \App::make('App\Droit\Abo\Repo\AboRappelInterface'),
                 \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
-                \App::make('App\Droit\Abo\Repo\AboUserInterface')
+                \App::make('App\Droit\Abo\Repo\AboUserInterface'),
+                \App::make('App\Droit\Abo\Repo\AboInterface')
             );
         });
     }

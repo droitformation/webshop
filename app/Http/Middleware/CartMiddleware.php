@@ -13,7 +13,7 @@ class CartMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-        if (\Cart::content()->isEmpty())
+        if (\Cart::instance('shop')->content()->isEmpty() && \Cart::instance('abonnement')->content()->isEmpty())
         {
             return redirect('/');
         }

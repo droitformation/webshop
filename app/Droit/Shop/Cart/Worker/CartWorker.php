@@ -91,6 +91,27 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      }
 
      /**
+      * Get coupon title
+      * @return float
+      * */
+     public function getCoupon()
+     {
+         $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
+
+         if($coupon)
+         {
+             if($coupon['type'] == 'shipping')
+             {
+                 return '<p><span class="text-muted">Frais de port offerts</span></p>';
+             }
+
+             return '<p><span class="text-muted">'.$coupon['title'].'</span> &nbsp;'.$coupon['value'].'%</p>';
+         }
+
+         return null;
+     }
+
+     /**
       * Get total from weight
       * IIT
       * @return void
@@ -99,7 +120,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
          $totalWeight = 0;
          // Get current cart instance
-         $cart     = \Cart::content();
+         $cart     = \Cart::instance('shop')->content();
          $products = $cart->lists('options');
 
          if(!$products->isEmpty())
@@ -179,7 +200,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
                  {
                      $newprice = $this->calculPriceWithCoupon($product);
 
-                     \Cart::update($rowId[0], array('price' => $newprice));
+                     \Cart::instance('shop')->update($rowId[0], array('price' => $newprice));
                  }
              }
          }
@@ -192,13 +213,13 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      * */
      public function couponGlobal()
      {
-         $cart = \Cart::content();
+         $cart = \Cart::instance('shop')->content();
 
          foreach($cart as $item)
          {
              $newprice = $item->price - ($item->price * ($this->hasCoupon->value)/100);
 
-             \Cart::update($item->rowid, array('price' => $newprice));
+             \Cart::instance('shop')->update($item->rowid, array('price' => $newprice));
          }
      }
 
@@ -209,7 +230,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      * */
      public function resetCartPrices()
      {
-         $cart = \Cart::content();
+         $cart = \Cart::instance('shop')->content();
 
          foreach($cart as $item)
          {
@@ -217,7 +238,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
              if($product)
              {
-                 \Cart::update($item->rowid, array('price' => $product->price_cents));
+                 \Cart::instance('shop')->update($item->rowid, array('price' => $product->price_cents));
              }
          }
      }
@@ -238,7 +259,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      */
      public function searchItem($id)
      {
-        return \Cart::search(['id' => $id]);
+        return \Cart::instance('shop')->search(['id' => $id]);
      }
 
      /**
@@ -249,8 +270,9 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      public function totalCartWithShipping()
      {
          $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
-
-         return \Cart::total() + $shipping->price_cents;
+         $total    = $this->totalCart() + $shipping->price_cents;
+         
+         return \number_format((float)$total, 2, '.', '');
      }
 
      /**
@@ -271,6 +293,59 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      * */
      public function totalCart()
      {
-         return \Cart::total();
+         $shop_cart = \Cart::instance('shop')->total();
+         $abo_cart  = \Cart::instance('abonnement')->total();
+
+         return number_format((float) ($shop_cart + $abo_cart), 2, '.', '');
+     }
+
+     /**
+      * Get total count items in cartt
+      * @return float
+      * */
+     public function countCart()
+     {
+         $shop_cart = \Cart::instance('shop')->count();
+         $abo_cart  = \Cart::instance('abonnement')->count();
+
+         return $shop_cart + $abo_cart;
+     }
+
+     /**
+      * Do we want an abo
+      * @return float
+      * */
+     public function orderAbo()
+     {
+         $abo = \Cart::instance('abonnement')->count();
+
+         return $abo > 0 ? true : false;
+     }
+
+     /**
+      * Data for an abo
+      * @return float
+      * */
+     public function getAboData()
+     {
+         $order = \Cart::instance('abonnement')->content();
+         $user  = \Auth::user()->load('adresses');
+
+         $adresse_id = $user->adresse_livraison->id;
+
+         $abos = $order->map(function ($item, $key) use ($adresse_id) {
+             return [
+                 'abo_id'         => $item->id,
+                 'exemplaires'    => 1,
+                 'adresse_id'     => $adresse_id,
+                 'status'         => 'abonne',
+                 'renouvellement' => 'auto'
+             ];
+         });
+
+         echo '<pre>';
+         print_r($abos);
+         echo '</pre>';exit();
+
      }
  }

@@ -10,6 +10,7 @@ use App\Droit\Shop\Shipping\Repo\ShippingInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Droit\Shop\Cart\Repo\CartInterface;
+use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 use App\Droit\Shop\Stock\Repo\StockInterface;
 
 class OrderMaker implements OrderMakerInterface{
@@ -20,6 +21,7 @@ class OrderMaker implements OrderMakerInterface{
     protected $adresse;
     protected $generator;
     protected $cart;
+    protected $worker;
     protected $stock;
 
     public function __construct(
@@ -29,6 +31,7 @@ class OrderMaker implements OrderMakerInterface{
         AdresseInterface $adresse,
         PdfGeneratorInterface $generator,
         CartInterface $cart,
+        CartWorkerInterface $worker,
         StockInterface $stock
     )
     {
@@ -38,6 +41,7 @@ class OrderMaker implements OrderMakerInterface{
         $this->adresse   = $adresse;
         $this->generator = $generator;
         $this->cart      = $cart;
+        $this->worker    = $worker;
         $this->stock     = $stock;
     }
 
@@ -75,11 +79,11 @@ class OrderMaker implements OrderMakerInterface{
     {
         $data = [
             'order_no'    => $this->order->newOrderNumber(),
-            'amount'      => isset($order['admin']) ? $this->total($order['order']) : \Cart::total() * 100,
+            'amount'      => isset($order['admin']) ? $this->total($order['order']) : \Cart::instance('shop')->total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
             'shipping_id' => isset($order['admin']) ? $this->getShipping($order) : $shipping->id,
             'payement_id' => 1,
-            'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::content())
+            'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::instance('shop')->content())
         ];
 
         $user = isset($order['admin']) ? $this->getUser($order) : ['user_id' => \Auth::user()->id];
@@ -96,7 +100,7 @@ class OrderMaker implements OrderMakerInterface{
     {
         $order = $this->order->create($data);
 
-        $cart  = \Cart::content();
+        $cart  = \Cart::instance('shop')->content();
 
         if(!$order && !empty($cart) && !$cart->isEmpty())
         {
