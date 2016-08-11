@@ -28,6 +28,18 @@ class AboUserEloquent implements AboUserInterface{
         return $this->abo_user->with(['tiers','user','abo','abo.products','factures','factures.rappels','originaltiers','originaluser'])->find($id);
     }
 
+    public function allByAdresse($id)
+    {
+        $abos = $this->abo_user->with(['user','abo']);
+
+        if(is_array($id))
+        {
+            return $abos->whereIn('adresse_id', $id)->get();
+        }
+
+        return $abos->where('adresse_id', '=', $id)->get();
+    }
+
     public function findByAdresse($id, $abo_id)
     {
         $abo = $this->abo_user->where('abo_id', '=', $abo_id)->where('adresse_id', '=', $id)->get();

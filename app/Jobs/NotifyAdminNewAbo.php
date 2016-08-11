@@ -32,9 +32,10 @@ class NotifyAdminNewAbo extends Job implements ShouldQueue
     public function handle()
     {
         $infos = [
-            'name'     => $this->abos->first()->user_adresse->name,
+            'name'     => $this->abos->first()->user->name,
             'what'     => 'Demande d\'abonnement',
-            'link'     => 'admin/abo'
+            'link'     => 'admin/abo',
+            'abos'     => $this->abos
         ];
 
         \Mail::send('emails.notification', $infos, function ($m) {

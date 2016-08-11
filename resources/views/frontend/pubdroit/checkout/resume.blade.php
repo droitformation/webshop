@@ -85,9 +85,7 @@
                                data-what="envoyer"
                                data-action="la commande" href="{{ url('checkout/send') }}">Envoyer la commande &nbsp;<i class="fa fa-paper-plane pull-right"></i>
                             </a>
-                            <a id="btn-stripe" style="display: none;" class="more-btn btn-success btn-commande"
-                               data-toggle="modal"
-                               data-target="#payment-stripe">Payer la commande  &nbsp;<i class="fa fa-paper-plane pull-right"></i></a>
+
                         </td>
                     </tr>
                 </table>

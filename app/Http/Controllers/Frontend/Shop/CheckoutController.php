@@ -10,6 +10,7 @@ use App\Droit\Abo\Worker\AboWorkerInterface;
 
 use App\Droit\Shop\Payment\Repo\PaymentInterface;
 use App\Events\OrderWasPlaced;
+use App\Events\NewAboRequest;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller {
@@ -111,20 +112,6 @@ class CheckoutController extends Controller {
             $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
             $order    = $this->order->make($request->all(),$shipping,$coupon);
 
-            $order->load('user');
-
-            // Payment
-            if($request->input('stripeToken'))
-            {
-                $charge = $this->viaStripe($request->input('stripeToken'),$order);
-
-                $order->payed_at       = \Carbon\Carbon::now();
-                $order->transaction_no = $charge->id;
-                $order->status         = 'payed';
-                $order->payement_id    = 2;
-                $order->save();
-            }
-
             $this->cleanUp();
 
             event(new OrderWasPlaced($order));
@@ -133,38 +120,12 @@ class CheckoutController extends Controller {
         if($this->checkout->orderAbo())
         {
             $data = $this->checkout->getAboData();
-            $this->abo->makeAbonnement($data);
+            $abos = $this->abo->makeAbonnement($data);
 
-           // event(new OrderWasPlaced($order));
+            event(new NewAboRequest($abos));
         }
 
         return redirect('/')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
-    }
-
-    /**
-     * Pay via stripe API
-     */
-    public function viaStripe($token,$order){
-
-        \Stripe\Stripe::setApiKey("sk_test_ryko0RINfRXTIq65ATCIAPAV");
-
-        // Create the charge on Stripe's servers - this will charge the user's card
-        try {
-
-            $charge = \Stripe\Charge::create(array(
-                    "amount"      => $order->total_with_shipping * 100, // amount in cents, again
-                    "currency"    => "chf",
-                    "source"      => $token,
-                    "description" => $order->user->email
-                )
-            );
-
-            return $charge;
-        }
-        catch(\Stripe\Error\Card $e)
-        {
-            throw new \App\Exceptions\CardDeclined('Carte décliné');
-        }
     }
 
     /*
@@ -172,7 +133,8 @@ class CheckoutController extends Controller {
      * */
     public function cleanUp()
     {
-        \Cart::destroy();
+        \Cart::instance('shop')->destroy();
+        \Cart::instance('abonnement')->destroy();
         session()->forget('noShipping');
         session()->forget('coupon');
     }

@@ -832,9 +832,9 @@ a.more-btn:visited
 .cart-holder .heading-bar{ overflow:hidden;}
 .cart-holder .heading-bar h2{ float:left;}
 .cart-table-holder{ padding:0 20px 20px 20px; background:#f9f9f9; border:1px solid #efefef; margin-bottom:70px;}
-.cart-table-holder table td, .cart-table-holder table th {
-    padding: 8px;
-}
+.cart-table-holder table td, .cart-table-holder table th { padding: 8px; }
+.cart-table-holder-abo{ background:#fdf9ee;}
+
 .product-detail{ border:1px solid #e5e5e5; color:#000;}
 .product-detail input[type="text"]{
     height: 30px;

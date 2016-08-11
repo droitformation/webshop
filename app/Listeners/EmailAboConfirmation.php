@@ -6,6 +6,9 @@ use App\Events\NewAboRequest;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\jobs\SendAboConfirmation;
+use App\jobs\NotifyAdminNewAbo;
 
 class EmailAboConfirmation
 {
@@ -30,7 +33,7 @@ class EmailAboConfirmation
     public function handle(NewAboRequest $event)
     {
         // Send email of confirmation to user
-        $job = (new SendConfirmationAbo($event->abos))->delay(15);
+        $job = (new SendAboConfirmation($event->abos))->delay(15);
 
         $this->dispatch($job);
 

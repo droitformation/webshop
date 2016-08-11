@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class EmailOrderConfirmation
 {
-
     use DispatchesJobs;
 
     /**

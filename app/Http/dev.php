@@ -355,6 +355,16 @@ Route::get('messageadmin', function()
 
 Route::get('notification', function()
 {
+    $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order   = $orders->getLast(1);
+    $order   = $order->first();
+
+    $job = new App\Jobs\SendOrderConfirmation($order);
+
+    app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
+
+    exit;
+
     setlocale(LC_ALL, 'fr_FR.UTF-8');
     $date   = \Carbon\Carbon::now()->formatLocalized('%d %B %Y');
     $title  = 'Votre commande sur publications-droit.ch';
@@ -379,6 +389,19 @@ Route::get('notification', function()
     ];
 
     return View::make('emails.shop.confirmation', $data);
+
+});
+
+Route::get('demande', function()
+{
+    $model = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $abos  = $model->allByAdresse(4983);
+
+    $job = new App\Jobs\NotifyAdminNewAbo($abos);
+
+    app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
+
+    //return View::make('emails.shop.demande', $data);
 
 });
 
@@ -461,53 +484,6 @@ Route::get('confirmation_newsletter', function()
     return View::make('emails.confirmation', $data);
 });
 
-Route::get('convert', function()
-{
-    $temp      = new \App\Droit\Colloque\Entities\Colloque_temp();
-    $colloques = $temp->all();
-
-    foreach($colloques as $colloque)
-    {
-        $new  = new \App\Droit\Colloque\Entities\Colloque();
-        $item = $new->find($colloque->id);
-
-        $item->organisateur = $colloque->organisateur_id;
-        $item->compte_id    = $colloque->compte_id;
-        $item->save();
-
-        /*        $new->id              = $colloque->id;
-                $new->titre           = $colloque->titre;
-                $new->soustitre       = $colloque->soustitre;
-                $new->sujet           = $colloque->sujet;
-                $new->start_at        = $colloque->start_at;
-                $new->end_at          = $colloque->end_at;
-                $new->active_at       = $colloque->active_at;
-                $new->registration_at = $colloque->registration_at;
-                $new->remarques       = $colloque->remarques;
-                $new->visible         = $colloque->visible;
-                $new->url             = $colloque->url;
-                $new->compte_id       = $colloque->compte_id;
-
-                if($colloque->typeColloque == 1){
-                    $new->bon = 1;
-                    $new->facture = 1;
-                }
-
-                if($colloque->typeColloque == 2){
-                    $new->bon = 0;
-                    $new->facture = 1;
-                }
-
-                if($colloque->typeColloque == 0){
-                    $new->bon = 0;
-                    $new->facture = 0;
-                }*/
-
-        //$new->save();
-    }
-
-});
-
 Route::get('testproduct', function()
 {
     $reminders  = \App::make('App\Droit\Reminder\Repo\ReminderInterface');
@@ -557,152 +533,9 @@ Route::get('/calculette', function () {
 
 Route::get('dispatch', function()
 {
-    $document    = 'arret';
-    $interface   = ucfirst($document);
-    $directorie  = 'arrets';
-    $putinfolder = $document.'s';
 
-    $model  =  App::make('App\Droit\\'.$interface.'\\Repo\\'.$interface.'Interface');
-
-    $models = $model->getAll(3);
-    $files  = $models->lists('file');
-
-    foreach($files as $path)
-    {
-        $file = explode('/', $path);
-        $file = end($file);
-
-        $tosearch[] = $file;
-    }
-
-    $path   = public_path('files').'/dispatch';
-    $search = File::allFiles($path);
-
-    foreach($search as $find)
-    {
-        $file = explode('/', $find);
-        $file = end($file);
-
-        if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
-        {
-            $target = public_path('files').'/'.$putinfolder.'/matrimonial/'.$file;
-
-            //File::copy( $find, $target );
-            echo $target;
-            echo '<br/>';
-        }
-    }
-
-    echo '<pre>';
-    //print_r($tosearch);
-    echo '</pre>';
-
-    exit;
 
 });
-
-Route::get('dispatchnewsletter', function()
-{
-    $model  =  App::make('App\Droit\Newsletter\Repo\NewsletterContentInterface');
-
-    $models = $model->getAll();
-    $files  = $models->lists('image')->all();
-    $files = array_filter($files);
-
-    foreach($files as $path)
-    {
-        $file = explode(',', $path);
-
-        foreach($file as $item){
-            $tosearch[] = $item;
-        }
-    }
-
-    $path   = public_path('dispatch/newsletter_images');
-    $search = File::allFiles($path);
-
-    foreach($search as $find)
-    {
-        $file = explode('/', $find);
-        $file = end($file);
-        echo $file;
-        echo '<br/>';
-
-        if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
-        {
-            $target = public_path('files').'/uploads/'.$file;
-            File::copy( $find, $target );
-        }
-    }
-
-    echo '<pre>';
-    //print_r($files);
-    echo '</pre>';
-
-    exit;
-
-});
-
-Route::get('dispatchcolloque', function()
-{
-    $model  = App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-
-    $models = $model->getAll();
-
-    foreach($models as $colloque)
-    {
-        $files = $colloque->documents->lists('path','type')->all();
-
-        foreach($files as $type => $item)
-        {
-            $tosearch[$colloque->id] = $files;
-        }
-    }
-
-    $path   = public_path('files/colloques/temp');
-    $search = File::allFiles($path);
-
-    foreach($search as $file)
-    {
-        $file = explode('/', $file);
-        $file = end($file);
-        $found[] = $file;
-    }
-
-    foreach($tosearch as $coloque)
-    {
-        foreach($coloque as $type => $item)
-        {
-           // echo $item.'<br/>';
-
-            if(in_array($item,$found) && File::exists(public_path('files/colloques/temp/'.$item)) && File::isFile(public_path('files/colloques/temp/'.$item)))
-            {
-                $target = public_path('files').'/colloques/'.$type.'/'.$item;
-                echo $target;
-                echo '<br/>';
-                File::copy( public_path('files/colloques/temp/'.$item), $target );
-            }
-        }
-    }
-
-    echo '<pre>';
-   // print_r($found);
-    echo '</pre>';
-
-    exit;
-
-});
-
-Route::get('duplicates', function () {
-
-    $model   = new \App\Droit\Adresse\Entities\Adresse();
-    $results = $model->select('email')->groupBy('email')->havingRaw('count(*) > 1')->get();
-
-    echo '<pre>';
-    print_r($results);
-    echo '</pre>';exit;
-});
-
 
 Route::get('merge', function () {
 
@@ -711,6 +544,7 @@ Route::get('merge', function () {
     $exporter->merge();
     
 });
+
 Route::get('exporter', function () {
 
     $adresses = [
@@ -747,49 +581,6 @@ Route::get('exporter', function () {
 
 
     return \PDF::loadView('backend.export.badge', $data)->setPaper('a4')->stream('badges_.pdf');
-
-});
-    
-    
-    
-    Route::get('convertfiles', function()
-    {
-        $type = 'bv';
-    
-        $path   = public_path('dispatch/pdfs/'.$type);
-        $search = File::allFiles($path);
-    
-        foreach($search as $filepath)
-        {
-    
-            $file   = explode('_', $filepath);
-            $target = public_path('files/colloques/'.$type.'/'.$type.'_'.$file[1]);
-            File::copy( $filepath, $target );
-    
-            //$part[] = $file[1];
-            $part[] = $target;
-    
-        }
-    
-    /*    foreach($search as $find)
-        {
-            $file = explode('/', $find);
-            $file = end($file);
-            echo $file;
-            echo '<br/>';
-    
-            if(in_array($file,$tosearch) && File::exists($find) && File::isFile($find))
-            {
-                $target = public_path('files').'/uploads/'.$file;
-                File::copy( $find, $target );
-            }
-        }*/
-
-    echo '<pre>';
-    print_r($part);
-    echo '</pre>';
-
-    exit;
 
 });
 

@@ -1236,7 +1236,7 @@
                                         <a style="text-decoration: none; color:#000;" href="{{ url('/') }}">publications-droit.ch</a>
                                     </h1>
                                     <h2>{{ $concerne }}</h2>
-                                </td
+                                </td>
                             </tr>
                             <tr><td colspan="2" style="{{ $resetMargin }}{{ $resetPadding }}border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;height:5px;line-height: 0 !important;font-size: 0 !important;">&nbsp;</td></tr>
                         </table>

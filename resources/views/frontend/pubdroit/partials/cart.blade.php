@@ -45,11 +45,11 @@
 @if( !\Cart::instance('abonnement')->content()->isEmpty() )
 
     <?php $abos = Cart::instance('abonnement')->content(); ?>
-    <div class="cart-table-holder">
+    <div class="cart-table-holder cart-table-holder-abo">
         <table width="100%" border="0" cellpadding="10">
             <tr>
-                <th width="15%" align="left">Nom</th>
-                <th width="32%" align="left">Nom</th>
+                <th width="15%" align="left">Abonnement</th>
+                <th width="32%" align="left"></th>
                 <th width="15%" style="text-align: center;">Prix</th>
                 <th width="12%" style="text-align: center;">Quantité</th>
                 <th width="15%" style="text-align: right;">Sous-total</th>
@@ -62,7 +62,7 @@
                     </td>
                     <td valign="middle" class="text-left">
                         <p>Demande d'abonnement <strong>{{ $item->name }}</strong></p>
-                        <p>Une facture vous sera envoyé séparément avec l'ouvrage</p>
+                        <p>Une facture vous sera envoyé avec l'ouvrage</p>
                     </td>
                     <td class="text-center" valign="middle">{{ $item->price }} CHF/{{ strtolower($item->options->plan) }}</td>
                     <td class="text-center" valign="middle">
