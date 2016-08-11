@@ -23,4 +23,5 @@
      public function orderAbo();
      public function orderShop();
      public function getAboData();
+     public function removeById($instance,$id);
  }

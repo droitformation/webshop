@@ -355,4 +355,17 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
              ];
          });
      }
+
+     public function removeById($instance,$id)
+     {
+         $toRemove = \Cart::instance($instance)->search(['id' => $id]);
+
+         if(!empty($toRemove))
+         {
+             foreach ($toRemove as $remove)
+             {
+                 \Cart::instance($instance)->remove($remove);
+             }
+         }
+     }
  }

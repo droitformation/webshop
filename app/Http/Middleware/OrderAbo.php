@@ -4,18 +4,21 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Droit\Abo\Repo\AboUserInterface;
+use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 
 class OrderAbo
 {
     protected $abonnement;
+    protected $worker;
 
     /**
      *
      * @return void
      */
-    public function __construct(AboUserInterface $abonnement)
+    public function __construct(AboUserInterface $abonnement, CartWorkerInterface $worker)
     {
         $this->abonnement = $abonnement;
+        $this->worker     = $worker;
     }
 
     /**
@@ -27,41 +30,47 @@ class OrderAbo
      */
     public function handle($request, Closure $next)
     {
-        //$this->aboExist($request->input('abo_id',null));
+        $redirect = false;
 
-        return $next($request);
-    }
+        $abo_id = $request->input('abo_id',null);
 
-    public function aboExist($abo_id)
-    {
-        if($abo_id)
-        {
+        if($abo_id){
             $abos = [$abo_id];
         }
 
-        if(!isset($abo_id) && !\Cart::instance('abonnement')->isEmpty())
+        if(empty($abos) && !\Cart::instance('abonnement')->content()->isEmpty())
         {
-            $abos = \Cart::instance('abonnement')->content()->pluck('id');
+            $abos = \Cart::instance('abonnement')->content()->map(function ($item, $key) {
+                return $item->id;
+            });
         }
 
-        if (\Auth::check() && !empty($abos))
+        if(\Auth::check() && !empty($abos))
         {
+            $user = \Auth::user()->load('adresses');
+
             foreach($abos as $abo)
             {
-                $user = \Auth::user()->load('adresses');
                 $exist = $this->abonnement->findByAdresse($user->adresse_livraison->id, $abo);
 
                 if($exist)
                 {
-                    $toRemove = \Cart::instance('abonnement')->search(function ($cartItem, $rowId) use ($abo) {
-                        return $cartItem->id === $abo;
-                    });
-
-                    $ids = $toRemove->pluck('rowId');
-
-                    return redirect('/')->with(['status' => 'warning', 'message' => 'Vous êtes déjà abonné à cet ouvrage']);
+                    $this->worker->removeById('abonnement', $abo);
+                    $redirect = true;
                 }
             }
         }
+
+        if($redirect)
+        {
+            return redirect('/')->with(['status' => 'warning', 'message' => 'Vous êtes déjà abonné à cet ouvrage']);
+        }
+
+        return $next($request);
+    }
+
+    public function aboExist($abo_id = null)
+    {
+
     }
 }
