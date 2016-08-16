@@ -29,7 +29,9 @@
          $handle   = fopen($filename, 'w+');
 
          // Add columns names
-         fputcsv($handle, array_map("utf8_decode", array_values(config('columns.names'))), ";",'"');
+         fputcsv($handle, array_map(function($text) {
+             return iconv(mb_detect_encoding($text, mb_detect_order(), true), "UTF-8", $text);
+         }, array_values(config('columns.names'))), ";",'"');
 
          // Put all adresses in csv
          foreach($adresses as $row)
@@ -48,8 +50,9 @@
          $columns = collect(array_keys(config('columns.names')));
 
          return $adresses->map(function ($adresse) use ($columns) {
-             return $columns->map(function ($column) use ($adresse){
-                 return utf8_decode($adresse->$column);
+             return $columns->map(function ($column) use ($adresse)
+             {
+                 return iconv(mb_detect_encoding($adresse->$column, mb_detect_order(), true), "UTF-8", $adresse->$column);
              });
          });
      }

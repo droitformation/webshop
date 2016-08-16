@@ -17,7 +17,7 @@ class AdminCreatePagesTest extends TestCase {
 
     public function tearDown()
     {
-        Mockery::close();
+        \Mockery::close();
     }
     
 	/**

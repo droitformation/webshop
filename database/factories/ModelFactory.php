@@ -124,6 +124,12 @@ $factory->define(App\Droit\Specialisation\Entities\Specialisation::class, functi
     ];
 });
 
+$factory->define(App\Droit\Profession\Entities\Profession::class, function (Faker\Generator $faker) {
+    return [
+        'title' => 'title'
+    ];
+});
+
 $profession = \App::make('App\Droit\Profession\Repo\ProfessionInterface');
 $canton     = \App::make('App\Droit\Canton\Repo\CantonInterface');
 $pays       = \App::make('App\Droit\Pays\Repo\PaysInterface');

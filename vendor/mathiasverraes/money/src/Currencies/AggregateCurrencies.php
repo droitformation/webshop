@@ -4,6 +4,7 @@ namespace Money\Currencies;
 
 use Money\Currencies;
 use Money\Currency;
+use Money\Exception\UnknownCurrencyException;
 
 /**
  * Aggregates several currency repositories.
@@ -43,5 +44,33 @@ final class AggregateCurrencies implements Currencies
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function subunitFor(Currency $currency)
+    {
+        foreach ($this->currencies as $c) {
+            if ($c->contains($currency)) {
+                return $c->subunitFor($currency);
+            }
+        }
+
+        throw new UnknownCurrencyException('Cannot find currency '.$currency->getCode());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        $iterator = new \AppendIterator();
+
+        foreach ($this->currencies as $c) {
+            $iterator->append($c->getIterator());
+        }
+
+        return $iterator;
     }
 }

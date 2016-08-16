@@ -6,8 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CouponTest extends TestCase {
 
-    use WithoutMiddleware;
-
     protected $coupon;
     protected $product;
 
@@ -31,7 +29,7 @@ class CouponTest extends TestCase {
 
     public function tearDown()
     {
-        Mockery::close();
+        \Mockery::close();
     }
     
 	/**

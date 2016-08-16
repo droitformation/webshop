@@ -30,6 +30,7 @@ class CartWorkerTest extends TestCase {
     public function tearDown()
     {
         \Cart::instance('shop')->destroy();
+        \Mockery::close();
     }
 
 	/**
@@ -64,14 +65,13 @@ class CartWorkerTest extends TestCase {
                 'expire_at'  => \Carbon\Carbon::now()->addDay()
             ]
         );
-
-        $coupon->products = new Illuminate\Database\Eloquent\Collection([$product]);
-
+        
+        $coupon->setRelation('products', new Illuminate\Database\Eloquent\Collection([$product]));
+        
         \Cart::instance('shop');
         \Cart::instance('shop')->add(11, 'Uno', 1, '20' , array('weight' => 1000)); // price 20
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
-        $this->product->shouldReceive('find')->once()->andReturn($product);
         
         $worker->setCoupon($coupon->title)->applyCoupon();
         
@@ -164,7 +164,6 @@ class CartWorkerTest extends TestCase {
         $threecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'three')->make();
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($threecoupon);
-        $this->product->shouldReceive('find')->once()->andReturn($oneproduct);
 
         $worker->getTotalWeight();
 
@@ -334,7 +333,6 @@ class CartWorkerTest extends TestCase {
         \Cart::instance('shop')->add($oneproduct->id, $oneproduct->title, 1, $oneproduct->price , array('weight' => $oneproduct->weight));
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($twocoupon);
-        $this->product->shouldReceive('find')->once()->andReturn($oneproduct);
 
         $worker->setCoupon($twocoupon->title)->applyCoupon();
 
@@ -362,7 +360,6 @@ class CartWorkerTest extends TestCase {
         \Cart::instance('shop')->add(100, 'Dos', 1, '10.00' , array('weight' => 600));
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($onecoupon);
-        $this->product->shouldReceive('find')->twice()->andReturn($oneproduct);
 
         $worker->setCoupon($onecoupon->title)->applyCoupon();
 
@@ -389,7 +386,6 @@ class CartWorkerTest extends TestCase {
         \Cart::instance('shop')->add(100, 'Dos', 1, '10.00' , array('weight' => 600));
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($onecoupon);
-        $this->product->shouldReceive('find')->twice()->andReturn($oneproduct);
 
         $worker->setCoupon($onecoupon->title)->applyCoupon();
 
@@ -422,9 +418,6 @@ class CartWorkerTest extends TestCase {
         // Has to match the factory product
         \Cart::instance('shop')->add(100, 'Dos', 1, '10.00', array('weight' => 600));
         \Cart::instance('abonnement')->add(2, 'Abo', 1, '100.00', array('image' => 'logo.png'));
-
-        $this->product->shouldReceive('find')->once()->andReturn($product);
-        $this->abo->shouldReceive('find')->once()->andReturn($abo);
 
         $price = $worker->totalCart();
         $count = $worker->countCart();

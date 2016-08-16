@@ -4,8 +4,8 @@ composer.phar
 composer.lock
 .DS_Store
 .idea/
-/public/logos/
 
+public/logos/
 public/files/products/
 public/files/arrets
 public/files/analyses
@@ -13,8 +13,7 @@ public/files/uploads
 public/files/colloques
 public/files/pictos
 public/files/shop
-public/files/dispatch/
 storage/excel/exports/
-public/dispatch/
 public/files/abos/
+public/newsletter/js/env.js
 

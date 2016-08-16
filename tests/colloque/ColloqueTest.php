@@ -20,7 +20,7 @@ class ColloqueTest extends TestCase {
 
     public function tearDown()
     {
-        Mockery::close();
+        \Mockery::close();
     }
 
 	public function testIntersectAnnexes()

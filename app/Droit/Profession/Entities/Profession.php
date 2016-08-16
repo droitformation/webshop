@@ -7,7 +7,7 @@ class Profession extends Model{
 
     protected $table = 'professions';
 
-    protected $fillable = array('title');
+    protected $fillable = ['title'];
     /**
      * Set timestamps off
      */

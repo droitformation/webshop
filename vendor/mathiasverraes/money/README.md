@@ -32,14 +32,14 @@ The documentation is available at http://money.readthedocs.org
 Installation
 ------------
 
-Install the library using [composer][1].
+Install the library using [composer][1]. It is listed on [Packagist][5].
 
 ``` bash
 composer require mathiasverraes/money
 ```
 
 Features
-------------
+--------
 
 - JSON Serialization
 - Big integer support utilizing different, transparent calculation logic upon availability (bcmath, gmp, plain php)
@@ -52,7 +52,27 @@ Integration
 
 See [`MoneyBundle`][2] or [`TbbcMoneyBundle`][4] for [Symfony integration][3].
 
+Contributing
+------------
+
+We would love to see you helping us to make this library better and better. Please keep in mind we do not use suffixes
+and prefixes in class names, so not `CurrenciesInterface` but `Currencies`. Other than that, Style CI will help you
+using the same code style as we are using. Please provide tests when creating a PR and clear descriptions of bugs when
+filing issues.
+
+License
+-------
+
+Money is licensed under the MIT License - see the `LICENSE` file for details
+
+Acknowledgements
+----------------
+
+This library is heavily inspired by Martin Fowler's Money pattern. A special remark goes to Mathias Verraes, without his
+contributions, in code and via his blog, this library would not be where it stands now.
+
 [1]: http://getcomposer.org/
 [2]: https://github.com/pink-tie/MoneyBundle/
 [3]: http://symfony.com/
 [4]: https://github.com/TheBigBrainsCompany/TbbcMoneyBundle
+[5]: https://packagist.org/packages/mathiasverraes/money

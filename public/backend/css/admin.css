@@ -645,7 +645,12 @@ select[multiple] {
 
 .site-dropdown {
     padding: 10px 5px;
-    width: 240px;
+    width: 400px;
+}
+
+.site-dropdown li{
+    display: inline-block;
+    width: 190px;
 }
 
 .info-tiles, .shortcut-tiles{

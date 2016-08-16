@@ -6,8 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuthorTest extends TestCase {
 
-    use WithoutMiddleware;
-
     protected $author;
 
     public function setUp()
