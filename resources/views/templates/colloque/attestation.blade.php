@@ -1,12 +1,6 @@
-<html>
-<head>
-    <style type="text/css">
-        @page { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: auto;}
-    </style>
-    <link rel="stylesheet" type="text/css" href="<?php echo public_path('css/generate/common.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo public_path('css/generate/bon.css');?>" media="screen" />
-</head>
-<body>
+@extends('templates.layouts.master')
+@section('content')
+
 <?php $colloque = $generate->getColloque(); ?>
 <div class="content">
     <table class="content-table">
@@ -101,5 +95,4 @@
     </table>
 </div>
 
-</body>
-</html>
+@stop

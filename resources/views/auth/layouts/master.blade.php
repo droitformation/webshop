@@ -15,8 +15,8 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-    <script src="<?php echo asset('backend/js/validation/messages_fr.js');?>"></script>
-    <script src="<?php echo asset('js/validation.js');?>"></script>
+    <script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
+    <script src="<?php echo asset('common/js/validation.js');?>"></script>
 </head>
 <body class="focusedform">
     <div class="{{ !Request::is('auth/register') ? 'verticalcenter' : 'verticalcenterregister' }}">

@@ -1,12 +1,6 @@
-<html>
-<head>
-    <style type="text/css">
-        @page { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: auto;}
-    </style>
-    <link rel="stylesheet" type="text/css" href="<?php echo public_path('css/generate/common.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo public_path('css/generate/invoice.css');?>" media="screen" />
-</head>
-<body style="position: relative;height:297mm;">
+@extends('templates.layouts.master')
+@section('content')
+
     <div id="content">
         <table id="content-table">
             <tr>
@@ -235,5 +229,4 @@
         </table>
     @endif
 
-</body>
-</html>
+@stop

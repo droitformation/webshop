@@ -41,9 +41,9 @@ class MatrimonialController extends Controller
 
     public function index()
     {
-        $page = $this->page->getBySlug($this->site_id,'home');
+        $page = $this->page->getBySlug($this->site_id,'index');
 
-        return view('frontend.matrimonial.index')->with([ 'page' => $page ]);
+        return view('frontend.matrimonial.index')->with(['page' => $page]);
     }
 
     /**

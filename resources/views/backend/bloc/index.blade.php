@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h3>Blocs de contenu</h3>
+        <h3>Blocs de contenus</h3>
     </div>
     <div class="col-md-6">
         <div class="options text-right" style="margin-bottom: 10px;">
@@ -28,9 +28,9 @@
                     <thead>
                     <tr>
                         <th class="col-sm-1">Action</th>
+                        <th class="col-sm-1">Type</th>
                         <th class="col-sm-2">Titre</th>
                         <th class="col-sm-1">Image</th>
-                        <th class="col-sm-1">Type</th>
                         <th class="col-sm-1">Position</th>
                         <th class="col-sm-1"></th>
                     </tr>
@@ -40,13 +40,13 @@
                         @foreach($blocs as $bloc)
                             <tr>
                                 <td><a class="btn btn-sky btn-sm" href="{{ url('admin/bloc/'.$bloc->id) }}">&Eacute;diter</a></td>
+                                <td>{{ ucfirst($bloc->type) }}</td>
                                 <td><strong>{!! $bloc->title !!}</strong></td>
                                 <td>
                                     @if(!empty($bloc->image))
                                         <img height="50" src="{{ asset('files/uploads/'.$bloc->image) }}" alt="{{ $bloc->title or '' }}" />
                                     @endif
                                 </td>
-                                <td>{{ $bloc->type }}</td>
                                 <td>{{ $positions[$bloc->position] }}</td>
                                 <td class="text-right">
                                     <form action="{{ url('admin/bloc/'.$bloc->id) }}" method="POST">

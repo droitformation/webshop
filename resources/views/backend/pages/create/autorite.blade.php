@@ -19,7 +19,7 @@
 
     <div class="form-group">
         <label for="contenu" class="control-label">Contenu</label>
-        {!! Form::textarea('content', null, ['class' => 'form-control redactorBlocSimple'] ) !!}
+        {!! Form::textarea('content', null, ['class' => 'form-control redactorSimple'] ) !!}
     </div>
 
     <input name="type" value="autorite" type="hidden">
