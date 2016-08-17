@@ -1,7 +1,8 @@
-@if(!Cart::content()->isEmpty())
+@if(!Cart::instance('shop')->content()->isEmpty() || !Cart::instance('abonnement')->content()->isEmpty())
 
     <div class="row">
         <figure class="col-md-4 first">
+            @if(!Cart::instance('shop')->content()->isEmpty())
             <div class="cart-option-box">
                 <h4><i class="fa fa-money"></i> RABAIS</h4>
                 {!! Form::open(array('url' => 'cart/applyCoupon')) !!}
@@ -14,6 +15,7 @@
                 </div><!-- /input-group -->
                 {!! Form::close() !!}
             </div>
+            @endif
         </figure>
         <figure class="col-md-4"></figure>
         <figure class="col-md-4 price-total">

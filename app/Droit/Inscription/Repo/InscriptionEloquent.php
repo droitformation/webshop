@@ -67,6 +67,12 @@ class InscriptionEloquent implements InscriptionInterface{
         return false;
     }
 
+    public function findByNumero($numero)
+    {
+        return $this->inscription->with(['price','colloque','user','rappels','user_options','user_options.option','groupe','participant'])
+            ->where('inscription_no','=',$numero)->paginate(20);
+    }
+
     public function getByGroupe($groupe_id)
     {
        return $this->inscription->where('group_id','=',$groupe_id)->get();

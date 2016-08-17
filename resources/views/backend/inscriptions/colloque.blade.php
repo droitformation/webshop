@@ -13,7 +13,6 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-
                     <div class="row">
                         <div class="col-md-10">
                             <h4>
@@ -26,7 +25,11 @@
                             <a href="{{ url('admin/inscription/create/'.$colloque->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une inscription</a>
                         </div>
                     </div>
-                    <hr/>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
 
                     <div class="row">
                         <div class="col-md-10">
@@ -49,7 +52,7 @@
                                         <h4 style="margin-bottom: 0;">Tri</h4>
                                         <div class="radio"><label><input type="radio" name="sort" value="" checked> Normal</label></div>
                                         <div class="radio"><label><input type="radio" name="sort" value="1"> Par options</label></div>
-                                        <div class="text-right" style="margin-top: 15px;">
+                                        <div style="margin-top: 15px;">
                                             <button type="submit" class="btn btn-inverse" style="margin-top: 5px;"><i class="fa fa-download"></i> &nbsp;Exporter liste excel</button>
                                             <a href="{{ url('admin/export/qrcodes/'.$colloque->id) }}" class="btn btn-brown" style="margin-top: 5px;">
                                                 <i class="fa fa-qrcode"></i> &nbsp;Exporter qrcodes
@@ -73,7 +76,7 @@
                                     @endif
                                 </select>
                                 <br/>
-                                <button type="submit" class="btn btn-primary pull-right" style="margin-top: 5px;"><i class="fa fa-files-o"></i> &nbsp;Générer</button>
+                                <button type="submit" class="btn btn-primary" style="margin-top: 5px;"><i class="fa fa-files-o"></i> &nbsp;Générer</button>
                             </form>
                         </div>
                     </div>
@@ -85,16 +88,26 @@
                 <div class="panel-body">
                     <div class="table-responsive">
                         <h3>Inscriptions</h3>
+
+                        <form class="form-horizontal pull-right" action="{{ url('admin/inscription/colloque/'.$colloque->id) }}" method="post">{!! csrf_field() !!}
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="inscription_no" placeholder="Recherche par numéro...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </form>
+
                         <table class="table" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                             <thead>
                             <tr>
-                                <th class="col-sm-1">Action</th>
+                                <th class="col-sm-1 no-sort">Action</th>
                                 <th class="col-sm-2">Déteteur</th>
                                 <th class="col-sm-2">No</th>
                                 <th class="col-sm-1">Prix</th>
                                 <th class="col-sm-1">Date</th>
                                 <th class="col-sm-2">Status</th>
-                                <th class="col-sm-1"></th>
+                                <th class="col-sm-1 no-sort"></th>
                             </tr>
                             </thead>
                             <tbody class="selects">

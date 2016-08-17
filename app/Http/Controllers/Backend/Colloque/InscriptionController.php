@@ -60,10 +60,18 @@ class InscriptionController extends Controller
      *
      * @return Response
      */
-    public function colloque($id)
+    public function colloque($id, Request $request)
     {
-        $colloque        = $this->colloque->find($id);
-        $inscriptions    = $this->inscription->getByColloque($id,false,true);
+        if($request->input('inscription_no',null))
+        {
+            $inscriptions = $this->inscription->findByNumero($request->input('inscription_no',null));
+        }
+        else
+        {
+            $inscriptions = $this->inscription->getByColloque($id,false,true); 
+        }
+        
+        $colloque = $this->colloque->find($id);
 
         return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'names' => config('columns.names')]);
     }

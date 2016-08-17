@@ -1,12 +1,13 @@
 <?php
 
-Route::group(['middleware' => ['web']], function () {
+$middleware = !empty(config('newsletter.middlewares')) ? config('newsletter.middlewares') : [];
 
-    /*
-    |--------------------------------------------------------------------------
-    | designpond\newsletter\Http\Controllers\Frontend Routes
-    |--------------------------------------------------------------------------
-    */
+/*
+|--------------------------------------------------------------------------
+| designpond\newsletter\Http\Controllers\Frontend Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => 'web'], function () {
 
     Route::post('unsubscribe', 'designpond\newsletter\Http\Controllers\Frontend\InscriptionController@unsubscribe');
     Route::post('subscribe', 'designpond\newsletter\Http\Controllers\Frontend\InscriptionController@subscribe');
@@ -20,6 +21,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('newsletter/campagne/{id}', 'designpond\newsletter\Http\Controllers\Frontend\NewsletterController@campagne');
         Route::resource('campagne', 'designpond\newsletter\Http\Controllers\Frontend\CampagneController');
     });
+});
+
+Route::group(['middleware' => $middleware], function () {
 
     /*
     |--------------------------------------------------------------------------

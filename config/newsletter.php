@@ -12,6 +12,16 @@ return [
     ],
 
     /*
+      * Middlewares for routes
+      * */
+
+    'middlewares' => [
+        'web',
+        'auth',
+        'administration'
+    ],
+
+    /*
     * Is used for mutiple sites
     * You need an entitie/model named site with id and slug for folder path
     * */

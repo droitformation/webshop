@@ -9,9 +9,9 @@
     <meta name="description" content="Administration">
     <meta name="_token" content="<?php echo csrf_token(); ?>">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/validation.css');?>">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/validation.css');?>">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>

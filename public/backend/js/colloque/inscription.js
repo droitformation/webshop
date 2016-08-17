@@ -60,7 +60,7 @@
 
         $('.table-list').DataTable({
             columnDefs: [
-                { type: 'num-no', targets: 0 }
+                { type: 'num-no', targets: 2 },{ "targets":'no-sort', "orderable": false}
             ],
             pageLength: -1,
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Tous"]],

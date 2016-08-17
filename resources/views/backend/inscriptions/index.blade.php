@@ -18,7 +18,7 @@
             <div class="panel-body">
                 <div class="table-responsive">
 
-                    <table class="table normalTable" id="" style="margin-bottom: 0px;"><!-- Start inscriptions -->
+                    <table class="table normalTable" style="margin-bottom: 0px;"><!-- Start inscriptions -->
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>

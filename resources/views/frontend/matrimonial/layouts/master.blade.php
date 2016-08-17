@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <!-- Local -->
-	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/common/css/chosen.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/chosen.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/common/css/structure.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/matrimonial/css/main.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/common/css/filter.css');?>">
@@ -31,7 +31,7 @@
 
     <!-- Local -->
 	<script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
-	<script type="text/javascript" src="<?php echo asset('frontend/common/js/chosen.jquery.js');?>"></script>
+    <script src="<?php echo asset('common/js/chosen.jquery.js');?>"></script>
 
 	</head>
 	<body>
