@@ -32,7 +32,7 @@ h3, .h3{
 }
 
 .table-responsive {
-    overflow: hidden;
+    overflow: visible;
 }
 
 .subject_content{
@@ -960,4 +960,14 @@ label.error{
 
 #accordion .panel-noborder{
     border: none;
+}
+
+/*
+    Dateticker
+*/
+
+.datepicker table tr td,
+.datepicker table.table-condensed thead > tr > th,
+.datepicker table tr th{
+    padding: 3px;
 }

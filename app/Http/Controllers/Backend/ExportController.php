@@ -85,6 +85,8 @@ class ExportController extends Controller
         $exporter = new \App\Droit\Generate\Export\ExportInscription();
         $exporter->setColumns($request->input('columns', config('columns.names')))->setSort($request->input('sort', false));
 
+        ini_set('memory_limit', '-1');
+        
         $exporter->export($inscriptions, $colloque);
     }
 

@@ -62,7 +62,8 @@
             columnDefs: [
                 { type: 'num-no', targets: 2 },{ "targets":'no-sort', "orderable": false}
             ],
-            pageLength: -1,
+            pageLength: 50,
+            bDeferRender: true,
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Tous"]],
             language: langues,
             pagingType: 'simple'

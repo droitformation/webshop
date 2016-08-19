@@ -68,7 +68,7 @@ class InscriptionController extends Controller
         }
         else
         {
-            $inscriptions = $this->inscription->getByColloque($id,false,true); 
+            $inscriptions = $this->inscription->getByColloque($id,false,true);
         }
         
         $colloque = $this->colloque->find($id);

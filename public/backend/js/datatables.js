@@ -56,6 +56,7 @@ $(document).ready(function() {
     });
 
     $('.simple-table').DataTable({
+        initComplete: init,
         language: langues,
         pagingType: 'simple',
         "columnDefs": [{

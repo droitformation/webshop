@@ -35,7 +35,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
         if($paginate)
         {
-            return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->orderBy('created_at','DESC')->paginate(20);
+            return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->orderBy('created_at','DESC')->paginate(50);
         }
 
         return $inscription->orderBy('created_at','DESC')->get();
