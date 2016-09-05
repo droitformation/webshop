@@ -89,7 +89,7 @@
                     <div class="table-responsive">
                         <h3>Inscriptions</h3>
 
-                        <form class="form-horizontal pull-right" action="{{ url('admin/inscription/colloque/'.$colloque->id) }}" method="post">{!! csrf_field() !!}
+                       <form class="form-horizontal pull-right" action="{{ url('admin/inscription/colloque/'.$colloque->id) }}" method="post">{!! csrf_field() !!}
                             <div class="input-group">
                                 <input type="text" class="form-control" name="inscription_no" placeholder="Recherche par numéro...">
                                 <span class="input-group-btn">
@@ -123,7 +123,7 @@
                             </tbody>
                         </table><!-- End inscriptions -->
 
-                        {!! $inscriptions->links() !!}
+
 
                         <hr/>
                         <p><br/><a class="btn btn-warning btn-sm pull-right" href="{{ url('admin/inscription/desinscription/'.$colloque->id) }}">Désinscriptions</a></p>

@@ -2,6 +2,8 @@
  namespace App\Droit\Generate\Export;
 
  use Illuminate\Foundation\Bus\DispatchesJobs;
+ use Box\Spout\Writer\WriterFactory;
+ use Box\Spout\Common\Type;
 
  class ExportAdresse{
 
@@ -16,10 +18,27 @@
          return $this;
      }
 
+     public function export($adresses)
+     {
+         $writer = WriterFactory::create(Type::XLSX); // for XLSX files
+
+         $filename = "file.xlsx";
+
+         $writer->openToBrowser($filename); // write data to a file or to a PHP stream
+         //$writer->openToBrowser($fileName); // stream data directly to the browser
+
+         $adresses = $this->prepareAdresse($adresses);
+
+         //$writer->addRow($singleRow); // add a row at a time
+         $writer->addRows($adresses->toArray()); // add multiple rows at a time
+
+         $writer->close();exit;
+     }
+
      /*
       * Export
       * */
-     public function export($adresses)
+    /* public function export($adresses)
      {
          $adresses = $this->prepareAdresse($adresses);
 
@@ -43,7 +62,7 @@
          fclose($handle);
 
          return $filename;
-     }
+     }*/
 
      public function prepareAdresse($adresses)
      {
@@ -52,7 +71,8 @@
          return $adresses->map(function ($adresse) use ($columns) {
              return $columns->map(function ($column) use ($adresse)
              {
-                 return iconv(mb_detect_encoding($adresse->$column, mb_detect_order(), true), "UTF-8", $adresse->$column);
+                 return trim($adresse->$column);
+                 //return iconv(mb_detect_encoding($adresse->$column, mb_detect_order(), true), "UTF-8", $adresse->$column);
              });
          });
      }
