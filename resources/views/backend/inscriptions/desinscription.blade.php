@@ -56,7 +56,7 @@
                                         <td>
 
                                             @if(isset($inscription->inscrit))
-                                                <?php $adresse = $inscription->inscrit->adresses->whereLoose('type',1)->first();?>
+                                                <?php $adresse = $inscription->inscrit->adresses->where('type',1)->first();?>
                                                 {!! isset($civilites[$adresse->civilite_id]) ? '<p><strong>'.$civilites[$adresse->civilite_id].'</strong></p>' : '' !!}
                                                 <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse->name }}</a></p>
 

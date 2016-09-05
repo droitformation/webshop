@@ -2,11 +2,12 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Cashier\Billable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable {
 
-	use Billable, SoftDeletes;
+	use Billable, SoftDeletes, Notifiable;
 
 	/**
 	 * The database table used by the model.

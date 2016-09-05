@@ -79,7 +79,7 @@ class AboWorker implements AboWorkerInterface{
                 $this->dispatch($job);
             }
 
-            $product = $abo->products->whereLoose('id', $product_id);
+            $product = $abo->products->where('id', $product_id);
             $product = !$product->isEmpty() ? $product->first() : null;
 
             if($product)

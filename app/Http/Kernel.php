@@ -12,7 +12,7 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $middleware = [
-		\Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
 	];
 
 	/**
@@ -27,11 +27,12 @@ class Kernel extends HttpKernel {
 			\Illuminate\Session\Middleware\StartSession::class,
 			\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 			\App\Http\Middleware\VerifyCsrfToken::class,
-			\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
+			\Illuminate\Routing\Middleware\SubstituteBindings::class,
 		],
 
 		'api' => [
 			'throttle:60,1',
+			'bindings',
 		],
 	];
 
@@ -41,21 +42,21 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-        'csrf' => 'App\Http\Middleware\VerifyCsrfToken',
-		'auth' => 'App\Http\Middleware\Authenticate',
-		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
-		'checkout' => 'App\Http\Middleware\CheckoutMiddleware',
-        'cart' => 'App\Http\Middleware\CartMiddleware',
-        'oauth' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware',
-        'oauth-owner' => 'LucaDegasperi\OAuth2Server\Middleware\OAuthOwnerMiddleware',
-        'check-authorization-params' => 'LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware',
+
+		'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+		'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+		'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+		'can' => \Illuminate\Auth\Middleware\Authorize::class,
+		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+		'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+		'checkout'       => 'App\Http\Middleware\CheckoutMiddleware',
+        'cart'           => 'App\Http\Middleware\CartMiddleware',
         'administration' =>'App\Http\Middleware\AdminMiddleware',
-        'pending' =>'App\Http\Middleware\PendingPayement',
-        'registered' =>'App\Http\Middleware\Registered',
-		'strip' =>'App\Http\Middleware\StripRequest',
-		'abo' =>'App\Http\Middleware\OrderAbo',
-		//'beta' =>'App\Http\Middleware\Beta',
+        'pending'        =>'App\Http\Middleware\PendingPayement',
+        'registered'     =>'App\Http\Middleware\Registered',
+		'strip'          =>'App\Http\Middleware\StripRequest',
+		'abo'            =>'App\Http\Middleware\OrderAbo',
 	];
 
 }

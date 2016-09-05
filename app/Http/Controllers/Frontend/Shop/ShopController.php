@@ -67,7 +67,7 @@ class ShopController extends Controller {
 		$products   = $this->product->getNbr(10,[5]);
         $colloques  = $this->colloque->getCurrent(true); // $registration = false, $finished = false, $visible = true
         $abos       = $this->abo->getAll();
-
+        
         $abos = $abos->map(function($abo, $key) {
             return $abo->current_product->load('abos');
         });

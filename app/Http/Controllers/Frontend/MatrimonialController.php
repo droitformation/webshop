@@ -60,7 +60,7 @@ class MatrimonialController extends Controller
         if($slug == 'jurisprudence')
         {
             $newsletters = $this->newsworker->siteNewsletters($this->site_id);
-            $exclude     = $this->newsworker->arretsToHide($newsletters->lists('id')->all());
+            $exclude     = $this->newsworker->arretsToHide($newsletters->pluck('id')->all());
 
             $data['arrets']   = $this->arret->getAll($this->site_id,$exclude)->take(10);
             $data['analyses'] = $this->analyse->getAll($this->site_id,$exclude)->take(10);
@@ -75,7 +75,7 @@ class MatrimonialController extends Controller
             else
             {
                 $newsletters = $this->newsworker->siteNewsletters($this->site_id);
-                $campagnes   = $this->newsworker->last($newsletters->lists('id'));
+                $campagnes   = $this->newsworker->last($newsletters->pluck('id'));
 
                 $data['campagne'] = $campagnes->first();
             }

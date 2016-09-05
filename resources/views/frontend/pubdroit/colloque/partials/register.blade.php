@@ -7,7 +7,7 @@
 
         <!-- Prices -->
         <div class='wrapper'>
-            <?php $prices = $colloque->prices->whereLoose('type','public'); ?>
+            <?php $prices = $colloque->prices->where('type','public'); ?>
             @if(!$prices->isEmpty())
                 @foreach($prices as $price)
                     <input class="prices" required type="radio" id="price_{{ $price->id }}" name="price_id" value="{{ $price->id }}">

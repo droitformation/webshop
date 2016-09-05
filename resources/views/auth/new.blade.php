@@ -9,7 +9,7 @@
                 <div class="panel-heading">Nouveau mot de passe</div>
 
                 <div class="panel-body">
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/define') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('password/define') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
                         <label class="col-md-4 control-label">E-Mail</label>

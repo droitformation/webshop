@@ -123,7 +123,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
         if(!$colloque->specialisations->isEmpty() && $user->adresse_contact)
         {
-            $data = $colloque->specialisations->lists('id')->all();
+            $data = $colloque->specialisations->pluck('id')->all();
             $this->adresse->setSpecialisation($user->adresse_contact->id, $data);
         }
     }

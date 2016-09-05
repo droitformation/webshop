@@ -116,7 +116,7 @@
          $row['date']   = $inscription->created_at->format('d/m/Y');
 
          $filtered = $inscription->options->filter(function ($item) {  return $item->type == 'checkbox';  });
-         $row['options'] = implode('\n',$filtered->lists('title')->all());
+         $row['options'] = implode('\n',$filtered->pluck('title')->all());
 
          array_walk($row, array($this, 'makeRow'));
 
@@ -216,7 +216,7 @@
                  $options = $this->options;
              }
 
-             return $options->lists('title','id')->all();
+             return $options->pluck('title','id')->all();
          }
 
          return [];

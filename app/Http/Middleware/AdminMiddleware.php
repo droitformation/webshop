@@ -16,7 +16,7 @@ class AdminMiddleware {
         $user = \Auth::user();
         $user->load('roles');
 
-        $roles = $user->roles->lists('id')->all();
+        $roles = $user->roles->pluck('id')->all();
 
         if(!in_array(1,$roles))
         {

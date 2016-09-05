@@ -121,7 +121,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          $totalWeight = 0;
          // Get current cart instance
          $cart     = \Cart::instance('shop')->content();
-         $products = $cart->lists('options');
+         $products = $cart->pluck('options');
 
          if(!$products->isEmpty())
          {

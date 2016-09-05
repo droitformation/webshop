@@ -38,7 +38,7 @@
 
                  $sheet->setOrientation('landscape');
 
-                 $this->options = $colloque->options->whereLoose('type', 'choix')->pluck('title', 'id')->toArray();
+                 $this->options = $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray();
                  $this->groupes = $colloque->groupes->pluck('text', 'id')->toArray();
 
                  $converted = $this->prepareInscription($inscriptions);
@@ -109,7 +109,7 @@
                  // Options checkbox
                  if(!$inscription->user_options->isEmpty())
                  {
-                     $data['checkbox'] = $inscription->user_options->load('option')->whereLoose('groupe_id', null)->implode('option.title', PHP_EOL);
+                     $data['checkbox'] = $inscription->user_options->load('option')->where('groupe_id', null)->implode('option.title', PHP_EOL);
                  }
 
                  // Do we need to sort, Sort by choix options

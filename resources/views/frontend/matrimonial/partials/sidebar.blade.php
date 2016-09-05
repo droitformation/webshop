@@ -35,14 +35,14 @@
             </div>
 
             @if(!$menus->isEmpty())
-                <?php $menu = $menus->whereLoose('position','sidebar')->sortBy('rang'); ?>
+                <?php $menu = $menus->where('position','sidebar')->sortBy('rang'); ?>
                 @if(!$menu->isEmpty())
                     <?php $menu = $menu->first()->load('pages'); ?>
                     @if(!$menu->pages->isEmpty())
                         @foreach($menu->pages as $page)
 
                             @if($page->template == 'newsletter')
-                                @include('frontend.partials.list', ['page' => $page, 'lists' => $campagnes->whereLoose('status','envoyé')->pluck('sujet','id')])
+                                @include('frontend.partials.list', ['page' => $page, 'lists' => $campagnes->where('status','envoyé')->pluck('sujet','id')])
 
                             @elseif($page->template == 'jurisprudence')
 

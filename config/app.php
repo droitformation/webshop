@@ -145,11 +145,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+		Illuminate\Notifications\NotificationServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-        LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
-        LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
         Torann\Registry\RegistryServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,

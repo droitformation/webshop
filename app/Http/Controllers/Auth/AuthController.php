@@ -58,7 +58,7 @@ class AuthController extends Controller {
 
         $returnPath = $request->input('returnPath',null);
 
-        $roles = $user->roles->lists('id')->all();
+        $roles = $user->roles->pluck('id')->all();
 
         // Logic that determines where to send the user
         if (in_array(1,$roles))
@@ -84,7 +84,7 @@ class AuthController extends Controller {
         $user = \Auth::user();
         $user->load('roles');
 
-        $roles = $user->roles->lists('id')->all();
+        $roles = $user->roles->pluck('id')->all();
 
         // Logic that determines where to send the user
         if (!in_array(1,$roles))

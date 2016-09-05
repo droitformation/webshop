@@ -47,8 +47,8 @@
                                 @if(!$newsletter->campagnes->isEmpty())
 
                                     <?php
-                                        $campagnes = $newsletter->campagnes->whereLoose('status','brouillon');
-                                        $archives  = $newsletter->campagnes->whereLoose('status','envoyé');
+                                        $campagnes = $newsletter->campagnes->where('status','brouillon');
+                                        $archives  = $newsletter->campagnes->where('status','envoyé');
                                         $years     = $archives->groupBy(function ($archive, $key) {
                                             return $archive->created_at->year;
                                         });

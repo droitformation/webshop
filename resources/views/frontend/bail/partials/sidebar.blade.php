@@ -75,7 +75,7 @@
                 @endif
 
                 @if(!$menus->isEmpty())
-                    <?php $menu = $menus->whereLoose('position','sidebar')->sortBy('rang'); ?>
+                    <?php $menu = $menus->where('position','sidebar')->sortBy('rang'); ?>
                     @if(!$menu->isEmpty())
                         <?php $menu = $menu->first()->load('pages'); ?>
                         @if(!$menu->pages->isEmpty())

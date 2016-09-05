@@ -130,7 +130,7 @@ class CategorieController extends Controller {
 
         $categorie = $this->categorie->find($request->input('id'));
 
-        $references = (!$categorie->categorie_arrets->isEmpty() ? $categorie->categorie_arrets->lists('reference') : null);
+        $references = (!$categorie->categorie_arrets->isEmpty() ? $categorie->categorie_arrets->pluck('reference') : null);
 
         return response()->json( $references, 200 );
     }

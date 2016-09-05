@@ -1,7 +1,7 @@
 @extends('auth.layouts.master')
 @section('content')
 
-	<form class="form-horizontal" id="registeraccount" role="form" method="POST" action="/auth/register">
+	<form class="form-horizontal" id="registeraccount" role="form" method="POST" action="register">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="panel-body">
 			<h3 style="margin-bottom: 15px;margin-top:0;">Créer un compte</h3>

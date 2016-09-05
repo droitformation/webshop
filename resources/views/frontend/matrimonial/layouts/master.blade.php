@@ -52,7 +52,7 @@
                             <nav class="col-md-8" id="menu-principal">
 
                                 @if(!$menus->isEmpty())
-                                    <?php $menu = $menus->whereLoose('position','main'); ?>
+                                    <?php $menu = $menus->where('position','main'); ?>
                                     @if(!$menu->isEmpty())
                                         <?php $menu = $menu->first()->load('pages'); ?>
                                         @if(!$menu->pages->isEmpty())

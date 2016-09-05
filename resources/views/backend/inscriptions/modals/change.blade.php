@@ -19,7 +19,7 @@
                     <h4>Détenteur actuel</h4>
                     <address>
                         @if(isset($user))
-                            <?php $adresse = $user->adresses->whereLoose('type',1)->first();?>
+                            <?php $adresse = $user->adresses->where('type',1)->first();?>
                             {{ $adresse->company }}<br/>
                             {{ $adresse->name }}<br>
                             {{ $adresse->adresse }}<br/>

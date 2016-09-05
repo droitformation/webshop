@@ -25,7 +25,7 @@ class Order extends Model{
     {
         if(isset($this->user))
         {
-            return $this->user->adresses->whereLoose('type',1)->first();
+            return $this->user->adresses->where('type',1)->first();
         }
 
         if(isset($this->adresse))
