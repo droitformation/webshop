@@ -8,8 +8,8 @@ class RoleTableSeeder extends \Illuminate\Database\Seeder  {
 		DB::table('roles')->truncate();
 
 		$roles = array(
-			array('id' => '1','name' => 'Administrateur'),
-			array('id' => '2','name' => 'Contributeur')
+			['id' => '1','name' => 'Administrateur'],
+			['id' => '2','name' => 'Contributeur']
 		);
 
 		// Uncomment the below to run the seeder

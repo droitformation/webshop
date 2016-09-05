@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateContentsTable extends Migration {
+class CreateBlocsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,23 +12,20 @@ class CreateContentsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('contents', function(Blueprint $table)
+		Schema::create('blocs', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('title')->nullable();
 			$table->text('content')->nullable();
 			$table->string('image')->nullable();
 			$table->string('url')->nullable();
-            $table->string('style')->nullable();
             $table->integer('rang')->default(0);
-			$table->integer('page_id');
-			$table->integer('categorie_id')->nullable();
-			$table->enum('type', array('agenda','loi','faq','lien','autorite','text'));
+			$table->enum('type', ['soutien','pub','text']);
+			$table->enum('position', ['sidebar','page']);
 			$table->timestamps();
             $table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.
@@ -37,7 +34,7 @@ class CreateContentsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('contents');
+		Schema::drop('blocs');
 	}
 
 }

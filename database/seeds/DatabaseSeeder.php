@@ -16,7 +16,25 @@ class DatabaseSeeder extends Seeder
         //$this->call(CalcIpcTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        // Adresse misc
+
+        $this->call(Adresse_typesTableSeeder::class);
+        $this->call(AdressesTableSeeder::class);
+        $this->call(CivilitesTableSeeder::class);
+        $this->call(ProfessionsTableSeeder::class);
+        $this->call(CantonsTableSeeder::class);
+        $this->call(PaysTableSeeder::class);
+
+        $this->call(LocationTableSeeder::class);
+        $this->call(OrganisateursTableSeeder::class);
+
+        $this->call(ShippingTableSeeder::class);
+        $this->call(PayementTableSeeder::class);
+
+        $this->call(SiteTableSeeder::class);
+        $this->call(RoleTableSeeder::class);
+        $this->call(RegistryTableSeeder::class);
+
+        $this->call(TypeSeeder::class);
 /*
         $this->call(Adresse_typesTableSeeder::class);
         $this->call(CivilitesTableSeeder::class);
@@ -31,7 +49,8 @@ class DatabaseSeeder extends Seeder
 /*
         $this->call(CompteTableSeeder::class);
         $this->call(LocationTableSeeder::class);
-        $this->call(OrganisateursTableSeeder::class);*/
+        $this->call(OrganisateursTableSeeder::class);
+*/
 
     /*
         // Shop
