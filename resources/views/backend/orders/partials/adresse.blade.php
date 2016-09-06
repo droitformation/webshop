@@ -51,12 +51,11 @@
     <div class="form-group row">
         <div class="col-md-6">
             <label class="control-label">Canton</label>
-            <?php $cantons = $cantons->lists('title','id')->all(); ?>
-            {!! Form::select('adresse[canton_id]', [0 => 'Choix'] + $cantons , old('adresse.canton_id'), ['class' => 'form-control']) !!}
+            {!! Form::select('adresse[canton_id]', [0 => 'Choix'] + $cantons->pluck('title','id')->all() , old('adresse.canton_id'), ['class' => 'form-control']) !!}
         </div>
         <div class="col-md-6">
             <label class="control-label">Pays</label>
-            {!! Form::select('adresse[pays_id]', $pays->lists('title','id')->all() , 208, ['class' => 'form-control']) !!}
+            {!! Form::select('adresse[pays_id]', $pays->pluck('title','id')->all() , 208, ['class' => 'form-control']) !!}
         </div>
     </div>
 

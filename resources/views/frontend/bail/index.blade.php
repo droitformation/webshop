@@ -6,7 +6,7 @@
 	 
 	 <div id="content" class="inner">
 
-		 @if(!$page->contents->isEmpty())
+		 @if(isset($page) && !$page->contents->isEmpty())
 			 <?php $chunk = $page->contents->chunk(3); ?>
 			 @foreach($chunk as $contents)
 

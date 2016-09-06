@@ -7,14 +7,15 @@
     <div id="content" class="inner">
 	    <div class="row">
 			<div class="col-md-12 homepageBlock">
-				<h1>{{ $page->title }}</h1>
-				{!! $page->content !!}
-
+				@if(isset($page))
+					<h1>{{ $page->title }}</h1>
+					{!! $page->content !!}
+				@endif
 				<h5 class="line">News</h5>
 			</div>
 		</div>
 
-		@if(!$page->contents->isEmpty())
+		@if(isset($page) && !$page->contents->isEmpty())
 			<?php $chunk = $page->contents->chunk(3); ?>
 			@foreach($chunk as $contents)
 

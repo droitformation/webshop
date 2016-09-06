@@ -13,14 +13,19 @@ class UserTest extends TestCase {
 	{
 		parent::setUp();
 
-		$user = App\Droit\User\Entities\User::find(710);
+		//$user = App\Droit\User\Entities\User::find(710);
+		DB::beginTransaction();
+
+		$user = factory(App\Droit\User\Entities\User::class, 'admin')->create();
 
 		$this->actingAs($user);
 	}
 
 	public function tearDown()
 	{
+		parent::tearDown();
 		Mockery::close();
+		DB::rollBack();
 	}
 
 	/**

@@ -38,7 +38,14 @@ class MatrimonialComposer
         $newsletters = $this->newsworker->siteNewsletters($site->id);
         $campagnes   = $this->newsworker->siteCampagnes($site->id);
 
-        $view->with('menus', $site->menus);
+        if(!$site->menus->isEmpty())
+        {
+            foreach($site->menus as $menu)
+            {
+                $view->with('menu_'.$menu->position, $menu);
+            }
+        }
+
         $view->with('site',  $site);
         $view->with('categories',  $categories);
         $view->with('years',  $years);

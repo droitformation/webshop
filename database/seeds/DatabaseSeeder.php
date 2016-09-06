@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        $this->call(Adresse_typesTableSeeder::class);
-        $this->call(AdressesTableSeeder::class);
         $this->call(CivilitesTableSeeder::class);
         $this->call(ProfessionsTableSeeder::class);
         $this->call(CantonsTableSeeder::class);
         $this->call(PaysTableSeeder::class);
 
+        $this->call(Adresse_typesTableSeeder::class);
+        //$this->call(AdressesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        
         $this->call(LocationTableSeeder::class);
         $this->call(OrganisateursTableSeeder::class);
 

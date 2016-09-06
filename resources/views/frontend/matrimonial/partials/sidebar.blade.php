@@ -2,42 +2,20 @@
 <div class="col-md-3">
     <div class="sidebar"><!-- Start sidebar div-->
 
-        <!--Logo unine -->
-        <div class="sidebar-bloc">
-            <p class="text-right">
-                <a href="http://www.unine.ch" target="_blank">
-                    <img height="60" src="{{ asset('/logos/unine-matrimonial.svg') }}" alt="">
-                </a>
-            </p>
-        </div>
+        @include('frontend.matrimonial.sidebar.logo')
         <!-- Bloc recherche -->
 
         <!-- sidebar -->
         <div id="mainSidebar">
 
             <!-- Bloc inscription newsletter -->
-            <div class="color-bloc">
-                <h4>Inscription à la newsletter</h4>
-                @foreach($newsletters as $newsletter)
-                    @include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'matrimonial'])
-                @endforeach
-            </div>
+            @include('frontend.matrimonial.sidebar.newsletter')
 
-            <div class="form-bloc">
-                <form action="matrimonial/search" method="POST" class="searchform">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Recherche...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default btn-sm" type="button"><i class="fa fa-search text-danger"></i></button>
-                        </span>
-                    </div>
-                </form>
-            </div>
+            <!-- Bloc search -->
+            @include('frontend.matrimonial.sidebar.search')
 
-            @if(!$menus->isEmpty())
-                <?php $menu = $menus->where('position','sidebar')->sortBy('rang'); ?>
-                @if(!$menu->isEmpty())
-                    <?php $menu = $menu->first()->load('pages'); ?>
+            @if(isset($menu_sidebar))
+                    <?php $menu_sidebar->load('pages'); ?>
                     @if(!$menu->pages->isEmpty())
                         @foreach($menu->pages as $page)
 
@@ -80,20 +58,13 @@
 
                         @endforeach
                     @endif
-                @endif
             @endif
 
-            @if(!$page->blocs->isEmpty())
-                @foreach($page->blocs as $bloc)
-                    <div class="sidebar-content-bloc">
-                        @include('frontend.partials.bloc', ['bloc' => $bloc])
-                    </div>
-                @endforeach
-            @endif
+            <!-- Bloc pages -->
+            @include('frontend.matrimonial.sidebar.page')
 
         </div>
         <!-- End main sidebar -->
-
 
     </div><!-- End sidebar div-->
 </div>

@@ -62,7 +62,7 @@
                     </header>
 
                     <!-- Fil d'ariane -->
-                    <section id="breadcrumbs" class="colorBlock min-inner colorSection">Home <a href=""> &gt; Newsletter</a></section>
+                    <section id="breadcrumbs" class="colorBlock min-inner colorSection"></section>
 
                     <!-- Contenu -->
 

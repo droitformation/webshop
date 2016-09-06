@@ -1574,3 +1574,16 @@ a.navbar-btn.navbar-register:focus{
 #orders-items{
     margin-bottom: 10px;
 }
+
+.logout{
+    margin-bottom: 0;
+    line-height: 20px;
+    display: inline;
+}
+
+.logout button{
+    border: none;
+    background: none;
+    color: #fff;
+    height: auto;
+}
