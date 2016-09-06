@@ -467,6 +467,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
     public static $classMap = array (
         'Adresse_typesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/Adresse_typesTableSeeder.php',
         'AdressesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AdressesTableSeeder.php',
+        'AttributTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AttributTableSeeder.php',
         'CantonsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CantonsTableSeeder.php',
         'CivilitesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CivilitesTableSeeder.php',
         'Clegginabox\\PDFMerger\\PDFMerger' => __DIR__ . '/..' . '/clegginabox/pdf-merger/src/PDFMerger/PDFMerger.php',

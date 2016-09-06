@@ -11,16 +11,18 @@ class ColloqueTest extends TestCase {
         $this->colloque = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
         $this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->colloque);
 
-        $model = new \App\Droit\User\Entities\User();
+        DB::beginTransaction();
 
-        $user = $model->find(710);
-
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
     }
 
     public function tearDown()
     {
-        \Mockery::close();
+        Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
 
 	public function testIntersectAnnexes()

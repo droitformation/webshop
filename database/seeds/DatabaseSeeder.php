@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ShippingTableSeeder::class);
         $this->call(PayementTableSeeder::class);
+        $this->call(AttributTableSeeder::class);
 
         $this->call(SiteTableSeeder::class);
         $this->call(RoleTableSeeder::class);

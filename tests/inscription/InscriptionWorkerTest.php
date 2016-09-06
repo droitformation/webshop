@@ -10,6 +10,8 @@ class InscriptionWorkerTest extends TestCase {
     {
         parent::setUp();
 
+        DB::beginTransaction();
+
         $this->inscription = Mockery::mock('App\Droit\Inscription\Repo\InscriptionInterface');
         $this->app->instance('App\Droit\Inscription\Repo\InscriptionInterface', $this->inscription);
 
@@ -19,14 +21,16 @@ class InscriptionWorkerTest extends TestCase {
         $this->adresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
         $this->app->instance('App\Droit\Adresse\Repo\AdresseInterface', $this->adresse);
 
-        $user = App\Droit\User\Entities\User::find(710);
-
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
     }
 
     public function tearDown()
     {
-         \Mockery::close();
+        Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
 
     /**
@@ -37,7 +41,7 @@ class InscriptionWorkerTest extends TestCase {
     {
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
             'id'          => '10',
-            'user_id'     => '710',
+            'user_id'     => '1',
             'colloque_id' => '12'
         ]);
 
@@ -45,7 +49,7 @@ class InscriptionWorkerTest extends TestCase {
         $colloque->annexe = ['bon','facture','bv'];
 
         $inscription->colloque = $colloque;
-        $inscription->user     = \App\Droit\User\Entities\User::find(710);
+        $inscription->user     = \App\Droit\User\Entities\User::find(1);
 
         $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
 
@@ -81,7 +85,7 @@ class InscriptionWorkerTest extends TestCase {
         $colloque->annexe = ['bon','facture','bv'];
 
         $group->colloque     = $colloque;
-        $group->user         = \App\Droit\User\Entities\User::find(710);
+        $group->user         = \App\Droit\User\Entities\User::find(1);
         $group->inscriptions = $inscriptions;
 
         $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
@@ -106,7 +110,7 @@ class InscriptionWorkerTest extends TestCase {
     {
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
             'id'          => '10',
-            'user_id'     => '710',
+            'user_id'     => '1',
             'colloque_id' => '12'
         ]);
 
@@ -114,7 +118,7 @@ class InscriptionWorkerTest extends TestCase {
         $colloque->annexe = ['bon','facture','bv'];
 
         $inscription->colloque = $colloque;
-        $inscription->user     = \App\Droit\User\Entities\User::find(710);
+        $inscription->user     = \App\Droit\User\Entities\User::find(1);
 
         $this->inscription->shouldReceive('update')->once();
 
@@ -147,7 +151,7 @@ class InscriptionWorkerTest extends TestCase {
         $colloque->annexe = ['bon','facture','bv'];
 
         $group->colloque     = $colloque;
-        $group->user         = \App\Droit\User\Entities\User::find(710);
+        $group->user         = \App\Droit\User\Entities\User::find(1);
         $group->inscriptions = $inscriptions;
 
         $this->inscription->shouldReceive('update')->times(3);

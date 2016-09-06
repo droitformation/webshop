@@ -69,13 +69,13 @@
     <div class="row form-group">
         <label class="col-sm-4 control-label">Canton</label>
         <div class="col-sm-7">
-            {!! Form::select('canton_id', $cantons->lists('title','id')->all() , null, ['data-parsley-required' => 'true' ,'class' => 'form-control', 'placeholder' => 'Choix']) !!}
+            {!! Form::select('canton_id', $cantons->pluck('title','id')->all() , null, ['data-parsley-required' => 'true' ,'class' => 'form-control', 'placeholder' => 'Choix']) !!}
         </div>
     </div>
     <div class="row form-group">
         <label class="col-sm-4 control-label">Pays</label>
         <div class="col-sm-7">
-            {!! Form::select('pays_id', $pays->lists('title','id')->all() , null, [ 'data-parsley-required' => 'true' ,'class' => 'form-control', 'placeholder' => 'Choix']) !!}
+            {!! Form::select('pays_id', $pays->pluck('title','id')->all() , null, [ 'data-parsley-required' => 'true' ,'class' => 'form-control', 'placeholder' => 'Choix']) !!}
         </div>
     </div>
 

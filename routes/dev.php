@@ -533,11 +533,13 @@ Route::get('/calculette', function () {
 
 Route::get('factory', function()
 {
-/*    $user = factory(App\Droit\User\Entities\User::class, 'admin')->create();
+    $user = factory(App\Droit\User\Entities\User::class)->create();
+    $user->roles()->attach(1);
 
     echo '<pre>';
     print_r($user);
-    echo '</pre>';exit();*/
+    echo '</pre>';exit();
+
 });
 
 Route::get('merge', function () {

@@ -5,11 +5,19 @@ class GenerateTest extends TestCase {
 	public function setUp()
 	{
 		parent::setUp();
+
+		DB::beginTransaction();
+
+		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user->roles()->attach(1);
+		$this->actingAs($user);
 	}
 
 	public function tearDown()
 	{
 		Mockery::close();
+		DB::rollBack();
+		parent::tearDown();
 	}
 
 	public function testGetTypeOfModel()
@@ -248,7 +256,7 @@ class GenerateTest extends TestCase {
 	{
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
             'id'          => '10',
-            'user_id'     => '710',
+            'user_id'     => '1',
             'colloque_id' => '12'
         ]);
 
@@ -260,7 +268,7 @@ class GenerateTest extends TestCase {
         $this->assertEquals($response->id, 12);
 
         $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make([
-            'user_id'     => '20',
+            'user_id'     => '1',
             'colloque_id' => '12'
         ]);
 
@@ -276,11 +284,11 @@ class GenerateTest extends TestCase {
     {
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
             'id'          => '10',
-            'user_id'     => '710',
+            'user_id'     => '1',
             'colloque_id' => '12'
         ]);
 
-        $inscription->user = App\Droit\User\Entities\User::find(710);
+        $inscription->user = App\Droit\User\Entities\User::find(1);
 
         $generate = new \App\Droit\Generate\Entities\Generate($inscription);
         $response = $generate->getAdresse();
@@ -292,7 +300,7 @@ class GenerateTest extends TestCase {
 	{
 		$inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
 			'id'          => '10',
-			'user_id'     => '710',
+			'user_id'     => '1',
 			'colloque_id' => '12'
 		]);
 
@@ -334,7 +342,7 @@ class GenerateTest extends TestCase {
 		$abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
 		$abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['abo_user_id' => 1 ,'product_id' => 1]);
 
-        $user = App\Droit\Adresse\Entities\Adresse::find(4983);
+        $user = App\Droit\Adresse\Entities\Adresse::find(1);
 
 		$abo_user->abo  = $abo;
         $abo_user->user = $user;
@@ -353,7 +361,7 @@ class GenerateTest extends TestCase {
         $abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 4983]);
         $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['abo_user_id' => 1 ,'product_id' => 1]);
 
-        $user = App\Droit\Adresse\Entities\Adresse::find(4983);
+        $user = App\Droit\Adresse\Entities\Adresse::find(1);
 
         $abo_user->abo  = $abo;
         $abo_user->user = $user;
@@ -369,14 +377,16 @@ class GenerateTest extends TestCase {
     public function testGetAboFilename()
     {
         // Using real product bad bad...
-        $product     = App\Droit\Shop\Product\Entities\Product::find(290);
 
         $abo         = factory(\App\Droit\Abo\Entities\Abo::class)->make(['id' => 1]);
         $abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
         $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['id' => 1,'abo_user_id' => 1 ,'product_id' => 1]);
 
+		$product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['id' => 1 , 'price' => 2000]);
+        $product->attributs()->attach(3, ['value' => 'REV']);
+        
         // Using real adresse bad bad...
-        $user = App\Droit\Adresse\Entities\Adresse::find(4983);
+        $user = App\Droit\Adresse\Entities\Adresse::find(1);
 
         $abo_facture->product = $product;
         $abo_user->abo        = $abo;
@@ -395,14 +405,15 @@ class GenerateTest extends TestCase {
 	public function testGetAboRappelFilename()
 	{
 		// Using real product bad bad...
-		$product     = App\Droit\Shop\Product\Entities\Product::find(290);
-
 		$abo         = factory(\App\Droit\Abo\Entities\Abo::class)->make(['id' => 1]);
 		$abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
 		$abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['id' => 2,'abo_user_id' => 1 ,'product_id' => 1]);
 
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['id' => 1 , 'price' => 2000]);
+        $product->attributs()->attach(3, ['value' => 'REV']);
+
 		// Using real adresse bad bad...
-		$user = App\Droit\Adresse\Entities\Adresse::find(4983);
+		$user = App\Droit\Adresse\Entities\Adresse::find(1);
 
 		$abo_facture->product = $product;
 		$abo_user->abo        = $abo;
@@ -416,24 +427,5 @@ class GenerateTest extends TestCase {
 		$file = 'files/abos/rappel/1/rappel_1_2.pdf';
 
 		$this->assertEquals($response, public_path($file));
-	}
-
-	public function testTempBon()
-	{
-		$inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([]);
-		$generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-
-        $annexes = ['bon','facture','bv'];
-
-        foreach($annexes as $annexe)
-        {
-            $generator->make($annexe, $inscription);
-
-            $file = storage_path('test/test.pdf');
-
-            $this->assertTrue(\File::exists($file));
-
-            \File::delete($file);
-        }
 	}
 }

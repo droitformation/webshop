@@ -97,7 +97,7 @@ class User extends Authenticatable {
 
     public function getRoleAdminAttribute()
     {
-        $roles = $this->roles->lists('id')->all();
+        $roles = $this->roles->pluck('id')->all();
 
         if(in_array(1,$roles))
         {

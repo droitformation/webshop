@@ -22,6 +22,8 @@ class OrderAdminTest extends TestCase {
     {
         parent::setUp();
 
+        DB::beginTransaction();
+
         $this->user = Mockery::mock('App\Droit\User\Repo\UserInterface');
         $this->app->instance('App\Droit\User\Repo\UserInterface', $this->user);
 
@@ -44,17 +46,16 @@ class OrderAdminTest extends TestCase {
         Session::setDefaultDriver('array');
         $this->manager = app('session');
 
-        $model = new \App\Droit\User\Entities\User();
-
-        $user = $model->find(710);
-
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
-
     }
 
     public function tearDown()
     {
         Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
 
     public function testSeePageForNewOrder()

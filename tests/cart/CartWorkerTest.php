@@ -25,12 +25,22 @@ class CartWorkerTest extends TestCase {
 
         \Cart::instance('shop')->destroy();
         \Cart::instance('abonnement')->destroy();
+
+        DB::beginTransaction();
+
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
     }
 
     public function tearDown()
     {
         \Cart::instance('shop')->destroy();
-        \Mockery::close();
+        \Cart::instance('abonnement')->destroy();
+        
+        Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
 
 	/**

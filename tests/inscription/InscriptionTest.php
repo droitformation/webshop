@@ -12,6 +12,8 @@ class InscriptionTest extends TestCase {
     {
         parent::setUp();
 
+        DB::beginTransaction();
+
         $this->mock = Mockery::mock('App\Droit\Inscription\Repo\InscriptionInterface');
         $this->app->instance('App\Droit\Inscription\Repo\InscriptionInterface', $this->mock);
 
@@ -24,14 +26,16 @@ class InscriptionTest extends TestCase {
         $this->colloque = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
         $this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->colloque);
 
-        $user = App\Droit\User\Entities\User::find(710);
-
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
     }
 
     public function tearDown()
     {
-         \Mockery::close();
+        Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
 
     /**
@@ -43,7 +47,7 @@ class InscriptionTest extends TestCase {
         $this->WithoutEvents();
         $this->withoutJobs();
 
-        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
@@ -82,7 +86,7 @@ class InscriptionTest extends TestCase {
     {
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
             'id'             => '10',
-            'user_id'        => '710',
+            'user_id'        => '1',
             'colloque_id'    => '12',
             'inscription_no' => '1234',
             'group_id'       => null
@@ -106,7 +110,7 @@ class InscriptionTest extends TestCase {
         $this->WithoutEvents();
         $this->withoutJobs();
 
-        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
@@ -124,18 +128,18 @@ class InscriptionTest extends TestCase {
      */
     public function testUpdateInscription()
     {
-        $input = ['id' => 3, 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $input = ['id' => 3, 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make($input);
 
         $this->mock->shouldReceive('update')->once()->andReturn($inscription);
         $this->worker->shouldReceive('makeDocuments')->once();
 
-        $this->visit('/admin/user/710');
+        $this->visit('/admin/user/1');
 
         $response = $this->call('PUT', 'admin/inscription/3', $input);
 
-        $this->assertRedirectedTo('/admin/user/710');
+        $this->assertRedirectedTo('/admin/user/1');
     }
 
     /**
@@ -145,17 +149,17 @@ class InscriptionTest extends TestCase {
     public function testSendInscription()
     {
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
-            'id' => 3, 'colloque_id' => 39, 'user_id' => 710, 'inscription_no' => '71-2015/1', 'price_id' => 290
+            'id' => 3, 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290
         ]);
 
         $this->mock->shouldReceive('find')->once()->andReturn($inscription);
         $this->worker->shouldReceive('sendEmail')->once();
 
-        $this->visit('/admin/user/710');
+        $this->visit('/admin/user/1');
 
         $response = $this->call('POST', 'admin/inscription/send', ['id' => 3, 'email' => 'cindy.leschaud@gmail.com']);
 
-        $this->assertRedirectedTo('/admin/user/710');
+        $this->assertRedirectedTo('/admin/user/1');
     }
 
     /**
@@ -169,11 +173,11 @@ class InscriptionTest extends TestCase {
         $this->groupe->shouldReceive('find')->once()->andReturn($group);
         $this->worker->shouldReceive('sendEmail')->once();
 
-        $this->visit('/admin/user/710');
+        $this->visit('/admin/user/1');
 
         $response = $this->call('POST', 'admin/inscription/send', ['id' => 3, 'group_id' => 3 ,'email' => 'cindy.leschaud@gmail.com']);
 
-        $this->assertRedirectedTo('/admin/user/710');
+        $this->assertRedirectedTo('/admin/user/1');
     }
 
     public function testGenerateDoc()

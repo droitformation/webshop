@@ -61,7 +61,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Profession</label>
         <div class="col-sm-7">
-            {!! Form::select('profession_id', $professions->lists('title','id')->all() , null, ['class' => 'form-control form-required', 'placeholder' => 'Choix profession']) !!}
+            {!! Form::select('profession_id', $professions->pluck('title','id')->all() , null, ['class' => 'form-control form-required', 'placeholder' => 'Choix profession']) !!}
         </div>
     </div>
     <div class="form-group">
@@ -97,13 +97,13 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Canton</label>
         <div class="col-sm-7">
-            {!! Form::select('canton_id', $cantons->lists('title','id')->all() , $adresse->canton_id, ['data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Canton']) !!}
+            {!! Form::select('canton_id', $cantons->pluck('title','id')->all() , $adresse->canton_id, ['data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Canton']) !!}
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Pays</label>
         <div class="col-sm-7">
-            {!! Form::select('pays_id', $pays->lists('title','id')->all() , $adresse->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Pays']) !!}
+            {!! Form::select('pays_id', $pays->pluck('title','id')->all() , $adresse->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Pays']) !!}
         </div>
     </div>
 

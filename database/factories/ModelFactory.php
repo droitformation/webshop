@@ -351,33 +351,12 @@ $factory->define(App\Droit\Shop\Attribute\Entities\Attribute::class, function (F
     ];
 });
 
-/*$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
-    $user = $factory->raw('App\Droit\User\Entities\User');
+$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
     return [
         'first_name' => 'Cindy',
         'last_name'  => 'Leschaud',
         'email'      => 'cindy.leschaud@unine.ch',
         'password'   => bcrypt('cindy2')
     ];
-})->each(function ($u) {
-    $u->adresses()->save(factory(App\Droit\Adresse\Entities\Adresse::class,1)->create([
-            'civilite_id'   => 2,
-            'first_name'    => 'Cindy',
-            'last_name'     => 'Leschaud',
-            'email'         => 'cindy.leschaud@gmail.com',
-            'company'       => 'UNINE',
-            'profession_id' => 1,
-            'telephone'     => '032 690 00 23',
-            'mobile'        => '032 690 00 23',
-            'fax'           => null,
-            'adresse'       => 'Avenue du 1er Mars 26',
-            'npa'           => '2000',
-            'ville'         => 'Neuchâtel',
-            'canton_id'     => 11,
-            'pays_id'       => 208,
-            'type'         => 1,
-            'livraison'    => 1
-        ])->make());
-})->each(function ($u) {
-    $u->roles()->attach(1);
-});*/
+});
+

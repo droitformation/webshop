@@ -28,7 +28,7 @@
         <testsuite name="helper">
             <directory>./tests/helper/</directory>
         </testsuite>
-        <testsuite name="backendshop">
+        <testsuite name="shop">
             <directory>./tests/backend/shop/</directory>
         </testsuite>
         <testsuite name="create">

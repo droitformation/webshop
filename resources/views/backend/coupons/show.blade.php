@@ -27,7 +27,7 @@
                             </div>
                         </div>
 
-                        <?php $choices = $coupon->products->lists('id')->all(); ?>
+                        <?php $choices = $coupon->products->pluck('id')->all(); ?>
 
                         <div class="form-group" id="productSelect" {{ ($coupon->type == 'product' ? 'style="display:block;"' : 'style="display:none;"') }}>
                             <label class="col-sm-3 control-label">Choix des produits</label>
