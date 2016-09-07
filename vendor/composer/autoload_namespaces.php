@@ -22,8 +22,6 @@ return array(
     'InlineStyle' => array($vendorDir . '/inlinestyle/inlinestyle'),
     'Gloudemans\\Shoppingcart' => array($vendorDir . '/gloudemans/shoppingcart/src'),
     'FontLib\\' => array($vendorDir . '/phenx/php-font-lib/src'),
-    'Faker\\PHPUnit' => array($vendorDir . '/fzaninotto/faker/test'),
-    'Faker' => array($vendorDir . '/fzaninotto/faker/src'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Diff' => array($vendorDir . '/phpspec/php-diff/lib'),
     'Cron' => array($vendorDir . '/mtdowling/cron-expression/src'),

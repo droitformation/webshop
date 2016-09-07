@@ -94,8 +94,7 @@ class ColloqueTest extends TestCase {
 
         $this->assertRedirectedTo('/admin/colloque/1');
     }
-
-
+    
     public function testDeleteColloque()
     {
         $this->colloque->shouldReceive('delete')->once();

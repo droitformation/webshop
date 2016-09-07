@@ -10,15 +10,18 @@ class AdminIndexPagesTest extends TestCase {
     {
         parent::setUp();
 
-        $user = App\Droit\User\Entities\User::find(710);
+        DB::beginTransaction();
 
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
-
     }
 
     public function tearDown()
     {
-        \Mockery::close();
+        Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
 
 	/**

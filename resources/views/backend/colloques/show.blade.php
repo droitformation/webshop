@@ -15,7 +15,7 @@
         <div class="col-md-8">
             <div id="colloque_edit" class="panel panel-midnightblue">
 
-                <?php $centers = $colloque->centres->lists('id')->all(); ?>
+                <?php $centers = $colloque->centres->pluck('id')->all(); ?>
                     <div class="panel-body">
 
                         <form action="{{ url('admin/colloque/'.$colloque->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">

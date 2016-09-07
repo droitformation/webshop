@@ -172,7 +172,7 @@ class InscriptionController extends Controller
         }
         else
         {
-            $group = $this->register->registerGroup($colloque, $request);
+            $group = $this->register->registerGroup($colloque, $request->all());
 
             $this->register->makeDocuments($group, true);
         }

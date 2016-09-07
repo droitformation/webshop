@@ -4,7 +4,7 @@
     <section class="row">
         <div class="col-md-12">
             <div class="m-bottom wellcome-msg">
-                <h2>BIENVENUE sur publications-droit.ch.</h2>
+                <h2>BIENVENUE sur publications-droit.ch</h2>
                 <p>Portail des divers publications de la Faculté de droit de l'Université de Neuchâtel</p>
             </div>
         </div>

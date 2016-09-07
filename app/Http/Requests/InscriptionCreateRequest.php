@@ -30,7 +30,8 @@ class InscriptionCreateRequest extends Request
     {
         return [
             'user_id'     => 'required',
-            'colloque_id' => 'required'
+            'colloque_id' => 'required',
+            'participant' => 'required_if:type,multiple'
         ];
     }
 }

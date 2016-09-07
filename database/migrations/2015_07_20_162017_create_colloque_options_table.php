@@ -16,7 +16,7 @@ class CreateColloqueOptionsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('colloque_id');
-            $table->string('type');
+            $table->enum('type',['checkbox','choix','text']);
             $table->timestamps();
             $table->softDeletes();
         });

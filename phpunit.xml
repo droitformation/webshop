@@ -46,6 +46,9 @@
         <testsuite name="frontend">
             <directory>./tests/frontend/</directory>
         </testsuite>
+        <testsuite name="pubdroit">
+            <directory>./tests/pubdroit/</directory>
+        </testsuite>
         <testsuite name="export">
             <directory>./tests/export/</directory>
         </testsuite>

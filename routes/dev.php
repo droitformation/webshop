@@ -533,12 +533,12 @@ Route::get('/calculette', function () {
 
 Route::get('factory', function()
 {
-    $user = factory(App\Droit\User\Entities\User::class)->create();
-    $user->roles()->attach(1);
+    $make = new \tests\factories\ObjectFactory();
+    $colloque = $make->colloque();
 
     echo '<pre>';
-    print_r($user);
-    echo '</pre>';exit();
+    print_r($colloque);
+    echo '</pre>';
 
 });
 

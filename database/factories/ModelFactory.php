@@ -253,47 +253,6 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'three', functi
     ];
 });
 
-$factory->define(App\Droit\Newsletter\Entities\Newsletter_users::class, function (Faker\Generator $faker) {
-    return [
-        'id'           => $faker->numberBetween(50,150),
-        'email'        => $faker->email,
-        'token'        => '1234',
-        'activated_at' => date('Y-m-d G:i:s')
-    ];
-});
-
-$factory->define(App\Droit\Newsletter\Entities\Newsletter_subscriptions::class, function (Faker\Generator $faker) {
-    return [
-        'user_id'       => 1,
-        'newsletter_id' => 1
-    ];
-});
-
-$factory->define(App\Droit\Newsletter\Entities\Newsletter::class, function (Faker\Generator $faker) {
-    return [
-        'id'           => 1,
-        'titre'        => 'Titre',
-        'list_id'      => '1',
-        'from_name'    => 'Nom',
-        'from_email'   => 'cindy.leschaud@gmail.com',
-        'return_email' => 'cindy.leschaud@gmail.com',
-        'unsuscribe'   => 'unsubscribe',
-        'preview'      => 'droit.local',
-        'logos'        => 'logos.jpg',
-        'header'       => 'header.jpg',
-        'color'        => '#fff'
-    ];
-});
-
-$factory->define(App\Droit\Newsletter\Entities\Newsletter_campagnes::class, function (Faker\Generator $faker) {
-    return [
-        'sujet'         => 'Sujet',
-        'auteurs'       => 'Cindy Leschaud',
-        'status'        => 'Brouillon',
-        'newsletter_id' => 1
-    ];
-});
-
 $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Generator $faker) {
     return [
         'first_name' => 'Cindy',
@@ -302,6 +261,14 @@ $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Genera
         'bio'        => 'Test',
         'photo'      => 'cindy.jpg',
         'rang'       => 1
+    ];
+});
+
+$factory->define(App\Droit\Compte\Entities\Compte::class, function (Faker\Generator $faker) {
+    return [
+        'motif'   => 'Payement',
+        'adresse' => 'Université de Neuchâtel<br/>Service des fonds de tiers<br/>2000 Neuchâtel',
+        'compte'  => '20-4130-2',
     ];
 });
 
@@ -351,6 +318,17 @@ $factory->define(App\Droit\Shop\Attribute\Entities\Attribute::class, function (F
     ];
 });
 
+$factory->define(App\Droit\Document\Entities\Document::class, function (Faker\Generator $faker) {
+    return [
+        'colloque_id' => 1,
+        'display'     => 1, 
+        'type'        => 'illustration',// 'illustration', 'programme', 'document'
+        'path'        => 'img.jpg',
+        'titre'       => 'Vignette'
+    ];
+});
+
+
 $factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
     return [
         'first_name' => 'Cindy',
@@ -359,4 +337,6 @@ $factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($fact
         'password'   => bcrypt('cindy2')
     ];
 });
+
+
 

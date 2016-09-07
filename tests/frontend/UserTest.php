@@ -7,9 +7,6 @@ class UserTest extends TestCase {
 
     use DatabaseTransactions;
 
-	protected $adresse;
-	protected $user;
-
 	public function setUp()
 	{
 		parent::setUp();
@@ -29,9 +26,9 @@ class UserTest extends TestCase {
 	 */
 	public function testProfilUser()
 	{
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
-
-        $this->assertFalse(Auth::check());
+		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		
+		$this->assertFalse(Auth::check());
 
         $this->visit( route('login') )
             ->submitForm('Envoyer', [
@@ -68,5 +65,28 @@ class UserTest extends TestCase {
         
 		$this->visit('/profil/colloques')->seePageIs('/profil/colloques');
 		$this->assertViewHas('user');
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testInscriptionColloque()
+	{
+		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$this->actingAs($user);
+
+		$this->visit('/colloque/1');
+		$this->assertViewHas('colloque');
+
+		$this->select(1, 'price_id')->press('Envoyer');
+
+		$this->seeInDatabase('colloque_inscriptions', [
+			'colloque_id' => 1,
+			'user_id'     => $user->id,
+			'price_id' => 1
+		]);
+
+        $this->seePageIs('/');
+
 	}
 }

@@ -5,13 +5,12 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Illuminate\Contracts\Mail\Mailer;
 use App\Droit\Inscription\Entities\Inscription;
 
-class SendConfirmationInscription extends Job implements SelfHandling, ShouldQueue
+class SendConfirmationInscription extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 

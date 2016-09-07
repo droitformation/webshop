@@ -6,7 +6,7 @@ class Document extends Model{
 
     protected $table = 'colloque_documents';
 
-    protected $fillable = array('colloque_id','display','type','path','titre');
+    protected $fillable = ['colloque_id','display','type','path','titre'];
 
     public $timestamps = false;
 

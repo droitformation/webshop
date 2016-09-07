@@ -58,24 +58,23 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         return $inscription;
     }
 
-    public function registerGroup($colloque, $request)
+    public function registerGroup($colloque_id, $data)
     {
         // create new group
-        $group = $this->group->create(['colloque_id' => $colloque , 'user_id' => $request->input('user_id')]);
+        $group = $this->group->create(['colloque_id' => $colloque_id , 'user_id' => $data['user_id']]);
 
         // Get all infos for inscriptions/participants
-        $participants = $request->input('participant');
-        $prices       = $request->input('price_id');
-        $options      = $request->input('options');
-        $occurrences  = $request->input('occurrences');
-        $groupes      = $request->input('groupes');
+        $prices       = $data['price_id'];
+        $options      = $data['options'];
+        $occurrences  = $data['occurrences'];
+        $groupes      = $data['groupes'];
 
         // Make inscription for each participant
-        foreach($participants as $index => $participant)
+        foreach($data['participant'] as $index => $participant)
         {
             $data = [
                 'group_id'    => $group->id,
-                'colloque_id' => $colloque,
+                'colloque_id' => $colloque_id,
                 'participant' => $participant,
                 'price_id'    => $prices[$index]
             ];
@@ -99,7 +98,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             }
 
             // Register a new inscription
-            $this->register($data,$colloque);
+            $this->register($data,$colloque_id);
 
         }
 
