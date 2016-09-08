@@ -19,6 +19,7 @@
                 <td align="center" valign="middle">{{ $item->product->price_cents }} CHF</td>
                 <td align="center" valign="middle">
                     <form method="post" action="{{ url('pubdroit/cart/quantityProduct') }}" class="form-inline">
+                        {!! csrf_field() !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="qty" value="{{ $item->qty }}">
                             <span class="input-group-btn">
@@ -67,6 +68,7 @@
                     <td class="text-center" valign="middle">{{ $item->price }} CHF/{{ strtolower($item->options->plan) }}</td>
                     <td class="text-center" valign="middle">
                         <form method="post" action="{{ url('pubdroit/cart/quantityAbo') }}" class="form-inline">
+                            {!! csrf_field() !!}
                             <div class="input-group">
                                 <input type="text" class="form-control" name="qty" value="{{ $item->qty }}">
                                 <span class="input-group-btn">

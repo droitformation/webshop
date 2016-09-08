@@ -83,7 +83,7 @@
                             <a id="btn-invoice" class="doAction more-btn btn-success btn-commande"
                                data-checked="true"
                                data-what="envoyer"
-                               data-action="la commande" href="{{ url('checkout/send') }}">Envoyer la commande &nbsp;<i class="fa fa-paper-plane pull-right"></i>
+                               data-action="la commande" href="{{ url('pubdroit/checkout/send') }}">Envoyer la commande &nbsp;<i class="fa fa-paper-plane pull-right"></i>
                             </a>
 
                         </td>

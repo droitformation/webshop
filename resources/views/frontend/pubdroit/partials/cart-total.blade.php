@@ -6,13 +6,13 @@
             <div class="cart-option-box">
                 <h4><i class="fa fa-money"></i> RABAIS</h4>
                 {!! Form::open(array('url' => 'pubdroit/cart/applyCoupon')) !!}
-                <p>Entrer votre code</p>
-                <div class="input-group">
-                    <input type="text" value="" name="coupon" id="inputDiscount" class="form-control" placeholder="">
-                    <span class="input-group-btn">
-                        <button class="more-btn" type="submit">Appliquer</button>
-                    </span>
-                </div><!-- /input-group -->
+                    <p>Entrer votre code</p>
+                    <div class="input-group">
+                        <input type="text" value="" name="coupon" id="inputDiscount" class="form-control" placeholder="">
+                        <span class="input-group-btn">
+                            <button class="more-btn" type="submit">Appliquer</button>
+                        </span>
+                    </div><!-- /input-group -->
                 {!! Form::close() !!}
             </div>
             @endif

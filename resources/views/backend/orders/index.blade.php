@@ -76,8 +76,9 @@
                         </div>
 
                         <div id="exportOptions" class="collapse">
-                            @if(!empty($names))
-                                @foreach($names as $key => $name)
+
+                            @if(!empty(config('columns.names')))
+                                @foreach(config('columns.names') as $key => $name)
                                     <div class="checkbox-inline checkbox-border">
                                         <label>
                                             <input class="checkbox_all" {{ in_array($key,$columns) ? 'checked' : '' }} value="{{ $name }}" name="columns[{{ $key }}]" type="checkbox"> {{ $name }}
