@@ -27,7 +27,6 @@
             <div class="form-group">
                 @if(!$items->isEmpty())
                     <p><select class="form-control multi-selection" name="type_id[]" multiple>
-                        <option value="">Choix</option>
                         @foreach($items as $item)
                             <option {{ isset($choices) && in_array($item->id, $choices) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
                         @endforeach

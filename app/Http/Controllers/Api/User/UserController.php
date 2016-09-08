@@ -96,7 +96,9 @@ class UserController extends Controller {
     {
         $this->user->delete($id);
 
-        return redirect('/')->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
+        alert()->success('Utilisateur supprimé');
+
+        return redirect('/');
     }
 
     public function getAdresse($id)

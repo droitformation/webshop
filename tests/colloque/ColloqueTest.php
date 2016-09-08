@@ -1,6 +1,11 @@
 <?php
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ColloqueTest extends TestCase {
+
+    use DatabaseTransactions, WithoutMiddleware;
 
     protected $colloque;
 
@@ -102,5 +107,20 @@ class ColloqueTest extends TestCase {
         $response = $this->call('DELETE', '/admin/colloque/1');
 
         $this->assertRedirectedTo('/admin/colloque');
+    }
+
+    public function testCreateColloque()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $this->actingAs($user);
+
+        $this->colloque->shouldReceive('getAll')->once()->andReturn(collect([$colloque]));
+        $this->colloque->shouldReceive('getYears')->once()->andReturn(collect([$colloque]));
+
+        $this->visit('admin/colloque');
+        $this->see($colloque->titre);
     }
 }

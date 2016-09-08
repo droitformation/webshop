@@ -49,7 +49,9 @@ class FaqController extends Controller
     {
         $categorie = $this->faqcat->create( $request->all() );
 
-        return redirect('admin/faq')->with(['status' => 'success' , 'message' => 'Catégorie crée']);
+        alert()->success('Catégorie crée');
+
+        return redirect('admin/faq');
     }
 
     /**
@@ -76,7 +78,9 @@ class FaqController extends Controller
     {
         $categorie = $this->faqcat->update( $request->all() );
 
-        return redirect()->back()->with(['status' => 'success' , 'message' => 'Catégorie mise à jour']);
+        alert()->success('Catégorie mise à jour');
+
+        return redirect()->back();
     }
 
     /**
@@ -89,7 +93,9 @@ class FaqController extends Controller
     {
         $this->faqcat->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Catégorie supprimée']);
+        alert()->success('Catégorie supprimée');
+
+        return redirect()->back();
     }
 
 }

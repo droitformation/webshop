@@ -1,4 +1,4 @@
-@if(isset($errors) && count($errors) > 0 || Session::has('status'))
+@if( (isset($errors) && count($errors) > 0))
 
     <?php $class  = ($errors->has() ? 'warning' : Session::get('status')); ?>
 
@@ -11,13 +11,7 @@
                     <p>{!! $message !!}</p>
                 @endforeach
 
-                @if(Session::has('message'))
-                    {!! Session::get('message') !!}
-                @endif
-
-                @if(Session::has('link'))
-                  <a href="{{ url(Session::get('link')) }}">Votre profil</a>
-                @endif
+                {!! Session::get('message') !!}
 
                 @if( $class != 'danger' && $class != 'success' &&  $class != 'warning' )
                     {{ $class }}

@@ -823,6 +823,9 @@ a.more-btn:visited
 
 /* Start List View Section */
 .item-holder{ overflow:hidden; border-bottom:1px dotted #dcdcdc; margin-bottom:17px; color:#000;padding-bottom: 15px;}
+.item-holder:last-child{
+    border-bottom:none;
+}
 .title-bar{ margin:0 0 10px;}
 .title-bar a{ font-size:18px; font-weight:bold;}
 .title-bar span{ display:block; font-weight:normal; color:#646464;}

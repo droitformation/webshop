@@ -65,6 +65,8 @@ class AuthorController extends Controller
 
         $author = $this->author->create($all);
 
+        alert()->success('Auteur crée');
+
         return redirect('admin/author/'.$author->id);
     }
 
@@ -100,6 +102,8 @@ class AuthorController extends Controller
 
         $author = $this->author->update($all);
 
+        alert()->success('Auteur mis à jour');
+
         return redirect('admin/author/'.$author->id);
     }
 
@@ -113,6 +117,8 @@ class AuthorController extends Controller
     {
         $this->author->delete($id);
 
-        return redirect('admin/author')->with(array('status' => 'success', 'message' => 'Auteur supprimé' ));
+        alert()->success('Auteur supprimé');
+
+        return redirect('admin/author');
     }
 }

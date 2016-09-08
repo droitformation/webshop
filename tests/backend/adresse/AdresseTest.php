@@ -52,5 +52,5 @@ class AdresseTest extends TestCase {
         $this->assertRedirectedTo('admin/user/2');
 
 	}
-
+    
 }

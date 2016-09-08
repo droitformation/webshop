@@ -41,7 +41,10 @@ class Page extends Node {
 
     public function getPageUrlAttribute()
     {
-        $page_url = ($this->isExternal ? $this->url : $this->site->slug.'/page/'.$this->slug);
+        $prefix   = $this->site->prefix ? $this->site->prefix : '/';
+
+        $page_url = ($this->isExternal ? $this->url : $prefix.'/page/'.$this->slug);
+        $page_url = ($this->template == 'index' ? $prefix : $page_url);
 
         $class    = \Request::is($page_url) ? 'active' : '';
 

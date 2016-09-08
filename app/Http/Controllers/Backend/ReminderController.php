@@ -91,7 +91,9 @@ class ReminderController extends Controller
 
         $reminder = $this->reminder->create( $data );
 
-        return redirect('admin/reminder/'.$reminder->id)->with(['status' => 'success' , 'message' => 'Rappel crée']);
+        alert()->success('Rappel crée');
+
+        return redirect('admin/reminder/'.$reminder->id);
     }
 
     /**
@@ -150,7 +152,9 @@ class ReminderController extends Controller
 
         $reminder = $this->reminder->update( $data );
 
-        return redirect('admin/reminder/'.$reminder->id)->with(['status' => 'success' , 'message' => 'Rappel mis à jour']);
+        alert()->success('Rappel mis à jour');
+
+        return redirect('admin/reminder/'.$reminder->id);
     }
 
     /**
@@ -163,7 +167,9 @@ class ReminderController extends Controller
     {
         $this->reminder->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Rappel supprimé']);
+        alert()->success('Rappel supprimé');
+
+        return redirect()->back();
     }
 
 }

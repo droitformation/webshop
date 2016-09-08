@@ -136,7 +136,9 @@ class InscriptionController extends Controller
         // Remake docs
         $this->register->makeDocuments($group, true);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'inscription à bien été crée' ));
+        alert()->success('L\'inscription à bien été crée');
+
+        return redirect()->back();
     }
 
     public function change(Request $request)
@@ -149,7 +151,9 @@ class InscriptionController extends Controller
 
         $this->register->makeDocuments($groupe, true);
 
-        return redirect('admin/inscription/colloque/'.$groupe->colloque_id)->with(['status' => 'success', 'message' => 'Le groupe a été modifié']);
+        alert()->success('Le groupe a été modifié');
+
+        return redirect('admin/inscription/colloque/'.$groupe->colloque_id);
     }
 
     /**
@@ -177,7 +181,9 @@ class InscriptionController extends Controller
             $this->register->makeDocuments($group, true);
         }
 
-        return redirect('admin/inscription/colloque/'.$colloque)->with(['status' => 'success', 'message' => 'L\'inscription à bien été crée']);
+        alert()->success('L\'inscription à bien été crée');
+
+        return redirect('admin/inscription/colloque/'.$colloque);
     }
 
     /**
@@ -214,7 +220,9 @@ class InscriptionController extends Controller
             $this->generator->make('attestation', $inscription);
         }
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Les documents ont été mis à jour']);
+        alert()->success('Les documents ont été mis à jour');
+
+        return redirect()->back();
     }
 
     /**
@@ -238,7 +246,9 @@ class InscriptionController extends Controller
             return redirect()->back()->with(['status' => 'success', 'message' => 'Email envoyé']);
         }
 
-        return redirect()->back()->with(['status' => 'warning', 'message' => 'Aucune inscription trouvé, problème']);
+        alert()->success('Aucune inscription trouvé, problème');
+
+        return redirect()->back();
 
     }
 
@@ -259,7 +269,9 @@ class InscriptionController extends Controller
         // Remake the documents
         $this->register->makeDocuments($model, true);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'inscription a été mise à jour']);
+        alert()->success('L\'inscription a été mise à jour');
+
+        return redirect()->back();
     }
 
     public function edit(Request $request)
@@ -284,7 +296,6 @@ class InscriptionController extends Controller
         }
 
         return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'default' : 'success')]);
-
     }
 
     /**
@@ -305,7 +316,9 @@ class InscriptionController extends Controller
             $this->register->makeDocuments($inscription->groupe, true);
         }
 
-        return redirect('admin/inscription/colloque/'.$inscription->colloque_id)->with(['status' => 'success', 'message' => 'Désinscription effectué']);
+        alert()->success('Désinscription effectué');
+
+        return redirect('admin/inscription/colloque/'.$inscription->colloque_id);
     }
 
     /**
@@ -324,7 +337,9 @@ class InscriptionController extends Controller
         // Delete the group
         $this->groupe->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Suppression du groupe effectué']);
+        alert()->success('Suppression du groupe effectué');
+
+        return redirect()->back();
     }
 
     /**
@@ -350,7 +365,9 @@ class InscriptionController extends Controller
             $this->groupe->restore($inscription->group_id);
         }
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'inscription a été restauré']);
+        alert()->success('L\'inscription a été restauré');
+
+        return redirect()->back();
     }
 
     /**

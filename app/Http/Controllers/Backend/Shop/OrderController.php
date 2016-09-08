@@ -82,8 +82,6 @@ class OrderController extends Controller {
                      ->setFree($request->input('onlyfree',null));
 
             $exporter->export($orders);
-
-            //$this->export->exportOrder($orders,$request->input('columns',config('columns.names')), $period, $request->input('details',null));
         }
 
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
@@ -119,7 +117,9 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order->id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'La facture a été regénéré']);
+        alert()->success('La facture a été regénéré');
+
+        return redirect()->back();
     }
 
     /**
@@ -148,7 +148,9 @@ class OrderController extends Controller {
         $order->admin = 1;
         $order->save();
 
-        return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été crée' ));
+        alert()->success('La commande a été crée');
+
+        return redirect('admin/orders');
     }
 
     /**
@@ -182,7 +184,9 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order->id);
 
-        return redirect('admin/order/'.$order->id)->with(['status' => 'success', 'message' => 'La commande a été mise à jour']);
+        alert()->success('La commande a été mise à jour');
+
+        return redirect('admin/order/'.$order->id);
     }
 
     /**
@@ -198,7 +202,9 @@ class OrderController extends Controller {
         $this->ordermaker->resetQty($order,'+');
         $this->order->delete($id);
 
-        return redirect('admin/orders')->with(array('status' => 'success' , 'message' => 'La commande a été annulé' ));
+        alert()->success('La commande a été annulé');
+
+        return redirect('admin/orders');
     }
 
     /**
@@ -211,7 +217,9 @@ class OrderController extends Controller {
     {
         $this->order->restore($id);
 
-        return redirect('admin/orders')->with(array('status' => 'success', 'message' => 'La commande a été restauré' ));
+        alert()->success('La commande a été restauré');
+
+        return redirect('admin/orders');
     }
 
 }

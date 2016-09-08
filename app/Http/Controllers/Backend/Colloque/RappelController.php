@@ -64,7 +64,9 @@ class RappelController extends Controller
             }
         }
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Les rappels ont été crées'));
+        alert()->success('Les rappels ont été crées');
+
+        return redirect()->back();
     }
 
     public function store(Request $request)
@@ -80,7 +82,9 @@ class RappelController extends Controller
             $this->generateSimple($inscription);
         }
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Le rappel a été crée'));
+        alert()->success('Le rappel a été crée');
+
+        return redirect()->back();
     }
 
     public function generateSimple($inscription)
@@ -121,6 +125,8 @@ class RappelController extends Controller
     {
         $this->rappel->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Rappel supprimée']);
+        alert()->success('Rappel supprimé');
+
+        return redirect()->back();
     }
 }

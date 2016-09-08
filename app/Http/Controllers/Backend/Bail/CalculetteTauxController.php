@@ -42,20 +42,26 @@ class CalculetteTauxController extends Controller
     {
         $taux = $this->taux->create( $request->all() );
 
-        return redirect('admin/calculette/taux')->with(['status' => 'success' , 'message' => 'Taux crée']);
+        alert()->success('Taux crée');
+
+        return redirect('admin/calculette/taux');
     }
 
     public function update($id,Request $request)
     {
         $this->taux->update( $request->all() );
 
-        return redirect('admin/calculette/taux/'.$id)->with(['status' => 'success' , 'message' => 'Taux mis à jour']);
+        alert()->success('Taux mis à jour');
+
+        return redirect('admin/calculette/taux/'.$id);
     }
 
     public function destroy($id)
     {
         $this->taux->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Taux supprimée']);
+        alert()->success('Taux supprimée');
+
+        return redirect()->back();
     }
 }

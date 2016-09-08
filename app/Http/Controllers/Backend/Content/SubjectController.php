@@ -49,7 +49,9 @@ class SubjectController extends Controller
         
         $seminaire->subjects()->save($subject);
 
-        return redirect()->back()->with(['status' => 'success' , 'message' => 'Sujet crée']);
+        alert()->success('Sujet crée');
+
+        return redirect()->back();
     }
 
     /**
@@ -75,7 +77,9 @@ class SubjectController extends Controller
 
         $this->subject->update( $data );
 
-        return redirect()->back()->with(['status' => 'success' , 'message' => 'Sujet mise à jour']);
+        alert()->success('Sujet mise à jour');
+
+        return redirect()->back();
     }
 
     /**
@@ -89,7 +93,9 @@ class SubjectController extends Controller
     {
         $this->subject->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Sujet supprimé']);
+        alert()->success('Sujet supprimé');
+
+        return redirect()->back();
     }
 
 }

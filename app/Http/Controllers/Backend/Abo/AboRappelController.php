@@ -44,7 +44,9 @@ class AboRappelController extends Controller {
 
         $this->generator->makeAbo('rappel', $rappel->facture, $rappels, $rappel);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La rappel a été crée' ));
+        alert()->success('La rappel a été crée');
+
+        return redirect()->back();
 	}
 
     /**
@@ -58,7 +60,9 @@ class AboRappelController extends Controller {
     {
         $rappel = $this->rappel->update($request->all());
 
-        return redirect('admin/abo/'.$rappel->id)->with(array('status' => 'success', 'message' => 'La rappel a été mis à jour' ));
+        alert()->success('La rappel a été mis à jour');
+
+        return redirect('admin/abo/'.$rappel->id);
     }
 
 
@@ -66,7 +70,9 @@ class AboRappelController extends Controller {
 	{
         $this->rappel->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Le rappel a été supprimé' ));
+        alert()->success('Le rappel a été supprimé');
+
+        return redirect()->back();
 	}
 
     /*
@@ -78,7 +84,9 @@ class AboRappelController extends Controller {
 
         $this->worker->rappels($product_id, $abo->id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération des rappels sera terminée.']);
+        alert()->success('La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération des rappels sera terminée.');
+
+        return redirect()->back();
     }
 
     /*
@@ -99,6 +107,8 @@ class AboRappelController extends Controller {
         $job = (new NotifyJobFinished('Les rappels ont été attachés. Nom du fichier: <strong>'.$name.'</strong>'));
         $this->dispatch($job);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Les rappels dont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.']);
+        alert()->success('Les rappels dont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
+
+        return redirect()->back();
     }
 }

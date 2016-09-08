@@ -4,7 +4,7 @@
 	<section class="row">
 		<div class="col-md-12">
 
-			<p><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
+			<p><a href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
 
 			<div class="heading-bar">
 				<h2>{{ $product->title }}</h2>
@@ -22,24 +22,24 @@
 					<div class="col-md-9 col-xs-12">
 
 						<div class="row">
-							<div class="col-md-6 col-xs-12">
-								<p>
-									@if(!$product->domains->isEmpty())
+							@if(!$product->domains->isEmpty())
+								<div class="col-md-6 col-xs-12">
+									<p>
 										@foreach($product->domains as $domain)
 											<span class="label label-info">{{ $domain->title }}</span>
 										@endforeach
-									@endif
-								</p>
-							</div>
-							<div class="col-md-6 col-xs-12">
-								<?php $attributs = $product->attributs->filter(function ($value, $key) {return in_array($value->id, [1,2]); }); ?>
+									</p>
+								</div>
+							@endif
+							<?php $attributs = $product->attributs->filter(function ($value, $key) {return in_array($value->id, [1,2]); }); ?>
 
-								@if(!$attributs->isEmpty())
+							@if(!$attributs->isEmpty())
+								<div class="col-md-6 col-xs-12">
 									@foreach($attributs as $attribute)
 										<p><strong>{{ $attribute->title }} : </strong> {{ $attribute->pivot->value }} </p>
 									@endforeach
-								@endif
-							</div>
+								</div>
+							@endif
 						</div>
 
 						<h3>{{ $product->title }}</h3>

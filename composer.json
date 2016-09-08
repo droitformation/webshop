@@ -24,10 +24,11 @@
         "baum/baum": "~1.1",
         "inlinestyle/inlinestyle": "1.*",
         "clegginabox/pdf-merger": "dev-master",
-		"designpond/newsletter" : "dev-master"
+		"designpond/newsletter" : "dev-master",
+		"vinkla/alert": "^1.2"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~4.0",
+		"phpunit/phpunit": "~5.0",
 		"phpspec/phpspec": "~2.1",
 		"benconstable/phpspec-laravel": "~2.0",
         "mockery/mockery": "0.9.*",

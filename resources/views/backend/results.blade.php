@@ -16,7 +16,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" name="term" placeholder="Recherche...">
                               <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-info"><i class="fa fa-search"></i></button>
+                                 <button type="submit" name="search" class="btn btn-info">OK</button>
                               </span>
                         </div><!-- /input-group -->
                     </form>
@@ -62,9 +62,10 @@
                                         <td><strong>{{ $user->name }}</strong></td>
                                         <td>{{ $user->email }}</td>
                                         <td class="text-right">
-                                            {!! Form::open(array('route' => array('admin.user.destroy', $user->id), 'method' => 'delete')) !!}
-                                            <button data-action="{{ $user->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                            {!! Form::close() !!}
+                                            <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
+                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                <button data-action="{{ $user->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @if(!$user->adresses->isEmpty())
@@ -109,9 +110,10 @@
                                         <td>{{ $adresse->company }}</td>
                                         <td>{{ $adresse->ville }}</td>
                                         <td class="text-right">
-                                            {!! Form::open(array('route' => array('admin.adresse.destroy', $adresse->id), 'method' => 'delete')) !!}
-                                            <button data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                            {!! Form::close() !!}
+                                            <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="form-horizontal">
+                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                <button data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

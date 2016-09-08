@@ -45,7 +45,9 @@ class QuestionController extends Controller
     {
         $question = $this->question->create( $request->all() );
 
-        return redirect('admin/question/'.$question->id)->with(['status' => 'success' , 'message' => 'Question crée']);
+        alert()->success('Question crée');
+
+        return redirect('admin/question/'.$question->id);
     }
 
     /**
@@ -73,7 +75,9 @@ class QuestionController extends Controller
     {
         $question = $this->question->update( $request->all() );
 
-        return redirect('admin/question/'.$question->id)->with(['status' => 'success' , 'message' => 'Question mise à jour']);
+        alert()->success('Question mise à jour');
+
+        return redirect('admin/question/'.$question->id);
     }
 
     /**
@@ -86,7 +90,9 @@ class QuestionController extends Controller
     {
         $this->question->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Question supprimée']);
+        alert()->success('Question supprimée');
+
+        return redirect()->back();
     }
 
 }

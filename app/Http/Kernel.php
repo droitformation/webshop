@@ -50,6 +50,7 @@ class Kernel extends HttpKernel {
 		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 		'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
+		'site'           => 'App\Http\Middleware\SiteMiddleware',
 		'checkout'       => 'App\Http\Middleware\CheckoutMiddleware',
         'cart'           => 'App\Http\Middleware\CartMiddleware',
         'administration' =>'App\Http\Middleware\AdminMiddleware',

@@ -53,7 +53,9 @@ class AttributController extends Controller
     {
         $attribut = $this->attribu->create( $request->all() );
 
-        return redirect('admin/attribut')->with(['status' => 'success' , 'message' => 'Attribut crée']);
+        alert()->success('Attribut crée');
+
+        return redirect('admin/attribut');
     }
 
     /**
@@ -81,7 +83,9 @@ class AttributController extends Controller
     {
         $this->attribu->update( $request->all() );
 
-        return redirect('admin/attribut/'.$id)->with(['status' => 'success' , 'message' => 'Attribut mise à jour']);
+        alert()->success('Attribut mise à jour');
+
+        return redirect('admin/attribut/'.$id);
     }
 
     /**
@@ -98,6 +102,8 @@ class AttributController extends Controller
         $attribu = $this->attribu->find($id);
         $attribu->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Attribut supprimée']);
+        alert()->success('Attribut supprimée');
+
+        return redirect()->back();
     }
 }

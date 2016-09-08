@@ -63,7 +63,9 @@ class PageController extends Controller
     {
         $page = $this->page->create($request->all());
 
-        return redirect('admin/page/'.$page->id)->with(array('status' => 'success' , 'message' => 'La page a été crée' ));
+        alert()->success('La page a été crée');
+
+        return redirect('admin/page/'.$page->id);
     }
 
     /**
@@ -90,7 +92,9 @@ class PageController extends Controller
     {
         $page = $this->page->update($request->all());
 
-        return redirect('admin/page/'.$page->id)->with( array('status' => 'success' , 'message' => 'La page a été mise à jour' ));
+        alert()->success('La page a été mise à jour');
+
+        return redirect('admin/page/'.$page->id);
     }
 
     /**
@@ -103,7 +107,9 @@ class PageController extends Controller
     {
         $this->page->delete($id);
 
-        return redirect('admin/page')->with(array('status' => 'success' , 'message' => 'La page a été supprimé' ));
+        alert()->success('La page a été supprimé');
+
+        return redirect('admin/page');
     }
 
     public function sorting(Request $request)
@@ -111,6 +117,7 @@ class PageController extends Controller
         $data = $request->all();
 
         $pages = $this->page->updateSorting($data['page_rang']);
+        
         echo 'ok';die();
     }
 

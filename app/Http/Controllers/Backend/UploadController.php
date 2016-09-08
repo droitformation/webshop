@@ -39,13 +39,19 @@ class UploadController extends Controller
                         'titre'       => $request->input('titre')
                     ]);
 
-                return redirect()->back()->with(array('status' => 'success', 'message' => 'Document ajouté'));
+                alert()->success('Document ajouté');
+
+                return redirect()->back();
             }
 
-            return redirect()->back()->with(array('status' => 'danger', 'message' => 'Problème avec le document'));
+            alert()->warning('Problème avec le document');
+
+            return redirect()->back();
         }
 
-        return redirect()->back()->with(array('status' => 'danger', 'message' => 'Veuillez choisir un document'));
+        alert()->warning('Veuillez choisir un document');
+
+        return redirect()->back();
     }
 
     public function upload(Request $request)

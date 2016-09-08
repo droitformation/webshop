@@ -125,7 +125,9 @@ class CheckoutController extends Controller {
             event(new NewAboRequest($abos));
         }
 
-        return redirect('/')->with(['status' => 'success', 'message' => 'Votre commande a été envoyé!']);
+        alert()->success('Votre commande a été envoyé!');
+
+        return redirect('/');
     }
 
     /*
@@ -135,6 +137,7 @@ class CheckoutController extends Controller {
     {
         \Cart::instance('shop')->destroy();
         \Cart::instance('abonnement')->destroy();
+        
         session()->forget('noShipping');
         session()->forget('coupon');
     }

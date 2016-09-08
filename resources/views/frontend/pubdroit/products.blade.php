@@ -4,7 +4,7 @@
     <section class="row">
         <div class="col-md-12">
 
-            <p><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
+            <p><a href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
 
             <div class="heading-bar">
                 <h2>{{ $title }} <strong>{{ $label }}</strong></h2>
@@ -18,11 +18,13 @@
 
                         <article class="item-holder">
                             <div class="col-md-2">
-                                <a href="{{ url('product/'.$product->id) }}"><img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" /></a>
+                                <a href="{{ url('pubdroit/product/'.$product->id) }}">
+                                    <img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" />
+                                </a>
                             </div>
                             <div class="col-md-10">
                                 <div class="title-bar">
-                                    <a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a>
+                                    <a href="{{ url('pubdroit/product/'.$product->id) }}">{{ $product->title }}</a>
                                     <span>{!! $product->teaser !!}</span>
                                 </div>
                                 @if(!$product->authors->isEmpty())

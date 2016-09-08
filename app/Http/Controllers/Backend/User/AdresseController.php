@@ -55,6 +55,8 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->create($request->all());
 
+        alert()->success('Adresse crée');
+
         return redirect('admin/adresse/'.$adresse->id);
     }
 
@@ -98,6 +100,8 @@ class AdresseController extends Controller {
             }
         }
 
+        alert()->success('Adresse convertie');
+
         return redirect('admin/user/'.$user->id);
 
     }
@@ -130,7 +134,9 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->update($request->all());
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Adresse mise à jour']);
+        alert()->success('Adresse mise à jour');
+
+        return redirect()->back();
     }
 
     /**
@@ -146,7 +152,9 @@ class AdresseController extends Controller {
         $url = $request->input('url',null);
         $url = $url ? $url : 'admin';
 
-        return redirect($url)->with(array('status' => 'success', 'message' => 'Adresse supprimé' ));
+        alert()->success('Adresse supprimé');
+
+        return redirect($url);
     }
 
 }

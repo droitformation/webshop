@@ -135,7 +135,7 @@
 <!-- Gallery plugins -->
 <script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/js/gallery/gallery-simple.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('js/colloque/isotope.pkgd.min.js');?>"></script>
+<script type='text/javascript' src="<?php echo asset('backend/js/isotope.pkgd.min.js');?>"></script>
 
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>

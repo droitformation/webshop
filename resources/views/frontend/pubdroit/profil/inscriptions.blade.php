@@ -13,7 +13,7 @@
                 <div class="list-group">
                     @foreach($inscriptions as $inscription)
                         <?php $inscription->load('colloque'); ?>
-                        <a href="{{ url('profil/inscription/'.$inscription->id) }}" class="list-group-item">
+                        <a href="{{ url('pubdroit/profil/inscription/'.$inscription->id) }}" class="list-group-item">
                             <h5>{{ $inscription->colloque->titre }}</h5>
                             <p><span class="glyphicon glyphicon-send" aria-hidden="true"></span> &nbsp;{{ $inscription->created_at->format('d/m/Y') }}</p>
                         </a>

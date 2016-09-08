@@ -65,6 +65,9 @@ class ShopController extends Controller {
 	{
         $nouveautes = $this->product->getByCategorie(5)->take(6);
 		$products   = $this->product->getNbr(10,[5]);
+
+        $page       = $this->page->getBySlug($this->site_id,'accueil');
+        
         $colloques  = $this->colloque->getCurrent(true); // $registration = false, $finished = false, $visible = true
         $abos       = $this->abo->getAll();
         
@@ -72,7 +75,13 @@ class ShopController extends Controller {
             return $abo->current_product->load('abos');
         });
 
-		return view('frontend.pubdroit.index')->with(['products' => $products, 'abos' => $abos, 'nouveautes' => $nouveautes, 'colloques' => $colloques]);
+		return view('frontend.pubdroit.index')->with([
+            'products'   => $products,
+            'page'       => $page,
+            'abos'       => $abos,
+            'nouveautes' => $nouveautes,
+            'colloques'  => $colloques
+        ]);
 	}
 
 	public function products(Request $request)

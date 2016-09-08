@@ -129,7 +129,9 @@ class ColloqueController extends Controller
             $this->document->updateColloqueDoc($colloque->id, ['illustration' => $illustration]);
         }
 
-        return redirect('admin/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'Le colloque a été crée'));
+        alert()->success('Le colloque a été crée');
+
+        return redirect('admin/colloque/'.$colloque->id);
     }
 
     /**
@@ -167,7 +169,9 @@ class ColloqueController extends Controller
             $this->document->updateColloqueDoc($id, ['illustration' => $illustration]);
         }
 
-        return redirect('admin/colloque/'.$colloque->id)->with(array('status' => 'success', 'message' => 'Le colloque a été mis à jour' ));
+        alert()->success('Le colloque a été mis à jour');
+
+        return redirect('admin/colloque/'.$colloque->id);
     }
 
     /**
@@ -180,7 +184,9 @@ class ColloqueController extends Controller
     {
         $this->colloque->delete($id);
 
-        return redirect('admin/colloque')->with(['status' => 'success', 'message' => 'Colloque supprimé']);
+        alert()->success('Colloque supprimé');
+
+        return redirect('admin/colloque');
     }
 
     /**

@@ -43,13 +43,17 @@ class SubscribeController extends Controller
 
         if(!$user)
         {
-            return redirect('/')->with(['status' => 'danger', 'jeton' => true ,'message' => 'Le jeton ne correspond pas ou à expiré']);
+            alert()->danger('Le jeton ne correspond pas ou à expiré');
+
+            return redirect('/');
         }
 
         //Subscribe to mailjet
         $this->worker->subscribeEmailToList( $user->email );
 
-        return redirect('/')->with(['status' => 'success', 'message' => 'Vous êtes maintenant abonné à la newsletter en droit du travail']);
+        alert()->success('Vous êtes maintenant abonné à la newsletter en droit du travail');
+
+        return redirect('/');
     }
 
     /**
@@ -90,11 +94,9 @@ class SubscribeController extends Controller
             $message->to($suscribe->email, $suscribe->email)->subject('Inscription!');
         });
 
-        return redirect('/')
-            ->with([
-                'status'  => 'success',
-                'message' => '<strong>Merci pour votre inscription!</strong><br/>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email'
-            ]);
+        alert()->success('<strong>Merci pour votre inscription!</strong><br/>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email');
+
+        return redirect('/');
     }
 
     /**
@@ -117,7 +119,9 @@ class SubscribeController extends Controller
 
         $this->subscription->delete($abonne->email);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => '<strong>Vous avez été désinscrit</strong>'));
+        alert()->success('<strong>Vous avez été désinscrit</strong>');
+
+        return redirect()->back();
     }
 
     public function findUserExist($email)

@@ -5,7 +5,7 @@
             @if(!Cart::instance('shop')->content()->isEmpty())
             <div class="cart-option-box">
                 <h4><i class="fa fa-money"></i> RABAIS</h4>
-                {!! Form::open(array('url' => 'cart/applyCoupon')) !!}
+                {!! Form::open(array('url' => 'pubdroit/cart/applyCoupon')) !!}
                 <p>Entrer votre code</p>
                 <div class="input-group">
                     <input type="text" value="" name="coupon" id="inputDiscount" class="form-control" placeholder="">
@@ -39,7 +39,7 @@
                     </tr>
                 </table>
                 <p class="text-right">
-                    <a href="{{ url('checkout/billing') }}" class="more-btn">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{ url('pubdroit/checkout/billing') }}" class="more-btn">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
                 </p>
             </div>
         </figure>

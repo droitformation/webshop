@@ -1,8 +1,8 @@
 <ul class="nav">
-    <li><a href="{{ url('categorie/5') }}">Nouveautés</a></li>
+    <li><a href="{{ url('pubdroit/categorie/5') }}">Nouveautés</a></li>
     @if(!$domains->isEmpty())
         <li>
-            <form action="{{ url('sort')}}" method="post">{!! csrf_field() !!}
+            <form action="{{ url('pubdroit/sort')}}" method="post">{!! csrf_field() !!}
                 <input type="hidden" name="title" value="Domaine">
                 <input type="hidden" name="label" value="domain">
                 <select name="search[domain_id]" class="dropdow-select">
@@ -16,7 +16,7 @@
     @endif
     @if(!$categories->isEmpty())
         <li>
-            <form action="{{ url('sort')}}" method="post">{!! csrf_field() !!}
+            <form action="{{ url('pubdroit/sort')}}" method="post">{!! csrf_field() !!}
                 <input type="hidden" name="title" value="Catégorie">
                 <input type="hidden" name="label" value="categorie">
                 <select name="search[categorie_id]" class="dropdow-select">
@@ -30,7 +30,7 @@
     @endif
     @if(!$authors->isEmpty())
         <li>
-            <form action="{{ url('sort')}}" method="post">{!! csrf_field() !!}
+            <form action="{{ url('pubdroit/sort')}}" method="post">{!! csrf_field() !!}
                 <input type="hidden" name="title" value="Auteur">
                 <input type="hidden" name="label" value="author">
                 <select name="search[author_id]" class="dropdow-select">
@@ -42,6 +42,6 @@
             </form>
         </li>
     @endif
-    <li class="item-colloque"><a href="{{ url('colloque') }}"><i class="fa fa-calendar"></i> &nbsp; Colloques</a></li>
-    <li class="item-colloque"><a href="{{ url('subscribe') }}"><i class="fa fa-paper-plane"></i> &nbsp; Newsletter</a></li>
+    <li class="item-colloque"><a href="{{ url('pubdroit/colloque') }}"><i class="fa fa-calendar"></i> &nbsp; Colloques</a></li>
+    <li class="item-colloque"><a href="{{ url('pubdroit/subscribe') }}"><i class="fa fa-paper-plane"></i> &nbsp; Newsletter</a></li>
 </ul>

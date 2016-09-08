@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <p><a href="{{ url('checkout/cart') }}"><span aria-hidden="true">&larr;</span> Retour au panier</a></p>
+        <p><a href="{{ url('pubdroit/checkout/cart') }}"><span aria-hidden="true">&larr;</span> Retour au panier</a></p>
 
         <div class="row">
             <div class="col-md-8">
@@ -13,7 +13,7 @@
                     <span class="h-line"></span>
                 </div>
 
-                <form class="form" method="post" action="{{ url('checkout/resume') }}" id="billing">
+                <form class="form" method="post" action="{{ url('pubdroit/checkout/resume') }}" id="billing">
                     {!! csrf_field() !!}
                     <ul class="billing-form">
 

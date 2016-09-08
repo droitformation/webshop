@@ -4,7 +4,7 @@
 <section class="row">
     <div class="col-md-12">
 
-        <p><a href="{{ url('checkout/billing') }}"><span aria-hidden="true">&larr;</span> Retour à l'adresse</a></p>
+        <p><a href="{{ url('pubdroit/checkout/billing') }}"><span aria-hidden="true">&larr;</span> Retour à l'adresse</a></p>
 
         <div class="heading-bar">
             <h2>3. Résumé de votre commande</h2>
@@ -36,7 +36,7 @@
                             <td valign="middle" width="15%">
                                 <img style="max-height:80px;" src="{{ asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
                             </td>
-                            <td width="40%" align="left"><a href="{{ url('product/'.$item->id) }}">{{ $item->name }}</a></td>
+                            <td width="40%" align="left"><a href="{{ url('pubdroit/product/'.$item->id) }}">{{ $item->name }}</a></td>
                             <td align="center" width="15%">{{  $item->product->price_cents }} CHF</td>
                             <td align="center" width="15%">{{ $item->qty }}</td>
                             <td align="right" width="15%">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>

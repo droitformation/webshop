@@ -50,7 +50,9 @@ class DomainController extends Controller
     {
         $domain = $this->domain->create( $request->all() );
 
-        return redirect('admin/domain/'.$domain->id)->with(['status' => 'success' , 'message' => 'Collection crée']);
+        alert()->success('Collection crée');
+
+        return redirect('admin/domain/'.$domain->id);
     }
 
     /**
@@ -78,7 +80,9 @@ class DomainController extends Controller
     {
         $this->domain->update( $request->all() );
 
-        return redirect('admin/domain/'.$id)->with(['status' => 'success' , 'message' => 'Collection mise à jour']);
+        alert()->success('Collection mise à jour');
+
+        return redirect('admin/domain/'.$id);
     }
 
     /**
@@ -92,6 +96,8 @@ class DomainController extends Controller
     {
         $this->domain->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Collection supprimée']);
+        alert()->success('Collection supprimée');
+
+        return redirect()->back();
     }
 }

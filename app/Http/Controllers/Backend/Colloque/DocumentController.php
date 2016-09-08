@@ -17,17 +17,6 @@ class DocumentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -37,6 +26,8 @@ class DocumentController extends Controller
     {
         $this->document->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success' , 'message' => 'Le document a été supprimé' ));
+        alert()->success('Le document a été supprimé');
+
+        return redirect()->back();
     }
 }

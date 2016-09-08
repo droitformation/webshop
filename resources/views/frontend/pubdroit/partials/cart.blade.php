@@ -18,7 +18,7 @@
                 <td valign="middle">{{ $item->name }}</td>
                 <td align="center" valign="middle">{{ $item->product->price_cents }} CHF</td>
                 <td align="center" valign="middle">
-                    <form method="post" action="{{ url('cart/quantityProduct') }}" class="form-inline">
+                    <form method="post" action="{{ url('pubdroit/cart/quantityProduct') }}" class="form-inline">
                         <div class="input-group">
                             <input type="text" class="form-control" name="qty" value="{{ $item->qty }}">
                             <span class="input-group-btn">
@@ -30,7 +30,7 @@
                 </td>
                 <td align="right" valign="middle">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>
                 <td align="center" valign="middle" class="mobile-hidden">
-                    <form method="post" action="{{ url('cart/removeProduct') }}" class="form-inline">{!! csrf_field() !!}
+                    <form method="post" action="{{ url('pubdroit/cart/removeProduct') }}" class="form-inline">{!! csrf_field() !!}
                         <input type="hidden" name="rowid" value="{{ $item->rowid }}">
                         <button type="submit"><i class="icon-trash"></i></button>
                     </form>
@@ -66,7 +66,7 @@
                     </td>
                     <td class="text-center" valign="middle">{{ $item->price }} CHF/{{ strtolower($item->options->plan) }}</td>
                     <td class="text-center" valign="middle">
-                        <form method="post" action="{{ url('cart/quantityAbo') }}" class="form-inline">
+                        <form method="post" action="{{ url('pubdroit/cart/quantityAbo') }}" class="form-inline">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="qty" value="{{ $item->qty }}">
                                 <span class="input-group-btn">
@@ -78,7 +78,7 @@
                     </td>
                     <td class="text-right" valign="middle">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>
                     <td class="text-center" valign="middle" class="mobile-hidden">
-                        <form method="post" action="{{ url('cart/removeAbo') }}" class="form-inline">{!! csrf_field() !!}
+                        <form method="post" action="{{ url('pubdroit/cart/removeAbo') }}" class="form-inline">{!! csrf_field() !!}
                             <input type="hidden" name="rowid" value="{{ $item->rowid }}">
                             <button type="submit"><i class="icon-trash"></i></button>
                         </form>

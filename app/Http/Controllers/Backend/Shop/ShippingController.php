@@ -49,7 +49,9 @@ class ShippingController extends Controller
     {
         $shipping  = $this->shipping->create($request->all());
 
-        return redirect('admin/shipping')->with(array('status' => 'success', 'message' => 'Le frais de port a été crée' ));
+        alert()->success('Le frais de port a été crée');
+
+        return redirect('admin/shipping');
     }
 
     /**
@@ -76,7 +78,9 @@ class ShippingController extends Controller
     {
         $shipping  = $this->shipping->update($request->all());
 
-        return redirect('admin/shipping')->with(array('status' => 'success', 'message' => 'Le frais de port a été mis à jour' ));
+        alert()->success('Le frais de port a été mis à jour');
+
+        return redirect('admin/shipping');
     }
 
     /**
@@ -89,6 +93,8 @@ class ShippingController extends Controller
     {
         $this->shipping->delete($id);
 
-        return redirect('admin/shipping')->with(array('status' => 'success' , 'message' => 'Le frais de port a été supprimé' ));
+        alert()->success('Le frais de port a été supprimé');
+
+        return redirect('admin/shipping');
     }
 }

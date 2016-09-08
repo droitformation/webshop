@@ -59,7 +59,6 @@ class ColloqueController extends Controller
     public function show($id,Request $request)
     {
         $colloque = $this->colloque->find($id);
-        $colloque->load('location');
 
         $registered = false;
         $pending    = false;

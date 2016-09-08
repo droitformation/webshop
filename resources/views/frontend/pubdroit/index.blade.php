@@ -11,15 +11,15 @@
     </section>
     
     <section class="row">
-        <section class="col-md-8 col-xs-12">
 
-            <div class="heading-bar">
-                <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Événements</h2>
-                <a class="text-danger pull-right" href="{{ url('archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
-                <span class="h-line"></span>
-            </div>
+        @if(!$colloques->isEmpty())
+            <section class="col-md-8 col-xs-12">
+                <div class="heading-bar">
+                    <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Événements</h2>
+                    <a class="text-danger pull-right" href="{{ url('archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
+                    <span class="h-line"></span>
+                </div>
 
-            @if(!$colloques->isEmpty())
                 <?php $chunks = $colloques->chunk(1); ?>
                 @foreach($chunks as $chunk)
                     <section class="row">
@@ -49,34 +49,33 @@
                         @endforeach
                     </section>
                 @endforeach
-            @endif
 
-        </section>
+            </section>
+        @endif
 
-        <section id="nouveautes" class="col-md-4 col-xs-12">
+        @if(!$nouveautes->isEmpty())
+            <section id="nouveautes" class="col-md-4 col-xs-12">
+                <div class="heading-bar">
+                    <h2><i class="fa fa-star"></i> &nbsp;Nouveautés</h2>
+                    <span class="h-line"></span>
+                </div>
 
-            <div class="heading-bar">
-                <h2><i class="fa fa-star"></i> &nbsp;Nouveautés</h2>
-                <span class="h-line"></span>
-            </div>
-
-            @if(!$nouveautes->isEmpty())
                 <?php $chunks = $nouveautes->take(4); ?>
                 @foreach($chunks as $product)
                         @include('frontend.pubdroit.partials.product', ['product' => $product, 'news' => false])
                 @endforeach
-            @endif
+            </section>
+        @endif
 
-        </section>
     </section>
 
-    <div class="heading-bar">
-        <h2>Abonnements</h2>
-        <span class="h-line"></span>
-    </div>
-
     @if(!$abos->isEmpty())
-    <?php $chunks = $abos->chunk(3); ?>
+        <div class="heading-bar">
+            <h2>Abonnements</h2>
+            <span class="h-line"></span>
+        </div>
+
+        <?php $chunks = $abos->chunk(3); ?>
         @foreach($chunks as $chunk)
             <section class="row">
                 @foreach($chunk as $product)
@@ -91,31 +90,28 @@
     <section class="row">
         <!-- Start Main Content -->
         <section class="col-md-9 col-xs-12">
-            <div class="heading-bar">
-                <h2>Publications</h2>
-                <span class="h-line"></span>
-            </div>
-            <!-- Start Ad Slider Section -->
-            <div class="blog-sec-slider">
-                <div class="slider5">
-                    <div class="slide"><a href="#"><img src="frontend/pubdroit/images/ad-book.jpg" alt=""/></a></div>
+
+            @if(!$products->isEmpty())
+
+                <div class="heading-bar">
+                    <h2>Publications</h2>
+                    <span class="h-line"></span>
                 </div>
-            </div>
-            <!-- End Ad Slider Section -->
 
-            <!-- Start Grid View Section -->
-            <section class="list-holder">
+                <!-- Start Grid View Section -->
+                <section class="list-holder">
 
-                @if(!$products->isEmpty())
                     @foreach($products as $product)
 
                         <article class="item-holder">
                             <div class="col-md-2">
-                                <a href="{{ url('product/'.$product->id) }}"><img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" /></a>
+                                <a href="{{ url('pubdroit/product/'.$product->id) }}">
+                                    <img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" />
+                                </a>
                             </div>
                             <div class="col-md-10">
                                 <div class="title-bar">
-                                    <a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a>
+                                    <a href="{{ url('pubdroit/product/'.$product->id) }}">{{ $product->title }}</a>
                                     <span>{!! $product->teaser !!}</span>
                                 </div>
                                 <div class="readmore product-description">{!! $product->description !!}</div>
@@ -126,24 +122,32 @@
                         </article>
 
                     @endforeach
-                @endif
 
-            </section>
-            <div class="blog-footer">
-                <div class="pagination">
-                    {!! $products->links() !!}
-                </div>
-            </div>
-            <!-- End Grid View Section -->
+                    <div class="blog-footer">
+                        <div class="pagination">
+                            {!! $products->links() !!}
+                        </div>
+                    </div>
+                    <!-- End Main Content -->
 
+                </section>
+            @endif
         </section>
-        <!-- End Main Content -->
 
         <!-- Start Main Side Bar -->
         <section class="col-md-3 col-xs-12">
             <div class="side-holder">
                 <article class="banner-ad">
-                    <img src="frontend/pubdroit/images/ad.jpg" alt="Helbing" />
+                    <!-- Bloc contenus -->
+                    @if(isset($page) && !$page->blocs->isEmpty())
+                        @foreach($page->blocs as $bloc)
+                            <div class="sidebar-content-bloc">
+                                @include('frontend.partials.bloc', ['bloc' => $bloc])
+                            </div>
+                        @endforeach
+                    @endif
+
+                   {{-- <img src="frontend/pubdroit/images/ad.jpg" alt="Helbing" />--}}
                 </article>
             </div>
         </section>

@@ -71,7 +71,9 @@ class ThemeController extends Controller {
 
         $theme = $this->theme->create( $data );
 
-        return redirect('admin/theme/'.$theme->id)->with(['status' => 'success' , 'message' => 'Thème crée']);
+		alert()->success('Thème crée');
+
+        return redirect('admin/theme/'.$theme->id);
 	}
 
 	/**
@@ -109,7 +111,9 @@ class ThemeController extends Controller {
 
         $this->theme->update( $data );
 
-        return redirect('admin/theme/'.$id)->with(['status' => 'success' , 'message' => 'Thème mise à jour']);
+		alert()->success('Thème mise à jour');
+
+        return redirect('admin/theme/'.$id);
 	}
 
 	/**
@@ -123,7 +127,9 @@ class ThemeController extends Controller {
 	{
         $this->theme->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Thème supprimée']);
+		alert()->success('Thème supprimée');
+
+        return redirect()->back();
 	}
 
 }

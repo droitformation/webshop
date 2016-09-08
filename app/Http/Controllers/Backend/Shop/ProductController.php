@@ -119,7 +119,9 @@ class ProductController extends Controller {
         // Create a entry in stock history
         $this->stock->create(['product_id' => $product->id, 'amount' => $product->sku, 'motif' => 'Stock initial', 'operator' => '+']);
 
-        return redirect('admin/product/'.$product->id)->with(array('status' => 'success', 'message' => 'Le produit a été crée' ));
+        alert()->success('Le produit a été crée');
+
+        return redirect('admin/product/'.$product->id);
     }
 
     /**
@@ -143,7 +145,9 @@ class ProductController extends Controller {
 
             if(empty($product->reference) || empty($product->edition))
             {
-                return redirect()->back()->with(['status' => 'warning', 'message' => 'Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement']);
+                alert()->warning('Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement');
+
+                return redirect()->back();
             }
         }
 
@@ -155,7 +159,9 @@ class ProductController extends Controller {
 
         $product  = $this->product->update($data);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Le produit a été mis à jour' ));
+        alert()->success('Le produit a été mis à jour');
+
+        return redirect()->back();
     }
 
     /**
@@ -168,7 +174,9 @@ class ProductController extends Controller {
     {
         $this->product->delete($id);
 
-        return redirect('admin/product')->with(['status' => 'success' , 'message' => 'Le produit a été supprimé']);
+        alert()->success('Le produit a été supprimé');
+
+        return redirect('admin/product');
     }
 
     public function addAttribut($id, Request $request)
@@ -185,7 +193,9 @@ class ProductController extends Controller {
 
         $product->attributs()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'attribut a été ajouté']);
+        alert()->success('L\'attribut a été ajouté');
+
+        return redirect()->back();
     }
 
     public function removeAttribut($id, Request $request)
@@ -194,7 +204,9 @@ class ProductController extends Controller {
 
         $product->attributs()->detach($request->input('attribute_id'));
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'attribut a été supprimé']);
+        alert()->success('L\'attribut a été supprimé');
+
+        return redirect()->back();
     }
 
     public function addType($id, Request $request)
@@ -204,7 +216,9 @@ class ProductController extends Controller {
 
         $product->$types()->sync($request->input('type_id'));
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'objet a été ajouté']);
+        alert()->success('L\'objet a été ajouté');
+
+        return redirect()->back();
     }
 
     public function removeType($id, Request $request)
@@ -214,6 +228,8 @@ class ProductController extends Controller {
 
         $product->$types()->detach($request->input('type_id'));
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'L\'objet été supprimé']);
+        alert()->success('L\'objet a été supprimé');
+
+        return redirect()->back();
     }
 }

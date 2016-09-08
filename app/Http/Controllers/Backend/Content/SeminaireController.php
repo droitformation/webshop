@@ -70,7 +70,9 @@ class SeminaireController extends Controller {
 
         $seminaire = $this->seminaire->create($data);
 
-        return redirect('admin/seminaire/'.$seminaire->id)->with(['status' => 'success' , 'message' => 'Seminaire crée']);
+		alert()->success('Seminaire crée');
+
+        return redirect('admin/seminaire/'.$seminaire->id);
 	}
 
 	/**
@@ -109,7 +111,9 @@ class SeminaireController extends Controller {
 
         $this->seminaire->update( $data );
 
-        return redirect('admin/seminaire/'.$id)->with(['status' => 'success' , 'message' => 'Seminaire mise à jour']);
+		alert()->success('Seminaire mise à jour');
+
+        return redirect('admin/seminaire/'.$id);
 	}
 
 	/**
@@ -123,7 +127,9 @@ class SeminaireController extends Controller {
 	{
         $this->seminaire->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Seminaire supprimé']);
+		alert()->success('Seminaire supprimé');
+
+        return redirect()->back();
 	}
 
 }

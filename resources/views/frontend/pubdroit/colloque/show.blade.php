@@ -4,7 +4,7 @@
     <section class="row">
         <div class="col-md-12">
 
-            <p><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
+            <p><a href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
 
             <div class="heading-bar">
                 <h2>Colloque</h2>
@@ -72,7 +72,7 @@
                                         @include('auth.partials.login-form', ['returnPath' => Request::url()])
                                     </div>
                                     <p class="line-delimiter">Ou</p>
-                                    <p><a href="{{ url('auth/register') }}" class="btn btn-block btn-primary">Je n'ai pas encore de compte</a></p>
+                                    <p><a href="{{ url('register') }}" class="btn btn-block btn-primary">Je n'ai pas encore de compte</a></p>
                                 </div>
                              @endif
 

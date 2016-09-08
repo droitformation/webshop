@@ -12,10 +12,10 @@
         <section class="row">
             <aside class="col-md-3">
                 <ul class="nav nav-list">
-                    <li class="{{ Request::is('profil') ? 'active' : '' }}"><a href="{{ url('profil') }}"><i class="fa fa-home"></i> &nbsp;Données</a></li>
-                    <li class="{{ Request::is('profil/orders') ? 'active' : '' }}"><a href="{{ url('profil/orders') }}"><i class="fa fa-shopping-cart"></i> &nbsp;Commandes</a></li>
-                    <li class="{{ Request::is('profil/colloques') || Request::is('profil/inscription/*') ? 'active' : '' }}"><a href="{{ url('profil/colloques') }}"><i class="fa fa-calendar"></i> &nbsp;Inscriptions</a></li>
-                    <li class="{{ Request::is('profil/subscriptions') ? 'active' : '' }}"><a href="{{ url('profil/subscriptions') }}"><i class="fa fa-paper-plane"></i> &nbsp;Abonnements aux newsletter</a></li>
+                    <li class="{{ Request::is('pubdroit/profil') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil') }}"><i class="fa fa-home"></i> &nbsp;Données</a></li>
+                    <li class="{{ Request::is('pubdroit/profil/orders') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil/orders') }}"><i class="fa fa-shopping-cart"></i> &nbsp;Commandes</a></li>
+                    <li class="{{ Request::is('pubdroit/profil/colloques') || Request::is('pubdroit/profil/inscription/*') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil/colloques') }}"><i class="fa fa-calendar"></i> &nbsp;Inscriptions</a></li>
+                    <li class="{{ Request::is('pubdroit/profil/subscriptions') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil/subscriptions') }}"><i class="fa fa-paper-plane"></i> &nbsp;Abonnements aux newsletter</a></li>
                 </ul>
             </aside>
             <div class="col-md-9">

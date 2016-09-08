@@ -72,21 +72,37 @@ class UserTest extends TestCase {
 	 */
 	public function testInscriptionColloque()
 	{
+		$make = new \tests\factories\ObjectFactory();
+		$colloque = $make->colloque();
+
+		$prices = $colloque->prices->pluck('id')->all();
+
 		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
 		$this->actingAs($user);
 
-		$this->visit('/colloque/1');
+		$this->visit('/colloque/'.$colloque->id);
 		$this->assertViewHas('colloque');
 
-		$this->select(1, 'price_id')->press('Envoyer');
+		$this->assertCount(1, $this->visit('/colloque/'.$colloque->id)
+			->crawler->filter('input[name="price_id"][value="'.$prices[0].'"]'));
+
+		$this->assertCount(1, $this->visit('/colloque/'.$colloque->id)
+			->crawler->filter('input[name="user_id"][value="'.$user->id.'"]'));
+
+		$this->assertCount(1, $this->visit('/colloque/'.$colloque->id)
+			->crawler->filter('input[name="colloque_id"][value="'.$colloque->id.'"]'));
+
+
+        $this->select($prices[0], 'price_id');
+
+        $this->press('Envoyer');
 
 		$this->seeInDatabase('colloque_inscriptions', [
-			'colloque_id' => 1,
+			'colloque_id' => $colloque->id,
 			'user_id'     => $user->id,
-			'price_id' => 1
+			'price_id'    => 1
 		]);
 
         $this->seePageIs('/');
-
 	}
 }

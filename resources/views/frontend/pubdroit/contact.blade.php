@@ -4,7 +4,7 @@
 	<section class="row">
 		<div class="col-md-12">
 
-			<p><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
+			<p><a href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
 
 			<div class="heading-bar">
 				<h2>{{ $page->title }}</h2>
@@ -15,7 +15,7 @@
 
 			<div class="row">
 				<div class="col-md-8">
-					<form action="{{ url('sendMessage') }}" class="form-horizontal" method="post">
+					<form action="{{ url('pubdroit/sendMessage') }}" class="form-horizontal" method="post">
 						{!! csrf_field() !!}
 						<div class="form-group">
 							<label class="col-md-2 control-label">Nom</label>
@@ -40,11 +40,9 @@
 					</form><!--END CONTACT FORM-->
 				</div>
 				<div class="col-md-4">
-
 					<h4>{!! Registry::get('shop.infos.nom') !!}</h4>
 					<p>{!! Registry::get('shop.infos.adresse') !!}</p>
 					<p><a href="mailto:{{ Registry::get('shop.infos.email') }}">{{ Registry::get('shop.infos.email') }}</a></p>
-
 				</div>
 			</div>
 

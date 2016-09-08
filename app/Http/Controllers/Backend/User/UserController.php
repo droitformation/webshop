@@ -77,6 +77,8 @@ class UserController extends Controller {
     {
         $user = $this->user->create($request->all());
 
+        alert()->success('Utilisateur crée');
+
         return redirect('admin/user/'.$user->id);
     }
 
@@ -105,7 +107,9 @@ class UserController extends Controller {
 
         $request->ajax();
 
-        return redirect('admin/user/'.$user->id)->with(array('status' => 'success', 'message' => 'Utilisateur mis à jour' ));
+        alert()->success('Utilisateur mis à jour');
+
+        return redirect('admin/user/'.$user->id);
     }
 
     /**
@@ -118,7 +122,9 @@ class UserController extends Controller {
     {
         $this->user->delete($id);
 
-        return redirect('admin/search/user')->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
+        alert()->success('Utilisateur supprimé');
+
+        return redirect('admin/search/user');
     }
 
 }

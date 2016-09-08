@@ -1,4 +1,4 @@
-<form role="form" id="colloque-inscription" method="POST" action="{{ url('registration') }}">
+<form role="form" id="colloque-inscription" method="POST" action="{{ url('pubdroit/registration') }}">
     {!! csrf_field() !!}
 
     <h4>Prix applicable</h4>

@@ -45,7 +45,9 @@ class AttestationController extends Controller
 
         $this->generator->make('attestation', $inscription);
 
-        return redirect()->back()->with(['status' => 'success' , 'message' => 'Attestation crée pour l\'inscription']);
+        alert()->success('Attestation crée pour l\'inscription');
+
+        return redirect()->back();
     }
 
     /**
@@ -58,7 +60,9 @@ class AttestationController extends Controller
     {
         $attestation = $this->attestation->create( $request->all() );
 
-        return redirect('admin/attestation/'.$attestation->id)->with(['status' => 'success' , 'message' => 'Attestation crée']);
+        alert()->success('Attestation crée');
+
+        return redirect('admin/attestation/'.$attestation->id);
     }
 
     /**
@@ -86,6 +90,8 @@ class AttestationController extends Controller
     {
         $this->attestation->update( $request->all() );
 
-        return redirect('admin/attestation/'.$id)->with(['status' => 'success' , 'message' => 'Attestation mise à jour']);
+        alert()->success('Attestation mise à jour');
+
+        return redirect('admin/attestation/'.$id);
     }
 }

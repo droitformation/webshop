@@ -68,7 +68,9 @@ class AboUserController extends Controller {
             $this->worker->make($facture->id);
         }
 
-        return redirect('admin/abonnement/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été crée' ));
+        alert()->success('L\'abonné a été crée');
+
+        return redirect('admin/abonnement/'.$abonnement->id);
     }
 
     public function update(Request $request, $id)
@@ -77,21 +79,27 @@ class AboUserController extends Controller {
 
         $this->worker->update($abonnement);
 
-        return redirect('admin/abonnement/'.$abonnement->id)->with(array('status' => 'success', 'message' => 'L\'abonné a été mis à jour' ));
+        alert()->success('L\'abonné a été mis à jour');
+
+        return redirect('admin/abonnement/'.$abonnement->id);
     }
 
 	public function destroy($id)
 	{
         $this->abonnement->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonné a été supprimé' ));
+        alert()->success('L\'abonné a été supprimé');
+
+        return redirect()->back();
 	}
 
     public function restore($id)
     {
         $this->abonnement->restore($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abonnement a été restauré' ));
+        alert()->success('L\'abonné a été restauré');
+
+        return redirect()->back();
     }
 
 }

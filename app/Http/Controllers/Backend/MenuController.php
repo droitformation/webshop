@@ -50,7 +50,9 @@ class MenuController extends Controller
     {
         $menu = $this->menu->create($request->all());
 
-        return redirect('admin/menu/'.$menu->id)->with(['status' => 'success' , 'message' => 'La menu a été crée']);
+        alert()->success('Le menu a été crée');
+
+        return redirect('admin/menu/'.$menu->id);
     }
 
     /**
@@ -76,7 +78,9 @@ class MenuController extends Controller
     {
         $menu = $this->menu->update($request->all());
 
-        return redirect('admin/menu/'.$menu->id)->with(['status' => 'success', 'message' => 'La menu a été mise à jour']);
+        alert()->success('Le menu a été mis à jour');
+
+        return redirect('admin/menu/'.$menu->id);
     }
 
     /**
@@ -89,6 +93,8 @@ class MenuController extends Controller
     {
         $this->menu->delete($id);
 
-        return redirect('admin/menu')->with(['status' => 'success' , 'message' => 'La menu a été supprimé']);
+        alert()->success('Le menu a été supprimé');
+
+        return redirect('admin/menu');
     }
 }

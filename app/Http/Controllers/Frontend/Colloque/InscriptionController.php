@@ -52,8 +52,10 @@ class InscriptionController extends Controller
         $inscription = $this->register->register($request->all(), $request->input('colloque_id'), true);
 
         event(new InscriptionWasRegistered($inscription));
+        
+        alert()->success('Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.');
 
-        return redirect('/')->with(['status' => 'success', 'message' => 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.' ]);
+        return redirect('/');
     }
 
     /**

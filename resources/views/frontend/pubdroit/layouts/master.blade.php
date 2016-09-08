@@ -67,7 +67,7 @@
                             @if (Auth::check())
                                 <ul class="top-nav2 pull-right">
                                     <li>Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</li>
-                                    <li><a href="{{ url('profil') }}">Mon compte</a></li>
+                                    <li><a href="{{ url('pubdroit/profil') }}">Mon compte</a></li>
                                     <li>
 										<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
 											<button type="submit">Déconnexion</button>
@@ -84,7 +84,7 @@
             <header id="main-header">
 				<section class="container">
 
-                    @include('partials.message')
+					@include('alert::alert')
 
 					<section class="row">
 						<section class="col-md-4 col-xs-12">
@@ -92,9 +92,9 @@
 						</section>
 						<section class="col-md-8 col-xs-12">
                             <div class="c-btn">
-                                <a href="{{ url('checkout/cart') }}" class="text-danger cart-basket"><i class="fa fa-shopping-basket"></i>&nbsp; Panier</a>
+                                <a href="{{ url('pubdroit/checkout/cart') }}" class="text-danger cart-basket"><i class="fa fa-shopping-basket"></i>&nbsp; Panier</a>
                                 <div class="btn-group">
-                                    <a href="{{ url('checkout/cart') }}" class="btn btn-mini dropdown-toggle">
+                                    <a href="{{ url('pubdroit/checkout/cart') }}" class="btn btn-mini dropdown-toggle">
 
 										@inject('cart_worker', 'App\Droit\Shop\Cart\Worker\CartWorker')
 

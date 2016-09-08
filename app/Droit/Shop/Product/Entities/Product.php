@@ -97,7 +97,7 @@ class Product extends Model{
 
     public function scopeReject($query, $categories)
     {
-        if($categories)
+        if(!empty($categories))
         {
             foreach($categories as $categorie)
             {

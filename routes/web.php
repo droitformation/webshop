@@ -28,103 +28,104 @@ Route::get('presence/occurrence/{id}/{key}', 'CodeController@occurrence');
 
 Route::post('sendMessage','ContactController@sendMessage');
 
-/*
-|--------------------------------------------------------------------------
-| Subscriptions adn newsletter Routes
-|--------------------------------------------------------------------------
-*/
+Route::group(['middleware' => 'site'], function () {
 
-Route::group(['prefix' => 'pubdroit'], function () {
+    // For now...
+    Route::get('/', function () {
+        return redirect('pubdroit');
+    });
 
-    Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\Shop\ShopController@page'));
+    Route::group(['prefix' => 'pubdroit'], function () {
+
+        Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\Shop\ShopController@page'));
+        /* *
+          * Colloques
+          * */
+        Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
+        Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
+
+        Route::group(['middleware' => 'auth'], function () {
+
+            /* *
+             * Inscriptions pages
+             * */
+            Route::get('colloque/inscription/{id}', ['middleware' => ['registered','pending'], 'uses' => 'Frontend\Colloque\ColloqueController@inscription']);
+            Route::post('registration', ['uses' => 'Frontend\Colloque\InscriptionController@store']);
+
+            /* *
+             * User profile routes
+             * */
+            Route::get('profil', 'Frontend\ProfileController@index');
+            Route::match(['put', 'post'],'profil/update', 'Frontend\ProfileController@update');
+            Route::get('profil/orders', 'Frontend\ProfileController@orders');
+            Route::get('profil/colloques', 'Frontend\ProfileController@colloques');
+            Route::get('profil/subscriptions', 'Frontend\ProfileController@subscriptions');
+            Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
+
+            /* Update user adresse via ajax  */
+            Route::post('ajax/adresse/{id}', 'Api\User\AdresseController@ajaxUpdate');
+
+        });
+
+        /* *
+         * Shop routes for frontend shop
+         * */
+        Route::get('/', 'Frontend\Shop\ShopController@index');
+        Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
+        Route::match(['get', 'post'], 'search', 'Frontend\Shop\ShopController@search');
+        Route::get('categorie/{id}', 'Frontend\Shop\ShopController@categorie');
+        Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
+        Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
+        Route::get('subscribe', 'Frontend\Shop\ShopController@subscribe');
+        Route::get('unsubscribe', 'Frontend\Shop\ShopController@unsubscribe');
+
+        Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
+
+        Route::group(['middleware' => ['auth','pending','cart','checkout']], function () {
+
+            /* Checkout routes for frontend shop  */
+            Route::get('checkout/cart',  'Frontend\Shop\CheckoutController@cart');
+            Route::get('checkout/billing',  'Frontend\Shop\CheckoutController@billing');
+            Route::match(['get', 'post'],'checkout/resume', 'Frontend\Shop\CheckoutController@resume');
+            Route::get('checkout/confirm',  'Frontend\Shop\CheckoutController@confirm');
+            Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
+        });
+
+        /* Cart routes for frontend shop  */
+        Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
+        Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
+        Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
+        Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
+
+        Route::post('cart/addAbo', ['uses' => 'Frontend\Shop\AboController@addAbo']);
+        Route::post('cart/removeAbo', 'Frontend\Shop\AboController@removeAbo');
+        Route::post('cart/quantityAbo', 'Frontend\Shop\AboController@quantityAbo');
+
+    });
+
+    Route::group(['prefix' => 'bail'], function () {
+
+        Route::get('/', array('uses' => 'Frontend\BailController@index'));
+        Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\BailController@page'));
+        Route::get('lois', array('uses' => 'Frontend\BailController@lois'));
+        Route::get('jurisprudence', array('uses' => 'Frontend\BailController@jurisprudence'));
+        Route::get('doctrine', array('uses' => 'Frontend\BailController@doctrine'));
+        Route::get('calcul', array('uses' => 'Frontend\BailController@calcul'));
+        Route::post('loyer', 'Frontend\Bail\CalculetteController@loyer');
+        Route::get('unsubscribe', 'Frontend\BailController@unsubscribe');
+
+    });
+
+    Route::group(['prefix' => 'matrimonial'], function () {
+
+        Route::get('/', array('uses' => 'Frontend\MatrimonialController@index'));
+        Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\MatrimonialController@page'));
+        Route::get('jurisprudence', array('uses' => 'Frontend\MatrimonialController@jurisprudence'));
+        Route::get('newsletter/{id?}', array('uses' => 'Frontend\MatrimonialController@newsletter'));
+        Route::get('unsubscribe', 'Frontend\MatrimonialController@unsubscribe');
+    });
 
 });
-
-Route::group(['prefix' => 'bail'], function () {
-
-    Route::get('/', array('uses' => 'Frontend\BailController@index'));
-    Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\BailController@page'));
-    Route::get('lois', array('uses' => 'Frontend\BailController@lois'));
-    Route::get('jurisprudence', array('uses' => 'Frontend\BailController@jurisprudence'));
-    Route::get('doctrine', array('uses' => 'Frontend\BailController@doctrine'));
-    Route::get('calcul', array('uses' => 'Frontend\BailController@calcul'));
-    Route::post('loyer', 'Frontend\Bail\CalculetteController@loyer');
-    Route::get('unsubscribe', 'Frontend\BailController@unsubscribe');
-
-});
-
-Route::group(['prefix' => 'matrimonial'], function () {
-
-    Route::get('/', array('uses' => 'Frontend\MatrimonialController@index'));
-    Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\MatrimonialController@page'));
-    Route::get('jurisprudence', array('uses' => 'Frontend\MatrimonialController@jurisprudence'));
-    Route::get('newsletter/{id?}', array('uses' => 'Frontend\MatrimonialController@newsletter'));
-    Route::get('unsubscribe', 'Frontend\MatrimonialController@unsubscribe');
-});
-
-/* *
-  * Colloques
-  * */
-Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
-Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
-
-Route::group(['middleware' => 'auth'], function () {
-
-    /* *
-     * Inscriptions pages
-     * */
-    Route::get('colloque/inscription/{id}', ['middleware' => ['registered','pending'], 'uses' => 'Frontend\Colloque\ColloqueController@inscription']);
-    Route::post('registration', ['uses' => 'Frontend\Colloque\InscriptionController@store']);
-
-    /* *
-     * User profile routes
-     * */
-    Route::get('profil', 'Frontend\ProfileController@index');
-    Route::match(['put', 'post'],'profil/update', 'Frontend\ProfileController@update');
-    Route::get('profil/orders', 'Frontend\ProfileController@orders');
-    Route::get('profil/colloques', 'Frontend\ProfileController@colloques');
-    Route::get('profil/subscriptions', 'Frontend\ProfileController@subscriptions');
-    Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
-
-    /* Update user adresse via ajax  */
-    Route::post('ajax/adresse/{id}', 'Api\User\AdresseController@ajaxUpdate');
-
-});
-
-/* *
- * Shop routes for frontend shop
- * */
-Route::get('/', 'Frontend\Shop\ShopController@index');
-Route::get('pubdroit', 'Frontend\Shop\ShopController@index');
-Route::match(['get', 'post'], 'products', 'Frontend\Shop\ShopController@products');
-Route::match(['get', 'post'], 'search', 'Frontend\Shop\ShopController@search');
-Route::get('categorie/{id}', 'Frontend\Shop\ShopController@categorie');
-Route::get('product/{id}', 'Frontend\Shop\ShopController@show');
-Route::get('archives', 'Frontend\Colloque\ColloqueController@archives');
-Route::get('subscribe', 'Frontend\Shop\ShopController@subscribe');
-Route::get('unsubscribe', 'Frontend\Shop\ShopController@unsubscribe');
-
-Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
-
-Route::group(['middleware' => ['auth','pending','cart','checkout']], function () {
-
-    /* Checkout routes for frontend shop  */
-    Route::get('checkout/cart',  'Frontend\Shop\CheckoutController@cart');
-    Route::get('checkout/billing',  'Frontend\Shop\CheckoutController@billing');
-    Route::match(['get', 'post'],'checkout/resume', 'Frontend\Shop\CheckoutController@resume');
-    Route::get('checkout/confirm',  'Frontend\Shop\CheckoutController@confirm');
-    Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');
-});
-
-/* Cart routes for frontend shop  */
-Route::post('cart/addProduct', 'Frontend\Shop\CartController@addProduct');
-Route::post('cart/removeProduct', 'Frontend\Shop\CartController@removeProduct');
-Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
-Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
-
-Route::post('cart/addAbo', ['uses' => 'Frontend\Shop\AboController@addAbo']);
-Route::post('cart/removeAbo', 'Frontend\Shop\AboController@removeAbo');
-Route::post('cart/quantityAbo', 'Frontend\Shop\AboController@quantityAbo');
 
 /* *
 * Administration routes

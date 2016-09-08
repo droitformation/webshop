@@ -84,7 +84,9 @@ class SpecialisationController extends Controller {
     {
         $specialisation = $this->specialisation->update($request->all());
 
-        return redirect('admin/specialisation')->with(['status' => 'success' , 'message' => 'Spécialisations mise à jour']);
+        alert()->success('Spécialisations mise à jour');
+
+        return redirect('admin/specialisation');
     }
 	
 	public function store(Request $request)
@@ -110,7 +112,9 @@ class SpecialisationController extends Controller {
 
         $specialisation = $this->specialisation->create($request->all());
 
-        return redirect('admin/specialisation')->with(['status' => 'success' , 'message' => 'Spécialisations crée']);
+        alert()->success('Spécialisations crée');
+
+        return redirect('admin/specialisation');
 	}
 		
 	public function destroy(Request $request)
@@ -131,7 +135,9 @@ class SpecialisationController extends Controller {
 
         $this->specialisation->delete($id);
 
-        return redirect('admin/specialisation')->with(['status' => 'success' , 'message' => 'Spécialisations supprimé']);
+        alert()->success('Spécialisations supprimé');
+
+        return redirect('admin/specialisation');
 	}
 
 

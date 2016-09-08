@@ -93,7 +93,9 @@ class MemberController extends Controller {
 
         $member = $this->member->create($request->all());
 
-        return redirect('admin/member')->with(['status' => 'success' , 'message' => 'Membre crée']);
+        alert()->success('Membre crée');
+
+        return redirect('admin/member');
 	}
 		
 	public function destroy(Request $request)
@@ -113,8 +115,8 @@ class MemberController extends Controller {
 
         $this->member->delete($id);
 
-        return redirect('admin/member')->with(['status' => 'success' , 'message' => 'Membre supprimé']);
+        alert()->success('Membre supprimé');
+
+        return redirect('admin/member');
 	}
-
-
 }

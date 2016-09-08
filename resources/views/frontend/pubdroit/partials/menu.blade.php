@@ -1,5 +1,4 @@
 <ul class="top-nav">
-    <li><a href="{{ url('/') }}" class="{{ Request::is('/')? 'active' : '' }}">Accueil</a></li>
     @if(!$menus->isEmpty())
         <?php $menu = $menus->where('position','main'); ?>
         @if(!$menu->isEmpty())

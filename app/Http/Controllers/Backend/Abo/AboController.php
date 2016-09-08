@@ -70,7 +70,8 @@ class AboController extends Controller {
 
         $abo = $this->abo->create($data);
 
-        return redirect('admin/abo')->with(array('status' => 'success', 'message' => 'L\'abo a été crée' ));
+        alert()->success('L\'abo a été crée');
+        return redirect('admin/abo');
 	}
 
     /**
@@ -93,7 +94,9 @@ class AboController extends Controller {
 
         $abo = $this->abo->update($data);
 
-        return redirect('admin/abo/'.$abo->id)->with(array('status' => 'success', 'message' => 'L\'abo  a été mis à jour' ));
+        alert()->success('L\'abo a été mis à jour');
+
+        return redirect('admin/abo/'.$abo->id);
     }
 		
 	public function destroy($id)
@@ -102,12 +105,16 @@ class AboController extends Controller {
 
         if(!$abo->abonnements->isEmpty())
         {
-            return redirect()->back()->with(array('status' => 'warning', 'message' => 'Il existe des utilisateurs pour cet abo' ));
+            alert()->warning('Il existe des utilisateurs pour cet abo');
+
+            return redirect()->back();
         }
 
         $this->abo->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'L\'abo  a été supprimé' ));
+        alert()->success('L\'abo  a été supprimé');
+
+        return redirect()->back();
 	}
 
     public function export(Request $request)
@@ -136,7 +143,9 @@ class AboController extends Controller {
             $this->worker->merge($files, $name, $abo_id);
         }
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Les factures ont été liés' ));
+        alert()->success('Les factures ont été liés');
+
+        return redirect()->back();
 
     }
 

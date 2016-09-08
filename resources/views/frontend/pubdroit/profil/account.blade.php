@@ -7,7 +7,7 @@
 
         <h4>Compte</h4>
         <div class="profil-info">
-            <form method="post" action="{{ url('user/'.$user->id) }}" class="form">{!! csrf_field() !!}
+            <form method="post" action="{{ url('pubdroit/user/'.$user->id) }}" class="form">{!! csrf_field() !!}
                 <input type="hidden" name="_method" value="PUT">
                 <fieldset>
                     <div class="row form-group">
@@ -50,7 +50,7 @@
         <div class="profil-wrapper">
             <h4>Adresse</h4>
             <div class="profil-info">
-                <form action="{{ url('profil/update') }}" method="POST" class="form">
+                <form action="{{ url('pubdroit/profil/update') }}" method="POST" class="form">
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
                     <div class="row form-group">
                         <label class="col-sm-4 control-label">Adresse de livraison</label>

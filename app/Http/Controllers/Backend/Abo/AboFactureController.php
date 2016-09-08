@@ -73,7 +73,9 @@ class AboFactureController extends Controller {
             $this->worker->make($item->id);
         }
 
-        return redirect()->back()->with(['status' => 'success', 'message' => $type.' a été crée']);
+        alert()->success($type.' a été crée');
+
+        return redirect()->back();
 
 	}
 
@@ -93,14 +95,18 @@ class AboFactureController extends Controller {
 
         $this->worker->make($facture->id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'La facture a été mis à jour']);
+        alert()->success('La facture a été mis à jour');
+
+        return redirect()->back();
     }
 		
 	public function destroy($id)
 	{
         $this->facture->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'La facture a été supprimé' ));
+        alert()->success('La facture a été supprimé');
+
+        return redirect()->back();
 	}
 
     /*
@@ -112,7 +118,9 @@ class AboFactureController extends Controller {
 
         $this->worker->generate($abo, $product_id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'La création des factures est en cours.<br/>Un email vous sera envoyé dès que la génération des factures sera terminée.']);
+        alert()->success('La création des factures est en cours.<br/>Un email vous sera envoyé dès que la génération des factures sera terminée.');
+
+        return redirect()->back();
     }
 
     /*
@@ -133,6 +141,8 @@ class AboFactureController extends Controller {
         $job = (new NotifyJobFinished('Les factures ont été attachés. Nom du fichier: '.$name));
         $this->dispatch($job);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Les factures dont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.']);
+        alert()->success('Les factures dont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
+
+        return redirect()->back();
     }
 }

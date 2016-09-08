@@ -56,7 +56,9 @@ class CouponController extends Controller
     {
         $coupon  = $this->coupon->create($request->all());
 
-        return redirect('admin/coupon')->with(array('status' => 'success', 'message' => 'Le coupon a été crée' ));
+        alert()->success('Le coupon a été crée');
+
+        return redirect('admin/coupon');
     }
 
     /**
@@ -84,7 +86,9 @@ class CouponController extends Controller
     {
         $coupon  = $this->coupon->update($request->all());
 
-        return redirect('admin/coupon')->with(array('status' => 'success', 'message' => 'Le coupon a été mis à jour' ));
+        alert()->success('Le coupon a été mis à jour');
+
+        return redirect('admin/coupon');
     }
 
     /**
@@ -97,6 +101,8 @@ class CouponController extends Controller
     {
         $this->coupon->delete($id);
 
-        return redirect('admin/coupon')->with(array('status' => 'success' , 'message' => 'Le coupon a été supprimé' ));
+        alert()->success('Le coupon a été supprimé');
+
+        return redirect('admin/coupon');
     }
 }

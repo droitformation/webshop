@@ -71,7 +71,9 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->create( $data );
 
-        return redirect('admin/bloc/'.$bloc->id)->with(['status' => 'success' , 'message' => 'Contenu crée']);
+        alert()->success('Contenu crée');
+
+        return redirect('admin/bloc/'.$bloc->id);
     }
 
     /**
@@ -110,7 +112,9 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->update( $data );
 
-        return redirect('admin/bloc/'.$bloc->id)->with(['status' => 'success' , 'message' => 'Contenu mis à jour']);
+        alert()->success('Contenu mis à jour');
+
+        return redirect('admin/bloc/'.$bloc->id);
     }
 
     /**
@@ -123,7 +127,9 @@ class BlocController extends Controller
     {
         $this->bloc->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Contenu supprimée']);
+        alert()->success('Contenu supprimée');
+
+        return redirect()->back();
     }
 
 }

@@ -121,7 +121,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Existe sous forme d'abonnement</label>
                             <div class="col-sm-4 col-xs-8">
-                                <?php $product_abos = $product->abos->lists('id')->all(); ?>
+                                <?php $product_abos = $product->abos->pluck('id')->all(); ?>
                                 @if(!$abos->isEmpty())
                                     <select name="abo_id[]" class="form-control" multiple>
                                         <option value="">Choix</option>

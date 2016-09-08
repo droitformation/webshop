@@ -9,7 +9,7 @@ class Site extends Model{
 
     protected $dates    = ['deleted_at'];
     protected $table    = 'sites';
-    protected $fillable = ['nom','url','logo','slug'];
+    protected $fillable = ['nom','url','logo','slug','prefix'];
 
     public function menus()
     {

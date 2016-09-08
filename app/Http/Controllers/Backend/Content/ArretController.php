@@ -89,7 +89,9 @@ class ArretController extends Controller {
         // Create arret
         $arret = $this->arret->create( $data );
 
-        return redirect('admin/arret/'.$arret->id)->with( array('status' => 'success' , 'message' => 'Arrêt crée') );
+        alert()->success('Arrêt crée');
+
+        return redirect('admin/arret/'.$arret->id);
 
     }
 
@@ -115,7 +117,9 @@ class ArretController extends Controller {
         // Create arret
         $arret = $this->arret->update( $data );
 
-        return redirect('admin/arret/'.$arret->id)->with( array('status' => 'success' , 'message' => 'Arrêt mis à jour') );
+        alert()->success('Arrêt mis à jour');
+
+        return redirect('admin/arret/'.$arret->id);
 
     }
 
@@ -130,7 +134,9 @@ class ArretController extends Controller {
     {
         $this->arret->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Arrêt supprimée' ));
+        alert()->success('Arrêt supprimée');
+
+        return redirect()->back();
     }
 
 

@@ -49,13 +49,17 @@ class CalculetteIpcController extends Controller
     {
         $this->ipc->update( $request->all() );
 
-        return redirect('admin/calculette/ipc/'.$id)->with(['status' => 'success' , 'message' => 'Ipc mis à jour']);
+        alert()->success('Ipc mis à jour');
+
+        return redirect('admin/calculette/ipc/'.$id);
     }
 
     public function destroy($id)
     {
         $this->ipc->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Ipc supprimée']);
+        alert()->success('Ipc supprimée');
+
+        return redirect()->back();
     }
 }

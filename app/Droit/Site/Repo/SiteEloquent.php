@@ -37,10 +37,11 @@ class SiteEloquent implements SiteInterface{
     public function create(array $data){
 
         $site = $this->site->create(array(
-            'nom'  => $data['nom'],
-            'url'  => $data['url'],
-            'logo' => $data['logo'],
-            'slug' => $data['slug']
+            'nom'    => $data['nom'],
+            'url'    => $data['url'],
+            'logo'   => $data['logo'],
+            'slug'   => $data['slug'],
+            'prefix' => $data['prefix']
         ));
 
         if( ! $site )

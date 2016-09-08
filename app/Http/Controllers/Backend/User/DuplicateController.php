@@ -95,7 +95,9 @@ class DuplicateController extends Controller {
             }
         }
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'terminé']);
+        alert()->success('terminé');
+
+        return redirect()->back();
     }
 
     /**
@@ -135,7 +137,9 @@ class DuplicateController extends Controller {
 
         $request->ajax();
 
-        return redirect('admin/duplicate/'.$duplicate->id)->with(array('status' => 'success', 'message' => 'Utilisateur mis à jour' ));
+        alert()->success('Utilisateur mis à jour');
+
+        return redirect('admin/duplicate/'.$duplicate->id);
     }
 
     /**
@@ -148,7 +152,9 @@ class DuplicateController extends Controller {
     {
         $this->duplicate->delete($id);
 
-        return redirect()->back()->with(array('status' => 'success', 'message' => 'Utilisateur supprimé' ));
+        alert()->success('Utilisateur supprimé');
+
+        return redirect()->back();
     }
 
 }

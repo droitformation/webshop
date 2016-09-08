@@ -4,7 +4,7 @@
 	<section class="row">
 		<article class="col-md-12">
 
-			<p><a href="{{ url('/') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
+			<p><a href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
 
 			<div class="heading-bar">
 				<h2>Résultats recherche {{ $term }}</h2>
@@ -19,11 +19,11 @@
 
 						@foreach($products as $product)
 							<article class="row result-item">
-								<a href="{{ url('product/'.$product->id) }}" class="col-md-2">
+								<a href="{{ url('pubdroit/product/'.$product->id) }}" class="col-md-2">
 									<img width="60" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
 								</a>
 								<div class="col-md-10">
-									<h4><a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a></h4>
+									<h4><a href="{{ url('pubdroit/product/'.$product->id) }}">{{ $product->title }}</a></h4>
 									<p>{{ strip_tags($product->teaser) }}</p>
 								</div>
 							</article>
@@ -42,7 +42,7 @@
 									<img width="60" class="thumbnail" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
 								</a>
 								<div class="col-md-10">
-									<h4><a href="{{ url('colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
+									<h4><a href="{{ url('pubdroit/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
 									<p>{{ $colloque->soustitre }}</p>
 									<p>{{ $colloque->sujet }}</p>
 								</div>
@@ -62,7 +62,7 @@
 							@if(!$author->products->isEmpty())
 							@foreach($author->products as $product)
 								<article class="row result-item">
-									<a href="{{ url('product/'.$product->id) }}" class="col-md-2">
+									<a href="{{ url('pubdroit/product/'.$product->id) }}" class="col-md-2">
 										<img width="60" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
 									</a>
 									<div class="col-md-10">

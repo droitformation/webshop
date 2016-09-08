@@ -158,6 +158,7 @@ return [
         Laravel\Cashier\CashierServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+		Vinkla\Alert\AlertServiceProvider::class,
 		designpond\newsletter\newsletterServiceProvider::class,
 
 		/*
@@ -236,7 +237,8 @@ return [
         'PDF'        => Barryvdh\DomPDF\Facade::class,
         'QrCode'     => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Registry'   => Torann\Registry\Facades\Registry::class,
-        'Socialite'  => Laravel\Socialite\Facades\Socialite::class
+        'Socialite'  => Laravel\Socialite\Facades\Socialite::class,
+		'Alert'      => Vinkla\Alert\Facades\Alert::class
 	],
 
 ];

@@ -51,7 +51,9 @@ class CompteController extends Controller
     {
         $compte = $this->compte->create( $request->all() );
 
-        return redirect('admin/compte/'.$compte->id)->with(['status' => 'success' , 'message' => 'Compte crée']);
+        alert()->success('Compte crée');
+
+        return redirect('admin/compte/'.$compte->id);
     }
 
     /**
@@ -79,7 +81,9 @@ class CompteController extends Controller
     {
         $this->compte->update( $request->all() );
 
-        return redirect('admin/compte/'.$id)->with(['status' => 'success' , 'message' => 'Compte mise à jour']);
+        alert()->success('Compte mise à jour');
+
+        return redirect('admin/compte/'.$id);
     }
 
     /**
@@ -93,6 +97,8 @@ class CompteController extends Controller
     {
         $this->compte->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Compte supprimé']);
+        alert()->success('Compte supprimé');
+
+        return redirect()->back();
     }
 }

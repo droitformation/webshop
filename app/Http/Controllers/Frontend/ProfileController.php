@@ -60,7 +60,9 @@ class ProfileController extends Controller
             }
         }
 
-        return redirect('profil')->with(['status' => 'success', 'message' => 'Adresses mise à jour']);;
+        alert()->success('Adresses mise à jour');
+
+        return redirect('profil');
     }
 
 

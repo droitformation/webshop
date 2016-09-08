@@ -1,4 +1,4 @@
-@if( count($errors) > 0 || Session::has('status'))
+@if( (isset($errors) && count($errors) > 0) )
 
 <div class="row">
     <div class="col-md-12">
@@ -10,9 +10,7 @@
             <p>{!! $message !!}</p>
             @endforeach
 
-            @if(Session::has('message'))
             {!! Session::get('message') !!}
-            @endif
 
         </div>
     </div>

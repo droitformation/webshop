@@ -114,7 +114,9 @@ class AdresseController extends Controller {
     {
         $this->adresse->delete($id);
 
-        return redirect('/')->with(array('status' => 'success', 'message' => 'Adresse supprimé' ));
+        alert()->success('Adresse supprimé');
+
+        return redirect('/');
     }
 
     public function getAdresse($id)

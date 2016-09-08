@@ -59,7 +59,9 @@ class CategorieController extends Controller {
 
         $categorie = $this->categorie->create( $data );
 
-        return redirect('admin/categorie/'.$categorie->id)->with(['status' => 'success' , 'message' => 'Catégorie crée']);
+		alert()->success('Catégorie crée');
+
+        return redirect('admin/categorie/'.$categorie->id);
 	}
 
 	/**
@@ -96,7 +98,9 @@ class CategorieController extends Controller {
 
         $this->categorie->update( $data );
 
-        return redirect('admin/categorie/'.$id)->with(['status' => 'success' , 'message' => 'Catégorie mise à jour']);
+		alert()->success('Catégorie mise à jour');
+
+        return redirect('admin/categorie/'.$id);
 	}
 
 	/**
@@ -110,7 +114,9 @@ class CategorieController extends Controller {
 	{
         $this->categorie->delete($id);
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Catégorie supprimée']);
+		alert()->success('Catégorie supprimée');
+
+        return redirect()->back();
 	}
 
     /**
