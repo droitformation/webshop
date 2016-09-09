@@ -42,6 +42,10 @@
             </form>
         </li>
     @endif
+
     <li class="item-colloque"><a href="{{ url('pubdroit/colloque') }}"><i class="fa fa-calendar"></i> &nbsp; Colloques</a></li>
-    <li class="item-colloque"><a href="{{ url('pubdroit/subscribe') }}"><i class="fa fa-paper-plane"></i> &nbsp; Newsletter</a></li>
+
+    @if(isset($newsletters) && !$newsletters->isEmpty())
+        <li class="item-colloque"><a href="{{ url('pubdroit/subscribe') }}"><i class="fa fa-paper-plane"></i> &nbsp; Newsletter</a></li>
+    @endif
 </ul>

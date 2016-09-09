@@ -43,50 +43,41 @@
                 </div>
             </div>
 
-            <div class="panel panel-midnightblue">
-                <div class="panel-body">
+            @inject('helper', 'App\Droit\Helper\Helper')
+            {{ $helper->displaySearch($search) }}
 
-                    <?php 
-                        if(isset($search) && !empty($search))
-                        {
-                            $key  = key($search);
-                            $name = str_replace('_id','',$key).'s';
-                            $id   = $search[$key];
+            @if(!$products->isEmpty())
 
-                            echo '<h3>'.$$name->find($id)->title.'</h3>';
-                        }
-                    ?>
+                <div class="panel panel-midnightblue">
+                    <div class="panel-body">
 
-                    <div class="row">
-                        @if(!$products->isEmpty())
-                        @foreach($products as $product)
-
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <p>
-                                                <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
-                                                <a href="{{ url('admin/product/'.$product->id) }}"><span class="title">{{ $product->title }}</span></a>
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3 text-right">
-                                            <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
+                        <div class="row">
+                            @foreach($products as $product)
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <p>
+                                                    <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
+                                                    <a href="{{ url('admin/product/'.$product->id) }}"><span class="title">{{ $product->title }}</span></a>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
+                        </div>
 
-                        @endforeach
+                        @if($paginate)
+                            {!! $products->links() !!}
                         @endif
+
                     </div>
-
-                    @if($paginate)
-                        {!! $products->links() !!}
-                    @endif
-
                 </div>
-            </div>
+            @endif
 
         </div>
     </div>

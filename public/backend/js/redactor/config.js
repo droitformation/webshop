@@ -3,7 +3,6 @@ $( function() {
     $('.redactor').redactor({
         minHeight  : 250,
         maxHeight: 450,
-        focus: true,
         formattingTags: ['p', 'h2', 'h3','h4'],
         lang: 'fr',
         plugins: ['imagemanager','filemanager','source','iconic','alignment'],
@@ -17,7 +16,6 @@ $( function() {
     $('.redactorSimple').redactor({
         minHeight: 50,
         maxHeight: 270,
-        focus    : true,
         lang: 'fr',
         plugins: ['iconic'],
         buttons  : ['format','bold','italic','link','|','lists']

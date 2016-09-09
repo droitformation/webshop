@@ -14,26 +14,16 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body" ng-app="upload">
-                    <form action="{{ url('admin/colloque') }}" enctype="multipart/form-data" method="POST" class="form-horizontal"
-                          flow-init="{query: {'path' : 'files/colloques', 'colloque_id' : 1, 'type' : 'illustration' }}"
-                          flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-                          flow-files-submitted="$flow.upload()">
+                    <form action="{{ url('admin/colloque') }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
                         {!! csrf_field() !!}
 
                         <fieldset title="Général">
                             <legend>Informations de base</legend>
 
                             <div class="form-group">
-                                <label for="titre" class="col-sm-3 control-label">Vignette</label>
-                                <div class="col-sm-3">
-                                    <div class="uploadBtn">
-                                        <span class="btn btn-xs btn-info" ng-hide="$flow.files.length"    flow-btn flow-attrs="{accept:'image/*'}">Selectionner image</span>
-                                        <span class="btn btn-xs btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Changer</span>
-                                        <span class="btn btn-xs btn-danger" ng-show="$flow.files.length"  ng-click="$flow.cancel()">Supprimer</span>
-                                    </div>
-                                    <div class="thumbnail big" ng-hide="$flow.files.length"><img src="http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=vignette" /></div>
-                                    <div class="thumbnail big" ng-show="$flow.files.length"><img style="height: 180px;" flow-img="$flow.files[0]" /></div>
-                                    <input type="hidden" name="illustration" value="{[{ $flow.files[0].name }]}">
+                                <label for="file" class="col-sm-3 control-label">Vignette</label>
+                                <div class="col-sm-7">
+                                    {!! Form::file('file') !!}
                                 </div>
                             </div>
 

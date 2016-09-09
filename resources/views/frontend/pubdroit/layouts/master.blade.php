@@ -55,7 +55,9 @@
 				<section class="container">
 					<section class="row">
 						<section class="col-md-6">
+							<!-- Main Menu -->
 							@include('frontend.pubdroit.partials.menu')
+							<!-- END MAin Menu -->
 						</section>
 						<section class="col-md-6 e-commerce-list text-right">
                             @if (!Auth::check())
@@ -151,15 +153,18 @@
 			<section class="footer-top1">
 				<section class="container">
 					<section class="row">
+
 						<figure class="col-md-6">
-							<h4>Newsletter</h4>
-							<p>Inscrivez simplement votre adresse email pour recevoir les nouveautés du site </p>
+							@if(isset($newsletters) && !$newsletters->isEmpty())
+								<h4>Newsletter</h4>
+								<p>Inscrivez simplement votre adresse email pour recevoir les nouveautés du site </p>
 
-							@foreach($newsletters as $newsletter)
-								@include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter])
-							@endforeach
-
+								@foreach($newsletters as $newsletter)
+									@include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter])
+								@endforeach
+							@endif
 						</figure>
+
 						<figure class="col-md-1"></figure>
 						<figure class="col-md-5">
 							<h4>Contact</h4>
@@ -187,7 +192,7 @@
 			<footer id="main-footer" class="social-ico-bar">
 				<section class="container">
 					<section class="row">
-						<p class="col-md-6">© 2016  publications-droit.ch </p>
+						<p class="col-md-6">© {{ date('Y') }} {{ $site->nom }}</p>
 					</section>
 				</section>
 			</footer>

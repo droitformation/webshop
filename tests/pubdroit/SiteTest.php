@@ -21,7 +21,7 @@ class SiteTest extends TestCase {
 	
 	public function testColloqueListPage()
 	{
-		$this->visit('/colloque')->see('Colloques');
+		$this->visit('pubdroit/colloque')->see('Colloques');
 	}
 	
 }

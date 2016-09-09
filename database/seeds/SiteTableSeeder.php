@@ -14,7 +14,7 @@ class SiteTableSeeder extends \Illuminate\Database\Seeder  {
 				'url' => 'http://www.publications-droit.ch/',
 				'logo' => 'pubdroit.svg',
 				'slug' => 'pubdroit',
-				'prefix' => null,
+				'prefix' => 'pubdroit',
 				'created_at' => '2015-11-10 08:00:00',
 				'updated_at' => '2015-11-10 08:00:00',
 				'deleted_at' => NULL),

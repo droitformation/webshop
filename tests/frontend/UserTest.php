@@ -36,7 +36,7 @@ class UserTest extends TestCase {
                 'password' => 'cindy2',
             ])
             ->click('Mon compte')
-            ->seePageIs(url('/profil'));
+            ->seePageIs(url('/pubdroit/profil'));
 
         $this->assertTrue(Auth::check());
 
@@ -51,7 +51,7 @@ class UserTest extends TestCase {
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
         $this->actingAs($user);
 
-		$this->visit('/profil/orders')->seePageIs('/profil/orders');
+		$this->visit('/pubdroit/profil/orders')->seePageIs('/pubdroit/profil/orders');
 		$this->assertViewHas('user');
 	}
 
@@ -63,7 +63,7 @@ class UserTest extends TestCase {
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
         $this->actingAs($user);
         
-		$this->visit('/profil/colloques')->seePageIs('/profil/colloques');
+		$this->visit('/pubdroit/profil/colloques')->seePageIs('/pubdroit/profil/colloques');
 		$this->assertViewHas('user');
 	}
 
@@ -80,18 +80,17 @@ class UserTest extends TestCase {
 		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
 		$this->actingAs($user);
 
-		$this->visit('/colloque/'.$colloque->id);
+		$this->visit('/pubdroit/colloque/'.$colloque->id);
 		$this->assertViewHas('colloque');
 
-		$this->assertCount(1, $this->visit('/colloque/'.$colloque->id)
+		$this->assertCount(1, $this->visit('/pubdroit/colloque/'.$colloque->id)
 			->crawler->filter('input[name="price_id"][value="'.$prices[0].'"]'));
 
-		$this->assertCount(1, $this->visit('/colloque/'.$colloque->id)
+		$this->assertCount(1, $this->visit('/pubdroit/colloque/'.$colloque->id)
 			->crawler->filter('input[name="user_id"][value="'.$user->id.'"]'));
 
-		$this->assertCount(1, $this->visit('/colloque/'.$colloque->id)
+		$this->assertCount(1, $this->visit('/pubdroit/colloque/'.$colloque->id)
 			->crawler->filter('input[name="colloque_id"][value="'.$colloque->id.'"]'));
-
 
         $this->select($prices[0], 'price_id');
 
@@ -103,6 +102,6 @@ class UserTest extends TestCase {
 			'price_id'    => 1
 		]);
 
-        $this->seePageIs('/');
+        $this->seePageIs('pubdroit');
 	}
 }

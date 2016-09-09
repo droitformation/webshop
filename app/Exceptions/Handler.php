@@ -49,9 +49,15 @@ class Handler extends ExceptionHandler {
 	{
         if ($e instanceof \App\Exceptions\CouponException){
             alert()->warning($e->getMessage());
-            return \Redirect::back()->with(array('status' => 'warning' , 'message' => $e->getMessage()));
+			return redirect()->back();
         }
-        
+
+		if($e instanceof \App\Exceptions\FactureColloqueTestException)
+		{
+			alert()->warning($e->getMessage());
+			return redirect()->back();
+		}
+
         if ($e instanceof \App\Exceptions\CardDeclined)
             return \Redirect::back()->with(array('status' => 'warning' , 'message' => $e->getMessage()));
 

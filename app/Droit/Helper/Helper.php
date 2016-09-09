@@ -599,4 +599,16 @@ class Helper {
         return $result;
     }
 
+    public function displaySearch($search = null)
+    {
+        if($search && !empty($search))
+        {
+            $key  = key($search);
+            $name = str_replace('_id','',$key).'s';
+            $id   = $search[$key];
+
+            echo '<h3>'.$$name->find($id)->title.'</h3>';
+        }
+    }
+
 }

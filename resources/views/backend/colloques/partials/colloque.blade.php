@@ -25,12 +25,10 @@
                             <div class="btn-group btn-group-colloque">
                                 <a class="btn btn-sky btn-sm" href="{{ url('admin/colloque/'.$colloque->id) }}">&Eacute;diter</a>
                                 <a class="btn btn-success btn-sm" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Inscriptions &nbsp;
-                                <span class="badge badge-success">
-                                    {{ $colloque->inscriptions->count() }}
-                                </span>
+                                    <span class="badge badge-success">{{ $colloque->inscriptions->count() }}</span>
                                 </a>
                                 <a class="btn btn-warning btn-sm" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}">Rappels</a>
-                                <button data-action="{{ $colloque->titre }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                <button data-action="{{ $colloque->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
                             </div>
                         </form>
                     </div>

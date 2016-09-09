@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\ColloqueRequest;
 
+use App\Droit\Service\UploadInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Document\Worker\DocumentWorker;
@@ -22,6 +23,7 @@ use App\Droit\Option\Repo\GroupOptionInterface;
 class ColloqueController extends Controller
 {
     protected $colloque;
+    protected $upload;
     protected $compte;
     protected $document;
     protected $inscription;
@@ -40,6 +42,7 @@ class ColloqueController extends Controller
      */
     public function __construct(
         ColloqueInterface $colloque,
+        UploadInterface $upload,
         CompteInterface $compte,
         InscriptionInterface $inscription,
         LocationInterface $location,
@@ -52,6 +55,7 @@ class ColloqueController extends Controller
     )
     {
         $this->colloque     = $colloque;
+        $this->upload       = $upload;
         $this->compte       = $compte;
         $this->document     = $document;
         $this->inscription  = $inscription;
@@ -119,14 +123,21 @@ class ColloqueController extends Controller
      */
     public function store(Request $request)
     {
-        $colloque = $this->colloque->create($request->all());
+        $data  = $request->except('file');
+        $_file = $request->file('file');
 
         // illustration
-        $illustration = $request->input('illustration',null);
-
-        if($illustration && !empty($illustration))
+        if($_file)
         {
-            $this->document->updateColloqueDoc($colloque->id, ['illustration' => $illustration]);
+            $file = $this->upload->upload( $request->file('file') , 'files/colloques/illustration');
+            $data['image'] = $file['name'];
+        }
+
+        $colloque = $this->colloque->create($request->all());
+
+        if(isset($data['image']) && !empty($data['image']))
+        {
+            $this->document->updateColloqueDoc($colloque->id, ['illustration' => $data['image']]);
         }
 
         alert()->success('Le colloque a été crée');
@@ -198,6 +209,10 @@ class ColloqueController extends Controller
     {
         $colloque = $this->colloque->find($id);
         $user     = \Auth::user();
+        
+        if($colloque->prices->isEmpty()){
+            throw new \App\Exceptions\FactureColloqueTestException('Il n\'existe pas de prix pour ce colloque');
+        }
 
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->make([
             'colloque_id' => $colloque->id,
