@@ -128,12 +128,7 @@ $('#formInscription').on('submit', function (e) {
     if(!val){
         return false;
     }
-
-/*    if(!user_id){
-        alert('problème avec la séléction de l\'utilisateur');
-        return false;
-    }*/
-
+    
     var datastring = $("#formInscription").serialize();
 
     $.ajax({

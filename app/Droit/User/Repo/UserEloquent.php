@@ -91,7 +91,7 @@ class UserEloquent implements UserInterface{
             'updated_at'     => date('Y-m-d G:i:s')
         ));
 
-        if(isset($data['role']))
+        if(isset($data['role']) && $data['role'] > 0)
         {
             $user->roles()->attach($data['role']);
         }

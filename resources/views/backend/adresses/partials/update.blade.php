@@ -1,6 +1,5 @@
-<form action="{{ url('admin/adresse/'.$adresse->id) }}" enctype="multipart/form-data" data-validate="parsley" method="POST" class="validate-form form-horizontal">
-    <input type="hidden" name="_method" value="PUT">
-    {!! csrf_field() !!}
+<form action="{{ url('admin/adresse/'.$adresse->id) }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">
+    <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
     <hr/>
     @if($adresse->user_id > 0)
         <div class="form-group">
@@ -52,6 +51,19 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Profession</label>
+        <div class="col-sm-7">
+            @if(isset($professions) && !$professions->isEmpty())
+                <select class="form-control form-required" data-parsley-required name="profession_id">
+                    <option value="">Choix</option>
+                    @foreach($professions->pluck('title','id')->all() as $id => $pr)
+                        <option {{ $id == $adresse->profession_id ? 'selected' : '' }} value="{{ $id }}">{{ $pr }}</option>
+                    @endforeach
+                </select>
+            @endif
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Adresse</label>
         <div class="col-sm-7">
             <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="{{ $adresse->adresse }}">
@@ -84,24 +96,45 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Canton</label>
         <div class="col-sm-7">
-            {!! Form::select('canton_id', $cantons->lists('title','id')->all() , $adresse->canton_id, ['data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Choix']) !!}
+            @if(isset($cantons) && !$cantons->isEmpty())
+                <select class="form-control form-required" data-parsley-required name="canton_id">
+                    <option value="">Choix</option>
+                    @foreach($cantons->pluck('title','id')->all() as $id => $c)
+                        <option {{ $id == $adresse->canton_id ? 'selected' : '' }} value="{{ $id }}">{{ $c }}</option>
+                    @endforeach
+                </select>
+            @endif
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Pays</label>
         <div class="col-sm-7">
-            {!! Form::select('pays_id', $pays->lists('title','id')->all() , $adresse->pays_id, [ 'data-parsley-required' => 'true' ,'class' => 'form-control form-required', 'placeholder' => 'Choix']) !!}
+            @if(isset($pays) && !$pays->isEmpty())
+                <select class="form-control form-required" data-parsley-required name="pays_id">
+                    <option value="">Choix</option>
+                    @foreach($pays->pluck('title','id')->all() as $id => $p)
+                        <option {{ $id == $adresse->pays_id ? 'selected' : '' }} value="{{ $id }}">{{ $p }}</option>
+                    @endforeach
+                </select>
+            @endif
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Profession</label>
-        <div class="col-sm-7">
-            {!! Form::select('profession_id', $professions->lists('title','id')->all() , $adresse->profession_id, ['class' => 'form-control', 'placeholder' => 'Choix']) !!}
-        </div>
-    </div>
-
-    {!! Form::hidden('id', $adresse->id) !!}
+    <input value="{{ $adresse->id }}" name="id" type="hidden">
+    <input value="{{ $adresse->user_id }}" name="user_id" type="hidden">
     <br/>
-    <p class="pull-right"><button class="btn btn-primary" type="submit">Enregistrer</button></p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="pull-left">
+                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                <input type="hidden" value="{{ url('admin/user/'.$adresse->user_id) }}" name="url">
+                <button data-what="Supprimer" data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+            </form>
+        </div>
+        <div class="col-md-6 text-right">
+            <button class="btn btn-primary" type="submit">Enregistrer</button>
+        </div>
+    </div>
+
 </form>

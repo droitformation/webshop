@@ -47,6 +47,18 @@ class AdresseController extends Controller {
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function make($id = null)
+    {
+        $user = $this->user->find($id);
+
+        return view('backend.adresses.create')->with(['user' => $user]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -56,6 +68,14 @@ class AdresseController extends Controller {
         $adresse = $this->adresse->create($request->all());
 
         alert()->success('Adresse crée');
+
+        if($request->input('user_id'))
+        {
+            $user = $this->user->find($request->input('user_id'));
+            $user->adresses()->save($adresse);
+
+            return redirect('admin/user/'.$user->id)->back();
+        }
 
         return redirect('admin/adresse/'.$adresse->id);
     }

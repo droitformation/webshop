@@ -166,7 +166,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     */
 
     Route::post('adresse/convert','Backend\User\AdresseController@convert');
+    Route::get('adresse/make/{id}','Backend\User\AdresseController@make');
     Route::resource('adresse', 'Backend\User\AdresseController');
+    
     Route::get('users', 'Backend\User\UserController@users');
     Route::resource('user', 'Backend\User\UserController');
 

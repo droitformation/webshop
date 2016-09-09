@@ -34,7 +34,7 @@
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
                               <h3 style="margin-bottom: 0;"><i class="fa fa-map-marker"></i> &nbsp;Adresse {{ $adresse->type_title }}</h3>
-                              @include('backend.adresses.adresse',['adresse' => $adresse])
+                              @include('backend.adresses.partials.update',['adresse' => $adresse])
                           </div>
                       </div>
                   </div>
@@ -43,8 +43,7 @@
                       <div class="collapse" id="collapseConvert">
                           <div class="panel panel-warning">
                               <div class="panel-body">
-                                  <form action="{{ url('admin/adresse/convert') }}" method="POST">
-                                      {!! csrf_field() !!}
+                                  <form action="{{ url('admin/adresse/convert') }}" method="POST">{!! csrf_field() !!}
                                       <div class="form-group">
                                           <label><strong>Indiquer un mot de passe</strong></label>
                                           <div class="input-group">

@@ -79,7 +79,7 @@ class UserController extends Controller {
 
         alert()->success('Utilisateur crée');
 
-        return redirect('admin/user/'.$user->id);
+        return redirect()->to('admin/user/'.$user->id);
     }
 
     /**

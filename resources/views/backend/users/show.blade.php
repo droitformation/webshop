@@ -6,18 +6,10 @@
         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-default">Retour</a>
     </div>
     <div class="col-md-6 text-right"><!-- col -->
-        <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
-            <div class="form-group">
-                <div class="btn-group">
-                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                    <button data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger deleteAction" type="submit">
-                        <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer le compte
-                    </button>
-                </div>
-            </div>
-        </form>
+        <a href="{{ url('admin/adresse/make/'.$user->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une adresse</a>
     </div>
 </div>
+<br>
 <!-- start row -->
 <div class="row">
     @if (!empty($user))
@@ -30,25 +22,26 @@
                           <div class="panel-body">
 
                               <form action="{{ url('admin/user/'.$user->id) }}" enctype="multipart/form-data" data-validate="parsley" method="POST" class="validate-form">
-                                  <input type="hidden" name="_method" value="PUT">
-                                  {!! csrf_field() !!}
+                                  <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
+
                                   @if(!$user->roles->isEmpty())
                                       @foreach($user->roles as $role)
                                           <span class="label label-info pull-right">{{ $role->name }}</span>
                                       @endforeach
                                   @endif
+
                                   <h3><i class="fa fa-user"></i> &nbsp;Compte</h3>
                                   <div class="form-group">
                                       <label for="message" class="control-label">Prénom</label>
-                                      {!! Form::text('first_name', $user->first_name , array('class' => 'form-control') ) !!}
+                                      <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}">
                                   </div>
                                   <div class="form-group">
                                       <label for="message" class="control-label">Nom</label>
-                                      {!! Form::text('last_name', $user->last_name , array('class' => 'form-control') ) !!}
+                                      <input type="text" name="last_name" class="form-control" value="{{ $user->last_name }}">
                                   </div>
                                   <div class="form-group">
                                       <label for="message" class="control-label">Email</label>
-                                      {!! Form::text('email', $user->email , array('class' => 'form-control') ) !!}
+                                      <input type="email" name="email" class="form-control" value="{{ $user->email }}">
                                   </div>
 
                                   <div class="form-group">
@@ -62,37 +55,45 @@
                                   </a>
                                   <div class="collapse" id="changePassword">
                                       <div class="form-group">
-                                          <br/>
-                                          <label for="pasword" class="control-label">Nouveau mot de passe</label>
+                                           <label for="pasword" class="control-label">Nouveau mot de passe</label>
                                           <input type="password" name="password" class="form-control">
                                       </div>
+                                  </div><br>
+                                  <div class="form-group">
+                                      <input value="{{ $user->user_id }}" type="hidden" name="id">
+                                      <button class="btn btn-primary pull-right" type="submit">Enregistrer</button>
                                   </div>
-
-                                  {!! Form::hidden('id', $user->id ) !!}
-                                  <button class="btn btn-primary btn-sm pull-right" type="submit">Enregistrer</button>
+                                  <div class="clearfix"></div>
+                              </form>
+                              <hr>
+                              <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
+                                  <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                  <button data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger btn-xs deleteAction" type="submit">
+                                      <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer le compte
+                                  </button>
                               </form>
                           </div>
                       </div>
 
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
-                              <h3><i class="fa fa-tags"></i> &nbsp;Spécialisations</h3>
-                              @if(isset($user->adresse_facturation) && !$user->adresse_facturation->specialisations->isEmpty())
-                                  <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_facturation->id }}">
+                              <h3><i class="fa fa-tags"></i>&nbsp;Spécialisations</h3>
+                              <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_facturation->id }}">
+                                  @if(isset($user->adresse_facturation) && !$user->adresse_facturation->specialisations->isEmpty())
                                       @foreach($user->adresse_facturation->specialisations as $specialisation)
                                           <li>{{ $specialisation->title }}</li>
                                       @endforeach
-                                  </ul>
-                              @endif
+                                  @endif
+                              </ul>
                               <hr/>
                               <h3><i class="fa fa-bookmark"></i> &nbsp;Membre</h3>
-                              @if(isset($user->adresse_facturation) && !$user->adresse_facturation->specialisations->isEmpty())
-                                  <ul id="members" data-id="{{ $user->adresse_facturation->id }}">
+                              <ul id="members" data-id="{{ $user->adresse_facturation->id }}">
+                                  @if(isset($user->adresse_facturation) && !$user->adresse_facturation->specialisations->isEmpty())
                                       @foreach($user->adresse_facturation->members as $members)
                                           <li>{{ $members->title }}</li>
                                       @endforeach
-                                  </ul>
-                              @endif
+                                  @endif
+                              </ul>
                           </div>
                       </div>
 
@@ -101,6 +102,7 @@
 
                       <!-- ADRESSES -->
                       <div class="panel-group" id="accordion">
+
                           @if(!$user->adresses->isEmpty())
                               @foreach ($user->adresses as $adresse)
                                   <div class="panel panel-midnightblue">
@@ -110,7 +112,7 @@
                                               <a role="button" class="btn btn-sm btn-primary pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$adresse->id}}">Voir</a>
                                           </h3>
                                           <div id="collapse{{$adresse->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                              @include('backend.users.adresse',['adresse' => $adresse])
+                                              @include('backend.adresses.partials.update',['adresse' => $adresse])
                                           </div>
                                       </div>
                                   </div>

@@ -13,7 +13,7 @@
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
-            <form action="{{ url('admin/user') }}" method="post" id="register" class="form-horizontal">
+            <form action="{{ url('admin/user') }}" method="post" id="" class="form-horizontal">{!! csrf_field() !!}
 
                 <div class="panel-body event-info">
                     <h3>Ajouter un compte/utilisateur</h3>
