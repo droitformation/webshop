@@ -29,7 +29,7 @@ class CreateColloquesTable extends Migration
             $table->integer('location_id');
             $table->integer('compte_id')->nullable();
             $table->integer('adresse_id')->nullable();
-            $table->enum('visible', ['0','1'])->default(0);
+            $table->tinyInteger('visible')->nullable();
             $table->tinyInteger('bon')->default(1);
             $table->tinyInteger('facture')->default(1);
             $table->integer('counter')->default(0);

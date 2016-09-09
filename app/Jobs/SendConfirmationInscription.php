@@ -58,7 +58,6 @@ class SendConfirmationInscription extends Job implements ShouldQueue
 
         $data = [
             'title'       => 'Votre inscription sur publications-droit.ch',
-            'logo'        => 'facdroit.png',
             'concerne'    => 'Inscription',
             'annexes'     => $this->inscription->colloque->annexe,
             'colloque'    => $this->inscription->colloque,

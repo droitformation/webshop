@@ -65,9 +65,9 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
         // Get all infos for inscriptions/participants
         $prices       = $data['price_id'];
-        $options      = $data['options'];
-        $occurrences  = $data['occurrences'];
-        $groupes      = $data['groupes'];
+        $options      = isset($data['options']) ? $data['options'] : [];
+        $occurrences  = isset($data['occurrences']) ? $data['occurrences'] : [];
+        $groupes      = isset($data['groupes']) ? $data['groupes'] : [];
 
         // Make inscription for each participant
         foreach($data['participant'] as $index => $participant)

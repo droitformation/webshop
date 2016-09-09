@@ -416,7 +416,7 @@ Route::get('registration', function()
     $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $groups      = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
 
-    $inscrit     = $inscription->find(9533);
+    $inscrit     = $inscription->find(3);
     $group       = $groups->find(3);
 
     $data = [
@@ -429,7 +429,7 @@ Route::get('registration', function()
         'date'         => $date,
     ];
 
-    $data1 = [
+/*    $data1 = [
         'title'        => $title,
         'concerne'     => 'Inscription',
         'logo'         => $logo,
@@ -438,7 +438,7 @@ Route::get('registration', function()
         'user'         => $group->user,
         'participants' => $group->participant_list,
         'date'         => $date,
-    ];
+    ];*/
 
     return View::make('emails.colloque.confirmation', $data);
 
@@ -448,10 +448,10 @@ Route::get('notifyadmin', function()
 {
 
     $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $inscrit     = $inscription->find(9567);
+    $inscrit     = $inscription->find(3);
 
-    $orders = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $order  = $orders->find(2930);
+/*    $orders = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order  = $orders->find(2930);*/
 
     $inscritpt = [
         'name' => $inscrit->inscrit->name,
@@ -460,14 +460,26 @@ Route::get('notifyadmin', function()
         'link' => 'admin/inscription/colloque/'.$inscrit->colloque->id
     ];
 
-    $ordered = [
+/*    $ordered = [
         'name'  => $order->user->name,
         'what'  => 'commande',
         'order' => $order->order_no,
         'link'  => 'admin/orders'
+    ];*/
+
+    $infos = [
+        'name'     => $inscrit->inscrit->name,
+        'colloque' => $inscrit->colloque->titre,
+        'what'     => 'inscription',
+        'link'     => 'admin/inscription/colloque/'.$inscrit->colloque->id
     ];
 
-    return View::make('emails.notification',$ordered);
+    \Mail::send('emails.notification', $infos, function ($m) {
+        $m->from('droit.formation@unine.ch', 'Administration');
+        $m->to('cindy.leschaud@gmail.com', 'Administration')->subject('Notification');
+    });
+
+    return View::make('emails.notification',$inscritpt);
 
 });
 

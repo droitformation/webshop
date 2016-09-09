@@ -67,7 +67,7 @@ class ShopController extends Controller {
 		$products   = $this->product->getNbr(10,[5]);
 
         $page       = $this->page->getBySlug($this->site_id,'accueil');
-        
+
         $colloques  = $this->colloque->getCurrent(true); // $registration = false, $finished = false, $visible = true
         $abos       = $this->abo->getAll();
         

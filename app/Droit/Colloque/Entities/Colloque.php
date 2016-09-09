@@ -110,7 +110,7 @@ class Colloque extends Model
 
     public function scopeRegistration($query,$status)
     {
-        if($status) $query->where('registration_at','>',date('Y-m-d'));
+        if($status) $query->where('registration_at','>=',date('Y-m-d'));
     }
 
     public function scopeFinished($query,$status)

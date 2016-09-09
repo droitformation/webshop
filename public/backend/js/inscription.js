@@ -96,6 +96,18 @@ if($inputUser.length)
 
 $("#colloqueSelection").chosen();
 
+$.validator.setDefaults({ ignore: ":hidden:not(select)" })
+$("#formInscription").validate({
+    rules: {
+        chosen:"required",
+        user_id:"required"
+    },
+    message: {
+        chosen:"Choisir",
+        user_id:"Choisir"
+    }
+});
+
 $( "#colloqueSelection" ).change(function()
 {
     var optionSelected = $("option:selected", this);
@@ -107,8 +119,20 @@ $( "#colloqueSelection" ).change(function()
 });
 
 $('#formInscription').on('submit', function (e) {
-    $('#colloqueSelection').trigger('change');
     e.preventDefault();
+    $('#colloqueSelection').trigger('change');
+
+    var val     = $("#colloqueSelection option:selected").val();
+    var user_id = $("#inputUser input").val();
+
+    if(!val){
+        return false;
+    }
+
+/*    if(!user_id){
+        alert('problème avec la séléction de l\'utilisateur');
+        return false;
+    }*/
 
     var datastring = $("#formInscription").serialize();
 
