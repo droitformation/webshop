@@ -90,6 +90,38 @@ class User extends Authenticatable {
         return false;
     }
 
+    public function getAdresseSpecialisationsAttribute()
+    {
+        if(isset($this->adresses))
+        {
+            $contact = $this->adresses->first(function ($adresse, $key) {
+                return $adresse->type == 1;
+            })->specialisations->reduce(function ($carry, $item) {
+                return $carry.'<li>'.$item->title.'</li>';
+            }, '');
+
+            return $contact;
+        }
+
+        return '';
+    }
+
+    public function getAdresseMembresAttribute()
+    {
+        if(isset($this->adresses))
+        {
+            $contact = $this->adresses->first(function ($adresse, $key) {
+                return $adresse->type == 1;
+            })->members->reduce(function ($carry, $item) {
+                return $carry.'<li>'.$item->title.'</li>';
+            }, '');
+
+            return $contact;
+        }
+
+        return '';
+    }
+
     public function getNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;

@@ -898,11 +898,23 @@ label.error{
     background: #f8f8f8;
 }
 
+
 .ui-widget-content li a span{
     font-size: 11px;
     display: block;
     font-weight: 400;
 }
+
+.ui-icon,
+.ui-widget-content .ui-icon{
+    background-image: url("../../backend/images/ui-icons_ffffff_256x240.png");
+}
+
+.ui-widget-content li .tagit-close:hover{
+    background: none;
+    opacity: 0.8;
+}
+
 #accordion .panel-title{
     width: 100%;
     display: block;

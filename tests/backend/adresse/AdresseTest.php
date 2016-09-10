@@ -1,6 +1,11 @@
 <?php
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 class AdresseTest extends TestCase {
+
+    use DatabaseTransactions;
 
     protected $adresse;
     protected $user;
@@ -17,9 +22,6 @@ class AdresseTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
-        $user->roles()->attach(1);
-        $this->actingAs($user);
     }
 
     public function tearDown()
@@ -36,6 +38,10 @@ class AdresseTest extends TestCase {
 	 */
 	public function testConvertAdresseToUser()
 	{
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
         $input = ['password' => 'cindy2'];
 
         $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->make(['id' => 2]);
@@ -50,7 +56,6 @@ class AdresseTest extends TestCase {
         $response = $this->call('POST', 'admin/adresse/convert', $input);
 
         $this->assertRedirectedTo('admin/user/2');
-
 	}
     
 }

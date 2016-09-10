@@ -99,11 +99,13 @@ class Handler extends ExceptionHandler {
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)
             return redirect()->to('admin');
 
-		if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)
+		if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException){
 			return response()->view('404', [], 404);
-
-		if($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException)
+		}
+		
+		if($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException){
 			return response()->view('404', [], 404);
+		}
 
 		if ($e instanceof \Illuminate\Session\TokenMismatchException)
 			return redirect('login');

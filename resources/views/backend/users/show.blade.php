@@ -21,7 +21,7 @@
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
 
-                              <form action="{{ url('admin/user/'.$user->id) }}" enctype="multipart/form-data" data-validate="parsley" method="POST" class="validate-form">
+                              <form action="{{ url('admin/user/'.$user->id) }}" data-validate="parsley" method="POST" class="validate-form">
                                   <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                                   @if(!$user->roles->isEmpty())
@@ -33,7 +33,7 @@
                                   <h3><i class="fa fa-user"></i> &nbsp;Compte</h3>
                                   <div class="form-group">
                                       <label for="message" class="control-label">Prénom</label>
-                                      <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}">
+                                      <input type="text" name="first_name" id="first_name" class="form-control" value="{{ $user->first_name }}">
                                   </div>
                                   <div class="form-group">
                                       <label for="message" class="control-label">Nom</label>
@@ -56,11 +56,11 @@
                                   <div class="collapse" id="changePassword">
                                       <div class="form-group">
                                            <label for="pasword" class="control-label">Nouveau mot de passe</label>
-                                          <input type="password" name="password" class="form-control">
+                                          <input type="password" id="password" name="password" class="form-control">
                                       </div>
                                   </div><br>
                                   <div class="form-group">
-                                      <input value="{{ $user->user_id }}" type="hidden" name="id">
+                                      <input value="{{ $user->id }}" type="hidden" name="id">
                                       <button class="btn btn-primary pull-right" type="submit">Enregistrer</button>
                                   </div>
                                   <div class="clearfix"></div>
@@ -78,22 +78,16 @@
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
                               <h3><i class="fa fa-tags"></i>&nbsp;Spécialisations</h3>
-                              <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_facturation->id }}">
-                                  @if(isset($user->adresse_facturation) && !$user->adresse_facturation->specialisations->isEmpty())
-                                      @foreach($user->adresse_facturation->specialisations as $specialisation)
-                                          <li>{{ $specialisation->title }}</li>
-                                      @endforeach
-                                  @endif
-                              </ul>
-                              <hr/>
-                              <h3><i class="fa fa-bookmark"></i> &nbsp;Membre</h3>
-                              <ul id="members" data-id="{{ $user->adresse_facturation->id }}">
-                                  @if(isset($user->adresse_facturation) && !$user->adresse_facturation->specialisations->isEmpty())
-                                      @foreach($user->adresse_facturation->members as $members)
-                                          <li>{{ $members->title }}</li>
-                                      @endforeach
-                                  @endif
-                              </ul>
+                              @if(isset($user->adresse_facturation))
+                                  <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_facturation->id }}">
+                                      {!! $user->adresse_specialisations !!}
+                                  </ul>
+                                  <hr/>
+                                  <h3><i class="fa fa-bookmark"></i> &nbsp;Membre</h3>
+                                  <ul id="members" data-id="{{ $user->adresse_facturation->id }}">
+                                      {!! $user->adresse_membres !!}
+                                  </ul>
+                              @endif
                           </div>
                       </div>
 

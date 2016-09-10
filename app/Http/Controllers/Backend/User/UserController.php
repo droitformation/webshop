@@ -109,7 +109,7 @@ class UserController extends Controller {
 
         alert()->success('Utilisateur mis à jour');
 
-        return redirect('admin/user/'.$user->id);
+        return redirect()->back();
     }
 
     /**
