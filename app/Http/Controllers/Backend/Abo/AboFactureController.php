@@ -141,7 +141,7 @@ class AboFactureController extends Controller {
         $job = (new NotifyJobFinished('Les factures ont été attachés. Nom du fichier: '.$name));
         $this->dispatch($job);
 
-        alert()->success('Les factures dont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
+        alert()->success('Les factures sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
 
         return redirect()->back();
     }

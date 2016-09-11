@@ -13,12 +13,10 @@
         <div class="panel panel-magenta">
             <div class="panel-body">
                 <h3>Créer une Inscription</h3>
-                <form id="formInscription" class="validate-form" data-validate="parsley">
+
+                <form id="formInscription" class="validate-form" data-validate="parsley" action="{{ url('admin/inscription/make') }}" method="post">
                     {!! csrf_field() !!}
-                    @if(isset($group_id))
-                        <input type="hidden" name="group_id" value="{{ $group_id }}" />
-                        <h4>Détenteur: {!! $groupe->name !!}</h4>
-                    @endif
+
                     <div class="form-group">
                         <label><strong>Type d'inscription</strong></label>
                         <div class="radio">
@@ -34,8 +32,8 @@
                         <select autocomplete="off" required class="form-control" id="colloqueSelection">
                             <option value="">Choisir le colloque</option>
                             @if(!$colloques->isEmpty())
-                                @foreach($colloques as $colloque)
-                                    <option <?php echo (isset($colloque_id) && ($colloque->id == $colloque_id) ? 'selected' : ''); ?> value="{{ $colloque->id }}">{{ $colloque->titre }}</option>
+                                @foreach($colloques as $col)
+                                    <option <?php echo (isset($colloque) && ($col->id == $colloque->id) ? 'selected' : ''); ?> value="{{ $col->id }}">{{ $col->titre }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -48,10 +46,7 @@
                     <div id="choiceColloque"></div>
 
                     <button type="submit" class="btn btn-info pull-right">Suivant</button>
-
                 </form>
-
-                <div id="selectInscription"></div>
 
             </div>
         </div>

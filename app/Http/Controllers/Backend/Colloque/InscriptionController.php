@@ -106,6 +106,23 @@ class InscriptionController extends Controller
      *
      * @return Response
      */
+    public function make(Request $request)
+    {
+        $colloques = $this->colloque->getAll();
+        $colloque  = $this->colloque->find($request->input('colloque_id'));
+        $user      = $this->user->find($request->input('user_id'));
+        $type      = $request->input('type');
+
+        $form = view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user' => $user, 'type' => $type]);
+
+        return view('backend.inscriptions.make')->with(['colloques' => $colloques, 'user' => $user, 'colloque' => $colloque, 'form' => $form, 'type' => $type]);
+    }
+
+    /**
+     * Display creation.
+     *
+     * @return Response
+     */
     public function add($group_id)
     {
         $inscription = $this->inscription->getByGroupe($group_id);

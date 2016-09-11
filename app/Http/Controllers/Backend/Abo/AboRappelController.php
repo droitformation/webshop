@@ -44,7 +44,7 @@ class AboRappelController extends Controller {
 
         $this->generator->makeAbo('rappel', $rappel->facture, $rappels, $rappel);
 
-        alert()->success('La rappel a été crée');
+        alert()->success('Le rappel a été crée');
 
         return redirect()->back();
 	}
@@ -60,7 +60,7 @@ class AboRappelController extends Controller {
     {
         $rappel = $this->rappel->update($request->all());
 
-        alert()->success('La rappel a été mis à jour');
+        alert()->success('Le rappel a été mis à jour');
 
         return redirect('admin/abo/'.$rappel->id);
     }
@@ -107,7 +107,7 @@ class AboRappelController extends Controller {
         $job = (new NotifyJobFinished('Les rappels ont été attachés. Nom du fichier: <strong>'.$name.'</strong>'));
         $this->dispatch($job);
 
-        alert()->success('Les rappels dont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
+        alert()->success('Les rappels sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
 
         return redirect()->back();
     }

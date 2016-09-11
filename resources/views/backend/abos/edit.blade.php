@@ -105,7 +105,7 @@
                             <label for="message" class="col-sm-3 control-label">Produits</label>
                             <div class="col-sm-5 col-xs-8">
                                 <select multiple class="form-control" id="multi-select" name="products_id[]">
-                                    <?php $product_abos = !$abo->products->isEmpty() ? $abo->products->lists('id')->all() : []; ?>
+                                    <?php $product_abos = !$abo->products->isEmpty() ? $abo->products->pluck('id')->all() : []; ?>
                                     @if(!$products->isEmpty())
                                         @foreach($products as $product)
                                             <option {{ in_array($product->id,$product_abos) ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->title }}</option>
@@ -117,7 +117,7 @@
 
                     </div>
                     <div class="panel-footer text-right">
-                        {!! Form::hidden('id', $abo->id ) !!}
+                        <input name="id" value="{{ $abo->id }}" type="hidden">
                         <button type="submit" class="btn btn-info">Envoyer</button>
                     </div>
                 </form>

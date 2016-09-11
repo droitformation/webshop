@@ -110,9 +110,13 @@ class ProductController extends Controller {
     public function store(Request $request)
     {
         $data = $request->except('file');
-        $file = $this->upload->upload( $request->file('file') , 'files/products');
 
-        $data['image'] = $file['name'];
+        if($request->file('file',null))
+        {
+            $file = $this->upload->upload( $request->file('file') , 'files/products');
+
+            $data['image'] = $file['name'];
+        }
 
         $product = $this->product->create($data);
         

@@ -37,7 +37,7 @@
         </fieldset>
     </div>
 
-    <input name="user_id" value="{{ $user_id }}" type="hidden">
+    <input name="user_id" value="{{ $user->id }}" type="hidden">
     <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
     <input name="type" value="{{ $type }}" type="hidden">
 

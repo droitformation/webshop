@@ -119,8 +119,8 @@ $( "#colloqueSelection" ).change(function()
 });
 
 $('#formInscription').on('submit', function (e) {
-    e.preventDefault();
-    $('#colloqueSelection').trigger('change');
+    //e.preventDefault();
+   /* $('#colloqueSelection').trigger('change');
 
     var val     = $("#colloqueSelection option:selected").val();
     var user_id = $("#inputUser input").val();
@@ -139,5 +139,5 @@ $('#formInscription').on('submit', function (e) {
             $('#selectInscription').html(data);
         },
         error: function(){alert('problème avec la séléction de l\'utilisateur');}
-    });
+    });*/
 });
