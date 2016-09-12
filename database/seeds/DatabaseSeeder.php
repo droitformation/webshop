@@ -38,6 +38,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RegistryTableSeeder::class);
 
         $this->call(TypeSeeder::class);
+
+        $this->call(MenuTableSeeder::class);
+        $this->call(PageTableSeeder::class);
+
 /*
         $this->call(Adresse_typesTableSeeder::class);
         $this->call(CivilitesTableSeeder::class);

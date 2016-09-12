@@ -133,4 +133,57 @@ class ObjectFactory
             'text'        => 'Choix 2',
         ]);
     }
+
+    public function product($nbr)
+    {
+        $images = \File::files('files/products');
+        $images = collect($images)->map(function ($name) {
+            $file = explode('/', $name);
+            $file = end($file);
+
+            return $file;
+        })->toArray();
+
+        for ($x = 0; $x <= $nbr; $x++) {
+            factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+                'title'           => $this->faker->sentence,
+                'teaser'          => $this->faker->sentence,
+                'image'           => $images[array_rand($images)],
+                'description'     => $this->faker->text() ,
+                'weight'          => 500,
+                'sku'             => 10,
+                'price'           => $this->faker->numberBetween(10000,30000),
+            ]);
+        }
+
+    }
+
+    public function order($nbr)
+    {
+        $product = new \App\Droit\Shop\Product\Entities\Product();
+        $exist   = $product->all();
+
+        if($exist->isEmpty())
+        {
+            $this->product($nbr);
+        }
+
+        for ($x = 1; $x <= $nbr; $x++)
+        {
+            $products = $product->orderByRaw("RAND()")->take(2)->get();
+            $amount   = $products->sum('price');
+
+            $order = factory(\App\Droit\Shop\Order\Entities\Order::class)->create([
+                'user_id'     => 1,
+                'coupon_id'   => null,
+                'payement_id' => 1,
+                'order_no'    => '2016-0000000'.$x.'',
+                'amount'      => $amount,
+                'shipping_id' => 1,
+            ]);
+
+            $order->products()->attach($products->pluck('id')->all());
+        }
+        
+    }
 }

@@ -152,18 +152,19 @@
                         @endif
 
                         <tr align="top" valign="top">
-                            <td width="40%" align="top" valign="top" class="text-right"><strong>Sous-total:</strong></td>
-                            <td width="60%" align="top" valign="top" class="text-right">{{ $order->price_cents }} CHF</td>
+                            <td width="40%" align="top" valign="top" class="text-right" style="border: none;"><strong>Sous-total:</strong></td>
+                            <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $order->price_cents }} CHF</td>
                         </tr>
                         <tr align="top" valign="top">
-                            <td width="40%" align="top" valign="top" class="text-right"><strong>Frais de port:</strong></td>
-                            <td width="60%" align="top" valign="top" class="text-right">{{ $order->shipping->price_cents }} CHF</td>
+                            <td width="40%" align="top" valign="top" class="text-right" style="border: none;"><strong>Frais de port:</strong></td>
+                            <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $order->shipping->price_cents }} CHF</td>
                         </tr>
                         <tr align="top" valign="top">
-                            <td width="40%" align="top" valign="top" class="text-right line"><strong>Total:</strong></td>
-                            <td width="60%" align="top" valign="top" class="text-right line"><strong>{{ $order->total_with_shipping }} CHF</strong></td>
+                            <td width="40%" align="top" valign="top" class="text-right line_total_invoice"><strong>Total:</strong></td>
+                            <td width="60%" align="top" valign="top" class="text-right line_total_invoice"><strong>{{ $order->total_with_shipping }} CHF</strong></td>
                         </tr>
                     </table>
+
                 </td>
             </tr>
         </table>

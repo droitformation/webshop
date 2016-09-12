@@ -92,8 +92,11 @@ class PdfGenerator implements PdfGeneratorInterface
         {
             $adresse = $order->adresse;
         }
+        
+        $products  = $order->products->groupBy(function ($item, $key) {
+            return $item->id.$item->pivot->price.$item->pivot->rabais.$item->pivot->isFree;
+        });
 
-        $products = $order->products->groupBy('id');
         $msgTypes = ['warning','special','remarque','signature'];
 
         $data = [

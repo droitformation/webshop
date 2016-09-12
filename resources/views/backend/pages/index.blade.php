@@ -21,22 +21,22 @@
             <div class="panel-body">
                 @if(!$pages->isEmpty())
                 <?php $menus_names = $pages->groupBy('menu_id'); ?>
-                <div class="row">
-                    @foreach($menus_names as $menu_id => $menu)
-                        <div class="col-md-6">
-                            <h4><a class="btn btn-info btn-sm" href="{{ url('admin/menu/'.$menu_id) }}"><i class="fa fa-edit"></i></a> &nbsp;{{ $menus[$menu_id] }}</h4>
-                            <div class="dd nestable_list" style="height: auto;">
-                                <ol class="dd-list sortable">
-                                    @if(!$menu->isEmpty())
-                                        @foreach($menu as $page)
-                                            <?php echo $helper->renderNode($page); ?>
-                                        @endforeach
-                                    @endif
-                                </ol>
+                    <div class="row">
+                        @foreach($menus_names as $menu_id => $menu)
+                            <div class="col-md-6">
+                                <h4><a class="btn btn-info btn-sm" href="{{ url('admin/menu/'.$menu_id) }}"><i class="fa fa-edit"></i></a> &nbsp;{{ $menus[$menu_id] }}</h4>
+                                <div class="dd nestable_list" style="height: auto;">
+                                    <ol class="dd-list sortable">
+                                        @if(!$menu->isEmpty())
+                                            @foreach($menu as $page)
+                                                <?php echo $helper->renderNode($page); ?>
+                                            @endforeach
+                                        @endif
+                                    </ol>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
                 @else
                     <p>Encore aucune page</p>
                 @endif

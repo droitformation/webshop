@@ -35,7 +35,7 @@ $( function() {
 
             var self   = $(this);
             var $form  = $(this).closest('form');
-            var inputs = $form.find('input,textarea,file');
+            var inputs = $form.find('input,textarea,file,select');
 
             var map = {};
 
@@ -65,7 +65,7 @@ $( function() {
 
             var self   = $(this);
             var $form  = $(this).closest('form');
-            var inputs = $form.find('input,textarea,file');
+            var inputs = $form.find('input,textarea,file,select');
 
             var id  = $form.data('id');
             var map = {};

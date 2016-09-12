@@ -78,6 +78,27 @@ class ContentEloquent implements ContentInterface{
 		return $content;
 	}
 
+	public function updateSorting(array $data)
+	{
+		if(!empty($data))
+		{
+			foreach($data as $rang => $id)
+			{
+				$content = $this->find($id);
+
+				if( ! $content )
+				{
+					return false;
+				}
+
+				$content->rang = $rang;
+				$content->save();
+			}
+
+			return true;
+		}
+	}
+	
 	public function delete($id){
 
         $content = $this->content->find($id);

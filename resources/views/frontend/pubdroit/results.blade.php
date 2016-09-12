@@ -10,7 +10,7 @@
 				<h2>Résultats recherche {{ $term }}</h2>
 				<span class="h-line"></span>
 			</div>
-
+			<?php $results = false; ?>
 			<div class="row">
 				<div class="col-md-6">
 					@if(!$products->isEmpty())
@@ -28,7 +28,7 @@
 								</div>
 							</article>
 						@endforeach
-
+						<?php $results = true; ?>
 					@endif
 				</div>
 				<div class="col-md-6">
@@ -48,6 +48,7 @@
 								</div>
 							</article>
 						@endforeach
+						<?php $results = true; ?>
 					@endif
 				</div>
 			</div>
@@ -60,21 +61,23 @@
 						@foreach($authors as $author)
 							<h3>{{ $author->name }}</h3>
 							@if(!$author->products->isEmpty())
-							@foreach($author->products as $product)
-								<article class="row result-item">
-									<a href="{{ url('pubdroit/product/'.$product->id) }}" class="col-md-2">
-										<img width="60" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
-									</a>
-									<div class="col-md-10">
-										<h4><a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a></h4>
-										<p>{{ strip_tags($product->teaser) }}</p>
-									</div>
-								</article>
-							@endforeach
+								@foreach($author->products as $product)
+									<article class="row result-item">
+										<a href="{{ url('pubdroit/product/'.$product->id) }}" class="col-md-2">
+											<img width="60" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
+										</a>
+										<div class="col-md-10">
+											<h4><a href="{{ url('product/'.$product->id) }}">{{ $product->title }}</a></h4>
+											<p>{{ strip_tags($product->teaser) }}</p>
+										</div>
+									</article>
+								@endforeach
 							@endif
 						@endforeach
+						<?php $results = true; ?>
 					@endif
 
+					{!! !$results ? '<p>Aucun résultat</p>' : '' !!}
 				</div>
 			</div>
 

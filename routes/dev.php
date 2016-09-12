@@ -53,58 +53,53 @@ Route::get('testing', function() {
     $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $items  = $order->getLast(2);*/
 
-    $inscrit  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $inscriptions = $inscrit->getByColloque(39,false, false);
+    $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order   = $orders->find(6);
 
-    $names = collect([
-        'civilite_title'   => 'Civilité',
-        'name'             => 'Nom et prénom',
-        'email'            => 'E-mail',
-        'profession_title' => 'Profession',
-        'company'          => 'Entrprise',
-        'telephone'        => 'Téléphone',
-        'mobile'           => 'Mobile',
-        'adresse'          => 'Adresse',
-        'cp'               => 'CP',
-        'complement'       => 'Complément d\'adresse',
-        'npa'              => 'NPA',
-        'ville'            => 'Ville',
-        'canton_title'     => 'Canton',
-        'pays_title'       => 'Pays'
-    ]);
+    $info['Numero']  = $order->order_no;
+    $info['Date']    = $order->created_at->format('d.m.Y');
+    $info['Montant'] = $order->price_cents.' CHF';
+    $info['Port']    = $order->total_shipping;
+    $info['Paye']    = $order->payed_at ? $order->payed_at->format('d.m.Y') : '';
+    $info['Status']  = $order->status_code['status'];
 
-    $users = $inscriptions->map(function ($inscription, $key) use ($names) {
-        $data = [
-            'Present'     => $inscription->present ? 'Oui' : '',
-            'Numéro'      => $inscription->inscription_no,
-            'Prix'        => $inscription->price_cents,
-            'Status'      => $inscription->status_name['status'],
-            'Date'        => $inscription->created_at->format('m/d/Y'),
-            'Participant' => ($inscription->group_id > 0 ? $inscription->participant->name : ''),
-        ];
+    // Only details of each order and group by product in orde, count qty
+    //$products = $this->free ? $this->hasFreeProducts($order) : $order->products;
+    //$grouped  = $products->groupBy('id');
 
-        $user = $inscription->inscrit;
-
-        // Adresse columns
-        if($user && !$user->adresses->isEmpty())
-        {
-            $data += $names->map(function ($item, $key) use ($user) {
-                return $user->adresses->first()->$key;
-            })->toArray();
-        }
-
-        // Options checkbox
-        if(!$inscription->user_options->isEmpty())
-        {
-            $data['checkbox'] = $inscription->user_options->load('option')->where('groupe_id', null)->implode('option.title', PHP_EOL);
-        }
-
-        return $data;
+    $grouped = $order->products->groupBy(function ($item, $key) {
+        return $item->id.$item->pivot->price.$item->pivot->rabais.$item->pivot->isFree;
     });
+
+    if($order->order_adresse)
+    {
+        $columns = array_keys(config('columns.names'));
+        // Get columns requested from user adresse
+        foreach($columns as $column)
+        {
+            $user[$column] = $order->order_adresse->$column;
+        }
+    }
+
+    foreach($grouped as $product)
+    {
+        $data['title']   = $product->first()->title;
+        $data['qty']     = $product->count();
+        $data['prix']    = $product->first()->price_normal.' CHF';
+        $data['special'] = $product->first()->price_special ? $product->first()->price_special.' CHF' : '';
+        $data['free']    = $product->first()->pivot->isFree ? 'Oui' : '';
+        $data['rabais']  = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
+
+        $converted[] = $info + $data + $user;
+    }
 
 
     echo '<pre>';
-    print_r($users);
+    print_r($converted);
+    echo '</pre>';exit();
+
+    echo '<pre>';
+    print_r($grouped);
     echo '</pre>';
 
     /*
@@ -546,10 +541,12 @@ Route::get('/calculette', function () {
 Route::get('factory', function()
 {
     $make = new \tests\factories\ObjectFactory();
-    $colloque = $make->colloque();
+    $products = $make->product(15);
+    //$colloque = $make->colloque();
+    $orders = $make->order(5);
 
     echo '<pre>';
-    print_r($colloque);
+    print_r($orders);
     echo '</pre>';
 
 });

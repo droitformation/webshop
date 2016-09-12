@@ -82,6 +82,15 @@ class PageContentController extends Controller
         echo view('backend.pages.partials.list')->with(['page' => $page]);
     }
 
+    public function sorting(Request $request)
+    {
+        $data = $request->all();
+
+        $content = $this->content->updateSorting($data['page_rang']);
+
+        echo 'ok';die();
+    }
+
     /**
      * Remove the specified resource from storage.
      *

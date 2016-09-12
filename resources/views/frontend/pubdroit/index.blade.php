@@ -72,10 +72,15 @@
     </section>
 
     @if(!$abos->isEmpty())
-        <div class="heading-bar">
-            <h2>Abonnements</h2>
-            <span class="h-line"></span>
-        </div>
+
+        <section class="row">
+            <div class="col-md-12">
+                <div class="heading-bar">
+                    <h2><i class="fa fa-bookmark"></i> &nbsp;Abonnements</h2>
+                    <span class="h-line"></span>
+                </div>
+            </div>
+        </section>
 
         <?php $chunks = $abos->chunk(3); ?>
         @foreach($chunks as $chunk)
@@ -89,14 +94,14 @@
         @endforeach
     @endif
 
-    <section class="row">
+    <section class="row" id="product_list">
         <!-- Start Main Content -->
         <section class="col-md-9 col-xs-12">
 
             @if(!$products->isEmpty())
 
                 <div class="heading-bar">
-                    <h2>Publications</h2>
+                    <h2><i class="fa fa-book"></i> &nbsp;Publications</h2>
                     <span class="h-line"></span>
                 </div>
 
@@ -153,5 +158,5 @@
         </section>
         <!-- End Main Side Bar -->
     </section>
-    </section>
+    </div>
 @stop

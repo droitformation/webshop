@@ -9,8 +9,8 @@
      protected $free;
      protected $columns = [];
 
-     public $simple_cols = ['Numero','Montant de la commande','Date','Paye','Status'];
-     public $extend_cols = ['Numero','Montant de la commande','Date','Payé','Status','Titre','Quantité','Prix','Prix spécial','Gratuit','Rabais'];
+     public $simple_cols = ['Numero','Date','Total','Port','Paye','Status'];
+     public $extend_cols = ['Numero','Date','Total','Port','Payé','Status','Titre','Quantité','Prix','Prix spécial','Gratuit','Rabais'];
 
      public function __construct()
      {
@@ -62,7 +62,7 @@
          $prepared = $this->prepareOrder($orders, $this->columns, $this->details);
 
          // Columns add columns requested if we want user and not details
-         $names = ($this->details ? $this->extend_cols : ($this->simple_cols + $this->columns));
+         $names = ($this->details ? $this->extend_cols + $this->columns : $this->simple_cols);
 
          \Excel::create('Export Commandes', function($excel) use ($prepared, $sum, $title, $names)
          {
@@ -77,9 +77,12 @@
                  $sheet->row(3,$names);
                  $sheet->row(3,function($row) {$row->setFontWeight('bold')->setFontSize(12);});
 
+                 // formatter
+                 $money = new \App\Droit\Shop\Product\Entities\Money;
+
                  // Set Orders list and total
                  $sheet->rows($prepared);
-                 $sheet->rows([[''],['Total', $sum.' CHF']]);
+                 $sheet->rows([[''],['Total','' ,$money->format($sum)]]);
 
                  $sheet->row($sheet->getHighestRow(), function ($row){ $row->setFontWeight('bold')->setFontSize(13); });
 
@@ -95,51 +98,55 @@
 
              foreach($orders as $order)
              {
-                 // we want only free books and wee have some? If wee don't skip the iteration for thsi order
+                 $user = [];
+                 // we want only free books and wee have some? If wee don't skip the iteration for this order
                  if($this->free && !$this->hasFreeProducts($order)){
                      continue;
                  }
 
                  $info['Numero']  = $order->order_no;
-                 $info['Montant'] = $order->price_cents.' CHF';
-                 $info['Date']    = $order->created_at->formatLocalized('%d %B %Y');
-                 $info['Paye']    = $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '';
+                 $info['Date']    = $order->created_at->format('d.m.Y');
+                 $info['Montant'] = $order->price_cents;
+                 $info['Port']    = $order->total_shipping;
+                 $info['Paye']    = $order->payed_at ? $order->payed_at->format('d.m.Y') : '';
                  $info['Status']  = $order->status_code['status'];
 
-                 // Only details of each order and group by product in orde, count qty
-                 if($details)
+                 if($this->details)
                  {
+                     // Only details of each order and group by product in orde, count qty
                      $products = $this->free ? $this->hasFreeProducts($order) : $order->products;
-                     $grouped  = $products->groupBy('id');
+                     $grouped  = $products->groupBy(function ($item, $key) {
+                         return $item->id.$item->pivot->price.$item->pivot->rabais.$item->pivot->isFree;
+                     });
 
-                     foreach($grouped as $product)
-                     {
-                         $data['title']   = $product->first()->title;
-                         $data['qty']     = $product->count();
-                         $data['prix']    = $product->first()->price_normal.' CHF';
-                         $data['special'] = $product->first()->price_special ? $product->first()->price_special.' CHF' : '';
-                         $data['free']    = $product->first()->pivot->isFree ? 'Oui' : '';
-                         $data['rabais']  = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
-
-                         $converted[] = $info + $data;
-                     }
-                 }
-                 else
-                 {
                      if($order->order_adresse)
                      {
                          $columns = array_keys($names);
                          // Get columns requested from user adresse
                          foreach($columns as $column)
                          {
-                             $data[$column] = $order->order_adresse->$column;
+                             $user[$column] = $order->order_adresse->$column;
                          }
+                     }
 
-                         $converted[] = $info + $data;
+                     foreach($grouped as $product)
+                     {
+                         $data['title']   = $product->first()->title;
+                         $data['qty']     = $product->count();
+                         $data['prix']    = $product->first()->price_normal;
+                         $data['special'] = $product->first()->price_special ? $product->first()->price_special : '';
+                         $data['free']    = $product->first()->pivot->isFree ? 'Oui' : '';
+                         $data['rabais']  = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
+
+                         $converted[] = $info + $data + $user;
                      }
                  }
+                 else
+                 {
+                     $converted[] = $info + $user;
+                 }
              }
-
+             
              return $converted;
          }
      }

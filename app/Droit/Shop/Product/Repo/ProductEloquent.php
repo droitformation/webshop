@@ -32,16 +32,9 @@ class ProductEloquent implements ProductInterface{
     }
 
     // For shop only
-    public function getNbr($nbr = null, $reject = null, $hidden = false)
+    public function getNbr($nbr = null, $hidden = false)
     {
-        $products = $this->product->reject($reject);
-
-        if(!$hidden)
-        {
-            $products->where('hidden','=',0);
-        }
-
-        return $products->orderBy('created_at', 'DESC')->paginate($nbr);
+        return $this->product->with(['categories'])->hidden($hidden)->orderBy('created_at', 'DESC')->paginate($nbr);
     }
 
     public function getAbos()

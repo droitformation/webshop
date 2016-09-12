@@ -7,7 +7,7 @@
 	 <div id="content" class="inner">
 
 		 @if(isset($page) && !$page->contents->isEmpty())
-			 <?php $chunk = $page->contents->chunk(3); ?>
+			 <?php $chunk = $page->contents->sortBy('rang')->chunk(3); ?>
 			 @foreach($chunk as $contents)
 
 				 <div class="row">

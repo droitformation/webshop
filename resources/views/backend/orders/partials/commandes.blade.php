@@ -76,7 +76,11 @@
             </tr>
             @if(!empty($order->products))
 
-                <?php $grouped = $order->products->groupBy('id'); ?>
+                <?php
+                    $grouped = $order->products->groupBy(function ($item, $key) {
+                        return $item->id.$item->pivot->price.$item->pivot->rabais.$item->pivot->isFree;
+                    });
+                ?>
                 <tr>
                     <td colspan="9" class="nopadding">
                         <div class="collapse customCollapse" id="order_no_{{ $order->id }}">
@@ -124,7 +128,9 @@
                                                         </a>
                                                     </td>
                                                     <td width="18%" valign="top" class="text-right">{{ $product->first()->price_normal }} CHF</td>
-                                                    <td width="18%" valign="top" class="text-right">{{ $product->first()->price_special ? $product->first()->price_special.' CHF' : '' }}</td>
+                                                    <td width="18%" valign="top" class="text-right">
+                                                        {{ $product->first()->price_special ? $product->first()->price_special.' CHF' : '' }}
+                                                    </td>
                                                     <td width="19%" valign="top"><p class="text-right">{{ $price_sum > 0 ? $money->format($price_sum).' CHF' : 'Gratuit' }} </p></td>
                                                 </tr>
                                             @endforeach

@@ -48,7 +48,7 @@ class Product extends Model{
         if(isset($this->pivot) && $this->pivot->rabais)
         {
             $price = ($this->price - ($this->price * $this->pivot->rabais/100)) / 100;
-            return $money->format($price);
+            return '('.$this->pivot->rabais.'%) '.$money->format($price);
         }
 
         if(isset($this->pivot) && $this->pivot->price)
@@ -99,14 +99,19 @@ class Product extends Model{
     {
         if(!empty($categories))
         {
-            foreach($categories as $categorie)
+            $query->whereHas('categories', function ($query) use ($categories)
             {
-                $query->whereHas('categories', function ($query) use ($categorie)
+                foreach($categories as $categorie)
                 {
                     $query->where('categorie_id', '!=' ,$categorie);
-                });
-            }
+                }
+            });
         }
+    }
+
+    public function scopeHidden($query, $hidden)
+    {
+        if ($hidden) $query->where('hidden','=',0);
     }
 
     public function scopeNbr($query,$nbr)

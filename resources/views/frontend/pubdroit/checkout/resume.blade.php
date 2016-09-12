@@ -64,16 +64,12 @@
                     <tr>
                         <td colspan="5" align="right">
 
-                            <div class="toggle-radio">
+                            @if(isset($payments))
                                 @foreach($payments as $payment)
-                                    <input type="radio" class="paymentType" autocomplete=off name="payement_id" {{ ($payment->id == 1  ? 'checked': '') }} id="{{ $payment->slug }}" value="{{ $payment->id }}" />
-                                    <label for="{{ $payment->slug }}">
-                                        {{ $payment->title }}<br/>
-                                        <img src="{{ asset('images/'.$payment->image.'') }}" alt="{{ $payment->title }}">
-                                        <small>{{ $payment->description }}</small>
-                                    </label>
+                                    <input type="hidden" name="payement_id" checked value="{{ $payment->id }}" />
+                                    <p><strong>Payement {{ $payment->title }}</strong><br/>{{ $payment->description }}</p><br/>
                                 @endforeach
-                            </div>
+                            @endif
 
                             <p class="text-right terms">
                                 <label><input id="termsAndConditions" type="checkbox"> &nbsp;J'ai lu <a href="#">les termes et conditions générales</a></label>

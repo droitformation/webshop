@@ -86,7 +86,25 @@ class Order extends Model{
         $price = $total / 100;
 
         return $money->format($price);
+    }
 
+    public function getTotalShippingAttribute()
+    {
+        // formatter
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        // Load relations
+        $this->load('shipping','coupon');
+
+        if(count($this->coupon) && $this->coupon->type == 'shipping')
+        {
+            return 0;
+        }
+
+        if($this->shipping)
+        {
+            return $money->format($this->shipping->price/100);
+        }
     }
 
     /**

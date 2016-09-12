@@ -42,6 +42,7 @@ class MatrimonialComposer
         {
             foreach($site->menus as $menu)
             {
+                $menu->load('pages');
                 $view->with('menu_'.$menu->position, $menu);
             }
         }

@@ -7,7 +7,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-2">
-                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
+                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/main/'.$abo->logo) }}" />
                     <h3 style="margin-bottom:0;line-height:24px">Abo</h3>
                     <p style="margin-bottom: 8px;">&Eacute;dition {{ $abo->title }}</p>
                 </div>

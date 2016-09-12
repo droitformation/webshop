@@ -3,9 +3,9 @@
     <?php $icons = ['text' => 'align-justify','autorite' => 'university', 'loi' => 'gavel', 'lien' => 'link', 'faq' => 'question-circle']; ?>
     @foreach($grouped as $groupe => $blocs)
         <h5><i class="fa fa-{{ $icons[$groupe] }}"></i> &nbsp;{{ ucfirst($groupe) }}</h5>
-        <ul class="list-group">
-            @foreach($blocs as $bloc)
-                <li class="list-group-item">
+        <ul class="list-group sortcontent">
+            @foreach($blocs->sortBy('rang') as $bloc)
+                <li class="list-group-item" id="page_rang_{{ $bloc->id }}">
                     <div class="row">
                         <div class="col-md-9">
                             <i id="msgEditOk" class="fa fa-check"></i>

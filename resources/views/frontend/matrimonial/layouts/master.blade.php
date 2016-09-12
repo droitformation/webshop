@@ -50,19 +50,13 @@
                                 </a>
                             </h1>
                             <nav class="col-md-8" id="menu-principal">
-
-                                @if(!$menus->isEmpty())
-                                    <?php $menu = $menus->where('position','main'); ?>
-                                    @if(!$menu->isEmpty())
-                                        <?php $menu = $menu->first()->load('pages'); ?>
-                                        @if(!$menu->pages->isEmpty())
-                                            @foreach($menu->pages as $page)
-                                                <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('matrimonial/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
-                                            @endforeach
-                                        @endif
+                                @if(isset($menu_main))
+                                    @if(!$menu_main->pages->isEmpty())
+                                        @foreach($menu_main->pages as $page)
+                                            <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('matrimonial/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
+                                        @endforeach
                                     @endif
                                 @endif
-
                             </nav>
                         </div>
                     </header>

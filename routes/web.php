@@ -211,7 +211,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('inscription/groupe/{id}', 'Backend\Colloque\InscriptionController@groupe');
     Route::post('inscription/destroygroup/{id}', 'Backend\Colloque\InscriptionController@destroygroup');
     Route::post('inscription/type', 'Backend\Colloque\InscriptionController@inscription');
-    Route::post('inscription/make', 'Backend\Colloque\InscriptionController@make');
+    Route::post('inscription/make', ['middleware' => 'already', 'uses' => 'Backend\Colloque\InscriptionController@make']);
     Route::post('inscription/edit', 'Backend\Colloque\InscriptionController@edit');
     Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
     Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
@@ -388,6 +388,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('page/sorting','Backend\Content\PageController@sorting');
     Route::resource('page',      'Backend\Content\PageController');
 
+    Route::post('pagecontent/sorting','Backend\Content\PageContentController@sorting');
     Route::get('pagecontent/{type}/{page}','Backend\Content\PageContentController@index');
     Route::resource('pagecontent', 'Backend\Content\PageContentController');
 

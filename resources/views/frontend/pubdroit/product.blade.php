@@ -51,24 +51,23 @@
 								{!!  $product->description !!}
 							</div>
 
-							<h4>Auteurs</h4>
-							<ul>
-								@if(!$product->authors->isEmpty())
+							@if(!$product->authors->isEmpty())
+								<h4>Auteurs</h4>
+								<ul>
 									@foreach($product->authors as $author)
 										<li>{{ $author->name }}</li>
 									@endforeach
-								@endif
-							</ul>
+								</ul>
+							@endif
 
-							<h4>Catégories</h4>
-							<ul>
-								@if(!$product->categories->isEmpty())
+							@if(!$product->categories->isEmpty())
+								<h4>Catégories</h4>
+								<ul>
 									@foreach($product->categories as $categorie)
 										<li>{{ $categorie->title }}</li>
 									@endforeach
-								@endif
-							</ul>
-
+								</ul>
+							@endif
 						</div>
 
 						<hr/>

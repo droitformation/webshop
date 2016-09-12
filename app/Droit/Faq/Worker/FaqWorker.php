@@ -40,8 +40,11 @@ class FaqWorker implements FaqWorkerInterface{
         if(!$this->categorie_id)
         {
             $categories = $this->getCategories();
-            
-            return $categories->first()->id;
+            if(!$categories->isEmpty()){
+                return $categories->first()->id;
+            }
+
+            return null;
         }
 
         return $this->categorie_id;

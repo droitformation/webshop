@@ -63,8 +63,8 @@ class ShopController extends Controller {
 	 */
 	public function index()
 	{
-        $nouveautes = $this->product->getByCategorie(5)->take(6);
-		$products   = $this->product->getNbr(10,[5]);
+		$products   = $this->product->getNbr(10);
+        $nouveautes = $this->product->getByCategorie(1);
 
         $page       = $this->page->getBySlug($this->site_id,'accueil');
 

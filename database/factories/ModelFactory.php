@@ -165,7 +165,6 @@ $factory->define(App\Droit\Adresse\Entities\Adresse::class, function (Faker\Gene
 
 $factory->define(App\Droit\Shop\Product\Entities\Product::class, function (Faker\Generator $faker) {
     return [
-        'id'              => 100,
         'title'           => 'Test product',
         'teaser'          => 'test',
         'image'           => 'test.jpg',
@@ -181,7 +180,6 @@ $factory->define(App\Droit\Shop\Product\Entities\Product::class, function (Faker
 
 $factory->define(App\Droit\Shop\Order\Entities\Order::class, function (Faker\Generator $faker) {
     return [
-        'id'          => 100,
         'user_id'     => 1,
         'coupon_id'   => null,
         'payement_id' => 1,

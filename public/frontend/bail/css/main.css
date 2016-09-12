@@ -78,6 +78,10 @@ a:visited {
   height: 86px;
 }
 
+.header p{
+    margin-bottom: 5px;
+}
+
 #breadcrumbs, #breadcrumbs a {
   color: #fff;
 }

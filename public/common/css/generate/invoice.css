@@ -271,3 +271,9 @@ small{
     padding: 10px;
     border: 1px solid #e5e5e5;
 }
+
+.line_total_invoice{
+    background: #f0f0f0;
+    border-top:1px solid #e1e1e1;
+    padding-top: 3px;
+}

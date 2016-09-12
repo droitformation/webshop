@@ -48,7 +48,15 @@ class BailComposer
         $newsletters = $this->newsworker->siteNewsletters($site->id);
         $campagnes   = $this->newsworker->siteCampagnes($site->id);
 
-        $view->with('menus', $site->menus);
+        if(!$site->menus->isEmpty())
+        {
+            foreach($site->menus as $menu)
+            {
+                $menu->load('pages');
+                $view->with('menu_'.$menu->position, $menu);
+            }
+        }
+        
         $view->with('site',  $site);
         $view->with('authors', $this->author->getAll());
         $view->with('categories',  $categories);

@@ -58,6 +58,7 @@ class Kernel extends HttpKernel {
         'registered'     =>'App\Http\Middleware\Registered',
 		'strip'          =>'App\Http\Middleware\StripRequest',
 		'abo'            =>'App\Http\Middleware\OrderAbo',
+		'already'        =>'App\Http\Middleware\AlreadyRegistered',
 	];
 
 }

@@ -20,20 +20,20 @@
                     <div class="form-group">
                         <label><strong>Type d'inscription</strong></label>
                         <div class="radio">
-                            <label><input type="radio" required name="type" value="simple" checked> Inscription simple</label>
+                            <label><input type="radio" required name="type" value="simple" {{ old('type') == 'simple' || !old('type') ? 'checked': '' }}> Inscription simple</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" required name="type" value="multiple"> Inscription multiple</label>
+                            <label><input type="radio" required name="type" value="multiple" {{ old('type') == 'multiple' ? 'checked': '' }}> Inscription multiple</label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label><strong>Colloque</strong></label>
-                        <select autocomplete="off" required class="form-control" id="colloqueSelection">
+                        <select autocomplete="off" name="colloque_id" required class="form-control" id="colloqueSelection">
                             <option value="">Choisir le colloque</option>
                             @if(!$colloques->isEmpty())
                                 @foreach($colloques as $col)
-                                    <option <?php echo (isset($colloque) && ($col->id == $colloque->id) ? 'selected' : ''); ?> value="{{ $col->id }}">{{ $col->titre }}</option>
+                                    <option {{ old('colloque_id') == $col->id ? 'selected' : '' }} value="{{ $col->id }}">{{ $col->titre }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -44,6 +44,10 @@
 
                     <div id="inputColloque"></div>
                     <div id="choiceColloque"></div>
+
+                    @if(old('user_id'))
+                        <input type="hidden" name="user_id" value="{{ old('user_id') }}">
+                    @endif
 
                     <button type="submit" class="btn btn-info pull-right">Suivant</button>
                 </form>

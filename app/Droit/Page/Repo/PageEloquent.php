@@ -39,7 +39,12 @@ class PageEloquent implements PageInterface{
 
     public function getBySlug($site,$slug)
     {
-        return $this->page->with(['contents','blocs'])->sites($site)->where('slug','=',$slug)->first();
+        return $this->page->with(['contents','blocs'])
+            ->sites($site)
+            ->where(function ($query) use ($slug) {
+                $query->where('slug','=',$slug)->orWhere('template','=',$slug);
+            })
+            ->first();
     }
 
     public function buildTree($data)

@@ -44,19 +44,13 @@
                         <div class="row">
                             <h1 class="col-md-3"><a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
                             <nav class="col-md-9" id="menu-principal">
-
-                                @if(!$menus->isEmpty())
-                                    <?php $menu = $menus->where('position','main'); ?>
-                                    @if(!$menu->isEmpty())
-                                        <?php $menu = $menu->first()->load('pages'); ?>
-                                        @if(!$menu->pages->isEmpty())
-                                            @foreach($menu->pages as $page)
-                                                <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('bail/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
-                                            @endforeach
-                                        @endif
+                                @if(isset($menu_main))
+                                    @if(!$menu_main->pages->isEmpty())
+                                        @foreach($menu_main->pages as $page)
+                                            <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('bail/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
+                                        @endforeach
                                     @endif
                                 @endif
-
                             </nav>
                         </div>
                     </header>
