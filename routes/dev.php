@@ -541,12 +541,12 @@ Route::get('/calculette', function () {
 Route::get('factory', function()
 {
     $make = new \tests\factories\ObjectFactory();
-    $products = $make->product(15);
-    //$colloque = $make->colloque();
-    $orders = $make->order(5);
+    //$products = $make->product(15);
+    $colloque = $make->colloque();
+    //$orders = $make->order(5);
 
     echo '<pre>';
-    print_r($orders);
+    //print_r($orders);
     echo '</pre>';
 
 });

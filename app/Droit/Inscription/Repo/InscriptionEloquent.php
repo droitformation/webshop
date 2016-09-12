@@ -25,6 +25,7 @@ class InscriptionEloquent implements InscriptionInterface{
     public function getByColloque($id, $type = false, $paginate = false)
     {
         $inscription = $this->inscription
+            //->select(\DB::raw('colloque_inscriptions.*, concat(CASE WHEN group_id IS NOT NULL THEN group_id ELSE user_id END) AS `grouped`'))
             ->with(['user','user.adresses','price','user_options','colloque.options','colloque.documents'])
             ->where('colloque_id','=',$id);
 
@@ -35,7 +36,8 @@ class InscriptionEloquent implements InscriptionInterface{
 
         if($paginate)
         {
-            return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->orderBy('created_at','DESC')->paginate(50);
+            return $inscription->groupBy('user_id')->groupBy('group_id')->orderBy('created_at','DESC')->paginate(50);
+            //return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->orderBy('created_at','DESC')->paginate(50);
         }
 
         return $inscription->orderBy('created_at','DESC')->get();

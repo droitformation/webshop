@@ -28,12 +28,15 @@ class AlreadyRegistered
      */
     public function handle($request, Closure $next)
     {
-        $exist = $this->inscription->getByUser($request->colloque_id,$request->user_id);
-
-        if($exist)
+        if($request->input('type') == 'simple')
         {
-            alert()->warning('Cet utilisateur est déjà inscrit à ce colloque');
-            return redirect()->back()->withInput();
+            $exist = $this->inscription->getByUser($request->input('colloque_id'),$request->input('user_id'));
+
+            if($exist)
+            {
+                alert()->warning('Cet utilisateur est déjà inscrit à ce colloque');
+                return redirect()->back()->withInput();
+            }
         }
 
         return $next($request);
