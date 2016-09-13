@@ -1,7 +1,12 @@
 
-// The url to the application
+/*
+ * Select user or adresse
+ * Used in abo, can be sued for tiers payant
+ * */
+
 var base_url = location.protocol + "//" + location.host+"/";
 
+// Get elements and choose via autocomplete
 $('input.search-adresse').each(function()
 {
     var idAutocomplete = $(this).prop("id");
@@ -39,6 +44,7 @@ $('input.search-adresse').each(function()
 
 });
 
+// Prepare tmeplate for adresse
 function template(data, type)
 {
     var company  = data.company ? data.company + '<br/>' : '';
@@ -58,6 +64,8 @@ function template(data, type)
     return html;
 }
 
+// Get already choosen data
+// Ex:  Back if validation fails
 var $search = $('.input-adresse');
 
 if($search.length && $search.data('uid'))
@@ -71,7 +79,7 @@ if($search.length && $search.data('uid'))
         var type = $(this).data('type');
         var name = type == 'adresse_id' || 'tiers_id' ? 'adresse_id' : 'user_id';
         var res  = name.replace("_id", "");
-        console.log(uid);
+
         if(uid)
         {
             $.get( 'admin/' + res + '/getAdresse/' + uid , function( data )
@@ -84,7 +92,7 @@ if($search.length && $search.data('uid'))
     });
 }
 
-
+// Remove the choosen adresse
 $('body').on('click','.remove-adresse', function(e) {
     e.preventDefault();
 
@@ -97,5 +105,4 @@ $('body').on('click','.remove-adresse', function(e) {
     var type   = $input.data('type');
 
     $input.html('<input type="hidden" value="" name="' + type + '">');
-
 });

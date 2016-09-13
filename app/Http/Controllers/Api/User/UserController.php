@@ -104,9 +104,24 @@ class UserController extends Controller {
     public function getAdresse($id)
     {
         $user    = $this->user->find($id);
-        $adresse = $user->adresse_livraison ? $user->adresse_livraison : '';
+        $adresse = $user->adresse_facturation ? $user->adresse_facturation : '';
 
         return $adresse;
+        die();
+    }
+
+    public function getUser($id)
+    {
+        $user    = $this->user->find($id);
+        $adresse = $user->adresse_facturation;
+
+        return [
+            'id'       => $id ,
+            'adresse'  => $adresse,
+            'civilite' => $adresse->civilite_title,
+            'cp'       => $adresse->cp_trim
+        ];
+
         die();
     }
 }

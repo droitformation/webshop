@@ -132,11 +132,6 @@
 <!-- Upload plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
 
-<!-- Gallery plugins -->
-<script type='text/javascript' src="<?php echo asset('backend/plugins/mixitup/jquery.mixitup.min.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/gallery/gallery-simple.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/js/isotope.pkgd.min.js');?>"></script>
-
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/colloque/inscription.js');?>"></script>
@@ -150,9 +145,10 @@
 @endif
 
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/inscription.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/search-user.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/search-adresse.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/order.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/user.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/inscription.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/colloque.js');?>"></script>

@@ -129,6 +129,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         ),
         'B' => 
         array (
+            'Box\\Spout\\' => 10,
             'Barryvdh\\DomPDF\\' => 16,
             'Barryvdh\\Debugbar\\' => 18,
         ),
@@ -340,6 +341,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
+        'Box\\Spout\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/box/spout/src/Spout',
         ),
         'Barryvdh\\DomPDF\\' => 
         array (

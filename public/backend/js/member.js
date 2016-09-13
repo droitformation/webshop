@@ -4,7 +4,6 @@ $( function() {
 
     if($("#members").length)
     {
-
         $.get(base_url + 'admin/member', function( data )
         {
             $("#members").tagit({

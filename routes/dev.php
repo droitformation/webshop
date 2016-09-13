@@ -542,8 +542,9 @@ Route::get('factory', function()
 {
     $make = new \tests\factories\ObjectFactory();
     //$products = $make->product(15);
-    $colloque = $make->colloque();
+    //$colloque = $make->colloque();
     //$orders = $make->order(5);
+    $make->user(40);
 
     echo '<pre>';
     //print_r($orders);

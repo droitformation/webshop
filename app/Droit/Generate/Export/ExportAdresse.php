@@ -3,6 +3,7 @@
 
  use Illuminate\Foundation\Bus\DispatchesJobs;
  use Box\Spout\Writer\WriterFactory;
+ use Box\Spout\Writer\Style\StyleBuilder;
  use Box\Spout\Common\Type;
 
  class ExportAdresse{
@@ -20,6 +21,8 @@
 
      public function export($adresses)
      {
+         $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->setShouldWrapText()->build();
+
          $writer = WriterFactory::create(Type::XLSX); // for XLSX files
 
          $filename = "file.xlsx";
@@ -30,7 +33,7 @@
          $adresses = $this->prepareAdresse($adresses);
 
          //$writer->addRow($singleRow); // add a row at a time
-         $writer->addRows($adresses->toArray()); // add multiple rows at a time
+         $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
 
          $writer->close();exit;
      }

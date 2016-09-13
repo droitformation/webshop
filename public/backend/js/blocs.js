@@ -1,4 +1,6 @@
-
+/*
+* Content blocs for pages
+* */
 $( function() {
 
     var base_url = location.protocol + "//" + location.host+"/";

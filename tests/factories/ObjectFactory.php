@@ -3,13 +3,21 @@
 class ObjectFactory
 {
     protected $faker;
+    protected $professions;
+    protected $cantons;
 
     public function __construct()
     {
         $this->faker = \Faker\Factory::create();
+
+        $profession = \App::make('App\Droit\Profession\Repo\ProfessionInterface');
+        $canton     = \App::make('App\Droit\Canton\Repo\CantonInterface');
+
+        $this->professions = $profession->getAll()->pluck('title','id')->all();
+        $this->cantons     = $canton->getAll()->pluck('title','id')->all();
     }
 
-    public function user()
+    public function makeUser()
     {
         $first_name = $this->faker->firstName;
         $last_name  = $this->faker->lastName;
@@ -23,19 +31,19 @@ class ObjectFactory
         ]);
 
         $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
-            'civilite_id'   => 1,
+            'civilite_id'   => $this->faker->numberBetween(1,4),
             'first_name'    => $first_name,
             'last_name'     => $last_name,
             'email'         => $email,
             'company'       => $this->faker->company,
-            'profession_id' => 1,
+            'profession_id' => array_rand($this->professions, 1),
             'telephone'     => '032 690 00 23',
             'mobile'        => '032 690 00 23',
             'fax'           => null,
             'adresse'       => $this->faker->address,
             'npa'           => $this->faker->postcode,
             'ville'         => $this->faker->city,
-            'canton_id'     => 6,
+            'canton_id'     => array_rand($this->cantons, 1),
             'pays_id'       => 208,
             'type'         => 1,
             'user_id'      => $user->id,
@@ -45,6 +53,19 @@ class ObjectFactory
         $user->adresses()->save($adresse);
 
         return $user;
+    }
+
+    public function user($nbr = false)
+    {
+        if($nbr)
+        {
+            for ($x = 0; $x <= $nbr; $x++)
+            {
+                $this->makeUser();
+            }
+        }
+
+        return $this->makeUser();;
     }
 
     public function makeAdmin($user)

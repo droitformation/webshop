@@ -24,31 +24,6 @@ class Kernel extends ConsoleKernel {
 	protected function schedule(Schedule $schedule)
 	{
 		$schedule->command('reminder')->everyMinute();
-
-/*		$schedule->call(function() {
-			\Mail::send('emails.notify', ['text' => 'hey'], function ($m)  {
-				$m->from('hello@app.com', 'Your Application');
-				$m->to('cindy.leschaud@gmail.com', 'Cindy Leschaud')->subject('Your Reminder!');
-			});
-		})->name('monitor_queue_listener')->everyMinute();*/
-
-		// Monitor queue listen
-/*		$path = base_path();
-		$schedule->call(function() use($path) {
-			if (file_exists($path . '/queue.pid')) {
-				$pid = file_get_contents($path . '/queue.pid');
-				$result = exec("ps -p $pid --no-heading | awk '{print $1}'");
-				$run = $result == '' ? true : false;
-			} else {
-				$run = true;
-			}
-			if($run) {
-				$command = '/usr/bin/php -c ' . $path .'/php.ini ' . $path . '/artisan queue:listen --tries=3 > /dev/null & echo $!';
-				$number = exec($command);
-				file_put_contents($path . '/queue.pid', $number);
-			}
-		})->name('monitor_queue_listener')->everyFiveMinutes();*/
-
 		$schedule->command('queue:work --daemon')->everyMinute()->withoutOverlapping();
 	}
 

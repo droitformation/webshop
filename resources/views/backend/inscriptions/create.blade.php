@@ -45,10 +45,6 @@
                     <div id="inputColloque"></div>
                     <div id="choiceColloque"></div>
 
-                    @if(old('user_id'))
-                        <input type="hidden" name="user_id" value="{{ old('user_id') }}">
-                    @endif
-
                     <button type="submit" class="btn btn-info pull-right">Suivant</button>
                 </form>
 

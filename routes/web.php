@@ -150,6 +150,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('search', 'Backend\SearchController@search');
 
     Route::get('user/getAdresse/{id}', 'Api\User\UserController@getAdresse');
+    Route::get('user/getUser/{id}', 'Api\User\UserController@getUser');
     Route::get('adresse/getAdresse/{id}', 'Api\User\AdresseController@getAdresse');
 
     Route::resource('faq', 'Backend\Bail\FaqController');

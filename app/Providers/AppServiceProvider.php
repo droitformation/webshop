@@ -52,9 +52,7 @@ class AppServiceProvider extends ServiceProvider {
         view()->composer([
             'frontend.pubdroit.partials.label',
             'backend.export.user',
-            'backend.products.create',
-            'backend.products.index',
-            'backend.products.show'
+            'backend.products.*',
         ], 'App\Http\ViewComposers\LabelComposer');
 
         view()->composer([

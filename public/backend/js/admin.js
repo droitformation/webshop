@@ -6,7 +6,12 @@ $( function() {
         html : true,
         trigger : 'hover'
     });
-    
+
+    $('.colorpicker').colorPicker();
+
+    /*
+     * Datepicker
+     * */
     $.fn.datepicker.dates['fr'] = {
         days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
         daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
@@ -22,6 +27,9 @@ $( function() {
         language: 'fr'
     });
 
+    /*
+     * delete action confirmation
+     * */
     $('body').on('click','.deleteAction',function(event){
 
         var $this  = $(this);
@@ -38,51 +46,8 @@ $( function() {
     });
 
     /*
-    * Inscription form clones
-    */
-    $('body').on("click", '#cloneBtn' ,function(e) {
-
-        var $wrapper_clone  = $('#wrapper_clone');
-        var $fieldset_clone = $('#fieldset_clone');
-
-        e.preventDefault(); e.stopPropagation();
-
-        var clone = $fieldset_clone.clone();
-
-        var length       = $('.field_clone').length;
-        var $options     = clone.find('.option-input');
-        var $occurrences = clone.find('.occurrence-input');
-        var $radios      = clone.find('.group-input');
-
-        $radios.each(function(){
-            var name = $(this).attr('name');
-            var name = name.replace('groupes[0]', 'groupes[' + length + ']');
-            $(this).attr('name', name);
-        });
-
-        $options.each(function(){
-            var oname = $(this).attr('name');
-            var oname = oname.replace('options[0]', 'options[' + length + ']');
-            $(this).attr('name', oname);
-        });
-
-        $occurrences.each(function(){
-            var oname = $(this).attr('name');
-            var oname = oname.replace('occurrences[0]', 'occurrences[' + length + ']');
-            $(this).attr('name', oname);
-        });
-
-        clone.attr('id', '');
-        clone.prepend('<a href="#" class="remove">x</a>');
-        clone.appendTo($wrapper_clone);
-    });
-
-    $('body').on("click", '.remove' ,function(e) {
-        e.preventDefault(); e.stopPropagation();
-
-        $(this).closest('fieldset').remove();
-    });
-
+    * For product abos
+    * */
     $('#multi-select').multiSelect({
         selectableHeader: "<input type='text' class='form-control' style='margin-bottom: 10px;'  autocomplete='off' placeholder='Rechercher par nom'>",
         selectionHeader : "<input type='text' class='form-control' style='margin-bottom: 10px;' autocomplete='off' placeholder='Rechercher par nom'>",
@@ -159,12 +124,10 @@ $( function() {
     {
         var $select = $('#productSelect');
 
-        if($('#typeSelect').val() == 'product')
-        {
+        if($('#typeSelect').val() == 'product') {
             $select.show();
         }
-        else
-        {
+        else {
             $select.hide();
         }
     }
@@ -172,81 +135,6 @@ $( function() {
     isProductCoupon();
 
     $('#typeSelect').change(function() { isProductCoupon(); });
-
-    $('.colorpicker').colorPicker();
-
-
-    var base_url = location.protocol + "//" + location.host+"/";
-
-    $("#tags").tagit({
-        fieldName          : "specialisation",
-        allowSpaces        : true,
-        placeholderText    : "Rechercher une spécialisation",
-        removeConfirmation : true,
-        afterTagAdded: function(event, ui) {
-            if(!ui.duringInitialization)
-            {
-                var specialisation = ui.tagLabel;
-                var colloque_id    = $(this).data('id');
-
-                $.ajax({
-                    dataType : "json",
-                    type     : 'POST',
-                    url      : base_url + 'admin/specialisation',
-                    data: {  colloque_id  : colloque_id, specialisation : specialisation , _token: $("meta[name='_token']").attr('content') },
-                    success: function( data ) {
-                        console.log('added');
-                    },
-                    error: function(data) {  console.log('error');  }
-                });
-            }
-        },
-        beforeTagRemoved: function(event, ui) {
-
-            var specialisation = ui.tagLabel;
-            var colloque_id    = $(this).data('id');
-
-            var answer = confirm('Voulez-vous vraiment supprimer : '+ specialisation +' ?');
-            if (answer) {
-                $.ajax({
-                    dataType : "json",
-                    type     : 'POST',
-                    url      : base_url + 'admin/specialisation/destroy',
-                    data     : {_method: 'delete', colloque_id: colloque_id, specialisation: specialisation, _token: $("meta[name='_token']").attr('content')},
-                    success: function (data) {
-                        console.log('removed');
-                    },
-                    error: function (data) {console.log('error');}
-                });
-            }
-            else
-            {
-                return false;
-            }
-        },
-        autocomplete: {
-            delay: 0,
-            minLength: 2,
-            source: function( request, response ) {
-                $.ajax({
-                    dataType : "json",
-                    type     : 'GET',
-                    url      : base_url + 'admin/specialisation/search',
-                    data: {  term: request.term , _token: $("meta[name='_token']").attr('content') },
-                    success: function( data ) {
-                        console.log(data);
-                        response( $.map( data, function( item ) {
-                            return {
-                                label: item.label,
-                                value: item.label
-                            }
-                        }));
-                    },
-                    error: function(data) {  console.log('error');  }
-                });
-            }
-        }
-    });
 
     $('.customCollapse').on('shown.bs.collapse', function () {
         var $row = $(this).closest('tr');

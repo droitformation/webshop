@@ -1,7 +1,9 @@
 /*
+ * Select row
  * Product add to new order
  * */
 
+// Initialize select
 $('.chosen-select').chosen();
 
 $('body').on("click", '#cloneBtnOrder' ,function(e) {
@@ -19,7 +21,6 @@ $('body').on("click", '#cloneBtnOrder' ,function(e) {
 
     // Checkbox
     var $checkbox = clone.find('input[type="checkbox"]');
-    console.log($checkbox);
     var name      = $checkbox.attr('name');
     name          = name.replace('order[gratuit][]', 'order[gratuit][' + length + ']');
 
@@ -34,11 +35,9 @@ $('body').on("click", '#cloneBtnOrder' ,function(e) {
     clone.appendTo($wrapper_clone);
 
     select.chosen();
-
 });
 
 $('body').on("click", '.remove_order' ,function(e) {
     e.preventDefault(); e.stopPropagation();
-
     $(this).closest('fieldset').remove();
 });

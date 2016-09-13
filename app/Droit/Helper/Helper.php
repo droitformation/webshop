@@ -6,10 +6,21 @@ use App\Droit\Service\UploadWorker;
 class Helper {
 
     protected $upload;
+    protected $categories;
+    protected $authors;
+    protected $domains;
 
     public function __construct()
     {
         $this->upload = new UploadWorker();
+
+        $categorie = \App::make('App\Droit\Shop\Categorie\Repo\CategorieInterface');
+        $author    = \App::make('App\Droit\Author\Repo\AuthorInterface');
+        $domain    = \App::make('App\Droit\Domain\Repo\DomainInterface');
+
+        $this->categories = $categorie->getAll();
+        $this->authors    = $author->getAll();
+        $this->domains    = $domain->getAll();
     }
 
 	/*
@@ -449,7 +460,7 @@ class Helper {
                 if($result instanceof \App\Droit\User\Entities\User)
                 {
                     $result->load('adresses');
-                    $adresse = $result->adresse_livraison ? $result->adresse_livraison : '';
+                    $adresse = $result->adresse_facturation ? $result->adresse_facturation : '';
                 }
 
                 if($result instanceof \App\Droit\Adresse\Entities\Adresse)
@@ -607,7 +618,7 @@ class Helper {
             $name = str_replace('_id','',$key).'s';
             $id   = $search[$key];
 
-            echo '<h3>'.$$name->find($id)->title.'</h3>';
+            echo '<h3>'.$this->$name->find($id)->title.'</h3>';
         }
     }
 
