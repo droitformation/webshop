@@ -42,8 +42,9 @@
                                             <td><img height="40" src="{!! asset('files/pictos/'.$categorie->image) !!}" alt="{{ $categorie->title }}" /></td>
                                             <td><strong>{{ $categorie->title }}</strong></td>
                                             <td class="text-right">
-                                                {!! Form::open(array('id' => 'deleteCategorieForm_'.$categorie->id, 'route' => array('admin.categorie.destroy', $categorie->id), 'method' => 'delete')) !!}
-                                                {!! Form::close() !!}
+                                                <form id="deleteCategorieForm_" action="{{ url('admin/categorie/'.$categorie->id) }}" method="POST" class="form-horizontal">
+                                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                </form>
                                                 <button data-id="{{ $categorie->id }}" class="btn btn-danger btn-sm deleteCategorie">x</button>
                                             </td>
                                         </tr>

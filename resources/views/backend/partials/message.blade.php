@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="alert alert-dismissable alert-{{ Session::get('status') }} {{ (count($errors) > 0 ? 'alert-danger' : '') }}">
+        <div class="alert alert-dismissable alert-{{ session('status') }} {{ (count($errors) > 0 ? 'alert-danger' : '') }}">
 
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
@@ -10,7 +10,7 @@
             <p>{!! $message !!}</p>
             @endforeach
 
-            {!! Session::get('message') !!}
+            {{ session('message') }}
 
         </div>
     </div>

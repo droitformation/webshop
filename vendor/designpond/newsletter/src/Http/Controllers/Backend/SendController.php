@@ -66,7 +66,9 @@ class SendController extends Controller
         // Update campagne status
         $this->campagne->update(['id' => $campagne->id, 'status' => 'envoyé', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => $toSend]);
 
-        return redirect('build/newsletter')->with(['status' => 'success' , 'message' => 'Campagne envoyé!']);
+        alert()->success('Campagne envoyé!');
+
+        return redirect('build/newsletter');
     }
     
     /**
@@ -105,7 +107,9 @@ class SendController extends Controller
             echo 'ok'; exit;
         }
 
-        return redirect('build/campagne/'.$campagne->id)->with( ['status' => 'success' , 'message' => 'Email de test envoyé!'] );
+        alert()->success('Email de test envoyé!');
+
+        return redirect('build/campagne/'.$campagne->id);
     }
 
     /**
@@ -133,6 +137,8 @@ class SendController extends Controller
             echo 'ok'; exit;
         }
 
-        return redirect('build/campagne/'.$campagne->id)->with( ['status' => 'success' , 'message' => 'Email de test envoyé!'] );
+        alert()->success('Email de test envoyé!');
+
+        return redirect('build/campagne/'.$campagne->id);
     }
 }
