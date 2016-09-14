@@ -210,7 +210,9 @@ class Generate{
 
             if (!\File::exists(public_path($path)))
             {
-                \File::makeDirectory(public_path($path));
+                if (!mkdir(public_path($path), 0755, true)) {
+                    die('Failed to create folders...');
+                }
             }
 
             $file = $path.$name.'_'.$this->model->colloque_id.'.pdf';
@@ -224,7 +226,7 @@ class Generate{
 
             if (!\File::exists(public_path($path)))
             {
-                if (!mkdir($path, 0755, true)) {
+                if (!mkdir(public_path($path), 0755, true)) {
                     die('Failed to create folders...');
                 }
             }
