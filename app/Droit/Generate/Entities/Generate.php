@@ -224,7 +224,9 @@ class Generate{
 
             if (!\File::exists(public_path($path)))
             {
-                \File::makeDirectory(public_path($path));
+                if (!mkdir($path, 0755, true)) {
+                    die('Failed to create folders...');
+                }
             }
 
             if($annexe == 'rappel')
