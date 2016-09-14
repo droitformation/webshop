@@ -16,7 +16,6 @@ class CreateShopProduitCategoriesTable extends Migration {
         {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('shop_products');
             $table->integer('categorie_id');
             $table->integer('sorting');
         });

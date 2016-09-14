@@ -6,18 +6,24 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AdminCreatePagesTest extends TestCase {
 
+    use DatabaseTransactions;
+    
     public function setUp()
     {
         parent::setUp();
+        
+        DB::beginTransaction();
 
-        $user = App\Droit\User\Entities\User::find(710);
-
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
     }
 
     public function tearDown()
     {
-        \Mockery::close();
+        Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
     
 	/**

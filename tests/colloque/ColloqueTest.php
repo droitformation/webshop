@@ -111,11 +111,8 @@ class ColloqueTest extends TestCase {
 
     public function testCreateColloque()
     {
-        $make = new \tests\factories\ObjectFactory();
+        $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
-
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
-        $this->actingAs($user);
 
         $this->colloque->shouldReceive('getAll')->once()->andReturn(collect([$colloque]));
         $this->colloque->shouldReceive('getYears')->once()->andReturn(collect([$colloque]));

@@ -53,17 +53,15 @@ return [
 		],
 
 		'testing' => [
-			'driver'      => 'mysql',
-			'host'        => 'localhost',
-			'database'    => env('DB_DATABASE', 'forge'),
-			'username'    => 'root',
-			'password'    => 'root',
-			'unix_socket' => env('DB_SOCKET', ''),
-			'unix_socket' => '/Applications/MAMP/tmp/mysql/mysql.sock',
-			'charset'     => 'utf8',
-			'collation'   => 'utf8_unicode_ci',
-			'prefix'      => '',
-			'strict'      => false,
+			'driver'    => 'mysql',
+			'host'      => env('DB_TEST_HOST', 'localhost'),
+			'database'  => env('DB_TEST_DATABASE', 'homestead_test'),
+			'username'  => env('DB_TEST_USERNAME', 'homestead'),
+			'password'  => env('DB_TEST_PASSWORD', 'secret'),
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+			'strict'    => false,
 		],
 
 		'mysql' => [

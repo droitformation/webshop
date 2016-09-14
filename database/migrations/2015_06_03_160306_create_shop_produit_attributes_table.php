@@ -16,7 +16,6 @@ class CreateShopProduitAttributesTable extends Migration {
         {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('shop_products');
             $table->integer('attribute_id');
             $table->string('value');
             $table->integer('sorting');

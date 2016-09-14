@@ -1,7 +1,6 @@
 <?php
 
 
-
 class SiteTest extends TestCase {
 
 	public function setUp()

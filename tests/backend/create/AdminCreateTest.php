@@ -6,12 +6,16 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AdminCreateTest extends TestCase {
 
+    use DatabaseTransactions;
+    
     public function setUp()
     {
         parent::setUp();
+        
+        DB::beginTransaction();
 
-        $user = App\Droit\User\Entities\User::find(710);
-
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
     }
 
@@ -23,17 +27,36 @@ class AdminCreateTest extends TestCase {
     /**
      * @return void
      */
-    public function testAdminPages()
+    public function testAdmin1Pages()
     {
-        $sites = [1,2,3];
+        $this->visit('admin/page/create/1')->see('Ajouter une page');
+        $this->visit('admin/menu/create/1')->see('Ajouter un menu');
+        $this->visit('admin/arret/create/1')->see('Créer arrêt');
+        $this->visit('admin/analyse/create/1')->see('Créer analyse');
+        $this->visit('admin/bloc/create/1')->see('Ajouter un bloc');
+    }
 
-        foreach($sites as $site)
-        {
-            $this->visit('admin/page/create/'.$site)->see('Ajouter une page');
-            $this->visit('admin/menu/create/'.$site)->see('Ajouter un menu');
-            $this->visit('admin/arret/create/'.$site)->see('Créer arrêt');
-            $this->visit('admin/analyse/create/'.$site)->see('Créer analyse');
-            $this->visit('admin/bloc/create/'.$site)->see('Ajouter un bloc');
-        }
+    /**
+     * @return void
+     */
+    public function testAdmin2Pages()
+    {
+        $this->visit('admin/page/create/2')->see('Ajouter une page');
+        $this->visit('admin/menu/create/2')->see('Ajouter un menu');
+        $this->visit('admin/arret/create/2')->see('Créer arrêt');
+        $this->visit('admin/analyse/create/2')->see('Créer analyse');
+        $this->visit('admin/bloc/create/2')->see('Ajouter un bloc');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAdmin3Pages()
+    {
+        $this->visit('admin/page/create/3')->see('Ajouter une page');
+        $this->visit('admin/menu/create/3')->see('Ajouter un menu');
+        $this->visit('admin/arret/create/3')->see('Créer arrêt');
+        $this->visit('admin/analyse/create/3')->see('Créer analyse');
+        $this->visit('admin/bloc/create/3')->see('Ajouter un bloc');
     }
 }

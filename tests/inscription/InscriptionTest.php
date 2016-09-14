@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 class InscriptionTest extends TestCase {
 
     protected $mock;
@@ -7,6 +9,8 @@ class InscriptionTest extends TestCase {
     protected $groupe;
     protected $interface;
     protected $worker;
+
+    use DatabaseTransactions;
 
     public function setUp()
     {
@@ -110,13 +114,17 @@ class InscriptionTest extends TestCase {
         $this->WithoutEvents();
         $this->withoutJobs();
 
-        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $make     = new \tests\factories\ObjectFactory();
+        $user     = $make->user();
+        $colloque = $make->colloque();
+
+        $input = ['type' => 'simple', 'colloque_id' => $colloque->id, 'user_id' => $user->id, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
 
         $this->worker->shouldReceive('register')->once()->andReturn($inscription);
 
-        $response = $this->call('POST', 'registration', $input);
+        $response = $this->call('POST', 'pubdroit/registration', $input);
 
         $this->assertRedirectedTo('/');
     }

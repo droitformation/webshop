@@ -318,8 +318,13 @@ class CartWorkerTest extends TestCase {
     public function testSearchItem()
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
-        
+        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'id' => 1,
+            'title' => 'Titre',
+            'price' => '1200',
+            'weight' => '2000'
+        ]);
+
         \Cart::instance('shop');
         \Cart::instance('shop')->add($oneproduct->id, $oneproduct->title, 1, $oneproduct->price , array('weight' => $oneproduct->weight));
 
@@ -336,7 +341,12 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
-        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
+        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'id' => 1,
+            'title'  => 'Titre',
+            'price'  => 1000,
+            'weight' => '2000'
+        ]);
         $twocoupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'two')->make();
         
         \Cart::instance('shop');
@@ -360,9 +370,7 @@ class CartWorkerTest extends TestCase {
     public function testCalculPriceWithSecondCoupon()
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-
-        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
-        $onecoupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
+        $onecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
         
         \Cart::instance('shop');
 
@@ -386,9 +394,7 @@ class CartWorkerTest extends TestCase {
     public function testCalculPriceWithFirstAndSecondCoupon()
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-
-        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
-        $onecoupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
+        $onecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
         
         \Cart::instance('shop');
 
@@ -418,9 +424,6 @@ class CartWorkerTest extends TestCase {
     public function testGetPriceWithProductAndAbo()
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-
-        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
-        $abo     = factory(App\Droit\Abo\Entities\Abo::class)->make();
 
         \Cart::instance('shop');
         \Cart::instance('abonnement');

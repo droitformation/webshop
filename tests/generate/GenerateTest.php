@@ -342,10 +342,10 @@ class GenerateTest extends TestCase {
 		$abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
 		$abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['abo_user_id' => 1 ,'product_id' => 1]);
 
-        $user = App\Droit\Adresse\Entities\Adresse::find(1);
+		$adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create();
 
 		$abo_user->abo  = $abo;
-        $abo_user->user = $user;
+        $abo_user->user = $adresse;
 
 		$abo_facture->abonnement = $abo_user;
 
@@ -361,17 +361,17 @@ class GenerateTest extends TestCase {
         $abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 4983]);
         $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['abo_user_id' => 1 ,'product_id' => 1]);
 
-        $user = App\Droit\Adresse\Entities\Adresse::find(1);
+		$adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create();
 
         $abo_user->abo  = $abo;
-        $abo_user->user = $user;
+        $abo_user->user = $adresse;
 
         $abo_facture->abonnement = $abo_user;
 
         $generate = new \App\Droit\Generate\Entities\Generate($abo_facture);
         $response = $generate->getAdresse();
 
-        $this->assertEquals($response->name, 'Cindy Leschaud');
+        $this->assertEquals($response->name, $adresse->name);
     }
 
     public function testGetAboFilename()
@@ -382,15 +382,15 @@ class GenerateTest extends TestCase {
         $abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
         $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['id' => 1,'abo_user_id' => 1 ,'product_id' => 1]);
 
-		$product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['id' => 1 , 'price' => 2000]);
+		$product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 2000]);
         $product->attributs()->attach(3, ['value' => 'REV']);
-        
+
         // Using real adresse bad bad...
-        $user = App\Droit\Adresse\Entities\Adresse::find(1);
+		$adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create();
 
         $abo_facture->product = $product;
         $abo_user->abo        = $abo;
-        $abo_user->user       = $user;
+        $abo_user->user       = $adresse;
 
         $abo_facture->abonnement = $abo_user;
 
@@ -409,15 +409,15 @@ class GenerateTest extends TestCase {
 		$abo_user    = factory(\App\Droit\Abo\Entities\Abo_users::class)->make(['abo_id' => 1 ,'adresse_id' => 1]);
 		$abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->make(['id' => 2,'abo_user_id' => 1 ,'product_id' => 1]);
 
-        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['id' => 1 , 'price' => 2000]);
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['id' => 1 , 'price' => 2000]);
         $product->attributs()->attach(3, ['value' => 'REV']);
 
 		// Using real adresse bad bad...
-		$user = App\Droit\Adresse\Entities\Adresse::find(1);
+		$adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create();
 
 		$abo_facture->product = $product;
 		$abo_user->abo        = $abo;
-		$abo_user->user       = $user;
+		$abo_user->user       = $adresse;
 
 		$abo_facture->abonnement = $abo_user;
 

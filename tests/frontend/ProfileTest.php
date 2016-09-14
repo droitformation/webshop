@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UserTest extends TestCase {
+class ProfileTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -99,7 +99,7 @@ class UserTest extends TestCase {
 		$this->seeInDatabase('colloque_inscriptions', [
 			'colloque_id' => $colloque->id,
 			'user_id'     => $user->id,
-			'price_id'    => 1
+			'price_id'    => $prices[0]
 		]);
 
         $this->seePageIs('pubdroit');

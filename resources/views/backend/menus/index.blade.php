@@ -41,7 +41,7 @@
                                 <td><a class="btn btn-sky btn-sm" href="{{ url('admin/menu/'.$menu->id) }}">&Eacute;diter</a></td>
                                 <td><strong>{!! $menu->title !!}</strong></td>
                                 <td>{{ $menu->site->nom }}</td>
-                                <td>{{ $positions[$menu->position] }}</td>
+                                <td>{{ isset($positions[$menu->position]) ? $positions[$menu->position] : '' }}</td>
                                 <td class="text-right">
                                     <form action="{{ url('admin/menu/'.$menu->id) }}" method="POST">
                                         <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}

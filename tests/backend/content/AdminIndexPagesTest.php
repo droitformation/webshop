@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AdminIndexPagesTest extends TestCase {
 
+    use DatabaseTransactions;
+
     public function setUp()
     {
         parent::setUp();
@@ -135,30 +137,63 @@ class AdminIndexPagesTest extends TestCase {
         $this->assertViewHas('members');
     }
 
+
+    public function testAdminSite1Pages()
+    {
+        $this->visit('admin/pages/1')->see('Pages');
+        $this->assertViewHas('pages');
+
+        $this->visit('admin/menus/1')->see('Menus');
+        $this->assertViewHas('menus');
+
+        $this->visit('admin/arrets/1')->see('Arrêts');
+        $this->assertViewHas('arrets');
+
+        $this->visit('admin/analyses/1')->see('Analyses');
+        $this->assertViewHas('analyses');
+
+        $this->visit('admin/blocs/1')->see('Blocs de contenu');
+        $this->assertViewHas('blocs');
+
+    }
+
+
     /**
      * @return void
      */
-    public function testAdminPages()
+    public function testAdmin2Pages()
     {
-        $sites = [1,2,3];
+        $this->visit('admin/pages/2')->see('Pages');
+        $this->assertViewHas('pages');
 
-        foreach($sites as $site)
-        {
-            $this->visit('admin/pages/'.$site)->see('Pages');
-            $this->assertViewHas('pages');
+        $this->visit('admin/menus/2')->see('Menus');
+        $this->assertViewHas('menus');
 
-            $this->visit('admin/menus/'.$site)->see('Menus');
-            $this->assertViewHas('menus');
+        $this->visit('admin/arrets/2')->see('Arrêts');
+        $this->assertViewHas('arrets');
 
-            $this->visit('admin/arrets/'.$site)->see('Arrêts');
-            $this->assertViewHas('arrets');
+        $this->visit('admin/analyses/2')->see('Analyses');
+        $this->assertViewHas('analyses');
 
-            $this->visit('admin/analyses/'.$site)->see('Analyses');
-            $this->assertViewHas('analyses');
+        $this->visit('admin/blocs/2')->see('Blocs de contenu');
+        $this->assertViewHas('blocs');
+    }
 
-            $this->visit('admin/blocs/'.$site)->see('Blocs de contenu');
-            $this->assertViewHas('blocs');
-        }
+    public function testAdmin3Pages()
+    {
+        $this->visit('admin/pages/3')->see('Pages');
+        $this->assertViewHas('pages');
 
+        $this->visit('admin/menus/3')->see('Menus');
+        $this->assertViewHas('menus');
+
+        $this->visit('admin/arrets/3')->see('Arrêts');
+        $this->assertViewHas('arrets');
+
+        $this->visit('admin/analyses/3')->see('Analyses');
+        $this->assertViewHas('analyses');
+
+        $this->visit('admin/blocs/3')->see('Blocs de contenu');
+        $this->assertViewHas('blocs');
     }
 }

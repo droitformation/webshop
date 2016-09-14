@@ -45,7 +45,6 @@ $factory->define(App\Droit\Inscription\Entities\Inscription::class, function (Fa
 
 $factory->define(App\Droit\Inscription\Entities\Groupe::class, function (Faker\Generator $faker) {
     return [
-        'id'          => 1,
         'colloque_id' => 39,
         'user_id'     => 710,
         'description' => 'Une description',
@@ -55,7 +54,6 @@ $factory->define(App\Droit\Inscription\Entities\Groupe::class, function (Faker\G
 
 $factory->define(App\Droit\Option\Entities\Option::class, function (Faker\Generator $faker) {
     return [
-        'id'          => 1,
         'colloque_id' => 1,
         'title'       => 'Option',
         'type'        => 'checkbox',
@@ -64,7 +62,6 @@ $factory->define(App\Droit\Option\Entities\Option::class, function (Faker\Genera
 
 $factory->define(App\Droit\Price\Entities\Price::class, function (Faker\Generator $faker) {
     return [
-        'id'          => 1,
         'colloque_id' => 1,
         'price'       => 4000,
         'type'        => 'public',
@@ -76,7 +73,6 @@ $factory->define(App\Droit\Price\Entities\Price::class, function (Faker\Generato
 
 $factory->define(App\Droit\Option\Entities\OptionGroupe::class, function (Faker\Generator $faker){
     return [
-        'id'          => 1,
         'colloque_id' => 1,
         'option_id'   => 1,
         'text'        => 'Groupe',

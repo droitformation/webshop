@@ -8,15 +8,19 @@ class AuthorTest extends TestCase {
 
     protected $author;
 
+    use DatabaseTransactions;
+
     public function setUp()
     {
         parent::setUp();
 
+        DB::beginTransaction();
+
         $this->author = Mockery::mock('App\Droit\Author\Repo\AuthorInterface');
         $this->app->instance('App\Droit\Author\Repo\AuthorInterface', $this->author);
 
-        $user = App\Droit\User\Entities\User::find(710);
-
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
         $this->actingAs($user);
 
     }
@@ -24,6 +28,8 @@ class AuthorTest extends TestCase {
     public function tearDown()
     {
         Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
     }
 
     /**
