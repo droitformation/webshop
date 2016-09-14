@@ -232,9 +232,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('colloque/editItem',   'Backend\Colloque\ColloqueController@editItem');
     Route::post('colloque/removeItem', 'Backend\Colloque\ColloqueController@removeItem');
 
-    Route::post('colloque/addprice', 'Backend\Colloque\ColloqueController@addprice');
-    Route::post('colloque/removeprice', 'Backend\Colloque\ColloqueController@removeprice');
-    Route::post('colloque/editprice', 'Backend\Colloque\ColloqueController@editprice');
     Route::post('colloque/addGroup', 'Backend\Colloque\ColloqueController@addGroup');
     Route::post('colloque/removeGroup', 'Backend\Colloque\ColloqueController@removeGroup');
     Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
@@ -242,7 +239,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('colloque/editoption', 'Backend\Colloque\ColloqueController@editoption');
 
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
-
+    Route::resource('price', 'Backend\Colloque\PriceController');
+    Route::resource('option', 'Backend\Colloque\OptionController');
+    Route::resource('group', 'Backend\Colloque\GroupController');
+    Route::resource('occurrence', 'Backend\Colloque\OccurrenceController');
     Route::resource('document', 'Backend\Colloque\DocumentController');
     Route::resource('compte', 'Backend\Colloque\CompteController');
 

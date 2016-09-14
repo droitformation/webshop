@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <span class="label label-default">
-                                     <a class="editablePrice" data-name="price" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer le prix">
+                                     <a class="editablePrice" data-name="price" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/price/{{ $prix->id }}" data-title="Changer le prix">
                                          {{ $prix->price_cents }}
                                      </a> CHF
                                 </span>
@@ -25,13 +25,13 @@
                                 <dl class="dl-horizontal price-list">
                                     <dt> Description:</dt>
                                     <dd>
-                                        <a class="editablePrice" data-name="description" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la description">
+                                        <a class="editablePrice" data-name="description" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/price/{{ $prix->id }}" data-title="Changer la description">
                                             {{ $prix->description }}
                                         </a>
                                     </dd>
                                     <dt> Remarque:</dt>
                                     <dd>
-                                        <a class="editablePrice editablePriceRemarque" data-name="remarque" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/colloque/editprice" data-title="Changer la remarque">
+                                        <a class="editablePrice editablePriceRemarque" data-name="remarque" data-type="text" data-pk="{{ $prix->id }}" data-url="admin/price/{{ $prix->id }}" data-title="Changer la remarque">
                                             {{ $prix->remarque }}
                                         </a>
                                     </dd>

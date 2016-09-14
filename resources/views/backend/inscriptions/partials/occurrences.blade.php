@@ -1,4 +1,4 @@
-<?php if(isset($inscription)) { $occurrences_choix = $inscription->occurrences->lists('id')->all(); } ?>
+<?php if(isset($inscription)) { $occurrences_choix = $inscription->occurrences->pluck('id')->all(); } ?>
 
 @foreach($colloque->occurrences as $index => $occurrence)
     <div class="form-group type-choix">

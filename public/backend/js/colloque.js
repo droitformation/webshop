@@ -1,6 +1,9 @@
-/*
- * Choice of location for event
- * */
+
+/********************************************
+ * Choice of location
+ * For colloque
+ *******************************************/
+
 if($('#endroitSelect').length && $('#endroitSelect').val() != "") {
     getEndroit($('#endroitSelect').val());
 }
@@ -34,9 +37,11 @@ function getEndroit(id){
     });
 }
 
-/*
- * Choice of adresse for event
- * */
+/********************************************
+ * Choice of adresse
+ * For colloque
+ *******************************************/
+
 if($('#adresseSelect').length && $('#adresseSelect').val() != "") {
     getAdresse($('#adresseSelect').val());
 }
@@ -65,200 +70,10 @@ function getAdresse(id){
     });
 }
 
-/*
- * Colloques options and prices
- */
-$('body').on("click",".addPrice",function(e) {
-
-    e.preventDefault();e.stopPropagation();
-
-    var $form = $(this).closest('div.price');
-    var $main = $(this).closest('.form-group');
-    var data  = $form.find("select,textarea,input").serialize();
-
-    $.ajax({
-        type : "POST",
-        url  : base_url + "admin/colloque/addprice",
-        data : { data: data, _token: $("meta[name='_token']").attr('content') },
-        success: function(data) {
-            $main.find('.priceWrapper').empty();
-            $main.replaceWith(data);
-            $('.editablePrice').editable({
-                emptytext : '',
-                params: function(params) {
-                    params._token = $("meta[name='_token']").attr('content');
-                    return params;
-                }
-            });
-        },
-        error: function(){alert('problème avec l\'ajout du prix');}
-    });
-});
-
-$('body').on("click",'.removePrice', function(e) {
-
-    e.preventDefault();e.stopPropagation();
-
-    var price = $(this).data('id');
-    var $main = $(this).closest('.form-group');
-
-    $.ajax({
-        type : "POST",
-        url  : base_url + "admin/colloque/removeprice",
-        data : { id: price, _token: $("meta[name='_token']").attr('content') },
-        success: function(data) {
-            $main.replaceWith(data);
-            $('.editablePrice').editable({
-                emptytext : '',
-                params: function(params) {
-                    params._token = $("meta[name='_token']").attr('content');
-                    return params;
-                }
-            });
-        },
-        error: function(){alert('problème avec la suppresion du prix');}
-    });
-});
-
-$('body').on("click",'.addOption',function(e) {
-
-    e.preventDefault();e.stopPropagation();
-
-    var $form = $(this).closest('div.option');
-    var $main = $(this).closest('.form-group');
-    var data  = $form.find("select,textarea,input").serialize();
-
-    $.ajax({
-        type : "POST",
-        url  : base_url + "admin/colloque/addoption",
-        data : { data: data, _token: $("meta[name='_token']").attr('content') },
-        success: function(data) {
-            $main.replaceWith(data);
-            $('.editableOption').editable({
-                params: function(params) {
-                    params.model  = $(this).editable().data('model');
-                    params._token = $("meta[name='_token']").attr('content');
-                    return params;
-                }
-            });
-        },
-        error: function(){alert('problème avec l\'ajout de \'option');}
-    });
-});
-
-$('body').on("click",'.addGroupBtn',function(e) {
-    var group = $(this).data('id');
-    $('#addGroupWrapper_' + group).toggle();
-});
-
-$('body').on("click",'.addGroup',function(e) {
-
-    e.preventDefault(); e.stopPropagation();
-
-    var group = $(this).data('id');
-    var $form = $(this).closest('.addGroupForm');
-    var data  = $form.find("input").serialize();
-    var $main = $(this).closest('.form-group');
-
-    $.ajax({
-        type : "POST",
-        url  : base_url + "admin/colloque/addGroup",
-        data : { data: data, _token: $("meta[name='_token']").attr('content') },
-        success: function(data) {
-            $main.replaceWith(data);
-            $('.editableOption').editable({
-                params: function(params) {
-                    // add additional params from data-attributes of trigger element
-                    params.model  = $(this).editable().data('model');
-                    params._token = $("meta[name='_token']").attr('content');
-                    return params;
-                }
-            });
-        },
-        error: function(){alert('problème avec l\'ajout du group');}
-    });
-});
-
-$('body').on("click",'.removeOption', function(e) {
-
-    e.preventDefault();e.stopPropagation();
-
-    var price = $(this).data('id');
-    var $main = $(this).closest('.form-group');
-
-    $.ajax({
-        type : "POST",
-        url  : base_url + "admin/colloque/removeoption",
-        data : { id: price, _token: $("meta[name='_token']").attr('content') },
-        success: function(data) {
-            $main.replaceWith(data);
-            $('.editableOption').editable({
-                params: function(params) {
-                    // add additional params from data-attributes of trigger element
-                    params.model  = $(this).editable().data('model');
-                    params._token = $("meta[name='_token']").attr('content');
-                    return params;
-                }
-            });
-        },
-        error: function(){alert('problème avec la suppresion de \'option');}
-    });
-});
-
-$('body').on("click",'.removeGroup', function(e) {
-
-    e.preventDefault();e.stopPropagation();
-
-    var group = $(this).data('id');
-    var $main = $(this).closest('.form-group');
-
-    $.ajax({
-        type : "POST",
-        url  : base_url + "admin/colloque/removeGroup",
-        data : { id: group, _token: $("meta[name='_token']").attr('content') },
-        success: function(data) {
-
-            $main.replaceWith(data);
-
-            $('.editableOption').editable({
-                params: function(params) {
-                    // add additional params from data-attributes of trigger element
-                    params.model  = $(this).editable().data('model');
-                    params._token = $("meta[name='_token']").attr('content');
-                    return params;
-                }
-            });
-        },
-        error: function(){alert('problème avec la suppresion du choix');}
-    });
-});
-
-
-$('.editableOption').editable({
-    params: function(params) {
-        // add additional params from data-attributes of trigger element
-        params.model = $(this).editable().data('model');
-        params._token = $("meta[name='_token']").attr('content');
-        return params;
-    }
-});
-
-$('.editablePrice').editable({
-    emptytext : '',
-    params: function(params) {
-        params._token = $("meta[name='_token']").attr('content');
-        return params;
-    }
-});
-
-$('.editableItem').editable({
-    emptytext : '',
-    params: function(params) {
-        params._token = $("meta[name='_token']").attr('content');
-        params.model  = $(this).editable().data('model');
-        return params;
-    }
-});
+/********************************************
+ * Payement inscriptions
+ * For colloque
+ *******************************************/
 
 $('.editablePayementDate').editable({
     emptytext : '',
@@ -281,10 +96,162 @@ $('.editablePayementDate').editable({
     }
 });
 
+/********************************************
+ * Prices
+ * For colloque
+ *******************************************/
+$('body').on("click",".addPrice",function(e) {
 
-/* ******************************************
-* Add option, price, group or occurrence
-* *******************************************/
+    e.preventDefault();e.stopPropagation();
+
+    var $form = $(this).closest('div.price');
+    var $main = $(this).closest('.form-group');
+    var data  = $form.find("select,textarea,input").serialize();
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/price",
+        data : { data: data, _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+            $main.find('.priceWrapper').empty();
+            $main.replaceWith(data);
+
+            $('.editablePrice').editable({
+                emptytext : '',
+                params: function(params) {
+                    params._token   = $("meta[name='_token']").attr('content');
+                    params._method  = 'put';
+                    return params;
+                }
+            });
+
+        },
+        error: function(){alert('problème avec l\'ajout du prix');}
+    });
+});
+
+$('body').on("click",'.removePrice', function(e) {
+
+    e.preventDefault();e.stopPropagation();
+
+    var price = $(this).data('id');
+    var $main = $(this).closest('.form-group');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/price/" + price,
+        data : { id: price, _method: 'delete', _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+            $main.replaceWith(data);
+
+            $('.editablePrice').editable({
+                emptytext : '',
+                params: function(params) {
+                    params._token   = $("meta[name='_token']").attr('content');
+                    params._method  = 'put';
+                    return params;
+                }
+            });
+
+        },
+        error: function(){alert('problème avec la suppresion du prix');}
+    });
+});
+
+$('.editablePrice').editable({
+    emptytext : '',
+    params: function(params) {
+        params._token   = $("meta[name='_token']").attr('content');
+        params._method  = 'put';
+        return params;
+    }
+});
+
+/********************************************
+ * Option Group
+ * For colloque
+ *******************************************/
+
+$('body').on("click",'.addGroupBtn',function(e) {
+    var group = $(this).data('id');
+    $('#addGroupWrapper_' + group).toggle();
+});
+
+$('body').on("click",'.addGroup',function(e) {
+
+    e.preventDefault(); e.stopPropagation();
+
+    var group = $(this).data('id');
+    var $form = $(this).closest('.addGroupForm');
+    var data  = $form.find("input").serialize();
+    var $main = $(this).closest('.form-group');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/group",
+        data : { data: data, _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+            $main.replaceWith(data);
+
+            $('.editableOption').editable({
+                params: function(params) {
+                    // add additional params from data-attributes of trigger element
+                    params._token   = $("meta[name='_token']").attr('content');
+                    params._method  = 'put';
+                    return params;
+                }
+            });
+
+        },
+        error: function(){alert('problème avec l\'ajout du group');}
+    });
+});
+
+
+
+$('body').on("click",'.removeGroup', function(e) {
+
+    e.preventDefault();e.stopPropagation();
+
+    var group = $(this).data('id');
+    var $main = $(this).closest('.form-group');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/group/" + group,
+        data : { id: group, _method: 'delete',  _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+
+            $main.replaceWith(data);
+
+            $('.editableOption').editable({
+                params: function(params) {
+                    // add additional params from data-attributes of trigger element
+                    params._token   = $("meta[name='_token']").attr('content');
+                    params._method  = 'put';
+                    return params;
+                }
+            });
+        },
+        error: function(){alert('problème avec la suppresion du choix');}
+    });
+});
+
+
+
+/********************************************
+ * Occurrences
+ * For colloque
+ *******************************************/
+
+$('.editableItem').editable({
+    emptytext : '',
+    params: function(params) {
+        params._token   = $("meta[name='_token']").attr('content');
+        params._method = 'put';
+        return params;
+    }
+});
 
 $('body').on("click",'.addItem',function(e) {
 
@@ -298,30 +265,25 @@ $('body').on("click",'.addItem',function(e) {
     // Get all data from form and serialize
     var data  = $form.find("select,textarea,input").serialize();
 
-    // get other data to post to controller (ColloqueController)
-    var model = $(this).data('model');
-    var view  = $(this).data('view');
-
     $.ajax({
         type : "POST",
-        url  : base_url + "admin/colloque/addItem",
-        data : { data: data, view: view, model : model , _token: $("meta[name='_token']").attr('content') },
+        url  : base_url + "admin/occurrence",
+        data : { data: data, _token: $("meta[name='_token']").attr('content') },
         success: function(data)
         {
             $main.replaceWith(data); // replace view with new html
-
-            model = (model.charAt(0).toUpperCase() + model.slice(1));
 
             // editable inplace reattach to dom
             $('.datePicker').datepicker({
                 format: 'yyyy-mm-dd',
                 language: 'fr'
             });
+
             $('.editableItem').editable({
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
-                    params.model  = $(this).editable().data('model');
-                    params._token = $("meta[name='_token']").attr('content');
+                    params._token  = $("meta[name='_token']").attr('content');
+                    params._method = 'put';
                     return params;
                 }
             });
@@ -338,29 +300,26 @@ $('body').on("click",'.removeItem', function(e) {
 
     var id    = $(this).data('id');
     var $main = $(this).closest('.form-group');
-    var model = $(this).data('model');
-    var view  = $(this).data('view');
 
     $.ajax({
         type : "POST",
-        url  : base_url + "admin/colloque/removeItem",
-        data : { id: id, model:model , view : view, _token: $("meta[name='_token']").attr('content') },
+        url  : base_url + "admin/occurrence/" + id,
+        data : { id: id, _method: 'delete', _token: $("meta[name='_token']").attr('content') },
         success: function(data) {
 
             $main.replaceWith(data); // replace view with new html
-
-            model = (model.charAt(0).toUpperCase() + model.slice(1));
 
             // editable inplace reattach to dom
             $('.datePicker').datepicker({
                 format: 'yyyy-mm-dd',
                 language: 'fr'
             });
+
             $('.editableItem').editable({
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
-                    params.model  = $(this).editable().data('model');
-                    params._token = $("meta[name='_token']").attr('content');
+                    params._token  = $("meta[name='_token']").attr('content');
+                    params._method = 'put';
                     return params;
                 }
             });
@@ -370,9 +329,78 @@ $('body').on("click",'.removeItem', function(e) {
 });
 
 
-/********************************************/
+/********************************************
+ * Options
+ * For colloque
+ *******************************************/
 
 $(document).on('change', '#selectTypeOption', function (e){
     var $type         = $(this).val();
     var $optionGroupe = $type == 'choix' ? $('#optionGroupe').show() : $('#optionGroupe').hide();
+});
+
+
+$('.editableOption').editable({
+    params: function(params) {
+        // add additional params from data-attributes of trigger element
+        params._token   = $("meta[name='_token']").attr('content');
+        params._method  = 'put';
+        return params;
+    }
+});
+
+
+$('body').on("click",'.addOption',function(e) {
+
+    e.preventDefault();e.stopPropagation();
+
+    var $form = $(this).closest('div.option');
+    var $main = $(this).closest('.form-group');
+    var data  = $form.find("select,textarea,input").serialize();
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/option",
+        data : { data: data, _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+            $main.replaceWith(data);
+            $('.editableOption').editable({
+                params: function(params) {
+                    params._token   = $("meta[name='_token']").attr('content');
+                    params._method  = 'put';
+                    return params;
+                }
+            });
+        },
+        error: function(){alert('problème avec l\'ajout de \'option');}
+    });
+});
+
+
+$('body').on("click",'.removeOption', function(e) {
+
+    e.preventDefault();e.stopPropagation();
+
+    var option = $(this).data('id');
+    var $main  = $(this).closest('.form-group');
+
+    $.ajax({
+        type : "POST",
+        url  : base_url + "admin/option/" + option,
+        data : { id: option, _method: 'delete', _token: $("meta[name='_token']").attr('content') },
+        success: function(data) {
+            $main.replaceWith(data);
+
+            $('.editableOption').editable({
+                params: function(params) {
+                    // add additional params from data-attributes of trigger element
+                    params._token   = $("meta[name='_token']").attr('content');
+                    params._method  = 'put';
+                    return params;
+                }
+            });
+
+        },
+        error: function(){alert('problème avec la suppresion de \'option');}
+    });
 });

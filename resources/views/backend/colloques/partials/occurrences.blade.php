@@ -13,8 +13,8 @@
                                 <p><strong>Titre</strong></p>
                                 <a class="editableItem"
                                    data-name="title"
-                                   data-model="occurrence" data-type="text"
-                                   data-pk="{{ $occurrence->id }}" data-url="admin/colloque/editItem"
+                                   data-type="text"
+                                   data-pk="{{ $occurrence->id }}" data-url="admin/occurrence/{{ $occurrence->id }}"
                                    data-title="Changer le titre">{{ $occurrence->title }}
                                 </a>
                             </div>
@@ -22,8 +22,8 @@
                                 <p><strong>Date</strong></p>
                                 <a class="editableItem"
                                    data-name="starting_at"
-                                   data-model="occurrence" data-type="date"
-                                   data-pk="{{ $occurrence->id }}" data-url="admin/colloque/editItem"
+                                   data-type="date"
+                                   data-pk="{{ $occurrence->id }}" data-url="admin/occurrence/{{ $occurrence->id }}"
                                    data-title="Changer la date">{{ $occurrence->starting_at->format('Y-m-d') }}
                                 </a>
                             </div>
@@ -35,18 +35,18 @@
                             <div class="col-md-12">
                                 <p><strong>Lieu</strong></p>
                                 <a class="editLocation" href="#" data-type="select"
-                                   data-model="occurrence" data-name="lieux_id"
+                                   data-name="lieux_id"
                                    data-pk="{{ $occurrence->id }}"
-                                   data-url="admin/colloque/editItem" data-title="Lieu">
+                                   data-url="admin/occurrence/{{ $occurrence->id }}" data-title="Lieu">
                                 </a>
                                 <script>
                                     jQuery(document).ready(function($){
                                         $('.editLocation').editable({
-                                            value : <?php echo json_encode($occurrence->location_id); ?>,
+                                            value : <?php echo json_encode($occurrence->lieux_id); ?>,
                                             source: <?php echo json_encode($locations_json); ?>,
                                             params: function(params) {
-                                                params._token = $("meta[name='_token']").attr('content');
-                                                params.model  = $(this).editable().data('model');
+                                                params._token  = $("meta[name='_token']").attr('content');
+                                                params._method = 'put';
                                                 return params;
                                             }
                                         });

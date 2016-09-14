@@ -17,7 +17,7 @@ class CreateColloqueOccurrencesTable extends Migration
             $table->string('title');
             $table->date('starting_at');
             $table->integer('colloque_id');
-            $table->integer('location_id');
+            $table->integer('lieux_id');
             $table->timestamps();
             $table->softDeletes();
         });

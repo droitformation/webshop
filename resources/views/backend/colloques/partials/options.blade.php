@@ -10,7 +10,7 @@
                             <?php $type = $option->type == 'choix' ? true : false; ?>
                             <div class="col-md-{{ $type ? 4 : 11 }}">
                                 <a class="editableOption" data-name="title" data-model="option" data-type="text"
-                                   data-pk="{{ $option->id }}" data-url="admin/colloque/editoption" data-title="Changer le titre">{{ $option->title }}
+                                   data-pk="{{ $option->id }}" data-url="admin/option/{{ $option->id }}" data-title="Changer le titre">{{ $option->title }}
                                 </a>
                             </div>
                             @if($type && !$option->groupe->isEmpty())
@@ -20,7 +20,7 @@
                                             <button class="btn btn-xs btn-warning pull-left removeGroup" data-id="{{ $group->id }}" type="button"><i class="fa fa-times"></i></button>
                                             <a class="editableOption editableOptionGroup"
                                                data-name="title" data-model="group" data-type="text" data-pk="{{ $group->id }}"
-                                               data-url="admin/colloque/editoption" data-title="Modifier le choix">{{ $group->text }}
+                                               data-url="admin/option/{{ $option->id }}" data-title="Modifier le choix">{{ $group->text }}
                                             </a>
                                         </p>
                                     @endforeach

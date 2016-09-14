@@ -134,7 +134,6 @@
 
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/colloque/inscription.js');?>"></script>
 
 @include('newsletter::Script.config')
 
