@@ -145,12 +145,14 @@
                                             </tr>
                                             <tr>
                                                 <td width="85%" class="text-right">
-                                                    @if(isset($order->coupon))<strong>Rabais appliqué <small class="text-muted">{{ $order->coupon->title }}</small></strong>@endif
+                                                    @if(isset($order->coupon))
+                                                        <strong>Rabais appliqué<small class="text-muted">{!! $order->coupon->coupon_title !!}</small></strong>
+                                                    @endif
                                                 </td>
                                                 <td width="15%" class="text-right">
                                                     @if($order->coupon_id > 0)
                                                         <?php $order->load('coupon'); ?>
-                                                        <p class="text-muted"><?php echo ($order->coupon->type == 'shipping' ? 'Frais de port offerts' : $order->coupon->value.'%') ?></p>
+                                                        <p class="text-muted">{!! $order->coupon->coupon_value !!}</p>
                                                     @endif
                                                 </td>
                                             </tr>

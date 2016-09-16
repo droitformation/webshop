@@ -89,10 +89,7 @@ $('.editablePayementDate').editable({
         $input.removeClass('bg-default bg-success');
         $input.addClass('bg-'+ response.color);
 
-        if(!response.success)
-        {
-            return response.msg;
-        }
+        return !response.success ? response.msg : null;
     }
 });
 
@@ -154,7 +151,7 @@ $('body').on("click",'.removePrice', function(e) {
             });
 
         },
-        error: function(){alert('problème avec la suppresion du prix');}
+        error: function(){alert('problème avec la suppression du prix');}
     });
 });
 
@@ -203,7 +200,7 @@ $('body').on("click",'.addGroup',function(e) {
             });
 
         },
-        error: function(){alert('problème avec l\'ajout du group');}
+        error: function(){alert('problème avec l\'ajout du groupe');}
     });
 });
 
@@ -233,7 +230,7 @@ $('body').on("click",'.removeGroup', function(e) {
                 }
             });
         },
-        error: function(){alert('problème avec la suppresion du choix');}
+        error: function(){alert('problème avec la suppression du choix');}
     });
 });
 
@@ -289,7 +286,7 @@ $('body').on("click",'.addItem',function(e) {
             });
 
         },
-        error: function(){alert('problème avec l\'ajout de');}
+        error: function(){alert('problème avec l\'ajout de la conférence');}
     });
 });
 
@@ -401,6 +398,6 @@ $('body').on("click",'.removeOption', function(e) {
             });
 
         },
-        error: function(){alert('problème avec la suppresion de \'option');}
+        error: function(){alert('problème avec la suppression de \'option');}
     });
 });

@@ -199,6 +199,32 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'one', function
     ];
 });
 
+$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'price', function (Faker\Generator $faker) {
+
+    $tomorrow = \Carbon\Carbon::now()->addDay();
+
+    return [
+        'id'         => 200,
+        'value'      => '20',
+        'type'       => 'price',
+        'title'      => 'Price minus',
+        'expire_at'  => $tomorrow
+    ];
+});
+
+$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'priceshipping', function (Faker\Generator $faker) {
+
+    $tomorrow = \Carbon\Carbon::now()->addDay();
+
+    return [
+        'id'         => 200,
+        'value'      => '20',
+        'type'       => 'priceshipping',
+        'title'      => 'Price shipping',
+        'expire_at'  => $tomorrow
+    ];
+});
+
 
 $factory->define(App\Droit\Shop\Shipping\Entities\Shipping::class, function (Faker\Generator $faker) {
 

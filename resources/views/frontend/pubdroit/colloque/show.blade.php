@@ -64,7 +64,7 @@
                                     @include('frontend.pubdroit.colloque.partials.register')
                                 @else
                                     <?php $message = ($registered ? Registry::get('inscription.messages.registered') : Registry::get('inscription.messages.pending')); ?>
-                                    <p><strong><i class="fa fa-exclamation-triangle"></i></strong> {!! strip_tags($message) !!}</p>
+                                    <p class="text-danger"><strong><i class="fa fa-exclamation-triangle"></i></strong> {!! strip_tags($message) !!}</p>
                                 @endif
                             @else
                                 <div class="login-form">
@@ -77,7 +77,7 @@
                              @endif
 
                         @else
-                            <p>Les inscriptiont sont terminées</p>
+                            <p>Les inscriptions sont terminées</p>
                         @endif
                     </div>
                 </div>

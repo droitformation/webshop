@@ -9,7 +9,31 @@ class Coupon extends Model{
 
     protected $dates = ['expire_at'];
 
-    protected $fillable = array('value','title','type','expire_at');
+    protected $fillable = ['value','title','type','expire_at'];
+
+    public function getCouponValueAttribute()
+    {
+        if($this->type == 'price' || $this->type == 'priceshipping')
+        {
+            return '-'.$this->value.' CHF';
+        }
+
+        if($this->type == 'shipping'){
+            return '';
+        }
+
+        return $this->value.'%';
+    }
+
+    public function getCouponTitleAttribute()
+    {
+        if($this->type == 'shipping')
+        {
+            return 'Frais de port offerts';
+        }
+
+        return 'Rabais: '.$this->title;
+    }
 
     public function products()
     {

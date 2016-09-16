@@ -64,10 +64,10 @@
 
                         @if($order->coupon_id > 0)
                             <span class="desktopHide" style="display: none;font-size: 0;max-height: 0;width: 0;line-height: 0;overflow: hidden;mso-hide: all;">
-                                {!! ( $order->coupon->type == 'shipping' ? 'Frais de port offerts' : 'Rabais: '.$order->coupon->title) !!}
+                                {!! $order->coupon->coupon_title !!}
                             </span>
                             <span class="amount" style="color: #54565c;">
-                                 {!! ( $order->coupon->type == 'shipping' ? '' : '-'.$order->coupon->value.'%') !!}
+                                {!! $order->coupon->coupon_value !!}
                             </span><br>
                         @endif
 

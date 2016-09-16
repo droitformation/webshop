@@ -9,31 +9,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ColloqueRequest;
 
 use App\Droit\Service\UploadInterface;
-use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Document\Worker\DocumentWorker;
 use App\Droit\Location\Repo\LocationInterface;
 use App\Droit\Organisateur\Repo\OrganisateurInterface;
 use App\Droit\Compte\Repo\CompteInterface;
-use App\Droit\Occurrence\Repo\OccurrenceInterface;
-use App\Droit\Price\Repo\PriceInterface;
-use App\Droit\Option\Repo\OptionInterface;
-use App\Droit\Option\Repo\GroupOptionInterface;
 
 class ColloqueController extends Controller
 {
     protected $colloque;
     protected $upload;
     protected $compte;
-    protected $document;
-    protected $inscription;
     protected $location;
     protected $organisateur;
-    protected $occurrence;
-    protected $price;
-    protected $option;
-    protected $group;
-    protected $helper;
+    protected $document;
 
     /**
      * Create a new controller instance.
@@ -44,29 +33,17 @@ class ColloqueController extends Controller
         ColloqueInterface $colloque,
         UploadInterface $upload,
         CompteInterface $compte,
-        InscriptionInterface $inscription,
         LocationInterface $location,
-        OccurrenceInterface $occurrence,
         OrganisateurInterface $organisateur,
-        DocumentWorker $document,
-        PriceInterface $price,
-        OptionInterface $option,
-        GroupOptionInterface $group
+        DocumentWorker $document
     )
     {
         $this->colloque     = $colloque;
         $this->upload       = $upload;
         $this->compte       = $compte;
-        $this->document     = $document;
-        $this->inscription  = $inscription;
         $this->location     = $location;
-        $this->occurrence   = $occurrence;
         $this->organisateur = $organisateur;
-        $this->price        = $price;
-        $this->option       = $option;
-        $this->group        = $group;
-
-        $this->helper  = new \App\Droit\Helper\Helper();
+        $this->document     = $document;
     }
 
     /**

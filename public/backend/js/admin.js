@@ -123,12 +123,20 @@ $( function() {
     function isProductCoupon()
     {
         var $select = $('#productSelect');
+        var value   = $('#typeSelect').val();
+        var $addon  = $('#val_addon');
 
-        if($('#typeSelect').val() == 'product') {
+        if(value == 'product') {
             $select.show();
+            $addon.text('%');
         }
-        else {
+        else if(value == 'price' || value == 'priceshipping'){
+            $select.show();
+            $addon.text('CHF');
+        }
+        else{
             $select.hide();
+            $addon.text('%');
         }
     }
 

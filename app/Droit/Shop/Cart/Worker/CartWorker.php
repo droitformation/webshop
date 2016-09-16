@@ -167,18 +167,18 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      {
          if($this->hasCoupon)
          {
-            if($this->hasCoupon->type == 'product')
-            {
-                $this->couponForProduct();
-            }
-            elseif($this->hasCoupon->type == 'shipping')
-            {
+             if($this->hasCoupon->type == 'product' || $this->hasCoupon->type == 'price' || $this->hasCoupon->type == 'priceshipping')
+             {
+                 $this->couponForProduct($this->hasCoupon->type);
+             }
+             elseif($this->hasCoupon->type == 'shipping')
+             {
                 session(['noShipping' => 'noShipping']);
-            }
-            else
-            {
+             }
+             else
+             {
                 $this->couponGlobal();
-            }
+             }
          }
      }
 
@@ -187,7 +187,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
     * IIT
     * @return void
     * */
-     public function couponForProduct()
+     public function couponForProduct($type)
      {
          if(isset($this->hasCoupon->products))
          {
@@ -198,7 +198,19 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
                  if(!empty($rowId))
                  {
-                     $newprice = $this->calculPriceWithCoupon($product);
+                     if($type == 'product')
+                     {
+                         $newprice = $this->calculPriceWithCoupon($product,'percent');
+                     }
+                     elseif($type == 'price' || $type = 'priceshipping')
+                     {
+                         $newprice = $this->calculPriceWithCoupon($product, 'minus');
+
+                         if($type = 'priceshipping')
+                         {
+                             session(['noShipping' => 'noShipping']);
+                         }
+                     }
 
                      \Cart::instance('shop')->update($rowId[0], array('price' => $newprice));
                  }
@@ -244,13 +256,21 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      }
 
      /**
-     * Calculat price from product and apply coupon discount
-     * IIT
-     * @return float
-     * */
-     public function calculPriceWithCoupon($product)
+      * Calculat price from product and apply coupon discount
+      * IIT
+      * @return float
+      * */
+     public function calculPriceWithCoupon($product,$operand)
      {
-         return $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
+         if($operand == 'percent')
+         {
+             return $product->price_cents - ($product->price_cents * ($this->hasCoupon->value)/100);
+         }
+
+         if($operand == 'minus')
+         {
+             return $product->price_cents - $this->hasCoupon->value;
+         }
      }
 
      /**

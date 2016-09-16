@@ -141,13 +141,12 @@
 
                         @if($order->coupon_id > 0)
                             <tr align="top" valign="top">
-                            @if( $order->coupon->type == 'shipping')
-                                <td width="40%" align="top" valign="top" class="text-right">Frais de port offerts</td>
-                                <td width="60%" align="top" valign="top" class="text-right"></td>
-                            @else
-                                <td width="40%" align="top" valign="top" class="text-right text-muted">Rabais {{ $order->coupon->title }}</td>
-                                <td width="60%" align="top" valign="top" class="text-right"> -{{ $order->coupon->value }}%</td>
-                            @endif
+                                <td width="40%" align="top" valign="top" class="text-right text-muted">
+                                    {!! $order->coupon->coupon_title !!}
+                                </td>
+                                <td width="60%" align="top" valign="top" class="text-right">
+                                    {{ $order->coupon->coupon_value }}
+                                </td>
                             </tr>
                         @endif
 

@@ -28,7 +28,11 @@
                                 @if($coupon['type'] == 'shipping')
                                     <span class="text-muted">Frais de port offerts</span>
                                 @else
-                                    <span class="text-muted">{{ $coupon['title'] }}</span> &nbsp;{{ $coupon['value'] }}%
+                                    @if($coupon['type'] == 'priceshipping')
+                                        <span class="text-muted">Frais de port offerts</span><br/>
+                                    @endif
+                                    <span class="text-muted">{{ $coupon['title'] }}</span>
+                                    &nbsp;{{ $coupon['value'] }} {{ $coupon['type']== 'price' || $coupon['type'] == 'priceshipping' ? 'CHF Rabais' : '%' }}
                                 @endif
                             </td>
                         </tr>

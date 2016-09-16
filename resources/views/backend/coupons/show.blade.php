@@ -22,6 +22,8 @@
                                 <select class="form-control" name="type" id="typeSelect">
                                     <option {{ ($coupon->type == 'global' ?  'selected' : '') }} value="global">Sur toute la commande</option>
                                     <option {{ ($coupon->type == 'product' ? 'selected' : '') }} value="product">Sur un ou plusieurs produits</option>
+                                    <option {{ ($coupon->type == 'price' ? 'selected' : '') }} value="price">Rabais prix sur produits</option>
+                                    <option {{ ($coupon->type == 'priceshipping' ? 'selected' : '') }} value="priceshipping">Rabais prix sur produits et frais de port gratuit</option>
                                     <option {{ ($coupon->type == 'shipping'? 'selected' : '') }} value="shipping">Frais de port gratuit</option>
                                 </select>
                             </div>
@@ -54,7 +56,7 @@
                             <div class="col-sm-5 col-xs-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="{{ $coupon->value }}" name="value">
-                                    <span class="input-group-addon">%</span>
+                                    <span class="input-group-addon" id="val_addon">{{ $coupon->type == 'price' || $coupon->type == 'priceshipping' ? 'CHF' : '%' }}</span>
                                 </div>
                             </div>
                             <div class="col-sm-4">

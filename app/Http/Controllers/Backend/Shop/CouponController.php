@@ -18,6 +18,8 @@ class CouponController extends Controller
     {
         $this->coupon  = $coupon;
         $this->product = $product;
+
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
     /**
@@ -27,8 +29,6 @@ class CouponController extends Controller
      */
     public function index()
     {
-        setlocale(LC_ALL, 'fr_FR.UTF-8');
-
         $coupons = $this->coupon->getAll();
 
         return view('backend.coupons.index')->with(['coupons' => $coupons]);
@@ -56,9 +56,7 @@ class CouponController extends Controller
     {
         $coupon  = $this->coupon->create($request->all());
 
-        alert()->success('Le coupon a été crée');
-
-        return redirect('admin/coupon');
+        return redirect('admin/coupon')->with(array('status' => 'success', 'message' => 'Le coupon a été crée' ));
     }
 
     /**
@@ -86,9 +84,7 @@ class CouponController extends Controller
     {
         $coupon  = $this->coupon->update($request->all());
 
-        alert()->success('Le coupon a été mis à jour');
-
-        return redirect('admin/coupon');
+        return redirect('admin/coupon')->with(['status' => 'success', 'message' => 'Le coupon a été mis à jour']);
     }
 
     /**
@@ -101,8 +97,6 @@ class CouponController extends Controller
     {
         $this->coupon->delete($id);
 
-        alert()->success('Le coupon a été supprimé');
-
-        return redirect('admin/coupon');
+        return redirect('admin/coupon')->with(['status' => 'success' , 'message' => 'Le coupon a été supprimé']);
     }
 }

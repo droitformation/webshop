@@ -31,7 +31,11 @@
                                 <tr>
                                     <td><a href="{{ url('admin/coupon/'.$coupon->id) }}" class="btn btn-sm btn-info">éditer</a></td>
                                     <td>{{ $coupon->title }}</td>
-                                    <td>{{ !empty($coupon->value) ? $coupon->value.' %' : 'gratuit' }} </td>
+                                    <td>
+                                        <?php $type = $coupon->type == 'price' || $coupon->type == 'priceshipping' ? 'CHF' : '%'; ?>
+                                        {{ !empty($coupon->value) ? $coupon->value.' '.$type : 'gratuit' }}
+                                        {{ $coupon->type == 'priceshipping' ? ' + frais de port gratuits' : '' }}
+                                    </td>
                                     <td>{{ $coupon->expire_at->formatLocalized('%d %B %Y') }}</td>
                                     <td class="text-right">
                                         @if($coupon->orders->isEmpty())

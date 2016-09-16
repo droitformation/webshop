@@ -1,5 +1,4 @@
 <ul class="nav">
-    <li><a href="{{ url('pubdroit/categorie/5') }}">Nouveautés</a></li>
     @if(!$domains->isEmpty())
         <li>
             <form action="{{ url('pubdroit/sort')}}" method="post">{!! csrf_field() !!}

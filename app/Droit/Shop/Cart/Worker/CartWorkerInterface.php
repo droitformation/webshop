@@ -11,10 +11,10 @@
      public function removeFreeShippingCoupon();
      public function reset();
      public function applyCoupon();
-     public function couponForProduct();
+     public function couponForProduct($type);
      public function couponGlobal();
      public function resetCartPrices();
-     public function calculPriceWithCoupon($product_id);
+     public function calculPriceWithCoupon($product_id, $operand);
      public function searchItem($id);
      public function totalCartWithShipping();
      public function totalShipping();

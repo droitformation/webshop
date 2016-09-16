@@ -347,6 +347,7 @@ class CartWorkerTest extends TestCase {
             'price'  => 1000,
             'weight' => '2000'
         ]);
+
         $twocoupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'two')->make();
         
         \Cart::instance('shop');
@@ -356,12 +357,74 @@ class CartWorkerTest extends TestCase {
 
         $worker->setCoupon($twocoupon->title)->applyCoupon();
 
-        $price = $worker->calculPriceWithCoupon($oneproduct);
+        $price = $worker->calculPriceWithCoupon($oneproduct,'percent');
 
         // Product price => 10.00
         // Coupon for product value 20%
 
         $this->assertEquals(8.00, $price);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculPriceWithPriceCoupon()
+    {
+        $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
+
+        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'id'     => 1,
+            'title'  => 'Titre',
+            'price'  => 5000,
+            'weight' => '2000'
+        ]);
+
+        $price = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'price')->make();
+
+        $price->products = collect([$product]);
+
+        \Cart::instance('shop')->add($product->id, $product->title, 1, $product->price_cents, ['weight' => $product->weight]);
+
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($price);
+
+        $worker->setCoupon($price->title)->applyCoupon();
+        $worker->calculPriceWithCoupon($price,'minus');
+
+        // Product price => 50.00
+        // Coupon for product value -20
+
+        $this->assertEquals(30, \Cart::instance('shop')->total());
+
+    }
+
+    public function testCalculPriceWithPriceShippingCoupon()
+    {
+        $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
+
+        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
+            'id'     => 1,
+            'title'  => 'Titre',
+            'price'  => 5000,
+            'weight' => '2000'
+        ]);
+
+        $price    = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'priceshipping')->make();
+
+        $price->products = collect([$product]);
+
+        \Cart::instance('shop')->add($product->id, $product->title, 1, $product->price_cents, ['weight' => $product->weight]);
+
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($price);
+
+        $worker->setCoupon($price->title)->applyCoupon();
+
+        $worker->calculPriceWithCoupon($price,'minus');
+
+        // Product price => 50.00
+        // Coupon for product value -20
+
+        $this->withSession(['noShipping']);
+        $this->assertEquals(30, \Cart::instance('shop')->total());
     }
 
     /**
