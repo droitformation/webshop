@@ -14,7 +14,7 @@
             <?php $inscription->load('colloque','rappels'); ?>
             <tr class="mainRow">
                 <td>
-                    <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $inscription->id }}">
+                    <a class="collapse_anchor" data-toggle="collapse" href="#inscription_simple_{{ $inscription->id }}">
                         <i class="fa fa-arrow-circle-right"></i>{{ $inscription->colloque->titre }}
                     </a>
                 </td>
@@ -29,7 +29,7 @@
                 <td colspan="6" class="nopadding">
 
                     <!-- Inscription details -->
-                    <div class="collapse customCollapse" id="inscription_no_{{ $inscription->id }}">
+                    <div class="collapse customCollapse" id="inscription_simple_{{ $inscription->id }}">
                         <div class="inscription_wrapper">
 
                             <!-- Inscription single -->
@@ -43,7 +43,7 @@
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 </div>
-                                <div class="col-md-5 line-spacer">
+                                <div class="col-md-6 line-spacer">
                                     @if(!empty($inscription->colloque->annexe))
                                         <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
                                     @endif
@@ -51,7 +51,7 @@
                                         <a href="{{ url('admin/attestation/inscription/'.$inscription->id) }}" class="btn btn-sm btn-green">Attestation</a>
                                     @endif
                                 </div>
-                                <div class="col-md-5 line-spacer text-right">
+                                <div class="col-md-4 line-spacer text-right">
                                     <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
                                         Envoyer l'inscription
                                     </button>

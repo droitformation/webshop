@@ -223,28 +223,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('inscription/rappels/{id}','Backend\Colloque\RappelController@rappels');
     Route::get('inscription/rappel/make/{id}','Backend\Colloque\RappelController@make');
     Route::resource('inscription/rappel','Backend\Colloque\RappelController');
-
-    Route::get('colloque/generate/{id}/{doc}', 'Backend\Colloque\ColloqueController@generate');
     Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
 
     // Add, edit, delete items for colloque
-    Route::post('colloque/addItem',    'Backend\Colloque\ColloqueController@addItem');
-    Route::post('colloque/editItem',   'Backend\Colloque\ColloqueController@editItem');
-    Route::post('colloque/removeItem', 'Backend\Colloque\ColloqueController@removeItem');
-
-    Route::post('colloque/addGroup', 'Backend\Colloque\ColloqueController@addGroup');
-    Route::post('colloque/removeGroup', 'Backend\Colloque\ColloqueController@removeGroup');
-    Route::post('colloque/addoption', 'Backend\Colloque\ColloqueController@addoption');
-    Route::post('colloque/removeoption', 'Backend\Colloque\ColloqueController@removeoption');
-    Route::post('colloque/editoption', 'Backend\Colloque\ColloqueController@editoption');
-
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
     Route::resource('price', 'Backend\Colloque\PriceController');
     Route::resource('option', 'Backend\Colloque\OptionController');
     Route::resource('group', 'Backend\Colloque\GroupController');
     Route::resource('occurrence', 'Backend\Colloque\OccurrenceController');
-    Route::resource('document', 'Backend\Colloque\DocumentController');
     Route::resource('compte', 'Backend\Colloque\CompteController');
+
+    Route::get('document/{colloque_id}/{doc}', 'Backend\Colloque\DocumentController@show');
+    Route::resource('document', 'Backend\Colloque\DocumentController');
 
     Route::get('attestation/colloque/{id}', 'Backend\Colloque\AttestationController@colloque');
     Route::get('attestation/inscription/{id}', 'Backend\Colloque\AttestationController@inscription');

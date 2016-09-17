@@ -176,30 +176,4 @@ class ColloqueController extends Controller
 
         return redirect('admin/colloque');
     }
-
-    /**
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function generate($id,$doc)
-    {
-        $colloque = $this->colloque->find($id);
-        $user     = \Auth::user();
-        
-        if($colloque->prices->isEmpty()){
-            throw new \App\Exceptions\FactureColloqueTestException('Il n\'existe pas de prix pour ce colloque');
-        }
-
-        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->make([
-            'colloque_id' => $colloque->id,
-            'user_id'     => $user->id,
-            'price_id'    => $colloque->prices->first()->id
-        ]);
-
-        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-        $generator->stream = true;
-
-        return $generator->make($doc, $inscription);
-    }
 }

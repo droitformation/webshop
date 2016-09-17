@@ -261,11 +261,11 @@
                 <div class="panel-body">
                     <h4><i class="fa fa-file"></i> &nbsp;Tester les documents</h4>
                     @if($colloque->bon)
-                        <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/colloque/generate/'.$colloque->id.'/bon') }}">Tester le bon</a>
+                        <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/document/'.$colloque->id.'/bon') }}">Tester le bon</a>
                     @endif
                     @if($colloque->facture)
-                        <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/colloque/generate/'.$colloque->id.'/facture') }}">Tester la facture</a>
-                        <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/colloque/generate/'.$colloque->id.'/bv') }}">Tester le bv</a>
+                        <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/document/'.$colloque->id.'/facture') }}">Tester la facture</a>
+                        <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/document/'.$colloque->id.'/bv') }}">Tester le bv</a>
                     @endif
                 </div>
             </div>

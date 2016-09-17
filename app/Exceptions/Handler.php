@@ -106,17 +106,17 @@ class Handler extends ExceptionHandler {
 
 		if ($e instanceof \App\Exceptions\DeleteUserException){
 			alert()->warning('Erreur avec la suppression de l\'abonnés sur mailjet');
-			return redirect('/');
+            return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\UserNotExistException){
 			alert()->warning('Cet utilisateur n\'existe pas');
-			return redirect('/');
+            return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\StockCartException){
 			alert()->warning('Il n\'y a plus assez de stock pour cet article');
-			return redirect('/');
+            return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\AdresseNotExistException){
@@ -124,8 +124,10 @@ class Handler extends ExceptionHandler {
 			return redirect('/')->with(['link' => 'profil']);
 		}
 
-        if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)
-            return redirect()->to('admin');
+        if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
+            alert()->warning('Méthode non autorisée');
+            return redirect()->back();
+        }
 
 		if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException){
 			return response()->view('404', [], 404);

@@ -20,12 +20,12 @@
                             <li>{{ $line }}</li>
                         @endforeach
 
-                        <?php $telephone = !empty($colloque->attestation->telephone) ? $colloque->attestation->telephone : \Registry::get('shop.infos.telephone'); ?>
+                        <?php $telephone = isset($colloque->attestation) && !empty($colloque->attestation->telephone) ? $colloque->attestation->telephone : \Registry::get('shop.infos.telephone'); ?>
                         <li>Tél. {{ $telephone }}</li>
                     </ul>
                 @endif
 
-                <p style="margin-top: 20px;">{{ $colloque->attestation->organisateur }}</p>
+                <p style="margin-top: 20px;">{{ isset($colloque->attestation) ? $colloque->attestation->organisateur : '' }}</p>
 
             </td>
             <td align="top" width="40%" valign="top">
@@ -43,7 +43,7 @@
             <td width="80%" class="content-attestation">
                 <h1 class="title blue">{{ strtoupper('attestation') }}</h1>
 
-                <?php $organisateur =  $colloque->attestation->organisateur ? $colloque->attestation->organisateur : $colloque->organisateur; ?>
+                <?php $organisateur =  isset($colloque->attestation) && $colloque->attestation->organisateur ? $colloque->attestation->organisateur : $colloque->organisateur; ?>
 
                 <p>{{ $organisateur }} atteste que<</p>
 
@@ -64,10 +64,12 @@
         <tr>
             <td width="20%"></td>
             <td width="80%">
-                @if($colloque->attestation->lieu)
+                @if(isset($colloque->attestation) && $colloque->attestation->lieu)
                     <p>{{ $colloque->attestation->lieu }}</p>
                 @else
-                    <p><strong>Lieu:</strong> {{ $colloque->location->name }} {{ strip_tags($colloque->location->adresse) }}</p>
+                    @if(isset($colloque->location))
+                        <p><strong>Lieu:</strong> {{ $colloque->location->name }} {{ strip_tags($colloque->location->adresse) }}</p>
+                    @endif
                 @endif
             </td>
         </tr>
@@ -75,7 +77,7 @@
         <tr>
             <td width="20%"></td>
             <td width="80%" class="comment-attestation">
-                @if($colloque->attestation->comment)
+                @if(isset($colloque->attestation) && $colloque->attestation->comment)
                     <p><strong>Thèmes:</strong></p>
                     {!! $colloque->attestation->comment !!}
                 @endif
@@ -88,8 +90,10 @@
         <tr>
             <td width="70%"></td>
             <td width="30%" class="signature-attestation">
-                <p><strong>{{ $colloque->attestation->title }}</strong></p>
-                <p>{{ $colloque->attestation->signature }}</p>
+                @if(isset($colloque->attestation))
+                    <p><strong>{{ $colloque->attestation->title }}</strong></p>
+                    <p>{{ $colloque->attestation->signature }}</p>
+                @endif
             </td>
         </tr>
     </table>

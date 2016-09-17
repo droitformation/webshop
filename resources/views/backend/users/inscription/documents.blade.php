@@ -9,8 +9,9 @@
 @endif
 
 @if($inscription->doc_attestation)
-   <br/>
-   <a target="_blank" href="{{ asset($inscription->doc_attestation) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Attestation</a>
+    <div class="btn-group">
+        <a target="_blank" href="{{ asset($inscription->doc_attestation) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Attestation</a>
+    </div>
 @endif
 
 @if(!$inscription->rappels->isEmpty())
