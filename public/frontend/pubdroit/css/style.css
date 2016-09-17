@@ -1430,6 +1430,10 @@ a.navbar-btn.navbar-register:focus{
    color: red;
 }
 
+section#abos{
+    margin-bottom: 30px;
+}
+
 .b-detail-holder hr{
     margin-top: 5px;
     border: none;

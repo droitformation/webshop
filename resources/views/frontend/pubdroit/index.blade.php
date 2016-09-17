@@ -72,26 +72,27 @@
     </section>
 
     @if(!$abos->isEmpty())
-
-        <section class="row">
-            <div class="col-md-12">
-                <div class="heading-bar">
-                    <h2><i class="fa fa-bookmark"></i> &nbsp;Abonnements</h2>
-                    <span class="h-line"></span>
+        <section id="abos">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-bar">
+                        <h2><i class="fa fa-bookmark"></i> &nbsp;Abonnements</h2>
+                        <span class="h-line"></span>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <?php $chunks = $abos->chunk(3); ?>
-        @foreach($chunks as $chunk)
-            <section class="row">
-                @foreach($chunk as $product)
-                    <div class="col-md-4">
-                       @include('frontend.pubdroit.partials.abo', ['product' => $product])
-                    </div>
-                @endforeach
-            </section>
-        @endforeach
+            <?php $chunks = $abos->chunk(3); ?>
+            @foreach($chunks as $chunk)
+                <div class="row">
+                    @foreach($chunk as $product)
+                        <div class="col-md-4">
+                           @include('frontend.pubdroit.partials.abo', ['product' => $product])
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
+        </section>
     @endif
 
     <section class="row" id="product_list">

@@ -86,7 +86,7 @@
                             <div class="col-sm-7">
                                 <div class="list-group">
                                     <div class="list-group-item">
-                                        {!!  Form::file('file')!!}
+                                        {!! Form::file('file')!!}
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select multiple class="form-control" id="multi-select" name="products_id[]">
                                     @if(!empty($products))
-                                        @foreach($products as $product)
+                                        @foreach($products as $index => $product)
                                             <option value="{{ $product->id }}">{{ $product->title }}</option>
                                         @endforeach
                                     @endif
@@ -107,7 +107,7 @@
 
                     </div>
                     <div class="panel-footer text-right">
-                        <button type="submit" class="btn btn-info">Créer un abo</button>
+                        <button id="createAbo" type="submit" class="btn btn-info">Enregistrer</button>
                     </div>
                 </form>
             </div>

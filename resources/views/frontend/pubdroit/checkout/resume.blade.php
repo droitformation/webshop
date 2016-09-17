@@ -87,8 +87,6 @@
                 </table>
             </div>
 
-            @include('frontend.pubdroit.partials.stripe-form')
-
         @endif
 
     </div>

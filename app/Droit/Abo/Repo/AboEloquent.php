@@ -17,6 +17,18 @@ class AboEloquent implements AboInterface{
         return $this->abo->with(['products'])->get();
     }
 
+    public function getAllFrontend()
+    {
+        return $this->abo->with(['products'])->whereHas('products', function($query){
+            $query->whereHas('attributs', function($q){
+                $q->where('title', '=', 'Référence');
+            });
+            $query->whereHas('attributs', function($q){
+                $q->where('title', '=', 'Édition');
+            });
+        })->get();
+    }
+
     public function find($id){
 
         return $this->abo->with(['abonnements','abonnements.user','abonnements.originaluser'])->find($id);
@@ -68,6 +80,11 @@ class AboEloquent implements AboInterface{
         }
 
         $abo->fill($data);
+
+        if(isset($data['price']))
+        {
+            $abo->price = $data['price'] * 100;
+        }
 
         $abo->save();
 

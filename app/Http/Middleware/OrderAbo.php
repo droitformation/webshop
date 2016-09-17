@@ -63,14 +63,12 @@ class OrderAbo
 
         if($redirect)
         {
-            return redirect('/')->with(['status' => 'warning', 'message' => 'Vous êtes déjà abonné à cet ouvrage']);
+            alert()->warning('Vous êtes déjà abonné à cet ouvrage');
+            throw new \App\Exceptions\OrderAboException('Vous êtes déjà abonné à cet ouvrage');
+
+            return redirect('/');
         }
 
         return $next($request);
-    }
-
-    public function aboExist($abo_id = null)
-    {
-
     }
 }

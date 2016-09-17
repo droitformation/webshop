@@ -112,8 +112,6 @@ class CheckoutController extends Controller {
             $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
             $order    = $this->order->make($request->all(),$shipping,$coupon);
 
-            $this->cleanUp();
-
             event(new OrderWasPlaced($order));
         }
         
@@ -125,9 +123,11 @@ class CheckoutController extends Controller {
             event(new NewAboRequest($abos));
         }
 
-        alert()->success('Votre commande a été envoyé!');
+        $this->cleanUp();
 
-        return redirect('/');
+        alert()->success('Merci! Votre commande a bien été envoyé. Celle-ci vous parviendra dans les plus brefs délais');
+
+        return redirect('pubdroit');
     }
 
     /*

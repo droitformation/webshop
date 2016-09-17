@@ -7,14 +7,21 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-2">
-                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/main/'.$abo->logo) }}" />
+                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/main/'.$abo->logo_file) }}" />
                     <h3 style="margin-bottom:0;line-height:24px">Abo</h3>
                     <p style="margin-bottom: 8px;">&Eacute;dition {{ $abo->title }}</p>
                 </div>
                 <div class="col-md-10">
                     <div class="nav nav-pills">
                         @if(!$abo->products->isEmpty())
-                            @foreach($abo->products as $product)
+                            <?php
+                                // Remove product without attributes
+                                $products = $abo->products->reject(function ($product, $key) {
+                                    $attributs = $product->attributs->pluck('id');
+                                    return !$attributs->contains(3) && !$attributs->contains(4);
+                                });
+                            ?>
+                            @foreach($products as $product)
                                 <a class="btn btn-default btn-sm" href="{{ url('admin/factures/'.$product->id) }}">
                                     &nbsp;<i class="fa fa-folder-open"></i>&nbsp; &Eacute;dition <strong>{{ $product->reference }} {{ $product->edition }}</strong>
                                 </a>

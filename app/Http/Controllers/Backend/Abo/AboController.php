@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\AboRequest;
+
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
@@ -57,7 +59,7 @@ class AboController extends Controller {
         return view('backend.abos.edit')->with(['abo' => $abo, 'plans' => $plans, 'products' => $products]);
     }
 
-	public function store(Request $request)
+	public function store(AboRequest $request)
 	{
         $data = $request->except('file');
         $file = $request->file('file',null);

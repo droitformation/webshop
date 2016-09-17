@@ -6,6 +6,7 @@ interface InscriptionInterface {
     public function getByColloque($id,$type = false,$paginate = false);
     public function getRappels($id);
     public function getByUser($colloque_id,$user_id);
+    public function isRegistered($colloque_id,$user_id);
     public function getByColloqueTrashed($id);
     public function getByGroupe($groupe_id);
     public function hasPayed($user_id);

@@ -3,6 +3,7 @@
 interface AboInterface {
 
     public function getAll();
+    public function getAllFrontend();
     public function find($data);
     public function findAboByProduct($id);
     public function create(array $data);

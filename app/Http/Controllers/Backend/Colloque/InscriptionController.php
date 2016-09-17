@@ -11,6 +11,7 @@ use App\Droit\Inscription\Repo\GroupeInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionCreateRequest;
+use App\Http\Requests\MakeInscriptionRequest;
 use App\Http\Requests\SendAdminInscriptionRequest;
 use App\Http\Controllers\Controller;
 
@@ -106,7 +107,7 @@ class InscriptionController extends Controller
      *
      * @return Response
      */
-    public function make(Request $request)
+    public function make(MakeInscriptionRequest $request)
     {
         $colloques = $this->colloque->getAll();
         $colloque  = $this->colloque->find($request->input('colloque_id'));

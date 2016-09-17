@@ -97,7 +97,7 @@ Route::group(['middleware' => 'site'], function () {
         Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
         Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
-        Route::post('cart/addAbo', ['uses' => 'Frontend\Shop\AboController@addAbo']);
+        Route::post('cart/addAbo', 'Frontend\Shop\AboController@addAbo');
         Route::post('cart/removeAbo', 'Frontend\Shop\AboController@removeAbo');
         Route::post('cart/quantityAbo', 'Frontend\Shop\AboController@quantityAbo');
 

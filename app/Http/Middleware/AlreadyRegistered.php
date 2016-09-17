@@ -30,7 +30,7 @@ class AlreadyRegistered
     {
         if($request->input('type') == 'simple')
         {
-            $exist = $this->inscription->getByUser($request->input('colloque_id'),$request->input('user_id'));
+            $exist = $this->inscription->isRegistered($request->input('colloque_id'),$request->input('user_id'));
 
             if($exist)
             {

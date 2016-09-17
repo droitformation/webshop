@@ -59,7 +59,25 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByUser($colloque_id,$user_id)
     {
-        $inscription = $this->inscription->with('rappels')->where('colloque_id','=',$colloque_id)->where('user_id','=',$user_id)->get();
+        $inscription = $this->inscription
+            ->with('rappels')->where('colloque_id','=',$colloque_id)
+            ->where('user_id','=',$user_id)
+            ->get();
+        
+        if(!$inscription->isEmpty())
+        {
+            return $inscription->first();
+        }
+
+        return false;
+    }
+
+    public function isRegistered($colloque_id,$user_id)
+    {
+        $inscription = $this->inscription->where('colloque_id','=',$colloque_id)
+            ->where('user_id','=',$user_id)
+            ->whereNull('group_id')
+            ->get();
 
         if(!$inscription->isEmpty())
         {

@@ -24,7 +24,7 @@ class UserTest extends TestCase {
         parent::tearDown();
     }
     
-    public function testChangePassword()
+    public function testChangeFirstName()
     {
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
 

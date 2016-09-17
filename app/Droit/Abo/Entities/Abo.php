@@ -18,6 +18,11 @@ class Abo extends Model{
         return $traduction[$this->plan];
     }
 
+    public function getLogoFileAttribute()
+    {
+        return $this->logo ? $this->logo : 'unine.png';
+    }
+
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

@@ -40,9 +40,15 @@ Route::get('testing', function() {
     $users        = \App::make('App\Droit\User\Repo\UserInterface');
 
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
-    $abos        = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
+    $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
+
+    $all = $abos->getAllFrontend();
+
+    echo '<pre>';
+    print_r($all);
+    echo '</pre>';exit();
 /*
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);

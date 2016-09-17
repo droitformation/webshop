@@ -81,6 +81,7 @@
 
                 <!-- messages and errors -->
                 @include('alert::alert')
+                @include('backend.partials.message')
 
                 <!-- Contenu -->
                 @yield('content')

@@ -8,8 +8,8 @@
         <tr>
             <td><img height="70mm" src="{{ public_path('files/main/'.\Registry::get('abo.infos.logo')) }}" alt="Unine logo" /></td>
             <td align="right">
-                @if($abo->abo->logo)
-                    <img height="65mm" src="{{ public_path('files/main/'.$abo->abo->logo) }}" alt="logo" />
+                @if($abo->abo->logo_file)
+                    <img height="65mm" src="{{ public_path('files/main/'.$abo->abo->logo_file) }}" alt="logo" />
                 @endif
             </td>
         </tr>

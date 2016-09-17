@@ -65,7 +65,7 @@ class ObjectFactory
             }
         }
 
-        return $this->makeUser();;
+        return $this->makeUser();
     }
 
     public function makeAdmin($user)
@@ -133,6 +133,14 @@ class ObjectFactory
         
     }
 
+    public function addAttributesAbo($product)
+    {
+        $product->attributs()->attach(3,['value' => 'TEST']);
+        $product->attributs()->attach(4,['value' => '2017']);
+
+        return $product;
+    }
+
     public function addGroupOption($colloque)
     {
         // Create main option
@@ -155,9 +163,9 @@ class ObjectFactory
         ]);
     }
 
-    public function product($nbr)
+    public function product($nbr = null)
     {
-        $images = \File::files('files/products');
+        $images = \File::files(public_path('files/products'));
         $images = collect($images)->map(function ($name) {
             $file = explode('/', $name);
             $file = end($file);
@@ -165,18 +173,28 @@ class ObjectFactory
             return $file;
         })->toArray();
 
-        for ($x = 0; $x <= $nbr; $x++) {
-            factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
-                'title'           => $this->faker->sentence,
-                'teaser'          => $this->faker->sentence,
-                'image'           => $images[array_rand($images)],
-                'description'     => $this->faker->text() ,
-                'weight'          => 500,
-                'sku'             => 10,
-                'price'           => $this->faker->numberBetween(10000,30000),
-            ]);
+        if($nbr){
+            for ($x = 0; $x <= $nbr; $x++) {
+                $this->makeProduct($images);
+            }
         }
 
+        return $this->makeProduct($images);
+    }
+
+    public function makeProduct($images)
+    {
+        $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+            'title'           => $this->faker->sentence,
+            'teaser'          => $this->faker->sentence,
+            'image'           => $images[array_rand($images)],
+            'description'     => $this->faker->text() ,
+            'weight'          => 500,
+            'sku'             => 10,
+            'price'           => $this->faker->numberBetween(10000,30000),
+        ]);
+
+        return $product;
     }
 
     public function order($nbr)
