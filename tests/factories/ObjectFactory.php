@@ -184,6 +184,8 @@ class ObjectFactory
 
     public function makeProduct($images)
     {
+        $images = !empty($images) ? $images : ['text.jpg','testing.png'];
+
         $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
             'title'           => $this->faker->sentence,
             'teaser'          => $this->faker->sentence,
