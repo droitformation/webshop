@@ -10,7 +10,7 @@ $( function() {
                 fieldName          : "specialisation",
                 placeholderText    : "Ajouter une spécialisation",
                 removeConfirmation : true,
-                tagSource      : data,
+                tagSource          : data,
                 afterTagAdded: function(event, ui)
                 {
                     if(!ui.duringInitialization)
@@ -43,7 +43,7 @@ $( function() {
                             dataType : "json",
                             type     : 'POST',
                             url      : base_url + 'admin/specialisation/destroy',
-                            data     : {_method: 'delete', id: id, model : model, specialisation: specialisation, _token: $("meta[name='_token']").attr('content')},
+                            data     : { _method: 'delete', id: id, model : model, specialisation: specialisation, _token: $("meta[name='_token']").attr('content')},
                             success: function (data) {
                                 console.log('removed');
                             },

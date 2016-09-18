@@ -25,15 +25,19 @@
 
          $writer = WriterFactory::create(Type::XLSX); // for XLSX files
 
-         $filename = "file.xlsx";
+         $filename = storage_path("excel/file.xlsx");
 
          $writer->openToBrowser($filename); // write data to a file or to a PHP stream
          //$writer->openToBrowser($fileName); // stream data directly to the browser
 
          $adresses = $this->prepareAdresse($adresses);
 
-         //$writer->addRow($singleRow); // add a row at a time
-         $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
+         if(!$adresses->isEmpty()){
+            /*  foreach($adresses as $adresse){
+                 $writer->addRow($adresse,$defaultStyle);  // add a row at a time
+             }*/
+             $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
+         }
 
          $writer->close();exit;
      }
