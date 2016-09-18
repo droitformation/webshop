@@ -185,7 +185,7 @@ $('body').on("click",'.addGroup',function(e) {
 
     $.ajax({
         type : "POST",
-        url  : base_url + "admin/group",
+        url  : base_url + "admin/groupoption",
         data : { data: data, _token: $("meta[name='_token']").attr('content') },
         success: function(data) {
             $main.replaceWith(data);
@@ -215,7 +215,7 @@ $('body').on("click",'.removeGroup', function(e) {
 
     $.ajax({
         type : "POST",
-        url  : base_url + "admin/group/" + group,
+        url  : base_url + "admin/groupoption/" + group,
         data : { id: group, _method: 'delete',  _token: $("meta[name='_token']").attr('content') },
         success: function(data) {
 

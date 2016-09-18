@@ -86,7 +86,7 @@
             <tr valign="top">
                 <td valign="top">
                     <p class="message">{{ $messages['remerciements'] }}</p>
-                    <p class="message">Neuchâtel, le <?php echo $date; ?></p>
+                    <p class="message">Neuchâtel, le {{ $date }}</p>
                 </td>
             </tr>
             <tr><td height="10">&nbsp;</td></tr>

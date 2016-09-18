@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Option\Repo\GroupOptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 
-class GroupController extends Controller {
+class GroupOptionController extends Controller {
     
     protected $group;
     protected $colloque;

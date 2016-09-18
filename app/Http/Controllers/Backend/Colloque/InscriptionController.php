@@ -259,12 +259,14 @@ class InscriptionController extends Controller
 
         if($item)
         {
-            $this->register->sendEmail($item, $request->input('email',null));
+            $this->register->sendEmail($item, $request->input('email'));
 
-            return redirect()->back()->with(['status' => 'success', 'message' => 'Email envoyé']);
+            alert()->success('Email envoyé');
+
+            return redirect()->back();
         }
 
-        alert()->success('Aucune inscription trouvé, problème');
+        alert()->warning('Aucune inscription trouvé, problème');
 
         return redirect()->back();
 

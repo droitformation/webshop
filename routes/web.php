@@ -229,7 +229,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
     Route::resource('price', 'Backend\Colloque\PriceController');
     Route::resource('option', 'Backend\Colloque\OptionController');
-    Route::resource('group', 'Backend\Colloque\GroupController');
+    Route::resource('groupoption', 'Backend\Colloque\GroupOptionController');
     Route::resource('occurrence', 'Backend\Colloque\OccurrenceController');
     Route::resource('compte', 'Backend\Colloque\CompteController');
 
