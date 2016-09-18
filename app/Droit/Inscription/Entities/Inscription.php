@@ -180,6 +180,20 @@ class Inscription extends Model
     }
 
     /**
+     * Scope a query to only include inscriptions for occurrences
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOccurrence($query, $occurrences)
+    {
+        if(!empty($occurrences)){
+            return $query->whereHas('occurrences', function($q) use ($occurrences){
+                $q->whereIn('colloque_occurrences.id', $occurrences);
+            });
+        }
+    }
+
+    /**
      * Scope a query to only include multiple inscription
      *
      * @return \Illuminate\Database\Eloquent\Builder

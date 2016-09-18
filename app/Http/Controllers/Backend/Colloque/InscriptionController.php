@@ -73,7 +73,7 @@ class InscriptionController extends Controller
         }
         
         $colloque = $this->colloque->find($id);
-
+  
         return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'names' => config('columns.names')]);
     }
 

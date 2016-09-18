@@ -80,11 +80,11 @@ class ExportController extends Controller
     public function inscription(Request $request)
     {
         $colloque     = $this->colloque->find($request->input('id'));
-        $inscriptions = $this->inscription->getByColloque($colloque->id);
+        $inscriptions = $this->inscription->getByColloqueExport($colloque->id, $request->input('occurrence', []));
 
         $exporter = new \App\Droit\Generate\Export\ExportInscription();
         $exporter->setColumns($request->input('columns', config('columns.names')))->setSort($request->input('sort', false));
-
+        
         ini_set('memory_limit', '-1');
         
         $exporter->export($inscriptions, $colloque);

@@ -15,9 +15,9 @@
         </div>
         <h6>Par année</h6>
         <ul id="seminaireannees" class="list annees clear">
-            @if(!empty($years))
+            @if(!empty($annees))
                 <ul id="arret-annees" class="list annees clear">
-                    @foreach($years as $year)
+                    @foreach($annees as $year)
                         <li><a rel="y{{ $year }}" href="#">Paru en {{ $year }}</a></li>
                     @endforeach
                 </ul>
@@ -27,8 +27,8 @@
         <div class="list auteurs clear selectList">
             <select style="width: 230px;" class="seminaire-chosen chosen-select author"  multiple data-placeholder="Filtrer par auteur..." name="filter">
                 @if(!$auteurs->isEmpty())
-                    @foreach($auteurs as $author)
-                        <option value="a{{ $author->id }}">{{ $author->name }}</option>
+                    @foreach($auteurs as $id => $author)
+                        <option value="a{{ $id }}">{{ $author }}</option>
                     @endforeach
                 @endif
             </select>

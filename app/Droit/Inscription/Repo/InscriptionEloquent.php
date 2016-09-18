@@ -43,6 +43,14 @@ class InscriptionEloquent implements InscriptionInterface{
         return $inscription->orderBy('created_at','DESC')->get();
     }
 
+    public function getByColloqueExport($id, $occurrences = [])
+    {
+        return $this->inscription
+            ->where('colloque_id','=',$id)
+            ->occurrence($occurrences)
+            ->with(['user','user.adresses','price','user_options','colloque.options'])->orderBy('created_at','DESC')->get();
+    }
+
     public function getByColloqueTrashed($id)
     {
         return $this->inscription->where('colloque_id','=',$id)->onlyTrashed()->groupBy('id')->get();
