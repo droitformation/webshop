@@ -10,7 +10,6 @@ use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 
-
 class ExportController extends Controller
 {
     protected $inscription;

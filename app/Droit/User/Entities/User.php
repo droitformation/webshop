@@ -139,6 +139,11 @@ class User extends Authenticatable {
         return false;
     }
 
+    public function getAllRolesAttribute()
+    {
+        return $this->roles->pluck('id')->all();
+    }
+
     /*
      * Search scopes
      * */

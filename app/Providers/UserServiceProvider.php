@@ -24,6 +24,7 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerUserService();
+        $this->registerRoleService();
         $this->registerAdresseService();
         $this->registerCiviliteService();
         $this->registerCantonService();
@@ -41,6 +42,17 @@ class UserServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\User\Repo\UserInterface', function()
         {
             return new \App\Droit\User\Repo\UserEloquent(new \App\Droit\User\Entities\User);
+        });
+    }
+
+    /**
+     * Role
+     */
+    protected function registerRoleService(){
+
+        $this->app->singleton('App\Droit\User\Repo\RoleInterface', function()
+        {
+            return new \App\Droit\User\Repo\RoleEloquent(new \App\Droit\User\Entities\Role);
         });
     }
 

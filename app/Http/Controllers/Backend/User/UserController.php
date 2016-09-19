@@ -6,29 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Droit\Pays\Repo\PaysInterface;
-use App\Droit\Canton\Repo\CantonInterface;
-use App\Droit\Profession\Repo\ProfessionInterface;
-
 use App\Droit\User\Repo\UserInterface;
+
 use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
 
 class UserController extends Controller {
 
     protected $user;
-    protected $pays;
-    protected $canton;
-    protected $profession;
 
-    public function __construct(UserInterface $user, CantonInterface $canton, PaysInterface $pays, ProfessionInterface $profession)
+    public function __construct(UserInterface $user)
     {
-        $this->user       = $user;
-        $this->pays       = $pays;
-        $this->canton     = $canton;
-        $this->profession = $profession;
-
-        setlocale(LC_ALL, 'fr_FR.UTF-8');
+        $this->user = $user;
     }
 
     /**
@@ -61,11 +50,7 @@ class UserController extends Controller {
      */
     public function create()
     {
-        $cantons     = $this->canton->getAll();
-        $professions = $this->profession->getAll();
-        $pays        = $this->pays->getAll();
-
-        return view('backend.users.create')->with(compact('pays','cantons','professions'));
+        return view('backend.users.create');
     }
 
     /**

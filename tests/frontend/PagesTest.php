@@ -1,23 +1,14 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 class PagesTest extends TestCase {
-
-    use DatabaseTransactions;
 
 	public function setUp()
 	{
 		parent::setUp();
-
-        DB::beginTransaction();
 	}
 
 	public function tearDown()
 	{
-		Mockery::close();
-		DB::rollBack();
         parent::tearDown();
 	}
 

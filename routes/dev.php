@@ -550,10 +550,10 @@ Route::get('factory', function()
     //$products = $make->product(15);
     //$colloque = $make->colloque();
     //$orders = $make->order(5);
-    $make->user(40);
+    $membre = $make->items('Member', 1);
 
     echo '<pre>';
-    //print_r($orders);
+    print_r($membre);
     echo '</pre>';
 
 });

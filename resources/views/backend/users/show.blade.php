@@ -45,9 +45,15 @@
                                   </div>
 
                                   <div class="form-group">
-                                      <label class="control-label">Administrateur</label>&nbsp;
-                                      <label class="radio"><input {{ $user->role_admin ? 'checked' : '' }} type="radio" name="role" value="1"> Oui</label>
-                                      <label class="radio"><input {{ !$user->role_admin ? 'checked' : '' }} type="radio" name="role" value="0"> Non</label>
+                                      <label class="control-label">Role</label>&nbsp;
+                                      <label class="radio"><input {{ empty($user->all_roles) ? 'checked' : '' }} type="radio" name="role" value="0"> Utilisateur simple</label>
+                                      @if(isset($roles))
+                                          @foreach($roles as $role)
+                                              <label class="radio">
+                                                  <input type="radio" name="role" {{ in_array($role->id ,$user->all_roles) ? 'checked' : '' }} value="{{ $role->id }}"> {{ $role->name }}
+                                              </label>
+                                          @endforeach
+                                      @endif
                                   </div>
 
                                   <a class="text-danger" data-toggle="collapse" href="#changePassword" href="#">

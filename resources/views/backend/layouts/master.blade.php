@@ -55,7 +55,7 @@
             <ul class="dropdown-menu userinfo arrow">
                 <li class="userlinks">
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('auth/logout') }}"><i class="pull-right fa  fa-power-off"></i> Logout</a></li>
+                        <li><a href="{{ url('logout') }}"><i class="pull-right fa  fa-power-off"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>

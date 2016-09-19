@@ -127,6 +127,12 @@ Route::group(['middleware' => 'site'], function () {
 
 });
 
+Route::group(['prefix' => 'team' , 'middleware' => ['auth','team']], function () {
+    Route::get('/','Team\TeamController@index');
+    Route::get('order/{id}','Team\Shop\OrderController@show');
+    Route::match(['get', 'post'],'orders', 'Team\Shop\OrderController@index');
+});
+
 /* *
 * Administration routes
 * */

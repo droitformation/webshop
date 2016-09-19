@@ -17,7 +17,7 @@ class ObjectFactory
         $this->cantons     = $canton->getAll()->pluck('title','id')->all();
     }
 
-    public function makeUser()
+    public function makeUser($data = [])
     {
         $first_name = $this->faker->firstName;
         $last_name  = $this->faker->lastName;
@@ -36,14 +36,14 @@ class ObjectFactory
             'last_name'     => $last_name,
             'email'         => $email,
             'company'       => $this->faker->company,
-            'profession_id' => array_rand($this->professions, 1),
+            'profession_id' => isset($data['profession']) ? $data['profession'] : 0,
             'telephone'     => '032 690 00 23',
             'mobile'        => '032 690 00 23',
             'fax'           => null,
             'adresse'       => $this->faker->address,
             'npa'           => $this->faker->postcode,
             'ville'         => $this->faker->city,
-            'canton_id'     => array_rand($this->cantons, 1),
+            'canton_id'     => isset($data['canton']) ? $data['canton'] : 0,
             'pays_id'       => 208,
             'type'         => 1,
             'user_id'      => $user->id,
@@ -52,16 +52,26 @@ class ObjectFactory
 
         $user->adresses()->save($adresse);
 
+        if(isset($data['specialisations']))
+        {
+            $adresse->specialisations()->attach($data['specialisations']);
+        }
+
+        if(isset($data['members']))
+        {
+            $adresse->members()->attach($data['members']);
+        }
+
         return $user;
     }
 
-    public function user($nbr = false)
+    public function user($data = [])
     {
-        if($nbr)
+        if(count($data) > 1)
         {
-            for ($x = 0; $x <= $nbr; $x++)
+            for ($x = 0; $x < count($data); $x++)
             {
-                $this->makeUser();
+                $this->makeUser($data[$x]);
             }
         }
 
@@ -226,5 +236,29 @@ class ObjectFactory
             $order->products()->attach($products->pluck('id')->all());
         }
         
+    }
+
+    public function items($type, $nbr = 1)
+    {
+        $specialisations = [];
+
+        if($nbr > 1)
+        {
+            for ($x = 1; $x <= $nbr; $x++)
+            {
+                $specialisations[] = $this->makeItems($type);
+            }
+
+            return collect($specialisations);
+        }
+
+        return $this->makeItems($type);
+    }
+
+    public function makeItems($type)
+    {
+        return factory('App\Droit\\'.$type.'\Entities\\'.$type)->create([
+            'title' => $this->faker->jobTitle
+        ]);
     }
 }

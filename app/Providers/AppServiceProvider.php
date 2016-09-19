@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider {
         ], 'App\Http\ViewComposers\ColloqueComposer');
 
         view()->composer([
-            'backend.users.adresse',
+            'backend.users.*',
             'frontend.pubdroit.profil.account',
             'backend.export.user',
             'frontend.pubdroit.checkout.billing',

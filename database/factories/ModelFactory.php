@@ -120,6 +120,12 @@ $factory->define(App\Droit\Specialisation\Entities\Specialisation::class, functi
     ];
 });
 
+$factory->define(App\Droit\Member\Entities\Member::class, function (Faker\Generator $faker) {
+    return [
+        'title' => 'title'
+    ];
+});
+
 $factory->define(App\Droit\Profession\Entities\Profession::class, function (Faker\Generator $faker) {
     return [
         'title' => 'title'

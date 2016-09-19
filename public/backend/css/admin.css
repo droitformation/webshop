@@ -983,3 +983,13 @@ label.error{
 .datepicker table tr th{
     padding: 3px;
 }
+
+.tiles-footer h3{
+    color: #fff;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.shortcut-tiles .tiles-footer {
+    text-align: center;
+}

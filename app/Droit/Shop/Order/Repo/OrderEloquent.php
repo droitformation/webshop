@@ -33,6 +33,7 @@ class OrderEloquent implements OrderInterface{
             ->whereBetween('created_at', [$start, $end])
             ->status($status)
             ->isfree($onlyfree)
+            ->orderBy('created_at')
             ->get();
     }
 
