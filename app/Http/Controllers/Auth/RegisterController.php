@@ -7,7 +7,7 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 
 use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
