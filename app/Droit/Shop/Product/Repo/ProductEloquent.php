@@ -12,9 +12,9 @@ class ProductEloquent implements ProductInterface{
         $this->product = $product;
     }
 
-    public function getAll($search = null, $nbr = null, $hidden = false)
+    public function getAll($search = null, $nbr = null, $visible = false)
     {
-        $products = $this->product->search($search)->hidden($hidden)->orderBy('created_at', 'DESC');
+        $products = $this->product->search($search)->visible($visible)->orderBy('created_at', 'DESC');
 
         if($nbr)
         {
@@ -25,9 +25,9 @@ class ProductEloquent implements ProductInterface{
     }
 
     // For shop only
-    public function getNbr($nbr = null, $hidden = false)
+    public function getNbr($nbr = null, $visible = true)
     {
-        return $this->product->with(['categories'])->hidden($hidden)->orderBy('created_at', 'DESC')->paginate($nbr);
+        return $this->product->with(['categories'])->visible($visible)->orderBy('created_at', 'DESC')->paginate($nbr);
     }
 
     public function getAbos()
@@ -43,7 +43,7 @@ class ProductEloquent implements ProductInterface{
             ->whereHas('categories', function($query) use ($id)
             {
                 $query->where('shop_categories.id', '=' ,$id);
-                $query->where('shop_categories.title', 'LIKE' ,'%'.$id.'%');
+                $query->orWhere('shop_categories.title', 'LIKE' ,'%'.$id.'%');
             })
             ->orderBy('created_at', 'DESC')
             ->get();

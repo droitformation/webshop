@@ -72,7 +72,7 @@ class ProductController extends Controller {
         }
         else // pagination
         {
-            $products = $this->product->getNbr(20, null, true);
+            $products = $this->product->getNbr(20,false);
             $paginate = true;
         }
 
