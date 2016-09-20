@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Droit\User\Entities\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -66,6 +68,6 @@ class LoginController extends Controller
             return redirect($returnPath);
         }
 
-        return redirect()->intended('profil');
+        return redirect()->intended('pubdroit/profil');
     }
 }

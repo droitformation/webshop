@@ -7,7 +7,7 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 
 use Validator;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/pubdroit';
     protected $adresse;
 
     /**
