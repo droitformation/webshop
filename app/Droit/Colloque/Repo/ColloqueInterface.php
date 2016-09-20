@@ -3,7 +3,7 @@
 interface ColloqueInterface {
 
     public function getAll($active = false, $archives = false);
-    public function getCurrent($registration = false, $finished = false, $visible = true);
+    public function getCurrent($registration = false, $visible = true);
     public function getByYear($year);
     public function search($term);
     public function getYears();

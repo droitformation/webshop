@@ -67,8 +67,7 @@ class ShopController extends Controller {
         $nouveautes = $this->product->getByCategorie('Nouveautés');
 
         $page       = $this->page->getBySlug($this->site_id,'accueil');
-
-        $colloques  = $this->colloque->getCurrent(true); // $registration = false, $finished = false, $visible = true
+        $colloques  = $this->colloque->getCurrent();
         $abos       = $this->abo->getAllFrontend();
         
         $abos = $abos->map(function($abo, $key) {

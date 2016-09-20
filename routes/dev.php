@@ -548,12 +548,12 @@ Route::get('factory', function()
 {
     $make = new \tests\factories\ObjectFactory();
     //$products = $make->product(15);
-    //$colloque = $make->colloque();
+    $colloque = $make->colloque();
     //$orders = $make->order(5);
-    $membre = $make->items('Member', 1);
+    //$membre = $make->items('Member', 1);
 
     echo '<pre>';
-    print_r($membre);
+    //print_r($membre);
     echo '</pre>';
 
 });

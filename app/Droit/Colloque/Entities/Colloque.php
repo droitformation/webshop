@@ -94,6 +94,11 @@ class Colloque extends Model
         if($visible) $query->where('visible','=',1);
     }
 
+    public function scopeIsVisible($query,$isVisible)
+    {
+        if($isVisible) $query->whereNotNull('visible');
+    }
+
     public function scopeActive($query,$status)
     {
         //if($status) $query->addSelect('*',\DB::Raw('COALESCE(end_at,start_at) as start_at'))->where('start_at','>',date('Y-m-d'));
@@ -110,7 +115,7 @@ class Colloque extends Model
 
     public function scopeRegistration($query,$status)
     {
-        if($status) $query->where('registration_at','>=',date('Y-m-d'));
+        if($status) $query->whereDate('registration_at', '>=', \Carbon\Carbon::now());
     }
 
     public function scopeFinished($query,$status)

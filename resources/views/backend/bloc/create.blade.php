@@ -47,7 +47,12 @@
                                     @foreach($sites as $site)
                                         <optgroup label="{{ $site->nom }}">
                                             @if(!$site->pages->isEmpty())
-                                                @foreach($site->pages as $page)
+                                                <?php
+                                                    $pages = $site->pages->reject(function ($page, $key) {
+                                                        return $page->isExternal;
+                                                    });
+                                                ?>
+                                                @foreach($pages as $page)
                                                     <option {{ old('page_id') && in_array($page->id,old('page_id')) ? 'selected' : '' }} value="{{ $page->id }}">{{ $page->title }}</option>
                                                 @endforeach
                                             @endif

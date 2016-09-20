@@ -22,9 +22,12 @@ class ColloqueEloquent implements ColloqueInterface{
         return $this->colloque->where('titre', 'like', '%'.$term.'%')->orWhere('sujet', 'like', '%'.$term.'%')->orWhere('soustitre', 'like', '%'.$term.'%')->get();
     }
 
-    public function getCurrent($registration = false, $finished = false, $visible = true)
+    public function getCurrent($registration = true, $isVisible = true)
     {
-        return $this->colloque->visible($visible)->registration($registration)->finished($finished)->orderBy('start_at','DESC')->get();
+        return $this->colloque
+            ->registration($registration)
+            ->isVisible($isVisible)
+            ->orderBy('start_at','DESC')->get();
     }
 
     public function getByYear($year)
