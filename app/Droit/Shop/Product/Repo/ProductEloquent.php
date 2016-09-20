@@ -14,14 +14,7 @@ class ProductEloquent implements ProductInterface{
 
     public function getAll($search = null, $nbr = null, $hidden = false)
     {
-        $products = $this->product->search($search);
-
-        if(!$hidden)
-        {
-            $products->where('hidden','=',0);
-        }
-
-        $products->orderBy('created_at', 'DESC');
+        $products = $this->product->search($search)->hidden($hidden)->orderBy('created_at', 'DESC');
 
         if($nbr)
         {
@@ -49,8 +42,8 @@ class ProductEloquent implements ProductInterface{
             ->where('hidden','=',0)
             ->whereHas('categories', function($query) use ($id)
             {
-                $query->where('categorie_id', '=' ,$id);
-
+                $query->where('shop_categories.id', '=' ,$id);
+                $query->where('shop_categories.title', 'LIKE' ,'%'.$id.'%');
             })
             ->orderBy('created_at', 'DESC')
             ->get();
