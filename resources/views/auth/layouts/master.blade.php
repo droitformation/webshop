@@ -18,8 +18,8 @@
     <script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo asset('common/js/validation.js');?>"></script>
 </head>
-<body class="focusedform">
-    <div class="{{ !Request::is('auth/register') ? 'verticalcenter' : 'verticalcenterregister' }}">
+<body class="">
+    <div class="{{ !Request::is('register') ? 'verticalcenter' : 'verticalcenterregister' }}">
 
         <!-- messages and errors -->
         @include('backend.partials.message')
