@@ -20,6 +20,15 @@ Route::get('code', 'CodeController@index');
 */
 Route::get('presence/{id}/{key}', 'CodeController@presence');
 Route::get('presence/occurrence/{id}/{key}', 'CodeController@occurrence');
+
+/*
+|--------------------------------------------------------------------------
+| Ajax login validation
+|--------------------------------------------------------------------------
+*/
+Route::post('check/email', 'Api\ValidationController@check');
+
+
 /*
 |--------------------------------------------------------------------------
 | Send message form contact

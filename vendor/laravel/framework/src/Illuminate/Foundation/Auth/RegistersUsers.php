@@ -31,6 +31,8 @@ trait RegistersUsers
 
         $this->guard()->login($this->create($request->all()));
 
+        \Auth::user()->adresses()->save($this->adresse->create($request->all()));
+
         return redirect($this->redirectPath());
     }
 

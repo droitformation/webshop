@@ -36,4 +36,36 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+
+    /**
+     * Show the admin login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAdmin()
+    {
+        return view('auth.login')->with(['admin' => true]);
+    }
+
+    public function authenticated(Request $request, User $user )
+    {
+        $user->load('roles');
+
+        $returnPath = $request->input('returnPath',null);
+
+        $roles = $user->roles->pluck('id')->all();
+
+        // Logic that determines where to send the user
+        if (in_array(1,$roles))
+        {
+            return redirect()->intended('admin');
+        }
+
+        if($returnPath)
+        {
+            return redirect($returnPath);
+        }
+
+        return redirect()->intended('profil');
+    }
 }

@@ -25,18 +25,18 @@ jQuery(document).ready(function($){
 
     $( "#registeraccount" ).validate({
         rules: {
-            first_name: "required",
-            last_name: "required",
-            adresse: "required",
-            ville: "required",
-            npa: "required",
-            password: "required",
+            first_name : "required",
+            last_name  : "required",
+            adresse    : "required",
+            ville      : "required",
+            npa        : "required",
+            password   : "required",
             password_confirmation: {equalTo: "#password"},
             email: {
                 required: true,
-                email: true,
-                remote: {
-                    url: base_url + "check/email",
+                email   : true,
+                remote  : {
+                    url : base_url + "check/email",
                     type: "post",
                     data: {
                         email: function() {
