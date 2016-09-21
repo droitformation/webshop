@@ -87,6 +87,7 @@
 				<section class="container">
 
 					@include('alert::alert')
+					@include('backend.partials.message')
 
 					<section class="row">
 						<section class="col-md-4 col-xs-12">

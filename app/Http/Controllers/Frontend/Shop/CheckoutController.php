@@ -112,7 +112,14 @@ class CheckoutController extends Controller {
             $shipping = $this->checkout->getTotalWeight()->setShipping()->orderShipping;
             $order    = $this->order->make($request->all(),$shipping,$coupon);
 
-            event(new OrderWasPlaced($order));
+            //event(new OrderWasPlaced($order));
+
+            $job = new \App\Jobs\SendOrderConfirmation($order);
+            $this->dispatchNow($job);
+
+            $notification = new \App\Jobs\NotifyAdminNewOrder($order);
+            $this->dispatchNow($notification);
+
         }
         
         if($this->checkout->orderAbo())
@@ -120,7 +127,12 @@ class CheckoutController extends Controller {
             $data = $this->checkout->getAboData();
             $abos = $this->abo->makeAbonnement($data);
 
-            event(new NewAboRequest($abos));
+            //event(new NewAboRequest($abos));
+            $job = new \App\Jobs\SendAboConfirmation($abos);
+            $this->dispatchNow($job);
+
+            $notification = new \App\Jobs\NotifyAdminNewAbo($abos);
+            $this->dispatchNow($notification);
         }
 
         $this->cleanUp();

@@ -235,7 +235,7 @@ class AdresseEloquent implements AdresseInterface{
 	public function setSpecialisation($adresse_id,$data)
 	{
 		$adresse = $this->adresse->find($adresse_id);
-        $exist   = $adresse->specialisations->lists('id')->all();
+        $exist   = $adresse->specialisations->pluck('id')->all();
 
         $adresse->specialisations()->sync(array_unique(array_merge($exist,$data)));
 	}
@@ -336,7 +336,7 @@ class AdresseEloquent implements AdresseInterface{
      */
     public function changeLivraison($adresse_id , $user_id){
 
-        $adresses = $this->adresseUser($user_id)->lists('id');
+        $adresses = $this->adresseUser($user_id)->pluck('id');
 
         foreach($adresses as $id)
         {

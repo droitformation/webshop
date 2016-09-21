@@ -54,13 +54,13 @@ class LoginController extends Controller
         $user->load('roles');
 
         $returnPath = $request->input('returnPath',null);
-
-        $roles = $user->roles->pluck('id')->all();
+        $roles      = $user->roles->pluck('id')->all();
 
         // Logic that determines where to send the user
         if (in_array(1,$roles))
         {
-            return redirect()->intended('admin');
+            $returnPath = $returnPath ? $returnPath : 'admin';
+            return redirect()->intended($returnPath);
         }
 
         if($returnPath)

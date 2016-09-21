@@ -1,4 +1,4 @@
-<form class="form-horizontal form-validation" role="form" method="POST" action="login">
+<form class="form-horizontal form-validation" role="form" method="POST" action="{{ url('login') }}">
     @if(isset($returnPath))
         <input type="hidden" name="returnPath" value="{{ $returnPath }}">
     @endif
