@@ -134,6 +134,8 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="livraison" value="1">
+
                 </div><!-- END Adresse -->
             </div><!-- END row -->
 

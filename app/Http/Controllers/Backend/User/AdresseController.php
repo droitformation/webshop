@@ -74,7 +74,7 @@ class AdresseController extends Controller {
             $user = $this->user->find($request->input('user_id'));
             $user->adresses()->save($adresse);
 
-            return redirect('admin/user/'.$user->id)->back();
+            return redirect()->back();
         }
 
         return redirect('admin/adresse/'.$adresse->id);
@@ -175,6 +175,16 @@ class AdresseController extends Controller {
         alert()->success('Adresse supprimé');
 
         return redirect($url);
+    }
+
+
+    public function livraison(Request $request)
+    {
+        $this->adresse->changeLivraison($request->input('adresse_id') , $request->input('user_id'));
+
+        alert()->success('Adresse de livraison modifié');
+
+        return redirect()->back();
     }
 
 }

@@ -127,5 +127,4 @@ class AdresseController extends Controller {
 
         die();
     }
-
 }

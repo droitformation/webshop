@@ -107,10 +107,26 @@
                               @foreach ($user->adresses as $adresse)
                                   <div class="panel panel-midnightblue">
                                       <div class="panel-body">
-                                          <h3 style="margin-bottom: 0;"><i class="fa fa-map-marker"></i>
-                                              &nbsp;Adresse {{ $adresse->type_title }}  &nbsp;{!! $adresse->livraison ? '<small class="text-mute">livraison</small>' : '' !!}
-                                              <a role="button" class="btn btn-sm btn-primary pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$adresse->id}}">Voir</a>
-                                          </h3>
+                                          <div class="row">
+                                              <div class="col-md-8">
+                                                  <h3 style="margin-bottom: 0;">
+                                                      <i class="fa fa-map-marker"></i>&nbsp;Adresse {{ $adresse->type_title }}
+                                                      {!! $adresse->livraison ? '<small class="text-mute">livraison</small>' : '' !!}
+                                                  </h3>
+                                              </div>
+                                              <div class="col-md-3 text-right">
+                                                  @if($adresse->user_id > 0 && !$adresse->livraison)
+                                                      <form action="{{ url('admin/adresse/livraison') }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+                                                          <input type="hidden" name="adresse_id" value="{{ $adresse->id }}">
+                                                          <input type="hidden" name="user_id" value="{{ $adresse->user_id }}">
+                                                          <button type="submit" class="btn btn-inverse btn-sm">Définir comme adresse de livraison</button>
+                                                      </form>
+                                                  @endif
+                                              </div>
+                                              <div class="col-md-1">
+                                                  <a role="button" class="btn btn-sm btn-primary" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$adresse->id}}">Voir</a>
+                                              </div>
+                                          </div>
                                           <div id="collapse{{$adresse->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                               @include('backend.adresses.partials.update',['adresse' => $adresse])
                                           </div>

@@ -273,7 +273,7 @@ class AdresseEloquent implements AdresseInterface{
 			'pays_id'       => (isset($data['pays_id']) ? $data['pays_id'] : 208),
 			'type'          => (isset($data['type']) ? $data['type'] : 1),
 			'user_id'       => (isset($data['user_id']) ? $data['user_id'] : 0),
-			'livraison'     => (isset($data['livraison']) ? $data['livraison'] : 1),
+			'livraison'     => (isset($data['livraison']) ? $data['livraison'] : 0),
 			'created_at'    => date('Y-m-d G:i:s'),
 			'updated_at'    => date('Y-m-d G:i:s')
 		));
@@ -334,23 +334,19 @@ class AdresseEloquent implements AdresseInterface{
     /**
      * Change delivery adresse for user
      */
-    public function changeLivraison($adresse_id , $user_id){
+    public function changeLivraison($adresse_id , $user_id)
+	{
+        $adresses = $this->adresse->where('user_id','=',$user_id)->get();
 
-        $adresses = $this->adresseUser($user_id)->pluck('id');
-
-        foreach($adresses as $id)
+        foreach($adresses as $adresse)
         {
-            // Find adresse
-            $adresse = $this->adresse->find($id);
             // If it's the provided adresse we want to change set livraison to 1 else set to 0
-            $livraison = ( $adresse_id == $id ? 1 : 0);
+            $livraison = ( $adresse->id == $adresse_id ? 1 : 0) ;
             $adresse->livraison = $livraison;
             $adresse->save();
-
         }
 
         return true;
-
     }
 
 	public function delete($id){
