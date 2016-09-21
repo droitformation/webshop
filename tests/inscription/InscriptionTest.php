@@ -50,6 +50,7 @@ class InscriptionTest extends TestCase {
 	{
         $this->WithoutEvents();
         $this->withoutJobs();
+        //$this->expectsJobs(App\Jobs\SendConfirmationInscription::class);
 
         $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
@@ -116,6 +117,8 @@ class InscriptionTest extends TestCase {
 
         $make     = new \tests\factories\ObjectFactory();
         $user     = $make->user();
+        $this->actingAs($user);
+
         $colloque = $make->colloque();
 
         $input = ['type' => 'simple', 'colloque_id' => $colloque->id, 'user_id' => $user->id, 'inscription_no' => '71-2015/1', 'price_id' => 290];
@@ -126,7 +129,7 @@ class InscriptionTest extends TestCase {
 
         $response = $this->call('POST', 'pubdroit/registration', $input);
 
-        $this->assertRedirectedTo('/');
+        $this->assertRedirectedTo('pubdroit');
     }
 
 
