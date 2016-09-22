@@ -206,7 +206,7 @@ margin-bottom:0;
 
 .c-btn .cart-basket {
     color: #b01d22;
-    line-height: 40px;
+    line-height: 30px;
     padding: 5px;
 }
 
@@ -258,7 +258,7 @@ margin-bottom:0;
 /* End WellCome Msg Css */
 
 /* Start Sale Bar Css */
-.s-product { padding:10px; border:1px solid #dee4e4; position:relative; margin-bottom: 20px;}
+.s-product { padding:10px; border:1px solid #dee4e4; position:relative; margin-bottom: 20px; background-color: #fff;}
 .s-product article {position: relative;min-height: 130px;}
 .s-product article h3 {
     color: #809f14;
@@ -1431,7 +1431,9 @@ a.navbar-btn.navbar-register:focus{
 }
 
 section#abos{
+    background: #fdf9ee none repeat scroll 0 0;
     margin-bottom: 30px;
+    padding: 5px 20px;
 }
 
 .b-detail-holder hr{

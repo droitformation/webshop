@@ -32,7 +32,8 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/common/parsley.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/common/validation.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/checkout/checkout.css');?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/checkout/checkout.css');?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/sweetalert.css');?>">
 	<noscript>
 		<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/noJS.css');?>">
 	</noscript>
@@ -88,6 +89,7 @@
 
 					@include('alert::alert')
 					@include('backend.partials.message')
+					@include('partials.basket-update')
 
 					<section class="row">
 						<section class="col-md-4 col-xs-12">
@@ -217,6 +219,7 @@
 		<script src="<?php echo asset('frontend/pubdroit/js/jquery.zoom.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/bookblock.js');?>"></script>
+		<script src="<?php echo asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
 
         <script src="<?php echo asset('frontend/pubdroit/js/interaction.js');?>"></script>
         <script src="<?php echo asset('frontend/pubdroit/js/custom.js');?>"></script>

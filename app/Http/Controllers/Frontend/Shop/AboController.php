@@ -36,6 +36,8 @@ class AboController extends Controller {
                 'image' => $item->logo, 'plan' => $item->plan_fr, 'product_id' => $item->current_product->id, 'product' => $item->current_product->title
             ]);
 
+        $request->session()->flash('cartUpdated', 'Panier mis à jour');
+
         return redirect()->back();
 	}
 
@@ -43,12 +45,16 @@ class AboController extends Controller {
 
         \Cart::instance('abonnement')->remove($request->input('rowid'));
 
+        $request->session()->flash('cartUpdated', 'Panier mis à jour');
+
         return redirect()->back();
     }
 
     public function quantityAbo(Request $request){
         
         \Cart::instance('abonnement')->update($request->input('rowid'), $request->input('qty'));
+
+        $request->session()->flash('cartUpdated', 'Panier mis à jour');
 
         return redirect()->back();
     }

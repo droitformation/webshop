@@ -6,7 +6,13 @@
             // Terms and conditions have to be checked
             if( !$('input[id=termsAndConditions]').is(':checked'))
             {
-                alert('Vous devez accepter les conditions générales');
+                swal({
+                    title: "Attention",
+                    text : 'Vous devez accepter les conditions générales',
+                    type : "warning",
+                    showConfirmButton: true
+                });
+
                 return false;
             }
 
@@ -25,16 +31,7 @@
                 return false;
             }
 
-            var action  = $this.data('action');
-            var what    = $this.data('what');
-            var answer  = confirm('Voulez-vous vraiment '+ what +' '+ action +' ?');
-
-            if (answer)
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         });
 
         /*****************************************************************
@@ -59,6 +56,8 @@
         })
 
     });
+
+   // swal("Good job!", "You clicked the button!", "success");
 
 
 }(window.jQuery);

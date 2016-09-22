@@ -161,7 +161,9 @@
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                 <div class="panel-body">
                                     <p>Les achats de livres sont fermes et définitifs. Ils ne pourront donc donner lieu à échange, remboursement ou à l’exercice d’un droit de
-                                        rétractation.Livraison et disponibilitéLes expéditions se font du lundi au vendredi inclus (sauf jours fériés) dans la mesure des
+                                        rétractation.</p>
+                                    <p><strong>Livraison et disponibilité</strong></p>
+                                    <p>Les expéditions se font du lundi au vendredi inclus (sauf jours fériés) dans la mesure des
                                         disponibilités de l’ouvrage. Un e-mail de confirmation vous est envoyé pour certifier la bonne réception de votre commande.</p>
                                 </div>
                             </div>

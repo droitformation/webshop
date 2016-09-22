@@ -125,8 +125,8 @@ class CheckoutController extends Controller {
 
         $this->cleanUp();
 
-        alert()->success('Merci! Votre commande a bien été envoyé. Celle-ci vous parviendra dans les plus brefs délais');
-
+        $request->session()->flash('OrderConfirmation', 'Ok');
+        
         return redirect('pubdroit');
     }
 

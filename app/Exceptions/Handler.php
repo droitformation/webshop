@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler {
 	public function render($request, Exception $e)
 	{
         if ($e instanceof \App\Exceptions\CouponException){
-            alert()->warning($e->getMessage());
+			$request->session()->flash('wrongCoupon', $e->getMessage());
 			return redirect()->back();
         }
 

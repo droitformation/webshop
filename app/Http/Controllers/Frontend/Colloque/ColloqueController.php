@@ -45,7 +45,7 @@ class ColloqueController extends Controller
 
     public function archives()
     {
-        $colloques  = $this->colloque->getCurrent(false,true);
+        $colloques  = $this->colloque->getArchive();
 
         return view('frontend.pubdroit.colloque.archives')->with(['colloques' => $colloques]);
     }

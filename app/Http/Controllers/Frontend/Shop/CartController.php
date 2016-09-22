@@ -53,12 +53,16 @@ class CartController extends Controller {
 
         \Cart::instance('shop')->associate('Product','App\Droit\Shop\Product\Entities')->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
 
+        $request->session()->flash('cartUpdated', 'Panier mis à jour');
+
         return redirect()->back();
 	}
 
     public function removeProduct(Request $request){
 
         \Cart::instance('shop')->remove($request->input('rowid'));
+
+        $request->session()->flash('cartUpdated', 'Panier mis à jour');
 
         return redirect()->back();
     }
@@ -67,14 +71,16 @@ class CartController extends Controller {
         
         \Cart::instance('shop')->update($request->input('rowid'), $request->input('qty'));
 
+        $request->session()->flash('cartUpdated', 'Panier mis à jour');
+
         return redirect()->back();
     }
 
     public function applyCoupon(Request $request){
 
         $this->worker->reset()->setCoupon($request->input('coupon'))->applyCoupon();
-
-        alert()->success('Le coupon a été appliqué');
+        
+        $request->session()->flash('couponApplyed', 'Le coupon a été appliqué');
 
         return redirect()->back();
     }
