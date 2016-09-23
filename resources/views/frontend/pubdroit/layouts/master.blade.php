@@ -51,9 +51,50 @@
 		<!-- Start Main Wrapper -->
 		<div class="wrapper">
 			<!-- Start Main Header -->
+			<div id="preheader">
+				<section class="container">
+					<section class="row">
+						<section class="col-md-6">
+							<ul class="pull-left menu">
+								@if(!$menus->isEmpty())
+									<?php $menu = $menus->where('position','main'); ?>
+									@if(!$menu->isEmpty())
+										<?php $menu = $menu->first()->load('pages'); ?>
+										@if(!$menu->pages->isEmpty())
+											@foreach($menu->pages as $page)
+												<li>{!! $page->page_url !!}</li>
+											@endforeach
+										@endif
+									@endif
+								@endif
+							</ul>
+						</section>
+						<section class="col-md-6 e-commerce-list text-right">
+							@if (!Auth::check())
+								<ul class="pull-right">
+									<li><a href="{{ url('login')}}" class="navbar-btn navbar-login btn-default"><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a></li>
+									<li><a href="{{ url('register')}}" class="navbar-btn navbar-register btn-primary"><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a></li>
+								</ul>
+							@endif
+							@if (Auth::check())
+								<ul class="pull-right">
+									<li>Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</li>
+									<li><a href="{{ url('pubdroit/profil') }}">Mon compte</a></li>
+									<li>
+										<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
+											<button class="btn btn-default btn-xs" type="submit">Déconnexion</button>
+										</form>
+									</li>
+								</ul>
+							@endif
+						</section>
+					</section>
+				</section>
+			</div>
 			<!-- Start Top Nav Bar -->
 			<section class="top-nav-bar">
 				<section class="container">
+
 					<section class="row">
 						<section class="col-md-6">
 							<!-- Main Menu -->

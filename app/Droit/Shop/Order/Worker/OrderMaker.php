@@ -314,4 +314,66 @@ class OrderMaker implements OrderMakerInterface{
         return $shipping->id;
     }
 
+    /*
+      * Update Order products with coupon
+      **/
+    public function updateOrder($order, $shipping_id, $coupon = null)
+    {
+        $data['id']          = $order->id;
+        $data['coupon_id']   = isset($coupon) ? $coupon->id : null;
+        $data['shipping_id'] = isset($coupon) && ($coupon->type == 'priceshipping' || $coupon->type == 'shipping')  ? 6 : $shipping_id;
+
+        $products = $order->products->map(function ($product, $key) use ($coupon) {
+
+            $price = $product->price_normal;
+
+            // search if product eligible for discount is in cart
+            if(isset($coupon->products) && $coupon->products->contains($product->id))
+            {
+                if($coupon->type == 'product')
+                {
+                    $price = $this->calculPriceWithCoupon($product, $coupon, 'percent');
+                }
+
+                if($coupon->type == 'price' || $coupon->type == 'priceshipping')
+                {
+                    $price = $this->calculPriceWithCoupon($product, $coupon, 'minus');
+                }
+            }
+
+            if(isset($coupon) && $coupon->type == 'global')
+            {
+                $price = $this->calculPriceWithCoupon($product, $coupon, 'percent');
+            }
+
+            return ['id' => $product->id, 'price' => $price * 100, 'isFree' => $product->isFree, 'rabais' => $product->rabais];
+
+        });
+
+        $total = $products->sum('price');
+
+        $data['amount']   = $total;
+        $data['products'] = $products->toArray();
+
+        return $data;
+    }
+
+    /**
+     * Calculat price from product and apply coupon discount
+     * IIT
+     * @return float
+     * */
+    public function calculPriceWithCoupon($product,$coupon,$operand)
+    {
+        if($operand == 'percent')
+        {
+            return $product->price_normal - ($product->price_normal * ($coupon->value)/100);
+        }
+
+        if($operand == 'minus')
+        {
+            return $product->price_normal - $coupon->value;
+        }
+    }
+
 }

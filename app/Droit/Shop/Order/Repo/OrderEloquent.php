@@ -177,6 +177,17 @@ class OrderEloquent implements OrderInterface{
             $order->adresse_id = $data['adresse_id'];
         }
 
+        // All products for order isFree
+        if(!empty($data['products']))
+        {
+            foreach($data['products'] as $product)
+            {
+                $id = array_pull($product, 'id');
+
+                $order->products()->sync([$id => $product]);
+            }
+        }
+
         $order->save();
 
         return $order;

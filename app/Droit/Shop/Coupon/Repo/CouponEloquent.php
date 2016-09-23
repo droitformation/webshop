@@ -34,6 +34,11 @@ class CouponEloquent implements CouponInterface{
         return false;
     }
 
+    public function getValid()
+    {
+        return $this->coupon->where('expire_at','>=',date('Y-m-d'))->get();
+    }
+
     public function create(array $data){
 
         $coupon = $this->coupon->create(array(

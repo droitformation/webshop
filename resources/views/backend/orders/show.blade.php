@@ -28,6 +28,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Coupon</label>
+                            <div class="col-sm-5 col-xs-12">
+                                <select name="coupon_id" class="form-control">
+                                    <option value="">Choix</option>
+                                    @if(!$coupons->isEmpty())
+                                        @foreach($coupons as $coupon)
+                                            <option {{ $coupon->id == $order->coupon_id ? 'selected' : '' }} value="{{ $coupon->id }}">{{ $coupon->title }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 col-xs-12 control-label">N°</label>
                             <div class="col-sm-5 col-xs-12">
                                 <input type="text" class="form-control" disabled value="{{ $order->order_no }}" name="order_no">

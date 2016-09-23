@@ -70,4 +70,16 @@ interface OrderMakerInterface
      * Get Shipping from the weigth or test if free request
      **/
     public function getShipping($order);
+
+    /*
+      * Update Order products with coupon
+      **/
+    public function updateOrder($order, $shipping_id, $coupon = null);
+
+    /**
+     * Calculat price from product and apply coupon discount
+     * IIT
+     * @return float
+     * */
+    public function calculPriceWithCoupon($product,$coupon,$operand);
 }

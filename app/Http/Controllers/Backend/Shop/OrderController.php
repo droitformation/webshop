@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Shop\Product\Repo\ProductInterface;
+use App\Droit\Shop\Coupon\Repo\CouponInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
@@ -16,6 +17,7 @@ use App\Droit\Shop\Order\Worker\OrderMakerInterface; // new implementation
 class OrderController extends Controller {
 
 	protected $product;
+    protected $coupon;
     protected $categorie;
     protected $order;
     protected $export;
@@ -34,6 +36,7 @@ class OrderController extends Controller {
 	 */
 	public function __construct(
         ProductInterface $product,
+        CouponInterface $coupon,
         CategorieInterface $categorie,
         OrderInterface $order,
         AdresseInterface $adresse,
@@ -43,6 +46,7 @@ class OrderController extends Controller {
     )
 	{
         $this->product       = $product;
+        $this->coupon        = $coupon;
         $this->categorie     = $categorie;
         $this->order         = $order;
         $this->adresse       = $adresse;
@@ -100,8 +104,9 @@ class OrderController extends Controller {
     {
         $shippings = $this->shipping->getAll();
         $order     = $this->order->find($id);
+        $coupons   = $this->coupon->getValid();
 
-        return view('backend.orders.show')->with(['order' => $order,'shippings' => $shippings]);
+        return view('backend.orders.show')->with(['order' => $order,'shippings' => $shippings, 'coupons' => $coupons]);
     }
 
     /**
@@ -174,7 +179,12 @@ class OrderController extends Controller {
 
     public function update($id, Request $request)
     {
-        $order = $this->order->update($request->all());
+        $coupon = $request->input('coupon_id',null);
+        $order  = $this->order->find($request->input('id'));
+        $coupon = isset($coupon) ? $this->coupon->find($request->input('coupon_id')) : null;
+
+        $data   = $this->ordermaker->updateOrder($order, $request->input('shipping_id'), $coupon);
+        $order  = $this->order->update($data);
 
         if(!empty(array_filter($request->input('tva',[]))))
             $this->pdfgenerator->setTva(array_filter($request->input('tva')));
