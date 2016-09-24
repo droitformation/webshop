@@ -8,11 +8,11 @@
             <tr>
                 <th class="col-md-2">Commande n°</th>
                 <th class="col-md-2">Client</th>
-                <th class="col-md-2">Date</th>
+                <th class="col-md-1">Date</th>
                 <th class="col-md-1">Montant</th>
                 <th class="col-md-1">Facture</th>
-                <th class="col-md-2">Payé le</th>
-                <th class="col-md-1">Via admin</th>
+                <th class="col-md-2">Envoyé le &nbsp;<i class="fa fa-plane"></i></th>
+                <th class="col-md-2">Payé le &nbsp;<i class="fa fa-money"></i></th>
                 <th class="text-right col-md-1"></th>
             </tr>
         </thead>
@@ -22,9 +22,10 @@
                 <td>
                     <a class="btn btn-sky btn-xs" href="{{ url('admin/order/'.$order->id) }}"><i class="fa fa-edit"></i></a>&nbsp;
                     <a class="collapse_anchor" data-toggle="collapse" href="#order_no_{{ $order->id }}"><i class="fa fa-order fa-arrow-circle-right"></i>{{ $order->order_no }}</a>
+                    {!! $order->admin ? '&nbsp;<i class="fa fa-check"></i>' : '' !!}
                 </td>
                 <td>{{ $order->order_adresse ? $order->order_adresse->name : 'Admin' }}</td>
-                <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
+                <td>{{ $order->created_at->formatLocalized('%d %b %Y') }}</td>
                 <td>{{ $order->total_with_shipping }} CHF</td>
                 <td>
 
@@ -37,6 +38,20 @@
                         </form>
                     @endif
 
+                </td>
+                <td>
+                    @if(!$cancelled)
+                        <div class="input-group">
+                            <div class="form-control editablePayementDate"
+                                 data-name="send_at" data-type="date" data-pk="{{ $order->id }}"
+                                 data-url="admin/order/edit" data-title="Date de payment">
+                                {{ $order->send_at ? $order->send_at->format('Y-m-d') : '' }}
+                            </div>
+                            <span class="input-group-addon bg-{{ $order->send_at ? 'info' : '' }}">
+                                {{ $order->send_at ? 'envoyé' : 'en attente' }}
+                            </span>
+                        </div>
+                    @endif
                 </td>
                 <td>
 
@@ -57,7 +72,6 @@
                     @endif
 
                 </td>
-                <td>{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>
                 <td class="text-right">
 
                     @if($cancelled)

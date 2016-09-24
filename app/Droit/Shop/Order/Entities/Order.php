@@ -9,9 +9,9 @@ class Order extends Model{
 
     protected $table = 'shop_orders';
 
-    protected $dates = ['deleted_at','payed_at'];
+    protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl', 'comment','admin'];
+    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl', 'comment','admin','send_at','payed_at'];
 
     public function getPriceCentsAttribute()
     {
@@ -124,6 +124,19 @@ class Order extends Model{
     public function scopeStatus($query, $status)
     {
         if ($status) $query->where('status','=',$status);
+    }
+    public function scopeSend($query, $send)
+    {
+        if($send)
+        {
+            $get = ($send == 'send') ? 'whereNotNull' : 'whereNull';
+            $query->$get('send_at');
+        }
+    }
+
+    public function scopePeriod($query, $period)
+    {
+        if ($period) $query->whereBetween('created_at', [$period['start'], $period['end']]);
     }
 
     public function scopeSearch($query, $order_no)

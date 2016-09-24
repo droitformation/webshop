@@ -34,15 +34,25 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-1 col-xs-12 text-left">
+                            <div class="col-lg-2 col-md-2 col-xs-12" style="min-width:130px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Facture</span>
+                                    <select class="form-control" name="send">
+                                        <option value="">Tous</option>
+                                        <option {{ old('send') == 'send' ? 'selected' : '' }} value="send">Envoyés</option>
+                                        <option {{ old('send') == 'pending' ? 'selected' : '' }} value="pending">En attente</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-1 col-xs-12 text-left">
                                 <div class="btn-group">
                                     <button class="btn btn-default" type="submit"><i class="fa fa-filter"></i> &nbsp; Rechercher</button>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12" style="min-width:130px;">
+                            <div class="col-lg-2 col-md-3 col-xs-12" style="min-width:130px;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="order_no" placeholder="Recherche...">
+                                        <input type="text" class="form-control" name="order_no" placeholder="Recherche par numéro...">
                                         <span class="input-group-btn">
                                             <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
                                         </span>

@@ -86,7 +86,7 @@ $('.editablePayementDate').editable({
     success: function(response, newValue)
     {
         var $input = $(this).closest('.input-group').find('.input-group-addon').text(response.etat);
-        $input.removeClass('bg-default bg-success');
+        $input.removeClass('bg-default bg-success bg-info');
         $input.addClass('bg-'+ response.color);
 
         return !response.success ? response.msg : null;

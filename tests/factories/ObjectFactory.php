@@ -219,6 +219,8 @@ class ObjectFactory
             $this->product($nbr);
         }
 
+        $orders = [];
+
         for ($x = 1; $x <= $nbr; $x++)
         {
             $products = $product->orderByRaw("RAND()")->take(2)->get();
@@ -234,8 +236,23 @@ class ObjectFactory
             ]);
 
             $order->products()->attach($products->pluck('id')->all());
+
+            $orders[] = $order;
         }
-        
+
+        return collect($orders);
+    }
+
+    public function updateOrder($orders, $data)
+    {
+        foreach($orders as $order)
+        {
+            $name = $data['column']; // payed_at or send_at
+            $date = $data['date'];
+            
+            $order->$name = $date;
+            $order->save();
+        }
     }
 
     public function items($type, $nbr = 1)

@@ -311,6 +311,12 @@ a:hover, a:active, a:focus {
     color: #ffffff;
 }
 
+.input-group-addon.bg-info{
+    background-color: #2bbce0;
+    border-color: #2bbce0;
+    color: #ffffff;
+}
+
 .card{
     background: #f9f9f9 none repeat scroll 0 0;
     border: 1px solid #eaeaea;

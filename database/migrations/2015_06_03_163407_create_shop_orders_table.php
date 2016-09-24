@@ -26,6 +26,7 @@ class CreateShopOrdersTable extends Migration {
 			$table->string('transaction_no')->nullable();
             $table->enum('status', ['pending', 'payed', 'cancelled'])->default('pending');
             $table->timestamp('payed_at')->nullable();
+			$table->timestamp('send_at')->nullable();
             $table->string('onetimeurl')->nullable(); // For download items
 			$table->text('comment')->nullable(); // For comment
             $table->softDeletes();

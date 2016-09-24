@@ -4,7 +4,8 @@ interface OrderInterface {
 
     public function getLast($nbr);
     public function getTrashed($start, $end);
-    public function getPeriod($start,$end,$status = null, $onlyfree = null, $order_no = null);
+    public function getPeriod($period, $status = null, $send = null, $onlyfree = null);
+    public function search($order_no);
     public function lastYear();
 	public function find($data);
     public function maxOrder($year);
@@ -12,6 +13,7 @@ interface OrderInterface {
     public function newOrderNumber();
 	public function create(array $data);
 	public function update(array $data);
+    public function updateDate(array $data);
 	public function delete($id);
     public function restore($id);
 }

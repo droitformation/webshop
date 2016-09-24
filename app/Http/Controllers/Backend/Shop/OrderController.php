@@ -70,12 +70,19 @@ class OrderController extends Controller {
 	public function index(Request $request)
 	{
         $data = $request->all();
-
+      
         $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
         $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
 
-        $orders = $this->order->getPeriod($period['start'],$period['end'], $request->input('status',null), $request->input('onlyfree',null), $request->input('order_no',null));
-
+        if($request->input('order_no',null))
+        {
+            $orders = $this->order->search($request->input('order_no',null));
+        }
+        else
+        {
+            $orders = $this->order->getPeriod($period, $request->input('status',null), $request->input('send',null), $request->input('onlyfree',null));
+        }
+        
         if($request->input('export',null))
         {
             $exporter = new \App\Droit\Generate\Export\ExportOrder();
@@ -167,11 +174,25 @@ class OrderController extends Controller {
     public function edit(Request $request)
     {
         $name  = $request->input('name');
-        $order = $this->order->update([ 'id' => $request->input('pk'), $name =>  $request->input('value')]);
+        $order = $this->order->updateDate(['id' => $request->input('pk'), 'name' => $name, 'value' => $request->input('value')]);
 
         if($order)
         {
-            return response()->json(['OK' => 200, 'etat' => ($order->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($order->status == 'pending' ? 'warning' : 'success')]);
+            if($name == 'payed_at'){
+                $etat   = ($order->status == 'pending' ? 'En attente' : 'Payé');
+                $status = ($order->status == 'pending' ? 'warning' : 'success');
+            }
+
+            if($name == 'send_at'){
+                $etat   = (!$order->send_at ? 'En attente' : 'Envoyé');
+                $status = (!$order->send_at ? 'warning' : 'info');
+            }
+
+            return response()->json([
+                'OK'    => 200,
+                'etat'  => $etat,
+                'color' => $status
+            ]);
         }
 
         return response()->json(['status' => 'error','msg' => 'problème']);

@@ -208,7 +208,7 @@ class OrderAdminTest extends TestCase {
         ];
 
         $order = factory(App\Droit\Shop\Order\Entities\Order::class)->make(['status' => 'payed']);
-        $this->order->shouldReceive('update')->once()->andReturn($order);
+        $this->order->shouldReceive('updateDate')->once()->andReturn($order);
 
         $this->json('POST', '/admin/order/edit', $input)
             ->seeJsonEquals([

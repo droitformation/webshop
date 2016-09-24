@@ -22,19 +22,19 @@ class OrderEloquent implements OrderInterface{
         return $this->order->with(['products','user'])->whereBetween('created_at', [$start, $end])->onlyTrashed()->orderBy('created_at','DESC')->get();
     }
 
-    public function getPeriod($start, $end, $status = null, $onlyfree = null, $order_no = null)
+    public function getPeriod($period, $status = null, $send = null, $onlyfree = null)
     {
-        if($order_no)
-        {
-            return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])->search($order_no)->get();
-        }
-
         return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])
-            ->whereBetween('created_at', [$start, $end])
+            ->period($period)
             ->status($status)
+            ->send($send)
             ->isfree($onlyfree)
-            ->orderBy('created_at')
             ->get();
+    }
+
+    public function search($order_no)
+    {
+        return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])->search($order_no)->get();
     }
 
     public function lastYear()
@@ -154,12 +154,6 @@ class OrderEloquent implements OrderInterface{
             $order->payed_at = $data['payed_at'];
         }
 
-        if(empty($data['payed_at']))
-        {
-            $order->status   = 'pending';
-            $order->payed_at = null;
-        }
-
         if(isset($data['created_at']))
         {
             $order->created_at = \Carbon\Carbon::createFromFormat('Y-m-d', $data['created_at']);
@@ -186,6 +180,29 @@ class OrderEloquent implements OrderInterface{
 
                 $order->products()->sync([$id => $product]);
             }
+        }
+
+        $order->save();
+
+        return $order;
+    }
+
+    public function updateDate(array $data)
+    {
+        $order = $this->order->findOrFail($data['id']);
+
+        if( ! $order )
+        {
+            return false;
+        }
+
+        $name = $data['name'];
+
+        $order->$name = empty($data['value']) ? null : $data['value'];
+
+        if($data['name'] == 'payed_at')
+        {
+            $order->status = empty($data['value']) ? 'pending' : 'payed';
         }
 
         $order->save();
