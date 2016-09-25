@@ -200,11 +200,11 @@ class OrderController extends Controller {
 
     public function update($id, Request $request)
     {
-        $coupon = $request->input('coupon_id',null);
         $order  = $this->order->find($request->input('id'));
         
-        $coupon = isset($coupon) ? $this->coupon->find($request->input('coupon_id')) : null;
+        $coupon = $request->input('coupon_id',null) ? $this->coupon->find($request->input('coupon_id')) : null;
 
+        // Prepare data and update
         $data   = $this->ordermaker->updateOrder($order, $request->input('shipping_id'), $coupon);
         $order  = $this->order->update($data);
 

@@ -75,6 +75,11 @@ return [
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
+			'dump' => [
+				'dump_command_path' => env('DB_BACKUP', '/usr/bin'), // only the path, so without `mysqldump` or `pg_dump`
+				'use_single_transaction',
+				'timeout' => 300,
+			]
 		],
 
 		'pgsql' => [

@@ -25,6 +25,8 @@ class Kernel extends ConsoleKernel {
 	{
 		$schedule->command('reminder')->everyMinute();
 		$schedule->command('queue:work --daemon')->everyMinute()->withoutOverlapping();
+		$schedule->command('backup:clean')->daily()->at('18:00');
+		$schedule->command('backup:run')->daily()->at('19:00');
 	}
 
 }

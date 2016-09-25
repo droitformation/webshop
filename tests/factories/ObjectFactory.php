@@ -175,6 +175,8 @@ class ObjectFactory
 
     public function product($nbr = null)
     {
+        $products = [];
+        
         $images = \File::files(public_path('files/products'));
         $images = collect($images)->map(function ($name) {
             $file = explode('/', $name);
@@ -183,10 +185,14 @@ class ObjectFactory
             return $file;
         })->toArray();
 
-        if($nbr){
-            for ($x = 0; $x <= $nbr; $x++) {
-                $this->makeProduct($images);
+        if($nbr)
+        {
+            for ($x = 0; $x <= $nbr; $x++) 
+            {
+                $products[] = $this->makeProduct($images);
             }
+            
+            return collect($products);
         }
 
         return $this->makeProduct($images);
@@ -221,7 +227,7 @@ class ObjectFactory
 
         $orders = [];
 
-        for ($x = 1; $x <= $nbr; $x++)
+        for($x = 1; $x <= $nbr; $x++)
         {
             $products = $product->orderByRaw("RAND()")->take(2)->get();
             $amount   = $products->sum('price');
@@ -245,14 +251,26 @@ class ObjectFactory
 
     public function updateOrder($orders, $data)
     {
+        $commandes = [];
+
         foreach($orders as $order)
         {
             $name = $data['column']; // payed_at or send_at
             $date = $data['date'];
             
             $order->$name = $date;
+
+            if($name == 'payed_at')
+            {
+                $order->status = 'payed';
+            }
+
             $order->save();
+
+            $commandes[] = $order;
         }
+
+        return collect($commandes);
     }
 
     public function items($type, $nbr = 1)

@@ -125,6 +125,7 @@ class Order extends Model{
     {
         if ($status) $query->where('status','=',$status);
     }
+    
     public function scopeSend($query, $send)
     {
         if($send)
