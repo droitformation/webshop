@@ -110,13 +110,13 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 
 #preheader{
     background-color: #f6f6f6;
-    height: 60px;
+    height: auto;
     padding: 0;
     width: 100%;
     margin: 0;
 }
 
-#preheader ul {
+#preheader-menu ul {
     list-style: outside none none;
     margin-bottom: 0;
     margin-left: 0;
@@ -124,31 +124,32 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     width: auto;
 }
 
-#preheader ul li {
+#preheader-menu ul li {
     float: left;
     width: auto;
     display: block;
-    height: 60px;
-    line-height: 60px;
+    height: 55px;
+    line-height: 55px;
 }
 
-#preheader li a {
+#preheader-menu li a {
     color: #959595;
     float: left;
-    height: 60px;
-    line-height: 60px;
+    height: 55px;
+    line-height: 55px;
     display: block;
+    padding: 0 20px;
     font-size: 13px;
     font-style: normal;
     text-transform: capitalize;
 }
 
-#preheader ul.menu li a {
+#preheader-menu ul.menu li a {
     color: #959595;
     float: left;
-    height: 60px;
+    height: 55px;
     padding: 20px;
-    line-height: 60px;
+    line-height: 55px;
     display: block;
     font-size: 13px;
     font-style: normal;
@@ -156,15 +157,24 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     text-transform: capitalize;
 }
 
-#preheader ul li a:hover,#preheader ul li a.active {
+#preheader-menu ul li a:hover,
+#preheader-menu ul li a.active {
     background: #eaeaea;
     text-decoration: none;
 }
 
 #loginBtn li a{
-
+    line-height: 30px;
+    height:40px;
 }
 
+.e-commerce-list ul{
+    list-style: none;
+}
+
+.btn-navbar{
+
+}
     /* Start main Header css */
 #main-header {
     background: #fff none repeat scroll 0 0;
@@ -174,7 +184,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 }
 
 #header{
-    /*height: 250px;*/
+    height: 250px;
 }
 #logo { margin:0; }
 #logo a { display:block; height:100%; }
@@ -1068,8 +1078,18 @@ input[type="color"],
 }
 
 .navbar-login{
-    background: #f7f6f6;
-    border: 1px solid #ccc;
+
+}
+
+.login-profile .btn-group{
+    margin-top: 10px;
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle),
+.btn-group > .btn:first-child,
+.btn-group > .btn:last-child:not(:first-child),
+.btn-group > .dropdown-toggle:not(:first-child){
+    border-radius: 0px;
 }
 
 a.navbar-btn.navbar-login:hover,
@@ -1091,6 +1111,45 @@ a.navbar-btn.navbar-register:focus{
     background: #2e6da4;
     color: #fff;
 }
+.checkout{
+    text-align: right;
+}
+
+.checkout__button {
+    backface-visibility: hidden;
+    background: #156470 none repeat scroll 0 0;
+    cursor: pointer;
+    display: inline-block;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1) 0s;
+    width: auto;
+    z-index: 10;
+}
+
+.checkout__text {
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    padding: 10px 15px;
+}
+
+.checkout__text i{
+   font-size: 20px;
+    margin-right: 5px;
+}
+
+.checkout__articles{
+    display: block;
+}
+
+.checkout__icon {
+    float: left;
+    margin-right: 5px;
+}
 
 .checkout-wrapper{
     padding: 20px;
@@ -1105,6 +1164,10 @@ a.navbar-btn.navbar-register:focus{
 
 /* MEGA MENU STYLE
 ********************************/
+#main-header{
+    position: relative;
+}
+
 #main-header .dropdown-menu > li {
     padding: 0;
 }

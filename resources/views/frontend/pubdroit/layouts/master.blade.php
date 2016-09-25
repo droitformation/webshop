@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/common/validation.css');?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/checkout/checkout.css');?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/sweetalert.css');?>">
+
 	<noscript>
 		<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/noJS.css');?>">
 	</noscript>
@@ -52,39 +53,47 @@
 		<div class="wrapper">
 			<!-- Start Main Header -->
 
-			<!-- Start Top Nav Bar -->
-			<section class="top-nav-bar">
+			<div id="preheader">
 				<section class="container">
-
 					<section class="row">
-						<section class="col-md-6">
-							<!-- Main Menu -->
-							@include('frontend.pubdroit.partials.menu')
-							<!-- END MAin Menu -->
+						<section class="col-md-6" id="preheader-menu">
+							<ul class="pull-left">
+								@if(!$menus->isEmpty())
+									<?php $menu = $menus->where('position','main'); ?>
+									@if(!$menu->isEmpty())
+										<?php $menu = $menu->first()->load('pages'); ?>
+										@if(!$menu->pages->isEmpty())
+											@foreach($menu->pages as $page)
+												<li>{!! $page->page_url !!}</li>
+											@endforeach
+										@endif
+									@endif
+								@endif
+							</ul>
 						</section>
-						<section class="col-md-6 e-commerce-list text-right">
-                            @if (!Auth::check())
-                                <div>
-                                    <a href="{{ url('login')}}" class="navbar-btn navbar-login btn-default"><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
-                                    <a href="{{ url('register')}}" class="navbar-btn navbar-register btn-primary"><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a>
-                                </div>
-                            @endif
-                            @if (Auth::check())
-                                <ul class="top-nav2 pull-right">
-                                    <li>Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</li>
-                                    <li><a href="{{ url('pubdroit/profil') }}">Mon compte</a></li>
-                                    <li>
+
+						<section class="col-md-6 text-right login-profile">
+							@if (!Auth::check())
+								<div class="btn-group">
+									<a href="{{ url('login')}}" class="btn btn-default navbar-login "><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
+									<a href="{{ url('register')}}" class="btn navbar-register btn-primary navbar-login "><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a>
+								</div>
+							@endif
+							@if (Auth::check())
+								<ul class="pull-right">
+									<li>Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</li>
+									<li><a href="{{ url('pubdroit/profil') }}">Mon compte</a></li>
+									<li>
 										<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
-											<button type="submit">Déconnexion</button>
+											<button class="btn btn-default btn-xs" type="submit">Déconnexion</button>
 										</form>
 									</li>
-                                </ul>
-                            @endif
+								</ul>
+							@endif
 						</section>
 					</section>
 				</section>
-			</section>
-			<!-- End Top Nav Bar -->
+			</div>
 
             <header id="main-header">
 				<section class="container">
@@ -97,23 +106,10 @@
 						<section class="col-md-4 col-xs-12">
 							<h1 id="logo"><a href="{{ url('/') }}"><img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" /></a></h1>
 						</section>
-						<section class="col-md-8 col-xs-12">
-                            <div class="c-btn">
-                                <a href="{{ url('pubdroit/checkout/cart') }}" class="text-danger cart-basket"><i class="fa fa-shopping-basket"></i>&nbsp; Panier</a>
-                                <div class="btn-group">
-                                    <a href="{{ url('pubdroit/checkout/cart') }}" class="btn btn-mini dropdown-toggle">
+						<section class="col-md-8 col-xs-12 text-right">
 
-										@inject('cart_worker', 'App\Droit\Shop\Cart\Worker\CartWorker')
+							@include('frontend.pubdroit.partials.panier')
 
-                                        @if($cart_worker->countCart() > 0)
-                                            {{ $cart_worker->countCart() }} {{ $cart_worker->countCart() > 1 ? 'articles': 'article'}} - {{ $cart_worker->totalCart() }} CHF
-                                        @else
-                                            0 article(s) - 0.00 CHF
-                                        @endif
-
-                                    </a>
-                                </div>
-                            </div>
 						</section>
 					</section>
 				</section>
