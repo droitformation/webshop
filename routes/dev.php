@@ -547,16 +547,16 @@ Route::get('/calculette', function () {
 Route::get('factory', function()
 {
     $make = new \tests\factories\ObjectFactory();
-    //$products = $make->product(15);
-    //$colloque = $make->colloque();
+    $products = $make->product(15);
+    $colloque = $make->colloque();
     //$orders = $make->order(5);
     //$membre = $make->items('Member', 1);
 
-    $payed   = $make->order(5);
-    $pending = $make->order(3);
+    //$payed   = $make->order(5);
+    //$pending = $make->order(3);
 
     // set 5 to payed status
-    $resu = $make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
+    //$resu = $make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
 
     echo '<pre>';
     //print_r($membre);

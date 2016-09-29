@@ -7,7 +7,7 @@
             <p><a href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
 
             <div class="heading-bar">
-                <h2>{{ $title }} <strong>{{ $label }}</strong></h2>
+                <h2>{{ $label }} <strong>{{ $title }}</strong></h2>
                 <span class="h-line"></span>
             </div>
 
