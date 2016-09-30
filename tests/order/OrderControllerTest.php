@@ -43,7 +43,7 @@ class OrderControllerTest extends TestCase {
         $this->visit(url('admin/orders'))->see('Commandes');
 
 		// filter to get all send orders
-		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'send' => 'send']);
+		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-10-30', 'send' => 'send']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();
@@ -53,7 +53,7 @@ class OrderControllerTest extends TestCase {
 		$this->assertEquals(3, $result->count());
 
 		// filter to get non sent orders
-        $response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'send' => 'pending']);
+        $response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-10-30', 'send' => 'pending']);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();
@@ -79,7 +79,7 @@ class OrderControllerTest extends TestCase {
 
 		$this->visit(url('admin/orders'))->see('Commandes');
 
-		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'status' => 'payed']);
+		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-10-30', 'status' => 'payed']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();
@@ -88,7 +88,7 @@ class OrderControllerTest extends TestCase {
 
 		$this->assertEquals(5, $result->count());
 
-		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'status' => 'pending']);
+		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-10-30', 'status' => 'pending']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();

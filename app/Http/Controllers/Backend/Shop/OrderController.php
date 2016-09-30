@@ -202,6 +202,10 @@ class OrderController extends Controller {
     {
         $order  = $this->order->find($request->input('id'));
         
+        if($request->input('created_at',null)){
+            $order  = $this->order->update(['id' => $request->input('id'), 'created_at' => $request->input('created_at')]);
+        }
+
         $coupon = $request->input('coupon_id',null) ? $this->coupon->find($request->input('coupon_id')) : null;
 
         // Prepare data and update

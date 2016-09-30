@@ -42,7 +42,7 @@ class ColloqueTest extends TestCase {
     {
         $colloques = factory(App\Droit\Colloque\Entities\Colloque::class,3)->make();
 
-        $this->colloque->shouldReceive('getAll')->once()->andReturn($colloques);
+        $this->colloque->shouldReceive('getCurrent')->once()->andReturn($colloques);
         $this->colloque->shouldReceive('getYears')->once()->andReturn($colloques);
 
         $this->visit('admin/colloque');
@@ -114,7 +114,7 @@ class ColloqueTest extends TestCase {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
 
-        $this->colloque->shouldReceive('getAll')->once()->andReturn(collect([$colloque]));
+        $this->colloque->shouldReceive('getCurrent')->once()->andReturn(collect([$colloque]));
         $this->colloque->shouldReceive('getYears')->once()->andReturn(collect([$colloque]));
 
         $this->visit('admin/colloque');
