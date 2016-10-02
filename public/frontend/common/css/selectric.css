@@ -12,8 +12,6 @@
 }
 
 .selectric {
-  border: 1px solid #DDD;
-  background: #e0e0e0;
   position: relative;
 }
 .selectric .label {
@@ -26,9 +24,9 @@
     line-height: 32px;
     height: 38px;
     background: none;
-    color: #3c3c3c;
+    color: #fff;
     text-decoration: none;
-    text-shadow: 0 1px 0 #ffffff;
+    text-shadow: none;
     font-weight: normal;
 }
 .selectric .button {
@@ -76,6 +74,7 @@
 }
 .selectric-open .selectric-items {
   display: block;
+    margin-top: 4px;
 }
 
 .selectric-disabled {

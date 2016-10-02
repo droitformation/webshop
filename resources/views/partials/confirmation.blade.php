@@ -54,3 +54,17 @@
         });
     </script>
 @endif
+
+@if(!empty(session('InscriptionConfirmation')))
+    <script>
+        $(function(){
+            swal({
+                title: "Merci!",
+                text: 'Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.',
+                type: "success",
+                confirmButtonColor: "#5cb85c",
+                showConfirmButton: true
+            });
+        });
+    </script>
+@endif

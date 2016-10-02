@@ -126,19 +126,24 @@ class ShopController extends Controller {
 
         if($search)
         {
-            $title  = $request->input('title','');
-            $label  = $request->input('label',null);
+            $label = key($search);
 
-            $label  = $label ? $this->$label->find($search[$label.'_id'])->title : '';
-
-            $products = $this->product->getAll($search);
-        }
-        else
-        {
-            return redirect('/');
+            return redirect('pubdroit/label/'.$search[$label].'/'.$label);
         }
 
-        return view('frontend.pubdroit.products')->with(['products' => $products, 'title' => $title, 'label' => $label]);
+        return redirect('pubdroit');
+    }
+
+    public function label($id,$label)
+    {
+        $labels = ['domain_id' => 'Collection', 'categorie_id' => 'Thème', 'author_id' => 'Auteur'];
+
+        $model  = str_replace('_id','',$label);
+        $title  = $label ? $this->$model->find($id)->title : '';
+        
+        $products = $this->product->getAll([$label => $id]);
+
+        return view('frontend.pubdroit.products')->with(['products' => $products, 'label' => $labels[$label], 'title' => $title]);
     }
 
     public function search(Request $request)

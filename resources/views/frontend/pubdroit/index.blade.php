@@ -31,7 +31,9 @@
 
                                 <div class="post-img">
                                     <a href="{{ url('colloque/'.$colloque->id) }}">
-                                        <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
+                                        @if(isset($colloque->illustration) && !empty($colloque->illustration))
+                                            <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
+                                        @endif
                                     </a>
                                     <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span>
                                 </div>
