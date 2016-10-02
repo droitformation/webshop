@@ -110,6 +110,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 
 #preheader{
     background-color: #f6f6f6;
+    border-bottom: 1px solid #ddd;
     height: auto;
     padding: 0;
     width: 100%;
