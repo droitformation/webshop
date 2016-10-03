@@ -53,7 +53,7 @@ class ColloqueController extends Controller
      */
     public function index()
     {
-        $colloques = $this->colloque->getAll(true);
+        $colloques = $this->colloque->getCurrent();
         $years     = $this->colloque->getYears();
 
         $years = $years->groupBy(function ($archive, $key) {

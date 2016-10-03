@@ -80,67 +80,71 @@
 								</div>
 							@endif
 							@if (Auth::check())
-								<ul class="pull-right">
-									<li>Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</li>
-									<li><a href="{{ url('pubdroit/profil') }}">Mon compte</a></li>
-									<li>
-										<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
-											<button class="btn btn-default btn-xs" type="submit">Déconnexion</button>
-										</form>
-									</li>
-								</ul>
+								<div class="pull-right logged-profile">
+									Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+									<a class="btn btn-default btn-profile" href="{{ url('pubdroit/profil') }}">Mon compte</a>
+									<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
+										<button class="btn btn-default btn-xs" type="submit"><i class="fa fa-power-off" aria-hidden="true"></i></button>
+									</form>
+								</div>
 							@endif
 						</section>
 					</section>
 				</section>
 			</div>
 
+            <div class="container">
+                @include('alert::alert')
+                @include('backend.partials.message')
+                @include('partials.confirmation')
+            </div>
+
             <header id="main-header">
+				<img src="{{ asset('files/uploads/mountain.jpg') }}" alt="homepage">
 				<section class="container">
 
-					@include('alert::alert')
-					@include('backend.partials.message')
-					@include('partials.basket-update')
-
 					<section class="row" id="header">
-						<section class="col-md-4 col-xs-12">
-							<h1 id="logo"><a href="{{ url('/') }}"><img style="height: 75px; width:380px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" /></a></h1>
+						<section class="col-md-5 col-xs-12">
+							<h1 id="logo">
+								<a href="{{ url('/') }}">
+									<img style="height: 80px; width:350px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
+								</a>
+							</h1>
 						</section>
-						<section class="col-md-8 col-xs-12 text-right">
-
+						<section class="col-md-7 col-xs-12 text-right">
 							@include('frontend.pubdroit.partials.panier')
-
 						</section>
 					</section>
 				</section>
-				<!-- Start Main Nav Bar -->
+			</header>
+			<!-- End Main Header -->
 
-                <nav id="nav">
-                    <section class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="navbar">
-                                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#labels">
-                                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                                    </button>
-                                    <div class="nav-collapse collapse in" id="labels">
-										@include('frontend.pubdroit.partials.label')
-                                    </div>
-                                    <div class="search-bar">
-										<form action="{{ url('pubdroit/search') }}" method="post">{!! csrf_field() !!}
-											<input name="term" type="text" value="Rechercher sur le site..." />
-											<button type="submit" class="button-default">ok</button>
-										</form>
-                                    </div>
+            <!-- Start Main Nav Bar -->
+
+            <nav id="nav">
+                <section class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="navbar">
+                                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#labels">
+                                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                </button>
+                                <div class="nav-collapse collapse in" id="labels">
+                                    @include('frontend.pubdroit.partials.label')
+                                </div>
+                                <div class="search-bar">
+                                    <form action="{{ url('pubdroit/search') }}" method="post">{!! csrf_field() !!}
+                                        <input name="term" type="text" value="Rechercher sur le site..." />
+                                        <button type="submit" class="button-default">ok</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </nav><!-- /.navbar -->
+                    </div>
+                </section>
+            </nav><!-- /.navbar -->
 
-                <!-- End Main Nav Bar -->
-			</header>
-			<!-- End Main Header -->
+            <!-- End Main Nav Bar -->
 
 			<!-- Start Main Content Holder -->
 			<section id="content-holder" class="container">

@@ -110,6 +110,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 
 #preheader{
     background-color: #f6f6f6;
+    border-bottom: 1px solid #ddd;
     height: auto;
     padding: 0;
     width: 100%;
@@ -178,15 +179,27 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     /* Start main Header css */
 #main-header {
     background: #fff none repeat scroll 0 0;
-    margin: 0 0 30px;
+    margin: 0;
     padding: 10px 0 0;
     height: auto;
+    position: relative;
+    height: 160px;
+    overflow: hidden;
 }
 
 #header{
-    height: 250px;
+    height: 115px;
 }
+
+#main-header img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+}
+
 #logo { margin:0; }
+#logo img { position: relative; }
 #logo a { display:block; height:100%; }
 #main-header input[type="text"] { font-size:13px; color:#5a5a5a; height:36px; float:left; margin:0; border: 1px solid #dadada;}
 #main-header input[type="button"] { border:0; font-size:14px; color:#fff; padding:7px 20px 8px 20px; float:left; background:#98b827; cursor:pointer; transition: width 1s; -moz-transition: 1s; /* Firefox 4 */ -webkit-transition: 1s; /* Safari and Chrome */ -o-transition: 1s; /* Opera */ }
@@ -202,14 +215,14 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 .top-nav2 li a:hover { color:#000; }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-    background-color: inherit;
-    color: #b01d22;
+    background-color: #000;
+    color: #fff;
 }
 /* Start Main menu css */
-#main-header #nav { background:rgba(37, 36, 36); background:rgba(37, 36, 36, 0.1); border-top: 1px solid rgba(37, 36, 36, 0.1); margin-top: 5px;}
+#main-header #nav { background:rgba(37, 36, 36, 0.8); background:rgba(37, 36, 36, 0.8); border-top: 1px solid rgba(37, 36, 36, 0.1); margin-top: 5px; position: relative;}
 #main-header .navbar-inverse .navbar-inner { background:none; border:0; -webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, .0), 0 0 0 rgba(0, 0, 0, .0); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 rgba(0, 0, 0, .0); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 rgba(0, 0, 0, .0); padding:0; }
 #main-header .navbar .nav > li:first-child { background:none; }
-#main-header .navbar .nav > li { font-size:14px; padding-left:2px; }
+#main-header .navbar .nav > li { font-size:14px;  }
 #main-header .navbar-inverse .brand,
 #main-header .navbar-inverse .nav > li > a { color: #3c3c3c; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0); border-bottom: 3px solid transparent; }
 #main-header .navbar-inverse .nav > li > a:hover { color:#000; background-color:rgba(37, 36, 36); background-color:rgba(37, 36, 36, 0.1); border-bottom: 3px solid #98B827; }
@@ -229,11 +242,27 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 #main-header .dropdown-menu > li a{
     padding: 5px 10px;
 }
-/* End Main menu css */
-#nav .navbar {
-    min-height: auto;
+/* Nav css */
+#nav{
+    background: #272727 none repeat scroll 0 0;
+    height: 46px;
+    margin-bottom: 20px;
+}
+
+#nav button.button-default{
+    background: #f7f7f7!important;
+    color: #000;
+    border: 1px solid #dadada;
+    padding: 5px 20px 7px;
+}
+#nav .search-bar input{
     margin-bottom: 0;
 }
+
+#nav form{
+    margin-bottom: 0;
+}
+
 /* Start Top Nav Bar Css */
 .top-nav-bar { background:#242424; color:#fff; }
 .top-nav-bar ul { margin:0; padding:0; list-style:none; float:left; }
@@ -681,7 +710,7 @@ margin-bottom:0;
 .post-nav li{ float:left; margin-right:5px; line-height: 30px;font-size: 15px; background:url(../images/post-nav-sep.png) no-repeat left; padding-left:15px;}
 .post-nav li a{ color:#323232;}
 .b-post-bottom .cart-price{ margin-top: 0; }
-.more-btn{ float:right; background:#b01d22; padding:6px 14px; font-size:12px; color:#fff; border:0; text-transform:uppercase; cursor: pointer;}
+.more-btn{ float:right; background:#b01d22; padding:6px 14px; font-size:12px; color:#fff; border:0; text-transform:uppercase; cursor: pointer; border-radius: 0;}
 .more-btn:hover{ text-decoration:none; color: #ffdfe0;}
 .more-btn.left{ float:left; margin-right:10px;}
 .submit-btn{
@@ -962,12 +991,7 @@ button, input, select, textarea {
     font-size: inherit;
     line-height: inherit;
 }
-#main-header button.button-default{
-    background: #f7f7f7!important;
-    color: #000;
-    border: 1px solid #dadada;
-    padding: 6px 20px 8px;
-}
+
 /* Start Main Slider Style */
 .main-slider{ position:relative;}
 .slider-bottom{ max-width:938px; margin:0 auto; display:block;}
@@ -1077,8 +1101,34 @@ input[type="color"],
     color: #fff;
 }
 
-.navbar-login{
+.logged-profile{
+    line-height: 55px;
+}
 
+.btn-profile{
+    background: #b01d22;
+    color: #fff;
+    -moz-user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    padding: 5px 8px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.btn-profile:hover{
+    background: #a2181d;
+    color: #fff;
+}
+
+.logged-profile a, .logged-profile button{
+    margin-left: 10px;
 }
 
 .login-profile .btn-group{
@@ -1113,11 +1163,12 @@ a.navbar-btn.navbar-register:focus{
 }
 .checkout{
     text-align: right;
+    margin-top: 15px;
 }
 
 .checkout__button {
     backface-visibility: hidden;
-    background: #156470 none repeat scroll 0 0;
+    background: #b01d22 none repeat scroll 0 0;
     cursor: pointer;
     display: inline-block;
     height: auto;
@@ -1279,6 +1330,8 @@ a.navbar-btn.navbar-register:focus{
     /* -webkit-transform: translate3d(0, 0, 0); Webkit Hardware Acceleration*/
     -webkit-backface-visibility: hidden; /* Safari Flicker Fix #2 */
     -webkit-transform: translateZ(0);
+    color: #fff;
+    text-shadow: none;
 }
 
 .author-list{
@@ -1692,8 +1745,13 @@ section#abos{
     margin-bottom: 0;
 }
 .item-colloque{
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #666;
     margin-left: 5px;
+}
+
+.item-colloque:last-child{
+    border-right: 1px solid #666;
+    margin-right: 5px;
 }
 
 .order-list td{
@@ -1727,5 +1785,5 @@ section#abos{
 }
 
 .logout button{
-    padding: 5px;
+    padding: 5px 8px;
 }

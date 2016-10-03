@@ -53,7 +53,8 @@ class InscriptionController extends Controller
 
         event(new InscriptionWasRegistered($inscription));
         
-        alert()->success('Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.');
+        //alert()->success('Nous avons bien pris en compte votre inscription, vous recevrez prochainement une confirmation par email.');
+        $request->session()->flash('InscriptionConfirmation', 'Ok');
 
         return redirect('pubdroit');
     }

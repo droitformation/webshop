@@ -37,13 +37,16 @@ class OrderControllerTest extends TestCase {
 		$pending = $make->order(5);
 		$send    = $make->order(3);
 
+		$start = \Carbon\Carbon::now()->startOfMonth()->subDay()->format('Y-m-d');
+		$end   = \Carbon\Carbon::now()->endOfMonth()->addDay()->format('Y-m-d');
+
 		// set 3 with date sent
 		$make->updateOrder($send, ['column' => 'send_at', 'date' => '2016-09-10']);
 
         $this->visit(url('admin/orders'))->see('Commandes');
 
 		// filter to get all send orders
-		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'send' => 'send']);
+		$response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'send' => 'send']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();
@@ -53,7 +56,7 @@ class OrderControllerTest extends TestCase {
 		$this->assertEquals(3, $result->count());
 
 		// filter to get non sent orders
-        $response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'send' => 'pending']);
+        $response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'send' => 'pending']);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();
@@ -74,12 +77,15 @@ class OrderControllerTest extends TestCase {
 		$payed   = $make->order(5);
 		$pending = $make->order(3);
 
+		$start = \Carbon\Carbon::now()->startOfMonth()->subDay()->format('Y-m-d');
+		$end   = \Carbon\Carbon::now()->endOfMonth()->addDay()->format('Y-m-d');
+
 		// set 5 to payed status
 		$make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
 
 		$this->visit(url('admin/orders'))->see('Commandes');
 
-		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'status' => 'payed']);
+		$response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'status' => 'payed']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();
@@ -88,7 +94,7 @@ class OrderControllerTest extends TestCase {
 
 		$this->assertEquals(5, $result->count());
 
-		$response = $this->call('POST', url('admin/orders'), ['start' => '2016-09-01', 'end' => '2016-09-30', 'status' => 'pending']);
+		$response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'status' => 'pending']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();

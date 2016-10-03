@@ -89,6 +89,7 @@ Route::group(['middleware' => 'site'], function () {
         Route::get('unsubscribe', 'Frontend\Shop\ShopController@unsubscribe');
 
         Route::match(['get', 'post'], 'sort', 'Frontend\Shop\ShopController@sort');
+        Route::get('label/{id}/{label}', 'Frontend\Shop\ShopController@label');
 
         Route::group(['middleware' => ['auth','pending','cart','checkout']], function () {
 
