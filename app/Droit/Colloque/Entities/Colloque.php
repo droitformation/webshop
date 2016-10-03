@@ -34,6 +34,20 @@ class Colloque extends Model
         return false;
     }
 
+    public function getFrontendIllustrationAttribute()
+    {
+        $illustration = $this->documents->filter(function ($item){
+            return $item->type == 'illustration';
+        });
+  
+        if(!$illustration->isEmpty())
+        {
+            return asset('files/colloques/illustration/'.$illustration->first()->path);
+        }
+
+        return asset('files/colloques/illustration/illu.png');
+    }
+
     public function getProgrammeAttribute()
     {
         $programme = $this->documents->filter(function ($item){

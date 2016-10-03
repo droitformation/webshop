@@ -10,9 +10,10 @@
                 <table class="table order-list">
                     <tr>
                         <th>Commande n°</th>
-                        <th>Passée le </th>
-                        <th>Montant</th>
+                        <th>Date</th>
                         <th>Statut</th>
+                        <th>Payement</th>
+                        <th>Montant</th>
                         <th></th>
                     </tr>
                     @foreach($user->orders as $order)
@@ -20,10 +21,11 @@
                         <tr>
                             <td>{{ $order->order_no }}</td>
                             <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
-                            <td>{{ $order->total_with_shipping }}</td>
+                            <td><span class="label label-{{ $order->send_at ? 'success' : 'default' }}">{{ $order->send_at ? 'Envoyé' : 'En attente' }}</span></td>
                             <td><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
+                            <td>{{ $order->total_with_shipping }}</td>
                             <td class="text-right">
-                                <a data-toggle="collapse" href="#order_no_{{ $order->id }}" aria-expanded="false" aria-controls="order_no_{{ $order->id }}">Voir la commande</a>
+                                <a class="text-info" data-toggle="collapse" href="#order_no_{{ $order->id }}" aria-expanded="false" aria-controls="order_no_{{ $order->id }}">Voir la commande</a>
                             </td>
                         </tr>
 
@@ -31,10 +33,9 @@
 
                             <?php $grouped = $order->products->groupBy('id'); ?>
                             <tr>
-                                <td colspan="5" class="nopadding">
+                                <td colspan="6" class="nopadding">
 
                                     <div class="collapse" id="order_no_{{ $order->id }}">
-
                                         <div id="orders-items">
                                             @foreach($grouped as $product)
                                                 <div class="row order-item">
@@ -55,14 +56,9 @@
 
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?php
-                                                $facture = public_path('files/shop/factures/facture_'.$order->order_no.'.pdf');
-
-                                                if ($order->facture)
-                                                {
-                                                    echo '<a target="_blank" href="'.asset($order->facture).'" class="btn btn-sm btn-default"><i class="fa fa-file"></i> &nbsp;Facture en pdf</a>';
-                                                }
-                                                ?>
+                                                @if ($order->facture)
+                                                    <a target="_blank" href="{{ asset($order->facture) }}" class="btn btn-sm btn-default"><i class="fa fa-file"></i> &nbsp;Facture en pdf</a>
+                                                @endif
                                             </div>
                                             <div class="col-md-5">
                                                 @if(isset($order->coupon))

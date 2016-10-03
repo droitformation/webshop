@@ -6,9 +6,20 @@
     <div class="profil-wrapper">
         @if(isset($user->inscriptions) && !$user->inscriptions->isEmpty())
 
-            <h3>{{ $inscription->colloque->titre }} <small>{{ $inscription->colloque->soustitre }}</small></h3>
-            <p class="text-primary">{{ $inscription->colloque->location->name }}</p>
-            <p>{{ $inscription->colloque->event_date }}</p>
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="{{ url('colloque/'.$inscription->colloque->id) }}">
+                        <img src="{{ asset($inscription->colloque->frontend_illustration) }}" alt='{{ $inscription->colloque->titre }}'/>
+                    </a>
+                </div>
+                <div class="col-md-10">
+                    <h3>{{ $inscription->colloque->titre }} </h3>
+                    <p class="text-muted">{{ $inscription->colloque->soustitre }}</p>
+                    <p class="text-primary">{{ $inscription->colloque->location->name }}</p>
+                    <p>{{ $inscription->colloque->event_date }}</p>
+                </div>
+            </div>
+
             <hr/>
 
             <div class="row">

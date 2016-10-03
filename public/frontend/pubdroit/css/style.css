@@ -134,7 +134,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 }
 
 #preheader-menu li a {
-    color: #959595;
+    color: #666;
     float: left;
     height: 55px;
     line-height: 55px;

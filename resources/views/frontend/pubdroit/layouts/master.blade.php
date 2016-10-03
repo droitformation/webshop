@@ -30,8 +30,8 @@
 	<!-- Booklet Css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/jquery.booklet.latest.css');?>">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/common/parsley.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/common/validation.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/parsley.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/validation.css');?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/checkout/checkout.css');?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/sweetalert.css');?>">
 
@@ -40,7 +40,6 @@
 	</noscript>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
 
 	<script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
@@ -100,7 +99,7 @@
             </div>
 
             <header id="main-header">
-				<img src="{{ asset('files/uploads/mountain.jpg') }}" alt="homepage">
+				<img src="{{ asset('files/uploads/book_shelf.jpg') }}" alt="homepage">
 				<section class="container">
 
 					<section class="row" id="header">
@@ -208,9 +207,10 @@
 
 		<!-- Javascript Files
     	================================================== -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
         <script src="<?php echo asset('common/js/jquery.selectric.js');?>"></script>
-		<script src="<?php echo asset('common/js/modernizr.js');?>"></script>
+{{--		<script src="<?php echo asset('common/js/modernizr.js');?>"></script>
 		<script src="<?php echo asset('common/js/easing.js');?>"></script>
 		<script src="<?php echo asset('common/js/jquery.slimscroll.min.js');?>"></script>
 
@@ -218,15 +218,12 @@
 		<script src="<?php echo asset('frontend/pubdroit/js/bxslider.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/input-clear.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/range-slider.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/jquery.zoom.js');?>"></script>
+		<script src="<?php echo asset('frontend/pubdroit/js/jquery.zoom.js');?>"></script>--}}
 		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/bookblock.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
 
         <script src="<?php echo asset('frontend/pubdroit/js/interaction.js');?>"></script>
-        <script src="<?php echo asset('frontend/pubdroit/js/custom.js');?>"></script>
         <script src="<?php echo asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/jquery.booklet.latest.js');?>"></script>
 
 	</body>
 </html>

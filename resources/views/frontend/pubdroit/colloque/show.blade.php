@@ -18,7 +18,7 @@
                     <div class="col-md-3">
                         <div class="b-img-holder">
                             <span class='zoom' id='ex1'>
-                                <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" height="219" width="300" id='jack' alt=''/>
+                                <img src="{{ asset($colloque->frontend_illustration) }}" height="219" width="300" alt='{{ $colloque->titre }}'/>
                             </span>
                         </div>
 

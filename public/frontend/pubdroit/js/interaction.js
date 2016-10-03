@@ -57,7 +57,33 @@
 
     });
 
-   // swal("Good job!", "You clicked the button!", "success");
+    $('.readmore').readmore({
+        moreLink : '<a class="morelink" href="#">Lire plus</a>',
+        lessLink: '<a class="morelink" href="#">Fermer</a>'
+    });
+
+    // Dropdown Menu Fade
+
+    $(".dropdown").hover(
+        function() { $('.dropdown-menu', this).fadeIn("fast");
+        },
+        function() { $('.dropdown-menu', this).fadeOut("fast");
+        });
+
+    $('.dropdow-select').selectric();
+
+    // Cache the target element
+
+    $('.dropdow-select').selectric().on('change', function() {
+        var id = $(this).val();
+
+        if(id)
+        {
+            $(this).closest('form').submit();
+        }
+        console.log(id);
+    });
 
 
 }(window.jQuery);
+

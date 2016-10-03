@@ -1,14 +1,13 @@
 <form role="form" id="colloque-inscription" method="POST" action="{{ url('pubdroit/registration') }}">
     {!! csrf_field() !!}
 
-    <h4>Prix applicable</h4>
-
     <div id="colloque-dependence">
 
         <!-- Prices -->
-        <div class='wrapper'>
-            <?php $prices = $colloque->prices->where('type','public'); ?>
-            @if(!$prices->isEmpty())
+        <?php $prices = $colloque->prices->where('type','public'); ?>
+        @if(!$prices->isEmpty())
+            <div class='wrapper'>
+                <h4>Prix applicable</h4>
                 @foreach($prices as $price)
                     <input class="prices" required type="radio" id="price_{{ $price->id }}" name="price_id" value="{{ $price->id }}">
                     <label for="price_{{ $price->id }}">
@@ -19,11 +18,10 @@
                         </div>
                     </label>
                 @endforeach
-            @endif
-            <div class="clearfix"></div>
-        </div>
-
-        <hr/>
+                <div class="clearfix"></div>
+            </div>
+            <hr/>
+        @endif
 
         <!-- Occurence if any -->
         @if(!$colloque->occurrences->isEmpty())

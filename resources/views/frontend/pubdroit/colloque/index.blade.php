@@ -20,9 +20,7 @@
                             <div class="event-post col-md-6 col-xs-12">
                                 <div class="post-img">
                                     <a href="{{ url('pubdroit/colloque/'.$colloque->id) }}">
-                                        @if(isset($colloque->illustration) && !empty($colloque->illustration))
-                                            <img src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
-                                        @endif
+                                        <img src="{{ asset($colloque->frontend_illustration) }}" height="219" width="300" alt='{{ $colloque->titre }}'/>
                                     </a>
                                     <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span>
                                 </div>

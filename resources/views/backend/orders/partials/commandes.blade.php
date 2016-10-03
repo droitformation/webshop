@@ -160,7 +160,7 @@
                                             <tr>
                                                 <td width="85%" class="text-right">
                                                     @if(isset($order->coupon))
-                                                        <strong>Rabais appliqué<small class="text-muted">{!! $order->coupon->coupon_title !!}</small></strong>
+                                                        <strong>Rabais appliqué <small class="text-muted">{!! $order->coupon->title !!}</small></strong>
                                                     @endif
                                                 </td>
                                                 <td width="15%" class="text-right">
