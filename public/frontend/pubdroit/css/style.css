@@ -204,7 +204,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 #main-header input[type="text"] { font-size:13px; color:#5a5a5a; height:36px; float:left; margin:0; border: 1px solid #dadada;}
 #main-header input[type="button"] { border:0; font-size:14px; color:#fff; padding:7px 20px 8px 20px; float:left; background:#98b827; cursor:pointer; transition: width 1s; -moz-transition: 1s; /* Firefox 4 */ -webkit-transition: 1s; /* Safari and Chrome */ -o-transition: 1s; /* Opera */ }
 #main-header input[type="button"]:hover { background:#6a8706; }
-.search-bar { float:right;  margin-top: 4px; }
+.search-bar { float:right;  margin-top: 5px; }
 .search-bar form{
     margin-bottom: 0;
 }
@@ -600,7 +600,7 @@ margin-bottom:0;
 /* End Content Css */
 
 /* Start Footer Top 1 Css */
-.footer-top1 { background:url(../images/footer-top1.jpg) repeat; padding:45px 0; font-size:14px; margin-top: 40px;}
+.footer-top1 { background:url(../images/footer-top1.jpg) repeat; padding:30px 0; font-size:14px; margin-top: 40px;}
 .footer-top1 h4 {
     color: #333;
     font-size: 25px;
@@ -911,7 +911,7 @@ a.more-btn:visited
 /* End Contact Page Section */
 
 /* Start Order Recieved Section */
-.order-list{ margin:0; list-style:none; padding:0 20px 20px;}
+.order-list{ margin:0; list-style:none; }
 .order-list li:first-child{ border-top:0; margin-top:0; padding-top:0;}
 .order-list li{ margin:10px 0 0; padding:10px 0 0; border-top:1px dotted #dcdcdc;}
 .order-list li span{color:#1e1e1e; font-size:18px;}
@@ -1346,7 +1346,7 @@ a.navbar-btn.navbar-register:focus{
 }
 
 .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
-    background-color: #e0e0e0;
+    background-color: #f1f1f1;
     color: #000;
 }
 
@@ -1360,13 +1360,21 @@ a.navbar-btn.navbar-register:focus{
     margin-bottom: 20px;
 }
 
+.profil-wrapper .list-group .list-group-item{
+    border-radius: 0;
+}
+
 .profil-wrapper h4 {
-    background-color: #e0e0e0;
+    background-color: #f1f1f1;
     color: #000;
+    font-size: 16px;
     height: 40px;
     line-height: 40px;
     margin: 0;
-    padding: 0 20px;
+    padding: 0 15px;
+    border-top: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    border-left: 1px solid #e5e5e5;
 }
 
 .profil-wrapper h4.bg-success{
@@ -1379,9 +1387,13 @@ a.navbar-btn.navbar-register:focus{
     margin-bottom: 0;
 }
 
+.profil-info dl dt{
+    text-align: left;
+}
+
 .profil-info .list-group{
     margin-left: 0;
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
 .nav > li > a:hover,
@@ -1754,6 +1766,12 @@ section#abos{
     margin-right: 5px;
 }
 
+table.order-list {
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
 .order-list td{
     background: #f5f5f5;
 }
@@ -1786,4 +1804,21 @@ section#abos{
 
 .logout button{
     padding: 5px 8px;
+}
+
+.sites-logos{
+    border-top: 1px solid #ededed;
+    background: #f1f1f1;
+    padding:10px;
+}
+
+.sites-logos a{
+    display: inline-block;
+    margin-left: 10px;
+    text-align: center;
+    width: 11%;
+ }
+
+.sites-logos a img{
+   max-width: 100%;
 }

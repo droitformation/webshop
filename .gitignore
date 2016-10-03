@@ -4,6 +4,7 @@ composer.phar
 composer.lock
 .DS_Store
 .idea/
+/tests/coverage
 
 public/logos/
 public/files/products/

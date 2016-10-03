@@ -2,6 +2,12 @@
 @section('profil')
     @parent
 
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><a href="{{ url('pubdroit/profil/colloques') }}"><span>&larr;</span> Retour à vos inscriptions</a></p>
+        </div>
+    </div>
     <!-- start wrapper -->
     <div class="profil-wrapper">
         @if(isset($user->inscriptions) && !$user->inscriptions->isEmpty())
@@ -28,26 +34,29 @@
                     <div class="profil-info">
                         <p>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</p>
                     </div>
-                    <h4>Infos</h4>
+                    <h4>Informations</h4>
                     <div class="profil-info">
-                        <p><strong>N°:</strong> {{ $inscription->inscription_no }}</p>
-                        <p><strong>Prix:</strong>{{ $inscription->price_cents }}</p>
+                        <dl class="dl-horizontal">
+                            <dt>N° d'inscription:</dt>
+                            <dd>{{ $inscription->inscription_no }}</dd>
+                            <dt>Prix:</dt>
+                            <dd>{{ $inscription->price_cents }}</dd>
+                        </dl>
                     </div>
                     <h4>Payement</h4>
                     <div class="profil-info">
                         @if($inscription->payed_at)
                             <h5><i class="fa fa-check text-success"></i> &nbsp;Payé le {{ $inscription->payed_at->format('d/m/Y') }}</h5>
                         @else
-                            <h5><i class="fa fa-times"></i> &nbsp;En attente</h5>
+                            <h5><i class="fa fa-exclamation-circle"></i> &nbsp;En attente</h5>
                         @endif
                     </div>
                 </div>
                 <div class="col-md-6">
 
-                    <h4>Documents</h4>
-                    <div class="profil-info">
-
-                        @if(!empty($inscription->documents))
+                    @if(!empty($inscription->documents))
+                        <h4>Documents</h4>
+                        <div class="profil-info">
                             @foreach($inscription->documents as $type => $annexe)
                                 <?php
                                     $path = config('documents.colloque.'.$type.'');
@@ -55,11 +64,10 @@
                                     echo '<a target="_blank" href="'.asset($file).'" class="btn btn-primary btn-block" style="text-align:left;"><i class="fa fa-file"></i> &nbsp;'.ucfirst($type).'</a>';
                                 ?>
                             @endforeach
-                        @endif
+                        </div>
+                    @endif
 
-                    </div>
-
-                    <h4>Options</h4>
+                    <h4>Vos choix</h4>
                     <div class="profil-info">
                         @if(!$inscription->user_options->isEmpty())
                             <ol>

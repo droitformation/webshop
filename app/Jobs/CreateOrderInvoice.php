@@ -5,11 +5,10 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Droit\Shop\Order\Entities\Order;
 
-class CreateOrderInvoice extends Job implements SelfHandling, ShouldQueue
+class CreateOrderInvoice extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 

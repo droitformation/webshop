@@ -26,7 +26,6 @@
     </script>
 @endif
 
-
 @if(!empty(session('wrongCoupon')))
     <script>
         $(function(){
@@ -40,6 +39,21 @@
         });
     </script>
 @endif
+
+@if(!empty(session('ContactConfirmation')))
+    <script>
+        $(function(){
+            swal({
+                title: "Merci pour votre message!",
+                text: 'Nous vous contacterons dès que possible.',
+                timer: 2500,
+                type: "success",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
 
 @if(!empty(session('OrderConfirmation')))
     <script>
@@ -68,3 +82,5 @@
         });
     </script>
 @endif
+
+

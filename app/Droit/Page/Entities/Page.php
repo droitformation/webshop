@@ -41,7 +41,7 @@ class Page extends Node {
 
     public function getPageUrlAttribute()
     {
-        $prefix   = $this->site->prefix ? $this->site->prefix : '/';
+        $prefix   = $this->site->slug ? $this->site->slug : '/';
 
         $page_url = ($this->isExternal ? $this->url : $prefix.'/page/'.$this->slug);
         $page_url = ($this->template == 'index' ? $prefix : $page_url);

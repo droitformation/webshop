@@ -417,8 +417,8 @@ Route::get('registration', function()
     $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $groups      = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
 
-    $inscrit     = $inscription->find(3);
-    $group       = $groups->find(3);
+    $inscrit     = $inscription->find(7913);
+    //$group       = $groups->find(3);
 
     $data = [
         'title'        => $title,

@@ -40,9 +40,11 @@ class ContactController extends Controller
             $message->to('secretariat.droit@unine.ch')->subject('Message depuis le site '.$site->nom.'');
         });
 
-        alert()->success('<strong>Merci pour votre message</strong><br/>Nous vous contacterons dès que possible.');
+       // alert()->success('<strong>Merci pour votre message</strong><br/>Nous vous contacterons dès que possible.');
 
-        return redirect('/'.$site->slug);
+        $request->session()->flash('ContactConfirmation', 'Ok');
+
+        return redirect($site->slug);
 
     }
 }

@@ -41,7 +41,6 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
-
 	<script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo asset('common/js/validation.js');?>"></script>
 
@@ -49,13 +48,13 @@
 	<body>
 
 		<!-- Start Main Wrapper -->
-		<div class="wrapper">
+		<section class="wrapper">
 			<!-- Start Main Header -->
 
 			<div id="preheader">
 				<section class="container">
 					<section class="row">
-						<section class="col-md-6" id="preheader-menu">
+						<section class="col-md-8" id="preheader-menu">
 							<ul class="pull-left">
 								@if(!$menus->isEmpty())
 									<?php $menu = $menus->where('position','main'); ?>
@@ -71,7 +70,7 @@
 							</ul>
 						</section>
 
-						<section class="col-md-6 text-right login-profile">
+						<section class="col-md-4 text-right login-profile">
 							@if (!Auth::check())
 								<div class="btn-group">
 									<a href="{{ url('login')}}" class="btn btn-default navbar-login "><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
@@ -103,14 +102,14 @@
 				<section class="container">
 
 					<section class="row" id="header">
-						<section class="col-md-5 col-xs-12">
+						<section class="col-md-6 col-xs-12">
 							<h1 id="logo">
 								<a href="{{ url('/') }}">
-									<img style="height: 80px; width:350px;" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
+									<img style="width:510px; height: 115px" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
 								</a>
 							</h1>
 						</section>
-						<section class="col-md-7 col-xs-12 text-right">
+						<section class="col-md-6 col-xs-12 text-right">
 							@include('frontend.pubdroit.partials.panier')
 						</section>
 					</section>
@@ -188,6 +187,20 @@
 
 						</figure>
 					</section>
+					<section class="row">
+						<div class="col-md-12">
+							<div class="sites-logos">
+								<a target="_blank" href="http://publications-droit.ch"><img src="{{ asset('files/sites/pubdroit.png') }}" alt="pubdroit" /></a>
+								<a target="_blank" href="http://droitmatrimonial.ch/"><img src="{{ asset('files/sites/matrimonial.png') }}" alt="matrimonial" /></a>
+								<a target="_blank" href="http://bail.ch/"><img src="{{ asset('files/sites/bail.png') }}" alt="bail" /></a>
+								<a target="_blank" href="http://droitpraticien.ch"><img src="{{ asset('files/sites/droitpraticien.png') }}" alt="droitpraticien" /></a>
+								<a target="_blank" href="http://tribunauxcivils.ch"><img src="{{ asset('files/sites/tribunaux.png') }}" alt="tribunaux" /></a>
+								<a target="_blank" href="http://droitdutravail.ch"><img src="{{asset('files/sites/droittravail.png')}}" alt="droitdutravail" /></a>
+								<a target="_blank" href="http://rjne.ch"><img src="{{ asset('files/sites/rjn.png') }}" alt="rjn" /></a>
+								<a target="_blank" href="http://rcassurances.ch"><img src="{{ asset('files/sites/rca.png') }}" alt="rcassurances" /></a>
+							</div>
+						</div>
+					</section>
 				</section>
 			</section>
 			<!-- End Footer Top 1 -->
@@ -208,20 +221,9 @@
 		<!-- Javascript Files
     	================================================== -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
         <script src="<?php echo asset('common/js/jquery.selectric.js');?>"></script>
-{{--		<script src="<?php echo asset('common/js/modernizr.js');?>"></script>
-		<script src="<?php echo asset('common/js/easing.js');?>"></script>
-		<script src="<?php echo asset('common/js/jquery.slimscroll.min.js');?>"></script>
-
-		<script src="<?php echo asset('frontend/pubdroit/js/bs.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/bxslider.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/input-clear.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/range-slider.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/jquery.zoom.js');?>"></script>--}}
 		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
-
         <script src="<?php echo asset('frontend/pubdroit/js/interaction.js');?>"></script>
         <script src="<?php echo asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
 

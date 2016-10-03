@@ -16,7 +16,7 @@ class Colloque extends Model
     protected $dates = ['deleted_at','start_at','end_at','registration_at','active_at'];
 
     protected $fillable = [
-        'titre', 'soustitre', 'sujet', 'remarques', 'start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
+        'titre', 'soustitre', 'sujet', 'remarques', 'notice','start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
         'location_id', 'compte_id', 'visible', 'bon', 'facture', 'email' ,'adresse_id','created_at', 'updated_at'
     ];
 

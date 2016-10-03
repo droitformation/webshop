@@ -131,6 +131,12 @@
                                             <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
                                         </div>
                                     </div>
+                                    <div class="row well">
+                                        <label class="col-sm-3 control-label">Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut</label>
+                                        <div class="col-sm-8 col-xs-6">
+                                            <textarea name="notice" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->notice or old('notice') }}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </fieldset>

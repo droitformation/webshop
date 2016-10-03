@@ -73,7 +73,11 @@
             <?php  }  ?>
 
             <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">
-                {!! Registry::get('inscription.infos.desistement') !!}
+                @if($colloque->notice)
+                    {!! $colloque->notice !!}
+                @else
+                    {!! Registry::get('inscription.infos.desistement') !!}
+                @endif
             </p>
 
             <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">Nous restons à disposition pour tout renseignement et vous adressons nos meilleures salutations.</p>

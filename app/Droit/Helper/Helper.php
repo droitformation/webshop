@@ -494,7 +494,7 @@ class Helper {
      */
     public function renderMenu($node)
     {
-        $url = ($node->main ? '' : 'page/');
+        $url = ($node->isExternal ? '' : 'page/');
 
         if( $node->isLeaf() )
         {
