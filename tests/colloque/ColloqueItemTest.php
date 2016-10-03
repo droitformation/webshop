@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ColloqueItemTest extends TestCase {
 
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     protected $colloque;
 
