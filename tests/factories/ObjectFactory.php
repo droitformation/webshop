@@ -103,7 +103,7 @@ class ObjectFactory
             'compte_id'       => $compte->id,
             'visible'         => 1,
             'bon'             => 1,
-            'facture'         => 1,
+            'facture'         => 0,
             'adresse_id'      => 1,
         ]);
         

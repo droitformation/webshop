@@ -51,18 +51,19 @@ class InscriptionTest extends TestCase {
         $this->WithoutEvents();
         $this->withoutJobs();
         //$this->expectsJobs(App\Jobs\SendConfirmationInscription::class);
-
-        $input = ['type' => 'simple', 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        
+        $input = ['type' => 'simple', 'colloque_id' => $colloque->id, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
-
+        $this->worker->shouldReceive('colloqueIsOk')->once()->andReturn(true);
         $this->worker->shouldReceive('register')->once()->andReturn($inscription);
         $this->worker->shouldReceive('makeDocuments')->once();
 
         $response = $this->call('POST', '/admin/inscription', $input);
 
-        $this->assertRedirectedTo('/admin/inscription/colloque/39');
-
+        $this->assertRedirectedTo('/admin/inscription/colloque/'.$colloque->id);
 	}
 
     /**
@@ -74,16 +75,20 @@ class InscriptionTest extends TestCase {
         $this->WithoutEvents();
         $this->withoutJobs();
 
-        $input = ['type' => 'multiple', 'colloque_id' => 39, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $input = ['type' => 'multiple', 'colloque_id' => $colloque->id, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
 
         $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
 
+        $this->worker->shouldReceive('colloqueIsOk')->once()->andReturn(true);
         $this->worker->shouldReceive('registerGroup')->once()->andReturn($group);
         $this->worker->shouldReceive('makeDocuments')->once();
 
         $response = $this->call('POST', '/admin/inscription',$input);
 
-        $this->assertRedirectedTo('/admin/inscription/colloque/39');
+        $this->assertRedirectedTo('/admin/inscription/colloque/'.$colloque->id);
 
     }
 

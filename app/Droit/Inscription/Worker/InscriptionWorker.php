@@ -124,6 +124,8 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         {
             throw new \App\Exceptions\ColloqueCompteException('Pas de compte pour le colloque');
         }
+
+        return true;
     }
 
     public function specialisation($colloque_id, $user)
