@@ -20,9 +20,9 @@
                             <label class="col-sm-3 control-label">Type de rabais</label>
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="typeSelect">
-                                    <option {{ ($coupon->type == 'global' ?  'selected' : '') }} value="global">Sur toute la commande</option>
-                                    <option {{ ($coupon->type == 'product' ? 'selected' : '') }} value="product">Sur un ou plusieurs produits</option>
-                                    <option {{ ($coupon->type == 'price' ? 'selected' : '') }} value="price">Rabais prix sur produits</option>
+                                    <option {{ ($coupon->type == 'global' ?  'selected' : '') }} value="global">Pourcentage sur toute la commande</option>
+                                    <option {{ ($coupon->type == 'product' ? 'selected' : '') }} value="product">Pourcentage sur un ou plusieurs produits</option>
+                                    <option {{ ($coupon->type == 'price' ? 'selected' : '') }} value="price">Rabais prix sur un ou plusieurs produits</option>
                                     <option {{ ($coupon->type == 'priceshipping' ? 'selected' : '') }} value="priceshipping">Rabais prix sur produits et frais de port gratuit</option>
                                     <option {{ ($coupon->type == 'shipping'? 'selected' : '') }} value="shipping">Frais de port gratuit</option>
                                 </select>

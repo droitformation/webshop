@@ -1,23 +1,32 @@
 @extends('templates.layouts.master')
 @section('content')
 
+    <?php $colloque = $generate->getColloque(); ?>
     <div class="content">
         <table class="content-table">
             <tr>
                 <td colspan="2">
-                    <img height="70mm" src="{{ public_path('files/main/'.\Registry::get('inscription.infos.logo')) }}" alt="Unine logo" />
+                    <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
+                    <img height="70mm" src="{{ public_path('files/logos/'.$logo) }}" alt="Unine logo" />
                 </td>
             </tr>
             <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
                 <td align="top" width="60%" valign="top">
 
-
-                    <div id="facdroit">
-                    {!! $generate->getColloque()->adresse->adresse !!}
-                    </div>
+                    @if(isset($colloque) && isset($colloque->adresse))
+                        <div id="facdroit">
+                            {!! $colloque->adresse->adresse !!}
+                        </div>
+                    @else
+                        <ul id="facdroit">
+                            <li>{!! \Registry::get('inscription.infos.nom') !!}</li>
+                            <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
+                        </ul>
+                    @endif
 
                     <p class="tva">{{ $tva['numero'] }}</p>
+
                     <div class="coordonnees">
                         <h4>Coordonnées pour le paiement</h4>
                         <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>

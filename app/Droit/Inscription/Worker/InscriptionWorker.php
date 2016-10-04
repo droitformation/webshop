@@ -115,6 +115,17 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         }
     }
 
+    public function colloqueIsOk($colloque_id)
+    {
+        $colloque = $this->colloque->find($colloque_id);
+
+        // test if we have a compte to make the bv
+        if($colloque->facture && (!isset($colloque->compte) || empty($colloque->compte)))
+        {
+            throw new \App\Exceptions\ColloqueCompteException('Pas de compte pour le colloque');
+        }
+    }
+
     public function specialisation($colloque_id, $user)
     {
         $user->load('adresses');

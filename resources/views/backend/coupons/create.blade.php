@@ -20,9 +20,9 @@
                             <label class="col-sm-3 control-label">Type de rabais</label>
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="typeSelect">
-                                    <option value="global">Sur toute la commande</option>
+                                    <option value="global">Pourcentage sur toute la commande</option>
                                     <option value="product">Pourcentage sur un ou plusieurs produits</option>
-                                    <option value="price">Rabais prix sur produits</option>
+                                    <option value="price">Rabais prix sur un ou plusieurs produits</option>
                                     <option value="priceshipping">Rabais prix sur produits et frais de port gratuit</option>
                                     <option value="shipping">Frais de port gratuit</option>
                                 </select>

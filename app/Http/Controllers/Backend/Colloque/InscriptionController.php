@@ -109,8 +109,11 @@ class InscriptionController extends Controller
      */
     public function make(MakeInscriptionRequest $request)
     {
+        $this->register->colloqueIsOk($request->input('colloque_id'));
+        
         $colloques = $this->colloque->getAll();
         $colloque  = $this->colloque->find($request->input('colloque_id'));
+
         $user      = $this->user->find($request->input('user_id'));
         $type      = $request->input('type');
 
@@ -184,6 +187,8 @@ class InscriptionController extends Controller
     {
         $type     = $request->input('type');
         $colloque = $request->input('colloque_id');
+
+        $this->register->colloqueIsOk($colloque);
 
         // if type simple
         if($type == 'simple')

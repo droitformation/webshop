@@ -1,10 +1,14 @@
 @extends('templates.layouts.master')
 @section('content')
 
+    <?php $colloque = $generate->getColloque(); ?>
     <div class="content">
         <table class="content-table">
             <tr>
-                <td><img height="80mm" src="<?php echo public_path('files/logos/facdroit.png'); ?>" alt="Unine logo" /></td>
+                <td>
+                    <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
+                    <img height="70mm" src="{{ public_path('files/logos/'.$logo) }}" alt="Unine logo" />
+                </td>
                 <td align="right">
                     <div class="visible-print">
                         @if(isset($code))
@@ -16,11 +20,14 @@
             <tr><td colspan="2" height="10">&nbsp;</td></tr>
             <tr align="top">
                 <td align="top" width="60%" valign="top">
-                    @if(!empty($expediteur))
+                    @if(isset($colloque) && isset($colloque->adresse))
+                        <div id="facdroit">
+                            {!! $colloque->adresse->adresse !!}
+                        </div>
+                    @else
                         <ul id="facdroit">
-                            @foreach($expediteur as $line)
-                                <li>{{ $line }}</li>
-                            @endforeach
+                            <li>{!! \Registry::get('inscription.infos.nom') !!}</li>
+                            <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
                         </ul>
                     @endif
                 </td>

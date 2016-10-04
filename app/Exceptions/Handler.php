@@ -119,6 +119,11 @@ class Handler extends ExceptionHandler {
             return redirect()->back();
 		}
 
+		if ($e instanceof \App\Exceptions\ColloqueCompteException){
+			alert()->warning('Attention! Le colloque n\'as pas de compte! Veuillez contrôler le compte attaché au colloque.');
+			return redirect()->back();
+		}
+
 		if ($e instanceof \App\Exceptions\AdresseNotExistException){
 			alert()->warning('Il n\'existe aucune adresse de livraison, veuillez indiquer une adresse valide dans');
 			return redirect('/')->with(['link' => 'profil']);

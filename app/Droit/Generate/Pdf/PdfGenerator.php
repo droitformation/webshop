@@ -166,7 +166,7 @@ class PdfGenerator implements PdfGeneratorInterface
         $data['generate'] = $generate;
 
         if($rappel){
-            $data['rappel']   = $model->load('rappels')->rappels->count();
+            $data['rappel'] = $model->load('rappels')->rappels->count();
         }
 
         // Qrcode for bon

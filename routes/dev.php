@@ -106,7 +106,7 @@ Route::get('testing', function() {
     $inscription =  $Inscriptions->find(7913);
 
     $generator->stream = true;
-    return $generator->make('facture',$inscription);
+    return $generator->make('bon',$inscription);
 
 
     /*
