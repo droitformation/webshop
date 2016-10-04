@@ -11,10 +11,12 @@
             <tr><td colspan="2" height="5">&nbsp;</td></tr>
             <tr align="top">
                 <td align="top" width="60%" valign="top">
-                    <ul id="facdroit">
-                        <li>{!! \Registry::get('inscription.infos.nom') !!}</li>
-                        <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
-                    </ul>
+
+
+                    <div id="facdroit">
+                    {!! $generate->getColloque()->adresse->adresse !!}
+                    </div>
+
                     <p class="tva">{{ $tva['numero'] }}</p>
                     <div class="coordonnees">
                         <h4>Coordonnées pour le paiement</h4>

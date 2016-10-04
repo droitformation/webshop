@@ -49,7 +49,7 @@
                                                 @if(!$adresses->isEmpty())
                                                     <option value="">Choix</option>
                                                     @foreach($adresses as $adresse)
-                                                        <option {{ ($colloque->adresse->id == $adresse->id ? 'selected' : '') }} value="{{ $adresse->id }}">{{ $adresse->name }}</option>
+                                                        <option {{ ($colloque->adresse->id == $adresse->id || old('adresse_id') == $adresse->id ? 'selected' : '') }} value="{{ $adresse->id }}">{{ $adresse->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>

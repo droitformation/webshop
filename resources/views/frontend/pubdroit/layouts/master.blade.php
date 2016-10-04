@@ -187,24 +187,26 @@
 
 						</figure>
 					</section>
-					<section class="row">
-						<div class="col-md-12">
-							<div class="sites-logos">
-								<a target="_blank" href="http://publications-droit.ch"><img src="{{ asset('files/sites/pubdroit.png') }}" alt="pubdroit" /></a>
-								<a target="_blank" href="http://droitmatrimonial.ch/"><img src="{{ asset('files/sites/matrimonial.png') }}" alt="matrimonial" /></a>
-								<a target="_blank" href="http://bail.ch/"><img src="{{ asset('files/sites/bail.png') }}" alt="bail" /></a>
-								<a target="_blank" href="http://droitpraticien.ch"><img src="{{ asset('files/sites/droitpraticien.png') }}" alt="droitpraticien" /></a>
-								<a target="_blank" href="http://tribunauxcivils.ch"><img src="{{ asset('files/sites/tribunaux.png') }}" alt="tribunaux" /></a>
-								<a target="_blank" href="http://droitdutravail.ch"><img src="{{asset('files/sites/droittravail.png')}}" alt="droitdutravail" /></a>
-								<a target="_blank" href="http://rjne.ch"><img src="{{ asset('files/sites/rjn.png') }}" alt="rjn" /></a>
-								<a target="_blank" href="http://rcassurances.ch"><img src="{{ asset('files/sites/rca.png') }}" alt="rcassurances" /></a>
-							</div>
-						</div>
-					</section>
+
 				</section>
 			</section>
 			<!-- End Footer Top 1 -->
-
+			<div class="sites-logos-wrapper">
+				<section class="container">
+					<div class="row">
+						<div class="col-md-12 sites-logos">
+							<a target="_blank" href="http://droitmatrimonial.ch/"><img src="{{ asset('files/sites/matrimonial.png') }}" alt="matrimonial" /></a>
+							<a target="_blank" href="http://bail.ch/"><img src="{{ asset('files/sites/bail.png') }}" alt="bail" /></a>
+							<a target="_blank" href="http://droitpraticien.ch"><img src="{{ asset('files/sites/droitpraticien.png') }}" alt="droitpraticien" /></a>
+							<a target="_blank" href="http://tribunauxcivils.ch"><img src="{{ asset('files/sites/tribunaux.png') }}" alt="tribunaux" /></a>
+							<a target="_blank" href="http://droitenschemas.ch"><img src="{{ asset('files/sites/schemas.png') }}" alt="schemas" /></a>
+							<a target="_blank" href="http://droitdutravail.ch"><img src="{{asset('files/sites/droittravail.png')}}" alt="droitdutravail" /></a>
+							<a target="_blank" href="http://rjne.ch"><img src="{{ asset('files/sites/rjn.png') }}" alt="rjn" /></a>
+							<a target="_blank" href="http://rcassurances.ch"><img src="{{ asset('files/sites/rca.png') }}" alt="rcassurances" /></a>
+						</div>
+					</div>
+				</section>
+			</div>
 			<!-- Start Main Footer -->
 			<footer id="main-footer" class="social-ico-bar">
 				<section class="container">

@@ -43,12 +43,6 @@ Route::get('testing', function() {
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
-
-    $all = $abos->getAllFrontend();
-
-    echo '<pre>';
-    print_r($all);
-    echo '</pre>';exit();
 /*
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
@@ -58,7 +52,7 @@ Route::get('testing', function() {
 
     $order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $items  = $order->getLast(2);*/
-
+    /*
     $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $order   = $orders->find(6);
 
@@ -106,11 +100,13 @@ Route::get('testing', function() {
 
     echo '<pre>';
     print_r($grouped);
-    echo '</pre>';
+    echo '</pre>';*/
 
-    /*
-        $generator->stream = true;
-        return $generator->factureOrder(2922);*/
+    $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $inscription =  $Inscriptions->find(7913);
+
+    $generator->stream = true;
+    return $generator->make('facture',$inscription);
 
 
     /*

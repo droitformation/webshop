@@ -609,6 +609,7 @@ margin-bottom:0;
 .footer-top1 h5 {
     margin:  5px 0 13px;
 }
+
 .tweets-list,
 .phon-list { margin:0; list-style:none; }
 .tweets-list li { margin:0 0 10px; }
@@ -1806,10 +1807,14 @@ table.order-list {
     padding: 5px 8px;
 }
 
+.sites-logos-wrapper{
+    padding: 15px;
+    background: #ddd;
+    display: block;
+}
+
 .sites-logos{
-    border-top: 1px solid #ededed;
-    background: #f1f1f1;
-    padding:10px;
+
 }
 
 .sites-logos a{
@@ -1818,6 +1823,10 @@ table.order-list {
     text-align: center;
     width: 11%;
  }
+
+.sites-logos a:first-child{
+    margin-left: 0;
+}
 
 .sites-logos a img{
    max-width: 100%;
