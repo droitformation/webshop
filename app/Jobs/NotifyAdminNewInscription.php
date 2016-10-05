@@ -41,9 +41,23 @@ class NotifyAdminNewInscription extends Job implements ShouldQueue
             'link'     => 'admin/inscription/colloque/'.$this->inscription->colloque->id
         ];
 
-        \Mail::send('emails.notification', $infos, function ($m) {
+        $email = $this->getEmail($this->inscription->colloque);
+
+        \Mail::send('emails.notification', $infos, function ($m) use ($email) {
             $m->from('droit.formation@unine.ch', 'Administration');
-            $m->to('cindy.leschaud@gmail.com', 'Administration')->subject('Notification');
+            $m->to($email, 'Administration')->subject('Notification');
         });
+    }
+
+    public function getEmail($colloque)
+    {
+        $environment = App::environment();
+
+        if($environment == 'production')
+        {
+            return $colloque->email ? $colloque->email : 'droit.formation@unine.ch';
+        }
+
+        return env('MAIL_TEST') ? env('MAIL_TEST') : 'cindy.leschaud@gmail.com';
     }
 }

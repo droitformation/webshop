@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
@@ -21,9 +21,9 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="typeSelect">
                                     <option value="global">Pourcentage sur toute la commande</option>
-                                    <option value="product">Pourcentage sur un ou plusieurs produits</option>
-                                    <option value="price">Rabais prix sur un ou plusieurs produits</option>
-                                    <option value="priceshipping">Rabais prix sur produits et frais de port gratuit</option>
+                                    <option value="product">Pourcentage sur un ou plusieurs livres</option>
+                                    <option value="price">Rabais prix sur un ou plusieurs livres</option>
+                                    <option value="priceshipping">Rabais prix sur livres et frais de port gratuit</option>
                                     <option value="shipping">Frais de port gratuit</option>
                                 </select>
                             </div>
