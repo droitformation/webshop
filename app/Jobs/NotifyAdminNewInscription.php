@@ -51,7 +51,7 @@ class NotifyAdminNewInscription extends Job implements ShouldQueue
 
     public function getEmail($colloque)
     {
-        $environment = App::environment();
+        $environment = \App::environment();
 
         if($environment == 'production')
         {
