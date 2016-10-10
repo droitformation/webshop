@@ -24,9 +24,33 @@ class Kernel extends ConsoleKernel {
 	protected function schedule(Schedule $schedule)
 	{
 		$schedule->command('reminder')->everyMinute();
-		$schedule->command('queue:work --daemon')->everyMinute()->withoutOverlapping();
 		$schedule->command('backup:clean')->daily()->at('18:00');
 		$schedule->command('backup:run')->daily()->at('19:00');
+
+		$schedule->call(function() {
+			$run_command = false;
+			$monitor_file_path = storage_path('queue.pid');
+
+			if (file_exists($monitor_file_path)) {
+				$pid = file_get_contents($monitor_file_path);
+				$result = exec("ps -p $pid --no-heading | awk '{print $1}'");
+
+				if ($result == '') {
+					$run_command = true;
+				}
+			} else {
+				$run_command = true;
+			}
+
+			if($run_command)
+			{
+				$command = 'php70 '. base_path('artisan'). ' queue:listen > /dev/null & echo $!';
+				$number = exec($command);
+				file_put_contents($monitor_file_path, $number);
+			}
+		})
+		->name('monitor_queue_listener')
+		->everyFiveMinutes();
 	}
 
 }
