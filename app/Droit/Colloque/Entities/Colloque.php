@@ -122,9 +122,9 @@ class Colloque extends Model
         })->orWhere('start_at','>',date('Y-m-d'));
     }
 
-    public function scopeArchives($query)
+    public function scopeArchives($query,$archives)
     {
-        return $query->where('start_at','<=',date('Y-m-d'));
+        if($archives) $query->where('start_at','<=',date('Y-m-d'));
     }
 
     public function scopeRegistration($query,$status)

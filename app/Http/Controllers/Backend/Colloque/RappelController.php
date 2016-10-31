@@ -10,7 +10,7 @@ use App\Droit\Inscription\Repo\RappelInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
-use Omnipay\Stripe\Message\Response;
+use App\Jobs\SendRappelEmail;
 
 class RappelController extends Controller
 {
@@ -126,6 +126,16 @@ class RappelController extends Controller
         $this->rappel->delete($id);
 
         alert()->success('Rappel supprimé');
+
+        return redirect()->back();
+    }
+
+    public function send(Request $request)
+    {
+        $job = (new SendRappelEmail($request->input('colloque_id')));
+        $this->dispatch($job);
+
+        alert()->success('Rappels envoyés');
 
         return redirect()->back();
     }

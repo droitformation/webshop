@@ -3,11 +3,24 @@
     <?php $helper = new \App\Droit\Helper\Helper(); ?>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a href="{{ url('admin/inscription/colloque/'.$colloque->id) }}" class="btn btn-default pull-left"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                    <a href="{{ url('admin/inscription/rappel/make/'.$colloque->id) }}" class="btn btn-brown pull-right"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{{ url('admin/inscription/rappel/make/'.$colloque->id) }}" class="btn btn-brown pull-left"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</a>
+
+                    <form action="{{ url('admin/inscription/rappel/send') }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                        <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
+                        <input type="hidden" name="count" value="{{ !$inscriptions->isEmpty() ? $inscriptions->count() : 0 }}">
+                        <button class="btn btn-inverse pull-right deleteAction" data-what="Envoyer" data-action="Rappels"><i class="fa fa-paper-plane"></i> &nbsp;Envoyer les rappel</button>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -17,7 +30,7 @@
         <div class="col-md-12">
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
-                    <h3>Rappel inscriptions</h3>
+                    <h3><strong>{{ $colloque->titre }}</strong><br/>Rappel inscriptions</h3>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>

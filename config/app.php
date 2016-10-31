@@ -172,6 +172,7 @@ return [
 		Vinkla\Alert\AlertServiceProvider::class,
 		Spatie\Backup\BackupServiceProvider::class,
 		designpond\newsletter\newsletterServiceProvider::class,
+        iWedmak\Mail\MailLogServiceProvider::class,
 
 		/*
 		 * Application Service Providers...

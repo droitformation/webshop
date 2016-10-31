@@ -10,6 +10,7 @@ use Spatie\Backup\Events\BackupManifestWasCreated;
 use Spatie\Backup\Events\BackupWasSuccessful;
 use Spatie\Backup\Exceptions\InvalidBackupJob;
 use Exception;
+use Spatie\DbDumper\DbDumper;
 
 class BackupJob
 {
@@ -168,7 +169,7 @@ class BackupJob
     {
         consoleOutput()->info("Zipping {$manifest->count()} files...");
 
-        $pathToZip = $this->temporaryDirectory->path(Carbon::now()->format('Y-m-d-h-i-s').'.zip');
+        $pathToZip = $this->temporaryDirectory->path(Carbon::now()->format('Y-m-d-H-i-s').'.zip');
 
         $zip = Zip::createForManifest($manifest, $pathToZip);
 
@@ -187,7 +188,7 @@ class BackupJob
      */
     protected function dumpDatabases(string $directory): array
     {
-        return $this->dbDumpers->map(function ($dbDumper) use ($directory) {
+        return $this->dbDumpers->map(function (DbDumper $dbDumper) use ($directory) {
             consoleOutput()->info("Dumping database {$dbDumper->getDbName()}...");
 
             $fileName = $dbDumper->getDbName().'.sql';

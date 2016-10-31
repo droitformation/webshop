@@ -235,7 +235,7 @@ class Inscription extends Model
 
     public function user_options()
     {
-        return $this->hasMany('App\Droit\Option\Entities\OptionUser');
+        return $this->hasMany('App\Droit\Option\Entities\OptionUser')->orderBy('id');
     }
 
     public function options()

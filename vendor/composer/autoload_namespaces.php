@@ -10,7 +10,6 @@ return array(
     'Venturecraft\\Revisionable' => array($vendorDir . '/venturecraft/revisionable/src'),
     'Svg\\' => array($vendorDir . '/phenx/php-svg-lib/src'),
     'SimpleSoftwareIO\\QrCode\\' => array($vendorDir . '/simplesoftwareio/simple-qrcode/src'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpSpec' => array($vendorDir . '/benconstable/phpspec-laravel/src', $vendorDir . '/phpspec/phpspec/src'),
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),

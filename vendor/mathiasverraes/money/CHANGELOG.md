@@ -1,20 +1,39 @@
 # Change Log
 
 
-## Unreleased
+## 3.0.0 - 2016-10-26
+
+### Added
+
+- DecimalMoneyFormatter: returns locale-independent raw decimal string
+
+### Changed
+
+- **[BC break]** Replaced StringToUnitsParser with DecimalMoneyParser
+- **[BC break]** Moved `Money\Exception\Exception` to `Money\Exception`
+- **[BC break]** UnkownCurrencyException is now DomainException instead of RuntimeException
+
+
+## 3.0.0-beta.3 - 2016-10-04
+
+### Added
+
+- FixedExchange: returns fixed exchange rates based on a list (array)
+
+### Changed
+
+- **[BC break]** Convert method now moved to its own class: Converter
+- **[BC break]** Exchange had one method getCurrencyPair which is now renamed to quote
+- Minor documentation issues
 
 ### Fixed
 
 - Integer detection when the number overflows the integer type and contains zeros
+- Rounding numbers containg trailing zeros
+- Converting Money to currency with different number of subunits
 
 
 ## 3.0.0-beta.2 - 2016-08-03
-
-### Changed
-
-- **[BC break]** Dropped PHP 5.4 support
-- **[BC break]** Intl and Bitcoin formatters and parsers now require Currencies
-- ISOCurrencies now uses moneyphp/iso-currencies as currency data source
 
 ### Added
 
@@ -25,6 +44,12 @@
 - Library exceptions now implement a common interface
 - Formatter and Parser implementation are now rounding half up
 
+### Changed
+
+- **[BC break]** Dropped PHP 5.4 support
+- **[BC break]** Intl and Bitcoin formatters and parsers now require Currencies
+- ISOCurrencies now uses moneyphp/iso-currencies as currency data source
+
 ### Fixed
 
 - Documentation to be inline with upcoming version 3
@@ -32,6 +57,7 @@
 - Formatting and parser issues for amounts and numbers with a trailing zero
 - Improved many exception messages
 - Registration of own Calculator implementations
+
 
 ## 3.0.0-beta - 2016-03-01
 
@@ -46,6 +72,7 @@
 - Currency list generation moved to dev dependency: reduces repo size
 - BC Math calculator adding and subtracting failed when bcscale was set
 - Parsing zero for StringToUnitsParser
+
 
 ## 3.0.0-alpha - 2016-02-04
 

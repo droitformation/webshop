@@ -1049,16 +1049,16 @@ h3.sub-heading-404{ font-size: 26px; text-align: center;}
 /* End Short Codes Styling */
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #ccc;
+    color: #6c6c6c;
 }
 ::-moz-placeholder { /* Firefox 19+ */
-    color: #ccc;
+    color: #6c6c6c;
 }
 :-ms-input-placeholder { /* IE 10+ */
-    color: #ccc;
+    color: #6c6c6c;
 }
 :-moz-placeholder { /* Firefox 18- */
-    color: #ccc;
+    color: #6c6c6c;
 }
 
 select, textarea, input[type="text"],

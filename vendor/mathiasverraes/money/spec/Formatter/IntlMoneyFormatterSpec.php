@@ -4,11 +4,12 @@ namespace spec\Money\Formatter;
 
 use Money\Currencies;
 use Money\Currency;
+use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Money\MoneyFormatter;
 use PhpSpec\ObjectBehavior;
 
-class IntlMoneyFormatterSpec extends ObjectBehavior
+final class IntlMoneyFormatterSpec extends ObjectBehavior
 {
     function let(\NumberFormatter $numberFormatter, Currencies $currencies)
     {
@@ -17,7 +18,7 @@ class IntlMoneyFormatterSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Money\Formatter\IntlMoneyFormatter');
+        $this->shouldHaveType(IntlMoneyFormatter::class);
     }
 
     function it_is_a_money_formatter()

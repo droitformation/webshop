@@ -101,12 +101,44 @@ Route::get('testing', function() {
     echo '<pre>';
     print_r($grouped);
     echo '</pre>';*/
-
+    $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $inscription =  $Inscriptions->find(7913);
+    $liste  =  $Inscriptions->getByColloque(39);
+    $inscription  =  $Inscriptions->find(12584);
+    $colloque  =  $colloques->find(39);
 
-    $generator->stream = true;
-    return $generator->make('bon',$inscription);
+    $user_options = $inscription->user_options->map(function ($option, $key) {
+        if($option->groupe_id){
+            return 'choix-'.$option->groupe_id;
+        }
+        return 'check-'.$option->id;
+    })->implode(',');
+
+    $grouped = $liste->groupBy(function ($inscription, $key) {
+        return $inscription->user_options->map(function ($option, $key) {
+            if($option->groupe_id){
+                return 'choix-'.$option->groupe_id;
+            }
+            return 'check-'.$option->id;
+        })->implode(',');
+    })->toArray();
+
+    $options = $colloque->options->map(function ($item, $key) {
+        if( !$item->groupe->isEmpty() ){
+            return $item->groupe->map(function ($groupe, $key) {
+                return 'choix-'.$groupe->id;
+            });
+        }
+        return 'checkbox-'.$item->id;
+    });
+
+    echo '<pre>';
+    print_r($grouped);
+    print_r($user_options);
+    echo '</pre>';exit();
+
+    //$generator->stream = true;
+    //return $generator->make('bon',$inscription);
 
 
     /*
@@ -392,15 +424,21 @@ Route::get('notification', function()
 Route::get('demande', function()
 {
     $model = \App::make('App\Droit\Abo\Repo\AboUserInterface');
-    $abos  = $model->allByAdresse(4983);
+    //$abos  = $model->allByAdresse(4983);
 
-    $job = new App\Jobs\NotifyAdminNewAbo($abos);
+    $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $rappels     = \App::make('App\Droit\Inscription\Repo\RappelInterface');
+    $rappel     = $rappels->find(1);
+
+    //$job = new App\Jobs\NotifyAdminNewAbo($abos);
+    $job = new App\Jobs\SendRappelEmail($rappel);
 
     app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
 
     //return View::make('emails.shop.demande', $data);
 
 });
+
 
 Route::get('registration', function()
 {
@@ -418,7 +456,7 @@ Route::get('registration', function()
 
     $data = [
         'title'        => $title,
-        'concerne'     => 'Inscription',
+        'concerne'     => '<span style="color:#9e0b0f;">Rappel</span>',
         'logo'         => $logo,
         'annexes'      => $inscrit->colloque->annexe,
         'colloque'     => $inscrit->colloque,
@@ -437,7 +475,8 @@ Route::get('registration', function()
         'date'         => $date,
     ];*/
 
-    return View::make('emails.colloque.confirmation', $data);
+    //return View::make('emails.colloque.confirmation', $data);
+    return View::make('emails.colloque.rappel', $data);
 
 });
 

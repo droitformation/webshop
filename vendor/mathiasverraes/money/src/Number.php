@@ -12,25 +12,29 @@ final class Number
     /**
      * @var string
      */
-    private $number;
+    private $integerPart;
 
     /**
-     * @var bool|int
+     * @var string
      */
-    private $decimalSeparatorPosition;
+    private $fractionalPart;
 
     /**
-     * @param $number
+     * @param string $integerPart
+     * @param string $fractionalPart
      */
-    public function __construct($number)
+    public function __construct($integerPart, $fractionalPart = '')
     {
-        if (is_string($number) === false) {
-            throw new \InvalidArgumentException(
-                'Number expects a string for calculations'
-            );
+        if ($this->validateNumberAsInteger($integerPart) === false) {
+            throw new \InvalidArgumentException('Invalid number');
         }
-        $this->number = (string) $number;
-        $this->decimalSeparatorPosition = strpos($number, '.');
+
+        if ($fractionalPart !== '' && $this->validateNumberAsInteger($fractionalPart) === false) {
+            throw new \InvalidArgumentException('Invalid number');
+        }
+
+        $this->integerPart = $integerPart ? $integerPart : '0';
+        $this->fractionalPart = $fractionalPart;
     }
 
     /**
@@ -38,7 +42,15 @@ final class Number
      */
     public function isDecimal()
     {
-        return $this->decimalSeparatorPosition !== false;
+        return $this->fractionalPart !== '';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInteger()
+    {
+        return $this->fractionalPart === '';
     }
 
     /**
@@ -46,22 +58,7 @@ final class Number
      */
     public function isHalf()
     {
-        if ($this->isDecimal() === false) {
-            return false;
-        }
-
-        $firstDigitAfterDecimal = $this->number[$this->decimalSeparatorPosition + 1];
-
-        if ($firstDigitAfterDecimal !== '5') {
-            return false;
-        }
-
-        $decimalPositions = strlen(rtrim($this->number, '0')) - ($this->decimalSeparatorPosition + 1);
-        if ($decimalPositions === 1) {
-            return true;
-        }
-
-        return false;
+        return $this->fractionalPart === '5';
     }
 
     /**
@@ -69,15 +66,9 @@ final class Number
      */
     public function isCurrentEven()
     {
-        if ($this->isDecimal() === false) {
-            $firstDigitBeforeDecimal = $this->number[strlen($this->number) - 1];
+        $lastIntegerPartNumber = $this->integerPart[strlen($this->integerPart) - 1];
 
-            return $firstDigitBeforeDecimal % 2 === 0;
-        }
-
-        $firstDigitBeforeDecimal = $this->number[$this->decimalSeparatorPosition - 1];
-
-        return $firstDigitBeforeDecimal % 2 === 0;
+        return $lastIntegerPartNumber % 2 === 0;
     }
 
     /**
@@ -85,11 +76,11 @@ final class Number
      */
     public function isCloserToNext()
     {
-        if ($this->isDecimal() === false) {
+        if ($this->fractionalPart === '') {
             return false;
         }
 
-        return $this->number[$this->decimalSeparatorPosition + 1] >= 5;
+        return $this->fractionalPart[0] >= 5;
     }
 
     /**
@@ -97,7 +88,29 @@ final class Number
      */
     public function __toString()
     {
-        return $this->number;
+        if ($this->fractionalPart === '') {
+            return $this->integerPart;
+        }
+
+        return $this->integerPart.'.'.$this->fractionalPart;
+    }
+
+    /**
+     * @param $number
+     *
+     * @return self
+     */
+    public static function fromString($number)
+    {
+        $decimalSeparatorPosition = strpos($number, '.');
+        if ($decimalSeparatorPosition === false) {
+            return new self($number, '');
+        }
+
+        return new self(
+            substr($number, 0, $decimalSeparatorPosition),
+            rtrim(substr($number, $decimalSeparatorPosition + 1), '0')
+        );
     }
 
     /**
@@ -111,7 +124,7 @@ final class Number
             throw new \InvalidArgumentException('Floating point expected');
         }
 
-        return new self(sprintf('%.8g', $floatingPoint));
+        return self::fromString(sprintf('%.8g', $floatingPoint));
     }
 
     /**
@@ -119,7 +132,7 @@ final class Number
      */
     public function isNegative()
     {
-        return $this->number[0] === '-';
+        return $this->integerPart[0] === '-';
     }
 
     /**
@@ -127,11 +140,7 @@ final class Number
      */
     public function getIntegerPart()
     {
-        if ($this->decimalSeparatorPosition === false) {
-            return $this->number;
-        }
-
-        return substr($this->number, 0, $this->decimalSeparatorPosition);
+        return $this->integerPart;
     }
 
     /**
@@ -139,11 +148,7 @@ final class Number
      */
     public function getFractionalPart()
     {
-        if ($this->decimalSeparatorPosition === false) {
-            return '';
-        }
-
-        return rtrim(substr($this->number, $this->decimalSeparatorPosition + 1), '0');
+        return $this->fractionalPart;
     }
 
     /**
@@ -151,7 +156,7 @@ final class Number
      */
     public function getIntegerRoundingMultiplier()
     {
-        if ($this->isNegative()) {
+        if ($this->integerPart[0] === '-') {
             return '-1';
         }
 
@@ -159,17 +164,12 @@ final class Number
     }
 
     /**
-     * @param string|int $number
+     * @param string $number
      *
      * @return bool
      */
-    public static function isInteger($number)
+    private static function validateNumberAsInteger($number)
     {
-        // Check if number is a valid integer
-        if (false !== filter_var($number, FILTER_VALIDATE_INT)) {
-            return true;
-        }
-
         // Check if number is invalid because of integer overflow
         $invalid = array_filter(
             str_split($number, strlen((string) PHP_INT_MAX) - 1),

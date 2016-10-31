@@ -48,7 +48,7 @@
 	<body>
 
 		<!-- Start Main Wrapper -->
-		<section class="wrapper">
+		<div class="wrapper">
 			<!-- Start Main Header -->
 
 			<div id="preheader">
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="search-bar">
                                     <form action="{{ url('pubdroit/search') }}" method="post">{!! csrf_field() !!}
-                                        <input name="term" type="text" value="Rechercher sur le site..." />
+                                        <input name="term" type="text" placeholder="Rechercher sur le site..." />
                                         <button type="submit" class="button-default">ok</button>
                                     </form>
                                 </div>

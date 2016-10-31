@@ -64,35 +64,17 @@ final class CurrencyPair implements \JsonSerializable
         $pattern = '#'.$currency.'/'.$currency.' '.$ratio.'#';
 
         $matches = [];
+
         if (!preg_match($pattern, $iso, $matches)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Can't create currency pair from ISO string '%s', format of string is invalid",
+                    'Cannot create currency pair from ISO string "%s", format of string is invalid',
                     $iso
                 )
             );
         }
 
         return new self(new Currency($matches[1]), new Currency($matches[2]), $matches[3]);
-    }
-
-    /**
-     * Converts Money from base to counter currency.
-     *
-     * @param Money $money
-     * @param int   $roundingMode
-     *
-     * @return Money
-     *
-     * @throws \InvalidArgumentException If $money's currency is not equal to base currency
-     */
-    public function convert(Money $money, $roundingMode = Money::ROUND_HALF_UP)
-    {
-        if (!$money->getCurrency()->equals($this->baseCurrency)) {
-            throw new \InvalidArgumentException('The Money has the wrong currency');
-        }
-
-        return $money->convert($this->counterCurrency, $this->conversionRatio, $roundingMode);
     }
 
     /**

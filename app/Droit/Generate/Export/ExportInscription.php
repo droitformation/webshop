@@ -57,7 +57,7 @@
                          foreach($option as $group_id => $group)
                          {
                              $sheet->appendRow(['']);
-                             $sheet->appendRow(['Choix', $this->groupes[$group_id]]);
+                             $sheet->appendRow(['Choix', isset($this->groupes[$group_id]) ? $this->groupes[$group_id] : 'aucun']);
                              $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
 
                              $sheet->appendRow(['']);
