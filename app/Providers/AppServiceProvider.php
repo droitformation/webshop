@@ -93,6 +93,8 @@ class AppServiceProvider extends ServiceProvider {
         $this->registerContentService();
         $this->registerBlocService();
         $this->registerMenuService();
+
+        $this->registerEmailService();
 	}
     
     /**
@@ -215,6 +217,17 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->singleton('App\Droit\Menu\Repo\MenuInterface', function()
         {
             return new \App\Droit\Menu\Repo\MenuEloquent(new \App\Droit\Menu\Entities\Menu);
+        });
+    }
+
+    /**
+     * Email
+     */
+    protected function registerEmailService(){
+
+        $this->app->singleton('App\Droit\Email\Repo\EmailInterface', function()
+        {
+            return new \App\Droit\Email\Repo\EmailEloquent(new \App\Droit\Email\Entities\Email);
         });
     }
 }

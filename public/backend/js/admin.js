@@ -209,6 +209,22 @@ $( function() {
         $(this).closest('label').tab('show');
     });
 
+    function getTextFromBody(data) {
+        return data.match(/<html [^>]+>([^<]+)<\/html>/)[1];
+    }
+
+    // Emails modal
+    $('#emailModal').on('show.bs.modal', function (event) {
+        var target = $(event.relatedTarget)
+        var id     = target.data('id');
+        var modal  = $(this)
+
+        $.get( base_url + "admin/email/" + id , function( data ) {
+            console.log(data);
+            modal.find('.modal-title').empty().text(data.subject);
+            modal.find('.modal-body').empty().html(data.body);
+        });
+    })
 
     $( "#register" ).validate({
         rules: {

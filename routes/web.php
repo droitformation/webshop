@@ -405,6 +405,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('location',    'Backend\Colloque\LocationController');
     Route::resource('organisateur','Backend\Colloque\OrganisateurController');
 
+    Route::match(['get', 'post'], 'email', 'Backend\EmailController@index');
+    Route::get('email/{id}','Backend\EmailController@show');
+  
     /*
     |--------------------------------------------------------------------------
     | Backend subscriptions, newsletters and campagnes Routes

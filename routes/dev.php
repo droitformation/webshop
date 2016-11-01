@@ -573,8 +573,11 @@ Route::get('/calculette', function () {
     $model    =  App::make('App\Droit\Calculette\Worker\CalculetteWorkerInterface');
     $facture  = $model->taux_actuel();
 
+    $model = new \App\Droit\Email\Entities\Email();
+
+    $email = $model->find(1);
     echo '<pre>';
-    print_r($facture);
+    print_r($email->body);
     echo '</pre>';exit;
 
 });

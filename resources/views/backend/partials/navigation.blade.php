@@ -30,6 +30,9 @@
                 <i class="fa fa-cloud-download"></i>&nbsp;<span>Export ou recherche</span>
             </a>
         </li>
+        <li class="<?php echo (Request::is('admin/email') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/email') }}"><i class="fa fa-envelope"></i>&nbsp;<span>Email log</span></a>
+        </li>
         <li class="nav-title">Evenements</li>
         <li class="<?php echo (Request::is('admin/colloque') || Request::is('admin/colloque/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/colloque') }}">
