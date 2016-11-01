@@ -22,10 +22,6 @@ class EventServiceProvider extends ServiceProvider {
         ]
 	];
 
-	protected $subscribe = [
-		'iWedmak\Mail\MailEventListener',
-	];
-
 	/**
 	 * Register any other events for your application.
 	 *

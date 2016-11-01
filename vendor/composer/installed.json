@@ -3531,55 +3531,6 @@
         ]
     },
     {
-        "name": "iwedmak/mail-log",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/iWedmak/laravel-5-mail-log.git",
-            "reference": "e7b8bb53f279cd6373aff0403ce6f3919dea1550"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/iWedmak/laravel-5-mail-log/zipball/e7b8bb53f279cd6373aff0403ce6f3919dea1550",
-            "reference": "e7b8bb53f279cd6373aff0403ce6f3919dea1550",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/database": "~5.0",
-            "laravel/framework": "5.*",
-            "php": ">=5.5.0"
-        },
-        "time": "2016-07-17 13:01:31",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "src/commands"
-            ],
-            "psr-4": {
-                "iWedmak\\Mail\\": "src/Logger/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "iWedmak Om",
-                "email": "iwedmak@gmail.com"
-            }
-        ],
-        "description": "Log emails in laravel 5",
-        "keywords": [
-            "illuminate",
-            "laravel",
-            "mail",
-            "maillog"
-        ]
-    },
-    {
         "name": "symfony/finder",
         "version": "v3.1.6",
         "version_normalized": "3.1.6.0",

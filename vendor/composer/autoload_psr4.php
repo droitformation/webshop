@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
-    'iWedmak\\Mail\\' => array($vendorDir . '/iwedmak/mail-log/src/Logger'),
     'fpdi\\' => array($vendorDir . '/itbz/fpdi/src'),
     'designpond\\newsletter\\' => array($vendorDir . '/designpond/newsletter/src'),
     'XdgBaseDir\\' => array($vendorDir . '/dnoegel/php-xdg-base-dir/src'),
