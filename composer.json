@@ -26,7 +26,8 @@
         "clegginabox/pdf-merger": "dev-master",
 		"designpond/newsletter" : "dev-master",
 		"vinkla/alert": "^1.2",
-		"spatie/laravel-backup": "^4.0"
+		"spatie/laravel-backup": "^4.0",
+		"shvetsgroup/laravel-email-database-log": "^1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~5.0",

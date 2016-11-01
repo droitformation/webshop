@@ -5617,5 +5617,47 @@
             "testing",
             "xunit"
         ]
+    },
+    {
+        "name": "shvetsgroup/laravel-email-database-log",
+        "version": "v1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/shvetsgroup/laravel-email-database-log.git",
+            "reference": "997a7a1b3736e546d9668368566e8280ae636fbd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/shvetsgroup/laravel-email-database-log/zipball/997a7a1b3736e546d9668368566e8280ae636fbd",
+            "reference": "997a7a1b3736e546d9668368566e8280ae636fbd",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~5.0"
+        },
+        "time": "2016-09-14 14:59:38",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ShvetsGroup\\LaravelEmailDatabaseLog\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alexander Shvets",
+                "email": "neochief@shvetsgroup.com"
+            }
+        ],
+        "description": "A simple database logger for all outgoing emails sent by Laravel website.",
+        "keywords": [
+            "laravel",
+            "markdown"
+        ]
     }
 ]

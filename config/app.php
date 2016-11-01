@@ -171,6 +171,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
 		Vinkla\Alert\AlertServiceProvider::class,
 		Spatie\Backup\BackupServiceProvider::class,
+		ShvetsGroup\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
 		designpond\newsletter\newsletterServiceProvider::class,
 
 		/*
