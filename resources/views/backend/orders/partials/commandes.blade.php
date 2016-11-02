@@ -32,10 +32,12 @@
                     @if($order->facture)
                         <a target="_blank" href="{{ $order->facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
                     @else
-                        <form action="{{ url('admin/order/generate') }}" method="POST">
+                       {{-- <form action="{{ url('admin/order/generate') }}" method="POST">
                             <input type="hidden" name="id" value="{{ $order->id }}">{!! csrf_field() !!}
                             <button class="btn btn-default btn-sm">Générer</button>
-                        </form>
+                        </form>--}}
+                        <div id="wrapper_{{ $order->id }}"></div>
+                        <button data-id="{{ $order->id }}" class="btn btn-default btn-sm order-generate">Générer</button>
                     @endif
 
                 </td>

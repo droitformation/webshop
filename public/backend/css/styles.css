@@ -493,6 +493,9 @@ cite {
 .text-muted {
   color: #aeafb1;
 }
+.text-required{
+  color:#859dec;
+}
 .text-primary {
   color: #4f8edc;
 }
@@ -511,6 +514,10 @@ a.text-success:hover {
 a.text-info:hover {
   color: #0f5363;
 }
+.text-required-if {
+  color: #f7941d;
+}
+
 .text-warning {
   color: #927608;
 }

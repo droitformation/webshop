@@ -1,6 +1,12 @@
 <form action="{{ url('admin/adresse/'.$adresse->id) }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">
     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
     <hr/>
+    <div class="form-group">
+        <div class="col-sm-11">
+            <p class="text-required-if">* Champ obligatoire sans prénom/nom</p>
+            <p class="text-required">* Champs obligatoire pour commandes et inscriptions ou conversion en compte utilisateur</p>
+        </div>
+    </div>
     @if($adresse->user_id > 0)
         <div class="form-group">
             <label class="col-sm-4 control-label">Type d'adresse</label>
@@ -18,7 +24,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Entreprise</label>
         <div class="col-sm-7">
-            <input type="text" name="company" class="form-control" value="{{ $adresse->company }}">
+            <input type="text" name="company" class="form-control form-required-if" value="{{ $adresse->company }}">
         </div>
     </div>
     <div class="form-group">
@@ -35,13 +41,13 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Prénom</label>
         <div class="col-sm-7">
-            <input type="text" name="first_name" data-parsley-required class="form-control form-required" value="{{ $adresse->first_name }}">
+            <input type="text" name="first_name" class="form-control form-required" value="{{ $adresse->first_name }}">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Nom</label>
         <div class="col-sm-7">
-            <input type="text" name="last_name" data-parsley-required class="form-control form-required" value="{{ $adresse->last_name }}">
+            <input type="text" name="last_name" class="form-control form-required" value="{{ $adresse->last_name }}">
         </div>
     </div>
     <div class="form-group">
@@ -97,7 +103,7 @@
         <label class="col-sm-4 control-label">Canton</label>
         <div class="col-sm-7">
             @if(isset($cantons) && !$cantons->isEmpty())
-                <select class="form-control form-required" data-parsley-required name="canton_id">
+                <select class="form-control" name="canton_id">
                     <option value="">Choix</option>
                     @foreach($cantons->pluck('title','id')->all() as $id => $c)
                         <option {{ $id == $adresse->canton_id ? 'selected' : '' }} value="{{ $id }}">{{ $c }}</option>
@@ -110,7 +116,7 @@
         <label class="col-sm-4 control-label">Pays</label>
         <div class="col-sm-7">
             @if(isset($pays) && !$pays->isEmpty())
-                <select class="form-control form-required" data-parsley-required name="pays_id">
+                <select class="form-control" name="pays_id">
                     <option value="">Choix</option>
                     @foreach($pays->pluck('title','id')->all() as $id => $p)
                         <option {{ $id == $adresse->pays_id ? 'selected' : '' }} value="{{ $id }}">{{ $p }}</option>
@@ -126,15 +132,10 @@
 
     <div class="row">
         <div class="col-md-6">
-            <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="pull-left">
-                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                <input type="hidden" value="{{ url('admin/user/'.$adresse->user_id) }}" name="url">
-                <button data-what="Supprimer" data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-            </form>
+
         </div>
         <div class="col-md-6 text-right">
             <button class="btn btn-primary" type="submit">Enregistrer</button>
         </div>
     </div>
-
 </form>

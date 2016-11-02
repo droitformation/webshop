@@ -70,6 +70,9 @@
         <li class="<?php echo (Request::is('admin/orders') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/orders') }}"><i class="fa fa-shopping-cart"></i> <span>Commandes</span></a>
         </li>
+        <li class="<?php echo (Request::is('admin/orders/resume') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/orders/resume') }}"><i class="fa fa-send"></i> <span>Résumé envois</span></a>
+        </li>
         <li class="<?php echo (Request::is('admin/order/create') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/order/create') }}"><i class="fa fa-plus-circle"></i> <span>Nouvelle commande</span></a>
         </li>

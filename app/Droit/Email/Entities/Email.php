@@ -14,30 +14,21 @@ class Email extends Model{
     {
         if($this->body)
         {
-            $str = $this->body;
+            $body = $this->extractString($this->body);
 
-            preg_match_all('/<(.*?)>/', $this->to, $match);
-
-            if(isset($match[1]) && isset($match[1][0]))
-            {
-                $body = $this->extractString($str, 'table');
-
-                return $body;
-            }
-            
-            return $this->body;
+            return $body ? $body : $this->body;
         }
     }
 
     // Function that returns the string between two strings.
-    protected function extractString($string, $tag)
+    protected function extractString($string)
     {
         $doc = new \DOMDocument();
         $doc->preserveWhiteSpace = false;
         $doc->formatOutput       = true;
         @$doc->loadHTML($string);
 
-        $table = $doc->getElementById('emailBody');
+        $table = $doc->getElementById('mainBody');
 
         return $table->c14n();
     }

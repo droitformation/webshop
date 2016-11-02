@@ -88,6 +88,21 @@ class Order extends Model{
         return $money->format($price);
     }
 
+    public function getTotalSumAttribute()
+    {
+        // Load relations
+        $this->load('shipping');
+
+        $total = $this->amount + $this->shipping->price;
+        $price = $total / 100;
+
+        // Calcul with TVA
+        $totalTVA = ($price*(2.5/100)) + $price;
+        $totalTVA = str_replace(',', '.', $totalTVA);
+
+        return $totalTVA;
+    }
+
     public function getTotalShippingAttribute()
     {
         // formatter

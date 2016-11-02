@@ -1,9 +1,18 @@
 <form action="{{ url('admin/adresse') }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">{!! csrf_field() !!}
     <h3>Créer une adresse</h3>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"></label>
+        <div class="col-sm-7">
+            <p class="text-required-if">* Champ obligatoire sans prénom/nom</p>
+            <p class="text-required">* Champs obligatoire pour commandes et inscriptions</p>
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="col-sm-3 control-label">Entreprise</label>
         <div class="col-sm-7">
-            <input type="text" name="company" class="form-control" value="">
+            <input type="text" name="company" class="form-control form-required-if" value="">
         </div>
     </div>
     <div class="form-group">
@@ -39,7 +48,7 @@
         <label class="col-sm-3 control-label">Profession</label>
         <div class="col-sm-7 col-xs-12">
             @if(isset($professions) && !$professions->isEmpty())
-                <select class="form-control form-required" data-parsley-required name="profession_id">
+                <select class="form-control" name="profession_id">
                     <option value="">Choix</option>
                     @foreach($professions->pluck('title','id')->all() as $id => $pr)
                         <option value="{{ $id }}">{{ $pr }}</option>
@@ -82,7 +91,7 @@
         <label class="col-sm-3 control-label">Canton</label>
         <div class="col-sm-3 col-xs-12">
             @if(isset($cantons) && !$cantons->isEmpty())
-                <select class="form-control form-required" data-parsley-required name="canton_id">
+                <select class="form-control" name="canton_id">
                     <option value="">Choix</option>
                     @foreach($cantons->pluck('title','id')->all() as $id => $c)
                         <option value="{{ $id }}">{{ $c }}</option>
@@ -95,7 +104,7 @@
         <label class="col-sm-3 control-label">Pays</label>
         <div class="col-sm-3 col-xs-12">
             @if(isset($pays) && !$pays->isEmpty())
-                <select class="form-control form-required" data-parsley-required name="pays_id">
+                <select class="form-control" name="pays_id">
                     <option value="">Choix</option>
                     @foreach($pays->pluck('title','id')->all() as $id => $p)
                         <option {{ $id == 208 ? 'selected' : '' }} value="{{ $id }}">{{ $p }}</option>
@@ -110,5 +119,6 @@
     @endif
 
     <input type="hidden" name="type" value="1">
+
     <br/><p class="pull-right"><button class="btn btn-primary" type="submit">Enregistrer</button></p>
 </form>

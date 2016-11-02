@@ -53,6 +53,11 @@ class Adresse extends Model {
 
     public function getNameAttribute()
     {
+        if(!empty($this->first_name) && !empty($this->last_name))
+        {
+            return $this->company;
+        }
+
         return $this->first_name.' '.$this->last_name;
     }
 

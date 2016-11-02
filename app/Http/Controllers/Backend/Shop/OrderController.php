@@ -60,6 +60,7 @@ class OrderController extends Controller {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         view()->share('status_list',['pending' => 'En attente', 'payed' => 'Payé', 'gratuit' => 'Gratuit']);
+        view()->share('send_list',['pending' => 'En attente', 'payed' => 'Envoyé']);
 	}
 
 	/**
@@ -129,9 +130,7 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order->id);
 
-        alert()->success('La facture a été regénéré');
-
-        return redirect()->back();
+        return ['facture' => $order->facture];
     }
 
     /**
@@ -256,6 +255,24 @@ class OrderController extends Controller {
         alert()->success('La commande a été restauré');
 
         return redirect('admin/orders');
+    }
+
+    public function resume(Request $request)
+    {
+        $data   = $request->all();
+ 
+        $status = $request->input('status',null) ? $request->input('status') : 'pending';
+        $send   = $request->input('send',null)   ? $request->input('send') : 'pending';
+
+        $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
+        $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
+
+        $orders = $this->order->getPeriod($period, $request->input('status',null), $request->input('send',null), $request->input('onlyfree',null));
+
+        $request->flash();
+
+        return view('backend.orders.resume')
+            ->with(['orders' => $orders, 'status' => $status, 'send' => $send, 'start' => $period['start'], 'end' => $period['end']] + $data);
     }
 
 }

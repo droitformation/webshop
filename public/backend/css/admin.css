@@ -342,6 +342,10 @@ a:hover, a:active, a:focus {
     border:1px solid #859dec;
 }
 
+.form-required-if{
+    border:1px solid #f7941d;
+}
+
 #adresseParent{
     margin: 5px 0 25px 0;
 }

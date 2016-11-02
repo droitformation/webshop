@@ -575,9 +575,9 @@ Route::get('/calculette', function () {
 
     $model = new \App\Droit\Email\Entities\Email();
 
-    $email = $model->find(1);
+    $email = $model->find(4);
     echo '<pre>';
-    print_r($email->body);
+    print_r($email->body_clean);
     echo '</pre>';exit;
 
 });

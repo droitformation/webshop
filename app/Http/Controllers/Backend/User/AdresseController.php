@@ -150,7 +150,7 @@ class AdresseController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update($id,UpdateAdresse $request)
+    public function update($id,CreateAdresse $request)
     {
         $adresse = $this->adresse->update($request->all());
 

@@ -2,33 +2,37 @@
 @section('content')
 
     <div id="content">
-        <table id="content-table">
-            <tr>
-                <td colspan="2"><img height="70mm" src="{{ public_path('files/main/'.\Registry::get('shop.infos.logo')) }}" alt="Unine logo" /></td>
-            </tr>
-            <tr><td colspan="2" height="5">&nbsp;</td></tr>
-            <tr align="top">
-                <td align="top" width="60%" valign="top">
-                    <div id="facdroit">
-                        <li>{{ \Registry::get('shop.infos.nom') }}</li>
-                        <li>{!! \Registry::get('shop.infos.adresse') !!}</li>
-                    </div>
-                </td>
-                <td align="top" width="40%" valign="top">
-                    @if($adresse)
-                        <ul id="user">
-                            {!! (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '') !!}
-                            <li>{{ $adresse->civilite_title.' '.$adresse->name }}</li>
-                            <li>{{ $adresse->adresse }}</li>
-                            {!! (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '') !!}
-                            {!! (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '') !!}
-                            <li>{{ $adresse->npa }} {{ $adresse->ville }}</li>
-                        </ul>
-                    @endif
-                </td>
-            </tr>
-            <tr><td colspan="2" height="1">&nbsp;</td></tr>
-        </table>
+        <div id="header-main">
+            <table id="content-table">
+                <tr><td colspan="2" height="30">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="2">
+                        <img height="70mm" id="logoImg" src="{{ public_path('files/main/'.\Registry::get('shop.infos.logo')) }}" alt="Unine logo" />
+                    </td>
+                </tr>
+                <tr><td colspan="2" height="10">&nbsp;</td></tr>
+                <tr align="top">
+                    <td align="top" width="60%" valign="top">
+                        <div id="facdroit">
+                            <li>{{ \Registry::get('shop.infos.nom') }}</li>
+                            <li>{!! \Registry::get('shop.infos.adresse') !!}</li>
+                        </div>
+                    </td>
+                    <td align="top" width="40%" valign="top">
+                        @if($adresse)
+                            <ul id="user">
+                                {!! (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '') !!}
+                                <li>{{ $adresse->civilite_title.' '.$adresse->name }}</li>
+                                <li>{{ $adresse->adresse }}</li>
+                                {!! (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '') !!}
+                                {!! (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '') !!}
+                                <li>{{ $adresse->npa }} {{ $adresse->ville }}</li>
+                            </ul>
+                        @endif
+                    </td>
+                </tr>
+            </table>
+        </div>
 
         <h1 class="title blue">Facture</h1>
 
@@ -72,6 +76,7 @@
             </tr>
         </table>
 
+
         <table id="invoice-table">
             <thead>
                 <tr>
@@ -95,8 +100,12 @@
                             <td class="text-left" valign="top">
                                 {{ $product->first()->title }} {!! ($product->first()->isbn ? '<br/><small style="font-size:9px;">(ISBN: '.$product->first()->isbn.')</small>' : '') !!}
                             </td>
-                            <td class="text-right" valign="top">{!! !$price_unit->isEmpty() ? $price_unit->first()->price_normal.' <span>CHF</span>' : 'gratuit' !!}</td>
-                            <td class="text-right" valign="top">{!! !$price_unit->isEmpty() && $price_unit->first()->price_special ? $price_unit->first()->price_special.' CHF' : '' !!}</td>
+                            <td class="text-right" valign="top">
+                                {!! !$price_unit->isEmpty() ? $price_unit->first()->price_normal.' <span>CHF</span>' : 'gratuit' !!}
+                            </td>
+                            <td class="text-right" valign="top">
+                                {!! !$price_unit->isEmpty() && $price_unit->first()->price_special ? $price_unit->first()->price_special.' CHF' : '' !!}
+                            </td>
                             <!-- Calculate price with quantitiy -->
                             <?php $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit') * $qty; ?>
                             <td class="text-right" valign="top">{{ number_format((float)$subtotal, 2, '.', '') }} <span>CHF</span></td>
@@ -184,7 +193,7 @@
                                 @if(!empty($versement))
                                     <ul class="versement">
                                         @foreach($versement as $line)
-                                            <li>{{ $line }}</li>
+                                            <li>{!! $line !!}</li>
                                         @endforeach
                                     </ul>
                                 @endif
@@ -201,7 +210,7 @@
                                 @if(!empty($versement))
                                     <ul class="versement">
                                         @foreach($versement as $line)
-                                            <li>{{ $line }}</li>
+                                            <li>{!! $line !!}</li>
                                         @endforeach
                                     </ul>
                                 @endif
@@ -216,8 +225,8 @@
                         <tr>
                             <td align="top" valign="top" width="64%" height="20mm">
                                 <ul class="versement">
-                                    <li>{{ $motif['centre'] }}</li>
-                                    <li>{{ $motif['texte'] }}</li>
+                                    <li>{!! $motif['centre'] !!}</li>
+                                    <li>{!! $motif['texte'] !!}</li>
                                     <li>Facture N° {{ $order->order_no }}</li>
                                 </ul>
                             </td>

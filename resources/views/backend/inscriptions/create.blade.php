@@ -39,6 +39,7 @@
                         </select>
                     </div>
 
+                    <h5>Détenteur de l'inscription</h5>
                     <!-- Search user autocomplete -->
                     @include('backend.partials.search-user')
 

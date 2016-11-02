@@ -27,12 +27,27 @@ class CreateAdresse extends Request {
 	public function rules()
 	{
         return [
-            'first_name' => 'required',
-            'last_name'  => 'required',
+			'company'    => 'required_without_all:first_name,last_name',
+            'first_name' => 'required_without:company',
+            'last_name'  => 'required_without:company',
             'adresse'    => 'required',
 			'npa'        => 'required',
 			'ville'      => 'required',
         ];
+	}
+
+	/**
+	 * Get the error messages for the defined validation rules.
+	 *
+	 * @return array
+	 */
+	public function messages()
+	{
+		return [
+			'company.required_without_all' => 'Le nom de l\'entreprise est requis sans prénom/nom',
+			'first_name.required_without'  => 'Le prénom est requis dans nom d\'entreprise ',
+			'last_name.required_without'  => 'Le nom est requis dans nom d\'entreprise ',
+		];
 	}
 
 }

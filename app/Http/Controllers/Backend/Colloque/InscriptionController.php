@@ -97,7 +97,7 @@ class InscriptionController extends Controller
      */
     public function create($colloque_id = null)
     {
-        $colloques = $this->colloque->getAll();
+        $colloques = $this->colloque->getAll(true,false);
 
         return view('backend.inscriptions.create')->with(['colloques' => $colloques, 'colloque_id' => $colloque_id]);
     }
