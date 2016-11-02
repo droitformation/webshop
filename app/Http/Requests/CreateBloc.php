@@ -32,7 +32,7 @@ class CreateBloc extends Request
             'title'     => 'required_without_all:content,url,file',
             'content'   => 'required_without_all:title,url,file',
             'file'      => 'required_with:url',
-            'url'       => 'required_without:file',
+            'url'       => 'required_with:file',
             'page_id'   => 'required',
             'type'      => 'required',
             'position'  => 'required'
