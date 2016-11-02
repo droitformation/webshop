@@ -46,6 +46,37 @@ jQuery(document).ready(function($){
                     }
                 }
             },
+        },
+        submitHandler: function(form) {
+            
+            var first_name = $(form).find("input[name='first_name']").val();
+            var last_name  = $(form).find("input[name='last_name']").val();
+
+            $.ajax({
+                type   : "POST",
+                url    : base_url + "check/name",
+                data   : { first_name: first_name, last_name : last_name, _token: $("meta[name='_token']").attr('content') },
+                success: function(data) {
+                    if(data != 'ok')
+                    {
+                        console.log(data);
+
+                        bootbox.confirm({
+                            title: "Uho",
+                            message: data,
+                            buttons: {
+                                cancel : { label: '<i class="fa fa-times"></i> Fermer'},
+                                confirm: { label: '<i class="fa fa-check"></i> Non je suis nouveau'}
+                            },
+                            callback: function (result) {
+                                form.submit();
+                            }
+                        });
+
+                    }
+                },
+                error  : function(){}
+            });
         }
     });
 

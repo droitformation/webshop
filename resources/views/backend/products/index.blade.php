@@ -29,7 +29,7 @@
                                 <div class="input-group">
                                     <input type="text" name="term" class="form-control" placeholder="ISBN, titre">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" type="submit">Ok</button>
+                                        <button class="btn btn-info" type="submit">Ok</button>
                                     </span>
                                 </div><!-- /input-group -->
                             </div>

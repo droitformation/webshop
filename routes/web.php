@@ -27,7 +27,7 @@ Route::get('presence/occurrence/{id}/{key}', 'CodeController@occurrence');
 |--------------------------------------------------------------------------
 */
 Route::post('check/email', 'Api\ValidationController@check');
-
+Route::post('check/name', 'Api\ValidationController@name');
 
 /*
 |--------------------------------------------------------------------------

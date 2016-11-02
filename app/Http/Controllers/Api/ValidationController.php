@@ -34,4 +34,20 @@ class ValidationController extends Controller
         return response()->json("true");
     }
 
+    /**
+     * Check email exist via ajax validation
+     *
+     * @return boolean
+     */
+    public function name(Request $request)
+    {
+        $exist = $this->user->findByName($request->all());
+
+        if($exist)
+        {
+            return response()->json(['Ce nom nous dit quelque chose...avez vous déjà un compte chez nous?']);
+        }
+
+        return response()->json(['ok']);
+    }
 }
