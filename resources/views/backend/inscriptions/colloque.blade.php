@@ -26,6 +26,49 @@
                 </div>
             </div>
 
+            <!-- export filters panel -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-2">
+
+                            <div class="btn-group-vertical btn-group-export">
+                                <button class="btn btn-inverse btn-sm" type="button" data-toggle="collapse" data-target="#exportExcel" aria-expanded="false" aria-controls="exportExcel">
+                                    <i class="fa fa-download"></i> &nbsp;Exporter liste excel
+                                </button>
+
+                                <button class="btn btn-brown btn-sm" type="button" data-toggle="collapse" data-target="#exportQrcode" aria-expanded="false" aria-controls="exportQrcode">
+                                    <i class="fa fa-qrcode"></i> &nbsp;Exporter qrcodes
+                                </button>
+
+                                <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#exportBadge" aria-expanded="false" aria-controls="exportBadge">
+                                    <i class="fa fa-files-o"></i> &nbsp;Exporter Badges
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="col-md-10">
+
+                            <div class="collapse" id="exportExcel">
+                                <h4>Export excel</h4>
+                            </div>
+
+                            <div class="collapse" id="exportQrcode">
+                                <h4>Export Qrcodes</h4>
+                            </div>
+
+                            <div class="collapse" id="exportBadge">
+                                <h4>Export Badges</h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- end export filters -->
+
             <div class="panel panel-default">
                 <div class="panel-body">
 

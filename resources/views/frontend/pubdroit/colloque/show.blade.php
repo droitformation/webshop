@@ -64,7 +64,11 @@
                                     @include('frontend.pubdroit.colloque.partials.register')
                                 @else
                                     <?php $message = ($registered ? Registry::get('inscription.messages.registered') : Registry::get('inscription.messages.pending')); ?>
-                                    <p class="text-danger"><strong><i class="fa fa-exclamation-triangle"></i></strong> {!! strip_tags($message) !!}</p>
+                                
+                                    <div class="text-danger text-center">
+                                        <img style="height: 90px;width: 80px; margin-bottom: 20px; margin-top: 30px;" src="{{ asset('frontend/pubdroit/images/notification.svg') }}" alt="{{ strip_tags($message) }}">
+                                        <h4>{{ strip_tags($message) }}</h4>
+                                    </div>
                                 @endif
                             @else
                                 <div class="login-form">

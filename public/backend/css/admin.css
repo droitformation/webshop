@@ -1003,3 +1003,8 @@ label.error{
 .shortcut-tiles .tiles-footer {
     text-align: center;
 }
+
+.btn-group-export button{
+    margin-bottom: 7px;
+    font-weight: 500;
+}

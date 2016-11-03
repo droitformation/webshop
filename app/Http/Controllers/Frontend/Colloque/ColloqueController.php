@@ -60,6 +60,11 @@ class ColloqueController extends Controller
     {
         $colloque = $this->colloque->find($id);
 
+        if(!$colloque->visible)
+        {
+            return redirect('pubdroit/colloque');
+        }
+
         $registered = false;
         $pending    = false;
 
