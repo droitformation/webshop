@@ -28,7 +28,15 @@ return [
                  */
                 'exclude' => [
                     base_path('vendor'),
-                    //base_path('node_modules'),
+                    base_path('node_modules'),
+                    base_path('temp'),
+                    base_path('.git'),
+                    base_path('public/files/uploads'),
+                    base_path('public/files/colloques/bon'),
+                    base_path('public/files/colloques/facture'),
+                    base_path('public/files/colloques/bv'),
+                    base_path('public/files/colloques/rappel'),
+                    base_path('public/files/shop/factures'),
                 ],
 
                 /*

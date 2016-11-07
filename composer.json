@@ -14,7 +14,6 @@
         "laravel/cashier": "~7.0",
 		"intervention/image": "^2.2",
         "gloudemans/shoppingcart": "~1.3",
-        "mathiasverraes/money": "dev-master",
         "barryvdh/laravel-dompdf": "0.7.x@dev",
         "maatwebsite/excel": "~2.0.0",
         "venturecraft/revisionable": "1.*",
