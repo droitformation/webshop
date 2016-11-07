@@ -40,7 +40,7 @@
                                     <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#exportBadge" aria-expanded="false" aria-controls="exportBadge">
                                         <i class="fa fa-files-o"></i> &nbsp;Exporter Badges
                                     </button>
-                                    <a href="{{ url('admin/export/qrcodes/'.$colloque->id) }}" class="btn btn-sm btn-brown">
+                                    <a href="{{ url('admin/export/qrcodes/'.$colloque->id) }}" target="_blank" class="btn btn-sm btn-brown">
                                         <i class="fa fa-qrcode"></i> &nbsp;Exporter qrcodes
                                     </a>
                                 </div>
