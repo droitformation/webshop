@@ -45,6 +45,8 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getByColloqueExport($id, $occurrences = [])
     {
+        $occurrences = array_filter($occurrences);
+        
         return $this->inscription
             ->where('colloque_id','=',$id)
             ->occurrence($occurrences)

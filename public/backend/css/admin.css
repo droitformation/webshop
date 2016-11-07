@@ -253,7 +253,7 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     margin-top: 15px;
 }
 
-.form-horizontal .checkbox-inline.checkbox-border{
+.checkbox-inline.checkbox-border{
     padding: 5px 5px 5px 3px;
     border: 1px solid #ddd;
     margin-left: 0;

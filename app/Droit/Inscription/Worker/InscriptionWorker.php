@@ -259,4 +259,12 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         }
     }
 
+    public function destroyDocuments($model)
+    {
+        $documents = collect($model->documents);
+        $documents = $documents->pluck('file')->all();
+        
+        \File::delete($documents);
+    }
+
 }

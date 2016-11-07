@@ -9,6 +9,11 @@ $( function() {
 
     $('.colorpicker').colorPicker();
 
+    var $excelGroup = $('#excelGroup');
+    $excelGroup.on('show.bs.collapse','.collapse', function() {
+        $excelGroup.find('.collapse.in').collapse('hide');
+    });
+
     /*
      * Datepicker
      * */

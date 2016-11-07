@@ -1494,6 +1494,15 @@ a.navbar-btn.navbar-register:focus{
     position: relative;
 }
 
+#colloque-dependence input[type=radio]:disabled + label,
+#colloque-dependence input[type=checkbox]:disabled  + label{
+    outline: 0;
+    background-color:#dadada;
+    border:2px solid #d9d9d9;
+    position: relative;
+    opacity: 0.8;
+}
+
 #colloque-dependence input[type=radio].prices + label,
 #colloque-dependence input[type=checkbox].prices + label,
 #colloque-dependence input[type=radio].prices:checked + label,

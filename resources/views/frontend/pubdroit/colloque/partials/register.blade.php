@@ -27,12 +27,13 @@
         @if(!$colloque->occurrences->isEmpty())
         <div class='wrapper'>
             <br/><h4>Merci de préciser</h4>
+            <?php $dates = $colloque->occurrences->pluck('starting_at')->unique(); ?>
 
             @foreach($colloque->occurrences as $occurrence)
-                <input class="options occurrences" required type="checkbox" id="occurrence_{{ $occurrence->id }}" name="occurrences[]" value="{{ $occurrence->id }}">
+                <input class="options occurrences" {{ $occurrence->full ? 'disabled' : 'required' }} type="{{ $dates->count() > 1 ? 'checkbox' : 'radio' }}" id="occurrence_{{ $occurrence->id }}" name="occurrences[]" value="{{ $occurrence->id }}">
                 <label for="occurrence_{{ $occurrence->id }}">
                     <div class='package'>
-                        <div class='name'>{{ $occurrence->title }}</div>
+                        <div class='name'>{{ $occurrence->title }} {{ $occurrence->full ? 'COMPLET' : '' }}</div>
                         <div class='occurrence_date'>Date: {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}</div>
                         <div class='occurrence_date occurrence_location'>{{ $occurrence->location->name }}</div>
                     </div>
@@ -49,6 +50,7 @@
             @foreach($types as $type => $options)
 
                 @if($type == 'checkbox')
+
                     <br/><h4>Merci de préciser &nbsp;<small class="text-muted">(facultatif)</small></h4>
                     <?php $check = 'checkbox'; ?>
                     <div class='wrapper'>
@@ -64,6 +66,7 @@
                     </div>
 
                 @else
+
                     <br/><h4>Merci de préciser</h4>
                     <?php $check = 'radio'; $titre =  'Options à choix'; ?>
                     @foreach($options as $option)
@@ -71,7 +74,7 @@
                             <p>{{ $option->title }} &nbsp;<div class="errorTxt"></div></p>
 
                             @foreach($option->groupe as $group)
-                                <input class="options" type="{{ $check }}" required id="group_{{ $group->id }}" name="options[{{ $option->id }}][]" value="{{ $group->id }}">
+                                <input class="options" type="{{ $check }}" required id="group_{{ $group->id }}" name="groupes[{{ $option->id }}]" value="{{ $group->id }}">
                                 <label for="group_{{ $group->id }}">
                                     <div class='package'>
                                         <div class='name option_name'>{{ $group->text }}</div>
@@ -81,6 +84,7 @@
                             <div class="clearfix"></div>
                         </div>
                     @endforeach
+
                 @endif
 
             @endforeach

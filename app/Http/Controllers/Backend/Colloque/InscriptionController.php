@@ -333,13 +333,16 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->find($id);
 
-        $this->inscription->delete($id);
+        // Destroy documents or else if we register the same person again the docs are going to be wrong
+        $this->register->destroyDocuments($inscription);
 
         // If it's a group inscription and we have deleted refresh the groupe invoice and bv
         if($inscription->group_id > 0)
         {
             $this->register->makeDocuments($inscription->groupe, true);
         }
+
+        $this->inscription->delete($id);
 
         alert()->success('Désinscription effectué');
 

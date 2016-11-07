@@ -44,12 +44,18 @@ class OccurrenceEloquent implements OccurrenceInterface{
 
         $occurrence = $this->occurrence->findOrFail($data['id']);
 
-        if( ! $occurrence )
+        if(!$occurrence)
         {
             return false;
         }
 
         $occurrence->fill($data);
+        
+        if(isset($data['full']))
+        {
+            $occurrence->full = $data['full'] > 0 ? 1 : null;
+        }
+
         $occurrence->save();
 
         return $occurrence;

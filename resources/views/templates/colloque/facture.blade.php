@@ -3,41 +3,40 @@
 
     <?php $colloque = $generate->getColloque(); ?>
     <div class="content">
-        <table class="content-table">
-            <tr>
-                <td colspan="2">
-                    <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
-                    <img height="70mm" src="{{ public_path('files/logos/'.$logo) }}" alt="Unine logo" />
-                </td>
-            </tr>
-            <tr><td colspan="2" height="5">&nbsp;</td></tr>
-            <tr align="top">
-                <td align="top" width="60%" valign="top">
+        <div id="header-main">
+            <table class="content-table">
+                <tr><td colspan="2" height="30">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="2">
+                        <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
+                        <img height="70mm" id="logoImg" src="{{ public_path('files/logos/'.$logo) }}" alt="Unine logo" />
+                    </td>
+                </tr>
+                <tr><td colspan="2" height="10">&nbsp;</td></tr>
+                <tr align="top">
+                    <td align="top" width="60%" valign="top">
 
-                    @if(isset($colloque) && isset($colloque->adresse))
-                        <div id="facdroit">
-                            {!! $colloque->adresse->adresse !!}
-                        </div>
-                    @else
-                        <ul id="facdroit">
-                            <li>{!! \Registry::get('inscription.infos.nom') !!}</li>
-                            <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
-                        </ul>
-                    @endif
+                        @if(isset($colloque) && isset($colloque->adresse))
+                            <div id="facdroit">
+                                <li>{!! $colloque->adresse->adresse !!}</li>
+                            </div>
+                        @else
+                            <ul id="facdroit">
+                                <li>{!! \Registry::get('inscription.infos.nom') !!}</li>
+                                <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
+                            </ul>
+                        @endif
 
-                    <p class="tva">{{ $tva['numero'] }}</p>
+                        <p class="tva">{{ $tva['numero'] }}</p>
 
-                    <div class="coordonnees">
-                        <h4>Coordonnées pour le paiement</h4>
-                        <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
-                    </div>
-                </td>
-                <td align="top" width="40%" valign="top">
-                    @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
-                </td>
-            </tr>
-            <tr><td colspan="2" height="15">&nbsp;</td></tr>
-        </table>
+                    </td>
+                    <td align="top" width="40%" valign="top">
+                        @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
+                    </td>
+                </tr>
+                <tr><td colspan="2" height="15">&nbsp;</td></tr>
+            </table>
+        </div>
     </div>
 
     <div class="content">
@@ -94,6 +93,15 @@
             </tr>
 
             <tr><td height="20">&nbsp;</td></tr>
+            <tr valign="top">
+                <td valign="top">
+                    <div class="coordonnees">
+                        <h4>Coordonnées pour le paiement</h4>
+                        <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
+                    </div>
+                </td>
+            </tr>
+            <tr><td height="30">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top">
                     <p class="message">{{ $messages['remerciements'] }}</p>

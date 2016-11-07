@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <p><strong>Lieu</strong></p>
                                 <a class="editLocation" href="#" data-type="select"
                                    data-name="lieux_id"
@@ -52,6 +52,15 @@
                                         });
                                     });
                                 </script>
+                            </div>
+                            <div class="col-md-4">
+                                <p><strong>Disponibilité</strong></p>
+                                <a class="editableItemCheck"
+                                   data-name="full"
+                                   data-type="select"
+                                   data-pk="{{ $occurrence->id }}" data-url="admin/occurrence/{{ $occurrence->id }}"
+                                   data-title="Changer la disponibilité">{{ $occurrence->full }}
+                                </a>
                             </div>
                         </div>
                     </li>

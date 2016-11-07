@@ -103,8 +103,21 @@ Route::get('testing', function() {
     echo '</pre>';*/
     $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $liste  =  $Inscriptions->getByColloque(39);
-    $inscription  =  $Inscriptions->find(12584);
+   // $liste  =  $Inscriptions->getByColloque(39);
+    $inscription  =  $Inscriptions->find(12589);
+
+    $documents = collect($inscription->documents);
+    $documents = $documents->pluck('file')->all();
+    \File::delete($documents);
+    
+    echo '<pre>';
+    print_r($documents);
+    echo '</pre>';
+
+   
+    exit();
+
+
     $colloque  =  $colloques->find(39);
 
     $user_options = $inscription->user_options->map(function ($option, $key) {

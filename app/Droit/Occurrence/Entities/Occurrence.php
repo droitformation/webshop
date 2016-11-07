@@ -11,7 +11,7 @@ class Occurrence extends Model{
 
     protected $dates = ['deleted_at','starting_at'];
 
-    protected $fillable = ['colloque_id','title','lieux_id','starting_at'];
+    protected $fillable = ['colloque_id','title','lieux_id','starting_at','full'];
 
     public function colloque()
     {
