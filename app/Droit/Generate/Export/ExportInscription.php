@@ -5,6 +5,7 @@
 
      protected $columns = [];
      protected $sort = null;
+     protected $dispatch = null;
      
      public $options = null;
      public $groupes = null;
@@ -28,52 +29,91 @@
          return $this;
      }
 
+     public function setDispatch($dispatch)
+     {
+         $this->dispatch = $dispatch;
+
+         return $this;
+     }
+
      /*
       * column names
       * if we want to sort
       * */
      public function export($inscriptions, $colloque = null)
      {
-         \Excel::create('Export inscriptions', function ($excel) use ($inscriptions,$colloque) {
-             $excel->sheet('Export', function ($sheet) use ($inscriptions,$colloque) {
+         // Group by occurrences if any else just group on 0 to have a loop
+         $grouped = $inscriptions->groupBy(function ($item, $key) {
+             if($this->dispatch){
+                 return $item->occurrences->pluck('title')->all();
+             }
+
+             return 0;
+         });
+/*
+         echo '<pre>';
+         print_r($grouped);
+         echo '</pre>';exit();*/
+
+         \Excel::create('Export inscriptions', function ($excel) use ($grouped,$colloque) {
+             $excel->sheet('Export', function ($sheet) use ($grouped,$colloque) {
 
                  $sheet->setOrientation('landscape');
 
-                 $this->options = $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray();
-                 $this->groupes = $colloque->groupes->pluck('text', 'id')->toArray();
-
-                 $converted = $this->prepareInscription($inscriptions);
-
-                 if ($this->sort && !empty($this->groupes))
-                 {
-                     $names['option_title'] = 'Choix';
-
-                     foreach($converted as $option_id => $option)
-                     {
-                         $sheet->appendRow(['Options', $this->options[$option_id]]);
-                         $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16);});
-                         $sheet->appendRow(['']);
-
-                         foreach($option as $group_id => $group)
-                         {
-                             $sheet->appendRow(['']);
-                             $sheet->appendRow(['Choix', isset($this->groupes[$group_id]) ? $this->groupes[$group_id] : 'aucun']);
-                             $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
-
-                             $sheet->appendRow(['']);
-                             $sheet->appendRow(['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $this->columns);
-                             $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
-                             $sheet->rows($group);
-                         }
-                         $sheet->appendRow(['']);
-                     }
-                 }
-                 else
+                 // start grouped loop and test if we need to display the name of the occureence
+                 foreach ($grouped as $group => $inscriptions)
                  {
                      $sheet->appendRow(['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $this->columns);
-                     $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14);});
-                     $sheet->rows($converted);
-                 }
+                     $sheet->row($sheet->getHighestRow(), function ($row) {
+                         $row->setFontWeight('bold')->setFontSize(14);
+                     })->appendRow(['']);
+
+                     if(!empty($group))
+                     {
+                         $sheet->appendRow([$group]);
+                         $sheet->row($sheet->getHighestRow(), function ($row) {
+                             $row->setFontWeight('bold')->setFontSize(14)->setFontColor('#009cff');
+                         })->appendRow(['']);
+
+                        // $sheet->mergeCells('A1:E1');
+                     }
+
+                     // Get options and grouped options
+                     $this->options = $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray();
+                     $this->groupes = $colloque->groupes->pluck('text', 'id')->toArray();
+
+                     // Prepare the inscriptions with infos
+                     $converted = $this->prepareInscription($inscriptions);
+
+                     if ($this->sort && !empty($this->groupes))
+                     {
+                         $names['option_title'] = 'Choix';
+
+                         foreach ($converted as $option_id => $option) {
+                             $sheet->appendRow(['Options', $this->options[$option_id]]);
+                             $sheet->row($sheet->getHighestRow(), function ($row) {
+                                 $row->setFontWeight('bold')->setFontSize(14);
+                             })->appendRow(['']);
+
+                             foreach ($option as $group_id => $group) {
+                                 $sheet->appendRow(['']);
+                                 $sheet->appendRow(['Choix', isset($this->groupes[$group_id]) ? $this->groupes[$group_id] : 'aucun']);
+                                 $sheet->row($sheet->getHighestRow(), function ($row) {
+                                     $row->setFontWeight('bold')->setFontSize(14);
+                                 });
+
+                                 $sheet->rows($group);
+                             }
+
+                             $sheet->appendRow(['']);
+                         }
+                     }
+                     else
+                     {
+                         $sheet->rows($converted);
+                     }
+
+                 } // end grouped loop
              });
 
          })->export('xls');

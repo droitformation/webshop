@@ -1583,8 +1583,10 @@ a.navbar-btn.navbar-register:focus{
 #colloque-dependence .name {
     color: #b01d22;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
     display: block;
+    margin-bottom: 10px;
+    line-height: 18px;
 }
 
 #colloque-dependence .name.option_name {
@@ -1602,7 +1604,6 @@ a.navbar-btn.navbar-register:focus{
 }
 
 #colloque-dependence .occurrence_date{
-    margin-top: 5px;
     font-size: 14px;
     font-weight: bold;
     display: block;

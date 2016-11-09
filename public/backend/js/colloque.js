@@ -295,6 +295,16 @@ $('body').on("click",'.addItem',function(e) {
                 }
             });
 
+            $('.editableItemCheck').editable({
+                value: 0,
+                source: [{value: 0,text: 'Ouvert au public'}, {value: 1,text: 'Complet'}],
+                params: function(params) {
+                    params._token   = $("meta[name='_token']").attr('content');
+                    params._method = 'put';
+                    return params;
+                }
+            });
+
         },
         error: function(){alert('problème avec l\'ajout de la conférence');}
     });
@@ -326,6 +336,16 @@ $('body').on("click",'.removeItem', function(e) {
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params._token  = $("meta[name='_token']").attr('content');
+                    params._method = 'put';
+                    return params;
+                }
+            });
+
+            $('.editableItemCheck').editable({
+                value: 0,
+                source: [{value: 0,text: 'Ouvert au public'}, {value: 1,text: 'Complet'}],
+                params: function(params) {
+                    params._token   = $("meta[name='_token']").attr('content');
                     params._method = 'put';
                     return params;
                 }

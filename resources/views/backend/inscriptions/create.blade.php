@@ -33,7 +33,7 @@
                             <option value="">Choisir le colloque</option>
                             @if(!$colloques->isEmpty())
                                 @foreach($colloques as $col)
-                                    <option {{ old('colloque_id') == $col->id ? 'selected' : '' }} value="{{ $col->id }}">{{ $col->titre }}</option>
+                                    <option {{ (old('colloque_id') == $col->id ) || ($colloque_id == $col->id) ? 'selected' : '' }} value="{{ $col->id }}">{{ $col->titre }}</option>
                                 @endforeach
                             @endif
                         </select>

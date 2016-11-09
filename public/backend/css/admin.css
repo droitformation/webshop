@@ -1004,6 +1004,10 @@ label.error{
     text-align: center;
 }
 
+.btn-group-export{
+    margin-bottom: 5px;
+}
+
 .btn-group-export button{
     margin-bottom: 7px;
     font-weight: 500;

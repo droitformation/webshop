@@ -13,6 +13,11 @@ class Occurrence extends Model{
 
     protected $fillable = ['colloque_id','title','lieux_id','starting_at','full'];
 
+    public function getIsActiveAttribute()
+    {
+        return $this->starting_at >= \Carbon\Carbon::today() ? true : false;
+    }
+
     public function colloque()
     {
         return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');

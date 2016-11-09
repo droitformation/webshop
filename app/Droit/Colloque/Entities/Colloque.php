@@ -67,6 +67,11 @@ class Colloque extends Model
         return $this->registration_at >= \Carbon\Carbon::today() ? true : false;
     }
 
+    public function getIsFullAttribute()
+    {
+        return $this->full ? '' : false;
+    }
+
     public function getEventDateAttribute()
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');

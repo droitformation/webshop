@@ -3,7 +3,7 @@
     <input type="hidden" name="id" value="{{ $colloque->id }}">{!! csrf_field() !!}
     <div class="row">
         <div class="form-group col-md-6">
-            <h4>Infos</h4>
+            <h4>Choix des information</h4>
             @if(!empty($names))
                 @foreach($names as $key => $name)
                     <div class="checkbox-inline checkbox-border">
@@ -13,19 +13,21 @@
             @endif
         </div>
         <div class="form-group col-md-3">
-            <h4>Tri par options</h4>
+            <h4>Options</h4>
             <div class="radio"><label><input type="radio" name="sort" value="" checked> Normal</label></div>
-            <div class="radio"><label><input type="radio" name="sort" value="1"> Par options à choix</label></div>
+            <div class="radio"><label><input type="radio" name="sort" value="1"> Trier par options à choix</label></div>
         </div>
         @if(count($colloque->occurrences))
             <div class="form-group col-md-3">
-                <h4>Tri par conférence</h4>
+                <h4>Conférences</h4>
+                <div class="checkbox"><label><input type="checkbox" name="dispatch" value="1" checked> Trier par conférences/salles</label></div>
+                <p>- ou -</p>
                 <select class="form-control" name="occurrence[]">
-                    <option value="">Toutes les conférences/Salles</option>
+                    <option value="">Choix d'une salle/conférence</option>
                     @foreach($colloque->occurrences as $occurrence)
-                        <option value="{{ $occurrence->id }}">{{ $occurrence->title }}</option>
+                        <option value="{{ $occurrence->id }}">Que {{ $occurrence->title }}</option>
                     @endforeach
-                </select>
+                </select><br/>
             </div>
         @endif
     </div>
