@@ -146,7 +146,7 @@ class Inscription extends Model
         }
         elseif(isset($this->user))
         {
-            return $this->user->name;
+            return $this->user->adresse_contact->name;
         }
 
         return $this->user_id;

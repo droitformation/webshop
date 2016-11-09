@@ -65,7 +65,7 @@ class InscriptionController extends Controller
     {
         if($request->input('inscription_no',null))
         {
-            $inscriptions = $this->inscription->findByNumero($request->input('inscription_no',null));
+            $inscriptions = $this->inscription->findByNumero($request->input('inscription_no',null),$id);
         }
         else
         {

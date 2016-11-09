@@ -6,6 +6,6 @@ class ExportQrcode
 {
     public function export($inscriptions,$colloque)
     {
-        return \PDF::loadView('backend.export.qrcode', ['inscriptions' => $inscriptions])->setPaper('a4')->stream('qrcodes_' . $colloque->id . '.pdf');
+        return \PDF::loadView('backend.export.qrcode', ['inscriptions' => $inscriptions])->setPaper('a4')->download('Qrcodes_colloque_' . $colloque->id . '.pdf');
     }
 }

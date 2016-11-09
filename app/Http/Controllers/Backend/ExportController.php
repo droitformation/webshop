@@ -88,7 +88,7 @@ class ExportController extends Controller
         
         ini_set('memory_limit', '-1');
         
-        $exporter->export($inscriptions, $colloque);
+        $exporter->export($inscriptions, $colloque, $request->input('occurrence', []));
     }
 
     public function generate(Request $request)
@@ -119,6 +119,8 @@ class ExportController extends Controller
 
         $exporter = new \App\Droit\Generate\Export\ExportBadge();
         $exporter->setConfig($badge);
+
+        ini_set('memory_limit', '-1');
 
         return $exporter->export($inscriptions, $colloque);
     }

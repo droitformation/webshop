@@ -97,10 +97,33 @@ class InscriptionEloquent implements InscriptionInterface{
         return false;
     }
 
-    public function findByNumero($numero)
+    public function findByNumero($numero, $colloque_id)
     {
         return $this->inscription->with(['price','colloque','user','rappels','user_options','user_options.option','groupe','participant'])
-            ->where('inscription_no','=',$numero)->paginate(20);
+            ->where('colloque_id','=',$colloque_id)
+            ->where(function($query) use ($numero) {
+
+                $query->where('inscription_no','=',$numero);
+
+                $query->orWhereHas('user', function($q) use ($numero){
+                    $q->where('users.first_name','LIKE', '%'.$numero.'%')->orWhere('users.last_name','LIKE', '%'.$numero.'%');
+                });
+
+                $query->orWhereHas('participant', function($q) use ($numero){
+                    $q->where('colloque_inscriptions_participants.name','LIKE', '%'.$numero.'%');
+                });
+
+                $query->orWhereHas('groupe', function($q) use ($numero){
+
+                    $q->whereHas('user', function($second) use ($numero){
+                        $second->where('users.first_name','LIKE', '%'.$numero.'%')
+                            ->orWhere('users.last_name','LIKE', '%'.$numero.'%');
+                    });
+                });
+
+            })
+            ->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))
+            ->paginate(20);
     }
 
     public function getByGroupe($groupe_id)
@@ -115,7 +138,15 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function restore($id)
     {
-        return $this->inscription->withTrashed()->find($id)->restore();
+        $restore = $this->inscription->withTrashed()->find($id);
+        $exist   = $this->isRegistered($restore->colloque_id,$restore->user_id);
+        
+        if($exist)
+        {
+            throw new \App\Exceptions\InscriptionExistException('Impossible de restaurer une autre inscription pour cette personne existe déjà') ;
+        }
+        
+        return $restore->restore();
     }
 
     public function hasPayed($user_id)

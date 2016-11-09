@@ -19,7 +19,7 @@ class ExportBadge
 
         $config = $this->config + ['data' => $data, 'colloque' => $colloque];
 
-        return \PDF::loadView('backend.export.badge', $config)->setPaper('a4')->stream('badges_' . $colloque->id . '.pdf');
+        return \PDF::loadView('backend.export.badge', $config)->setPaper('a4')->download('Badges_colloque_' . $colloque->id . '.pdf');
     }
 
     public function chunkData($data,$cols,$nbr)

@@ -40,20 +40,21 @@
       * column names
       * if we want to sort
       * */
-     public function export($inscriptions, $colloque = null)
+     public function export($inscriptions, $colloque = null, $occurences = null)
      {
          // Group by occurrences if any else just group on 0 to have a loop
-         $grouped = $inscriptions->groupBy(function ($item, $key) {
-             if($this->dispatch){
+         $grouped = $inscriptions->groupBy(function ($item, $key) use ($occurences){
+             if($this->dispatch)
+             {
+                 if(!empty(array_filter($occurences)))
+                 {
+                     return $item->occurrences->whereIn('id',$occurences)->pluck('title')->all();
+                 }
+
                  return $item->occurrences->pluck('title')->all();
              }
-
              return 0;
          });
-/*
-         echo '<pre>';
-         print_r($grouped);
-         echo '</pre>';exit();*/
 
          \Excel::create('Export inscriptions', function ($excel) use ($grouped,$colloque) {
              $excel->sheet('Export', function ($sheet) use ($grouped,$colloque) {
@@ -63,19 +64,11 @@
                  // start grouped loop and test if we need to display the name of the occureence
                  foreach ($grouped as $group => $inscriptions)
                  {
-                     $sheet->appendRow(['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $this->columns);
-                     $sheet->row($sheet->getHighestRow(), function ($row) {
-                         $row->setFontWeight('bold')->setFontSize(14);
-                     })->appendRow(['']);
-
                      if(!empty($group))
                      {
                          $sheet->appendRow([$group]);
-                         $sheet->row($sheet->getHighestRow(), function ($row) {
-                             $row->setFontWeight('bold')->setFontSize(14)->setFontColor('#009cff');
-                         })->appendRow(['']);
-
-                        // $sheet->mergeCells('A1:E1');
+                         $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#009cff');});
+                         $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
                      }
 
                      // Get options and grouped options
@@ -89,35 +82,47 @@
                      {
                          $names['option_title'] = 'Choix';
 
-                         foreach ($converted as $option_id => $option) {
-                             $sheet->appendRow(['Options', $this->options[$option_id]]);
-                             $sheet->row($sheet->getHighestRow(), function ($row) {
-                                 $row->setFontWeight('bold')->setFontSize(14);
-                             })->appendRow(['']);
+                         foreach ($converted as $option_id => $option)
+                         {
+                             $sheet->appendRow([$this->options[$option_id]]);
+                             $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#595959');});
+                             $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
 
-                             foreach ($option as $group_id => $group) {
-                                 $sheet->appendRow(['']);
-                                 $sheet->appendRow(['Choix', isset($this->groupes[$group_id]) ? $this->groupes[$group_id] : 'aucun']);
-                                 $sheet->row($sheet->getHighestRow(), function ($row) {
-                                     $row->setFontWeight('bold')->setFontSize(14);
-                                 });
+                             foreach ($option as $group_id => $group)
+                             {
+                                 $sheet->appendRow([isset($this->groupes[$group_id]) ? '- '.$this->groupes[$group_id] : 'aucun']);
+                                 $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14)->setFontColor('#003e65'); })->appendRow(['']);
 
-                                 $sheet->rows($group);
+                                 $this->makeHeader($sheet);
+
+                                 $sheet->rows($group)->appendRow(['']);
                              }
-
-                             $sheet->appendRow(['']);
                          }
                      }
                      else
                      {
+                         $this->makeHeader($sheet);
+
                          $sheet->rows($converted);
                      }
+
+                     $sheet->appendRow(['']);
 
                  } // end grouped loop
              });
 
          })->export('xls');
 
+     }
+
+     protected function makeHeader($sheet)
+     {
+         $header = ['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $this->columns;
+
+         $sheet->appendRow($header);
+         $sheet->row($sheet->getHighestRow(), function ($row) {
+             $row->setFontSize(13)->setFontWeight('bold');
+         });
      }
 
      public function prepareInscription($inscriptions)

@@ -69,6 +69,11 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
+		if ($e instanceof \App\Exceptions\InscriptionExistException){
+			alert()->warning($e->getMessage());
+			return redirect()->back();
+		}
+
 		if ($e instanceof \App\Exceptions\OrderCreationException){
 			alert()->danger($e->getMessage());
 			return redirect('checkout/confirm');

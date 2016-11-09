@@ -12,7 +12,7 @@ interface InscriptionInterface {
     public function getByGroupe($groupe_id);
     public function hasPayed($user_id);
     public function find($id);
-    public function findByNumero($numero);
+    public function findByNumero($numero,$colloque_id);
     public function restore($id);
     public function create(array $data);
     public function update(array $data);
