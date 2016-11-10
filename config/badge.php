@@ -17,7 +17,7 @@ return array(
         'etiquettes' => '8',
         'margin'     => '13mm 8mm 8mm 8mm',
         'cols'       => '2',
-        'height'     => '69mm',
+        'height'     => '67mm',
         'blocheight' => '52mm',
         'width'      => '50%'
     ],

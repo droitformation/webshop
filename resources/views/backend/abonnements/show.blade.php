@@ -139,8 +139,7 @@
                         @endif
 
                         <h4>Créer une facture</h4>
-                        <form action="{{ url('admin/facture') }}" method="POST">
-                            {!! csrf_field() !!}
+                        <form action="{{ url('admin/facture') }}" method="POST">{!! csrf_field() !!}
                             <div class="row">
                                 <div class="col-md-4"><input type="text" class="form-control datePicker" name="created_at" placeholder="Date"></div>
                                 <div class="col-md-5">

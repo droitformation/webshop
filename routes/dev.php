@@ -618,8 +618,23 @@ Route::get('factory', function()
 Route::get('merge', function () {
 
       // Export adresses
-    $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-    $exporter->merge();
+/*    $exporter = new \App\Droit\Generate\Export\ExportAdresse();
+    $exporter->merge();*/
+
+    $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
+
+    // Directory for edition => product_id
+    $dir       = 'files/abos/facture/273';
+    $reference = 'RJN';
+    $edition   = '2014';
+    $name      = 'facture_'.$reference.'_'.$edition;
+    // Get all files in directory
+    $files = \File::files(public_path($dir));
+
+    if(!empty($files))
+    {
+        $worker->merge($files, $name, 1);
+    }
     
 });
 

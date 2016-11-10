@@ -54,7 +54,7 @@ class AboWorker implements AboWorkerInterface{
             $product = $factures->first()->product;
 
             // Name of the pdf file with all the invoices bound together for a particular edition
-            $name = 'rappels_'.$product->reference.'_'.$product->edition;
+            $name = 'rappels_'.$product->reference.'_'.$product->edition_clean;
 
             // Job for merging documents
             $merge = (new MergeRappels($product->id, $name, $abo_id));
@@ -85,7 +85,7 @@ class AboWorker implements AboWorkerInterface{
             if($product)
             {
                 // Name of the pdf file with all the invoices bound together for a particular edition
-                $name = 'factures_'.$product->reference.'_'.$product->edition;
+                $name = 'factures_'.$product->reference.'_'.$product->edition_clean;
 
                 // Job for merging documents
                 $merge = (new MergeFactures($product->id, $name, $abo->id));
@@ -117,7 +117,7 @@ class AboWorker implements AboWorkerInterface{
      */
     public function merge($files, $name, $abo_id)
     {
-        $outputDir =  public_path('/files/abos/bound/'.$abo_id);
+        $outputDir =  public_path('files/abos/bound/'.$abo_id);
         $outputName = $outputDir.'/'.$name.'.pdf';
 
         if (!\File::exists($outputDir))

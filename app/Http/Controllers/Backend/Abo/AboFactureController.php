@@ -43,7 +43,7 @@ class AboFactureController extends Controller {
         $abo      = $this->abo->findAboByProduct($id);
         $product  = $this->product->find($id);
 
-        $dir      = 'files/abos/bound/'.$abo->id.'/*_'.$product->reference.'_'.$product->edition.'.pdf';
+        $dir      = 'files/abos/bound/'.$abo->id.'/*_'.$product->reference.'_'.$product->edition_clean.'.pdf';
         $files    = \File::glob($dir);
 
         return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
@@ -132,7 +132,7 @@ class AboFactureController extends Controller {
         $product = $this->product->find($product_id);
 
         // Name of the pdf file with all the invoices bound together for a particular edition
-        $name = 'factures_'.$product->reference.'_'.$product->edition;
+        $name = 'factures_'.$product->reference.'_'.$product->edition_clean;
 
         // Job for merging documents
         $merge = (new MergeFactures($product->id, $name, $abo->id));

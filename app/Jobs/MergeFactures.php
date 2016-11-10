@@ -46,6 +46,5 @@ class MergeFactures extends Job implements ShouldQueue
         {
             $worker->merge($files, $this->name, $this->abo_id);
         }
-
     }
 }

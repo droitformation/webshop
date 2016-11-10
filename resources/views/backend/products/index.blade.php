@@ -56,13 +56,13 @@
                                 <div class="col-md-4">
                                     <div class="card">
                                         <div class="row">
-                                            <div class="col-md-9">
+                                            <div class="col-md-10">
                                                 <p>
                                                     <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
                                                     <a href="{{ url('admin/product/'.$product->id) }}"><span class="title">{{ $product->title }}</span></a>
                                                 </p>
                                             </div>
-                                            <div class="col-md-3 text-right">
+                                            <div class="col-md-2 text-right">
                                                 <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
                                             </div>
                                         </div>

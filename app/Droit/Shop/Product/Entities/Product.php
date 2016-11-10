@@ -27,6 +27,13 @@ class Product extends Model{
         return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
     }
 
+    public function getEditionCleanAttribute()
+    {
+        $attribute = $this->attributs->where('id',4);
+
+        return !$attribute->isEmpty() ? str_replace('/','-' , $attribute->first()->pivot->value) : '';
+    }
+
     public function getIsbnAttribute()
     {
         $attribute = $this->attributs->where('id',1);
