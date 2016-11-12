@@ -30,7 +30,8 @@ class InscriptionRequest extends Request
     {
         return [
             'user_id'     => 'required',
-            'colloque_id' => 'required'
+            'colloque_id' => 'required',
+            'price_id'    => 'required'
         ];
     }
 }
