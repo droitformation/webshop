@@ -16,6 +16,28 @@ class Adresse extends Model {
         'fax', 'adresse', 'cp', 'complement','npa', 'ville', 'canton_id','pays_id', 'type', 'livraison'
     ];
 
+    /**
+     * Set the user's first name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = trim($value);
+    }
+
+    /**
+     * Set the user's first name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = trim($value);
+    }
+
     public function getTypeTitleAttribute()
     {
         $this->load('typeadresse');

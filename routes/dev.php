@@ -104,17 +104,14 @@ Route::get('testing', function() {
     $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
    // $liste  =  $Inscriptions->getByColloque(39);
-    $inscription  =  $Inscriptions->find(12589);
+    $inscription  =  $Inscriptions->find(12600);
 
-    $documents = collect($inscription->documents);
-    $documents = $documents->pluck('file')->all();
-    \File::delete($documents);
+    $attachements = $inscription->rappels->sortBy('created_at')->last();
     
     echo '<pre>';
-    print_r($documents);
+    print_r($attachements->doc_rappel);
     echo '</pre>';
-
-   
+    
     exit();
 
 
@@ -189,6 +186,17 @@ Route::get('testing', function() {
 
     //echo md5('cindy');
 
+});
+
+Route::get('testuser', function()
+{
+    $users = \App::make('App\Droit\User\Repo\UserInterface');
+
+    $user = $users->findByName(['first_name' => 'Coralie', 'last_name' => 'Ahmetaj', 'canton_id' => 6]);
+
+    echo '<pre>';
+    print_r($user);
+    echo '</pre>';exit();
 });
 
 Route::get('cartworker', function()

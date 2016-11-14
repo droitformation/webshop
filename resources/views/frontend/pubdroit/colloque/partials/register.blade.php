@@ -13,7 +13,7 @@
                     <label for="price_{{ $price->id }}">
                         <div class='package'>
                             <div class='name'>{{ $price->description }}</div>
-                            <div class='price_cents'>{{ $price->price_cents }} CHF</div>
+                            <div class='price_cents'>{{ $price->price_cents > 0 ? $price->price_cents.' CHF' : 'Gratuit' }}</div>
                             {!! !empty($price->remarque) ? '<hr/><p>'.$price->remarque.'</p>' : '' !!}
                         </div>
                     </label>

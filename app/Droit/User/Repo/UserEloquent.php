@@ -36,7 +36,19 @@ class UserEloquent implements UserInterface{
 
     public function findByName($name)
     {
-        $exist = $this->user->where('first_name', 'like', '%'.$name['first_name'].'%')->where('last_name', 'like', '%'.$name['last_name'].'%')->get();
+        $exist = $this->user->where(function ($query) use($name) {
+
+                $query->where('first_name', 'like', '%'.$name['first_name'].'%')
+                      ->where('last_name', 'like', '%'.$name['last_name'].'%');
+
+            })->whereHas('adresses', function ($query) use ($name) {
+
+                if(isset($name['canton_id']))
+                {
+                    $query->where('canton_id', $name['canton_id']);
+                }
+
+            })->get();
 
         return (!$exist->isEmpty() ? $exist->first() : null);
     }

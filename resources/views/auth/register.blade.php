@@ -129,7 +129,7 @@
                             <label>Canton</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-puzzle-piece"></i></span>
-                                {!! Form::select('canton_id', $cantons->pluck('title','id')->all() , null, ['class' => 'form-control', 'placeholder' => 'Choix']) !!}
+                                {!! Form::select('canton_id', $cantons->pluck('title','id')->all() , null, ['class' => 'form-control', 'required' => 'required','placeholder' => 'Choix']) !!}
                             </div>
                         </div>
                     </div>

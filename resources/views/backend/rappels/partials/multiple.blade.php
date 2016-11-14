@@ -26,7 +26,7 @@
     </td>
     <td>{{ $group->price }} CHF</td>
     <td> @include('backend.inscriptions.partials.payed', ['inscription' => $group->inscriptions->first(), 'model' => 'group', 'item' => $group]) </td>
-    <td>{{ $group->inscriptions->first()->created_at->formatLocalized('%d %B %Y') }}</td>
+    <td>{{ $group->inscriptions->first()->created_at->formatLocalized('%d %b %Y') }}</td>
     <td>
         @if(!$group->rappels->isEmpty())
             <ol>

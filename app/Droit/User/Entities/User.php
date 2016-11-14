@@ -25,6 +25,28 @@ class User extends Authenticatable {
 	 */
 	protected $fillable = ['first_name','last_name', 'email', 'password'];
 
+    /**
+     * Set the user's first name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = trim($value);
+    }
+
+    /**
+     * Set the user's first name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = trim($value);
+    }
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
@@ -161,6 +183,14 @@ class User extends Authenticatable {
     public function scopeSearchEmail($query, $email)
     {
         if ($email) $query->where('email', 'like' ,'%'.$email.'%');
+    }
+
+    public function scopeCanton($query, $name)
+    {
+        if (isset($name['canton_id'])) $query->whereHas('adresses', function ($query) use ($name)
+        {
+            $query->whereIn('canton_id', $name['canton_id']);
+        });
     }
 
     /*

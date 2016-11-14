@@ -50,11 +50,15 @@
                                     @if(!$inscription->doc_attestation)
                                         <a href="{{ url('admin/attestation/inscription/'.$inscription->id) }}" class="btn btn-sm btn-green">Attestation</a>
                                     @endif
-                                </div>
-                                <div class="col-md-4 line-spacer text-right">
                                     <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
                                         Envoyer l'inscription
                                     </button>
+                                </div>
+                                <div class="col-md-4 line-spacer text-right">
+                                    <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">X</button>
+                                    </form>
                                 </div>
                             </div>
                             <!-- END Inscription edit,send,rappels -->

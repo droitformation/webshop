@@ -18,7 +18,9 @@
                     <form action="{{ url('admin/inscription/rappel/send') }}" method="POST" class="pull-right">{!! csrf_field() !!}
                         <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
                         <input type="hidden" name="count" value="{{ !$inscriptions->isEmpty() ? $inscriptions->count() : 0 }}">
-                        <button class="btn btn-inverse pull-right deleteAction" data-what="Envoyer" data-action="Rappels"><i class="fa fa-paper-plane"></i> &nbsp;Envoyer les rappel</button>
+                        <button class="btn btn-inverse pull-right" id="confirmSendRappels">
+                            <i class="fa fa-paper-plane"></i> &nbsp;Envoyer les rappel
+                        </button>
                     </form>
 
                 </div>
@@ -58,9 +60,6 @@
 
                             </tbody>
                         </table><!-- End inscriptions -->
-
-                        {!! $inscriptions->links() !!}
-
                     </div>
                 </div>
             </div>

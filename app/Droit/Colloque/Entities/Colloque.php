@@ -62,6 +62,21 @@ class Colloque extends Model
         return false;
     }
 
+    public function getProgrammeAttachementAttribute()
+    {
+        $programme = $this->documents->filter(function ($item){
+            return $item->type == 'programme';
+        });
+
+        if(!$programme->isEmpty())
+        {
+            $file = 'files/colloques/'.$programme->first()->type.'/'.$programme->first()->path;
+            return ['name' => 'Programme.pdf', 'file' => public_path($file)];
+        }
+
+        return false;
+    }
+
     public function getIsActiveAttribute()
     {
         return $this->registration_at >= \Carbon\Carbon::today() ? true : false;
@@ -127,19 +142,19 @@ class Colloque extends Model
         })->orWhere('start_at','>',date('Y-m-d'));
     }
 
-    public function scopeArchives($query,$archives)
+    public function scopeArchives($query,$archives = null)
     {
         if($archives) $query->where('start_at','<=',date('Y-m-d'));
     }
 
     public function scopeRegistration($query,$status)
     {
-        if($status) $query->whereDate('registration_at', '>=', \Carbon\Carbon::now());
+        if($status) $query->where('registration_at', '>=', date('Y-m-d'));
     }
 
     public function scopeFinished($query,$status)
     {
-        if($status) $query->where('registration_at','<=',date('Y-m-d'));
+        if($status) $query->where('registration_at','<',date('Y-m-d'));
     }
 
     public function specialisations()

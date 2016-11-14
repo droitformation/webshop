@@ -31,6 +31,7 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->registerInscriptionService();
         $this->registerInscriptionWorkerService();
         $this->registerRappelService();
+        $this->registerRappelWorkerService();
         $this->registerDocumentService();
         $this->registerGroupeService();
         $this->registerOptionService();
@@ -86,6 +87,19 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Inscription\Repo\RappelInterface', function()
         {
             return new \App\Droit\Inscription\Repo\RappelEloquent(new \App\Droit\Inscription\Entities\Rappel);
+        });
+    }
+
+    /**
+     * Rappel
+     */
+    protected function registerRappelWorkerService(){
+
+        $this->app->singleton('App\Droit\Inscription\Worker\RappelWorkerInterface', function()
+        {
+            return new \App\Droit\Inscription\Worker\RappelWorker(
+                \App::make('App\Droit\Inscription\Repo\RappelInterface')
+            );
         });
     }
 

@@ -51,28 +51,30 @@ jQuery(document).ready(function($){
             
             var first_name = $(form).find("input[name='first_name']").val();
             var last_name  = $(form).find("input[name='last_name']").val();
+            var canton_id  = $(form).find("input[name='canton_id']").val();
 
             $.ajax({
                 type   : "POST",
                 url    : base_url + "check/name",
-                data   : { first_name: first_name, last_name : last_name, _token: $("meta[name='_token']").attr('content') },
+                data   : { first_name: first_name, last_name : last_name, canton_id : canton_id , _token: $("meta[name='_token']").attr('content') },
                 success: function(data) {
                     if(data != 'ok')
                     {
-                        console.log(data);
-
                         bootbox.confirm({
                             title: "Uho",
                             message: data,
                             buttons: {
-                                cancel : { label: '<i class="fa fa-times"></i> Fermer'},
-                                confirm: { label: '<i class="fa fa-check"></i> Non je suis nouveau'}
+                                cancel : { label: '<i class="fa fa-times"></i> Fermer et aller au login'},
+                                confirm: { label: '<i class="fa fa-check"></i> Non je suis nouveau et je veux créer un compte!'}
                             },
                             callback: function (result) {
-                                form.submit();
+                                if(result)
+                                {
+                                    form.submit();
+                                }
+                                bootbox.hideAll();
                             }
                         });
-
                     }
                 },
                 error  : function(){}

@@ -7,10 +7,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Inscription\Repo\RappelInterface;
+use App\Droit\Inscription\Worker\RappelWorkerInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
 use App\Jobs\SendRappelEmail;
+use App\Jobs\MakeRappelInscription;
 
 class RappelController extends Controller
 {
@@ -18,16 +20,15 @@ class RappelController extends Controller
     protected $colloque;
     protected $group;
     protected $rappel;
-    protected $generator;
+    protected $worker;
 
-    public function __construct(InscriptionInterface $inscription, RappelInterface $rappel, ColloqueInterface $colloque, GroupeInterface $group)
+    public function __construct(InscriptionInterface $inscription, RappelInterface $rappel, RappelWorkerInterface $worker, ColloqueInterface $colloque, GroupeInterface $group)
     {
         $this->inscription = $inscription;
         $this->colloque    = $colloque;
         $this->group       = $group;
         $this->rappel      = $rappel;
-
-        $this->generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+        $this->worker      = $worker;
     }
 
     /**
@@ -36,10 +37,19 @@ class RappelController extends Controller
      * @param  $id
      * @return Response
      */
-    public function rappels($id)
+    public function rappels(Request $request, $id)
     {
         $colloque     = $this->colloque->find($id);
         $inscriptions = $this->inscription->getRappels($id);
+
+        if($request->ajax())
+        {
+            $rappel = $inscriptions->map(function ($item, $key) {
+                return ['name' => $item->user->name, 'inscription_no' => $item->inscription_no];
+            });
+
+            return response()->json($rappel);
+        }
 
         return view('backend.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
     }
@@ -55,11 +65,11 @@ class RappelController extends Controller
                 // Simple rappels
                 if($inscription->group_id)
                 {
-                    $this->generateMultiple($inscription->groupe);
+                    $this->worker->generateMultiple($inscription->groupe);
                 }
                 else   // Multiple rappels
                 {
-                    $this->generateSimple($inscription);
+                    $this->worker->generateSimple($inscription);
                 }
             }
         }
@@ -75,46 +85,18 @@ class RappelController extends Controller
 
         if($inscription->group_id)
         {
-            $this->generateMultiple($inscription->groupe);
+            $this->worker->generateMultiple($inscription->groupe);
         }
         else
         {
-            $this->generateSimple($inscription);
+            $this->worker->generateSimple($inscription);
         }
 
         alert()->success('Le rappel a été crée');
 
         return redirect()->back();
     }
-
-    public function generateSimple($inscription)
-    {
-        $rappel = $this->rappel->create([
-            'colloque_id'    => $inscription->colloque_id,
-            'inscription_id' => $inscription->id,
-            'user_id'        => $inscription->user_id,
-            'group_id'       => $inscription->group_id,
-        ]);
-
-        $this->generator->make('facture', $inscription, $rappel);
-
-        return true;
-    }
-
-    public function generateMultiple($group)
-    {
-        $rappel = $this->rappel->create([
-            'colloque_id'    => $group->colloque_id,
-            'inscription_id' => null,
-            'user_id'        => $group->user_id,
-            'group_id'       => $group->id,
-        ]);
-
-        $this->generator->make('facture', $group, $rappel);
-
-        return true;
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -132,7 +114,12 @@ class RappelController extends Controller
 
     public function send(Request $request)
     {
-        $job = (new SendRappelEmail($request->input('colloque_id')));
+        // Make sur we have created all the rappels in pdf
+        $job = (new MakeRappelInscription($request->input('colloque_id')));
+        $this->dispatch($job);
+        
+        // Send the rappels via email
+        $job = (new SendRappelEmail($request->input('colloque_id')))->delay(\Carbon\Carbon::now()->addMinutes(1));
         $this->dispatch($job);
 
         alert()->success('Rappels envoyés');

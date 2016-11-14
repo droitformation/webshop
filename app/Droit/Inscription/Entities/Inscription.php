@@ -87,7 +87,6 @@ class Inscription extends Model
 
         if(!$this->inscrit)
         {
-            //throw new \App\Exceptions\AdresseNotExistException('ce user n\'existe pas pour l\'inscription:'.$this->id);
             return null;
         }
 

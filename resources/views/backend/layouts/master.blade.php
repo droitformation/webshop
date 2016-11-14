@@ -9,7 +9,7 @@
     <meta name="author" content="Cindy Leschaud | @DesignPond">
     <meta name="_token" content="<?php echo csrf_token(); ?>">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <script src="https://use.fontawesome.com/037c712a00.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">

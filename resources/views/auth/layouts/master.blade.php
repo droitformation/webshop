@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/validation.css');?>">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/037c712a00.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
@@ -39,7 +40,12 @@
                 </a>
             </h1>
 
-            <p><a href="{{ url('/') }}" class="text-danger"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a></p>
+            <p>
+                <a href="{{ url('/') }}" class="text-danger"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a>
+                @if(Request::is('register'))
+                    <a href="{{ url('login') }}" class="btn btn-primary pull-right"><i class="fa fa-user"></i> &nbsp;Login</a>
+                @endif
+            </p><br/>
 
             <!-- Contenu -->
             @yield('content')

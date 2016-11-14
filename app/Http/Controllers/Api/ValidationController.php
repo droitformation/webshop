@@ -45,7 +45,7 @@ class ValidationController extends Controller
 
         if($exist)
         {
-            return response()->json(['Ce nom nous dit quelque chose...avez vous déjà un compte chez nous?']);
+            return response()->json(['<h3>Ce nom nous dit quelque chose...avez vous déjà un compte chez nous ?</h3>']);
         }
 
         return response()->json(['ok']);

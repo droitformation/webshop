@@ -26,41 +26,43 @@
                 </div>
             </div>
 
-            <!-- export filters panel -->
-            <div class="panel panel-default">
-                <div class="panel-body">
+            @if(!$inscriptions->isEmpty())
+                <!-- export filters panel -->
+                <div class="panel panel-default">
+                    <div class="panel-body">
 
-                    <div id="excelGroup">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="btn-group btn-group-export">
-                                    <button class="btn btn-inverse btn-sm" type="button" data-toggle="collapse" data-target="#exportExcel" aria-expanded="false" aria-controls="exportExcel">
-                                        <i class="fa fa-download"></i> &nbsp;Exporter liste excel
-                                    </button>
-                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#exportBadge" aria-expanded="false" aria-controls="exportBadge">
-                                        <i class="fa fa-files-o"></i> &nbsp;Exporter Badges
-                                    </button>
-                                    <a href="{{ url('admin/export/qrcodes/'.$colloque->id) }}" target="_blank" class="btn btn-sm btn-brown">
-                                        <i class="fa fa-qrcode"></i> &nbsp;Exporter qrcodes
-                                    </a>
+                        <div id="excelGroup">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-group btn-group-export">
+                                        <button class="btn btn-inverse btn-sm" type="button" data-toggle="collapse" data-target="#exportExcel" aria-expanded="false" aria-controls="exportExcel">
+                                            <i class="fa fa-download"></i> &nbsp;Exporter liste excel
+                                        </button>
+                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#exportBadge" aria-expanded="false" aria-controls="exportBadge">
+                                            <i class="fa fa-files-o"></i> &nbsp;Exporter Badges
+                                        </button>
+                                        <a href="{{ url('admin/export/qrcodes/'.$colloque->id) }}" target="_blank" class="btn btn-sm btn-brown">
+                                            <i class="fa fa-qrcode"></i> &nbsp;Exporter qrcodes
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="collapse" id="exportExcel">
+                                        @include('backend.inscriptions.filters.excel')
+                                    </div>
+                                    <div class="collapse" id="exportBadge">
+                                        @include('backend.inscriptions.filters.badge')
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="collapse" id="exportExcel">
-                                    @include('backend.inscriptions.filters.excel')
-                                </div>
-                                <div class="collapse" id="exportBadge">
-                                    @include('backend.inscriptions.filters.badge')
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
-
                 </div>
-            </div>
-            <!-- end export filters -->
+                <!-- end export filters -->
+            @endif
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">

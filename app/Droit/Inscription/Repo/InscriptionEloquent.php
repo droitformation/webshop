@@ -64,7 +64,7 @@ class InscriptionEloquent implements InscriptionInterface{
             ->whereNull('payed_at')
             ->with(['price','colloque','user','participant','groupe','duplicate'])
             ->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))
-            ->paginate(20);
+            ->get();
     }
 
     public function getByUser($colloque_id,$user_id)

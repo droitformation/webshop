@@ -32,7 +32,7 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function getArchive()
     {
-        return $this->colloque->archives()->isVisible(true)->orderBy('start_at','DESC')->get();
+        return $this->colloque->archives(true)->isVisible(true)->orderBy('start_at','DESC')->get();
     }
 
     public function getByYear($year)

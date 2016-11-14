@@ -14,6 +14,7 @@ class SendRappelEmail implements ShouldQueue
 
     protected $colloque_id;
     protected $inscription;
+    protected $worker;
     protected $mailer;
 
     /**
@@ -25,6 +26,7 @@ class SendRappelEmail implements ShouldQueue
     {
         $this->colloque_id = $colloque_id;
         $this->inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+        $this->worker      = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -49,30 +51,23 @@ class SendRappelEmail implements ShouldQueue
 
     protected function send($inscription)
     {
-        $user         = $inscription->user;
-        $attachements = $inscription->documents;
+        $user   = $inscription->inscrit;
+        $rappel = $inscription->rappels->sortBy('created_at')->last();
 
         $data = [
             'title'       => 'Votre inscription sur publications-droit.ch',
             'concerne'    => 'Rappel',
             'annexes'     => $inscription->colloque->annexe,
             'colloque'    => $inscription->colloque,
-            'user'        => $inscription->user,
+            'user'        => $user,
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 
-        \Mail::send('emails.colloque.rappel', $data , function ($message) use ($user,$attachements) {
+        \Mail::send('emails.colloque.rappel', $data , function ($message) use ($user,$rappel) {
 
             $message->to($user->email, $user->name)->subject('Rappel');
-
-            // Attach all documents
-            if(!empty($attachements))
-            {
-                foreach($attachements as $attachement)
-                {
-                    $message->attach($attachement['file'], array('as' => $attachement['name'], 'mime' => 'application/pdf'));
-                }
-            }
+            $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
+            
         });
     }
 }
