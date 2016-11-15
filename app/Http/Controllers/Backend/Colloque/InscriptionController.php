@@ -346,7 +346,7 @@ class InscriptionController extends Controller
 
         alert()->success('Désinscription effectué');
 
-        return redirect('admin/inscription/colloque/'.$inscription->colloque_id);
+        return redirect()->back();
     }
 
     /**

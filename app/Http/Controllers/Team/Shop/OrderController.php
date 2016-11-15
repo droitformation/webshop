@@ -44,16 +44,21 @@ class OrderController extends Controller {
         $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
         $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
 
-        $orders = $this->order->getPeriod($period['start'],$period['end'], $request->input('status',null), $request->input('onlyfree',null), $request->input('order_no',null));
+        $orders = $this->order->getPeriod(
+            $period,
+            $request->input('status',null),
+            $request->input('send',null),
+            $request->input('onlyfree',null)
+        );
 
         if($request->input('export',null))
         {
             $exporter = new \App\Droit\Generate\Export\ExportOrder();
 
             $exporter->setColumns($request->input('columns',config('columns.names')))
-                     ->setPeriod($period)
-                     ->setDetail($request->input('details',null))
-                     ->setFree($request->input('onlyfree',null));
+                ->setPeriod($period)
+                ->setDetail($request->input('details',null))
+                ->setFree($request->input('onlyfree',null));
 
             $exporter->export($orders);
         }
