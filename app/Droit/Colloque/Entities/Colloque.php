@@ -70,8 +70,11 @@ class Colloque extends Model
 
         if(!$programme->isEmpty())
         {
-            $file = 'files/colloques/'.$programme->first()->type.'/'.$programme->first()->path;
-            return ['name' => 'Programme.pdf', 'file' => public_path($file)];
+            $file = public_path('files/colloques/'.$programme->first()->type.'/'.$programme->first()->path);
+
+            if (\File::exists($file)) {
+                return ['name' => 'Programme.pdf', 'file' => $file];
+            }
         }
 
         return false;
