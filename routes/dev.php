@@ -106,10 +106,19 @@ Route::get('testing', function() {
    // $liste  =  $Inscriptions->getByColloque(39);
     $inscription  =  $Inscriptions->find(12600);
 
-    $attachements = $inscription->rappels->sortBy('created_at')->last();
+
+    $attachements = $inscription->documents;
+
+    $program = $inscription->colloque->programme_attachement;
+
+    if($program)
+    {
+        $attachements['program'] = $program;
+    }
+
     
     echo '<pre>';
-    print_r($attachements->doc_rappel);
+    print_r($attachements);
     echo '</pre>';
     
     exit();

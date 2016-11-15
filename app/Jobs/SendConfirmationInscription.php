@@ -56,9 +56,12 @@ class SendConfirmationInscription extends Job implements ShouldQueue
         $user         = $this->inscription->user;
         $attachements = $this->inscription->documents;
 
-        $attachements[] = $this->inscription->colloque->programme_attachement;
+        $program = $this->inscription->colloque->programme_attachement;
         
-        array_filter($attachements);
+        if($program)
+        {
+            $attachements['program'] = $program;
+        }
 
         $data = [
             'title'       => 'Votre inscription sur publications-droit.ch',
