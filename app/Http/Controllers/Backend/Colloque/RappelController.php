@@ -45,7 +45,7 @@ class RappelController extends Controller
         if($request->ajax())
         {
             $rappel = $inscriptions->map(function ($item, $key) {
-                return ['name' => $item->user->name, 'inscription_no' => $item->inscription_no];
+                return ['id' => $item->id, 'name' => $item->inscrit->name, 'inscription_no' => $item->inscription_no];
             });
 
             return response()->json($rappel);
@@ -115,11 +115,11 @@ class RappelController extends Controller
     public function send(Request $request)
     {
         // Make sur we have created all the rappels in pdf
-        $job = (new MakeRappelInscription($request->input('colloque_id')));
+        $job = (new MakeRappelInscription($request->input('inscriptions')));
         $this->dispatch($job);
         
         // Send the rappels via email
-        $job = (new SendRappelEmail($request->input('colloque_id')))->delay(\Carbon\Carbon::now()->addMinutes(1));
+        $job = (new SendRappelEmail($request->input('inscriptions')))->delay(\Carbon\Carbon::now()->addMinutes(1));
         $this->dispatch($job);
 
         alert()->success('Rappels envoyés');

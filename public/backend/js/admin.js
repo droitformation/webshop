@@ -262,52 +262,7 @@ $( function() {
             error  : function(){ alert('problème'); }
         });
     });
-
-    /*****
-     * Rappel confirmation modal
-     * */
-    $('body').on('click','#confirmSendRappels',function(event){
-        event.stopPropagation();
-        event.preventDefault();
-
-        var $form  = $(this).closest('form');
-        var id     = $form.find("input[name='colloque_id']").val();
-
-        console.log($form);
-        console.log(id);
-
-        $.ajax({
-            type: "GET",
-            url : base_url + "admin/inscription/rappels/" + id,
-            success: function(result) {
-
-                var $list = [];
-
-                $.each(result,function(index, value) {
-                    $list.push('<p>' + value.name + ' : ' + value.inscription_no + '</p>');
-                });
-
-                bootbox.confirm({
-                    message: '<h4>Voulez-vous vraiment envoyer les rappels suivants?</h4>' + $list.join(''),
-                    buttons: {
-                        confirm: { label: 'Oui', className: 'btn-success'},
-                        cancel : { label: 'Non', className: 'btn-danger'}
-                    },
-                    callback: function (result) {
-                        if(result) {
-                            $form.submit();
-                        }
-
-                        bootbox.hideAll();
-                    }
-                });
-
-                console.log($list);
-            },
-            error: function(){ console.log('problème'); }
-        });
-
-    });
+    
 });
 
 $(document).ready(ajustamodal);

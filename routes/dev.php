@@ -104,21 +104,11 @@ Route::get('testing', function() {
     $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
    // $liste  =  $Inscriptions->getByColloque(39);
-    $inscription  =  $Inscriptions->find(12600);
-
-
-    $attachements = $inscription->documents;
-
-    $program = $inscription->colloque->programme_attachement;
-
-    if($program)
-    {
-        $attachements['program'] = $program;
-    }
+    $inscription  =  $Inscriptions->getMultiple([12607]);
 
     
     echo '<pre>';
-    print_r($attachements);
+    print_r($inscription->first()->list_rappel);
     echo '</pre>';
     
     exit();

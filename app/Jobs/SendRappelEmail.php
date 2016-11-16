@@ -12,7 +12,7 @@ class SendRappelEmail implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $colloque_id;
+    protected $inscriptions;
     protected $inscription;
     protected $worker;
     protected $mailer;
@@ -22,11 +22,11 @@ class SendRappelEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($colloque_id)
+    public function __construct($inscriptions)
     {
-        $this->colloque_id = $colloque_id;
-        $this->inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-        $this->worker      = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
+        $this->inscriptions = $inscriptions;
+        $this->inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+        $this->worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -38,7 +38,9 @@ class SendRappelEmail implements ShouldQueue
      */
     public function handle()
     {
-        $inscriptions = $this->inscription->getRappels($this->colloque_id);
+        if(empty($this->inscriptions)){ return true; }
+
+        $inscriptions = $this->inscription->getMultiple($this->inscriptions);
 
         if(!$inscriptions->isEmpty())
         {
@@ -47,12 +49,14 @@ class SendRappelEmail implements ShouldQueue
                 $this->send($inscription);
             }
         }
+
+        return true;
     }
 
     protected function send($inscription)
     {
         $user   = $inscription->inscrit;
-        $rappel = $inscription->rappels->sortBy('created_at')->last();
+        $rappel = $inscription->list_rappel->sortBy('created_at')->last();
 
         $data = [
             'title'       => 'Votre inscription sur publications-droit.ch',

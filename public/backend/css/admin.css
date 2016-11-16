@@ -48,7 +48,6 @@ h3, .h3{
     padding-bottom: 10px;
 }
 
-
 .inscription_wrapper table tr td{
     line-height: 18px;
     padding-top: 0;
@@ -58,6 +57,7 @@ h3, .h3{
 .inscription_wrapper h4{
     font-size: 15px;
     font-weight: 500;
+    margin: 0 0 3px 0;
 }
 
 .inscription_wrapper p{
@@ -417,7 +417,6 @@ a:hover, a:active, a:focus {
 
 .modal-content h4{
     font-size: 16px;
-    margin: 5px 0;
 }
 
 .modal-content .form-group{
@@ -728,8 +727,8 @@ select[multiple] {
 .line-spacer{
     border-top: 1px solid #e6e7e8;
     display: block;
-    margin: 20px 0;
-    padding-top: 20px;
+    margin: 10px 0;
+    padding-top: 15px;
 }
 
 .line-spacer div:last-child{
@@ -768,15 +767,15 @@ select[multiple] {
     padding: 0;
     padding-left: 15px;
     padding-top: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .inscription_wrapper ol li{
-    margin-top: 2px;
+    line-height: 14px;
 }
 
 .inscription_wrapper ol li a{
-    line-height: 22px;
+    line-height: 218px;
 }
 
 .inscription_wrapper ol li button{
@@ -1012,4 +1011,8 @@ label.error{
 .btn-group-export button{
     margin-bottom: 7px;
     font-weight: 500;
+}
+
+input[type="checkbox"].rappel-input {
+    margin-right: 5px;
 }

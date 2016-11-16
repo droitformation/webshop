@@ -22,6 +22,16 @@ class InscriptionEloquent implements InscriptionInterface{
             ->get();
     }
 
+    public function getMultiple(array $inscriptions)
+    {
+        return $this->inscription->whereIn('id',$inscriptions)
+            ->with(['price','colloque','user','participant','groupe','rappels','group_rappels'])
+            ->whereHas('price', function($q){
+                $q->where('price','>', 0);
+            })
+            ->get();
+    }
+
     public function getByColloque($id, $type = false, $paginate = false)
     {
         $inscription = $this->inscription
@@ -63,6 +73,9 @@ class InscriptionEloquent implements InscriptionInterface{
         return $this->inscription->where('colloque_id','=',$id)
             ->whereNull('payed_at')
             ->with(['price','colloque','user','participant','groupe','duplicate'])
+            ->whereHas('price', function($q){
+                $q->where('price','>', 0);
+            })
             ->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))
             ->get();
     }

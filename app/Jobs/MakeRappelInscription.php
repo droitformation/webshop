@@ -13,18 +13,18 @@ class MakeRappelInscription extends Job implements ShouldQueue
 
     protected $worker;
     protected $inscription;
-    protected $colloque_id;
+    protected $inscriptions;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($colloque_id)
+    public function __construct($inscriptions)
     {
-        $this->worker      = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
-        $this->inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-        $this->colloque_id = $colloque_id;
+        $this->worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
+        $this->inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+        $this->inscriptions = $inscriptions;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -36,13 +36,15 @@ class MakeRappelInscription extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $inscriptions = $this->inscription->getRappels($this->colloque_id);
+        if(empty($this->inscriptions)){ return true; }
+
+        $inscriptions = $this->inscription->getMultiple($this->inscriptions);
 
         if(!$inscriptions->isEmpty())
         {
             foreach($inscriptions as $inscription) {
 
-                $rappel = $inscription->rappels->sortBy('created_at')->last();
+                $rappel = $inscription->list_rappel->sortBy('created_at')->last();
 
                 if(!$rappel) 
                 {

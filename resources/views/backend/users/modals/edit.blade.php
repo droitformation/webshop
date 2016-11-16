@@ -2,7 +2,7 @@
 <!-- Modal -->
 <div class="modal fade" id="editInscription_{{ $inscription->id }}" tabindex="-1" role="dialog" aria-labelledby="editInscription">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content edit-modal-inscription">
             <!-- form start -->
             <form data-validate-parsley action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form" >
                 <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
@@ -14,8 +14,8 @@
                 <div class="modal-body">
                     <fieldset>
                         @if($inscription->group_id)
-                            <div class="form-group">
-                                <label>Nom du participant</label>
+                            <div class="form-group participant">
+                                <label><strong>Nom du participant</strong></label>
                                 <input name="participant" required class="form-control" value="{{ $inscription->participant->name }}" type="text">
                             </div>
                         @endif
@@ -26,13 +26,17 @@
 
                         <!-- Occurence if any -->
                         @if(!$inscription->colloque->occurrences->isEmpty())
-                            <h4>Conférences</h4>
-                            @include('backend.inscriptions..partials.occurrences', ['select' => 'occurrences[]', 'colloque' => $inscription->colloque])
+                            <div class="inscription_set">
+                                <h4>Conférences</h4>
+                                @include('backend.inscriptions.partials.occurrences', ['select' => 'occurrences[]', 'colloque' => $inscription->colloque, 'inscription' => $inscription])
+                            </div>
                         @endif
 
                         @if(!$inscription->colloque->options->isEmpty())
-                            <h4>Merci de préciser</h4>
-                            @include('backend.inscriptions.partials.options', ['select' => 'groupes', 'colloque' => $inscription->colloque])
+                            <div class="inscription_set">
+                                <h4>Options</h4>
+                                @include('backend.inscriptions.partials.options', ['select' => 'groupes', 'colloque' => $inscription->colloque, 'inscription' => $inscription])
+                            </div>
                         @endif
 
                         <?php $user = ($inscription->group_id ? 'group_id' : 'user_id'); ?>
@@ -41,7 +45,6 @@
                         <input name="colloque_id" value="{{ $inscription->colloque->id }}" type="hidden">
                     </fieldset>
 
-                    <br/>
                     <p class="text-warning"><i class="fa fa-warning"></i> &nbsp;La mise a jour prend quelques secondes car les documents sont regénérés</p>
 
                 </div>

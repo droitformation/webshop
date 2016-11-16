@@ -152,6 +152,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/colloque.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/rappels.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/sorting.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/member.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>

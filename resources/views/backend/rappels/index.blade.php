@@ -15,7 +15,8 @@
                 <div class="panel-body">
                     <a href="{{ url('admin/inscription/rappel/make/'.$colloque->id) }}" class="btn btn-brown pull-left"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</a>
 
-                    <form action="{{ url('admin/inscription/rappel/send') }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                    <form action="{{ url('admin/inscription/rappel/send') }}" method="POST" class="pull-right">
+                        {!! csrf_field() !!}
                         <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
                         <input type="hidden" name="count" value="{{ !$inscriptions->isEmpty() ? $inscriptions->count() : 0 }}">
                         <button class="btn btn-inverse pull-right" id="confirmSendRappels">

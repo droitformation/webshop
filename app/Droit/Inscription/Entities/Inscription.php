@@ -137,6 +137,21 @@ class Inscription extends Model
         return null;
     }
 
+    public function getIsFreeAttribute()
+    {
+        if(isset($this->price) && $this->price->price > 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getListRappelAttribute()
+    {
+        return $this->group_id > 0 ? $this->group_rappels : $this->rappels;
+    }
+
     public function getNameInscriptionAttribute()
     {
         if($this->group_id > 0)
@@ -252,4 +267,10 @@ class Inscription extends Model
         return $this->hasMany('App\Droit\Inscription\Entities\Rappel');
     }
 
+    public function group_rappels()
+    {
+        return $this->hasMany(
+            'App\Droit\Inscription\Entities\Rappel','group_id', 'group_id'
+        );
+    }
 }
