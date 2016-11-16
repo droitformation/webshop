@@ -51,11 +51,20 @@
     margin-top: 15px;
 }
 
+.question-item{
+    padding: 5px;
+}
+
 .type-choix, .checkbox_all p{
     padding: 3px 5px;
     border: 1px solid #ddd;
     margin-bottom: 3px;
     background: #fff;
+}
+
+.question-item{
+    padding:6px 8px 10px 8px;
+    cursor: move;
 }
 
 .type-choix .radio{

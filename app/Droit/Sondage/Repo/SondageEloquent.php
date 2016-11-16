@@ -52,6 +52,33 @@ class SondageEloquent implements SondageInterface{
         return $sondage;
     }
 
+    public function updateSorting($id, array $data)
+    {
+        if(!empty($data))
+        {
+            $sorting = collect($data)->map(function($item,$key) {
+                return ['key' => $key, 'id' => $item];
+            })->mapWithKeys(function($item) {
+                return [['key' => $item['id'], 'rang' => $item['key']]];
+            })->keyBy('key')->map(function ($item, $key) {
+                unset($item['key']);
+                return $item;
+            })->toArray();
+            
+            $sondage = $this->find($id);
+
+            if( ! $sondage )
+            {
+                return false;
+            }
+
+            $sondage->questions()->sync($sorting);
+
+            return true;
+        }
+    }
+
+
     public function delete($id)
     {
         $sondage = $this->sondage->find($id);

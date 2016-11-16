@@ -53,16 +53,18 @@
             <div class="panel-body">
 
                 @if(!$sondage->questions->isEmpty())
-                    @foreach($sondage->questions as $question)
-                        <div class="form-group">
-                            <strong>{{ $question->question }}</strong>
-                            <form action="{{ url('admin/sondage/remove/'.$question->id) }}" method="POST" class="pull-right">{!! csrf_field() !!}
-                                <input type="hidden" name="question_id" value="{{ $question->id }}" />
-                                <input type="hidden" name="sondage_id" value="{{ $question->sondage_id }}" />
-                                <button class="btn btn-danger btn-xs">Retirer</button>
-                            </form>
-                        </div>
-                    @endforeach
+                    <div class="sortquestion" data-id="{{ $sondage->id }}">
+                        @foreach($sondage->questions as $question)
+                            <div class="form-group type-choix question-item" id="question_rang_{{ $question->id }}">
+                                <strong>{{ $question->question }}</strong>
+                                <form action="{{ url('admin/sondage/remove/'.$question->id) }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                                    <input type="hidden" name="question_id" value="{{ $question->id }}" />
+                                    <input type="hidden" name="sondage_id" value="{{ $question->sondage_id }}" />
+                                    <button class="btn btn-danger btn-xs">Retirer</button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
 
             </div>

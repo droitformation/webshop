@@ -15,6 +15,20 @@ $(function() {
         }
     });
 
+    $( ".sortquestion" ).sortable({
+        axis: 'y',
+        update: function (event, ui) {
+            var id   =  $(this).data('id');
+            var data = $(this).sortable('serialize') +"&id="+ id +"&_token=" + $("meta[name='_token']").attr('content');
+            // POST to server using $.post or $.ajax
+            $.ajax({
+                data: data,
+                type: 'POST',
+                url: url+ 'admin/sondage/sorting'
+            });
+        }
+    });
+
     $( ".sortcontent" ).sortable({
         axis: 'y',
         update: function (event, ui) {

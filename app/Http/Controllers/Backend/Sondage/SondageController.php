@@ -110,4 +110,13 @@ class SondageController extends Controller
 
         return redirect()->back();
     }
+
+    public function sorting(Request $request)
+    {
+        $data = $request->all();
+
+        $sondage = $this->sondage->updateSorting($request->input('id'), $data['question_rang']);
+
+        echo 'ok';die();
+    }
 }

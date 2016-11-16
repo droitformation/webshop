@@ -8,7 +8,7 @@ class Sondage_question extends Model{
 
     protected $table = 'sondage_question_items';
 
-    protected $fillable = ['sondage_id','question_id']; 
+    protected $fillable = ['sondage_id','question_id','rang'];
 
     public $timestamps = false;
 

@@ -244,6 +244,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
 
     Route::post('sondage/remove','Backend\Sondage\SondageController@remove');
+    Route::post('sondage/sorting','Backend\Sondage\SondageController@sorting');
     Route::resource('sondage', 'Backend\Sondage\SondageController');
     Route::resource('sondage_question', 'Backend\Sondage\QuestionController');
     

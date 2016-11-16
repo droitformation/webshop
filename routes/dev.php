@@ -154,8 +154,21 @@ Route::get('sondage', function()
 
     $sondages = $model->getAll();
 
+    $sorting = [2,1,3,5,4];
+    $id = 23;
+
+    $multiplied = collect($sorting)->map(function($item,$key) {
+        return ['key' => $key, 'id' => $item];
+    })->mapWithKeys(function($item) {
+        return [['key' => $item['id'], 'rang' => $item['key']]];
+    })->keyBy('key')->map(function ($item, $key) {
+        unset($item['key']);
+        return $item;
+    });
+
+
     echo '<pre>';
-    print_r($sondages);
+    print_r($multiplied);
     echo '</pre>';exit();
 });
 
