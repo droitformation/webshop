@@ -38,6 +38,10 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->registerGroupOptionService();
         $this->registerPriceService();
         $this->registerOccurrenceService();
+
+        $this->registerSondageService();
+        $this->registerQuestionService();
+        $this->registerReponseService();
     }
 
     /**
@@ -214,4 +218,36 @@ class ColloqueServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Sondage
+     */
+    protected function registerSondageService(){
+
+        $this->app->singleton('App\Droit\Sondage\Repo\SondageInterface', function()
+        {
+            return new \App\Droit\Sondage\Repo\SondageEloquent(new \App\Droit\Sondage\Entities\Sondage());
+        });
+    }
+
+    /**
+     * Question
+     */
+    protected function registerQuestionService(){
+
+        $this->app->singleton('App\Droit\Sondage\Repo\QuestionInterface', function()
+        {
+            return new \App\Droit\Sondage\Repo\QuestionEloquent(new \App\Droit\Sondage\Entities\Question());
+        });
+    }
+
+    /**
+     * Reponse
+     */
+    protected function registerReponseService(){
+
+        $this->app->singleton('App\Droit\Sondage\Repo\ReponseInterface', function()
+        {
+            return new \App\Droit\Sondage\Repo\ReponseEloquent(new \App\Droit\Sondage\Entities\Reponse());
+        });
+    }
 }

@@ -243,6 +243,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('inscription/rappel','Backend\Colloque\RappelController');
     Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
 
+    Route::post('sondage/remove','Backend\Sondage\SondageController@remove');
+    Route::resource('sondage', 'Backend\Sondage\SondageController');
+    Route::resource('sondage_question', 'Backend\Sondage\QuestionController');
+    
     // Add, edit, delete items for colloque
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
     Route::resource('price', 'Backend\Colloque\PriceController');

@@ -146,55 +146,16 @@ Route::get('testing', function() {
     print_r($user_options);
     echo '</pre>';exit();
 
-    //$generator->stream = true;
-    //return $generator->make('bon',$inscription);
-
-
-    /*
-        $collection = $rappels->map(function ($item, $key) {
-            $rappel = $item->rappels->sortByDesc('created_at')->first();
-            $pdf    = 'files/abos/rappel/292/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';
-
-            if(\File::exists($pdf)){ return $pdf; }
-
-        })->all();
-
-        $files = \File::files('files/abos/rappel/292');
-        $get   = array_intersect($collection,$files);
-
-        echo '<pre>';
-        print_r($collection);
-        print_r($files);
-        print_r($get);
-        echo '</pre>';*/
-
-
-    //$generator->stream = true;
-    //$generate = new \App\Droit\Generate\Entities\Generate($inscriptio);
-    //return $generator->make('bon', $inscriptio);
-/*    $inscriptio = $inscription->find(9547);
-
-    $today = \Carbon\Carbon::today();
-    $today = \Carbon\Carbon::parse('2016-09-16');
-
-    $presence = $inscriptio->occurrences->filter(function ($value, $key) use ($today){
-        return $value->start_at == $today;
-    });
-
-    $inscriptio->occurrences()->updateExistingPivot($presence->first()->id, ['present' => 1]);*/
-
-    //echo md5('cindy');
-
 });
 
-Route::get('testuser', function()
+Route::get('sondage', function()
 {
-    $users = \App::make('App\Droit\User\Repo\UserInterface');
+    $model = \App::make('App\Droit\Sondage\Repo\SondageInterface');
 
-    $user = $users->findByName(['first_name' => 'Coralie', 'last_name' => 'Ahmetaj', 'canton_id' => 6]);
+    $sondages = $model->getAll();
 
     echo '<pre>';
-    print_r($user);
+    print_r($sondages);
     echo '</pre>';exit();
 });
 

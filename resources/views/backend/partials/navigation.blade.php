@@ -57,6 +57,9 @@
         <li class="<?php echo (Request::is('admin/compte') || Request::is('admin/compte/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/compte') }}"><i class="fa fa-calculator"></i> <span>Comptes</span></a>
         </li>
+        <li class="<?php echo (Request::is('admin/sondage') || Request::is('admin/sondage/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/sondage') }}"><i class="fa fa-question-circle"></i> <span>Sondages</span></a>
+        </li>
 
         <li class="nav-title">Shop</li>
         <li class="<?php echo (Request::is('admin/abo') || Request::is('admin/abo/*') || Request::is('admin/abonnements/*') || Request::is('admin/abonnement/*') || Request::is('admin/facture/*') || Request::is('admin/factures/*') ? 'active' : '' ); ?>">
