@@ -7,16 +7,19 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Sondage\Repo\SondageInterface;
+use App\Droit\Sondage\Repo\AvisInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 
 class SondageController extends Controller
 {
     protected $sondage;
+    protected $avis;
     protected $colloque;
 
-    public function __construct(SondageInterface $sondage, ColloqueInterface $colloque)
+    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque)
     {
         $this->sondage  = $sondage;
+        $this->avis     = $avis;
         $this->colloque = $colloque;
     }
 
@@ -67,9 +70,10 @@ class SondageController extends Controller
     public function show($id)
     {
         $sondage   = $this->sondage->find($id);
+        $avis      = $this->avis->getAll();
         $colloques = $this->colloque->getAll(false,false);
         
-        return view('backend.sondages.show')->with(['sondage' => $sondage, 'colloques' => $colloques]);
+        return view('backend.sondages.show')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques]);
     }
 
     /**
@@ -100,15 +104,6 @@ class SondageController extends Controller
         alert()->success('Le sondage a été supprimé');
 
         return redirect('admin/sondage');
-    }
-
-    public function remove(Request $request)
-    {
-        $sondage = $this->sondage->find($request->input('sondage_id'));
-
-        $sondage->questions()->detach($request->input('question_id'));
-
-        return redirect()->back();
     }
 
     public function sorting(Request $request)

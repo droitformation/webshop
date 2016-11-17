@@ -262,6 +262,25 @@ $( function() {
             error  : function(){ alert('problème'); }
         });
     });
+
+    /**
+     * Sondage select change
+     */
+
+     $('body').on('change','#sondageTypeSelect',function(){
+
+         var optionSelected = $("option:selected", this);
+         var valueSelected  = optionSelected.val();
+
+         if(valueSelected == 'text')
+         {
+             $('#sondageChoices').hide();
+         }
+         else{
+             $('#sondageChoices').show();
+         }
+
+     });
     
 });
 

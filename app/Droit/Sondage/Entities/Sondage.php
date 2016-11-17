@@ -15,9 +15,9 @@ class Sondage extends Model{
         return $this->hasMany('App\Droit\Sondage\Entities\Reponse','sondage_id', 'id');
     }
 
-    public function questions()
+    public function avis()
     {
-        return $this->belongsToMany('App\Droit\Sondage\Entities\Question', 'sondage_question_items', 'sondage_id', 'question_id')->orderBy('rang')->withPivot('rang');
+        return $this->belongsToMany('App\Droit\Sondage\Entities\Avis', 'sondage_avis_items', 'sondage_id', 'avis_id')->orderBy('rang')->withPivot('rang');
     }
 
     public function colloque()

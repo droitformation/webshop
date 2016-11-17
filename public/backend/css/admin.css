@@ -1016,3 +1016,8 @@ label.error{
 input[type="checkbox"].rappel-input {
     margin-right: 5px;
 }
+
+.sortquestion{
+    margin-left: 5px;
+    padding-left: 5px;
+}

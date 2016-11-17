@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Question;
+namespace App\Http\Controllers\Backend\Sondage;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Droit\Sondage\Repo\QuestionInterface;
+use App\Droit\Sondage\Repo\AvisInterface;
 
-class QuestionController extends Controller
+class AvisController extends Controller
 {
-    protected $question;
+    protected $avis;
 
-    public function __construct(QuestionInterface $question)
+    public function __construct(AvisInterface $avis)
     {
-        $this->question = $question;
+        $this->avis = $avis;
     }
 
     /**
@@ -24,9 +24,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = $this->question->getAll();
+        $avis = $this->avis->getAll();
 
-        return view('backend.questions.index')->with(['questions' => $questions]);
+        return view('backend.avis.index')->with(['avis' => $avis]);
     }
 
     /**
@@ -36,7 +36,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('backend.questions.create');
+        return view('backend.avis.create');
     }
 
     /**
@@ -46,11 +46,24 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $question = $this->question->create($request->all());
+        $avis = $this->avis->create($request->all());
 
         alert()->success('La question a été crée');
 
-        return redirect()->back();
+        return redirect('admin/avis');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $avis = $this->avis->find($id);
+
+        return view('backend.avis.show')->with(['avis' => $avis]);
     }
 
     /**
@@ -61,7 +74,7 @@ class QuestionController extends Controller
      */
     public function update($id, Request $request)
     {
-        $question = $this->question->update($request->all());
+        $avis = $this->avis->update($request->all());
 
         alert()->success('La question a été mis à jour');
 
@@ -76,7 +89,7 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        $this->question->delete($id);
+        $this->avis->delete($id);
 
         alert()->success('La question a été supprimé');
 

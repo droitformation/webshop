@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateColloqueSondageQuestionItemsTable extends Migration
+class CreateColloqueSondageAvisReponsesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateColloqueSondageQuestionItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sondage_question_items', function (Blueprint $table) {
+        Schema::create('sondage_avis_reponses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('sondage_id');
-            $table->integer('question_id');
-            $table->integer('rang')->default(0);
+            $table->integer('reponse_id');
+            $table->integer('avis_id');
+            $table->text('reponse');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +29,6 @@ class CreateColloqueSondageQuestionItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sondage_question_items');
+        Schema::dropIfExists('sondage_avis_reponses');
     }
 }

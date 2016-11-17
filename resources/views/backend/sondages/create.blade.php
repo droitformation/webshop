@@ -13,32 +13,38 @@
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
-            <form action="{!!  url('admin/theme')!!}" enctype="multipart/form-data" method="POST" class="validate-form form-horizontal" data-validate="parsley">
+            <form action="{{ url('admin/sondage') }}" method="POST" class="validate-form form-horizontal" data-validate="parsley">
                 {!! csrf_field() !!}
 
-            <div class="panel-heading">
-                <h4>Ajouter un thème</h4>
-            </div>
-            <div class="panel-body event-info">
+                <div class="panel panel-midnightblue">
+                    <div class="panel-body">
 
-                <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Titre</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="title" value="" class="form-control" required>
+                        <h3>Sondage</h3>
+
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Colloque</label>
+                            <div class="col-sm-6">
+                                <select autocomplete="off" name="colloque_id" required class="form-control">
+                                    <option value="">Choisir le colloque</option>
+                                    @if(!$colloques->isEmpty())
+                                        @foreach($colloques as $colloque)
+                                            <option {{ (old('colloque_id') == $colloque->id ) ? 'selected' : '' }} value="{{ $colloque->id }}">{{ $colloque->titre }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Valide jusqu'au</label>
+                            <div class="col-sm-3">
+                                <input type="text" name="valid_at" value="" class="form-control datePicker required">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-            </div>
-            <div class="panel-footer mini-footer ">
-                <div class="col-sm-3">
-                    <input type="hidden" name="parent_id" value="2">
-                </div>
-                <div class="col-sm-9">
-                    <button class="btn btn-primary" type="submit">Envoyer</button>
-                </div>
-            </div>
-
-           </form>
+            </form>
 
         </div>
     </div>

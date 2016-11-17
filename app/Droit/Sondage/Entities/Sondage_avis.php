@@ -4,17 +4,17 @@ namespace App\Droit\Sondage\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sondage_question extends Model{
+class Sondage_avis extends Model{
 
-    protected $table = 'sondage_question_items';
+    protected $table = 'sondage_avis_items';
 
-    protected $fillable = ['sondage_id','question_id','rang'];
+    protected $fillable = ['sondage_id','avis_id','rang'];
 
     public $timestamps = false;
 
-    public function question()
+    public function avis()
     {
-        return $this->belongsTo('App\Droit\Sondage\Entities\Question');
+        return $this->belongsTo('App\Droit\Sondage\Entities\Avis');
     }
 
     public function sondage()

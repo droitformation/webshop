@@ -1,6 +1,6 @@
 <?php namespace App\Droit\Sondage\Repo;
 
-interface QuestionInterface {
+interface AvisInterface {
 
     public function getAll();
     public function find($data);

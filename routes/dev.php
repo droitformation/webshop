@@ -152,7 +152,13 @@ Route::get('sondage', function()
 {
     $model = \App::make('App\Droit\Sondage\Repo\SondageInterface');
 
-    $sondages = $model->getAll();
+    $sondage = $model->find(1);
+
+    $max = $sondage->questions->max('pivot.rang');
+
+    $exist = $sondage->questions->contains('id',1);
+
+/*    $sondages = $model->getAll();
 
     $sorting = [2,1,3,5,4];
     $id = 23;
@@ -164,11 +170,11 @@ Route::get('sondage', function()
     })->keyBy('key')->map(function ($item, $key) {
         unset($item['key']);
         return $item;
-    });
+    });*/
 
 
     echo '<pre>';
-    print_r($multiplied);
+    print_r($exist);
     echo '</pre>';exit();
 });
 

@@ -246,7 +246,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('sondage/remove','Backend\Sondage\SondageController@remove');
     Route::post('sondage/sorting','Backend\Sondage\SondageController@sorting');
     Route::resource('sondage', 'Backend\Sondage\SondageController');
-    Route::resource('sondage_question', 'Backend\Sondage\QuestionController');
+    Route::resource('avis', 'Backend\Sondage\AvisController');
+    Route::resource('sondagequestion', 'Backend\Sondage\SondageQuestionController');
     
     // Add, edit, delete items for colloque
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');

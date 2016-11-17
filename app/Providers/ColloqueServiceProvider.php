@@ -40,7 +40,7 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->registerOccurrenceService();
 
         $this->registerSondageService();
-        $this->registerQuestionService();
+        $this->registerAvisService();
         $this->registerReponseService();
     }
 
@@ -230,13 +230,13 @@ class ColloqueServiceProvider extends ServiceProvider
     }
 
     /**
-     * Question
+     * Avis
      */
-    protected function registerQuestionService(){
+    protected function registerAvisService(){
 
-        $this->app->singleton('App\Droit\Sondage\Repo\QuestionInterface', function()
+        $this->app->singleton('App\Droit\Sondage\Repo\AvisInterface', function()
         {
-            return new \App\Droit\Sondage\Repo\QuestionEloquent(new \App\Droit\Sondage\Entities\Question());
+            return new \App\Droit\Sondage\Repo\AvisEloquent(new \App\Droit\Sondage\Entities\Avis());
         });
     }
 

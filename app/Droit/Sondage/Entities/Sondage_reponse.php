@@ -8,12 +8,12 @@ class Sondage_reponse extends Model{
 
     protected $table = 'sondage_question_reponses';
 
-    protected $fillable = ['reponse_id'.'question_id','reponse'];
+    protected $fillable = ['reponse_id'.'avis_id','reponse'];
 
     public $timestamps = false;
     
-    public function question()
+    public function avis()
     {
-        return $this->belongsTo('App\Droit\Sondage\Entities\Question');
+        return $this->belongsTo('App\Droit\Sondage\Entities\Avis');
     }
 }

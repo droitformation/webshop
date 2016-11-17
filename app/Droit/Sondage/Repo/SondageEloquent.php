@@ -14,7 +14,7 @@ class SondageEloquent implements SondageInterface{
 
     public function getAll()
     {
-        return $this->sondage->with(['colloque','questions'])->get();
+        return $this->sondage->with(['colloque','avis'])->get();
     }
 
     public function find($id)
@@ -72,7 +72,7 @@ class SondageEloquent implements SondageInterface{
                 return false;
             }
 
-            $sondage->questions()->sync($sorting);
+            $sondage->avis()->sync($sorting);
 
             return true;
         }
