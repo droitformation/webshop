@@ -19,4 +19,9 @@ class Reponse extends Model{
     {
         return $this->belongsTo('App\Droit\Sondage\Entities\Sondage');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Droit\User\Entities\User');
+    }
 }

@@ -2,8 +2,11 @@
 @section('content')
 
 <div class="row"><!-- row -->
-    <div class="col-md-12"><!-- col -->
+    <div class="col-md-4"><!-- col -->
         <p><a class="btn btn-default" href="{{ url('admin/sondage') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+    </div>
+    <div class="col-md-4 text-right"><!-- col -->
+        <p><a class="btn btn-info" href="{{ url('admin/reponse/'.$sondage->id) }}"><i class="fa fa-bullhorn"></i> &nbsp;Voir les réponses</a></p>
     </div>
 </div>
 <!-- start row -->
@@ -43,12 +46,18 @@
                     </div>
 
                 </div>
+                <div class="panel-footer mini-footer ">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <button class="btn btn-primary" type="submit">Envoyer</button>
+                    </div>
+                </div>
             </div>
         </form>
 
         <div class="panel panel-midnightblue">
             <div class="panel-body">
-                <h3>Questions  <a href="{{ url('admin/avis/create') }}" class="btn btn-sm btn-success pull-right">Nouvelle question</a></h3>
+                <h3>Questions  <a href="{{ url('admin/avis/create') }}" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Nouvelle question</a></h3>
 
                 <h4>Ajouter une question</h4>
 

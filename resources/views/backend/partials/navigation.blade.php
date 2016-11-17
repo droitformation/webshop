@@ -57,8 +57,13 @@
         <li class="<?php echo (Request::is('admin/compte') || Request::is('admin/compte/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/compte') }}"><i class="fa fa-calculator"></i> <span>Comptes</span></a>
         </li>
-        <li class="<?php echo (Request::is('admin/sondage') || Request::is('admin/sondage/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/sondage') }}"><i class="fa fa-question-circle"></i> <span>Sondages</span></a>
+
+        <li class="{{ Request::is('admin/sondage') || Request::is('admin/sondage/*') || Request::is('admin/avis') || Request::is('admin/avis/*') ? 'active' : '' }}">
+            <a href="javascript:;"><i class="fa fa-question-circle"></i><span>Sondages</span></a>
+            <ul class="acc-menu">
+                <li class="{{ Request::is('admin/sondage/*') ? 'active' : '' }}"><a href="{{ url('admin/sondage')  }}">Liste des sondages</a></li>
+                <li class="{{ Request::is('admin/avis/*') ? 'active' : '' }}"><a href="{{ url('admin/avis')  }}">Catalogue de questions</a></li>
+            </ul>
         </li>
 
         <li class="nav-title">Shop</li>

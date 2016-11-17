@@ -18,8 +18,8 @@ class CreateColloqueSondageReponsesTable extends Migration
             $table->integer('sondage_id');
             $table->integer('user_id');
             $table->string('email');
-            $table->dateTime('sent_at');
-            $table->dateTime('response_at');
+            $table->dateTime('sent_at')->nullable();
+            $table->dateTime('response_at')->nullable();
             $table->timestamps();
         });
     }

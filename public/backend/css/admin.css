@@ -1017,7 +1017,30 @@ input[type="checkbox"].rappel-input {
     margin-right: 5px;
 }
 
+.reponses-wrapper{
+    padding: 20px;
+}
+
+.reponses-wrapper form{
+    margin-bottom: 20px;
+}
+
+.sondage-reponse-wrapper{
+    margin-bottom: 10px;
+}
+
 .sortquestion{
     margin-left: 5px;
     padding-left: 5px;
+}
+
+.question-title{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.question-reponse{
+    margin-bottom: 5px;
 }
