@@ -315,17 +315,18 @@ class OrderMaker implements OrderMakerInterface{
     }
 
     /*
-      * Update Order products with coupon
-      **/
+     * Update Order products with coupon
+     **/
     public function updateOrder($order, $shipping_id, $coupon = null)
     {
         $data['id']          = $order->id;
+        $data['created_at']  = $order->created_at->format('Y-m-d');
         $data['coupon_id']   = isset($coupon) ? $coupon->id : null;
         $data['shipping_id'] = isset($coupon) && ($coupon->type == 'priceshipping' || $coupon->type == 'shipping')  ? 6 : $shipping_id;
 
         $products = $order->products->map(function ($product, $key) use ($coupon) {
 
-            $price = !$product->pivot->isFree ? $product->price_normal : null;
+            $price = !$product->pivot->isFree ? $product->price_normal : 0;
 
             // search if product eligible for discount is in cart
             if(isset($coupon->products) && $coupon->products->contains($product->id))
@@ -346,7 +347,7 @@ class OrderMaker implements OrderMakerInterface{
                 $price = $this->calculPriceWithCoupon($product, $coupon, 'percent');
             }
 
-            return ['id' => $product->id, 'price' => $price, 'isFree' => $product->pivot->isFree, 'rabais' => $product->pivot->rabais];
+            return ['id' => $product->id, 'price' => $price * 100, 'isFree' => $product->pivot->isFree, 'rabais' => $product->pivot->rabais];
 
         });
 

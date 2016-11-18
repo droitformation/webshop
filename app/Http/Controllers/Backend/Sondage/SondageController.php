@@ -114,4 +114,9 @@ class SondageController extends Controller
 
         echo 'ok';die();
     }
+
+    public function send(Request $request)
+    {
+        return $request->all();
+    }
 }

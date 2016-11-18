@@ -3,16 +3,29 @@ $(function() {
 
     var url  = location.protocol + "//" + location.host+"/";
 
-    $('body').on('click','#confirmSendRappels',function(event){
+    $('body').on('click','#sendTestSondage',function(event){
         event.stopPropagation();
         event.preventDefault();
 
+        var id  = $(this).data('id');
+
         bootbox.prompt({
-            title: "This is a prompt with an email input!",
+            title: "Envoyer à",
             inputType: 'email',
             callback: function (result) {
+
                 console.log(result);
-                $('#sendRappelForm').submit();
+
+                $.ajax({
+                    type: "POST",
+                    date: {'sondage_id' : id, 'email' : result, '_token' : $("meta[name='_token']").attr('content')},
+                    url : base_url + "admin/sondage/send",
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(){ console.log('problème'); }
+                });
+
             }
         });
     });

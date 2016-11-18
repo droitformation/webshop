@@ -245,6 +245,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::post('sondage/remove','Backend\Sondage\SondageController@remove');
     Route::post('sondage/sorting','Backend\Sondage\SondageController@sorting');
+    Route::post('sondage/send','Backend\Sondage\SondageController@send');
     Route::resource('sondage', 'Backend\Sondage\SondageController');
     Route::resource('avis', 'Backend\Sondage\AvisController');
     Route::match(['get', 'post'], 'reponse/{id}', 'Backend\Sondage\ReponseController@show');
