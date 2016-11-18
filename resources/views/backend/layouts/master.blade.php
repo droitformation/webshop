@@ -158,6 +158,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/blocs.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/sondage.js');?>"></script>
 
 </body>
 </html>

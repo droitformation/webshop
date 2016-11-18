@@ -26,8 +26,9 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
-                            <th class="col-sm-5">Colloque</th>
+                            <th class="col-sm-4">Colloque</th>
                             <th class="col-sm-2">Réponses</th>
+                            <th class="col-sm-3">Envoyer</th>
                             <th class="col-sm-2 no-sort"></th>
                         </tr>
                         </thead>
@@ -38,6 +39,10 @@
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/sondage/'.$sondage->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td><strong>{{ $sondage->colloque->titre }}</strong></td>
                                     <td><a class="btn btn-sm btn-info" href="{{ url('admin/reponse/'.$sondage->id) }}"><i class="fa fa-bullhorn"></i> &nbsp;Voir les réponses</a></td>
+                                    <td><a class="btn btn-sm btn-inverse" href="{{ url('admin/sondage/send'.$sondage->id) }}">
+                                            <i class="fa fa-paper-plane"></i> &nbsp;Envoyer un test
+                                        </a>
+                                    </td>
                                     <td class="text-right">
                                         <form action="{{ url('admin/sondage/'.$sondage->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}

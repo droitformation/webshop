@@ -325,7 +325,7 @@ class OrderMaker implements OrderMakerInterface{
 
         $products = $order->products->map(function ($product, $key) use ($coupon) {
 
-            $price = $product->price_normal;
+            $price = !$product->pivot->isFree ? $product->price_normal : null;
 
             // search if product eligible for discount is in cart
             if(isset($coupon->products) && $coupon->products->contains($product->id))
@@ -346,7 +346,7 @@ class OrderMaker implements OrderMakerInterface{
                 $price = $this->calculPriceWithCoupon($product, $coupon, 'percent');
             }
 
-            return ['id' => $product->id, 'price' => $price * 100, 'isFree' => $product->isFree, 'rabais' => $product->rabais];
+            return ['id' => $product->id, 'price' => $price, 'isFree' => $product->pivot->isFree, 'rabais' => $product->pivot->rabais];
 
         });
 

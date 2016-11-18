@@ -249,7 +249,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('avis', 'Backend\Sondage\AvisController');
     Route::match(['get', 'post'], 'reponse/{id}', 'Backend\Sondage\ReponseController@show');
 
-    Route::resource('sondagequestion', 'Backend\Sondage\SondageQuestionController');
+    Route::resource('sondageavis', 'Backend\Sondage\SondageAvisController');
     
     // Add, edit, delete items for colloque
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
