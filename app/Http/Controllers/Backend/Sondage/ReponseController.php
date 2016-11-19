@@ -24,20 +24,6 @@ class ReponseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        $avis = $this->avis->create($request->all());
-
-        alert()->success('La question a été crée');
-
-        return redirect('admin/avis');
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id

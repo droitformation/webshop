@@ -6,21 +6,25 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendSondage;
 use App\Droit\Sondage\Repo\SondageInterface;
 use App\Droit\Sondage\Repo\AvisInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\Sondage\Repo\ReponseInterface;
 
 class SondageController extends Controller
 {
     protected $sondage;
+    protected $reponse;
     protected $avis;
     protected $colloque;
 
-    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque)
+    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque, ReponseInterface $reponse)
     {
         $this->sondage  = $sondage;
         $this->avis     = $avis;
         $this->colloque = $colloque;
+        $this->reponse  = $reponse;
     }
 
     /**
@@ -117,6 +121,8 @@ class SondageController extends Controller
 
     public function send(Request $request)
     {
-        return $request->all();
+        $this->dispatch(new SendSondage($request->all()));
+
+        return response()->json($request->all());
     }
 }

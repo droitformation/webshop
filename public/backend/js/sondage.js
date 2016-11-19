@@ -18,7 +18,7 @@ $(function() {
 
                 $.ajax({
                     type: "POST",
-                    date: {'sondage_id' : id, 'email' : result, '_token' : $("meta[name='_token']").attr('content')},
+                    data: {'sondage_id' : id, 'email' : result, 'isTest' : true, '_token' : $("meta[name='_token']").attr('content')},
                     url : base_url + "admin/sondage/send",
                     success: function(data) {
                         console.log(data);

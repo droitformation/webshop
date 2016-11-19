@@ -40,10 +40,7 @@
                                     <td><strong>{{ $sondage->colloque->titre }}</strong></td>
                                     <td><a class="btn btn-sm btn-info" href="{{ url('admin/reponse/'.$sondage->id) }}"><i class="fa fa-bullhorn"></i> &nbsp;Voir les réponses</a></td>
                                     <td>
-                                        <a class="btn btn-sm btn-inverse" id="sendTestSondage" href="{{ url('admin/sondage/send'.$sondage->id) }}">
-                                            <i class="fa fa-paper-plane"></i> &nbsp;Envoyer un test
-                                        </a>
-                                        <button data-id="{{ $sondage->id }}" id="sendTestSondage" class="btn btn-danger btn-sm">
+                                        <button data-id="{{ $sondage->id }}" id="sendTestSondage" class="btn btn-inverse btn-sm">
                                             <i class="fa fa-paper-plane"></i> &nbsp;Envoyer un test
                                         </button>
                                     </td>

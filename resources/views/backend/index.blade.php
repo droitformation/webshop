@@ -50,11 +50,11 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
-                            <th class="col-sm-2">Colloque</th>
+                            <th class="col-sm-3">Colloque</th>
                             <th class="col-sm-3">Déteteur</th>
                             <th class="col-sm-2">No</th>
                             <th class="col-sm-2">Prix</th>
-                            <th class="col-sm-2">Date</th>
+                            <th class="col-sm-1">Date</th>
                         </tr>
                         </thead>
                         <tbody class="selects">
@@ -125,7 +125,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $inscription->group_id ? $group->price : $inscription->price_cents }} CHF</td>
-                                        <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
+                                        <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
                                     </tr>
 
                                 @endforeach
