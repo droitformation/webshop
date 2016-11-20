@@ -93,12 +93,13 @@
                     <ol class="sortquestion" data-id="{{ $sondage->id }}">
                         @foreach($sondage->avis as $avis)
                             <li class="form-group type-choix question-item" id="question_rang_{{ $avis->id }}">
-                                <strong>{{ strip_tags( $avis->question) }}</strong>
+                                <strong style="width: 90%;display: inline-block;">{{ strip_tags( $avis->question) }}</strong>
                                 <form action="{{ url('admin/sondageavis/'.$avis->sondage_id) }}" method="POST" class="pull-right">
                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                     <input type="hidden" name="question_id" value="{{ $avis->id }}" />
                                     <button class="btn btn-danger btn-xs">Retirer</button>
                                 </form>
+                                <div class="clearfix"></div>
                             </li>
                         @endforeach
                     </ol>
