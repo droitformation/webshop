@@ -2,10 +2,10 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-5">
-        <h3>Questions</h3>
+    <div class="col-md-6">
+        <h3>Catalogue de questions</h3>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-6">
         <div class="options text-right" style="margin-bottom: 10px;">
             <div class="btn-toolbar">
                <a href="{{ url('admin/avis/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
@@ -15,7 +15,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-10 col-xs-12">
+    <div class="col-md-12 col-xs-12">
 
         @if(!$avis->isEmpty())
 

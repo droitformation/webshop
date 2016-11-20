@@ -31,11 +31,11 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10 col-lg-push-1">
 
-                <div class="panel panel-default">
+                <div class="panel panel-default panel-sondage">
                    <div class="panel-body">
-                       <h1 class="auth-logo text-center">
+                       <h1 class="sondage-logo text-center">
                            <a class="text-inverse" href="{{ url('/') }}">
                                <img style="max-height: 100px;" src="{{ asset('emails/logos/pubdroit.png') }}" alt="{{ url('/pubdroit') }}">
                            </a>

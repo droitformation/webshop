@@ -5,14 +5,14 @@
     <div class="col-md-4"><!-- col -->
         <p><a class="btn btn-default" href="{{ url('admin/sondage') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
-    <div class="col-md-4 text-right"><!-- col -->
+    <div class="col-md-5 text-right"><!-- col -->
         <p><a class="btn btn-info" href="{{ url('admin/reponse/'.$sondage->id) }}"><i class="fa fa-bullhorn"></i> &nbsp;Voir les réponses</a></p>
     </div>
 </div>
 <!-- start row -->
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
 
         <!-- form start -->
         <form action="{{ url('admin/sondage/'.$sondage->id) }}" method="POST" class="validate-form form-horizontal" data-validate="parsley">
@@ -40,7 +40,7 @@
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Valide jusqu'au</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <input type="text" name="valid_at" value="{{ $sondage->valid_at->format('Y-m-d') }}" class="form-control datePicker required">
                         </div>
                     </div>
@@ -49,6 +49,7 @@
                 <div class="panel-footer mini-footer ">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
+                        <input type="hidden" name="id" value="{{ $sondage->id }}" />
                         <button class="btn btn-primary" type="submit">Envoyer</button>
                     </div>
                 </div>
@@ -65,11 +66,15 @@
                     <input type="hidden" name="id" value="{{ $sondage->id }}" />
                     <div class="input-group">
 
+                        <?php $inList = !$sondage->avis->isEmpty() ? $sondage->avis->pluck('id') : collect([]); ?>
+
                         @if(!$avis->isEmpty())
                             <select class="form-control" name="question_id">
                                 <option value="">Choix</option>
                                 @foreach($avis as $question)
-                                    <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
+                                    @if(!$inList->contains($question->id))
+                                        <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         @endif

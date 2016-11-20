@@ -77,7 +77,7 @@
                 <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
             </div>
 
-            <div class="container">
+            <div class="container" id="mainContainer">
 
                 <!-- messages and errors -->
                 @include('alert::alert')

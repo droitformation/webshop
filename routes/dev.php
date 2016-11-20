@@ -537,23 +537,18 @@ Route::get('sondage', function()
     $sondages = new App\Droit\Sondage\Entities\Sondage();
     $sondage  = $sondages->find(1);
 
-    $url = base64_encode(json_encode([
-        'sondage_id' => $sondage->id,
-        'email'      => 'cindy.leschaud@gmail.com',
-        'isTest'     => 1,
-        'token'      => \Hash::make($sondage->id.'cindy.leschaud@gmail.com')
-    ]));
-
     $data = [
-        'sondage' => $sondage,
-        'email'   => 'cindy.leschaud@gmail.com',
-        'url'     => $url
+        'email'    => 'cindy.leschaud@gmail.com',
+        'isTest'   => 1,
     ];
 
    // $decoded = json_decode(base64_decode($url));
+    $job = new \App\Jobs\SendSondage($sondage,$data);
+    $job->handle();
 
+   // app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
 
-    return View::make('emails.sondage', $data);
+    //return View::make('emails.sondage', $data);
 });
 
 Route::get('testproduct', function()

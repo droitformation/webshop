@@ -1040,8 +1040,21 @@ input[type="checkbox"].rappel-input {
     font-weight: bold;
     margin-bottom: 5px;
     margin-top: 10px;
+    color: #386aa7;
 }
 
 .question-reponse{
     margin-bottom: 5px;
+}
+
+.question-reponse-multi{
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.question-reponse-multi:last-child{
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }

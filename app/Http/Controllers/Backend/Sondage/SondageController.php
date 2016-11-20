@@ -121,7 +121,10 @@ class SondageController extends Controller
 
     public function send(Request $request)
     {
-        $this->dispatch(new SendSondage($request->all()));
+        $sondage = $this->sondage->find($request->input('sondage_id'));
+
+
+        $this->dispatch(new SendSondage($sondage, $request->except(['_token','sondage_id'])));
 
         return response()->json($request->all());
     }

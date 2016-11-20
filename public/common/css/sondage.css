@@ -1,7 +1,28 @@
+.sondage-logo{
+    margin-bottom: 40px;
+}
+
 .form-sondage{
    padding: 20px 0;
 }
 
 .label-question{
     font-size: 17px;
+    color: #000;
+}
+
+textarea.form-control-sondage{
+    border: 1px solid #accafb;
+    height: 130px;
+}
+
+.radio label, .checkbox label{
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.panel-sondage{
+    box-shadow: 0 1px 1px 0 #B3B3B3;
+    border: none;
+    border-radius: 0px;
 }

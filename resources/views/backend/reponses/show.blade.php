@@ -26,8 +26,8 @@
                                 <label for="message" class="control-label">Trier par</label>
                                 <div class="input-group">
                                     <select name="sort" class="form-control">
-                                        <option selected value="reponse_id">Personne</option>
-                                        <option value="avis_id">Question</option>
+                                        <option {{ $sort == 'reponse_id' ? 'selected' : '' }} value="reponse_id">Personne</option>
+                                        <option {{ $sort == 'avis_id' ? 'selected' : '' }} value="avis_id">Question</option>
                                     </select>
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" type="submit">Envoyer</button>
@@ -50,15 +50,14 @@
                                             <div class="col-md-12">
                                                 <div class="question-title">{!! $response->first()->avis->question !!}</div>
                                                 @foreach($response as $avis)
-                                                    <div class="question-reponse">{!! $avis->reponse !!}</div>
+                                                    <div class="question-reponse question-reponse-multi">{!! $avis->reponse !!}</div>
                                                 @endforeach
                                             </div>
                                         </div>
                                     @else
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <h4>{{ $response->first()->response->user->name }}</h4>
-                                                <p>{{ $response->first()->response->email }}</p>
+                                                <h4>{{ $response->first()->response->email }}</h4>
                                             </div>
                                             <div class="col-md-8">
                                                 @foreach($response as $avis)

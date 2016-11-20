@@ -25,10 +25,10 @@ class ReponseEloquent implements ReponseInterface{
     public function create(array $data)
     {
         $reponse = $this->reponse->create(array(
-            'sondage_id' => $data['sondage_id'],
-            'user_id'    => $data['user_id'],
-            'email'      => $data['email'],
-            'sent_at'    => $data['sent_at']
+            'sondage_id'  => $data['sondage_id'],
+            'isTest'      => isset($data['isTest']) ? 1 : null,
+            'email'       => $data['email'],
+            'response_at' => \Carbon\Carbon::now()
         ));
 
         if(!$reponse)
@@ -49,6 +49,9 @@ class ReponseEloquent implements ReponseInterface{
         }
 
         $reponse->fill($data);
+
+        $reponse->isTest = isset($data['isTest']) ? 1 : null;
+
         $reponse->save();
 
         return $reponse;

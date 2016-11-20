@@ -16,7 +16,6 @@ class CreateColloqueSondageReponsesTable extends Migration
         Schema::create('sondage_reponses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sondage_id');
-            $table->integer('user_id');
             $table->string('email');
             $table->tinyInteger('isTest')->nullable();
             $table->dateTime('sent_at')->nullable();
