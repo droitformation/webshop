@@ -35,16 +35,12 @@ class Kernel extends ConsoleKernel {
 				$pid = file_get_contents($monitor_file_path);
 				$result = exec("ps -p $pid --no-heading | awk '{print $1}'");
 
-				if ($result == '') {
-					$run_command = true;
-				}
-			} else {
-				$run_command = true;
-			}
+				if ($result == '') {$run_command = true;}
+			} else {$run_command = true;}
 
 			if($run_command)
 			{
-				$command = 'php70 '. base_path('artisan'). ' queue:listen > /dev/null & echo $!';
+				$command = 'php70 '. base_path('artisan'). ' queue:listen --tries=3 > /dev/null & echo $!';
 				$number = exec($command);
 				file_put_contents($monitor_file_path, $number);
 			}
