@@ -33,16 +33,20 @@ class ReponseController extends Controller
     {
         $sondage = $this->sondage->find($id);
 
+        $isTest = $request->input('isTest',false);
+
         $sort = $request->input('sort',null);
         $sort = $sort ? $sort : 'reponse_id';
         
-        $reponses = $sondage->reponses->map(function ($item, $key) {
+        $reponses = !$isTest ? $sondage->reponses_no_test : $sondage->reponses;
+        
+        $reponses = $reponses->map(function ($item, $key) {
             return $item->items->load('response');
         })->flatten()->groupBy(function ($item, $key) use($sort) {
             return $item->$sort;
         });
         
-        return view('backend.reponses.show')->with(['sondage' => $sondage, 'reponses' => $reponses, 'sort' => $sort]);
+        return view('backend.reponses.show')->with(['sondage' => $sondage, 'reponses' => $reponses, 'sort' => $sort, 'isTest' => $isTest]);
     }
 
     /**

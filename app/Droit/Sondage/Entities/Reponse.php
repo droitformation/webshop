@@ -8,7 +8,7 @@ class Reponse extends Model{
 
     protected $table = 'sondage_reponses';
 
-    protected $fillable = ['sondage_id','user_id','email','sent_at','response_at'];
+    protected $fillable = ['sondage_id','user_id','email','sent_at','response_at','isTest'];
 
     public function items()
     {

@@ -1,6 +1,10 @@
 @extends('sondages.layouts.master')
 @section('content')
 
+    @if($isTest)
+        <div class="alert alert-warning">Ceci est un sondage test</div>
+    @endif
+
     <h3>Sondage pour {{ $sondage->colloque->titre }}</h3>
 
     <form class="form-sondage" action="{{ url('reponse') }}" method="POST">{!! csrf_field() !!}

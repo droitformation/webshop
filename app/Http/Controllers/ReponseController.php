@@ -29,16 +29,23 @@ class ReponseController extends Controller
 
     public function create($token)
     {
-        $data = (array) json_decode(base64_decode($token));
-
+        $data    = (array) json_decode(base64_decode($token));
         $sondage = $this->sondage->find($data['sondage_id']);
+        $answer  = $this->reponse->hasAnswer($data['email'], $data['sondage_id']);
+
+        if($answer)
+        {
+            alert()->warning('Vous avez déjà répondu au sondage');
+
+            return redirect('reponse');
+        }
 
         return view('sondages.create')->with(['sondage' => $sondage, 'email' => $data['email'], 'isTest' => $data['isTest']]);
     }
 
     public function store(Request $request)
     {
-        $reponse = $this->worker->make($request->except('reponses'), $request->only('reponses') );
+        $reponse = $this->worker->make($request->except('reponses'), $request->only('reponses'));
 
         alert()->success('Merci pour votre participation au sondage!');
 

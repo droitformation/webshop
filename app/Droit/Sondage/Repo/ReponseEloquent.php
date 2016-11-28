@@ -22,6 +22,17 @@ class ReponseEloquent implements ReponseInterface{
         return $this->reponse->find($id);
     }
 
+    public function hasAnswer($email, $sondage_id)
+    {
+        $reponse = $this->reponse
+            ->where('email','=',$email)
+            ->where('sondage_id','=',$sondage_id)
+            ->whereNull('isTest')
+            ->get();
+        
+        return !$reponse->isEmpty() ? true : false;
+    }
+
     public function create(array $data)
     {
         $reponse = $this->reponse->create(array(

@@ -1058,3 +1058,7 @@ input[type="checkbox"].rappel-input {
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
+.sondage-reponse-istest{
+    background: #fdf8ed;
+}

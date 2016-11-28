@@ -58,7 +58,7 @@
 
         <div class="panel panel-midnightblue">
             <div class="panel-body">
-                <h3>Questions  <a href="{{ url('admin/avis/create') }}" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Nouvelle question</a></h3>
+                <h3 style="margin-bottom: 20px;">Questions  <a href="{{ url('admin/avis/create') }}" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter une question au catalogue</a></h3>
 
                 <h4>Ajouter une question</h4>
 

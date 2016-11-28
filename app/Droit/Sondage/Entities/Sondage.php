@@ -15,6 +15,11 @@ class Sondage extends Model{
         return $this->hasMany('App\Droit\Sondage\Entities\Reponse','sondage_id', 'id');
     }
 
+    public function reponses_no_test()
+    {
+        return $this->hasMany('App\Droit\Sondage\Entities\Reponse','sondage_id', 'id')->whereNull('isTest');
+    }
+
     public function avis()
     {
         return $this->belongsToMany('App\Droit\Sondage\Entities\Avis', 'sondage_avis_items', 'sondage_id', 'avis_id')->orderBy('rang')->withPivot('rang');

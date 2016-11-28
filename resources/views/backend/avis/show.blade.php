@@ -50,6 +50,7 @@
                 <div class="panel-footer mini-footer ">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
+                        <input type="hidden" name="id" value="{{ $avis->id }}" />
                         <button class="btn btn-primary" type="submit">Envoyer</button>
                     </div>
                 </div>

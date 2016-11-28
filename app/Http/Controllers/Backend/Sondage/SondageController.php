@@ -48,7 +48,7 @@ class SondageController extends Controller
     {
         $colloques = $this->colloque->getAll(false,false);
         
-        return view('backend.sondages.create')->with(['colloque' => $colloques]);
+        return view('backend.sondages.create')->with(['colloques' => $colloques]);
     }
 
     /**
@@ -122,7 +122,6 @@ class SondageController extends Controller
     public function send(Request $request)
     {
         $sondage = $this->sondage->find($request->input('sondage_id'));
-
 
         $this->dispatch(new SendSondage($sondage, $request->except(['_token','sondage_id'])));
 

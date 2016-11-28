@@ -14,30 +14,33 @@
 
             <div class="panel panel-primary">
                 <div class="panel-body">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3>Réponses au sondage</h3>
-                            <p><strong>{{ $sondage->colloque->titre }}</strong></p>
-                        </div>
-                        <div class="col-md-6">
-                            <form action="{{ url('admin/reponse/'.$sondage->id) }}" method="POST" class="" data-validate="parsley">
-                                {!! csrf_field() !!}
-                                <label for="message" class="control-label">Trier par</label>
+                    <form action="{{ url('admin/reponse/'.$sondage->id) }}" method="POST" class="" data-validate="parsley"> {!! csrf_field() !!}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Réponses au sondage</h3>
+                                <p><strong>{{ $sondage->colloque->titre }}</strong></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="message" class="control-label">
+                                    Trier par
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="isTest" {{ $isTest ? 'checked' : '' }} value="1" type="checkbox"> Afficher les tests
+                                        </label>
+                                    </div>
+                                </label>
                                 <div class="input-group">
                                     <select name="sort" class="form-control">
                                         <option {{ $sort == 'reponse_id' ? 'selected' : '' }} value="reponse_id">Personne</option>
                                         <option {{ $sort == 'avis_id' ? 'selected' : '' }} value="avis_id">Question</option>
                                     </select>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="submit">Envoyer</button>
-                                </span>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">Envoyer</button>
+                                    </span>
                                 </div>
-                            </form>
-
+                            </div>
                         </div>
-                    </div>
-
+                    </form>
                     <hr/>
 
                     <div class="reponses-wrapper">
@@ -50,14 +53,24 @@
                                             <div class="col-md-12">
                                                 <div class="question-title">{!! $response->first()->avis->question !!}</div>
                                                 @foreach($response as $avis)
-                                                    <div class="question-reponse question-reponse-multi">{!! $avis->reponse !!}</div>
+                                                    @if($avis->response->isTest)
+                                                        <div class="question-reponse question-reponse-multi sondage-reponse-istest">
+                                                            <span class="label label-warning">Test</span>
+                                                    @else
+                                                        <div class="question-reponse question-reponse-multi">
+                                                    @endif
+                                                        {!! $avis->reponse !!}
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
                                     @else
-                                        <div class="row">
+                                        <div class="row {{ $response->first()->response->isTest ? 'sondage-reponse-istest' : '' }}">
                                             <div class="col-md-4">
-                                                <h4>{{ $response->first()->response->email }}</h4>
+                                                <h4>
+                                                    {!! $response->first()->response->isTest ? '<span class="label label-warning">Test</span>' : '' !!}
+                                                    {{ $response->first()->response->email }}
+                                                </h4>
                                             </div>
                                             <div class="col-md-8">
                                                 @foreach($response as $avis)

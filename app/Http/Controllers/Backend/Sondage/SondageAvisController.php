@@ -27,7 +27,9 @@ class SondageAvisController extends Controller
             return redirect()->back();
         }
 
-        $sondage->avis()->attach($request->input('question_id'), ['rang' => $sondage->avis->max('pivot.rang')]);
+        $max = $sondage->avis->max('pivot.rang') ? $sondage->avis->max('pivot.rang') : 0;
+
+        $sondage->avis()->attach($request->input('question_id'), ['rang' => $max]);
 
         alert()->success('Question ajouté');
 
