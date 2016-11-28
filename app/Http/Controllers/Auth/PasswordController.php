@@ -75,6 +75,4 @@ class PasswordController extends Controller {
 
         return redirect()->back()->with(['status' => 'danger', 'message' => 'Les identifiants email / mot de passe ne correspondent pas'])->withInput($request->only('email'));
     }
-
-
 }

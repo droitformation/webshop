@@ -103,6 +103,11 @@ a:visited{
     top: -2px;
 }
 
+.alert {
+    margin-bottom: 0px;
+    padding: 15px;
+}
+
 a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox 4 */ -webkit-transition: 1s; /* Safari and Chrome */ -o-transition: 1s; /* Opera */ }
 .first { margin-left:0 !important; }
 .m-bottom { margin:0 0 50px; }

@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable {
 
@@ -24,6 +25,17 @@ class User extends Authenticatable {
 	 * @var array
 	 */
 	protected $fillable = ['first_name','last_name', 'email', 'password'];
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
 
     /**
      * Set the user's first name.

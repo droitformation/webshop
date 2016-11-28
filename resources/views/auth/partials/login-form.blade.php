@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="panel-footer">
-        <a href="{{ url('password/email') }}" class="pull-left text-inverse" style="padding-left:0">Mot de passe perdu?</a>
+        <a href="{{ url('password/reset') }}" class="pull-left text-inverse" style="padding-left:0">Mot de passe perdu?</a>
         <div class="pull-right">
             <button type="submit" class="btn btn-inverse">Envoyer</button>
         </div>

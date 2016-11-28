@@ -18,6 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/sweetalert.css');?>">
     <script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo asset('common/js/validation.js');?>"></script>
 
@@ -27,6 +28,7 @@
 
         <!-- messages and errors -->
         @include('backend.partials.message')
+        @include('partials.confirmation')
 
         <div class="panel panel-inverse">
 
@@ -54,5 +56,6 @@
         </div>
 
     </div>
+    <script src="<?php echo asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
 </body>
 </html>

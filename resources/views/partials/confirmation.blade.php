@@ -54,6 +54,19 @@
     </script>
 @endif
 
+@if(!empty(session('status')))
+    <script>
+        $(function(){
+            swal({
+                title: "Ok",
+                text: "<?php echo session('status'); ?>",
+                timer: 2500,
+                type: "success",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
 
 @if(!empty(session('OrderConfirmation')))
     <script>
