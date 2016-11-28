@@ -172,6 +172,8 @@ class Subscription extends Model
 
         $subscription->quantity = $quantity;
 
+        $subscription->prorate = $this->prorate;
+
         $subscription->save();
 
         $this->quantity = $quantity;
@@ -206,6 +208,20 @@ class Subscription extends Model
         }
 
         $this->billingCycleAnchor = $date;
+
+        return $this;
+    }
+
+    /**
+     * Force the trial to end immediately.
+     *
+     * This method must be combined with swap, resume, etc.
+     *
+     * @return $this
+     */
+    public function skipTrial()
+    {
+        $this->trial_ends_at = null;
 
         return $this;
     }

@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 class OrderMakerTest extends \TestCase {
+
+    use DatabaseTransactions;
 
     protected $mock;
     protected $mockship;

@@ -37,7 +37,7 @@ class ReponseEloquent implements ReponseInterface{
     {
         $reponse = $this->reponse->create(array(
             'sondage_id'  => $data['sondage_id'],
-            'isTest'      => isset($data['isTest']) ? 1 : null,
+            'isTest'      => isset($data['isTest']) && $data['isTest'] == 1 ? 1 : null,
             'email'       => $data['email'],
             'response_at' => \Carbon\Carbon::now()
         ));

@@ -30,7 +30,11 @@ class Email extends Model{
 
         $table = $doc->getElementById('mainBody');
 
-        return $table->c14n();
+        if($table){
+            return $table->c14n();
+        }
+
+        return '';
     }
 
     /**

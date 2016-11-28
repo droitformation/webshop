@@ -270,7 +270,7 @@
     </style>
 </head>
 <body class="" style="font-family: sans-serif;">
-<table border="0" cellpadding="0" cellspacing="0" class="body">
+<table border="0" cellpadding="0" cellspacing="0" class="body" id="mainBody">
     <tr>
         <td>&nbsp;</td>
         <td class="container">

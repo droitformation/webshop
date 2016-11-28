@@ -346,10 +346,26 @@ $factory->define(App\Droit\Shop\Attribute\Entities\Attribute::class, function (F
 $factory->define(App\Droit\Document\Entities\Document::class, function (Faker\Generator $faker) {
     return [
         'colloque_id' => 1,
-        'display'     => 1, 
+        'display'     => 1,
         'type'        => 'illustration',// 'illustration', 'programme', 'document'
         'path'        => 'img.jpg',
         'titre'       => 'Vignette'
+    ];
+});
+
+$factory->define(App\Droit\Sondage\Entities\Sondage::class, function (Faker\Generator $faker) {
+    return [
+        'colloque_id'  => 1,
+        'valid_at'     => 1
+    ];
+});
+
+
+$factory->define(App\Droit\Sondage\Entities\Avis::class, function (Faker\Generator $faker) {
+    return [
+        'type' => 'text',
+        'question' => '',
+        'choices' => null
     ];
 });
 

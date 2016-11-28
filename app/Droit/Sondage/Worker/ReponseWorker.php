@@ -12,8 +12,8 @@ class ReponseWorker
         $this->reponse = $reponse;
     }
 
-    public function make($data, $reponses){
-        
+    public function make($data, $reponses)
+    {
         $reponse = $this->reponse->create($data);
 
         $reponses = array_filter($reponses['reponses']);

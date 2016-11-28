@@ -8,7 +8,7 @@
     <div class="col-md-6">
         <div class="options text-right" style="margin-bottom: 10px;">
             <div class="btn-toolbar">
-               <a href="{{ url('admin/avis/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+               <a href="{{ url('admin/avis/create') }}" class="btn btn-success" id="addBtn"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
             </div>
         </div>
     </div>
