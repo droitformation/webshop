@@ -23,7 +23,7 @@
                         Nous vous remercions pour votre commande sur <a href="http://www.publications-droit.ch" style="color: #1a446e;">www.publications-droit.ch</a>.
                         Celle-ci vous parviendra dans les plus bref délais.<br/>
                     </p>
-                    <p style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }} color: #1a446e; margin-top: 15px;"><strong>Résumé de votre commande:</strong></p>
+                    <p style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }} color: #000; margin-top: 15px;"><strong>Résumé de votre commande:</strong></p>
                 </div>
             </td>
         </tr>
@@ -45,7 +45,7 @@
                                 <span class="desktopHide" style="{{ $desktopHide }}">Qt: </span>{{ $qty }}
                             </td>
                             <td class="" style="{{ $resetMargin }} width: 390px; {{ $tdTableRow }} text-align: left;">
-                                {{ $product->first()->title }}
+                                <strong>{{ $product->first()->title }}</strong>
                             </td>
                             <td class="alignRight" style="{{ $resetMargin }}width: 40px; {{ $tdTableRow }}">
                                 <span class="desktopHide" style="{{ $desktopHide }}">Subtotal: </span>
@@ -80,8 +80,8 @@
                     </tr>
 
                     <tr>
-                        <td colspan="2" class="eTotal alignRight" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width: 312px;border-bottom: 1px solid #ebebeb;font-size: 14px;line-height: 19px;color: #000;background-color: #f6f6f7;"><strong>Total</strong><br/></td>
-                        <td class="eTotal alignRight" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width:124px;border-bottom: 1px solid #ebebeb;font-size: 14px;line-height: 19px;color: #54565c;background-color: #f6f6f7;"><span class="amount" style="color: #000000;font-size: 16px;font-weight: bold;">{{ $order->total_with_shipping }} CHF</span></td>
+                        <td colspan="2" class="eTotal alignRight" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width: 312px;border-top: 1px solid #ebebeb;font-size: 14px;line-height: 19px;color: #000;background-color: #fbfbfb;"><strong>Total</strong><br/></td>
+                        <td class="eTotal alignRight" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 6px;padding-right: 6px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width:124px;border-top: 1px solid #ebebeb;font-size: 14px;line-height: 19px;color: #54565c;background-color: #fbfbfb;"><span class="amount" style="color: #000000;font-size: 16px;font-weight: bold;">{{ $order->total_with_shipping }} CHF</span></td>
                     </tr>
 
                 </table>

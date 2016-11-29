@@ -18,9 +18,9 @@ class AboUserEloquent implements AboUserInterface{
         $this->abo_rappel  = $abo_rappel;
     }
 
-    public function getAll()
+    public function getAll($nbr = null)
     {
-        return $this->abo_user->all();
+        return $this->abo_user->take($nbr)->get();
     }
 
     public function find($id)

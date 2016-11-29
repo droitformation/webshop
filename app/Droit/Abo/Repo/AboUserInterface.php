@@ -2,7 +2,7 @@
 
 interface AboUserInterface {
 
-    public function getAll();
+    public function getAll($nbr = null);
     public function find($data);
     public function max($abo_id);
     public function findByAdresse($id, $abo_id);

@@ -70,7 +70,7 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
 
     });
 
-    Route::get('inscription', function ($id = null) {
+    Route::get('inscription/{id?}', function ($id = null) {
 
         $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
@@ -79,9 +79,7 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         }
         else {
             $inscriptions = $model->getAll(10);
-            $inscription  = !$inscriptions->isEmpty() ? $inscriptions->first(function ($value, $key) {
-                return $value->user_id;
-            }) : null;
+            $inscription  = !$inscriptions->isEmpty() ? $inscriptions->first() : null;
         }
 
         if(!$inscription) {
@@ -108,6 +106,72 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         }
 
         return view('emails.colloque.confirmation')->with($data);
+    });
+
+    Route::get('rappel/{id?}', function ($id = null) {
+
+        $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
+        if($id) {
+            $inscription =  $model->find($id);
+        }
+        else {
+            $inscriptions = $model->getAll(10);
+            $inscription  = !$inscriptions->isEmpty() ? $inscriptions->first() : null;
+        }
+
+        if(!$inscription) {
+            return 'Aucune inscription à afficher';
+        }
+
+        $data = [
+            'title'        => 'Votre inscription sur publications-droit.ch',
+            'concerne'     => 'Inscription',
+            'annexes'      => $inscription->colloque->annexe,
+            'colloque'     => $inscription->colloque,
+            'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+        ];
+
+        if($inscription->group_id)
+        {
+            $data['participants'] = $inscription->groupe->participant_list;
+            $data['user']         = $inscription->groupe->user;
+        }
+
+        if($inscription->user_id)
+        {
+            $data['user'] = $inscription->user;
+        }
+
+        return view('emails.colloque.rappel')->with($data);
+    });
+
+
+    Route::get('abonnement/{id?}', function ($id = null) {
+
+        $model = new \App\Droit\Abo\Entities\Abo_users();
+        
+        if($id) {
+            $abonnement =  $model->find($id);
+        }
+        else 
+        {
+            $abonnements = $model->where('status','=','abonne')->orderBy('id','desc')->take(1)->get();
+            $abonnement  = !$abonnements->isEmpty() ? $abonnements->first() : null;
+        }
+        
+        $data = [
+            'title'     => 'Votre demande d\'abonnement sur publications-droit.ch',
+            'concerne'  => 'Votre demande d\'abonnement',
+            'logo'      => 'facdroit.png',
+            'abos'      => collect([$abonnement]),
+            'total'     => number_format((float) (20000/100), 2, '.', ''),
+            'user'      => $abonnement->user,
+            'date'      => \Carbon\Carbon::now()->formatLocalized('%d %B %Y')
+        ];
+
+        return view('emails.shop.demande')->with($data);
+
     });
 
 });

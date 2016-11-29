@@ -12,10 +12,10 @@
 
     <table style="{{ $style['email-body_inner_full'] }}" align="center" width="600" cellpadding="0" cellspacing="0">
         <tr>
-            <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }} padding: 35px 25px 20px 25px;">
+            <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }} padding: 25px 25px 20px 25px;">
                 <div style="{{ $style['body_content'] }}">
-                    <h2 style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 16px;line-height: 28px;font-weight: bold;color: #000000;">Bonjour {{ $user->name }}</h2>
-                    <p>Nous avons bien pris en compte votre inscription et vous remercions de votre intérêt.</p>
+                    <h2 style="{{$resetMargin}}margin-bottom:5px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 16px;line-height: 28px;font-weight: bold;color: #000000;">Bonjour {{ $user->name }}</h2>
+                    <p style="{{$resetMargin}}margin-bottom:10px;{{ $resetPadding }}">Nous avons bien pris en compte votre inscription et vous remercions de votre intérêt.</p>
                 </div>
 
                 <!--infos colloque -->

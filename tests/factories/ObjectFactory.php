@@ -177,13 +177,7 @@ class ObjectFactory
     {
         $products = [];
         
-        $images = \File::files(public_path('files/products'));
-        $images = collect($images)->map(function ($name) {
-            $file = explode('/', $name);
-            $file = end($file);
-
-            return $file;
-        })->toArray();
+        $images = $this->getImages();
 
         if($nbr)
         {
@@ -196,6 +190,18 @@ class ObjectFactory
         }
 
         return $this->makeProduct($images);
+    }
+
+    public function getImages()
+    {
+        $images = \File::files(public_path('files/products'));
+        
+        return collect($images)->map(function ($name) {
+            $file = explode('/', $name);
+            $file = end($file);
+
+            return $file;
+        })->toArray();
     }
 
     public function makeProduct($images)
@@ -295,5 +301,16 @@ class ObjectFactory
         return factory('App\Droit\\'.$type.'\Entities\\'.$type)->create([
             'title' => $this->faker->jobTitle
         ]);
+    }
+
+    public function makeAbo()
+    {
+        $product = $this->makeProduct($this->getImages());
+        $product = $this->addAttributesAbo($product);
+        
+        $abo =  \App\Droit\Abo\Entities\Abo::create(['title' => 'TestAbo', 'price' => 50, 'plan' => 'year']);
+        $abo->products()->attach($product->id);
+        
+        
     }
 }
