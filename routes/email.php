@@ -2,6 +2,54 @@
 
 Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']], function () {
 
+    Route::get('contact', function () {
+
+        $sites = new \App\Droit\Site\Entities\Site();
+        $sites = $sites->all();
+
+        $data = [
+            'site'     => $sites->first(),
+            'remarque' => 'Dapibus ante accumasa laoreet mauris nostra torquenté vehicula non interdùm, vehiculâ suscipit alèquam. Lorem ad quîs j\'libéro pharétra vivamus mollis ultricités ut, vulputaté ac pulvinar èst commodo aenanm pharétra cubilia, lacus aenean pharetra des ïd quisquées mauris varius sit. Mie dictumst nûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit çunc, primiés ?',
+            'name'     => 'Cindy Leschaud',
+            'email'    => 'cindy.leschaud@gmail.com'
+        ];
+
+        return view('emails.contact')->with($data);
+
+    });
+
+    Route::get('newsletter', function () {
+
+        $sites = new \App\Droit\Site\Entities\Site();
+        $sites = $sites->all();
+
+        $data = [
+            'site'  => $sites->first(),
+            'token' => '#'
+        ];
+
+        return view('emails.confirmation')->with($data);
+
+    });
+
+    Route::get('notification', function () {
+
+        $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
+        $inscriptions = $model->getAll(10);
+        $inscription  = !$inscriptions->isEmpty() ? $inscriptions->first() : null;
+
+        $data = [
+            'name'     => $inscription->inscrit->name,
+            'colloque' => $inscription->colloque->titre,
+            'what'     => 'inscription',
+            'link'     => 'admin/inscription/colloque/'.$inscription->colloque->id
+        ];
+
+        return view('emails.notification')->with($data);
+
+    });
+
     Route::get('sondage/{id?}', function ($id = null) {
 
         $model = \App::make('App\Droit\Sondage\Repo\SondageInterface');
