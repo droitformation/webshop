@@ -381,3 +381,18 @@ $factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($fact
 
 
 
+$factory->define(App\Droit\Reminder\Entities\Reminder::class, function (Faker\Generator $faker) {
+
+    return [
+        'send_at'  => \Carbon\Carbon::now()->addMonth(1),
+        'start'    => \Carbon\Carbon::now()->addDay(1),
+        'title'    => 'Rappel pour le colloque',
+        'text'     => 'Dapibus ante accumasa laoreet mauris nostra toittis énis molestie vehicula non interdùm, vehiculâ suscipit alèquam. Lorem ad quîs j\'libéro pharétra vivamus mollis ultricités ut, vulputaté ac pulvinar èst commodo aenanm pharétra cubilia, lacus aenean pharetra des ïd quisquées mauris varius sit. Mie dictumst nûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit çunc, primiés ?',
+        'type'     => 'colloque',
+        'interval' => 'month',
+        'model_id' => 39,
+        'model'    => 'App\Droit\Colloque\Entities\Colloque',
+        'relation' => null,
+        'relation_id' => null,
+    ];
+});

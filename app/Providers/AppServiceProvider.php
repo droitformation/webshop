@@ -33,6 +33,10 @@ class AppServiceProvider extends ServiceProvider {
         ], 'App\Http\ViewComposers\SiteComposer');
 
         view()->composer([
+            'emails.*',
+        ], 'App\Http\ViewComposers\EmailComposer');
+
+        view()->composer([
             'backend.colloques.show',
             'backend.colloques.partials.occurrences',
         ], 'App\Http\ViewComposers\ColloqueComposer');

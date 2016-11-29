@@ -1,23 +1,29 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="utf-8">
-</head>
-<body style="font-family: arial, sans-serif;">
+@extends('emails.layouts.notification')
+@section('content')
 
-    <div style="font-family: arial, sans-serif;">
+    <?php $config = config('reminder.'.$reminder->type); ?>
 
-        <?php $config = config('reminder.'.$reminder->type); ?>
-
-        <h3 style="color: #252f73;font-size: 18px;font-weight: 300;letter-spacing: 0;line-height: 30px;">{{ $reminder->title }}</h3>
-        <p style="color: #000;font-size: 18px;letter-spacing: 0;line-height: 30px;">
-            @if($item)
-                <strong> Pour le {{ $config['name'] }} :</strong> {{ $item->titre or $item->title }}
-            @endif
-        </p>
-        <p>{!! $reminder->text !!}</p>
-        <p><a style="font-family: arial, sans-serif;color: #444; font-size: 13px;" href="{{ url('/') }}">Administration Droit Formation</a></p>
-    </div>
-
-</body>
-</html>
+    <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url('pubdroit') }}" target="_blank">
+        <img width="max-width:100%;" src="{{ asset('files/uploads/header_email.png') }}" alt="{{ config('app.name') }}">
+    </a>
+    <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="{{ $fontFamily }} {{ $style['email-body_cell_header'] }}">
+                <!-- Greeting -->
+                <h1 style="{{ $style['header-1'] }}">{{ $reminder->title }}</h1>
+                @if($item)
+                    <p style="color: #000;margin-top: 5px;margin-bottom: 0px;">
+                        <strong> Pour le {{ $config['name'] }}</strong><br/> {{ $item->titre or $item->title }}
+                    </p>
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}">
+                <div style="{{ $style['paragraph'] }}">
+                    {!! $reminder->text !!}
+                </div>
+            </td>
+        </tr>
+    </table>
+@stop

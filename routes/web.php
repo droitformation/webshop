@@ -451,6 +451,9 @@ Auth::routes();
 Route::get('password/new', 'Auth\PasswordController@getNew');
 Route::post('password/define', 'Auth\PasswordController@postDefine');
 
+
+require base_path('routes/email.php');
+
 /*
  * Only for development
  * */

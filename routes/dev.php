@@ -148,34 +148,17 @@ Route::get('testing', function() {
 
 });
 
-Route::get('sondage', function()
+Route::get('sondage_test', function()
 {
     $model = \App::make('App\Droit\Sondage\Repo\SondageInterface');
 
-    $sondage = $model->find(1);
-
-    $max = $sondage->questions->max('pivot.rang');
-
-    $exist = $sondage->questions->contains('id',1);
-
-/*    $sondages = $model->getAll();
-
-    $sorting = [2,1,3,5,4];
-    $id = 23;
-
-    $multiplied = collect($sorting)->map(function($item,$key) {
-        return ['key' => $key, 'id' => $item];
-    })->mapWithKeys(function($item) {
-        return [['key' => $item['id'], 'rang' => $item['key']]];
-    })->keyBy('key')->map(function ($item, $key) {
-        unset($item['key']);
-        return $item;
-    });*/
-
+    $sondages = $model->getAll();
+    $sondage =  $sondages->first();
 
     echo '<pre>';
-    print_r($exist);
+    print_r($sondage);
     echo '</pre>';exit();
+
 });
 
 Route::get('cartworker', function()
