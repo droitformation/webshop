@@ -15,7 +15,9 @@
                     <td align="top" width="60%" valign="top">
                         <div id="facdroit">
                             <li>{{ \Registry::get('shop.infos.nom') }}</li>
-                            <li>{!! \Registry::get('shop.infos.adresse') !!}</li>
+                            <li class="mb-5">{!! \Registry::get('shop.infos.adresse') !!}</li>
+                            {!! !empty(\Registry::get('shop.infos.telephone')) ? '<li>Tél. '.\Registry::get('shop.infos.telephone').'</li>' : '' !!}
+                            {!! !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
                         </div>
                     </td>
                     <td align="top" width="40%" valign="top">

@@ -59,6 +59,13 @@ class Abo_users extends Model{
         return isset($user) ? $user : null;
     }
 
+    public function getUserFacturationAttribute()
+    {
+        $user = isset($this->tiers) ? $this->tiers : $this->user;
+
+        return isset($user) ? $user : null;
+    }
+
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

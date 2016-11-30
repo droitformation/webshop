@@ -55,7 +55,11 @@
             <ul class="dropdown-menu userinfo arrow">
                 <li class="userlinks">
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('logout') }}"><i class="pull-right fa  fa-power-off"></i> Logout</a></li>
+                        <li>
+                            <form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
+                                <button class="btn btn-default btn-xs" type="submit"><i class="fa fa-power-off" aria-hidden="true"></i> &nbsp;Logout</button>
+                            </form>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -153,6 +157,7 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/colloque.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/rappels.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/abo.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/sorting.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/member.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>

@@ -39,15 +39,15 @@ class MergeRappels extends Job implements ShouldQueue
         $worker  = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
         $facture = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
-        $rappels = $facture->getFacturesAndRappels($product_id);
+        $factures = $facture->getRappels($product_id);
 
-        if(!$rappels->isEmpty())
+        if(!$factures->isEmpty())
         {
             // Directory for edition => product_id
-            $dir = 'files/abos/rappel/'.$this->product_id;
+            $dir = 'files/abos/rappel/'.$product_id;
 
             // Get all files in directory
-            $lists = $rappels->map(function ($item, $key) use ($product_id)
+            $lists = $factures->map(function ($item, $key) use ($product_id)
             {
                 $rappel = $item->rappels->sortByDesc('created_at')->first();
                 $pdf    = 'files/abos/rappel/'.$product_id.'/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';

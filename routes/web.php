@@ -380,10 +380,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');
     Route::get('facture/generate/{id}', 'Backend\Abo\AboFactureController@generate');
     Route::get('facture/bind/{id}', 'Backend\Abo\AboFactureController@bind');
+    Route::post('facture/edit', 'Backend\Abo\AboFactureController@edit');
     Route::resource('facture', 'Backend\Abo\AboFactureController');
 
     Route::get('rappel/generate/{id}', 'Backend\Abo\AboRappelController@generate');
     Route::get('rappel/bind/{id}', 'Backend\Abo\AboRappelController@bind');
+    Route::post('rappel/send', 'Backend\Abo\AboRappelController@send');
+    Route::get('rappel/{id}', 'Backend\Abo\AboRappelController@index');
+    Route::get('rappels/{id}','Backend\Abo\AboRappelController@rappels');
     Route::resource('rappel', 'Backend\Abo\AboRappelController');
 
     Route::get('abo/desinscription/{id}', 'Backend\Abo\AboController@desinscription');

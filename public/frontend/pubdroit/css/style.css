@@ -368,8 +368,8 @@ margin-bottom:0;
 .s-product article {position: relative;min-height: 130px;}
 .s-product article h3 {
     color: #809f14;
-    font-size: 15px;
-    line-height: 15px;
+    font-size: 14px;
+    line-height: 14px;
     margin: 0 0 5px;
 }
 .s-product article h3 a{
@@ -395,6 +395,16 @@ margin-bottom:0;
     bottom: -5px;
     position: absolute;
 }
+.cart-price form{
+    margin-bottom: 5px;
+    min-height: 30px;
+}
+.cart-price form:after{
+    content: ".";
+    visibility: hidden;
+    clear: both;
+    height:0;
+}
 .cart-price span.cart {
     background:url(../images/cart-icon2.png) no-repeat left top;
     line-height:23px;
@@ -410,6 +420,9 @@ margin-bottom:0;
     line-height:23px;
     border-left:1px solid #5a5a5a;
     padding:0 0 0 10px;
+}
+.cart-price small{
+    display: block;
 }
 .product-image{
     max-height: 337px;

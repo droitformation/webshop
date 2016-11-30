@@ -10,7 +10,8 @@ return [
 
     'names' => [
         'civilite_title'   => 'Civilité',
-        'name'             => 'Nom et prénom',
+        'first_name'       => 'Prénom',
+        'last_name'        => 'Nom',
         'email'            => 'E-mail',
         'profession_title' => 'Profession',
         'company'          => 'Entrprise',

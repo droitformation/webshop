@@ -14,7 +14,7 @@ class DomainEloquent implements DomainInterface{
 
     public function getAll(){
 
-        return $this->domain->all();
+        return $this->domain->orderBy('title','asc')->get();
     }
 
     public function search($term)

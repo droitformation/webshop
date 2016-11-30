@@ -43,7 +43,7 @@ class AboFactureController extends Controller {
         $abo      = $this->abo->findAboByProduct($id);
         $product  = $this->product->find($id);
 
-        $dir      = 'files/abos/bound/'.$abo->id.'/*_'.$product->reference.'_'.$product->edition_clean.'.pdf';
+        $dir      = 'files/abos/bound/'.$abo->id.'/factures_'.$product->reference.'_'.$product->edition_clean.'.pdf';
         $files    = \File::glob($dir);
 
         return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
@@ -121,6 +121,13 @@ class AboFactureController extends Controller {
         alert()->success('La création des factures est en cours.<br/>Un email vous sera envoyé dès que la génération des factures sera terminée.');
 
         return redirect()->back();
+    }
+
+    public function edit(Request $request)
+    {
+        $facture = $this->facture->update(['id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
+
+        return response()->json(['OK' => 200, 'etat' => (!$facture->payed_at ? 'En attente' : 'Payé'),'color' => (!$facture->payed_at ? 'default' : 'success')]);
     }
 
     /*

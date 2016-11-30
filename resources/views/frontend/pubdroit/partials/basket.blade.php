@@ -9,6 +9,7 @@
                 <span class="price">{{ $product->price_cents }} CHF</span>
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
             </form>
+            <small><i>Prix public recommandé</i></small>
         @else
             <p class="text-muted">Ouvrage épuisé</p>
         @endif

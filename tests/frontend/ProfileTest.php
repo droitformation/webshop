@@ -72,6 +72,8 @@ class ProfileTest extends TestCase {
 	 */
 	public function testInscriptionColloque()
 	{
+		$this->withoutEvents();
+		
 		$make = new \tests\factories\ObjectFactory();
 		$colloque = $make->colloque();
 

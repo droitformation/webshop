@@ -21,16 +21,7 @@
                 <tr><td colspan="2" height="10">&nbsp;</td></tr>
                 <tr align="top">
                     <td align="top" width="60%" valign="top">
-                        @if(isset($colloque) && isset($colloque->adresse))
-                            <div id="facdroit">
-                                <li>{!! $colloque->adresse->adresse !!}</li>
-                            </div>
-                        @else
-                            <ul id="facdroit">
-                                <li>{!! \Registry::get('inscription.infos.nom') !!}</li>
-                                <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
-                            </ul>
-                        @endif
+                        @include('templates.colloque.partials.adresse', ['colloque' => isset($colloque) ? : null])
                     </td>
                     <td align="top" width="40%" valign="top">
 

@@ -3,31 +3,36 @@
 
 <?php $abo     = $generate->getAbo(); ?>
 <?php $facture = $generate->getFacture(); ?>
+
 <div id="content">
-    <table id="content-table">
-        <tr>
-            <td><img height="70mm" src="{{ public_path('files/main/'.\Registry::get('abo.infos.logo')) }}" alt="Unine logo" /></td>
-            <td align="right">
-                @if($abo->abo->logo_file)
-                    <img height="65mm" src="{{ public_path('files/main/'.$abo->abo->logo_file) }}" alt="logo" />
-                @endif
-            </td>
-        </tr>
-        <tr><td colspan="2" height="5">&nbsp;</td></tr>
-        <tr align="top">
-            <td align="top" width="60%" valign="top">
-                <div id="facdroit">
-                    {!! ($abo->abo->name ? '<li>'.$abo->abo->name.'</li>' : '') !!}
-                    <li>{!! \Registry::get('abo.infos.nom') !!}</li>
-                    <li>{!! \Registry::get('abo.infos.adresse') !!}</li>
-                </div>
-            </td>
-            <td align="top" width="40%" valign="top">
-                @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
-            </td>
-        </tr>
-        <tr><td colspan="2" height="1">&nbsp;</td></tr>
-    </table>
+    <div id="header-main">
+        <table id="content-table">
+            <tr><td colspan="2" height="30">&nbsp;</td></tr>
+            <tr>
+                <td><img height="70mm" id="logoImg" src="{{ public_path('files/main/'.\Registry::get('abo.infos.logo')) }}" alt="Unine logo" /></td>
+                <td align="right">
+                    @if($abo->abo->logo_file)
+                        <img height="65mm" src="{{ public_path('files/main/'.$abo->abo->logo_file) }}" alt="logo" />
+                    @endif
+                </td>
+            </tr>
+            <tr><td colspan="2" height="10">&nbsp;</td></tr>
+            <tr align="top">
+                <td align="top" width="60%" valign="top">
+                    <div id="facdroit">
+                        {!! ($abo->abo->name ? '<li>'.$abo->abo->name.'</li>' : '') !!}
+                        <li>{!! \Registry::get('abo.infos.nom') !!}</li>
+                        <li class="mb-5">{!! \Registry::get('abo.infos.adresse') !!}</li>
+                        {!!  !empty(\Registry::get('shop.infos.telephone')) ? '<li>Tél. '.\Registry::get('shop.infos.telephone').'</li>' : '' !!}
+                        {!!  !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
+                    </div>
+                </td>
+                <td align="top" width="40%" valign="top">
+                    @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <h1 class="title blue">
         <?php $rappel = (isset($rappel) ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span>' : ''); ?>

@@ -53,7 +53,7 @@ class ExportadresseTest extends TestCase {
         $converted = $converted->toArray();
 
         $expect = [
-            'Madame', 'Cindy Leschaud', 'cindy.leschaud@gmail.com', 'Avocat', 'DesignPond', '032 690 00 23', '032 690 00 23',
+            'Madame', 'Cindy','Leschaud', 'cindy.leschaud@gmail.com', 'Avocat', 'DesignPond', '032 690 00 23', '032 690 00 23',
             'Ruelle de l\'hôtel de ville 3', '', '', '2520', 'La Neuveville', 'Berne (BE)', 'Suisse',
         ];
 

@@ -15,7 +15,6 @@
                 page-break-inside:avoid;
                 box-sizing: border-box;
                 position: relative;
-                background: #f5f5f5;
             }
             div{
                 width: auto;

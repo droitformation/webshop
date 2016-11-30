@@ -592,6 +592,18 @@ select[multiple] {
     line-height: 18px;
 }
 
+.logout{
+    margin: 0 5px;
+}
+
+.dropdown-menu.userinfo .userlinks ul li {
+    margin: 0;
+}
+
+.dropdown-menu.userinfo {
+    min-width: 100px;
+    padding: 5px 10px;
+}
 
 .panel-colloque .media-body p{
     line-height: 17px;

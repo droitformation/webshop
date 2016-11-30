@@ -39,11 +39,11 @@ class AboWorker implements AboWorkerInterface{
 
     public function rappels($product_id, $abo_id)
     {
-        $factures = $this->facture->findByProduct($product_id);
+        $factures = $this->facture->getRappels($product_id);
 
         if(!$factures->isEmpty())
         {
-            $chunks = $factures->chunk(20);
+            $chunks = $factures->chunk(10);
 
             foreach($chunks as $chunk)
             {
@@ -71,7 +71,7 @@ class AboWorker implements AboWorkerInterface{
         if(!$abo->abonnements->isEmpty())
         {
             $abonnes = $abo->abonnements->whereIn('status',['abonne']);
-            $chunks  = $abonnes->chunk(20);
+            $chunks  = $abonnes->chunk(10);
 
             foreach($chunks as $chunk)
             {

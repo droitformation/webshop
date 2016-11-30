@@ -56,6 +56,21 @@
             <input type="text" name="email" class="form-control" value="{{ $adresse->email }}">
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Téléphone</label>
+        <div class="col-sm-7">
+            <input type="text" name="telephone" class="form-control" value="{{ $adresse->telephone }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Mobile</label>
+        <div class="col-sm-7">
+            <input type="text" name="mobile" class="form-control" value="{{ $adresse->mobile }}">
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="col-sm-4 control-label">Profession</label>
         <div class="col-sm-7">

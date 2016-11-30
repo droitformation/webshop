@@ -44,6 +44,21 @@
             <input type="text" name="email" class="form-control" value="{{ isset($user) ? $user->email : '' }}">
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Téléphone</label>
+        <div class="col-sm-5">
+            <input type="text" name="telephone" class="form-control" value="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Mobile</label>
+        <div class="col-sm-5">
+            <input type="text" name="mobile" class="form-control" value="">
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="col-sm-3 control-label">Profession</label>
         <div class="col-sm-7 col-xs-12">

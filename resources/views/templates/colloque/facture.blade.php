@@ -15,20 +15,8 @@
                 <tr><td colspan="2" height="10">&nbsp;</td></tr>
                 <tr align="top">
                     <td align="top" width="60%" valign="top">
-
-                        @if(isset($colloque) && isset($colloque->adresse))
-                            <div id="facdroit">
-                                <li>{!! $colloque->adresse->adresse !!}</li>
-                            </div>
-                        @else
-                            <ul id="facdroit">
-                                <li>{!! \Registry::get('inscription.infos.nom') !!}</li>
-                                <li>{!! \Registry::get('inscription.infos.adresse') !!}</li>
-                            </ul>
-                        @endif
-
+                        @include('templates.colloque.partials.adresse', ['colloque' => isset($colloque) ? : null])
                         <p class="tva">{{ $tva['numero'] }}</p>
-
                     </td>
                     <td align="top" width="40%" valign="top">
                         @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
@@ -115,15 +103,15 @@
             <tr><td height="20">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top" style="margin-top: 20px;">
-                    @if(!empty($generate->getColloque()->annexe) && in_array('bon',$generate->getColloque()->annexe))
 
+                    @if(!empty($generate->getColloque()->annexe) && in_array('bon',$generate->getColloque()->annexe) && !$rappel)
                         @if(is_array($generate->getNo()))
                             <p class="red"><strong>Annexes : bons de participation à présenter à l'entrée</strong></p>
                         @else
                             <p class="red"><strong>Annexe : bon de participation à présenter à l'entrée</strong></p>
                         @endif
-
                     @endif
+
                 </td>
             </tr>
         </table>

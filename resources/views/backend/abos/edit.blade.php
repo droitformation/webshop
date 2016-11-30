@@ -102,8 +102,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="message" class="col-sm-3 control-label">Produits</label>
-                            <div class="col-sm-5 col-xs-8">
+                            <label for="message" class="col-sm-3 col-xs-12 control-label">Produits</label>
+                            <div class="col-sm-5 col-xs-12">
                                 <select multiple class="form-control" id="multi-select" name="products_id[]">
                                     <?php $product_abos = !$abo->products->isEmpty() ? $abo->products->pluck('id')->all() : []; ?>
                                     @if(!$products->isEmpty())
@@ -112,6 +112,9 @@
                                         @endforeach
                                     @endif
                                 </select>
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">Seul les livres ayant les éléments de références pour la facture sont affichés</p>
                             </div>
                         </div>
 

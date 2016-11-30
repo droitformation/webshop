@@ -39,6 +39,11 @@ class AboFactureEloquent implements AboFactureInterface{
         return $this->facture->with(['rappels'])->where('product_id','=',$product_id)->get();
     }
 
+    public function getRappels($product_id)
+    {
+        return $this->facture->with(['rappels'])->where('product_id','=',$product_id)->whereNull('payed_at')->get();
+    }
+
     public function findByProduct($product_id)
     {
         return $this->facture->where('product_id','=',$product_id)->whereNull('payed_at')->get();

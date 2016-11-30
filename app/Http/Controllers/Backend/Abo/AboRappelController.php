@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Jobs\NotifyJobFinished;
 use App\Jobs\MergeRappels;
+use App\Jobs\MakeRappelAbo;
+use App\Jobs\SendRappelAboEmail;
 
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Droit\Abo\Worker\AboWorkerInterface;
@@ -33,6 +35,20 @@ class AboRappelController extends Controller {
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
+    
+    public function index($id)
+    {
+        $factures = $this->facture->getRappels($id);
+
+
+        $abo      = $this->abo->findAboByProduct($id);
+        $product  = $this->product->find($id);
+
+        $dir      = 'files/abos/bound/'.$abo->id.'/rappels_'.$product->reference.'_'.$product->edition_clean.'.pdf';
+        $files    = \File::glob($dir);
+
+        return view('backend.abonnements.rappels.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
+    }
 
 	public function store(Request $request)
 	{
@@ -110,5 +126,32 @@ class AboRappelController extends Controller {
         alert()->success('Les rappels sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
 
         return redirect()->back();
+    }
+
+    public function send(Request $request)
+    {
+        $rappels = $this->facture->find($request->input('rappels'));
+        
+        // Send the rappels via email
+        $job = (new SendRappelAboEmail($rappels))->delay(\Carbon\Carbon::now()->addMinutes(1));
+        $this->dispatch($job);
+
+        alert()->success('Rappels envoyés');
+
+        return redirect()->back();
+    }
+
+    public function rappels(Request $request, $product_id)
+    {
+        $factures = $this->facture->find($product_id);
+
+        if($request->ajax())
+        {
+            $rappels = $factures->map(function ($item, $key) {
+                return ['id' => $item->id, 'name' => $item->abonnement->user_facturation->name, 'numero' => $item->abonnement->numero];
+            });
+
+            return response()->json($rappels);
+        }
     }
 }

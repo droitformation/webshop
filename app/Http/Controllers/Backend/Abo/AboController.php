@@ -54,7 +54,7 @@ class AboController extends Controller {
     {
         $abo      = $this->abo->find($id);
         $plans    = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
-        $products = $this->product->getAll(null,null,true); // all with hidden ones
+        $products = $this->product->forAbos();
 
         return view('backend.abos.edit')->with(['abo' => $abo, 'plans' => $plans, 'products' => $products]);
     }
