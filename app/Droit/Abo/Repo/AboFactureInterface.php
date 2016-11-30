@@ -3,6 +3,7 @@
 interface AboFactureInterface {
 
     public function getAll($product_id);
+    public function getMultiple($ids);
     public function find($data);
     public function findByUserAndProduct($abo_user_id, $product_id);
     public function findByProduct($product_id);

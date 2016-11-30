@@ -84,7 +84,7 @@
                                         <td>
                                             @include('backend.abonnements.partials.payed',['facture' => $facture])
                                         </td>
-                                        <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
+                                        <td>{{ $facture->created_at->formatLocalized('%d %b %Y') }}</td>
                                         <td>
                                             @if(!$facture->rappels->isEmpty())
                                                 <ol>

@@ -4,13 +4,6 @@
 
 var url  = location.protocol + "//" + location.host+"/";
 
-$('body').on('click','#select_all',function(){
-    var checked = this.checked ? true : false;
-    $('.checkbox_all input.rappel-input').each(function(){
-        this.checked = checked;
-    });
-});
-
 $('body').on('click','#confirmSendAboRappels',function(event){
     event.stopPropagation();event.preventDefault();
 
@@ -25,10 +18,10 @@ $('body').on('click','#confirmSendAboRappels',function(event){
             var $list = [];
 
             $.each(result,function(index, value) {
-                $list.push('<p><input type="checkbox" checked class="rappel-input" name="inscriptions[]" value="'+ value.id +'" />'+ value.name +' : '+ value.inscription_no + '</p>' );
+                $list.push('<p><input type="checkbox" checked class="rappel-input" name="rappels[]" value="'+ value.id +'" />'+ value.name +' : '+ value.numero + '</p>' );
             });
 
-            var $html = '<form id="sendRappelForm" action="' + url + 'admin/inscription/rappel/send" method="POST">'
+            var $html = '<form id="sendAboRappelForm" action="' + url + 'admin/rappel/send" method="POST">'
                         + '<input type="hidden" name="_token" value="' + $("meta[name='_token']").attr('content') + '">'
                         + '<p><input id="select_all" type="checkbox"> &nbsp;Tout cocher/décocher</p>'
                         + '<div class="checkbox_all">'
@@ -44,9 +37,9 @@ $('body').on('click','#confirmSendAboRappels',function(event){
                 callback: function (result) {
                     if(result){
 
-                        console.log($('#sendRappelForm'))
+                        console.log($('#sendAboRappelForm'))
 
-                        $('#sendRappelForm').submit();
+                        $('#sendAboRappelForm').submit();
                     }
 
                     bootbox.hideAll();

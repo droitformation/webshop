@@ -15,7 +15,6 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         ];
 
         return view('emails.contact')->with($data);
-
     });
 
     Route::get('newsletter', function () {
@@ -220,6 +219,30 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
 
         return view('emails.shop.demande')->with($data);
 
+    });
+
+    Route::get('aborappel', function () {
+
+        $model    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+        $factures = $model->getAll(303);
+        $facture  = !$factures->isEmpty() ? $factures->first() : null;
+
+        if($facture)
+        {
+            $rappel = $facture->rappels->sortBy('created_at')->last();
+
+            $data = [
+                'title'       => 'Abonnement sur publications-droit.ch',
+                'concerne'    => 'Rappel',
+                'abonnement'  => $facture->abonnement,
+                'abo'         => $facture->abonnement->abo,
+                'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            ];
+
+            return view('emails.abo.rappel')->with($data);
+        }
+
+        return 'Aucune rappel à afficher';
     });
 
 });

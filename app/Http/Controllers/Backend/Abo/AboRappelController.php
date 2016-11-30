@@ -130,10 +130,8 @@ class AboRappelController extends Controller {
 
     public function send(Request $request)
     {
-        $rappels = $this->facture->find($request->input('rappels'));
-        
-        // Send the rappels via email
-        $job = (new SendRappelAboEmail($rappels))->delay(\Carbon\Carbon::now()->addMinutes(1));
+        //Send the rappels via email
+        $job = (new SendRappelAboEmail($request->input('rappels')))->delay(\Carbon\Carbon::now()->addMinutes(1));
         $this->dispatch($job);
 
         alert()->success('Rappels envoyés');
@@ -141,17 +139,14 @@ class AboRappelController extends Controller {
         return redirect()->back();
     }
 
-    public function rappels(Request $request, $product_id)
+    public function rappels($product_id)
     {
-        $factures = $this->facture->find($product_id);
+        $factures = $this->facture->getRappels($product_id);
 
-        if($request->ajax())
-        {
-            $rappels = $factures->map(function ($item, $key) {
-                return ['id' => $item->id, 'name' => $item->abonnement->user_facturation->name, 'numero' => $item->abonnement->numero];
-            });
+        $rappels = $factures->map(function ($item, $key) {
+            return ['id' => $item->id, 'name' => $item->abonnement->user_facturation->name, 'numero' => $item->abonnement->numero];
+        });
 
-            return response()->json($rappels);
-        }
+        return response()->json($rappels);
     }
 }

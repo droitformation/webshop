@@ -387,7 +387,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('rappel/bind/{id}', 'Backend\Abo\AboRappelController@bind');
     Route::post('rappel/send', 'Backend\Abo\AboRappelController@send');
     Route::get('rappel/{id}', 'Backend\Abo\AboRappelController@index');
-    Route::get('rappels/{id}','Backend\Abo\AboRappelController@rappels');
+    Route::get('abo/rappels/{id}','Backend\Abo\AboRappelController@rappels');
     Route::resource('rappel', 'Backend\Abo\AboRappelController');
 
     Route::get('abo/desinscription/{id}', 'Backend\Abo\AboController@desinscription');
