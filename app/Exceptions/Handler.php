@@ -148,6 +148,11 @@ class Handler extends ExceptionHandler {
             return redirect()->back();
 		}
 
+		if($e instanceof \Illuminate\Database\Eloquent\ProductNotFoundException){
+			alert()->warning('Aucune livre trouvé pour abonnent');
+			return redirect()->back();
+		}
+
 		if ($e instanceof \Illuminate\Session\TokenMismatchException)
 			return redirect('login');
 

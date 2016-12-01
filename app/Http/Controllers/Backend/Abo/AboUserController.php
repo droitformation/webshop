@@ -9,7 +9,7 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
-use App\Droit\Abo\Worker\AboWorkerInterface;
+use App\Droit\Abo\Worker\AboFactureWorkerInterface;
 
 class AboUserController extends Controller {
 
@@ -19,7 +19,7 @@ class AboUserController extends Controller {
     protected $facture;
     protected $worker;
 
-    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboFactureInterface $facture, AboWorkerInterface $worker)
+    public function __construct(AboUserInterface $abonnement, AdresseInterface $adresse, AboInterface $abo, AboFactureInterface $facture, AboFactureWorkerInterface $worker)
     {
         $this->abonnement = $abonnement;
         $this->adresse    = $adresse;
@@ -65,7 +65,7 @@ class AboUserController extends Controller {
         {
             $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $request->input('product_id')]);
 
-            $this->worker->make($facture->id);
+            $this->worker->make($facture);
         }
 
         alert()->success('L\'abonné a été crée');

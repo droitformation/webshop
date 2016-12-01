@@ -37,81 +37,6 @@ class AboWorker implements AboWorkerInterface{
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
-    public function rappels($product_id, $abo_id)
-    {
-        $factures = $this->facture->getRappels($product_id);
-
-        if(!$factures->isEmpty())
-        {
-            $chunks = $factures->chunk(10);
-
-            foreach($chunks as $chunk)
-            {
-                $job = (new MakeRappelAbo($chunk, $product_id));
-                $this->dispatch($job);
-            }
-
-            $product = $factures->first()->product;
-
-            // Name of the pdf file with all the invoices bound together for a particular edition
-            $name = 'rappels_'.$product->reference.'_'.$product->edition_clean;
-
-            // Job for merging documents
-            $merge = (new MergeRappels($product->id, $name, $abo_id));
-            $this->dispatch($merge);
-
-            $job = (new NotifyJobFinished('Les rappels ont été crées et attachés. Nom du fichier: <strong>'.$name.'</strong>'));
-            $this->dispatch($job);
-        }
-    }
-
-    public function generate($abo, $product_id, $all = false)
-    {
-        // All abonnements for the product
-        if(!$abo->abonnements->isEmpty())
-        {
-            $abonnes = $abo->abonnements->whereIn('status',['abonne']);
-            $chunks  = $abonnes->chunk(10);
-
-            foreach($chunks as $chunk)
-            {
-                $job = (new MakeFactureAbo($chunk, $product_id, $all));
-                $this->dispatch($job);
-            }
-
-            $product = $abo->products->where('id', $product_id);
-            $product = !$product->isEmpty() ? $product->first() : null;
-
-            if($product)
-            {
-                // Name of the pdf file with all the invoices bound together for a particular edition
-                $name = 'factures_'.$product->reference.'_'.$product->edition_clean;
-
-                // Job for merging documents
-                $merge = (new MergeFactures($product->id, $name, $abo->id));
-                $this->dispatch($merge);
-
-                $job = (new NotifyJobFinished('Les factures ont été crées et attachés. Nom du fichier: '.$name));
-                $this->dispatch($job);
-            }
-        }
-    }
-
-    public function make($facture_id, $rappel = false)
-    {
-        $rappels = null;
-
-        $facture = $this->facture->find($facture_id);
-
-        if($rappel)
-        {
-            $rappels = $this->rappel->findByFacture($facture_id);
-            $rappels = $rappels->count();
-        }
-
-        $this->generator->makeAbo('facture', $facture, $rappels, $rappel);
-    }
-
     /**
      *  Merging pdfs
      */
@@ -138,29 +63,6 @@ class AboWorker implements AboWorkerInterface{
         }
 
         $pdf->merge('file', $outputName, 'P');
-    }
-
-    public function update($abonnement)
-    {
-        $factures = $abonnement->factures;
-
-        if(!$factures->isEmpty())
-        {
-            foreach($factures as $facture)
-            {
-                if($abonnement->status == 'abonne')
-                {
-                    $this->generator->makeAbo('facture', $facture);
-                }
-                else
-                {
-                     if (!\File::exists($facture->abo_facture))
-                     {
-                         \File::delete($facture->abo_facture);
-                     }
-                }
-            }
-        }
     }
 
     /**

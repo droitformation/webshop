@@ -3,16 +3,13 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Jobs\NotifyJobFinished;
-use App\Jobs\MergeFactures;
 
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
-use App\Droit\Abo\Worker\AboWorkerInterface;
+use App\Droit\Abo\Worker\AboFactureWorkerInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
-use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
 class AboFactureController extends Controller {
 
@@ -21,17 +18,15 @@ class AboFactureController extends Controller {
     protected $facture;
     protected $rappel;
     protected $product;
-    protected $generator;
     protected $worker;
 
-    public function __construct(AboUserInterface $abonnement, AboInterface $abo, AboFactureInterface $facture, ProductInterface $product, AboRappelInterface $rappel, PdfGeneratorInterface $generator, AboWorkerInterface $worker)
+    public function __construct(AboUserInterface $abonnement, AboInterface $abo, AboFactureInterface $facture, ProductInterface $product, AboRappelInterface $rappel, AboFactureWorkerInterface $worker)
     {
         $this->abo        = $abo;
         $this->abonnement = $abonnement;
         $this->facture    = $facture;
         $this->rappel     = $rappel;
         $this->product    = $product;
-        $this->generator  = $generator;
         $this->worker     = $worker;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -42,21 +37,17 @@ class AboFactureController extends Controller {
         $factures = $this->facture->getAll($id);
         $abo      = $this->abo->findAboByProduct($id);
         $product  = $this->product->find($id);
-
-        $dir      = 'files/abos/bound/'.$abo->id.'/factures_'.$product->reference.'_'.$product->edition_clean.'.pdf';
-        $files    = \File::glob($dir);
+        
+        $files    = \File::glob('files/abos/bound/'.$abo->id.'/factures_'.$product->reference.'_'.$product->edition_clean.'.pdf');
 
         return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
     }
 
     public function show($id)
     {
-        $facture    = $this->facture->find($id);
-        $abo        = $this->abo->find($facture->abonnement->abo_id);
-        $abonnement = $this->abonnement->find($facture->abo_user_id);
-        $product    = $this->product->find($facture->product_id);
-
-        return view('backend.abonnements.factures.show')->with([ 'facture' => $facture, 'abo' => $abo, 'abonnement' => $abonnement, 'product' => $product ]);
+        $facture = $this->facture->find($id);
+        
+        return view('backend.abonnements.factures.show')->with([ 'facture' => $facture, 'abo' => $facture->abonnement->abo, 'abonnement' => $facture->abonnement, 'product' => $facture->product ]);
     }
 
 	public function store(Request $request)
@@ -64,19 +55,11 @@ class AboFactureController extends Controller {
         $type = $request->input('type');
         $item = $this->$type->create($request->except('type'));
 
-        if($type == 'rappel')
-        {
-            $this->worker->make($request->input('abo_facture_id'), $item);
-        }
-        else
-        {
-            $this->worker->make($item->id);
-        }
-
+        $this->worker->make($item);
+        
         alert()->success($type.' a été crée');
 
         return redirect()->back();
-
 	}
 
     public function update(Request $request, $id)
@@ -88,12 +71,10 @@ class AboFactureController extends Controller {
 
         if($price)
         {
-            $abonnement = $this->abonnement->find($facture->abo_user_id);
-            $abonnement->price = $request->input('price') * 100;
-            $abonnement->save();
+            $this->abonnement->update(['id' => $facture->abo_user_id, 'price' => $request->input('price') * 100]);
         }
 
-        $this->worker->make($facture->id);
+        $this->worker->make($facture);
 
         alert()->success('La facture a été mis à jour');
 
@@ -108,48 +89,15 @@ class AboFactureController extends Controller {
 
         return redirect()->back();
 	}
-
+    
     /*
-     * Generate all invoices and bind the all
+     * Ajax Call
      * */
-    public function generate($product_id)
-    {
-        $abo = $this->abo->findAboByProduct($product_id);
-
-        $this->worker->generate($abo, $product_id);
-
-        alert()->success('La création des factures est en cours.<br/>Un email vous sera envoyé dès que la génération des factures sera terminée.');
-
-        return redirect()->back();
-    }
-
     public function edit(Request $request)
     {
         $facture = $this->facture->update(['id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
 
         return response()->json(['OK' => 200, 'etat' => (!$facture->payed_at ? 'En attente' : 'Payé'),'color' => (!$facture->payed_at ? 'default' : 'success')]);
     }
-
-    /*
-    * Bind all invoices
-    * */
-    public function bind($product_id)
-    {
-        $abo     = $this->abo->findAboByProduct($product_id);
-        $product = $this->product->find($product_id);
-
-        // Name of the pdf file with all the invoices bound together for a particular edition
-        $name = 'factures_'.$product->reference.'_'.$product->edition_clean;
-
-        // Job for merging documents
-        $merge = (new MergeFactures($product->id, $name, $abo->id));
-        $this->dispatch($merge);
-
-        $job = (new NotifyJobFinished('Les factures ont été attachés. Nom du fichier: '.$name));
-        $this->dispatch($job);
-
-        alert()->success('Les factures sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
-
-        return redirect()->back();
-    }
+    
 }

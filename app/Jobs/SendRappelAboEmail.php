@@ -67,7 +67,7 @@ class SendRappelAboEmail implements ShouldQueue
         ];
 
         \Mail::send('emails.abo.rappel', $data , function ($message) use ($user,$rappel) {
-            $message->to($user->email, $user->name)->subject('Rappel');
+            $message->to($user->email, $user->name)->subject('Rappel abonnement');
             $message->attach(public_path($rappel->abo_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
         });
     }

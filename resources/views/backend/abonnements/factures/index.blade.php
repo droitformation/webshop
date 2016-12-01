@@ -18,11 +18,21 @@
                     <h3 style="margin-bottom:0;line-height:24px">{{ $abo->title }}</h3>
                     <p style="margin-bottom: 8px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
-                <div class="col-md-10 text-right">
-                    <div>
-                        <a href="{{ url('admin/facture/generate/'.$product->id) }}" class="btn btn-warning">Générer toutes les factures</a>
-                        <a href="{{ url('admin/facture/bind/'.$product->id) }}" class="btn btn-default" title="Re-attacher toutes les factures"><i class="fa fa-link"></i></a>
-                    </div>
+                <div class="col-md-9">
+                    <form action="{{ url('admin/abo/generate') }}" method="POST" class="pull-right">
+                        <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="worker" value="facture">
+                        <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer toutes les factures</button>
+                    </form>
+                </div>
+                <div class="col-md-1 text-right">
+                    <form action="{{ url('admin/abo/bind') }}" method="POST">
+                        <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="worker" value="facture">
+                        <button type="submit" class="btn btn-default" title="Re-attacher toutes les factures"><i class="fa fa-link"></i> &nbsp; Attacher</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -32,16 +42,20 @@
         <div class="col-md-12 col-xs-12">
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
-                    <h3 style="margin-bottom: 30px;">Factures pour l'&eacute;dition {{ $product->reference.' '.$product->edition }}</h3>
-                    @if(!empty($files))
-                        <h4 style="margin-bottom: 10px; margin-top: 0;">Rappels liés</h4>
-                        <div class="btn-group">
-                            @foreach($files as $file)
-                                <?php $name = explode('/',$file); ?>
-                                <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="btn btn-default"><i class="fa fa-download"></i>&nbsp; {{ end($name) }}</a>
-                            @endforeach
-                        </div>
-                    @endif
+
+                    <h3 style="margin-bottom: 30px;" class="pull-left">Factures pour l'&eacute;dition {{ $product->reference.' '.$product->edition }}</h3>
+                    <div class="pull-right">
+                        @if(!empty($files))
+                            <h4 style="margin-bottom: 10px; margin-top: 0;">Rappels liés</h4>
+                            <div class="btn-group">
+                                @foreach($files as $file)
+                                    <?php $name = explode('/',$file); ?>
+                                    <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-download"></i>&nbsp; {{ end($name) }}</a>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                    <div class="clearfix"></div><br/>
                     <table class="table" id="abos-table">
                         <thead>
                             <tr>

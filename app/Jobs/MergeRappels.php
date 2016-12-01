@@ -11,20 +11,18 @@ class MergeRappels extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
-    protected $product_id;
-    protected $name;
-    protected $abo_id;
+    protected $product;
+    protected $abo;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($product_id, $name, $abo_id)
+    public function __construct($product, $abo)
     {
-        $this->product_id = $product_id;
-        $this->name       = $name;
-        $this->abo_id     = $abo_id;
+        $this->product = $product;
+        $this->abo     = $abo;
     }
 
     /**
@@ -34,23 +32,21 @@ class MergeRappels extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $product_id = $this->product_id;
-
         $worker  = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
         $facture = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
-        $factures = $facture->getRappels($product_id);
+        $factures = $facture->getRappels($this->product->id);
 
         if(!$factures->isEmpty())
         {
             // Directory for edition => product_id
-            $dir = 'files/abos/rappel/'.$product_id;
-
+            $dir = 'files/abos/rappel/'.$this->product->id;
+            
             // Get all files in directory
-            $lists = $factures->map(function ($item, $key) use ($product_id)
+            $lists = $factures->map(function ($item, $key)
             {
                 $rappel = $item->rappels->sortByDesc('created_at')->first();
-                $pdf    = 'files/abos/rappel/'.$product_id.'/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';
+                $pdf    = 'files/abos/rappel/'.$this->product->id.'/rappel_'.$rappel->id.'_'.$rappel->abo_facture_id.'.pdf';
 
                 if(\File::exists(public_path($pdf))){ return public_path($pdf); }
             })->all();
@@ -59,9 +55,12 @@ class MergeRappels extends Job implements ShouldQueue
             $files = \File::files(public_path($dir));
             $files = array_intersect($lists,$files);
 
+            $name  = 'rappels_'.$this->product->reference.'_'.$this->product->edition_clean;
+
+            // Merge the files
             if(!empty($files))
             {
-                $worker->merge($files, $this->name, $this->abo_id);
+                $worker->merge($files, $name, $this->abo->id);
             }
         }
     }

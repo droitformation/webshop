@@ -10,7 +10,6 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Service\UploadInterface;
-use App\Droit\Abo\Worker\AboWorkerInterface;
 
 class AboController extends Controller {
 
@@ -18,15 +17,13 @@ class AboController extends Controller {
     protected $adresse;
     protected $product;
     protected $upload;
-    protected $worker;
 
-    public function __construct(AboInterface $abo, AdresseInterface $adresse, ProductInterface $product, UploadInterface $upload, AboWorkerInterface $worker)
+    public function __construct(AboInterface $abo, AdresseInterface $adresse, ProductInterface $product, UploadInterface $upload)
     {
         $this->abo     = $abo;
         $this->adresse = $adresse;
         $this->product = $product;
         $this->upload  = $upload;
-        $this->worker  = $worker;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
@@ -73,6 +70,7 @@ class AboController extends Controller {
         $abo = $this->abo->create($data);
 
         alert()->success('L\'abo a été crée');
+        
         return redirect('admin/abo');
 	}
 
@@ -118,38 +116,6 @@ class AboController extends Controller {
 
         return redirect()->back();
 	}
-
-    public function export(Request $request)
-    {
-        $abo_id     = $request->input('abo_id');
-        $product_id = $request->input('product_id');
-        $type       = $request->input('type');
-        $edition    = $request->input('edition');
-        $reference  = $request->input('reference','na');
-
-        $reference  = str_replace('/','_',$reference);
-
-        // facture_RJN-155_939
-        // Name of the pdf file with all the invoices bound together for a particular edition
-        $name = $type.'_'.$reference.'_'.$edition;
-
-        // Type : facture or rappel
-        // Directory for edition => product_id
-        $dir   = 'files/abos/'.$type.'/'.$product_id;
-
-        // Get all files in directory
-        $files = \File::files($dir);
-
-        if(!empty($files))
-        {
-            $this->worker->merge($files, $name, $abo_id);
-        }
-
-        alert()->success('Les factures ont été liés');
-
-        return redirect()->back();
-
-    }
 
     public function desinscription($id)
     {

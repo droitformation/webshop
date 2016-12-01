@@ -12,19 +12,19 @@ class MakeRappelAbo extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $rappel;
+    protected $facture;
     protected $factures;
-    protected $product_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($factures, $product_id)
+    public function __construct($factures)
     {
         $this->rappel     = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
+        $this->facture    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
         $this->factures   = $factures;
-        $this->product_id = $product_id;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -38,21 +38,18 @@ class MakeRappelAbo extends Job implements ShouldQueue
     {
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-        // All factures for the product
-        foreach($this->factures as $facture)
-        {
-            $exist = $this->rappel->findByFacture($facture->id);
+        if(empty($this->factures)){ return true; }
 
-            // No need to remake a rappel
-            if(!$exist)
+        $factures = $this->facture->getMultiple($this->factures);
+
+        foreach($factures as $facture)
+        {
+            // Make rappel if not exist
+            if($facture->rappels->isEmpty())
             {
                 $rappel  = $this->rappel->create(['abo_facture_id' => $facture->id]);
-                $rappel->load('facture');
-
-                $rappels = $this->rappel->findByAllFacture($facture->id);
-                $rappels = $rappels->count();
-
-                $generator->makeAbo('rappel', $rappel->facture, $rappels, $rappel);
+                
+                $generator->makeAbo('rappel', $facture, 1, $rappel);
             }
         }
     }

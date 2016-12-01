@@ -11,20 +11,18 @@ class MergeFactures extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
-    protected $product_id;
-    protected $name;
-    protected $abo_id;
+    protected $product;
+    protected $abo;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($product_id, $name, $abo_id)
+    public function __construct($product, $abo)
     {
-        $this->product_id = $product_id;
-        $this->name       = $name;
-        $this->abo_id     = $abo_id;
+        $this->product = $product;
+        $this->abo     = $abo;
     }
 
     /**
@@ -37,14 +35,15 @@ class MergeFactures extends Job implements ShouldQueue
         $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
 
         // Directory for edition => product_id
-        $dir   = 'files/abos/facture/'.$this->product_id;
+        $dir   = 'files/abos/facture/'.$this->product->id;
+        $name  = 'factures_'.$this->product->reference.'_'.$this->product->edition_clean;
 
         // Get all files in directory
         $files = \File::files(public_path($dir));
 
         if(!empty($files))
         {
-            $worker->merge($files, $this->name, $this->abo_id);
+            $worker->merge($files, $name, $this->abo->id);
         }
     }
 }

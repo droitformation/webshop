@@ -28,6 +28,8 @@ class AboServiceProvider extends ServiceProvider
         $this->registerAboFactureService();
         $this->registerAboRappelService();
         $this->registerAboWorkerService();
+        $this->registerAboFactureWorkerService();
+        $this->registerAboRappelWorkerService();
     }
 
     /**
@@ -97,4 +99,33 @@ class AboServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Abo facture  worker
+     */
+    protected function registerAboFactureWorkerService(){
+
+        $this->app->singleton('App\Droit\Abo\Worker\AboFactureWorkerInterface', function()
+        {
+            return new \App\Droit\Abo\Worker\AboFactureWorker(
+                \App::make('App\Droit\Abo\Repo\AboFactureInterface'),
+                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
+                \App::make('App\Droit\Abo\Repo\AboUserInterface'),
+                \App::make('App\Droit\Abo\Repo\AboInterface')
+            );
+        });
+    }
+
+    /**
+     * Abo facture  worker
+     */
+    protected function registerAboRappelWorkerService(){
+
+        $this->app->singleton('App\Droit\Abo\Worker\AboRappelWorkerInterface', function()
+        {
+            return new \App\Droit\Abo\Worker\AboRappelWorker(
+                \App::make('App\Droit\Abo\Repo\AboFactureInterface'),
+                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface')
+            );
+        });
+    }
 }
