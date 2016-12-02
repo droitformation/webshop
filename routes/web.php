@@ -319,6 +319,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('stock/export/{id}', 'Backend\Shop\StockController@export');
 
     Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
+    Route::match(['get', 'post'],'order/rappels', 'Backend\Shop\RappelController@index');
+
     Route::post('order/edit', 'Backend\Shop\OrderController@edit');
     Route::post('order/export', 'Backend\Shop\OrderController@export');
     Route::match(['get', 'post'],'orders/resume', 'Backend\Shop\OrderController@resume');

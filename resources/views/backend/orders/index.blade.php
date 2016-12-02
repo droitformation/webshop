@@ -4,6 +4,12 @@
     <?php $helper = new \App\Droit\Helper\Helper(); ?>
 
     <div class="row">
+        <div class="col-md-12 text-right">
+            <p><a href="{{ url('admin/order/rappels') }}" class="btn btn-brown"><i class="fa fa-exclamation-triangle"></i> &nbsp;Voir les rappels</a></p>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
 
             <div class="panel panel-default">

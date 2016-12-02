@@ -25,6 +25,7 @@ class ShopServiceProvider extends ServiceProvider
     {
         $this->registerProductService();
         $this->registerOrderService();
+        $this->registerRappelService();
         $this->registerAttributeService();
         $this->registerCategorieService();
 
@@ -71,6 +72,17 @@ class ShopServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Shop\Order\Repo\OrderInterface', function()
         {
             return new \App\Droit\Shop\Order\Repo\OrderEloquent(new \App\Droit\Shop\Order\Entities\Order);
+        });
+    }
+
+    /**
+     * Order
+     */
+    protected function registerRappelService(){
+
+        $this->app->singleton('App\Droit\Shop\Rappel\Repo\RappelInterface', function()
+        {
+            return new \App\Droit\Shop\Rappel\Repo\RappelEloquent(new \App\Droit\Shop\Rappel\Entities\Rappel);
         });
     }
 

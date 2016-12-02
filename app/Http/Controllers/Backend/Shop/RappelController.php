@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Http\Controllers\Backend\Shop;
+
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use App\Droit\Shop\Rappel\Repo\RappelInterface;
+use App\Droit\Shop\Order\Repo\OrderInterface;
+
+use App\Jobs\SendRappelShopEmail;
+use App\Jobs\MakeRappelShop;
+
+class RappelController extends Controller
+{
+    protected $order;
+    protected $rappel;
+    
+    public function __construct(OrderInterface $order, RappelInterface $rappel)
+    {
+        $this->order  = $order;
+        $this->rappel = $rappel;
+    }
+
+    /**
+     * Rappels list
+     * By colloque: colloque_id, type (simple or multiple), paginate
+     * @param  $id
+     * @return Response
+     */
+    public function index(Request $request)
+    {
+        $data = $request->all();
+
+        $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
+        $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
+
+        $orders = $this->order->getPeriod($period,'pending');
+        
+        return view('backend.orders.rappels')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end']] + $request->all());
+    }
+
+    public function make(Request $request)
+    {
+        $orders = $this->order->getRappels($request->all()git );
+
+        if(!$orders->isEmpty())
+        {
+            foreach($orders as $order)
+            {
+                $this->worker->generate($order);
+            }
+        }
+
+        alert()->success('Les rappels ont été crées');
+
+        return redirect()->back();
+    }
+
+    public function store(Request $request)
+    {
+        $order = $this->order->find($request->input('id'));
+        
+        $this->worker->generate($order);
+
+        alert()->success('Le rappel a été crée');
+
+        return redirect()->back();
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->rappel->delete($id);
+
+        alert()->success('Rappel supprimé');
+
+        return redirect()->back();
+    }
+
+    public function send(Request $request)
+    {
+        // Make sur we have created all the rappels in pdf
+        $job = (new MakeRappelInscription($request->input('inscriptions')));
+        $this->dispatch($job);
+        
+        // Send the rappels via email
+        $job = (new SendRappelEmail($request->input('inscriptions')))->delay(\Carbon\Carbon::now()->addMinutes(1));
+        $this->dispatch($job);
+
+        alert()->success('Rappels envoyés');
+
+        return redirect()->back();
+    }
+}

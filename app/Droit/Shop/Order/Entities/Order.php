@@ -192,4 +192,9 @@ class Order extends Model{
     {
         return $this->belongsTo('App\Droit\Shop\Coupon\Entities\Coupon');
     }
+
+    public function rappels()
+    {
+        return $this->hasMany('App\Droit\Shop\Rappel\Entities\Rappel');
+    }
 }

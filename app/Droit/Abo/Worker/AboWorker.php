@@ -2,18 +2,11 @@
 
 namespace App\Droit\Abo\Worker;
 
-use App\Droit\Abo\Worker\AboWorkerInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
 use App\Droit\Abo\Repo\AboUserInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
-use App\Jobs\MakeFactureAbo;
-use App\Jobs\MergeFactures;
-use App\Jobs\MergeRappels;
-use App\Jobs\MakeRappelAbo;
-use App\Jobs\NotifyJobFinished;
-use Symfony\Component\Process\Process;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class AboWorker implements AboWorkerInterface{
