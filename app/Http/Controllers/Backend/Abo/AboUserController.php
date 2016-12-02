@@ -31,12 +31,11 @@ class AboUserController extends Controller {
 	}
 
     public function index($id, Request $request){
-
-        $product_id = $request->input('product_id', null);
-
-        $id  = ($product_id ? $product_id : $id);
+        
+        $id  = ($request->input('product_id', null) ? $request->input('product_id') : $id);
         $abo = $this->abo->find($id);
 
+        // Get files bound froma all factures
         $dir   = './files/abos/bound/'.$id;
         $files = \File::files($dir);
 

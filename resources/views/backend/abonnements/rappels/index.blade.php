@@ -81,7 +81,7 @@
                                         <td>
                                             <form action="{{ url('admin/rappel') }}" method="POST">{!! csrf_field() !!}
                                                 <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">
-                                                <button class="btn btn-brown btn-sm " type="submit">Générer un rappel</button>
+                                                <button class="btn btn-brown btn-sm" id="makeRappel_{{ $facture->id }}" type="submit">Générer un rappel</button>
                                             </form>
                                         </td>
                                         <td>{{ $facture->abonnement->numero }}</td>

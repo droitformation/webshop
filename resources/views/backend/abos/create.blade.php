@@ -103,6 +103,9 @@
                                     @endif
                                 </select>
                             </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <p class="help-block">Seul les livres ayant les éléments de références pour la facture sont affichés</p>
+                            </div>
                         </div>
 
                     </div>

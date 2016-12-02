@@ -115,6 +115,7 @@ class CheckoutController extends Controller {
             event(new OrderWasPlaced($order));
         }
         
+        // Prepare a new abonnement for the client
         if($this->checkout->orderAbo())
         {
             $data = $this->checkout->getAboData();

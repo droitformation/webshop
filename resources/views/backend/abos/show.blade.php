@@ -41,8 +41,8 @@
 
                     <h3 class="pull-left">Tous les abonnés</h3>
                     <p class="pull-right">
-                        <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
-                        <a class="btn btn-warning btn-sm" href="{{ url('admin/abo/desinscription/'.$abo->id) }}">Désinscriptions</a>
+                        <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success btn-sm" id="addAbonne"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
+                        <a class="btn btn-warning btn-sm" href="{{ url('admin/abo/desinscription/'.$abo->id) }}">Désabonnements</a>
                     </p><div class="clearfix"></div><br/>
 
                     <table class="table" id="abos-table">

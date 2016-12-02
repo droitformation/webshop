@@ -33,6 +33,8 @@ class SendReminderEmail extends Job implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
+        $item = null;
+
         if(isset($this->reminder->model) && !empty($this->reminder->model))
         {
             $model = new $this->reminder->model;
@@ -42,20 +44,12 @@ class SendReminderEmail extends Job implements ShouldQueue
                 $model_id = $this->reminder->model_id;
                 $item     = $model->find($model_id);
             }
-            else
-            {
-                $item = null;
-            }
-        }
-        else
-        {
-            $item = null;
         }
 
         $mailer->send('emails.reminder', ['reminder' => $this->reminder, 'item' => $item], function ($m)
         {
             $m->from('droit.formation@unine.ch', 'Droit Formation');
-            $m->to('cindy.leschaud@gmail.com', 'Cindy Leschaud')->subject('Rappel');
+            $m->to('droit.formation@unine.ch', 'Droit Formation')->subject('Rappel');
         });
 
         $this->reminder->delete();

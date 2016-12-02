@@ -66,7 +66,7 @@ class AboFactureEloquent implements AboFactureInterface{
         $facture = $this->facture->create(array(
             'abo_user_id' => $data['abo_user_id'],
             'product_id'  => $data['product_id'],
-            'created_at'  => \Carbon\Carbon::now(),
+            'created_at'  => isset($data['created_at']) ? $data['created_at'] : \Carbon\Carbon::now()
         ));
 
         if( ! $facture )

@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\AboFactureRequest;
+
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Abo\Repo\AboFactureInterface;
 use App\Droit\Abo\Repo\AboRappelInterface;
@@ -50,7 +52,7 @@ class AboFactureController extends Controller {
         return view('backend.abonnements.factures.show')->with([ 'facture' => $facture, 'abo' => $facture->abonnement->abo, 'abonnement' => $facture->abonnement, 'product' => $facture->product ]);
     }
 
-	public function store(Request $request)
+	public function store(AboFactureRequest $request)
 	{
         $type = $request->input('type');
         $item = $this->$type->create($request->except('type'));

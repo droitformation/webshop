@@ -78,6 +78,29 @@ class ObjectFactory
         return $this->makeUser();
     }
 
+    public function adresse()
+    {
+        return factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
+            'civilite_id'   => $this->faker->numberBetween(1,4),
+            'first_name'    => $this->faker->firstName,
+            'last_name'     => $this->faker->lastName,
+            'email'         => $this->faker->email,
+            'company'       => $this->faker->company,
+            'profession_id' => isset($data['profession']) ? $data['profession'] : 0,
+            'telephone'     => '032 690 00 23',
+            'mobile'        => '032 690 00 23',
+            'fax'           => null,
+            'adresse'       => $this->faker->address,
+            'npa'           => $this->faker->postcode,
+            'ville'         => $this->faker->city,
+            'canton_id'     => isset($data['canton']) ? $data['canton'] : 0,
+            'pays_id'       => 208,
+            'type'         => 1,
+            'user_id'      => 0,
+            'livraison'    => 1
+        ]);
+    }
+
     public function makeAdmin($user)
     {
         $user->roles()->attach(1);
@@ -311,6 +334,26 @@ class ObjectFactory
         $abo =  \App\Droit\Abo\Entities\Abo::create(['title' => 'TestAbo', 'price' => 50, 'plan' => 'year']);
         $abo->products()->attach($product->id);
         
+        return $abo;
+    }
+
+    public function makeAbonnement()
+    {
+         $abo     = $this->makeAbo();
+         $adresse = $this->adresse();
         
+         return factory(\App\Droit\Abo\Entities\Abo_users::class)->create([
+             'abo_id'         => $abo->id,
+             'adresse_id'     => $adresse->id,
+         ]);
+    }
+
+    public function abonnementFacture($abonnement)
+    {
+        $abonnement->factures()->create([
+            'abo_user_id' => $abonnement->id,
+            'product_id'  => $abonnement->abo->current_product->id,
+            'payed_at'    => null
+        ]);
     }
 }

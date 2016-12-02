@@ -311,13 +311,13 @@ $factory->define(App\Droit\Abo\Entities\Abo_users::class, function (Faker\Genera
         'abo_id'         => 1,
         'numero'         => 123,
         'exemplaires'    => 1,
-        'adresse_id'     => '',
-        'tiers_id'       => '',
-        'price'          => 1000,
-        'reference'      => '',
-        'remarque'       => '',
-        'status'         => '',
-        'renouvellement' => ''
+        'adresse_id'     => '1',
+        'tiers_id'       => null,
+        'price'          => null,
+        'reference'      => null,
+        'remarque'       => null,
+        'status'         => 'abonne',
+        'renouvellement' => 'auto'
     ];
 });
 

@@ -2,8 +2,15 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-12">
-            <p><a href="{{ url('admin/factures/'.$facture->product_id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        <div class="col-md-12" style="margin-bottom: 15px;">
+
+            <a href="{{ url('admin/factures/'.$facture->product_id) }}" class="btn btn-default">
+                <i class="fa fa-list"></i> &nbsp;Retour a la liste des factures
+            </a>&nbsp;&nbsp;
+            <a href="{{ url('admin/abonnement/'.$facture->abo_user_id) }}" class="btn btn-inverse">
+                <i class="fa fa-user"></i> &nbsp;Retour à l'abonnement
+            </a>
+
         </div>
     </div>
 
@@ -67,7 +74,7 @@
                     </div>
                     <div class="panel-footer text-right">
                         {!! Form::hidden('id', $facture->id ) !!}
-                        <button type="submit" class="btn btn-info">Envoyer</button>
+                        <button type="submit" id="editFacture" class="btn btn-info">Envoyer</button>
                     </div>
                 </form>
             </div>

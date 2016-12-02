@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use \Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class AboTest extends TestCase {
+class AboAdminTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -35,15 +35,6 @@ class AboTest extends TestCase {
         $this->click('addAbo');
 
         $this->seePageIs(url('admin/abo/create'));
-
-        /*      
-       $this->type('Bienne', 'ville');
-        $this->press('Enregistrer');
-        $this->seeInDatabase('users', [
-            'id'         => $user->id,
-            'first_name' => 'Terry'
-        ]);
-        */
     }
 
     public function testGetAboProductWithAttributes()
@@ -53,6 +44,7 @@ class AboTest extends TestCase {
         $user->roles()->attach(1);
         $this->actingAs($user);
 
+        // Make new product and add the attributes
         $make = new \tests\factories\ObjectFactory();
         $product = $make->product();
         $product = $make->addAttributesAbo($product);
@@ -74,4 +66,5 @@ class AboTest extends TestCase {
             'price' => '5000'
         ]);
     }
+
 }

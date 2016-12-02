@@ -66,7 +66,7 @@ class AboWorker implements AboWorkerInterface{
     }
 
     /**
-     * Make new abonnement for client
+     * Make new abonnement for client from frontend shop
      *
      * @param  array
      * @return void

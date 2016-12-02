@@ -139,6 +139,8 @@
                         @endif
 
                         <h4>Créer une facture</h4>
+
+                        <!-- Create facture form -->
                         <form action="{{ url('admin/facture') }}" method="POST">{!! csrf_field() !!}
                             <div class="row">
                                 <div class="col-md-4"><input type="text" class="form-control datePicker" name="created_at" placeholder="Date"></div>
@@ -150,12 +152,13 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" value="{{ $abonnement->id }}" name="abo_user_id">
+                                    <input type="hidden" value="facture" name="type">
                                 </div>
                                 <div class="col-md-3"><button class="btn btn-info" type="submit">Ajouter une facture</button></div>
                             </div>
-                            <input type="hidden" value="{{ $abonnement->id }}" name="abo_user_id">
-                            <input type="hidden" value="facture" name="type">
                         </form>
+                        <!-- End create facture form -->
 
                     </div>
                 </div>
