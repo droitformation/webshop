@@ -10,7 +10,7 @@ class Abo_rappels extends Model{
     protected $table    = 'abo_rappels';
     protected $fillable = ['abo_facture_id'];
 
-    public function getAboRappelAttribute()
+    public function getDocRappelAttribute()
     {
         $this->load('facture','facture.abonnement');
 

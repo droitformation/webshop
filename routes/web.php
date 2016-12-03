@@ -388,11 +388,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('facture/edit', 'Backend\Abo\AboFactureController@edit');
     Route::resource('facture', 'Backend\Abo\AboFactureController');
 
-    Route::post('abo/generate', 'Backend\Abo\AboFileController@generate');
+    Route::post('abo/rappel/generate', 'Backend\Abo\AboFileController@generate');
+
     Route::post('abo/bind', 'Backend\Abo\AboFileController@bind');
-    
+
+    Route::post('abonnement/rappel/generate','Backend\Abo\AboRappelController@generate');
+    Route::delete('abonnement/rappel/{id}', 'Backend\Abo\AboRappelController@destroy');
+
     Route::post('rappel/send', 'Backend\Abo\AboRappelController@send');
     Route::get('rappel/{id}', 'Backend\Abo\AboRappelController@index');
+
     Route::resource('rappel', 'Backend\Abo\AboRappelController');
 
     Route::get('abo/desinscription/{id}', 'Backend\Abo\AboController@desinscription');

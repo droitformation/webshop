@@ -45,15 +45,13 @@ class AboRappelController extends Controller {
         return view('backend.abonnements.rappels.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
     }
 
-	public function store(Request $request)
+	public function generate(Request $request)
 	{
-        $rappel = $this->rappel->create($request->all());
+        $rappel = $this->rappel->create(['abo_facture_id' => $request->input('id')]);
 
         $this->worker->make($rappel, true);
 
-        alert()->success('Le rappel a été crée');
-
-        return redirect()->back();
+        return ['rappels' => $rappel->facture->rappel_list];
 	}
 
     public function update(Request $request, $id)
@@ -69,9 +67,9 @@ class AboRappelController extends Controller {
 	{
         $this->rappel->delete($id);
 
-        alert()->success('Le rappel a été supprimé');
+        $facture = $this->facture->find($request->input('item'));
 
-        return redirect()->back();
+        return ['rappels' => $facture->rappel_list];
 	}
 
     public function send(Request $request)

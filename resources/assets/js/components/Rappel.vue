@@ -51,7 +51,7 @@ export default {
               this.isVisible = false;
               // POST /someUrl
               this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item }).then((response) => {
-
+                 console.log(response);
                   // set data on vm
                   this.updateRappels(response.body.rappels);
                   this.loading = false;

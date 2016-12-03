@@ -65,10 +65,9 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="col-md-1"></th>
                                 <th class="col-md-1">Numero</th>
                                 <th class="col-md-3">Nom</th>
-                                <th class="col-md-3">Status</th>
+                                <th class="col-md-2">Status</th>
                                 <th class="col-md-1">Date</th>
                                 <th class="col-md-3">Rappels</th>
                             </tr>
@@ -78,12 +77,6 @@
                             @if(!$factures->isEmpty())
                                 @foreach($factures as $facture)
                                     <tr>
-                                        <td>
-                                            <form action="{{ url('admin/rappel') }}" method="POST">{!! csrf_field() !!}
-                                                <input type="hidden" value="{{ $facture->id }}" name="abo_facture_id">
-                                                <button class="btn btn-brown btn-sm" name="makeRappel_{{ $facture->id }}" type="submit">Générer un rappel</button>
-                                            </form>
-                                        </td>
                                         <td>{{ $facture->abonnement->numero }}</td>
                                         <td>
                                             @if($facture->abonnement->user)
@@ -99,7 +92,8 @@
                                         </td>
                                         <td>{{ $facture->created_at->formatLocalized('%d %b %Y') }}</td>
                                         <td>
-                                            @if(!$facture->rappels->isEmpty())
+                                            <rappel path="abonnement" :rappels="{{ $facture->rappel_list }}" item="{{ $facture->id }}"></rappel>
+                                           {{-- @if(!$facture->rappels->isEmpty())
                                                 <ol>
                                                 @foreach($facture->rappels as $rappel)
                                                     <li>
@@ -115,7 +109,7 @@
                                                     </li>
                                                 @endforeach
                                                 </ol>
-                                            @endif
+                                            @endif--}}
                                         </td>
                                     </tr>
                                 @endforeach

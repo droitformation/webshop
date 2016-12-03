@@ -53,7 +53,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-midnightblue">
-                <div class="panel-body">
+                <div class="panel-body" id="appComponent">
                     <h3><i class="fa fa-shopping-cart"></i> &nbsp;Rappel commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
 
                     @include('backend.orders.partials.factures', ['orders' => $orders])
