@@ -66,7 +66,7 @@ class OrderMaker implements OrderMakerInterface{
         if(isset($commande['message']) && !empty(array_filter($commande['message'])))
             $this->generator->setMsg(array_filter($commande['message']));
 
-        $this->generator->factureOrder($order->id);
+        $this->generator->factureOrder($order);
 
         return $order;
     }

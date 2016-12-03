@@ -4,11 +4,10 @@ use Carbon\Carbon;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\User\Repo\UserInterface;
 
+use App\Droit\Generate\Entities\OrderGenerate;
+
 class PdfGenerator implements PdfGeneratorInterface
 {
-    protected $order;
-    protected $user;
-    protected $inscription;
     protected $now;
 
     public $stream = false;
@@ -36,12 +35,9 @@ class PdfGenerator implements PdfGeneratorInterface
 
     public $signature = 'Le secrétariat de la Faculté de droit';
 
-    public function __construct(OrderInterface $order, UserInterface $user)
+    public function __construct()
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
-
-        $this->order = $order;
-        $this->user  = $user;
 
         $this->now   = Carbon::now()->formatLocalized('%d %B %Y');
 
@@ -78,53 +74,25 @@ class PdfGenerator implements PdfGeneratorInterface
         $this->tva = $tva;
     }
 
-    public function factureOrder($order_id)
+    public function factureOrder($order, $rappel = null)
     {
-        $order = $this->order->find($order_id);
-        $order->load('products','user','shipping','payement');
+        $generate = new OrderGenerate($order);
+        $data     = $this->getData('order');
 
-        if($order->user_id)
-        {
-            $order->user->load('adresses');
-            $adresse = $order->user->adresse_facturation;
+        $data['order']    = $order;
+        $data['adresse']  = $generate->getAdresse();
+        $data['products'] = $generate->getProducts();
+
+        if($rappel){
+            $data['rappel'] = $order->rappels->count();
         }
-        else
-        {
-            $adresse = $order->adresse;
-        }
-        
-        $products  = $order->products->groupBy(function ($item, $key) {
-            return $item->id.$item->pivot->price.$item->pivot->rabais.$item->pivot->isFree;
-        });
-
-        $msgTypes = ['warning','special','remarque','signature'];
-
-        $data = [
-            'expediteur' => $this->expediteur,
-            'messages'   => $this->messages,
-            'versement'  => $this->versement,
-            'motif' => [
-                'centre' => $this->centre,
-                'texte'  => $this->motif,
-            ],
-            'tva' => [
-                'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres',
-                'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
-            ],
-            'compte'    => \Registry::get('shop.compte.livre'),
-            'order'     => $order,
-            'adresse'   => $adresse,
-            'products'  => $products,
-            'msgTypes'  => $msgTypes,
-            'date'      => $this->now
-        ];
 
         $facture = \PDF::loadView('templates.shop.facture', $data)->setPaper('a4');
 
-        $generate = ($this->stream ? 'stream' : 'save');
+        $make = ($this->stream ? 'stream' : 'save');
+        $name = $generate->getName($rappel);
 
-        return $facture->$generate(public_path().'/files/shop/factures/facture_'.$order->order_no.'.pdf');
-
+        return $facture->$make($name);
     }
 
     public function makeAbo($document, $model, $rappel = null, $rappel_model = null)
@@ -207,6 +175,22 @@ class PdfGenerator implements PdfGeneratorInterface
              $data['messages']  = $this->messages;
              $data['signature'] = $this->signature;
              $data['tva']       = $this->tva;
+        }
+
+        if($document == 'order')
+        {
+            $data['messages']  = $this->messages;
+            $data['signature'] = $this->signature;
+            $data['tva']       = $this->tva;
+            $data['versement'] = $this->versement;
+            $data['motif'] = [
+                'centre' => $this->centre,
+                'texte'  => $this->motif,
+            ];
+            $data['tva'] = [
+                'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres',
+                'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
+            ];
         }
 
         if($document == 'abo')

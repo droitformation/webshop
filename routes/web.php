@@ -320,6 +320,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
     Route::match(['get', 'post'],'order/rappels', 'Backend\Shop\RappelController@index');
+    Route::resource('order/rappel', 'Backend\Shop\RappelController');
 
     Route::post('order/edit', 'Backend\Shop\OrderController@edit');
     Route::post('order/export', 'Backend\Shop\OrderController@export');

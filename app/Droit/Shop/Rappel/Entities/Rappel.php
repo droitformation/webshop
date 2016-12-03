@@ -10,7 +10,7 @@ class Rappel extends Model{
 
     public function getDocRappelAttribute()
     {
-        $file = 'files/shop/rappels/rappel_'.$this->order_id.'_'.$this->id.'.pdf';
+        $file = 'files/shop/rappels/rappel_'.$this->id.'_'.$this->order->order_no.'.pdf';
 
         if (\File::exists($file))
         {

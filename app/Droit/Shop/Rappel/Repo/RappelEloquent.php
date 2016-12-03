@@ -24,11 +24,9 @@ class RappelEloquent implements RappelInterface
         return $this->rappel->find($id);
     }
 
-    public function create(array $data){
-
-        $rappel = $this->rappel->create(array(
-            'order_id'    => $data['order_id']
-        ));
+    public function create(array $data)
+    {
+        $rappel = $this->rappel->create(['order_id' => $data['order_id']]);
 
         if( ! $rappel )
         {
@@ -36,11 +34,10 @@ class RappelEloquent implements RappelInterface
         }
 
         return $rappel;
-
     }
 
-    public function update(array $data){
-
+    public function update(array $data)
+    {
         $rappel = $this->rappel->findOrFail($data['id']);
 
         if( ! $rappel )
@@ -56,6 +53,6 @@ class RappelEloquent implements RappelInterface
 
     public function delete($id)
     {
-        return $this->rappel->delete($id);
+        return $this->rappel->find($id)->delete();
     }
 }

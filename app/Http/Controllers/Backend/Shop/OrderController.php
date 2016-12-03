@@ -128,7 +128,7 @@ class OrderController extends Controller {
     {
         $order = $this->order->find($request->input('id'));
 
-        $this->pdfgenerator->factureOrder($order->id);
+        $this->pdfgenerator->factureOrder($order);
 
         return ['facture' => $order->facture];
     }
@@ -217,7 +217,7 @@ class OrderController extends Controller {
         if(!empty(array_filter($request->input('message',[]))))
             $this->pdfgenerator->setMsg(array_filter($request->input('message')));
 
-        $this->pdfgenerator->factureOrder($order->id);
+        $this->pdfgenerator->factureOrder($order);
 
         alert()->success('La commande a été mise à jour');
 

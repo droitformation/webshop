@@ -2,41 +2,12 @@
 @section('content')
 
     <div id="content">
-        <div id="header-main">
-            <table id="content-table">
-                <tr><td colspan="2" height="30">&nbsp;</td></tr>
-                <tr>
-                    <td colspan="2">
-                        <img height="70mm" id="logoImg" src="{{ public_path('files/main/'.\Registry::get('shop.infos.logo')) }}" alt="Unine logo" />
-                    </td>
-                </tr>
-                <tr><td colspan="2" height="10">&nbsp;</td></tr>
-                <tr align="top">
-                    <td align="top" width="60%" valign="top">
-                        <div id="facdroit">
-                            <li>{{ \Registry::get('shop.infos.nom') }}</li>
-                            <li class="mb-5">{!! \Registry::get('shop.infos.adresse') !!}</li>
-                            {!! !empty(\Registry::get('shop.infos.telephone')) ? '<li>Tél. '.\Registry::get('shop.infos.telephone').'</li>' : '' !!}
-                            {!! !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
-                        </div>
-                    </td>
-                    <td align="top" width="40%" valign="top">
-                        @if($adresse)
-                            <ul id="user">
-                                {!! (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '') !!}
-                                <li>{{ $adresse->civilite_title.' '.$adresse->name }}</li>
-                                <li>{{ $adresse->adresse }}</li>
-                                {!! (!empty($adresse->complement) ? '<li>'.$adresse->complement.'</li>' : '') !!}
-                                {!! (!empty($adresse->cp) ? '<li>'.$adresse->cp_trim.'</li>' : '') !!}
-                                <li>{{ $adresse->npa }} {{ $adresse->ville }}</li>
-                            </ul>
-                        @endif
-                    </td>
-                </tr>
-            </table>
-        </div>
 
-        <h1 class="title blue">Facture</h1>
+        @include('templates.shop.partials.header')
+
+        <h1 class="title blue">
+            {!! isset($rappel) ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span> Facture' : 'Facture' !!}
+        </h1>
 
         <table class="content-table">
             <tr>
@@ -44,9 +15,7 @@
                     @if(!empty($tva))
                         <ul id="tva">
                             <li><strong>{{ \Registry::get('shop.infos.tva') }} TVA</strong></li>
-                            @foreach($tva as $line)
-                                <li>{{ $line }}</li>
-                            @endforeach
+                            {!! "<li>".implode('</li><li>', $tva)."</li>" !!}
                         </ul>
                     @endif
                     <div class="coordonnees">
@@ -77,7 +46,6 @@
                 </td>
             </tr>
         </table>
-
 
         <table id="invoice-table">
             <thead>
@@ -118,126 +86,9 @@
             </tbody>
         </table>
 
-        <table id="content-table">
-            <tr><td colspan="2" height="5">&nbsp;</td></tr>
-            <tr>
-                <!-- Messages for customer -->
-                <td width="62%" align="top" valign="top">
-
-                    <h3>Communications</h3>
-                    <div class="communications">
-
-                        @if($order->payed_at)
-                           <p class="message special">Acquitté le {{ $order->payed_at->format('d/m/Y') }}</p>
-                        @endif
-
-                        @if(!empty($messages))
-                            @foreach($msgTypes as $msgType)
-                                @if(isset($messages[$msgType]) && !empty($messages[$msgType]))
-                                    <p class="message '.$msgType.'">{{ $messages[$msgType] }}</p>
-                                @endif
-                            @endforeach
-                            <br/>
-                        @endif
-
-                        <p class="message">{{ $messages['remerciements'] }}</p><br/>
-                        <p class="message">Neuchâtel, le <?php echo $date; ?></p>
-                    </div>
-
-                </td>
-                <td width="5%" align="top" valign="top"></td>
-                <!-- Total calculations -->
-                <td width="33%" align="top" valign="top" class="text-right">
-                    <table width="100%" id="content-table" class="total_line" align="right" valign="top">
-
-                        @if($order->coupon_id > 0)
-                            <tr align="top" valign="top">
-                                <td width="40%" align="top" valign="top" class="text-right text-muted">
-                                    {!! $order->coupon->coupon_title !!}
-                                </td>
-                                <td width="60%" align="top" valign="top" class="text-right">
-                                    {{ $order->coupon->coupon_value }}
-                                </td>
-                            </tr>
-                        @endif
-
-                        <tr align="top" valign="top">
-                            <td width="40%" align="top" valign="top" class="text-right" style="border: none;"><strong>Sous-total:</strong></td>
-                            <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $order->price_cents }} CHF</td>
-                        </tr>
-                        <tr align="top" valign="top">
-                            <td width="40%" align="top" valign="top" class="text-right" style="border: none;"><strong>Frais de port:</strong></td>
-                            <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $order->shipping->price_cents }} CHF</td>
-                        </tr>
-                        <tr align="top" valign="top">
-                            <td width="40%" align="top" valign="top" class="text-right line_total_invoice"><strong>Total:</strong></td>
-                            <td width="60%" align="top" valign="top" class="text-right line_total_invoice"><strong>{{ $order->total_with_shipping }} CHF</strong></td>
-                        </tr>
-                    </table>
-
-                </td>
-            </tr>
-        </table>
+        @include('templates.shop.partials.infos')
     </div>
 
-    <!-- BV id payment type = 1 -->
-    @if($order->payement_id == 1)
-
-        {{ ($products->count() > 7 ? '<p style="page-break-after: always;"></p>' : '') }}
-        <?php list($francs,$centimes) = $order->price_total_explode; ?>
-
-        <table id="bv-table">
-            <tr align="top" valign="top">
-                <td width="60mm" align="top" valign="top">
-                    <table id="recu" valign="top">
-                        <tr>
-                            <td align="top" valign="center" height="43mm">
-                                @if(!empty($versement))
-                                    <ul class="versement">
-                                        @foreach($versement as $line)
-                                            <li>{!! $line !!}</li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr><td align="top" valign="center" height="7.6mm" class="compte">{{ $compte }}</td></tr>
-                        <tr><td align="top" valign="center" height="6mm" class="price"><span class="francs">{{ $francs }}</span>{{ $centimes }}</td></tr>
-                    </table>
-                </td>
-                <td width="62mm" align="top" valign="top">
-                    <table id="compte" valign="top">
-                        <tr>
-                            <td align="top" valign="center" height="43mm">
-                                @if(!empty($versement))
-                                    <ul class="versement">
-                                        @foreach($versement as $line)
-                                            <li>{!! $line !!}</li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr><td align="top" valign="top" height="7.6mm" class="compte"><?php echo $compte; ?></td></tr>
-                        <tr><td align="top" valign="top" height="6mm" class="price"><span class="francs">{{ $francs }}</span>{{ $centimes }}</td></tr>
-                    </table>
-                </td>
-                <td width="88mm" align="top" valign="top">
-                    <table id="versement" valign="top">
-                        <tr>
-                            <td align="top" valign="top" width="64%" height="20mm">
-                                <ul class="versement">
-                                    <li>{!! $motif['centre'] !!}</li>
-                                    <li>{!! $motif['texte'] !!}</li>
-                                    <li>Facture N° {{ $order->order_no }}</li>
-                                </ul>
-                            </td>
-                            <td align="top" valign="top" width="32%" height="20mm"></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    @endif
+    @include('templates.shop.partials.bv')
 
 @stop

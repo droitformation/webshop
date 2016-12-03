@@ -43,6 +43,18 @@ Route::get('testing', function() {
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
+
+    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
+    $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $orders = $model->getLast(1);
+    $rappel = $rappel_model->find(1);
+    $order  = !$orders->isEmpty() ? $orders->first() : null;
+
+    $generator->stream = true;
+    $generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+
+    return $generator->factureOrder($order,$rappel);
+
 /*
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
@@ -101,17 +113,10 @@ Route::get('testing', function() {
     echo '<pre>';
     print_r($grouped);
     echo '</pre>';*/
-    $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+   // $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+   // $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
    // $liste  =  $Inscriptions->getByColloque(39);
-    $inscription  =  $Inscriptions->getMultiple([12607]);
-
-    
-    echo '<pre>';
-    print_r($inscription->first()->list_rappel);
-    echo '</pre>';
-    
-    exit();
+   // $inscription  =  $Inscriptions->getMultiple([12607]);
 
 
     $colloque  =  $colloques->find(39);

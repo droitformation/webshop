@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Droit\Shop\Rappel\Repo\RappelInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 
+use App\Droit\Generate\Pdf\PdfGeneratorInterface;
+
 use App\Jobs\SendRappelShopEmail;
 use App\Jobs\MakeRappelShop;
 
@@ -16,11 +18,13 @@ class RappelController extends Controller
 {
     protected $order;
     protected $rappel;
+    protected $generator;
     
-    public function __construct(OrderInterface $order, RappelInterface $rappel)
+    public function __construct(OrderInterface $order, RappelInterface $rappel, PdfGeneratorInterface $generator)
     {
         $this->order  = $order;
         $this->rappel = $rappel;
+        $this->generator = $generator;
     }
 
     /**
@@ -43,7 +47,7 @@ class RappelController extends Controller
 
     public function make(Request $request)
     {
-        $orders = $this->order->getRappels($request->all()git );
+        $orders = $this->order->getRappels($request->all());
 
         if(!$orders->isEmpty())
         {
@@ -60,9 +64,10 @@ class RappelController extends Controller
 
     public function store(Request $request)
     {
-        $order = $this->order->find($request->input('id'));
-        
-        $this->worker->generate($order);
+        $rappel = $this->rappel->create(['order_id' => $request->input('order_id')]);
+
+        $this->generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+        $this->generator->factureOrder($rappel->order, $rappel);
 
         alert()->success('Le rappel a été crée');
 

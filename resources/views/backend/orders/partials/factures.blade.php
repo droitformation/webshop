@@ -54,11 +54,11 @@
                         <ol>
                             @foreach($order->rappels as $rappel)
                                 <li>
-                                    <form action="{{ url('admin/orser/rappel/'.$rappel->id) }}" method="POST" class="">
+                                    <form action="{{ url('admin/order/rappel/'.$rappel->id) }}" method="POST" class="">
                                         <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                         <div class="form-group" style="margin-bottom: 6px;">
                                             @if($rappel->doc_rappel)
-                                                <a target="_blank" href="{{ asset($rappel->abo_rappel) }}">Rappel {{ $rappel->created_at->format('d/m/Y') }}</a> &nbsp;
+                                                <a target="_blank" href="{{ asset($rappel->doc_rappel) }}">Rappel {{ $rappel->created_at->format('d/m/Y') }}</a> &nbsp;
                                             @endif
                                             <button data-what="Supprimer" data-action="le rappel" class="btn btn-danger btn-xs pull-right deleteAction"><i class="fa fa-times"></i></button>
                                         </div>
