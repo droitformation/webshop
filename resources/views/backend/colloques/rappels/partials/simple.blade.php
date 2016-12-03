@@ -1,10 +1,10 @@
 <tr {!! ($inscription->group_id ? 'class="isGoupe"' : '') !!}>
-    <td>
+{{--    <td>
         <form action="{{ url('admin/inscription/rappel') }}" method="POST">{!! csrf_field() !!}
             <input type="hidden" name="id" value="{{ $inscription->id }}">
             <button class="btn btn-brown btn-sm">Générer un rappel</button>
         </form>
-    </td>
+    </td>--}}
     <td>
         <p><strong>{{ ($inscription->inscrit && $inscription->adresse_facturation ? $inscription->adresse_facturation->civilite_title : '') }}</strong></p>
 
@@ -20,7 +20,7 @@
     <td> @include('backend.inscriptions.partials.payed',['model' => 'inscription', 'item' => $inscription]) </td>
     <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
     <td>
-        @if(!$inscription->rappels->isEmpty())
+{{--        @if(!$inscription->rappels->isEmpty())
             <ol>
                 @foreach($inscription->rappels as $rappel)
                     <li>
@@ -34,6 +34,8 @@
                     </li>
                 @endforeach
             </ol>
-        @endif
+        @endif--}}
+
+        <rappel path="inscription" :rappels="{{ $inscription->rappel_list }}" item="{{ $inscription->id }}"></rappel>
     </td>
 </tr>

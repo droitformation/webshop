@@ -32,13 +32,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-midnightblue">
-                <div class="panel-body">
+                <div class="panel-body"  id="appComponent">
                     <h3><strong>{{ $colloque->titre }}</strong><br/>Rappel inscriptions</h3>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="col-md-1"></th>
                                 <th class="col-sm-2">Déteteur</th>
                                 <th class="col-sm-1">No</th>
                                 <th class="col-sm-1">Prix</th>

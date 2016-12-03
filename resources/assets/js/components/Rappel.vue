@@ -22,7 +22,7 @@
 <script>
 export default {
 
-    props: ['order','rappels'],
+    props: ['item','rappels','path'],
     data () {
         return {
             list: [],
@@ -32,7 +32,7 @@ export default {
     },
     computed: {
         computedOrder: function () {
-            return this.order
+            return this.item
         }
     },
     mounted: function ()  {
@@ -40,7 +40,6 @@ export default {
         this.loading = false;
     },
     methods: {
-
         getRappels : function(){
            this.list = this.rappels;
         },
@@ -48,14 +47,13 @@ export default {
            this.list = rappels;
         },
         generate: function() {
-              this.loading = true;
+              this.loading   = true;
               this.isVisible = false;
               // POST /someUrl
-              this.$http.post('/admin/order/rappel/generate', { id: this.order }).then((response) => {
+              this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item }).then((response) => {
 
                   // set data on vm
                   this.updateRappels(response.body.rappels);
-
                   this.loading = false;
 
               }, (response) => {
@@ -64,7 +62,7 @@ export default {
         },
         remove : function(id){
              this.loading = true;
-             this.$http.post('/admin/order/rappel/' + id, { order : this.order, '_method' : 'DELETE' }).then((response) => {
+             this.$http.post('/admin/' + this.path + '/rappel/' + id, { item : this.item, '_method' : 'DELETE' }).then((response) => {
                   console.log(response);
 
                   // set data on vm

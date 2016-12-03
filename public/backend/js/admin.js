@@ -32,6 +32,8 @@ $( function() {
         language: 'fr'
     });
 
+    $('.select-chosen').chosen();
+
     /*
      * delete action confirmation
      * */

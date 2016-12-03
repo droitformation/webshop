@@ -84,7 +84,7 @@ class RappelController extends Controller
     {
         $this->rappel->delete($id);
 
-        $order = $this->order->find($request->input('order'));
+        $order = $this->order->find($request->input('item'));
         
         return ['rappels' => $order->rappel_list];
     }

@@ -15,6 +15,13 @@ class Inscription extends Model
 
     protected $fillable = ['colloque_id', 'user_id', 'group_id', 'inscription_no', 'price_id', 'payed_at', 'send_at', 'status','admin','present'];
 
+    public function getRappelListAttribute()
+    {
+        return $this->rappels->map(function ($item, $key) {
+            return ['id' => $item->id ,'date' => 'Rappel '.$item->created_at->format('d/m/Y'), 'doc_rappel' => $item->doc_rappel];
+        });
+    }
+    
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

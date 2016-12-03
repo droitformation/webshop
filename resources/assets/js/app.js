@@ -15,8 +15,8 @@ require('./bootstrap');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('generate', require('./components/Generate.vue'));
-Vue.component('shoprappel', require('./components/ShopRappel.vue'));
+Vue.component('rappel', require('./components/Rappel.vue'));
 
 const app = new Vue({
-    el: '#mainContainer'
+    el: '#appComponent'
 });

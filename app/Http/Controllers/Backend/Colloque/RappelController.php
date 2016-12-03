@@ -103,13 +103,15 @@ class RappelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->rappel->delete($id);
 
-        alert()->success('Rappel supprimé');
+        $inscription = $this->inscription->find($request->input('item'));
 
-        return redirect()->back();
+        $list = $inscription->group_id ? $inscription->groupe->rappel_list : $inscription->rappel_list;
+
+        return ['rappels' => $list];
     }
 
     public function send(Request $request)
@@ -125,5 +127,21 @@ class RappelController extends Controller
         alert()->success('Rappels envoyés');
 
         return redirect()->back();
+    }
+
+    public function generate(Request $request)
+    {
+        $inscription = $this->inscription->find($request->input('id'));
+
+        if($inscription->group_id) {
+            $this->worker->generateMultiple($inscription->groupe);
+            $list = $inscription->groupe->rappel_list;
+        }
+        else{
+            $this->worker->generateSimple($inscription);
+            $list = $inscription->rappel_list;
+        }
+
+        return ['rappels' => $list];
     }
 }

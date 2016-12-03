@@ -43,7 +43,7 @@
                 </td>
                 <td>
 
-                    <shoprappel :rappels="{{ $order->rappel_list }}" order="{{ $order->id }}"></shoprappel>
+                    <rappel path="order" :rappels="{{ $order->rappel_list }}" item="{{ $order->id }}"></rappel>
                   {{--  @if(!$order->rappels->isEmpty())
                         <ol>
                             @foreach($order->rappels as $rappel)

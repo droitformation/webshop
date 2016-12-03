@@ -29,7 +29,7 @@
 
                     <div class="form-group">
                         <label><strong>Colloque</strong></label>
-                        <select autocomplete="off" name="colloque_id" required class="form-control" id="colloqueSelection">
+                        <select autocomplete="off" name="colloque_id" required class="form-control select-chosen" id="">
                             <option value="">Choisir le colloque</option>
                             @if(!$colloques->isEmpty())
                                 @foreach($colloques as $col)

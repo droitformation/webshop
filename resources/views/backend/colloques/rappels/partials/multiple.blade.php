@@ -1,11 +1,5 @@
 <tr>
     <td>
-        <form action="{{ url('admin/inscription/rappel') }}" method="POST">{!! csrf_field() !!}
-            <input type="hidden" name="id" value="{{ $id }}">
-            <button class="btn btn-brown btn-sm">Générer un rappel</button>
-        </form>
-    </td>
-    <td>
         <p><strong>{{ ($group->user && $group->user->adresse_facturation ? $group->user->adresse_facturation->civilite_title : '') }}</strong></p>
 
         @if($group->user)
@@ -28,7 +22,8 @@
     <td> @include('backend.inscriptions.partials.payed', ['inscription' => $group->inscriptions->first(), 'model' => 'group', 'item' => $group]) </td>
     <td>{{ $group->inscriptions->first()->created_at->formatLocalized('%d %b %Y') }}</td>
     <td>
-        @if(!$group->rappels->isEmpty())
+        <rappel path="inscription" :rappels="{{ $group->rappel_list }}" item="{{ $group->inscriptions->first()->id }}"></rappel>
+     {{--   @if(!$group->rappels->isEmpty())
             <ol>
                 @foreach($group->rappels as $rappel)
                     <li>
@@ -42,6 +37,6 @@
                     </li>
                 @endforeach
             </ol>
-        @endif
+        @endif--}}
     </td>
 </tr>

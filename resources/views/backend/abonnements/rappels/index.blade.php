@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-midnightblue">
-                <div class="panel-body">
+                <div class="panel-body" id="appComponent">
 
                     <h3 style="margin-bottom: 30px;" class="pull-left">Rappels pour l'&eacute;dition {{ $product->reference.' '.$product->edition }}</h3>
                     <div class="pull-right">
