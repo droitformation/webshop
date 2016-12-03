@@ -32,8 +32,7 @@
                     @if($order->facture)
                         <a target="_blank" href="{{ $order->facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
                     @else
-                        <div id="wrapper_{{ $order->id }}"></div>
-                        <button data-id="{{ $order->id }}" class="btn btn-default btn-sm order-generate">Générer</button>
+                        <generate path="order" order="{{ $order->id }}"></generate>
                     @endif
 
                 </td>

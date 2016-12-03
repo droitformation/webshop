@@ -21,6 +21,13 @@ class Order extends Model{
         return $money->format($price);
     }
 
+    public function getRappelListAttribute()
+    {
+        return $this->rappels->map(function ($item, $key) {
+            return ['id' => $item->id ,'date' => 'Rappel '.$item->created_at->format('d/m/Y'), 'doc_rappel' => $item->doc_rappel];
+        });
+    }
+
     public function getOrderAdresseAttribute()
     {
         if(isset($this->user))

@@ -80,13 +80,13 @@ class RappelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->rappel->delete($id);
 
-        alert()->success('Rappel supprimé');
-
-        return redirect()->back();
+        $order = $this->order->find($request->input('order'));
+        
+        return ['rappels' => $order->rappel_list];
     }
 
     public function send(Request $request)
@@ -102,5 +102,15 @@ class RappelController extends Controller
         alert()->success('Rappels envoyés');
 
         return redirect()->back();
+    }
+
+    public function generate(Request $request)
+    {
+        $rappel = $this->rappel->create(['order_id' => $request->input('id')]);
+
+        $this->generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+        $this->generator->factureOrder($rappel->order, $rappel);
+        
+        return ['rappels' => $rappel->order->rappel_list];
     }
 }

@@ -6,24 +6,17 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="col-md-1"></th>
                 <th class="col-md-2">Commande n°</th>
                 <th class="col-md-1">Date</th>
                 <th class="col-md-1">Montant</th>
                 <th class="col-md-1">Facture</th>
                 <th class="col-md-2">Payé le &nbsp;<i class="fa fa-money"></i></th>
-                <th class="col-md-2">Rappel</th>
+                <th class="col-md-5">Rappel</th>
             </tr>
         </thead>
         <tbody>
         @foreach($orders as $order)
             <tr class="mainRow">
-                <td>
-                    <form action="{{ url('admin/order/rappel') }}" method="POST">{!! csrf_field() !!}
-                        <input type="hidden" value="{{ $order->id }}" name="order_id">
-                        <button class="btn btn-brown btn-sm" name="makeRappel_" type="submit">Générer un rappel</button>
-                    </form>
-                </td>
                 <td><a class="collapse_anchor" data-toggle="collapse" href="#order_no_{{ $order->id }}"><i class="fa fa-order fa-arrow-circle-right"></i>{{ $order->order_no }}</a></td>
                 <td>{{ $order->created_at->formatLocalized('%d %b %Y') }}</td>
                 <td>{{ $order->total_with_shipping }} CHF</td>
@@ -32,8 +25,7 @@
                     @if($order->facture)
                         <a target="_blank" href="{{ $order->facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
                     @else
-                        <div id="wrapper_{{ $order->id }}"></div>
-                        <button data-id="{{ $order->id }}" class="btn btn-default btn-sm order-generate">Générer</button>
+                        <generate path="order" order="{{ $order->id }}"></generate>
                     @endif
 
                 </td>
@@ -50,7 +42,9 @@
                     </div>
                 </td>
                 <td>
-                    @if(!$order->rappels->isEmpty())
+
+                    <shoprappel :rappels="{{ $order->rappel_list }}" order="{{ $order->id }}"></shoprappel>
+                  {{--  @if(!$order->rappels->isEmpty())
                         <ol>
                             @foreach($order->rappels as $rappel)
                                 <li>
@@ -66,7 +60,7 @@
                                 </li>
                             @endforeach
                         </ol>
-                    @endif
+                    @endif--}}
                 </td>
             </tr>
             @if(!empty($order->products))

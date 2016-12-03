@@ -1078,3 +1078,7 @@ input[type="checkbox"].rappel-input {
 #abos-table_wrapper{
     margin-top: 10px;
 }
+
+.rappel-item{
+    margin-bottom: 5px;
+}

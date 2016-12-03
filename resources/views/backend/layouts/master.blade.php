@@ -39,6 +39,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <base href="/">
 
+    <script>
+        window.Laravel = <?php echo json_encode([
+                'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
 </head>
 <body>
 
@@ -164,6 +169,8 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/blocs.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/sondage.js');?>"></script>
+
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>

@@ -108,7 +108,7 @@ class OrderController extends Controller {
      *
      * @return Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $shippings = $this->shipping->getAll();
         $order     = $this->order->find($id);
@@ -130,7 +130,7 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order);
 
-        return ['facture' => $order->facture];
+        return ['link' => $order->facture];
     }
 
     /**
