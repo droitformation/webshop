@@ -38,12 +38,11 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="col-sm-2">Déteteur</th>
-                                <th class="col-sm-1">No</th>
+                                <th class="col-sm-2">No</th>
                                 <th class="col-sm-1">Prix</th>
                                 <th class="col-sm-2">Status</th>
                                 <th class="col-sm-1">Date</th>
-                                <th class="col-md-3">Rappels</th>
+                                <th class="col-md-6">Rappels</th>
                             </tr>
                             </thead>
                             <tbody class="selects">
@@ -51,9 +50,9 @@
                                 @if(!$inscriptions->isEmpty())
                                     @foreach($inscriptions as $inscription)
                                         @if($inscription->group_id)
-                                            @include('backend.colloques.rappels.partials.multiple', ['id' => $inscription->id, 'group' => $inscription->groupe])
+                                            @include('backend.inscriptions.rappels.partials.multiple', ['id' => $inscription->id, 'group' => $inscription->groupe])
                                         @else
-                                            @include('backend.colloques.rappels.partials.simple', ['inscription' => $inscription])
+                                            @include('backend.inscriptions.rappels.partials.simple', ['inscription' => $inscription])
                                         @endif
                                     @endforeach
                                 @endif

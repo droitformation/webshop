@@ -2,7 +2,7 @@
 @if($order->payement_id == 1)
 
     {{ ($products->count() > 7 ? '<p style="page-break-after: always;"></p>' : '') }}
-    <?php list($francs,$centimes) = $order->price_total_explode; ?>
+    <?php list($francs,$centimes) = explode('.', $montant) or $order->price_total_explode; ?>
 
     <table id="bv-table">
         <tr align="top" valign="top">

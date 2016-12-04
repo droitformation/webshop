@@ -82,6 +82,7 @@ class PdfGenerator implements PdfGeneratorInterface
         $data['order']    = $order;
         $data['adresse']  = $generate->getAdresse();
         $data['products'] = $generate->getProducts();
+        $data['montant']  = $generate->getPrice($rappel);
 
         if($rappel){
             $data['rappel'] = $order->rappels->count();

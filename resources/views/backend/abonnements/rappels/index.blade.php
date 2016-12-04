@@ -65,11 +65,10 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="col-md-1">Numero</th>
-                                <th class="col-md-3">Nom</th>
-                                <th class="col-md-2">Status</th>
+                                <th class="col-md-2">Numero</th>
+                                <th class="col-md-3">Status</th>
                                 <th class="col-md-1">Date</th>
-                                <th class="col-md-3">Rappels</th>
+                                <th class="col-md-6">Rappels</th>
                             </tr>
                             </thead>
                             <tbody class="selects">
@@ -79,37 +78,11 @@
                                     <tr>
                                         <td>{{ $facture->abonnement->numero }}</td>
                                         <td>
-                                            @if($facture->abonnement->user)
-                                                <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->user->name }}</a>
-                                            @elseif($facture->abonnement->originaluser)
-                                                <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->originaluser->name }}</a>
-                                            @else
-                                                <p><span class="label label-warning">Duplicata</span></p>
-                                            @endif
-                                        </td>
-                                        <td>
                                             @include('backend.abonnements.partials.payed',['facture' => $facture])
                                         </td>
                                         <td>{{ $facture->created_at->formatLocalized('%d %b %Y') }}</td>
                                         <td>
                                             <rappel path="abonnement" :rappels="{{ $facture->rappel_list }}" item="{{ $facture->id }}"></rappel>
-                                           {{-- @if(!$facture->rappels->isEmpty())
-                                                <ol>
-                                                @foreach($facture->rappels as $rappel)
-                                                    <li>
-                                                        <form action="{{ url('admin/facture/'.$facture->id) }}" method="POST" class="">
-                                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                            <div class="form-group" style="margin-bottom: 6px;">
-                                                                @if($rappel->abo_rappel)
-                                                                    <a target="_blank" href="{{ asset($rappel->abo_rappel) }}">Rappel {{ $rappel->created_at->format('d/m/Y') }}</a> &nbsp;
-                                                                @endif
-                                                                <button data-what="Supprimer" data-action="le rappel" class="btn btn-danger btn-xs pull-right deleteAction"><i class="fa fa-times"></i></button>
-                                                            </div>
-                                                        </form>
-                                                    </li>
-                                                @endforeach
-                                                </ol>
-                                            @endif--}}
                                         </td>
                                     </tr>
                                 @endforeach

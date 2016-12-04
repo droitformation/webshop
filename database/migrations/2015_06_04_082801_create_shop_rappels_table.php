@@ -16,6 +16,8 @@ class CreateShopRappelsTable extends Migration
         Schema::create('shop_rappels', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
+            $table->integer('montant')->nullable();
+            $table->timestamp('payed_at')->nullable();
             $table->timestamps();
         });
     }

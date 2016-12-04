@@ -51,7 +51,7 @@ class RappelController extends Controller
             return response()->json($rappel);
         }
 
-        return view('backend.colloques.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
+        return view('backend.inscriptions.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
     }
 
     public function make($id)

@@ -6,7 +6,7 @@ class Rappel extends Model{
 
     protected $table = 'shop_rappels';
 
-    protected $fillable = ['order_id'];
+    protected $fillable = ['order_id','montant'];
 
     public function getDocRappelAttribute()
     {

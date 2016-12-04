@@ -47,21 +47,12 @@ class AboRappelController extends Controller {
 
 	public function generate(Request $request)
 	{
-        $rappel = $this->rappel->create(['abo_facture_id' => $request->input('id')]);
+        $rappel = $this->rappel->create(['abo_facture_id' => $request->input('id'), 'montant' => $request->input('montant',null)]);
 
         $this->worker->make($rappel, true);
 
         return ['rappels' => $rappel->facture->rappel_list];
 	}
-
-    public function update(Request $request, $id)
-    {
-        $rappel = $this->rappel->update($request->all());
-
-        alert()->success('Le rappel a été mis à jour');
-
-        return redirect('admin/abo/'.$rappel->id);
-    }
 
 	public function destroy($id, Request $request)
 	{

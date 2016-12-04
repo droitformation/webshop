@@ -42,7 +42,7 @@ class RappelController extends Controller
 
         $orders = $this->order->getPeriod($period,'pending');
         
-        return view('backend.orders.rappels')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end']] + $request->all());
+        return view('backend.orders.rappels.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end']] + $request->all());
     }
 
     public function make(Request $request)
@@ -61,7 +61,7 @@ class RappelController extends Controller
 
         return redirect()->back();
     }
-
+/*
     public function store(Request $request)
     {
         $rappel = $this->rappel->create(['order_id' => $request->input('order_id')]);
@@ -72,7 +72,7 @@ class RappelController extends Controller
         alert()->success('Le rappel a été crée');
 
         return redirect()->back();
-    }
+    }*/
     
     /**
      * Remove the specified resource from storage.
@@ -106,9 +106,11 @@ class RappelController extends Controller
 
     public function generate(Request $request)
     {
-        $rappel = $this->rappel->create(['order_id' => $request->input('id')]);
+        $rappel = $this->rappel->create(['order_id' => $request->input('id'), 'montant' => $request->input('montant',null)]);
 
-        $this->generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+        $message = $rappel->montant ? config('generate.rappel.montant') : config('generate.rappel.normal');
+        
+        $this->generator->setMsg(['warning' => $message]);
         $this->generator->factureOrder($rappel->order, $rappel);
 
         $order = $this->order->find($request->input('id'));

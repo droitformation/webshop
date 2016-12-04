@@ -8,7 +8,7 @@ class Rappel extends Model
 {
     protected $table = 'colloque_inscription_rappels';
 
-    protected $fillable = ['user_id', 'group_id', 'inscription_id','colloque_id'];
+    protected $fillable = ['user_id', 'group_id', 'inscription_id','colloque_id','montant'];
 
     public function getDocRappelAttribute()
     {

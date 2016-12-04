@@ -8,7 +8,7 @@ class Abo_rappels extends Model{
     use SoftDeletes;
 
     protected $table    = 'abo_rappels';
-    protected $fillable = ['abo_facture_id'];
+    protected $fillable = ['abo_facture_id','montant'];
 
     public function getDocRappelAttribute()
     {

@@ -47,7 +47,8 @@ class AboRappelEloquent implements AboRappelInterface{
     public function create(array $data){
 
         $rappel = $this->rappel->create([
-            'abo_facture_id' => $data['abo_facture_id']
+            'abo_facture_id' => $data['abo_facture_id'],
+            'montant'        => (isset($data['montant']) ? $data['montant'] * 100 : null),
         ]);
 
         if( ! $rappel )

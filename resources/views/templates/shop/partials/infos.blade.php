@@ -51,7 +51,11 @@
                 </tr>
                 <tr align="top" valign="top">
                     <td width="40%" align="top" valign="top" class="text-right line_total_invoice"><strong>Total:</strong></td>
-                    <td width="60%" align="top" valign="top" class="text-right line_total_invoice"><strong>{{ $order->total_with_shipping }} CHF</strong></td>
+                    <td width="60%" align="top" valign="top" class="text-right line_total_invoice">
+                        <strong>
+                            {{ $montant or $order->total_with_shipping }} CHF
+                        </strong>
+                    </td>
                 </tr>
             </table>
 

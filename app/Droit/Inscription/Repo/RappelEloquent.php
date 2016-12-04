@@ -28,7 +28,8 @@ class RappelEloquent implements RappelInterface{
             'colloque_id'    => $data['colloque_id'],
             'inscription_id' => (isset($data['inscription_id']) ? $data['inscription_id'] : null),
             'user_id'        => (isset($data['user_id']) ? $data['user_id'] : null),
-            'group_id'       => (isset($data['group_id']) ? $data['group_id'] : null)
+            'group_id'       => (isset($data['group_id']) ? $data['group_id'] : null),
+            'montant'        => (isset($data['montant']) ? $data['montant'] * 100 : null),
         ));
 
         if( ! $rappel )

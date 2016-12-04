@@ -7,18 +7,15 @@
         <thead>
             <tr>
                 <th class="col-md-2">Commande n°</th>
-                <th class="col-md-1">Date</th>
                 <th class="col-md-1">Montant</th>
                 <th class="col-md-1">Facture</th>
-                <th class="col-md-3">Payé le &nbsp;<i class="fa fa-money"></i></th>
-                <th class="col-md-4">Rappel</th>
+                <th class="col-md-8">Rappel</th>
             </tr>
         </thead>
         <tbody>
         @foreach($orders as $order)
             <tr class="mainRow">
                 <td><a class="collapse_anchor" data-toggle="collapse" href="#order_no_{{ $order->id }}"><i class="fa fa-order fa-arrow-circle-right"></i>{{ $order->order_no }}</a></td>
-                <td>{{ $order->created_at->formatLocalized('%d %b %Y') }}</td>
                 <td>{{ $order->total_with_shipping }} CHF</td>
                 <td>
 
@@ -30,38 +27,7 @@
 
                 </td>
                 <td>
-                    <div class="input-group">
-                        <div class="form-control editablePayementDate"
-                             data-name="payed_at" data-type="date" data-pk="{{ $order->id }}"
-                             data-url="admin/order/edit" data-title="Date de payment">
-                            {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}
-                        </div>
-                        <span class="input-group-addon bg-{{ $order->payed_at ? 'success' : '' }}">
-                            {{ $order->payed_at ? 'payé' : 'en attente' }}
-                        </span>
-                    </div>
-                </td>
-                <td>
-
                     <rappel path="order" :rappels="{{ $order->rappel_list }}" item="{{ $order->id }}"></rappel>
-
-                  {{--  @if(!$order->rappels->isEmpty())
-                        <ol>
-                            @foreach($order->rappels as $rappel)
-                                <li>
-                                    <form action="{{ url('admin/order/rappel/'.$rappel->id) }}" method="POST" class="">
-                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                        <div class="form-group" style="margin-bottom: 6px;">
-                                            @if($rappel->doc_rappel)
-                                                <a target="_blank" href="{{ asset($rappel->doc_rappel) }}">Rappel {{ $rappel->created_at->format('d/m/Y') }}</a> &nbsp;
-                                            @endif
-                                            <button data-what="Supprimer" data-action="le rappel" class="btn btn-danger btn-xs pull-right deleteAction"><i class="fa fa-times"></i></button>
-                                        </div>
-                                    </form>
-                                </li>
-                            @endforeach
-                        </ol>
-                    @endif--}}
                 </td>
             </tr>
             @if(!empty($order->products))
