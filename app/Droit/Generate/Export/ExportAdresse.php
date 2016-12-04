@@ -21,7 +21,7 @@
 
      public function export($adresses)
      {
-         $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->setShouldWrapText()->build();
+         $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
 
          $writer = WriterFactory::create(Type::XLSX); // for XLSX files
 
