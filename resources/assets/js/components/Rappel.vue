@@ -3,7 +3,7 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-                <button @click="generate" class="btn btn-brown btn-sm">Générer un rappel</button>
+                <form><button @click="generate" :id="getButtonId()" class="btn btn-brown btn-sm">Générer un rappel</button></form>
             </div>
             <div class="col-md-8">
                 <ol>
@@ -33,6 +33,9 @@ export default {
     computed: {
         computedOrder: function () {
             return this.item
+        },
+        computedNumber: function () {
+            return  'makeRappel_' + this.item
         }
     },
     mounted: function ()  {
@@ -40,6 +43,9 @@ export default {
         this.loading = false;
     },
     methods: {
+        getButtonId : function(){
+            return  'makeRappel_' + this.item
+        },
         getRappels : function(){
            this.list = this.rappels;
         },
