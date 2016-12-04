@@ -110,7 +110,9 @@ class RappelController extends Controller
 
         $this->generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
         $this->generator->factureOrder($rappel->order, $rappel);
-        
-        return ['rappels' => $rappel->order->rappel_list];
+
+        $order = $this->order->find($request->input('id'));
+
+        return ['rappels' => $order->rappel_list];
     }
 }

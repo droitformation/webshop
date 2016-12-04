@@ -8,8 +8,8 @@
             <div class="col-md-8">
                 <ol>
                     <li class="rappel-item" v-for="rappel in list">
-                        <a :href="rappel.doc_rappel" class="text-primary">{{ rappel.date }}</a>
-                            <button @click="remove(rappel.id)" class="btn btn-danger btn-xs pull-right"><i class="fa fa-times"></i></button>
+                        <a :href="rappel.doc_rappel" target="_blank" class="text-primary">{{ rappel.date }}</a>
+                        <button @click="remove(rappel.id)" class="btn btn-danger btn-xs pull-right"><i class="fa fa-times"></i></button>
                         <div class="clearfix"></div>
                     </li>
                 </ol>
@@ -55,12 +55,16 @@ export default {
         generate: function() {
               this.loading   = true;
               this.isVisible = false;
-              // POST /someUrl
+
+              // POST
               this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item }).then((response) => {
-                 console.log(response);
-                  // set data on vm
-                  this.updateRappels(response.body.rappels);
-                  this.loading = false;
+                  console.log(response);
+
+                  //small delay for pdf generation completion
+                  setTimeout(function(){
+                       this.updateRappels(response.body.rappels);
+                       this.loading = false;
+                  }, 500);
 
               }, (response) => {
                 // error callback

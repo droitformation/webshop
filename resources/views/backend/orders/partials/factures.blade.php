@@ -10,8 +10,8 @@
                 <th class="col-md-1">Date</th>
                 <th class="col-md-1">Montant</th>
                 <th class="col-md-1">Facture</th>
-                <th class="col-md-2">Payé le &nbsp;<i class="fa fa-money"></i></th>
-                <th class="col-md-5">Rappel</th>
+                <th class="col-md-3">Payé le &nbsp;<i class="fa fa-money"></i></th>
+                <th class="col-md-4">Rappel</th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +44,7 @@
                 <td>
 
                     <rappel path="order" :rappels="{{ $order->rappel_list }}" item="{{ $order->id }}"></rappel>
+
                   {{--  @if(!$order->rappels->isEmpty())
                         <ol>
                             @foreach($order->rappels as $rappel)
