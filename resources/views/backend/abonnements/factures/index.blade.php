@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <p><a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+            <p><a href="{{ url('admin/abonnements/'.$abo->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour aux abonnées</a></p>
         </div>
         <div class="col-md-6 text-right">
             <p><a href="{{ url('admin/rappel/'.$product->id) }}" class="btn btn-brown"><i class="fa fa-exclamation-triangle"></i> &nbsp;Voir les rappels</a></p>
@@ -14,9 +14,9 @@
         <div class="panel-body" style="padding-bottom: 10px;">
             <div class="row">
                 <div class="col-md-2">
-                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
-                    <h3 style="margin-bottom:0;line-height:24px">{{ $abo->title }}</h3>
-                    <p style="margin-bottom: 8px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
+                    <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
+                    <h3 style="margin-bottom:0;line-height:20px;font-size: 18px;"><a href="{{ url('admin/abo/'.$abo->id) }}">{{ $abo->title }}</a></h3>
+                    <p style="margin-bottom: 5px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
                 <div class="col-md-9">
                     <form action="{{ url('admin/abo/generate') }}" method="POST" class="pull-right">
