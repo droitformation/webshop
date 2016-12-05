@@ -11,8 +11,8 @@ use App\Droit\Shop\Order\Repo\OrderInterface;
 
 use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
-use App\Jobs\SendRappelShopEmail;
-use App\Jobs\MakeRappelShop;
+use App\Jobs\NotifyJobFinished;
+use App\Jobs\MakeRappelOrder;
 
 class RappelController extends Controller
 {
@@ -35,12 +35,12 @@ class RappelController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $request->all();
+        $data = session()->has('period') ? session('period') : $request->all();
 
         $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
         $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
 
-        $orders = $this->order->getPeriod($period,'pending');
+        $orders = $this->order->getRappels($period);
         
         return view('backend.orders.rappels.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end']] + $request->all());
     }
@@ -51,13 +51,17 @@ class RappelController extends Controller
 
         if(!$orders->isEmpty())
         {
-            foreach($orders as $order)
-            {
-                $this->worker->generate($order);
-            }
+            // Make sur we have created all the rappels in pdf
+            $job = (new MakeRappelOrder($orders->pluck('id')->all()));
+            $this->dispatch($job);
+
+            $job = (new NotifyJobFinished('Les rappels pour les commandes ont été crées.'));
+            $this->dispatch($job);
         }
 
-        alert()->success('Les rappels ont été crées');
+        alert()->success('La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
+
+        session(['period' => $request->all()]);
 
         return redirect()->back();
     }
@@ -77,24 +81,9 @@ class RappelController extends Controller
         return ['rappels' => $order->rappel_list];
     }
 
-    public function send(Request $request)
-    {
-        // Make sur we have created all the rappels in pdf
-        $job = (new MakeRappelInscription($request->input('inscriptions')));
-        $this->dispatch($job);
-        
-        // Send the rappels via email
-        $job = (new SendRappelEmail($request->input('inscriptions')))->delay(\Carbon\Carbon::now()->addMinutes(1));
-        $this->dispatch($job);
-
-        alert()->success('Rappels envoyés');
-
-        return redirect()->back();
-    }
-
     public function generate(Request $request)
     {
-        $rappel = $this->rappel->create(['order_id' => $request->input('id'),]);
+        $rappel = $this->rappel->create(['order_id' => $request->input('id')]);
         $order  = $this->order->find($request->input('id'));
 
         $this->generator->setMsg(['warning' => config('generate.rappel.normal')]);

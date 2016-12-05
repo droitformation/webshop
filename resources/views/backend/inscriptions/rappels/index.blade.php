@@ -10,7 +10,8 @@
                 <div class="col-md-6">
                     <?php $illustration = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
                     <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/colloques/illustration/'.$illustration) }}" />
-                    <p style="margin-bottom: 0;"><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a><br/><small>{{ $colloque->event_date }}</small></p>
+                        <h3 style="margin-bottom:0px;line-height:20px;font-size: 18px;"><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h3>
+                        <p style="margin-bottom: 0;">{{ $colloque->event_date }}</p>
                 </div>
                 <div class="col-md-6">
                     <form action="{{ url('admin/inscription/rappel/send') }}" method="POST" class="pull-right" style="margin-left: 20px;">

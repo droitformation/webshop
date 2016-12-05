@@ -32,6 +32,21 @@ class OrderEloquent implements OrderInterface{
             ->get();
     }
 
+    public function getRappels($period)
+    {
+        return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])
+            ->period($period)
+            ->status('pending')
+            ->whereNull('payed_at')
+            ->where('amount','>', 0)
+            ->get();
+    }
+
+    public function getMultiple($orders)
+    {
+        return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])->whereIn('id',$orders)->get();
+    }
+
     public function search($order_no)
     {
         return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])->search($order_no)->get();

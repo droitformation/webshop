@@ -40,8 +40,10 @@
                             </div>
                         </form>
                         <div class="col-lg-5 col-md-4 col-xs-12">
-                            <form action="{{ url('admin/order/rappel/generate') }}" method="POST" class="pull-right">
+                            <form action="{{ url('admin/order/rappel/make') }}" method="POST" class="pull-right">
                                 <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
+                                <input type="hidden" name="start" value="{{ $start->format('Y-m-d') }}">
+                                <input type="hidden" name="end" value="{{ $end->format('Y-m-d') }}">
                                 <button type="submit" class="btn btn-brown pull-left"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</button>
                             </form>
                         </div>
