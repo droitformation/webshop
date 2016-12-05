@@ -7,8 +7,8 @@
             <h3>Communications</h3>
             <div class="communications">
 
-                @if($order->payed_at)
-                    <p class="message special">Acquitté le {{ $order->payed_at->format('d/m/Y') }}</p>
+                @if($generate->order()->payed_at)
+                    <p class="message special">Acquitté le {{ $generate->order()->payed_at->format('d/m/Y') }}</p>
                 @endif
 
                 @if(!empty($messages) && !empty(config('generate.order.msgTypes')))
@@ -30,33 +30,33 @@
         <td width="33%" align="top" valign="top" class="text-right">
             <table width="100%" id="content-table" class="total_line" align="right" valign="top">
 
-                @if($order->coupon_id > 0)
+                @if($generate->order()->coupon_id > 0)
                     <tr align="top" valign="top">
                         <td width="40%" align="top" valign="top" class="text-right text-muted">
-                            {!! $order->coupon->coupon_title !!}
+                            {!! $generate->order()->coupon->coupon_title !!}
                         </td>
                         <td width="60%" align="top" valign="top" class="text-right">
-                            {{ $order->coupon->coupon_value }}
+                            {{ $generate->order()->coupon->coupon_value }}
                         </td>
                     </tr>
                 @endif
 
                 <tr align="top" valign="top">
                     <td width="40%" align="top" valign="top" class="text-right" style="border: none;"><strong>Sous-total:</strong></td>
-                    <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $order->price_cents }} CHF</td>
+                    <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $generate->order()->price_cents }} CHF</td>
                 </tr>
                 <tr align="top" valign="top">
                     <td width="40%" align="top" valign="top" class="text-right" style="border: none;"><strong>Frais de port:</strong></td>
-                    <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $order->shipping->price_cents }} CHF</td>
+                    <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $generate->order()->shipping->price_cents }} CHF</td>
                 </tr>
+
                 <tr align="top" valign="top">
                     <td width="40%" align="top" valign="top" class="text-right line_total_invoice"><strong>Total:</strong></td>
                     <td width="60%" align="top" valign="top" class="text-right line_total_invoice">
-                        <strong>
-                            {{ $montant or $order->total_with_shipping }} CHF
-                        </strong>
+                        <strong>{{ $generate->order()->total_with_shipping }} CHF</strong>
                     </td>
                 </tr>
+
             </table>
 
         </td>

@@ -76,22 +76,16 @@ class PdfGenerator implements PdfGeneratorInterface
 
     public function factureOrder($order, $rappel = null)
     {
-        $generate = new OrderGenerate($order);
         $data     = $this->getData('order');
+        $generate = new OrderGenerate($order);
 
-        $data['order']    = $order;
-        $data['adresse']  = $generate->getAdresse();
-        $data['products'] = $generate->getProducts();
-        $data['montant']  = $generate->getPrice($rappel);
-
-        if($rappel){
-            $data['rappel'] = $order->rappels->count();
-        }
+        $data['generate'] = $generate;
+        $data['rappel']   = $rappel ? $rappel : null;
 
         $facture = \PDF::loadView('templates.shop.facture', $data)->setPaper('a4');
 
         $make = ($this->stream ? 'stream' : 'save');
-        $name = $generate->getName($rappel);
+        $name = $generate->getFilename($rappel);
 
         return $facture->$make($name);
     }

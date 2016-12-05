@@ -13,6 +13,7 @@ use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
 use App\Jobs\SendRappelEmail;
 use App\Jobs\MakeRappelInscription;
+use App\Jobs\NotifyJobFinished;
 
 class RappelController extends Controller
 {
@@ -54,27 +55,21 @@ class RappelController extends Controller
         return view('backend.inscriptions.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
     }
 
-    public function make($id)
+    public function make(Request $request)
     {
-        $inscriptions = $this->inscription->getRappels($id);
+        $inscriptions = $this->inscription->getRappels($request->input('colloque_id'));
 
         if(!$inscriptions->isEmpty())
         {
-            foreach($inscriptions as $inscription)
-            {
-                // Simple rappels
-                if($inscription->group_id)
-                {
-                    $this->worker->generateMultiple($inscription->groupe);
-                }
-                else   // Multiple rappels
-                {
-                    $this->worker->generateSimple($inscription);
-                }
-            }
+            // Make sur we have created all the rappels in pdf
+            $job = (new MakeRappelInscription($inscriptions->pluck('id')->all()));
+            $this->dispatch($job);
+
+            $job = (new NotifyJobFinished('Les rappels pour le colloque ont été crées.'));
+            $this->dispatch($job);
         }
 
-        alert()->success('Les rappels ont été crées');
+        alert()->success('La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
 
         return redirect()->back();
     }
@@ -87,8 +82,7 @@ class RappelController extends Controller
         {
             $this->worker->generateMultiple($inscription->groupe);
         }
-        else
-        {
+        else {
             $this->worker->generateSimple($inscription);
         }
 
@@ -107,11 +101,16 @@ class RappelController extends Controller
     {
         $this->rappel->delete($id);
 
-        $inscription = $this->inscription->find($request->input('item'));
+        if($request->ajax())
+        {
+            $inscription = $this->inscription->find($request->input('item'));
 
-        $list = $inscription->group_id ? $inscription->groupe->rappel_list : $inscription->rappel_list;
+            $list = $inscription->group_id ? $inscription->groupe->rappel_list : $inscription->rappel_list;
+            return ['rappels' => $list];
+        }
+        
+        return redirect()->back('Rappel supprimé');
 
-        return ['rappels' => $list];
     }
 
     public function send(Request $request)

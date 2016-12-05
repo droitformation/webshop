@@ -2,16 +2,10 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-2">
-               <form><button @click="generate" :id="getButtonId()" class="btn btn-brown btn-sm">Générer un rappel</button></form>
-            </div>
-            <div class="col-md-3">
-                <input class="form-control" v-model="montant" placeholder="Montant déjà payé">
-            </div>
-            <div class="col-md-3">
-                <input class="form-control datepicker" v-model="payed_at" placeholder="Payé le">
-            </div>
             <div class="col-md-4">
+               <form><button @click="generate" :id="getButtonId()" class="btn btn-brown">Générer un rappel</button></form>
+            </div>
+            <div class="col-md-8">
                 <ol>
                     <li class="rappel-item" v-for="rappel in list">
                         <a :href="rappel.doc_rappel" target="_blank" class="text-primary">{{ rappel.date }}</a>
@@ -32,17 +26,9 @@ export default {
     data () {
         return {
             list: [],
-            montant: null,
-            payed_at: null,
             loading: true,
             isVisible: true
         }
-    },
-    mounted: function() {
-        $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            language: 'fr'
-        });
     },
     computed: {
         computedOrder: function () {
@@ -72,7 +58,7 @@ export default {
 
               e.preventDefault();
               // POST
-              this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item, montant: this.montant }).then((response) => {
+              this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item }).then((response) => {
 
                   var self = this;
                   //small delay for pdf generation completion

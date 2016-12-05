@@ -25,6 +25,8 @@ Vue.http.interceptors.push((request, next) => {
 Vue.http.options.root = location.protocol + "//" + location.host+"/";
 Vue.http.options.emulateJSON = true; // send as
 
+//import DatePicker from "vuejs-datepicker"
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

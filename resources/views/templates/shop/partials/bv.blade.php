@@ -1,8 +1,8 @@
 <!-- BV id payment type = 1 -->
-@if($order->payement_id == 1)
+@if($generate->order()->payement_id == 1)
 
-    {{ ($products->count() > 7 ? '<p style="page-break-after: always;"></p>' : '') }}
-    <?php list($francs,$centimes) = explode('.', $montant) or $order->price_total_explode; ?>
+    {{ ($generate->getProducts()->count() > 7 ? '<p style="page-break-after: always;"></p>' : '') }}
+    <?php list($francs,$centimes) = $generate->order()->price_total_explode; ?>
 
     <table id="bv-table">
         <tr align="top" valign="top">
@@ -43,7 +43,7 @@
                             <ul class="versement">
                                 <li>{!! $motif['centre'] !!}</li>
                                 <li>{!! $motif['texte'] !!}</li>
-                                <li>Facture N° {{ $order->order_no }}</li>
+                                <li>Facture N° {{ $generate->order()->order_no }}</li>
                             </ul>
                         </td>
                         <td align="top" valign="top" width="32%" height="20mm"></td>

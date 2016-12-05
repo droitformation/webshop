@@ -13,6 +13,11 @@ class OrderGenerate
         $this->order = $order;
     }
 
+    public function order()
+    {
+        return $this->order;
+    }
+
     public function getAdresse()
     {
         if($this->order->user_id)
@@ -31,25 +36,12 @@ class OrderGenerate
         });
     }
 
-    public function getName($rappel = null)
+    public function getFilename($rappel = null)
     {
         if($rappel){
             return public_path('files/shop/rappels/rappel_'.$rappel->id.'_'.$this->order->order_no.'.pdf');
         }
 
         return public_path('files/shop/factures/facture_'.$this->order->order_no.'.pdf');
-    }
-
-    public function getPrice($rappel = null)
-    {
-        if($rappel->montant)
-        {
-            $money = new \App\Droit\Shop\Product\Entities\Money;
-
-            $price = $rappel->montant / 100;
-            return $money->format($price);
-        }
-
-        return $this->order->total_with_shipping;
     }
 }

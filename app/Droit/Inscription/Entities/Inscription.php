@@ -86,6 +86,18 @@ class Inscription extends Model
     }
 
     /* *
+  * Get only facture doc
+  * */
+    public function getDocFactureAttribute()
+    {
+        $path = config('documents.colloque.facture');
+
+        $file = $path.'facture'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
+
+        return ($this->annexe && \File::exists(public_path($file)) ? $file : null);
+    }
+
+    /* *
      * Get only attestation doc
      * */
     public function getDocAttestationAttribute()

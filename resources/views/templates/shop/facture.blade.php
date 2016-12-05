@@ -6,7 +6,7 @@
         @include('templates.shop.partials.header')
 
         <h1 class="title blue">
-            {!! isset($rappel) ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span> Facture' : 'Facture' !!}
+            {!! isset($rappel) ? '<span class="red">'.$generate->order()->rappels->count().''.($generate->order()->rappels->count() > 1 ? 'ème' : 'ère').' Rappel</span> Facture' : 'Facture' !!}
         </h1>
 
         <table class="content-table">
@@ -28,19 +28,19 @@
                     <table id="content-table" class="infos">
                         <tr>
                             <td width="28%"><strong class="blue">Payement</strong></td>
-                            <td width="72%">{{ $order->payement->title }}</td>
+                            <td width="72%">{{ $generate->order()->payement->title }}</td>
                         </tr>
                         <tr>
                             <td width="28%"><strong class="blue">Total:</strong></td>
-                            <td width="72%">{{ $order->price_cents }} CHF</td>
+                            <td width="72%">{{ $generate->order()->price_cents }} CHF</td>
                         </tr>
                         <tr>
                             <td width="20%"><strong class="blue">Date:</strong></td>
-                            <td width="80%">{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
+                            <td width="80%">{{ $generate->order()->created_at->formatLocalized('%d %B %Y') }}</td>
                         </tr>
                         <tr>
                             <td width="28%"><strong class="blue">N° facture:</strong></td>
-                            <td width="72%">{{ $order->order_no }}</td>
+                            <td width="72%">{{ $generate->order()->order_no }}</td>
                         </tr>
                     </table>
                 </td>
@@ -59,8 +59,8 @@
             </thead>
             <tbody>
 
-                @if(!empty($products))
-                    @foreach($products as $product_id => $product)
+                @if(!$generate->getProducts()->isEmpty())
+                    @foreach($generate->getProducts() as $product_id => $product)
 
                         <?php $price_unit = $product->reject(function ($item) { return $item->pivot->isFree; }); ?>
                         <?php $qty = $product->count();?>

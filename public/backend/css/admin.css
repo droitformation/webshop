@@ -1,5 +1,6 @@
 .datepicker {
     z-index: 1450;
+    border-radius: 0px;
 }
 
 #wrap {

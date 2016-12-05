@@ -17,7 +17,8 @@
                 </div>
             </td>
             <td align="top" width="40%" valign="top">
-                @if($adresse)
+                @if($generate->getAdresse())
+                    <?php $adresse = $generate->getAdresse(); ?>
                     <ul id="user">
                         {!! (!empty($adresse->company) ? '<li>'.$adresse->company.'</li>' : '') !!}
                         <li>{{ $adresse->civilite_title.' '.$adresse->name }}</li>

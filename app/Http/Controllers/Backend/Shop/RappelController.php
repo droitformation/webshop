@@ -61,18 +61,6 @@ class RappelController extends Controller
 
         return redirect()->back();
     }
-/*
-    public function store(Request $request)
-    {
-        $rappel = $this->rappel->create(['order_id' => $request->input('order_id')]);
-
-        $this->generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
-        $this->generator->factureOrder($rappel->order, $rappel);
-
-        alert()->success('Le rappel a été crée');
-
-        return redirect()->back();
-    }*/
     
     /**
      * Remove the specified resource from storage.
@@ -106,14 +94,11 @@ class RappelController extends Controller
 
     public function generate(Request $request)
     {
-        $rappel = $this->rappel->create(['order_id' => $request->input('id'), 'montant' => $request->input('montant',null)]);
+        $rappel = $this->rappel->create(['order_id' => $request->input('id'),]);
+        $order  = $this->order->find($request->input('id'));
 
-        $message = $rappel->montant ? config('generate.rappel.montant') : config('generate.rappel.normal');
-        
-        $this->generator->setMsg(['warning' => $message]);
-        $this->generator->factureOrder($rappel->order, $rappel);
-
-        $order = $this->order->find($request->input('id'));
+        $this->generator->setMsg(['warning' => config('generate.rappel.normal')]);
+        $this->generator->factureOrder($order, $rappel);
 
         return ['rappels' => $order->rappel_list];
     }

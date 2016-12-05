@@ -15,9 +15,12 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <h4>Période</h4>
+
                     <div class="row">
                         <form class="form-horizontal" action="{{ url('admin/order/rappels') }}" method="post">{!! csrf_field() !!}
+                            <div class="col-lg-1 col-md-1 col-xs-12">
+                                <h4 style="margin:0;margin-top: 2px;">Période</h4>
+                            </div>
                             <div class="col-lg-2 col-md-3 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon">Du</span>
@@ -36,10 +39,10 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="col-lg-6 col-md-3 col-xs-12">
+                        <div class="col-lg-5 col-md-4 col-xs-12">
                             <form action="{{ url('admin/order/rappel/generate') }}" method="POST" class="pull-right">
                                 <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
-                                <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer tous les rappels</button>
+                                <button type="submit" class="btn btn-brown pull-left"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</button>
                             </form>
                         </div>
                     </div>

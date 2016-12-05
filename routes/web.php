@@ -247,9 +247,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
 
     Route::get('inscription/rappels/{id}','Backend\Colloque\RappelController@rappels');
-    Route::get('inscription/rappel/make/{id}','Backend\Colloque\RappelController@make');
+    
+    Route::post('inscription/rappel/make','Backend\Colloque\RappelController@make');
     Route::post('inscription/rappel/send','Backend\Colloque\RappelController@send');
     Route::post('inscription/rappel/generate', 'Backend\Colloque\RappelController@generate');
+    
     Route::resource('inscription/rappel','Backend\Colloque\RappelController');
     Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
 

@@ -15,8 +15,6 @@ class CreateAboRappelsTable extends Migration
         Schema::create('abo_rappels', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('abo_facture_id');
-            $table->integer('montant')->nullable();
-            $table->timestamp('payed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

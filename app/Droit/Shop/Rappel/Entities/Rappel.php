@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 class Rappel extends Model{
 
     protected $table = 'shop_rappels';
-
-    protected $fillable = ['order_id','montant'];
+    protected $dates = ['payed_at'];
+    protected $fillable = ['order_id'];
 
     public function getDocRappelAttribute()
     {
@@ -18,6 +18,15 @@ class Rappel extends Model{
         }
 
         return null;
+    }
+
+    public function getMontantPriceAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        $price = $this->montant / 100;
+
+        return $money->format($price);
     }
 
     public function order()
