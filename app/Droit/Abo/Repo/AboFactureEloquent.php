@@ -87,6 +87,11 @@ class AboFactureEloquent implements AboFactureInterface{
         }
 
         $facture->fill($data);
+        
+        if($data['created_at']){
+            $facture->created_at = $data['created_at'];
+        }
+
         $facture->payed_at = (isset($data['payed_at']) && !empty($data['payed_at']) ? $data['payed_at'] : null);
         $facture->save();
 

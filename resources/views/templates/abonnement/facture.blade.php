@@ -46,7 +46,7 @@
             </td>
             <td width="1%"  align="top"></td>
             <td width="30%" align="left" style="text-align: left;" class="misc-infos">
-                <?php if(!empty($tva)) { echo \Registry::get('shop.infos.tva').' TVA'; } ?>
+                <?php if(!empty($tva)) { echo \Registry::get('shop.infos.tva'); } ?>
                 <div class="coordonnees">
                     <h4>Coordonnées pour le paiement</h4>
                     <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>

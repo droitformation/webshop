@@ -6,7 +6,7 @@
 
             <div class="options text-left" style="margin-bottom: 10px;">
                 <div class="btn-toolbar">
-                    <a href="{{ url('admin/colloque') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                    <a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                     <form action="{{ url('admin/colloque') }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
                         {!! csrf_field() !!}
 
-                        <fieldset title="Général">
+                        <fieldset title="Général"  id="appComponent">
                             <legend>Informations de base</legend>
 
                             <div class="form-group">
@@ -73,19 +73,15 @@
                                 </div>
                             </div>
 
+                            <?php $adresses = $organisateurs->reject(function ($item) { return $item->adresse == ''; }) ?>
+
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Endroit</label>
-                                <div class="col-sm-6 col-xs-8">
-                                    <select class="form-control required" name="location_id" id="endroitSelect">
-                                        @if(!$locations->isEmpty())
-                                            <option value="">Choix</option>
-                                            @foreach($locations as $location)
-                                                <option value="{{ $location->id }}">{{ $location->name }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    <br/>
-                                    <div id="showEndroit"></div>
+                                <label class="col-sm-3 control-label">
+                                    Adresse principale<br/><small>Indiqué sur bon, bv, facture</small>
+                                    <p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
+                                </label>
+                                <div class="col-sm-6">
+                                    <organisateur organisateur="{{ $adresses->first()->id }}" :adresses="{{ $adresses }}"></organisateur>
                                 </div>
                             </div>
 

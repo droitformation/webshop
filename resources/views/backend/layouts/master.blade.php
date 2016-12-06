@@ -42,6 +42,8 @@
     <script>
         window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
+                'url'   => url('/'),
+                'ajax' => url('admin/ajax/')
         ]); ?>
     </script>
 </head>
@@ -153,6 +155,7 @@
     @include('newsletter::Script.main')
 @endif
 
+<script type="text/javascript" src="<?php echo asset('backend/js/select-list.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/search-user.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/search-adresse.js');?>"></script>

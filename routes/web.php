@@ -391,8 +391,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('facture/edit', 'Backend\Abo\AboFactureController@edit');
     Route::resource('facture', 'Backend\Abo\AboFactureController');
 
-    Route::post('abo/rappel/generate', 'Backend\Abo\AboFileController@generate');
-
+    Route::post('abo/generate', 'Backend\Abo\AboFileController@generate');
     Route::post('abo/bind', 'Backend\Abo\AboFileController@bind');
 
     Route::post('abonnement/rappel/generate','Backend\Abo\AboRappelController@generate');
@@ -440,8 +439,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('pagecontent/{type}/{page}','Backend\Content\PageContentController@index');
     Route::resource('pagecontent', 'Backend\Content\PageContentController');
 
-    Route::resource('author',      'Backend\Content\AuthorController');
+    Route::resource('author', 'Backend\Content\AuthorController');
+
+    Route::post('location/colloque','Backend\Colloque\LocationController@colloque');
     Route::resource('location',    'Backend\Colloque\LocationController');
+
+    Route::post('organisateur/colloque','Backend\Colloque\OrganisateurController@colloque');
     Route::resource('organisateur','Backend\Colloque\OrganisateurController');
 
     Route::match(['get', 'post'], 'email', 'Backend\EmailController@index');
@@ -456,7 +459,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('ajax/arret/{id}',   'Backend\Content\ArretController@simple');
     Route::get('ajax/arrets/{id?}', 'Backend\Content\ArretController@arrets');
     Route::get('ajax/analyses/{id}','Backend\Content\AnalyseController@simple');
-    Route::get('ajax/categories/{id?}',   'Backend\Content\CategorieController@categories');
+    Route::get('ajax/categories/{id?}', 'Backend\Content\CategorieController@categories');
     Route::post('ajax/categorie/arrets','Backend\Content\CategorieController@arrets');
 
 });

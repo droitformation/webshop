@@ -49,7 +49,7 @@ class AboFactureRequest extends FormRequest
     public function messages()
     {
         return [
-            'abo_user_id.unique' => 'Une facture existe déjà pour cete édition'
+            'abo_user_id.unique' => 'Une facture existe déjà pour cette édition'
         ];
     }
 }

@@ -72,11 +72,6 @@ class LocationController extends Controller
     {
         $location = $this->location->find($id);
 
-        if($request->ajax())
-        {
-            return response()->json( $location, 200 );
-        }
-
         return view('backend.locations.show')->with(['location' => $location]);
     }
 
@@ -118,6 +113,19 @@ class LocationController extends Controller
         alert()->success('Lieu supprimée');
 
         return redirect()->back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function colloque(Request $request)
+    {
+        $location = $this->location->find($request->input('id'));
+
+        return ['location' => $location];
     }
 
 }

@@ -3,14 +3,8 @@
 
     <div class="row">
         <div class="col-md-12" style="margin-bottom: 15px;">
-
-            <a href="{{ url('admin/factures/'.$facture->product_id) }}" class="btn btn-default">
-                <i class="fa fa-list"></i> &nbsp;Retour a la liste des factures
-            </a>&nbsp;&nbsp;
-            <a href="{{ url('admin/abonnement/'.$facture->abo_user_id) }}" class="btn btn-inverse">
-                <i class="fa fa-user"></i> &nbsp;Retour à l'abonnement
-            </a>
-
+            <a href="{{ url('admin/factures/'.$facture->product_id) }}" class="btn btn-default"><i class="fa fa-list"></i> &nbsp;Retour a la liste des factures</a>&nbsp;&nbsp;
+            <a href="{{ url('admin/abonnement/'.$facture->abo_user_id) }}" class="btn btn-inverse"><i class="fa fa-user"></i> &nbsp;Retour à l'abonnement</a>
         </div>
     </div>
 
@@ -65,8 +59,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Facture</label>
                             <div class="col-sm-3 col-xs-6">
-                                @if($facture->abo_facture)
-                                    <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->abo_facture) }}?{{ rand(100,10000) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                @if($facture->doc_facture)
+                                    <a class="btn btn-sm btn-default" target="_blank" href="{{ asset($facture->doc_facture) }}?{{ rand(100,10000) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
                                 @endif
                             </div>
                         </div>

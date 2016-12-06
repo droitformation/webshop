@@ -67,7 +67,7 @@ class AbonnementAdminTest extends TestCase {
         $this->assertViewHas('factures');
     }
 
-    public function testRappelsUserEdition()
+    public function testRappelsUser()
     {
         $make = new \tests\factories\ObjectFactory();
 
@@ -76,18 +76,30 @@ class AbonnementAdminTest extends TestCase {
 
         $this->visit(url('admin/rappel/'.$abonnement->abo->current_product->id));
         $this->assertViewHas('factures');
-
-/*        $this->press('makeRappel_'.$abonnement->factures->first()->id);
-
-        $this->seePageIs(url('admin/rappel/'.$abonnement->abo->current_product->id));
-
-        $facture = $abonnement->factures->first();
-        $rappels = $facture->rappels;
-
-        $this->assertEquals(1, $rappels->count());*/
     }
 
     public function testEditFacture()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $abonnement = $make->makeAbonnement();
+        $make->abonnementFacture($abonnement);
+
+        $facture = $abonnement->factures->first();
+
+        $this->visit(url('admin/facture/'.$facture->id));
+        $this->type('2016-12-31', 'payed_at');
+        $this->type('2016-12-31', 'created_at');
+        $this->press('editFacture');
+
+        $this->seeInDatabase('abo_factures', [
+            'id'       => $facture->id,
+            'payed_at' => '2016-12-31',
+            'created_at' => '2016-12-31',
+        ]);
+    }
+
+    public function testEditFactureDisplayInAbonnement()
     {
         $make = new \tests\factories\ObjectFactory();
 
@@ -102,8 +114,12 @@ class AbonnementAdminTest extends TestCase {
 
         $this->seeInDatabase('abo_factures', [
             'id'       => $facture->id,
-            'payed_at' => '2016-12-31',
+            'payed_at' => '2016-12-31'
         ]);
+
+        $this->visit(url('admin/abonnement/'.$facture->abo_user_id));
+        $this->see('Payé le 2016-12-31');
+
     }
 
     public function testDesinscriptionPage()

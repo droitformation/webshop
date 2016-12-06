@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="options text-left" style="margin-bottom: 10px;">
-                <a href="{{ url('admin/abonnements/'.$abonnement->abo_id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                <a href="{{ url('admin/abonnements/'.$abonnement->abo_id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour aux abonnées</a>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
 
             @if( $abonnement->status == 'abonne')
 
-                <div class="panel panel-midnightblue">
+                <div class="panel panel-midnightblue" id="appComponent">
                     <div class="panel-heading">
                         <h4><i class="fa fa-star-half-empty"></i> &nbsp;Payements</h4>
                     </div>
@@ -127,9 +127,10 @@
                                             @include('backend.abonnements.partials.facture', ['facture' => $facture])
                                         @endforeach
 
-                                        @if(!$facture->rappels->isEmpty())
+                                        <!-- Make rappel -->
+                                        @if(!$facture->payed_at)
                                             <hr/>
-                                            @include('backend.abonnements.partials.rappels', ['rappels' => $facture->rappels])
+                                            <rappel path="abonnement" :rappels="{{ $facture->rappel_list }}" item="{{ $facture->id }}"></rappel>
                                         @endif
                                     @endif
                                 </div>

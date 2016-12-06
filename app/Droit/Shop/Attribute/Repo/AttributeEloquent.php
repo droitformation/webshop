@@ -25,9 +25,10 @@ class AttributeEloquent implements AttributeInterface{
     public function create(array $data){
 
         $attribute = $this->attribute->create(array(
-            'title'    => $data['title'],
-            'reminder' => (isset($data['reminder']) && !empty($data['reminder']) ? 1 : null),
-            'text'     => (isset($data['text']) ? $data['text'] : null)
+            'title'     => $data['title'],
+            'reminder'  => (isset($data['reminder']) && !empty($data['reminder']) ? 1 : null),
+            'text'      => (isset($data['text']) ? $data['text'] : null),
+            'intervals' => $data['intervals']
         ));
 
         if( ! $attribute )
@@ -58,7 +59,6 @@ class AttributeEloquent implements AttributeInterface{
     public function delete($id){
 
         return $this->attribute->delete($id);
-
     }
 
 }

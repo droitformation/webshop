@@ -503,6 +503,12 @@ a.editable-click.editablePriceRemarque{
     margin-right: 5px;
 }
 
+form.rappel button.btn.btn-xs{
+    padding: 3px 8px;
+    font-size:14px;
+    font-weight: bold;
+}
+
 .price-list dt{
     width: 100px;
     text-align: left;

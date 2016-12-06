@@ -12,7 +12,6 @@ class Location extends Model{
 
     public function getLocationMapAttribute()
     {
-
         if($this->map)
         {
             return 'files/colloques/cartes/'.$this->map;

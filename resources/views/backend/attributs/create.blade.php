@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Interval</label>
                     <div class="col-sm-7">
-                        <select class="form-control" name="interval">
+                        <select class="form-control" name="intervals">
                             <option value="">Choix</option>
                             <option value="week">1 semaine</option>
                             <option value="month">1 mois</option>

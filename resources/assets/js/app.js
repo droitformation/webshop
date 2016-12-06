@@ -17,7 +17,8 @@ require('./bootstrap');
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('generate', require('./components/Generate.vue'));
 Vue.component('rappel', require('./components/Rappel.vue'));
-Vue.component('sendrappel', require('./components/Sendrappel.vue'));
+Vue.component('organisateur', require('./components/Organisateur.vue'));
+Vue.component('endroit', require('./components/Endroit.vue'));
 
 const app = new Vue({
     el: '#appComponent'

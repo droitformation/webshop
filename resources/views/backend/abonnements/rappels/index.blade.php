@@ -64,7 +64,7 @@
                     </div>
                     <div class="clearfix"></div><br/>
                     <div class="table-responsive">
-                        <table class="table  table-striped">
+                        <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th class="col-md-1">Numero</th>

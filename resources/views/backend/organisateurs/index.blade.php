@@ -22,8 +22,8 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
-                            <th class="col-sm-3">Nom</th>
-                            <th class="col-sm-2">Description</th>
+                            <th class="col-sm-2">Nom</th>
+                            <th class="col-sm-3">Description</th>
                             <th class="col-sm-2">Lien</th>
                             <th class="col-sm-2">Logo</th>
                             <th class="col-sm-1">Centre</th>
@@ -38,9 +38,11 @@
                                     <td><strong>{{ $organisateur->name }}</strong></td>
                                     <td>{!! $organisateur->description !!} </td>
                                     <td>{!! $organisateur->url !!}</td>
-                                    <td>
+                                    <td align="center">
                                         @if($organisateur->logo)
-                                            <img style="height: 50px;" src="{{ asset('files/logos/'.$organisateur->logo) }}" alt="{{ $organisateur->name }}"></td>
+                                            <p class="text-center thumbnail">
+                                                <img style="max-height: 45px; max-width: 100px; margin: 0 auto;" src="{{ asset('files/logos/'.$organisateur->logo) }}" alt="{{ $organisateur->name }}"></td>
+                                            </p>
                                         @endif
                                     <td>
                                         @if($organisateur->centre)

@@ -22,7 +22,7 @@
                             <input type="hidden" name="_method" value="PUT">
                             {!! csrf_field() !!}
 
-                            <fieldset title="Général">
+                            <fieldset title="Général" id="appComponent">
                                 <legend>Général</legend>
 
                                 <div class="form-group">
@@ -33,30 +33,14 @@
                                     </div>
                                 </div>
 
+                                <?php $adresses = $organisateurs->reject(function ($item) { return $item->adresse == ''; })->sortBy('id'); ?>
+
                                 <div class="form-group">
-                                    <label for="titre" class="col-sm-3 control-label">
-                                        Adresse principale<br/><small>Indiqué sur bon, bv, facture</small>
-                                        <p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
+                                    <label class="col-sm-3 control-label">
+                                        Adresse principale<br/><small>Indiqué sur bon, bv, facture</small><p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
                                     </label>
                                     <div class="col-sm-8">
-                                        <div id="choixAdresse">
-                                            <select class="form-control form-required required" autocomplete="off" name="adresse_id" id="adresseSelect">
-                                                <?php
-                                                    $adresses = $organisateurs->reject(function ($item) {
-                                                        return $item->adresse == '';
-                                                    });
-                                                ?>
-                                                @if(!$adresses->isEmpty())
-                                                    <option value="">Choix</option>
-                                                    @foreach($adresses as $adresse)
-                                                        <option {{ ($colloque->adresse->id == $adresse->id || old('adresse_id') == $adresse->id ? 'selected' : '') }} value="{{ $adresse->id }}">{{ $adresse->name }}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div><br/>
-                                        <div class="thumbnail thumbnail-colloque">
-                                            <div id="showAdresse">{!! $colloque->adresse->adresse !!}</div>
-                                        </div>
+                                        <organisateur organisateur="{{ $colloque->adresse->id }}" :adresses="{{ $adresses }}"></organisateur>
                                     </div>
                                 </div>
 
@@ -104,16 +88,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Endroit</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control form-required required" name="location_id" id="endroitSelect">
-                                            @if(!$locations->isEmpty())
-                                                <option value="">Choix</option>
-                                                @foreach($locations as $location)
-                                                    <option {{ ($colloque->location_id == $location->id ? 'selected' : '') }} value="{{ $location->id }}">{{ $location->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                        <br/>
-                                        <div id="showEndroit"></div>
+                                        <endroit endroit="{{ $colloque->location_id }}" :adresses="{{ $locations }}"></endroit>
                                     </div>
                                 </div>
 

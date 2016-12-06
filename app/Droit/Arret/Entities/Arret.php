@@ -7,7 +7,7 @@ class Arret extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['site_id','user_id','reference','pub_date','abstract','pub_text','file'];
+	protected $fillable = ['site_id','user_id','reference','pub_date','abstract','pub_text','file','dumois'];
     protected $dates    = ['pub_date'];
 
     public function getDocumentAttribute()

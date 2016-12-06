@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <a :href="link" v-if="link" class="btn btn-default btn-sm">Facture</a>
+        <a :href="link" v-if="link" class="btn btn-default btn-sm">Facture en pdf</a>
         <i v-show="loading" class="fa fa-spinner fa-spin"></i>
         <button v-show="isVisible" v-if="!link"  @click="generate" class="btn btn-inverse btn-sm">Générer</button>
     </div>

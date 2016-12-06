@@ -84,7 +84,10 @@ class ArretController extends Controller {
             $data['file'] = $file['name'];
         }
 
-        $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
+        if($request->input('categories',null))
+        {
+            $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
+        }
 
         // Create arret
         $arret = $this->arret->create( $data );
@@ -116,7 +119,7 @@ class ArretController extends Controller {
 
         // Create arret
         $arret = $this->arret->update( $data );
-
+    
         alert()->success('Arrêt mis à jour');
 
         return redirect('admin/arret/'.$arret->id);

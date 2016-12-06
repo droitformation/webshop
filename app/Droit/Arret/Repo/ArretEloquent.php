@@ -115,7 +115,7 @@ class ArretEloquent implements ArretInterface{
 		}
 
         // Insert related categories
-        if(isset($data['categories']))
+        if(isset($data['categories']) && !empty($data['categories']))
         {
             $arret->categories()->sync($data['categories']);
         }
@@ -145,7 +145,7 @@ class ArretEloquent implements ArretInterface{
 		$arret->save();
 
         // Insert related categories
-        if(isset($data['categories']))
+        if(isset($data['categories']) && !empty($data['categories']))
         {
             $arret->categories()->sync($data['categories']);
         }

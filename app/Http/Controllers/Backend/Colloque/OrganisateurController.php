@@ -121,4 +121,16 @@ class OrganisateurController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function colloque(Request $request)
+    {
+        $organisateur = $this->organisateur->find($request->input('id'));
+
+        return ['organisateur' => $organisateur];
+    }
 }

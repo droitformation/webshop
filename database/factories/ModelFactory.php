@@ -289,6 +289,16 @@ $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Genera
     ];
 });
 
+$factory->define(App\Droit\Arret\Entities\Arret::class, function (Faker\Generator $faker) {
+    return [
+        'site_id'    => 1,
+        'reference'  => 'reference 123',
+        'pub_date'   => \Carbon\Carbon::now(),
+        'abstract'   => 'lorem ipsum dolor amet',
+        'pub_text'   => 'amet dolor ipsum lorem'
+    ];
+});
+
 $factory->define(App\Droit\Compte\Entities\Compte::class, function (Faker\Generator $faker) {
     return [
         'motif'   => 'Payement',

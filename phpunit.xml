@@ -16,6 +16,9 @@
         <testsuite name="abo">
             <directory>./tests/abo/</directory>
         </testsuite>
+        <testsuite name="arrets">
+            <directory>./tests/arrets/</directory>
+        </testsuite>
         <testsuite name="cart">
             <directory>./tests/cart/</directory>
         </testsuite>

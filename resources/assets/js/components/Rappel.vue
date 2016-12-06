@@ -3,7 +3,7 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-               <form><button @click="generate" :id="getButtonId()" class="btn btn-brown">Générer un rappel</button></form>
+               <form><button @click="generate" :id="getButtonId()" class="btn btn-brown btn-sm">Générer un rappel</button></form>
             </div>
             <div class="col-md-8">
                 <ol>
