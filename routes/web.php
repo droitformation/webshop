@@ -416,11 +416,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('arrets/{site}','Backend\Content\ArretController@index');
     Route::get('arret/create/{site}','Backend\Content\ArretController@create');
-    Route::resource('arret',     'Backend\Content\ArretController');
+    Route::resource('arret', 'Backend\Content\ArretController');
 
     Route::get('analyses/{site}','Backend\Content\AnalyseController@index');
     Route::get('analyse/create/{site}','Backend\Content\AnalyseController@create');
-    Route::resource('analyse',   'Backend\Content\AnalyseController');
+    Route::resource('analyse', 'Backend\Content\AnalyseController');
 
     Route::get('categories/{site}','Backend\Content\CategorieController@index');
     Route::get('categorie/create/{site}','Backend\Content\CategorieController@create');

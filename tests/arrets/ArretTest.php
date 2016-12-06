@@ -70,4 +70,23 @@ class ArretTest extends TestCase {
 			'dumois' => 1
 		]);
 	}
+
+	public function testDeleteArret()
+	{
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+		$arret = factory(App\Droit\Arret\Entities\Arret::class)->create();
+
+		$this->visit(url('admin/arrets/1'));
+
+        $response = $this->call('DELETE','admin/arret/'.$arret->id, [] ,['id' => $arret->id]);
+
+		$this->notSeeInDatabase('arrets', [
+			'id' => $arret->id,
+            'deleted_at' => null
+        ]);
+	}
 }
