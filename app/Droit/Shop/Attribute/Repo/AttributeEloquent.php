@@ -28,7 +28,7 @@ class AttributeEloquent implements AttributeInterface{
             'title'     => $data['title'],
             'reminder'  => (isset($data['reminder']) && !empty($data['reminder']) ? 1 : null),
             'text'      => (isset($data['text']) ? $data['text'] : null),
-            'intervals' => $data['intervals']
+            'duration'  => $data['duration']
         ));
 
         if( ! $attribute )

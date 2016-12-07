@@ -69,25 +69,28 @@ class ReminderController extends Controller
      */
     public function store(Request $request)
     {
-        $id       = $request->input('model_id',null);
         $data     = $request->all();
-        $start    = $request->input('send_at');
+        $send_at  = Carbon::now();
 
-        if($id)
+        if($request->input('model_id'))
         {
-            $type      = $request->input('type');
+            // Type of reminder, product. colloque, general
+            $type   = $request->input('type');
+            $start  = $request->input('start');
 
-            $model     = $this->$type->find($id);
-            $send_at   = $model->$start;
+            // Get the model
+            $model  = $this->$type->find($request->input('model_id'));
 
-            $data['send_at'] = $this->helper->addInterval($send_at, $request->input('interval'));
+            if(!$model || is_null($model->$start)) {
+                alert()->danger('Cette date ne correspond pas');
+                return redirect()->back();
+            }
+
+            // Get start date we want (created_at,'start_at','end_at','registration_at','active_at')
+            $send_at = $model->$start;
         }
-        else
-        {
-            $data['send_at'] = $this->helper->addInterval(Carbon::now(), $request->input('interval'));
-        }
 
-        $data['start'] = $start;
+        $data['send_at'] = $this->helper->addInterval($send_at, $request->input('duration'));
 
         $reminder = $this->reminder->create( $data );
 
@@ -107,15 +110,12 @@ class ReminderController extends Controller
     {
         $reminder  = $this->reminder->find($id);
         $type      = $reminder->type;
+        $items     = null;
 
         if($type != 'rappel')
         {
             $active = ($type == 'colloque' || $type == 'attribute' ? true : null); // products getall pass search
             $items  = $this->$type->getAll($active);
-        }
-        else
-        {
-            $items = null;
         }
 
         return view('backend.reminders.show')->with(['reminder' => $reminder, 'items' => $items]);
@@ -130,31 +130,34 @@ class ReminderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id       = $request->input('model_id',null);
         $data     = $request->all();
-        $start    = $request->input('send_at');
+        $send_at  = Carbon::now();
 
-        if($id)
+        if($request->input('model_id'))
         {
-            $type      = $request->input('type');
+            // Type of reminder, product. colloque, general
+            $type   = $request->input('type');
+            $start  = $request->input('start');
 
-            $model     = $this->$type->find($id);
-            $send_at   = $model->$start;
+            // Get the model
+            $model  = $this->$type->find($request->input('model_id'));
 
-            $data['send_at'] = $this->helper->addInterval($send_at, $request->input('interval'));
+            if(!$model || is_null($model->$start)) {
+                alert()->danger('Cette date ne correspond pas');
+                return redirect()->back();
+            }
+
+            // Get start date we want (created_at,'start_at','end_at','registration_at','active_at')
+            $send_at = $model->$start;
         }
-        else
-        {
-            $data['send_at'] = $this->helper->addInterval(Carbon::now(), $request->input('interval'));
-        }
 
-        $data['start'] = $start;
+        $data['send_at'] = $this->helper->addInterval($send_at, $request->input('duration'));
 
         $reminder = $this->reminder->update( $data );
 
         alert()->success('Rappel mis à jour');
 
-        return redirect('admin/reminder/'.$reminder->id);
+        return redirect()->back();
     }
 
     /**

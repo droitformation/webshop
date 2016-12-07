@@ -34,7 +34,7 @@
                         <label for="message" class="col-sm-3 control-label">Depuis</label>
                         <div class="col-sm-7">
                             @if(!empty($config))
-                                <select class="form-control" name="send_at">
+                                <select class="form-control" name="start">
                                     @foreach($config['dates'] as $date => $human)
                                         <option {{ $reminder->send_at == $date ? 'selected' : '' }} required value="{{ $date }}">{{ $human }}</option>
                                     @endforeach
@@ -46,13 +46,13 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Interval</label>
                         <div class="col-sm-7">
-                            <select class="form-control" name="interval">
+                            <select class="form-control" name="duration">
                                 <option value="">Choix</option>
-                                <option {{ $reminder->interval == 'week' ? 'selected' : '' }} value="week">1 semaine</option>
-                                <option {{ $reminder->interval == 'month' ? 'selected' : '' }} value="month">1 mois</option>
-                                <option {{ $reminder->interval == 'trimester' ? 'selected' : '' }} value="trimester">3 mois</option>
-                                <option {{ $reminder->interval == 'semester' ? 'selected' : '' }} value="semester">6 mois</option>
-                                <option {{ $reminder->interval == 'year' ? 'selected' : '' }} value="year">1 an</option>
+                                <option {{ $reminder->duration == 'week' ? 'selected' : '' }} value="week">1 semaine</option>
+                                <option {{ $reminder->duration == 'month' ? 'selected' : '' }} value="month">1 mois</option>
+                                <option {{ $reminder->duration == 'trimester' ? 'selected' : '' }} value="trimester">3 mois</option>
+                                <option {{ $reminder->duration == 'semester' ? 'selected' : '' }} value="semester">6 mois</option>
+                                <option {{ $reminder->duration == 'year' ? 'selected' : '' }} value="year">1 an</option>
                             </select>
                         </div>
                     </div>

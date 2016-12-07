@@ -11,7 +11,7 @@ class Attribute extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title','reminder','text','intervals'];
+    protected $fillable = ['title','reminder','text','duration'];
 
     /**
      * Set timestamps off

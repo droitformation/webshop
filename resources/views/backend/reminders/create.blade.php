@@ -32,7 +32,7 @@
                     <label for="message" class="col-sm-3 control-label">Depuis</label>
                     <div class="col-sm-7">
                         @if(!empty($config))
-                            <select class="form-control" name="send_at">
+                            <select class="form-control" name="start">
                                 @foreach($config['dates'] as $date => $human)
                                     <option value="{{ $date }}">{{ $human }}</option>
                                 @endforeach
@@ -45,7 +45,7 @@
 
                     <label for="message" class="col-sm-3 control-label">Interval</label>
                     <div class="col-sm-7">
-                        <select class="form-control" name="interval">
+                        <select class="form-control" name="duration">
                             <option value="">Choix</option>
                             <option value="week">1 semaine</option>
                             <option value="month">1 mois</option>

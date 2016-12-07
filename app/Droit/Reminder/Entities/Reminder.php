@@ -9,6 +9,6 @@ class Reminder extends Model{
 
     protected $table    = 'reminders';
     protected $dates    = ['send_at'];
-    protected $fillable = ['send_at','start','title','text','type','interval','model_id','model','relation','relation_id'];
+    protected $fillable = ['send_at','start','title','text','type','duration','model_id','model','relation','relation_id'];
 
 }

@@ -10,13 +10,13 @@ use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 
 class AttributController extends Controller
 {
-    protected $attribu;
+    protected $attr;
 
-    public function __construct( AttributeInterface $attribu )
+    public function __construct( AttributeInterface $attr )
     {
-        $this->attribu = $attribu;
+        $this->attr = $attr;
 
-        view()->share('intervals',['week' => '1 semaine', 'month' => '1 mois', 'trimester' => '3 mois', 'semester' => '6 mois' ,'year' => '1 an']);
+        view()->share('duration',['week' => '1 semaine', 'month' => '1 mois', 'trimester' => '3 mois', 'semester' => '6 mois' ,'year' => '1 an']);
     }
 
     /**
@@ -27,7 +27,7 @@ class AttributController extends Controller
      */
     public function index()
     {
-        $attributs = $this->attribu->getAll();
+        $attributs = $this->attr->getAll();
 
         return view('backend.attributs.index')->with(['attributs' => $attributs]);
     }
@@ -51,7 +51,7 @@ class AttributController extends Controller
      */
     public function store(Request $request)
     {
-        $attribut = $this->attribu->create( $request->all() );
+        $attribut = $this->attr->create( $request->all() );
 
         alert()->success('Attribut crée');
 
@@ -67,7 +67,7 @@ class AttributController extends Controller
      */
     public function show($id)
     {
-        $attribut = $this->attribu->find($id);
+        $attribut = $this->attr->find($id);
 
         return view('backend.attributs.show')->with(['attribut' => $attribut]);
     }
@@ -81,7 +81,7 @@ class AttributController extends Controller
      */
     public function update($id,Request $request)
     {
-        $this->attribu->update( $request->all() );
+        $this->attr->update( $request->all() );
 
         alert()->success('Attribut mise à jour');
 
@@ -99,7 +99,7 @@ class AttributController extends Controller
     {
         $id = $request->input('id');
 
-        $attribu = $this->attribu->find($id);
+        $attribu = $this->attr->find($id);
         $attribu->delete($id);
 
         alert()->success('Attribut supprimée');

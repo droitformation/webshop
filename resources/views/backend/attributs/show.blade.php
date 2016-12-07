@@ -43,13 +43,13 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Interval</label>
                         <div class="col-sm-7">
-                            <select class="form-control" name="intervals">
+                            <select class="form-control" name="duration">
                                 <option value="">Choix</option>
-                                <option {{ $attribut->intervals == 'week' ? 'selected' : '' }} value="week">1 semaine</option>
-                                <option {{ $attribut->intervals == 'month' ? 'selected' : '' }} value="month">1 mois</option>
-                                <option {{ $attribut->intervals == 'trimester' ? 'selected' : '' }} value="trimester">3 mois</option>
-                                <option {{ $attribut->intervals == 'semester' ? 'selected' : '' }} value="semester">6 mois</option>
-                                <option {{ $attribut->intervals == 'year' ? 'selected' : '' }} value="year">1 an</option>
+                                <option {{ $attribut->duration == 'week' ? 'selected' : '' }} value="week">1 semaine</option>
+                                <option {{ $attribut->duration == 'month' ? 'selected' : '' }} value="month">1 mois</option>
+                                <option {{ $attribut->duration == 'trimester' ? 'selected' : '' }} value="trimester">3 mois</option>
+                                <option {{ $attribut->duration == 'semester' ? 'selected' : '' }} value="semester">6 mois</option>
+                                <option {{ $attribut->duration == 'year' ? 'selected' : '' }} value="year">1 an</option>
                             </select>
                         </div>
                     </div>

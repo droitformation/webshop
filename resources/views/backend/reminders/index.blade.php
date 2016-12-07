@@ -13,7 +13,7 @@
 
                 @if(!empty($items))
                     @foreach($items as $type => $title)
-                        <a href="{{ url('admin/reminder/create/'.$type) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un rappel {{ $title['name'] }}</a>
+                        <a href="{{ url('admin/reminder/create/'.$type) }}" id="reminder_{{ $type }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter un rappel {{ $title['name'] }}</a>
                     @endforeach
                 @endif
 

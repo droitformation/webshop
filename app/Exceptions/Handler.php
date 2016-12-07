@@ -79,6 +79,11 @@ class Handler extends ExceptionHandler {
 			return redirect('checkout/confirm');
 		}
 
+		if ($e instanceof \App\Exceptions\NoDateReminder){
+			alert()->danger('Aucune date indiqué pour le rappel');
+			return redirect()->back();
+		}
+
 		if ($e instanceof \App\Exceptions\RegisterException){
 			alert()->danger('Vous êtes déjà inscrit à ce colloque');
 			return redirect()->back();

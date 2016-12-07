@@ -41,7 +41,7 @@ class ReminderEloquent implements ReminderInterface{
             'title'       => $data['title'],
             'type'        => $data['type'],
             'start'       => $data['start'],
-            'interval'    => $data['interval'],
+            'duration'    => $data['duration'],
             'text'        => (isset($data['text']) ? $data['text'] : null),
             'model_id'    => (isset($data['model_id']) ? $data['model_id'] : null),
             'model'       => (isset($data['model']) ? $data['model'] : null),

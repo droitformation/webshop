@@ -19,7 +19,7 @@ class CreateRemindersTable extends Migration
             $table->string('title');
             $table->string('type');
             $table->text('text')->nullable();
-            $table->string('interval');
+            $table->string('duration');
             $table->integer('model_id')->nullable();
             $table->string('model')->nullable();
             $table->string('relation')->nullable();

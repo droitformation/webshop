@@ -19,6 +19,9 @@
         <testsuite name="arrets">
             <directory>./tests/arrets/</directory>
         </testsuite>
+        <testsuite name="reminder">
+            <directory>./tests/reminder/</directory>
+        </testsuite>
         <testsuite name="cart">
             <directory>./tests/cart/</directory>
         </testsuite>

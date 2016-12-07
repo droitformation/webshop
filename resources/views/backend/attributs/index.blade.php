@@ -8,7 +8,7 @@
     <div class="col-md-6">
         <div class="options text-right" style="margin-bottom: 10px;">
             <div class="btn-toolbar">
-               <a href="{{ url('admin/attribut/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+               <a href="{{ url('admin/attribut/create') }}" id="attribut_create" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/attribut/'.$attribut->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td><strong>{{ $attribut->title }}</strong></td>
-                                    <td>{{ isset($intervals[$attribut->interval]) ? $intervals[$attribut->interval] : '' }}</td>
+                                    <td>{{ isset($duration[$attribut->duration]) ? $duration[$attribut->duration] : '' }}</td>
                                     <td><strong>{!! $attribut->reminder ? '<label class="label label-success">oui</label>' : '' !!}</strong></td>
                                     <td>{!! $attribut->text !!}</td>
                                     <td class="text-right">
