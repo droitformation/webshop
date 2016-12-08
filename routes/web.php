@@ -142,6 +142,7 @@ Route::group(['middleware' => 'site'], function () {
         Route::get('jurisprudence', array('uses' => 'Frontend\MatrimonialController@jurisprudence'));
         Route::get('newsletter/{id?}', array('uses' => 'Frontend\MatrimonialController@newsletter'));
         Route::get('unsubscribe', 'Frontend\MatrimonialController@unsubscribe');
+        Route::get('app', 'Frontend\MatrimonialController@app');
     });
 
 });
@@ -464,6 +465,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
 });
 
+Route::group(['prefix' => 'vue'], function () {
+
+    Route::post('categories','Api\CategorieController@index');
+    Route::post('arrets','Api\ArretController@index');
+
+});
 /*
 |--------------------------------------------------------------------------
 | Authentication routes...

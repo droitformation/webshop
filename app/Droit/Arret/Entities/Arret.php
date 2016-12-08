@@ -37,6 +37,19 @@ class Arret extends Model {
         if ($trashed) $query->withTrashed();
     }
 
+    public function scopeExclude($query, $only)
+    {
+        if($only)
+        {
+            foreach($only as $categorie)
+            {
+                $query->whereHas('categories', function($query) use ($categorie){
+                    $query->where('categories_id', '=' ,$categorie);
+                });
+            }
+        }
+    }
+
     public function categories()
     {
         return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');

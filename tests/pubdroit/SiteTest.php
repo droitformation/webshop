@@ -3,9 +3,13 @@
 
 class SiteTest extends TestCase {
 
+	protected  $site;
+
 	public function setUp()
 	{
 		parent::setUp();
+
+		$this->site = App::make('App\Droit\Site\Repo\SiteInterface');
 	}
 
 	public function tearDown()
@@ -15,12 +19,12 @@ class SiteTest extends TestCase {
 
 	public function testFrontPage()
 	{
-		$this->visit('/')->see('BIENVENUE sur publications-droit.ch');
-	}
-	
-	public function testColloqueListPage()
-	{
-		$this->visit('pubdroit/colloque')->see('Colloques');
+		$slugs = $this->site->getAll();
+
+		foreach ($slugs as $slug)
+		{
+			$this->visit('/'.$slug->slug);
+		}
 	}
 	
 }

@@ -32,12 +32,10 @@ button.alert:focus,
 }
 
 #content ul{
-    list-style: none;
-    margin: 0 0 10px 0;
-    padding: 5px;
+
 }
 
-#content ul li {
+#sidebar ul li {
     padding-left: 20px;
     line-height: 21px;
     background: rgba(0, 0, 0, 0) url("../../images/matrimonial/list.gif") no-repeat scroll 0 7px;

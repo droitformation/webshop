@@ -349,24 +349,27 @@ Route::get('cartworker', function()
     */
 });
 
-Route::get('messageadmin', function()
+Route::get('categoriestest', function()
 {
-    $sites = new App\Droit\Site\Entities\Site();
-    $site  = $sites->find(1);
+    $model = App::make('App\Droit\Arret\Repo\ArretInterface');
 
-    $data = [
-        'name'      => 'Cindy Leschaud',
-        'site'      => $site,
-        'email'     => 'cindy.leschaud@gmail.com',
-        'remarque'  => '<h3>Quis consectetur  aenanm mié àc ornare fermentum cél leçtus vivérra séd</h3><p> himenaeos
-                        interdum dapibus nulla ût nètus cursus consectetur lacinia curabitur suscipit dolor nibh mlius,
-                        rhoncüs donec égét.</p> <p>Platea sociosqu potentié proîn habitassé c\'est-a-dire curabitur lorem fermentum
-                        potenti ïpsum vulputaté primiés l\'sagittis interdùm phasellus quîs grâvida aenean témpor lilitoxic
-                        lacinia dicûm 19 605€ condimentum grâvida purus m\'amèt, Frînglilia porttitor curabitur proin est
-                        èiam convallis léo tincidunt ût ac métus vestibulum elementum consequat pulvinar.</p>'
-    ];
+    $arrets = $model->allForSite(2, null);
 
-    return View::make('emails.contact', $data);
+    $arrets = $arrets->map(function ($arret, $key) {
+        return [
+            'id'         => $arret->id,
+            'title'      => $arret->reference.' '.$arret->pub_date->formatLocalized('%d %B %Y'),
+            'reference'  => $arret->reference,
+            'abstract'   => $arret->abstract,
+            'pub_text'   => $arret->pub_text,
+            'document'   => $arret->document ? asset('files/arrets/'.$arret->file) : null,
+            'categories' => !$arret->categories->isEmpty() ? $arret->categories : null,
+        ];
+    });
+
+    echo '<pre>';
+    print_r($arrets);
+    echo '</pre>';exit();
 
 });
 
