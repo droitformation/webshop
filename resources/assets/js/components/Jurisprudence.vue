@@ -16,15 +16,14 @@
                                 <div class="post-title">
                                     <h3 class="title">Analyse de {{ analyse.auteurs }}</h3>
                                     <p class="text-muted">{{ analyse.date }}</p>
+                                    <p class="text-abstract-app">{{ analyse.abstract }}</p>
 
                                     <div v-for="reference in analyse.references">
-
                                         <b-collapse-toggle v-bind:target="'reference_' + reference.id" v-bind:target-group="'analyse_' + analyse.id">
                                             <div><a href="#">{{ reference.title }}</a></div>
                                         </b-collapse-toggle>
                                         <b-collapse v-bind:id="'reference_' + reference.id" v-bind:group="'analyse_' + analyse.id">
-
-                                            <div class="well">
+                                            <div class="well well-app">
                                                <div class="post">
                                                    <div class="post-title">
                                                        <h3>{{ reference.title }}</h3>
@@ -36,12 +35,9 @@
                                                    </div>
                                                </div>
                                            </div>
-
                                         </b-collapse>
-
                                     </div>
 
-                                    <p class="text-abstract-app">{{ analyse.abstract }}</p>
                                 </div>
                                 <div class="post-entry">
                                     <a :href="analyse.document" v-if="analyse.document">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a>

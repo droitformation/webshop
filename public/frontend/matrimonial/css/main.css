@@ -340,3 +340,10 @@ a:visited {
 .widget p label{
     margin-left: 5px;
 }
+
+.well-app{
+    margin-top: 10px;
+    border-radius: 0;
+    background: #fff;
+    box-shadow:none;
+}
