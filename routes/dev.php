@@ -352,10 +352,11 @@ Route::get('cartworker', function()
 Route::get('categoriestest', function()
 {
     $model = App::make('App\Droit\Arret\Repo\ArretInterface');
+    $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
 
-    $arrets = $model->allForSite(2, null);
+    $results = $model->allForSite(2, null, null);
 
-    $arrets = $arrets->map(function ($arret, $key) {
+/*    $arrets = $results->map(function ($arret, $key) {
         return [
             'id'         => $arret->id,
             'title'      => $arret->reference.' '.$arret->pub_date->formatLocalized('%d %B %Y'),
@@ -367,8 +368,39 @@ Route::get('categoriestest', function()
         ];
     });
 
+    $result = [
+        'arrets' => $arrets,
+        'pagination' => [
+            'total'    => $results->total(),
+            'per_page' => $results->perPage(),
+            'current_page' => $results->currentPage(),
+            'last_page'    => $results->lastPage(),
+            'from' => $results->firstItem(),
+            'to'   => $results->lastItem()
+        ],
+    ];*/
+
+    $analyses = $modela->allForSite(3, null);
+
+    $analyses = $analyses->map(function ($analyse, $key) {
+
+        if(!$analyse->arrets->isEmpty()) {
+            $references = $analyse->arrets->map(function ($item, $key) {
+                return '<a href="#'.$item->reference.'">'.$item->reference.' du '.$item->pub_date->formatLocalized('%d %B %Y').'</a>';
+            });
+        }
+
+        return [
+            'id'         => $analyse->id,
+            'references' => isset($references) && !$references->isEmpty() ? $references : null,
+            'auteurs'    => $analyse->authors->implode('name', ', '),
+            'abstract'   => $analyse->abstract,
+            'document'   => $analyse->document ? asset('files/analyses/'.$analyse->file) : null,
+        ];
+    });
+
     echo '<pre>';
-    print_r($arrets);
+    print_r($analyses);
     echo '</pre>';exit();
 
 });

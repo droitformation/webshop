@@ -269,3 +269,74 @@ a:visited {
 .homepageBlock a{
    margin-top: 5px;
 }
+
+/**
+* Main content app styles
+*/
+
+.inner-app{
+    padding: 40px;
+}
+
+.inner-app h2{
+    margin-bottom: 40px;
+    color: #eD3C95;
+}
+
+.inner-app form label{
+    color: #eD3C95;
+}
+
+.analyse-app{
+    margin-bottom: 40px;
+}
+
+.sidebar-app{
+    position: fixed;
+    margin-top: -20px;
+}
+
+.sidebar-app h3{
+    color: #000;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.list-cat-app,
+.list-cat-app p{
+    text-align: center;
+}
+
+.post-title p{
+    font-style: italic;
+    margin: 15px 0;
+}
+
+.post-title p,
+.post-entry,
+.post-entry p{
+    font-size: 14px;
+}
+
+.sidebar-app .widget{
+    padding: 10px 10px;
+    background: #f5f5f5;
+    border:1px solid #ebebeb;
+}
+
+.sidebar-app .widget .title{
+    background: #fbfbfb none repeat scroll 0 0;
+    border: 1px solid #ebebeb;
+    font-size: 15px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.widget p{
+    margin-bottom: 3px;
+}
+
+.widget p label{
+    margin-left: 5px;
+}

@@ -26,27 +26,5 @@ class CategorieController extends Controller {
 
 		return ['categories' => $categories];
     }
-	
-    public function arrets(Request $request)
-    {
-
-        $categories = $this->categorie->allForSite($request->input('site'), $request->input('selected',null));
-
-        $arrets = $categories->map(function ($categorie, $key) {
-            return $categorie->arrets->map(function ($arret, $key) {
-                return [
-                    'id'         => $arret->id,
-                    'title'      => $arret->reference.' '.$arret->pub_date->formatLocalized('%d %B %Y'),
-                    'reference'  => $arret->reference,
-                    'abstract'   => $arret->abstract,
-                    'pub_text'   => $arret->pub_text,
-                    'document'   => $arret->document ? asset('files/arrets/'.$arret->file) : null,
-                    'categories' => !$arret->categories->isEmpty() ? $arret->categories : null,
-                ];
-            });
-        })->flatten(1);
-
-        return ['arrets' => $arrets];
-    }
 
 }

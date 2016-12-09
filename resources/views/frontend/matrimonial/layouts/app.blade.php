@@ -28,6 +28,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue/dist/bootstrapVue.js"></script>
 
     <!-- Local -->
 	<script src="<?php echo asset('common/js/messages_fr.js');?>"></script>

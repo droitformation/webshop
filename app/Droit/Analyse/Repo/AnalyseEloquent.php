@@ -29,6 +29,16 @@ class AnalyseEloquent implements AnalyseInterface{
         return $analyse->orderBy('pub_date', 'DESC')->get();
     }
 
+    public function allForSite($site, $years = null)
+    {
+        return $this->analyse
+            ->with(['arrets'])
+            ->years($years)
+            ->site($site)
+            ->orderBy('pub_date', 'DESC')
+            ->get();
+    }
+
     public function getCount($site = null)
     {
         return $this->analyse->site($site)->select('id')->get();

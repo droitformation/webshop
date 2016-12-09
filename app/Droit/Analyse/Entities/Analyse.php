@@ -30,6 +30,14 @@ class Analyse extends Model {
         if ($site) $query->where('site_id','=',$site);
     }
 
+    public function scopeYears($query, $years)
+    {
+        if(!empty($years))
+        {
+            $query->whereIn(\DB::raw("year(pub_date)"), $years)->get();
+        }
+    }
+
     public function categories()
     {
         return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'analyse_categories', 'analyse_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');

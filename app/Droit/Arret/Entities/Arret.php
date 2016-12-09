@@ -37,7 +37,12 @@ class Arret extends Model {
         if ($trashed) $query->withTrashed();
     }
 
-    public function scopeExclude($query, $only)
+    public function scopeDefault($query,$categories,$years)
+    {
+        if (empty($categories) && empty($years)) $query->take(10);
+    }
+
+    public function scopeCategories($query, $only)
     {
         if($only)
         {
@@ -47,6 +52,14 @@ class Arret extends Model {
                     $query->where('categories_id', '=' ,$categorie);
                 });
             }
+        }
+    }
+
+    public function scopeYears($query, $years)
+    {
+        if(!empty($years))
+        {
+            $query->whereIn(\DB::raw("year(pub_date)"), $years)->get();
         }
     }
 

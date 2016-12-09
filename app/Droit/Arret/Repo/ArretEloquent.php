@@ -24,9 +24,15 @@ class ArretEloquent implements ArretInterface{
         return $arrets->orderBy('reference', 'ASC')->get();
     }
 
-    public function allForSite($site, $only = null)
+    public function allForSite($site, $categories = null, $years = null)
     {
-        return $this->arret->with(['categories','analyses'])->exclude($only)->site($site)->orderBy('reference', 'ASC')->get();
+        return $this->arret
+            ->with(['categories','analyses'])
+            ->categories($categories)
+            ->years($years)
+            ->site($site)
+            ->orderBy('pub_date', 'DESC')
+            ->paginate(7);
     }
 
     public function getCount($site = null)
