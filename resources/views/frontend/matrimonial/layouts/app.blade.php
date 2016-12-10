@@ -44,22 +44,24 @@
 	<body>
         <div id="main" class="container">
 
-            <header class="header">
+            <header class="header" id="app">
                 <div class="row">
                     <h1 class="col-md-4">
                         <a class="" href="{{ url('matrimonial/page/index') }}">
                             <img src="{{ asset('logos/droitmatrimonial.svg') }}" alt="Logo droitmatrimonial.ch">
                         </a>
                     </h1>
-                    <nav class="col-md-8" id="menu-principal">
-                        @if(isset($menu_main))
-                            @if(!$menu_main->pages->isEmpty())
-                                @foreach($menu_main->pages as $page)
-                                    <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('matrimonial/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
-                                @endforeach
+                    <div class="col-md-8 text-right">
+                        <nav id="menu-principal" class="menu-principal-app">
+                            @if(isset($menu_main))
+                                @if(!$menu_main->pages->isEmpty())
+                                    @foreach($menu_main->pages as $page)
+                                        <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('matrimonial/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
+                                    @endforeach
+                                @endif
                             @endif
-                        @endif
-                    </nav>
+                        </nav>
+                    </div>
                 </div>
             </header>
             <div class="row" id="content-wrapper">

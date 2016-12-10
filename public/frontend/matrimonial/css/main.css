@@ -172,6 +172,14 @@ a:visited {
     color: #eD3C95;
 }
 
+#app #menu-principal {
+    padding: 0 20px 0 0;
+}
+
+#app #menu-principal > a{
+    padding: 0 10px;
+}
+
 /*======================================
 	Form
 =======================================*/
@@ -281,6 +289,7 @@ a:visited {
 .inner-app h2{
     margin-bottom: 40px;
     color: #eD3C95;
+    font-size: 30px;
 }
 
 .inner-app form label{
@@ -294,6 +303,7 @@ a:visited {
 .sidebar-app{
     position: fixed;
     margin-top: -20px;
+    padding-left: 30px;
 }
 
 .sidebar-app h3{
@@ -346,4 +356,18 @@ a:visited {
     border-radius: 0;
     background: #fff;
     box-shadow:none;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #eD3C95;
+    border-color: #eD3C95;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: #eD3C95;
 }

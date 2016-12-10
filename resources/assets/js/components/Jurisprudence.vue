@@ -72,6 +72,8 @@
                         </div>
 
                     </article>
+
+                    <!-- pagination -->
                     <nav  v-if="displayArret">
                         <ul class="pagination">
                             <li v-if="pagination.current_page > 1">
@@ -85,6 +87,8 @@
                             </li>
                         </ul>
                     </nav>
+                    <!-- pagination -->
+
                 </section>
             </div>
             <div class="col-md-4">
