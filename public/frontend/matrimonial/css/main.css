@@ -19,7 +19,7 @@ button.alert:focus,
 =======================================*/
 #content h1{
     color: #eD3C95;
-    font-size: 20px;
+    font-size: 25px;
     margin-bottom: 20px;
 }
 
@@ -49,8 +49,9 @@ a:visited {
 
 .line{
     border-bottom: 1px solid #eD3C95;
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    font-weight: normal;
 }
 
 .agenda{
@@ -313,6 +314,10 @@ a:visited {
     margin-bottom: 15px;
 }
 
+.list-cat-app{
+    margin-bottom: 10px;
+}
+
 .list-cat-app,
 .list-cat-app p{
     text-align: center;
@@ -370,4 +375,17 @@ a:visited {
 
 .pagination > li > a, .pagination > li > span {
     color: #eD3C95;
+}
+
+.analyse-app{
+    margin: 20px 0 40px 0;
+}
+
+.btn-matrimonial{
+    background-color: #eD3C95;
+    border-color: #eD3C95;
+    color: #fff !important;
+    width: 100%;
+    text-align: center;
+    border-radius: 0px;
 }

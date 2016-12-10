@@ -354,7 +354,8 @@ Route::get('categoriestest', function()
     $model = App::make('App\Droit\Arret\Repo\ArretInterface');
     $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
 
-    $results = $model->allForSite(2, null, null);
+    $results = $model->allForSite(3, ['categories' => [], 'years' => [], 'display' => false]);
+
 
 /*    $arrets = $results->map(function ($arret, $key) {
         return [
@@ -380,7 +381,7 @@ Route::get('categoriestest', function()
         ],
     ];*/
 
-    $analyses = $modela->allForSite(3, null);
+/*    $analyses = $modela->allForSite(3, null);
 
     $analyses = $analyses->map(function ($analyse, $key) {
 
@@ -397,10 +398,10 @@ Route::get('categoriestest', function()
             'abstract'   => $analyse->abstract,
             'document'   => $analyse->document ? asset('files/analyses/'.$analyse->file) : null,
         ];
-    });
+    });*/
 
     echo '<pre>';
-    print_r($analyses);
+    print_r($results->pluck('reference')->all());
     echo '</pre>';exit();
 
 });

@@ -55,6 +55,14 @@ class Arret extends Model {
         }
     }
 
+    public function scopeAnalyses($query, $only)
+    {
+        if($only == 'true')
+        {
+            $query->has('analyses');
+        }
+    }
+
     public function scopeYears($query, $years)
     {
         if(!empty($years))

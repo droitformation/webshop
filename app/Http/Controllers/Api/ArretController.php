@@ -24,12 +24,27 @@ class ArretController extends Controller {
     public function index(Request $request)
     {
         $results = $this->arret->allForSite(
-            $request->input('site'), 
-            $request->input('categories',null), 
-            $request->input('years',null)
+            $request->input('site'), [
+                'categories' => $request->input('categories',[]),
+                'years'      => $request->input('years',[]),
+                'display'    => $request->input('display')
+            ]
         );
         
         $arrets = $results->map(function ($arret, $key) {
+
+            if(!$arret->analyses->isEmpty()) {
+                $analyses = $arret->analyses->map(function ($analyse, $key) {
+                    return [
+                        'id'         => $analyse->id,
+                        'date'       => $analyse->pub_date->formatLocalized('%d %B %Y'),
+                        'auteurs'    => $analyse->authors->implode('name', ', '),
+                        'abstract'   => $analyse->abstract,
+                        'document'   => $analyse->document ? asset('files/analyses/'.$analyse->file) : null,
+                    ];
+                });
+            }
+            
             return [
                 'id'         => $arret->id,
                 'title'      => $arret->reference.' '.$arret->pub_date->formatLocalized('%d %B %Y'),
@@ -38,10 +53,11 @@ class ArretController extends Controller {
                 'pub_text'   => $arret->pub_text,
                 'document'   => $arret->document ? asset('files/arrets/'.$arret->file) : null,
                 'categories' => !$arret->categories->isEmpty() ? $arret->categories : null,
+                'analyses' => isset($analyses) ? $analyses : null,
             ];
         });
 
-        $analyses = $this->analyse->allForSite(
+       /* $analyses = $this->analyse->allForSite(
             $request->input('site'),
             $request->input('years',null)
         );
@@ -69,11 +85,11 @@ class ArretController extends Controller {
                 'abstract'   => $analyse->abstract,
                 'document'   => $analyse->document ? asset('files/analyses/'.$analyse->file) : null,
             ];
-        });
+        });*/
 
         return [
             'arrets'   => $arrets,
-            'analyses' => $analyses,
+            //'analyses' => $analyses,
             'pagination' => [
                 'total'    => $results->total(),
                 'per_page' => $results->perPage(),

@@ -1,10 +1,14 @@
-@extends('frontend.matrimonial.layouts.master')
+@extends('frontend.matrimonial.layouts.app')
 @section('content')
 
-    <!-- Illustration -->
-    <section id="photo"><img src=" {{ asset('/images/matrimonial/home.jpg') }}" alt=""></section>
 
-    <div id="content" class="inner">
+	<!-- Illustration -->
+	<section>
+		<img src="{{ asset('/images/matrimonial/home.jpg') }}" alt="">
+	</section>
+
+	<div id="content" class="inner inner-app">
+
 		@if(isset($page))
 			<div class="row">
 				<div class="col-md-12 homepageBlock">
@@ -14,7 +18,7 @@
 			</div>
 
 			@if(!$page->contents->isEmpty())
-				<h5 class="line">News</h5>
+				<h4 class="line">News</h4>
 				<?php $chunk = $page->contents->chunk(3); ?>
 				@foreach($chunk as $contents)
 					<div class="row">
@@ -31,6 +35,6 @@
 
 			@endif
 		@endif
-    </div>
-		
+	</div>
+
 @stop
