@@ -1,20 +1,26 @@
-@extends('frontend.matrimonial.layouts.master')
+@extends('frontend.matrimonial.layouts.app')
 @section('content')
 
-	<div id="content" class="inner">
+	<div id="content" class="inner inner-app">
+
 		<div class="row">
-			<div class="col-md-12">
-				<h3 class="line up">{{ $page->title }}</h3>
-				{!! $page->content !!}
+			<div class="col-md-12 homepageBlock">
+
+				@if(isset($page))
+					<h3 class="line">{{ $page->title }}</h3>
+					{!! $page->content !!}
+
+					@if(!$page->contents->isEmpty())
+						<?php $styles = $page->contents->groupBy('type'); ?>
+						@foreach($styles as $style => $contents)
+							@include('frontend.matrimonial.partials.'.$style, ['contents' => $contents])
+						@endforeach
+					@endif
+				@endif
+
 			</div>
 		</div>
 
-		@if(!$page->contents->isEmpty())
-			<?php $styles = $page->contents->groupBy('type'); ?>
-			@foreach($styles as $style => $contents)
-				@include('frontend.matrimonial.partials.'.$style, ['contents' => $contents])
-			@endforeach
-		@endif
+	</div>
 
-	 </div>
 @stop

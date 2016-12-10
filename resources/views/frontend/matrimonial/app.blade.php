@@ -3,7 +3,7 @@
 
     <div id="content" class="inner inner-app">
 
-		<h2>Jurisprudence</h2>
+		<h3 class="line">Jurisprudence</h3>
 
 		<div id="appComponent" style="min-height: 450px;">
 			<jurisprudence slug="matrimonial" site="3" :categories="{{ $categories }}" :years="{{ $years }}"></jurisprudence>

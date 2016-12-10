@@ -1,4 +1,4 @@
-<div class="form-bloc">
+<div class="widget clear">
     <form action="matrimonial/search" method="POST" class="searchform">
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Recherche...">

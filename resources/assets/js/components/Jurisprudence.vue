@@ -70,7 +70,7 @@
             <div class="col-md-4">
                 <div class="sidebar-app">
 
-                    <div class="widget categories clear">
+                    <div class="widget clear">
                         <h3 class="title"><i class="icon-tasks"></i> &nbsp;Affichage</h3>
                         <p><input type="checkbox" name="display" v-on:change="filterYears" v-model="display">
                             <label>Que les arrêts avec analyses</label></p>

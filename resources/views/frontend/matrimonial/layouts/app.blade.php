@@ -51,7 +51,7 @@
                             <img src="{{ asset('logos/droitmatrimonial.svg') }}" alt="Logo droitmatrimonial.ch">
                         </a>
                     </h1>
-                    <div class="col-md-8 text-right">
+                    <div class="col-md-6 text-right">
                         <nav id="menu-principal" class="menu-principal-app">
                             @if(isset($menu_main))
                                 @if(!$menu_main->pages->isEmpty())
@@ -61,6 +61,9 @@
                                 @endif
                             @endif
                         </nav>
+                    </div>
+                    <div class="col-md-2">
+                        @include('frontend.matrimonial.sidebar.logo')
                     </div>
                 </div>
             </header>

@@ -1,41 +1,13 @@
-@extends('frontend.matrimonial.layouts.master')
+@extends('frontend.matrimonial.layouts.app')
 @section('content')
 
-		<!-- Illustration -->
+	<div id="content" class="inner inner-app">
 
-<div id="content" class="inner">
+		<h3 class="line">Jurisprudence</h3>
 
-	<div class="row">
-		<div class="col-md-12">
-			<h3 class="line up">Jurisprudence</h3>
-		</div>
-	</div>
-	<div id="arrets" class="row">
-		<div id="filtering" class="col-md-12">
-			<div class="arrets">
-
-				<!-- liste des analyses -->
-				@if(!$analyses->isEmpty())
-					@include('frontend.matrimonial.partials.analyse')
-				@endif
-				<!-- fin liste des analyses -->
-
-				<!-- liste des arrets -->
-				<div class="cat clear bail">
-					<div class="liste">
-
-						@if(!$arrets->isEmpty())
-							@foreach($arrets as $arret)
-								@include('frontend.matrimonial.partials.arret')
-							@endforeach
-						@endif
-
-					</div>
-				</div>
-				<!-- fin liste des arrets -->
-			</div>
+		<div id="appComponent" style="min-height: 450px;">
+			<jurisprudence slug="matrimonial" site="3" :categories="{{ $categories }}" :years="{{ $years }}"></jurisprudence>
 		</div>
 	</div>
 
-</div>
 @stop

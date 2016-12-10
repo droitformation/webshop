@@ -22,7 +22,7 @@ h2 {
 
 /* line 19, main.scss */
 h3 {
-    font-size: 25em;
+    font-size: 25px;
     font-weight: bold;
 }
 
@@ -253,7 +253,7 @@ h3.link {
 .menu > li > a{
     color: #333;
     display: block;
-    line-height: 20px;
+    line-height: 24px;
 }
 
 #rightmenu{

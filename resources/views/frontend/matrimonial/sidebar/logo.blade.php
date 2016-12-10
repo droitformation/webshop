@@ -1,8 +1,8 @@
 <!--Logo unine -->
-<div class="sidebar-bloc">
+<div class="sidebar-unine-logo">
     <p class="text-right">
         <a href="http://www.unine.ch" target="_blank">
-            <img height="60" src="{{ asset('/logos/unine-matrimonial.svg') }}" alt="">
+            <img height="70" src="{{ asset('/logos/unine-matrimonial.svg') }}" alt="">
         </a>
     </p>
 </div>

@@ -105,11 +105,13 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
+        $page  = $this->page->find($id);
+
         $this->page->delete($id);
 
         alert()->success('La page a été supprimé');
 
-        return redirect('admin/page');
+        return redirect('admin/page/'.$page->site_id);
     }
 
     public function sorting(Request $request)

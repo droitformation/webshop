@@ -1,9 +1,9 @@
 
 @if($bloc->type == 'soutien')
-    <h5>Avec le soutien de</h5>
+    <h3 class="title">Avec le soutien de</h3>
 @else
     @if(!empty($bloc->title))
-        <h5>{{ $bloc->title }}</h5>
+        <h3 class="title">{{ $bloc->title }}</h3>
     @endif
 @endif
 
