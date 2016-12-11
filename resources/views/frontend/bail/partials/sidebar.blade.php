@@ -1,55 +1,42 @@
 <!-- Sidebar -->
-<div class="col-md-3">
-    <div class="sidebar"><!-- Start sidebar div-->
+<div class="sidebar-app">
 
-        <!--Logo unine -->
-        @include('frontend.bail.sidebar.logo')
-
+    @if(!Request::is('bail/page/index'))
         <!-- Bloc search -->
         @include('frontend.bail.sidebar.search')
 
-        <!-- sidebar -->
-        <div id="mainSidebar">
+        <!-- Bloc inscription newsletter -->
+        @include('frontend.bail.sidebar.newsletter')
+    @endif
 
-            <!-- Bloc archives newsletter -->
+    @if(Request::is('bail/page/newsletter') && !$newsletters->isEmpty())
+        @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters->first()->campagnes->pluck('sujet','id')])
+    @endif
 
-            <div id="rightmenu">
+    @if(Request::is('bail/page/revues'))
+        @include('frontend.partials.list', ['page' => $page, 'lists' => $revues])
+    @endif
 
-                @if(isset($menu_sidebar) && !$menu_sidebar->pages->isEmpty())
-                    @foreach($menu_sidebar->pages as $page)
+    @if(Request::is('bail/page/doctrine'))
+        @include('frontend.bail.sidebar.doctrine')
+    @endif
 
-                        @if($page->template == 'newsletter' && !$newsletters->isEmpty())
-                            @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters->first()->campagnes->pluck('sujet','id')])
+    @if(isset($menu_sidebar) && !$menu_sidebar->pages->isEmpty())
 
-                        @elseif($page->template == 'revue')
-                            @include('frontend.partials.list', ['page' => $page, 'lists' => $revues])
+        <div class="widget clear">
+            <h3 class="title">Liens direct</h3>
+            @foreach($menu_sidebar->pages as $page)
+                <a class="link" href="{{ url($site->slug.'/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
+            @endforeach
+        </div>
 
-                        @elseif($page->template == 'jurisprudence')
-                            @include('frontend.bail.sidebar.jurisprudence')
+    @endif
 
-                        @elseif($page->template == 'doctrine')
-                            @include('frontend.bail.sidebar.doctrine')
+    <!-- Bloc pages -->
+    @include('frontend.bail.sidebar.page')
 
-                        @else
-                            <h5><a href="{{ url($site->slug.'/page/'.$page->slug) }}">{{ $page->menu_title }} <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-                        @endif
+    <!-- Bloc inscription newsletter -->
+    @include('frontend.bail.sidebar.calculette')
 
-                    @endforeach
-                @endif
-            </div>
-
-            <!-- Bloc pages -->
-            @include('frontend.bail.sidebar.page')
-
-            <!-- Bloc inscription newsletter -->
-            @include('frontend.bail.sidebar.calculette')
-
-            <!-- Bloc inscription newsletter -->
-            @include('frontend.bail.sidebar.newsletter')
-
-        </div><!-- End main sidebar -->
-
-    </div><!-- End sidebar div-->
-</div>
-
+</div><!-- End sidebar div-->
 <!-- End sidebar -->

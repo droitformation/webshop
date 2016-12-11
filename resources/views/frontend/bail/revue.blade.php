@@ -1,9 +1,10 @@
 @extends('frontend.bail.layouts.master')
 @section('content')
 
-	<div id="content" class="inner">
+	<div id="content" class="inner inner-app">
+
 		<div class="row">
-			<div class="col-md-12 revue-content">
+			<div class="col-md-8">
 				<h3 class="line up">{{ $page->title }}</h3>
 
 				<div class="row">
@@ -27,9 +28,13 @@
 				</div>
 
 				{!! $page->content !!}
+
+			</div>
+			<div class="col-md-4">
+				@include('frontend.bail.partials.sidebar')
 			</div>
 		</div>
 
+	</div>
 
-	 </div>
 @stop

@@ -1,22 +1,16 @@
 @extends('frontend.bail.layouts.master')
 @section('content')
 
-		<!-- Illustration -->
-
-<div id="content" class="inner">
+<div id="content" class="inner inner-app">
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8">
+
 			<h3 class="line up">Newsletter</h3>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
 
 			@if(isset($campagne))
-				<p><a href="{{ url('matrimonial/page/newsletter/'.$campagne->newsletter_id ) }}"><i class="fa fa-arrow-circle-left"></i> Retour</a></p>
-				<h2>{{ $campagne->sujet }}</h2>
-				<h3>{{ $campagne->auteurs }}</h3>
+				<h3>{{ $campagne->sujet }}</h3>
+				<p>{{ $campagne->auteurs }}</p>
 
 				<hr/>
 
@@ -32,7 +26,10 @@
 			@endif
 
 		</div>
+		<div class="col-md-4">
+			@include('frontend.bail.partials.sidebar')
+		</div>
 	</div>
-
 </div>
+
 @stop

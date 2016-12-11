@@ -1,6 +1,5 @@
-<h5><a href="{{ url('bail/page/doctrine') }}" title="Articles de doctrine">Articles de doctrine <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-@if( Request::is('bail/page/doctrine') )
-<div class="seminaire">
+<div class="widget clear">
+    <h3 class="title">Articles de doctrine </h3>
 
     <div class="filtre">
         <h6>Par catégorie</h6>
@@ -34,6 +33,4 @@
             </select>
         </div>
     </div>
-
 </div>
-@endif

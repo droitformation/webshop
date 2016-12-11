@@ -1,5 +1,5 @@
-<h5 class="color-bloc">Calculateur</h5>
-<div class="sidebar-bloc calculator">
+<div class="widget clear">
+    <h3 class="title">Calculateur</h3>
 
     <p>Calculez les hausses et baisses de loyer en un clic</p>
 

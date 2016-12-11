@@ -1,4 +1,4 @@
-@extends('frontend.matrimonial.layouts.app')
+@extends('frontend.matrimonial.layouts.master')
 @section('content')
 
 	<!-- Illustration -->

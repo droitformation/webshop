@@ -1,4 +1,4 @@
-@extends('frontend.matrimonial.layouts.app')
+@extends('frontend.matrimonial.layouts.master')
 @section('content')
 
 
@@ -10,7 +10,6 @@
 			<h3 class="line">Newsletter</h3>
 
 			@if(isset($campagne))
-				<p><a href="{{ url('matrimonial/page/newsletter/'.$campagne->newsletter_id ) }}"><i class="fa fa-arrow-circle-left"></i> Retour</a></p>
 
 				<div class="post">
 					<div class="post-title">

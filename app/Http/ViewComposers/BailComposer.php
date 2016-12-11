@@ -42,7 +42,6 @@ class BailComposer
         $site       = $this->site->findBySlug('bail');
         $categories = $this->categorie->getAll($site->id);
         $revues     = $this->product->getByCategorie('Revue');
-
         $years      = $this->arret->annees($site->id);
 
         $newsletters = $this->newsworker->siteNewsletters($site->id);

@@ -132,7 +132,7 @@ Route::group(['middleware' => 'site'], function () {
         Route::get('calcul', array('uses' => 'Frontend\BailController@calcul'));
         Route::post('loyer', 'Frontend\Bail\CalculetteController@loyer');
         Route::get('unsubscribe', 'Frontend\BailController@unsubscribe');
-
+        Route::get('app', 'Frontend\BailController@app');
     });
 
     Route::group(['prefix' => 'matrimonial'], function () {
@@ -142,7 +142,7 @@ Route::group(['middleware' => 'site'], function () {
         Route::get('jurisprudence', array('uses' => 'Frontend\MatrimonialController@jurisprudence'));
         Route::get('newsletter/{id?}', array('uses' => 'Frontend\MatrimonialController@newsletter'));
         Route::get('unsubscribe', 'Frontend\MatrimonialController@unsubscribe');
-        Route::get('app', 'Frontend\MatrimonialController@app');
+
     });
 
 });

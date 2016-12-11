@@ -88,9 +88,4 @@ class MatrimonialController extends Controller
     {
         return view('frontend.matrimonial.unsubscribe');
     }
-
-    public function app()
-    {
-        return view('frontend.matrimonial.app');
-    }
 }

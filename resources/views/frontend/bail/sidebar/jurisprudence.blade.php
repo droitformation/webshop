@@ -1,5 +1,6 @@
 <h5><a href="{{ url($site->slug.'/page/jurisprudence') }}">Jurisprudence <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
 @if( Request::is($site->slug.'/page/jurisprudence') )
+
     <div id="masterFilter">
         <div class="widget list categories clear">
             <h3 class="title"><i class="icon-tasks"></i> &nbsp;Catégories</h3>

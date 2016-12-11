@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8" />
-	<title>Bail</title>
-	
-	<meta name="description" content="Bail">
-	<meta name="author" content="Cindy Leschaud | @DesignPond">
+    <title>Bail</title>
+
+    <meta name="description" content="Bail">
+    <meta name="author" content="Cindy Leschaud | @DesignPond">
     <meta name="_token" content="<?php echo csrf_token(); ?>">
     <!-- CSS Files
     ================================================== -->
@@ -26,70 +26,78 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue/dist/bootstrapVue.js"></script>
 
     <!-- Local -->
     <script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo asset('common/js/chosen.jquery.js');?>"></script>
 
-	</head>
-	<body>
-        <div id="main" class="container">
+    <script>
+        window.Laravel = <?php echo json_encode([
+                'csrfToken' => csrf_token()
+        ]); ?>
+    </script>
 
-            <div class="row" id="content-wrapper">
-                <!-- Contenu principal -->
-                <div id="mainContent" class="maincontent col-md-9">
+</head>
+<body>
+<div id="main" class="container">
 
-                    <!-- Entête et menu -->
-                    <header class="header">
-                        <div class="row">
-                            <h1 class="col-md-3"><a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
-                            <nav class="col-md-9" id="menu-principal">
-                                @if(isset($menu_main))
-                                    @if(!$menu_main->pages->isEmpty())
-                                        @foreach($menu_main->pages as $page)
-                                            <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('bail/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
-                                        @endforeach
-                                    @endif
-                                @endif
-                            </nav>
-                        </div>
-                    </header>
-
-                    <!-- Fil d'ariane -->
-                    <section id="breadcrumbs" class="colorBlock min-inner colorSection"></section>
-
-                    <!-- Contenu -->
-
-                    @yield('content')
-
-                    <!-- Fin contenu -->
-
-                </div>
-                <!-- Fin contenu principal -->
-
-                <!-- sidebar -->
-                @include('frontend.bail.partials.sidebar')
-                <!-- End sidebar -->
-
+    <!-- Entête et menu -->
+    <header class="header" id="app">
+        <div class="row">
+            <h1 class="col-md-3"><a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
+            <div class="col-md-7 text-right">
+                <nav id="menu-principal">
+                    @if(isset($menu_main))
+                        @if(!$menu_main->pages->isEmpty())
+                            @foreach($menu_main->pages as $page)
+                                <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('bail/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
+                            @endforeach
+                        @endif
+                    @endif
+                </nav>
             </div>
+            <div class="col-md-2">
+                <!--Logo unine -->
+                <div class="sidebar-unine-logo">
+                    <p class="text-right ">
+                        <a href="http://www.unine.ch" target="_blank">
+                            <img src="{{ asset('/images/bail/unine.png') }}" alt="">
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
 
-            <footer id="mainFooter" class="colorBlock">
-                © {{ date('Y') }} - bail.ch<br/>
-                Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
-                <a href="mailto:seminaire.bail@unine.ch">seminaire.bail@unine.ch</a>
-            </footer>
+    <div class="row" id="content-wrapper">
+        <!-- Contenu principal -->
+        <div id="mainContent" class="maincontent">
+            <section class="colorBlock min-inner colorSection"></section>
 
-	    </div>
+            <!-- Contenu -->
+        @yield('content')
+        <!-- Fin contenu -->
 
+        </div>
+    </div>
+    <footer id="mainFooter" class="colorBlock">
+        © {{ date('Y') }} - bail.ch<br/>
+        Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
+        <a href="mailto:seminaire.bail@unine.ch">seminaire.bail@unine.ch</a>
+    </footer>
+</div>
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-                integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-        <script src="<?php echo asset('frontend/common/js/sidebar.js');?>"></script>
-        <script src="<?php echo asset('frontend/common/js/arrets.js');?>"></script>
-        <script src="<?php echo asset('frontend/bail/js/seminaires.js');?>"></script>
-        <script src="<?php echo asset('frontend/bail/js/calculette.js');?>"></script>
-        <script src="<?php echo asset('frontend/bail/js/main.js');?>"></script>
+<script src="<?php echo asset('frontend/common/js/sidebar.js');?>"></script>
+<script src="<?php echo asset('frontend/common/js/arrets.js');?>"></script>
+<script src="<?php echo asset('frontend/bail/js/seminaires.js');?>"></script>
+<script src="<?php echo asset('frontend/bail/js/calculette.js');?>"></script>
+<script src="<?php echo asset('frontend/bail/js/main.js');?>"></script>
+<script src="<?php echo asset('common/js/chose.jquery.js');?>"></script>
+<script src="<?php echo asset('js/app.js');?>"></script>
 
-	</body>
+</body>
 </html>

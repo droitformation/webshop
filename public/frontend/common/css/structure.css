@@ -310,7 +310,7 @@ h3.link {
     display: inline-block;
     padding: 0 5px;
     margin-top: 10px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 /* line 188, main.scss */
@@ -469,4 +469,153 @@ footer a {
     color: #fff;
 }
 
+
+/**
+* Main content app styles
+*/
+
+#appComponent .col-md-4{
+    position: relative;
+}
+
+.inner.inner-app{
+    padding: 40px;
+}
+
+.inner-app h2{
+    margin-bottom: 40px;
+    color: #000;
+    font-size: 30px;
+}
+
+#newsletter h2{
+    font-size: 25px;
+    font-weight: bold;
+    color:#000;
+    margin-bottom: 20px;
+}
+
+#newsletter .row{
+    margin-bottom: 40px;
+}
+
+#newsletter .bloc-content h2{
+    font-size: 25px;
+    color: #000;
+}
+
+.inner-app form label{
+    color: #000;
+}
+
+.sidebar-list{
+    max-height:350px;
+    overflow: scroll;
+}
+
+.analyse-app{
+    margin-bottom: 40px;
+}
+
+.sidebar-app{
+    margin-top: 25px;
+    padding-left: 30px;
+    position: relative;
+}
+
+#appComponent .sidebar-app {
+}
+
+.sidebar-app h3{
+    color: #000;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.list-cat-app{
+    margin-bottom: 10px;
+}
+
+.maincontent .list-cat-app,
+.maincontent .list-cat-app p{
+    text-align: center;
+}
+
+.post-title p{
+    font-style: italic;
+    margin: 15px 0;
+}
+
+.post-title p,
+.post-entry,
+.post-entry p{
+    font-size: 14px;
+}
+
+.sidebar-app .widget{
+    padding: 10px 10px;
+    background: #f5f5f5;
+    border:1px solid #ebebeb;
+}
+
+.sidebar-app .widget .title{
+    background: #ddd none repeat scroll 0 0;
+    border: 1px solid #e7e7e7;
+    color: #000;
+    font-size: 15px;
+    margin: -10px -10px 10px;
+    padding: 8px;
+}
+
+.sidebar-app .widget a.link{
+    color: #000;
+    font-size: 15px;
+    display: block;
+    padding: 3px 8px;
+}
+
+.widget p{
+    margin-bottom: 3px;
+}
+
+.widget p label{
+    margin-left: 5px;
+}
+
+.well-app{
+    margin-top: 10px;
+    border-radius: 0;
+    background: #fff;
+    box-shadow:none;
+}
+
+.analyse-app{
+    margin: 20px 0 40px 0;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #666;
+    border-color: #666;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: #000;
+}
+
+.btn-app{
+    width: 100%;
+    text-align: center;
+    border-radius: 0px;
+}
+
+.sidebar-unine-logo{
+    padding: 10px;
+    line-height: 70px;
+}
 

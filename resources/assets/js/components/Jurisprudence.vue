@@ -4,6 +4,7 @@
 
         <div class="row">
             <div class="col-md-8">
+                <h3 class="line">Jurisprudence</h3>
 
                 <p id="loader-app" v-show="loading"><i class="fa fa-spinner fa-spin"></i></p>
                 <p v-if="blocs.length === 0" v-show="!loading" class="text-danger"><i class="fa fa-exclamation-triangle"></i> &nbsp;Aucun arrêt pour cette recherche</p>
@@ -24,7 +25,7 @@
                                     <!-- Ananlyse -->
                                     <div class="analyse-app" v-for="analyse in arret.analyses">
                                         <b-collapse-toggle v-bind:target="'reference_' + analyse.id" v-bind:target-group="'analyse_' + arret.id">
-                                            <div><a class="btn btn-sm btn-matrimonial" href="#"><i class="fa fa-file"></i> &nbsp;Voir l'analyse</a></div>
+                                            <div><a class="btn btn-sm btn-app" href="#"><i class="fa fa-file"></i> &nbsp;Voir l'analyse</a></div>
                                         </b-collapse-toggle>
                                         <b-collapse v-bind:id="'reference_' + analyse.id" v-bind:group="'analyse_' + arret.id">
                                             <div class="well well-app">
@@ -68,7 +69,9 @@
                 </section>
             </div>
             <div class="col-md-4">
-                <div class="sidebar-app">
+                <div class="sidebar-app fixed">
+
+                    <a :href="url + slug" class="btn btn-default btn-block"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour accueil</a>
 
                     <div class="widget clear">
                         <h3 class="title"><i class="icon-tasks"></i> &nbsp;Affichage</h3>

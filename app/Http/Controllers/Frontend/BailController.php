@@ -84,7 +84,14 @@ class BailController extends Controller
 
         if($slug == 'revues')
         {
-            $data['revue'] = $this->product->find($var);
+            if(isset($var)){
+                $revue = $this->product->find($var);
+            }
+            else{
+                $revue = $this->product->getByCategorie('Revue')->last();
+            }
+
+            $data['revue'] = $revue;
         }
 
         if($slug == 'doctrine')
@@ -129,17 +136,9 @@ class BailController extends Controller
         return view('bail.doctrine')->with(['seminaires' => $seminaires , 'subjects' => $subjects  ,'categories' => $categories]);
     }
 
-    /*
-           public function search(){
-   
-               $query = Request::get('q');
-   
-               $resultats = array();
-   
-               return view('bail.search')->with( array( 'resultats' => $query ));
-           }
-   
-   
-       */
+    public function app()
+    {
+        return view('frontend.bail.app');
+    }
 
 }

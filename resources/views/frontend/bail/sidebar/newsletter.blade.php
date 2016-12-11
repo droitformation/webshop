@@ -1,9 +1,8 @@
 @if(!$newsletters->isEmpty())
-    <h5 class="color-bloc">Inscription à la newsletter</h5>
-    <div class="sidebar-bloc">
+    <div class="widget clear">
+        <h3 class="title">Inscription à la newsletter</h3>
         @foreach($newsletters as $newsletter)
             @include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'bail'])
         @endforeach
     </div>
 @endif
-

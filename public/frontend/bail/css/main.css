@@ -26,6 +26,11 @@ a:visited {
 
 .line{
     border-bottom: 1px solid #cb2629;
+    font-size: 16px;
+}
+
+.line.up{
+    margin-top: 20px;
 }
 
 .revue-content h3{
@@ -44,7 +49,7 @@ a:visited {
 .agenda{
     padding: 15px;
     background: #cb2629;
-    color: #f5c8c8;
+    color: #fff8f8;
 }
 
 .agenda a, .agenda h5{
@@ -73,9 +78,17 @@ a:visited {
     margin-bottom: 10px;
 }
 
+.inner.inner-app.inner-home{
+    padding-top: 20px;
+}
+
+.home-bloc{
+    margin-bottom: 20px;
+}
+
 .header {
   background: #fff;
-  height: 86px;
+  height: 90px;
 }
 
 .header p{
@@ -152,6 +165,19 @@ a:visited {
     padding: 10px 0 0 0;
 }
 
+.bloc-content h3{
+    font-size: 20px;
+}
+
+.bloc-content h4{
+    font-size: 16px;
+}
+
+.bloc-content ul li h3{
+    font-size: 14px;
+    font-weight: normal;
+}
+
 .color-bloc {
     color: #fff;
     padding:10px 10px;
@@ -183,7 +209,7 @@ a:visited {
 }
 
 .faq_list p{
-   width: 32%;
+   width: 31.5%;
    display: table;
    float: left;
    margin: 5px;
@@ -378,4 +404,86 @@ a:visited {
 
 #calculatorResult .result .nouveau_loyer {
   font-weight: bold;
+}
+
+#calculette label{
+    margin: 10px 0 5px 0;
+}
+
+
+/**
+* Main content app styles
+*/
+
+.sidebar-app {
+    margin-top: 15px;
+}
+
+.inner.inner-app{
+   padding-top: 30px;
+}
+
+.inner-app h2{
+    color: #b80e1d;
+}
+
+#newsletter h2{
+    color:#000;
+}
+
+#newsletter .row{
+    margin-bottom: 40px;
+}
+
+#newsletter .bloc-content h2{
+    color: #b80e1d;
+}
+
+.inner-app form label{
+    color: #b80e1d;
+}
+
+.sidebar-app .widget{
+    background: #f5f5f5;
+    border:1px solid #ebebeb;
+}
+
+.sidebar-app .widget .title{
+    background: #b80e1d none repeat scroll 0 0;
+    border: 1px solid #e7e7e7;
+    color: #fff;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #b80e1d;
+    border-color: #b80e1d;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: #b80e1d;
+}
+
+.btn-app{
+    background-color: #b80e1d;
+    border-color: #b80e1d;
+    color: #fff !important;
+}
+
+.post-title h3{
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+.analyse-app h3{
+    font-size: 18px;
+    text-align: left;
+}
+
+.post-entry{
+    text-align: justify;
 }
