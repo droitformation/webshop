@@ -44,7 +44,7 @@ Route::get('testing', function() {
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
 
-    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
+/*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $orders = $model->getLast(1);
     $rappel = $rappel_model->find(27);
@@ -53,7 +53,17 @@ Route::get('testing', function() {
     $generator->stream = true;
     $generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
 
-    return $generator->factureOrder($order,$rappel);
+    return $generator->factureOrder($order,$rappel);*/
+
+    $colloque = $colloques->find(39);
+
+    $prices = $colloque->inscriptions->map(function ($item, $key) {
+        return $item->price;
+    })->pluck('id');
+
+    echo '<pre>';
+    print_r($inscriptions);
+    echo '</pre>';exit();
 
 /*
     $colloque = $colloques->find(39);

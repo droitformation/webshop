@@ -12,7 +12,6 @@
             @if(!$prices->isEmpty())
                 @foreach($prices as $prix)
                     <li class="list-group-item">
-
                         <div class="row">
                             <div class="col-md-2">
                                 <span class="label label-default">
@@ -41,7 +40,6 @@
                                 <button class="btn btn-xs btn-danger pull-right removePrice" data-id="{{ $prix->id }}" type="button">&nbsp;<i class="fa fa-times"></i>&nbsp;</button>
                             </div>
                         </div>
-
                     </li>
                 @endforeach
             @endif

@@ -267,6 +267,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     
     // Add, edit, delete items for colloque
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
+
+    Route::post('price/change', 'Backend\Colloque\PriceController@change');
+
     Route::resource('price', 'Backend\Colloque\PriceController');
     Route::resource('option', 'Backend\Colloque\OptionController');
     Route::resource('groupoption', 'Backend\Colloque\GroupOptionController');

@@ -45,7 +45,17 @@ class PriceController extends Controller {
             return response('OK', 200);exit;
         }
 
-        return response('OK', 200)->with(['status' => 'error','msg' => 'problème']);
+        return response('ERROR', 200);
+    }
+
+    public function change(Request $request)
+    {
+        $price = $this->price->update([ 'id' => $request->input('id'), 'type' => $request->input('value')]);
+        
+        $colloque_id = $price->colloque_id;
+        $colloque    = $this->colloque->find($colloque_id);
+        
+        echo view('backend.colloques.partials.prices')->with(['type' => $price->type, 'title' => 'Prix '.$price->type, 'colloque' => $colloque]);exit;
     }
 
     /**
@@ -59,6 +69,17 @@ class PriceController extends Controller {
         $oldprice    = $price;
         $colloque_id = $price->colloque_id;
 
+        $colloque = $this->colloque->find($colloque_id);
+
+        $prices = $colloque->inscriptions->map(function ($item, $key) {
+            return $item->price;
+        })->pluck('id');
+
+        if($prices->contains($id))
+        {
+            return response('ERROR', 400);
+        }
+        
         $this->price->delete($price->id);
 
         // Has to be called after the delete so we have the updates prices
