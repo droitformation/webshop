@@ -94,21 +94,21 @@ class UploadController extends Controller
     public function uploadRedactor(Request $request)
     {
         // thumb for redactor filemanager
-        //$this->upload->upload( $request->file('file') , 'files/uploads/thumbs', 'thumbs');
+        // $this->upload->upload( $request->file('file') , 'files/uploads/thumbs', 'thumbs');
 
-        $files = $this->upload->upload( $request->file('file') , 'files/uploads' );
+        $file = $this->upload->upload( $request->file('file') , 'files/uploads' );
 
-        \File::copy(public_path('/files/uploads/'.$files['name']), public_path('/files/uploads/thumbs/'.$files['name']));
+        \File::copy(public_path('files/uploads/'.$file['name']), public_path('files/uploads/thumbs/'.$file['name']));
 
         $sizes = \Config::get('size.thumbs');
 
-        $this->upload->resize(  public_path('/files/uploads/thumbs/'.$files['name']), '', $sizes['width'], $sizes['height']);
+        $this->upload->resize( public_path('files/uploads/thumbs/'.$file['name']), '', $sizes['width'], $sizes['height']);
 
-        if($files)
+        if($file)
         {
             $array = [
-                'filelink' => url('/').'/files/uploads/'.$files['name'],
-                'filename' => $files['name']
+                'filelink' => asset('files/uploads/'.$file['name']),
+                'filename' => $file['name']
             ];
 
             return response()->json($array,200 );
@@ -119,13 +119,13 @@ class UploadController extends Controller
 
     public function uploadFileRedactor(Request $request)
     {
-        $files = $this->upload->upload( $request->file('file') , 'files/uploads' );
+        $file = $this->upload->upload( $request->file('file') , 'files/uploads' );
 
-        if($files)
+        if($file)
         {
             $array = [
-                'filelink' => url('/').'/files/uploads/'.$files['name'],
-                'filename' => $files['name']
+                'filelink' => asset('files/uploads/'.$file['name']),
+                'filename' => $file['name']
             ];
 
             return response()->json($array,200 );
@@ -147,7 +147,7 @@ class UploadController extends Controller
 
                 if(substr($mime, 0, 5) == 'image')
                 {
-                    $data[] = ['image' => asset('files/uploads/'.$file), 'thumb' => asset('files/uploads/thumbs/'.$file), 'title' => $file];
+                    $data[] = ['image' => asset('files/uploads/'.$file), 'thumb' => asset('files/uploads/'.$file), 'title' => $file];
                 }
             }
         }
@@ -168,7 +168,7 @@ class UploadController extends Controller
 
                 if(substr($mime, 0, 5) != 'image')
                 {
-                    $data[] = ['name' => $file, 'link' => asset('files/uploads/'.$file) , 'title' => $file];
+                    $data[] = ['image' => $file, 'title' => asset('files/uploads/'.$file) ];
                 }
             }
         }

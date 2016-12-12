@@ -223,6 +223,9 @@ App.controller("MultiSelectionController",['$scope',"$filter","Categories","Arre
 
         if( $scope.typeItem == 'arrets'){
 
+            var site_id = $('#main').data('site');
+            site_id = !site_id ? null : site_id;
+
             Arrets.query(site_id)
                 .then(function (data) {
                     self.items  = data;

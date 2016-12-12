@@ -7,16 +7,19 @@
     <!-- Bloc inscription newsletter -->
     @include('frontend.matrimonial.sidebar.newsletter')
 
-    @if(isset($menu_sidebar) && !$menu_sidebar->pages->isEmpty())
-        @foreach($menu_sidebar->pages as $page)
+    @if( (Request::is('matrimonial/page/newsletter') || Request::is('matrimonial/page/newsletter/*')) && !$newsletters->isEmpty())
+        @include('frontend.partials.list', ['page' => $page, 'lists' => $campagnes->where('status','envoyé')->pluck('sujet','id')])
+    @endif
 
-            @if($page->template == 'newsletter')
-                @include('frontend.partials.list', ['page' => $page, 'lists' => $campagnes->where('status','envoyé')->pluck('sujet','id')])
-            @else
-                <h5><a href="{{ url($site->slug.'/page/'.$page->slug) }}">{{ $page->menu_title }} <i class="pull-right fa fa-arrow-circle-right"></i></a></h5>
-            @endif
+    @if(isset($menu_sidebar) && !$menu_sidebar->pages_active->isEmpty())
 
-        @endforeach
+        <div class="widget clear">
+            <h3 class="title">Liens direct</h3>
+            @foreach($menu_sidebar->pages_active as $page)
+                <a class="link" href="{{ url($site->slug.'/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
+            @endforeach
+        </div>
+
     @endif
 
     <!-- Bloc pages -->

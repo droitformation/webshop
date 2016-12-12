@@ -27,13 +27,13 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/admin.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/inscription.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/types.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/redactor/redactor.css');?>">
 
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
 
     @if(isset($isNewsletter))
         @include('newsletter::Style.main', ['campagne' => isset($campagne) ? : null])
-        @include('newsletter::Style.redactor')
     @endif
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

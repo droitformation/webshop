@@ -101,7 +101,7 @@ class PageEloquent implements PageInterface{
             $page->parent_id = null;
         }
 
-        $page->hidden     = $data['hidden'] ? 1 : null;
+        $page->hidden     = $data['hidden'] > 0 ? 1 : null;
         $page->updated_at = date('Y-m-d G:i:s');
 
         $page->save();

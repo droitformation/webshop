@@ -569,7 +569,7 @@ class Helper {
         $form = '<form action="'.url('admin/page/'.$node->id).'" method="POST">
                               <input type="hidden" name="_method" value="DELETE">'.csrf_field().'
                               <a href="admin/page/'.$node->id.'" class="btn btn-info btn-sm">&eacute;diter</a>
-                              <button data-action="page: '.$node->title.'" class="btn btn-danger btn-sm deleteAction">X</button>
+                              <button data-what="Supprimer" data-action="page: '.$node->title.'" class="btn btn-danger btn-sm deleteAction">X</button>
                           </form>';
 
         if( $node->isLeaf() )

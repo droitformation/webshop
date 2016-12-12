@@ -61,6 +61,12 @@ class BailController extends Controller
     {
         $page = $this->page->getBySlug($this->site_id,$slug);
 
+        if(!$page)
+        {
+            alert()->warning('Aucune page trouvé');
+            return redirect('/bail');
+        }
+
         $data['page'] = $page;
         $data['var']  = $var;
 

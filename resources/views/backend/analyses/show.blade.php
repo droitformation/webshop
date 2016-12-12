@@ -20,14 +20,8 @@
                 <input type="hidden" name="_method" value="PUT">
                 {!! csrf_field() !!}
 
-            <div class="panel-body event-info" ng-app="selection">
+            <div class="panel-body event-info" ng-app="selection" id="main" data-site="{{ $analyse->site_id }}">
                 <h4>&Eacute;diter l'analyse</h4>
-                <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Titre auteur</label>
-                    <div class="col-sm-3">
-                        {!! Form::text('author', $analyse->author , ['class' => 'form-control'] )  !!}
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Titre alternatif (remplace analyse de l'arrêt...)</label>
@@ -36,12 +30,12 @@
                     </div>
                 </div>
 
-                <?php $authors = (isset($analyse->authors) ? $analyse->authors->lists('id')->all() : []); ?>
+                <?php $authors = (isset($analyse->authors) ? $analyse->authors->pluck('id')->all() : []); ?>
 
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Auteurs</label>
                     <div class="col-sm-3">
-                        <select multiple class="form-control" id="author" name="author_id[]">
+                        <select multiple class="form-control" required id="author" name="author_id[]">
                             <option value="">Choisir</option>
                             @if(!empty($auteurs))
                                 @foreach($auteurs as $auteur)
@@ -56,10 +50,10 @@
                     <label for="message" class="col-sm-3 control-label">Appartient au site</label>
                     <div class="col-sm-3">
                         @if(!$sites->isEmpty())
-                            <select class="form-control" name="site_id">
+                            <select class="form-control" required name="site_id">
                                 <option value="">Appartient au site</option>
                                 @foreach($sites as $select)
-                                    <option {{ $select->id == $analyse->site_id ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
+                                    <option {{ $select->id == $analyse->site_id ? 'selected' : '' }}   value="{{ $select->id }}">{{ $select->nom }}</option>
                                 @endforeach
                             </select>
                         @endif
@@ -69,7 +63,7 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Date de publication</label>
                     <div class="col-sm-2">
-                        {!! Form::text('pub_date', $analyse->pub_date->format('Y-m-d') , array('class' => 'form-control datePicker') ) !!}
+                        <input type="text" name="pub_date" required class="form-control datePicker" value="{{ $analyse->pub_date->format('Y-m-d') }}">
                     </div>
                 </div>
 
@@ -98,7 +92,7 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Résumé</label>
                     <div class="col-sm-7">
-                        {!! Form::textarea('abstract', $analyse->abstract , array('class' => 'form-control', 'cols' => '50' , 'rows' => '4' )) !!}
+                        {!! Form::textarea('abstract', $analyse->abstract , array('class' => 'form-control', 'cols' => '50' , 'rows' => '4' ,'required' => 'required')) !!}
                     </div>
                 </div>
 

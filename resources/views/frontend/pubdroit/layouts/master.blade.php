@@ -59,9 +59,9 @@
 								@if(!$menus->isEmpty())
 									<?php $menu = $menus->where('position','main'); ?>
 									@if(!$menu->isEmpty())
-										<?php $menu = $menu->first()->load('pages'); ?>
-										@if(!$menu->pages->isEmpty())
-											@foreach($menu->pages as $page)
+										<?php $menu = $menu->first()->load('pages_active'); ?>
+										@if(!$menu->pages_active->isEmpty())
+											@foreach($menu->pages_active as $page)
 												<li>{!! $page->page_url !!}</li>
 											@endforeach
 										@endif

@@ -57,6 +57,12 @@ class MatrimonialController extends Controller
     {
         $data['page'] = $this->page->getBySlug($this->site_id,$slug);
         $data['var']  = $var;
+
+        if(!$data['page'])
+        {
+            alert()->warning('Aucune page trouvé');
+            return redirect('/bail');
+        }
         
         if($slug == 'jurisprudence')
         {

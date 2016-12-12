@@ -11,21 +11,15 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="panel panel-midnightblue">
+        <div class="panel panel-midnightblue" ng-app="selection">
 
             <!-- form start -->
             <form action="{{ url('admin/analyse') }}" enctype="multipart/form-data" method="POST" class="validate-form form-horizontal" data-validate="parsley">
                 {{ csrf_field() }}
 
-           
-            <div class="panel-body event-info" ng-app="selection">
+
+            <div class="panel-body event-info" ng-app="selection" id="main" data-site="{{ $site }}">
                 <h4>Créer analyse</h4>
-                <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Tire auteurs</label>
-                    <div class="col-sm-3">
-                        {!! Form::text('author', null , array('class' => 'form-control') ) !!}
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Titre alternatif (remplace analyse de l'arrêt...)</label>
@@ -37,7 +31,7 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Auteurs</label>
                     <div class="col-sm-3">
-                        <select multiple class="form-control" id="author" name="author_id[]">
+                        <select multiple class="form-control" id="author" required name="author_id[]">
                             <option value="">Choisir</option>
                             @if(!empty($auteurs))
                                 @foreach($auteurs as $auteur)
@@ -52,7 +46,7 @@
                     <label for="message" class="col-sm-3 control-label">Appartient au site</label>
                     <div class="col-sm-3">
                         @if(!$sites->isEmpty())
-                            <select class="form-control" name="site_id">
+                            <select class="form-control" required name="site_id">
                                 <option value="">Appartient au site</option>
                                 @foreach($sites as $select)
                                     <option {{ $select->id == $site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
@@ -65,7 +59,7 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Date de publication</label>
                     <div class="col-sm-2">
-                        {!! Form::text('pub_date', null , array('class' => 'form-control datePicker') ) !!}
+                        {!! Form::text('pub_date', null , array('class' => 'form-control datePicker', 'required' => 'required') ) !!}
                     </div>
                 </div>
 
@@ -79,7 +73,7 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Résumé</label>
                     <div class="col-sm-7">
-                        {!! Form::textarea('abstract', null , array('class' => 'form-control', 'cols' => '50' , 'rows' => '4' )) !!}
+                        {!! Form::textarea('abstract', null , array('class' => 'form-control', 'cols' => '50' , 'rows' => '4', 'required' => 'required' )) !!}
                     </div>
                 </div>
 

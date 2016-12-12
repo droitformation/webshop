@@ -4,7 +4,7 @@
 	<div id="content" class="inner inner-app">
 
 		<div class="row">
-			<div class="col-md-12 homepageBlock">
+			<div class="col-md-8">
 
 				@if(isset($page))
 					<h3 class="line">{{ $page->title }}</h3>
@@ -18,6 +18,9 @@
 					@endif
 				@endif
 
+			</div>
+			<div class="col-md-4">
+				@include('frontend.matrimonial.partials.sidebar')
 			</div>
 		</div>
 

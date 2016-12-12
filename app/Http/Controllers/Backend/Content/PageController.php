@@ -111,7 +111,7 @@ class PageController extends Controller
 
         alert()->success('La page a été supprimé');
 
-        return redirect('admin/page/'.$page->site_id);
+        return redirect()->back();
     }
 
     public function sorting(Request $request)

@@ -58,10 +58,9 @@ class AnalyseEloquent implements AnalyseInterface{
 
 		$analyse = $this->analyse->create(array(
 			'user_id'    => (isset($data['user_id']) ? $data['user_id'] : null),
-            'authors'    => $data['authors'],
             'pub_date'   => $data['pub_date'],
             'abstract'   => $data['abstract'],
-            'file'       => $data['file'],
+            'file'       => (isset($data['file']) ? $data['file'] : null),
             'site_id'    => (isset($data['site_id']) ? $data['site_id'] : null),
             'title'      => (isset($data['title']) ? $data['title'] : null),
 			'created_at' => date('Y-m-d G:i:s'),
