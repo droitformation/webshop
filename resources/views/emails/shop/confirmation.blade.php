@@ -17,7 +17,7 @@
             <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }} padding: 35px 25px 15px 25px;">
                 <div style="{{ $style['paragraph'] }}">
                     <h2 style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 16px;line-height: 28px;font-weight: bold;color: #000000;">
-                        Bonjour {{ $order->user->name }}
+                        Bonjour {{ isset($order->user) ? $order->user->name: '' }}
                     </h2>
                     <p style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }}">
                         Nous vous remercions pour votre commande sur <a href="http://www.publications-droit.ch" style="color: #1a446e;">www.publications-droit.ch</a>.
