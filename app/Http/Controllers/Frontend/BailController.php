@@ -124,21 +124,4 @@ class BailController extends Controller
     {
         return view('frontend.bail.unsubscribe');
     }
-
-   public function doctrine()
-   {
-        $seminaires = $this->seminaire->getSubjects();
-
-        echo '<pre>';
-        print_r($seminaires);
-        echo '</pre>';exit();
-
-        return view('bail.doctrine')->with(['seminaires' => $seminaires , 'subjects' => $subjects  ,'categories' => $categories]);
-    }
-
-    public function app()
-    {
-        return view('frontend.bail.app');
-    }
-
 }

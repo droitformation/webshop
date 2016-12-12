@@ -56,7 +56,8 @@ class MatrimonialController extends Controller
     public function page($slug, $var = null)
     {
         $data['page'] = $this->page->getBySlug($this->site_id,$slug);
-
+        $data['var']  = $var;
+        
         if($slug == 'jurisprudence')
         {
             $newsletters = $this->newsworker->siteNewsletters($this->site_id);

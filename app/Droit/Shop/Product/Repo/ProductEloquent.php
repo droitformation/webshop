@@ -109,7 +109,7 @@ class ProductEloquent implements ProductInterface{
             $products->where('hidden','=',0);
         }
 
-        return $products->groupBy('id')->get();
+        return $products->groupBy('shop_products.id')->get();
     }
 
     public function create(array $data){

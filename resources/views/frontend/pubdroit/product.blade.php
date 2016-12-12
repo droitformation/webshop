@@ -45,7 +45,7 @@
 						<h3>{{ $product->title }}</h3>
 
 						<div>
-							<p><strong>{{ $product->teaser }}</strong></p>
+							<p><strong>{!! $product->teaser !!}</strong></p>
 
 							<div class="well well-sm product-description">
 								{!!  $product->description !!}

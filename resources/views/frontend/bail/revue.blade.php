@@ -7,6 +7,7 @@
 			<div class="col-md-8">
 				<h3 class="line up">{{ $page->title }}</h3>
 
+				@if(isset($revue))
 				<div class="row">
 					<div class="col-md-5">
 						<div class="thumbnail" style="display: inline-block;">
@@ -15,18 +16,18 @@
 					</div>
 					<div class="col-md-7">
 						<h4 class="revue-title">{{ $revue->title }}</h4>
-						<p>{{ $revue->teaser }}</p>
+						<p>{!! $revue->teaser !!}</p>
 						<p>
 							<a href="{{ url('pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-default">
 								<i class="fa fa-shopping-cart"></i> &nbsp;Commander
 							</a>
-							<a href="{{ url('pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-info">
+							<a href="{{ url('pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-danger">
 								<i class="fa fa-download"></i> &nbsp;Télécharger
 							</a>
 						</p>
 					</div>
 				</div>
-
+				@endif
 				{!! $page->content !!}
 
 			</div>

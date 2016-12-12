@@ -43,7 +43,8 @@ button.alert:focus,
 
 a, a:hover,
 a:active,
-a:visited {
+a:visited ,
+.menu > li > a.active{
     color: #eD3C95;
 }
 

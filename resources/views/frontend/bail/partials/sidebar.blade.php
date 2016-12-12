@@ -9,11 +9,11 @@
         @include('frontend.bail.sidebar.newsletter')
     @endif
 
-    @if(Request::is('bail/page/newsletter') && !$newsletters->isEmpty())
+    @if( (Request::is('bail/page/newsletter') || Request::is('bail/page/newsletter/*')) && !$newsletters->isEmpty())
         @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters->first()->campagnes->pluck('sujet','id')])
     @endif
 
-    @if(Request::is('bail/page/revues'))
+    @if(Request::is('bail/page/revues') || Request::is('bail/page/revues/*'))
         @include('frontend.partials.list', ['page' => $page, 'lists' => $revues])
     @endif
 

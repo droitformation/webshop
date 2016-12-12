@@ -90,7 +90,7 @@
 
 <script src="<?php echo asset('frontend/common/js/sidebar.js');?>"></script>
 <script src="<?php echo asset('frontend/common/js/arrets.js');?>"></script>
-<script src="<?php echo asset('common/js/chose.jquery.js');?>"></script>
+
 <script src="<?php echo asset('js/app.js');?>"></script>
 
 </body>

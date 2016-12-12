@@ -40,7 +40,7 @@
                                                             <p><a target="_blank" href="{{ asset($row->annexe_path) }}">Annexe 1 </a></p>
                                                         @endif
                                                         @if($row->seminaire && $row->seminaire->product)
-                                                            <p><a target="_blank" href="{{ asset('product/'.$row->seminaire->product->id) }}">Aquérir</a></p>
+                                                            <p><a target="_blank" href="{{ asset('pubdroit/product/'.$row->seminaire->product->id) }}">Aquérir</a></p>
                                                         @else
                                                         @endif
                                                     </div>
