@@ -11,7 +11,7 @@
         <article class="col-md-8">
 
             @foreach($product->abos as $abo)
-                <h3><a href="{{ url('product/'.$product->id) }}">Abonnement {{ $abo->title }}</a></h3>
+                <h3><a href="{{ url('pubdroit/product/'.$product->id) }}">Abonnement {{ $abo->title }}</a></h3>
                 <p>{{ $abo->plan_fr }}</p>
                 <p><strong>Dernière édition:</strong> <br/><i>{{ $product->title }}</i></p>
 

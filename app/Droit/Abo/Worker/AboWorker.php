@@ -80,7 +80,7 @@ class AboWorker implements AboWorkerInterface{
             $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $item['product_id']]);
 
             // Generate first pdf invoice
-            $this->make($facture->id);
+            $this->generator->makeAbo('facture', $facture);
 
             $collection->push($abonnement);
         }
