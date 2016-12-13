@@ -16,7 +16,7 @@
                 <p><strong>Dernière édition:</strong> <br/><i>{{ $product->title }}</i></p>
 
                 <form method="post" action="{{ url('pubdroit/cart/addAbo') }}" class="form-inline">{!! csrf_field() !!}
-                    <button type="submit" class="cart-btn2">Ajouter au panier</button>
+                    <button type="submit" id="addAbo_{{ $product->id }}" class="cart-btn2">Ajouter au panier</button>
                     <span class="price">{{ $abo->price_cents }} CHF</span>
                     <input type="hidden" name="abo_id" value="{{ $abo->id }}">
                 </form>

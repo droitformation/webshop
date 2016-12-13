@@ -40,6 +40,20 @@
     </script>
 @endif
 
+@if(!empty(session('OrderAbo')))
+    <script>
+        $(function(){
+            swal({
+                title: "Oho",
+                text: 'Vous êtes déjà abonné à cet ouvrage',
+                timer: 2500,
+                type: "warning",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
 @if(!empty(session('ContactConfirmation')))
     <script>
         $(function(){

@@ -34,7 +34,8 @@ class OrderAbo
 
         $abo_id = $request->input('abo_id',null);
 
-        if($abo_id){
+        if($abo_id)
+        {
             $abos = [$abo_id];
         }
 
@@ -52,7 +53,7 @@ class OrderAbo
             foreach($abos as $abo)
             {
                 $exist = $this->abonnement->findByAdresse($user->adresse_livraison->id, $abo);
-
+                
                 if($exist)
                 {
                     $this->worker->removeById('abonnement', $abo);
@@ -63,10 +64,10 @@ class OrderAbo
 
         if($redirect)
         {
-            alert()->warning('Vous êtes déjà abonné à cet ouvrage');
-            throw new \App\Exceptions\OrderAboException('Vous êtes déjà abonné à cet ouvrage');
-
-            return redirect('/');
+            session(['OrderAbo' => 'Error']);
+            $request->session()->flash('OrderAbo', 'Error');
+            
+            return redirect()->back();
         }
 
         return $next($request);

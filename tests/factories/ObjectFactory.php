@@ -339,12 +339,12 @@ class ObjectFactory
 
     public function makeAbonnement()
     {
-         $abo     = $this->makeAbo();
-         $adresse = $this->adresse();
+         $abo  = $this->makeAbo();
+         $user = $this->makeUser();
         
          return factory(\App\Droit\Abo\Entities\Abo_users::class)->create([
              'abo_id'         => $abo->id,
-             'adresse_id'     => $adresse->id,
+             'adresse_id'     => $user->adresses->first()->id,
          ]);
     }
 
