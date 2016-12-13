@@ -37,7 +37,7 @@ class ArretController extends Controller {
                 $analyses = $arret->analyses->map(function ($analyse, $key) {
                     return [
                         'id'         => $analyse->id,
-                        'date'       => $analyse->pub_date->formatLocalized('%d %B %Y'),
+                        'date'       => utf8_encode($analyse->pub_date->formatLocalized('%d %B %Y')),
                         'auteurs'    => $analyse->authors->implode('name', ', '),
                         'abstract'   => $analyse->abstract,
                         'document'   => $analyse->document ? asset('files/analyses/'.$analyse->file) : null,
@@ -47,13 +47,13 @@ class ArretController extends Controller {
             
             return [
                 'id'         => $arret->id,
-                'title'      => $arret->reference.' '.$arret->pub_date->formatLocalized('%d %B %Y'),
+                'title'      => $arret->reference.' '.utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')),
                 'reference'  => $arret->reference,
                 'abstract'   => $arret->abstract,
-                'pub_text'   => strip_tags($arret->pub_text),
+                'pub_text'   => $arret->pub_text,
                 'document'   => $arret->document ? asset('files/arrets/'.$arret->file) : null,
                 'categories' => !$arret->categories->isEmpty() ? $arret->categories : null,
-                'analyses' => isset($analyses) ? $analyses : null,
+                'analyses'   => isset($analyses) ? $analyses : null,
             ];
         });
 
