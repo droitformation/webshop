@@ -50,7 +50,7 @@ class ArretController extends Controller {
                 'title'      => $arret->reference.' '.$arret->pub_date->formatLocalized('%d %B %Y'),
                 'reference'  => $arret->reference,
                 'abstract'   => $arret->abstract,
-                'pub_text'   => $arret->pub_text,
+                'pub_text'   => strip_tags($arret->pub_text),
                 'document'   => $arret->document ? asset('files/arrets/'.$arret->file) : null,
                 'categories' => !$arret->categories->isEmpty() ? $arret->categories : null,
                 'analyses' => isset($analyses) ? $analyses : null,
