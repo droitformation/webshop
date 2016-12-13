@@ -57,8 +57,7 @@ class ArretController extends Controller {
             ];
         });
 
-
-        return [
+        return response()->json([
             'arrets'   => $arrets,
             'pagination' => [
                 'total'    => $results->total(),
@@ -68,7 +67,7 @@ class ArretController extends Controller {
                 'from' => $results->firstItem(),
                 'to'   => $results->lastItem()
             ],
-        ];
+        ]);
     }
     
 }
