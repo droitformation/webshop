@@ -28,12 +28,22 @@ class AboController extends Controller {
     public function addAbo(Request $request)
 	{
         $item = $this->abo->find($request->input('abo_id'));
+
+        $exist = \Cart::instance('abonnement')->search(['id' => (int)$request->input('abo_id')]);
         
-        \Cart::instance('abonnement')->search(['id' => (int)$request->input('abo_id')]);
+        if($exist){
+            $request->session()->flash('aboAlreadyInCart', 'Abonnement déjà dans les panier');
+            return redirect()->back();
+        }
+        
         \Cart::instance('abonnement')
             ->associate('Abo','App\Droit\Abo\Entities')
             ->add($item->id, $item->title, 1, $item->price_cents , [
-                'image' => $item->logo, 'plan' => $item->plan_fr, 'product_id' => $item->current_product->id, 'product' => $item->current_product->title
+                'image' => $item->logo,
+                'plan' => $item->plan_fr,
+                'product_id' => $item->current_product->id,
+                'product' => $item->current_product->title,
+                'shipping_cents' => $item->shipping_cents
             ]);
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');

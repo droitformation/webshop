@@ -178,8 +178,8 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     list-style: none;
 }
 
-.btn-navbar{
-
+.btn-trash{
+    color: #000;
 }
     /* Start main Header css */
 #main-header {

@@ -30,9 +30,8 @@
                                 <tr>
                                     <td>
                                         <form action="{{ url('admin/abonnement/restore/'.$abonnement->id) }}" method="POST" class="form-horizontal">
-                                            <input type="hidden" name="_method" value="POST">
-                                            {!! csrf_field() !!}
-                                            <button data-what="Restaurer" data-action="N°: {{ $abonnement->numero }}" class="btn btn-warning btn-xs deleteAction">Restaurer</button>
+                                            <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
+                                            <button id="restore_{{ $abonnement->id }}" data-what="Restaurer" data-action="N°: {{ $abonnement->numero }}" class="btn btn-warning btn-xs deleteAction">Restaurer</button>
                                         </form>
                                     </td>
                                     <td>{{ $abonnement->numero }}</td>

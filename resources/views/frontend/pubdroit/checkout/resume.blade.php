@@ -72,7 +72,7 @@
                             @endif
 
                             <p class="text-right terms">
-                                <label><input id="termsAndConditions" type="checkbox"> &nbsp;J'ai lu <a href="#">les termes et conditions générales</a></label>
+                                <label><input id="termsAndConditions" name="termsAndConditions" type="checkbox"> &nbsp;J'ai lu <a href="#">les termes et conditions générales</a></label>
                             </p>
 
                             <hr/>

@@ -30,30 +30,26 @@ class OrderAbo
      */
     public function handle($request, Closure $next)
     {
-        $redirect = false;
+        // get abos from request or in cart already
+        $abos = $this->getAbos($request);
 
-        $abo_id = $request->input('abo_id',null);
-
-        if($abo_id)
-        {
-            $abos = [$abo_id];
-        }
-
-        if(empty($abos) && !\Cart::instance('abonnement')->content()->isEmpty())
-        {
-            $abos = \Cart::instance('abonnement')->content()->map(function ($item, $key) {
-                return $item->id;
-            });
-        }
-
-        if(\Auth::check() && !empty($abos))
+        // if user is authenticated
+        if(\Auth::check())
         {
             $user = \Auth::user()->load('adresses');
+
+            // No adresse , no abo yet
+            if(!isset($user->adresse_livraison)) {
+
+                $request->session()->flash('AdresseMissing', 'Error');
+
+                return redirect()->back();
+            }
 
             foreach($abos as $abo)
             {
                 $exist = $this->abonnement->findByAdresse($user->adresse_livraison->id, $abo);
-                
+
                 if($exist)
                 {
                     $this->worker->removeById('abonnement', $abo);
@@ -62,14 +58,27 @@ class OrderAbo
             }
         }
 
-        if($redirect)
+        if(isset($redirect))
         {
-            session(['OrderAbo' => 'Error']);
             $request->session()->flash('OrderAbo', 'Error');
-            
-            return redirect()->back();
+
+            return redirect('pubdroit');
         }
 
         return $next($request);
+    }
+
+    protected function getAbos($request)
+    {
+        $abo_id = $request->input('abo_id',null);
+
+        if(!\Cart::instance('abonnement')->content()->isEmpty())
+        {
+            $abos = \Cart::instance('abonnement')->content()->map(function ($item, $key) {
+                return $item->id;
+            });
+        }
+
+        return isset($abos) ? $abos : [$abo_id];
     }
 }

@@ -76,6 +76,7 @@ class CheckoutController extends Controller {
         $shipping  = $this->checkout->totalShipping();
         $total     = $this->checkout->totalCartWithShipping();
         $payments  = $this->payment->getAll();
+        
         $user      = \Auth::user();
         $coupon    = (\Session::has('coupon') ? \Session::get('coupon') : false);
 

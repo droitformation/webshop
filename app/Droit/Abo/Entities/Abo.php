@@ -9,7 +9,7 @@ class Abo extends Model{
 
     protected $table = 'abos';
 
-    protected $fillable = ['title','plan','logo','name','compte','adresse','price'];
+    protected $fillable = ['title','plan','logo','name','compte','adresse','price','shipping'];
 
     public function getPlanFrAttribute()
     {
@@ -27,6 +27,14 @@ class Abo extends Model{
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
         $price = $this->price / 100;
+
+        return $money->format($price);
+    }
+
+    public function getShippingCentsAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $price = $this->shipping / 100;
 
         return $money->format($price);
     }

@@ -125,10 +125,40 @@ class AbonnementAdminTest extends TestCase {
     public function testDesinscriptionPage()
     {
         $make = new \tests\factories\ObjectFactory();
-        $abo     = $make->makeAbo();
+        $abo  = $make->makeAbo();
 
         $this->visit(url('admin/abo/desinscription/'.$abo->id));
         $this->assertViewHas('abo');
     }
-    
+
+    public function testDesinscriptionAboUser()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $abonnement = $make->makeAbonnement();
+        $make->abonnementFacture($abonnement);
+
+        $this->visit(url('admin/abonnements/'.$abonnement->abo_id));
+        $this->assertViewHas('abo');
+
+        // desinscription
+        $this->press('deleteAbo_'.$abonnement->id);
+
+        $this->notSeeInDatabase('abo_users', [
+            'id'         => $abonnement->id,
+            'deleted_at' => null
+        ]);
+
+        $this->visit(url('admin/abo/desinscription/'.$abonnement->abo_id));
+        $this->assertViewHas('abo');
+
+        // restore abo
+        $this->press('restore_'.$abonnement->id);
+
+        $this->seeInDatabase('abo_users', [
+            'id'         => $abonnement->id,
+            'deleted_at' => null
+        ]);
+
+    }
 }

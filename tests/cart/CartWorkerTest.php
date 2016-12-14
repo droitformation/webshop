@@ -37,6 +37,8 @@ class CartWorkerTest extends TestCase {
     {
         \Cart::instance('shop')->destroy();
         \Cart::instance('abonnement')->destroy();
+
+        \Session::forget('noShipping');
         
         Mockery::close();
         DB::rollBack();
@@ -408,23 +410,16 @@ class CartWorkerTest extends TestCase {
             'weight' => '2000'
         ]);
 
-        $price    = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'priceshipping')->make();
-
-        $price->products = collect([$product]);
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'priceshipping')->make();
 
         \Cart::instance('shop')->add($product->id, $product->title, 1, $product->price_cents, ['weight' => $product->weight]);
 
-        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($price);
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
-        $worker->setCoupon($price->title)->applyCoupon();
+        $worker->setCoupon($coupon->title)->applyCoupon();
 
-        $worker->calculPriceWithCoupon($price,'minus');
-
-        // Product price => 50.00
-        // Coupon for product value -20
-
-        $this->withSession(['noShipping']);
-        $this->assertEquals(30, \Cart::instance('shop')->total());
+        $this->withSession(['noShipping' => 'noShipping']);
+        $this->assertEquals(50.00, $worker->totalCartWithShipping());
     }
 
     /**
@@ -480,26 +475,5 @@ class CartWorkerTest extends TestCase {
         $this->assertEquals(0, $worker->orderShipping->price);
 
     }
-
-    /**
-     * @return void
-     */
-    public function testGetPriceWithProductAndAbo()
-    {
-        $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-
-        \Cart::instance('shop');
-        \Cart::instance('abonnement');
-
-        // Has to match the factory product
-        \Cart::instance('shop')->add(100, 'Dos', 1, '10.00', array('weight' => 600));
-        \Cart::instance('abonnement')->add(2, 'Abo', 1, '100.00', array('image' => 'logo.png'));
-
-        $price = $worker->totalCart();
-        $count = $worker->countCart();
-
-        $this->assertEquals(110.00, $price);
-        $this->assertEquals(2, $count);
-
-    }
+    
 }

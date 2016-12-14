@@ -223,7 +223,7 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'priceshipping'
     $tomorrow = \Carbon\Carbon::now()->addDay();
 
     return [
-        'value'      => '20',
+        'value'      => null,
         'type'       => 'priceshipping',
         'title'      => 'Price shipping',
         'expire_at'  => $tomorrow

@@ -38,6 +38,12 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Frais de port</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" name="shipping">
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Centre/institut</label>

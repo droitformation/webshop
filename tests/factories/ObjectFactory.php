@@ -337,15 +337,20 @@ class ObjectFactory
         return $abo;
     }
 
-    public function makeAbonnement()
+    public function makeAbonnement($abo = null, $user = null)
     {
-         $abo  = $this->makeAbo();
-         $user = $this->makeUser();
-        
-         return factory(\App\Droit\Abo\Entities\Abo_users::class)->create([
-             'abo_id'         => $abo->id,
-             'adresse_id'     => $user->adresses->first()->id,
-         ]);
+        if(!$abo){
+            $abo = $this->makeAbo();
+        }
+
+        if(!$user){
+            $user = $this->makeUser();
+        }
+
+        return factory(\App\Droit\Abo\Entities\Abo_users::class)->create([
+         'abo_id'         => $abo->id,
+         'adresse_id'     => $user->adresses->first()->id,
+        ]);
     }
 
     public function abonnementFacture($abonnement)

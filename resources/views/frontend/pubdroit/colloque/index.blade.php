@@ -8,6 +8,7 @@
 
             <div class="heading-bar">
                 <h2>Colloques</h2>
+                <a class="text-danger pull-right" href="{{ url('pubdroit/archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
                 <span class="h-line"></span>
             </div>
 
@@ -39,10 +40,6 @@
                     </section>
                 @endforeach
             @endif
-
-            <div class="b-post-bottom text-right">
-                <a class="text-danger" href="{{ url('pubdroit/archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
-            </div>
 
         </div>
     </section>

@@ -20,6 +20,7 @@ class CreateAbosTable extends Migration
             $table->string('name')->nullable();
             $table->string('compte')->nullable();
             $table->integer('price');
+            $table->integer('shipping');
             $table->text('adresse')->nullable();
             $table->timestamps();
             $table->softDeletes();

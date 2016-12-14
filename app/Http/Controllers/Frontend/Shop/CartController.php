@@ -51,7 +51,9 @@ class CartController extends Controller {
             throw new \App\Exceptions\StockCartException('Plus assez de stocks pour cet article');
         }
 
-        \Cart::instance('shop')->associate('Product','App\Droit\Shop\Product\Entities')->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
+        \Cart::instance('shop')
+            ->associate('Product','App\Droit\Shop\Product\Entities')
+            ->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 

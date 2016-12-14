@@ -85,7 +85,7 @@ class User extends Authenticatable {
             return $livraison->first();
         }
 
-        return [];
+        return null;
     }
 
     public function getAdresseContactAttribute()

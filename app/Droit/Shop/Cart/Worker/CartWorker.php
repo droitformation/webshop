@@ -289,8 +289,8 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      * */
      public function totalCartWithShipping()
      {
-         $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
-         $total    = $this->totalCart() + $shipping->price_cents;
+         $shipping = $this->totalShipping();
+         $total    = $this->totalCart() + $shipping;
          
          return \number_format((float)$total, 2, '.', '');
      }
@@ -303,6 +303,16 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      public function totalShipping()
      {
          $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
+
+         // Add shipping for abos
+         if(!\Cart::instance('abonnement')->content()->isEmpty() && !\Session::has('noShipping'))
+         {
+             $abo_shipping = \Cart::instance('abonnement')->content()->map(function ($item, $key) {
+                 return $item->options->shipping_cents;
+             })->sum();
+
+             return \number_format((float)($abo_shipping + $shipping->price_cents), 2, '.', '');
+         }
 
          return $shipping->price_cents;
      }
@@ -320,7 +330,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      }
 
      /**
-      * Get total count items in cartt
+      * Get total count items in cart
       * @return float
       * */
      public function countCart()

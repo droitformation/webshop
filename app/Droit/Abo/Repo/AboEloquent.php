@@ -47,13 +47,14 @@ class AboEloquent implements AboInterface{
     public function create(array $data){
 
         $abo = $this->abo->create(array(
-            'title'   => $data['title'],
-            'logo'    => (isset($data['logo']) ? $data['logo']: null),
-            'name'    => (isset($data['name']) ? $data['name']: null),
-            'compte'  => (isset($data['compte']) ? $data['compte']: null),
-            'adresse' => (isset($data['adresse']) ? $data['adresse']: null),
-            'price'   => $data['price'] * 100,
-            'plan'    => $data['plan']
+            'title'    => $data['title'],
+            'logo'     => (isset($data['logo']) ? $data['logo']: null),
+            'name'     => (isset($data['name']) ? $data['name']: null),
+            'compte'   => (isset($data['compte']) ? $data['compte']: null),
+            'adresse'  => (isset($data['adresse']) ? $data['adresse']: null),
+            'price'    => $data['price'] * 100,
+            'shipping' => isset($data['shipping']) ? $data['shipping'] * 100 : null,
+            'plan'     => $data['plan']
         ));
 
         if( ! $abo )
@@ -84,6 +85,11 @@ class AboEloquent implements AboInterface{
         if(isset($data['price']))
         {
             $abo->price = $data['price'] * 100;
+        }
+
+        if(isset($data['shipping']))
+        {
+            $abo->shipping = $data['shipping'] * 100;
         }
 
         $abo->save();

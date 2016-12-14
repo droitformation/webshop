@@ -33,7 +33,7 @@
                 <td align="center" valign="middle" class="mobile-hidden">
                     <form method="post" action="{{ url('pubdroit/cart/removeProduct') }}" class="form-inline">{!! csrf_field() !!}
                         <input type="hidden" name="rowid" value="{{ $item->rowid }}">
-                        <button type="submit"><i class="icon-trash"></i></button>
+                        <button type="submit"><i class="fa fa-trash"></i></button>
                     </form>
                 </td>
             </tr>
@@ -82,7 +82,7 @@
                     <td class="text-center" valign="middle" class="mobile-hidden">
                         <form method="post" action="{{ url('pubdroit/cart/removeAbo') }}" class="form-inline">{!! csrf_field() !!}
                             <input type="hidden" name="rowid" value="{{ $item->rowid }}">
-                            <button type="submit"><i class="icon-trash"></i></button>
+                            <button type="submit"><i class="fa fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

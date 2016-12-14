@@ -18,7 +18,6 @@
             <section class="col-md-8 col-xs-12">
                 <div class="heading-bar">
                     <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Événements</h2>
-                    <a class="text-danger pull-right" href="{{ url('pubdroit/archives') }}"><i class="fa fa-calendar"></i> &nbsp;Archives</a>
                     <span class="h-line"></span>
                 </div>
 

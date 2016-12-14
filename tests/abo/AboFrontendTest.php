@@ -26,34 +26,82 @@ class AboFrontendTest extends TestCase {
     {
         $make = new \tests\factories\ObjectFactory();
 
-        $abonnement = $make->makeAbonnement();
-        $make->abonnementFacture($abonnement);
+        //make abo ansd user
+        $abo  = $make->makeAbo();
+        $user = $make->makeUser();
 
-        $this->actingAs($abonnement->user->user);
+        // login user
+        $this->actingAs($user);
 
-        // Make new product and add the attributes
+        // add abo in cart
         $this->visit(url('pubdroit'));
-        $this->press('addAbo_'.$abonnement->abo_id);
 
-        $response = $this->response->getContent();
-        echo '<pre>';
-        print_r($response);
-        echo '</pre>';exit();
-        $this->assertRedirectedTo('pubdroit');
+        $this->press('addAbo_'.$abo->id);
 
-        //$this->visit(url('pubdroit/checkout/cart'));
-       // $this->see('Demande d\'abonnement');
-        // Test if the product is in the cart
-        //$inCart = \Cart::instance('abonnement')->search(['id' => (int)$abonnement->abo_id]);
+        $this->seePageIs(url('pubdroit'));
 
-       // $this->assertTrue(!empty($inCart));
+        // See abo is on cart page
+        $this->visit(url('pubdroit/checkout/cart'));
+        $this->see('Demande d\'abonnement');
 
-     /*   $response = $this->call('POST', '/admin/abo', $data);
+        // Test if the abo is in the cart
+        $inCart = \Cart::instance('abonnement')->search(['id' => (int)$abo->id]);
 
-        $this->seeInDatabase('abos', [
-            'title' => 'TestAbo',
-            'price' => '5000'
-        ]);*/
+        $this->assertTrue(!empty($inCart));
     }
 
+    public function testAddAboInCartAlreadyAbonnee()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        //make abo ansd user
+        $abo  = $make->makeAbo();
+        $user = $make->makeUser();
+
+        // add abo for the user
+        $abonnement = $make->makeAbonnement($abo,$user);
+        $make->abonnementFacture($abonnement);
+
+        // login user
+        $this->actingAs($user);
+
+        // add abo in cart
+        $this->visit(url('pubdroit'));
+        $this->press('addAbo_'.$abo->id);
+
+        // Test if the abo is not in the cart
+        $inCart = \Cart::instance('abonnement')->search(['id' => (int)$abo->id]);
+
+        $this->assertTrue(empty($inCart));
+    }
+
+    public function testBuyAbo()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        //make abo ansd user
+        $abo  = $make->makeAbo();
+        $user = $make->makeUser();
+
+        // login user
+        $this->actingAs($user);
+
+        // add abo in cart
+        $this->visit(url('pubdroit'));
+        $this->press('addAbo_'.$abo->id);
+        $this->seePageIs(url('pubdroit'));
+
+        // See abo is on cart page
+        $this->visit(url('pubdroit/checkout/resume'));
+        $this->see('Demande d\'abonnement');
+
+        $this->check('termsAndConditions');
+        $this->click('btn-invoice');
+
+        $this->seeInDatabase('abo_users', [
+            'abo_id'     => $abo->id,
+            'adresse_id' => $user->adresses->first()->id,
+        ]);
+
+    }
 }
