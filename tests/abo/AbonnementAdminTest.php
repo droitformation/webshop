@@ -34,12 +34,12 @@ class AbonnementAdminTest extends TestCase {
         $abo     = $make->makeAbo();
         $adresse = $make->user();
 
-        $this->visit(url('admin/abonnements/'.$abo->id));
+        $this->visit('admin/abonnements/'.$abo->id);
         $this->assertViewHas('abo');
 
         $this->click('addAbonne');
 
-        $this->seePageIs(url('admin/abonnement/create/'.$abo->id));
+        $this->seePageIs('admin/abonnement/create/'.$abo->id);
 
         $data = [
             'abo_id'         => $abo->id,
@@ -63,7 +63,7 @@ class AbonnementAdminTest extends TestCase {
         $make = new \tests\factories\ObjectFactory();
         $abo     = $make->makeAbo();
 
-        $this->visit(url('admin/factures/'.$abo->current_product->id));
+        $this->visit('admin/factures/'.$abo->current_product->id);
         $this->assertViewHas('factures');
     }
 

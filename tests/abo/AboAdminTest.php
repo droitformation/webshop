@@ -29,7 +29,7 @@ class AboAdminTest extends TestCase {
         $user->roles()->attach(1);
         $this->actingAs($user);
 
-        $this->visit(url('admin/abo'));
+        $this->visit('admin/abo');
         $this->assertViewHas('abos');
 
         $this->click('addAbo');
@@ -49,8 +49,8 @@ class AboAdminTest extends TestCase {
         $product = $make->product();
         $product = $make->addAttributesAbo($product);
 
-        $this->visit(url('admin/abo/create'));
-        $this->seePageIs(url('admin/abo/create'));
+        $this->visit('admin/abo/create');
+        $this->seePageIs('admin/abo/create');
 
         $data = [
             'title'       => 'TestAbo',

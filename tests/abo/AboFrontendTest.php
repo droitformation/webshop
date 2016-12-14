@@ -34,14 +34,14 @@ class AboFrontendTest extends TestCase {
         $this->actingAs($user);
 
         // add abo in cart
-        $this->visit(url('pubdroit'));
+        $this->visit('pubdroit');
 
         $this->press('addAbo_'.$abo->id);
 
-        $this->seePageIs(url('pubdroit'));
+        $this->seePageIs('pubdroit');
 
         // See abo is on cart page
-        $this->visit(url('pubdroit/checkout/cart'));
+        $this->visit('pubdroit/checkout/cart');
         $this->see('Demande d\'abonnement');
 
         // Test if the abo is in the cart
@@ -66,7 +66,7 @@ class AboFrontendTest extends TestCase {
         $this->actingAs($user);
 
         // add abo in cart
-        $this->visit(url('pubdroit'));
+        $this->visit('pubdroit');
         $this->press('addAbo_'.$abo->id);
 
         // Test if the abo is not in the cart
@@ -87,12 +87,12 @@ class AboFrontendTest extends TestCase {
         $this->actingAs($user);
 
         // add abo in cart
-        $this->visit(url('pubdroit'));
+        $this->visit('pubdroit');
         $this->press('addAbo_'.$abo->id);
-        $this->seePageIs(url('pubdroit'));
+        $this->seePageIs('pubdroit');
 
         // See abo is on cart page
-        $this->visit(url('pubdroit/checkout/resume'));
+        $this->visit('pubdroit/checkout/resume');
         $this->see('Demande d\'abonnement');
 
         $this->check('termsAndConditions');
