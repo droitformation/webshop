@@ -7,8 +7,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\jobs\SendAboConfirmation;
-use App\jobs\NotifyAdminNewAbo;
+use App\Jobs\SendAboConfirmation;
+use App\Jobs\NotifyAdminNewAbo;
 
 class EmailAboConfirmation
 {
