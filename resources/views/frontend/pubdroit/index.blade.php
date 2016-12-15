@@ -41,7 +41,13 @@
                                     <p><strong>Lieu: </strong>
                                     {{ $colloque->location ? $colloque->location->name : '' }}, {!! $colloque->location ? strip_tags($colloque->location->adresse) : '' !!}</p>
                                     {!! $colloque->remarque !!}
-                                    <p><a class="more-btn btn-sm" href="{{ url('pubdroit/colloque/'.$colloque->id) }}">Inscription</a></p>
+
+                                    @if($colloque->is_open)
+                                        <p><a class="more-btn btn-sm" href="{{ url('pubdroit/colloque/'.$colloque->id) }}">Inscription</a></p>
+                                    @else
+                                        <p class="text-danger text-right">COMPLET</p>
+                                    @endif
+
                                 </div>
                                 <div class="clearfix"></div>
 

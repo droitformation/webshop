@@ -48,6 +48,69 @@ class UserTest extends TestCase {
         ]);
     }
 
+    public function testCreateNewUser()
+    {
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $this->assertTrue(Auth::check());
+
+        $this->visit(url('admin/user/create'));
+
+        // Create new user
+        $this->type('Terry', 'first_name');
+        $this->type('Jonesy', 'last_name');
+        $this->type('terry.jonesy@domain.ch', 'email');
+        $this->type('123456', 'password');
+
+        $this->press('Envoyer');
+
+        $this->seeInDatabase('users', [
+            'first_name' => 'Terry',
+            'last_name' => 'Jonesy',
+            'email' => 'terry.jonesy@domain.ch'
+        ]);
+    }
+
+    public function testCrateDeletedUser()
+    {
+        $admin = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $admin->roles()->attach(1);
+        $this->actingAs($admin);
+
+        $user = factory(App\Droit\User\Entities\User::class,'user')->create([
+            'email' => 'terry.jonesy@domain.ch'
+        ]);
+
+        $this->visit(url('admin/user/'.$user->id));
+        // delete user
+        $this->press('deleteUser_'.$user->id);
+
+        $this->notSeeInDatabase('users', [
+            'id'         => $user->id,
+            'deleted_at' => null
+        ]);
+
+        $this->visit(url('admin/user/create'));
+
+        // Create new user
+        $this->type('Terry', 'first_name');
+        $this->type('Jonesy', 'last_name');
+        $this->type('terry.jonesy@domain.ch', 'email');
+        $this->type('123456', 'password');
+
+        $this->press('Envoyer');
+
+        $this->seeInDatabase('users', [
+            'first_name' => 'Terry',
+            'last_name'  => 'Jonesy',
+            'email'      => 'terry.jonesy@domain.ch'
+        ]);
+
+    }
+
     public function testNewAdresse()
     {
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();

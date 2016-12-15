@@ -389,7 +389,14 @@ $factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($fact
     ];
 });
 
-
+$factory->defineAs(App\Droit\User\Entities\User::class, 'user' ,function ($factory){
+    return [
+        'first_name' => 'Jane',
+        'last_name'  => 'Doe',
+        'email'      => 'jane.doe@gmail.com',
+        'password'   => bcrypt('jane2')
+    ];
+});
 
 $factory->define(App\Droit\Reminder\Entities\Reminder::class, function (Faker\Generator $faker) {
 

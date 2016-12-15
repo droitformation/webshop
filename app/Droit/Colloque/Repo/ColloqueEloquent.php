@@ -74,7 +74,6 @@ class ColloqueEloquent implements ColloqueInterface{
             'sujet'           => $data['sujet'],
             'remarques'       => $data['remarques'],
             'organisateur'    => $data['organisateur'],
-            'location_id'     => $data['location_id'],
             'adresse_id'      => (isset($data['adresse_id']) ? $data['adresse_id'] : 1),
             'start_at'        => $data['start_at'],
             'end_at'          => (isset($data['end_at']) && !empty($data['end_at']) ? $data['end_at'] : null),
@@ -124,6 +123,11 @@ class ColloqueEloquent implements ColloqueInterface{
         if(isset($data['centres']))
         {
             $colloque->centres()->sync($data['centres']);
+        }
+
+        if(isset($data['capacite']))
+        {
+            $colloque->capacite = $data['capacite'] > 0 ? $data['capacite'] : null;
         }
 
         return $colloque;

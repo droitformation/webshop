@@ -25,10 +25,11 @@ class OccurrenceEloquent implements OccurrenceInterface{
     public function create(array $data){
 
         $occurrence = $this->occurrence->create(array(
-            'colloque_id' => $data['colloque_id'],
-            'title'       => $data['title'],
-            'lieux_id'    => $data['lieux_id'],
-            'starting_at' => $data['starting_at']
+            'colloque_id'    => $data['colloque_id'],
+            'title'          => $data['title'],
+            'capacite_salle' => isset($data['capacite_salle']) ? $data['capacite_salle'] : null,
+            'lieux_id'       => $data['lieux_id'],
+            'starting_at'    => $data['starting_at']
         ));
 
         if( ! $occurrence )
@@ -54,6 +55,11 @@ class OccurrenceEloquent implements OccurrenceInterface{
         if(isset($data['full']))
         {
             $occurrence->full = $data['full'] > 0 ? 1 : null;
+        }
+
+        if(isset($data['capacite_salle']))
+        {
+            $occurrence->capacite_salle = $data['capacite_salle'] > 0 ? $data['capacite_salle'] : null;
         }
 
         $occurrence->save();

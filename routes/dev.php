@@ -55,11 +55,12 @@ Route::get('testing', function() {
 
     return $generator->factureOrder($order,$rappel);*/
 
-    $colloque = $colloques->find(39);
+    $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
+    $occurrence   = $occurrences->find(1);
 
-    $prices = $colloque->inscriptions->map(function ($item, $key) {
-        return $item->price;
-    })->pluck('id');
+    $inscriptions = $occurrence->colloque->inscriptions->map(function ($item, $key) {
+        return $item->id;
+    })->count();
 
     echo '<pre>';
     print_r($inscriptions);

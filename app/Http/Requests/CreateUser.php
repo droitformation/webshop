@@ -29,7 +29,7 @@ class CreateUser extends Request {
         return [
             'first_name' => 'required',
             'last_name'  => 'required',
-            'email'      => 'required|email|max:255|unique:users',
+			'email'      => 'required|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
             'password'   => 'required|min:6',
         ];
 	}

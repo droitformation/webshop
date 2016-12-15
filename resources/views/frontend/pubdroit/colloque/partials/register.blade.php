@@ -25,23 +25,24 @@
 
         <!-- Occurence if any -->
         @if(!$colloque->occurrences->isEmpty())
-        <div class='wrapper'>
-            <br/><h4>Merci de préciser</h4>
-            <?php $dates = $colloque->occurrences->pluck('starting_at')->unique(); ?>
+            <div class='wrapper'>
+                <br/><h4>Merci de préciser</h4>
 
-            @foreach($colloque->occurrences as $occurrence)
-                <input class="options occurrences" {{ !$occurrence->full && $occurrence->is_active ? 'required' : 'disabled' }} type="{{ $dates->count() > 1 ? 'checkbox' : 'radio' }}" id="occurrence_{{ $occurrence->id }}" name="occurrences[]" value="{{ $occurrence->id }}">
-                <label for="occurrence_{{ $occurrence->id }}">
-                    <div class='package'>
-                        <div class='name'>{{ $occurrence->title }} {{ $occurrence->full ? 'COMPLET' : '' }}</div>
-                        <div class='occurrence_date'>Date: {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}</div>
-                        <div class='occurrence_date occurrence_location'>{{ $occurrence->location->name }}</div>
-                    </div>
-                </label>
-            @endforeach
+                <?php $dates = $colloque->occurrences->pluck('starting_at')->unique(); ?>
 
-            <div class="clearfix"></div>
-        </div><hr/>
+                @foreach($colloque->occurrences as $occurrence)
+                    <input class="options occurrences" {{ (!$occurrence->full && $occurrence->is_active) || $occurrence->is_open ? 'required' : 'disabled' }} type="{{ $dates->count() > 1 ? 'checkbox' : 'radio' }}" id="occurrence_{{ $occurrence->id }}" name="occurrences[]" value="{{ $occurrence->id }}">
+                    <label for="occurrence_{{ $occurrence->id }}">
+                        <div class='package'>
+                            <div class='name'>{{ $occurrence->title }} {{ $occurrence->full || !$occurrence->is_open ? 'COMPLET' : '' }}</div>
+                            <div class='occurrence_date'>Date: {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}</div>
+                            <div class='occurrence_date occurrence_location'>{{ $occurrence->location->name }}</div>
+                        </div>
+                    </label>
+                @endforeach
+
+                <div class="clearfix"></div>
+            </div><hr/>
         @endif
 
         <!-- Options -->

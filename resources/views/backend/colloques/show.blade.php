@@ -73,6 +73,16 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="organisateur" class="col-sm-3 control-label">Capacité de la salle</label>
+                                    <div class="col-sm-2">
+                                        <input name="capacite" type="text" value="{{ $colloque->capacite }}" class="form-control form-required" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="help-block">Permet de fermer les inscription sur le site</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="organisateur" class="col-sm-3 control-label">Centres</label>
                                     <div class="col-sm-8">
                                         @if(!$organisateurs->isEmpty())

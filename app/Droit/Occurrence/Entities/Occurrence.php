@@ -11,11 +11,24 @@ class Occurrence extends Model{
 
     protected $dates = ['deleted_at','starting_at'];
 
-    protected $fillable = ['colloque_id','title','lieux_id','starting_at','full'];
+    protected $fillable = ['colloque_id','title','lieux_id','starting_at','full','capacite_salle'];
 
     public function getIsActiveAttribute()
     {
         return $this->starting_at >= \Carbon\Carbon::today() ? true : false;
+    }
+
+    public function getIsOpenAttribute()
+    {
+        $inscriptions = $this->colloque->inscriptions->map(function ($item, $key) {
+            return $item->id;
+        })->count();
+
+        if(!$this->capacite_salle){
+            return true;
+        }
+
+        return $this->capacite_salle > $inscriptions ? true : false;
     }
 
     public function colloque()
