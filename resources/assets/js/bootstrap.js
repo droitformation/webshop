@@ -12,6 +12,7 @@ require('vue-resource');
 
 import BootstrapVue from 'bootstrap-vue';
 
+
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -26,9 +27,8 @@ Vue.http.interceptors.push((request, next) => {
 
 Vue.http.options.root = location.protocol + "//" + location.host+"/";
 Vue.http.options.emulateJSON = true; // send as
-Vue.use(BootstrapVue);
 
-//import DatePicker from "vuejs-datepicker"
+Vue.use(BootstrapVue);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

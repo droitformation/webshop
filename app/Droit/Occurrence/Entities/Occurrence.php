@@ -40,4 +40,9 @@ class Occurrence extends Model{
     {
         return $this->belongsTo('App\Droit\Location\Entities\Location','lieux_id');
     }
+
+    public function prices()
+    {
+        return $this->belongsToMany('App\Droit\Price\Entities\Price','colloque_occurrence_prices','occurrence_id','price_id');
+    }
 }

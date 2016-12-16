@@ -119,17 +119,29 @@ class Colloque extends Model
         }
     }
 
+    public function getOccurrenceDisplayAttribute()
+    {
+        return $this->occurrences->mapWithKeys_v2(function ($occurrence) {
+            return [$occurrence->id => [
+                'id'     => $occurrence->id,
+                'title'  => $occurrence->title,
+                'start'  => $occurrence->starting_at->format('Y-m-d'),
+                'lieux'  => $occurrence->location->name,
+                'prices' => $occurrence->prices->pluck('id'),
+                'state'  => false,
+            ]];
+        });;
+    }
+
     public function getAnnexeAttribute()
     {
         $annexes = [];
 
-        if($this->bon)
-        {
+        if($this->bon) {
             $annexes[] = 'bon';
         }
 
-        if($this->facture)
-        {
+        if($this->facture) {
             $annexes[] = 'facture';
             $annexes[] = 'bv';
         }

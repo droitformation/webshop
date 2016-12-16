@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-import Multiselect from 'vue-multiselect'
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -20,6 +20,7 @@ Vue.component('rappel', require('./components/Rappel.vue'));
 Vue.component('organisateur', require('./components/Organisateur.vue'));
 Vue.component('endroit', require('./components/Endroit.vue'));
 Vue.component('jurisprudence', require('./components/Jurisprudence.vue'));
+Vue.component('occurrence', require('./components/Occurrence.vue'));
 
 const app = new Vue({
     el: '#appComponent'

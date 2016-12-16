@@ -124,6 +124,20 @@
                                     </div>
                                 </div>
 
+                                <legend>Conférences</legend>
+                                <?php
+                                echo '<pre>';
+                                print_r($colloque->occurrence_display);
+                                echo '</pre>';
+                                ?>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Multiples conférences</label>
+                                    <div class="col-sm-8">
+                                        <occurrence :locations="{{ $locations }}" :occurrences="{{ $colloque->occurrence_display }}"></occurrence>
+                                    </div>
+                                </div>
+
+
                             </fieldset>
 
                             <fieldset title="Dates">

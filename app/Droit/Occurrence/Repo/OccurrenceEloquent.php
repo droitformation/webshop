@@ -37,6 +37,12 @@ class OccurrenceEloquent implements OccurrenceInterface{
             return false;
         }
 
+        // prices
+        if(isset($data['prices']))
+        {
+            $occurrence->prices()->attach($data['prices']);
+        }
+
         return $occurrence;
 
     }
@@ -51,6 +57,12 @@ class OccurrenceEloquent implements OccurrenceInterface{
         }
 
         $occurrence->fill($data);
+
+        // prices
+        if(isset($data['prices']))
+        {
+            $occurrence->prices()->attach($data['prices']);
+        }
         
         if(isset($data['full']))
         {

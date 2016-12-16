@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "vue-multiselect": "^1.1.4",
-    "vuejs-datepicker": "^0.4.24"
+    "vuejs-datepicker": "^0.4.27"
   }
 }

@@ -58,12 +58,37 @@ Route::get('testing', function() {
     $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
     $occurrence   = $occurrences->find(1);
 
-    $inscriptions = $occurrence->colloque->inscriptions->map(function ($item, $key) {
+    $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $colloque   = $colloques->find(102);
+
+/*    $inscriptions = $occurrence->colloque->inscriptions->map(function ($item, $key) {
         return $item->id;
-    })->count();
+    })->count();*/
+
+    $occur = $colloque->occurrences->map(function ($occurrence, $key) {
+        return [
+            'id'     => $occurrence->id,
+            'title'  => $occurrence->title,
+            'start'  => $occurrence->starting_at->format('Y-m-d'),
+            'lieux'  => $occurrence->location->name,
+            'prices' => $occurrence->prices->pluck('id'),
+            'state'  => false,
+        ];
+    });
+
+    $keyed = $colloque->occurrences->mapWithKeys_v2(function ($occurrence) {
+        return [$occurrence->id => [
+            'id'     => $occurrence->id,
+            'title'  => $occurrence->title,
+            'start'  => $occurrence->starting_at->format('Y-m-d'),
+            'lieux'  => $occurrence->location->name,
+            'prices' => $occurrence->prices->pluck('id'),
+            'state'  => false,
+        ]];
+    });
 
     echo '<pre>';
-    print_r($inscriptions);
+    print_r($keyed);
     echo '</pre>';exit();
 
 /*
