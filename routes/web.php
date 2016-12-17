@@ -472,7 +472,9 @@ Route::group(['prefix' => 'vue'], function () {
 
     Route::post('categories','Api\CategorieController@index');
     Route::post('arrets','Api\ArretController@index');
-
+    Route::post('occurrence','Api\OccurrenceController@store');
+    Route::put('occurrence/{id}','Api\OccurrenceController@update');
+    Route::delete('occurrence/{id}','Api\OccurrenceController@destroy');
 });
 /*
 |--------------------------------------------------------------------------

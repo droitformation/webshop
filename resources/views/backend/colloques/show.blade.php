@@ -133,7 +133,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Multiples conférences</label>
                                     <div class="col-sm-8">
-                                        <occurrence :locations="{{ $locations }}" :occurrences="{{ $colloque->occurrence_display }}"></occurrence>
+                                        <occurrence :colloque="{{ $colloque->id }}" :locations="{{ $locations }}" :occurrences="{{ $colloque->occurrence_display }}"></occurrence>
                                     </div>
                                 </div>
 

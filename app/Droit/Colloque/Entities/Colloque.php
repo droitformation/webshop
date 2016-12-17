@@ -123,12 +123,15 @@ class Colloque extends Model
     {
         return $this->occurrences->mapWithKeys_v2(function ($occurrence) {
             return [$occurrence->id => [
-                'id'     => $occurrence->id,
-                'title'  => $occurrence->title,
-                'start'  => $occurrence->starting_at->format('Y-m-d'),
-                'lieux'  => $occurrence->location->name,
-                'prices' => $occurrence->prices->pluck('id'),
-                'state'  => false,
+                'id'             => $occurrence->id,
+                'colloque_id'    => $occurrence->colloque_id,
+                'title'          => $occurrence->title,
+                'starting_at'    => $occurrence->starting_at->format('Y-m-d'),
+                'lieux'          => $occurrence->location->name,
+                'lieux_id'       => $occurrence->lieux_id,
+                'prices'         => $occurrence->prices->pluck('id'),
+                'capacite_salle' => $occurrence->capacite_salle,
+                'state'          => false,
             ]];
         });;
     }

@@ -49,7 +49,7 @@ class OccurrenceEloquent implements OccurrenceInterface{
 
     public function update(array $data){
 
-        $occurrence = $this->occurrence->findOrFail($data['id']);
+        $occurrence = $this->occurrence->find($data['id']);
 
         if(!$occurrence)
         {
@@ -61,7 +61,7 @@ class OccurrenceEloquent implements OccurrenceInterface{
         // prices
         if(isset($data['prices']))
         {
-            $occurrence->prices()->attach($data['prices']);
+            $occurrence->prices()->sync($data['prices']);
         }
         
         if(isset($data['full']))
