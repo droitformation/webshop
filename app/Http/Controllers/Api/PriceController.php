@@ -51,7 +51,7 @@ class PriceController extends Controller {
     {
         $price = $this->price->find($id);
      
-        if($price->inscriptions->count > 0)
+        if($price->inscriptions->count() > 0)
         {
             return response('ERROR', 400);
         }
