@@ -52,6 +52,11 @@ class PriceEloquent implements PriceInterface{
 
         $price->fill($data);
 
+        if(isset($data['price']))
+        {
+            $price->price = $data['price'] * 100;
+        }
+
         $price->save();
 
         return $price;

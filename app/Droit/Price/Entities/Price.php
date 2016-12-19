@@ -18,4 +18,9 @@ class Price extends Model{
         return $money->format($price);
     }
 
+    public function inscriptions()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription');
+    }
+
 }

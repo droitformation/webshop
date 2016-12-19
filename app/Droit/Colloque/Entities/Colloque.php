@@ -130,10 +130,27 @@ class Colloque extends Model
                 'lieux'          => $occurrence->location->name,
                 'lieux_id'       => $occurrence->lieux_id,
                 'prices'         => $occurrence->prices->pluck('id'),
+                'prices_names'   => $occurrence->prices->implode('description', ', '),
                 'capacite_salle' => $occurrence->capacite_salle,
                 'state'          => false,
             ]];
-        });;
+        });
+    }
+
+    public function getPriceDisplayAttribute()
+    {
+        return $this->prices->mapWithKeys_v2(function ($price) {
+            return [$price->id => [
+                'id'             => $price->id,
+                'colloque_id'    => $price->colloque_id,
+                'description'    => $price->description,
+                'price'          => $price->price_cents,
+                'type'           => $price->type,
+                'remarque'       => $price->remarque,
+                'rang'           => $price->rang,
+                'state'          => false,
+            ]];
+        });
     }
 
     public function getAnnexeAttribute()

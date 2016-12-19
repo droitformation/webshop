@@ -124,32 +124,28 @@
                                     </div>
                                 </div>
 
-                                <legend>Conférences</legend>
-                                <?php
-                                echo '<pre>';
-                                print_r($colloque->occurrence_display);
-                                echo '</pre>';
-                                ?>
+                                <legend>Prix</legend>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Multiples conférences</label>
+                                    <label class="col-sm-3 control-label">Prix</label>
                                     <div class="col-sm-8">
-                                        <occurrence :colloque="{{ $colloque->id }}" :locations="{{ $locations }}" :occurrences="{{ $colloque->occurrence_display }}"></occurrence>
+                                        <price :prices="{{ $colloque->price_display }}" :colloque="{{ $colloque->id }}"></price>
                                     </div>
                                 </div>
 
+                                <legend>Conférences</legend>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Multiples conférences</label>
+                                    <div class="col-sm-8">
+                                        <occurrence :prices="{{ $colloque->prices }}" :colloque="{{ $colloque->id }}" :locations="{{ $locations }}" :occurrences="{{ $colloque->occurrence_display }}"></occurrence>
+                                    </div>
+                                </div>
 
                             </fieldset>
 
                             <fieldset title="Dates">
                                 <legend>Dates</legend>
                                 @include('backend.colloques.partials.dates')
-                            </fieldset>
-
-                            <fieldset title="Occurrence">
-
-                                <legend>Conférences</legend>
-                                @include('backend.colloques.partials.occurrences')
-
                             </fieldset>
 
                             <fieldset title="Prix">

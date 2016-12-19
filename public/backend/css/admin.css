@@ -1095,5 +1095,9 @@ input[type="checkbox"].rappel-input {
 }
 
 .form-group-item{
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+}
+
+.form-group-item label{
+    margin-bottom: 0;
 }

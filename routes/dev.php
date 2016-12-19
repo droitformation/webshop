@@ -42,7 +42,7 @@ Route::get('testing', function() {
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-
+    $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
 
 /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
@@ -59,11 +59,11 @@ Route::get('testing', function() {
     $occurrence   = $occurrences->find(1);
 
     $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $colloque   = $colloques->find(102);
+    $colloque   = $colloques->find(101);
 
 /*    $inscriptions = $occurrence->colloque->inscriptions->map(function ($item, $key) {
         return $item->id;
-    })->count();*/
+    })->count();
 
     $occur = $colloque->occurrences->map(function ($occurrence, $key) {
         return [
@@ -86,9 +86,12 @@ Route::get('testing', function() {
             'state'  => false,
         ]];
     });
+    */
+
+    $price = $colloque->prices->first();
 
     echo '<pre>';
-    print_r($keyed);
+    print_r($colloque->price_display);
     echo '</pre>';exit();
 
 /*
