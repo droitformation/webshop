@@ -141,6 +141,15 @@
                                     </div>
                                 </div>
 
+                                <legend>Options</legend>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Options</label>
+                                    <div class="col-sm-8">
+                                        <option-groupe :options="{{ $colloque->option_display }}" :colloque="{{ $colloque->id }}"></option-groupe>
+                                    </div>
+                                </div>
+
                             </fieldset>
 
                             <fieldset title="Dates">
@@ -148,16 +157,9 @@
                                 @include('backend.colloques.partials.dates')
                             </fieldset>
 
-                            <fieldset title="Prix">
-
-                                <legend>Prix</legend>
-                                @include('backend.colloques.partials.prices',['type' => 'public', 'title' => 'Prix public'])
-                                @include('backend.colloques.partials.prices',['type' => 'admin' , 'title' => 'Prix admin'])
-
-                            </fieldset>
                             <fieldset title="Options">
 
-                                <legend>Options</legend>
+
                                 @include('backend.colloques.partials.options')
 
                             </fieldset>

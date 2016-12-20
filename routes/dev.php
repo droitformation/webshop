@@ -59,39 +59,15 @@ Route::get('testing', function() {
     $occurrence   = $occurrences->find(1);
 
     $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $colloque   = $colloques->find(101);
+    $colloque   = $colloques->find(102);
 
-/*    $inscriptions = $occurrence->colloque->inscriptions->map(function ($item, $key) {
-        return $item->id;
-    })->count();
-
-    $occur = $colloque->occurrences->map(function ($occurrence, $key) {
-        return [
-            'id'     => $occurrence->id,
-            'title'  => $occurrence->title,
-            'start'  => $occurrence->starting_at->format('Y-m-d'),
-            'lieux'  => $occurrence->location->name,
-            'prices' => $occurrence->prices->pluck('id'),
-            'state'  => false,
-        ];
-    });
-
-    $keyed = $colloque->occurrences->mapWithKeys_v2(function ($occurrence) {
-        return [$occurrence->id => [
-            'id'     => $occurrence->id,
-            'title'  => $occurrence->title,
-            'start'  => $occurrence->starting_at->format('Y-m-d'),
-            'lieux'  => $occurrence->location->name,
-            'prices' => $occurrence->prices->pluck('id'),
-            'state'  => false,
-        ]];
-    });
-    */
 
     $price = $colloque->prices->first();
 
+    $option = $colloque->options->first();
+
     echo '<pre>';
-    print_r($colloque->price_display);
+    print_r($colloque->option_display);
     echo '</pre>';exit();
 
 /*

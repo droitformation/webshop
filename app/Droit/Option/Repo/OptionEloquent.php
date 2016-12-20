@@ -6,10 +6,12 @@ use App\Droit\Option\Entities\Option as M;
 class OptionEloquent implements OptionInterface{
 
     protected $option;
+    protected $helper;
 
     public function __construct(M $option)
     {
         $this->option = $option;
+        $this->helper = new \App\Droit\Helper\Helper();
     }
 
     public function getAll(){
@@ -35,6 +37,18 @@ class OptionEloquent implements OptionInterface{
             return false;
         }
 
+        if(isset($data['groupe']))
+        {
+            foreach($data['groupe'] as $choice)
+            {
+                $option->groupe()->create([
+                    'text'        => $choice['text'],
+                    'colloque_id' => $data['colloque_id'],
+                    'option_id'   => $option->id
+                ]);
+            }
+        }
+
         return $option;
 
     }
@@ -43,9 +57,23 @@ class OptionEloquent implements OptionInterface{
 
         $option = $this->option->findOrFail($data['id']);
 
-        if( ! $option )
+        if(!$option)
         {
             return false;
+        }
+
+        if(isset($data['groupe']))
+        {
+            $option->groupe()->delete();
+
+            foreach($data['groupe'] as $choice)
+            {
+                $option->groupe()->create([
+                    'text'        => $choice['text'],
+                    'colloque_id' => $data['colloque_id'],
+                    'option_id'   => $option->id
+                ]);
+            }
         }
 
         $option->fill($data);
@@ -57,8 +85,8 @@ class OptionEloquent implements OptionInterface{
     public function delete($id){
 
         $option = $this->option->find($id);
+        $option->groupe()->delete();
 
         return $option->delete();
-
     }
 }

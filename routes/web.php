@@ -479,6 +479,8 @@ Route::group(['prefix' => 'vue'], function () {
     Route::post('price','Api\PriceController@store');
     Route::put('price/{id}','Api\PriceController@update');
     Route::delete('price/{id}','Api\PriceController@destroy');
+
+    Route::post('option','Api\OptionController@store');
 });
 /*
 |--------------------------------------------------------------------------

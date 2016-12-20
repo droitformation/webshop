@@ -104,9 +104,7 @@
     .price-list dd {
         margin-left: 100px;
     }
-    .admin{
-        background:#f5f5f5;
-    }
+
 </style>
 <script>
 
@@ -132,18 +130,10 @@ export default {
     },
     methods: {
         getPrices : function(){
-           this.list = this.prices;
-        },
-        ajouterPrice:function(){
-
-            this.$http.post('/vue/price', { price : this.nouveau }).then((response) => {
-                this.updatePrices(response.body.prices);
-                this.resetform();
-            }, (response) => {}).bind(this);
-
+             this.list = _.orderBy(this.prices, ['type'],['desc']);
         },
         editPrice : function(price){
-            this.list[price.id].state = true;
+            price.state = true;
         },
         ajouter:function(){
             this.add = true;
@@ -159,26 +149,28 @@ export default {
                 colloque_id: this.colloque,
             };
         },
-        updatePrices : function(prices){
-            this.list = this.prices;
+        ajouterPrice:function(){
+
+            this.$http.post('/vue/price', { price : this.nouveau }).then((response) => {
+                this.list = _.orderBy(response.body.prices, ['type'],['desc']);
+                this.resetform();
+            }, (response) => {}).bind(this);
         },
         savePrice : function(price){
 
-            this.list[price.id].state = false;
-            var model = this.list[price.id];
+            //var model = _.find(this.prices, function(model) { return model.id == price.id });
 
-            this.$http.post('/vue/price/' + model.id, { model, '_method' : 'put'  }).then((response) => {
-                this.updatePrices(response.body.prices);
+            this.$http.post('/vue/price/' + price.id, { price, '_method' : 'put' }).then((response) => {
+               this.list = _.orderBy(response.body.prices, ['type'],['desc']);
             }, (response) => {}).bind(this);
 
         },
         deletePrice :function(price){
 
-            this.list[price.id].state = false;
-            var model = this.list[price.id];
+            //var model = _.find(this.prices, function(model) { return model.id == price.id });
 
-            this.$http.post('/vue/price/' + model.id, { '_method' : 'DELETE' }).then((response) => {
-                this.updatePrices(response.body.prices);
+            this.$http.post('/vue/price/' + price.id, { '_method' : 'DELETE' }).then((response) => {
+                this.list = _.orderBy(response.body.prices, ['type'],['desc']);
             }, (response) => {}).bind(this);
         }
     }

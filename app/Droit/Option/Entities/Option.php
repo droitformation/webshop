@@ -11,7 +11,7 @@ class Option extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = array('colloque_id','title','type');
+    protected $fillable = ['colloque_id','title','type'];
 
     public function colloque()
     {
@@ -21,6 +21,11 @@ class Option extends Model{
     public function groupe()
     {
         return $this->hasMany('App\Droit\Option\Entities\OptionGroupe','option_id')->groupBy('id');
+    }
+
+    public function inscriptions()
+    {
+        return $this->belongsToMany('App\Droit\Inscription\Entities\Inscription' , 'colloque_option_users', 'option_id', 'inscription_id');
     }
 
     public function groupe_inscription()

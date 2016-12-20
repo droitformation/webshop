@@ -34,7 +34,7 @@ class PriceController extends Controller {
      */
     public function update($id,Request $request)
     {
-        $data = $request->input('model');
+        $data = $request->input('price');
 
         $price    = $this->price->update($data);
         $colloque = $this->colloque->find($data['colloque_id']);

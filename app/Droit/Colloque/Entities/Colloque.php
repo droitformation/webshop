@@ -139,7 +139,7 @@ class Colloque extends Model
 
     public function getPriceDisplayAttribute()
     {
-        return $this->prices->mapWithKeys_v2(function ($price) {
+        return $this->prices->groupBy('type')->flatten(1)->mapWithKeys_v2(function ($price) {
             return [$price->id => [
                 'id'             => $price->id,
                 'colloque_id'    => $price->colloque_id,
@@ -149,6 +149,20 @@ class Colloque extends Model
                 'remarque'       => $price->remarque,
                 'rang'           => $price->rang,
                 'state'          => false,
+            ]];
+        });
+    }
+
+    public function getOptionDisplayAttribute()
+    {
+        return $this->options->mapWithKeys_v2(function ($option) {
+            return [$option->id => [
+                'id'          => $option->id,
+                'colloque_id' => $option->colloque_id,
+                'title'       => $option->title,
+                'type'        => $option->type,
+                'groupe'      => $option->groupe->mapWithKeys(function ($item) {return [$item['id'] => ['text' => $item['text']]];}),
+                'state'       => false,
             ]];
         });
     }

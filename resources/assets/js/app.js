@@ -22,6 +22,7 @@ Vue.component('endroit', require('./components/Endroit.vue'));
 Vue.component('jurisprudence', require('./components/Jurisprudence.vue'));
 Vue.component('occurrence', require('./components/Occurrence.vue'));
 Vue.component('price', require('./components/Price.vue'));
+Vue.component('option-groupe', require('./components/OptionGroupe.vue'));
 
 const app = new Vue({
     el: '#appComponent'
