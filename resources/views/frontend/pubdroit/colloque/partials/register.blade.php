@@ -47,50 +47,64 @@
         @endif
 
         <!-- Options -->
+        <div class="options-list">
         <?php $types = $colloque->options->groupBy('type'); ?>
-        @if(!$types->isEmpty())
-            @foreach($types as $type => $options)
+            @if(!$types->isEmpty())
+                @foreach($types as $type => $options)
 
-                @if($type == 'checkbox')
-
-                    <br/><h4>Merci de préciser &nbsp;<small class="text-muted">(facultatif)</small></h4>
-                    <?php $check = 'checkbox'; ?>
-                    <div class='wrapper'>
-                        @foreach($options as $option)
-                            <input class="options" type="{{ $check }}" id="option_{{ $option->id }}" name="options[]" value="{{ $option->id }}">
-                            <label for="option_{{ $option->id }}">
-                                <div class='package'>
-                                    <div class='name option_name'>{{ $option->title }}</div>
-                                </div>
-                            </label>
-                        @endforeach
-                        <div class="clearfix"></div>
-                    </div>
-
-                @else
-
-                    <br/><h4>Merci de préciser</h4>
-                    <?php $check = 'radio'; $titre =  'Options à choix'; ?>
-                    @foreach($options as $option)
+                    @if($type == 'checkbox')
+                        <h4>Merci de préciser &nbsp;<small class="text-muted">(facultatif)</small></h4>
+                        <?php $check = 'checkbox'; ?>
                         <div class='wrapper'>
-                            <p>{{ $option->title }} &nbsp;<div class="errorTxt"></div></p>
-
-                            @foreach($option->groupe as $group)
-                                <input class="options" type="{{ $check }}" required id="group_{{ $group->id }}" name="groupes[{{ $option->id }}]" value="{{ $group->id }}">
-                                <label for="group_{{ $group->id }}">
+                            @foreach($options as $option)
+                                <input class="options" type="{{ $check }}" id="option_{{ $option->id }}" name="options[]" value="{{ $option->id }}">
+                                <label for="option_{{ $option->id }}">
                                     <div class='package'>
-                                        <div class='name option_name'>{{ $group->text }}</div>
+                                        <div class='name option_name'>{{ $option->title }}</div>
                                     </div>
                                 </label>
                             @endforeach
                             <div class="clearfix"></div>
                         </div>
-                    @endforeach
+                    @endif
+                    @if($type == 'text')
+                        <h4>Merci de préciser</h4>
+                        <div class='wrapper'>
+                            @foreach($options as $option)
+                                <label for="option_{{ $option->id }}">
+                                    <div class='package'>
+                                        <div class='name option_name'>{{ $option->title }}</div>
+                                    </div>
+                                </label>
+                                <textarea class="form-control" id="option_{{ $option->id }}" name="options[][{{ $option->id }}]"></textarea>
+                            @endforeach
+                            <div class="clearfix"></div>
+                        </div>
+                    @endif
+                    @if($type == 'choix')
+                        <h4>Merci de préciser</h4>
+                        <?php $check = 'radio'; $titre =  'Options à choix'; ?>
+                        @foreach($options as $option)
+                            <div class='wrapper'>
+                                <p>{{ $option->title }} &nbsp;<div class="errorTxt"></div></p>
 
-                @endif
+                                @foreach($option->groupe as $group)
+                                    <input class="options" type="{{ $check }}" required id="group_{{ $group->id }}" name="groupes[{{ $option->id }}]" value="{{ $group->id }}">
+                                    <label for="group_{{ $group->id }}">
+                                        <div class='package'>
+                                            <div class='name option_name'>{{ $group->text }}</div>
+                                        </div>
+                                    </label>
+                                @endforeach
+                                <div class="clearfix"></div>
+                            </div>
+                        @endforeach
+                    @endif
 
-            @endforeach
-        @endif
+                @endforeach
+            @endif
+        </div>
+
     </div>
 
     <input name="user_id" value="{{ Auth::user()->id }}" type="hidden">

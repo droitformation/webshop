@@ -185,6 +185,10 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionCreateRequest $request)
     {
+
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';exit();
         $type     = $request->input('type');
         $colloque = $request->input('colloque_id');
 
@@ -228,7 +232,7 @@ class InscriptionController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function generate($id)
+    public function regenerate($id)
     {
         $inscription = $this->inscription->find($id);
 
@@ -246,6 +250,23 @@ class InscriptionController extends Controller
         alert()->success('Les documents ont été mis à jour');
 
         return redirect()->back();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function generate(Request $request)
+    {
+        $inscription = $this->inscription->find($request->input('id'));
+
+        $model = $inscription->group_id ? $inscription->groupe : $inscription;
+
+        $this->register->makeDocuments($model, true);
+
+        return ['link' => $model->doc_facture];
     }
 
     /**
@@ -424,6 +445,15 @@ class InscriptionController extends Controller
         }
 
         echo 'ok';
+    }
+
+    public function test()
+    {
+        $colloques = $this->colloque->getAll();
+        $colloque  = $this->colloque->find(102);
+        $user      = $this->user->find(710);
+        
+        return view('backend.inscriptions.test')->with(['colloques' => $colloques, 'user' => $user, 'colloque' => $colloque]);
     }
 
 }

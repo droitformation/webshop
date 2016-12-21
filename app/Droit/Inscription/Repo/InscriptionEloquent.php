@@ -3,6 +3,7 @@
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Entities\Inscription as M;
 use Carbon\Carbon;
+use FontLib\Table\Type\kern;
 
 class InscriptionEloquent implements InscriptionInterface{
 
@@ -208,7 +209,14 @@ class InscriptionEloquent implements InscriptionInterface{
         {
             foreach($data['options'] as $option)
             {
-                $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);
+                if(is_array($option))
+                {
+                    $id = key($option);
+                    $inscription->options()->attach($id, ['inscription_id' => $inscription->id, 'reponse' => $option[$id]]);
+                }
+                else{
+                    $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);
+                }
             }
         }
 
@@ -288,7 +296,14 @@ class InscriptionEloquent implements InscriptionInterface{
         {
             foreach($data['options'] as $option)
             {
-                $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);
+                if(is_array($option))
+                {
+                    $id = key($option);
+                    $inscription->options()->attach($id, ['inscription_id' => $inscription->id, 'reponse' => $option[$id]]);
+                }
+                else{
+                    $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);
+                }
             }
         }
 

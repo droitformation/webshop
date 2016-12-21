@@ -18,6 +18,17 @@
         @endforeach
     @endif
 
+    @if($input == 'text')
+        @foreach($options as $index => $option)
+            <div class="form-group type-choix">
+                @foreach($options as $option)
+                    <label>{{ $option->title }}</label>
+                    <textarea class="form-control" class="text-input" name="options[0][{{ $option->id }}][]"></textarea>
+                @endforeach
+            </div>
+        @endforeach
+    @endif
+
     <!-- Options radio -->
     @if($input == 'choix')
         @foreach($options as $option)

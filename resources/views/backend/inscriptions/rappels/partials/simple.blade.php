@@ -5,7 +5,11 @@
     </td>
     <td>{{ $inscription->price->price_cents }} CHF</td>
     <td>
-        <a target="_blank" href="{{ $inscription->doc_facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
+        @if($inscription->doc_facture)
+            <a target="_blank" href="{{ $inscription->doc_facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
+        @else
+            <generate path="inscription" order="{{ $inscription->id }}"></generate>
+        @endif
     </td>
     <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
     <td>

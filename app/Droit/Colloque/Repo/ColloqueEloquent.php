@@ -79,6 +79,7 @@ class ColloqueEloquent implements ColloqueInterface{
             'end_at'          => (isset($data['end_at']) && !empty($data['end_at']) ? $data['end_at'] : null),
             'registration_at' => $data['registration_at'],
             'active_at'       => (isset($data['active_at']) ? $data['active_at'] : null),
+            'visible'         => null,
             'created_at'      => \Carbon\Carbon::now(),
             'updated_at'      => \Carbon\Carbon::now()
         ));

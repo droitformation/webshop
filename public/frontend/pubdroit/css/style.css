@@ -1435,6 +1435,16 @@ a.navbar-btn.navbar-register:focus{
     padding-left: 20px;
 }
 
+.options-list h4{
+    margin-top: 10px;
+}
+
+.options-list textarea{
+    border: 1px solid #b01d22;
+    border-radius: 4px;
+    color: #333;
+}
+
 .calltoaction{
     width: 100%;
     padding: 5px 0;

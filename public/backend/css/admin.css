@@ -253,6 +253,15 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     position: relative;
 }
 
+.list-option-title{
+    background: #f5f5f5 none repeat scroll 0 0;
+    border: 1px solid #f1f1f1;
+    font-size: 14px;
+    margin: 0 0 8px;
+    padding: 3px 5px;
+    text-transform: uppercase;
+}
+
 #accordion{
     margin-bottom: 20px;
 }
@@ -1127,4 +1136,30 @@ input[type="checkbox"].rappel-input {
 
 .form-group-item label{
     margin-bottom: 0;
+}
+
+/*
+    Style inscription multiple vue
+*/
+
+.inscription-item {
+    background: #f7f7f7 none repeat scroll 0 0;
+    float: left;
+    margin: 5px;
+    min-width: 300px;
+    padding: 8px;
+    position: relative;
+    width: 24%;
+}
+
+.inscription-item-choix{
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    margin-bottom: 3px;
+    padding: 3px 5px;
+}
+
+.inscription-item-choix label{
+    margin-bottom: 0;
+    display: block;
 }

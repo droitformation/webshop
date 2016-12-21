@@ -231,10 +231,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::match(['get', 'post'], 'inscription/colloque/{id}', 'Backend\Colloque\InscriptionController@colloque');
 
+    Route::get('inscription/test', 'Backend\Colloque\InscriptionController@test');// tests routes
+
     Route::get('inscription/desinscription/{id}', 'Backend\Colloque\InscriptionController@desinscription');
     Route::get('inscription/create/{id?}', 'Backend\Colloque\InscriptionController@create');
     Route::get('inscription/add/{group_id}', 'Backend\Colloque\InscriptionController@add');
-    Route::get('inscription/generate/{id}', 'Backend\Colloque\InscriptionController@generate');
+    Route::get('inscription/regenerate/{id}', 'Backend\Colloque\InscriptionController@regenerate');
+    Route::post('inscription/generate', 'Backend\Colloque\InscriptionController@generate');
     Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
     Route::get('inscription/groupe/{id}', 'Backend\Colloque\InscriptionController@groupe');
     Route::post('inscription/destroygroup/{id}', 'Backend\Colloque\InscriptionController@destroygroup');
@@ -481,6 +484,9 @@ Route::group(['prefix' => 'vue'], function () {
     Route::delete('price/{id}','Api\PriceController@destroy');
 
     Route::post('option','Api\OptionController@store');
+    Route::put('option/{id}','Api\OptionController@update');
+    Route::delete('option/{id}','Api\OptionController@destroy');
+
 });
 /*
 |--------------------------------------------------------------------------

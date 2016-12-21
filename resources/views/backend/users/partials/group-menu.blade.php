@@ -26,7 +26,7 @@
                 <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#editGroup_{{ $group->id }}">Changer le détenteur</a>
                 <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#addToGroup_{{ $group->id }}">Ajouter un participant</a>
                 @if(!empty($group->colloque->annexe))
-                    <a href="{{ url('admin/inscription/generate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
+                    <a href="{{ url('admin/inscription/regenerate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
                 @endif
                 <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscriptionGroup_{{ $group->id }}">Envoyer l'inscription</button>
             </div>

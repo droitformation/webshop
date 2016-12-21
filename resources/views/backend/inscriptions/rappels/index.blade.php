@@ -52,7 +52,7 @@
                                 <th class="col-md-5">Rappels</th>
                             </tr>
                             </thead>
-                            <tbody class="selects">
+                            <tbody class="selects" id="appComponent">
 
                                 @if(!$inscriptions->isEmpty())
                                     @foreach($inscriptions as $inscription)

@@ -155,12 +155,15 @@ class Colloque extends Model
 
     public function getOptionDisplayAttribute()
     {
-        return $this->options->mapWithKeys_v2(function ($option) {
+        $choix = ['checkbox' => 'Case à cocher', 'choix' => 'Choix multiple', 'text' => 'Texte'];
+        
+        return $this->options->mapWithKeys_v2(function ($option) use ($choix) {
             return [$option->id => [
                 'id'          => $option->id,
                 'colloque_id' => $option->colloque_id,
                 'title'       => $option->title,
                 'type'        => $option->type,
+                'type_name'   => isset($choix[$option->type]) ? $choix[$option->type] : '',
                 'groupe'      => $option->groupe->mapWithKeys(function ($item) {return [$item['id'] => ['text' => $item['text']]];}),
                 'state'       => false,
             ]];

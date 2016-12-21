@@ -33,26 +33,13 @@
 
         <ul class="list-group">
             <li v-for="option in list" :class="'list-group-item ' + option.type">
-
+                <h4 class="list-option-title">{{ option.type_name }}</h4>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-10">
                         <label><strong>Titre</strong></label>
                         <p v-if="!option.state">{{ option.title }}</p>
                         <div v-if="option.state">
                             <input class="form-control" name="title" type="text" v-model="option.title" v-bind:value="option.title">
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div v-if="option.groupe.length != 0">
-                            <label><strong>Choix</strong></label>
-                            <p v-if="!option.state" v-for="groupe in option.groupe">{{ groupe.text }}</p>
-
-                            <div v-if="option.state">
-                                <p v-for="groupe in option.groupe">
-                                    <input class="form-control" :value="groupe.text" v-model="groupe.text">
-                                </p>
-                                <a class="btn btn-xs btn-info" @click="addGroupe(option)"><i class="fa fa-plus"></i></a>
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-2 text-right">
@@ -63,7 +50,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" v-if="option.groupe.length != 0">
+                    <div class="col-md-10">
+                        <label><strong>Choix</strong></label>
+                        <p v-if="!option.state" v-for="groupe in option.groupe">{{ groupe.text }}</p>
 
+                        <div class="list-option-groupe" v-if="option.state">
+                            <p v-for="groupe in option.groupe"><input class="form-control" :value="groupe.text" v-model="groupe.text"></p>
+                            <a class="btn btn-xs btn-info" @click="addGroupe(option)"><i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
 
@@ -81,6 +78,13 @@
     }
     .list-group-item {
         padding: 8px 15px 8px 15px;
+    }
+    .list-group-item label{
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .list-option-groupe p{
+           margin-bottom: 5px;
     }
     .list-group-option{
         margin-top:10px;
@@ -120,7 +124,8 @@ export default {
         },
         selectType : function(){
 
-            if(this.nouveau.type == 'choix'){
+            if(this.nouveau.type == 'choix')
+            {
                 this.nouveau.groupe.push({text: ''});
             }
             else{

@@ -13,6 +13,7 @@ $( function() {
 
         var length       = $('.field_clone').length;
         var $options     = clone.find('.option-input');
+        var $texts       = clone.find('.text-input');
         var $occurrences = clone.find('.occurrence-input');
         var $radios      = clone.find('.group-input');
 
@@ -25,6 +26,12 @@ $( function() {
         $options.each(function(){
             var oname = $(this).attr('name');
             var oname = oname.replace('options[0]', 'options[' + length + ']');
+            $(this).attr('name', oname);
+        });
+
+        $texts.each(function(){
+            var oname = $(this).attr('name');
+            var oname = oname.replace('options[0][]', 'options[' + length + '][]');
             $(this).attr('name', oname);
         });
 

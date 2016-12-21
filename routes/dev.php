@@ -44,32 +44,49 @@ Route::get('testing', function() {
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
 
-/*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
-    $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $orders = $model->getLast(1);
-    $rappel = $rappel_model->find(27);
-    $order  = $orders->find(3263);
-
-    $generator->stream = true;
-    $generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
-
-    return $generator->factureOrder($order,$rappel);*/
-
     $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
     $occurrence   = $occurrences->find(1);
 
     $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     $colloque   = $colloques->find(102);
 
-
     $price = $colloque->prices->first();
-
     $option = $colloque->options->first();
+
+    $options = [
+        0 => 156,
+        1 => [146 => 'sfasfaf']
+    ];
+    $inscription = 1;
+    foreach($options as $option)
+    {
+        if(is_array($option))
+        {
+            $id    = key($option);
+            $array = ['inscription_id' => $inscription, 'reponse' => $option[$id]];
+
+            echo '<pre>';
+            print_r($id);
+            print_r($array);
+            echo '</pre>';
+        }
+    }
 
     echo '<pre>';
     print_r($colloque->option_display);
     echo '</pre>';exit();
 
+
+    /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
+        $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $orders = $model->getLast(1);
+        $rappel = $rappel_model->find(27);
+        $order  = $orders->find(3263);
+
+        $generator->stream = true;
+        $generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+
+        return $generator->factureOrder($order,$rappel);*/
 /*
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
