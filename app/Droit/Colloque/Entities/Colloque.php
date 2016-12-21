@@ -164,7 +164,7 @@ class Colloque extends Model
                 'title'       => $option->title,
                 'type'        => $option->type,
                 'type_name'   => isset($choix[$option->type]) ? $choix[$option->type] : '',
-                'groupe'      => $option->groupe->mapWithKeys(function ($item) {return [$item['id'] => ['text' => $item['text']]];}),
+                'groupe'      => $option->groupe->mapWithKeys(function ($item) {return [$item['id'] => [ 'text' => $item['text'], 'id' => $item['id'] ]];}),
                 'state'       => false,
             ]];
         });

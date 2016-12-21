@@ -52,25 +52,7 @@ Route::get('testing', function() {
 
     $price = $colloque->prices->first();
     $option = $colloque->options->first();
-
-    $options = [
-        0 => 156,
-        1 => [146 => 'sfasfaf']
-    ];
-    $inscription = 1;
-    foreach($options as $option)
-    {
-        if(is_array($option))
-        {
-            $id    = key($option);
-            $array = ['inscription_id' => $inscription, 'reponse' => $option[$id]];
-
-            echo '<pre>';
-            print_r($id);
-            print_r($array);
-            echo '</pre>';
-        }
-    }
+    
 
     echo '<pre>';
     print_r($colloque->option_display);

@@ -27,7 +27,7 @@ Vue.http.interceptors.push((request, next) => {
 
 Vue.http.options.root = location.protocol + "//" + location.host+"/";
 Vue.http.options.emulateJSON = true; // send as
-
+Vue.config.devtools = true;
 Vue.use(BootstrapVue);
 
 /**

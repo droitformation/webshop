@@ -19,7 +19,7 @@
                     <div class="col-md-8">
                         <input type="text" class="form-control option-title" name="title" placeholder="Titre de l'option" v-model="nouveau.title">
 
-                        <div class="list-group-option" v-if="nouveau.groupe.length != 0">
+                        <div class="list-group-option" v-if="nouveau.type == 'choix' &&  nouveau.groupe.length != 0">
                             <p v-for="groupe in nouveau.groupe">
                                 <input class="form-control" :value="groupe.text" v-model="groupe.text" placeholder="Choix">
                             </p>
@@ -56,7 +56,9 @@
                         <p v-if="!option.state" v-for="groupe in option.groupe">{{ groupe.text }}</p>
 
                         <div class="list-option-groupe" v-if="option.state">
-                            <p v-for="groupe in option.groupe"><input class="form-control" :value="groupe.text" v-model="groupe.text"></p>
+                            <p v-for="groupe in option.groupe">
+                                <input class="form-control" :value="groupe.text" v-model="groupe.text">
+                            </p>
                             <a class="btn btn-xs btn-info" @click="addGroupe(option)"><i class="fa fa-plus"></i></a>
                         </div>
                     </div>
@@ -126,7 +128,7 @@ export default {
 
             if(this.nouveau.type == 'choix')
             {
-                this.nouveau.groupe.push({text: ''});
+                this.nouveau.groupe.push({ text: ''});
             }
             else{
                 this.nouveau.groupe = [];
@@ -142,7 +144,7 @@ export default {
             this.nouveau.groupe.push({text: ''});
         },
         addGroupe: function(option) {
-            option.groupe.push({text: ''});
+            option.groupe.push({ text: ''});
         },
         resetform :function(){
             this.add = false;
@@ -165,6 +167,7 @@ export default {
         saveOption : function(option){
 
             this.$http.post('/vue/option/' + option.id, { option, '_method' : 'put' }).then((response) => {
+               console.log(response.body.options);
                this.list = _.orderBy(response.body.options, ['type'],['desc']);
             }, (response) => {}).bind(this);
 

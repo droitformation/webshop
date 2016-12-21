@@ -1,6 +1,7 @@
 <template>
     <div>
 
+        <p><a @click="addInscription" class="btn btn-sm btn-info"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
         <fieldset class="inscription-item" v-for="inscription in inscriptions">
 
             <div class="form-group">
@@ -26,20 +27,20 @@
             <div class="form-group">
                 <h4>Options</h4>
 
-                <div v-for="option in list_options">
+                <div v-for="(option,index) in list_options">
+
+                    <label><input type="checkbox" v-bind:value="option.id" v-model="inscription.options"> {{ option.title }}</label>
 
                     <div v-if="option.type == 'checkbox'" class="inscription-item-choix">
-                        <label>
-                            <input type="checkbox" v-bind:value="option.id" v-model="inscription.options"> {{ option.title }}
-                        </label>
+                        <label><input type="checkbox" v-bind:value="option.id" v-model="inscription.options"> {{ option.title }}</label>
                     </div>
 
                     <div v-if="option.type == 'choix' && option.groupe.length != 0">
                         <h4>Choix</h4>
                         <div class="inscription-item-choix">
                             <p><strong>{{ option.title }}</strong></p>
-                            <label v-for="(groupe,index) in option.groupe">
-                                <input type="radio" v-bind:value="index" v-model="inscription.options"> {{ groupe.text }}
+                            <label v-for="groupe in option.groupe">
+                                <input type="radio" v-bind:value="groupe.id" v-model="inscription.options[index]"> {{ groupe.text }}
                             </label>
                         </div>
                     </div>
@@ -47,13 +48,14 @@
                     <div v-if="option.type == 'text'" class="inscription-item-choix">
                         <p><strong>{{ option.title }}</strong></p>
                         <label>
-                            <textarea class="form-control" v-bind:value="option.id" v-model="inscription.options"></textarea>
+                            <textarea class="form-control" v-model="inscription.options"></textarea>
                         </label>
                     </div>
 
                 </div>
 
             </div>
+            {{ inscriptions }}
         </fieldset>
 
     </div>
@@ -76,7 +78,7 @@
                         participant: '',
                         price_id: '',
                         occurrences: [],
-                        options: null,
+                        options:[],
                         groupes: [],
                         type: 'multiple'
                     }
@@ -90,7 +92,20 @@
             getData : function(){
                 this.list_prices = this.prices;
                 this.list_occurrences = this.occurrences;
-                this.list_options = this.options;
+
+                this.list_options = _.orderBy(this.options, ['type'],['desc']);
+            },
+            addInscription: function(option) {
+                this.inscriptions.push({
+                    user_id: this.user.id,
+                    colloque_id: this.colloque.id,
+                    participant: '',
+                    price_id: '',
+                    occurrences: [],
+                    options: null,
+                    groupes: [],
+                    type: 'multiple'
+                });
             },
          }
     }
