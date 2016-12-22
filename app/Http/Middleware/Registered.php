@@ -30,9 +30,7 @@ class Registered
     {
         $message  = \Registry::get('inscription.messages.registered');
 
-        $exist = $this->inscription->getByUser($request->id,\Auth::user()->id);
-
-        if($exist)
+        if( \Auth::user()->inscription_pending->count() > 1 ) 
         {
             return redirect('colloque')->with(array('status' => 'warning', 'message' => $message ));
         }

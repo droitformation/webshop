@@ -73,7 +73,9 @@ class ColloqueController extends Controller
             $user = \Auth::user();
             $restrict_colloque = \Registry::get('inscription.restrict');
 
-            $pending    = $restrict_colloque && !$this->inscription->hasPayed($user->id) ? 'pending' : false;
+           // $hasPayments = \Auth::user()->inscription_pending->count() > 1
+
+            $pending    = $restrict_colloque && (\Auth::user()->inscription_pending->count() > 1) ? 'pending' : false;
             $registered = $user->inscriptions->contains('colloque_id',$id) ? 'registered' : false;
         }
 

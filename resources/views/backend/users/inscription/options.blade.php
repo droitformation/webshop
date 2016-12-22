@@ -7,6 +7,9 @@
                     <?php $user_options->load('option_groupe'); ?>
                     <p class="text-info">{{ isset($user_options->option_groupe) ?  $user_options->option_groupe->text : '' }}</p>
                 @endif
+                @if($user_options->option->type == 'text')
+                    <p class="text-info">{{ $user_options->reponse }}</p>
+                @endif
             </li>
         @endforeach
     </ol>

@@ -31,7 +31,9 @@ $( function() {
 
         $texts.each(function(){
             var oname = $(this).attr('name');
-            var oname = oname.replace('options[0][]', 'options[' + length + '][]');
+            var id    = $(this).data('option_id');
+            console.log(id);
+            var oname = oname.replace('options[0][][' + id + ']', 'options[' + length + '][][' + id + ']');
             $(this).attr('name', oname);
         });
 

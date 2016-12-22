@@ -23,7 +23,15 @@
             <div class="form-group type-choix">
                 @foreach($options as $option)
                     <label>{{ $option->title }}</label>
-                    <textarea class="form-control" class="text-input" name="options[0][{{ $option->id }}][]"></textarea>
+                    <?php $reponse =  isset($groupe_choix) && isset($groupe_choix[$option->id]) ? $groupe_choix[$option->id]->first()->reponse : ''; ?>
+
+                    @if(isset($inscription) || isset($add))
+                        <textarea class="form-control text-input" data-option_id="{{ $option->id }}" name="options[][{{ $option->id }}]">{{ $reponse }}</textarea>
+                    @else
+                        <?php $name = ($type == 'multiple' ? 'options[0][]['.$option->id.']' : 'options[]['.$option->id.']'); ?>
+                        <textarea class="form-control text-input" data-option_id="{{ $option->id }}" name="{{ $name }}">{{ $reponse }}</textarea>
+                    @endif
+
                 @endforeach
             </div>
         @endforeach

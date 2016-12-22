@@ -152,7 +152,7 @@ export default {
                 title: '',
                 option: '',
                 type: 'checkbox',
-                groupe: null,
+                groupe: [],
                 colloque_id: this.colloque,
             };
         },

@@ -224,6 +224,11 @@ class User extends Authenticatable {
         return $this->hasMany('App\Droit\Inscription\Entities\Inscription','user_id', 'id');
     }
 
+    public function inscription_pending()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription','user_id', 'id')->whereNull('payed_at');
+    }
+
     public function inscription_groupes()
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Groupe');

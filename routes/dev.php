@@ -52,10 +52,9 @@ Route::get('testing', function() {
 
     $price = $colloque->prices->first();
     $option = $colloque->options->first();
-    
 
     echo '<pre>';
-    print_r($colloque->option_display);
+    print_r(\Auth::user()->inscription_pending);
     echo '</pre>';exit();
 
 

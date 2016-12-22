@@ -11,7 +11,7 @@ class OptionUser extends Model
 
     protected $table = 'colloque_option_users';
 
-    protected $fillable = array('user_id','option_id','inscription_id','groupe_id','reponse');
+    protected $fillable = ['user_id','option_id','inscription_id','groupe_id','reponse'];
 
     protected $dates = ['deleted_at'];
 
