@@ -148,6 +148,7 @@ class Colloque extends Model
                 'type'           => $price->type,
                 'remarque'       => $price->remarque,
                 'rang'           => $price->rang,
+                'occurrences'    => $price->occurrence_list,
                 'state'          => false,
             ]];
         });

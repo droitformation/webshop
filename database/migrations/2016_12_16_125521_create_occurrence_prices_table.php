@@ -17,6 +17,7 @@ class CreateOccurrencePricesTable extends Migration
             $table->increments('id');
             $table->integer('occurrence_id')->unsigned()->index();
             $table->integer('price_id')->unsigned()->index();
+            $table->string('contrainte')->nullable();
         });
     }
 

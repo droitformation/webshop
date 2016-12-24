@@ -18,9 +18,29 @@ class Price extends Model{
         return $money->format($price);
     }
 
+    public function getOccurrenceListAttribute()
+    {
+        return [
+            'list'   => $this->occurrences->pluck('id')->all(),
+            'titles' => $this->occurrences->pluck('title')->all(),
+        ];
+
+    /*    return $this->occurrences->mapWithKeys_v2(function ($occurrence) {
+            return [$occurrence->id => [
+                'id'         => $occurrence->id,
+                'title'      => $occurrence->title,
+                'contrainte' => 'all',// all, only
+            ]];
+        });*/
+    }
+
     public function inscriptions()
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Inscription');
     }
 
+    public function occurrences()
+    {
+        return $this->belongsToMany('App\Droit\Occurrence\Entities\Occurrence','colloque_occurrence_prices','price_id','occurrence_id')->withPivot(['contrainte']);
+    }
 }

@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddCapaciteColloqueToColloquesTable' => $baseDir . '/database/migrations/2016_12_15_095943_add_capacite_colloque_to_colloques_table.php',
+    'AddCapaciteSalleToColloqueOccurrencesTable' => $baseDir . '/database/migrations/2016_12_15_100409_add_capacite_salle_to_colloque_occurrences_table.php',
     'AddSendAtToNewsletterCampagnesTable' => $baseDir . '/database/migrations/2014_08_12_090838_add_send_at_to_newsletter_campagnes_table.php',
     'Adresse_typesTableSeeder' => $baseDir . '/database/seeds/Adresse_typesTableSeeder.php',
     'AdressesTableSeeder' => $baseDir . '/database/seeds/AdressesTableSeeder.php',
@@ -79,6 +81,7 @@ return array(
     'CreateNewsletterTypesTable' => $baseDir . '/database/migrations/2014_08_05_105320_create_newsletter_types_table.php',
     'CreateNewsletterUsersTable' => $baseDir . '/database/migrations/2014_08_05_113929_create_newsletter_users_table.php',
     'CreateNewslettersTable' => $baseDir . '/database/migrations/2014_08_05_104236_create_newsletters_table.php',
+    'CreateOccurrencePricesTable' => $baseDir . '/database/migrations/2016_12_16_125521_create_occurrence_prices_table.php',
     'CreateOccurrenceUsersTable' => $baseDir . '/database/migrations/2015_10_25_111531_create_occurrence_users_table.php',
     'CreateOrganisateursTable' => $baseDir . '/database/migrations/2015_07_20_111104_create_organisateurs_table.php',
     'CreatePagesTable' => $baseDir . '/database/migrations/2016_07_28_191420_create_pages_table.php',

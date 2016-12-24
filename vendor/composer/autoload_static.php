@@ -8,8 +8,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
@@ -496,6 +496,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
     );
 
     public static $classMap = array (
+        'AddCapaciteColloqueToColloquesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_095943_add_capacite_colloque_to_colloques_table.php',
+        'AddCapaciteSalleToColloqueOccurrencesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_100409_add_capacite_salle_to_colloque_occurrences_table.php',
         'AddSendAtToNewsletterCampagnesTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_12_090838_add_send_at_to_newsletter_campagnes_table.php',
         'Adresse_typesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/Adresse_typesTableSeeder.php',
         'AdressesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AdressesTableSeeder.php',
@@ -569,6 +571,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'CreateNewsletterTypesTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_05_105320_create_newsletter_types_table.php',
         'CreateNewsletterUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_05_113929_create_newsletter_users_table.php',
         'CreateNewslettersTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_05_104236_create_newsletters_table.php',
+        'CreateOccurrencePricesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_16_125521_create_occurrence_prices_table.php',
         'CreateOccurrenceUsersTable' => __DIR__ . '/../..' . '/database/migrations/2015_10_25_111531_create_occurrence_users_table.php',
         'CreateOrganisateursTable' => __DIR__ . '/../..' . '/database/migrations/2015_07_20_111104_create_organisateurs_table.php',
         'CreatePagesTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_28_191420_create_pages_table.php',

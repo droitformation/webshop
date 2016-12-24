@@ -82,6 +82,11 @@
                        </dl>
                    </div>
                </div>
+               <div class="row">
+                   <div class="col-md-12">
+                       {{ price.occurrences }}
+                   </div>
+               </div>
 
            </li>
        </ul>
@@ -110,10 +115,11 @@
 
 export default {
 
-    props: ['colloque','prices'],
+    props: ['colloque','prices','occurrences'],
     data () {
         return {
             list: [],
+            list_occurrences: [],
             nouveau:{
                 description: '',
                 price: '',
@@ -126,11 +132,12 @@ export default {
         }
     },
     beforeMount: function () {
-        this.getPrices();
+        this.getData();
     },
     methods: {
-        getPrices : function(){
+        getData : function(){
              this.list = _.orderBy(this.prices, ['type'],['desc']);
+             this.list_occurrences = this.occurrences;
         },
         editPrice : function(price){
             price.state = true;

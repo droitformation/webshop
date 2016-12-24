@@ -94,6 +94,7 @@
                         <div id="exportOptions" class="collapse">
 
                             @if(!empty(config('columns.names')))
+                                <p><label><input type="checkbox" id="select_all"> Tout séléctionner</label></p>
                                 @foreach(config('columns.names') as $key => $name)
                                     <div class="checkbox-inline checkbox-border">
                                         <label>

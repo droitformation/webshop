@@ -5,6 +5,7 @@
         <div class="form-group col-md-6">
             <h4>Choix des information</h4>
             @if(!empty($names))
+                <p><label><input type="checkbox" id="select_all"> Tout séléctionner</label></p>
                 @foreach($names as $key => $name)
                     <div class="checkbox-inline checkbox-border">
                         <label><input class="checkbox_all" value="{{ $name }}" checked name="columns[{{ $key }}]" type="checkbox"> {{ $name }}</label>

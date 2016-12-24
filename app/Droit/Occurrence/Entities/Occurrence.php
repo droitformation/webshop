@@ -43,6 +43,6 @@ class Occurrence extends Model{
 
     public function prices()
     {
-        return $this->belongsToMany('App\Droit\Price\Entities\Price','colloque_occurrence_prices','occurrence_id','price_id');
+        return $this->belongsToMany('App\Droit\Price\Entities\Price','colloque_occurrence_prices','occurrence_id','price_id')->withPivot(['contrainte']);
     }
 }

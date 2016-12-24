@@ -48,13 +48,15 @@ Route::get('testing', function() {
     $occurrence   = $occurrences->find(1);
 
     $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $colloque   = $colloques->find(102);
+    $colloque   = $colloques->find(100);
 
-    $price = $colloque->prices->first();
+    $price  = $colloque->prices->first();
     $option = $colloque->options->first();
+    
+    $price  = $prices->find(388);
 
     echo '<pre>';
-    print_r(\Auth::user()->inscription_pending);
+    print_r($price->occurrence_list);
     echo '</pre>';exit();
 
 

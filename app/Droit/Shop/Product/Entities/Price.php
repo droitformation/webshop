@@ -3,7 +3,6 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class Price extends Model{
 
     use SoftDeletes;
@@ -12,7 +11,7 @@ class Price extends Model{
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = array('product_id', 'price_net', 'price_gross');
+    protected $fillable = ['product_id', 'price_net', 'price_gross'];
     /**
      * Set timestamps off
      */

@@ -16,164 +16,164 @@
             <div id="colloque_edit" class="panel panel-midnightblue">
 
                 <?php $centers = $colloque->centres->pluck('id')->all(); ?>
-                    <div class="panel-body">
+                <div class="panel-body">
 
-                        <form action="{{ url('admin/colloque/'.$colloque->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
-                            <input type="hidden" name="_method" value="PUT">
-                            {!! csrf_field() !!}
+                    <form action="{{ url('admin/colloque/'.$colloque->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                        <input type="hidden" name="_method" value="PUT">
+                        {!! csrf_field() !!}
 
-                            <fieldset title="Général" id="appComponent">
-                                <legend>Général</legend>
+                        <fieldset title="Général" id="appComponent">
+                            <legend>Général</legend>
 
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label"><strong>Visible</strong></label>
-                                    <div class="col-sm-8">
-                                        <label class="radio-inline"><input type="radio" {{ $colloque->visible ? 'checked' : '' }} name="visible" value="1"> Oui</label>
-                                        <label class="radio-inline"><input type="radio" {{ !$colloque->visible ? 'checked' : '' }} name="visible" value="0"> Non</label>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><strong>Visible</strong></label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline"><input type="radio" {{ $colloque->visible ? 'checked' : '' }} name="visible" value="1"> Oui</label>
+                                    <label class="radio-inline"><input type="radio" {{ !$colloque->visible ? 'checked' : '' }} name="visible" value="0"> Non</label>
+                                </div>
+                            </div>
+
+                            <?php $adresses = $organisateurs->reject(function ($item) { return $item->adresse == ''; })->sortBy('id'); ?>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    Adresse principale<br/><small>Indiqué sur bon, bv, facture</small><p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
+                                </label>
+                                <div class="col-sm-8">
+                                    <organisateur organisateur="{{ $colloque->adresse->id }}" :adresses="{{ $adresses }}"></organisateur>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="titre" class="col-sm-3 control-label">Titre</label>
+                                <div class="col-sm-8">
+                                    {!! Form::text('titre', $colloque->titre , array('class' => 'form-control form-required required' )) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="soustitre" class="col-sm-3 control-label">Sous-titre</label>
+                                <div class="col-sm-8">
+                                    {!! Form::text('soustitre', $colloque->soustitre , array('class' => 'form-control' )) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sujet" class="col-sm-3 control-label">Sujet</label>
+                                <div class="col-sm-8">
+                                    {!! Form::text('sujet', $colloque->sujet , array('class' => 'form-control form-required required' )) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="organisateur" class="col-sm-3 control-label">Organisateur</label>
+                                <div class="col-sm-8">
+                                    {!! Form::text('organisateur', $colloque->organisateur , array('class' => 'form-control form-required required' )) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="organisateur" class="col-sm-3 control-label">Capacité de la salle</label>
+                                <div class="col-sm-2">
+                                    <input name="capacite" type="text" value="{{ $colloque->capacite }}" class="form-control form-required" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="help-block">Permet de fermer les inscription sur le site</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="organisateur" class="col-sm-3 control-label">Centres</label>
+                                <div class="col-sm-8">
+                                    @if(!$organisateurs->isEmpty())
+                                        @foreach($organisateurs as $organisateur)
+                                            <label class="checkbox-inline centre">
+                                                <input type="checkbox" name="centres[]" {{ (in_array($organisateur->id,$centers) ? 'checked' : '') }} value="{{ $organisateur->id }}"> {{ $organisateur->name }}
+                                            </label>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Endroit</label>
+                                <div class="col-sm-8">
+                                    <endroit endroit="{{ $colloque->location_id }}" :adresses="{{ $locations }}"></endroit>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description" class="col-sm-3 control-label">Remarques</label>
+                                <div class="col-sm-8">
+                                    <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->remarques }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row well">
+                                    <label class="col-sm-3 control-label">Envoyer les email de confirmation<br/> à une autre adresse email</label>
+                                    <div class="col-sm-8 col-xs-6">
+                                        <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
                                     </div>
                                 </div>
-
-                                <?php $adresses = $organisateurs->reject(function ($item) { return $item->adresse == ''; })->sortBy('id'); ?>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">
-                                        Adresse principale<br/><small>Indiqué sur bon, bv, facture</small><p class="help-block">Ne sont listé que les organisateur avec une adresse</p>
-                                    </label>
-                                    <div class="col-sm-8">
-                                        <organisateur organisateur="{{ $colloque->adresse->id }}" :adresses="{{ $adresses }}"></organisateur>
+                                <div class="row well">
+                                    <label class="col-sm-3 control-label">Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut</label>
+                                    <div class="col-sm-8 col-xs-6">
+                                        <textarea name="notice" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->notice or old('notice') }}</textarea>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="titre" class="col-sm-3 control-label">Titre</label>
-                                    <div class="col-sm-8">
-                                        {!! Form::text('titre', $colloque->titre , array('class' => 'form-control form-required required' )) !!}
-                                    </div>
+                            <legend>Prix</legend>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Prix</label>
+                                <div class="col-sm-8">
+                                    <price :prices="{{ $colloque->price_display }}" :colloque="{{ $colloque->id }}"></price>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="soustitre" class="col-sm-3 control-label">Sous-titre</label>
-                                    <div class="col-sm-8">
-                                        {!! Form::text('soustitre', $colloque->soustitre , array('class' => 'form-control' )) !!}
-                                    </div>
+                            <legend>Conférences</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Multiples conférences</label>
+                                <div class="col-sm-8">
+                                    <occurrence :prices="{{ $colloque->prices }}" :colloque="{{ $colloque->id }}" :locations="{{ $locations }}" :occurrences="{{ $colloque->occurrence_display }}"></occurrence>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="sujet" class="col-sm-3 control-label">Sujet</label>
-                                    <div class="col-sm-8">
-                                        {!! Form::text('sujet', $colloque->sujet , array('class' => 'form-control form-required required' )) !!}
-                                    </div>
+                            <legend>Options</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Options</label>
+                                <div class="col-sm-8">
+                                    <option-groupe :options="{{ $colloque->option_display }}" :colloque="{{ $colloque->id }}"></option-groupe>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="organisateur" class="col-sm-3 control-label">Organisateur</label>
-                                    <div class="col-sm-8">
-                                        {!! Form::text('organisateur', $colloque->organisateur , array('class' => 'form-control form-required required' )) !!}
-                                    </div>
-                                </div>
+                        </fieldset>
 
-                                <div class="form-group">
-                                    <label for="organisateur" class="col-sm-3 control-label">Capacité de la salle</label>
-                                    <div class="col-sm-2">
-                                        <input name="capacite" type="text" value="{{ $colloque->capacite }}" class="form-control form-required" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p class="help-block">Permet de fermer les inscription sur le site</p>
-                                    </div>
-                                </div>
+                        <fieldset title="Dates">
+                            <legend>Dates</legend>
+                            @include('backend.colloques.partials.dates')
+                        </fieldset>
 
-                                <div class="form-group">
-                                    <label for="organisateur" class="col-sm-3 control-label">Centres</label>
-                                    <div class="col-sm-8">
-                                        @if(!$organisateurs->isEmpty())
-                                            @foreach($organisateurs as $organisateur)
-                                                <label class="checkbox-inline centre">
-                                                    <input type="checkbox" name="centres[]" {{ (in_array($organisateur->id,$centers) ? 'checked' : '') }} value="{{ $organisateur->id }}"> {{ $organisateur->name }}
-                                                </label>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Endroit</label>
-                                    <div class="col-sm-8">
-                                        <endroit endroit="{{ $colloque->location_id }}" :adresses="{{ $locations }}"></endroit>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="description" class="col-sm-3 control-label">Remarques</label>
-                                    <div class="col-sm-8">
-                                        <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->remarques }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row well">
-                                        <label class="col-sm-3 control-label">Envoyer les email de confirmation<br/> à une autre adresse email</label>
-                                        <div class="col-sm-8 col-xs-6">
-                                            <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
-                                        </div>
-                                    </div>
-                                    <div class="row well">
-                                        <label class="col-sm-3 control-label">Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut</label>
-                                        <div class="col-sm-8 col-xs-6">
-                                            <textarea name="notice" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->notice or old('notice') }}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <legend>Prix</legend>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Prix</label>
-                                    <div class="col-sm-8">
-                                        <price :prices="{{ $colloque->price_display }}" :colloque="{{ $colloque->id }}"></price>
-                                    </div>
-                                </div>
-
-                                <legend>Conférences</legend>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Multiples conférences</label>
-                                    <div class="col-sm-8">
-                                        <occurrence :prices="{{ $colloque->prices }}" :colloque="{{ $colloque->id }}" :locations="{{ $locations }}" :occurrences="{{ $colloque->occurrence_display }}"></occurrence>
-                                    </div>
-                                </div>
-
-                                <legend>Options</legend>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Options</label>
-                                    <div class="col-sm-8">
-                                        <option-groupe :options="{{ $colloque->option_display }}" :colloque="{{ $colloque->id }}"></option-groupe>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-
-                            <fieldset title="Dates">
-                                <legend>Dates</legend>
-                                @include('backend.colloques.partials.dates')
-                            </fieldset>
-
-                            <fieldset title="Options">
+                        <fieldset title="Options">
 
 
-                                @include('backend.colloques.partials.options')
+                            @include('backend.colloques.partials.options')
 
-                            </fieldset>
-                            <fieldset title="Annexes">
+                        </fieldset>
+                        <fieldset title="Annexes">
 
-                                <legend>Annexes</legend>
-                                @include('backend.colloques.partials.annexes')
+                            <legend>Annexes</legend>
+                            @include('backend.colloques.partials.annexes')
 
-                            </fieldset>
+                        </fieldset>
 
-                            <input type="hidden" name="id" value="{{ $colloque->id }}"><br/>
-                            <input type="submit" class="finish btn-success btn pull-right" value="Envoyer" />
-                        </form>
-                    </div>
+                        <input type="hidden" name="id" value="{{ $colloque->id }}"><br/>
+                        <input type="submit" class="finish btn-success btn pull-right" value="Envoyer" />
+                    </form>
+                </div>
             </div>
 
         </div>
