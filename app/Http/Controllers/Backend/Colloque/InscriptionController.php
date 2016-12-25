@@ -220,6 +220,10 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->find($id);
 
+        if(!$inscription){
+            return redirect('admin/inscription/create');
+        }
+
         return view('backend.inscriptions.show')->with(['inscription' => $inscription, 'colloque' => $inscription->colloque, 'user' => $inscription->inscrit]);
     }
 
