@@ -185,7 +185,6 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionCreateRequest $request)
     {
-   
         $type     = $request->input('type');
         $colloque = $request->input('colloque_id');
 
