@@ -299,6 +299,33 @@ $factory->define(App\Droit\Arret\Entities\Arret::class, function (Faker\Generato
     ];
 });
 
+$factory->define(App\Droit\Analyse\Entities\Analyse::class, function (Faker\Generator $faker) {
+    return [
+        'site_id'    => 1,
+        'title'      => 'Un titre',
+        'pub_date'   => \Carbon\Carbon::now(),
+        'abstract'   => 'lorem ipsum dolor amet',
+    ];
+});
+
+$factory->define(App\Droit\Categorie\Entities\Categorie::class, function (Faker\Generator $faker) {
+    return [
+        'site_id' => 1,
+        'title'   => 'Un titre',
+        'image'   => 'lorex.jpg',
+    ];
+});
+
+$factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Generator $faker) {
+    return [
+        'first_name' => $faker->firstName,
+        'last_name'  =>  $faker->lastName,
+        'occupation' => $faker->sentence,
+        'bio'        => $faker->sentence,
+        'photo'      => 'test.jpg'
+    ];
+});
+
 $factory->define(App\Droit\Compte\Entities\Compte::class, function (Faker\Generator $faker) {
     return [
         'motif'   => 'Payement',
@@ -341,14 +368,6 @@ $factory->define(App\Droit\Abo\Entities\Abo_factures::class, function (Faker\Gen
 
 $factory->define(App\Droit\Shop\Attribute\Entities\Attribute::class, function (Faker\Generator $faker) {
     return [
-        'id'    => 3,
-        'title' => 'REF'
-    ];
-});
-
-$factory->define(App\Droit\Shop\Attribute\Entities\Attribute::class, function (Faker\Generator $faker) {
-    return [
-        'id'    => 3,
         'title' => 'REF'
     ];
 });

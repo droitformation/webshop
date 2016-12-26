@@ -24,21 +24,11 @@ class MemberController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-        $data = [];
-
 		$members = $this->member->getAll();
-
-        if(!$members->isEmpty())
-        {
-            foreach($members as $result)
-            {
-                $data[] = $result->title;
-            }
-        }
 
         if($request->ajax())
         {
-            return response()->json( $data, 200 );
+            return response()->json( $members->pluck('title')->all(), 200 );
         }
 
         return view('backend.members.index')->with(['members' => $members]);
@@ -58,18 +48,11 @@ class MemberController extends Controller {
 
     public function search(Request $request)
     {
-        $data = [];
-        $term = $request->input('term');
-
-        $member = $this->member->search($term,true);
-
-        if(!$member->isEmpty())
-        {
-            foreach($member as $result)
-            {
-                $data[] = ['label' => $result->title, 'value' => $result->id];
-            }
-        }
+        $members = $this->member->search($request->input('term'),true);
+        
+        $data = $members->map(function ($member, $key) {
+            return ['label' => $member->title, 'value' => $member->id];
+        })->all();
 
         if($request->ajax())
         {

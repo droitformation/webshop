@@ -1,9 +1,8 @@
 <?php
 
 
-class DomainSiteTest extends TestCase {
+class PubdroitTest extends TestCase {
 
-	
 	
 	public function setUp()
 	{

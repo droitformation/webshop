@@ -61,7 +61,7 @@ class AbonnementAdminTest extends TestCase {
     public function testFactureUserEdition()
     {
         $make = new \tests\factories\ObjectFactory();
-        $abo     = $make->makeAbo();
+        $abo  = $make->makeAbo();
 
         $this->visit('admin/factures/'.$abo->current_product->id);
         $this->assertViewHas('factures');

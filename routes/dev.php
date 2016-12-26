@@ -188,6 +188,25 @@ Route::get('cartworker', function()
     $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
     //$worker = \App::make('App\Droit\Abo\Worker\AboWorker');
 
+    $specialisations = \App::make('App\Droit\Specialisation\Repo\SpecialisationInterface');
+    $specialisation  = $specialisations->search('Bai',true);
+
+    if(!$specialisation->isEmpty())
+    {
+        foreach($specialisation as $result)
+        {
+            $data[] = $result->title;
+        }
+    }
+
+    $data = $specialisation->map(function ($item, $key) {
+        return $item->title;
+    })->all();
+
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';exit();
+
     $data[] = [
         'abo_id'         => 1,
         'exemplaires'    => 1,

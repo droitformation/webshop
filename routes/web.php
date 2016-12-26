@@ -183,8 +183,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('question/create/{categorie}', 'Backend\Bail\QuestionController@create');
     Route::resource('question', 'Backend\Bail\QuestionController');
 
-    Route::resource('calculette/ipc', 'Backend\Bail\CalculetteIpcController');
-    Route::resource('calculette/taux', 'Backend\Bail\CalculetteTauxController');
+    Route::resource('calculette/ipc', 'Backend\CalculetteIpcController');
+    Route::resource('calculette/taux', 'Backend\CalculetteTauxController');
 
     /*
     |--------------------------------------------------------------------------
@@ -194,7 +194,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::post('adresse/convert','Backend\User\AdresseController@convert');
     Route::post('adresse/livraison','Backend\User\AdresseController@livraison');
-    Route::get('adresse/make/{id}','Backend\User\AdresseController@make');
+    Route::get('adresse/create/{user_id?}','Backend\User\AdresseController@create');
     Route::resource('adresse', 'Backend\User\AdresseController');
     
     Route::get('users', 'Backend\User\UserController@users');

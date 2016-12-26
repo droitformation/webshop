@@ -38,7 +38,5 @@ class EmailController extends Controller
             'subject'  => $email->subject,
             'body'     => $email->body_clean
         ];
-        
-        //return $this->email->find($id);
     }
 }

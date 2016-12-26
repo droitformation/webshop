@@ -39,13 +39,24 @@ class ArretTest extends TestCase {
 	{
 		$this->visit(url('admin/arret/create/1'));
 
+		// Create an analyse
+		$author  = factory(App\Droit\Author\Entities\Author::class)->create();
+		$analyse = factory(App\Droit\Analyse\Entities\Analyse::class)->create();
+
+		//Create a categorie
+		$categorie = factory(App\Droit\Categorie\Entities\Categorie::class)->create();
+		
+		$analyse->authors()->attach([$author->id]);
+
 		$data = [
 			'site_id'    => 1,
 			'reference'  => 'reference 123',
 			'pub_date'   => \Carbon\Carbon::now(),
 			'abstract'   => 'lorem ipsum dolor amet',
 			'pub_text'   => 'amet dolor ipsum lorem',
-			'categories' => []
+			'dumois'     => 1,
+			'categories' => [$categorie->id],
+			'analyses'   => [$analyse->id]
 		];
 
 		$response = $this->call('POST', '/admin/arret', $data);
@@ -53,8 +64,15 @@ class ArretTest extends TestCase {
 		$this->seeInDatabase('arrets', [
 			'reference' => 'reference 123',
 			'abstract'  => 'lorem ipsum dolor amet',
-			'dumois'    => 0
+			'dumois'    => 1
 		]);
+
+		$content = $this->followRedirects()->response->getOriginalContent();
+		$content = $content->getData();
+		$arret   = $content['arret'];
+
+		$this->assertEquals(1, $arret->categories->count());
+		//$this->assertEquals(1, $arret->analyses->count());
 	}
 
 	public function testUpdateArret()

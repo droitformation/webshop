@@ -31,7 +31,7 @@
         <input name="type" value="{{ $type }}" type="hidden">
 
         <div class="form-group">
-            <br><button class="btn btn-danger pull-right" type="submit">Inscrire</button>
+            <br><button id="makeInscription" class="btn btn-danger pull-right" type="submit">Inscrire</button>
         </div>
     </fieldset>
 </form>

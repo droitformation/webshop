@@ -46,6 +46,7 @@ class AboAdminTest extends TestCase {
 
         // Make new product and add the attributes
         $make = new \tests\factories\ObjectFactory();
+
         $product = $make->product();
         $product = $make->addAttributesAbo($product);
 
@@ -56,14 +57,16 @@ class AboAdminTest extends TestCase {
             'title'       => 'TestAbo',
             'price'       => 50,
             'plan'        => 'year',
+            'shipping'    => '12',
             'products_id' => [$product->id]
         ];
 
         $response = $this->call('POST', '/admin/abo', $data);
 
         $this->seeInDatabase('abos', [
-            'title' => 'TestAbo',
-            'price' => '5000'
+            'title'    => 'TestAbo',
+            'price'    => '5000',
+            'shipping' => '1200'
         ]);
     }
 

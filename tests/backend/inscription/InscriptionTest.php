@@ -43,17 +43,17 @@ class InscriptionTest extends TestCase {
     }
 
     /**
-	 *
-	 * @return void
-	 */
-	public function testRegisterNewInscription()
-	{
+     *
+     * @return void
+     */
+    public function testRegisterNewInscription()
+    {
         $this->WithoutEvents();
         $this->withoutJobs();
         //$this->expectsJobs(App\Jobs\SendConfirmationInscription::class);
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
-        
+
         $input = ['type' => 'simple', 'colloque_id' => $colloque->id, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
@@ -64,7 +64,7 @@ class InscriptionTest extends TestCase {
         $response = $this->call('POST', '/admin/inscription', $input);
 
         $this->assertRedirectedTo('/admin/inscription/colloque/'.$colloque->id);
-	}
+    }
 
     /**
      *
@@ -110,33 +110,6 @@ class InscriptionTest extends TestCase {
 
         $response = $this->call('GET', 'admin/inscription/colloque/39');
     }
-
-    /**
-     * Inscription from frontend
-     * @return void
-     */
-    public function testRegisterInscription()
-    {
-        $this->WithoutEvents();
-        $this->withoutJobs();
-
-        $make     = new \tests\factories\ObjectFactory();
-        $user     = $make->user();
-        $this->actingAs($user);
-
-        $colloque = $make->colloque();
-
-        $input = ['type' => 'simple', 'colloque_id' => $colloque->id, 'user_id' => $user->id, 'inscription_no' => '71-2015/1', 'price_id' => 290];
-
-        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
-
-        $this->worker->shouldReceive('register')->once()->andReturn($inscription);
-
-        $response = $this->call('POST', 'pubdroit/registration', $input);
-
-        $this->assertRedirectedTo('pubdroit');
-    }
-
 
     /**
      * Inscription update from admin

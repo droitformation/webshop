@@ -7,7 +7,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\User\Repo\UserInterface;
-
 use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
 

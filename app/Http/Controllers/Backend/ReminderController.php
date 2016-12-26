@@ -174,5 +174,4 @@ class ReminderController extends Controller
 
         return redirect()->back();
     }
-
 }

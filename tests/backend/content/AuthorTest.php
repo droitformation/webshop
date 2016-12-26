@@ -45,7 +45,6 @@ class AuthorTest extends TestCase {
         $this->assertViewHas('author');
     }
 
-
     /**
      * @return void
      */

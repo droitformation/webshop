@@ -37,23 +37,13 @@ class AdresseController extends Controller {
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create new adresse, if we passe an user_id make the adresse for the user
      *
      * @return Response
      */
-    public function create()
+    public function create($user_id = null)
     {
-        return view('backend.adresses.create');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function make($id = null)
-    {
-        $user = $this->user->find($id);
+        $user = $user_id ? $this->user->find($user_id) : null;
 
         return view('backend.adresses.create')->with(['user' => $user]);
     }
@@ -88,7 +78,7 @@ class AdresseController extends Controller {
             'first_name' => $adresse->first_name,
             'last_name'  => $adresse->last_name,
             'email'      => $adresse->email,
-            'password'   => bcrypt($request->input('password')),
+            'password'   => $request->input('password',null),
         ];
 
         $validator = \Validator::make($data, [
@@ -98,32 +88,23 @@ class AdresseController extends Controller {
             'password'   => 'required|min:5',
         ]);
 
-        if ($validator->fails())
-        {
+        if($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        $data['password'] = bcrypt($request->input('password',null));
 
         // Create user account
         $user = $this->user->create($data);
 
         // update adresse with user_id
         $this->adresse->update(['id' => $adresse->id, 'user_id' => $user->id, 'livraison' => 1]);
-
         // Assign all orders to new user
-        if(!$adresse->orders->isEmpty())
-        {
-            foreach($adresse->orders as $order)
-            {
-                $order->adresse_id = null;
-                $order->user_id    = $user->id;
-                $order->save();
-            }
-        }
+        $this->adresse->assignOrdersToUser($adresse->id, $user->id);
 
         alert()->success('Adresse convertie');
 
         return redirect('admin/user/'.$user->id);
-
     }
 
     /**
@@ -176,8 +157,7 @@ class AdresseController extends Controller {
 
         return redirect($url);
     }
-
-
+    
     public function livraison(Request $request)
     {
         $this->adresse->changeLivraison($request->input('adresse_id') , $request->input('user_id'));

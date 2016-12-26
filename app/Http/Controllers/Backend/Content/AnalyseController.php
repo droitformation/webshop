@@ -85,7 +85,6 @@ class AnalyseController extends Controller {
      */
     public function store(Request $request)
     {
-
         $data  = $request->except('file');
         $_file = $request->file('file',null);
 
@@ -127,14 +126,14 @@ class AnalyseController extends Controller {
 
         $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
         $data['arrets']     = $this->helper->prepareCategories($request->input('arrets'));
+        $data['author_id']  = $this->helper->prepareCategories($request->input('author_id'));
 
         // Create analyse
-        $analyse = $this->analyse->update( $data );
+        $analyse = $this->analyse->update($data);
 
         alert()->success('Analyse mise à jour');
 
         return redirect('admin/analyse/'.$analyse->id);
-
     }
 
     /**

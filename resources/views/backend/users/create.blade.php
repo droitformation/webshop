@@ -20,21 +20,21 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Prénom</label>
                         <div class="col-sm-6">
-                            <input type="text" name="first_name" id="first_name" value="" class="form-control">
+                            <input type="text" name="first_name" id="first_name" value="{{ old('first_name') }}" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Nom</label>
                         <div class="col-sm-6">
-                            <input type="text" name="last_name" id="last_name" value="" class="form-control">
+                            <input type="text" name="last_name" id="last_name" value="{{ old('last_name') }}" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Email</label>
                         <div class="col-sm-6">
-                            <input type="email" name="email" id="email" value="" class="form-control">
+                            <input type="email" name="email" id="email" value="{{ old('email') }}" class="form-control">
                         </div>
                     </div>
 

@@ -17,8 +17,8 @@ class AdresseEloquent implements AdresseInterface{
 		$this->format  = new \App\Droit\Helper\Format();
 	}
 	
-	public function getAll(){
-		
+	public function getAll()
+    {
 		return $this->adresse->where('user_id','=',0)->take(10)->skip(0)->get();	
 	}
 
@@ -121,8 +121,8 @@ class AdresseEloquent implements AdresseInterface{
         return $this->adresse->where('user_id','=',0)->orderBy('created_at','DESC')->take(5)->get();
     }
 
-    public function getLast($nbr){
-	
+    public function getLast($nbr)
+    {
 		return $this->adresse->orderBy('id', 'DESC')->take($nbr)->skip(0)->get();	
 	}
 	
@@ -188,68 +188,9 @@ class AdresseEloquent implements AdresseInterface{
 	 *
 	 * @return stdObject users
 	 */
-	public function find($id){
-				
+	public function find($id)
+    {
 		return $this->adresse->with(['user','orders'])->find($id);
-	}
-	
-	/**
-	 * Return all infos for adrese to show
-	 * We need:
-	 * Adresse
-	 * if it's an user adresse: user infos
-	 * Specialisation
-	 * Members
-	 * 
-	 * @return array
-	*/
-	public function show($id){
-						
-        $adresse = $this->find($id);
-        $type    = $this->typeAdresse($id);
-      
-        $membres         = array();
-        $specialisations = array();
-        
-        if($type == 1)
-        {
-       	 	$membres          = $this->members($id);
-	   	 	$specialisations  = $this->specialisations($id);	        
-        }
-	
-		return array( 'adresse' => $adresse , 'membres' => $membres , 'specialisations' => $specialisations , 'type' => $type );
-	}
-
-	/**
-	 * Return if adresse is linked to user
-	 *
-	 * @return user id
-	 */	
-	public function isUser($adresse){
-		
-		$infos = $this->adresse->findOrFail($adresse);
-		
-		return $infos->user_id;			
-	}
-
-	public function setSpecialisation($adresse_id,$data)
-	{
-		$adresse = $this->adresse->find($adresse_id);
-        $exist   = $adresse->specialisations->pluck('id')->all();
-
-        $adresse->specialisations()->sync(array_unique(array_merge($exist,$data)));
-	}
-
-	/**
-	 * Return type of adresse
-	 *
-	 * @return  stdObject Collection of adresse
-	 */		
-	public function typeAdresse($adresse){
-	
-		$infos = $this->adresse->findOrFail($adresse);
-		
-		return $infos->type;			
 	}
 
 	public function create(array $data)
@@ -287,8 +228,8 @@ class AdresseEloquent implements AdresseInterface{
 		
 	}
 	
-	public function update(array $data){
-		
+	public function update(array $data)
+    {
 		$adresse = $this->adresse->findOrFail($data['id']);	
 		
 		if( ! $adresse )
@@ -313,11 +254,18 @@ class AdresseEloquent implements AdresseInterface{
 		return $adresse;
 	}
 
+    public function delete($id)
+    {
+        $adresse = $this->adresse->find($id);
+
+        return $adresse->delete();
+    }
+
     /**
      *  Update a column
      */
-    public function updateColumn($id , $column , $value){
-
+    public function updateColumn($id , $column , $value)
+	{
         $adresse = $this->adresse->find($id);
 
         if( ! $adresse )
@@ -329,6 +277,33 @@ class AdresseEloquent implements AdresseInterface{
         $adresse->save();
 
         return $adresse;
+    }
+
+    public function setSpecialisation($adresse_id,$data)
+    {
+        $adresse = $this->adresse->find($adresse_id);
+        $exist   = $adresse->specialisations->pluck('id')->all();
+
+        $adresse->specialisations()->sync(array_unique(array_merge($exist,$data)));
+    }
+
+    public function assignOrdersToUser($id, $user_id)
+    {
+        $adresse = $this->adresse->find($id);
+
+        if(!$adresse)  {
+            return false;
+        }
+
+        if(!$adresse->orders->isEmpty()) 
+        {
+            foreach($adresse->orders as $order) 
+            {
+                $order->adresse_id = null;
+                $order->user_id    = $user_id;
+                $order->save();
+            }
+        }
     }
 
     /**
@@ -348,13 +323,5 @@ class AdresseEloquent implements AdresseInterface{
 
         return true;
     }
-
-	public function delete($id){
-	
-		$adresse = $this->adresse->find($id);
-
-		return $adresse->delete();
-		
-	}
 
 }

@@ -47,7 +47,7 @@
                                             <form action="{{ url('admin/attribut/'.$attribut->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                                 <input type="hidden" name="id" value="{{ $attribut->id }}">
-                                                <button data-what="Supprimer" data-action="{{ $attribut->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                <button id="deleteAttribut_{{ $attribut->id }}" data-what="Supprimer" data-action="{{ $attribut->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                             </form>
                                         @endif
                                     </td>

@@ -31,13 +31,9 @@ class SpecialisationController extends Controller {
 
 		$specialisations = $this->specialisation->getAll();
 
-        if(!$specialisations->isEmpty())
-        {
-            foreach($specialisations as $result)
-            {
-                $data[] = $result->title;
-            }
-        }
+        $data = $specialisations->map(function ($item, $key) {
+            return $item->title;
+        })->all();
 
         if($request->ajax())
         {
@@ -49,18 +45,11 @@ class SpecialisationController extends Controller {
 
     public function search(Request $request)
     {
-        $data = [];
-        $term = $request->input('term');
+        $specialisations = $this->specialisation->search($request->input('term'),true);
 
-        $specialisation = $this->specialisation->search($term,true);
-
-        if(!$specialisation->isEmpty())
-        {
-            foreach($specialisation as $result)
-            {
-                $data[] = ['label' => $result->title, 'value' => $result->id];
-            }
-        }
+        $data = $specialisations->map(function ($item, $key) {
+            return ['label' => $item->title, 'value' => $item->id];
+        })->all();
 
         if($request->ajax())
         {
@@ -139,6 +128,5 @@ class SpecialisationController extends Controller {
 
         return redirect('admin/specialisation');
 	}
-
-
+    
 }

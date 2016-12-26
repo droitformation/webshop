@@ -249,8 +249,7 @@ class ObjectFactory
         $product = new \App\Droit\Shop\Product\Entities\Product();
         $exist   = $product->all();
 
-        if($exist->isEmpty())
-        {
+        if($exist->isEmpty()) {
             $this->product($nbr);
         }
 
@@ -276,6 +275,33 @@ class ObjectFactory
         }
 
         return collect($orders);
+    }
+
+    public function makeAdresseOrder($adresse_id)
+    {
+        $product = new \App\Droit\Shop\Product\Entities\Product();
+        $exist   = $product->all();
+
+        if($exist->isEmpty()) {
+            $this->product(4);
+        }
+
+        $products = $product->orderByRaw("RAND()")->take(2)->get();
+        $amount   = $products->sum('price');
+
+        $order = factory(\App\Droit\Shop\Order\Entities\Order::class)->create([
+            'user_id'     => null,
+            'adresse_id'  => $adresse_id,
+            'coupon_id'   => null,
+            'payement_id' => 1,
+            'order_no'    => '2016-0000000123',
+            'amount'      => $amount,
+            'shipping_id' => 1,
+        ]);
+
+        $order->products()->attach($products->pluck('id')->all());
+
+        return $order;
     }
 
     public function updateOrder($orders, $data)

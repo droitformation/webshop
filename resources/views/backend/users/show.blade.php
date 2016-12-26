@@ -6,7 +6,7 @@
         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-default">Retour</a>
     </div>
     <div class="col-md-6 text-right"><!-- col -->
-        <a href="{{ url('admin/adresse/make/'.$user->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une adresse</a>
+        <a href="{{ url('admin/adresse/create/'.$user->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une adresse</a>
     </div>
 </div>
 <br>
