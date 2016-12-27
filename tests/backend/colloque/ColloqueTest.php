@@ -86,12 +86,58 @@ class ColloqueTest extends TestCase {
 
     public function testColloqueEditPage()
     {
+        $location = factory(App\Droit\Location\Entities\Location::class)->create();
+
+        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->create([
+            'titre'           => 'Titre',
+            'sujet'           => 'Sujet',
+            'organisateur'    => 'Organisateur',
+            'location_id'     => $location->id, // missing => exception
+            'start_at'        => '2020-12-31',
+            'registration_at' => '2020-11-31',
+            'compte_id'       => null, // missing => exception
+            'visible'         => null,
+            'bon'             => 1,
+            'facture'         => 1,
+            'adresse_id'      => 1
+        ]);
+
+        $this->visit('admin/colloque/'.$colloque->id);
+
+        $response = $this->call('PUT','/admin/colloque/'.$colloque->id, [
+            'id'              => $colloque->id,
+            'titre'           => 'Titre',
+            'sujet'           => 'Sujet',
+            'organisateur'    => 'Organisateur',
+            'location_id'     => $location->id,
+            'start_at'        => '2020-12-31',
+            'registration_at' => '2020-11-31',
+            'compte_id'       => null, // missing => exception
+            'visible'         => null,
+            'bon'             => 1,
+            'facture'         => 1,
+            'adresse_id'      => 1
+        ]);
+
+        $this->assertRedirectedTo('admin/colloque/'.$colloque->id);
+        $this->followRedirects();
+        $this->see('Le champ compte est obligatoire quand la génération d\'une facture est demandé.');
 
     }
     
     public function testDeleteColloque()
     {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
 
+        $this->visit(url('admin/colloque/'.$colloque->id));
+
+        $response = $this->call('DELETE','admin/colloque/'.$colloque->id);
+
+        $this->notSeeInDatabase('colloques', [
+            'id' => $colloque->id,
+            'deleted_at' => null
+        ]);
     }
 
 }

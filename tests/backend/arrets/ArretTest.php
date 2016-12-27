@@ -72,7 +72,6 @@ class ArretTest extends TestCase {
 		$arret   = $content['arret'];
 
 		$this->assertEquals(1, $arret->categories->count());
-		//$this->assertEquals(1, $arret->analyses->count());
 	}
 
 	public function testUpdateArret()

@@ -1,7 +1,7 @@
 <div class="form-group">
     <label class="col-sm-3 control-label">Générer le <strong>bon de participation</strong></label>
     <div class="col-sm-5">
-        <label class="radio-inline"><input type="radio" {{ ($colloque->bon ? 'checked' : '') }} name="bon" value="1"> Oui</label>
+        <label class="radio-inline"><input type="radio" {{ ($colloque->bon or old('bon') ? 'checked' : '') }} name="bon" value="1"> Oui</label>
         <label class="radio-inline"><input type="radio" {{ (!$colloque->bon ? 'checked' : '') }} name="bon" value="0"> Non</label>
     </div>
 </div>
@@ -9,7 +9,7 @@
 <div class="form-group">
     <label class="col-sm-3 control-label">Générer la <strong>facture</strong> et le <strong>BV</strong></label>
     <div class="col-sm-5">
-        <label class="radio-inline"><input type="radio" {{ ($colloque->facture ? 'checked' : '') }} name="facture" value="1"> Oui</label>
+        <label class="radio-inline"><input type="radio" {{ ($colloque->facture or old('facture') ? 'checked' : '') }} name="facture" value="1"> Oui</label>
         <label class="radio-inline"><input type="radio" {{ (!$colloque->facture ? 'checked' : '') }} name="facture" value="0"> Non</label>
     </div>
 </div>

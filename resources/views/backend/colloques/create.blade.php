@@ -86,6 +86,13 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">Endroit</label>
+                                <div class="col-sm-6">
+                                    <endroit endroit="{{ $locations->first()->id }}" :adresses="{{ $locations }}"></endroit>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="description" class="col-sm-3 control-label">Remarques</label>
                                 <div class="col-sm-6">
                                     <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control"></textarea>

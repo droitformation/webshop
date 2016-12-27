@@ -16,8 +16,8 @@ class CreateLocationsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('adresse');
-            $table->string('url');
-            $table->string('map');
+            $table->string('url')->nullable();
+            $table->string('map')->nullable();
         });
     }
 

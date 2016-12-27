@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label for="organisateur" class="col-sm-3 control-label">Capacité de la salle</label>
                                 <div class="col-sm-2">
-                                    <input name="capacite" type="text" value="{{ $colloque->capacite }}" class="form-control form-required" required>
+                                    <input name="capacite" type="text" value="{{ $colloque->capacite or old('capacite') }}" class="form-control">
                                 </div>
                                 <div class="col-md-6">
                                     <p class="help-block">Permet de fermer les inscription sur le site</p>
@@ -105,7 +105,7 @@
                             <div class="form-group">
                                 <label for="description" class="col-sm-3 control-label">Remarques</label>
                                 <div class="col-sm-8">
-                                    <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->remarques }}</textarea>
+                                    <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->remarques or old('remarques') }}</textarea>
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@
                                 <div class="row well">
                                     <label class="col-sm-3 control-label">Envoyer les email de confirmation<br/> à une autre adresse email</label>
                                     <div class="col-sm-8 col-xs-6">
-                                        <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
+                                        <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email or old('email')  }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
                                     </div>
                                 </div>
                                 <div class="row well">
@@ -157,17 +157,9 @@
                             @include('backend.colloques.partials.dates')
                         </fieldset>
 
-                        <fieldset title="Options">
-
-
-                            @include('backend.colloques.partials.options')
-
-                        </fieldset>
                         <fieldset title="Annexes">
-
                             <legend>Annexes</legend>
                             @include('backend.colloques.partials.annexes')
-
                         </fieldset>
 
                         <input type="hidden" name="id" value="{{ $colloque->id }}"><br/>

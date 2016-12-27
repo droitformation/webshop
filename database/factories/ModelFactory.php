@@ -71,6 +71,16 @@ $factory->define(App\Droit\Price\Entities\Price::class, function (Faker\Generato
     ];
 });
 
+
+$factory->define(App\Droit\Location\Entities\Location::class, function (Faker\Generator $faker) {
+    return [
+        'name'    => 'The location',
+        'adresse' => 'Ruelle de l\'hôtel de ville 3',
+        'url'     => null,
+        'map'     => 'test.jpg',
+    ];
+});
+
 $factory->define(App\Droit\Option\Entities\OptionGroupe::class, function (Faker\Generator $faker){
     return [
         'colloque_id' => 1,

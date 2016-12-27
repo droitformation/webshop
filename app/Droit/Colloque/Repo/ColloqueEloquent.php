@@ -74,6 +74,7 @@ class ColloqueEloquent implements ColloqueInterface{
             'sujet'           => $data['sujet'],
             'remarques'       => $data['remarques'],
             'organisateur'    => $data['organisateur'],
+            'location_id'     => (isset($data['location_id']) ? $data['location_id'] : null),
             'adresse_id'      => (isset($data['adresse_id']) ? $data['adresse_id'] : 1),
             'start_at'        => $data['start_at'],
             'end_at'          => (isset($data['end_at']) && !empty($data['end_at']) ? $data['end_at'] : null),
