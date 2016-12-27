@@ -64,35 +64,6 @@ class ColloqueControllerTest extends TestCase {
 
         $this->assertRedirectedTo('/admin/colloque/1');
     }
-
-    public function testColloqueEditPage()
-    {
-        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make([
-            'id'              => 1,
-            'titre'           => 'Titre',
-            'sujet'           => 'Sujet',
-            'organisateur'    => 'Organisateur',
-            'location_id'     => 3,
-            'start_at'        => '2020-12-31',
-            'registration_at' => '2020-11-31',
-            'compte_id'       => 1
-        ]);
-
-        $this->colloque->shouldReceive('update')->once()->andReturn($colloque);
-
-        $response = $this->call('PUT','/admin/colloque/1', [
-            'id'              => 1,
-            'titre'           => 'Titre',
-            'sujet'           => 'Sujet',
-            'organisateur'    => 'Organisateur',
-            'location_id'     => 3,
-            'start_at'        => '2020-12-31',
-            'registration_at' => '2020-11-31',
-            'compte_id'       => 1
-        ]);
-
-        $this->assertRedirectedTo('/admin/colloque/1');
-    }
     
     public function testDeleteColloque()
     {
