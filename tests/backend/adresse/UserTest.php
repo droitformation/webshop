@@ -23,30 +23,6 @@ class UserTest extends TestCase {
         DB::rollBack();
         parent::tearDown();
     }
-    
-    public function testChangeFirstName()
-    {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
-
-        $user->roles()->attach(1);
-
-        $this->actingAs($user);
-
-        $this->assertTrue(Auth::check());
-
-        $this->visit(url('admin/user/'.$user->id));
-        $this->seePageIs(url('admin/user/'.$user->id));
-        $this->assertViewHas('user');
-
-        $this->type('Terry', 'first_name');
-
-        $this->press('Enregistrer');
-
-        $this->seeInDatabase('users', [
-            'id'         => $user->id,
-            'first_name' => 'Terry'
-        ]);
-    }
 
     public function testCreateNewUser()
     {
@@ -74,7 +50,7 @@ class UserTest extends TestCase {
         ]);
     }
 
-    public function testCrateDeletedUser()
+    public function testDeleteThenCreateUserWithSameEmail()
     {
         $admin = factory(App\Droit\User\Entities\User::class,'admin')->create();
         $admin->roles()->attach(1);
@@ -108,10 +84,9 @@ class UserTest extends TestCase {
             'last_name'  => 'Jonesy',
             'email'      => 'terry.jonesy@domain.ch'
         ]);
-
     }
 
-    public function testNewAdresse()
+    public function testUpdateUser()
     {
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
 
@@ -119,24 +94,20 @@ class UserTest extends TestCase {
 
         $this->actingAs($user);
 
-        $this->visit(url('admin/adresse/create'));
+        $this->assertTrue(Auth::check());
+
+        $this->visit(url('admin/user/'.$user->id));
+        $this->seePageIs(url('admin/user/'.$user->id));
+        $this->assertViewHas('user');
 
         $this->type('Terry', 'first_name');
-        $this->type('Jones', 'last_name');
-        $this->type('terry.jones@gmail.com', 'email');
-        $this->type('Rue du test 23', 'adresse');
-        $this->type('1234', 'npa');
-        $this->type('Bienne', 'ville');
+
         $this->press('Enregistrer');
 
-        $this->seeInDatabase('adresses', [
-            'first_name' => 'Terry',
-            'last_name'  => 'Jones',
-            'email'      => 'terry.jones@gmail.com',
-            'adresse'    => 'Rue du test 23',
-            'npa'        => '1234',
-            'ville'      => 'Bienne',
+        $this->seeInDatabase('users', [
+            'id'         => $user->id,
+            'first_name' => 'Terry'
         ]);
-
     }
+
 }

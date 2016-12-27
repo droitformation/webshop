@@ -12,10 +12,10 @@
 
             <h3>Ajouter un colloque</h3>
 
-            <div class="panel panel-midnightblue">
-                <div class="panel-body" ng-app="upload">
-                    <form action="{{ url('admin/colloque') }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
-                        {!! csrf_field() !!}
+            <form action="{{ url('admin/colloque') }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                {!! csrf_field() !!}
+                <div class="panel panel-midnightblue">
+                    <div class="panel-body" ng-app="upload">
 
                         <fieldset title="Général"  id="appComponent">
                             <legend>Informations de base</legend>
@@ -119,13 +119,13 @@
                             </div>
                         </fieldset>
 
-                        <input type="submit" class="finish btn-success btn" value="Submit" />
-                    </form>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="text-right"><input type="submit" class="finish btn-success btn" value="Envoyer" /></p>
+                    </div>
                 </div>
-
             </div>
-
-        </div>
+        </form>
     </div>
 
 @stop

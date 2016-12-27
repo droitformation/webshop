@@ -31,7 +31,7 @@ class OccurrenceController extends Controller {
         $occurrence = $this->occurrence->create($data);
         $colloque   = $this->colloque->find($data['colloque_id']);
 
-        return ['occurrences' => $colloque->occurrence_display];
+        return response()->json(['occurrences' => $colloque->occurrence_display]);
     }
 
     /**
@@ -39,12 +39,12 @@ class OccurrenceController extends Controller {
      */
     public function update($id,Request $request)
     {
-        $data = $request->all();
+        $data = $request->input('occurrence');
+        
+        $occurrence = $this->occurrence->update($data);
+        $colloque   = $this->colloque->find($data['colloque_id']);
 
-        $occurrence = $this->occurrence->update($data['model']);
-        $colloque   = $this->colloque->find($data['model']['colloque_id']);
-
-        return ['occurrences' => $colloque->occurrence_display];
+        return response()->json(['occurrences' => $colloque->occurrence_display]);
     }
 
     /**
@@ -58,6 +58,6 @@ class OccurrenceController extends Controller {
         $this->occurrence->delete($id);
         $colloque   = $this->colloque->find($occurrence->colloque_id);
 
-        return ['occurrences' => $colloque->occurrence_display];
+        return response()->json(['occurrences' => $colloque->occurrence_display]);
     }
 }

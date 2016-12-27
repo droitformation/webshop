@@ -12,11 +12,15 @@
                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                     <input type="hidden" name="url" value="{{ redirect()->getUrlGenerator()->previous() }}">
                     <div class="btn-group">
+                        @if($adresse->user_id == 0 || !$adresse->user_id)
+                            <button class="btn btn-warning pull-right" type="button" data-toggle="collapse" data-target="#collapseConvert" aria-expanded="false" aria-controls="collapseConvert">
+                                Convertir en compte utilisateur
+                            </button>
+                        @else
+                            <a class="btn btn-info" href="{{ url('admin/user/'.$adresse->user_id) }}"><i class="fa fa-user"></i> &nbsp;Voir le compte</a>
+                        @endif
                         <button data-what="Supprimer" data-action="{{ $adresse->name }}" class="btn btn-danger deleteAction" type="submit">
                             <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer l'adresse
-                        </button>
-                        <button class="btn btn-warning pull-right" type="button" data-toggle="collapse" data-target="#collapseConvert" aria-expanded="false" aria-controls="collapseConvert">
-                            Convertir en compte utilisateur
                         </button>
                     </div>
                 </form>

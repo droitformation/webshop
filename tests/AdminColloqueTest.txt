@@ -1,0 +1,30 @@
+ColloqueController
+ [x] List colloques
+ [x] Create new colloque
+ [x] Colloque edit page
+ [x] Delete colloque
+ [x] Create colloque
+
+Colloque
+ [x] Intersect annexes
+ [x] List current colloques
+ [x] List archive colloques
+ [x] Create new colloque
+ [x] Colloque edit page
+ [x] Delete colloque
+
+Occurrence
+ [x] Create new occurrence
+ [x] Update occurrence
+ [x] Delete occurrence
+
+Option
+ [x] Create new option
+ [x] Update option
+ [x] Delete option
+
+Price
+ [x] Create new price
+ [x] Update price
+ [x] Delete price
+

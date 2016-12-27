@@ -19,7 +19,7 @@ class AdresseEloquent implements AdresseInterface{
 	
 	public function getAll()
     {
-		return $this->adresse->where('user_id','=',0)->take(10)->skip(0)->get();	
+		return $this->adresse->where('user_id','=',0)->orderBy('first_name')->orderBy('last_name')->paginate(30);
 	}
 
     public function search($term)
@@ -59,7 +59,6 @@ class AdresseEloquent implements AdresseInterface{
 			->orWhere('last_name', 'like', '%'.$term.'%')
 			->orWhere('company', 'like', '%'.$term.'%')
 			->get();
-
     }
 
 	public function findByEmail($email)

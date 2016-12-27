@@ -5,17 +5,13 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ColloqueTest extends TestCase {
 
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     protected $colloque;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->colloque = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
-        $this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->colloque);
-
         DB::beginTransaction();
 
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
@@ -38,86 +34,64 @@ class ColloqueTest extends TestCase {
         $this->assertTrue($result);
 	}
 
-    public function testListColloques()
+    public function testListCurrentColloques()
     {
-        $colloques = factory(App\Droit\Colloque\Entities\Colloque::class,3)->make();
+        $make = new \tests\factories\ObjectFactory();
 
-        $this->colloque->shouldReceive('getCurrent')->once()->andReturn($colloques);
-        $this->colloque->shouldReceive('getYears')->once()->andReturn($colloques);
-
+        $make->colloque(); // colloque active
+        $make->colloque(); // colloque active
+        $make->colloque(\Carbon\Carbon::now()->subMonths(2), \Carbon\Carbon::now()->subMonth()); // colloque finished
+        
         $this->visit('admin/colloque');
         $this->assertViewHas('colloques');
+
+        $content   = $this->response->getOriginalContent();
+        $content   = $content->getData();
+        $colloques = $content['colloques'];
+
+        $this->assertEquals(2, $colloques->count());
+    }
+
+    public function testListArchiveColloques()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $make->colloque(\Carbon\Carbon::createFromDate(2015, 5, 21), \Carbon\Carbon::createFromDate(2015, 5, 31)); // colloque finished
+
+        $this->visit('admin/colloque/archive/2015');
+        $this->assertViewHas('colloques');
+
+        $content   = $this->response->getOriginalContent();
+        $content   = $content->getData();
+        $colloques = $content['colloques'];
+
+        $this->assertEquals(1, $colloques->count());
     }
 
     public function testCreateNewColloque()
     {
-        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make([
-            'id'              => 1,
-            'titre'           => 'Titre',
-            'sujet'           => 'Sujet',
-            'organisateur'    => 'Organisateur',
-            'location_id'     => 3,
-            'start_at'        => '2020-12-31',
-            'registration_at' => '2020-11-31',
-            'compte_id'       => 1
-        ]);
+        $start    = \Carbon\Carbon::now()->addDays(5)->toDateTimeString();
+        $register = \Carbon\Carbon::now()->toDateTimeString();
 
-        $this->colloque->shouldReceive('create')->once()->andReturn($colloque);
+        $this->visit('admin/colloque/create');
 
-        $this->visit('/admin/colloque/create')->see('Ajouter un colloque');
-
-        $response = $this->call('POST', '/admin/colloque');
-
-        $this->assertRedirectedTo('/admin/colloque/1');
+        $this->type('Un beau colloque', 'titre');
+        $this->type('Un beau sous-titre', 'soustitre');
+        $this->type('Un sujet', 'sujet');
+        $this->type('Cindy', 'organisateur');
+        $this->type($start, 'start_at');
+        $this->type($register, 'registration_at');
+        $this->press('Envoyer');
     }
 
     public function testColloqueEditPage()
     {
-        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make([
-            'id'              => 1,
-            'titre'           => 'Titre',
-            'sujet'           => 'Sujet',
-            'organisateur'    => 'Organisateur',
-            'location_id'     => 3,
-            'start_at'        => '2020-12-31',
-            'registration_at' => '2020-11-31',
-            'compte_id'       => 1
-        ]);
 
-        $this->colloque->shouldReceive('update')->once()->andReturn($colloque);
-
-        $response = $this->call('PUT','/admin/colloque/1', [
-            'id'              => 1,
-            'titre'           => 'Titre',
-            'sujet'           => 'Sujet',
-            'organisateur'    => 'Organisateur',
-            'location_id'     => 3,
-            'start_at'        => '2020-12-31',
-            'registration_at' => '2020-11-31',
-            'compte_id'       => 1
-        ]);
-
-        $this->assertRedirectedTo('/admin/colloque/1');
     }
     
     public function testDeleteColloque()
     {
-        $this->colloque->shouldReceive('delete')->once();
 
-        $response = $this->call('DELETE', '/admin/colloque/1');
-
-        $this->assertRedirectedTo('/admin/colloque');
     }
 
-    public function testCreateColloque()
-    {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->colloque();
-
-        $this->colloque->shouldReceive('getCurrent')->once()->andReturn(collect([$colloque]));
-        $this->colloque->shouldReceive('getYears')->once()->andReturn(collect([$colloque]));
-
-        $this->visit('admin/colloque');
-        $this->see($colloque->titre);
-    }
 }

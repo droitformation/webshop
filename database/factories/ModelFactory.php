@@ -91,8 +91,8 @@ $factory->define(App\Droit\Option\Entities\OptionUser::class, function (Faker\Ge
 
 $factory->define(App\Droit\Occurrence\Entities\Occurrence::class, function (Faker\Generator $faker){
     return [
-        'start_at'     => \Carbon\Carbon::now()->addDay(),
-        'location_id'  => 1,
+        'starting_at'  => \Carbon\Carbon::now()->addDay(),
+        'lieux_id'     => 1,
         'colloque_id'  => 1,
         'title'        => 'Titre'
     ];

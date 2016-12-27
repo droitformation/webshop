@@ -37,7 +37,7 @@ class OptionController extends Controller {
         $option   = $this->option->create($data);
         $colloque = $this->colloque->find($data['colloque_id']);
 
-        return ['options' => $colloque->option_display];
+        return response()->json(['options' => $colloque->option_display]);
     }
 
     /**
@@ -50,7 +50,7 @@ class OptionController extends Controller {
         $item     = $this->option->update($data);
         $colloque = $this->colloque->find($data['colloque_id']);
 
-        return ['options' => $colloque->option_display];
+        return response()->json(['options' => $colloque->option_display]);
     }
 
     /**
@@ -69,7 +69,7 @@ class OptionController extends Controller {
         $this->option->delete($option->id);
         $colloque = $this->colloque->find($option->colloque_id);
 
-        return ['options' => $colloque->option_display];
+        return response()->json(['options' => $colloque->option_display]);
     }
 
 }

@@ -10,6 +10,7 @@ use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\CreateAdresse;
 use App\Http\Requests\UpdateAdresse;
+use App\Http\Requests\SearchTermRequest;
 
 class AdresseController extends Controller {
 
@@ -29,11 +30,20 @@ class AdresseController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $adresses = $this->adresse->getAll();
+        if($request->input('term')) {
+            $term = $request->input('term',session()->get('term', null));
 
-        return view('backend.adresses.index')->with([ 'adresses' => $adresses ]);
+            session(['term' => $request->input('term')]);
+
+            $adresses = $this->adresse->search($term);
+        }
+        else{
+            $adresses = $this->adresse->getAll();
+        }
+
+        return view('backend.adresses.index')->with(['adresses' => $adresses, 'term' => $request->input('term','')]);
     }
 
     /**

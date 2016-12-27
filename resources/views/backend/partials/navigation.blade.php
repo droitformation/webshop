@@ -25,6 +25,7 @@
         <li class="nav-title">Utiliateurs et adresses</li>
         <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur (et admin)</span></a></li>
         <li><a href="{{ url('admin/adresse/create') }}"><i class="fa fa-street-view"></i><span>Ajouter une adresse</span></a></li>
+        <li><a href="{{ url('admin/adresses') }}"><i class="fa fa-street-view"></i><span>Adresses</span></a></li>
         <li class="<?php echo (Request::is('admin/export/view') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/export/view') }}">
                 <i class="fa fa-cloud-download"></i>&nbsp;<span>Export ou recherche</span>

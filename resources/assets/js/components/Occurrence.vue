@@ -231,9 +231,9 @@ export default {
         },
         save : function(occurence){
 
-            var model = this.list[occurence.id];
+            var occurrence = this.list[occurence.id];
 
-            this.$http.post('/vue/occurrence/' + model.id, { model, '_method' : 'put'  }).then((response) => {
+            this.$http.post('/vue/occurrence/' + occurrence.id, { occurrence, '_method' : 'put'  }).then((response) => {
 
                 this.updateOccurrences(response.body.occurrences);
 

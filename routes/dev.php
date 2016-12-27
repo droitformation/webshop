@@ -55,9 +55,25 @@ Route::get('testing', function() {
     
     $price  = $prices->find(388);
 
+    $prices_t = collect([
+        1 => [
+            'id'             => 1,
+            'colloque_id'    => $colloque->id,
+            'description'    => 'cindy',
+            'price'          => 10,
+            'type'           => 'public',
+            'remarque'       => 'testing',
+            'rang'           => 0,
+            'occurrences'    => collect([]),
+            'state'          => false,
+        ]
+    ]);
+
     echo '<pre>';
-    print_r($price->occurrence_list);
-    echo '</pre>';exit();
+    print_r($colloque->price_display);
+    print_r($prices_t);
+    echo '</pre>';
+    exit();
 
 
     /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');

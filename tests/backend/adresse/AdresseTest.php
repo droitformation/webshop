@@ -28,11 +28,27 @@ class AdresseTest extends TestCase {
         parent::tearDown();
     }
 
-	/**
-	 * A basic functional test example.
-	 *
-	 * @return void
-	 */
+    public function testAdressesList()
+    {
+        $this->visit(url('admin/adresses'));
+        $this->assertViewHas('adresses');
+
+        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
+            'first_name' => 'SG878sdv',
+            'last_name'  => 'User',
+            'email'      => 'SG878sdv@gmail.com',
+        ]);
+
+        $response = $this->call('POST', 'admin/adresses', ['term' => 'SG878sdv']);
+
+        $content   = $this->followRedirects()->response->getOriginalContent();
+        $content   = $content->getData();
+        $adresses  = $content['adresses'];
+
+        $this->assertTrue($adresses->contains('first_name','SG878sdv'));
+        $this->assertTrue($adresses->contains('email','SG878sdv@gmail.com'));
+    }
+    
 	public function testConvertAdresseToUser()
 	{
         $make = new \tests\factories\ObjectFactory();
@@ -77,12 +93,70 @@ class AdresseTest extends TestCase {
         $this->assertSessionHasErrors('password');
     }
 
-    public function testCreateAdresseForUser()
+    public function testCreateAdresseForUserForm()
     {
         $user  = factory(App\Droit\User\Entities\User::class)->create();
 
-        $response = $this->call('GET', 'admin/adresse/create/'.$user->id);
-
+        $this->visit(url('admin/adresse/create/'.$user->id));
         $this->assertViewHas('user');
+
+        // Create adresse with user data but change last_name
+        $this->type($user->first_name, 'first_name');
+        $this->type('Jones', 'last_name');
+        $this->type($user->email, 'email');
+        $this->type('Rue du test 23', 'adresse');
+        $this->type('1234', 'npa');
+        $this->type('Bienne', 'ville');
+        $this->press('Enregistrer');
+
+        $this->seeInDatabase('adresses', [
+            'user_id'    => $user->id,
+            'first_name' => $user->first_name,
+            'last_name'  => 'Jones',
+            'email'      => $user->email,
+            'adresse'    => 'Rue du test 23',
+            'npa'        => '1234',
+            'ville'      => 'Bienne',
+        ]);
+    }
+
+    public function testNewAdresse()
+    {
+        $this->visit(url('admin/adresse/create'));
+
+        $this->type('Terry', 'first_name');
+        $this->type('Jones', 'last_name');
+        $this->type('terry.jones@gmail.com', 'email');
+        $this->type('Rue du test 23', 'adresse');
+        $this->type('1234', 'npa');
+        $this->type('Bienne', 'ville');
+        $this->press('Enregistrer');
+
+        $this->seeInDatabase('adresses', [
+            'first_name' => 'Terry',
+            'last_name'  => 'Jones',
+            'email'      => 'terry.jones@gmail.com',
+            'adresse'    => 'Rue du test 23',
+            'npa'        => '1234',
+            'ville'      => 'Bienne',
+        ]);
+    }
+
+    public function testDeleteAdresse()
+    {
+        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
+            'first_name' => 'New',
+            'last_name'  => 'User',
+            'email'      => null,
+        ]);
+
+        $this->visit(url('admin/adresse/'.$adresse->id));
+
+        $response = $this->call('DELETE','admin/adresse/'.$adresse->id);
+
+        $this->notSeeInDatabase('adresses', [
+            'id' => $adresse->id,
+            'deleted_at' => null
+        ]);
     }
 }

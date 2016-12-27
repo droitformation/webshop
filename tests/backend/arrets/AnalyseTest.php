@@ -25,7 +25,7 @@ class AnalyseTest extends TestCase {
 		parent::tearDown();
 	}
 
-	public function testAnalyseCreation()
+	public function testAnalyseCreationForm()
 	{
 		$this->visit(url('admin/analyses/1'));
 		$this->assertViewHas('analyses');
@@ -35,7 +35,7 @@ class AnalyseTest extends TestCase {
 		$this->seePageIs(url('admin/analyse/create/1'));
 	}
 
-	public function testCreateNewArret()
+	public function testCreateNewAnalyse()
 	{
 		$this->visit(url('admin/arret/create/1'));
 

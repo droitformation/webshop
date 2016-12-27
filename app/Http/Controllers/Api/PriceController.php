@@ -26,7 +26,7 @@ class PriceController extends Controller {
         $price    = $this->price->create($data);
         $colloque = $this->colloque->find($data['colloque_id']);
 
-        return ['prices' => $colloque->price_display];
+        return response()->json(['prices' => $colloque->price_display]);
     }
 
     /**
@@ -35,11 +35,11 @@ class PriceController extends Controller {
     public function update($id,Request $request)
     {
         $data = $request->input('price');
-
+        
         $price    = $this->price->update($data);
         $colloque = $this->colloque->find($data['colloque_id']);
-
-        return ['prices' => $colloque->price_display];
+        
+        return response()->json(['prices' => $colloque->price_display]);
     }
 
     /**
@@ -51,15 +51,14 @@ class PriceController extends Controller {
     {
         $price = $this->price->find($id);
      
-        if($price->inscriptions->count() > 0)
-        {
+        if($price->inscriptions->count() > 0) {
             return response('ERROR', 400);
         }
         
         $this->price->delete($id);
         $colloque = $this->colloque->find($price->colloque_id);
 
-        return ['prices' => $colloque->price_display];
+        return response()->json(['prices' => $colloque->price_display]);
     }
 
 }

@@ -108,8 +108,11 @@ class ObjectFactory
         return $user;
     }
 
-    public function colloque()
+    public function colloque($registration = null, $start = null)
     {
+        $registration_at = $registration ? $registration : \Carbon\Carbon::now()->addMonth();
+        $start_at        = $start ? $start : \Carbon\Carbon::now()->addMonths(2);
+
         $compte = factory(\App\Droit\Compte\Entities\Compte::class)->create();
 
         $colloque = factory(\App\Droit\Colloque\Entities\Colloque::class)->create([
@@ -117,9 +120,9 @@ class ObjectFactory
             'soustitre'       => $this->faker->sentence,
             'sujet'           => $this->faker->sentence,
             'remarques'       => $this->faker->text(),
-            'start_at'        => \Carbon\Carbon::now()->addMonths(2),
+            'start_at'        => $start_at,
             'end_at'          => null,
-            'registration_at' => \Carbon\Carbon::now()->addMonth(),
+            'registration_at' => $registration_at,
             'active_at'       => null,
             'organisateur'    => $this->faker->company,
             'location_id'     => 1,

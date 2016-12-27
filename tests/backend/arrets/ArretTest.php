@@ -25,7 +25,7 @@ class ArretTest extends TestCase {
 		parent::tearDown();
 	}
 
-	public function testArretCreation()
+	public function testArretCreationForm()
 	{
 		$this->visit(url('admin/arrets/1'));
 		$this->assertViewHas('arrets');
