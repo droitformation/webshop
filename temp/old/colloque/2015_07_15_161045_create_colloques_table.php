@@ -25,7 +25,7 @@ class CreateColloquesTable extends Migration
             $table->date('end_at')->nullable();
             $table->date('registration_at');
             $table->date('active_at')->nullable();
-            $table->integer('location_id');
+            $table->integer('location_id')->nullable();
             $table->integer('compte_id')->nullable();
             $table->integer('adresse_id')->nullable();
             $table->enum('visible', ['0','1'])->default(0);

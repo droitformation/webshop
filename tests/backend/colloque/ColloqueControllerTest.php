@@ -43,7 +43,7 @@ class ColloqueControllerTest extends TestCase {
 
     public function testCreateNewColloque()
     {
-        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make([
+        $data = [
             'id'              => 1,
             'titre'           => 'Titre',
             'sujet'           => 'Sujet',
@@ -52,13 +52,15 @@ class ColloqueControllerTest extends TestCase {
             'start_at'        => '2020-12-31',
             'registration_at' => '2020-11-31',
             'compte_id'       => 1
-        ]);
+        ];
+
+        $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->make($data);
 
         $this->colloque->shouldReceive('create')->once()->andReturn($colloque);
 
         $this->visit('/admin/colloque/create')->see('Ajouter un colloque');
 
-        $response = $this->call('POST', '/admin/colloque');
+        $response = $this->call('POST', '/admin/colloque',$data);
 
         $this->assertRedirectedTo('/admin/colloque/1');
     }

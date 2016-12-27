@@ -5,7 +5,11 @@
             <div class="alert alert-dismissable alert-danger">
 
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
+                <?php
+                echo '<pre>';
+                print_r($errors);
+                echo '</pre>';
+                ?>
                 @foreach($errors->all() as $message)
                 <p>{!! $message !!}</p>
                 @endforeach

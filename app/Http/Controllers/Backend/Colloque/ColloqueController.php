@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\ColloqueRequest;
+use App\Http\Requests\ColloqueCreateRequest;
 
 use App\Droit\Service\UploadInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
@@ -98,7 +99,7 @@ class ColloqueController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(ColloqueCreateRequest $request)
     {
         $data  = $request->except('file');
         $_file = $request->file('file');

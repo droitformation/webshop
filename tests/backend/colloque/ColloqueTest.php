@@ -72,25 +72,45 @@ class ColloqueTest extends TestCase {
     {
         $start    = \Carbon\Carbon::now()->addDays(5)->toDateTimeString();
         $register = \Carbon\Carbon::now()->toDateTimeString();
+        $location = factory(App\Droit\Location\Entities\Location::class)->create();
 
         $this->visit('admin/colloque/create');
 
-        $this->type('Un beau colloque', 'titre');
-        $this->type('Un beau sous-titre', 'soustitre');
-        $this->type('Un sujet', 'sujet');
-        $this->type('Cindy', 'organisateur');
-        $this->type($start, 'start_at');
-        $this->type($register, 'registration_at');
-        $this->press('Envoyer');
+        $this->assertViewHas('locations');
+        $this->assertViewHas('organisateurs');
+
+        $response = $this->call('POST','/admin/colloque', [
+            'titre'           => 'Titre',
+            'sujet'           => 'Sujet',
+            'soustitre'       => 'Un sous titre',
+            'organisateur'    => 'Organisateur',
+            'organisateur'    => 'Organisateur',
+            'location_id'     => $location->id,
+            'start_at'        => '2020-12-31',
+            'registration_at' => '2020-11-31',
+        ]);
+
+        $this->notSeeInDatabase('colloques', [
+            'titre'           => 'Titre',
+            'sujet'           => 'Sujet',
+            'soustitre'       => 'Un sous titre',
+            'organisateur'    => 'Organisateur',
+            'organisateur'    => 'Organisateur',
+            'location_id'     => $location->id,
+            'start_at'        => '2020-12-31',
+            'registration_at' => '2020-11-31',
+        ]);
+
     }
 
-    public function testColloqueEditPage()
+    public function testColloqueEditFailsValidation()
     {
         $location = factory(App\Droit\Location\Entities\Location::class)->create();
 
         $colloque = factory(App\Droit\Colloque\Entities\Colloque::class)->create([
             'titre'           => 'Titre',
             'sujet'           => 'Sujet',
+            'soustitre'       => 'Un sous titre',
             'organisateur'    => 'Organisateur',
             'location_id'     => $location->id, // missing => exception
             'start_at'        => '2020-12-31',
@@ -122,7 +142,6 @@ class ColloqueTest extends TestCase {
         $this->assertRedirectedTo('admin/colloque/'.$colloque->id);
         $this->followRedirects();
         $this->see('Le champ compte est obligatoire quand la génération d\'une facture est demandé.');
-
     }
     
     public function testDeleteColloque()
@@ -140,4 +159,34 @@ class ColloqueTest extends TestCase {
         ]);
     }
 
+    /**
+     * @expectedException \App\Exceptions\ColloqueMissingInfoException
+     */
+    public function testColloqueValidationFails()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $colloque->prices()->delete();
+
+        $validator = new \App\Droit\Colloque\Worker\ColloqueValidation($colloque);
+        $validator->activate();
+
+        $this->expectExceptionMessage('Il manque les infos d\'attestation, Il manque au moins un prix');
+    }
+
+    public function testColloqueValidation()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $attestation = factory(App\Droit\Colloque\Entities\Colloque_attestation::class)->create([
+            'colloque_id'  => $colloque->id,
+        ]);
+
+        $validator = new \App\Droit\Colloque\Worker\ColloqueValidation($colloque);
+        $result = $validator->activate();
+
+        $this->assertTrue($result);
+    }
 }
