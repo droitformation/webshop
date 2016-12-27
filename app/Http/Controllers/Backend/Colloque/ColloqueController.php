@@ -150,6 +150,14 @@ class ColloqueController extends Controller
      */
     public function update(ColloqueRequest $request, $id)
     {
+        $colloque = $this->colloque->find($request->input('id'));
+
+        // if we want the colloque visible validate the required dependencies
+        if($request->input('visible') == 1){
+            $validator = new \App\Droit\Colloque\Worker\ColloqueValidation($colloque);
+            $validator->activate();
+        }
+
         $colloque     = $this->colloque->update($request->all());
         $illustration = $request->input('illustration',null);
 
