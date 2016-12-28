@@ -57,11 +57,9 @@ class ColloqueController extends Controller
         $colloques = $this->colloque->getCurrent(true,false);
         $years     = $this->colloque->getYears();
 
-        $years = $years->groupBy(function ($archive, $key) {
+        $years = $years->map(function ($archive, $key) {
             return $archive->start_at->year;
-        });
-
-        $years = array_keys($years->toArray());
+        })->unique()->values()->toArray();
 
         return view('backend.colloques.index')->with(['colloques' => $colloques, 'years' => $years]);
     }
@@ -71,11 +69,9 @@ class ColloqueController extends Controller
         $colloques = $this->colloque->getByYear($year);
         $years     = $this->colloque->getYears();
 
-        $years = $years->groupBy(function ($archive, $key) {
+        $years = $years->map(function ($archive, $key) {
             return $archive->start_at->year;
-        });
-
-        $years = array_keys($years->toArray());
+        })->unique()->values()->toArray();
 
         return view('backend.colloques.archive')->with(['colloques' => $colloques, 'years' => $years, 'current' => $year]);
     }
@@ -87,10 +83,9 @@ class ColloqueController extends Controller
      */
     public function create()
     {
-        $locations     = $this->location->getAll();
-        $organisateurs = $this->organisateur->centres();
+        $centres = $this->organisateur->centres();
 
-        return view('backend.colloques.create')->with(['locations' => $locations, 'organisateurs' => $organisateurs]);
+        return view('backend.colloques.create')->with(['centres' => $centres]);
     }
 
     /**
@@ -101,21 +96,14 @@ class ColloqueController extends Controller
      */
     public function store(ColloqueCreateRequest $request)
     {
-        $data  = $request->except('file');
-        $_file = $request->file('file');
+        $colloque = $this->colloque->create($request->all());
+        $_file    = $request->file('file');
 
         // illustration
         if($_file)
         {
             $file = $this->upload->upload( $request->file('file') , 'files/colloques/illustration');
-            $data['image'] = $file['name'];
-        }
-
-        $colloque = $this->colloque->create($request->all());
-
-        if(isset($data['image']) && !empty($data['image']))
-        {
-            $this->document->updateColloqueDoc($colloque->id, ['illustration' => $data['image']]);
+            $this->document->updateColloqueDoc($colloque->id, ['illustration' => $file['name']]);
         }
 
         alert()->success('Le colloque a été crée');
@@ -131,14 +119,9 @@ class ColloqueController extends Controller
      */
     public function show($id,Request $request)
     {
-        $colloque      = $this->colloque->find($id);
-        $colloque->load('location','adresse','specialisations','centres','compte','prices','documents','options.groupe');
+        $colloque = $this->colloque->find($id);
 
-        $locations     = $this->location->getAll();
-        $comptes       = $this->compte->getAll();
-        $organisateurs = $this->organisateur->centres();
-
-        return view('backend.colloques.show')->with(['colloque' => $colloque, 'comptes' => $comptes, 'locations' => $locations, 'organisateurs' => $organisateurs]);
+        return view('backend.colloques.show')->with(['colloque' => $colloque]);
     }
 
     /**

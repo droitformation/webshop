@@ -84,28 +84,27 @@
 
                             <table class="table table-condensed table-bordered" style="margin-bottom: 10px;">
                                 <thead>
-                                <tr>
-                                    <th><strong>Nbr de paquets</strong></th>
-                                    <th><strong>Nbr ouvrages</strong> <small class="text-muted">(par paquet)</small></th>
-                                </tr>
+                                    <tr>
+                                        <th><strong>Nbr de paquets</strong></th>
+                                        <th><strong>Nbr ouvrages</strong> <small class="text-muted">(par paquet)</small></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @if(!$grouped->isEmpty())
-                                    @foreach($grouped as $nbr => $group)
-                                        <tr><td>{{ $group }}</td><td>{{ $nbr }}</td></tr>
-                                    @endforeach
-                                @else
-                                    <tr><td colspan="2" class="text-center">Encore aucun paquet à envoyer</td></tr>
-                                @endif
+                                    @if(!$grouped->isEmpty())
+                                        @foreach($grouped as $nbr => $group)
+                                            <tr><td>{{ $group }}</td><td>{{ $nbr }}</td></tr>
+                                        @endforeach
+                                    @else
+                                        <tr><td colspan="2" class="text-center">Encore aucun paquet à envoyer</td></tr>
+                                    @endif
                                 </tbody>
-
                             </table>
 
                         </div>
                         <div class="col-md-3"></div>
                         <div class="col-md-5">
                             <div class="well well-sm">
-                                <dl class="dl-horizontal">
+                                <dl class="dl-horizontal dl-resume">
                                     <dt>Nombre de commandes :</dt><dd>{{ $orders->count() }}</dd>
                                     <dt>Nombre d'ouvrages : </dt><dd>{{ $count }}</dd>
                                     <dt>Total (avec frais de port) : </dt><dd>{{ $money->format($sum) }} CHF</dd>

@@ -31,6 +31,7 @@ class ColloqueComposer
         $locations     = $this->location->getAll();
         $organisateurs = $this->organisateur->getAll();
         $comptes       = $this->compte->getAll();
+        $centres  = $this->organisateur->centres();
 
         foreach($locations as $index => $location)
         {
@@ -38,9 +39,14 @@ class ColloqueComposer
             $locations_json[$index]['text']  = htmlspecialchars($location->name);
         }
 
-        $view->with('locations_colloque', $locations);
-        //$view->with('organisateurs', $organisateurs);
+        $adresses = $organisateurs->reject(function ($item) { return $item->adresse == ''; });
+
+        $view->with('adresses', $adresses);
+        $view->with('centres', $centres);
+        $view->with('locations', $locations);
+        $view->with('organisateurs', $organisateurs);
         $view->with('comptes', $comptes);
+
         $view->with('locations_json', $locations_json);
     }
 }

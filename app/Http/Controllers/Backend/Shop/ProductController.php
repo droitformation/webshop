@@ -141,20 +141,13 @@ class ProductController extends Controller {
         $file = $request->file('file',null);
 
         // Make sur that if it is a abo we have attributes (reference and edition)
-        $abo_id = $request->input('abo_id',null);
-
-        if(!empty($abo_id))
-        {
-            $product = $this->product->find($request->input('id'));
-
-            if(empty($product->reference) || empty($product->edition))
-            {
-                alert()->warning('Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement');
-
-                return redirect()->back();
-            }
+        $product = $this->product->find($request->input('id'));
+        
+        if($request->input('abo_id',null)){
+            $validator = new \App\Droit\Shop\Product\Worker\ProductValidation($product);
+            $validator->activate();
         }
-
+        
         if($file)
         {
             $file = $this->upload->upload( $request->file('file') , 'files/products');

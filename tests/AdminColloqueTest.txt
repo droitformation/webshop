@@ -1,17 +1,16 @@
-ColloqueController
- [x] List colloques
- [x] Create new colloque
- [x] Colloque edit page
- [x] Delete colloque
- [x] Create colloque
+Attestation
+ [x] Create attestation for colloque
+ [x] Update attestation for colloque
 
 Colloque
  [x] Intersect annexes
  [x] List current colloques
  [x] List archive colloques
  [x] Create new colloque
- [x] Colloque edit page
+ [x] Colloque edit fails validation
  [x] Delete colloque
+ [x] Colloque validation fails
+ [x] Colloque validation
 
 Occurrence
  [x] Create new occurrence

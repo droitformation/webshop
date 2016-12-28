@@ -1168,3 +1168,11 @@ input[type="checkbox"].rappel-input {
     margin-bottom: 0;
     display: block;
 }
+
+.dl-horizontal.dl-resume dt{
+    width: 200px;
+}
+
+.dl-horizontal.dl-resume dd{
+    margin-left: 220px;
+}

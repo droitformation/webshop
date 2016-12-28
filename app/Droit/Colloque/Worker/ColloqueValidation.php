@@ -6,6 +6,8 @@ use App\Droit\Colloque\Entities\Colloque;
 
 class ColloqueValidation
 {
+    protected $colloque;
+    
     public $errors = [];
 
     public function __construct(Colloque $colloque)
@@ -27,7 +29,7 @@ class ColloqueValidation
     public function hasAttestation()
     {
         if(!count($this->colloque->attestation)){
-            $this->errors[] = 'Il manque les infos d\'attestation';
+            $this->errors[] = 'Il manque les infos d\'attestation pour activer le colloque';
         }
 
         return $this;

@@ -25,14 +25,8 @@ class AppServiceProvider extends ServiceProvider {
             'newsletter::Backend.*',
         ], 'App\Http\ViewComposers\SiteComposer');
 
-        view()->composer([
-            'emails.*',
-        ], 'App\Http\ViewComposers\EmailComposer');
-
-        view()->composer([
-            'backend.colloques.show',
-            'backend.colloques.partials.occurrences',
-        ], 'App\Http\ViewComposers\ColloqueComposer');
+        view()->composer(['emails.*',], 'App\Http\ViewComposers\EmailComposer');
+        view()->composer(['backend.colloques.*'], 'App\Http\ViewComposers\ColloqueComposer');
 
         view()->composer([
             'backend.users.*',

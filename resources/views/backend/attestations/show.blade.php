@@ -10,8 +10,7 @@
     <div class="row">
         <div class="col-md-10">
             <form action="{{ url('admin/attestation/'.$attestation->id) }}" method="POST" class="form-horizontal">
-                <input type="hidden" name="_method" value="PUT">
-                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                 <div class="panel panel-midnightblue">
                     <div class="panel-body">

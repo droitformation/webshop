@@ -63,17 +63,15 @@
                                 <label for="organisateur" class="col-sm-3 control-label">Centres</label>
                                 <div class="col-sm-6">
 
-                                    @if(!$organisateurs->isEmpty())
-                                        @foreach($organisateurs as $organisateur)
+                                    @if(!$centres->isEmpty())
+                                        @foreach($centres as $centre)
                                             <label class="checkbox-inline centre">
-                                                <input type="checkbox" name="centres[]" value="{{ $organisateur->id }}"> {{ $organisateur->name }}
+                                                <input type="checkbox" name="centres[]" value="{{ $centre->id }}"> {{ $centre->name }}
                                             </label>
                                         @endforeach
                                     @endif
                                 </div>
                             </div>
-
-                            <?php $adresses = $organisateurs->reject(function ($item) { return $item->adresse == ''; }) ?>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">

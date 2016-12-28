@@ -191,35 +191,5 @@ class InscriptionWorkerTest extends TestCase {
 
         $worker->specialisation(12, $user);
     }
-
-    public function testCreateGroupInscription()
-    {
-        /*$worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
-
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->colloque();
-
-        $prices   = $colloque->prices->pluck('id')->all();
-        $options  = $colloque->options->pluck('id')->all();
-
-        $data = [
-            'colloque_id' => $colloque->id ,
-            'user_id'     => 1,
-            'participant' => [
-                'Cindy Leschaud',
-                'Coralie Ahmetaj'
-            ],
-            'price_id' => [
-                $prices[0],
-                $prices[0]
-            ],
-            'options' => [
-                $prices[0],
-                $prices[0]
-            ]
-        ];
-
-        $worker->registerGroup($colloque, $data);*/
-    }
-
+    
 }

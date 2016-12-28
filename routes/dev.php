@@ -55,26 +55,16 @@ Route::get('testing', function() {
     
     $price  = $prices->find(388);
 
-    $prices_t = collect([
-        1 => [
-            'id'             => 1,
-            'colloque_id'    => $colloque->id,
-            'description'    => 'cindy',
-            'price'          => 10,
-            'type'           => 'public',
-            'remarque'       => 'testing',
-            'rang'           => 0,
-            'occurrences'    => collect([]),
-            'state'          => false,
-        ]
-    ]);
+    $years     = $colloques->getYears();
 
+    $years = $years->map(function ($archive, $key) {
+        return $archive->start_at->year;
+    })->unique()->values()->toArray();
+
+    //$years = array_keys($years->toArray());
     echo '<pre>';
-    print_r($colloque->price_display);
-    print_r($prices_t);
-    echo '</pre>';
-    exit();
-
+    print_r($years);
+    echo '</pre>';exit();
 
     /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
         $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');

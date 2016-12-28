@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-md-1 text-right">
                                 <label>&nbsp;</label><br/>
-                                <a href="{{ url('admin/product/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+                                <a href="{{ url('admin/product/create') }}" id="addProduct" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
                             </div>
                         </div>
                     </form>

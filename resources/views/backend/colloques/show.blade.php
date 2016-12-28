@@ -15,7 +15,6 @@
         <div class="col-md-8">
             <div id="colloque_edit" class="panel panel-midnightblue">
 
-                <?php $centers = $colloque->centres->pluck('id')->all(); ?>
                 <div class="panel-body">
 
                     <form action="{{ url('admin/colloque/'.$colloque->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
@@ -32,8 +31,6 @@
                                     <label class="radio-inline"><input type="radio" {{ !$colloque->visible ? 'checked' : '' }} name="visible" value="0"> Non</label>
                                 </div>
                             </div>
-
-                            <?php $adresses = $organisateurs->reject(function ($item) { return $item->adresse == ''; })->sortBy('id'); ?>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">
@@ -85,10 +82,10 @@
                             <div class="form-group">
                                 <label for="organisateur" class="col-sm-3 control-label">Centres</label>
                                 <div class="col-sm-8">
-                                    @if(!$organisateurs->isEmpty())
-                                        @foreach($organisateurs as $organisateur)
+                                    @if(!$centres->isEmpty())
+                                        @foreach($centres as $centre)
                                             <label class="checkbox-inline centre">
-                                                <input type="checkbox" name="centres[]" {{ (in_array($organisateur->id,$centers) ? 'checked' : '') }} value="{{ $organisateur->id }}"> {{ $organisateur->name }}
+                                                <input type="checkbox" name="centres[]" {{ ($colloque->centres->contains($centre->id) ? 'checked' : '') }} value="{{ $centre->id }}"> {{ $centre->name }}
                                             </label>
                                         @endforeach
                                     @endif

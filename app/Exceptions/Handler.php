@@ -64,6 +64,12 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
+		if($e instanceof \App\Exceptions\ProductMissingInfoException)
+		{
+			alert()->warning($e->getMessage());
+			return redirect()->back();
+		}
+
 		if($e instanceof \App\Exceptions\OrderAboException)
 		{
 			alert()->warning($e->getMessage());

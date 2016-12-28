@@ -13,7 +13,7 @@ class ColloqueServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+ 
     }
 
     /**

@@ -9,7 +9,7 @@
             <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                 @if($product->orders->count() == 0)
-                    <button data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger deleteAction">Supprimer</button>
+                    <button id="deleteProduct" data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger deleteAction">Supprimer</button>
                 @endif
             </form>
         </div>
