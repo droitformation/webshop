@@ -42,10 +42,10 @@ class MenuTest extends TestCase {
 
         $this->type('Un menu', 'title')->select('main', 'position')->press('Envoyer');
 
-        $this->seeInDatabase('shop_products', [
+        $this->seeInDatabase('menus', [
             'title'       => 'Un menu',
             'position'    => 'main',
-            'sit_id'      => 1
+            'site_id'     => 1
         ]);
     }
 
