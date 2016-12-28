@@ -498,6 +498,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
     public static $classMap = array (
         'AddCapaciteColloqueToColloquesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_095943_add_capacite_colloque_to_colloques_table.php',
         'AddCapaciteSalleToColloqueOccurrencesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_100409_add_capacite_salle_to_colloque_occurrences_table.php',
+        'AddEndAtToColloquePricesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_25_091232_add_end_at_to_colloque_prices_table.php',
         'AddSendAtToNewsletterCampagnesTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_12_090838_add_send_at_to_newsletter_campagnes_table.php',
         'Adresse_typesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/Adresse_typesTableSeeder.php',
         'AdressesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AdressesTableSeeder.php',
