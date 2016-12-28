@@ -13,8 +13,10 @@
 
         @if(isset($inscription->inscrit))
             <?php $adresse = $inscription->inscrit->adresses->where('type',1)->first();?>
-            <p><strong>{{ $adresse->civilite_title }}</strong></p>
-            <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse->name }}</a></p>
+            @if(isset($adresse))
+                <p><strong>{{ $adresse->civilite_title }}</strong></p>
+            @endif
+            <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse ? $adresse->name : '' }}</a></p>
             <p>{{ $inscription->inscrit->email }}</p>
         @else
             <p><span class="label label-warning">Utilisateur ou adresse non trouvé ID: {{ $inscription->group_id or $inscription->user_id }}</span></p>
