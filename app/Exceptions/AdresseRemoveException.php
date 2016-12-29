@@ -1,5 +1,5 @@
 <?php namespace App\Exceptions;
 
-class AdresseNotExistException extends \Exception {
+class AdresseRemoveException extends \Exception {
 
 }

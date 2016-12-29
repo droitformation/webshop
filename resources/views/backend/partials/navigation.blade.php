@@ -22,10 +22,24 @@
                 <i class="fa fa-bolt"></i> <span>Rappels</span>
             </a>
         </li>
+
         <li class="nav-title">Utiliateurs et adresses</li>
-        <li><a href="{{ url('admin/user/create') }}"><i class="fa fa-user"></i><span>Ajouter utilisateur (et admin)</span></a></li>
-        <li><a href="{{ url('admin/adresse/create') }}"><i class="fa fa-street-view"></i><span>Ajouter une adresse</span></a></li>
-        <li><a href="{{ url('admin/adresses') }}"><i class="fa fa-street-view"></i><span>Adresses</span></a></li>
+
+        <li class="<?php echo (Request::is('admin/user') || Request::is('admin/user/*') ? 'active' : '' ); ?>">
+            <a href="javascript:;"><i class="fa fa-users"></i><span>Utilisateurs</span></a>
+            <ul class="acc-menu">
+                <li><a href="{{ url('admin/users') }}"><span>Liste des utilisateurs</span></a></li>
+                <li><a href="{{ url('admin/user/create') }}"><span>Ajouter utilisateur (admin)</span></a></li>
+            </ul>
+        </li>
+        <li class="<?php echo (Request::is('admin/adresse') || Request::is('admin/adresse/*') ? 'active' : '' ); ?>">
+            <a href="javascript:;"><i class="fa fa-street-view"></i><span>Adresses</span></a>
+            <ul class="acc-menu">
+                <li><a href="{{ url('admin/adresses') }}"><span>Liste des adresses</span></a></li>
+                <li><a href="{{ url('admin/adresse/create') }}"><span>Ajouter une adresse</span></a></li>
+            </ul>
+        </li>
+
         <li class="<?php echo (Request::is('admin/export/view') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/export/view') }}">
                 <i class="fa fa-cloud-download"></i>&nbsp;<span>Export ou recherche</span>

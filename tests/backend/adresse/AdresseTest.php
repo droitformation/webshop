@@ -159,4 +159,42 @@ class AdresseTest extends TestCase {
             'deleted_at' => null
         ]);
     }
+
+    /**
+     * @expectedException \App\Exceptions\AdresseRemoveException
+     */
+    public function testDeleteAdresseValidation()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $user    = factory(App\Droit\User\Entities\User::class)->create();
+        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        // Order for user linked to adresse
+        $make->order(2, $user->id);
+
+        $validator = new \App\Droit\Adresse\Worker\AdresseValidation($adresse);
+        $validator->activate();
+
+        $this->expectExceptionMessage('L\'adresse est lié à des commandes, L\'adresse est rattaché à un compte utilisateur');
+    }
+
+    /**
+     * @expectedException \App\Exceptions\AdresseRemoveException
+     */
+    public function testDeleteAdresseWithOrdersValidation()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create();
+
+        $make->makeAdresseOrder($adresse->id);
+
+        $validator = new \App\Droit\Adresse\Worker\AdresseValidation($adresse);
+        $validator->activate();
+
+        $this->expectExceptionMessage('L\'adresse est lié à des commandes');
+    }
 }

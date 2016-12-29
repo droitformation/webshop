@@ -64,6 +64,8 @@
                                         <td class="text-right">
                                             <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                <input type="hidden" name="url" value="{{ url('admin/search/user') }}">
+                                                <input type="hidden" name="term" value="{{ session()->get('term') }}">
                                                 <button data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
                                             </form>
                                         </td>
@@ -112,6 +114,8 @@
                                         <td class="text-right">
                                             <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                <input type="hidden" name="url" value="{{ url('admin/search/user') }}">
+                                                <input type="hidden" name="term" value="{{ session()->get('term') }}">
                                                 <button data-what="Supprimer" data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
                                             </form>
                                         </td>

@@ -1,0 +1,15 @@
+Adresse
+ [x] Adresses list
+ [x] Convert adresse to user
+ [x] Convert adresse to user fails
+ [x] Create adresse for user form
+ [x] New adresse
+ [x] Delete adresse
+ [x] Delete adresse validation
+ [x] Delete adresse with orders validation
+
+User
+ [x] Create new user
+ [x] Delete then create user with same email
+ [x] Update user
+

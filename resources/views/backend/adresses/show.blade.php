@@ -10,7 +10,12 @@
             <div class="btn-toolbar">
                 <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                    <input type="hidden" name="url" value="{{ redirect()->getUrlGenerator()->previous() }}">
+                    <input type="hidden" name="url" value="{{ url('admin/adresses')}}">
+
+                    @if(!session()->has('term'))
+                        <input type="hidden" name="term" value="{{ session()->get('term') }}">
+                    @endif
+
                     <div class="btn-group">
                         @if($adresse->user_id == 0 || !$adresse->user_id)
                             <button class="btn btn-warning pull-right" type="button" data-toggle="collapse" data-target="#collapseConvert" aria-expanded="false" aria-controls="collapseConvert">

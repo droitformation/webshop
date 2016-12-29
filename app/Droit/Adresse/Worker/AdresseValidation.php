@@ -1,34 +1,57 @@
-<?php namespace App\Droit\Shop\Product\Worker;
+<?php namespace App\Droit\Adresse\Worker;
 
-use App\Droit\Shop\Product\Entities\Product;
+use App\Droit\Adresse\Entities\Adresse;
 
-class ProductValidation
+class AdresseValidation
 {
-    protected $product;
+    protected $adresse;
     
     public $errors = [];
 
-    public function __construct(Product $product)
+    public function __construct(Adresse $adresse)
     {
-        $this->product = $product;
+        $this->adresse = $adresse;
     }
 
     public function activate()
     {
-        $this->hasAttributes();
+        $this->hasUser()->hasOrdersOrInscriptions();
 
         if(!empty($this->errors)){
-            throw new \App\Exceptions\ProductMissingInfoException(implode(', ', $this->errors));
+            throw new \App\Exceptions\AdresseRemoveException(implode(', ', $this->errors));
         }
 
         return true;
     }
 
-    public function hasAttributes()
+    public function hasUser()
     {
-        if(empty($this->product->reference) || empty($this->product->edition))
+        if(isset($this->adresse->user))
         {
-            $this->errors[] = 'Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement';
+            $this->errors[] = 'L\'adresse est rattaché à un compte utilisateur';
+        }
+
+        return $this;
+    }
+
+    public function hasOrdersOrInscriptions()
+    {
+        if(isset($this->adresse->user))
+        {
+            if(!$this->adresse->user->orders->isEmpty())
+            {
+                $this->errors[] = 'L\'adresse est lié à des commandes';
+            }
+
+            if(!$this->adresse->user->inscriptions->isEmpty())
+            {
+                $this->errors[] = 'L\'adresse est lié à des inscriptions';
+            }
+        }
+
+        if(!$this->adresse->orders->isEmpty())
+        {
+            $this->errors[] = 'L\'adresse est lié à des commandes';
         }
 
         return $this;

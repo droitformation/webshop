@@ -108,13 +108,13 @@
                                   <div class="panel panel-midnightblue">
                                       <div class="panel-body">
                                           <div class="row">
-                                              <div class="col-md-8">
+                                              <div class="col-md-7">
                                                   <h3 style="margin-bottom: 0;">
                                                       <i class="fa fa-map-marker"></i>&nbsp;Adresse {{ $adresse->type_title }}
                                                       {!! $adresse->livraison ? '<small class="text-mute">livraison</small>' : '' !!}
                                                   </h3>
                                               </div>
-                                              <div class="col-md-3 text-right">
+                                              <div class="col-md-4 text-right">
                                                   @if($adresse->user_id > 0 && !$adresse->livraison)
                                                       <form action="{{ url('admin/adresse/livraison') }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
                                                           <input type="hidden" name="adresse_id" value="{{ $adresse->id }}">

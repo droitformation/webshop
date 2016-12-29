@@ -32,18 +32,18 @@ class AdresseController extends Controller {
      */
     public function index(Request $request)
     {
-        if($request->input('term')) {
-            $term = $request->input('term',session()->get('term', null));
+        $term = $request->input('term',session()->get('term'));
 
-            session(['term' => $request->input('term')]);
-
+        if($term)
+        {
+            session(['term' => $term]);
             $adresses = $this->adresse->search($term);
         }
         else{
             $adresses = $this->adresse->getAll();
         }
 
-        return view('backend.adresses.index')->with(['adresses' => $adresses, 'term' => $request->input('term','')]);
+        return view('backend.adresses.index')->with(['adresses' => $adresses, 'term' => $term]);
     }
 
     /**
@@ -127,12 +127,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->find($id);
 
-        if($request->ajax())
-        {
-            return $adresse->load('canton','profession','specialisations','civilite');
-        }
-
-        return view('backend.adresses.show')->with(array( 'adresse' => $adresse ));
+        return view('backend.adresses.show')->with(['adresse' => $adresse , 'term' => session()->get('term')]);
     }
 
     /**
@@ -158,14 +153,19 @@ class AdresseController extends Controller {
      */
     public function destroy($id, Request $request)
     {
+       $adresse = $this->adresse->find($id);
+
+        // Validate deletion, if no user or user with no orders or inscriptions delete the adresse
+        $validator = new \App\Droit\Adresse\Worker\AdresseValidation($adresse);
+        $validator->activate();
+
         $this->adresse->delete($id);
 
-        $url = $request->input('url',null);
-        $url = $url ? $url : 'admin';
+        $request->session()->keep(['term']);
 
-        alert()->success('Adresse supprimé');
+        alert()->success('Adresse supprimée');
 
-        return redirect($url);
+        return redirect($request->input('url','admin'));
     }
     
     public function livraison(Request $request)

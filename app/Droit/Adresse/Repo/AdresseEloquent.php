@@ -19,7 +19,11 @@ class AdresseEloquent implements AdresseInterface{
 	
 	public function getAll()
     {
-		return $this->adresse->where('user_id','=',0)->orderBy('first_name')->orderBy('last_name')->paginate(30);
+		return $this->adresse->where(function ($query) {
+                $query->where('user_id','=',0)->orWhereNull('user_id');
+            })->orderBy('first_name')
+            ->orderBy('last_name')
+            ->paginate(30);
 	}
 
     public function search($term)
@@ -71,7 +75,9 @@ class AdresseEloquent implements AdresseInterface{
     public function searchSimple($terms)
     {
         return $this->adresse->with(['user'])
-            ->where('user_id','=',0)
+			->where(function ($query) {
+				$query->where('user_id','=',0)->orWhereNull('user_id');
+			})
             ->searchEmail($terms['email'])
             ->searchLastName($terms['last_name'])
             ->searchFirstName($terms['first_name'])
@@ -117,7 +123,10 @@ class AdresseEloquent implements AdresseInterface{
 
     public function getPaginate()
     {
-        return $this->adresse->where('user_id','=',0)->orderBy('created_at','DESC')->take(5)->get();
+        return $this->adresse->where(function ($query) {
+				$query->where('user_id','=',0)->orWhereNull('user_id');
+			})
+			->orderBy('created_at','DESC')->take(5)->get();
     }
 
     public function getLast($nbr)
@@ -129,7 +138,9 @@ class AdresseEloquent implements AdresseInterface{
 
 		$columns = array( 'prenom', 'nom', 'email' , 'adresse',  'ville');
 
-        $iTotal = $this->adresse->where('user_id','=',0)->get(array('id'))->count();
+        $iTotal = $this->adresse->where(function ($query) {
+			$query->where('user_id','=',0)->orWhereNull('user_id');
+		})->get(array('id'))->count();
 		
 		if($sSearch)
 		{
@@ -212,7 +223,7 @@ class AdresseEloquent implements AdresseInterface{
 			'canton_id'     => (isset($data['canton_id']) ? $data['canton_id'] : null),
 			'pays_id'       => (isset($data['pays_id']) ? $data['pays_id'] : 208),
 			'type'          => (isset($data['type']) ? $data['type'] : 1),
-			'user_id'       => (isset($data['user_id']) ? $data['user_id'] : 0),
+			'user_id'       => (isset($data['user_id']) ? $data['user_id'] : null),
 			'livraison'     => (isset($data['livraison']) ? $data['livraison'] : 0),
 			'created_at'    => date('Y-m-d G:i:s'),
 			'updated_at'    => date('Y-m-d G:i:s')

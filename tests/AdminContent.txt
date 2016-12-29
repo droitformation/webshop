@@ -1,0 +1,26 @@
+AdminIndexPages
+ [x] Index domain
+ [x] Index author
+ [x] Index theme
+ [x] Index shipping
+ [x] Index coupon
+ [x] Index specialisation
+ [x] Index membre
+ [x] Index attribut
+ [x] Index colloque
+ [x] Index organisateur
+ [x] Index location
+ [x] Export page
+ [x] Admin site 1 pages
+ [x] Admin 2 pages
+ [x] Admin 3 pages
+
+Author
+ [x] Author show
+ [x] Author store
+ [x] Author delete
+
+Menu
+ [x] Menu list
+ [x] Menu create
+

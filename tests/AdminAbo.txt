@@ -1,0 +1,14 @@
+AboAdmin
+ [x] Add abo
+ [x] Get abo product with attributes
+
+AbonnementAdmin
+ [x] Abo make new users
+ [x] Facture user edition
+ [x] Rappels user
+ [x] Edit facture
+ [x] Edit facture without created at
+ [x] Edit facture display in abonnement
+ [x] Desinscription page
+ [x] Desinscription abo user
+

@@ -44,14 +44,13 @@ class SearchController extends Controller
      */
     public function user(Request $request)
     {
-        $term = $request->input('term',session()->get('term', null));
-
-        if(!$term)
-        {
+        $term = $request->input('term',session()->get('term'));
+     
+        if(!$term) {
             return view('backend.results');
         }
 
-        session(['term' => $request->input('term')]);
+        session(['term' => $term]);
 
         $users    = $this->user->search($term);
         $adresses = $this->adresse->search($term);
@@ -61,7 +60,7 @@ class SearchController extends Controller
             return $adresse->user_id > 0;
         });
 
-        return view('backend.results')->with(['users' => $users, 'adresses' => $singles]);
+        return view('backend.results')->with(['users' => $users, 'adresses' => $singles, 'term' => $term]);
     }
 
     /**
