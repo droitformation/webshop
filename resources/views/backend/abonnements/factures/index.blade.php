@@ -68,7 +68,7 @@
                                 <th class="col-md-1"></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="appComponent">
                         @if(!$factures->isEmpty())
                             @foreach($factures as $facture)
                                 <tr>
@@ -86,7 +86,9 @@
                                     <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
                                     <td>
                                         @if($facture->doc_facture)
-                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->doc_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->doc_facture) }}">Facture pdf</a>
+                                        @else
+                                            <generate path="facture" order="{{ $facture->id }}"></generate>
                                         @endif
                                     </td>
                                     <td>
