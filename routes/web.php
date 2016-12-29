@@ -130,7 +130,7 @@ Route::group(['middleware' => 'site'], function () {
         Route::get('jurisprudence', array('uses' => 'Frontend\BailController@jurisprudence'));
         Route::get('doctrine', array('uses' => 'Frontend\BailController@doctrine'));
         Route::get('calcul', array('uses' => 'Frontend\BailController@calcul'));
-        Route::post('loyer', 'Frontend\Bail\CalculetteController@loyer');
+        Route::post('loyer', 'Frontend\CalculetteController@loyer');
         Route::get('unsubscribe', 'Frontend\BailController@unsubscribe');
         Route::get('app', 'Frontend\BailController@app');
     });
@@ -197,8 +197,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('adresse/create/{user_id?}','Backend\User\AdresseController@create');
     Route::match(['get', 'post'], 'adresses', 'Backend\User\AdresseController@index');
     Route::resource('adresse', 'Backend\User\AdresseController');
-    
-    Route::get('users', 'Backend\User\UserController@users');
+
+    Route::match(['get', 'post'], 'users', 'Backend\User\UserController@index');
     Route::resource('user', 'Backend\User\UserController');
 
     Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
