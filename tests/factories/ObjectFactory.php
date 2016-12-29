@@ -19,8 +19,8 @@ class ObjectFactory
 
     public function makeUser($data = [])
     {
-        $first_name = $this->faker->firstName;
-        $last_name  = $this->faker->lastName;
+        $first_name = isset($data['first_name']) ? $data['first_name'] : $this->faker->firstName;
+        $last_name  = isset($data['last_name']) ? $data['last_name'] : $this->faker->lastName;
         $email      = $this->faker->email;
 
         $user = factory(\App\Droit\User\Entities\User::class)->create([
@@ -31,7 +31,7 @@ class ObjectFactory
         ]);
 
         $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
-            'civilite_id'   => $this->faker->numberBetween(1,4),
+            'civilite_id'   => isset($data['civilite_id']) ? $data['civilite_id'] : $this->faker->numberBetween(1,4),
             'first_name'    => $first_name,
             'last_name'     => $last_name,
             'email'         => $email,
@@ -389,5 +389,38 @@ class ObjectFactory
             'product_id'  => $abonnement->abo->current_product->id,
             'payed_at'    => null
         ]);
+    }
+
+    public function makeInscriptions($nbr = 1, $groupe = null)
+    {
+        // Create colloque
+        $colloque    = $this->colloque();
+
+        for($x = 1; $x <= $nbr; $x++)
+        {
+            $personne  = $this->makeUser();
+            factory(\App\Droit\Inscription\Entities\Inscription::class)->create(['user_id' => $personne->id, 'group_id' => null, 'colloque_id' => $colloque->id]);
+        }
+
+        if($groupe)
+        {
+            $detenteur = $this->makeUser();
+
+            $group = factory(\App\Droit\Inscription\Entities\Groupe::class)->create([
+                'user_id'     => $detenteur->id,
+                'colloque_id' => $colloque->id
+            ]);
+
+            $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class,2)->create(['user_id' => null, 'group_id' => $group->id, 'colloque_id' => $colloque->id]);
+            $inscriptions = $inscriptions->map(function ($item, $key) {
+                $item->inscription_no = '10-2016/1'.$key;
+
+                $participant = new \App\Droit\Inscription\Entities\Participant();
+                $participant->create(['name' => $this->faker->firstName, 'inscription_id' => $item->id ]);
+                return $item;
+            });
+        }
+
+        return $colloque->load('inscriptions');
     }
 }

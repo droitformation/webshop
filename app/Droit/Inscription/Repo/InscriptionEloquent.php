@@ -37,7 +37,7 @@ class InscriptionEloquent implements InscriptionInterface{
     {
         $inscription = $this->inscription
             //->select(\DB::raw('colloque_inscriptions.*, concat(CASE WHEN group_id IS NOT NULL THEN group_id ELSE user_id END) AS `grouped`'))
-            ->with(['user','user.adresses','price','user_options','colloque.options','colloque.documents'])
+            ->with(['user','user.adresses','groupe','groupe.user.adresses','price','user_options','colloque.options','colloque.documents'])
             ->where('colloque_id','=',$id);
 
         if($type)

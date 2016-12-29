@@ -1,0 +1,31 @@
+Display
+ [x] Type of inscription
+ [x] Inscrit normal
+ [x] Inscrit group
+ [x] Is correct model
+ [x] Is correct model groupe
+ [x] Correct name normal
+ [x] Correct name group
+ [x] Not valid
+
+InscriptionController
+ [x] Make simple inscription
+ [x] Make multiple inscription
+
+Inscription
+ [x] Register new inscription
+ [x] Register multiple new inscription
+ [x] Last inscriptions
+ [x] Update inscription
+ [x] Send inscription
+ [x] Send group inscription
+ [x] Generate doc
+ [x] Generate doc free
+
+InscriptionWorker
+ [x] Prepare data inscription send inscription
+ [x] Prepare data group send inscription
+ [x] Update inscription
+ [x] Update group inscription
+ [x] Add specialisation to user
+

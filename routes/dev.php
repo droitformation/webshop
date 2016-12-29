@@ -55,15 +55,15 @@ Route::get('testing', function() {
     
     $price  = $prices->find(388);
 
-    $years     = $colloques->getYears();
+    //$years     = $colloques->getYears();
 
-    $years = $years->map(function ($archive, $key) {
-        return $archive->start_at->year;
-    })->unique()->values()->toArray();
+
+    //$make  = new \tests\factories\ObjectFactory();
+   // $make->makeInscriptions(1, 1);
 
     //$years = array_keys($years->toArray());
     echo '<pre>';
-    print_r($years);
+   // print_r($years);
     echo '</pre>';exit();
 
     /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
@@ -342,13 +342,14 @@ Route::get('cartworker', function()
     $abofacture    = $abofactures->find(939);
     $abouser   = $abousers->find(531);*/
 
-    $generator     = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    //$generator     = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     //$job = new \App\Jobs\MakeDocument($inscription);
     //$job->handle();
-    $generator->stream = true;
+    //$generator->stream = true;
 
     //$generate = new \App\Droit\Generate\Entities\Generate($abofacture);
+
 
     exit;
 

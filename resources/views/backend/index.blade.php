@@ -62,13 +62,13 @@
                                 @foreach($inscriptions as $inscription)
                                     <tr>
                                         <td>
-                                            @if(!$inscription->group_id)
+                                            @if(isset($inscription->groupe))
                                                 <a class="btn btn-sky btn-sm" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}"><i class="fa fa-edit"></i></a>
                                                 @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
                                             @endif
                                         </td>
                                         <td>
-                                            @if($inscription->group_id)
+                                            @if(isset($inscription->groupe))
                                                 <?php $group = $inscription->groupe; ?>
                                                 {{ $group->colloque->titre }}
                                             @else
@@ -85,17 +85,17 @@
                                                 <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse ? $adresse->name : '' }}</a></p>
                                                 <p>{{ $inscription->inscrit->email }}</p>
                                             @else
-                                                <p><span class="label label-warning">Duplicata</span></p>
+                                                <h4><span class="label label-warning">Utilisateur ou groupe non trouvé ID: {{ $inscription->group_id or $inscription->user_id }}</span></h4>
                                             @endif
 
-                                            @if($inscription->group_id)
+                                            @if(isset($inscription->groupe))
                                                 <br/><a class="btn btn-info btn-xs" data-toggle="modal" data-target="#editGroup_{{ $inscription->groupe->id }}">Changer le détenteur</a>
                                                 @include('backend.inscriptions.modals.change', ['group' => $inscription->groupe]) <!-- Modal edit group -->
                                             @endif
 
                                         </td>
                                         <td>
-                                            @if($inscription->group_id)
+                                            @if(isset($inscription->groupe))
                                                 <?php $group = $inscription->groupe; ?>
                                                 @if($group->inscriptions)
                                                     @foreach($group->inscriptions as $inscription)
@@ -126,7 +126,7 @@
                                                 @include('backend.partials.toggle', ['id' => $inscription->id])
                                             @endif
                                         </td>
-                                        <td>{{ $inscription->group_id ? $group->price : $inscription->price_cents }} CHF</td>
+                                        <td>{{ isset($inscription->groupe) ? $group->price : $inscription->price_cents }} CHF</td>
                                         <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
                                     </tr>
 

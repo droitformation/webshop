@@ -43,6 +43,13 @@ $factory->define(App\Droit\Inscription\Entities\Inscription::class, function (Fa
     ];
 });
 
+$factory->define(App\Droit\Inscription\Entities\Groupe::class, function (Faker\Generator $faker) {
+    return [
+        'colloque_id' => 39,
+        'user_id'     => 710
+    ];
+});
+
 $factory->define(App\Droit\Colloque\Entities\Colloque_attestation::class, function (Faker\Generator $faker) {
     return [
         'colloque_id'  => 1,

@@ -1,6 +1,6 @@
-<tr {!! ($inscription->group_id ? 'class="isGoupe"' : '') !!}>
+<tr {!! (isset($inscription->groupe) ? 'class="isGoupe"' : '') !!}>
     <td>
-        @if(!$inscription->group_id)
+        @if(!isset($inscription->groupe))
             <a class="btn btn-sky btn-sm" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}"><i class="fa fa-edit"></i></a>
             @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
 
@@ -19,17 +19,17 @@
             <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse ? $adresse->name : '' }}</a></p>
             <p>{{ $inscription->inscrit->email }}</p>
         @else
-            <p><span class="label label-warning">Utilisateur ou adresse non trouvé ID: {{ $inscription->group_id or $inscription->user_id }}</span></p>
+            <h4><span class="label label-warning">Utilisateur ou groupe non trouvé ID: {{ $inscription->group_id or $inscription->user_id }}</span></h4>
         @endif
 
-        @if($inscription->group_id)
+        @if(isset($inscription->groupe))
             <br/><a class="btn btn-info btn-xs" data-toggle="modal" data-target="#editGroup_{{ $inscription->groupe->id }}">Changer le détenteur</a>
             @include('backend.inscriptions.modals.change', ['group' => $inscription->groupe]) <!-- Modal edit group -->
         @endif
 
     </td>
     <td>
-        @if($inscription->group_id)
+        @if(isset($inscription->groupe))
             <?php $group = $inscription->groupe; ?>
             @if($group->inscriptions)
                 @foreach($group->inscriptions as $inscription)
@@ -60,15 +60,15 @@
             @include('backend.partials.toggle', ['id' => $inscription->id])
         @endif
     </td>
-    <td>{{ $inscription->group_id ? $group->price : $inscription->price_cents }} CHF</td>
+    <td>{{ isset($inscription->groupe) ? $group->price : $inscription->price_cents }} CHF</td>
     <td>{{ $inscription->created_at->formatLocalized('%d %B %Y') }}</td>
     <td>
-        <?php $model = ($inscription->group_id ? 'group' : 'inscription'); ?>
-        <?php $item  = ($inscription->group_id ? $inscription->groupe : $inscription); ?>
+        <?php $model = (isset($inscription->groupe) ? 'group' : 'inscription'); ?>
+        <?php $item  = (isset($inscription->groupe) ? $inscription->groupe : $inscription); ?>
         @include('backend.inscriptions.partials.payed',['model' => $model, 'item' => $item])
     </td>
     <td class="text-right">
-        @if(!$inscription->group_id)
+        @if(!isset($inscription->groupe))
             <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
                 <input type="hidden" name="_method" value="DELETE">
                 <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">X</button>

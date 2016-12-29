@@ -144,11 +144,12 @@ class Inscription extends Model
 
     public function getInscritAttribute()
     {
-        if($this->group_id > 0)
+        if(isset($this->groupe))
         {
             return $this->groupe->user;
         }
-        else
+
+        if(isset($this->user))
         {
             return $this->user;
         }

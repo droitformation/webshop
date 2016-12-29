@@ -115,7 +115,7 @@ class Colloque extends Model
         }
         else
         {
-            return $this->start_at->formatLocalized('%A %u %B %Y');
+            return $this->start_at->formatLocalized('%A %d %B %Y');
         }
     }
 
