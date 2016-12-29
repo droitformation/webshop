@@ -18,7 +18,7 @@
                     <h3 style="margin-bottom:0;line-height:20px;font-size: 18px;"><a href="{{ url('admin/abo/'.$abo->id) }}">{{ $abo->title }}</a></h3>
                     <p style="margin-bottom: 5px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <form action="{{ url('admin/abo/generate') }}" method="POST" class="pull-right">
                         <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -85,8 +85,8 @@
                                     </td>
                                     <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
                                     <td>
-                                        @if($facture->abo_facture)
-                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->abo_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+                                        @if($facture->doc_facture)
+                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->doc_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
                                         @endif
                                     </td>
                                     <td>

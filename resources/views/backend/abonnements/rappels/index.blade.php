@@ -70,7 +70,6 @@
                                 <th class="col-md-1">Numero</th>
                                 <th class="col-md-2">Personne</th>
                                 <th class="col-md-2">Prix</th>
-                                <th class="col-md-2">Facture</th>
                                 <th class="col-md-5">Rappels</th>
                             </tr>
                             </thead>
@@ -90,9 +89,6 @@
                                             @endif
                                         </td>
                                         <td>{{ $facture->abonnement->abo->price_cents }} CHF</td>
-                                        <td>
-                                            <a target="_blank" href="{{ $facture->facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
-                                        </td>
                                         <td>
                                             <rappel path="abonnement" :rappels="{{ $facture->rappel_list }}" item="{{ $facture->id }}"></rappel>
                                         </td>

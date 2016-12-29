@@ -99,6 +99,26 @@ class AbonnementAdminTest extends TestCase {
         ]);
     }
 
+    public function testEditFactureWithoutCreatedAt()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $abonnement = $make->makeAbonnement();
+        $make->abonnementFacture($abonnement);
+
+        $facture = $abonnement->factures->first();
+
+        $this->visit(url('admin/facture/'.$facture->id));
+        $this->type('2016-12-31', 'payed_at');
+        $this->press('editFacture');
+
+        $this->seeInDatabase('abo_factures', [
+            'id'         => $facture->id,
+            'payed_at'   => '2016-12-31',
+            'created_at' => $facture->created_at->toDateString()
+        ]);
+    }
+
     public function testEditFactureDisplayInAbonnement()
     {
         $make = new \tests\factories\ObjectFactory();

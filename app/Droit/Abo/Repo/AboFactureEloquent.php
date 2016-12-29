@@ -88,7 +88,7 @@ class AboFactureEloquent implements AboFactureInterface{
 
         $facture->fill($data);
         
-        if($data['created_at']){
+        if(isset($data['created_at'])){
             $facture->created_at = $data['created_at'];
         }
 

@@ -8,7 +8,9 @@
             <div class="col-md-8">
                 <ol>
                     <li class="rappel-item" v-for="rappel in list">
-                        <a :href="rappel.doc_rappel" target="_blank" class="text-primary">{{ rappel.date }}</a>
+                        <a :href="rappel.doc_rappel" target="_blank" class="text-primary">
+                            {{ rappel.date }} <span v-if="!rappel.doc_rappel">pdf non crée</span>
+                        </a>
                         <button @click="remove(rappel.id)" class="btn btn-danger btn-xs pull-right"><i class="fa fa-times"></i></button>
                         <div class="clearfix"></div>
                     </li>

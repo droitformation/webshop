@@ -397,6 +397,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');
     
     Route::post('facture/edit', 'Backend\Abo\AboFactureController@edit');
+    Route::post('facture/generate', 'Backend\Abo\AboFactureController@generate');
     Route::resource('facture', 'Backend\Abo\AboFactureController');
 
     Route::post('abo/generate', 'Backend\Abo\AboFileController@generate');

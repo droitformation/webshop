@@ -101,5 +101,19 @@ class AboFactureController extends Controller {
 
         return response()->json(['OK' => 200, 'etat' => (!$facture->payed_at ? 'En attente' : 'Payé'),'color' => (!$facture->payed_at ? 'default' : 'success')]);
     }
+
+    /**
+     * Generate the facture
+     *
+     * @return Response
+     */
+    public function generate(Request $request)
+    {
+        $facture = $this->facture->find($request->input('id'));
+
+        $this->worker->make($facture);
+
+        return response()->json(['link' => $facture->doc_facture]);
+    }
     
 }
