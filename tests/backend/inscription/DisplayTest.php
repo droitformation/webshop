@@ -174,4 +174,26 @@ class DisplayTest extends TestCase {
         $this->assertFalse($display->isValid());
         $this->assertEquals(['Pas de\'adresse pour l\'inscrit'], $display->errors);
     }
+
+    public function testGetParticipants()
+    {
+        // Create colloque
+        $make = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1, 1);
+
+        $inscription = $colloque->inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        })->first();
+
+        $particiants = $inscription->groupe->inscriptions->map(function ($item, $key) {
+            return $item->participant;
+        });
+
+        $display = new \App\Droit\Inscription\Entities\Display($inscription);
+        $display->isValid();
+
+        $this->assertEquals('group', $display->type);
+        $this->assertEquals($particiants, $display->getParticiants());
+
+    }
 }

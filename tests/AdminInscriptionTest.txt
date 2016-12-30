@@ -7,6 +7,7 @@ Display
  [x] Correct name normal
  [x] Correct name group
  [x] Not valid
+ [x] Get participants
 
 InscriptionController
  [x] Make simple inscription

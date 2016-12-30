@@ -71,6 +71,16 @@ class InscriptionController extends Controller
         {
             $inscriptions = $this->inscription->getByColloque($id,false,true);
         }
+
+        $valid = $inscriptions->transform(function ($inscription, $key) {
+            return new \App\Droit\Inscription\Entities\Display($inscription);
+        })->partition(function ($display) {
+            return $display->isValid();
+        });
+
+        echo '<pre>';
+        print_r($valid);
+        echo '</pre>';exit();
         
         $colloque = $this->colloque->find($id);
   

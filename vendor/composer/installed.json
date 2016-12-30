@@ -1200,49 +1200,6 @@
         ]
     },
     {
-        "name": "itbz/fpdi",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hanneskod/fpdi.git",
-            "reference": "77d993af6ee36959dc0da3a968b388311810a13e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hanneskod/fpdi/zipball/77d993af6ee36959dc0da3a968b388311810a13e",
-            "reference": "77d993af6ee36959dc0da3a968b388311810a13e",
-            "shasum": ""
-        },
-        "require": {
-            "itbz/fpdf": "~1.7",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "hanneskod/classtools": "~1.0",
-            "nikic/php-parser": "~1.0",
-            "phpunit/phpunit": "4.*",
-            "symfony/finder": "~2.3",
-            "tecnickcom/tcpdf": "^6.2.12"
-        },
-        "suggest": {
-            "tecnickcom/tcpdf": "FPDI supports TCPDF as a replacement for FPDF"
-        },
-        "time": "2016-04-07 13:33:33",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "fpdi\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "Unofficial PSR-4 compliant version of the FPDI library"
-    },
-    {
         "name": "phpunit/php-timer",
         "version": "1.0.8",
         "version_normalized": "1.0.8.0",
@@ -2557,63 +2514,6 @@
         ]
     },
     {
-        "name": "stripe/stripe-php",
-        "version": "v3.23.0",
-        "version_normalized": "3.23.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/stripe/stripe-php.git",
-            "reference": "c702a2ed92f4b39603c4a796492d87bcc16c819c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c702a2ed92f4b39603c4a796492d87bcc16c819c",
-            "reference": "c702a2ed92f4b39603c4a796492d87bcc16c819c",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-json": "*",
-            "ext-mbstring": "*",
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0",
-            "satooshi/php-coveralls": "~0.6.1",
-            "squizlabs/php_codesniffer": "~2.0"
-        },
-        "time": "2016-09-15 18:16:59",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Stripe\\": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Stripe and contributors",
-                "homepage": "https://github.com/stripe/stripe-php/contributors"
-            }
-        ],
-        "description": "Stripe PHP Library",
-        "homepage": "https://stripe.com/",
-        "keywords": [
-            "api",
-            "payment processing",
-            "stripe"
-        ]
-    },
-    {
         "name": "phpdocumentor/reflection-docblock",
         "version": "3.1.1",
         "version_normalized": "3.1.1.0",
@@ -3358,61 +3258,6 @@
         ]
     },
     {
-        "name": "swiftmailer/swiftmailer",
-        "version": "v5.4.4",
-        "version_normalized": "5.4.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/swiftmailer/swiftmailer.git",
-            "reference": "545ce9136690cea74f98f86fbb9c92dd9ab1a756"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/545ce9136690cea74f98f86fbb9c92dd9ab1a756",
-            "reference": "545ce9136690cea74f98f86fbb9c92dd9ab1a756",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9.1"
-        },
-        "time": "2016-11-24 01:01:23",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "5.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/swift_required.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Chris Corbyn"
-            },
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Swiftmailer, free feature-rich PHP mailer",
-        "homepage": "http://swiftmailer.org",
-        "keywords": [
-            "email",
-            "mail",
-            "mailer"
-        ]
-    },
-    {
         "name": "paragonie/random_compat",
         "version": "v2.0.4",
         "version_normalized": "2.0.4.0",
@@ -3736,68 +3581,6 @@
             "polyfill",
             "portable",
             "shim"
-        ]
-    },
-    {
-        "name": "laravel/cashier",
-        "version": "v7.0.4",
-        "version_normalized": "7.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/laravel/cashier.git",
-            "reference": "7a549d0fb3b3a0a9236173f41f50a4172da6a59b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/laravel/cashier/zipball/7a549d0fb3b3a0a9236173f41f50a4172da6a59b",
-            "reference": "7a549d0fb3b3a0a9236173f41f50a4172da6a59b",
-            "shasum": ""
-        },
-        "require": {
-            "dompdf/dompdf": "^0.7.0",
-            "illuminate/database": "~5.3",
-            "illuminate/support": "~5.3",
-            "nesbot/carbon": "~1.0",
-            "php": ">=5.5.9",
-            "stripe/stripe-php": "~3.0",
-            "symfony/http-kernel": "~2.7|~3.0"
-        },
-        "require-dev": {
-            "illuminate/http": "~5.3",
-            "illuminate/routing": "~5.3",
-            "illuminate/view": "~5.3",
-            "mockery/mockery": "~0.9",
-            "phpunit/phpunit": "~4.0",
-            "vlucas/phpdotenv": "~2.0"
-        },
-        "time": "2016-11-25 15:21:16",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "8.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Laravel\\Cashier\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Taylor Otwell",
-                "email": "taylorotwell@gmail.com"
-            }
-        ],
-        "description": "Laravel Cashier provides an expressive, fluent interface to Stripe's subscription billing services.",
-        "keywords": [
-            "billing",
-            "laravel",
-            "stripe"
         ]
     },
     {
@@ -5592,5 +5375,223 @@
             "laravel",
             "newsletter"
         ]
+    },
+    {
+        "name": "stripe/stripe-php",
+        "version": "v4.3.0",
+        "version_normalized": "4.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/stripe/stripe-php.git",
+            "reference": "234bcbd7483873c8762a67dfbdf2e6594b0a2ecc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/234bcbd7483873c8762a67dfbdf2e6594b0a2ecc",
+            "reference": "234bcbd7483873c8762a67dfbdf2e6594b0a2ecc",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-json": "*",
+            "ext-mbstring": "*",
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0",
+            "satooshi/php-coveralls": "~0.6.1",
+            "squizlabs/php_codesniffer": "~2.0"
+        },
+        "time": "2016-11-30 19:16:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Stripe\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Stripe and contributors",
+                "homepage": "https://github.com/stripe/stripe-php/contributors"
+            }
+        ],
+        "description": "Stripe PHP Library",
+        "homepage": "https://stripe.com/",
+        "keywords": [
+            "api",
+            "payment processing",
+            "stripe"
+        ]
+    },
+    {
+        "name": "swiftmailer/swiftmailer",
+        "version": "v5.4.5",
+        "version_normalized": "5.4.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/swiftmailer/swiftmailer.git",
+            "reference": "cd142238a339459b10da3d8234220963f392540c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/cd142238a339459b10da3d8234220963f392540c",
+            "reference": "cd142238a339459b10da3d8234220963f392540c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9.1",
+            "symfony/phpunit-bridge": "~3.2"
+        },
+        "time": "2016-12-29 10:02:40",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/swift_required.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Chris Corbyn"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Swiftmailer, free feature-rich PHP mailer",
+        "homepage": "http://swiftmailer.org",
+        "keywords": [
+            "email",
+            "mail",
+            "mailer"
+        ]
+    },
+    {
+        "name": "laravel/cashier",
+        "version": "v7.0.5",
+        "version_normalized": "7.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/laravel/cashier.git",
+            "reference": "1067614a481b3a90170db6ed198f9ecf93f20a37"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/laravel/cashier/zipball/1067614a481b3a90170db6ed198f9ecf93f20a37",
+            "reference": "1067614a481b3a90170db6ed198f9ecf93f20a37",
+            "shasum": ""
+        },
+        "require": {
+            "dompdf/dompdf": "^0.7.0",
+            "illuminate/database": "~5.3",
+            "illuminate/support": "~5.3",
+            "nesbot/carbon": "~1.0",
+            "php": ">=5.5.9",
+            "stripe/stripe-php": "~4.0",
+            "symfony/http-kernel": "~2.7|~3.0"
+        },
+        "require-dev": {
+            "illuminate/http": "~5.3",
+            "illuminate/routing": "~5.3",
+            "illuminate/view": "~5.3",
+            "mockery/mockery": "~0.9",
+            "phpunit/phpunit": "~4.0",
+            "vlucas/phpdotenv": "~2.0"
+        },
+        "time": "2016-12-29 03:10:21",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "8.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Laravel\\Cashier\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Taylor Otwell",
+                "email": "taylorotwell@gmail.com"
+            }
+        ],
+        "description": "Laravel Cashier provides an expressive, fluent interface to Stripe's subscription billing services.",
+        "keywords": [
+            "billing",
+            "laravel",
+            "stripe"
+        ]
+    },
+    {
+        "name": "itbz/fpdi",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hanneskod/fpdi.git",
+            "reference": "2f8e029e335df752ab122b775d2a2b28bf79d91f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hanneskod/fpdi/zipball/2f8e029e335df752ab122b775d2a2b28bf79d91f",
+            "reference": "2f8e029e335df752ab122b775d2a2b28bf79d91f",
+            "shasum": ""
+        },
+        "require": {
+            "itbz/fpdf": "~1.7",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "hanneskod/classtools": "~1.0",
+            "nikic/php-parser": "~1.0",
+            "phpunit/phpunit": "4.*",
+            "symfony/finder": "~2.3",
+            "tecnickcom/tcpdf": "^6.2.12"
+        },
+        "suggest": {
+            "tecnickcom/tcpdf": "FPDI supports TCPDF as a replacement for FPDF"
+        },
+        "time": "2016-12-28 18:49:35",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "fpdi\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Unofficial PSR-4 compliant version of the FPDI library"
     }
 ]

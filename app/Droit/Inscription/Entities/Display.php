@@ -87,7 +87,11 @@ class Display
     public function getParticiants()
     {
         $group = $this->getModel();
-        
-        return $group->inscriptions->pluck('participant');
+
+        return $group->inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        })->map(function ($item, $key) {
+            return $item->participant;
+        });
     }
 }
