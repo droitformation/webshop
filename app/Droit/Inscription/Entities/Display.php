@@ -9,7 +9,8 @@ class Display
     public $errors;
     public $type;
     public $inscrit = null;
-    public $name = '';
+    public $detenteur = '';
+    public $adresse   = '';
 
     public function __construct(Model $inscription)
     {
@@ -50,8 +51,8 @@ class Display
         {
             $this->inscription->groupe->load('user','user.adresses');
 
-            $this->inscrit = $this->inscription->groupe->user;
-            $this->name = $this->getName($this->inscription->groupe->user);
+            $this->inscrit   = $this->inscription->groupe->user;
+            $this->detenteur = $this->getDetenteur($this->inscription->groupe->user);
 
             return $this;
         }
@@ -61,7 +62,7 @@ class Display
             $this->inscription->user->load('adresses');
             $this->inscrit = $this->inscription->user;
 
-            $this->name = $this->getName($this->inscription->user);
+            $this->detenteur = $this->getDetenteur($this->inscription->user);
 
             return $this;
         }
@@ -70,7 +71,7 @@ class Display
         $this->errors[] = 'Pas de model inscrit valide';
     }
 
-    public function getName($inscrit)
+    public function getDetenteur($inscrit)
     {
         if(!isset($inscrit->adresses) || $inscrit->adresses->isEmpty()){
             $this->valid = false;
@@ -79,9 +80,9 @@ class Display
             return [];
         }
 
-        $adresse = $inscrit->adresses->where('type',1)->first();
+        $this->adresse = $inscrit->adresses->where('type',1)->first();
 
-        return ['civilite' => $adresse->civilite_title, 'name' => $adresse->name ];
+        return ['id' => $inscrit->id, 'civilite' => $this->adresse->civilite_title, 'name' => $this->adresse->name, 'email' => $this->adresse->email ];
     }
 
     public function getParticiants()

@@ -3,7 +3,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- form start -->
-            <form data-validate-parsley action="{{ url('admin/inscription/change') }}" method="POST" class="form" >
+            <form data-validate-parsley action="{{ url('admin/group/'.$group->id) }}" method="POST" class="form">
+                <input type="hidden" name="_method" value="PUT">
                 {!! csrf_field() !!}
 
                 <div class="modal-header">
@@ -18,8 +19,7 @@
 
                     <h4>Détenteur actuel</h4>
                     <address>
-                        @if(isset($user))
-                            <?php $adresse = $user->adresses->where('type',1)->first();?>
+                        @if(isset($adresse))
                             {{ $adresse->company }}<br/>
                             {{ $adresse->name }}<br>
                             {{ $adresse->adresse }}<br/>

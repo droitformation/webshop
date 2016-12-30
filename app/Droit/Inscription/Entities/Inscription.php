@@ -144,17 +144,27 @@ class Inscription extends Model
 
     public function getInscritAttribute()
     {
-        if(isset($this->groupe))
-        {
+        if(isset($this->groupe)) {
             return $this->groupe->user;
         }
 
-        if(isset($this->user))
-        {
+        if(isset($this->user)) {
             return $this->user;
         }
 
         return null;
+    }
+
+    public function getDetenteurAttribute()
+    {
+        $adresse = $this->inscrit->adresses->where('type',1)->first();
+
+        return ['id' => $this->inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email ];
+    }
+
+    public function getAdresseInscritAttribute()
+    {
+        return $this->inscrit->adresses->where('type',1)->first();
     }
 
     public function getIsFreeAttribute()

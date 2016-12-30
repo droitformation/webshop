@@ -4,14 +4,18 @@ Display
  [x] Inscrit group
  [x] Is correct model
  [x] Is correct model groupe
- [x] Correct name normal
- [x] Correct name group
+ [x] Correct detenteur normal
+ [x] Correct detenteur group
  [x] Not valid
  [x] Get participants
 
 InscriptionController
+ [x] Desinscription list
+ [x] Desinscription
  [x] Make simple inscription
  [x] Make multiple inscription
+ [x] Edit columns via ajax
+ [x] Edit groupe columns via ajax
 
 Inscription
  [x] Register new inscription

@@ -10,7 +10,6 @@
                     <h4>
                         <?php $illustration = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
                         <img style="height: 50px; float:left;margin-right: 15px; margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/'.$illustration.'') }}" />
-
                         <p><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a><br/><small>{{ $colloque->event_date }}</small></p>
                     </h4>
                 </div>
@@ -40,18 +39,16 @@
                         </thead>
                         <tbody class="selects">
 
-                            @if(!empty($desinscriptions))
+                            @if(!$desinscriptions->isEmpty())
                                 @foreach($desinscriptions as $inscription)
 
                                     <?php $style = ($inscription->group_id > 0 ? 'class="isGoupe"' : ''); ?>
                                     <tr {!! $style !!}>
                                         <td>
-
-                                            <form action="{{ url('admin/inscription/restore/'.$inscription->id) }}" method="POST" class="form-horizontal">
+                                            <form action="{{ url('admin/desinscription/restore/'.$inscription->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                                                 <button data-what="Restaurer" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-warning btn-xs deleteAction">Restaurer</button>
                                             </form>
-
                                         </td>
                                         <td>
 

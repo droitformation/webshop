@@ -8,7 +8,7 @@
                 <h4 class="modal-title" id="myModalLabel">Inscription n° {{ $inscription->inscription_no }}</h4>
             </div>
             <div class="modal-body">
-                @include('backend.users.partials.single-inscription')
+                @include('backend.users.partials.single-inscription', ['inscription' => $inscription])
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>

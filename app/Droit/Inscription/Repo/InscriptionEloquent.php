@@ -45,9 +45,9 @@ class InscriptionEloquent implements InscriptionInterface{
             $inscription->$type;
         }
 
-        if($paginate)
+        if($paginate) 
         {
-            return $inscription->groupBy('user_id')->groupBy('group_id')->orderBy('created_at','DESC')->paginate(50);
+            return $inscription->groupBy('user_id')->groupBy('group_id')->orderBy('created_at','DESC')->paginate(30);
             //return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->orderBy('created_at','DESC')->paginate(50);
         }
 
@@ -159,8 +159,10 @@ class InscriptionEloquent implements InscriptionInterface{
         {
             throw new \App\Exceptions\InscriptionExistException('Impossible de restaurer une autre inscription pour cette personne existe déjà') ;
         }
-        
-        return $restore->restore();
+
+        $restore->restore();
+
+        return $restore;
     }
 
     public function hasPayed($user_id)
@@ -249,6 +251,24 @@ class InscriptionEloquent implements InscriptionInterface{
 
     }
 
+    /*
+     * For ajax calls, because we only want to update certain columns
+     * */
+    public function updateColumn(array $data)
+    {
+        $inscription = $this->inscription->findOrFail($data['id']);
+
+        if(! $inscription)
+        {
+            return false;
+        }
+        
+        $inscription->fill($data);
+        $inscription->save();
+        
+        return $inscription;
+    }
+    
     public function update(array $data){
 
         $inscription = $this->inscription->findOrFail($data['id']);

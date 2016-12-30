@@ -229,35 +229,37 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     | Inscriptions and colloque Routes
     |--------------------------------------------------------------------------
     */
-
+    Route::get('inscription/test/{id}', 'Backend\Colloque\InscriptionController@test');// tests routes
+    
     Route::match(['get', 'post'], 'inscription/colloque/{id}', 'Backend\Colloque\InscriptionController@colloque');
-
-    Route::get('inscription/test', 'Backend\Colloque\InscriptionController@test');// tests routes
 
     Route::get('inscription/desinscription/{id}', 'Backend\Colloque\InscriptionController@desinscription');
     Route::get('inscription/create/{id?}', 'Backend\Colloque\InscriptionController@create');
-    Route::get('inscription/add/{group_id}', 'Backend\Colloque\InscriptionController@add');
+
     Route::get('inscription/regenerate/{id}', 'Backend\Colloque\InscriptionController@regenerate');
     Route::post('inscription/generate', 'Backend\Colloque\InscriptionController@generate');
     Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
-    Route::get('inscription/groupe/{id}', 'Backend\Colloque\InscriptionController@groupe');
-    Route::post('inscription/destroygroup/{id}', 'Backend\Colloque\InscriptionController@destroygroup');
+    
     Route::post('inscription/type', 'Backend\Colloque\InscriptionController@inscription');
     Route::post('inscription/make', ['middleware' => 'already', 'uses' => 'Backend\Colloque\InscriptionController@make']);
     Route::post('inscription/edit', 'Backend\Colloque\InscriptionController@edit');
-    Route::post('inscription/push', 'Backend\Colloque\InscriptionController@push');
-    Route::post('inscription/change', 'Backend\Colloque\InscriptionController@change');
+    
     Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
     Route::post('inscription/presence', 'Backend\Colloque\InscriptionController@presence');
+    
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
+    
+    Route::get('desinscription/{id}', 'Backend\Colloque\DesinscriptionController@index');
+    Route::post('desinscription/restore/{id}', 'Backend\Colloque\DesinscriptionController@restore');
+    Route::resource('desinscription', 'Backend\Colloque\DesinscriptionController');
+    Route::resource('group', 'Backend\Colloque\GroupInscriptionController');
 
     Route::get('inscription/rappels/{id}','Backend\Colloque\RappelController@rappels');
-    
     Route::post('inscription/rappel/make','Backend\Colloque\RappelController@make');
     Route::post('inscription/rappel/send','Backend\Colloque\RappelController@send');
     Route::post('inscription/rappel/generate', 'Backend\Colloque\RappelController@generate');
-    
     Route::resource('inscription/rappel','Backend\Colloque\RappelController');
+    
     Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
 
     Route::post('sondage/remove','Backend\Sondage\SondageController@remove');

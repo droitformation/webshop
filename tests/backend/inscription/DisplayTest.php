@@ -120,11 +120,11 @@ class DisplayTest extends TestCase {
         $this->assertEquals($group->groupe, $display->getModel());
     }
 
-    public function testCorrectNameNormal()
+    public function testCorrectDetenteurNormal()
     {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
-        $user     = $make->makeUser(['first_name' => 'Cindy', 'last_name' => 'Leschaud', 'civilite_id' => 2]);
+        $user     = $make->makeUser(['first_name' => 'Cindy', 'last_name' => 'Leschaud', 'email' => 'cindy.leschaud@gmail.com', 'civilite_id' => 2, 'email' => 'cindy.leschaud@gmail.com']);
 
         $this->assertEquals('Cindy Leschaud', $user->adresses->first()->name);
         $this->assertEquals('Madame', $user->adresses->first()->civilite_title);
@@ -135,14 +135,14 @@ class DisplayTest extends TestCase {
         $display->isValid();
 
         $this->assertTrue($display->valid);
-        $this->assertEquals(['civilite' => 'Madame', 'name' => 'Cindy Leschaud'], $display->name);
+        $this->assertEquals(['id' => $user->id, 'civilite' => 'Madame', 'name' => 'Cindy Leschaud', 'email' => 'cindy.leschaud@gmail.com'], $display->detenteur);
     }
 
-    public function testCorrectNameGroup()
+    public function testCorrectDetenteurGroup()
     {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
-        $user     = $make->makeUser(['first_name' => 'Cindy', 'last_name' => 'Leschaud', 'civilite_id' => 2]);
+        $user     = $make->makeUser(['first_name' => 'Cindy', 'last_name' => 'Leschaud', 'civilite_id' => 2, 'email' => 'cindy.leschaud@gmail.com']);
 
         $this->assertEquals('Cindy Leschaud', $user->adresses->first()->name);
         $this->assertEquals('Madame', $user->adresses->first()->civilite_title);
@@ -157,8 +157,9 @@ class DisplayTest extends TestCase {
         $display = new \App\Droit\Inscription\Entities\Display($inscriptions->first());
         $display->isValid();
 
+        $this->assertEquals($user->adresses->first(), $display->adresse);
         $this->assertTrue($display->valid);
-        $this->assertEquals(['civilite' => 'Madame', 'name' => 'Cindy Leschaud'], $display->name);
+        $this->assertEquals(['id' => $user->id, 'civilite' => 'Madame', 'name' => 'Cindy Leschaud', 'email' => 'cindy.leschaud@gmail.com'], $display->detenteur);
     }
 
     public function testNotValid()

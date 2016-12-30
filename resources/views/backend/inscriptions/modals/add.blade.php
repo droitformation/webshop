@@ -3,8 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- form start -->
-            <form data-validate-parsley action="{{ url('admin/inscription/push') }}" method="POST" class="form" >
-                {!! csrf_field() !!}
+            <form data-validate-parsley action="{{ url('admin/group') }}" method="POST" class="form" >{!! csrf_field() !!}
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

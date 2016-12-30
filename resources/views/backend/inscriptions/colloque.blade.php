@@ -79,9 +79,9 @@
                                     <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
                                 </span>
                             </div>
-                        </form>
+                        </form><div class="clearfix"></div>
 
-                        <table class="table" style="margin-bottom: 0px;"><!-- Start inscriptions -->
+                        <table class="table" style="margin-bottom: 0px; margin-top:20px;"><!-- Start inscriptions -->
                             <thead>
                             <tr>
                                 <th class="col-sm-1 no-sort">Action</th>
@@ -95,9 +95,13 @@
                             </thead>
                             <tbody class="selects">
 
-                            @if(!$inscriptions->isEmpty())
-                                @foreach($inscriptions as $inscription)
-                                    @include('backend.inscriptions.partials.row', ['inscription' => $inscription])
+                            @if(!$inscriptions_filter->isEmpty())
+                                @foreach($inscriptions_filter as $inscription)
+                                    @if($inscription->group_id)
+                                        @include('backend.inscriptions.rows.multiple', ['inscription' => $inscription])
+                                    @else
+                                        @include('backend.inscriptions.rows.simple', ['inscription' => $inscription])
+                                    @endif
                                 @endforeach
                             @else
                                 <tr><td colspan="7"><p>Aucune inscriptions pour le moment</p></td></tr>
@@ -106,10 +110,12 @@
                             </tbody>
                         </table><!-- End inscriptions -->
 
-                        {{ $inscriptions->links() }}
+                        @if($inscriptions instanceof \Illuminate\Pagination\LengthAwarePaginator )
+                            {{$inscriptions->links()}}
+                        @endif
 
                         <hr/>
-                        <p><br/><a class="btn btn-warning btn-sm pull-right" href="{{ url('admin/inscription/desinscription/'.$colloque->id) }}">Désinscriptions</a></p>
+                        <p><br/><a class="btn btn-warning btn-sm pull-right" href="{{ url('admin/desinscription/'.$colloque->id) }}">Désinscriptions</a></p>
                     </div>
                 </div>
             </div>

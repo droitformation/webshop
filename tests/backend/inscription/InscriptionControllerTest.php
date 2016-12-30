@@ -8,7 +8,11 @@ class InscriptionControllerTest extends TestCase {
 
 	public function setUp()
 	{
-		parent::setUp();
+        parent::setUp();
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
 	}
 
 	public function tearDown()
@@ -16,24 +20,58 @@ class InscriptionControllerTest extends TestCase {
 		parent::tearDown();
 	}
 
+    public function testDesinscriptionList()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $this->visit('admin/desinscription/'.$colloque->id);
+        $this->assertViewHas('desinscriptions');
+    }
+
+    public function testDesinscription()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = factory(App\Droit\User\Entities\User::class,'admin')->create();
+
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create(['user_id' => $person->id, 'group_id' => null, 'colloque_id' => $colloque->id]);
+
+        $this->visit('admin/inscription/colloque/'.$colloque->id);
+        $this->call('DELETE', 'admin/inscription/'.$inscription->id);
+
+        $this->notSeeInDatabase('colloque_inscriptions', [
+            'colloque_id' => $colloque->id,
+            'user_id'     => $person->id,
+            'deleted_at'  => null
+        ]);
+
+        $this->visit('admin/desinscription/'.$colloque->id);
+        $this->call('POST', 'admin/desinscription/restore/'.$inscription->id);
+
+        $this->seeInDatabase('colloque_inscriptions', [
+            'colloque_id' => $colloque->id,
+            'user_id'     => $person->id,
+            'deleted_at'  => null
+        ]);
+    }
+
 	public function testMakeSimpleInscription()
 	{
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
-
-        $user->roles()->attach(1);
-        $this->actingAs($user);
-
         // Create colloque
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
         $person   = $make->makeUser();
+
         $prices   = $colloque->prices->pluck('id')->all();
         $options  = $colloque->options->pluck('id')->all();
 
         // Redirect because no session
         $this->visit('admin/inscription/make');
         $this->seePageIs('admin/inscription/create');
-
+        
         // See pag with data
         $data = ['colloque_id' => $colloque->id, 'user_id' => $person->id,'type' => 'simple'];
         $this->call('POST', 'admin/inscription/make', $data);
@@ -62,10 +100,6 @@ class InscriptionControllerTest extends TestCase {
 
     public function testMakeMultipleInscription()
     {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
-
-        $user->roles()->attach(1);
-        $this->actingAs($user);
         // Create colloque
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
@@ -114,5 +148,59 @@ class InscriptionControllerTest extends TestCase {
             'group_id'    => $inscription->group_id,
             'price_id'    => $prices[0],
         ]);
+    }
+
+    public function testEditColumnsViaAjax()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create(['user_id' => $person->id, 'group_id' => null, 'colloque_id' => $colloque->id]);
+
+        $data = [
+            'model'    => 'inscription' ,
+            'pk'       => $inscription->id,
+            'name'     => 'payed_at',
+            'value'    => \Carbon\Carbon::now()->toDateString()
+        ];
+
+        $this->call('POST', 'admin/inscription/edit', $data);
+
+        $this->seeInDatabase('colloque_inscriptions', [
+            'id'          => $inscription->id,
+            'colloque_id' => $colloque->id,
+            'payed_at'    => \Carbon\Carbon::now()->toDateString(),
+        ]);
+    }
+
+    public function testEditGroupeColumnsViaAjax()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1, 1);
+
+        $inscriptions = $colloque->inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        });
+        
+        $groupe = $inscriptions->first();
+
+        $data = [
+            'model'    => 'group' ,
+            'pk'       => $groupe->groupe->id,
+            'name'     => 'payed_at',
+            'value'    => \Carbon\Carbon::now()->toDateString()
+        ];
+
+        $this->call('POST', 'admin/inscription/edit', $data);
+
+        foreach($inscriptions as $inscription)
+        {
+            $this->seeInDatabase('colloque_inscriptions', [
+                'id'          => $inscription->id,
+                'colloque_id' => $colloque->id,
+                'payed_at'    => \Carbon\Carbon::now()->toDateString(),
+            ]);
+        }
     }
 }

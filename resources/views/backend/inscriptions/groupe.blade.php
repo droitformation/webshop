@@ -14,7 +14,8 @@
             <div class="panel-body">
                 <h3>Changer le détenteur du groupe</h3>
 
-                <form data-validate-parsley action="{{ url('admin/inscription/change') }}" method="POST" class="form" >
+                <form data-validate-parsley action="{{ url('admin/group/'.$group->id) }}" method="POST" class="form">
+                    <input type="hidden" name="_method" value="PUT">
                     {!! csrf_field() !!}
 
                     <input type="hidden" name="group_id" value="{{ $groupe->id }}" />

@@ -1176,3 +1176,8 @@ input[type="checkbox"].rappel-input {
 .dl-horizontal.dl-resume dd{
     margin-left: 220px;
 }
+
+.btn-isGroupe{
+    display: inline-block;
+    margin-top: 10px;
+}

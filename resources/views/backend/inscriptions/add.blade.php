@@ -13,7 +13,7 @@
         <div class="panel panel-magenta">
             <div class="panel-body">
                 <h3>Ajouter une Inscription au groupe</h3>
-                <form data-validate-parsley action="{{ url('admin/inscription/push') }}" method="POST" class="form" >
+                <form data-validate-parsley action="{{ url('admin/group') }}" method="POST" class="form" >
                     {!! csrf_field() !!}
 
                     <input type="hidden" name="group_id" value="{{ $group_id }}" />

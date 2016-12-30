@@ -21,7 +21,7 @@ class ObjectFactory
     {
         $first_name = isset($data['first_name']) ? $data['first_name'] : $this->faker->firstName;
         $last_name  = isset($data['last_name']) ? $data['last_name'] : $this->faker->lastName;
-        $email      = $this->faker->email;
+        $email      = isset($data['email']) ? $data['email'] : $this->faker->email;
 
         $user = factory(\App\Droit\User\Entities\User::class)->create([
             'first_name' => $first_name,

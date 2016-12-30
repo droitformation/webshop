@@ -63,41 +63,22 @@ class InscriptionController extends Controller
      */
     public function colloque($id, Request $request)
     {
-        if($request->input('inscription_no',null))
-        {
+        $colloque = $this->colloque->find($id);
+
+        if($request->input('inscription_no',null)) {
             $inscriptions = $this->inscription->findByNumero($request->input('inscription_no',null),$id);
         }
-        else
-        {
+        else {
             $inscriptions = $this->inscription->getByColloque($id,false,true);
         }
 
-        $valid = $inscriptions->transform(function ($inscription, $key) {
-            return new \App\Droit\Inscription\Entities\Display($inscription);
-        })->partition(function ($display) {
+        // Filter to remove inscriptions without all infos
+        $inscriptions_filter = $inscriptions->filter(function ($inscription, $key) {
+            $display = new \App\Droit\Inscription\Entities\Display($inscription);
             return $display->isValid();
         });
-
-        echo '<pre>';
-        print_r($valid);
-        echo '</pre>';exit();
-        
-        $colloque = $this->colloque->find($id);
   
-        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'colloque' => $colloque, 'names' => config('columns.names')]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function desinscription($id)
-    {
-        $colloque        = $this->colloque->find($id);
-        $desinscriptions = $this->inscription->getByColloqueTrashed($id);
-
-        return view('backend.inscriptions.desinscription')->with(['colloque' => $colloque, 'desinscriptions' => $desinscriptions]);
+        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'inscriptions_filter' => $inscriptions_filter, 'colloque' => $colloque, 'names' => config('columns.names')]);
     }
 
     /**
@@ -127,7 +108,7 @@ class InscriptionController extends Controller
         $user      = $this->user->find($request->input('user_id'));
         $type      = $request->input('type');
 
-        $form = view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user' => $user, 'type' => $type]);
+        $form = view('backend.inscriptions.register.'.$type)->with(['colloque' => $colloque, 'user' => $user, 'type' => $type]);
 
         return view('backend.inscriptions.make')->with(['colloques' => $colloques, 'user' => $user, 'colloque' => $colloque, 'form' => $form, 'type' => $type]);
     }
@@ -145,49 +126,6 @@ class InscriptionController extends Controller
     }
 
     /**
-     * Display groupe edit.
-     *
-     * @return Response
-     */
-    public function groupe($group_id)
-    {
-        $groupe = $this->groupe->find($group_id);
-
-        return view('backend.inscriptions.groupe')->with(['groupe' => $groupe]);
-    }
-
-    public function push(Request $request)
-    {
-        // Register a new inscription for group
-        $this->register->register($request->all(), $request->input('colloque_id'));
-
-        // Get the group
-        $group = $this->groupe->find($request->input('group_id'));
-
-        // Remake docs
-        $this->register->makeDocuments($group, true);
-
-        alert()->success('L\'inscription à bien été crée');
-
-        return redirect()->back();
-    }
-
-    public function change(Request $request)
-    {
-        // Update user for group and remake docs
-        $groupe = $this->groupe->update([
-            'id'      => $request->input('group_id'),
-            'user_id' => $request->input('user_id')
-        ]);
-
-        $this->register->makeDocuments($groupe, true);
-
-        alert()->success('Le groupe a été modifié');
-
-        return redirect('admin/inscription/colloque/'.$groupe->colloque_id);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
@@ -201,16 +139,12 @@ class InscriptionController extends Controller
         $this->register->colloqueIsOk($colloque);
 
         // if type simple
-        if($type == 'simple')
-        {
+        if($type == 'simple') {
             $inscription = $this->register->register($request->all(), $colloque, true);
-
             $this->register->makeDocuments($inscription, true);
         }
-        else
-        {
+        else {
             $group = $this->register->registerGroup($colloque, $request->all());
-
             $this->register->makeDocuments($group, true);
         }
 
@@ -252,8 +186,7 @@ class InscriptionController extends Controller
         $this->register->makeDocuments($model, true);
 
         // remake attestation
-        if($inscription->doc_attestation)
-        {
+        if($inscription->doc_attestation) {
             $this->generator->make('attestation', $inscription);
         }
 
@@ -332,23 +265,20 @@ class InscriptionController extends Controller
 
     public function edit(Request $request)
     {
-        $model = $request->input('model');
+        $data = $request->all();
 
-        if($model == 'group')
-        {
-            $group = $this->groupe->find($request->input('pk'));
+        if($data['model'] == 'group') {
+            $group = $this->groupe->find($data['pk']);
 
             if(!$group->inscriptions->isEmpty())
             {
-                foreach($group->inscriptions as $inscription)
-                {
-                    $inscription = $this->inscription->update(['id' => $inscription->id , $request->input('name') => $request->input('value')]);
-                }
+                $group->inscriptions->each(function ($inscription, $key) use ($data) {
+                    $this->inscription->updateColumn(['id' => $inscription->id , $data['name'] => $data['value']]);
+                });
             }
         }
-        else
-        {
-            $inscription = $this->inscription->update(['id' => $request->input('pk'), $request->input('name') => $request->input('value')]);
+        else {
+            $inscription = $this->inscription->updateColumn(['id' => $data['pk'], $data['name'] => $data['value']]);
         }
 
         return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'default' : 'success')]);
@@ -368,63 +298,13 @@ class InscriptionController extends Controller
         $this->register->destroyDocuments($inscription);
 
         // If it's a group inscription and we have deleted refresh the groupe invoice and bv
-        if($inscription->group_id > 0)
-        {
+        if($inscription->group_id > 0) {
             $this->register->makeDocuments($inscription->groupe, true);
         }
 
         $this->inscription->delete($id);
 
         alert()->success('Désinscription effectué');
-
-        return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroygroup($id)
-    {
-        $group = $this->groupe->find($id);
-
-        // Delete all inscriptions for group
-        $group->inscriptions()->delete();
-
-        // Delete the group
-        $this->groupe->delete($id);
-
-        alert()->success('Suppression du groupe effectué');
-
-        return redirect()->back();
-    }
-
-    /**
-     * Restore the inscription
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function restore($id)
-    {
-        $this->inscription->restore($id);
-
-        $inscription = $this->inscription->find($id);
-
-        // Remake the documents
-        $model = ($inscription->group_id ? $inscription->groupe : $inscription);
-
-        $this->register->makeDocuments($model, true);
-
-        // If the inscription was in a group, restore the group
-        if($inscription->group_id > 0 && $inscription->groupe)
-        {
-            $this->groupe->restore($inscription->group_id);
-        }
-
-        alert()->success('L\'inscription a été restauré');
 
         return redirect()->back();
     }
@@ -441,7 +321,7 @@ class InscriptionController extends Controller
         // simple or multiple
         $type     = $request->input('type');
 
-        echo view('backend.inscriptions.partials.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type])->__toString();
+        echo view('backend.inscriptions.register.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type])->__toString();
     }
 
     public function presence(Request $request)
@@ -455,15 +335,6 @@ class InscriptionController extends Controller
         }
 
         echo 'ok';
-    }
-
-    public function test()
-    {
-        $colloques = $this->colloque->getAll();
-        $colloque  = $this->colloque->find(102);
-        $user      = $this->user->find(710);
-        
-        return view('backend.inscriptions.test')->with(['colloques' => $colloques, 'user' => $user, 'colloque' => $colloque]);
     }
 
 }
