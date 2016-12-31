@@ -1,6 +1,6 @@
 <?php
 
-class InscriptionTest extends TestCase {
+class RegisterWorker extends TestCase {
 
     public function setUp()
     {
