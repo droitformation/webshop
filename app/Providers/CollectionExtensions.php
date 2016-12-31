@@ -38,6 +38,14 @@ class CollectionExtensions extends ServiceProvider
 
             return new static($result);
         });
+
+        Collection::macro('transpose', function () {
+            $items = array_map(function (...$items) {
+                return $items;
+            }, ...$this->values());
+
+            return new static($items);
+        });
     }
 
     /**

@@ -229,25 +229,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     | Inscriptions and colloque Routes
     |--------------------------------------------------------------------------
     */
-    Route::get('inscription/test/{id}', 'Backend\Colloque\InscriptionController@test');// tests routes
+    //Route::get('inscription/test/{id}', 'Backend\Colloque\InscriptionController@test');// tests routes
     
     Route::match(['get', 'post'], 'inscription/colloque/{id}', 'Backend\Colloque\InscriptionController@colloque');
-
-    Route::get('inscription/desinscription/{id}', 'Backend\Colloque\InscriptionController@desinscription');
     Route::get('inscription/create/{id?}', 'Backend\Colloque\InscriptionController@create');
-
     Route::get('inscription/regenerate/{id}', 'Backend\Colloque\InscriptionController@regenerate');
-    Route::post('inscription/generate', 'Backend\Colloque\InscriptionController@generate');
     Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
-    
-    Route::post('inscription/type', 'Backend\Colloque\InscriptionController@inscription');
     Route::post('inscription/make', ['middleware' => 'already', 'uses' => 'Backend\Colloque\InscriptionController@make']);
-    Route::post('inscription/edit', 'Backend\Colloque\InscriptionController@edit');
-    
     Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
-    Route::post('inscription/presence', 'Backend\Colloque\InscriptionController@presence');
-    
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
+
+    // Ajax calls
+    Route::post('inscription/presence', 'Api\InscriptionController@presence');
+    Route::post('inscription/type', 'Api\InscriptionController@inscription');
+    Route::post('inscription/generate', 'Api\InscriptionController@generate');
+    Route::post('inscription/edit', 'Api\InscriptionController@edit');
     
     Route::get('desinscription/{id}', 'Backend\Colloque\DesinscriptionController@index');
     Route::post('desinscription/restore/{id}', 'Backend\Colloque\DesinscriptionController@restore');

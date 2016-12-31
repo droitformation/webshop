@@ -191,5 +191,4 @@ class InscriptionWorkerTest extends TestCase {
 
         $worker->specialisation(12, $user);
     }
-    
 }

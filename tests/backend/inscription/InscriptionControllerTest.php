@@ -118,7 +118,6 @@ class InscriptionControllerTest extends TestCase {
         $this->see('Créer une inscription multiple');
 
         $data = [
-            'type'        => 'multiple',
             'colloque_id' => $colloque->id ,
             'user_id'     => $person->id,
             'participant' => [
@@ -136,9 +135,9 @@ class InscriptionControllerTest extends TestCase {
         ];
 
         $reponse = $this->call('POST', 'admin/inscription', $data);
-
         $content = $this->followRedirects()->response->getOriginalContent();
         $content = $content->getData();
+
         $inscriptions = $content['inscriptions'];
         $inscription  = $inscriptions->first();
 

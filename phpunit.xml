@@ -56,6 +56,9 @@
         <testsuite name="generate">
             <directory>./tests/backend/workers/generate/</directory>
         </testsuite>
+        <testsuite name="registeradmin">
+            <directory>./tests/backend/workers/register/</directory>
+        </testsuite>
 
         <testsuite name="abonnement">
             <directory>./tests/frontend/abonnement/</directory>

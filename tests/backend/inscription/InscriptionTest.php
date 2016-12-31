@@ -83,7 +83,7 @@ class InscriptionTest extends TestCase {
         $group = factory(App\Droit\Inscription\Entities\Groupe::class)->make();
 
         $this->worker->shouldReceive('colloqueIsOk')->once()->andReturn(true);
-        $this->worker->shouldReceive('registerGroup')->once()->andReturn($group);
+        $this->worker->shouldReceive('register')->once()->andReturn($group);
         $this->worker->shouldReceive('makeDocuments')->once();
 
         $response = $this->call('POST', '/admin/inscription',$input);

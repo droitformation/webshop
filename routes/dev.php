@@ -398,6 +398,59 @@ Route::get('categoriestest', function()
     $results = $model->allForSite(3, ['categories' => [], 'years' => [], 'display' => false]);
 
 
+    // Create colloque
+    $make     = new \tests\factories\ObjectFactory();
+    $colloque = $make->colloque();
+    $person   = $make->makeUser();
+
+    $prices   = $colloque->prices->pluck('id')->all();
+    $options  = $colloque->options->pluck('id')->all();
+
+    $data = [
+        //'type'        => 'multiple',
+        //'colloque_id' => $colloque->id ,
+        // 'user_id'     => $person->id,
+        'participant' => [
+            'Cindy Leschaud',
+            'Coralie Ahmetaj'
+        ],
+        'price_id' => [
+            $prices[0],
+            $prices[0]
+        ],
+        'occurrences' => [
+            [2],
+            [2,3]
+        ],
+        'options' => [
+            0 => [
+                $options[0],
+                [148 => 'psum odolr amet']
+            ],
+            1 => [
+                $options[0], [148 => 'lorexm ipsu']
+            ]
+        ],
+        'groupes' => [
+            [147 => 44],
+            [147 => 45]
+        ]
+    ];
+
+    $contacts = collect($data)->transpose()->map(function ($register) {
+        return [
+            'participant' => $register[0],
+            'price_id' => $register[1],
+            'occurrences' => $register[2],
+            'options' => $register[3],
+            'groupes' => $register[4],
+        ];
+    })->toArray();
+
+    echo '<pre>';
+    print_r($contacts);
+    echo '</pre>';exit();
+
 /*    $arrets = $results->map(function ($arret, $key) {
         return [
             'id'         => $arret->id,

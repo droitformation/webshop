@@ -34,14 +34,40 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $this->helper  = new \App\Droit\Helper\Helper();
     }
 
-    public function register($data,$colloque_id, $simple = false)
+    public function register($data, $simple = false)
     {
         if($simple)
         {
-            $this->existAlready($colloque_id, $data['user_id']);
+            $this->existAlready($data['colloque_id'], $data['user_id']);
+
+            return $this->inscription($data);
         }
 
-        $inscription_no = $this->colloque->getNewNoInscription($colloque_id);
+        $colloque_id = array_pull($data, 'colloque_id');
+        $user_id     = array_pull($data, 'user_id');
+
+        // create new group
+        $group = $this->group->create(['colloque_id' => $colloque_id, 'user_id' => $user_id]);
+
+        collect($data)->transpose()->map(function ($register) {
+            return [
+                'participant' => $register[0],
+                'price_id'    => $register[1],
+                'occurrences' => isset($register[2]) ? $register[2] : null,
+                'options'     => isset($register[3]) ? $register[3] : null,
+                'groupes'     => isset($register[4]) ? $register[4] : null,
+            ];
+        })->each(function ($item) use ($group) {
+            $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;
+            $this->inscription($data);
+        });
+
+        return $group;
+    }
+
+    public function inscription($data)
+    {
+        $inscription_no = $this->colloque->getNewNoInscription($data['colloque_id']);
 
         // Prepare data
         $data        = $data + ['inscription_no' => $inscription_no];
@@ -50,15 +76,15 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         // Attach specialisations
         $user = ($inscription->group_id > 0 ? $inscription->groupe->user : $inscription->user);
 
-        $this->specialisation($colloque_id, $user);
+        $this->specialisation($data['colloque_id'], $user);
 
         // Update counter
-        $this->colloque->increment($colloque_id);
+        $this->colloque->increment($data['colloque_id']);
 
         return $inscription;
     }
 
-    public function registerGroup($colloque_id, $data)
+    /*public function registerGroup($data,$colloque_id)
     {
         // create new group
         $group = $this->group->create(['colloque_id' => $colloque_id , 'user_id' => $data['user_id']]);
@@ -103,7 +129,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         }
 
         return $group;
-    }
+    }*/
 
     public function existAlready($colloque_id, $user_id)
     {

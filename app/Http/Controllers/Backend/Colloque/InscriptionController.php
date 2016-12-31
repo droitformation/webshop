@@ -133,24 +133,21 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionCreateRequest $request)
     {
-        $type     = $request->input('type');
-        $colloque = $request->input('colloque_id');
-
-        $this->register->colloqueIsOk($colloque);
+        $this->register->colloqueIsOk($request->input('colloque_id'));
 
         // if type simple
-        if($type == 'simple') {
-            $inscription = $this->register->register($request->all(), $colloque, true);
+        if($request->input('type') == 'simple') {
+            $inscription = $this->register->register($request->all(), true);
             $this->register->makeDocuments($inscription, true);
         }
         else {
-            $group = $this->register->registerGroup($colloque, $request->all());
+            $group = $this->register->register($request->except(['type','_token']));
             $this->register->makeDocuments($group, true);
         }
 
         alert()->success('L\'inscription à bien été crée');
 
-        return redirect('admin/inscription/colloque/'.$colloque);
+        return redirect('admin/inscription/colloque/'.$request->input('colloque_id'));
     }
 
     /**
@@ -194,23 +191,6 @@ class InscriptionController extends Controller
         alert()->success('Les documents ont été mis à jour');
 
         return redirect()->back();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function generate(Request $request)
-    {
-        $inscription = $this->inscription->find($request->input('id'));
-
-        $model = $inscription->group_id ? $inscription->groupe : $inscription;
-
-        $this->register->makeDocuments($model, true);
-
-        return ['link' => $model->doc_facture];
     }
 
     /**
@@ -264,24 +244,6 @@ class InscriptionController extends Controller
         return redirect()->back();
     }
 
-    /*
-     * Edit via ajax x-editable in payed partial
-     * */
-    public function edit(Request $request)
-    {
-        $data = $request->all();
-
-        // List inscription ids to update
-        $list = $data['model'] == 'group' ? $this->groupe->find($data['pk'])->inscriptions->pluck('id') : collect([$data['pk']]);
-
-        // update all of them
-        $inscriptions = $list->map(function ($id, $key) use ($data) {
-            return $this->inscription->updateColumn(['id' => $id , $data['name'] => $data['value']]);
-        });
-
-        return response()->json(['OK' => 200, 'etat' => $inscriptions->first()->status_name['status'] ,'color' => $inscriptions->first()->status_name['color']]);
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -305,34 +267,6 @@ class InscriptionController extends Controller
         alert()->success('Désinscription effectué');
 
         return redirect()->back();
-    }
-
-    /**
-     * Inscription partial via ajax
-     * @return Response
-     */
-    public function inscription(Request $request){
-
-        $colloque = $this->colloque->find($request->input('colloque_id'));
-        $user     = $this->user->find($request->input('user_id'));
-
-        // simple or multiple
-        $type     = $request->input('type');
-
-        echo view('backend.inscriptions.register.'.$type)->with(['colloque' => $colloque, 'user_id' => $request->input('user_id'), 'user' => $user, 'type' => $type])->__toString();
-    }
-
-    public function presence(Request $request)
-    {
-        $inscription = $this->inscription->find($request->input('id'));
-
-        if($inscription)
-        {
-            $inscription->present = $request->input('presence',null) ? 1 : null ;
-            $inscription->save();
-        }
-
-        echo 'ok';
     }
 
 }
