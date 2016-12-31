@@ -256,14 +256,29 @@ class InscriptionEloquent implements InscriptionInterface{
      * */
     public function updateColumn(array $data)
     {
-        $inscription = $this->inscription->findOrFail($data['id']);
+        $inscription = $this->inscription->find($data['id']);
 
-        if(! $inscription)
+        if(!$inscription)
         {
             return false;
         }
         
         $inscription->fill($data);
+
+        if(isset($data['payed_at']) && !empty($data['payed_at']))
+        {
+            $valid = (Carbon::createFromFormat('Y-d-m', $data['payed_at']) !== false);
+
+            $inscription->status = !$valid || null ? 'pending' : 'payed';
+            $inscription->payed_at = $data['payed_at'];
+        }
+
+        if(empty($data['payed_at']))
+        {
+            $inscription->status   = 'pending';
+            $inscription->payed_at = null;
+        }
+        
         $inscription->save();
         
         return $inscription;

@@ -163,6 +163,7 @@ class InscriptionController extends Controller
     {
         $inscription = $this->inscription->find($id);
 
+        // Make sur we redirect to the create page if there is no inscription
         if(!$inscription){
             return redirect('admin/inscription/create');
         }
@@ -263,25 +264,22 @@ class InscriptionController extends Controller
         return redirect()->back();
     }
 
+    /*
+     * Edit via ajax x-editable in payed partial
+     * */
     public function edit(Request $request)
     {
         $data = $request->all();
 
-        if($data['model'] == 'group') {
-            $group = $this->groupe->find($data['pk']);
+        // List inscription ids to update
+        $list = $data['model'] == 'group' ? $this->groupe->find($data['pk'])->inscriptions->pluck('id') : collect([$data['pk']]);
 
-            if(!$group->inscriptions->isEmpty())
-            {
-                $group->inscriptions->each(function ($inscription, $key) use ($data) {
-                    $this->inscription->updateColumn(['id' => $inscription->id , $data['name'] => $data['value']]);
-                });
-            }
-        }
-        else {
-            $inscription = $this->inscription->updateColumn(['id' => $data['pk'], $data['name'] => $data['value']]);
-        }
+        // update all of them
+        $inscriptions = $list->map(function ($id, $key) use ($data) {
+            return $this->inscription->updateColumn(['id' => $id , $data['name'] => $data['value']]);
+        });
 
-        return response()->json(['OK' => 200, 'etat' => ($inscription->status == 'pending' ? 'En attente' : 'Payé'),'color' => ($inscription->status == 'pending' ? 'default' : 'success')]);
+        return response()->json(['OK' => 200, 'etat' => $inscriptions->first()->status_name['status'] ,'color' => $inscriptions->first()->status_name['color']]);
     }
 
     /**

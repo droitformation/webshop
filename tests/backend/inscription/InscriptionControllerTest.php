@@ -165,7 +165,9 @@ class InscriptionControllerTest extends TestCase {
             'value'    => \Carbon\Carbon::now()->toDateString()
         ];
 
-        $this->call('POST', 'admin/inscription/edit', $data);
+        $result = ['OK' => 200, 'etat' => 'Payé','color' => 'success'];
+
+        $this->json('POST', 'admin/inscription/edit', $data)->seeJson($result);
 
         $this->seeInDatabase('colloque_inscriptions', [
             'id'          => $inscription->id,
@@ -192,7 +194,9 @@ class InscriptionControllerTest extends TestCase {
             'value'    => \Carbon\Carbon::now()->toDateString()
         ];
 
-        $this->call('POST', 'admin/inscription/edit', $data);
+        $result = ['OK' => 200, 'etat' => 'Payé','color' => 'success'];
+
+        $this->json('POST', 'admin/inscription/edit', $data)->seeJson($result);
 
         foreach($inscriptions as $inscription)
         {
