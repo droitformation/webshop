@@ -5,7 +5,6 @@ interface InscriptionWorkerInterface{
 
     // Register inscription simple and grouped
     public function register($data, $simple = false);
-    //public function registerGroup($data,$colloque_id);
 
     // Send via admin
     public function prepareData($model);

@@ -20,7 +20,7 @@
         @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $colloque, 'inscription' => null]) <!-- Modal add to group -->
 
     </td>
-    <td>{{ $inscription->groupe->price }} CHF</td>
+    <td>{{ $inscription->groupe->price_cents }} CHF</td>
     <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
     <td>@include('backend.inscriptions.partials.payed',['model' => 'group', 'item' => $inscription->groupe, 'inscription' => $inscription])</td>
     <td class="text-right">

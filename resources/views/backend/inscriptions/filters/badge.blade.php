@@ -7,9 +7,9 @@
             <h4>Nombre de badges par page</h4>
             <div class="input-group">
                 <select class="form-control" name="format">
-                    @if($badges)
+                    @if(!empty(config('badge')))
                         <optgroup label="Etiquettes">
-                            @foreach($badges as $code => $config)
+                            @foreach(config('badge') as $code => $config)
                                 <option value="pdf|{{$code}}">{{ $config['etiquettes'] }} badges par page</option>
                             @endforeach
                         </optgroup>

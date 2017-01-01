@@ -32,7 +32,8 @@
             </div>
         </div>
         <div class="col-md-3 text-right">
-            <form action="{{ url('admin/inscription/destroygroup/'.$inscription->groupe->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+            <form action="{{ url('admin/group/'. $inscription->groupe->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+                <input type="hidden" name="_method" value="DELETE">
                 <button data-what="Supprimer" data-action="le groupe et ses inscriptions" class="btn btn-danger btn-sm deleteAction">X</button>
             </form>
         </div>

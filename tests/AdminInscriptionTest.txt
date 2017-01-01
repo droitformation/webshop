@@ -4,8 +4,6 @@ Display
  [x] Inscrit group
  [x] Is correct model
  [x] Is correct model groupe
- [x] Correct detenteur normal
- [x] Correct detenteur group
  [x] Not valid
  [x] Get participants
 
@@ -22,15 +20,14 @@ Inscription
  [x] Register multiple new inscription
  [x] Last inscriptions
  [x] Update inscription
- [x] Send inscription
- [x] Send group inscription
  [x] Generate doc
  [x] Generate doc free
 
 InscriptionWorker
- [x] Prepare data inscription send inscription
- [x] Prepare data group send inscription
  [x] Update inscription
- [x] Update group inscription
- [x] Add specialisation to user
+
+SendInscription
+ [x] Send inscription
+ [x] Send group inscription
+ [x] Send fails
 

@@ -29,7 +29,8 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    {!! Form::hidden('group_id', $group->id) !!}
+                    <input name="id" required value="{{ $group->id }}" type="hidden">
+                    <input name="model" required value="group" type="hidden">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </div>

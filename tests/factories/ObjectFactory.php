@@ -54,12 +54,27 @@ class ObjectFactory
 
         if(isset($data['specialisations']))
         {
-            $adresse->specialisations()->attach($data['specialisations']);
+            $user->adresse_contact->specialisations()->attach($data['specialisations']);
         }
 
         if(isset($data['members']))
         {
-            $adresse->members()->attach($data['members']);
+            $user->adresse_contact->members()->attach($data['members']);
+        }
+
+        return $user->load('adresses');
+    }
+
+    public function addMemberships($user, $data)
+    {
+        if(isset($data['specialisations']))
+        {
+            $user->adresse_contact->specialisations()->attach($data['specialisations']);
+        }
+
+        if(isset($data['members']))
+        {
+            $user->adresse_contact->members()->attach($data['members']);
         }
 
         return $user;
@@ -69,10 +84,14 @@ class ObjectFactory
     {
         if(count($data) > 1)
         {
+            $users = [];
+
             for ($x = 0; $x < count($data); $x++)
             {
-                $this->makeUser($data[$x]);
+                $users[] = $this->makeUser($data[$x]);
             }
+
+            return collect($users);
         }
 
         return $this->makeUser();
@@ -129,7 +148,7 @@ class ObjectFactory
             'compte_id'       => $compte->id,
             'visible'         => 1,
             'bon'             => 1,
-            'facture'         => 0,
+            'facture'         => 1,
             'adresse_id'      => 1,
         ]);
         
@@ -167,6 +186,15 @@ class ObjectFactory
 
         return $colloque;
         
+    }
+
+    public function colloqueOnlyBon($colloque)
+    {
+        $colloque->facture  = 0;
+        $colloque->compte_id  = null;
+        $colloque->save();
+
+        return $colloque;
     }
 
     public function addAttributesAbo($product)
@@ -394,12 +422,18 @@ class ObjectFactory
     public function makeInscriptions($nbr = 1, $groupe = null)
     {
         // Create colloque
-        $colloque    = $this->colloque();
+        $colloque = $this->colloque();
+        $prices   = $colloque->prices->pluck('id')->all();
 
         for($x = 1; $x <= $nbr; $x++)
         {
             $personne  = $this->makeUser();
-            factory(\App\Droit\Inscription\Entities\Inscription::class)->create(['user_id' => $personne->id, 'group_id' => null, 'colloque_id' => $colloque->id]);
+            factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+                'user_id'     => $personne->id,
+                'group_id'    => null,
+                'price_id'    => $prices[0],
+                'colloque_id' => $colloque->id
+            ]);
         }
 
         if($groupe)
@@ -411,7 +445,13 @@ class ObjectFactory
                 'colloque_id' => $colloque->id
             ]);
 
-            $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class,2)->create(['user_id' => null, 'group_id' => $group->id, 'colloque_id' => $colloque->id]);
+            $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class,2)->create([
+                'user_id'     => null,
+                'group_id'    => $group->id,
+                'price_id'    => $prices[0],
+                'colloque_id' => $colloque->id
+            ]);
+
             $inscriptions = $inscriptions->map(function ($item, $key) {
                 $item->inscription_no = '10-2016/1'.$key;
 

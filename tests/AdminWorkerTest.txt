@@ -1,4 +1,12 @@
-Inscription
+RegisterWorker
  [x] Register group data
  [x] Register
+ [x] Update date send
+ [x] Update date send groupe
+ [x] Prepare data
+ [x] Prepare data group
+ [x] Add specialisation to user
+ [x] Makedocuments
+ [x] Makedocuments groupe
+ [x] Make only bon
 

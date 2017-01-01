@@ -236,20 +236,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('inscription/regenerate/{id}', 'Backend\Colloque\InscriptionController@regenerate');
     Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
     Route::post('inscription/make', ['middleware' => 'already', 'uses' => 'Backend\Colloque\InscriptionController@make']);
-    Route::post('inscription/send', 'Backend\Colloque\InscriptionController@send');
     Route::resource('inscription', 'Backend\Colloque\InscriptionController');
+
+    Route::post('inscription/send', 'Backend\Colloque\SendInscriptionController@send');
 
     // Ajax calls
     Route::post('inscription/presence', 'Api\InscriptionController@presence');
     Route::post('inscription/type', 'Api\InscriptionController@inscription');
     Route::post('inscription/generate', 'Api\InscriptionController@generate');
     Route::post('inscription/edit', 'Api\InscriptionController@edit');
-    
+
+    // Desinscriptions
     Route::get('desinscription/{id}', 'Backend\Colloque\DesinscriptionController@index');
     Route::post('desinscription/restore/{id}', 'Backend\Colloque\DesinscriptionController@restore');
     Route::resource('desinscription', 'Backend\Colloque\DesinscriptionController');
     Route::resource('group', 'Backend\Colloque\GroupInscriptionController');
 
+    // Rappels inscription
     Route::get('inscription/rappels/{id}','Backend\Colloque\RappelController@rappels');
     Route::post('inscription/rappel/make','Backend\Colloque\RappelController@make');
     Route::post('inscription/rappel/send','Backend\Colloque\RappelController@send');

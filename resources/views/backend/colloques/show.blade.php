@@ -160,7 +160,7 @@
                         </fieldset>
 
                         <input type="hidden" name="id" value="{{ $colloque->id }}"><br/>
-                        <input type="submit" class="finish btn-success btn pull-right" value="Envoyer" />
+                        <input type="submit" class="finish btn-primary btn pull-right" value="Envoyer" />
                     </form>
                 </div>
             </div>

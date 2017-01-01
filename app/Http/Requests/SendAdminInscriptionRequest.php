@@ -29,9 +29,9 @@ class SendAdminInscriptionRequest extends Request
     public function rules()
     {
         return [
-            'id'       => 'required_without:group_id',
-            'group_id' => 'required_without:id',
-            'email'    => 'required|email',
+            'id'     => 'required_without:group_id',
+            'model'  => 'required_without:id',
+            'email'  => 'required|email',
         ];
     }
 }

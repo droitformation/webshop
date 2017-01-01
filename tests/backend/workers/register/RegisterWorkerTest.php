@@ -2,11 +2,16 @@
 
 class RegisterWorker extends TestCase {
 
+    protected $generator;
+
     public function setUp()
     {
         parent::setUp();
 
         DB::beginTransaction();
+
+        $this->generator = Mockery::mock('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+        $this->app->instance('App\Droit\Generate\Pdf\PdfGeneratorInterface', $this->generator);
 
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
         $user->roles()->attach(1);
@@ -104,5 +109,170 @@ class RegisterWorker extends TestCase {
             'price_id'    => $prices[0],
         ]);
     }
-    
+
+    public function testUpdateDateSend()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $worker->updateInscription($inscription);
+
+        $this->seeInDatabase('colloque_inscriptions', [
+            'id'      => $inscription->id,
+            'send_at' => date('Y-m-d'),
+            'admin'   => 1
+        ]);
+    }
+
+    public function testUpdateDateSendGroupe()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1,1);
+
+        $group = $colloque->inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        })->first();
+
+        $worker->updateInscription($group->groupe);
+
+        foreach($group->groupe->inscriptions as $inscription)
+        {
+            $this->seeInDatabase('colloque_inscriptions', [
+                'id'      => $inscription->id,
+                'send_at' => date('Y-m-d'),
+                'admin'   => 1
+            ]);
+        }
+    }
+
+    public function testPrepareData()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $result = $worker->prepareData($inscription);
+
+        $data = [
+            'title'     => 'Votre inscription sur publications-droit.ch',
+            'logo'      => 'facdroit.png',
+            'concerne'  => 'Inscription',
+            'date'      => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            'annexes'   => $inscription->colloque->annexe,
+            'colloque'  => $inscription->colloque,
+            'user'      => $inscription->user
+        ];
+
+        $this->assertEquals($data, $result);
+    }
+
+    public function testPrepareDataGroup()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1,1);
+
+        $group = $colloque->inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        })->first();
+
+        $result = $worker->prepareData($group->groupe);
+
+        $data = [
+            'title'        => 'Votre inscription sur publications-droit.ch',
+            'logo'         => 'facdroit.png',
+            'concerne'     => 'Inscription',
+            'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            'annexes'      => $group->groupe->colloque->annexe,
+            'colloque'     => $group->groupe->colloque,
+            'user'         => $group->groupe->user,
+            'participants' => $group->groupe->participant_list
+        ];
+
+        $this->assertEquals($data, $result);
+    }
+
+    public function testAddSpecialisationToUser()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+
+        $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+
+        $coll_specialisations = factory(App\Droit\Specialisation\Entities\Specialisation::class,2)->create();
+        $user_specialisations = factory(App\Droit\Specialisation\Entities\Specialisation::class,2)->create();
+
+        $colloque->specialisations()->attach($coll_specialisations->pluck('id')->all());
+        $person->adresse_contact->specialisations()->attach($user_specialisations->pluck('id')->all());
+
+        $all = array_merge($coll_specialisations->pluck('id')->all(), $user_specialisations->pluck('id')->all());
+        sort($all);
+
+        $worker->specialisation($colloque, $person);
+
+        $person->adresse_contact->load('specialisations');
+        $result = $person->adresse_contact->specialisations->pluck('id')->all();
+        sort($result);
+
+        $this->assertEquals($all, $result);
+
+    }
+
+    public function testMakedocuments()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $this->generator->shouldReceive('make')->times(3);
+
+        $worker->makeDocuments($inscription, true);
+    }
+
+    public function testMakedocumentsGroupe()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1,1);
+
+        $group = $colloque->inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        })->first();
+
+        $this->generator->shouldReceive('make')->times(4);// 2x bon 1x facture, 1x bv
+
+        $worker->makeDocuments($group->groupe, true);
+    }
+
+    public function testMakeOnlyBon()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+        $colloque = $make->colloqueOnlyBon($colloque);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $this->generator->shouldReceive('make')->times(1);
+
+        $worker->makeDocuments($inscription, true);
+    }
+
 }

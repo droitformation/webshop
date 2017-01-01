@@ -145,19 +145,19 @@ $factory->define(App\Droit\Inscription\Entities\Participant::class, function (Fa
 
 $factory->define(App\Droit\Specialisation\Entities\Specialisation::class, function (Faker\Generator $faker) {
     return [
-        'title' => 'title'
+        'title' => $faker->word
     ];
 });
 
 $factory->define(App\Droit\Member\Entities\Member::class, function (Faker\Generator $faker) {
     return [
-        'title' => 'title'
+        'title' => $faker->word
     ];
 });
 
 $factory->define(App\Droit\Profession\Entities\Profession::class, function (Faker\Generator $faker) {
     return [
-        'title' => 'title'
+        'title' => $faker->word
     ];
 });
 
@@ -348,7 +348,7 @@ $factory->define(App\Droit\Categorie\Entities\Categorie::class, function (Faker\
 $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,
-        'last_name'  =>  $faker->lastName,
+        'last_name'  => $faker->lastName,
         'occupation' => $faker->sentence,
         'bio'        => $faker->sentence,
         'photo'      => 'test.jpg'

@@ -1,9 +1,8 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th class="col-md-4">Colloque</th>
-            <th class="col-md-2">Montant</th>
-            <th class="col-md-3">Payé</th>
+            <th class="col-md-6">Colloque</th>
+            <th class="col-md-4">Montant</th>
         </tr>
     </thead>
     <tbody>
@@ -15,8 +14,7 @@
                         <i class="fa fa-arrow-circle-right"></i>{{ $group->colloque->titre }}
                     </a>
                 </td>
-                <td>{{ $group->price }} CHF</td>
-                <td>@include('backend.inscriptions.partials.payed',['model' => 'group', 'item' => $group, 'inscription' => $group->inscriptions->first()])</td>
+                <td>{{ $group->price_cents }} CHF</td>
             </tr>
 
             <!-- Inscription details -->

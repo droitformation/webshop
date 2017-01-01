@@ -3,43 +3,28 @@ namespace App\Droit\Inscription\Worker;
 
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
-use App\Droit\Option\Repo\OptionInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
-use App\Droit\Adresse\Repo\AdresseInterface;
-use Illuminate\Support\Collection;
+use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
 class InscriptionWorker implements InscriptionWorkerInterface{
-
-    /*
-    * Helper class for misc functions
-    **/
-    protected $helper;
-
+    
     protected $inscription;
     protected $colloque;
-    protected $adresse;
-    protected $option;
     protected $group;
+    protected $generator;
 
-    public $dispatch = [];
-
-    public function __construct(InscriptionInterface $inscription, ColloqueInterface $colloque, AdresseInterface $adresse ,OptionInterface $option, GroupeInterface $group)
+    public function __construct(InscriptionInterface $inscription, ColloqueInterface $colloque, GroupeInterface $group, PdfGeneratorInterface $generator)
     {
         $this->inscription = $inscription;
-        $this->colloque    = $colloque;
-        $this->adresse     = $adresse;
-        $this->option      = $option;
         $this->group       = $group;
-
-        $this->helper  = new \App\Droit\Helper\Helper();
+        $this->colloque    = $colloque;
+        $this->generator   = $generator;
     }
 
     public function register($data, $simple = false)
     {
         if($simple)
         {
-            $this->existAlready($data['colloque_id'], $data['user_id']);
-
             return $this->inscription($data);
         }
 
@@ -76,7 +61,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         // Attach specialisations
         $user = ($inscription->group_id > 0 ? $inscription->groupe->user : $inscription->user);
 
-        $this->specialisation($data['colloque_id'], $user);
+        $this->specialisation($inscription->colloque, $user);
 
         // Update counter
         $this->colloque->increment($data['colloque_id']);
@@ -84,85 +69,13 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         return $inscription;
     }
 
-    /*public function registerGroup($data,$colloque_id)
+    public function specialisation($colloque, $user)
     {
-        // create new group
-        $group = $this->group->create(['colloque_id' => $colloque_id , 'user_id' => $data['user_id']]);
-
-        // Get all infos for inscriptions/participants
-        $prices       = $data['price_id'];
-        $options      = isset($data['options']) ? $data['options'] : [];
-        $occurrences  = isset($data['occurrences']) ? $data['occurrences'] : [];
-        $groupes      = isset($data['groupes']) ? $data['groupes'] : [];
-
-        // Make inscription for each participant
-        foreach($data['participant'] as $index => $participant)
+        if(!$colloque->specialisations->isEmpty())
         {
-            $data = [
-                'group_id'    => $group->id,
-                'colloque_id' => $colloque_id,
-                'participant' => $participant,
-                'price_id'    => $prices[$index]
-            ];
+            $all = array_merge($colloque->specialisations->pluck('id')->all(), $user->adresse_contact->specialisations->pluck('id')->all());
 
-            // choosen options for participants
-            if(isset($options[$index]))
-            {
-                $data['options'] = $options[$index];
-            }
-
-            // choosen occurrences for participants
-            if(isset($occurrences[$index]))
-            {
-                $data['occurrences'] = $occurrences[$index];
-            }
-
-            // choosen groupe of options for participants
-            if(isset($groupes[$index]))
-            {
-                $data['groupes'] = $groupes[$index];
-            }
-
-            // Register a new inscription
-            $this->register($data,$colloque_id);
-
-        }
-
-        return $group;
-    }*/
-
-    public function existAlready($colloque_id, $user_id)
-    {
-        $already = $this->inscription->getByUser($colloque_id,$user_id);
-
-        if($already)
-        {
-            throw new \App\Exceptions\RegisterException('Register failed');
-        }
-    }
-
-    public function colloqueIsOk($colloque_id)
-    {
-        $colloque = $this->colloque->find($colloque_id);
-
-        // test if we have a compte to make the bv
-        if($colloque->facture && (!isset($colloque->compte) || empty($colloque->compte)))
-        {
-            throw new \App\Exceptions\ColloqueCompteException('Pas de compte pour le colloque');
-        }
-
-        return true;
-    }
-
-    public function specialisation($colloque_id, $user)
-    {
-        $user->load('adresses');
-        $colloque = $this->colloque->find($colloque_id);
-
-        if(!$colloque->specialisations->isEmpty() && $user->adresse_contact)
-        {
-            $data = $colloque->specialisations->pluck('id')->all();
-            $this->adresse->setSpecialisation($user->adresse_contact->id, $data);
+            $user->adresse_contact->specialisations()->sync(array_unique($all));
         }
     }
 
@@ -170,6 +83,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     {
         // Update documents if they don't exist
         $this->makeDocuments($model);
+
         // Send prepared data and documents, update inscription with send date for admin
         $this->send($this->prepareData($model), $model->user, $model->documents, $email);
         $this->updateInscription($model);
@@ -186,11 +100,8 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
             $message->to($email, $user->name)->subject('Confirmation d\'inscription');
 
-            if(!empty($attachements))
-            {
-                // Attach all documents
-                foreach($attachements as $attachement)
-                {
+            if(!empty($attachements)) {
+                foreach($attachements as $attachement) {
                     $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
                 }
             }
@@ -204,21 +115,14 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             'logo'        => 'facdroit.png',
             'concerne'    => 'Inscription',
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            'annexes'      => $model->colloque->annexe,
+            'colloque'     => $model->colloque,
+            'user'         => $model->user,
         ];
 
         if($model instanceof \App\Droit\Inscription\Entities\Groupe)
         {
-            $data['annexes']      = $model->colloque->annexe;
-            $data['colloque']     = $model->colloque;
-            $data['user']         = $model->user;
             $data['participants'] = $model->participant_list;
-        }
-
-        if($model instanceof \App\Droit\Inscription\Entities\Inscription)
-        {
-            $data['annexes']  = $model->colloque->annexe;
-            $data['colloque'] = $model->colloque;
-            $data['user']     = $model->user;
         }
 
         return $data;
@@ -226,71 +130,46 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
     public function updateInscription($model)
     {
-        // Update the send date and add true if send via admin
-        if($model instanceof \App\Droit\Inscription\Entities\Groupe)
-        {
-            foreach($model->inscriptions as $inscription)
-            {
-                $this->inscription->update(['id' => $inscription->id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
-            }
-        }
-        else
-        {
-            $this->inscription->update(['id' => $model->id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
-        }
+        // List inscription ids to update
+        $list = $model instanceof \App\Droit\Inscription\Entities\Groupe ? $model->inscriptions->pluck('id') : collect([$model->id]);
+
+        // update all of them
+        $inscriptions = $list->map(function ($id, $key) {
+            return $this->inscription->update(['id' => $id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
+        });
     }
 
     public function makeDocuments($model,$refresh = false)
     {
-        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-        $annexes   = $model->colloque->annexe;
+        $annexes = $model->colloque->annexe;
 
-        // Force refresh of documents, only if we need to
-        // Else we only test if there are no docs
+        // Force refresh of documents, only if we need to else we only test if there are no docs
         $refresh = $refresh ? true : empty($model->documents);
 
         // Generate annexes if any
         if($refresh && !empty($annexes))
         {
-            // Update the send date and add true if send via admin
-            if($model instanceof \App\Droit\Inscription\Entities\Groupe)
-            {
-                foreach($model->inscriptions as $inscription)
-                {
-                    // Make the bon if we want one
-                    if(in_array('bon',$annexes))
-                    {
-                        $generator->make('bon', $inscription);
-                    }
-                }
+            collect($annexes)->map(function ($annexe, $key) use ($model) {
 
-                // Make the facture andbv if the price is not 0
-                if($model->price > 0 && in_array('facture',$annexes))
-                {
-                    $generator->make('facture', $model);
-                    $generator->make('bv', $model);
+                // List inscription to remake
+                $list = $model instanceof \App\Droit\Inscription\Entities\Groupe ? $model->inscriptions : collect([$model]);
+
+                if($annexe == 'bon') {
+                    $list->map(function ($inscription, $key) {
+                        $this->generator->make('bon', $inscription);
+                    });
                 }
-            }
-            else
-            {
-                foreach($annexes as $annexe)
-                {
-                    // Make the bon and the other docs if the price is not 0
-                    if($annexe == 'bon' || ($model->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')))
-                    {
-                        $generator->make($annexe, $model);
-                    }
+                // Make the bon and the other docs if the price is not 0
+                if($model->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')) {
+                    $this->generator->make($annexe, $model);
                 }
-            }
+            });
         }
     }
 
     public function destroyDocuments($model)
     {
-        $documents = collect($model->documents);
-        $documents = $documents->pluck('file')->all();
-        
-        \File::delete($documents);
+        \File::delete(collect($model->documents)->pluck('file')->all());
     }
 
 }

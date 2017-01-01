@@ -1,12 +1,7 @@
-
-<!-- Modal -->
 <div class="modal fade" id="sendInscription_{{ $inscription->id }}" tabindex="-1" role="dialog" aria-labelledby="sendInscription_">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <!-- form start -->
-            <form data-validate-parsley action="{{ url('admin/inscription/send') }}" method="POST" class="form" >
-                {!! csrf_field() !!}
-
+            <form data-validate-parsley action="{{ url('admin/inscription/send') }}" method="POST" class="form" >{!! csrf_field() !!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Envoyer {{ $inscription->inscription_no }}</h4>
@@ -20,12 +15,12 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    {!! Form::hidden('id', $inscription->id ) !!}
+                    <input name="id" required value="{{ $inscription->id }}" type="hidden">
+                    <input name="model" required value="inscription" type="hidden">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </div>
             </form>
         </div>
     </div>
-</div>
-<!-- Modal -->
+</div><!-- Modal -->

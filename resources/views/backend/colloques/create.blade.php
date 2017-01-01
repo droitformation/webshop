@@ -126,7 +126,7 @@
 
                     </div>
                     <div class="panel-footer">
-                        <p class="text-right"><input type="submit" class="finish btn-success btn" value="Envoyer" /></p>
+                        <p class="text-right"><input type="submit" class="finish btn-primary btn" value="Envoyer" /></p>
                     </div>
                 </div>
             </div>

@@ -84,7 +84,7 @@ class ExportTest extends TestCase {
 		$specs = $specialisations->pluck('id')->all();
 
 		$members = $make->items('Member', 2);
-		$mem = $specialisations->pluck('id')->all();
+		$mem     = $members->pluck('id')->all();
 
 		$infos = [
 			['canton' => 6,  'profession' => 1],
@@ -95,7 +95,7 @@ class ExportTest extends TestCase {
 			['canton' => 10, 'profession' => 1]
 		];
 
-		$make->user($infos);
+		$users = $make->user($infos);
 
 		$results = $repo->searchMultiple(['cantons' => [10], 'specialisations' => $specs], true);
 		$this->assertEquals(1, $results->count());

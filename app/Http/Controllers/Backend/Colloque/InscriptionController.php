@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Backend\Colloque;
 
+use App\Http\Controllers\Controller;
+
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Worker\InscriptionWorkerInterface;
 use App\Droit\User\Repo\UserInterface;
-use App\Droit\Inscription\Repo\GroupeInterface;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\InscriptionCreateRequest;
 use App\Http\Requests\MakeInscriptionRequest;
-use App\Http\Requests\SendAdminInscriptionRequest;
-use App\Http\Controllers\Controller;
 
 class InscriptionController extends Controller
 {
@@ -22,24 +21,15 @@ class InscriptionController extends Controller
     protected $colloque;
     protected $user;
     protected $generator;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorkerInterface $register, GroupeInterface $groupe)
+    
+    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorkerInterface $register)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
         $this->register    = $register;
         $this->user        = $user;
-        $this->groupe      = $groupe;
 
         $this->generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-        $this->helper      = new \App\Droit\Helper\Helper();
-
-        view()->share('badges', config('badge'));
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -58,7 +48,8 @@ class InscriptionController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  int  $id
+     * @param  Request  $request
      * @return Response
      */
     public function colloque($id, Request $request)
@@ -82,8 +73,8 @@ class InscriptionController extends Controller
     }
 
     /**
-     * Display creation.
-     *
+     * Display creation form
+     * @param  int  $colloque_id
      * @return Response
      */
     public function create($colloque_id = null)
@@ -95,13 +86,11 @@ class InscriptionController extends Controller
 
     /**
      * Display creation.
-     *
+     * @param  MakeInscriptionRequest  $request
      * @return Response
      */
     public function make(MakeInscriptionRequest $request)
     {
-        $this->register->colloqueIsOk($request->input('colloque_id'));
-        
         $colloques = $this->colloque->getAll();
         $colloque  = $this->colloque->find($request->input('colloque_id'));
 
@@ -115,7 +104,7 @@ class InscriptionController extends Controller
 
     /**
      * Display creation.
-     *
+     * @param  int  $group_id
      * @return Response
      */
     public function add($group_id)
@@ -133,8 +122,6 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionCreateRequest $request)
     {
-        $this->register->colloqueIsOk($request->input('colloque_id'));
-
         // if type simple
         if($request->input('type') == 'simple') {
             $inscription = $this->register->register($request->all(), true);
@@ -169,61 +156,7 @@ class InscriptionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function regenerate($id)
-    {
-        $inscription = $this->inscription->find($id);
-
-        $model = $inscription->group_id ? $inscription->groupe : $inscription;
-
-        // remake docs
-        $this->register->makeDocuments($model, true);
-
-        // remake attestation
-        if($inscription->doc_attestation) {
-            $this->generator->make('attestation', $inscription);
-        }
-
-        alert()->success('Les documents ont été mis à jour');
-
-        return redirect()->back();
-    }
-
-    /**
-     * Send inscription via admin
-     *
-     * @return Response
-     */
-    public function send(SendAdminInscriptionRequest $request)
-    {
-        $group_id = $request->input('group_id',null);
-        $model    = $group_id ? 'groupe' : 'inscription';
-        $model_id = $group_id ? $group_id : $request->input('id');
-
-        // Find model inscription or group
-        $item = $this->$model->find($model_id);
-
-        if($item)
-        {
-            $this->register->sendEmail($item, $request->input('email'));
-
-            alert()->success('Email envoyé');
-
-            return redirect()->back();
-        }
-
-        alert()->warning('Aucune inscription trouvé, problème');
-
-        return redirect()->back();
-
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the inscription
      *
      * @param  Request  $request
      * @param  int  $id
@@ -245,7 +178,7 @@ class InscriptionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the inscription
      *
      * @param  int  $id
      * @return Response
@@ -265,6 +198,32 @@ class InscriptionController extends Controller
         $this->inscription->delete($id);
 
         alert()->success('Désinscription effectué');
+
+        return redirect()->back();
+    }
+
+
+    /**
+     * Remake documents for inscription
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function regenerate($id)
+    {
+        $inscription = $this->inscription->find($id);
+
+        $model = $inscription->group_id ? $inscription->groupe : $inscription;
+
+        // remake docs
+        $this->register->makeDocuments($model, true);
+
+        // remake attestation
+        if($inscription->doc_attestation) {
+            $this->generator->make('attestation', $inscription);
+        }
+
+        alert()->success('Les documents ont été mis à jour');
 
         return redirect()->back();
     }

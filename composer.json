@@ -35,7 +35,8 @@
         "mockery/mockery": "0.9.*",
         "fzaninotto/faker": "1.6.0",
         "symfony/dom-crawler":"~3.0",
-        "symfony/css-selector" : "~3.0"
+        "symfony/css-selector" : "~3.0",
+		"tightenco/mailthief": "^0.3.3"
 	},
 	"autoload": {
 		"classmap": [

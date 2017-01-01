@@ -191,6 +191,11 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function create(array $data){
 
+        if( isset($data['user_id']) && $this->isRegistered($data['colloque_id'],$data['user_id']) )
+        {
+            throw new \App\Exceptions\RegisterException('Register failed');
+        }
+            
         $inscription = $this->inscription->create(array(
             'colloque_id'     => $data['colloque_id'],
             'user_id'         => (isset($data['user_id']) ? $data['user_id'] : null),

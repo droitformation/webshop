@@ -5593,5 +5593,49 @@
             "MIT"
         ],
         "description": "Unofficial PSR-4 compliant version of the FPDI library"
+    },
+    {
+        "name": "tightenco/mailthief",
+        "version": "v0.3.3",
+        "version_normalized": "0.3.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tightenco/mailthief.git",
+            "reference": "9e073e4cf63fd9425eb85278352380faa83d72af"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tightenco/mailthief/zipball/9e073e4cf63fd9425eb85278352380faa83d72af",
+            "reference": "9e073e4cf63fd9425eb85278352380faa83d72af",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/mail": "^5.0",
+            "illuminate/view": "^5.0"
+        },
+        "require-dev": {
+            "laravel/framework": "^5.1",
+            "mockery/mockery": "^0.9.5",
+            "phpunit/phpunit": "^5.5"
+        },
+        "time": "2016-11-30 16:49:35",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "MailThief\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adam Wathan",
+                "email": "adam.wathan@gmail.com"
+            }
+        ],
+        "description": "A fake Mailer for Laravel applications that takes the pain out of testing mail."
     }
 ]
