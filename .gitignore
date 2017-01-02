@@ -6,6 +6,10 @@ composer.lock
 .idea/
 /tests/coverage
 
+.htaccess
+public/error_log
+storage/queue.pid
+
 public/logos/
 public/files/products/
 public/files/arrets
