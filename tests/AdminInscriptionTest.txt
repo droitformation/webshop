@@ -6,6 +6,7 @@ Display
  [x] Is correct model groupe
  [x] Not valid
  [x] Get participants
+ [x] Notadresse
 
 InscriptionController
  [x] Search inscription

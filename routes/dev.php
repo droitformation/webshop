@@ -66,8 +66,10 @@ Route::get('testing', function() {
     if(isset($inscrit->adresses) && !$inscrit->adresses->isEmpty())
     {
         $adresse = $inscrit->adresses->where('type',1)->map(function($adresse, $key) use ($inscrit) {
-            return ['id' => $inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email ];
+            return $adresse;
         })->first();
+        
+        // return ['id' => $inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email ];
     }
 
     //$years = array_keys($years->toArray());

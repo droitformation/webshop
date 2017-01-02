@@ -33,9 +33,6 @@
          $adresses = $this->prepareAdresse($adresses);
 
          if(!$adresses->isEmpty()){
-            /*  foreach($adresses as $adresse){
-                 $writer->addRow($adresse,$defaultStyle);  // add a row at a time
-             }*/
              $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
          }
 

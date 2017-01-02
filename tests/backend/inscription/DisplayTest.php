@@ -155,4 +155,19 @@ class DisplayTest extends TestCase {
         $this->assertEquals($particiants, $display->getParticiants());
 
     }
+
+    public function testNotadresse()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $inscription->user->adresses()->delete();
+
+        $display = new \App\Droit\Inscription\Entities\Display($inscription);
+        $display->isValid();
+
+        $this->assertFalse( $display->isValid() );
+    }
 }

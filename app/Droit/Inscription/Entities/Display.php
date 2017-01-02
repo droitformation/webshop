@@ -73,14 +73,16 @@ class Display
 
     public function getDetenteur($inscrit)
     {
-        if(!isset($inscrit->adresses) || $inscrit->adresses->isEmpty()){
+        $this->adresse = $inscrit->adresses->where('type',1)->map(function($adresse, $key) use ($inscrit) {
+            return $adresse;
+        })->first();
+
+        if(!$this->adresse){
             $this->valid = false;
             $this->errors[] = 'Pas de\'adresse pour l\'inscrit';
-            
+
             return [];
         }
-
-        $this->adresse = $inscrit->adresses->where('type',1)->first();
 
         return ['id' => $inscrit->id, 'civilite' => $this->adresse->civilite_title, 'name' => $this->adresse->name, 'email' => $this->adresse->email ];
     }
