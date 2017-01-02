@@ -45,15 +45,15 @@ Route::get('testing', function() {
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
 
     $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
-    $occurrence   = $occurrences->find(1);
+    //$occurrence   = $occurrences->find(1);
 
     $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $colloque   = $colloques->find(100);
+    //$colloque   = $colloques->find(100);
 
-    $price  = $colloque->prices->first();
-    $option = $colloque->options->first();
+   // $price  = $colloque->prices->first();
+    //$option = $colloque->options->first();
     
-    $price  = $prices->find(388);
+    //$price  = $prices->find(388);
 
     //$years     = $colloques->getYears();
 
@@ -61,9 +61,18 @@ Route::get('testing', function() {
     //$make  = new \tests\factories\ObjectFactory();
    // $make->makeInscriptions(1, 1);
 
+    $inscrit = $users->find(710);
+
+    if(isset($inscrit->adresses) && !$inscrit->adresses->isEmpty())
+    {
+        $adresse = $inscrit->adresses->where('type',1)->map(function($adresse, $key) use ($inscrit) {
+            return ['id' => $inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email ];
+        })->first();
+    }
+
     //$years = array_keys($years->toArray());
     echo '<pre>';
-   // print_r($years);
+    print_r($adresse);
     echo '</pre>';exit();
 
     /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');

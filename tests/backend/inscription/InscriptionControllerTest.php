@@ -20,6 +20,63 @@ class InscriptionControllerTest extends TestCase {
 		parent::tearDown();
 	}
 
+    public function testSearchInscription()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        // All inscriptions
+
+        $this->visit('admin/inscription/colloque/'.$colloque->id);
+        $this->assertViewHas('inscriptions');
+
+        $content = $this->response->getOriginalContent();
+        $content = $content->getData();
+
+        $inscriptions = $content['inscriptions'];
+
+        $this->assertEquals($colloque->inscriptions->count(), $inscriptions->count());
+
+        // with search results
+
+        $this->call('POST', 'admin/inscription/colloque/'.$colloque->id, ['inscription_no' => $inscription->inscription_no]);
+
+        $content = $this->response->getOriginalContent();
+        $content = $content->getData();
+
+        $inscriptions = $content['inscriptions'];
+        $result  = $inscriptions->first();
+
+        $this->assertEquals($result->inscription_no, $inscription->inscription_no);
+    }
+
+    public function testCreateInscription()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $this->visit('admin/inscription/create');
+        $this->see('Créer une Inscription');
+        $this->assertViewHas('colloques');
+    }
+
+    public function testCreateInscriptionColloque()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $this->visit('admin/inscription/create/'.$colloque->id);
+        $this->see($colloque->title);
+        $this->see('Créer une Inscription');
+        $this->assertViewHas('colloques');
+    }
+
     public function testDesinscriptionList()
     {
         // Create colloque

@@ -8,6 +8,9 @@ Display
  [x] Get participants
 
 InscriptionController
+ [x] Search inscription
+ [x] Create inscription
+ [x] Create inscription colloque
  [x] Desinscription list
  [x] Desinscription
  [x] Make simple inscription
@@ -18,13 +21,19 @@ InscriptionController
 Inscription
  [x] Register new inscription
  [x] Register multiple new inscription
- [x] Last inscriptions
  [x] Update inscription
- [x] Generate doc
- [x] Generate doc free
 
 InscriptionWorker
- [x] Update inscription
+ [x] Register group data
+ [x] Register
+ [x] Update date send
+ [x] Update date send groupe
+ [x] Prepare data
+ [x] Prepare data group
+ [x] Add specialisation to user
+ [x] Makedocuments
+ [x] Makedocuments groupe
+ [x] Make only bon
 
 SendInscription
  [x] Send inscription
