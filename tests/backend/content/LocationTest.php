@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class MenuTest extends TestCase {
+class LocationTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -29,37 +29,49 @@ class MenuTest extends TestCase {
 	/**
 	 * @return void
 	 */
-	public function testMenuList()
+	public function testLocationList()
 	{
-        $this->visit('admin/menus/1')->see('Menus');
-        $this->assertViewHas('menus');
+        $this->visit('admin/location')->see('Lieux');
+        $this->assertViewHas('locations');
 	}
-    
-   public function testMenuCreate()
+
+     public function testLocationCreate()
+     {
+          $this->visit('admin/location')->click('addLocation');
+          $this->seePageIs('admin/location/create');
+  
+          $this->type('Un lieux', 'name')->type('<p>Une adresse</p>', 'adresse')->press('Envoyer');
+  
+          $this->seeInDatabase('locations', [
+              'name'    => 'Un lieux',
+              'adresse' => '<p>Une adresse</p>',
+          ]);
+      }
+
+    public function testUpdateLocation()
     {
-        $this->visit('admin/menus/1')->click('addMenu');
-        $this->seePageIs('admin/menu/create/1');
+        $location = factory(App\Droit\Location\Entities\Location::class)->create();
 
-        $this->type('Un menu', 'title')->select('main', 'position')->press('Envoyer');
+        $this->visit('admin/location/'.$location->id)->see($location->name);
 
-        $this->seeInDatabase('menus', [
-            'title'       => 'Un menu',
-            'position'    => 'main',
-            'site_id'     => 1
+        $this->type('Un autre lieux', 'name')->type('<p>Une adresse</p>', 'adresse')->press('Envoyer');
+
+        $this->seeInDatabase('locations', [
+            'name'    => 'Un autre lieux',
+            'adresse' => $location->adresse,
         ]);
     }
 
-    /*
-        public function testUpdateMenu()
-        {
-            $this->visit('admin/theme')->see('Thèmes');
-            $this->assertViewHas('themes');
-        }
+    public function testDeleteLocation()
+    {
+        $location = factory(App\Droit\Location\Entities\Location::class)->create();
 
-        public function testDeleteMenu()
-        {
-            $this->visit('admin/shipping')->see('Frais de port');
-            $this->assertViewHas('shippings');
-        }*/
-    
+        $this->visit('admin/location/'.$location->id)->see($location->name);
+
+        $response = $this->call('DELETE','admin/location/'.$location->id);
+
+        $this->notSeeInDatabase('locations', [
+            'id' => $location->id,
+        ]);
+    }
 }

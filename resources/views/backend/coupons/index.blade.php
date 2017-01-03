@@ -6,7 +6,7 @@
             <h3>Coupons rabais</h3>
         </div>
         <div class="col-md-2 text-right">
-            <a href="{{ url('admin/coupon/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+            <a id="addCoupon" href="{{ url('admin/coupon/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
         </div>
     </div>
 

@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CouponTest extends TestCase {
+class CouponControllerTest extends TestCase {
 
     protected $coupon;
     protected $product;
@@ -12,14 +12,6 @@ class CouponTest extends TestCase {
     public function setUp()
     {
         parent::setUp();
-
-        $this->product = Mockery::mock('App\Droit\Shop\Product\Repo\ProductInterface');
-        $this->app->instance('App\Droit\Shop\Product\Repo\ProductInterface', $this->product);
-
-        $this->coupon = Mockery::mock('App\Droit\Shop\Coupon\Repo\CouponInterface');
-        $this->app->instance('App\Droit\Shop\Coupon\Repo\CouponInterface', $this->coupon);
-
-        $this->helper = Mockery::mock('App\Droit\Helper\Helper');
 
         DB::beginTransaction();
 
@@ -40,13 +32,6 @@ class CouponTest extends TestCase {
 	 */
 	public function testCouponList()
 	{
-        $coupon1 = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
-        $coupon2 = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'two')->make();
-
-        $coupons = new \Illuminate\Support\Collection([$coupon1,$coupon2]);
-
-        $this->coupon->shouldReceive('getAll')->once()->andReturn($coupons);
-
         $this->visit('admin/coupon');
         $this->assertViewHas('coupons');
 	}
@@ -54,47 +39,73 @@ class CouponTest extends TestCase {
     /**
      * @return void
      */
-    public function testCouponShow()
-    {
-        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
-        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
-
-        $products = new \Illuminate\Support\Collection([$product]);
-
-        $this->coupon->shouldReceive('find')->once()->andReturn($coupon);
-        $this->product->shouldReceive('getAll')->once()->andReturn($products);
-
-        $this->visit('admin/coupon/100');
-        $this->assertViewHas('coupon');
-        $this->assertViewHas('products');
-    }
-
-    /**
-     * @return void
-     */
     public function testCouponCreate()
     {
-        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
-        $products = new \Illuminate\Support\Collection([$product]);
+        $this->visit('admin/coupon')->click('addCoupon');
+        $this->seePageIs('admin/coupon/create');
 
-        $this->product->shouldReceive('getAll')->once()->andReturn($products);
+        $this->type('1000', 'value')
+            ->select('global', 'type')
+            ->type('Test', 'title')
+            ->type(\Carbon\Carbon::now()->addDay()->toDateString(), 'expire_at')
+            ->press('Créer un coupon');
 
-        $this->visit('admin/coupon/create');
-        $this->assertViewHas('products');
+        $this->seeInDatabase('shop_coupons', [
+            'value'      => '1000',
+            'type'       => 'global',
+            'title'      => 'Test',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()->toDateString()
+        ]);
+    }
+
+    public function testCouponPricCreate()
+    {
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
+            'title'           => 'Test product',
+            'teaser'          => 'One test product',
+            'image'           => 'test.jpg',
+            'description'     => 'Lorem ipsum dolor amet' ,
+            'weight'          => 900,
+            'sku'             => 10,
+            'price'           => 1000,
+        ]);
+
+        $this->visit('admin/coupon')->click('addCoupon');
+        $this->seePageIs('admin/coupon/create');
+
+        $this->type('1000', 'value')
+            ->select('price', 'type')
+            ->select($product->id, 'product_id[]')
+            ->type('Test', 'title')
+            ->type(\Carbon\Carbon::now()->addDay()->toDateString(), 'expire_at')
+            ->press('Créer un coupon');
+
+        $this->seeInDatabase('shop_coupons', [
+            'value'      => '1000',
+            'type'       => 'price',
+            'title'      => 'Test',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()->toDateString()
+        ]);
     }
 
     /**
      * @return void
      */
-    public function testCouponStore()
+    public function testCouponUpdate()
     {
-        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'price')->create();
 
-        $this->coupon->shouldReceive('create')->once()->andReturn($coupon);
+        $this->visit('admin/coupon/'.$coupon->id);
 
-        $response = $this->call('POST', 'admin/coupon', ['value' => '20', 'type' => 'general', 'title' => 'second', 'expire_at' => \Carbon\Carbon::now()->addDay(2)->toDateString()]);
+        $this->select('global', 'type')->press('Envoyer');
 
-        $this->assertRedirectedTo('admin/coupon');
+        $this->seeInDatabase('shop_coupons', [
+            'id'         => $coupon->id,
+            'value'      => $coupon->value,
+            'type'       => 'global',
+            'title'      => $coupon->title,
+            'expire_at'  => \Carbon\Carbon::now()->addDay()->toDateString()
+        ]);
     }
 
     /**
@@ -102,11 +113,15 @@ class CouponTest extends TestCase {
      */
     public function testCouponDelete()
     {
-        $this->coupon->shouldReceive('delete')->once();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'price')->create();
 
-        $response = $this->call('DELETE','admin/coupon/100', [] ,['id' => '100']);
+        $response = $this->call('DELETE','admin/coupon/'.$coupon->id);
 
         $this->assertRedirectedTo('admin/coupon');
+
+        $this->notSeeInDatabase('shop_coupons', [
+            'id' => $coupon->id,
+        ]);
 
     }
 }

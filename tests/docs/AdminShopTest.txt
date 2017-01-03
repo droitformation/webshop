@@ -5,13 +5,6 @@ CouponController
  [x] Coupon update
  [x] Coupon delete
 
-Coupon
- [x] Coupon list
- [x] Coupon show
- [x] Coupon create
- [x] Coupon store
- [x] Coupon delete
-
 OrderAdmin
  [x] See page for new order
  [x] Create new order via admin pass validation with user

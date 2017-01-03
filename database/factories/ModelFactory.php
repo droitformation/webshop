@@ -155,6 +155,21 @@ $factory->define(App\Droit\Member\Entities\Member::class, function (Faker\Genera
     ];
 });
 
+$factory->define(App\Droit\Menu\Entities\Menu::class, function (Faker\Generator $faker) {
+    return [
+        'title'    => $faker->word,
+        'position' => 'main',
+        'site_id'  => 1
+    ];
+});
+
+$factory->define(App\Droit\Location\Entities\Location::class, function (Faker\Generator $faker) {
+    return [
+        'name'    => 'Un lieux',
+        'adresse' => '<p>Une adresse</p>',
+    ];
+});
+
 $factory->define(App\Droit\Profession\Entities\Profession::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->word
@@ -226,9 +241,8 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'one', function
     $tomorrow = \Carbon\Carbon::now()->addDay();
 
     return [
-        'id'         => 100,
         'value'      => '10',
-        'type'       => 'general',
+        'type'       => 'global',
         'title'      => 'test',
         'expire_at'  => $tomorrow
     ];

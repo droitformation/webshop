@@ -5,12 +5,8 @@
     <div class="col-md-4">
         <h3>Lieux</h3>
     </div>
-    <div class="col-md-8">
-        <div class="options text-right" style="margin-bottom: 10px;">
-            <div class="btn-toolbar">
-               <a href="{{ url('admin/location/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-            </div>
-        </div>
+    <div class="col-md-8 text-right">
+        <a id="addLocation" href="{{ url('admin/location/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
     </div>
 </div>
 

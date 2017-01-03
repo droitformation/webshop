@@ -48,18 +48,32 @@ class MenuTest extends TestCase {
             'site_id'     => 1
         ]);
     }
-
-    /*
-        public function testUpdateMenu()
-        {
-            $this->visit('admin/theme')->see('Thèmes');
-            $this->assertViewHas('themes');
-        }
-
-        public function testDeleteMenu()
-        {
-            $this->visit('admin/shipping')->see('Frais de port');
-            $this->assertViewHas('shippings');
-        }*/
     
+    public function testUpdateMenu()
+    {
+        $menu = factory(App\Droit\Menu\Entities\Menu::class)->create();
+
+        $this->visit('admin/menu/'.$menu->id)->see($menu->title);
+
+        $this->type('Un menu', 'title')->select('sidebar', 'position')->press('Envoyer');
+
+        $this->seeInDatabase('menus', [
+            'title'       => 'Un menu',
+            'position'    => 'sidebar',
+            'site_id'     => $menu->site_id
+        ]);
+    }
+  
+    public function testDeleteMenu()
+    {
+        $menu = factory(App\Droit\Menu\Entities\Menu::class)->create();
+
+        $this->visit('admin/menu/'.$menu->id)->see($menu->title);
+
+        $response = $this->call('DELETE','admin/menu/'.$menu->id);
+
+        $this->notSeeInDatabase('menus', [
+            'id' => $menu->id,
+        ]);
+    }
 }

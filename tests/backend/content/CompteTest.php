@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class MenuTest extends TestCase {
+class CompteTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -29,53 +29,59 @@ class MenuTest extends TestCase {
 	/**
 	 * @return void
 	 */
-	public function testMenuList()
+	public function testCompteList()
 	{
-        $this->visit('admin/menus/1')->see('Menus');
-        $this->assertViewHas('menus');
+        $this->visit('admin/compte')->see('Comptes');
+        $this->assertViewHas('comptes');
 	}
     
-   public function testMenuCreate()
+   public function testCompteCreate()
     {
-        $this->visit('admin/menus/1')->click('addMenu');
-        $this->seePageIs('admin/menu/create/1');
+        $this->visit('admin/compte')->click('addCompte');
+        $this->seePageIs('admin/compte/create');
 
-        $this->type('Un menu', 'title')->select('main', 'position')->press('Envoyer');
+        $this->type('Un compte', 'motif')->type('Adresse', 'adresse')->type('234-131-2', 'compte')->press('Envoyer');
 
-        $this->seeInDatabase('menus', [
-            'title'       => 'Un menu',
-            'position'    => 'main',
-            'site_id'     => 1
+        $this->seeInDatabase('comptes', [
+            'motif'      => 'Un compte',
+            'adresse'    => 'Adresse',
+            'compte'     => '234-131-2'
         ]);
     }
-    
-    public function testUpdateMenu()
+
+    public function testUpdateCompte()
     {
-        $menu = factory(App\Droit\Menu\Entities\Menu::class)->create();
+        $compte = factory(App\Droit\Compte\Entities\Compte::class)->create();
 
-        $this->visit('admin/menu/'.$menu->id)->see($menu->title);
+        $this->visit('admin/compte/'.$compte->id)->see($compte->motif);
 
-        $this->type('Un menu', 'title')->select('sidebar', 'position')->press('Envoyer');
+        $response = $this->call('PUT', 'admin/compte/'.$compte->id,
+            [
+                'id'       => $compte->id,
+                'motif'    => 'Un autre compte',
+                'adresse'  => '<p>Autre Adresse</p>',
+                'compte'   => '20-4130-2',
+            ]
+        );
 
-        $this->seeInDatabase('menus', [
-            'title'       => 'Un menu',
-            'position'    => 'sidebar',
-            'site_id'     => $menu->site_id
+        $this->seeInDatabase('comptes', [
+            'id'       => $compte->id,
+            'motif'    => 'Un autre compte',
+            'adresse'  => '<p>Autre Adresse</p>',
+            'compte'   => '20-4130-2',
         ]);
     }
   
-    public function testDeleteMenu()
+    public function testDeleteCompte()
     {
-        $menu = factory(App\Droit\Menu\Entities\Menu::class)->create();
+        $compte = factory(App\Droit\Compte\Entities\Compte::class)->create();
 
-        $this->visit('admin/menu/'.$menu->id)->see($menu->title);
+        $this->visit('admin/compte/'.$compte->id)->see($compte->title);
 
-        $this->type('Un menu', 'title')->select('sidebar', 'position')->press('Envoyer');
+        $response = $this->call('DELETE','admin/compte/'.$compte->id);
 
-        $response = $this->call('DELETE','admin/menu/'.$menu->id);
-
-        $this->notSeeInDatabase('menus', [
-            'id' => $menu->id,
+        $this->notSeeInDatabase('comptes', [
+            'id' => $compte->id,
         ]);
     }
 }

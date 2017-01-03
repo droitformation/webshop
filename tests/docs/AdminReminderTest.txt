@@ -1,0 +1,12 @@
+AttributReminder
+ [x] Create new attribut
+ [x] Update attribut
+ [x] Delete reminder
+
+Reminder
+ [x] Create new reminder
+ [x] Update reminder
+ [x] Delete reminder
+ [x] Reminder no dates
+ [x] Reminder update no dates
+

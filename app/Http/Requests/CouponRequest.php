@@ -29,10 +29,11 @@ class CouponRequest extends Request
     public function rules()
     {
         return [
-            'title'     => 'required',
-            'value'     => 'required_if:type,product,global',
-            'expire_at' => 'required|date|date_format:Y-m-d|after:yesterday',
-            'type'      => 'required'
+            'title'      => 'required',
+            'value'      => 'required_if:type,product,global',
+            'product_id' => 'required_if:type,product,price,priceshipping',
+            'expire_at'  => 'required|date|date_format:Y-m-d|after:yesterday',
+            'type'       => 'required'
         ];
     }
 
