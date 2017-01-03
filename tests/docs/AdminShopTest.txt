@@ -1,3 +1,10 @@
+CouponController
+ [x] Coupon list
+ [x] Coupon create
+ [x] Coupon pric create
+ [x] Coupon update
+ [x] Coupon delete
+
 Coupon
  [x] Coupon list
  [x] Coupon show

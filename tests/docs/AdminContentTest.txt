@@ -20,7 +20,21 @@ Author
  [x] Author store
  [x] Author delete
 
+Compte
+ [x] Compte list
+ [x] Compte create
+ [x] Update compte
+ [x] Delete compte
+
+Location
+ [x] Location list
+ [x] Location create
+ [x] Update location
+ [x] Delete location
+
 Menu
  [x] Menu list
  [x] Menu create
+ [x] Update menu
+ [x] Delete menu
 

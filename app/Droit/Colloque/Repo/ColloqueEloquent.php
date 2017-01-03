@@ -26,7 +26,7 @@ class ColloqueEloquent implements ColloqueInterface{
     {
         return $this->colloque
             ->registration($registration)
-            ->isVisible($isVisible)
+            ->visible($isVisible)
             ->orderBy('start_at','DESC')->get();
     }
 
