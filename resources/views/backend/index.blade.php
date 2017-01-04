@@ -62,7 +62,7 @@
                                 @foreach($inscriptions as $inscription)
                                     <tr>
                                         <td>
-                                            @if(isset($inscription->groupe))
+                                            @if(!isset($inscription->groupe))
                                                 <a class="btn btn-sky btn-sm" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}"><i class="fa fa-edit"></i></a>
                                                 @include('backend.users.modals.edit', ['inscription' => $inscription]) <!-- Modal edit inscription -->
                                             @endif
