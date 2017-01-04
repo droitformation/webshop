@@ -34,7 +34,46 @@ class ProductTest extends TestCase {
 		$this->assertViewHas('products');
 	}
 
-	public function testCreateProduct()
+    public function testProductsSearchTerm()
+    {
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
+
+        $this->visit('admin/products');
+
+        // filter to get all send orders
+        $response = $this->call('POST', url('admin/products'), ['term' => $product->title]);
+
+        $content = $response->getOriginalContent();
+        $content = $content->getData();
+
+        $result = $content['products'];
+
+        $this->assertEquals(1, $result->count());
+    }
+
+    public function testProductsSearchSort()
+    {
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
+
+        $author = factory(App\Droit\Author\Entities\Author::class)->create();
+
+        $product1->authors()->attach($author->id);
+
+        $this->visit('admin/products');
+
+        // filter to get all send orders
+        $response = $this->call('POST', url('admin/products'), ['sort' => ['author_id' => $author->id]]);
+
+        $content = $response->getOriginalContent();
+        $content = $content->getData();
+
+        $result = $content['products'];
+
+        $this->assertEquals(1, $result->count());
+    }
+
+    public function testCreateProduct()
 	{
 		$this->visit('admin/products')->click('addProduct');
 		$this->seePageIs('admin/product/create');
@@ -177,6 +216,37 @@ class ProductTest extends TestCase {
         $validator->activate();
 
         $this->expectExceptionMessage('Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement');
+    }
+
+    public function testProductAddAttribute()
+    {
+        $product   = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
+        $attribute = factory(App\Droit\Shop\Attribute\Entities\Attribute::class)->create();
+
+        $this->visit('admin/product/'.$product->id);
+        
+        $this->type('new', 'value')
+           ->select($attribute->id, 'attribute_id')
+           ->press('addAttribute');
+
+        $product->load('attributs');
+        
+        $this->assertTrue($product->attributs->contains('id',$attribute->id));
+    }
+
+    public function testProductDeleteAttribute()
+    {
+        $product   = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
+        $attribute = factory(App\Droit\Shop\Attribute\Entities\Attribute::class)->create();
+
+        $product->attributs()->attach($attribute->id, ['value' => 'new']);
+
+        $this->visit('admin/product/'.$product->id);
+        $this->press('deleteAttribute_'.$attribute->id);
+
+        $product->load('attributs');
+
+        $this->assertFalse($product->attributs->contains('id',$attribute->id));
     }
 
 }

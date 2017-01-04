@@ -44,7 +44,8 @@
             </div>
 
             @inject('helper', 'App\Droit\Helper\Helper')
-            {{ $helper->displaySearch($search) }}
+
+           {{ $helper->displaySearch($sort) }}
 
             @if(!$products->isEmpty())
 
@@ -71,7 +72,7 @@
                             @endforeach
                         </div>
 
-                        @if($paginate)
+                        @if($products instanceof \Illuminate\Pagination\LengthAwarePaginator )
                             {!! $products->links() !!}
                         @endif
 

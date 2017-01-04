@@ -11,7 +11,7 @@ class Domain extends Model{
     
     protected $dates = ['deleted_at'];
 
-    protected $fillable = array('title','hidden');
+    protected $fillable = ['title','hidden'];
     /**
      * Set timestamps off
      */

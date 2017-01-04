@@ -160,6 +160,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('/', 'Backend\AdminController@index');
 
+    Route::get('menus/{site}','Backend\MenuController@index');
+    Route::get('menu/create/{site}','Backend\MenuController@create');
+    Route::resource('menu', 'Backend\MenuController');
+
+    Route::resource('site', 'Backend\SiteController');
+    
     Route::get('user/search', 'Backend\User\UserController@search');
     Route::get('config/shop', 'Backend\ConfigController@shop');
     Route::get('config/abo', 'Backend\ConfigController@abo');
@@ -304,25 +310,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     /*
     |--------------------------------------------------------------------------
-    | Inscriptions and colloque Routes
+    | Shop and products Routes
     |--------------------------------------------------------------------------
     */
 
-    Route::get('menus/{site}','Backend\MenuController@index');
-    Route::get('menu/create/{site}','Backend\MenuController@create');
-    Route::resource('menu', 'Backend\MenuController');
-
-    Route::resource('site', 'Backend\SiteController');
     Route::resource('coupon', 'Backend\Shop\CouponController');
     Route::resource('shipping', 'Backend\Shop\ShippingController');
     Route::resource('theme', 'Backend\Shop\ThemeController');
     Route::resource('domain', 'Backend\Shop\DomainController');
     Route::resource('attribut', 'Backend\Shop\AttributController');
+    
+    Route::resource('productattribut', 'Backend\Shop\ProductAttributeController');
+    Route::resource('productlabel', 'Backend\Shop\ProductLabelController');
 
-    Route::post('product/addAttribut/{id}', 'Backend\Shop\ProductController@addAttribut');
-    Route::post('product/removeAttribut/{id}', 'Backend\Shop\ProductController@removeAttribut');
-    Route::post('product/addType/{id}', 'Backend\Shop\ProductController@addType');
-    Route::post('product/removeType/{id}', 'Backend\Shop\ProductController@removeType');
     Route::match(['get', 'post'], 'products', 'Backend\Shop\ProductController@index');
     Route::resource('product', 'Backend\Shop\ProductController');
 
@@ -349,8 +349,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('order/{id}','Backend\Shop\OrderController@show');
     Route::put('order/{id}','Backend\Shop\OrderController@update');
     Route::delete('order/{id}','Backend\Shop\OrderController@destroy');
-
-    //Route::resource('order', 'Backend\Shop\OrderController');
 
     /*
     |--------------------------------------------------------------------------

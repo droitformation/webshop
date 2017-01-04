@@ -167,9 +167,10 @@
                         @foreach($product->attributs as $attribute)
                             <div>
                                 <strong>{{ $attribute->title }}</strong><br/>{{ $attribute->pivot->value }}
-                                <form action="{{ url('admin/product/removeAttribut/'.$product->id) }}" method="POST" class="pull-right">{!! csrf_field() !!}
-                                    <input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
-                                    <button data-action="{{ $attribute->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
+                                <form action="{{ url('admin/productattribut/'.$attribute->id) }}" method="POST" class="pull-right">
+                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <button id="deleteAttribute_{{ $attribute->id }}" data-what="Supprimer" data-action="{{ $attribute->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
                                 </form>
                             </div>
                         @endforeach
@@ -178,7 +179,7 @@
 
                     <h4>Ajouter un attribut</h4>
 
-                    <form action="{{ url('admin/product/addAttribut/'.$product->id) }}" method="POST">{!! csrf_field() !!}
+                    <form action="{{ url('admin/productattribut') }}" method="POST">{!! csrf_field() !!}
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>Type</label>
@@ -195,7 +196,8 @@
                                 <label>Valeur</label>
                                 <div class="input-group">
                                     <input type="text" name="value" class="form-control" placeholder="Valeur">
-                                    <span class="input-group-btn"><button class="btn btn-info" type="submit">Ajouter</button></span>
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <span class="input-group-btn"><button id="addAttribute" class="btn btn-info" type="submit">Ajouter</button></span>
                                 </div><!-- /input-group -->
                             </div>
                         </div>
@@ -204,9 +206,9 @@
                 </div>
             </div>
 
-            @include('backend.products.partials.item',['title' => 'Thème', 'items' => $categories, 'types' => 'categories'])
-            @include('backend.products.partials.item',['title' => 'Auteur',    'items' => $authors,    'types' => 'authors'])
-            @include('backend.products.partials.item',['title' => 'Domaine',   'items' => $domains,    'types' => 'domains'])
+            @include('backend.products.partials.label',['title' => 'Thème',   'items' => $categories,  'labels' => 'categories'])
+            @include('backend.products.partials.label',['title' => 'Auteur',  'items' => $authors, 'labels' => 'authors'])
+            @include('backend.products.partials.label',['title' => 'Domaine', 'items' => $domains, 'labels' => 'domains'])
 
         </div>
     </div>

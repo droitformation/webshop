@@ -612,8 +612,7 @@ class Helper {
 
     public function displaySearch($search = null)
     {
-        if($search && !empty($search))
-        {
+        if($search){
             $key  = key($search);
             $name = str_replace('_id','',$key).'s';
             $id   = $search[$key];

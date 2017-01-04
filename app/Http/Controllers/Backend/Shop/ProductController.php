@@ -6,10 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Service\UploadInterface;
-use App\Droit\Reminder\Worker\ReminderWorkerInterface;
-
 use App\Droit\Shop\Product\Repo\ProductInterface;
-use App\Droit\Shop\Attribute\Repo\AttributeInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Shop\Stock\Repo\StockInterface;
@@ -18,10 +15,8 @@ class ProductController extends Controller {
 
     protected $upload;
 	protected $product;
-    protected $attribute;
     protected $abo;
     protected $order;
-    protected $reminder;
     protected $stock;
 
 	/**
@@ -29,54 +24,36 @@ class ProductController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(
-        ProductInterface $product,
-        OrderInterface $order,
-        AttributeInterface $attribute,
-        UploadInterface $upload,
-        AboInterface $abo,
-        ReminderWorkerInterface $reminder,
-        StockInterface $stock
-    )
+	public function __construct(ProductInterface $product, OrderInterface $order, UploadInterface $upload, AboInterface $abo, StockInterface $stock)
 	{
         $this->product   = $product;
         $this->order     = $order;
-        $this->attribute = $attribute;
         $this->upload    = $upload;
-        $this->reminder  = $reminder;
         $this->abo       = $abo;
         $this->stock     = $stock;
 	}
 
 	/**
 	 * Show the application welcome screen to the user.
-	 *
+     * @param  \Illuminate\Http\Request $request
 	 * @return Response
 	 */
 	public function index(Request $request)
 	{
-        $search = $request->input('search',null);
-        $search = $search ? array_filter($search) : null;
-        $term   = $request->input('term',null);
-
+        $sort = $request->input('sort') ? array_filter($request->input('sort')) : null;
+  
         // results for search
-        if($search)
-        {
-            $paginate = false;
-            $products = $this->product->getAll($search, null, true);
+        if($sort) {
+            $products = $this->product->getAll($sort, null, true);
         }
-        elseif($term)
-        {
-            $products = $this->product->search(trim($term),true);
-            $paginate = false;
+        elseif($request->input('term',null)) {
+            $products = $this->product->search(trim($request->input('term')),true);
         }
-        else // pagination
-        {
+        else{
             $products = $this->product->getNbr(20,false);
-            $paginate = true;
         }
 
-		return view('backend.products.index')->with(['products' => $products, 'paginate' => $paginate, 'search' => $search, 'term' => $term]);
+		return view('backend.products.index')->with(['products' => $products, 'sort' => $sort, 'term' => $request->input('term')]);
 	}
 
     /**
@@ -90,7 +67,7 @@ class ProductController extends Controller {
     }
 
     /**
-     *
+     * @param  int $id
      * @return Response
      */
     public function show($id)
@@ -104,17 +81,15 @@ class ProductController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $data = $request->except('file');
 
-        if($request->file('file',null))
-        {
+        if($request->file('file',null)) {
             $file = $this->upload->upload( $request->file('file') , 'files/products');
-
             $data['image'] = $file['name'];
         }
 
@@ -132,7 +107,7 @@ class ProductController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -154,7 +129,7 @@ class ProductController extends Controller {
             $data['image'] = $file['name'];
         }
 
-        $product  = $this->product->update($data);
+        $product = $this->product->update($data);
 
         alert()->success('Le produit a été mis à jour');
 
@@ -174,59 +149,5 @@ class ProductController extends Controller {
         alert()->success('Le produit a été supprimé');
 
         return redirect('admin/product');
-    }
-
-    public function addAttribut($id, Request $request)
-    {
-        $product = $this->product->find($id);
-
-        // See if attribute is a rappel
-        $attribute = $this->attribute->find($request->input('attribute_id'));
-
-        if($attribute->reminder)
-        {
-            $this->reminder->add($attribute, $product, $request->input('value'), $attribute->interval);
-        }
-
-        $product->attributs()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);
-
-        alert()->success('L\'attribut a été ajouté');
-
-        return redirect()->back();
-    }
-
-    public function removeAttribut($id, Request $request)
-    {
-        $product = $this->product->find($id);
-
-        $product->attributs()->detach($request->input('attribute_id'));
-
-        alert()->success('L\'attribut a été supprimé');
-
-        return redirect()->back();
-    }
-
-    public function addType($id, Request $request)
-    {
-        $product = $this->product->find($id);
-        $types   = $request->input('type');
-
-        $product->$types()->sync($request->input('type_id'));
-
-        alert()->success('L\'objet a été ajouté');
-
-        return redirect()->back();
-    }
-
-    public function removeType($id, Request $request)
-    {
-        $product = $this->product->find($id);
-        $types   = $request->input('type');
-
-        $product->$types()->detach($request->input('type_id'));
-
-        alert()->success('L\'objet a été supprimé');
-
-        return redirect()->back();
     }
 }

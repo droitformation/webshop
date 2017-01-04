@@ -1,9 +1,9 @@
 @if(!$items->isEmpty())
     <label>{{ $title }}</label>
-    <select class="form-control" name="search[{{ $type }}]">
+    <select class="form-control" name="sort[{{ $type }}]">
         <option value="">Choix</option>
         @foreach($items as $item)
-            <option value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
+            <option {{ isset($sort[$type]) && ($sort[$type] == $item->id) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
         @endforeach
     </select>
 @endif

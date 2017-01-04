@@ -99,7 +99,7 @@ class ProductEloquent implements ProductInterface{
 
     public function search($term, $hidden = false)
     {
-        $products = $this->product->join('shop_product_attributes', 'shop_products.id', '=', 'shop_product_attributes.product_id')
+        $products = $this->product->leftJoin('shop_product_attributes', 'shop_products.id', '=', 'shop_product_attributes.product_id')
             ->where('shop_product_attributes.value', 'like', '%'.$term.'%')
             ->orWhere('shop_products.title', 'like', '%'.$term.'%')
             ->select('shop_products.*','shop_product_attributes.value');

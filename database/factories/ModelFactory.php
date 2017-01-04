@@ -321,6 +321,14 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'three', functi
     ];
 });
 
+$factory->define(App\Droit\Shop\Categorie\Entities\Categorie::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->word,
+        'image' => $faker->word.'.jpg',
+        'rang' => 1,
+    ];
+});
+
 $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Generator $faker) {
     return [
         'first_name' => 'Cindy',
@@ -366,6 +374,12 @@ $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Genera
         'occupation' => $faker->sentence,
         'bio'        => $faker->sentence,
         'photo'      => 'test.jpg'
+    ];
+});
+
+$factory->define(App\Droit\Domain\Entities\Domain::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->word
     ];
 });
 
