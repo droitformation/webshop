@@ -117,7 +117,7 @@ class ProductEloquent implements ProductInterface{
         $product = $this->product->create(array(
             'title'           => $data['title'],
             'teaser'          => $data['teaser'],
-            'image'           => $data['image'],
+            'image'           => isset($data['image']) ? $data['image'] : '',
             'description'     => $data['description'],
             'weight'          => $data['weight'],
             'sku'             => $data['sku'],

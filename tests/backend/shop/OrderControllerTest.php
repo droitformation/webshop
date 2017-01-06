@@ -30,7 +30,6 @@ class OrderControllerTest extends TestCase {
 	 */
 	public function testFilterSendOrderss()
 	{
-
 		// Prepare and create some orders
 		$make   = new \tests\factories\ObjectFactory();
 		
@@ -107,10 +106,6 @@ class OrderControllerTest extends TestCase {
 
 	public function testUpdateOrderWithCoupon()
 	{
-		$admin = factory(App\Droit\User\Entities\User::class,'admin')->create();
-		$admin->roles()->attach(1);
-		$this->actingAs($admin);
-
 		$make  = new \tests\factories\ObjectFactory();
 		$user = $make->user();
 
@@ -161,6 +156,31 @@ class OrderControllerTest extends TestCase {
 
 		$this->assertEquals(6, $result->shipping_id);
 		$this->assertEquals($total, $result->amount);
-
 	}
+
+	public function testEditColumnsViaAjax()
+	{
+		// create some orders
+	/*	$make   = new \tests\factories\ObjectFactory();
+
+		$order = $make->order(1);
+		$order = $order->first();
+
+		$data = [
+			'pk'    => $order->id,
+			'name'  => 'payed_at',
+			'value' => \Carbon\Carbon::now()->toDateString()
+		];
+
+		$result = ['OK' => 200, 'etat' => 'Payé', 'color' => 'success'];
+
+		$this->json('POST', 'admin/order/edit', $data)->seeJson($result);
+
+		$this->seeInDatabase('shop_orders', [
+			'id'         => $order->id,
+			'status'     => $order->status,
+			'payed_at'   => \Carbon\Carbon::now()->toDateString(),
+		]);*/
+	}
+
 }
