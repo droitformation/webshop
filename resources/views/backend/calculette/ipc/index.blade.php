@@ -5,7 +5,9 @@
     <div class="col-md-6">
         <h3>Calculette IPC</h3>
 
-        <p class="text-right"><a href="{{ url('admin/calculette/ipc/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter IPC</a></p>
+        <p class="text-right">
+            <a id="addCalculetteIpc" href="{{ url('admin/calculette/ipc/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter IPC</a>
+        </p>
 
     </div>
 </div>

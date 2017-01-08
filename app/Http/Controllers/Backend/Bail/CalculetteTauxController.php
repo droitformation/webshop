@@ -16,7 +16,7 @@ class CalculetteTauxController extends Controller
     {
         $this->taux = $taux;
 
-        view()->share('calcantons', config('calculette.cantons') );
+        view()->share('calcantons', config('calculette.cantons'));
     }
 
     public function index()

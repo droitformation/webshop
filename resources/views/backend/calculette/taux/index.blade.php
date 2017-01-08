@@ -6,7 +6,7 @@
         <h3>Calculette taux</h3>
 
         <p class="text-right">
-            <a href="{{ url('admin/calculette/taux/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter taux</a>
+            <a id="addCalculetteTaux" href="{{ url('admin/calculette/taux/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter taux</a>
         </p>
     </div>
 </div>

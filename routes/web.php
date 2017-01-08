@@ -189,8 +189,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('question/create/{categorie}', 'Backend\Bail\QuestionController@create');
     Route::resource('question', 'Backend\Bail\QuestionController');
 
-    Route::resource('calculette/ipc', 'Backend\CalculetteIpcController');
-    Route::resource('calculette/taux', 'Backend\CalculetteTauxController');
+    Route::resource('calculette/ipc', 'Backend\Bail\CalculetteIpcController');
+    Route::resource('calculette/taux', 'Backend\Bail\CalculetteTauxController');
 
     /*
     |--------------------------------------------------------------------------

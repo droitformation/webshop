@@ -36,7 +36,6 @@ class CalculetteTauxEloquent implements CalculetteTauxInterface{
 		}
 
 		return $calculette;
-
 	}
 
 	public function update(array $data){
