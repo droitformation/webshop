@@ -43,6 +43,27 @@ $factory->define(App\Droit\Inscription\Entities\Inscription::class, function (Fa
     ];
 });
 
+$factory->define(App\Droit\Calculette\Entities\Calculette_ipc::class, function (Faker\Generator $faker) {
+    
+    $date = \Carbon\Carbon::now()->addMonth()->format('Y-m-d');
+    
+    return [
+        'indice'   => 3,
+        'start_at' => $date
+    ];
+});
+
+$factory->define(App\Droit\Calculette\Entities\Calculette_taux::class, function (Faker\Generator $faker) {
+
+    $date = \Carbon\Carbon::now()->addMonth()->format('Y-m-d');
+
+    return [
+        'taux'     => 3,
+        'canton'   => 'be',
+        'start_at' => $date
+    ];
+});
+
 $factory->define(App\Droit\Inscription\Entities\Groupe::class, function (Faker\Generator $faker) {
     return [
         'colloque_id' => 39,

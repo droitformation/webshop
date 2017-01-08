@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CalculetteTest extends TestCase {
+class CalculetteTauxTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -29,7 +29,7 @@ class CalculetteTest extends TestCase {
 	/**
 	 * @return void
 	 */
-	public function testCalculetteList()
+	public function testCalculetteTauxList()
 	{
         $this->visit('admin/calculette/taux')->see('Calculette taux');
         $this->assertViewHas('taux');
@@ -46,43 +46,47 @@ class CalculetteTest extends TestCase {
 
         $this->visit('admin/calculette/taux')->click('addCalculetteTaux');
 
-        $this->type('Un calculette', 'taux')
-            ->type('Un calculette', 'start_at')
+        $this->type('4.5', 'taux')
+            ->type($date, 'start_at')
             ->select($canton, 'canton')
             ->press('Envoyer');
 
-        $this->seeInDatabase('calculettes', [
+        $this->seeInDatabase('calculette_taux', [
             'taux'      => 4.5,
             'start_at'  => $date,
             'canton'    => $canton
         ]);
     }
 
-    /* public function testUpdateCalculette()
+    public function testUpdateCalculetteTaux()
      {
-         $calculette = factory(App\Droit\Calculette\Entities\Calculette::class)->create();
+         $taux = factory(App\Droit\Calculette\Entities\Calculette_taux::class)->create(); // canton => be, taux => 3
+         $date = \Carbon\Carbon::now()->addMonth()->format('Y-m-d');
 
-         $this->visit('admin/calculette/'.$calculette->id)->see($calculette->title);
+         $this->visit('admin/calculette/taux/'.$taux->id);
 
-         $this->type('Un calculette', 'title')->select('sidebar', 'position')->press('Envoyer');
+         $this->type('4.5', 'taux')
+             ->type($date, 'start_at')
+             ->select('vd', 'canton')
+             ->press('Envoyer');
 
-         $this->seeInDatabase('calculettes', [
-             'title'       => 'Un calculette',
-             'position'    => 'sidebar',
-             'site_id'     => $calculette->site_id
+         $this->seeInDatabase('calculette_taux', [
+             'taux'      => 4.5,
+             'start_at'  => $date,
+             'canton'    => 'vd'
          ]);
      }
 
-     public function testDeleteCalculette()
-     {
-         $calculette = factory(App\Droit\Calculette\Entities\Calculette::class)->create();
+    public function testDeleteCalculetteTaux()
+    {
+        $taux = factory(App\Droit\Calculette\Entities\Calculette_taux::class)->create(); // canton => be, taux => 3
 
-         $this->visit('admin/calculette/'.$calculette->id)->see($calculette->title);
+        $this->visit('admin/calculette/taux/'.$taux->id);
 
-         $response = $this->call('DELETE','admin/calculette/'.$calculette->id);
+        $response = $this->call('DELETE','admin/calculette/taux/'.$taux->id);
 
-         $this->notSeeInDatabase('calculettes', [
-             'id' => $calculette->id,
-         ]);
-     }*/
+        $this->notSeeInDatabase('calculette_taux', [
+            'id' => $taux->id,
+        ]);
+    }
 }

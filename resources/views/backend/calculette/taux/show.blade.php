@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Taux</label>
                         <div class="col-sm-9">
-                            <input type="text" name="{!! $taux->taux !!}" value="" class="form-control" required>
+                            <input type="text" value="{!! $taux->taux !!}" name="taux" class="form-control" required>
                         </div>
                     </div>
 
