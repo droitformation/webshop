@@ -7,7 +7,7 @@ class Bloc extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['title','content','image','url','rang','type','position'];
+	protected $fillable = ['title','content','image','url','rang','type','position','site_id'];
 
     protected $table = 'blocs';
 
@@ -23,17 +23,6 @@ class Bloc extends Model {
             return $this->truncate($this->content,80,'...',true);
         }
     }
-
-    /**
-     * Scope a query to only include arrets for site
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-
-    public function scopeSites($query,$site)
-    {
-        if ($site) $query->where('site_id','=',$site);
-    }
-     */
 
     public function truncate($s, $l, $e = '...', $isHTML = false)
     {

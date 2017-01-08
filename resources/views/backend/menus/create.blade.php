@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/menus/'.$current) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{{ url('admin/menus/'.$current_site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 <!-- start row -->
@@ -38,7 +38,7 @@
                             @if(!$sites->isEmpty())
                                 <select class="form-control" name="site_id">
                                     @foreach($sites as $site)
-                                        <option {{ $current == $site->id  ? 'selected' : '' }} value="{{ $site->id  }}">{{ $site->nom }}</option>
+                                        <option {{ $current_site == $site->id  ? 'selected' : '' }} value="{{ $site->id  }}">{{ $site->nom }}</option>
                                     @endforeach
                                 </select>
                             @endif

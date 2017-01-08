@@ -39,7 +39,7 @@ class PageController extends Controller
         $pages = $this->page->getAll($site);
         $root  = $this->page->getRoot($site);
 
-        return view('backend.pages.index')->with(['pages' => $pages, 'root' => $root, 'current' => $site]);
+        return view('backend.pages.index')->with(['pages' => $pages, 'root' => $root, 'current_site' => $site]);
     }
 
     /**
@@ -51,7 +51,7 @@ class PageController extends Controller
     {
         $menus = $this->menu->getAll($site);
 
-        return view('backend.pages.create')->with(['menus' => $menus, 'current' => $site]);
+        return view('backend.pages.create')->with(['menus' => $menus, 'current_site' => $site]);
     }
 
     /**
@@ -79,7 +79,7 @@ class PageController extends Controller
         $page  = $this->page->find($id);
         $menus = $this->menu->getAll();
 
-        return view('backend.pages.show')->with(array( 'page' => $page , 'menus' => $menus));
+        return view('backend.pages.show')->with(array('page' => $page , 'menus' => $menus, 'current_site' => $page->site_id));
     }
 
     /**

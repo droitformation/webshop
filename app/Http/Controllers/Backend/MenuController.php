@@ -28,7 +28,7 @@ class MenuController extends Controller
     {
         $menus = $this->menu->getAll($site);
 
-        return view('backend.menus.index')->with(['menus' => $menus,'current' => $site]);
+        return view('backend.menus.index')->with(['menus' => $menus, 'current_site' => $site]);
     }
 
     /**
@@ -38,7 +38,7 @@ class MenuController extends Controller
      */
     public function create($site)
     {
-        return view('backend.menus.create')->with(['current' => $site]);
+        return view('backend.menus.create')->with(['current_site' => $site]);
     }
 
     /**
@@ -65,7 +65,7 @@ class MenuController extends Controller
     {
         $menu = $this->menu->find($id);
 
-        return view('backend.menus.show')->with(['menu' => $menu]);
+        return view('backend.menus.show')->with(['menu' => $menu, 'current_site' => $menu->site_id]);
     }
 
     /**

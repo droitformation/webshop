@@ -46,6 +46,7 @@ class BlocEloquent implements BlocInterface{
 			'url'        => (isset($data['url']) ? $data['url'] : ''),
 			'rang'       => (isset($data['rang']) ? $data['rang'] : 0),
 			'type'       => $data['type'],
+			'site_id'    => (isset($data['site_id']) ? $data['site_id'] : 1),
 			'position'   => $data['position'],
 			'created_at' => date('Y-m-d G:i:s'),
 			'updated_at' => date('Y-m-d G:i:s')

@@ -26,6 +26,8 @@ class SeminaireController extends Controller {
 		$this->product   = $product;
         $this->colloque  = $colloque;
         $this->upload    = $upload;
+
+		view()->share('current_site', 2);
     }
 
     /**

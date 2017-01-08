@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 
-<?php $site = $sites->find($current); ?>
+<?php $site = $sites->find($current_site); ?>
 
 <div class="row">
     <div class="col-md-6">
@@ -20,7 +20,7 @@
     <div class="col-md-12 col-xs-12">
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <h4><img height="100%" style="width: 150px;" src="{{ asset('logos/'.$site->logo) }}" alt="{{ $site->nom }}" /></h4>
+
                 @if(!$categories->isEmpty())
 
                     <div class="panel panel-primary">

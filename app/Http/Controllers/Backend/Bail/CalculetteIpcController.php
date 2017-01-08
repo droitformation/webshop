@@ -16,7 +16,9 @@ class CalculetteIpcController extends Controller
     {
         $this->ipc  = $ipc;
 
-        view()->share('calcantons', config('calculette.cantons') );
+        view()->share('calcantons', config('calculette.cantons'));
+        view()->share('site_slug', 'bail');
+        view()->share('current_site', 2);
     }
 
     public function index()

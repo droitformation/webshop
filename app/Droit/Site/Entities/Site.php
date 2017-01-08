@@ -11,6 +11,13 @@ class Site extends Model{
     protected $table    = 'sites';
     protected $fillable = ['nom','url','logo','slug','prefix'];
 
+    public function getInternalPagesAttribute()
+    {
+        return $this->pages->reject(function ($page, $key) {
+            return $page->isExternal;
+        });
+    }
+
     public function menus()
     {
         return $this->hasMany('App\Droit\Menu\Entities\Menu');

@@ -38,7 +38,7 @@ class ArretController extends Controller {
         $arrets     = $this->arret->getAll($site);
         $categories = $this->categorie->getAll();
 
-        return view('backend.arrets.index')->with(['arrets' => $arrets , 'categories' => $categories, 'current' => $site]);
+        return view('backend.arrets.index')->with(['arrets' => $arrets , 'categories' => $categories, 'current_site' => $site]);
     }
 
     /**
@@ -51,7 +51,7 @@ class ArretController extends Controller {
         $arret      = $this->arret->find($id);
         $categories = $this->categorie->getAll();
 
-        return view('backend.arrets.show')->with([ 'isNewsletter' => true, 'arret' => $arret, 'categories' => $categories]);
+        return view('backend.arrets.show')->with([ 'isNewsletter' => true, 'arret' => $arret, 'categories' => $categories, 'current_site' => $arret->site_id]);
     }
 
     /**
@@ -64,7 +64,7 @@ class ArretController extends Controller {
     {
         $categories = $this->categorie->getAll();
 
-        return view('backend.arrets.create')->with(['isNewsletter' => true, 'site' => $site, 'categories' => $categories ]);
+        return view('backend.arrets.create')->with(['isNewsletter' => true, 'current_site' => $site, 'categories' => $categories ]);
     }
 
     /**
@@ -75,27 +75,22 @@ class ArretController extends Controller {
     public function store(Request $request)
     {
         $data  = $request->except('file');
-        $_file = $request->file('file',null);
-
+ 
         // Files upload
-        if( $_file )
-        {
+        if( $request->file('file',null) ) {
             $file = $this->upload->upload( $request->file('file') , 'files/arrets' );
             $data['file'] = $file['name'];
         }
 
-        if($request->input('categories',null))
-        {
+        if($request->input('categories',null)) {
             $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
         }
-
-        // Create arret
+        
         $arret = $this->arret->create( $data );
 
         alert()->success('Arrêt crée');
 
         return redirect('admin/arret/'.$arret->id);
-
     }
 
     /**
@@ -105,25 +100,21 @@ class ArretController extends Controller {
      */
     public function update(Request $request)
     {
-        $data  = $request->except('file');
-        $_file = $request->file('file',null);
+        $data = $request->except('file');
 
         // Files upload
-        if( $_file )
-        {
+        if( $request->file('file',null) ) {
             $file = $this->upload->upload( $request->file('file') , 'files/arrets' );
             $data['file'] = $file['name'];
         }
 
         $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
-
-        // Create arret
+        
         $arret = $this->arret->update( $data );
     
         alert()->success('Arrêt mis à jour');
 
         return redirect('admin/arret/'.$arret->id);
-
     }
 
     /**

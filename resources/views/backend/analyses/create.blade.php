@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/analyses/'.$site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{{ url('admin/analyses/'.$current_site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 
@@ -18,7 +18,7 @@
                 {{ csrf_field() }}
 
 
-            <div class="panel-body event-info" ng-app="selection" id="main" data-site="{{ $site }}">
+            <div class="panel-body event-info" ng-app="selection" id="main" data-site="{{ $current_site }}">
                 <h4>Créer analyse</h4>
 
                 <div class="form-group">
@@ -49,7 +49,7 @@
                             <select class="form-control" required name="site_id">
                                 <option value="">Appartient au site</option>
                                 @foreach($sites as $select)
-                                    <option {{ $select->id == $site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
+                                    <option {{ $select->id == $current_site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
                                 @endforeach
                             </select>
                         @endif
@@ -132,7 +132,7 @@
             </div>
             <div class="panel-footer mini-footer ">
                 <div class="col-sm-3">
-                    <input type="hidden" name="site_id" value="{{ $site }}">
+                    <input type="hidden" name="site_id" value="{{ $current_site }}">
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary" type="submit">Envoyer </button>

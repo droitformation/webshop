@@ -19,7 +19,9 @@ class FaqController extends Controller
     {
         $this->faqcat   = $faqcat;
         $this->question = $question;
-        $this->site_id  = 2;
+ 
+        view()->share('site_slug', 'bail');
+        view()->share('current_site_id', 2);
     }
 
     public function index()

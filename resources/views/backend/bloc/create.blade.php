@@ -1,22 +1,16 @@
 @extends('backend.layouts.master')
 @section('content')
 
-<div class="row"><!-- row -->
-    <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/blocs/'.$site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
-    </div>
-</div>
 <!-- start row -->
 <div class="row">
-
     <div class="col-md-12">
+        <p><a class="btn btn-default" href="{{ url('admin/blocs/'.$current_site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+
         <div class="panel panel-midnightblue">
-
             <!-- form start -->
-            <form action="{{ url('admin/bloc') }}" enctype="multipart/form-data" method="POST" class="validate-form form-horizontal" data-validate="parsley">
-                {!! csrf_field() !!}
-
+            <form action="{{ url('admin/bloc') }}" enctype="multipart/form-data" method="POST" class="validate-form form-horizontal" data-validate="parsley">{!! csrf_field() !!}
                 <div class="panel-body event-info">
+
                     <h4>Ajouter un bloc</h4>
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Rang</label>
@@ -43,21 +37,15 @@
                         <label for="message" class="col-sm-3 control-label">Afficher sur les pages du site</label>
                         <div class="col-sm-4">
                             @if(!$sites->isEmpty())
+                                <?php $site = $sites->find($current_site); ?>
                                 <select multiple class="form-control" name="page_id[]">
-                                    @foreach($sites as $site)
-                                        <optgroup label="{{ $site->nom }}">
-                                            @if(!$site->pages->isEmpty())
-                                                <?php
-                                                    $pages = $site->pages->reject(function ($page, $key) {
-                                                        return $page->isExternal;
-                                                    });
-                                                ?>
-                                                @foreach($pages as $page)
-                                                    <option {{ old('page_id') && in_array($page->id,old('page_id')) ? 'selected' : '' }} value="{{ $page->id }}">{{ $page->title }}</option>
-                                                @endforeach
-                                            @endif
-                                        </optgroup>
-                                    @endforeach
+                                    <optgroup label="{{ $site->nom }}">
+                                        @if(!$site->internal_pages->isEmpty())
+                                            @foreach($site->internal_pages as $page)
+                                                <option {{ old('page_id') && in_array($page->id,old('page_id')) ? 'selected' : '' }} value="{{ $page->id }}">{{ $page->title }}</option>
+                                            @endforeach
+                                        @endif
+                                    </optgroup>
                                 </select>
                             @endif
                         </div>
@@ -99,7 +87,7 @@
 
                 </div>
                 <div class="panel-footer mini-footer ">
-                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">{!! Form::hidden('site_id', $current_site) !!}</div>
                     <div class="col-sm-6">
                         <button class="btn btn-primary" type="submit">Envoyer</button>
                     </div>
@@ -107,8 +95,8 @@
 
             </form>
         </div>
-    </div>
 
+    </div>
 </div>
 <!-- end row -->
 

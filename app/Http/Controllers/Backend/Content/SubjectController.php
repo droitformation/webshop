@@ -21,6 +21,8 @@ class SubjectController extends Controller
         $this->seminaire = $seminaire;
         $this->subject   = $subject;
         $this->upload    = $upload;
+
+        view()->share('current_site', 2);
     }
 
     /**

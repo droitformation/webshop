@@ -357,18 +357,11 @@ class Helper {
      * @param  array
      * @return array
      */
-    public function prepareCategories($data){
-
-        $categories = [];
-
-        if(!empty($data))
-        {
-            foreach($data as $index => $key){
-                $categories[$key] = ['sorting' => $index];
-            }
-        }
-
-        return $categories;
+    public function prepareCategories($data)
+    {
+        return collect($data)->mapWithKeys_v2(function ($categorie, $key) {
+            return [$categorie => ['sorting' => $key]];
+        })->toArray();
     }
 
     /**

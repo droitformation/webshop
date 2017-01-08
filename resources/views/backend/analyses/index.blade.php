@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 
-<?php $site = $sites->find($current); ?>
+<?php $site = $sites->find($current_site); ?>
 
 <div class="row">
     <div class="col-md-6">
@@ -18,8 +18,6 @@
 
 <div class="row">
     <div class="col-md-12">
-
-        <h4><img height="100%" style="width: 150px;" src="{{ asset('logos/'.$site->logo) }}" alt="{{ $site->nom }}" /></h4>
 
         <div class="panel panel-midnightblue">
             <div class="panel-body">

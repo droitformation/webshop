@@ -12,7 +12,6 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-
         view()->composer([
             'backend.partials.sites',
             'backend.menus.*',
@@ -20,7 +19,7 @@ class AppServiceProvider extends ServiceProvider {
             'backend.bloc.*',
             'backend.arrets.*',
             'backend.analyses.*',
-            'backend.domains.*',
+            'backend.calculette.*',
             'backend.categories.*',
             'newsletter::Backend.*',
         ], 'App\Http\ViewComposers\SiteComposer');

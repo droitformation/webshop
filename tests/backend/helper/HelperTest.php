@@ -122,4 +122,26 @@ class HelperTest extends TestCase {
         $this->assertEquals($expect, $result);
     }
 
+    public function testPrepareCategories()
+    {
+        $data   = [65,19,16,2];
+
+        $expect = [
+            65 => ['sorting' =>  0],
+            19 => ['sorting' =>  1],
+            16 => ['sorting' =>  2],
+            2  => ['sorting' =>  3]
+        ];
+
+        $result = $this->helper->prepareCategories($data);
+
+        $this->assertEquals($expect, $result);
+
+        $data   = [];
+        $expect = [];
+
+        $result = $this->helper->prepareCategories($data);
+
+        $this->assertEquals($expect, $result);
+    }
 }

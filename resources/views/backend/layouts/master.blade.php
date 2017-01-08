@@ -84,15 +84,21 @@
     <div id="page-content">
         <div id='wrap'>
 
+            <!-- messages and errors -->
+            @include('alert::alert')
+            @include('backend.partials.message')
+
             <div id="page-heading">
-                <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
+                @if(isset($sites) && isset($current_site) && $sites->contains('id',$current_site))
+                    <div class="site-bar color-{{ $sites->find($current_site)->slug }}">
+                        {{ $sites->find($current_site)->nom }}
+                    </div>
+                @else
+                    <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
+                @endif
             </div>
 
             <div class="container" id="mainContainer">
-
-                <!-- messages and errors -->
-                @include('alert::alert')
-                @include('backend.partials.message')
 
                 <!-- Contenu -->
                 @yield('content')

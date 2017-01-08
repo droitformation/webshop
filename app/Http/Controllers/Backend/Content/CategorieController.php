@@ -30,7 +30,7 @@ class CategorieController extends Controller {
     {
         $categories = $this->categorie->getAll($site);
 
-        return view('backend.categories.index')->with(['categories' => $categories, 'current' => $site]);
+        return view('backend.categories.index')->with(['categories' => $categories, 'current_site' => $site]);
     }
 
 	/**
@@ -41,7 +41,7 @@ class CategorieController extends Controller {
 	 */
 	public function create($site)
 	{
-        return view('backend.categories.create')->with(['site' => $site]);
+        return view('backend.categories.create')->with(['current_site' => $site]);
 	}
 
 	/**
@@ -75,7 +75,7 @@ class CategorieController extends Controller {
 	{
         $categorie = $this->categorie->find($id);
 
-        return view('backend.categories.show')->with(['categorie' => $categorie]);
+        return view('backend.categories.show')->with(['categorie' => $categorie, 'current_site' => $categorie->site_id]);
 	}
 
 	/**

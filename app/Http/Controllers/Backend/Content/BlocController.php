@@ -36,7 +36,7 @@ class BlocController extends Controller
     {
         $blocs = $this->bloc->getAll($site);
 
-        return view('backend.bloc.index')->with(['blocs' => $blocs, 'current' => $site]);
+        return view('backend.bloc.index')->with(['blocs' => $blocs, 'current_site' => $site]);
     }
 
     /**
@@ -47,7 +47,7 @@ class BlocController extends Controller
      */
     public function create($site)
     {
-        return view('backend.bloc.create')->with(['site' => $site]);
+        return view('backend.bloc.create')->with(['current_site' => $site]);
     }
 
     /**
@@ -59,13 +59,10 @@ class BlocController extends Controller
     public function store(CreateBloc $request)
     {
         $data  = $request->except('file');
-        $_file = $request->file('file', null);
 
         // Image upload
-        if(isset($_file) )
-        {
+        if($request->file('file', null)) {
             $file = $this->upload->upload( $request->file('file') , 'files/uploads');
-
             $data['image'] = $file['name'];
         }
 
@@ -86,8 +83,8 @@ class BlocController extends Controller
     public function show($id)
     {
         $bloc = $this->bloc->find($id);
-
-        return view('backend.bloc.show')->with(['bloc' => $bloc]);
+      
+        return view('backend.bloc.show')->with(['bloc' => $bloc, 'current_site' => $bloc->site_id ]);
     }
 
     /**

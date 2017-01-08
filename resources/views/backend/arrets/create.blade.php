@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{!! url('admin/arrets/'.$site) !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{!! url('admin/arrets/'.$current_site) !!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 
@@ -26,7 +26,7 @@
                             <select class="form-control" name="site_id">
                                 <option value="">Appartient au site</option>
                                 @foreach($sites as $select)
-                                    <option {{ $select->id == $site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
+                                    <option {{ $select->id == $current_site ? 'selected' : '' }}  value="{{ $select->id }}">{{ $select->nom }}</option>
                                 @endforeach
                             </select>
                         @endif
@@ -39,9 +39,7 @@
                         {!! Form::text('reference', null , array('class' => 'form-control') ) !!}
                         <br/>
                         <div class="checkbox">
-                            <label>
-                                {!! Form::checkbox('dumois', '1') !!} Arrêt du mois
-                            </label>
+                            <label>{!! Form::checkbox('dumois', '1') !!} Arrêt du mois</label>
                         </div>
                         <p class="help-block">Attache l'analyse à l'arrêt dans la newsletter</p>
                     </div>
@@ -78,7 +76,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Catégories</label>
 
-                    <div class="col-sm-9" id="main" ng-app="selection" data-site="{{ $site }}">
+                    <div class="col-sm-9" id="main" ng-app="selection" data-site="{{ $current_site }}">
 
                         <div ng-controller="MultiSelectionController as selectcat">
                             <div class="listArrets forArrets" ng-init="typeItem='categories'">
@@ -106,7 +104,7 @@
             </div>
             <div class="panel-footer mini-footer ">
                 <div class="col-sm-3">
-                    <input type="hidden" name="site_id" value="{{ $site }}">
+                    <input type="hidden" name="site_id" value="{{ $current_site }}">
                     {!! Form::hidden('user_id', \Auth::user()->id )!!}
                 </div>
                 <div class="col-sm-6">

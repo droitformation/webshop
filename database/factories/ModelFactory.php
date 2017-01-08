@@ -180,7 +180,7 @@ $factory->define(App\Droit\Menu\Entities\Menu::class, function (Faker\Generator 
     return [
         'title'    => $faker->word,
         'position' => 'main',
-        'site_id'  => 1
+        'site_id'  => 2
     ];
 });
 
@@ -508,5 +508,35 @@ $factory->define(App\Droit\Reminder\Entities\Reminder::class, function (Faker\Ge
         'model'    => 'App\Droit\Colloque\Entities\Colloque',
         'relation'    => null,
         'relation_id' => null,
+    ];
+});
+
+
+$factory->define(App\Droit\Page\Entities\Page::class, function (Faker\Generator $faker) {
+    return [
+        'title'       => $faker->sentence,
+        'content'     => $faker->sentence,
+        'template'    => 'page',
+        'site_id'     => 2,
+        'menu_title'  => $faker->word,
+        'slug'        => $faker->word,
+        'rang'        => 1,
+        'menu_id'     => null,
+        'url'         => null,
+        'isExternal'  => null,
+        'hidden'      => null,
+    ];
+});
+
+$factory->define(App\Droit\Bloc\Entities\Bloc::class,function (Faker\Generator $faker){
+    return [
+        'title'       => $faker->sentence,
+        'content'     => $faker->sentence,
+        'image'      => '',
+        'url'        => '',
+        'rang'       => 1,
+        'type'       => 'pub',
+        'site_id'    => 2,
+        'position'   => 'sidebar'
     ];
 });

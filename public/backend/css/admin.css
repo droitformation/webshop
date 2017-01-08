@@ -1181,3 +1181,10 @@ input[type="checkbox"].rappel-input {
     display: inline-block;
     margin-top: 10px;
 }
+
+.site-bar{
+    font-size: 20px;
+    height: 45px;
+    line-height: 30px;
+    padding: 7px 20px;
+}

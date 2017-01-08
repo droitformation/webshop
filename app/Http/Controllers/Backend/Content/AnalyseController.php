@@ -12,7 +12,6 @@ use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Service\UploadInterface;
 use App\Droit\Author\Repo\AuthorInterface;
 
-
 class AnalyseController extends Controller {
 
     protected $analyse;
@@ -32,6 +31,7 @@ class AnalyseController extends Controller {
         $this->helper    = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR');
+
     }
 
 	/**
@@ -46,7 +46,7 @@ class AnalyseController extends Controller {
         $analyses   = $this->analyse->getAll($site);
         $categories = $this->categorie->getAll($site);
 
-        return view('backend.analyses.index')->with(['analyses' => $analyses , 'categories' => $categories, 'current' => $site]);
+        return view('backend.analyses.index')->with(['analyses' => $analyses , 'categories' => $categories, 'current_site' => $site]);
     }
 
     /**
@@ -61,7 +61,9 @@ class AnalyseController extends Controller {
         $categories = $this->categorie->getAll();
         $auteurs    = $this->author->getAll();
 
-        return view('backend.analyses.show')->with(['isNewsletter' => true, 'analyse' => $analyse, 'arrets' => $arrets, 'categories' => $categories, 'auteurs' => $auteurs]);
+        return view('backend.analyses.show')->with([
+            'isNewsletter' => true, 'analyse' => $analyse, 'arrets' => $arrets, 'categories' => $categories, 'auteurs' => $auteurs, 'current_site' => $analyse->site_id
+        ]);
     }
 
     /**
@@ -75,7 +77,7 @@ class AnalyseController extends Controller {
         $categories = $this->categorie->getAll($site);
         $auteurs    = $this->author->getAll();
 
-        return view('backend.analyses.create')->with(['isNewsletter' => true, 'arrets' => $arrets, 'categories' => $categories, 'auteurs' => $auteurs, 'site' => $site]);
+        return view('backend.analyses.create')->with(['isNewsletter' => true, 'arrets' => $arrets, 'categories' => $categories, 'auteurs' => $auteurs, 'current_site' => $site]);
     }
 
     /**
@@ -86,11 +88,9 @@ class AnalyseController extends Controller {
     public function store(Request $request)
     {
         $data  = $request->except('file');
-        $_file = $request->file('file',null);
 
         // Files upload
-        if( $_file )
-        {
+        if( $request->file('file',null) ) {
             $file = $this->upload->upload( $request->file('file') , 'files/analyses' );
             $data['file'] = $file['name'];
         }
@@ -98,13 +98,11 @@ class AnalyseController extends Controller {
         $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
         $data['arrets']     = $this->helper->prepareCategories($request->input('arrets'));
 
-        // Create analyse
         $analyse = $this->analyse->create( $data );
 
         alert()->success('Analyse crée');
 
         return redirect('admin/analyse/'.$analyse->id);
-
     }
 
     /**
@@ -115,11 +113,9 @@ class AnalyseController extends Controller {
     public function update(Request $request)
     {
         $data  = $request->except('file');
-        $_file = $request->file('file',null);
 
         // Files upload
-        if( $_file )
-        {
+        if( $request->file('file',null) ) {
             $file = $this->upload->upload( $request->file('file') , 'files/analyses' );
             $data['file'] = $file['name'];
         }
@@ -128,7 +124,6 @@ class AnalyseController extends Controller {
         $data['arrets']     = $this->helper->prepareCategories($request->input('arrets'));
         $data['author_id']  = $this->helper->prepareCategories($request->input('author_id'));
 
-        // Create analyse
         $analyse = $this->analyse->update($data);
 
         alert()->success('Analyse mise à jour');
@@ -138,7 +133,7 @@ class AnalyseController extends Controller {
 
     /**
      * Remove the specified resource from storage.
-     * DELETE /adminconotroller/{id}
+     * DELETE /admin/analyse/{id}
      *
      * @param  int  $id
      * @return Response

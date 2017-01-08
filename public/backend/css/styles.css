@@ -1,3 +1,4 @@
+
 /*!
  * Avant v1.2.2 (c) by The Red Team
  * Powered by Bootstrap v3.1 and FontAwesome 4.0.3
@@ -8175,7 +8176,8 @@ footer #back-to-top {
 #page-heading:after {
   clear: both;
 }
-#page-heading h1,#page-heading h2 {
+#page-heading h1,
+#page-heading h2{
   margin: 0;
   padding: 15px 20px 10px 20px;
   float: left;
@@ -8183,6 +8185,7 @@ footer #back-to-top {
   font-weight: 300;
   font-size: 42px;
 }
+
 #page-heading h2 {
     font-size: 24px;
 }
@@ -9159,7 +9162,7 @@ body.show-rightbar #chatarea .chatmsg.sent:after {
 /* Sidebar Menu */
 #sidebar {
   white-space: normal;
-  margin: 10px 0 0 0;
+  margin: 0;
   padding-left: 0 !important;
 }
 #sidebar .badge {
@@ -9390,8 +9393,8 @@ body.collapse-leftbar #sidebar > li.hasChild:hover > a:before {
   color: #3f444c;
   padding: 0 10px 0 37px;
   border-radius: 0px;
-  min-height: 40px;
-  line-height: 18px;
+  min-height: 45px;
+  line-height: 22px;
   width: 100%;
 }
 #search form .search-query:-moz-placeholder {
@@ -9435,13 +9438,13 @@ body.collapse-leftbar #sidebar > li.hasChild:hover > a:before {
 #search form button[type="submit"] {
   float: left;
   position: absolute;
-  top: 0;
+  top: 3px;
   left: 10px;
   border: 0;
   background: none;
   padding: 13px 0;
   margin: 0;
-  min-width: none;
+  min-width: auto;
 }
 #search form button[type="submit"] i {
   color: #3f444c;

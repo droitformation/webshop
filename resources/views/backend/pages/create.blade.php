@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/pages/'.$current) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste des pages</a></p>
+        <p><a class="btn btn-default" href="{{ url('admin/pages/'.$current_site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste des pages</a></p>
     </div>
 </div>
 <!-- start row -->
@@ -44,7 +44,7 @@
                                 <select class="form-control" name="site_id">
                                     <option value="">Appartient au site</option>
                                     @foreach($sites as $site)
-                                        <option {{ $site->id == $current ? 'selected' : '' }} value="{{ $site->id }}">{{ $site->nom }}</option>
+                                        <option {{ $site->id == $current_site ? 'selected' : '' }} value="{{ $site->id }}">{{ $site->nom }}</option>
                                     @endforeach
                                 </select>
                             @endif

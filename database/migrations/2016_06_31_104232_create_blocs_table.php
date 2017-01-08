@@ -20,6 +20,7 @@ class CreateBlocsTable extends Migration {
 			$table->string('image')->nullable();
 			$table->string('url')->nullable();
             $table->integer('rang')->default(0);
+			$table->integer('site_id')->default(1);
 			$table->enum('type', ['soutien','pub','text']);
 			$table->enum('position', ['sidebar','page']);
 			$table->timestamps();
