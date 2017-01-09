@@ -4,20 +4,9 @@
 <?php $site = $sites->find($current_site); ?>
 
 <div class="row">
-    <div class="col-md-6">
-        <h3>Analyses</h3>
-    </div>
-    <div class="col-md-6">
-        <div class="options text-right" style="margin-bottom: 10px;">
-            <div class="btn-toolbar">
-                <a href="{{ url('admin/analyse/create/'.$site->id) }}" class="btn btn-success" id="addAnalyse"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-            </div>
-        </div>
-    </div>
-</div>
+    <div class="col-md-10">
 
-<div class="row">
-    <div class="col-md-12">
+        <h3>Analyses <a href="{{ url('admin/analyse/create/'.$site->id) }}" class="btn btn-success pull-right" id="addAnalyse"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></h3>
 
         <div class="panel panel-midnightblue">
             <div class="panel-body">
@@ -49,7 +38,7 @@
                                     <td>
                                         <form action="{{ url('admin/analyse/'.$analyse->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-what="supprimer" data-action="analyse" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            <button data-what="supprimer" data-action="analyse" class="btn btn-danger btn-sm deleteAction">x</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -62,6 +51,9 @@
             </div>
         </div>
 
+    </div>
+    <div class="col-md-2">
+        @include('backend.partials.sites-menu')
     </div>
 </div>
 

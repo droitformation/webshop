@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider {
             'backend.analyses.*',
             'backend.calculette.*',
             'backend.categories.*',
+            'backend.seminaires.*',
             'newsletter::Backend.*',
         ], 'App\Http\ViewComposers\SiteComposer');
 

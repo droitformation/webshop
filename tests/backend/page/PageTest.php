@@ -121,7 +121,7 @@ class PageTest extends TestCase {
             'type'     => 'text'
         ];
 
-        $response = $this->call('POST', 'admin/pagecontent', $data);
+        $this->call('POST', 'admin/pagecontent', $data);
 
         $this->seeInDatabase('contents', [
             'title'    => 'Un titre bloc',

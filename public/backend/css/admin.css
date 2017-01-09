@@ -680,6 +680,26 @@ select[multiple] {
     margin-bottom: 0;
 }
 
+.site-dropdown.site-sidebar{
+    width: 100%;
+    margin-top: 30px;
+}
+
+.site-dropdown.site-sidebar > li{
+    width: 100%;
+    display: block;
+}
+
+.site-dropdown.site-sidebar > li > a {
+    clear: both;
+    color: #fff;
+    display: block;
+    font-weight: normal;
+    line-height: 1.42857;
+    padding: 3px 10px;
+    white-space: nowrap;
+}
+
 .tiles-body.tiles-simple{
     padding-bottom:7px;
 }
@@ -1187,4 +1207,5 @@ input[type="checkbox"].rappel-input {
     height: 45px;
     line-height: 30px;
     padding: 7px 20px;
+    margin-bottom: 20px;
 }

@@ -48,7 +48,7 @@ class PageContentController extends Controller
 
         $page = $this->page->find($content->page_id);
 
-        echo view('backend.pages.partials.list')->with(['page' => $page]);
+        return view('backend.pages.partials.list')->with(['page' => $page]);
     }
 
     /**
@@ -79,7 +79,7 @@ class PageContentController extends Controller
 
         $page = $this->page->find($content->page_id);
 
-        echo view('backend.pages.partials.list')->with(['page' => $page]);
+        return view('backend.pages.partials.list')->with(['page' => $page]);
     }
 
     public function sorting(Request $request)

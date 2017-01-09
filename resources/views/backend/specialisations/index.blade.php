@@ -40,7 +40,7 @@
                                         <form action="{{ url('admin/specialisation/'.$specialisation->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                             <input type="hidden" name="id" value="{{ $specialisation->id }}">
-                                            <button data-what="Supprimer" data-action="{{ $specialisation->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            <button data-what="Supprimer" data-action="{{ $specialisation->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                         </form>
                                     </td>
                                 </tr>

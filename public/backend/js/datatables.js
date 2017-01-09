@@ -45,12 +45,14 @@ $(document).ready(function() {
 
     $('#arrets').DataTable({
         initComplete: init,
+        pageLength: 25,
         language    : langues,
         pagingType  : 'simple'
     });
 
     $('.simple').DataTable({
         initComplete: init,
+        pageLength: 25,
         language    : langues,
         pagingType  : 'simple'
     });
@@ -58,6 +60,7 @@ $(document).ready(function() {
     $('.simple-table').DataTable({
         initComplete: init,
         language: langues,
+        pageLength: 25,
         pagingType: 'simple',
         "columnDefs": [{
             "targets"  : 'no-sort',
@@ -68,6 +71,7 @@ $(document).ready(function() {
     $('#generic').DataTable({
         language: langues,
         pagingType: 'simple',
+        pageLength: 25,
         "columnDefs": [{
             "targets"  : 'no-sort',
             "orderable": false
@@ -88,6 +92,7 @@ $(document).ready(function() {
     $('.generic').DataTable({
         language: langues,
         pagingType: 'simple',
+        pageLength: 25,
         "columnDefs": [
             { "visible": false, "targets": 0 }
         ],

@@ -4,25 +4,12 @@
 <?php $site = $sites->find($current_site); ?>
 
 <div class="row">
-    <div class="col-md-6">
-        <h3>Arrêts</h3>
-    </div>
-    <div class="col-md-6">
-        <div class="options text-right" style="margin-bottom: 10px;">
-            <div class="btn-toolbar">
-                <a href="{{ url('admin/arret/create/'.$site->id) }}" class="btn btn-success" id="addArret"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-            </div>
-        </div>
-    </div>
-</div>
+    <div class="col-md-10">
+        <h3>Arrêts <a href="{{ url('admin/arret/create/'.$site->id) }}" class="btn btn-success pull-right" id="addArret"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></h3>
 
-<div class="row">
-    <div class="col-md-12">
         <div class="tab-container">
-
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
-
                     <table class="table simple" style="margin-bottom: 0px;">
                         <thead>
                         <tr>
@@ -41,10 +28,10 @@
                                         <td><strong>{{ $arret->reference }}</strong></td>
                                         <td>{{ $arret->pub_date->formatLocalized('%d %B %Y') }}</td>
                                         <td>{{ $arret->abstract }}</td>
-                                        <td>
+                                        <td class="text-right">
                                             <form action="{{ url('admin/arret/'.$arret->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button data-what="supprimer" data-action="arrêt {{ $arret->reference }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                                <button data-what="supprimer" data-action="arrêt {{ $arret->reference }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -55,8 +42,11 @@
 
                 </div>
             </div>
-
         </div>
+
+    </div>
+    <div class="col-md-2">
+        @include('backend.partials.sites-menu')
     </div>
 </div>
 

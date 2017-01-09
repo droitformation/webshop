@@ -3,15 +3,9 @@
 
     <div class="row">
         <div class="col-md-10">
-            <h3>Seminaires</h3>
-        </div>
-        <div class="col-md-2 text-right">
-            <a href="{{ url('admin/seminaire/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-8">
+            <h3>Seminaires <a href="{{ url('admin/seminaire/create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></h3>
+
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
@@ -36,7 +30,7 @@
                                     <td class="text-right">
                                         <form action="{{ url('admin/seminaire/'.$seminaire->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-what="Supprimer" data-action="{{ $seminaire->title }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                            <button data-what="Supprimer" data-action="{{ $seminaire->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -48,6 +42,9 @@
                 </div>
             </div>
 
+        </div>
+        <div class="col-md-2">
+            @include('backend.partials.sites-menu')
         </div>
     </div>
 

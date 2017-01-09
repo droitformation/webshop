@@ -5,20 +5,15 @@
 <?php $site   = $sites->find($current_site); ?>
 
 <div class="row">
-    <div class="col-md-6">
-        <h4>Pages</h4>
-        <p class="help-block"><i class="fa fa-crosshairs"></i> &nbsp;Cliquez-glissez les pages pour changer l'ordre dans le menu</p>
-    </div>
-    <div class="col-md-6 text-right">
-        <p><a id="addPage" href="{{ url('admin/page/create/'.$current_site) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></p>
-    </div>
-</div>
-<hr/>
-<div class="row">
-    <div class="col-md-12">
+    <div class="col-md-10">
+
+        <h3>Pages <a id="addPage" href="{{ url('admin/page/create/'.$current_site) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></h3>
 
         <div class="panel panel-primary">
             <div class="panel-body">
+
+                <p class="help-block"><i class="fa fa-crosshairs"></i> &nbsp;Cliquez-glissez les pages pour changer l'ordre dans le menu</p><br/>
+
                 @if(!$pages->isEmpty())
                 <?php $menus_names = $pages->groupBy('menu_id'); ?>
                     <div class="row">
@@ -43,6 +38,9 @@
             </div>
         </div>
 
+    </div>
+    <div class="col-md-2">
+        @include('backend.partials.sites-menu')
     </div>
 </div>
 

@@ -29,8 +29,8 @@
                             <th class="col-sm-2">Titre</th>
                             <th class="col-sm-2">Interval</th>
                             <th class="col-sm-2">Visible que dans admin et utilisé comme rappel</th>
-                            <th class="col-sm-5">Texte</th>
-                            <th class="col-sm-1 no-sort"></th>
+                            <th class="col-sm-4">Texte</th>
+                            <th class="col-sm-2 no-sort"></th>
                         </tr>
                         </thead>
                         <tbody class="selects">
@@ -49,6 +49,8 @@
                                                 <input type="hidden" name="id" value="{{ $attribut->id }}">
                                                 <button id="deleteAttribut_{{ $attribut->id }}" data-what="Supprimer" data-action="{{ $attribut->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                             </form>
+                                        @else
+                                            <span class="text-danger">Attribut utilisé</span>
                                         @endif
                                     </td>
                                 </tr>

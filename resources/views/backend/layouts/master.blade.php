@@ -134,6 +134,9 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/layouts/enquire.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.nicescroll.min.js');?>"></script>
+
+<!-- Scripts -->
+<script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/layouts/application.js');?>"></script>
 
 @include('backend.scripts.redactor')
@@ -150,8 +153,6 @@
 <!-- Upload plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
 
-<!-- Scripts -->
-<script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
 
 @include('newsletter::Script.config')
 

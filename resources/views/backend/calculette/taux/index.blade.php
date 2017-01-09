@@ -2,17 +2,11 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-6">
-        <h3>Calculette taux</h3>
+    <div class="col-md-10 col-xs-12">
 
-        <p class="text-right">
-            <a id="addCalculetteTaux" href="{{ url('admin/calculette/taux/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter taux</a>
-        </p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 col-xs-12">
+        <h3>Calculette taux
+            <a id="addCalculetteTaux" href="{{ url('admin/calculette/taux/create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter taux</a>
+        </h3>
 
         @if(!$taux->isEmpty())
 
@@ -53,7 +47,9 @@
         @endif
 
     </div>
-
+    <div class="col-md-2">
+        @include('backend.partials.sites-menu')
+    </div>
 </div>
 
 

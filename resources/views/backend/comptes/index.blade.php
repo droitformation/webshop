@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <h3>Comptes</h3>
     </div>
     <div class="col-md-6">
@@ -15,7 +15,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-10 col-xs-12">
+    <div class="col-md-12 col-xs-12">
 
         @if(!$comptes->isEmpty())
 

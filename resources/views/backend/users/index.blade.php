@@ -48,7 +48,7 @@
                                 </thead>
                                 <tbody class="selects">
                                     @foreach($users as $user)
-                                        <tr class="mainRowSearch">
+                                        <tr>
                                             <td><a class="btn btn-sky btn-sm" href="{{ url('admin/user/'.$user->id) }}">&Eacute;diter</a></td>
                                             <td><strong>{{ $user->name }}</strong></td>
                                             <td>{{ $user->email }}</td>

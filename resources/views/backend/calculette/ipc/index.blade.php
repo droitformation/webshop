@@ -2,18 +2,13 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-6">
-        <h3>Calculette IPC</h3>
+    <div class="col-md-10 col-xs-12">
 
-        <p class="text-right">
-            <a id="addCalculetteIpc" href="{{ url('admin/calculette/ipc/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter IPC</a>
-        </p>
-
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 col-xs-12">
+        <h3>Calculette IPC
+            <a id="addCalculetteIpc" href="{{ url('admin/calculette/ipc/create') }}" class="btn btn-success pull-right">
+                <i class="fa fa-plus"></i> &nbsp;Ajouter IPC
+            </a>
+        </h3>
 
         @if(!$ipcs->isEmpty())
 
@@ -52,7 +47,9 @@
         @endif
 
     </div>
-
+    <div class="col-md-2">
+        @include('backend.partials.sites-menu')
+    </div>
 </div>
 
 

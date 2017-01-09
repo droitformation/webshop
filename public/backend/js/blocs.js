@@ -17,6 +17,8 @@ $( function() {
 
             $.get( "admin/pagecontent/" + type + "/" + page_id, function( data ) {
 
+                console.log(data);
+                
                 var $bloc = '<div class="bloc-content"><a href="#" class="btn btn-danger btn-xs pull-right remove-bloc-btn">x</a>' + data + '</div>';
                 $('#bloc-wrapper').html($bloc);
 
