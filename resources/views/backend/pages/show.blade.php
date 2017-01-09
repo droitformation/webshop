@@ -149,14 +149,12 @@
         <div class="col-md-6">
             <div class="panel panel-midnightblue">
                 <div class="panel-body event-info">
-                    <div class="form-group">
 
+                    <div class="form-group">
                         <h4>Blocs de contenu</h4>
                         <div id="listBlocs">
                             @include('backend.pages.partials.list')
-                        </div>
-
-                        <hr/>
+                        </div><hr/>
                         <h4>Ajouter un bloc de contenu</h4>
                         <div id="content-bloc-wrapper" data-page="{{ $page->id }}">
                             <a href="#" data-type="text" class="new-bloc-content btn btn-primary btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc texte</a>
@@ -166,10 +164,17 @@
                             <a href="#" data-type="faq" class="new-bloc-content btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc FAQ</a>
                             <div id="bloc-wrapper" data-page="{{ $page->id }}"></div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
+
+            <div class="panel panel-midnightblue">
+                <div class="panel-body event-info" id="appComponent">
+                    <content-form :page="{{ $page->id }}"></content-form>
+                </div>
+            </div>
+
         </div>
         @endif
     @endif

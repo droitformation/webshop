@@ -25,6 +25,7 @@ Vue.component('price', require('./components/Price.vue'));
 Vue.component('option-groupe', require('./components/OptionGroupe.vue'));
 Vue.component('inscription', require('./components/Inscription.vue'));
 Vue.component('detenteur', require('./components/Detenteur.vue'));
+Vue.component('content-form', require('./components/ContentForm.vue'));
 
 const app = new Vue({
     el: '#appComponent'
