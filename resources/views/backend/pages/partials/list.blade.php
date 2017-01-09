@@ -1,6 +1,6 @@
 @if(!$page->contents->isEmpty())
     <?php $grouped = $page->contents->groupBy('type'); ?>
-    <?php $icons = ['text' => 'align-justify','autorite' => 'university', 'loi' => 'gavel', 'lien' => 'link', 'faq' => 'question-circle']; ?>
+    <?php $icons = ['text' => 'align-justify','autorite' => 'building', 'loi' => 'gavel', 'lien' => 'link', 'faq' => 'question-circle']; ?>
     @foreach($grouped as $groupe => $blocs)
         <h5><i class="fa fa-{{ $icons[$groupe] }}"></i> &nbsp;{{ ucfirst($groupe) }}</h5>
         <ul class="list-group sortcontent">

@@ -20,8 +20,7 @@
 
             <!-- form start -->
             <form data-validate-parsley action="{{ url('admin/page/'.$page->id) }}" method="POST" class="form-horizontal" >
-                <input type="hidden" name="_method" value="PUT">
-                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                 <div class="panel-body event-info">
                     <h4>&Eacute;diter {{ $page->titre }}</h4>

@@ -6,7 +6,7 @@
         <h3>Auteurs</h3>
     </div>
     <div class="col-md-2 text-right">
-        <a href="{{ url('admin/author/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
+        <a id="addAuthor" href="{{ url('admin/author/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
     </div>
 </div>
 

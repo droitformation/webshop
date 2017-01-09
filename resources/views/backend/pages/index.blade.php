@@ -10,7 +10,7 @@
         <p class="help-block"><i class="fa fa-crosshairs"></i> &nbsp;Cliquez-glissez les pages pour changer l'ordre dans le menu</p>
     </div>
     <div class="col-md-6 text-right">
-        <p><a href="{{ url('admin/page/create/'.$current_site) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></p>
+        <p><a id="addPage" href="{{ url('admin/page/create/'.$current_site) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></p>
     </div>
 </div>
 <hr/>

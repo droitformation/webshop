@@ -28,6 +28,9 @@
         <testsuite name="content">
             <directory>./tests/backend/content/</directory>
         </testsuite>
+        <testsuite name="page">
+            <directory>./tests/backend/page/</directory>
+        </testsuite>
         <testsuite name="create">
             <directory>./tests/backend/create/</directory>
         </testsuite>

@@ -6,10 +6,7 @@ use App\Droit\Content\Entities\Content as M;
 class ContentEloquent implements ContentInterface{
 
 	protected $content;
-
-	/**
-	 * Construct a new SentryUser Object
-	 */
+	
 	public function __construct(M $content)
 	{
 		$this->content = $content;

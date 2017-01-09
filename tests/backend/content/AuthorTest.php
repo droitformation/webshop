@@ -16,9 +16,6 @@ class AuthorTest extends TestCase {
 
         DB::beginTransaction();
 
-        $this->author = Mockery::mock('App\Droit\Author\Repo\AuthorInterface');
-        $this->app->instance('App\Droit\Author\Repo\AuthorInterface', $this->author);
-
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
@@ -35,39 +32,54 @@ class AuthorTest extends TestCase {
     /**
      * @return void
      */
-    public function testAuthorShow()
+    public function testAuthorList()
     {
-        $author = factory(App\Droit\Author\Entities\Author::class)->make(['id' => 1]);
-
-        $this->author->shouldReceive('find')->once()->andReturn($author);
-
-        $this->visit('admin/author/1');
-        $this->assertViewHas('author');
+        $this->visit('admin/author');
+        $this->assertViewHas('authors');
     }
 
-    /**
-     * @return void
-     */
-    public function testAuthorStore()
+    public function testAuthorCreate()
     {
-        $author = factory(App\Droit\Author\Entities\Author::class)->make();
+        $this->visit('admin/author')->click('addAuthor');
+        $this->seePageIs('admin/author/create');
 
-        $this->author->shouldReceive('create')->once()->andReturn($author);
+        $this->type('Cindy', 'first_name')
+            ->type('Leschaud', 'last_name')
+            ->type('Webmaster', 'occupation')
+            ->type('Une bio', 'bio')
+            ->press('Envoyer');
 
-        $response = $this->call('POST', 'admin/author',['first_name' => 'Jane', 'last_name' => 'Doe', 'occupation' => 'Test', 'bio' => 'Test', 'photo' => 'jane.jpg', 'rang' => 1]);
-
-        $this->assertRedirectedTo('admin/author');
+        $this->seeInDatabase('authors', [
+            'first_name' => 'Cindy',
+            'last_name'  => 'Leschaud',
+            'occupation' => 'Webmaster',
+            'bio'        => 'Une bio'
+        ]);
     }
 
-    /**
-     * @return void
-     */
+    public function testAuthorUpdate()
+    {
+        $author = factory(App\Droit\Author\Entities\Author::class)->create();
+
+        $this->visit('admin/author/'.$author->id);
+        $this->type('Webmaster', 'occupation')->press('Envoyer');
+
+        $this->seeInDatabase('authors', [
+            'first_name' => $author->first_name,
+            'last_name'  => $author->last_name,
+            'occupation' => 'Webmaster',
+            'bio'        => $author->bio
+        ]);
+    }
+
     public function testAuthorDelete()
     {
-        $this->author->shouldReceive('delete')->once();
+        $author = factory(App\Droit\Author\Entities\Author::class)->create();
 
-        $response = $this->call('DELETE','admin/author/1', [] ,['id' => '1']);
+        $this->visit('admin/author');
 
-        $this->assertRedirectedTo('admin/author');
+        $response = $this->call('DELETE','admin/author/'.$author->id);
+
+        $this->notSeeInDatabase('authors', ['id' => $author->id]);
     }
 }

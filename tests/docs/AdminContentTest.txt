@@ -34,9 +34,22 @@ AdminIndexPages
  [x] Admin 3 pages
 
 Author
- [x] Author show
- [x] Author store
+ [x] Author list
+ [x] Author create
+ [x] Author update
  [x] Author delete
+
+CalculetteIpc
+ [x] Calculette ipc list
+ [x] Calculette create
+ [x] Update calculette ipc
+ [x] Delete calculette ipc
+
+CalculetteTaux
+ [x] Calculette taux list
+ [x] Calculette create
+ [x] Update calculette taux
+ [x] Delete calculette taux
 
 Compte
  [x] Compte list
@@ -49,10 +62,4 @@ Location
  [x] Location create
  [x] Update location
  [x] Delete location
-
-Menu
- [x] Menu list
- [x] Menu create
- [x] Update menu
- [x] Delete menu
 

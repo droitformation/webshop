@@ -1,23 +1,19 @@
 @extends('backend.layouts.master')
 @section('content')
 
-<div class="row"><!-- row -->
-    <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/pages/'.$current_site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste des pages</a></p>
-    </div>
-</div>
+
 <!-- start row -->
 <div class="row">
-
     <div class="col-md-12">
+        <p><a class="btn btn-default" href="{{ url('admin/pages/'.$current_site) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste des pages</a></p>
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
-            <form data-validate-parsley action="{{ url('admin/page') }}" method="POST" class="form-horizontal" >
-            {!! csrf_field() !!}
+            <form data-validate-parsley action="{{ url('admin/page') }}" method="POST" class="form-horizontal" >{!! csrf_field() !!}
 
                 <div class="panel-body event-info">
                     <h4>Ajouter une page</h4>
+
                     <div class="row">
                         <h4 class="col-sm-4">Général</h4>
                     </div>
@@ -33,7 +29,7 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Titre dans le menu</label>
                         <div class="col-sm-2">
-                            {!! Form::text('menu_title', null , array('class' => 'form-control') ) !!}
+                            <input type="text" name="menu_title" value="" class="form-control">
                         </div>
                     </div>
 
@@ -72,7 +68,7 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
                         <div class="col-sm-1">
-                            {!! Form::text('rang', null , array('class' => 'form-control') ) !!}
+                            <input type="text" name="rang" value="" class="form-control">
                         </div>
                         <div class="col-sm-2"><p class="help-block">Ordre croissant</p></div>
                     </div>
@@ -101,14 +97,14 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Titre</label>
                         <div class="col-sm-7">
-                            {!! Form::text('title', null , array('class' => 'form-control') ) !!}
+                            <input type="text" name="title" value="" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="contenu" class="col-sm-3 control-label">Contenu</label>
                         <div class="col-sm-7">
-                            {!! Form::textarea('content', null, array('class' => 'form-control  redactor' )) !!}
+                            <textarea name="content" class="form-control  redactor"></textarea>
                         </div>
                     </div>
 
@@ -123,7 +119,7 @@
                         <div class="form-group">
                             <label for="contenu" class="col-sm-3 control-label">Lien</label>
                             <div class="col-sm-7">
-                                {!! Form::text('url', null, array('class' => 'form-control' )) !!}
+                                <input type="text" name="url" value="" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -131,7 +127,7 @@
                 </div>
                 <div class="panel-footer mini-footer ">
                     <div class="col-sm-3">
-                        {!! Form::hidden('parent_id', 0) !!}
+                        <input type="hidden" name="parent_id" value="0">
                     </div>
                     <div class="col-sm-6">
                         <button class="btn btn-primary" type="submit">Envoyer</button>
