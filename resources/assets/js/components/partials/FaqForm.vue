@@ -1,13 +1,25 @@
 <template>
     <form>
-        <h4>Bloc loi</h4>
+        <h4>Bloc FAQ</h4>
+
+        <div class="form-group">
+            <label class="control-label">Titre</label>
+            <input v-model="title" name="title" type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Catégorie</label>
+            <select name="categorie_id" class="form-control">
+                <option v-for="categorie in categories" v-bind:value="categorie.id">{{ categorie.title }}</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <label class="control-label">Contenu</label>
             <textarea v-model="content" name="content" class="form-control redactorSmall"></textarea>
         </div>
 
-        <input name="type" value="loi" type="hidden">
+        <input name="type" value="faq" type="hidden">
         <input name="page_id" v-bind:value="page" type="hidden">
         <button type="button" class="btn btn-primary btn-sm">Ajouter</button>
 
@@ -16,7 +28,7 @@
 <style></style>
 <script>
     export default{
-        props: ['page'],
+        props: ['page','categories'],
         data(){
             return{
 

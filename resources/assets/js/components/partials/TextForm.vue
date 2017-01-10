@@ -1,5 +1,5 @@
 <template>
-    <form class="form add-bloc-form">
+    <form>
         <h4>Bloc texte</h4>
 
         <div class="form-group">
@@ -22,7 +22,7 @@
 
         <input name="type" value="text" type="hidden">
         <input name="page_id" v-bind:value="page" type="hidden">
-        <button type="button" class="btn btn-magenta btn-sm add-bloc-btn">Ajouter</button>
+        <button type="button" class="btn btn-primary btn-sm">Ajouter</button>
 
     </form>
 </template>

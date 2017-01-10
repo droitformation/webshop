@@ -171,7 +171,7 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body event-info" id="appComponent">
-                    <content-form :page="{{ $page->id }}"></content-form>
+                    <content-form :categories="{{ $categories }}" :page="{{ $page->id }}" :contents="{{ json_encode($page->content_list) }}"></content-form>
                 </div>
             </div>
 

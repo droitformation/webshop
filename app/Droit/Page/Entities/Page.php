@@ -24,19 +24,33 @@ class Page extends Node {
 
     protected $orderColumn = 'rang';
 
-    /**
-     * Scope a query to only include arrets for site
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeSites($query,$site)
-    {
-        if ($site) $query->where('site_id','=',$site);
-    }
-
     public function getLimitTextAttribute()
     {
         return $this->truncate($this->content,350);
+    }
+
+    public function getContentListAttribute()
+    {
+        return $this->contents->groupBy('type')->mapWithKeys_v2(function ($type, $key)  {
+            return [ucfirst($key) => $type->mapWithKeys_v2(function ($bloc) {
+                return [$bloc->id => [
+                    'id'       => $bloc->id,
+                    'title'    => $bloc->name,
+                    'content'  => $bloc->content,
+                    'image'    => asset($bloc->image),
+                    'url'      => $bloc->url,
+                    'rang'     => $bloc->rang,
+                    'type'     => $bloc->type,
+                    'position' => $bloc->position
+                ]];
+            })];
+
+        })->toArray();
+    }
+    
+    public function scopeSites($query,$site)
+    {
+        if ($site) $query->where('site_id','=',$site);
     }
 
     public function getPageUrlAttribute()

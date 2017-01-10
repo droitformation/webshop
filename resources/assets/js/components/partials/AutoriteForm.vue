@@ -1,13 +1,27 @@
 <template>
     <form>
-        <h4>Bloc loi</h4>
+        <h4>Bloc Autorité</h4>
+
+        <div class="form-group">
+            <label class="control-label">Titre</label>
+            <input v-model="title" name="title" type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Image</label>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <input name="file" type="file">
+                </div>
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="control-label">Contenu</label>
             <textarea v-model="content" name="content" class="form-control redactorSmall"></textarea>
         </div>
 
-        <input name="type" value="loi" type="hidden">
+        <input name="type" value="autorite" type="hidden">
         <input name="page_id" v-bind:value="page" type="hidden">
         <button type="button" class="btn btn-primary btn-sm">Ajouter</button>
 
@@ -16,7 +30,7 @@
 <style></style>
 <script>
     export default{
-        props: ['page'],
+        props: ['page','categories'],
         data(){
             return{
 

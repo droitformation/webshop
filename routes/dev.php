@@ -406,11 +406,18 @@ Route::get('categoriestest', function()
     $model = App::make('App\Droit\Arret\Repo\ArretInterface');
     $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
 
+    $pages = App::make('App\Droit\Page\Repo\PageInterface');
+
     $results = $model->allForSite(3, ['categories' => [], 'years' => [], 'display' => false]);
 
+    $page = $pages->find(1);
+
+    echo '<pre>';
+    print_r($page->bloc_list);
+    echo '</pre>';exit();
 
     // Create colloque
-    $make     = new \tests\factories\ObjectFactory();
+/*    $make     = new \tests\factories\ObjectFactory();
     $colloque = $make->colloque();
     $person   = $make->makeUser();
 
@@ -456,11 +463,8 @@ Route::get('categoriestest', function()
             'options' => $register[3],
             'groupes' => $register[4],
         ];
-    })->toArray();
+    })->toArray();*/
 
-    echo '<pre>';
-    print_r($contacts);
-    echo '</pre>';exit();
 
 /*    $arrets = $results->map(function ($arret, $key) {
         return [
