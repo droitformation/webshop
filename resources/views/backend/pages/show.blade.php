@@ -15,7 +15,7 @@
 
     <?php $template = ($page->template == 'page' || $page->template == 'index' ? true : false); ?>
 
-    <div class="col-md-{{ $template ? 6 : 12 }}">
+    <div class="col-md-{{ $template ? 7 : 12 }}">
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
@@ -146,7 +146,7 @@
     </div>
 
     @if($template && !$page->isExternal)
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-midnightblue">
                 <div class="panel-body event-info">
 

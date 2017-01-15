@@ -1,15 +1,15 @@
 <template>
-    <form>
+    <form method="post" :action="base_url">
         <h4>Bloc texte</h4>
 
         <div class="form-group">
             <label class="control-label">Titre</label>
-            <input v-model="title" name="title" type="text" class="form-control">
+            <input v-model="bloc.title" name="title" type="text" class="form-control">
         </div>
 
         <div class="form-group">
             <label class="control-label">Style de bloc</label>
-            <select class="form-control" v-model="style" name="style">
+            <select class="form-control" v-model="style" name="bloc.style">
                 <option value="">Choisir</option>
                 <option value="agenda">Bloc agenda rouge</option>
             </select>
@@ -17,13 +17,10 @@
 
         <div class="form-group">
             <label class="control-label">Contenu</label>
-            <textarea v-model="content" name="content" class="form-control redactorSmall"></textarea>
+            <textarea v-model="content" name="bloc.content" class="form-control redactorSmall"></textarea>
         </div>
 
-        <input name="type" value="text" type="hidden">
-        <input name="page_id" v-bind:value="page" type="hidden">
-        <button type="button" class="btn btn-primary btn-sm">Ajouter</button>
-
+        <button type="button" @click="addContent" class="btn btn-primary btn-sm">Ajouter</button>
     </form>
 </template>
 <style></style>
@@ -32,7 +29,13 @@
         props: ['page'],
         data(){
             return{
-
+                bloc: {
+                    title: '',
+                    content: '',
+                    style: '',
+                    type: 'text',
+                    page_id: this.page
+                }
             }
         },
         mounted: function () {
@@ -51,7 +54,18 @@
                         buttons  : ['format','bold','italic','link','|','unorderedlis','orderedlist']
                     });
                });
-            }
+            },
+            ajouter:function(){
+
+            this.$http.post('/admin/content', { bloc : this.bloc }).then((response) => {
+
+                 this.$emit('option-select', this.response.body.id)
+
+            }, (response) => {
+            // error callback
+            }).bind(this);
+        },
+
         }
     }
 </script>

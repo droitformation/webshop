@@ -1,5 +1,6 @@
 <template>
-    <form class="bloc-content">
+    <form :action="url" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_token" v-bind:value="Laravel.csrfToken">
         <h4>Bloc {{ bloc.type }}</h4>
 
         <div v-if="bloc.type == 'loi' || bloc.type == 'text' || bloc.type == 'lien'" class="form-group">
@@ -53,7 +54,7 @@
         props: ['bloc','categories'],
         data(){
             return{
-
+                url: location.protocol + "//" + location.host+"/admin/content/" + bloc.id
             }
         },
         mounted: function () {

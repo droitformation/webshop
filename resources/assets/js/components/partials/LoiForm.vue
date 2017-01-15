@@ -1,5 +1,6 @@
 <template>
-    <form>
+    <form :action="url" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_token" :value="Laravel.csrfToken">
         <h4>Bloc loi</h4>
 
         <div class="form-group">
@@ -19,7 +20,7 @@
         props: ['page'],
         data(){
             return{
-
+                url: location.protocol + "//" + location.host+"/admin/content"
             }
         },
         mounted: function () {

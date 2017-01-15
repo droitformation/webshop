@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Administration | Droit Formation">
     <meta name="author" content="Cindy Leschaud | @DesignPond">
-    <meta name="_token" content="<?php echo csrf_token(); ?>">
+    <meta id="_token" name="_token" content="<?php echo csrf_token(); ?>">
 
     <script src="https://use.fontawesome.com/fd16a07224.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">

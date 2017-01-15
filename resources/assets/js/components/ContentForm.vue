@@ -36,7 +36,6 @@
                 <faq-form v-if="form == 'faq'" :page="page" :categories="categories"></faq-form>
                 <autorite-form v-if="form == 'autorite'" :page="page"></autorite-form>
 
-                <content-edit v-if="edit" :bloc="content"></content-edit>
 
             </div>
         </div>
@@ -55,7 +54,7 @@
     import FaqForm from './partials/FaqForm.vue';
     import AutoriteForm from './partials/AutoriteForm.vue';
 
-    import ContentEdit from './partials/ContentEdit.vue';
+    //import ContentEdit from './partials/ContentEdit.vue';
 
     export default{
         props: ['page','categories','contents'],
@@ -92,7 +91,7 @@
             }
         },
         components:{
-            TextForm,LoiForm,LienForm,FaqForm,AutoriteForm,ContentEdit
+            TextForm,LoiForm,LienForm,FaqForm,AutoriteForm
         }
     }
 </script>
