@@ -71,6 +71,16 @@ $factory->define(App\Droit\Inscription\Entities\Groupe::class, function (Faker\G
     ];
 });
 
+$factory->define(App\Droit\Inscription\Entities\Rappel::class, function (Faker\Generator $faker) {
+    return [
+        'user_id'        => 1,
+        'group_id'       => null,
+        'inscription_id' => 1,
+        'colloque_id'    => 1,
+        'montant'        => null
+    ];
+});
+
 $factory->define(App\Droit\Colloque\Entities\Colloque_attestation::class, function (Faker\Generator $faker) {
     return [
         'colloque_id'  => 1,

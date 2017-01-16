@@ -463,4 +463,21 @@ class ObjectFactory
 
         return $colloque->load('inscriptions');
     }
+
+    public function makeInscriptionForUser($user, $date)
+    {
+        // Create colloque
+        $colloque = $this->colloque();
+        $prices   = $colloque->prices->pluck('id')->all();
+
+        return factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'     => $user->id,
+            'group_id'    => null,
+            'price_id'    => $prices[0],
+            'colloque_id' => $colloque->id,
+            'payed_at'    => null,
+            'created_at'  => $date,
+            'updated_at'  => $date
+        ]);
+    }
 }

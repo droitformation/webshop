@@ -63,18 +63,24 @@ Route::get('testing', function() {
 
     $inscrit = $users->find(710);
 
-    if(isset($inscrit->adresses) && !$inscrit->adresses->isEmpty())
+    $pending = $inscrit->inscription_pending->mapWithKeys_v2(function ($item, $key) {
+        return [$item->colloque_id => $item->rappels->pluck('id')];
+    })->filter(function ($value, $key) {
+        return !$value->isEmpty();
+    });
+
+/*    if(isset($inscrit->adresses) && !$inscrit->adresses->isEmpty())
     {
         $adresse = $inscrit->adresses->where('type',1)->map(function($adresse, $key) use ($inscrit) {
             return $adresse;
         })->first();
         
         // return ['id' => $inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email ];
-    }
+    }*/
 
     //$years = array_keys($years->toArray());
     echo '<pre>';
-    print_r($adresse);
+    print_r($inscrit);
     echo '</pre>';exit();
 
     /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
