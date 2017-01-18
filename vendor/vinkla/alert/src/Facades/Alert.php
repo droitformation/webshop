@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * This is the alert facade class.
  *
- * @author Vincent Klaiber <vincent@hoy.se>
+ * @author Vincent Klaiber <hello@vinkla.com>
  */
 class Alert extends Facade
 {
@@ -27,7 +27,7 @@ class Alert extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'alert';
     }

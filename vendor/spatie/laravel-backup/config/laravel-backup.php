@@ -62,7 +62,6 @@ return [
         ],
     ],
 
-
     /*
      * You can get notified when specific events occur. Out of the box you can use 'mail' and 'slack'.
      * For Slack you need to install guzzlehttp/guzzle.
@@ -88,7 +87,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'your@email.com',
+            'to' => 'your@example.com',
         ],
 
         'slack' => [
@@ -118,7 +117,6 @@ return [
         ],
         */
     ],
-
 
     'cleanup' => [
         /*

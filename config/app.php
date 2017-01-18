@@ -158,7 +158,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 		Illuminate\Notifications\NotificationServiceProvider::class,
 
-        Laravel\Socialite\SocialiteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Torann\Registry\RegistryServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
@@ -248,7 +247,6 @@ return [
         'PDF'        => Barryvdh\DomPDF\Facade::class,
         'QrCode'     => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Registry'   => Torann\Registry\Facades\Registry::class,
-        'Socialite'  => Laravel\Socialite\Facades\Socialite::class,
 		'Alert'      => Vinkla\Alert\Facades\Alert::class
 	],
 
