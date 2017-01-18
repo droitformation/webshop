@@ -16,14 +16,10 @@ class TeamMiddleware {
         $user = \Auth::user();
         $user->load('roles');
 
-        $roles = $user->roles->pluck('id')->all();
-
-        if(in_array(2,$roles) || in_array(1,$roles))
-        {
+		if($user->roles->contains('id',1) || $user->roles->contains('id',2)){
 			return $next($request);
         }
 
 		return redirect('/');
 	}
-
 }

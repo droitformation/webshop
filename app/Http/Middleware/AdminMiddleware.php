@@ -16,10 +16,12 @@ class AdminMiddleware {
         $user = \Auth::user();
         $user->load('roles');
 
-        $roles = $user->roles->pluck('id')->all();
+        if(!$user->roles->contains('id',1)) {
 
-        if(!in_array(1,$roles))
-        {
+			if($user->roles->contains('id',2)){
+				return redirect()->to('/team');
+			}
+			
             return redirect()->to('/');
         }
 

@@ -149,8 +149,13 @@ Route::group(['middleware' => 'site'], function () {
 
 Route::group(['prefix' => 'team' , 'middleware' => ['auth','team']], function () {
     Route::get('/','Team\TeamController@index');
+    
     Route::get('order/{id}','Team\Shop\OrderController@show');
     Route::match(['get', 'post'],'orders', 'Team\Shop\OrderController@index');
+
+    Route::get('colloque','Team\Colloque\ColloqueController@index');
+    Route::get('colloque/{id}','Team\Colloque\ColloqueController@show');
+    Route::get('colloque/archive/{year}', 'Team\Colloque\ColloqueController@archive');
 });
 
 /* *

@@ -47,6 +47,8 @@ class Kernel extends ConsoleKernel {
 		})
 		->name('monitor_queue_listener')
 		->everyFiveMinutes();
+
+		// ->pingBefore('https://cronitor.link/abc/run')->thenPing('https://cronitor.link/abc/complete');
 	}
 
 }

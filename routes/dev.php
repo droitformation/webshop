@@ -3,6 +3,17 @@
  * Test routes
  ============================================ */
 
+Route::get('abos_test', function () {
+
+    $model = \App::make('App\Droit\Organisateur\Repo\OrganisateurInterface');
+
+    $all = $model->centres()->pluck('logo','id');
+
+
+    echo '<pre>';
+    print_r($all);
+    echo '</pre>';exit;
+});
 
 Route::get('mapped', function () {
 
