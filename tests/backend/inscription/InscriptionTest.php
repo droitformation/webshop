@@ -27,9 +27,6 @@ class InscriptionTest extends TestCase {
         $this->worker = Mockery::mock('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
         $this->app->instance('App\Droit\Inscription\Worker\InscriptionWorkerInterface', $this->worker);
 
-        $this->colloque = Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
-        $this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->colloque);
-
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
@@ -91,17 +88,21 @@ class InscriptionTest extends TestCase {
      */
     public function testUpdateInscription()
     {
-        $input = ['id' => 3, 'colloque_id' => 39, 'user_id' => 1, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $input = ['id' => 3, 'colloque_id' => 39, 'user_id' => $user->id, 'inscription_no' => '71-2015/1', 'price_id' => 290];
 
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make($input);
 
         $this->mock->shouldReceive('update')->once()->andReturn($inscription);
         $this->worker->shouldReceive('makeDocuments')->once();
 
-        $this->visit('/admin/user/1');
+        $this->visit('/admin/user/'.$user->id);
 
         $response = $this->call('PUT', 'admin/inscription/3', $input);
 
-        $this->assertRedirectedTo('/admin/user/1');
+        $this->assertRedirectedTo('/admin/user/'.$user->id);
     }
 }

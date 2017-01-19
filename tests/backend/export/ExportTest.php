@@ -36,7 +36,7 @@ class ExportTest extends TestCase {
 		];
 
 		$make  = new \tests\factories\ObjectFactory();
-		$make->user($infos);
+		$users = $make->user($infos);
 
 		/**********************/
 
@@ -60,7 +60,7 @@ class ExportTest extends TestCase {
 		$professions = $results->pluck('profession_id')->unique()->values()->all();
 		$cantons     = $results->pluck('canton_id')->unique()->values()->all();
 
-		$this->assertEquals(2, $results->count());
+		$this->assertEquals(1, $results->count());
 		$this->assertEquals([6], $cantons);
 		$this->assertEquals([1], $professions);
 
