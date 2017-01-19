@@ -3,11 +3,14 @@
 namespace Spatie\DbDumper\Databases;
 
 use Spatie\DbDumper\DbDumper;
-use Spatie\DbDumper\Exceptions\CannotStartDump;
 use Symfony\Component\Process\Process;
+use Spatie\DbDumper\Exceptions\CannotStartDump;
 
 class MySql extends DbDumper
 {
+    /** @var bool */
+    protected $skipComments = true;
+
     /** @var bool */
     protected $useExtendedInserts = true;
 
@@ -17,6 +20,26 @@ class MySql extends DbDumper
     public function __construct()
     {
         $this->port = 3306;
+    }
+
+    /**
+     * @return $this
+     */
+    public function skipComments()
+    {
+        $this->skipComments = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function dontSkipComments()
+    {
+        $this->skipComments = false;
+
+        return $this;
     }
 
     /**
@@ -98,12 +121,18 @@ class MySql extends DbDumper
      */
     public function getDumpCommand(string $dumpFile, string $temporaryCredentialsFile): string
     {
+        $quote = $this->determineQuote();
+
         $command = [
-            "\"{$this->dumpBinaryPath}mysqldump\"",
+            "{$quote}{$this->dumpBinaryPath}mysqldump{$quote}",
             "--defaults-extra-file=\"{$temporaryCredentialsFile}\"",
-            '--skip-comments',
-            $this->useExtendedInserts ? '--extended-insert' : '--skip-extended-insert',
         ];
+
+        if ($this->skipComments) {
+            $command[] = '--skip-comments';
+        }
+
+        $command[] = $this->useExtendedInserts ? '--extended-insert' : '--skip-extended-insert';
 
         if ($this->useSingleTransaction) {
             $command[] = '--single-transaction';
@@ -152,5 +181,10 @@ class MySql extends DbDumper
                 throw CannotStartDump::emptyParameter($requiredProperty);
             }
         }
+    }
+
+    protected function determineQuote(): string
+    {
+        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? '"' : "'";
     }
 }

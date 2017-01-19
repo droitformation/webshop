@@ -17,6 +17,7 @@ class AdminMiddleware {
 		
         if(!\Auth::user()->roles->contains('id',1))
         {
+
             return redirect()->to('/');
         }
 

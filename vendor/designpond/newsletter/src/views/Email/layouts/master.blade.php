@@ -42,12 +42,12 @@
                 <!-- Header -->
                 @include('newsletter::Email.send.header')
 
-                <tr>
-                    <td id="sortable" class="newsletterborder" width="600" align="center" valign="top">
+                @if(config('newsletter.pdf'))
+                    @include('newsletter::Email.send.link')
+                @endif
 
-                        @if(config('newsletter.pdf'))
-                            @include('newsletter::Email.send.link')
-                        @endif
+                <tr>
+                    <td id="sortable" class="newsletterborder" style="display:block;" width="600" align="center" valign="top">
 
                         <!-- Main content -->
                         @yield('content')

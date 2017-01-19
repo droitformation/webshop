@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Administration | Droit Formation</title>
+    <title>Administration | Droit Formation | Team</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Administration | Droit Formation">
@@ -51,7 +51,7 @@
         <div id='wrap'>
 
             <div id="page-heading">
-                <h2>Droit Formation <small>Administration</small></h2>
+                <h2>Droit Formation <small> <span class="text-primary">Team</span></small></h2>
             </div>
 
             <div class="container">

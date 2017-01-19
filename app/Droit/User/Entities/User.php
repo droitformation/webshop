@@ -178,6 +178,20 @@ class User extends Authenticatable {
         return $this->roles->pluck('id')->all();
     }
 
+    public function getCantRegisterAttribute()
+    {
+        $restrict_colloque = \Registry::get('inscription.restrict');
+
+        $inscription_pending = $this->inscription_pending->mapWithKeys_v2(function ($item, $key) {
+            return [$item->colloque_id => $item->rappels->pluck('id')];
+        })->filter(function ($value, $key) {
+            return !$value->isEmpty();
+        });
+
+        // If we restrict and we have rappels we cant register
+        return $restrict_colloque && ($inscription_pending->count() > 1) ? true : false;
+    }
+
     /*
      * Search scopes
      * */

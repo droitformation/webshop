@@ -2,9 +2,9 @@
 
 namespace Spatie\Backup\Notifications;
 
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Collection;
 use Spatie\Backup\Helpers\Format;
+use Illuminate\Support\Collection;
+use Illuminate\Notifications\Notification;
 
 abstract class BaseNotification extends Notification
 {
@@ -21,7 +21,7 @@ abstract class BaseNotification extends Notification
 
     public function applicationName(): string
     {
-        return config('app.name');
+        return config('app.name') ?? config('app.url') ?? 'Laravel application';
     }
 
     public function diskName(): string

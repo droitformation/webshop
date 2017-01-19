@@ -1,10 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <!-- Define Charset -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!-- Responsive Meta Tag -->
-
+        <link rel="stylesheet" type="text/css" href="{{ public_path('newsletter/css/frontend/print.css') }}" media="screen" />
         <style>
             * {
                 font-family: Arial, Helvetica, sans-serif;
@@ -12,11 +10,12 @@
                 box-sizing:border-box;
             }
             @page {
-                padding: 30px; margin: 30px 50px; background: #fff; font-family: Arial, Helvetica, sans-serif;
+                padding: 20px; margin:20px 50px; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: avoid;
             }
             .bloc{
                 margin: 10px 0;
                 width: 100%;
+                page-break-inside: auto !important;
             }
             .bloc,
             .bloc div,
@@ -26,22 +25,25 @@
             .bloc a,
             .bloc ul li
             {
-                font-size: 14px !important;
-                line-height: 18px;
+                font-size: 16px !important;
+                line-height:20px;
                 box-sizing:border-box;
+            }
+            .arret h2{
+                font-size: 24px;
             }
             .arret, .analyse{
                 width: 100%;
                 display: block;
             }
             .arret-content{
-                display: inline-block;
+                display: block;
                 box-sizing:border-box;
-                width: 70%;
+                width: 100%;
             }
             .arret-categories{
                 display: inline-block;
-                width:29%;
+                width:19%;
                 box-sizing:border-box;
                 text-align: center;
             }

@@ -19,7 +19,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * This is the alert service provider class.
  *
- * @author Vincent Klaiber <vincent@hoy.se>
+ * @author Vincent Klaiber <hello@vinkla.com>
  */
 class AlertServiceProvider extends ServiceProvider
 {
@@ -64,7 +64,7 @@ class AlertServiceProvider extends ServiceProvider
      *
      * @return string[]
      */
-    public function provides()
+    public function provides(): array
     {
         return [
             'alert',

@@ -15,16 +15,20 @@ class Product extends Model{
 
     public function getReferenceAttribute()
     {
-        $attribute = $this->attributs->where('id',3);
+        $attribute = $this->attributs->first(function ($item, $key) {
+            return $item->id == 3;
+        });
 
-        return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
+        return $attribute ? $attribute->pivot->value : '';
     }
 
     public function getEditionAttribute()
     {
-        $attribute = $this->attributs->where('id',4);
+        $attribute = $this->attributs->first(function ($item, $key) {
+            return $item->id == 4;
+        });
 
-        return !$attribute->isEmpty() ? $attribute->first()->pivot->value : '';
+        return $attribute ? $attribute->pivot->value : '';
     }
 
     public function getEditionCleanAttribute()

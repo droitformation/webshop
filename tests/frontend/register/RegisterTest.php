@@ -11,11 +11,10 @@ class RegisterTest extends TestCase {
     public function setUp()
     {
         parent::setUp();
-
         DB::beginTransaction();
 
-        $this->worker = Mockery::mock('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
-        $this->app->instance('App\Droit\Inscription\Worker\InscriptionWorkerInterface', $this->worker);
+        //$this->worker = Mockery::mock('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        //$this->app->instance('App\Droit\Inscription\Worker\InscriptionWorkerInterface', $this->worker);
 
         $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
         $user->roles()->attach(1);
@@ -33,25 +32,52 @@ class RegisterTest extends TestCase {
      * Inscription from frontend
      * @return void
      */
-    public function testRegisterInscription()
+    public function testCanRegister()
     {
-        $this->WithoutEvents();
-        $this->withoutJobs();
-
-        $make  = new \tests\factories\ObjectFactory();
-        $user  = $make->user();
-        $this->actingAs($user);
+        $make = new \tests\factories\ObjectFactory();
 
         $colloque = $make->colloque();
+        $user     = $make->makeUser();
 
-        $input = ['type' => 'simple', 'colloque_id' => $colloque->id, 'user_id' => $user->id, 'inscription_no' => '71-2015/1', 'price_id' => 290];
+        $this->actingAs($user);
+        $date = \Carbon\Carbon::now()->subDays(32)->toDateString();
 
-        $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make();
+        $inscription1 = $make->makeInscriptionForUser($user, $date);
+        $inscription2 = $make->makeInscriptionForUser($user, $date);
 
-        $this->worker->shouldReceive('register')->once()->andReturn($inscription);
+        $this->visit('/pubdroit/colloque/'.$colloque->id);
+        $this->assertViewHas('colloque');
 
-        $response = $this->call('POST', 'pubdroit/registration', $input);
+        $this->see($colloque->title);
+    }
 
-        $this->assertRedirectedTo('pubdroit');
+    public function testCantRegisterHasRappel()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $colloque = $make->colloque();
+        $user     = $make->makeUser();
+
+        $this->actingAs($user);
+        $date = \Carbon\Carbon::now()->subDays(32)->toDateString();
+
+        $inscription1 = $make->makeInscriptionForUser($user, $date);
+        $inscription2 = $make->makeInscriptionForUser($user, $date);
+
+        $inscription1->rappels()->create([
+            'user_id'     => $user->id,
+            'colloque_id' => $inscription1->colloque_id,
+        ]);
+
+        $inscription2->rappels()->create([
+            'user_id'      => $user->id,
+            'colloque_id'  => $inscription2->colloque_id,
+        ]);
+
+        $this->visit('/pubdroit/colloque/'.$colloque->id);
+        $this->assertViewHas('colloque');
+
+        $this->see('Vous avez des payements en attente, veuillez contacter le secrétariat: droit.formation@unine.ch');
+
     }
 }

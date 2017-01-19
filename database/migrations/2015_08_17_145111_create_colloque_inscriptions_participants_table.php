@@ -16,7 +16,6 @@ class CreateColloqueInscriptionsParticipantsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('inscription_id')->unsigned()->index();
-            $table->foreign('inscription_id')->references('id')->on('colloque_inscriptions')->onDelete('cascade');
             $table->softDeletes();
         });
     }

@@ -28,11 +28,17 @@ class Registered
      */
     public function handle($request, Closure $next)
     {
-        $message  = \Registry::get('inscription.messages.registered');
+        $message = \Registry::get('inscription.messages.registered');
 
-        if( \Auth::user()->inscription_pending->count() > 1 ) 
+        $pending = \Auth::user()->inscription_pending->mapWithKeys_v2(function ($item, $key) {
+            return [$item->colloque_id => $item->rappels->pluck('id')];
+        })->filter(function ($value, $key) {
+            return !$value->isEmpty();
+        });
+
+        if($pending->count() > 1)
         {
-            return redirect('colloque')->with(array('status' => 'warning', 'message' => $message ));
+            return redirect('colloque')->with(['status' => 'warning', 'message' => $message]);
         }
 
         return $next($request);

@@ -65,19 +65,8 @@ class ColloqueController extends Controller
             return redirect('pubdroit/colloque');
         }
 
-        $registered = false;
-        $pending    = false;
-
-        if(\Auth::check())
-        {
-            $user = \Auth::user();
-            $restrict_colloque = \Registry::get('inscription.restrict');
-
-           // $hasPayments = \Auth::user()->inscription_pending->count() > 1
-
-            $pending    = $restrict_colloque && (\Auth::user()->inscription_pending->count() > 1) ? 'pending' : false;
-            $registered = $user->inscriptions->contains('colloque_id',$id) ? 'registered' : false;
-        }
+        $pending    = \Auth::check() && \Auth::user()->cant_register ? 'pending' : false;
+        $registered = \Auth::check() && \Auth::user()->inscriptions->contains('colloque_id',$id) ? 'registered' : false;
 
         if ($request->ajax())
         {
