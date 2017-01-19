@@ -110,6 +110,20 @@
     </script>
 @endif
 
+@if(!empty(session('updateAdresse')))
+    <script>
+        $(function(){
+            swal({
+                title: "Ok",
+                text: "Adresse mise à jour",
+                timer: 2500,
+                type: "success",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
 @if(!empty(session('OrderConfirmation')))
     <script>
         $(function(){

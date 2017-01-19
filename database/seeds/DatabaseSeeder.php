@@ -23,8 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PaysTableSeeder::class);
 
         $this->call(Adresse_typesTableSeeder::class);
-        //$this->call(AdressesTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
         
         $this->call(LocationTableSeeder::class);
         $this->call(OrganisateursTableSeeder::class);
@@ -41,6 +39,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(MenuTableSeeder::class);
         $this->call(PageTableSeeder::class);
+        $this->call(NewsletterTableSeeder::class);
 
 /*
         $this->call(Adresse_typesTableSeeder::class);

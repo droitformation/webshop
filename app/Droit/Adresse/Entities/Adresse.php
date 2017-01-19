@@ -222,4 +222,9 @@ class Adresse extends Model {
     {
         return $this->hasMany('App\Droit\Shop\Order\Entities\Order','adresse_id', 'id');
     }
+
+    public function abos()
+    {
+        return $this->hasMany('App\Droit\Abo\Entities\Abo_users','adresse_id', 'id');
+    }
 }

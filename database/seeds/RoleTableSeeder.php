@@ -8,12 +8,21 @@ class RoleTableSeeder extends \Illuminate\Database\Seeder  {
 		DB::table('roles')->truncate();
 
 		$roles = array(
-			['id' => '1','name' => 'Administrateur'],
-			['id' => '2','name' => 'Contributeur']
+			['name' => 'Administrateur'],
+			['name' => 'Contributeur']
 		);
 
 		// Uncomment the below to run the seeder
 		DB::table('roles')->insert($roles);
+
+		DB::table('user_roles')->truncate();
+
+		$roles = array(
+			['user_id' => 710, 'role_id' => 1]
+		);
+
+		// Uncomment the below to run the seeder
+		DB::table('user_roles')->insert($roles);
 	}
 
 }

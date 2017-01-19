@@ -15,6 +15,7 @@
                     <li class="{{ Request::is('pubdroit/profil') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil') }}"><i class="fa fa-home"></i> &nbsp;Données</a></li>
                     <li class="{{ Request::is('pubdroit/profil/orders') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil/orders') }}"><i class="fa fa-shopping-cart"></i> &nbsp;Commandes</a></li>
                     <li class="{{ Request::is('pubdroit/profil/colloques') || Request::is('pubdroit/profil/inscription/*') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil/colloques') }}"><i class="fa fa-calendar"></i> &nbsp;Inscriptions</a></li>
+                    <li class="{{ Request::is('pubdroit/profil/abos') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil/abos') }}"><i class="fa fa-book"></i> &nbsp;Abonnements</a></li>
                     <li class="{{ Request::is('pubdroit/profil/subscriptions') ? 'active' : '' }}"><a href="{{ url('pubdroit/profil/subscriptions') }}"><i class="fa fa-paper-plane"></i> &nbsp;Abonnements aux newsletter</a></li>
                 </ul>
             </aside>

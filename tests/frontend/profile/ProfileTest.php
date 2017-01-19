@@ -43,6 +43,86 @@ class ProfileTest extends TestCase {
 		$this->assertViewHas('user');
 	}
 
+	public function testUpdateAdresseLivraison()
+	{
+		$make     = new \tests\factories\ObjectFactory();
+		$person   = $make->makeUser();
+
+		$this->actingAs($person);
+
+		// Second adresse
+		$adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
+			'civilite_id'   => 2,
+			'first_name'    => $person->first_name,
+			'last_name'     => $person->last_name,
+			'email'         => $person->email,
+			'user_id'       => $person->id,
+			'livraison'     => null
+		]);
+
+		$person->load('adresses');
+
+		$adresse_livraison = $person->adresses->where('livraison',1);
+
+		$this->assertEquals(1, $adresse_livraison->count());
+
+		$edit = $person->adresses->first(function ($adresse, $key) {
+			return $adresse->livraison == null;
+		});
+
+		$original = $person->adresses->first(function ($adresse, $key) {
+			return $adresse->livraison == 1;
+		});
+
+		$this->visit('pubdroit/profil');
+
+		$response = $this->call('PUT','pubdroit/profil/update', [
+			'id'         => $edit->id,
+			'livraison'  => 1,
+			'user_id'    => $edit->user_id,
+			'first_name' => $edit->first_name,
+			'last_name'  => $edit->last_name,
+			'adresse'    => $edit->adresse,
+			'npa'        => $edit->npa,
+			'ville'      => $edit->ville,
+		]);
+
+		// Make sur the livraison adresse has been changed
+		$this->seeInDatabase('adresses', [
+			'id'        => $original->id,
+			'livraison' => null
+		]);
+
+		$this->seeInDatabase('adresses', [
+			'id'        => $edit->id,
+			'livraison' => 1
+		]);
+
+		// Re change livraison adresse
+		$response = $this->call('PUT','pubdroit/profil/update', [
+			'id'         => $original->id,
+			'livraison'  => 1,
+			'user_id'    => $original->user_id,
+			'first_name' => $original->first_name,
+			'last_name'  => $original->last_name,
+			'adresse'    => $original->adresse,
+			'npa'        => $original->npa,
+			'ville'      => $original->ville,
+		]);
+
+		// Make sur the livraison adresse has been changed
+		$this->seeInDatabase('adresses', [
+			'id'        => $original->id,
+			'livraison' => 1
+		]);
+
+		$this->seeInDatabase('adresses', [
+			'id'        => $edit->id,
+			'livraison' => null
+		]);
+
+	}
+
 	/**
 	 * @return void
 	 */

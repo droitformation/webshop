@@ -78,6 +78,7 @@ Route::group(['middleware' => 'site'], function () {
             Route::get('profil/orders', 'Frontend\ProfileController@orders');
             Route::get('profil/colloques', 'Frontend\ProfileController@colloques');
             Route::get('profil/subscriptions', 'Frontend\ProfileController@subscriptions');
+            Route::get('profil/abos', 'Frontend\ProfileController@abos');
             Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
 
             /* Update user adresse via ajax  */
