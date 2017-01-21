@@ -4,7 +4,7 @@
 <section class="row">
     <div class="col-md-12">
 
-        <p><a href="{{ url('pubdroit/checkout/billing') }}"><span aria-hidden="true">&larr;</span> Retour à l'adresse</a></p>
+        <p class="backBtn"><a class="btn btn-sm btn-default btn-profile" href="{{ url('pubdroit/checkout/billing') }}"><span aria-hidden="true">&larr;</span> Retour à l'adresse</a></p>
 
         <div class="heading-bar">
             <h2>3. Résumé de votre commande</h2>

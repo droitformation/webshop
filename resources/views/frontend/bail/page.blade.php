@@ -8,7 +8,9 @@
 				@if(isset($page))
 
 					<h3 class="line up">{{ $page->title }}</h3>
-					{!! $page->content !!}
+					<div class="content-bloc-page">
+						{!! $page->content !!}
+					</div>
 
 					@if(!$page->contents->isEmpty())
 						<?php $styles = $page->contents->groupBy('type'); ?>

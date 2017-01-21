@@ -3,7 +3,7 @@
 
     @if(!Request::is('bail/page/index'))
         <!-- Bloc search -->
-        @include('frontend.bail.sidebar.search')
+        {{--@include('frontend.bail.sidebar.search')--}}
 
         <!-- Bloc inscription newsletter -->
         @include('frontend.bail.sidebar.newsletter')

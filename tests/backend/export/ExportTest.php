@@ -38,7 +38,7 @@ class ExportTest extends TestCase {
 		$make  = new \tests\factories\ObjectFactory();
 		$users = $make->user($infos);
 
-		/**********************/
+		/******** Search with all cantons **************/
 
 		$results = $repo->searchMultiple(['cantons' => [6,8]], true);
 		$cantons = $results->pluck('canton_id')->unique()->values()->all();
@@ -46,7 +46,7 @@ class ExportTest extends TestCase {
 		$this->assertEquals([6,8], $cantons);
 		$this->assertTrue(!in_array(3,$cantons));
 
-		/**********************/
+		/********** Search with all profession ************/
 
 		$results     = $repo->searchMultiple(['professions' => [1,2]], true);
 		$professions = $results->pluck('profession_id')->unique()->values()->all();
@@ -56,12 +56,12 @@ class ExportTest extends TestCase {
 
 		/********* All results *************/
 
-		$results     = $repo->searchMultiple(['cantons' => [6], 'professions' => [1]], true);
+		$results     = $repo->searchMultiple(['cantons' => [6,10], 'professions' => [1]], true);
 		$professions = $results->pluck('profession_id')->unique()->values()->all();
 		$cantons     = $results->pluck('canton_id')->unique()->values()->all();
 
-		$this->assertEquals(1, $results->count());
-		$this->assertEquals([6], $cantons);
+		$this->assertEquals(3, $results->count());
+		$this->assertEquals([6,10], $cantons);
 		$this->assertEquals([1], $professions);
 
 		/********* Cross results *************/
