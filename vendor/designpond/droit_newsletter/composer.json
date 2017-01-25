@@ -1,0 +1,49 @@
+{
+    "name": "designpond/droit_newsletter",
+    "type": "library",
+    "description": "Newsletter building tool for main UniNE websites",
+    "keywords": [
+        "designpond",
+        "droit_newsletter",
+        "laravel"
+    ],
+    "homepage": "https://github.com/designpond/droit_newsletter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cindy Leschaud",
+            "email": "cindy.leschaud@gmail.com",
+            "homepage": "http://www.designpond.ch",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "~5.5|~7.0",
+        "intervention/image": "dev-master",
+        "inlinestyle/inlinestyle": "1.*",
+        "maatwebsite/excel": "~2.0.0",
+        "mailjet/mailjet-apiv3-php": "^1.1",
+        "vinkla/alert": "^1.2",
+        "barryvdh/laravel-dompdf": "0.7.x@dev"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "designpond\\newsletter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "designpond\\newsletter\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

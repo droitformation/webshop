@@ -37,18 +37,7 @@ $(function() {
     $('#datePickerNewsletter').datetimepicker({
         locale: 'fr-ch',
         format:  'YYYY-MM-DD HH:mm',
-        minDate : moment().format(),
-        icons: {
-            time: 'fa fa-clock-o',
-            date: 'fa fa-calendar',
-            up: 'fa fa-chevron-up',
-            down: 'fa fa-chevron-down',
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-screenshot',
-            clear: 'fa fa-trash',
-            close: 'fa fa-remove'
-        }
+        minDate : moment().format()
     });
 
     $('body').on('click','.deleteActionNewsletter',function(event){

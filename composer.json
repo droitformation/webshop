@@ -22,7 +22,7 @@
         "baum/baum": "~1.1",
         "inlinestyle/inlinestyle": "1.*",
         "clegginabox/pdf-merger": "dev-master",
-		"designpond/newsletter" : "dev-master",
+		"designpond/droit_newsletter" : "dev-master",
 		"vinkla/alert": "^1.2",
 		"spatie/laravel-backup": "^4.0",
 		"shvetsgroup/laravel-email-database-log": "^1.0"

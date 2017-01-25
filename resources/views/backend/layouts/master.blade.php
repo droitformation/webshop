@@ -43,7 +43,8 @@
         window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
                 'url'   => url('/'),
-                'ajax' => url('admin/ajax/')
+                'ajaxUrl' => url('admin/ajax/'),
+                'adminUrl' => url('admin/')
         ]); ?>
     </script>
 </head>

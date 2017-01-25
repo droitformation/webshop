@@ -38,7 +38,7 @@
 								thumbtitle = val.title;
 							}
 
-							var img = $('<img src="' + val.thumb + '"  data-params="' + encodeURI(JSON.stringify(val)) + '" style="width: 100px; height: 75px; cursor: pointer;" />');
+							var img = $('<img src="' + val.thumb + '"  data-params="' + encodeURI(JSON.stringify(val)) + '" style="width: 100px; cursor: pointer;" />');
 							$box.append(img);
 							$(img).click($.proxy(this.imagemanager.insert, this));
 

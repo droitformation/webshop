@@ -480,6 +480,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('ajax/categories/{id?}', 'Backend\Content\CategorieController@categories');
     Route::post('ajax/categorie/arrets','Backend\Content\CategorieController@arrets');
 
+    Route::get('ajax/product',  'Api\ProductController@index');
+    Route::get('ajax/product/{id}', 'Api\ProductController@show');
+
+    Route::get('ajax/colloque',  'Api\ColloqueController@index');
+    Route::get('ajax/colloque/{id}', 'Api\ColloqueController@show');
+
 });
 
 Route::group(['prefix' => 'vue'], function () {
@@ -497,7 +503,7 @@ Route::group(['prefix' => 'vue'], function () {
     Route::post('option','Api\OptionController@store');
     Route::put('option/{id}','Api\OptionController@update');
     Route::delete('option/{id}','Api\OptionController@destroy');
-
+    
 });
 /*
 |--------------------------------------------------------------------------
