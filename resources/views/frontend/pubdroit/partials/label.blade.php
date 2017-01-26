@@ -5,7 +5,7 @@
                 <input type="hidden" name="title" value="Domaine">
                 <input type="hidden" name="label" value="domain">
                 <select name="search[domain_id]" class="dropdow-select">
-                    <option value="">Collections</option>
+                    <option value="">Thèmes</option>
                     @foreach($domains as $domain)
                         <option value="{{ $domain->id }}">{{ $domain->title }}</option>
                     @endforeach
@@ -19,7 +19,7 @@
                 <input type="hidden" name="title" value="Catégorie">
                 <input type="hidden" name="label" value="categorie">
                 <select name="search[categorie_id]" class="dropdow-select">
-                    <option value="">Thèmes</option>
+                    <option value="">Collections</option>
                     @foreach($categories as $categorie)
                         <option value="{{ $categorie->id }}">{{ $categorie->title }}</option>
                     @endforeach

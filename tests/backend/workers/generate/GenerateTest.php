@@ -282,18 +282,21 @@ class GenerateTest extends TestCase {
 
     public function testGetAdresse()
     {
+		$make     = new \tests\factories\ObjectFactory();
+		$person   = $make->makeUser();
+
         $inscription = factory(App\Droit\Inscription\Entities\Inscription::class)->make([
             'id'          => '10',
             'user_id'     => '1',
             'colloque_id' => '12'
         ]);
 
-        $inscription->user = App\Droit\User\Entities\User::find(1);
+        $inscription->user = $person;
 
         $generate = new \App\Droit\Generate\Entities\Generate($inscription);
         $response = $generate->getAdresse();
 
-        $this->assertEquals($response->name, 'Cindy Leschaud');
+        $this->assertEquals($response->name, $person->name);
     }
 
 	public function testGetOccurences()

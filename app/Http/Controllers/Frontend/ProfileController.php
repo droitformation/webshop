@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\UpdateAdresse;
+use Illuminate\Support\Facades\Redirect;
 
 class ProfileController extends Controller
 {
@@ -32,40 +33,37 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = $this->user->find(\Auth::user()->id);
-        $current = '/';
-
-        return view('frontend.pubdroit.profil.account')->with(compact('user','current'));
+        return view('frontend.pubdroit.profil.account')->with(['current' => '/', 'user' => \Auth::user()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  UpdateAdresse  $request
+     * @return Redirect
      */
     public function update(UpdateAdresse $request)
     {
         $data = $request->all();
 
-        if(!empty($data))
-        {
-            if(isset($data['id']))
-            {
-                $this->adresse->update($data);
-            }
-            else
-            {
-                $this->adresse->create($data);
+        if(!empty($request->all())) {
+
+            $action = $request->input('id',null) ? 'update' : 'create';
+
+            // Update or create
+            $this->adresse->$action($data);
+
+            // Change livraison adresse
+            if($request->input('id',null) && $data['livraison'] > 0){
+                $this->adresse->changeLivraison($request->input('id') , $request->input('user_id'));
             }
         }
 
-        alert()->success('Adresses mise à jour');
+        $request->session()->flash('updateAdresse', 'Adresse mise à jour');
 
-        return redirect('profil');
+        return redirect('pubdroit/profil');
     }
-
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -73,47 +71,38 @@ class ProfileController extends Controller
      */
     public function orders()
     {
-        $user = $this->user->find(\Auth::user()->id);
-
-        return view('frontend.pubdroit.profil.orders')->with(compact('user'));
+        return view('frontend.pubdroit.profil.orders')->with(['user' => \Auth::user()]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
+    
     public function colloques()
     {
-        $user = $this->user->find(\Auth::user()->id);
-
-        return view('frontend.pubdroit.profil.inscriptions')->with(compact('user'));
+        return view('frontend.pubdroit.profil.inscriptions')->with(['user' => \Auth::user()]);
     }
-
-    /**
-     *
-     * @return Response
-     */
+    
     public function inscription($id)
     {
-        $user = $this->user->find(\Auth::user()->id);
-        $inscription = $user->inscriptions->find($id);
-        $inscription->load('user_options','colloque');
-        $inscription->user_options->load('option');
-        $inscription->colloque->load('location','centres','compte');
+        $inscription = \Auth::user()->inscriptions->find($id);
 
-        return view('frontend.pubdroit.profil.inscription')->with(compact('user','id','inscription'));
+        return view('frontend.pubdroit.profil.inscription')->with(['user' => \Auth::user(), 'id' => $id, 'inscription' => $inscription]);
+    }
+
+    public function abos()
+    {
+        $abos =  \Auth::user()->adresses->map(function ($item, $key) {
+            return $item->abos;
+        })->flatten(1);
+
+
+        return view('frontend.pubdroit.profil.abos')->with(['user' => \Auth::user(), 'abos' => $abos]);
     }
 
     public function subscriptions()
     {
-        $user = $this->user->find(\Auth::user()->id);
-
-        $emails = array_merge([$user->email], isset($user->adresses) ? $user->adresses->pluck('email')->all() : []);
+        $emails = array_merge([\Auth::user()->email], isset(\Auth::user()->adresses) ? \Auth::user()->adresses->pluck('email')->all() : []);
 
         $subscriptions = $this->newsworker->hasSubscriptions(array_unique($emails));
 
-        return view('frontend.pubdroit.profil.subscription')->with(compact('user','id','subscriptions'));
+        return view('frontend.pubdroit.profil.subscription')->with(['user' => \Auth::user(), 'subscriptions' => $subscriptions]);
     }
 
 }

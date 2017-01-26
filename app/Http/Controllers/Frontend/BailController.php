@@ -120,6 +120,7 @@ class BailController extends Controller
                 $campagnes   = $this->newsworker->last($newsletters->pluck('id'));
 
                 $data['campagne'] = $campagnes->first();
+
             }
         }
 

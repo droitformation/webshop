@@ -3,7 +3,8 @@
 
 <div class="row">
     <div class="col-md-12">
-        <p><a href="{{ url('pubdroit/checkout/cart') }}"><span aria-hidden="true">&larr;</span> Retour au panier</a></p>
+
+        <p class="backBtn"><a class="btn btn-sm btn-default btn-profile" href="{{ url('pubdroit/checkout/cart') }}"><span aria-hidden="true">&larr;</span> Retour au panier</a></p>
 
         <div class="row">
             <div class="col-md-8">

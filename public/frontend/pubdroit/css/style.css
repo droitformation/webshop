@@ -203,6 +203,10 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     max-width: 100%;
 }
 
+.backBtn{
+    margin-bottom: 20px;
+}
+
 #logo { margin:0; }
 #logo img { position: relative; }
 #logo a { display:block; height:100%; }
@@ -351,7 +355,7 @@ margin-bottom:0;
     padding:0px 0 30px 0;
     box-sizing: border-box;
     line-height:28px;
-    margin-bottom: 40px;
+    margin:10px 0 40px 0;
 }
 .wellcome-msg h2 {
     color: #000;
@@ -1152,6 +1156,7 @@ input[type="color"],
 
 .login-profile .btn-group{
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle),

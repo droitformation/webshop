@@ -5,14 +5,17 @@
 
 Route::get('abos_test', function () {
 
-    $model = \App::make('App\Droit\Organisateur\Repo\OrganisateurInterface');
+    $infos = [
+        ['canton' => 6, 'profession' => 1],
+        ['canton' => 6, 'profession' => 2],
+        ['canton' => 8, 'profession' => 3],
+        ['canton' => 10, 'profession' => 1],
+        ['canton' => 10, 'profession' => 2],
+        ['canton' => 10, 'profession' => 1]
+    ];
 
-    $all = $model->centres()->pluck('logo','id');
-
-
-    echo '<pre>';
-    print_r($all);
-    echo '</pre>';exit;
+    $make  = new \tests\factories\ObjectFactory();
+    $users = $make->user($infos);
 });
 
 Route::get('mapped', function () {

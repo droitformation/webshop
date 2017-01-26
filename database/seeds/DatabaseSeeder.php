@@ -21,26 +21,20 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfessionsTableSeeder::class);
         $this->call(CantonsTableSeeder::class);
         $this->call(PaysTableSeeder::class);
-
         $this->call(Adresse_typesTableSeeder::class);
-        //$this->call(AdressesTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        
+
         $this->call(LocationTableSeeder::class);
         $this->call(OrganisateursTableSeeder::class);
-
         $this->call(ShippingTableSeeder::class);
         $this->call(PayementTableSeeder::class);
         $this->call(AttributTableSeeder::class);
-
         $this->call(SiteTableSeeder::class);
         $this->call(RoleTableSeeder::class);
         $this->call(RegistryTableSeeder::class);
-
         $this->call(TypeSeeder::class);
-
         $this->call(MenuTableSeeder::class);
         $this->call(PageTableSeeder::class);
+        $this->call(NewsletterTableSeeder::class);
 
 /*
         $this->call(Adresse_typesTableSeeder::class);

@@ -46,6 +46,7 @@
 
     @if(!$user->adresses->isEmpty())
         @foreach($user->adresses as $adresse)
+
                 <!-- start wrapper -->
         <div class="profil-wrapper">
             <h4>Adresse</h4>

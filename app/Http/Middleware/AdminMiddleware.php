@@ -13,15 +13,11 @@ class AdminMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-        $user = \Auth::user();
-        $user->load('roles');
+		\Auth::user()->load('roles');
+		
+        if(!\Auth::user()->roles->contains('id',1))
+        {
 
-        if(!$user->roles->contains('id',1)) {
-
-			if($user->roles->contains('id',2)){
-				return redirect()->to('/team');
-			}
-			
             return redirect()->to('/');
         }
 

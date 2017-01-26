@@ -322,11 +322,11 @@ class AdresseEloquent implements AdresseInterface{
     public function changeLivraison($adresse_id , $user_id)
 	{
         $adresses = $this->adresse->where('user_id','=',$user_id)->get();
-
+	
         foreach($adresses as $adresse)
         {
             // If it's the provided adresse we want to change set livraison to 1 else set to 0
-            $livraison = ( $adresse->id == $adresse_id ? 1 : 0) ;
+            $livraison = ( $adresse->id == $adresse_id ? 1 : null) ;
             $adresse->livraison = $livraison;
             $adresse->save();
         }

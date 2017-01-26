@@ -108,10 +108,10 @@
             <a href="{{ url('admin/shipping') }}"><i class="fa fa-truck"></i> <span>Frais de port</span></a>
         </li>
         <li class="<?php echo (Request::is('admin/theme') || Request::is('admin/theme/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/theme') }}"><i class="fa fa-star-half-o"></i> <span>Thèmes</span></a>
+            <a href="{{ url('admin/theme') }}"><i class="fa fa-star-half-o"></i> <span>Collections</span></a>
         </li>
         <li class="<?php echo (Request::is('admin/domain') || Request::is('admin/domain/*') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/domain') }}"><i class="fa fa-shield"></i> <span>Collections</span></a>
+            <a href="{{ url('admin/domain') }}"><i class="fa fa-shield"></i> <span>Thèmes</span></a>
         </li>
         <li class="<?php echo (Request::is('admin/attribut') || Request::is('admin/attribut/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/attribut') }}"><i class="fa fa-flag"></i> <span>Attributs</span></a>

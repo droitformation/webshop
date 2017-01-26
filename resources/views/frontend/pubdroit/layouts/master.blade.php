@@ -21,6 +21,7 @@
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/skins/red.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/update-responsive.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/common/css/selectric.css');?>">
+	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/user/profil.css');?>">
 
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/main-slider.css');?>">

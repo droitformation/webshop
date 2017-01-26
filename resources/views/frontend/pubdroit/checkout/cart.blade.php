@@ -4,7 +4,7 @@
 <section class="row">
     <div class="col-md-12">
 
-        <p><a href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour au shop</a></p>
+        <p class="backBtn"><a class="btn btn-sm btn-default btn-profile" href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour au shop</a></p>
 
         <div class="heading-bar">
             <h2>1. Panier</h2>

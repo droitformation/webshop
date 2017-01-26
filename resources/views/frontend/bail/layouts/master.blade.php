@@ -45,7 +45,9 @@
     <!-- Entête et menu -->
     <header class="header" id="app">
         <div class="row">
-            <h1 class="col-md-3"><a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/images/bail/logo.png') }}" alt="Logo Bail.ch"></a></h1>
+            <h1 class="col-md-3">
+                <a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/logos/bail.svg') }}" alt="Logo Bail.ch"></a>
+            </h1>
             <div class="col-md-7 text-right">
                 <nav id="menu-principal">
                     @if(isset($menu_main))
@@ -73,11 +75,11 @@
     <div class="row" id="content-wrapper">
         <!-- Contenu principal -->
         <div id="mainContent" class="maincontent">
-            <section class="colorBlock min-inner colorSection"></section>
+            <section class="colorBlock min-inner colorSection headerBreadcrumb"></section>
 
             <!-- Contenu -->
-        @yield('content')
-        <!-- Fin contenu -->
+            @yield('content')
+            <!-- Fin contenu -->
 
         </div>
     </div>
