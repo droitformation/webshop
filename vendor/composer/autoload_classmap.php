@@ -698,7 +698,7 @@ return array(
     'ShippingTableSeeder' => $baseDir . '/database/seeds/ShippingTableSeeder.php',
     'SiteTableSeeder' => $baseDir . '/database/seeds/SiteTableSeeder.php',
     'SpecialisationTableSeeder' => $baseDir . '/database/seeds/SpecialisationTableSeeder.php',
-    'TestCase' => $baseDir . '/tests/TestCase.php',
+    'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'TypeSeeder' => $baseDir . '/database/seeds/TypeSeeder.php',
     'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',

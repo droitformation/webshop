@@ -1,6 +1,6 @@
 <?php
 
-class ExampleTest extends TestCase {
+class ExampleTest extends BrowserKitTest {
 
 	/**
 	 * A basic functional test example.
