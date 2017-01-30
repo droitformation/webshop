@@ -1137,7 +1137,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'ShippingTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ShippingTableSeeder.php',
         'SiteTableSeeder' => __DIR__ . '/../..' . '/database/seeds/SiteTableSeeder.php',
         'SpecialisationTableSeeder' => __DIR__ . '/../..' . '/database/seeds/SpecialisationTableSeeder.php',
-        'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
+        'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'TypeSeeder' => __DIR__ . '/../..' . '/database/seeds/TypeSeeder.php',
         'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',

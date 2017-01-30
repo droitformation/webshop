@@ -12,4 +12,5 @@ before_script:
 script:
   - php artisan migrate --env=testing --no-interaction
   - php artisan db:seed --env=testing --no-interaction
+  - composer dumpautoload
   - vendor/bin/phpunit
