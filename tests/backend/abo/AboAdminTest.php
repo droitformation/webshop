@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Laravel\BrowserKitTesting\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use \Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AboAdminTest extends BrowserKitTest {
