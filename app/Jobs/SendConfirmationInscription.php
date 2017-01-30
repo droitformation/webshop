@@ -35,6 +35,8 @@ class SendConfirmationInscription extends Job implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
+        $attachements = [];
+
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         
         $this->inscription->load('colloque');
@@ -58,8 +60,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
 
         $program = $this->inscription->colloque->programme_attachement;
         
-        if($program)
-        {
+        if($program) {
             $attachements['program'] = $program;
         }
 
@@ -81,7 +82,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             {
                 foreach($attachements as $attachement)
                 {
-                    $message->attach($attachement['file'], array('as' => $attachement['name'], 'mime' => 'application/pdf'));
+                    $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
                 }
             }
         });

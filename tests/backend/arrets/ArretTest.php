@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class ArretTest extends TestCase {
+class ArretTest extends BrowserKitTest {
 
 	use DatabaseTransactions;
 
@@ -10,7 +10,7 @@ class ArretTest extends TestCase {
 	{
 		parent::setUp();
 
-		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
 
 		$user->roles()->attach(1);
 		$this->actingAs($user);
@@ -90,7 +90,7 @@ class ArretTest extends TestCase {
 
 	public function testDeleteArret()
 	{
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);

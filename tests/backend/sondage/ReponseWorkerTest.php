@@ -1,25 +1,30 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class ReponseWorkerTest extends TestCase {
+class ReponseWorkerTest extends BrowserKitTest {
 
 	use DatabaseTransactions;
 
 	protected $mock;
 
-	public function setUp()
-	{
-		parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
 
-/*		$this->mock = Mockery::mock('App\Droit\Sondage\Repo\ReponseInterface');
-		$this->app->instance('App\Droit\Sondage\Repo\ReponseInterface', $this->mock);*/
-	}
+        DB::beginTransaction();
 
-	public function tearDown()
-	{
-		parent::tearDown();
-	}
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+    }
+
+    public function tearDown()
+    {
+        Mockery::close();
+        DB::rollBack();
+        parent::tearDown();
+    }
 	
 	public function testCreateReponse()
 	{

@@ -2,28 +2,19 @@
 
 use SimpleSoftwareIO\QrCode\DataTypes\WiFi;
 
-/**
- * Simple Laravel QrCode Generator
- * A simple wrapper for the popular BaconQrCode made for Laravel.
- *
- * @link http://www.simplesoftware.io
- * @author SimpleSoftware support@simplesoftware.io
- *
- */
-
-class WiFiTest extends \PHPUnit_Framework_TestCase{
-
+class WiFiTest extends \PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
-        $this->wifi = new Wifi;
+        $this->wifi = new Wifi();
     }
 
     public function test_it_generates_a_proper_format_with_just_the_ssid()
     {
         $this->wifi->create([
             0 => [
-                'ssid' => 'foo'
-            ]
+                'ssid' => 'foo',
+            ],
         ]);
 
         $properFormat = 'WIFI:S:foo;';
@@ -35,9 +26,9 @@ class WiFiTest extends \PHPUnit_Framework_TestCase{
     {
         $this->wifi->create([
             0 => [
-                'ssid' => 'foo',
-                'hidden' => 'true'
-            ]
+                'ssid'   => 'foo',
+                'hidden' => 'true',
+            ],
         ]);
 
         $properFormat = 'WIFI:S:foo;H:true;';
@@ -49,10 +40,10 @@ class WiFiTest extends \PHPUnit_Framework_TestCase{
     {
         $this->wifi->create([
             0 => [
-                'ssid' => 'foo',
+                'ssid'       => 'foo',
                 'encryption' => 'WPA',
-                'password' => 'bar'
-            ]
+                'password'   => 'bar',
+            ],
         ]);
 
         $properFormat = 'WIFI:T:WPA;S:foo;P:bar;';
@@ -64,11 +55,11 @@ class WiFiTest extends \PHPUnit_Framework_TestCase{
     {
         $this->wifi->create([
             0 => [
-                'ssid' => 'foo',
+                'ssid'       => 'foo',
                 'encryption' => 'WPA',
-                'password' => 'bar',
-                'hidden' => 'true'
-            ]
+                'password'   => 'bar',
+                'hidden'     => 'true',
+            ],
         ]);
 
         $properFormat = 'WIFI:T:WPA;S:foo;P:bar;H:true;';

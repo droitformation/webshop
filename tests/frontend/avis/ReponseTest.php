@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class ReponseTest extends TestCase {
+class ReponseTest extends BrowserKitTest {
 
 	use DatabaseTransactions;
 
@@ -113,7 +113,7 @@ class ReponseTest extends TestCase {
 
 	public function testCreateQuestion()
 	{
-		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
 		$user->roles()->attach(1);
 		$this->actingAs($user);
 

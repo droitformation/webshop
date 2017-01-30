@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 use \Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class AboFrontendTest extends TestCase {
+class AboFrontendTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -45,9 +45,13 @@ class AboFrontendTest extends TestCase {
         $this->see('Demande d\'abonnement');
 
         // Test if the abo is in the cart
-        $inCart = \Cart::instance('abonnement')->search(['id' => (int)$abo->id]);
+        $id = $abo->id;
 
-        $this->assertTrue(!empty($inCart));
+        $inCart = \Cart::instance('abonnement')->search(function ($cartItem, $rowId) use ($id) {
+            return $cartItem->id == $id;
+        });
+
+        $this->assertTrue(!$inCart->isEmpty());
     }
 
     public function testAddAboInCartAlreadyAbonnee()
@@ -69,10 +73,13 @@ class AboFrontendTest extends TestCase {
         $this->visit('pubdroit');
         $this->press('addAbo_'.$abo->id);
 
-        // Test if the abo is not in the cart
-        $inCart = \Cart::instance('abonnement')->search(['id' => (int)$abo->id]);
+        $id = $abo->id;
 
-        $this->assertTrue(empty($inCart));
+        $inCart = \Cart::instance('abonnement')->search(function ($cartItem, $rowId) use ($id) {
+            return $cartItem->id == $id;
+        });
+
+        $this->assertTrue($inCart->isEmpty());
     }
 
     public function testBuyAbo()

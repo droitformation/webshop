@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AdresseTest extends TestCase {
+class AdresseTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -13,7 +13,7 @@ class AdresseTest extends TestCase {
     {
         parent::setUp();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);

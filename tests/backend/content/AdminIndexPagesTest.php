@@ -2,9 +2,9 @@
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class AdminIndexPagesTest extends TestCase {
+class AdminIndexPagesTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -14,7 +14,7 @@ class AdminIndexPagesTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }

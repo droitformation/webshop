@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 use \Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class AbonnementAdminTest extends TestCase {
+class AbonnementAdminTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -15,7 +15,7 @@ class AbonnementAdminTest extends TestCase {
         DB::beginTransaction();
 
         //Login as admin
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);

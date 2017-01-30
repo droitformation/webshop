@@ -28,23 +28,25 @@ class AboController extends Controller {
     public function addAbo(Request $request)
 	{
         $item = $this->abo->find($request->input('abo_id'));
+        $id   = $request->input('abo_id');
 
-        $exist = \Cart::instance('abonnement')->search(['id' => (int)$request->input('abo_id')]);
+        $exist = \Cart::instance('abonnement')->search(function ($cartItem, $rowId) use ($id) {
+            return $cartItem->id == $id;
+        });
         
-        if($exist){
+        if(!$exist->isEmpty()){
             $request->session()->flash('aboAlreadyInCart', 'Abonnement déjà dans les panier');
             return redirect()->back();
         }
         
         \Cart::instance('abonnement')
-            ->associate('Abo','App\Droit\Abo\Entities')
             ->add($item->id, $item->title, 1, $item->price_cents , [
                 'image' => $item->logo,
                 'plan' => $item->plan_fr,
                 'product_id' => $item->current_product->id,
                 'product' => $item->current_product->title,
                 'shipping_cents' => $item->shipping_cents
-            ]);
+            ])->associate('App\Droit\Abo\Entities\Abo');
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 
@@ -53,7 +55,7 @@ class AboController extends Controller {
 
     public function removeAbo(Request $request){
 
-        \Cart::instance('abonnement')->remove($request->input('rowid'));
+        \Cart::instance('abonnement')->remove($request->input('rowId'));
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 
@@ -62,7 +64,7 @@ class AboController extends Controller {
 
     public function quantityAbo(Request $request){
         
-        \Cart::instance('abonnement')->update($request->input('rowid'), $request->input('qty'));
+        \Cart::instance('abonnement')->update($request->input('rowId'), $request->input('qty'));
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 

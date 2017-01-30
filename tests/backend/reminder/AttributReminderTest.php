@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class AttributReminderTest extends TestCase {
+class AttributReminderTest extends BrowserKitTest {
 
 	use DatabaseTransactions;
 
@@ -10,7 +10,7 @@ class AttributReminderTest extends TestCase {
 	{
 		parent::setUp();
 
-		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
 
 		$user->roles()->attach(1);
 		$this->actingAs($user);

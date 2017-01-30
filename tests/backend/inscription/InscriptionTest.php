@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class InscriptionTest extends TestCase {
+class InscriptionTest extends BrowserKitTest {
 
     protected $mock;
     protected $colloque;
@@ -27,7 +27,7 @@ class InscriptionTest extends TestCase {
         $this->worker = Mockery::mock('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
         $this->app->instance('App\Droit\Inscription\Worker\InscriptionWorkerInterface', $this->worker);
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }
@@ -88,7 +88,7 @@ class InscriptionTest extends TestCase {
      */
     public function testUpdateInscription()
     {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
 

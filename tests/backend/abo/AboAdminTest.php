@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 use \Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class AboAdminTest extends TestCase {
+class AboAdminTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -24,8 +24,8 @@ class AboAdminTest extends TestCase {
     
     public function testAddAbo()
     {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
-
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+        
         $user->roles()->attach(1);
         $this->actingAs($user);
 
@@ -39,7 +39,7 @@ class AboAdminTest extends TestCase {
 
     public function testGetAboProductWithAttributes()
     {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);

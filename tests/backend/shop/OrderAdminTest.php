@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class OrderAdminTest extends TestCase {
+class OrderAdminTest extends BrowserKitTest {
 
     //use WithoutMiddleware;
 
@@ -46,7 +46,7 @@ class OrderAdminTest extends TestCase {
         Session::setDefaultDriver('array');
         $this->manager = app('session');
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }

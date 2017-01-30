@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class OrderControllerTest extends TestCase {
+class OrderControllerTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -13,7 +13,7 @@ class OrderControllerTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
 	}
@@ -126,9 +126,11 @@ class OrderControllerTest extends TestCase {
 			'payement_id' => 1,
 		]);
 
-		$coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'priceshipping')->create([
+		$coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
 			'value' => 10, // -10
 			'title' => 'PHP',
+			'type'  => 'priceshipping',
+			'expire_at' => \Carbon\Carbon::now()->addDay()->toDateString()
 		]);
 
 		$order->products()->saveMany($products);

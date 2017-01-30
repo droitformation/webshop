@@ -1,52 +1,45 @@
-<?php namespace SimpleSoftwareIO\QrCode\DataTypes;
+<?php
+
+namespace SimpleSoftwareIO\QrCode\DataTypes;
+
 use BaconQrCode\Exception\InvalidArgumentException;
 
-/**
- * Simple Laravel QrCode Generator
- * A simple wrapper for the popular BaconQrCode made for Laravel.
- *
- * @link http://www.simplesoftware.io
- * @author SimpleSoftware support@simplesoftware.io
- *
- */
-
-class Email implements DataTypeInterface {
-
+class Email implements DataTypeInterface
+{
     /**
-     * The prefix of the QrCode
+     * The prefix of the QrCode.
      *
      * @var string
      */
-    private $prefix = 'mailto:';
+    protected $prefix = 'mailto:';
 
     /**
-     * The email address
+     * The email address.
      *
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
-     * The subject of the email
+     * The subject of the email.
      *
      * @var string
      */
-    private $subject;
+    protected $subject;
 
     /**
      * The body of an email.
      *
      * @var string
      */
-    private $body;
+    protected $body;
 
     /**
      * Generates the DataType Object and sets all of its properties.
      *
      * @param $arguments
-     * @return void
      */
-    public function create(Array $arguments)
+    public function create(array $arguments)
     {
         $this->setProperties($arguments);
     }
@@ -66,57 +59,64 @@ class Email implements DataTypeInterface {
      *
      * @return string
      */
-    private function buildEmailString()
+    protected function buildEmailString()
     {
-        $email = $this->prefix . $this->email;
+        $email = $this->prefix.$this->email;
 
-        if (isset($this->subject) || isset($this->body))
-        {
+        if (isset($this->subject) || isset($this->body)) {
             $data = [
                 'subject' => $this->subject,
-                'body' => $this->body
+                'body'    => $this->body,
             ];
-            $email .=  '?' . http_build_query($data);
+            $email .= '?'.http_build_query($data);
         }
 
         return $email;
     }
 
     /**
-     * Sets the objects properties
+     * Sets the objects properties.
      *
      * @param $arguments
      */
-    private function setProperties(Array $arguments)
+    protected function setProperties(array $arguments)
     {
-        if (isset($arguments[0])) $this->setEmail($arguments[0]);
-        if (isset($arguments[1])) $this->subject = $arguments[1];
-        if (isset($arguments[2])) $this->body = $arguments[2];
+        if (isset($arguments[0])) {
+            $this->setEmail($arguments[0]);
+        }
+        if (isset($arguments[1])) {
+            $this->subject = $arguments[1];
+        }
+        if (isset($arguments[2])) {
+            $this->body = $arguments[2];
+        }
     }
 
     /**
-     * Sets the email property
+     * Sets the email property.
      *
      * @param $email
      */
-    private function setEmail($email)
+    protected function setEmail($email)
     {
-        if ( $this->isValidEmail($email)) $this->email = $email;
+        if ($this->isValidEmail($email)) {
+            $this->email = $email;
+        }
     }
 
     /**
-     * Ensures an email is valid
+     * Ensures an email is valid.
      *
      * @param string $email
+     *
      * @return bool
      */
-    private function isValidEmail($email)
+    protected function isValidEmail($email)
     {
-        if ( ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException('Invalid email provided');
         }
 
         return true;
     }
-
 }

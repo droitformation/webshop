@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class OrderMakerTest extends \TestCase {
+class OrderMakerTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 

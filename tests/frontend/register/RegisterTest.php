@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class RegisterTest extends TestCase {
+class RegisterTest extends BrowserKitTest {
     
     protected $worker;
 
@@ -13,10 +13,7 @@ class RegisterTest extends TestCase {
         parent::setUp();
         DB::beginTransaction();
 
-        //$this->worker = Mockery::mock('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
-        //$this->app->instance('App\Droit\Inscription\Worker\InscriptionWorkerInterface', $this->worker);
-
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }
@@ -77,7 +74,7 @@ class RegisterTest extends TestCase {
         $this->visit('/pubdroit/colloque/'.$colloque->id);
         $this->assertViewHas('colloque');
 
-        $this->see('Vous avez des payements en attente, veuillez contacter le secrétariat: droit.formation@unine.ch');
+        $this->see('Vous avez des payements en attente');
 
     }
 }

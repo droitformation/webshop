@@ -1,15 +1,15 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class InscriptionControllerTest extends TestCase {
+class InscriptionControllerTest extends BrowserKitTest {
 
 	use DatabaseTransactions;
 
 	public function setUp()
 	{
         parent::setUp();
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);
@@ -92,7 +92,7 @@ class InscriptionControllerTest extends TestCase {
         // Create colloque
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
-        $person   = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $person   = factory(App\Droit\User\Entities\User::class)->create();
 
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create(['user_id' => $person->id, 'group_id' => null, 'colloque_id' => $colloque->id]);
 

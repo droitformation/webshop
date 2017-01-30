@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class ProfileTest extends TestCase {
+class ProfileTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -26,11 +26,14 @@ class ProfileTest extends TestCase {
 	 */
 	public function testProfilUser()
 	{
-		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create([
+			'email'    => 'cindy.leschaud@unine.ch',
+			'password' => bcrypt('cindy2')
+		]);
 		
 		$this->assertFalse(Auth::check());
 
-        $this->visit( route('login') )
+        $this->visit('login')
             ->submitForm('Envoyer', [
                 'email'    => 'cindy.leschaud@unine.ch',
                 'password' => 'cindy2',
@@ -128,7 +131,7 @@ class ProfileTest extends TestCase {
 	 */
 	public function testProfilCommandesUser()
 	{
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
         $this->actingAs($user);
 
 		$this->visit('/pubdroit/profil/orders')->seePageIs('/pubdroit/profil/orders');
@@ -140,7 +143,7 @@ class ProfileTest extends TestCase {
 	 */
 	public function testProfilInscriptionsUser()
 	{
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
         $this->actingAs($user);
         
 		$this->visit('/pubdroit/profil/colloques')->seePageIs('/pubdroit/profil/colloques');
@@ -159,7 +162,7 @@ class ProfileTest extends TestCase {
 
 		$prices = $colloque->prices->pluck('id')->all();
 
-		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
 		$this->actingAs($user);
 
 		$this->visit('/pubdroit/colloque/'.$colloque->id);

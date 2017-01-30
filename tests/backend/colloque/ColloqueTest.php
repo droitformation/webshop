@@ -1,9 +1,9 @@
 <?php
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class ColloqueTest extends TestCase {
+class ColloqueTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -14,7 +14,7 @@ class ColloqueTest extends TestCase {
         parent::setUp();
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }

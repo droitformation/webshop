@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class DisplayTest extends TestCase {
+class DisplayTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -12,7 +12,7 @@ class DisplayTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }
@@ -124,7 +124,7 @@ class DisplayTest extends TestCase {
     {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
-        $user     = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user     = factory(App\Droit\User\Entities\User::class)->create();
         
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create(['user_id' => $user->id, 'group_id' => null, 'colloque_id' => $colloque->id]);
 

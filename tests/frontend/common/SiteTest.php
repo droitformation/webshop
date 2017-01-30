@@ -1,7 +1,7 @@
 <?php
 
 
-class SiteTest extends TestCase {
+class SiteTest extends BrowserKitTest {
 
 	protected  $site;
 

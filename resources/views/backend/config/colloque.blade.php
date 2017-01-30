@@ -117,11 +117,11 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <label><strong>Si oui la facture est considérée comme non payée après</strong></label>
-                            <div class="input-group" style="width: 130px;">
+                            <label><strong>Si oui il n'est pas possible de s'inscrire si la personne possède 2 (rappels) factures ouvertes.</strong></label>
+                           {{-- <div class="input-group" style="width: 130px;">
                                 <input type="text" class="form-control" name="inscription[days]" value="{!! Registry::get('inscription.days')!!}">
                                 <span class="input-group-addon" id="basic-addon2">jours</span>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                     <div class="panel-footer">

@@ -1,8 +1,12 @@
 <?php
 
-class InscriptionWorkerTest extends TestCase {
+use Laravel\BrowserKitTesting\DatabaseTransactions;
+
+class InscriptionWorkerTest extends BrowserKitTest {
 
     protected $generator;
+    
+    use DatabaseTransactions;
 
     public function setUp()
     {
@@ -13,7 +17,7 @@ class InscriptionWorkerTest extends TestCase {
         $this->generator = Mockery::mock('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->app->instance('App\Droit\Generate\Pdf\PdfGeneratorInterface', $this->generator);
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }

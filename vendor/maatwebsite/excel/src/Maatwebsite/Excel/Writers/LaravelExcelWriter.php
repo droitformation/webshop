@@ -4,11 +4,11 @@ use Closure;
 use Carbon\Carbon;
 use PHPExcel_IOFactory;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use Maatwebsite\Excel\Classes\FormatIdentifier;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Exceptions\LaravelExcelException;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 /**
  *
@@ -151,7 +151,7 @@ class LaravelExcelWriter {
     }
 
     /**
-     * Get the title
+     * Get the filename
      * @return string
      */
     public function getFileName()
@@ -166,7 +166,7 @@ class LaravelExcelWriter {
      * @param  array  $mergeData
      * @return  LaravelExcelWriter
      */
-    public function shareView($view, $data = array(), $mergeData = array())
+    public function shareView($view, $data = [], $mergeData = [])
     {
         // Get the parser
         $this->getParser();
@@ -185,7 +185,7 @@ class LaravelExcelWriter {
      */
     public function setView()
     {
-        return call_user_func_array(array($this, 'shareView'), func_get_args());
+        return call_user_func_array([$this, 'shareView'], func_get_args());
     }
 
     /**
@@ -194,7 +194,7 @@ class LaravelExcelWriter {
      */
     public function loadView()
     {
-        return call_user_func_array(array($this, 'shareView'), func_get_args());
+        return call_user_func_array([$this, 'shareView'], func_get_args());
     }
 
     /**
@@ -224,7 +224,7 @@ class LaravelExcelWriter {
 
         // Autosize columns when no user didn't change anything about column sizing
         if (!$this->sheet->hasFixedSizeColumns())
-            $this->sheet->setAutosize(Config::get('excel.export.autosize', false));
+            $this->sheet->setAutosize(config('excel.export.autosize', false));
 
         // Parse the sheet
         $this->sheet->parsed();
@@ -251,7 +251,7 @@ class LaravelExcelWriter {
      * @param array  $headers
      * @throws LaravelExcelException
      */
-    public function export($ext = 'xls', Array $headers = array())
+    public function export($ext = 'xls', Array $headers = [])
     {
         // Set the extension
         $this->ext = $ext;
@@ -268,7 +268,7 @@ class LaravelExcelWriter {
      * @param       $ext
      * @param array $headers
      */
-    public function convert($ext, Array $headers = array())
+    public function convert($ext, Array $headers = [])
     {
         $this->export($ext, $headers);
     }
@@ -278,7 +278,7 @@ class LaravelExcelWriter {
      * @param  string $ext
      * @param array   $headers
      */
-    public function download($ext = 'xls', Array $headers = array())
+    public function download($ext = 'xls', Array $headers = [])
     {
         $this->export($ext, $headers);
     }
@@ -314,19 +314,19 @@ class LaravelExcelWriter {
      * @param array $headers
      * @throws LaravelExcelException
      */
-    protected function _download(Array $headers = array())
+    protected function _download(Array $headers = [])
     {
         // Set the headers
         $this->_setHeaders(
             $headers,
-            array(
+            [
                 'Content-Type'        => $this->contentType,
                 'Content-Disposition' => 'attachment; filename="' . $this->filename . '.' . $this->ext . '"',
                 'Expires'             => 'Mon, 26 Jul 1997 05:00:00 GMT', // Date in the past
                 'Last-Modified'       => Carbon::now()->format('D, d M Y H:i:s'),
                 'Cache-Control'       => 'cache, must-revalidate',
                 'Pragma'              => 'public'
-            )
+            ]
         );
 
         // Check if writer isset
@@ -369,13 +369,13 @@ class LaravelExcelWriter {
         if ($this->returnInfo($returnInfo))
         {
             // Send back information about the stored file
-            return array(
+            return [
                 'full'  => $toStore,
                 'path'  => $this->storagePath,
                 'file'  => $this->filename . '.' . $this->ext,
                 'title' => $this->filename,
                 'ext'   => $this->ext
-            );
+            ];
         }
 
         // Return itself
@@ -389,7 +389,7 @@ class LaravelExcelWriter {
      */
     public function returnInfo($returnInfo = false)
     {
-        return $returnInfo ? $returnInfo : Config::get('excel.export.store.returnInfo', false);
+        return $returnInfo ? $returnInfo : config('excel.export.store.returnInfo', false);
     }
 
     /**
@@ -411,6 +411,23 @@ class LaravelExcelWriter {
      */
     protected function _render()
     {
+        // Preserve any existing active sheet index
+        $activeIndex = $this->getExcel()->getActiveSheetIndex();
+
+        //Fix borders for merged cells
+        foreach($this->getAllSheets() as $sheet){
+
+            foreach($sheet->getMergeCells() as $cells){
+
+                $style = $sheet->getStyle(explode(':', $cells)[0]);
+
+                $sheet->duplicateStyle($style, $cells);
+            }
+        }
+
+        // Restore active sheet index.
+        $this->setActiveSheetIndex($activeIndex);
+
         // There should be enough sheets to continue rendering
         if ($this->excel->getSheetCount() < 0)
             throw new LaravelExcelException('[ERROR] Aborting spreadsheet render: no sheets were created.');
@@ -426,7 +443,7 @@ class LaravelExcelWriter {
     }
 
     /**
-     * Get the view parser
+     * Get the excel object
      * @return PHPExcel
      */
     public function getExcel()
@@ -455,6 +472,18 @@ class LaravelExcelWriter {
     {
         return $this->sheet;
     }
+    
+    /**
+     * Set the active sheet index
+     * @param integer $index
+     * @return LaravelExcelWriter
+     */
+    public function setActiveSheetIndex($index)
+    {
+        $this->sheet = $this->excel->setActiveSheetIndex($index);
+
+        return $this;
+    }
 
     /**
      * Set attributes
@@ -470,7 +499,7 @@ class LaravelExcelWriter {
         if ($this->excel->isChangeableProperty($setter))
         {
             // Set the properties
-            call_user_func_array(array($this->excel->getProperties(), $setter), $params);
+            call_user_func_array([$this->excel->getProperties(), $setter], $params);
         }
     }
 
@@ -508,9 +537,10 @@ class LaravelExcelWriter {
         // Set CSV delimiter
         if ($this->format == 'CSV')
         {
-            $this->writer->setDelimiter(Config::get('excel.csv.delimiter', ','));
-            $this->writer->setEnclosure(Config::get('excel.csv.enclosure', '"'));
-            $this->writer->setLineEnding(Config::get('excel::csv.line_ending', "\r\n"));
+            $this->writer->setDelimiter(config('excel.csv.delimiter', ','));
+            $this->writer->setEnclosure(config('excel.csv.enclosure', '"'));
+            $this->writer->setLineEnding(config('excel.csv.line_ending', "\r\n"));
+            $this->writer->setUseBOM(config('excel.csv.use_bom', false));
         }
 
         // Set CSV delimiter
@@ -520,10 +550,10 @@ class LaravelExcelWriter {
         }
 
         // Calculation settings
-        $this->writer->setPreCalculateFormulas(Config::get('excel.export.calculate', false));
+        $this->writer->setPreCalculateFormulas(config('excel.export.calculate', false));
 
         // Include Charts
-        $this->writer->setIncludeCharts(Config::get('excel.export.includeCharts', false));
+        $this->writer->setIncludeCharts(config('excel.export.includeCharts', false));
 
         return $this->writer;
     }
@@ -535,8 +565,8 @@ class LaravelExcelWriter {
     protected function setPdfRenderer()
     {
         // Get the driver name
-        $driver = Config::get('excel.export.pdf.driver');
-        $path = Config::get('excel.export.pdf.drivers.' . $driver . '.path');
+        $driver = config('excel.export.pdf.driver');
+        $path = config('excel.export.pdf.drivers.' . $driver . '.path');
 
         // Disable autoloading for dompdf
         if(! defined("DOMPDF_ENABLE_AUTOLOAD")){
@@ -553,7 +583,7 @@ class LaravelExcelWriter {
      * @param $headers
      * @throws LaravelExcelException
      */
-    protected function _setHeaders(Array $headers = array(), Array $default)
+    protected function _setHeaders(Array $headers = [], Array $default)
     {
         if (headers_sent()) throw new LaravelExcelException('[ERROR]: Headers already sent');
 
@@ -574,14 +604,19 @@ class LaravelExcelWriter {
     protected function _setStoragePath($path = false)
     {
         // Get the default path
-        $path = $path ? $path : Config::get('excel.export.store.path', storage_path($this->storagePath));
+        $path = $path ? $path : config('excel.export.store.path', storage_path($this->storagePath));
 
         // Trim of slashes, to makes sure we won't add them double
         $this->storagePath = rtrim($path, '/');
 
         // Make sure the storage path exists
-        if (!$this->filesystem->isWritable($this->storagePath))
+        if (!$this->filesystem->exists($this->storagePath)) {
             $this->filesystem->makeDirectory($this->storagePath, 0777, true);
+        }
+
+        if (!$this->filesystem->isWritable($this->storagePath)) {
+            throw new LaravelExcelException("Permission denied to the storage path");
+        }
     }
 
     /**
@@ -614,7 +649,7 @@ class LaravelExcelWriter {
         elseif (method_exists($this->excel, $method))
         {
             // Call the method from the excel object with the given params
-            $return = call_user_func_array(array($this->excel, $method), $params);
+            $return = call_user_func_array([$this->excel, $method], $params);
 
             return $return ? $return : $this;
         }

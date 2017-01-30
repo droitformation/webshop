@@ -1,14 +1,13 @@
 <?PHP namespace App\Droit\User\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable {
 
-	use Billable, SoftDeletes, Notifiable;
+	use  SoftDeletes, Notifiable;
 
 	/**
 	 * The database table used by the model.

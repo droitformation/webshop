@@ -1,8 +1,6 @@
 <?php
 
-
-class PubdroitTest extends TestCase {
-
+class PubdroitTest extends BrowserKitTest {
 	
 	public function setUp()
 	{

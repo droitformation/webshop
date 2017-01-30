@@ -1,9 +1,9 @@
 <?php
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class PriceTest extends TestCase {
+class PriceTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -13,7 +13,7 @@ class PriceTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }

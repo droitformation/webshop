@@ -267,7 +267,7 @@ $factory->define(App\Droit\Shop\Order\Entities\Order::class, function (Faker\Gen
     ];
 });
 
-$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'one', function (Faker\Generator $faker) {
+$factory->define(App\Droit\Shop\Coupon\Entities\Coupon::class, function (Faker\Generator $faker) {
 
     $tomorrow = \Carbon\Carbon::now()->addDay();
 

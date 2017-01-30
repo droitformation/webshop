@@ -1,12 +1,16 @@
 <?php
 
-class CartWorkerTest extends TestCase {
+use Laravel\BrowserKitTesting\DatabaseTransactions;
+
+class CartWorkerTest extends BrowserKitTest {
     
     protected $shipping;
     protected $coupon;
     protected $product;
     protected $abo;
     protected $worker;
+    
+    use DatabaseTransactions;
     
     public function setUp()
     {
@@ -28,7 +32,7 @@ class CartWorkerTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }
@@ -51,10 +55,13 @@ class CartWorkerTest extends TestCase {
 	public function testGetWeight()
 	{
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-        
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 2000]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 2000]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(55, 'Uno', 1, '12' , array('weight' => 155));
-        \Cart::instance('shop')->add(56, 'Duo', 1, '34' , array('weight' => 25));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '12' , array('weight' => 155))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product2->id, 'Duo', 1, '34' , array('weight' => 25))->associate('App\Droit\Shop\Product\Entities\Product');
 
 		$result = $worker->getTotalWeight();
 
@@ -68,25 +75,19 @@ class CartWorkerTest extends TestCase {
     {
         $worker  = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
         
-        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['id' => 11 , 'price' => 2000]);
-        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make([
-                'id'         => 1,
-                'value'      => 10, // 10% coupon
-                'type'       => 'product',
-                'title'      => 'test',
-                'expire_at'  => \Carbon\Carbon::now()->addDay()
-            ]
-        );
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 2000]);
+        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create();
         
-        $coupon->setRelation('products', new Illuminate\Database\Eloquent\Collection([$product]));
+        $coupon->products()->attach($product);
         
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(11, 'Uno', 1, '20' , array('weight' => 1000)); // price 20
+        \Cart::instance('shop')->add($product->id, 'Uno', 1, '20' , array('weight' => 1000))
+            ->associate('App\Droit\Shop\Product\Entities\Product'); // price 20
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
         
         $worker->setCoupon($coupon->title)->applyCoupon();
-        
+     
         $total = \Cart::instance('shop')->total();
 
         // Total 20 - (20*0.1) = 18
@@ -100,8 +101,7 @@ class CartWorkerTest extends TestCase {
     {
         $worker  = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
-        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make([
-                'id'         => 1,
+        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
                 'value'      => 10, // 10% coupon
                 'type'       => 'global',
                 'title'      => 'test',
@@ -109,8 +109,10 @@ class CartWorkerTest extends TestCase {
             ]
         );
 
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 2000]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(11, 'Uno', 1, '30' , array('weight' => 1000)); // price 20
+        \Cart::instance('shop')->add($product->id, 'Uno', 1, '30' , array('weight' => 1000))->associate('App\Droit\Shop\Product\Entities\Product');
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
@@ -129,10 +131,9 @@ class CartWorkerTest extends TestCase {
     public function testApplyCouponAndResetCart()
     {
         $worker  = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['id' => 11 , 'price' => 3000]);
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 3000]);
 
-        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make([
-                'id'         => 1,
+        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->make([
                 'value'      => 10, // 10% coupon
                 'type'       => 'global',
                 'title'      => 'test',
@@ -141,7 +142,7 @@ class CartWorkerTest extends TestCase {
         );
 
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(11, 'Uno', 1, '30' , array('weight' => 1000)); // price 20
+        \Cart::instance('shop')->add($product->id, 'Uno', 1, '30' , array('weight' => 1000))->associate('App\Droit\Shop\Product\Entities\Product');
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
         $this->product->shouldReceive('find')->once()->andReturn($product);
@@ -168,18 +169,25 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1200]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 3400]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(55, 'Uno', 1, '12' , array('weight' => 155));
-        \Cart::instance('shop')->add(56, 'Duo', 1, '34' , array('weight' => 25));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '12' , array('weight' => 155))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product2->id, 'Duo', 1, '34' , array('weight' => 25))->associate('App\Droit\Shop\Product\Entities\Product');
 
-        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make();
-        $threecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'three')->make();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'      => '0',
+            'type'       => 'shipping',
+            'title'      => 'freeshipping',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()
+        ]);
 
-        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($threecoupon);
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
         $worker->getTotalWeight();
 
-        $worker->setCoupon($threecoupon->title)->applyCoupon();
+        $worker->setCoupon($coupon->title)->applyCoupon();
         $worker->getTotalWeight()->setShipping();
 
         $this->assertEquals(0, $worker->orderShipping->price);
@@ -192,9 +200,12 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1200]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 3400]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(55, 'Uno', 1, '12' , array('weight' => 155));
-        \Cart::instance('shop')->add(56, 'Duo', 1, '34' , array('weight' => 25));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '12' , array('weight' => 155))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product2->id, 'Duo', 1, '34' , array('weight' => 25))->associate('App\Droit\Shop\Product\Entities\Product');
 
         $worker->getTotalWeight();
         $worker->setShipping();
@@ -209,10 +220,14 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1200]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 3400]);
+        $product3 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4400]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(55, 'Uno', 1, '12' , array('weight' => 500));
-        \Cart::instance('shop')->add(56, 'Duo', 1, '34' , array('weight' => 800));
-        \Cart::instance('shop')->add(58, 'Duo', 1, '44' , array('weight' => 800));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '12' , array('weight' => 500))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product2->id, 'Duo', 1, '34' , array('weight' => 800))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product3->id, 'Duo', 1, '44' , array('weight' => 800))->associate('App\Droit\Shop\Product\Entities\Product');
 
         $worker->getTotalWeight();
         $worker->setShipping();
@@ -227,11 +242,16 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1200]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 3400]);
+        $product3 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4400]);
+        $product4 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4400]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(65, 'Uno', 1, '12' , array('weight' => 1500));
-        \Cart::instance('shop')->add(76, 'Duo', 1, '34' , array('weight' => 1500));
-        \Cart::instance('shop')->add(88, 'tres', 1, '44' , array('weight' => 2000));
-        \Cart::instance('shop')->add(89, 'cuatro', 1, '44' , array('weight' => 5000));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '12' , array('weight' => 1500))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product2->id, 'Duo', 1, '34' , array('weight' => 1500))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product3->id, 'tres', 1, '44' , array('weight' => 2000))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product4->id, 'cuatro', 1, '44' , array('weight' => 5000))->associate('App\Droit\Shop\Product\Entities\Product');
 
         $worker->getTotalWeight();
         $worker->setShipping();
@@ -246,11 +266,16 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1200]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 3400]);
+        $product3 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4400]);
+        $product4 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4400]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(65, 'Uno', 1, '12' , array('weight' => 5500));
-        \Cart::instance('shop')->add(76, 'Duo', 1, '34' , array('weight' => 5500));
-        \Cart::instance('shop')->add(88, 'tres', 1, '44' , array('weight' => 4000));
-        \Cart::instance('shop')->add(89, 'cuatro', 1, '44' , array('weight' => 5000));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '12' , array('weight' => 5500))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product2->id, 'Duo', 1, '34' , array('weight' => 5500))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product3->id, 'tres', 1, '44' , array('weight' => 4000))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product4->id, 'cuatro', 1, '44' , array('weight' => 5000))->associate('App\Droit\Shop\Product\Entities\Product');
 
         $worker->getTotalWeight()->setShipping();
 
@@ -264,12 +289,19 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1200]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 3400]);
+        $product3 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4400]);
+        $product4 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4300]);
+        $product5 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 4200]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(65, 'Uno', 1, '12' , array('weight' => 5500));
-        \Cart::instance('shop')->add(76, 'Duo', 1, '34' , array('weight' => 5500));
-        \Cart::instance('shop')->add(88, 'tres', 1, '44' , array('weight' => 4000));
-        \Cart::instance('shop')->add(89, 'cuatro', 1, '43' , array('weight' => 5000));
-        \Cart::instance('shop')->add(90, 'cinquo', 1, '42' , array('weight' => 10000));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '12' , array('weight' => 5500))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product2->id, 'Duo', 1, '34' , array('weight' => 5500))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product3->id, 'tres', 1, '44' , array('weight' => 4000))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product4->id, 'cuatro', 1, '43' , array('weight' => 5000))->associate('App\Droit\Shop\Product\Entities\Product');
+        \Cart::instance('shop')->add($product5->id, 'cinquo', 1, '42' , array('weight' => 10000))->associate('App\Droit\Shop\Product\Entities\Product');
 
         $worker->getTotalWeight();
         $worker->setShipping();
@@ -284,16 +316,18 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+
         \Cart::instance('shop');
-        \Cart::instance('shop')->add(1, 'Uno', 1, '1000' , array('weight' => 500));
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '1000' , array('weight' => 500))->associate('App\Droit\Shop\Product\Entities\Product');
 
-        $onecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create();
 
-        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($onecoupon);
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
-        $worker->setCoupon($onecoupon->title);
+        $worker->setCoupon($coupon->title);
 
-        $this->assertEquals($worker->hasCoupon->id, $onecoupon->id);
+        $this->assertEquals($worker->hasCoupon->id, $coupon->id);
 
     }
 
@@ -304,14 +338,22 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
-        \Cart::instance('shop');
-        \Cart::instance('shop')->add(1, 'Uno', 1, '1000' , array('weight' => 500));
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
 
-        $onecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
+        \Cart::instance('shop');
+        \Cart::instance('shop')->add($product1->id, 'Uno', 1, '1000' , array('weight' => 500))->associate('App\Droit\Shop\Product\Entities\Product');
+
+        $coupon  = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->make([
+                'value'      => 10, // 10% coupon
+                'type'       => 'global',
+                'title'      => 'test',
+                'expire_at'  => \Carbon\Carbon::now()->addDay()
+            ]
+        );
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn(false);
 
-        $worker->setCoupon($onecoupon->title);
+        $worker->setCoupon($coupon->title);
     }
 
     /**
@@ -320,19 +362,19 @@ class CartWorkerTest extends TestCase {
     public function testSearchItem()
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
-            'id' => 1,
-            'title' => 'Titre',
-            'price' => '1200',
+        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
+            'title'  => 'Titre',
+            'price'  => '1200',
             'weight' => '2000'
         ]);
 
         \Cart::instance('shop');
-        \Cart::instance('shop')->add($oneproduct->id, $oneproduct->title, 1, $oneproduct->price , array('weight' => $oneproduct->weight));
+        \Cart::instance('shop')->add($product->id, $product->title, 1, $product->price, ['weight' => $product->weight])
+            ->associate('App\Droit\Shop\Product\Entities\Product');
 
-        $found = $worker->searchItem($oneproduct->id);
+        $found = $worker->searchItem($product->id);
 
-        $this->assertEquals($found[0], \Cart::instance('shop')->content()->first()->rowid);
+        $this->assertEquals($found->first()->rowId, \Cart::instance('shop')->content()->first()->rowId);
 
     }
 
@@ -343,23 +385,29 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
-        $oneproduct  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
-            'id' => 1,
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
             'title'  => 'Titre',
             'price'  => 1000,
             'weight' => '2000'
         ]);
 
-        $twocoupon   = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'two')->make();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'     => '20',
+            'type'      => 'product',
+            'title'     => 'second',
+            'expire_at' => \Carbon\Carbon::now()->addDay()
+        ]);
+
+        $coupon->products()->attach($product->id);
         
         \Cart::instance('shop');
-        \Cart::instance('shop')->add($oneproduct->id, $oneproduct->title, 1, $oneproduct->price , array('weight' => $oneproduct->weight));
+        \Cart::instance('shop')->add($product->id, $product->title, 1, $product->price, ['weight' => $product->weight]);
 
-        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($twocoupon);
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
-        $worker->setCoupon($twocoupon->title)->applyCoupon();
+        $worker->setCoupon($coupon->title)->applyCoupon();
 
-        $price = $worker->calculPriceWithCoupon($oneproduct,'percent');
+        $price = $worker->calculPriceWithCoupon($product,'percent');
 
         // Product price => 10.00
         // Coupon for product value 20%
@@ -374,23 +422,27 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
-        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
-            'id'     => 1,
+        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
             'title'  => 'Titre',
             'price'  => 5000,
             'weight' => '2000'
         ]);
 
-        $price = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'price')->make();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'      => '20',
+            'type'       => 'price',
+            'title'      => 'Price minus',
+            'expire_at' => \Carbon\Carbon::now()->addDay()
+        ]);
 
-        $price->products = collect([$product]);
+        $coupon->products()->attach($product->id);
 
         \Cart::instance('shop')->add($product->id, $product->title, 1, $product->price_cents, ['weight' => $product->weight]);
 
-        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($price);
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
-        $worker->setCoupon($price->title)->applyCoupon();
-        $worker->calculPriceWithCoupon($price,'minus');
+        $worker->setCoupon($coupon->title)->applyCoupon();
+        $worker->calculPriceWithCoupon($coupon,'minus');
 
         // Product price => 50.00
         // Coupon for product value -20
@@ -403,14 +455,18 @@ class CartWorkerTest extends TestCase {
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
 
-        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make([
-            'id'     => 1,
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
             'title'  => 'Titre',
             'price'  => 5000,
             'weight' => '2000'
         ]);
 
-        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'priceshipping')->make();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'      => null,
+            'type'       => 'priceshipping',
+            'title'      => 'Price shipping',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()
+        ]);
 
         \Cart::instance('shop')->add($product->id, $product->title, 1, $product->price_cents, ['weight' => $product->weight]);
 
@@ -428,16 +484,27 @@ class CartWorkerTest extends TestCase {
     public function testCalculPriceWithSecondCoupon()
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-        $onecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
-        
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'      => 10, // 10% coupon
+            'type'       => 'product',
+            'title'      => 'test',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()
+        ]);
+
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
+            'title'  => 'Titre',
+            'price'  => 1000,
+            'weight' => '2000'
+        ]);
+
+        $coupon->products()->attach($product->id);
+
         \Cart::instance('shop');
+        \Cart::instance('shop')->add($product->id, 'Dos', 1, '10.00', ['weight' => 600]);
 
-        // Has to match the factory product
-        \Cart::instance('shop')->add(100, 'Dos', 1, '10.00' , array('weight' => 600));
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
-        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($onecoupon);
-
-        $worker->setCoupon($onecoupon->title)->applyCoupon();
+        $worker->setCoupon($coupon->title)->applyCoupon();
 
         // Product price => 10.00
         // Coupon for product value 10%
@@ -452,20 +519,30 @@ class CartWorkerTest extends TestCase {
     public function testCalculPriceWithFirstAndSecondCoupon()
     {
         $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorkerInterface');
-        $onecoupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'one')->make();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'      => 10, // 10% coupon
+            'type'       => 'product',
+            'title'      => 'test',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()
+        ]);
+
+        $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
+            'title'  => 'Titre',
+            'price'  => 1000,
+            'weight' => '2000'
+        ]);
+
+        $coupon->products()->attach($product->id);
         
         \Cart::instance('shop');
+        \Cart::instance('shop')->add($product->id, 'Dos', 1, '10.00', ['weight' => 600]);
 
-        // Has to match the factory product
-        \Cart::instance('shop')->add(100, 'Dos', 1, '10.00' , array('weight' => 600));
+        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($coupon);
 
-        $this->coupon->shouldReceive('findByTitle')->once()->andReturn($onecoupon);
-
-        $worker->setCoupon($onecoupon->title)->applyCoupon();
+        $worker->setCoupon($coupon->title)->applyCoupon();
 
         // Product price => 10.00
         // Coupon for product value 10%
-
         $this->assertEquals(9, \Cart::total());
 
         // Add free shipping later for example via admin
@@ -473,7 +550,5 @@ class CartWorkerTest extends TestCase {
         $worker->setShipping();
 
         $this->assertEquals(0, $worker->orderShipping->price);
-
     }
-    
 }

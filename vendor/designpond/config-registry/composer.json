@@ -1,0 +1,27 @@
+{
+    "name": "designpond/config-registry",
+    "description": "Laravel registry manager",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cindy Leschaud",
+            "email": "cindy.leschaud@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "~5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "DesignPond\\Registry\\": "src/DesignPond/Registry"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -37,7 +37,7 @@
                                 <img style="max-height:80px;" src="{{ asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
                             </td>
                             <td width="40%" align="left"><a href="{{ url('pubdroit/product/'.$item->id) }}">{{ $item->name }}</a></td>
-                            <td align="center" width="15%">{{  $item->product->price_cents }} CHF</td>
+                            <td align="center" width="15%">{{  $item->model->price_cents }} CHF</td>
                             <td align="center" width="15%">{{ $item->qty }}</td>
                             <td align="right" width="15%">{{ number_format((float)($item->price * $item->qty), 2, '.', '') }} CHF</td>
                         </tr>

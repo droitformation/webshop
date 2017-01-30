@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class ReminderTest extends TestCase {
+class ReminderTest extends BrowserKitTest {
 
 	use DatabaseTransactions;
 
@@ -10,7 +10,7 @@ class ReminderTest extends TestCase {
 	{
 		parent::setUp();
 
-		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
 
 		$user->roles()->attach(1);
 		$this->actingAs($user);
@@ -112,7 +112,7 @@ class ReminderTest extends TestCase {
 
     public function testReminderNoDates()
     {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);
@@ -144,7 +144,7 @@ class ReminderTest extends TestCase {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);

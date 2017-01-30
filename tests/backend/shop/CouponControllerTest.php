@@ -2,10 +2,12 @@
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class CouponControllerTest extends TestCase {
+class CouponControllerTest extends BrowserKitTest {
 
+    use DatabaseTransactions;
+    
     protected $coupon;
     protected $product;
 
@@ -15,7 +17,7 @@ class CouponControllerTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }
@@ -93,7 +95,12 @@ class CouponControllerTest extends TestCase {
      */
     public function testCouponUpdate()
     {
-        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'price')->create();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'      => '20',
+            'type'       => 'price',
+            'title'      => 'Price minus',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()->toDateString()
+        ]);
 
         $this->visit('admin/coupon/'.$coupon->id);
 
@@ -113,7 +120,12 @@ class CouponControllerTest extends TestCase {
      */
     public function testCouponDelete()
     {
-        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class,'price')->create();
+        $coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'      => '20',
+            'type'       => 'price',
+            'title'      => 'Price minus',
+            'expire_at'  => \Carbon\Carbon::now()->addDay()->toDateString()
+        ]);
 
         $response = $this->call('DELETE','admin/coupon/'.$coupon->id);
 

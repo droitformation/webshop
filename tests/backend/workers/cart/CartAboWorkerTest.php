@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class CartAboWorkerTest extends TestCase {
+class CartAboWorkerTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -54,18 +54,16 @@ class CartAboWorkerTest extends TestCase {
 
         // Shipping => 10.00
         \Cart::instance('shop')
-            ->associate('Product','App\Droit\Shop\Product\Entities')
-            ->add($product->id, $product->title, 1, 50.00 , array('image' => 'youhou.jpg','weight' => 200));
+            ->add($product->id, $product->title, 1, 50.00 , array('image' => 'youhou.jpg','weight' => 200))->associate('App\Droit\Shop\Product\Entities\Product');
 
         \Cart::instance('abonnement')
-            ->associate('Abo','App\Droit\Abo\Entities')
             ->add($abo->id, $abo->title, 1, 150.00 , [
                 'image'          => 'oho.jpg',
                 'plan'           => $abo->plan_fr,
                 'product_id'     => $abo->current_product->id,
                 'product'        => $abo->current_product->title,
                 'shipping_cents' => 15.00
-            ]);
+            ])->associate('App\Droit\Abo\Entities\Abo');
 
         $price    = $worker->totalCart();
         $count    = $worker->countCart();

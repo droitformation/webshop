@@ -35,11 +35,15 @@ class CartController extends Controller {
 
         // is there enough stock to add this product?
         // Get qty of product already in cart
-        $rowId = \Cart::instance('shop')->search(['id' => (int)$request->input('product_id')]);
+        $id = $request->input('product_id');
 
-        if($rowId)
+        $rowId = \Cart::instance('shop')->search(function ($cartItem, $id) {
+            return $cartItem->id === $id;
+        });
+
+        if(!$rowId->isEmpty())
         {
-            $already = \Cart::instance('shop')->get($rowId[0]);
+            $already = \Cart::instance('shop')->get($rowId->first()->rowId);
             $qty     = $already ? $already->qty + 1 : $qty;
         }
 
@@ -52,8 +56,8 @@ class CartController extends Controller {
         }
 
         \Cart::instance('shop')
-            ->associate('Product','App\Droit\Shop\Product\Entities')
-            ->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight));
+            ->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight))
+            ->associate('App\Droit\Shop\Product\Entities\Product');
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 
@@ -62,7 +66,7 @@ class CartController extends Controller {
 
     public function removeProduct(Request $request){
 
-        \Cart::instance('shop')->remove($request->input('rowid'));
+        \Cart::instance('shop')->remove($request->input('rowId'));
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 
@@ -71,7 +75,7 @@ class CartController extends Controller {
 
     public function quantityProduct(Request $request){
         
-        \Cart::instance('shop')->update($request->input('rowid'), $request->input('qty'));
+        \Cart::instance('shop')->update($request->input('rowId'), $request->input('qty'));
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 

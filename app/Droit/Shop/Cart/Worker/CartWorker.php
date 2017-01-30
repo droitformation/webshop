@@ -195,9 +195,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
              {
                  // search if product eligible for discount is in cart
                  $rowId = $this->searchItem($product->id);
-
-                 if(!empty($rowId))
+        
+                 if(!$rowId->isEmpty())
                  {
+                     $rowId = $rowId->first();
+
                      if($type == 'product')
                      {
                          $newprice = $this->calculPriceWithCoupon($product,'percent');
@@ -212,7 +214,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
                          }
                      }
 
-                     \Cart::instance('shop')->update($rowId[0], array('price' => $newprice));
+                     \Cart::instance('shop')->update($rowId->rowId, array('price' => $newprice));
                  }
              }
          }
@@ -231,7 +233,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          {
              $newprice = $item->price - ($item->price * ($this->hasCoupon->value)/100);
 
-             \Cart::instance('shop')->update($item->rowid, array('price' => $newprice));
+             \Cart::instance('shop')->update($item->rowId, array('price' => $newprice));
          }
      }
 
@@ -250,7 +252,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
              if($product)
              {
-                 \Cart::instance('shop')->update($item->rowid, array('price' => $product->price_cents));
+                 \Cart::instance('shop')->update($item->rowId, array('price' => $product->price_cents));
              }
          }
      }
@@ -279,7 +281,9 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      */
      public function searchItem($id)
      {
-        return \Cart::instance('shop')->search(['id' => $id]);
+         return \Cart::instance('shop')->search(function ($cartItem, $rowId) use ($id) {
+             return $cartItem->id == (int)$id;
+         });
      }
 
      /**
@@ -388,11 +392,13 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
      public function removeById($instance,$id)
      {
-         $toRemove = \Cart::instance($instance)->search(['id' => $id]);
+         $toRemove = \Cart::instance($instance)->search(function ($cartItem, $id) {
+             return $cartItem->id === $id;
+         });
 
-         if(!empty($toRemove))
+         if(!$toRemove->isEmpty())
          {
-             foreach ($toRemove as $remove)
+             foreach($toRemove as $remove)
              {
                  \Cart::instance($instance)->remove($remove);
              }

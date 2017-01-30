@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
-class UserTest extends TestCase {
+class UserTest extends BrowserKitTest {
 
     use DatabaseTransactions;
 
@@ -26,7 +26,7 @@ class UserTest extends TestCase {
 
     public function testCreateNewUser()
     {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+         $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);
@@ -52,11 +52,11 @@ class UserTest extends TestCase {
 
     public function testDeleteThenCreateUserWithSameEmail()
     {
-        $admin = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $admin = factory(App\Droit\User\Entities\User::class)->create();
         $admin->roles()->attach(1);
         $this->actingAs($admin);
 
-        $user = factory(App\Droit\User\Entities\User::class,'user')->create([
+        $user = factory(App\Droit\User\Entities\User::class)->create([
             'email' => 'terry.jonesy@domain.ch'
         ]);
 
@@ -88,7 +88,7 @@ class UserTest extends TestCase {
 
     public function testUpdateUser()
     {
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
 

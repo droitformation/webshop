@@ -159,13 +159,12 @@ return [
 		Illuminate\Notifications\NotificationServiceProvider::class,
 
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-        Torann\Registry\RegistryServiceProvider::class,
+		DesignPond\Registry\RegistryServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Laravel\Cashier\CashierServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 		Vinkla\Alert\AlertServiceProvider::class,
@@ -246,7 +245,7 @@ return [
         'Excel'      => Maatwebsite\Excel\Facades\Excel::class,
         'PDF'        => Barryvdh\DomPDF\Facade::class,
         'QrCode'     => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-        'Registry'   => Torann\Registry\Facades\Registry::class,
+		'Registry' => DesignPond\Registry\Facades\Registry::class,
 		'Alert'      => Vinkla\Alert\Facades\Alert::class
 	],
 

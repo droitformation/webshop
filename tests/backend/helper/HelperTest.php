@@ -1,6 +1,6 @@
 <?php
 
-class HelperTest extends TestCase {
+class HelperTest extends BrowserKitTest {
 
     protected $format;
     protected $helper;

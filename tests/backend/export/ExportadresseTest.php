@@ -1,6 +1,8 @@
 <?php
 
-class ExportadresseTest extends TestCase {
+use Laravel\BrowserKitTesting\DatabaseTransactions;
+
+class ExportadresseTest extends BrowserKitTest {
 
     protected $mock;
     protected $colloque;
@@ -14,7 +16,7 @@ class ExportadresseTest extends TestCase {
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+        $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }

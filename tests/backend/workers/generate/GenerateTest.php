@@ -1,14 +1,18 @@
 <?php
 
-class GenerateTest extends TestCase {
+use Laravel\BrowserKitTesting\DatabaseTransactions;
 
+class GenerateTest extends BrowserKitTest {
+
+	use DatabaseTransactions;
+	
 	public function setUp()
 	{
 		parent::setUp();
 
 		DB::beginTransaction();
 
-		$user = factory(App\Droit\User\Entities\User::class,'admin')->create();
+		$user = factory(App\Droit\User\Entities\User::class)->create();
 		$user->roles()->attach(1);
 		$this->actingAs($user);
 	}
