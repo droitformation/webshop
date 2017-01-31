@@ -106,6 +106,10 @@ class BailController extends Controller
             $data['order']     = $this->seminaire->categories();
             $data['auteurs']   = $this->seminaire->authors();
             $data['annees']    = $this->seminaire->years();
+
+            echo '<pre>';
+            print_r($data['doctrines']);
+            echo '</pre>';exit();
         }
 
         if($slug == 'newsletter')

@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\BrowserKitTesting\DatabaseTransactions;
 use \Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Support\Facades\Mail;
 
 class AboFrontendTest extends BrowserKitTest {
 
@@ -97,6 +98,8 @@ class AboFrontendTest extends BrowserKitTest {
         $this->visit('pubdroit');
         $this->press('addAbo_'.$abo->id);
         $this->seePageIs('pubdroit');
+
+        Mail::fake();
 
         // See abo is on cart page
         $this->visit('pubdroit/checkout/resume');
