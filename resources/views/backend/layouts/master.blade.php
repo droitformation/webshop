@@ -14,7 +14,6 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/responsive.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dropzone.css?=13321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/chosen.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/chosen-bootstrap.css');?>">
@@ -31,6 +30,9 @@
 
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
     <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
+
+    <!-- Manager -->
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css');?>">
 
     @if(isset($isNewsletter))
         @include('newsletter::Style.main', ['campagne' => isset($campagne) ? : null])
@@ -151,10 +153,6 @@
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
-<!-- Upload plugins -->
-<script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
-
-
 @include('newsletter::Script.config')
 
 @if(isset($isNewsletter))
@@ -176,10 +174,14 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/abo.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/sorting.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/member.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/blocs.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/sondage.js');?>"></script>
+
+<!-- Upload plugins -->
+<script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/manager/isotope.pkgd.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 

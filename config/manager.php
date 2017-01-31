@@ -11,5 +11,7 @@ return [
     'arrets',
     'analyses',
     'colloques',
-    'shop'
+    'shop',
+    'import',
+    'sites'
 ];

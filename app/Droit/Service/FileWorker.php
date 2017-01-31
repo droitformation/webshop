@@ -4,7 +4,7 @@ namespace App\Droit\Service;
 
 class FileWorker implements FileWorkerInterface{
 
-    public function authorisized()
+    public function authorized()
     {
         $directories = \Storage::disk('files')->directories();
         $manager     = config('manager');
@@ -15,6 +15,8 @@ class FileWorker implements FileWorkerInterface{
 
     public function tree($source_dir, $directory_depth = 0, $hidden = FALSE, $onlydir = TRUE)
     {
+        $authorized = $this->authorized();
+
         if ($fp = @opendir($source_dir))
         {
             $filedata	= array();
@@ -35,10 +37,7 @@ class FileWorker implements FileWorkerInterface{
                 }
                 else
                 {
-                    if($onlydir)
-                    {
-                        $filedata[] = $file;
-                    }
+
                 }
             }
 
@@ -47,42 +46,26 @@ class FileWorker implements FileWorkerInterface{
         }
 
         return FALSE;
-
     }
 
     public function manager()
     {
-        $authorisized = $this->authorisized();
+        $authorized = $this->authorized();
 
-        $all = $this->tree('files',0,false,false);
+        $all = $this->tree('files',0,false,true);
 
-        if(!empty($all))
-        {
-            foreach($all as $dir => $sub)
-            {
-                if(in_array($dir, $authorisized))
-                {
-                    $files[$dir] = $sub;
-                }
-            }
-        }
-
-        return isset($files) ? $files : [];
+        return collect($all)->filter(function ($directorie, $key) use ($authorized) {
+            return in_array($key, $authorized);
+        })->toArray();
     }
 
     public function listDirectoryFiles($dir)
     {
-        $tree = $this->tree($dir);
+        $tree = \File::allfiles($dir);
 
-        foreach($tree as $index => $file)
-        {
-            if(!is_array($file))
-            {
-                $files[] = $file;
-            }
-        }
-
-        return isset($files) ? $files : [];
+        return collect($tree)->map(function ($file) use ($dir) {
+            return $file->getFilename();
+        })->toArray();
     }
 
     public function listActionFiles($dir)
@@ -93,22 +76,23 @@ class FileWorker implements FileWorkerInterface{
             if(is_array($subdir))
             {
                 echo '<li class="sub">'.$name.'';
-                $this->listFiles($subdir);
+                    $this->listFiles($subdir);
                 echo '</li>';
             }
             else
             {
                 echo '<li>';
-                    echo '<form action="'.url('admin/file').'" method="POST"><input type="hidden" name="_method" value="DELETE">'. csrf_field();
-                    echo '<a target="_blank" href="'.asset($subdir).'">'.$subdir.'</a>';
-                    echo '<input type="hidden" name="path" value="'.$subdir.'" />';
-                    echo '<button class="btn btn-danger btn-xs pull-right" data-what="Supprimer" data-action="file" type="submit">x</button>';
-                    echo '<span class="clearfix"></span></form>';
+                echo '<form action="'.url('admin/file').'" method="POST"><input type="hidden" name="_method" value="DELETE">'. csrf_field();
+                echo '<a target="_blank" href="'.asset($name.'/'.$subdir).'">'.$name.'/'.$subdir.'</a>';
+                echo '<input type="hidden" name="path" value="'.$name.'/'.$subdir.'" />';
+                echo '<button class="btn btn-danger btn-xs pull-right" data-what="Supprimer" data-action="file" type="submit">x</button>';
+                echo '<span class="clearfix"></span></form>';
                 echo '</li>';
             }
 
         }
         echo '</ul>';
+
     }
 
     public function treeDirectories($directories, $path = '')
@@ -124,10 +108,10 @@ class FileWorker implements FileWorkerInterface{
             {
                 if(is_array($subdir))
                 {
-                    $active = ($name == 'uploads' ? 'active' : '');
+                    $parent = ($name == 'pictos' ? 'no-interaction' : '');
 
                     echo '<li>
-                        <a class="'.$active.' node file-folder" href="'.$path.$name.'"><i class="fa fa-folder-o"></i> &nbsp;'.$name.'</a>';
+                        <a class="node file-folder" data-parent="'.$parent.'" href="'.$path.$name.'"><i class="fa fa-folder-o"></i> &nbsp;'.$name.'</a>';
                         $this->treeDirectories($subdir, $path.$name.'/');
                     echo '</li>';
                 }
@@ -136,4 +120,5 @@ class FileWorker implements FileWorkerInterface{
 
         echo ($exist ? '</ul>' : '' );
     }
+
 }

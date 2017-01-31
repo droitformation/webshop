@@ -731,8 +731,12 @@ Route::get('testproduct', function()
 
 Route::get('manager', function()
 {
+
+    echo '<pre>';
+    print_r(array_keys(config('sites')));
+    echo '</pre>';exit();
     $manager = App::make('App\Droit\Service\FileWorkerInterface');
-    $files   = $manager->listDirectoryFiles('files/logos/');
+    $files   = $manager->dir_contains_children('files/pictos');
 
     echo '<pre>';
     print_r($files);

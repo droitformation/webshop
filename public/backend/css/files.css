@@ -8,10 +8,14 @@
     margin-left: 20px;
     min-height: 30px;
     padding: 0;
+    margin-bottom: 15px;
 }
 
 .dropzone .dz-message {
     margin: 1em 0;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .dropzone .dz-preview .dz-details {
@@ -54,6 +58,10 @@
 
 .dropzone .dz-preview .dz-remove:hover {
     text-decoration: none;
+}
+
+.dropmessage{
+    margin-left: 20px;
 }
 
 .listFiles{
@@ -168,6 +176,22 @@
     z-index: 100;
 }
 
+ .modal-dialog {
+    width: 95%;
+    height: 95%;
+    margin-top: 45px;
+}
+
+ .modal-content {
+    height: auto;
+    min-height: 95%;
+    border-radius: 0;
+}
+
+#uploadModal .modal-body {
+    padding-top: 10px;
+}
+
 #fileManager{
     border: 1px solid #ddd;
     padding: 15px;
@@ -238,7 +262,7 @@ FILE MANAGER
     padding-left: 5px;
 }
 .tree ul li {
-    line-height: 22px;
+    line-height: 20px;
     padding: 2px 0;
     padding-left: 16px;
     position: relative;
@@ -271,23 +295,25 @@ FILE MANAGER
 .tree ul li:last-child:after {
     height: 10px;
 }
-.tree ul a {
+.tree ul button {
     background-color: #428bca;
-    border-color: #357ebd;
+    border: 1px solid #357ebd;
     color: #ffffff;
     cursor: pointer;
     display: block;
-    line-height: 22px;
+    line-height: 20px;
     padding: 2px 0 2px 5px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.tree ul a:hover {
+.tree ul button:hover {
     color: #fff;
     background: #347cba;
     text-decoration: none;
 }
 
-.tree ul a.active {
+.tree ul button.active {
     color: #fff;
     background: #6e6e6e;
     text-decoration: none;

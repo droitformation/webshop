@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Droit\Service\FileWorkerInterface;
 use App\Droit\Service\UploadInterface;
 
+use Illuminate\Support\Facades\Cache;
+
 class FileController extends Controller
 {
     protected $file;
@@ -23,21 +25,39 @@ class FileController extends Controller
     public function files(Request $request)
     {
         $images = ['jpg','jpeg','JPG','JPEG','png','gif'];
-        $files  = $this->file->listDirectoryFiles($request->input('path'));
+        $files  = $this->file->listDirectoryFiles($request->input('path'), 'files');
 
         echo view('manager.partials.files', ['path' => $request->input('path') ,'files' => $files, 'images' => $images])->__toString();
+    }
+    
+    public function getfiles(Request $request)
+    {
+        $files  = $this->file->listDirectoryFiles($request->input('path'), 'files');
+
+        return response()->json(['files' => $files]);
+    }
+
+    public function gettree()
+    {
+        $directories = \Cache::rememberForever('files', function () {
+            return $this->file->manager();
+        });
+
+        return response()->json(['directories' => $directories]);
     }
 
     public function tree()
     {
-        $files = $this->file->manager();
+        $files = \Cache::rememberForever('files', function () {
+            return $this->file->manager();
+        });
 
         echo view('manager.partials.folders', ['files' => $files]);
     }
 
     public function delete(Request $request)
     {
-        $file = $request->input('src');
+        $file = $request->input('path');
 
         if (\File::exists($file))
         {
