@@ -6,8 +6,8 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body" id="appComponent">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Modal</button>
-                    <manager></manager>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Choisir un fichier</button>
+                    <manager :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
                 </div>
             </div>
 

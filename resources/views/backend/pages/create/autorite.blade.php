@@ -9,12 +9,8 @@
 
     <div class="form-group">
         <label for="file" class="control-label">Image</label>
-        <div class="file-upload-wrapper" data-name="file">
-            <button type="button" class="btn btn-default" id="image" data-toggle="modal" data-target="#uploadModal">Chercher</button>
-            <div class="file-input"></div>
-
-            @include('manager.modal')
-        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Choisir un fichier</button>
+        <manager :name="file" :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
     </div>
 
     <div class="form-group">

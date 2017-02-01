@@ -148,7 +148,7 @@
     @if($template && !$page->isExternal)
         <div class="col-md-5">
             <div class="panel panel-midnightblue">
-                <div class="panel-body event-info">
+                <div class="panel-body event-info" id="appComponent">
 
                     <div class="form-group">
                         <h4>Blocs de contenu</h4>
@@ -166,12 +166,6 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-
-            <div class="panel panel-midnightblue">
-                <div class="panel-body event-info" id="appComponent">
-                    <content-form :categories="{{ $categories }}" :page="{{ $page->id }}" :contents="{{ json_encode($page->content_list) }}"></content-form>
                 </div>
             </div>
 
