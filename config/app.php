@@ -246,7 +246,8 @@ return [
         'PDF'        => Barryvdh\DomPDF\Facade::class,
         'QrCode'     => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 		'Registry' => DesignPond\Registry\Facades\Registry::class,
-		'Alert'      => Vinkla\Alert\Facades\Alert::class
+		'Alert'      => Vinkla\Alert\Facades\Alert::class,
+	
 	],
 
 ];

@@ -31,6 +31,7 @@ return array(
     'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Plank\\Mediable\\' => array($vendorDir . '/plank/laravel-mediable/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'MailThief\\' => array($vendorDir . '/tightenco/mailthief/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),

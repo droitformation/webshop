@@ -54,17 +54,17 @@ class UploadWorker implements UploadInterface {
 	 * resize file 
 	 * @return instance
 	*/	
-	public function resize( $path, $name , $width = null , $height = null)
+	public function resize($path, $destination = null, $width = null , $height = null)
     {
         $img = \Image::make($path)->orientate();
+
+        $destination = $destination ? $destination : $path;
 
         // prevent possible upsizing
         $img->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        });
-
-        $img->save($path);
+        })->save($destination);
 	}
 
     /*

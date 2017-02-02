@@ -1,23 +1,6 @@
 @extends('backend.layouts.master')
 @section('content')
 
-{{--    <div class="row">
-        <div class="col-md-12">
-
-            <div class="panel panel-midnightblue">
-                <div class="panel-body">
-                    <form>
-                        <div class="file-upload-wrapper" data-name="file">
-                            <button type="button" class="btn btn-default" id="image" data-toggle="modal" data-target="#uploadModal">Chercher</button>
-                            <div class="file-input"></div>
-                            @include('manager.modal')
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-    </div>--}}
     <div class="row">
         <div class="col-md-12">
             <?php $active_chunks = $colloques->chunk(4); ?>

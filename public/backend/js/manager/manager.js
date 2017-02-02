@@ -4,8 +4,11 @@ $( function() {
      *  First load uploads folder in manager
      * *********/
 
-    $('body').on('show.bs.modal','#uploadModal', function ()
-    {
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').on('show.bs.modal','#uploadModal', function () {
         var $gallery  = $('#gallery');
 
         $gallery.html('<li style="width: 100%; height: 300px;line-height: 300px;text-align: center;"><img style="width: 60px; height: 60px;" src="' + base_url + '/images/default.svg" /></li>');
@@ -13,23 +16,18 @@ $( function() {
         var $manager  = $('#fileManager');
         var $tree     = $('#fileManagerTree');
 
-        $.post( "admin/files", { path: 'files/uploads', _token: $("meta[name='_token']").attr('content') }).done(function( data ){
-            $manager.empty().append(data);
-            $manager.data('path','files/uploads');
-
-            $('#gallery').isotope({
-                itemSelector: '.file-item',
-                masonry     : {layoutMode: 'fitColumns', columnWidth: 120}
-            });
-        });
+        $manager.append('<p>Choisir un dossier</p>');
 
         $.get( "admin/tree", function( data ) {
             $tree.empty().append(data);
         });
 
+        var path =  $tree.find('li a.active').attr('href');
+        console.log(path);
+
         var myDropzone = new Dropzone("div#dropzone", {
             url: "admin/upload",
-            dictDefaultMessage: "Ajouter une image",
+            dictDefaultMessage: " Ajouter un fichier",
             dictRemoveFile: "Enlever",
             thumbnailWidth: 100,
             thumbnailHeight: 80,
@@ -37,8 +35,9 @@ $( function() {
         });
 
         myDropzone.on('sending', function(file, xhr, formData){
-            var path =  $('#fileManager').data('path');
+            var path   =  $('#fileManager').data('path');
             formData.append('path', path);
+            formData.append('_token', $("meta[name='_token']").attr('content'));
         });
 
         myDropzone.on("success", function(file) {
@@ -57,8 +56,8 @@ $( function() {
                     }
                 });
             });
-
         });
+
     });
 
     $('body').on('shown.bs.modal','#uploadModal', function ()
@@ -150,20 +149,26 @@ $( function() {
         e.preventDefault();
         e.stopPropagation();
 
-        var cropper = new Croppic('cropManager');
-        cropper.destroy();
-
         var $manager  = $('#fileManager');
-        var $gallery  = $('#gallery');
 
+        var nointeraction = $(this).data('parent');
+        console.log(nointeraction);
+
+        if(nointeraction){
+            $manager.empty().append('<p>Aucun fichier à ce niveau, choisir un sous-dossier</p>');
+            return false;
+        }
+
+        var $gallery  = $('#gallery');
         var path      = $(this).attr('href');
+        console.log(path);
+        $manager.data('path',path);
 
         $gallery.html('<li style="width: 100%; height: 300px;line-height: 300px;text-align: center;"><img style="width: 60px; height: 60px;" src="' + base_url + '/images/default.svg" /></li>');
 
         $.post( "admin/files", { path: path , _token: $("meta[name='_token']").attr('content')}).done(function( data )
         {
             $manager.empty().append(data);
-            $manager.data('path',path);
 
             $('#gallery').isotope({
                 itemSelector: '.file-item',
@@ -187,36 +192,5 @@ $( function() {
 
         $(this).closest('.file-choosen-wrapper').remove();
     });
-
-    /********
-     * Cropp image in manager
-     * *********/
-
-    $('body').on('click','.file-manager-crop' ,function(e){
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        var src = $(this).data('src');
-
-        var cropperOptions = {
-            cropUrl    : 'admin/files/crop',
-            loadPicture: src,
-            modal      : true,
-            onAfterImgCrop: function()
-            {
-                console.log('onAfterImgCrop');
-                var cropper = new Croppic('cropManager');
-                cropper.destroy();
-            },
-            cropData:{
-                "_token": $('meta[name="_token"]').attr('content')
-            }
-        }
-
-        var cropperHeader = new Croppic('cropManager', cropperOptions);
-
-    });
-
 
 });

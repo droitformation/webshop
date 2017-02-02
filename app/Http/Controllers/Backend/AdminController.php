@@ -36,4 +36,9 @@ class AdminController extends Controller {
 
         return view('backend.index')->with(['inscriptions' => $inscriptions, 'orders' => $orders, 'colloques' => $colloques]);
 	}
+
+    public function test()
+    {
+        return view('backend.test');
+    }
 }

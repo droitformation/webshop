@@ -18,6 +18,61 @@ Route::get('abos_test', function () {
     $users = $make->user($infos);
 });
 
+Route::get('resize', function () {
+
+    $upload = \App::make('App\Droit\Service\UploadInterface');
+
+    $file = 'files/products/2012_Couv_ProtectAdultes.jpg';
+    $destination = 'files/products/thumbs/2012_Couv_ProtectAdultes.jpg';
+
+    $files = \File::files('files/uploads');
+
+    $main_path = 'files/uploads/';
+    $thumb_path = 'files/uploads/thumbs/';
+
+    $allowed = ['jpg','jpeg','png','gif','PNG','JPEG','JPG','GIF'];
+
+    $paths = collect($files)->map(function ($file, $key) use ($allowed) {
+
+        $mime      = \File::mimeType($file);
+        $extension = \File::extension($file);
+
+        if(substr($mime, 0, 5) == 'image' && in_array($extension,$allowed))
+        {
+            $file = explode('/', $file);
+            $file = end($file);
+
+            return $file;
+        }
+
+        return false;
+    })->filter(function ($item, $key) {
+        return $item ? $item : false;
+    });
+
+   /* echo '<pre>';
+    print_r($paths);
+    echo '</pre>';exit();*/
+
+    $chunks = $paths->chunk(50);
+
+    foreach($chunks as $chunk){
+        $chunk->each(function ($path, $key) use ($main_path, $thumb_path, $upload) {
+
+            $file        = $main_path.$path;
+            $destination = $thumb_path.$path;
+
+            $upload->resize( $file , $destination ,120 , 100);
+
+        });
+    }
+
+    echo '<pre>';
+    print_r($paths);
+    echo '</pre>';exit();
+
+});
+
 Route::get('mapped', function () {
 
     $CampagneInterface = \App::make('App\Droit\Newsletter\Repo\NewsletterCampagneInterface');
@@ -731,8 +786,12 @@ Route::get('testproduct', function()
 
 Route::get('manager', function()
 {
+
+    echo '<pre>';
+    print_r(array_keys(config('sites')));
+    echo '</pre>';exit();
     $manager = App::make('App\Droit\Service\FileWorkerInterface');
-    $files   = $manager->listDirectoryFiles('files/logos/');
+    $files   = $manager->dir_contains_children('files/pictos');
 
     echo '<pre>';
     print_r($files);

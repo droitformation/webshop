@@ -165,6 +165,7 @@ Route::group(['prefix' => 'team' , 'middleware' => ['auth','team']], function ()
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], function () {
 
     Route::get('/', 'Backend\AdminController@index');
+    Route::get('test', 'Backend\AdminController@test');
 
     Route::get('menus/{site}','Backend\MenuController@index');
     Route::get('menu/create/{site}','Backend\MenuController@create');
@@ -370,6 +371,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
     Route::get('fileJson/{id?}',  ['uses' => 'Backend\UploadController@fileJson']);
 
+    Route::post('getfiles', ['uses' => 'Backend\FileController@getfiles']);
+    Route::get('gettree', ['uses' => 'Backend\FileController@gettree']);
+    
     Route::post('files', ['uses' => 'Backend\FileController@files']);
     Route::get('tree', ['uses' => 'Backend\FileController@tree']);
     Route::get('export', ['uses' => 'Backend\FileController@tree']);

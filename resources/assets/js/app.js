@@ -27,6 +27,8 @@ Vue.component('inscription', require('./components/Inscription.vue'));
 Vue.component('detenteur', require('./components/Detenteur.vue'));
 Vue.component('content-form', require('./components/ContentForm.vue'));
 
+Vue.component('manager', require('./components/Manager.vue'));
+
 const app = new Vue({
     el: '#appComponent'
 });

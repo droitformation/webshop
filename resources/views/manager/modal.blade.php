@@ -13,15 +13,15 @@
                         <div id="treeMenu">
 
                             <div class="tree">
-                                <h4>Dossiers</h4>
                                 <div id="fileManagerTree"></div>
                             </div>
 
                             <div id="dropzone" class="dropzone"></div>
+                            <p class="dropmessage"><i>Les fichiers sont téléchargé dans le dossier en cours, sinon si aucun n'est choisi le dossier par défault sera uploads</i></p>
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div id="fileManager" data-path="uploads"></div>
+                        <div id="fileManager" data-path="files/uploads"></div>
                     </div>
                 </div>
             </div>
