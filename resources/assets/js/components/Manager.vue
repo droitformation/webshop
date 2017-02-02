@@ -18,10 +18,10 @@
                                         <div id="fileManagerTree">
                                             <ul>
                                                 <li v-bind:class="{active: isActive(index)}" v-for="(directorie,index) in directories">
-                                                    <button class="node" @click="chosenFolder('files/' + index)"><i class="fa fa-folder-o"></i> &nbsp;{{ index }}</button>
+                                                    <button type="button" class="node" v-on:click.stop="chosenFolder('files/' + index)"><i class="fa fa-folder-o"></i> &nbsp;{{ index }}</button>
                                                     <ul>
                                                         <li v-bind:class="{active: isActive(second)}" v-for="(folder,second) in directorie">
-                                                            <button class="node" @click="chosenFolder('files/' + index + '/' + second)"><i class="fa fa-folder-o"></i> &nbsp;{{ second }}</button>
+                                                            <button type="button" class="node" v-on:click.stop="chosenFolder('files/' + index + '/' + second)"><i class="fa fa-folder-o"></i> &nbsp;{{ second }}</button>
                                                         </li>
                                                     </ul>
                                                 </li>

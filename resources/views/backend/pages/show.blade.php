@@ -157,7 +157,7 @@
                         </div>
                     </div>
                     <hr/>
-                    <div class="form-group">
+                    <div class="form-group" id="appComponent">
                         <h4>Ajouter un bloc de contenu</h4>
 
                         <div id="adresseParent">

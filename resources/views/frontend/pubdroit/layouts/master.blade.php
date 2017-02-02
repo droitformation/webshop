@@ -99,7 +99,7 @@
             </div>
 
             <header id="main-header">
-				<img src="{{ asset('files/uploads/book_shelf.jpeg') }}" alt="homepage">
+				<img src="{{ asset('images/pubdroit/book_shelf.jpeg') }}" alt="homepage">
 				<section class="container">
 
 					<section class="row" id="header">
