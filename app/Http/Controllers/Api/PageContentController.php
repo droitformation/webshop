@@ -42,14 +42,11 @@ class PageContentController extends Controller
      */
     public function store(Request $request)
     {
+        $content = $this->content->create($request->all());
 
-        $data = $request->input('data');
+        alert()->success('Le bloc a été ajouté');
 
-        $content = $this->content->create($data);
-
-        $page = $this->page->find($content->page_id);
-
-        return view('backend.pages.partials.list')->with(['page' => $page]);
+        return redirect()->back();
     }
 
     /**
@@ -74,13 +71,11 @@ class PageContentController extends Controller
      */
     public function update($id, Request $request)
     {
-        $data = $request->input('data');
+        $content = $this->content->update($request->all());
 
-        $content = $this->content->update($data);
+        alert()->success('Le bloc a été mis à jour');
 
-        $page = $this->page->find($content->page_id);
-
-        return view('backend.pages.partials.list')->with(['page' => $page]);
+        return redirect()->back();
     }
 
     public function sorting(Request $request)
@@ -102,9 +97,9 @@ class PageContentController extends Controller
     {
         $this->content->delete($id);
 
-        $page = $this->page->find($request->page_id);
+        alert()->success('Le bloc a été supprimé');
 
-        echo view('backend.pages.partials.list')->with(['page' => $page]);
+        return redirect()->back();
     }
 
 }

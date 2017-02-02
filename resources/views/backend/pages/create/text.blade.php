@@ -20,4 +20,4 @@
 
 <input name="type" value="text" type="hidden">
 <input name="page_id" value="{{ $page_id }}" type="hidden">
-<button type="button" class="btn btn-magenta btn-sm add-bloc-btn">Ajouter</button>
+<button type="submit" class="btn btn-magenta btn-sm add-bloc-btn">Ajouter</button>

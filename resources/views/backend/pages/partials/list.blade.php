@@ -1,4 +1,4 @@
-@if(!$page->contents->isEmpty())
+
     <?php $grouped = $page->contents->groupBy('type'); ?>
     <?php $icons = ['text' => 'align-justify','autorite' => 'building', 'loi' => 'gavel', 'lien' => 'link', 'faq' => 'question-circle']; ?>
     @foreach($grouped as $groupe => $blocs)
@@ -12,12 +12,14 @@
                             {!! !empty($bloc->name) ? $bloc->name : $bloc->content !!}
                         </div>
                         <div class="col-md-3">
-                            <a href="#" data-id="{{ $bloc->id }}" data-page="{{ $bloc->page_id }}" class="btn btn-danger btn-xs pull-right delete-bloc"><i class="fa fa-times"></i></a>
-                            <a href="#" data-id="{{ $bloc->id }}" class="btn btn-info btn-xs pull-right edit-bloc">éditer</a>
+                            <form action="{{ url('admin/pagecontent/'.$bloc->id) }}" method="POST" class="text-right">
+                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                <a data-toggle="collapse" href="#pagecontent_{{ $bloc->id }}" class="btn btn-info btn-xs">éditer</a>
+                                <button data-what="supprimer" data-action="bloc: {{!empty($bloc->name) ? $bloc->name : $bloc->content }}" class="btn btn-danger btn-xs deleteAction">x</button>
+                            </form>
                         </div>
                     </div>
                 </li>
             @endforeach
         </ul>
     @endforeach
-@endif

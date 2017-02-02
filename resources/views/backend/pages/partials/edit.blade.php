@@ -1,4 +1,5 @@
-<form data-validate-parsley class="form edit-bloc-form" data-id="{{ $content->id }}">
+ <form class="form" method="post" action="{{ url('admin/pagecontent/'.$content->id) }}">
+     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
     <h4>Bloc</h4>
 
@@ -11,14 +12,14 @@
 
     @if($content->type == 'autorite')
         <div class="form-group">
-            <label for="file" class="control-label">Image</label>
-            <img src="{{ asset($content->image) }}" alt="image">
-            <div class="file-upload-wrapper" data-name="file">
-                <button type="button" class="btn btn-default" id="image" data-toggle="modal" data-target="#uploadModal">Chercher</button>
-                <div class="file-input"></div>
+            <label for="file" class="control-label">Image</label><br/>
 
-                @include('manager.modal')
-            </div>
+            @if($content->image)
+                <p><img style="max-width: 140px;" src="{{ asset($content->image) }}" alt="image"></p>
+            @endif
+
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Choisir un fichier</button>
+            <manager name="image" :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
         </div>
     @endif
 
@@ -53,6 +54,6 @@
     <input name="id" value="{{ $content->id }}" type="hidden">
     <input name="type" value="{{ $content->type }}" type="hidden">
     <input name="page_id" value="{{ $content->page_id }}" type="hidden">
-    <button type="button" class="btn btn-primary edit-bloc-btn">&Eacute;diter</button>
+    <button type="submit" class="btn btn-primary edit-bloc-btn">&Eacute;diter</button>
 
 </form>

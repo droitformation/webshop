@@ -114,7 +114,7 @@ class PageTest extends BrowserKitTest {
 
         $this->visit('admin/page/'.$page->id);
 
-        $data['data'] = [
+        $data = [
             'title'    => 'Un titre bloc',
             'content'  => '<p>Un bloc de contenu</p>',
             'page_id'  => $page->id,

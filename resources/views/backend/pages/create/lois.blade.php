@@ -7,4 +7,4 @@
 
 <input name="type" value="loi" type="hidden">
 <input name="page_id" value="{{ $page_id }}" type="hidden">
-<button type="button" class="btn btn-success btn-sm add-bloc-btn">Ajouter</button>
+<button type="submit" class="btn btn-success btn-sm add-bloc-btn">Ajouter</button>

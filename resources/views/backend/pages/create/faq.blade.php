@@ -23,5 +23,5 @@
 
 <input name="type" value="faq" type="hidden">
 <input name="page_id" value="{{ $page_id }}" type="hidden">
-<button type="button" class="btn btn-green btn-sm add-bloc-btn">Ajouter</button>
+<button type="submit" class="btn btn-green btn-sm add-bloc-btn">Ajouter</button>
 

@@ -147,17 +147,27 @@
 
     @if($template && !$page->isExternal)
         <div class="col-md-5">
-            <div class="panel panel-midnightblue">
+            <div class="panel panel-midnightblue"  id="appComponent">
                 <div class="panel-body event-info">
 
                     <div class="form-group">
                         <h4>Blocs de contenu</h4>
-                        <div id="listBlocs">
-                            @include('backend.pages.partials.list')
-                        </div>
+
+                        @if(!$page->contents->isEmpty())
+
+                            @include('backend.pages.partials.list', ['page' => $page])
+
+                            @foreach($page->contents as $pagecontent)
+                                <div class="collapse" id="pagecontent_{{ $pagecontent->id }}">
+                                    <div class="well well-sm">
+                                        @include('backend.pages.partials.edit', ['content' => $pagecontent])
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                     <hr/>
-                    <div class="form-group" id="appComponent">
+                    <div class="form-group">
                         <h4>Ajouter un bloc de contenu</h4>
 
                         <div id="adresseParent">
@@ -168,11 +178,12 @@
                             </div>
                             @foreach($types as $name => $type)
                                <div class="collapse" id="bloc{{ $name }}">
-                                    <div class="well well-sm">
-                                        <form data-validate-parsley class="form add-bloc-form" method="post" action="{{ url('admin/pagecontent') }}">
-                                            @include('backend.pages.create.'.$name, ['page_id' => $page->id])
-                                        </form>
-                                    </div>
+                                   <form data-validate-parsley class="form" method="post" action="{{ url('admin/pagecontent') }}">
+                                       {!! csrf_field() !!}
+                                       <div class="well well-sm">
+                                           @include('backend.pages.create.'.$name, ['page_id' => $page->id])
+                                       </div>
+                                   </form>
                                 </div>
                             @endforeach
                         </div>
