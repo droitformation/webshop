@@ -79,8 +79,11 @@ class PageController extends Controller
         $page  = $this->page->find($id);
         $menus = $this->menu->getAll();
         $site  = $this->site->find(2);
+        
+        $types = config('columns.types');
 
-        return view('backend.pages.show')->with(array('page' => $page , 'menus' => $menus, 'current_site' => $page->site_id, 'categories' => $site->categories));
+        return view('backend.pages.show')
+            ->with(['page' => $page, 'menus' => $menus, 'current_site' => $page->site_id, 'categories' => $site->categories, 'types' => $types]);
     }
 
     /**

@@ -24,6 +24,14 @@ return [
         'ville'            => 'Ville',
         'canton_title'     => 'Canton',
         'pays_title'       => 'Pays'
+    ],
+
+    'types' => [
+        'text'     => ['title' => 'Texte', 'color' => 'primary'],
+        'lois'     => ['title' => 'Loi', 'color' => 'success'],
+        'autorite' => ['title' => 'Autorité', 'color' => 'magenta'],
+        'lien'     => ['title' => 'Lien', 'color' => 'orange'],
+        'faq'      => ['title' => 'Faq', 'color' => 'green'],
     ]
 
 ];

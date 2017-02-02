@@ -154,24 +154,31 @@
                         <h4>Blocs de contenu</h4>
                         <div id="listBlocs">
                             @include('backend.pages.partials.list')
-                        </div><hr/>
-                        <h4>Ajouter un bloc de contenu</h4>
-                        <div id="content-bloc-wrapper" data-page="{{ $page->id }}">
-                            <a href="#" data-type="text" class="new-bloc-content btn btn-primary btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc texte</a>
-                            <a href="#" data-type="lois" class="new-bloc-content btn btn-success btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lois</a>
-                            <a href="#" data-type="autorite" class="new-bloc-content btn btn-magenta btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc autorité</a>
-                            <a href="#" data-type="lien" class="new-bloc-content btn btn-orange btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc lien</a>
-                            <a href="#" data-type="faq" class="new-bloc-content btn btn-green btn-sm"><i class="fa fa-plus"></i> &nbsp;Bloc FAQ</a>
-                            <div id="bloc-wrapper" data-page="{{ $page->id }}"></div>
                         </div>
                     </div>
+                    <hr/>
+                    <div class="form-group">
+                        <h4>Ajouter un bloc de contenu</h4>
 
-                </div>
-            </div>
+                        <div id="adresseParent">
+                            <div class="btn-group" style="margin-bottom: 15px;">
+                                @foreach($types as $name => $type)
+                                    <a class="btn btn-sm btn-{{ $type['color'] }} accordion-toggle" data-toggle="bloc{{ $name }}"><i class="fa fa-plus"></i> &nbsp;Bloc {{ $type['title'] }}</a>
+                                @endforeach
+                            </div>
+                            @foreach($types as $name => $type)
+                               <div class="collapse" id="bloc{{ $name }}">
+                                    <div class="well well-sm">
+                                        <form data-validate-parsley class="form add-bloc-form" method="post" action="{{ url('admin/pagecontent') }}">
+                                            @include('backend.pages.create.'.$name, ['page_id' => $page->id])
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
 
-            <div class="panel panel-midnightblue">
-                <div class="panel-body event-info" id="appComponent">
-                    <content-form :categories="{{ $categories }}" :page="{{ $page->id }}" :contents="{{ json_encode($page->content_list) }}"></content-form>
+                    </div>
+
                 </div>
             </div>
 
