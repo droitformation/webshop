@@ -23,7 +23,7 @@
 
 						<div class="row">
 							@if(!$product->domains->isEmpty())
-								<div class="col-md-6 col-xs-12">
+								<div class="col-md-6 col-xs-12" id="label-tags">
 									<p>
 										@foreach($product->domains as $domain)
 											<span class="label label-info">{{ $domain->title }}</span>

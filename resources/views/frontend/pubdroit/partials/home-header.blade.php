@@ -14,7 +14,7 @@
     @if(!$colloques->isEmpty())
         <section class="col-md-8 col-xs-12">
             <div class="heading-bar">
-                <h2><i class="fa fa-calendar"></i> &nbsp;Prochains Événements</h2>
+                <h2><i class="fa fa-calendar"></i> &nbsp;Prochains événements</h2>
                 <span class="h-line"></span>
             </div>
 
