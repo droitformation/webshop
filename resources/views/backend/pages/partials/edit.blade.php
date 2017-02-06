@@ -18,8 +18,8 @@
                 <p><img style="max-width: 140px;" src="{{ asset($content->image) }}" alt="image"></p>
             @endif
 
-            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Choisir un fichier</button>
-            <manager name="image" :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal_{{ $content->id }}">Choisir un fichier</button>
+            <manager :id="{{ $content->id }}" name="image" :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
         </div>
     @endif
 

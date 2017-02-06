@@ -7,7 +7,7 @@ $( function() {
         removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],
         lang: 'fr',
         plugins: ['imagemanager','filemanager','fontsize','fontcolor'],
-        fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
+
         imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
         fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
@@ -20,8 +20,13 @@ $( function() {
         minHeight: 50,
         maxHeight: 270,
         lang: 'fr',
+        plugins: ['imagemanager','filemanager'],
+        fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
+        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
+        imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
+        imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
         plugins: ['iconic'],
-        buttons  : ['format','bold','italic','link','|','unorderedlis','orderedlist']
+        buttons  : ['format','bold','italic','link','image','file','|','unorderedlis','orderedlist']
     });
 
 });

@@ -98,14 +98,18 @@ class UploadController extends Controller
 
         $file = $this->upload->upload( $request->file('file') , 'files/uploads' );
 
-        \File::copy(public_path('files/uploads/'.$file['name']), public_path('files/uploads/thumbs/'.$file['name']));
-
-        $sizes = \Config::get('size.thumbs');
-
-        $this->upload->resize( public_path('files/uploads/thumbs/'.$file['name']), '', $sizes['width'], $sizes['height']);
-
         if($file)
         {
+            $mime = \File::mimeType(public_path('files/uploads/'.$file['name']));
+
+            if(substr($mime, 0, 5) == 'image')
+            {
+                \File::copy(public_path('files/uploads/'.$file['name']), public_path('files/uploads/thumbs/'.$file['name']));
+                $sizes = \Config::get('size.thumbs');
+
+                $this->upload->resize( public_path('files/uploads/thumbs/'.$file['name']), null, $sizes['width'], $sizes['height']);
+            }
+            
             $array = [
                 'filelink' => asset('files/uploads/'.$file['name']),
                 'filename' => $file['name']

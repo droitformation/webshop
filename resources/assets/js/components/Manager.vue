@@ -2,7 +2,7 @@
 <div>
     <div id="bs-modal">
         <!-- MODAL -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" :id="'myModal_' + id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -29,7 +29,7 @@
                                         </div>
                                     </div>
 
-                                    <div id="dropzone" class="dropzone"></div>
+                                    <div :id="'dropzone_' + id" class="dropzone"></div>
                                     <p class="dropmessage"><i>Les fichiers sont téléchargé dans le dossier en cours, sinon si aucun n'est choisi le dossier par défault sera uploads</i></p>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
 <script>
 
 export default {
- props: ['name','thumbs', 'input'],
+ props: ['name','thumbs', 'input','id'],
     data () {
         return {
            directories:[],
@@ -102,7 +102,7 @@ export default {
         var self = this;
         this.$nextTick(function(){
 
-            var myDropzone = new Dropzone("div#dropzone", {
+            var myDropzone = new Dropzone("#dropzone_" + this.id, {
                 url: "admin/upload",
                 dictDefaultMessage: " Ajouter un fichier",
                 dictRemoveFile: "Enlever",
@@ -165,7 +165,7 @@ export default {
             this.filename = path;
             this.chosen   = true;
 
-            $('#myModal').modal('hide');
+            $('#myModal_'+this.id).modal('hide');
         },
         addFile: function(file){
             this.files.push(file.name);

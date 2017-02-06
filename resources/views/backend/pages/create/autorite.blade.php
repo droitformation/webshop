@@ -7,8 +7,8 @@
 
 <div class="form-group">
     <label for="file" class="control-label">Image</label><br/>
-    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Choisir un fichier</button>
-    <manager name="image" :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal_0">Choisir un fichier</button>
+    <manager id="0" name="image" :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
 </div>
 
 <div class="form-group">

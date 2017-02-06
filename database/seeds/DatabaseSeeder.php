@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeSeeder::class);
         $this->call(MenuTableSeeder::class);
         $this->call(PageTableSeeder::class);
+        //$this->call(ContentSeeder::class);
         $this->call(NewsletterTableSeeder::class);
 
 /*

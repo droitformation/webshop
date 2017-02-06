@@ -6,7 +6,7 @@
              <div class="col-md-4">
                  <div class="text-center">
                      <p><strong>{!! $bloc->title !!}</strong></p>
-                     <p><img src="{{ asset($bloc->image) }}" alt="{!! $bloc->title !!}"></p>
+                     <p><img style="max-width: 100px;" src="{{ asset($bloc->image) }}" alt="{!! $bloc->title !!}"></p>
                      {!! $bloc->content !!}
                  </div>
              </div>
