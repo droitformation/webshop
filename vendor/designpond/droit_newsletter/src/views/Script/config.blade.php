@@ -1,1 +1,0 @@
-<script type="text/javascript" src="{{ asset('newsletter/js/env.js') }}"></script>

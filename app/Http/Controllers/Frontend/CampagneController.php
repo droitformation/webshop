@@ -5,33 +5,17 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Droit\Arret\Repo\GroupeInterface;
+use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 
 class CampagneController extends Controller
 {
     protected $campagne;
-    protected $worker;
-    protected $helper;
 
-    public function __construct(NewsletterCampagneInterface $campagne, CampagneInterface $worker )
+    public function __construct(NewsletterCampagneInterface $campagne)
     {
         $this->campagne = $campagne;
-        $this->worker   = $worker;
-        $this->helper   = new \App\Droit\Helper\Helper();
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $campagnes = $this->campagne->getAll();
-
-        return view('backend.newsletter.campagne.index')->with(compact('campagnes'));
-    }
-
+    
     /**
      * Display the specified resource.
      *
@@ -40,20 +24,20 @@ class CampagneController extends Controller
      */
     public function show($id)
     {
-        /*
-        * Urls
-        */
-        $unsubscribe  = url('/unsubscribe/'.$id);
-        $browser      = url('/campagne/'.$id);
+        $campagne = $this->campagne->find($id);
 
-        $infos = $this->campagne->find($id);
-        $infos->newsletter->load('site');
-        
-        $campagne      = $this->worker->prepareCampagne($id);
-        $categories    = $this->worker->getCategoriesArrets();
-        $imgcategories = $this->worker->getCategoriesImagesArrets();
+        return view('emails.newsletter.view')->with(['campagne' => $campagne]);
+    }
 
-        return view('frontend.newsletter.view')->with(array('content' => $campagne , 'infos' => $infos , 'unsubscribe' => $unsubscribe , 'browser' => $browser, 'categories' => $categories, 'imgcategories' => $imgcategories));
+    public function pdf($id)
+    {
+        $campagne = $this->campagne->find($id);
+
+        $pdf = \PDF::loadView('frontend.newsletter.pdf', ['campagne' => $campagne])->setPaper('a4');
+
+       // $pdf->set_option('defaultFont', 'Arial');
+
+        return $pdf->stream('newsletter_'.$id.'.pdf');
     }
 
 }

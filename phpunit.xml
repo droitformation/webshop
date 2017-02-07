@@ -81,7 +81,9 @@
         <testsuite name="register">
             <directory>./tests/frontend/register/</directory>
         </testsuite>
-
+        <testsuite name="newsletter">
+            <directory>./tests/newsletter/</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

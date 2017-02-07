@@ -2,6 +2,33 @@
 
 All notable changes to `laravel-backup` will be documented in this file.
 
+## 4.4.9 - 2017-02-06
+- fix the dumping of DB's on Windows systems
+
+## 4.4.8 - 2017-02-06
+- avoid empty directories in zips on Windows systems
+
+## 4.4.7 - 2017-02-04
+- improve the creation of db dumper subdirectory in the temporary directory
+
+## 4.4.6 - 2017-02-04
+- force creation of temporary directory
+
+## 4.4.5 - 2017-02-03
+- force `BackupDestinationStatus::maximumAllowedUsageInBytes()` to return an integer
+
+## 4.4.4 - 2017-02-02
+
+- fix constraints so the latest version of `spatie/temporary-backup` can be pulled in
+
+## 4.4.3 - 2017-02-02
+
+- fix bug where entire backup disk would be ignored for backups
+
+## 4.4.2 - 2017-02-01
+
+- improve handling of temporary directory
+
 ## 4.4.1 - 2017-01-26
 
 - fix typehint of `setMaximumStorageUsageInMegabytes`

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class RemoveNewsletterUserRequest extends Request
+class RemoveNewsletterUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,12 +18,12 @@ class RemoveNewsletterUserRequest extends Request
             return true;
         }
 
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-
+     *
      * @return array
      */
     public function rules()
@@ -33,4 +33,5 @@ class RemoveNewsletterUserRequest extends Request
             'activation' => 'required_with:newsletter_id'
         ];
     }
+
 }

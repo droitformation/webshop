@@ -170,7 +170,7 @@ return [
 		Vinkla\Alert\AlertServiceProvider::class,
 		Spatie\Backup\BackupServiceProvider::class,
 		ShvetsGroup\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
-		designpond\newsletter\newsletterServiceProvider::class,
+		App\Providers\NewsletterServiceProvider::class,
 
 		/*
 		 * Application Service Providers...

@@ -61,7 +61,7 @@ return [
         'arret'     => 'files/arrets/',
         'analyse'   => 'files/analyses/',
         'author'    => 'files/authors/',
-        'upload'    => 'files/',
+        'upload'    => 'files/uploads/',
         'product'   => 'files/products/',
         'colloque'  => 'files/colloques/',
     ],

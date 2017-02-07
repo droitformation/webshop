@@ -550,3 +550,88 @@ $factory->define(App\Droit\Bloc\Entities\Bloc::class,function (Faker\Generator $
         'position'   => 'sidebar'
     ];
 });
+
+/**
+ * Newsletter
+ */
+
+$factory->define(App\Droit\Newsletter\Entities\Newsletter_users::class, function (Faker\Generator $faker) {
+    return [
+        'id'           => $faker->numberBetween(50,150),
+        'email'        => $faker->email,
+        'token'        => '1234',
+        'activated_at' => date('Y-m-d G:i:s')
+    ];
+});
+
+$factory->define(App\Droit\Newsletter\Entities\Newsletter_subscriptions::class, function (Faker\Generator $faker) {
+    return [
+        'user_id'       => 1,
+        'newsletter_id' => 1
+    ];
+});
+
+$factory->define(App\Droit\Newsletter\Entities\Newsletter::class, function (Faker\Generator $faker) {
+    return [
+        'titre'        => 'Titre',
+        'list_id'      => '1',
+        'from_name'    => 'Nom',
+        'from_email'   => 'cindy.leschaud@gmail.com',
+        'return_email' => 'cindy.leschaud@gmail.com',
+        'unsuscribe'   => 'unsubscribe',
+        'preview'      => 'droit.local',
+        'logos'        => 'logos.jpg',
+        'header'       => 'header.jpg',
+        'color'        => '#fff'
+    ];
+});
+
+$factory->define(App\Droit\Newsletter\Entities\Newsletter_campagnes::class, function (Faker\Generator $faker) {
+    return [
+        'sujet'           => 'Sujet',
+        'auteurs'         => 'Cindy Leschaud',
+        'status'          => 'Brouillon',
+        'newsletter_id'   => 1,
+        'api_campagne_id' => 1,
+        'send_at'         => null,
+        'created_at'      => \Carbon\Carbon::createFromDate(2016, 12, 21)->toDateTimeString(),
+        'updated_at'      => \Carbon\Carbon::createFromDate(2016, 12, 21)->toDateTimeString(),
+    ];
+});
+
+$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
+    return [
+        'name'       => 'Cindy Leschaud',
+        'email'      => 'cindy.leschaud@unine.ch',
+        'password'   => bcrypt('cindy2')
+    ];
+});
+
+$factory->define(App\Droit\Newsletter\Entities\Newsletter_lists::class, function (Faker\Generator $faker) {
+    return [
+        'title' => 'Sujet'
+    ];
+});
+
+$factory->define(App\Droit\Newsletter\Entities\Newsletter_emails::class, function (Faker\Generator $faker) {
+    return [
+        'email'=> $faker->email
+    ];
+});
+
+$factory->define(App\Droit\Newsletter\Entities\Newsletter_contents::class, function (Faker\Generator $faker) {
+    return [
+        'type_id'       => 6, // text
+        'titre'        => null,
+        'contenu'      => null,
+        'image'        => null,
+        'lien'         => null,
+        'arret_id'     => null,
+        'categorie_id' => null,
+        'product_id'   => null,
+        'colloque_id'  => null,
+        'newsletter_campagne_id' => 1,
+        'rang'      => 1,
+        'groupe_id' => null,
+    ];
+});

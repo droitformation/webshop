@@ -17,7 +17,7 @@
 				<div id="newsletter">
 					@if(!$campagne->content->isEmpty())
 						@foreach($campagne->content as $bloc)
-							{!! view('newsletter::Frontend.content.'.$bloc->type->partial)->with(['bloc' => $bloc ])->__toString() !!}
+							{!! view('frontend.newsletter.content.'.$bloc->type->partial)->with(['bloc' => $bloc ])->__toString() !!}
 						@endforeach
 					@endif
 				</div>

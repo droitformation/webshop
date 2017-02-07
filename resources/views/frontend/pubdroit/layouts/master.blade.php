@@ -164,7 +164,7 @@
 								<p>Inscrivez simplement votre adresse email pour recevoir les nouveautés du site </p>
 
 								@foreach($newsletters as $newsletter)
-									@include('newsletter::Frontend.partials.subscribe', ['newsletter' => $newsletter])
+									@include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter])
 								@endforeach
 							@endif
 						</figure>

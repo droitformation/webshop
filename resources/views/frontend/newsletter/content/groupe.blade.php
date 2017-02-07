@@ -1,48 +1,40 @@
-
-@if(isset($bloc->arrets))
+@if(isset($bloc->groupe) && !$bloc->groupe->arrets->isEmpty())
 
     <div class="row">
         <div class="col-md-9">
-            <h3 style="text-align: left;">{{ $categories[$bloc->categorie] }}</h3>
+            <h3>{{ $bloc->groupe->categorie->title }}</h3>
         </div>
-        <div class="col-md-3 listCat text-center">
-            <img width="130" border="0" src="{{ asset('files/pictos/'.$site->slug.'/'.$bloc->image) }}" alt="{{ $categories[$bloc->categorie] }}" />
+        <div class="col-md-3">
+            <img style="max-width: 130px;" border="0" src="{{ asset(config('newsletter.path.categorie').$bloc->groupe->categorie->image) }}" alt="{{ $bloc->groupe->categorie->title }}" />
         </div>
     </div>
 
-    <!-- Bloc content-->
-    @foreach($bloc->arrets as $arret)
-
+    @foreach($bloc->groupe->arrets as $arret)
+        <?php $arret->load('categories');  ?>
         <div class="row">
             <div class="col-md-9">
-                <div class="post">
-                    <div class="post-title">
-                        <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
-                        <h2 class="title">{{ $arret->reference }} du {{ $arret->pub_date->formatLocalized('%d %B %Y') }}</h2>
-                        <p>{!! $arret->abstract !!}</p>
-                    </div><!--END POST-TITLE-->
-                    <div class="post-entry">
-                        {!! $arret->pub_text !!}
-                    </div>
-                </div><!--END POST-->
-            </div>
-            <div class="col-md-3 listCat text-center">
-                <?php
-                if(!$arret->arrets_categories->isEmpty() )
-                {
-                    foreach($arret->arrets_categories as $categorie)
-                    {
-                        if($categorie->id != $bloc->categorie){
-                            echo '<a target="_blank" href="'.url('jurisprudence').'#'.$arret->reference.'">
-                                <img width="130" border="0" alt="'.$categorie->title.'" src="'.asset('files/pictos/'.$site->slug.'/'.$categorie->image).'">
-                            </a>';
-                        }
-                    }
-                }
-                ?>
-            </div>
-        </div>
+                <h2>{{ $arret->reference }} du {{ $arret->pub_date->formatLocalized('%d %B %Y') }}</h2>
+                <p>{!! $arret->abstract !!}</p>
+                {!! $arret->pub_text !!}
 
+                @if(isset($arret->file))
+                    <p><a target="_blank" href="{{ asset(config('newsletter.path.arret').$arret->file) }}">Télécharger en pdf</a></p>
+                @endif
+
+            </div>
+            <div class="col-md-3">
+
+                @if(!$arret->categories->isEmpty())
+                    @foreach($arret->categories as $categorie)
+                        <a target="_blank" href="{{ config('newsletter.link.arret') }}#{{ $bloc->reference }}">
+                            <img style="max-width: 130px;" border="0" alt="{{ $categorie->title }}" src="{{ asset(config('newsletter.path.categorie').$categorie->image) }}">
+                        </a>
+                    @endforeach
+                @endif
+
+            </div>
+            <div class="clear"></div>
+        </div>
     @endforeach
 @endif
 

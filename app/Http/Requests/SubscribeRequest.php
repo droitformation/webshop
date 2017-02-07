@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Illuminate\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
-class SubscribeRequest extends Request
+class SubscribeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -35,7 +35,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css');?>">
 
     @if(isset($isNewsletter))
-        @include('newsletter::Style.main', ['campagne' => isset($campagne) ? : null])
+        @include('style.main', ['campagne' => isset($campagne) ? : null])
     @endif
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
@@ -153,14 +153,15 @@
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
-@include('newsletter::Script.config')
+@include('script.config')
 
 @if(isset($isNewsletter))
-    @include('newsletter::Script.date')
-    @include('newsletter::Script.angular')
-    @include('newsletter::Script.main')
+    @include('script.date')
+    @include('script.angular')
+    @include('script.main')
 @endif
 
+<script type="text/javascript" src="{{ asset('newsletter/js/sorting.js') }}"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/select-list.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/search-user.js');?>"></script>
