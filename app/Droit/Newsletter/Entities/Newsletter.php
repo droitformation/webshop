@@ -37,6 +37,11 @@ class Newsletter extends Model {
         return $this->hasMany('\App\Droit\Newsletter\Entities\Newsletter_campagnes')->orderBy('updated_at','DESC');
     }
 
+    public function campagnes_visibles()
+    {
+        return $this->hasMany('\App\Droit\Newsletter\Entities\Newsletter_campagnes')->whereNull('hidden')->orderBy('updated_at','DESC');
+    }
+
     public function draft()
     {
         return $this->hasMany('\App\Droit\Newsletter\Entities\Newsletter_campagnes')->where('status','=','brouillon')->orderBy('updated_at','DESC');

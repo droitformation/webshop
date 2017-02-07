@@ -59,7 +59,8 @@ class CampagneWorker implements CampagneInterface{
     {
         return $this->campagne->getLastCampagne($newsletter_id);
     }
-    
+
+
     /**
      * Archives by year
      */
@@ -88,9 +89,11 @@ class CampagneWorker implements CampagneInterface{
     {
         if(config('newsletter.multi')) {
             $newsletters = $this->newsletter->getSite($site_id);
-            return $newsletters->map(function ($newsletter, $key) {
-                return $newsletter->campagnes->where('hidden',null);
+            $campagnes = $newsletters->map(function ($newsletter, $key) {
+                return $newsletter->campagnes_visibles;
             })->flatten(1);
+
+            return $campagnes;
         }
 
         return null;

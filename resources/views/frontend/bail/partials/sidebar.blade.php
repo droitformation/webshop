@@ -10,7 +10,7 @@
     @endif
 
     @if( (Request::is('bail/page/newsletter') || Request::is('bail/page/newsletter/*')) && !$newsletters->isEmpty())
-        @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters->first()->campagnes->pluck('sujet','id')])
+        @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletters->first()->campagnes_visibles->pluck('sujet','id')])
     @endif
 
     @if(Request::is('bail/page/revues') || Request::is('bail/page/revues/*'))

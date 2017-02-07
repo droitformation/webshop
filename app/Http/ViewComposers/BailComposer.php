@@ -46,7 +46,7 @@ class BailComposer
 
         $newsletters = $this->newsworker->siteNewsletters($site->id);
         $campagnes   = $this->newsworker->siteCampagnes($site->id);
-
+ 
         if(!$site->menus->isEmpty())
         {
             foreach($site->menus as $menu)
