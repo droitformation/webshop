@@ -174,7 +174,7 @@ class ImportTest extends BrowserKitTest
     }
 
     /**
-     * @expectedException designpond\newsletter\Exceptions\BadFormatException
+     * @expectedException App\Exceptions\BadFormatException
      */
     public function testImportListFormatFails()
     {

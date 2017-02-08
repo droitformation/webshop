@@ -48,7 +48,7 @@ class MailjetWorkerTest extends BrowserKitTest
     }
 
     /**
-     * @expectedException designpond\newsletter\Exceptions\ListNotSetException
+     * @expectedException App\Exceptions\ListNotSetException
      */
     public function testNoListException()
     {
