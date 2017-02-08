@@ -47,7 +47,7 @@ class ArretController extends Controller {
             
             return [
                 'id'         => $arret->id,
-                'title'      => $arret->reference.' '.utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')),
+                'title'      => $arret->reference.', '.utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')),
                 'reference'  => $arret->reference,
                 'abstract'   => $arret->abstract,
                 'pub_text'   => $arret->pub_text,

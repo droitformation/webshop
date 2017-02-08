@@ -39,14 +39,12 @@ class BailComposer
     {
         setlocale(LC_ALL, 'fr_FR');
         
-        $site       = $this->site->findBySlug('bail');
-        $categories = $this->categorie->getAll($site->id);
-        $revues     = $this->product->getByCategorie('Revue');
-        $years      = $this->arret->annees($site->id);
-
+        $site        = $this->site->findBySlug('bail');
+        $categories  = $this->categorie->getAll($site->id);
+        $revues      = $this->product->getByCategorie('Revue');
+        $years       = $this->arret->annees($site->id);
         $newsletters = $this->newsworker->siteNewsletters($site->id);
-        $campagnes   = $this->newsworker->siteCampagnes($site->id);
- 
+
         if(!$site->menus->isEmpty())
         {
             foreach($site->menus as $menu)
@@ -61,8 +59,6 @@ class BailComposer
         $view->with('categories',  $categories);
         $view->with('revues', $revues->pluck('title','id'));
         $view->with('years',  $years);
-
-        $view->with('campagnes',$campagnes);
         $view->with('newsletters',$newsletters);
 
         $view->with('faqcantons',['be'=>'Berne','fr'=>'Fribourg','ge'=>'Genève','ju'=>'Jura','ne'=>'Neuchâtel','vs'=>'Valais','vd'=>'Vaud']);

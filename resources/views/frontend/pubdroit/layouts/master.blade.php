@@ -161,7 +161,7 @@
 						<figure class="col-md-6">
 							@if(isset($newsletters) && !$newsletters->isEmpty())
 								<h4>Newsletter</h4>
-								<p>Inscrivez simplement votre adresse email pour recevoir les nouveautés du site </p>
+								<p>Si vous souhaitez être informé des dernières nouveautés, inscrivez-vous simplement à notre newsletter en insérant votre adresse e-mail.</p>
 
 								@foreach($newsletters as $newsletter)
 									@include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter])

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmailSpecialisationsTable extends Migration
+class CreateListSpecialisationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateEmailSpecialisationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_specialisations', function (Blueprint $table) {
+        Schema::create('list_specialisations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('email_id');
+            $table->integer('list_id');
             $table->integer('specialisation_id');
         });
     }
@@ -27,6 +27,6 @@ class CreateEmailSpecialisationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('email_specialisations');
+        Schema::dropIfExists('list_specialisations');
     }
 }

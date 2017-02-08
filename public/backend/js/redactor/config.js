@@ -13,7 +13,7 @@ $( function() {
         fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
         imageResizable: true,
         imagePosition: true,
-        buttons    : ['html','formatting','bold','italic','|','unorderedlis','orderedlist', '|','image','file','link','alignment']
+        buttons    : ['html','formatting','bold','italic','|','unorderedlist','orderedlist', '|','image','file','link','alignment']
     });
 
     $('.redactorSimple').redactor({
@@ -26,7 +26,7 @@ $( function() {
         imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
         plugins: ['iconic'],
-        buttons  : ['format','bold','italic','link','image','file','|','unorderedlis','orderedlist']
+        buttons  : ['format','bold','italic','link','image','file','|','unorderedlist','orderedlist']
     });
 
 });

@@ -106,25 +106,19 @@ class BailController extends Controller
             $data['order']     = $this->seminaire->categories();
             $data['auteurs']   = $this->seminaire->authors();
             $data['annees']    = $this->seminaire->years();
-
-            echo '<pre>';
-            print_r($data['doctrines']);
-            echo '</pre>';exit();
         }
 
         if($slug == 'newsletter')
         {
-            if($var)
-            {
+            if($var) {
                 $data['campagne'] = $this->newsworker->getCampagne($var);
             }
             else
             {
                 $newsletters = $this->newsworker->siteNewsletters($this->site_id);
-                $campagnes   = $this->newsworker->last($newsletters->pluck('id'));
+                $campagnes = $newsletters->pluck('campagnes_visibles')->flatten()->sortByDesc('send_at');
 
                 $data['campagne'] = $campagnes->first();
-
             }
         }
 

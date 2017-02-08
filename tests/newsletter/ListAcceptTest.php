@@ -55,9 +55,28 @@ class ListAcceptTest extends BrowserKitTest
 
         $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
 
-        $response = $this->call('POST', 'build/liste/send', ['list_id' => $liste->id, 'campagne_id' => 1]);
+        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
 
         $this->followRedirects()->seePageIs('build/newsletter');
+    }
+
+    public function testAddSpecialisations()
+    {
+        $list = App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        $specialisations = $make->items('Specialisation', $nbr = 2);
+        $specialisations = $specialisations->pluck('id')->all();
+
+        $result = $list->create(['title' => 'One title', 'emails' => ['cindy.leschaud@gmail.com','pruntrut@yahoo.fr'], 'specialisations' => $specialisations]);
+
+        $this->seeInDatabase('newsletter_lists', ['title' => 'One title']);
+        $this->seeInDatabase('newsletter_emails', ['email' => 'cindy.leschaud@gmail.com']);
+        $this->seeInDatabase('newsletter_emails', ['email' => 'pruntrut@yahoo.fr']);
+
+        $this->assertEquals(2, $result->emails->count());
+
+        $this->assertEquals($specialisations, $result->specialisations->pluck('id')->all());
     }
     
     function prepareFileUpload($path)

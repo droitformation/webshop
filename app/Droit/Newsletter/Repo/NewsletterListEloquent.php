@@ -30,8 +30,7 @@ class NewsletterListEloquent implements NewsletterListInterface{
             'updated_at'   => date('Y-m-d G:i:s')
         ));
 
-        if( ! $list )
-        {
+        if( ! $list ) {
             return false;
         }
 
@@ -41,6 +40,10 @@ class NewsletterListEloquent implements NewsletterListInterface{
             {
                 $list->emails()->save(new \App\Droit\Newsletter\Entities\Newsletter_emails(['list_id' => $list->id, 'email' => $email]));
             }
+        }
+
+        if(isset($data['specialisations']) && !empty($data['specialisations'])){
+            $list->specialisations()->attach($data['specialisations']);
         }
 
         return $list;
@@ -56,8 +59,21 @@ class NewsletterListEloquent implements NewsletterListInterface{
         }
 
         $list->fill($data);
-
         $list->save();
+
+        if(isset($data['emails']) && !empty($data['emails']))
+        {
+            $exists = $list->emails->pluck('email')->all();
+            $emails = array_diff($data['emails'],$exists);
+
+            foreach($emails as $email) {
+                $list->emails()->save(new \App\Droit\Newsletter\Entities\Newsletter_emails(['list_id' => $list->id, 'email' => $email]));
+            }
+        }
+
+        if(isset($data['specialisations']) && !empty($data['specialisations'])){
+            $list->specialisations()->sync($data['specialisations']);
+        }
 
         return $list;
     }

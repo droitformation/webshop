@@ -68,7 +68,9 @@ Route::group(['middleware' => $middleware], function () {
         Route::resource('import', 'Backend\Newsletter\ImportController');
         Route::resource('emails', 'Backend\Newsletter\EmailController');
 
-        Route::post('liste/send', 'Backend\Newsletter\ListController@send');
+        Route::post('send/list', 'Backend\Newsletter\ListController@send');
+        Route::post('export', 'Backend\Newsletter\ListController@export');
+        Route::get('listes', 'Backend\Newsletter\ListController@index');
         Route::resource('liste', 'Backend\Newsletter\ListController');
 
     });

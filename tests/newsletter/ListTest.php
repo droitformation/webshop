@@ -53,7 +53,7 @@ class ListTest extends BrowserKitTest
         $this->list->shouldReceive('getAll')->once();
         $this->list->shouldReceive('find')->once();
 
-        $this->visit('build/liste/1')->see('Listes hors campagne');
+        $this->visit('build/liste/1');
         $this->assertViewHas('lists');
         $this->assertViewHas('list');
     }
@@ -65,7 +65,7 @@ class ListTest extends BrowserKitTest
         $this->list->shouldReceive('find')->once();
         $mock->shouldReceive('send')->once();
 
-        $response = $this->call('POST', 'build/liste/send', ['list_id' => 1, 'campagne_id' => 1]);
+        $response = $this->call('POST', 'build/send/liste', ['list_id' => 1, 'campagne_id' => 1]);
 
         $this->assertRedirectedTo('build/newsletter');
     }

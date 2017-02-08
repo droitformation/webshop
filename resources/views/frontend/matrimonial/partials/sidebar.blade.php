@@ -8,7 +8,9 @@
     @include('frontend.matrimonial.sidebar.newsletter')
 
     @if( (Request::is('matrimonial/page/newsletter') || Request::is('matrimonial/page/newsletter/*')) && !$newsletters->isEmpty())
-        @include('frontend.partials.list', ['page' => $page, 'lists' => $campagnes->where('hidden',null)->where('status','envoyé')->pluck('sujet','id')])
+        @foreach($newsletters as $newsletter)
+            @include('frontend.partials.list', ['page' => $page, 'lists' => $newsletter->campagnes_visibles->pluck('sujet','id')])
+        @endforeach
     @endif
 
     @if(isset($menu_sidebar) && !$menu_sidebar->pages_active->isEmpty())

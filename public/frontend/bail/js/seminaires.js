@@ -2,7 +2,7 @@ $( document ).ready(function(event) {
 	
 	if($('#seminaires')) {
 			
-		var domFiltre = $('.seminaire .filtre');
+		var domFiltre = $('.seminaire.filtre');
 		
 		// Chosen init
 		var chosenSelect = $(".seminaire-chosen").chosen();
@@ -15,7 +15,7 @@ $( document ).ready(function(event) {
 		var blockCat   = domSeminaires.find('.sujets div.cat');
 		var sujets     = domSeminaires.find('.sujets div.cat div.sujet');	
 		
-		console.log(filtresOne);	
+		console.log(filtresOne);
 		
 		var activeClasses      = [];
 		var activeSelectors    = [];
@@ -83,7 +83,7 @@ $( document ).ready(function(event) {
 				'author':[]
 			};
 		
-			domFiltre.find('ul#seminaireannees li a.active').each(function(item,index) {
+			domFiltre.find('#seminaireannees li a.active').each(function(item,index) {
 				activeClasses.year.push($(this).attr('rel'));
 			});
 		

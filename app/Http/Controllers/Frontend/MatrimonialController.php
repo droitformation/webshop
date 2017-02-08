@@ -82,7 +82,7 @@ class MatrimonialController extends Controller
             else
             {
                 $newsletters = $this->newsworker->siteNewsletters($this->site_id);
-                $campagnes   = $this->newsworker->last($newsletters->pluck('id'));
+                $campagnes = $newsletters->pluck('campagnes_visibles')->flatten()->sortByDesc('send_at');
 
                 $data['campagne'] = $campagnes->first();
             }

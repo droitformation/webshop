@@ -11,6 +11,7 @@ use App\Droit\Newsletter\Repo\NewsletterListInterface;
 use App\Droit\Newsletter\Repo\NewsletterEmailInterface;
 use App\Droit\Service\UploadInterface;
 use App\Http\Requests\EmailListRequest;
+use App\Http\Requests\UpdateListRequest;
 use App\Http\Requests\SendListRequest;
 
 class ListController extends Controller
@@ -41,7 +42,7 @@ class ListController extends Controller
     {
         $lists = $this->list->getAll();
 
-        return view('backend.newsletter.lists.import')->with(['lists' => $lists]);
+        return view('backend.newsletter.lists.index')->with(['lists' => $lists]);
     }
 
     /**
@@ -54,7 +55,7 @@ class ListController extends Controller
         $lists = $this->list->getAll();
         $list  = $this->list->find($id);
 
-        return view('backend.newsletter.lists.emails')->with(['lists' => $lists, 'list' => $list]);
+        return view('backend.newsletter.lists.show')->with(['lists' => $lists, 'list' => $list]);
     }
 
     /**
@@ -94,13 +95,65 @@ class ListController extends Controller
 
             return redirect()->back();
         }
-
-        $emails  = $results->pluck('email')->all();
-        $list    = $this->list->create(['title' => $request->input('title'), 'emails' => $emails]);
+        
+        $list = $this->list->create([
+            'title' => $request->input('title'), 
+            'emails' => $results->pluck('email')->unique()->all(), 
+            'specialisations' => $request->input('specialisations')]);
 
         alert()->success('Fichier importé!');
 
-        return redirect('build/liste');
+        return redirect('build/listes');
+    }
+
+    public function update(UpdateListRequest $request)
+    {
+        $data = $request->except('file');
+        
+        if($request->file('file'))
+        {
+            $file = $this->upload->upload( $request->file('file') , 'files');
+
+            if(!$file) {
+                throw new \App\Exceptions\FileUploadException('Upload failed');
+            }
+
+            // path to xls
+            $path = public_path('files/'.$file['name']);
+            // Read uploded xls
+            $results = $this->import->read($path);
+
+            if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') ) {
+                alert()->danger('Le fichier est vide ou mal formaté');
+                return redirect()->back();
+            }
+
+            $data['emails'] = $results->pluck('email')->unique()->all();
+        }
+
+        $list = $this->list->update($data);
+
+        alert()->success('Liste mise à jour');
+
+        return redirect()->back();
+    }
+
+    public function export(Request $request)
+    {
+        $list = $this->list->find($request->input('list_id'));
+
+        $emails = $list->emails->map(function ($item) {
+            return [$item->email];
+        });
+
+        \Excel::create('Export_liste_'.$list->title, function ($excel) use ($emails) {
+            $excel->sheet('Export', function ($sheet) use ($emails) {
+                $sheet->setOrientation('portrait');
+
+                $sheet->rows($emails->toArray());
+            });
+
+        })->export('xls');
     }
 
     /**

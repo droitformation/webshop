@@ -34,9 +34,7 @@ class MatrimonialComposer
         $site       = $this->site->findBySlug('matrimonial');
         $categories = $this->categorie->getAll($site->id);
         $years      = $this->arret->annees($site->id);
-
         $newsletters = $this->newsworker->siteNewsletters($site->id);
-        $campagnes   = $this->newsworker->siteCampagnes($site->id);
 
         if(!$site->menus->isEmpty())
         {
@@ -50,8 +48,6 @@ class MatrimonialComposer
         $view->with('site',  $site);
         $view->with('categories',  $categories);
         $view->with('years',  $years);
-
-        $view->with('campagnes',$campagnes);
         $view->with('newsletters',$newsletters);
     }
 }
