@@ -453,3 +453,7 @@ div#fieldChooser,div#fieldChooser2 {
 .deleteContentBlocArret{
     margin-top: 5px;
 }
+
+#addEmail{
+    margin:15px 0 10px 0;
+}

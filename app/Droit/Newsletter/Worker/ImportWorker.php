@@ -42,7 +42,7 @@ class ImportWorker implements ImportWorkerInterface
 
     public function import($data,$file)
     {
-        $file          = $this->upload->upload( $file , 'files' );
+        $file          = $this->upload->upload( $file , 'files/import' );
         $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
 
         if(!$file)
@@ -51,7 +51,7 @@ class ImportWorker implements ImportWorkerInterface
         }
 
         // path to xls
-        $path = public_path('files/'.$file['name']);
+        $path = public_path('files/import/'.$file['name']);
 
         // Read uploaded xls
         $results = $this->read($path);

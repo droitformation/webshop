@@ -22,6 +22,13 @@ class NewsletterListEloquent implements NewsletterListInterface{
 		return $this->list->with(['emails'])->find($id);
 	}
 
+    public function emailExist($id,$email)
+    {
+        return $this->list->where('id','=',$id)->whereHas('emails', function($q) use ($email) {
+            $q->where('email','=', $email);
+        })->get();
+    }
+    
     public function create(array $data){
 
         $list = $this->list->create(array(

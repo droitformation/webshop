@@ -40,7 +40,7 @@ class ListAcceptTest extends BrowserKitTest
 
         $liste->emails()->saveMany([$email1,$email2]);
 
-        $this->visit('build/liste/'.$liste->id)->see('Listes hors campagne');
+        $this->visit('build/liste/'.$liste->id)->see($liste->title);
         $this->assertViewHas('lists');
         $this->assertViewHas('list');
         $this->see('One Title');
@@ -77,6 +77,50 @@ class ListAcceptTest extends BrowserKitTest
         $this->assertEquals(2, $result->emails->count());
 
         $this->assertEquals($specialisations, $result->specialisations->pluck('id')->all());
+    }
+
+    public function testUpdateList()
+    {
+        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create([
+            'title' => 'One Title'
+        ]);
+
+        $make  = new \tests\factories\ObjectFactory();
+        $specialisations = $make->items('Specialisation', $nbr = 2);
+        $specialisations = $specialisations->pluck('id')->all();
+
+        $this->visit('build/liste/'.$liste->id)->see($liste->title);
+
+        $response = $this->call('PUT','build/liste/'.$liste->id, ['id' =>  $liste->id,'title' => 'Other title', 'specialisations' => $specialisations]);
+
+        $this->visit('build/liste/'.$liste->id)->see('Other title');
+
+        $content = $this->followRedirects()->response->getOriginalContent();
+        $content = $content->getData();
+        $result  = $content['list'];
+
+        $this->assertEquals($specialisations, $result->specialisations->pluck('id')->all());
+
+        $this->seeInDatabase('newsletter_lists', [
+            'id'    => $liste->id,
+            'title' => 'Other title'
+        ]);
+    }
+
+    public function testDeleteList()
+    {
+        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create([
+            'title' => 'One Title'
+        ]);
+
+        $this->visit('build/liste/'.$liste->id)->see($liste->title);
+
+        $response = $this->call('DELETE','build/liste/'.$liste->id);
+
+        $this->notSeeInDatabase('newsletter_lists', [
+            'id' => $liste->id,
+            'deleted_at' => null
+        ]);
     }
     
     function prepareFileUpload($path)

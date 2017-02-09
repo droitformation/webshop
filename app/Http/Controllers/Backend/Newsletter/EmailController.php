@@ -26,7 +26,14 @@ class EmailController extends Controller
 
     public function store(Request $request)
     {
-        $email = $this->emails->create( $request->all() );
+        $exist = $this->list->emailExist($request->input('list_id'),$request->input('email'));
+
+        if(!$exist->isEmpty()){
+            alert()->warning('Cet email est déjà dans la liste');
+            return redirect()->back();
+        }
+
+        $email = $this->emails->create($request->all());
 
         alert()->success('Email ajouté');
 

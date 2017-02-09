@@ -50,22 +50,31 @@ class ListTest extends BrowserKitTest
 
     public function testListPage()
     {
-        $this->list->shouldReceive('getAll')->once();
-        $this->list->shouldReceive('find')->once();
+        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create([
+            'title' => 'One Title'
+        ]);
 
-        $this->visit('build/liste/1');
+        $this->list->shouldReceive('getAll')->once()->andReturn(collect([$liste]));
+        $this->list->shouldReceive('find')->once()->andReturn($liste);
+
+        $this->visit('build/liste/'.$liste->id);
         $this->assertViewHas('lists');
         $this->assertViewHas('list');
     }
 
     public function testSendToList()
     {
+        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create([
+            'title' => 'One Title'
+        ]);
+
         $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
         $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
-        $this->list->shouldReceive('find')->once();
+
+        $this->list->shouldReceive('find')->once()->andReturn($liste);
         $mock->shouldReceive('send')->once();
 
-        $response = $this->call('POST', 'build/send/liste', ['list_id' => 1, 'campagne_id' => 1]);
+        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
 
         $this->assertRedirectedTo('build/newsletter');
     }
@@ -105,7 +114,7 @@ class ListTest extends BrowserKitTest
             $response = $this->call('POST', 'build/liste', ['title' => 'Un titre' ,'list_id' => 1, 'campagne_id' => 1], [], ['file' => $upload]);
 
         } catch (Exception $e) {
-            $this->assertType('designpond\newsletter\Exceptions\FileUploadException', $e);
+            $this->assertType('App\Droit\Exceptions\FileUploadException', $e);
         }
     }
 
@@ -130,7 +139,7 @@ class ListTest extends BrowserKitTest
                 ->press('Envoyer');
 
         } catch (Exception $e) {
-            $this->assertType('\designpond\newsletter\Exceptions\BadFormatException', $e);
+            $this->assertType('\App\Droit\Exceptions\BadFormatException', $e);
         }
 
     }

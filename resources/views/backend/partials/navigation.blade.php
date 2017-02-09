@@ -130,7 +130,7 @@
                 <li class="<?php echo (Request::is('build/newsletter/*') ? 'active' : '' ); ?>"><a href="{{ url('build/newsletter')  }}">Liste des campagnes</a></li>
                 <li class="<?php echo (Request::is('build/subscriber/*') ? 'active' : '' ); ?>"><a href="{{ url('build/subscriber')  }}">Abonnés</a></li>
                 <li class="<?php echo (Request::is('build/import') ? 'active' : '' ); ?>"><a href="{{ url('build/import')  }}">Importer une liste</a></li>
-                <li class="<?php echo (Request::is('build/listes') ? 'active' : '' ); ?>"><a href="{{ url('build/listes')  }}">Liste hors campagnes</a></li>
+                <li class="<?php echo (Request::is('build/liste') ? 'active' : '' ); ?>"><a href="{{ url('build/liste')  }}">Liste hors campagnes</a></li>
             </ul>
         </li>
 

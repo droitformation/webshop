@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <p><a href="{{ url('build/listes') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour aux listes</a></p>
+            <p><a href="{{ url('build/liste') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour aux listes</a></p>
         </div>
     </div>
 
@@ -30,17 +30,19 @@
                         @endforeach
                     @endif
 
-                    <div id="addEmail" class="row collapse">
-                        <div class="col-md-12">
-                            <form action="{{ url('build/emails') }}" method="POST">{!! csrf_field() !!}
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" name="email" class="form-control" placeholder="Ajouter un nouvel email">
-                                        <input type="hidden" name="list_id" value="{{ $list->id }}">
-                                        <span class="input-group-btn"><button class="btn btn-info" type="submit">Ajouter</button></span>
-                                    </div><!-- /input-group -->
-                                </div>
-                            </form>
+                    <div id="addEmail" class="collapse">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form action="{{ url('build/emails') }}" method="POST">{!! csrf_field() !!}
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" name="email" class="form-control" placeholder="Ajouter un nouvel email">
+                                            <input type="hidden" name="list_id" value="{{ $list->id }}">
+                                            <span class="input-group-btn"><button class="btn btn-info" type="submit">Ajouter</button></span>
+                                        </div><!-- /input-group -->
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
 

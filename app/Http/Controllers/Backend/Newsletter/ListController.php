@@ -58,25 +58,9 @@ class ListController extends Controller
         return view('backend.newsletter.lists.show')->with(['lists' => $lists, 'list' => $list]);
     }
 
-    /**
-     * Send test campagne
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function send(SendListRequest $request)
-    {
-        $list = $this->list->find($request->input('list_id'));
-
-        $this->import->send($request->input('campagne_id'),$list);
-
-        alert()->success('Campagne envoyé à la liste!');
-
-        return redirect('build/newsletter');
-    }
-
     public function store(EmailListRequest $request)
     {
-        $file = $this->upload->upload( $request->file('file') , 'files');
+        $file = $this->upload->upload( $request->file('file') , 'files/import');
 
         if(!$file)
         {
@@ -84,7 +68,7 @@ class ListController extends Controller
         }
 
         // path to xls
-        $path = public_path('files/'.$file['name']);
+        $path = public_path('files/import/'.$file['name']);
 
         // Read uploded xls
         $results = $this->import->read($path);
@@ -103,7 +87,7 @@ class ListController extends Controller
 
         alert()->success('Fichier importé!');
 
-        return redirect('build/listes');
+        return redirect()->back();
     }
 
     public function update(UpdateListRequest $request)
@@ -112,14 +96,14 @@ class ListController extends Controller
         
         if($request->file('file'))
         {
-            $file = $this->upload->upload( $request->file('file') , 'files');
+            $file = $this->upload->upload( $request->file('file') , 'files/import');
 
             if(!$file) {
                 throw new \App\Exceptions\FileUploadException('Upload failed');
             }
 
             // path to xls
-            $path = public_path('files/'.$file['name']);
+            $path = public_path('files/import/'.$file['name']);
             // Read uploded xls
             $results = $this->import->read($path);
 
@@ -136,6 +120,31 @@ class ListController extends Controller
         alert()->success('Liste mise à jour');
 
         return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        $this->list->delete($id);
+
+        alert()->success('Liste supprimée');
+
+        return redirect()->back();
+    }
+
+    /**
+     * Send test campagne
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function send(SendListRequest $request)
+    {
+        $list = $this->list->find($request->input('list_id'));
+
+        $this->import->send($request->input('campagne_id'),$list);
+
+        alert()->success('Campagne envoyé à la liste!');
+
+        return redirect('build/newsletter');
     }
 
     public function export(Request $request)
@@ -156,18 +165,4 @@ class ListController extends Controller
         })->export('xls');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * DELETE /list
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $this->list->delete($id);
-
-        alert()->success('Liste supprimée');
-
-        return redirect()->back();
-    }
 }

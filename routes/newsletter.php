@@ -70,7 +70,6 @@ Route::group(['middleware' => $middleware], function () {
 
         Route::post('send/list', 'Backend\Newsletter\ListController@send');
         Route::post('export', 'Backend\Newsletter\ListController@export');
-        Route::get('listes', 'Backend\Newsletter\ListController@index');
         Route::resource('liste', 'Backend\Newsletter\ListController');
 
     });
