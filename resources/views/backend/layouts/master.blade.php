@@ -147,6 +147,7 @@
 <!-- Form plugins -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
+<script type="text/javascript" src="{{ asset('newsletter/js/jqColorPicker.min.js') }}"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/placeholdr.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
 <script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
@@ -159,16 +160,16 @@
     @include('script.date')
     @include('script.angular')
     @include('script.main')
+    <script type="text/javascript" src="<?php echo asset('backend/js/select-list.js');?>"></script>
+    <script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
 @endif
 
 <script type="text/javascript" src="{{ asset('newsletter/js/sorting.js') }}"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/select-list.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/search-user.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/search-adresse.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/order.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/inscription.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/colloque.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/rappels.js');?>"></script>
@@ -181,7 +182,6 @@
 <!-- Upload plugins -->
 <script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/manager/isotope.pkgd.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
