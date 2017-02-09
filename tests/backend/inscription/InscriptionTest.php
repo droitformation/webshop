@@ -1,6 +1,6 @@
 <?php
 
-use Laravel\BrowserKitTesting\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class InscriptionTest extends BrowserKitTest {
 

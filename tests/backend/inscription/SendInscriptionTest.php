@@ -1,6 +1,6 @@
 <?php
 
-use Laravel\BrowserKitTesting\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use MailThief\Testing\InteractsWithMail;
 use Illuminate\Support\Facades\Mail;
 

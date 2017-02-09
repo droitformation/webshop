@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Laravel\BrowserKitTesting\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class OptionTest extends BrowserKitTest {

@@ -1,6 +1,6 @@
 <?php
 
-use Laravel\BrowserKitTesting\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Mail;
 
 class RegisterTest extends BrowserKitTest {

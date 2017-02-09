@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Laravel\BrowserKitTesting\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class BlocTest extends BrowserKitTest {
 
