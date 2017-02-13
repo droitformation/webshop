@@ -50,7 +50,7 @@
                             </td>
                             <td valign="middle" width="40%" class="text-left">
                                 <p>Demande d'abonnement <strong>{{ $item->name }}</strong></p>
-                                <p>Une facture vous sera envoyé avec l'ouvrage</p>
+                                {!! $item->model->remarque !!}
                             </td>
                             <td align="center" width="15%">{{ $item->price }} CHF</td>
                             <td align="center" width="15%">{{ $item->qty }}</td>

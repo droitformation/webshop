@@ -63,7 +63,7 @@
                     </td>
                     <td valign="middle" class="text-left">
                         <p>Demande d'abonnement <strong>{{ $item->name }}</strong></p>
-                        <p>Une facture vous sera envoyé avec l'ouvrage</p>
+                        {!! $item->model->remarque !!}
                     </td>
                     <td class="text-center" valign="middle">{{ $item->price }} CHF/{{ strtolower($item->options->plan) }}</td>
                     <td class="text-center" valign="middle">
