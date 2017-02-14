@@ -117,7 +117,12 @@ Route::get('testing', function() {
     //$occurrence   = $occurrences->find(1);
 
     $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    //$colloque   = $colloques->find(100);
+    $colloque   = $colloques->find(107);
+    $user     = $users->find(710);
+
+    echo '<pre>';
+    print_r($user->inscription_participations);
+    echo '</pre>';exit();
 
    // $price  = $colloque->prices->first();
     //$option = $colloque->options->first();
@@ -165,7 +170,7 @@ Route::get('testing', function() {
 /*
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
-    $user     = $users->find(710);
+
 
     $rappels  = $factures->getFacturesAndRappels(292);
 

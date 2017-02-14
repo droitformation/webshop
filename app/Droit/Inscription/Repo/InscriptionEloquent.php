@@ -249,7 +249,7 @@ class InscriptionEloquent implements InscriptionInterface{
         {
             $participant = new \App\Droit\Inscription\Entities\Participant();
 
-            $participant->create(['name' => $data['participant'], 'inscription_id' => $inscription->id ]);
+            $participant->create(['name' => $data['participant'], 'email' => $data['email'], 'inscription_id' => $inscription->id ]);
         }
 
         return $inscription;
@@ -362,7 +362,7 @@ class InscriptionEloquent implements InscriptionInterface{
         {
             $participant = new \App\Droit\Inscription\Entities\Participant();
             $participant->where('inscription_id','=',$inscription->id )->delete();
-            $participant->create(['name' => $data['participant'], 'inscription_id' => $inscription->id ]);
+            $participant->create(['name' => $data['participant'], 'email' => $data['email'], 'inscription_id' => $inscription->id ]);
         }
 
         return $inscription;

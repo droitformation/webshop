@@ -4,11 +4,10 @@
     <div id="colloque-dependence">
 
         <!-- Prices -->
-        <?php $prices = $colloque->prices->where('type','public'); ?>
-        @if(!$prices->isEmpty())
+        @if(!$colloque->prices_active->isEmpty())
             <div class='wrapper'>
                 <h4>Prix applicable</h4>
-                @foreach($prices as $price)
+                @foreach($colloque->prices_active as $price)
                     <input class="prices" required type="radio" id="price_{{ $price->id }}" name="price_id" value="{{ $price->id }}">
                     <label for="price_{{ $price->id }}">
                         <div class='package'>

@@ -32,6 +32,15 @@
                        </dl>
                    </div>
                </div>
+               <div class="row">
+                   <div class="col-md-12">
+                       <dl class="dl-horizontal price-list">
+                           <dt style="width:200px;">Cacher le prix à partir du:</dt>
+                           <dd style="margin-left:220px;"><input class="form-control datePickerNew" name="end_at" type="text" v-model="nouveau.end_at" v-bind:value="nouveau.end_at"></dd>
+                       </dl>
+                   </div>
+               </div>
+
                <p class="text-right margBottom"><a @click="ajouterPrice" class="btn btn-sm btn-primary">Envoyer</a></p>
            </li>
        </ul>
@@ -82,6 +91,19 @@
                        </dl>
                    </div>
                </div>
+
+               <div class="row">
+                   <div class="col-md-12">
+                       <dl class="dl-horizontal price-list">
+                           <dt style="width:200px;">Cacher le prix à partir du:</dt>
+                           <dd style="margin-left:220px;" v-if="!price.state">{{ price.end_at }}</dd>
+                           <dd style="margin-left:220px;" v-if="price.state">
+                               <input class="form-control datePickerPrices" name="end_at" type="text" v-model="price.end_at" v-bind:value="price.end_at">
+                           </dd>
+                       </dl>
+                   </div>
+               </div>
+
            </li>
        </ul>
 
@@ -120,6 +142,7 @@ export default {
                 type: 'public',
                 rang: '',
                 remarque: '',
+                end_at:'',
                 colloque_id: this.colloque,
             },
             add : false
@@ -132,9 +155,51 @@ export default {
         getData : function(){
              this.list = _.orderBy(this.prices, ['type'],['desc']);
              this.list_occurrences = this.occurrences;
+
+             this.$nextTick(function(){
+
+               $.fn.datepicker.dates['fr'] = {
+                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+                    today: "Aujourd'hui",
+                    clear: "Clear"
+                };
+
+                var self = this;
+
+                $('.datePickerNew').datepicker({
+                    format: 'yyyy-mm-dd',
+                    language: 'fr'
+                }).on('changeDate', function(ev){
+                   self.nouveau.end_at = ev.target.value;
+                });
+            });
         },
         editPrice : function(price){
             price.state = true;
+
+            this.$nextTick(function(){
+                 $.fn.datepicker.dates['fr'] = {
+                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+                    today: "Aujourd'hui",
+                    clear: "Clear"
+                };
+
+                $('.datePickerPrices').datepicker({
+                    format: 'yyyy-mm-dd',
+                    language: 'fr'
+                }).on('changeDate', function(ev){
+                   price.end_at = ev.target.value;
+                });
+            });
+
         },
         ajouter:function(){
             this.add = true;

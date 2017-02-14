@@ -15,6 +15,11 @@ class Participant extends Model
 
     protected $table = 'colloque_inscriptions_participants';
 
-    protected $fillable = ['name', 'inscription_id'];
+    protected $fillable = ['name', 'inscription_id','email'];
+
+    public function inscription()
+    {
+        return $this->belongsTo('App\Droit\Inscription\Entities\Inscription');
+    }
 
 }

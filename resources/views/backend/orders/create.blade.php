@@ -71,12 +71,23 @@
                         <hr/>
 
                         <fieldset class="row">
-                            <div class="form-group col-md-2">
-                                <label><i class="fa fa-truck"></i>&nbsp;&nbsp;Frais de port</label><br/>
-                                <div class="checkbox">
-                                    <label>
-                                         Gratuit&nbsp;<input type="checkbox" {{ old('free') == 1 ? 'checked' : '' }} name="free" value="1">
-                                    </label>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <i class="fa fa-truck"></i>&nbsp;&nbsp;Frais de port gratuit&nbsp;<input type="checkbox" {{ old('free') == 1 ? 'checked' : '' }} name="free" value="1">
+                                        </label>
+                                    </div>
+                                    @if(!$shippings->isEmpty())
+                                        <p>-- ou --</p>
+                                        <div class="form-group">
+                                            <select name="shipping_id" class="form-control">
+                                                @foreach($shippings as $shipping)
+                                                    <option value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -91,7 +102,6 @@
                                     <span class="input-group-addon">%</span>
                                 </div><!-- /input-group -->
                             </div>
-                            <div class="col-md-1"></div>
                             <div class="col-md-6">
                                 <label><i class="fa fa-info-circle"></i>&nbsp; Phrases d'informations</label><br/>
                                 <div class="form-group input-group">

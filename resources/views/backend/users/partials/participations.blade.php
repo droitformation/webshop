@@ -7,7 +7,7 @@
     </thead>
     <tbody>
         <!-- Group start -->
-        @foreach($inscriptions_groupe as $group)
+        @foreach($user->participations as $inscription)
             <tr class="mainRow">
                 <td>
                     <a class="collapse_anchor" data-toggle="collapse" href="#inscription_no_{{ $group->id }}">

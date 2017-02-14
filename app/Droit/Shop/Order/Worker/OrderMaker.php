@@ -81,7 +81,8 @@ class OrderMaker implements OrderMakerInterface{
             'order_no'    => $this->order->newOrderNumber(),
             'amount'      => isset($order['admin']) ? $this->total($order['order']) : \Cart::instance('shop')->total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
-            'shipping_id' => isset($order['admin']) ? $this->getShipping($order) : $shipping->id,
+            //'shipping_id' => isset($order['admin']) ? $this->getShipping($order) : $shipping->id,
+            'shipping_id' => $shipping ? $shipping->id : $this->getShipping($order),
             'payement_id' => 1,
             'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::instance('shop')->content())
         ];

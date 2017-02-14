@@ -34,6 +34,5 @@ class PubdroitComposer
 
         $view->with('campagnes',$campagnes);
         $view->with('newsletters',$newsletters);
-
     }
 }

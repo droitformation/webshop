@@ -71,12 +71,10 @@ class User extends Authenticatable {
         {
             $livraison = $this->adresses->filter(function($adresse)
             {
-                if ($adresse->livraison == 1)
-                {
+                if ($adresse->livraison == 1) {
                     return true;
                 }
-                elseif ($adresse->type == 1)
-                {
+                elseif ($adresse->type == 1) {
                     return true;
                 }
             });
@@ -93,8 +91,7 @@ class User extends Authenticatable {
         {
             $contact = $this->adresses->filter(function($adresse)
             {
-                if ($adresse->type == 1)
-                {
+                if ($adresse->type == 1) {
                     return true;
                 }
             });
@@ -111,8 +108,7 @@ class User extends Authenticatable {
         {
             $contact = $this->adresses->filter(function($adresse)
             {
-                if ($adresse->type == 1)
-                {
+                if ($adresse->type == 1) {
                     return true;
                 }
             });
@@ -162,14 +158,14 @@ class User extends Authenticatable {
 
     public function getRoleAdminAttribute()
     {
-        $roles = $this->roles->pluck('id')->all();
+        return $this->roles->contains('id',1);
+    }
 
-        if(in_array(1,$roles))
-        {
-            return true;
-        }
-
-        return false;
+    public function getInscriptionParticipationsAttribute()
+    {
+        return $this->participations->map(function ($participation) {
+            return $participation->inscription->groupe;
+        });
     }
 
     public function getAllRolesAttribute()
@@ -245,6 +241,11 @@ class User extends Authenticatable {
     public function inscription_groupes()
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Groupe');
+    }
+
+    public function participations()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Participant','email', 'email');
     }
 
     public function roles()

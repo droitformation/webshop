@@ -14,9 +14,15 @@
 
     <div id="wrapper_clone">
         <fieldset class="field_clone" id="fieldset_clone">
+
             <div class="form-group">
                 <label>Nom du participant</label>
                 <input name="participant[]" required class="form-control" value="" type="text">
+            </div>
+
+            <div class="form-group">
+                <label>Email (lier à un compte)</label>
+                <input name="email[]" required class="form-control" value="" type="text">
             </div>
 
             @if(!$colloque->prices->isEmpty())

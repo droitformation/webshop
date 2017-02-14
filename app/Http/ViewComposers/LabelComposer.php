@@ -32,9 +32,14 @@ class LabelComposer
      */
     public function compose(View $view)
     {
+        $authors = $this->author->getAll();
+        $authors = $authors->reject(function ($author) {
+            return empty($author->first_name) && empty($author->last_name);
+        });
+
         $view->with('categories', $this->categorie->getAll());
         $view->with('attributes', $this->attribute->getAll());
-        $view->with('authors',    $this->author->getAll());
+        $view->with('authors',    $authors);
         $view->with('domains',    $this->domain->getAll());
     }
 }

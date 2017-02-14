@@ -160,6 +160,26 @@ export default {
     methods: {
         edit : function(occurence){
             this.list[occurence.id].state = true;
+
+             this.$nextTick(function(){
+                 $.fn.datepicker.dates['fr'] = {
+                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+                    today: "Aujourd'hui",
+                    clear: "Clear"
+                };
+
+                $('.datePickerApp').datepicker({
+                    format: 'yyyy-mm-dd',
+                    language: 'fr'
+                }).on('changeDate', function(ev){
+                   occurence.starting_at = ev.target.value;
+                });
+
+            });
         },
         delete : function(occurence){
             this.list[occurence.id].state = false;
@@ -179,11 +199,6 @@ export default {
                     today: "Aujourd'hui",
                     clear: "Clear"
                 };
-
-                $('.datePickerApp').datepicker({
-                    format: 'yyyy-mm-dd',
-                    language: 'fr'
-                });
 
                 var self = this;
 

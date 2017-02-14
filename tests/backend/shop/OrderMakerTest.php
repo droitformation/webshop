@@ -380,6 +380,28 @@ class OrderMakerTest extends BrowserKitTest {
 
     }
 
+    public function testPrepareOrderDataFromAdminPassShipping()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000]);
+        $shipping = factory(App\Droit\Shop\Shipping\Entities\Shipping::class)->create();
+
+        $order = [
+            'user_id' => 710,
+            'order'   => [
+                'products' => [0 => 11, 1 => 12],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
+            ],
+            'admin' => 1
+        ];
+        $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
+        $this->mock->shouldReceive('find')->twice()->andReturn($product);
+        $result = $make->prepare($order, $shipping);
+        $this->assertEquals($shipping->id,$result['shipping_id']);
+    }
+
     public function testGetUserOrCreateAdresseFromOrder()
     {
         $make    = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');

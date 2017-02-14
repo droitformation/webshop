@@ -29,7 +29,8 @@ class PriceEloquent implements PriceInterface{
             'price'       => $data['price'] * 100,
             'type'        => $data['type'],
             'description' => $data['description'],
-            'remarque'    => isset($data['remarque']) ? $data['remarque'] : null
+            'remarque'    => isset($data['remarque']) ? $data['remarque'] : null,
+            'end_at'      => isset($data['end_at']) ? $data['end_at'] : null
         ));
 
         if( ! $price )

@@ -46,6 +46,10 @@ class InscriptionWorkerTest extends BrowserKitTest {
                 'Cindy Leschaud',
                 'Coralie Ahmetaj'
             ],
+            'email' => [
+                'cindy.leschaud@gmail.com',
+                'coralie.ahmetaj@hotmail.com'
+            ],
             'price_id' => [
                 $prices[0],
                 $prices[0]

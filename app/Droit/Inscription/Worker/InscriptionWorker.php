@@ -37,10 +37,11 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         collect($data)->transpose()->map(function ($register) {
             return [
                 'participant' => $register[0],
-                'price_id'    => $register[1],
-                'occurrences' => isset($register[2]) ? $register[2] : null,
-                'options'     => isset($register[3]) ? $register[3] : null,
-                'groupes'     => isset($register[4]) ? $register[4] : null,
+                'email'       => $register[1],
+                'price_id'    => $register[2],
+                'occurrences' => isset($register[3]) ? $register[3] : null,
+                'options'     => isset($register[4]) ? $register[4] : null,
+                'groupes'     => isset($register[5]) ? $register[5] : null,
             ];
         })->each(function ($item) use ($group) {
             $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;

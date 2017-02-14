@@ -140,9 +140,10 @@ class OrderController extends Controller {
      */
     public function create()
     {
-        $products = $this->product->getAll();
+        $products  = $this->product->getAll();
+        $shippings = $this->shipping->getAll();
 
-        return view('backend.orders.create')->with(['products' => $products]);
+        return view('backend.orders.create')->with(['products' => $products, 'shippings' => $shippings]);
     }
 
     /**
@@ -153,7 +154,9 @@ class OrderController extends Controller {
      */
     public function store(Request $request)
     {
-        $order = $this->ordermaker->make($request->all());
+        $shipping = $request->input('shipping_id',null) ? $this->shipping->find($request->input('shipping_id')) : null;
+
+        $order = $this->ordermaker->make($request->all(),$shipping);
 
         // via admin
         $order->admin = 1;

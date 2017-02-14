@@ -91,6 +91,20 @@ class Colloque extends Model
         return false;
     }
 
+    public function getPricesActiveAttribute()
+    {
+        return $this->prices->reject(function ($price, $key) {
+                return $price->type == 'admin';
+            })->filter(function ($price, $key) {
+
+            if($price->end_at){
+                return $price->end_at > \Carbon\Carbon::now() ? $price : false;
+            }
+
+            return $price;
+        });
+    }
+
     public function getIsActiveAttribute()
     {
         return $this->registration_at >= \Carbon\Carbon::today() ? true : false;
@@ -149,6 +163,7 @@ class Colloque extends Model
                 'remarque'       => $price->remarque,
                 'rang'           => $price->rang,
                 'occurrences'    => $price->occurrence_list,
+                'end_at'         => $price->end_at ? $price->end_at->format('Y-m-d') : null,
                 'state'          => false,
             ]];
         });
