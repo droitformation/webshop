@@ -44,11 +44,10 @@ class Kernel extends ConsoleKernel {
 				$number = exec($command);
 				file_put_contents($monitor_file_path, $number);
 			}
-		})
+		})->pingBefore('https://cronitor.link/OJA0Ue/run')->thenPing('https://cronitor.link/OJA0Ue/complete')
 		->name('monitor_queue_listener')
 		->everyFiveMinutes();
 
-		$schedule->pingBefore('https://cronitor.link/OJA0Ue/run')->thenPing('https://cronitor.link/OJA0Ue/complete');
 	}
 
 }
