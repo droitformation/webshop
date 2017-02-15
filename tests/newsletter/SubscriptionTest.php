@@ -126,5 +126,5 @@ class SubscriptionTest extends BrowserKitTest
 
         $this->assertRedirectedTo('build/subscriber/1');
     }
-
+    
 }

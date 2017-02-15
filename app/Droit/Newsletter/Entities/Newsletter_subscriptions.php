@@ -12,5 +12,4 @@ class Newsletter_subscriptions extends Model {
     {
         return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter');
     }
-
 }

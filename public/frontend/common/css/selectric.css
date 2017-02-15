@@ -127,6 +127,8 @@
     position: absolute;
     top: 100%;
     left: 0;
+    background: #F8F8F8;
+    border: 1px solid #C4C4C4;
     z-index: -1;
     box-shadow: 0 0 10px -6px;
     min-width: 180px;
@@ -150,6 +152,8 @@
 .selectric-items li {
   display: block;
   padding: 8px;
+  border-top: 1px solid #FFF;
+  border-bottom: 1px solid #EEE;
   color: #666;
   cursor: pointer;
 }

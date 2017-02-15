@@ -40,6 +40,36 @@
     </script>
 @endif
 
+
+@if(!empty(session('alreadySubscribed')))
+    <script>
+        $(function(){
+            swal({
+                title: "Oho",
+                text: 'Vous êtes déjà inscrit à la newsletter',
+                timer: 2500,
+                type: "warning",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
+@if(!empty(session('confirmationSent')))
+    <script>
+        $(function(){
+            swal({
+                title: "Merci pour votre inscription!",
+                text: 'Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email',
+                timer: 3500,
+                type: "success",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
+
 @if(!empty(session('OrderAbo')))
     <script>
         $(function(){

@@ -557,9 +557,8 @@ $factory->define(App\Droit\Bloc\Entities\Bloc::class,function (Faker\Generator $
 
 $factory->define(App\Droit\Newsletter\Entities\Newsletter_users::class, function (Faker\Generator $faker) {
     return [
-        'id'           => $faker->numberBetween(50,150),
         'email'        => $faker->email,
-        'token'        => '1234',
+        'activation_token' => '1234',
         'activated_at' => date('Y-m-d G:i:s')
     ];
 });

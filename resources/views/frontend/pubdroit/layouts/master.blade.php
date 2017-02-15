@@ -164,9 +164,9 @@
 							@if(isset($newsletters) && !$newsletters->isEmpty())
 								<h4>Newsletter</h4>
 								<p>Si vous souhaitez être informé des dernières nouveautés, inscrivez-vous simplement à notre newsletter en insérant votre adresse e-mail.</p>
-
 								@foreach($newsletters as $newsletter)
-									@include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter])
+									<h4>{{ $newsletter->titre }}</h4>
+									@include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'pubdroit'])
 								@endforeach
 							@endif
 						</figure>

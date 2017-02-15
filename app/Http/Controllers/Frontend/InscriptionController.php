@@ -10,18 +10,30 @@ use App\Http\Requests\SubscribeRequest;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
 use App\Droit\Newsletter\Repo\NewsletterInterface;
+use App\Droit\Newsletter\Worker\SubscriptionWorker;
+use App\Droit\Site\Repo\SiteInterface;
 
 class InscriptionController extends Controller
 {
     protected $subscription;
     protected $worker;
     protected $newsletter;
+    protected $subscribeworker;
+    protected $site;
 
-    public function __construct(MailjetServiceInterface $worker, NewsletterUserInterface $subscription, NewsletterInterface $newsletter)
+    public function __construct(
+        MailjetServiceInterface $worker,
+        NewsletterUserInterface $subscription,
+        NewsletterInterface $newsletter,
+        SubscriptionWorker $subscribeworker,
+        SiteInterface $site
+    )
     {
         $this->worker        = $worker;
         $this->subscription  = $subscription;
         $this->newsletter    = $newsletter;
+        $this->subscribeworker  = $subscribeworker;
+        $this->site           = $site;
     }
 
     /**
@@ -75,40 +87,20 @@ class InscriptionController extends Controller
      */
     public function subscribe(SubscribeRequest $request)
     {
-        $subscribe = $this->subscription->findByEmail($request->input('email'));
+        $site = $this->site->find($request->input('site_id'));
+        $subscribe = $this->subscribeworker->subscribe($request->input('email'), $request->input('newsletter_id'));
 
-        if($subscribe)
-        {
-            if(!$subscribe->activated_at)
-            {
-                alert()->warning('Cet email existe déjà');
-
-                return redirect('/')->withInput()->with('resend', true);
-            }
-
-            $subscriptions = $subscribe->subscriptions->pluck('id')->all();
-
-            if(in_array($request->input('newsletter_id'),$subscriptions))
-            {
-                alert()->warning('Vous êtes déjà inscrit à la newsletter');
-
-                return redirect($request->input('return_path', '/'));
-            }
+        if(!$subscribe) {
+            $request->session()->flash('alreadySubscribed', 'Already');
         }
-        else
-        {
-            // Subscribe user with activation token to website list and sync newsletter abos
-            $subscribe = $this->subscription->create(['email' => $request->input('email'), 'activation_token' => md5($request->email.\Carbon\Carbon::now()) ]);
+        else {
+            
+            \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe) {
+                $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
+            });
+
+            $request->session()->flash('confirmationSent', 'Confirmation envoyé');
         }
-
-        $subscribe->subscriptions()->attach($request->input('newsletter_id'));
-
-        \Mail::send('emails.newsletter.confirmation', array('token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')), function($message) use ($subscribe)
-        {
-            $message->to($subscribe->email, $subscribe->email)->subject('Inscription!');
-        });
-
-        alert()->success('<strong>Merci pour votre inscription!</strong><br/>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email');
 
         return redirect($request->input('return_path', '/'));
     }
@@ -140,7 +132,7 @@ class InscriptionController extends Controller
         
         if(!$this->worker->removeContact($abonne->email))
         {
-            throw new \App\Droit\Exceptions\SubscribeUserException('Erreur synchronisation email vers mailjet');
+            throw new \App\Exceptions\SubscribeUserException('Erreur synchronisation email vers mailjet');
         }
 
         // Delete person only if no subscription left
@@ -162,7 +154,7 @@ class InscriptionController extends Controller
      *
      * @return Response
      */
-    public function resend(Request $request)
+/*    public function resend(Request $request)
     {
         $subscribe = $this->subscription->findByEmail($request->input('email'));
 
@@ -174,5 +166,5 @@ class InscriptionController extends Controller
         alert()->success('<strong>Lien d\'activation envoyé</strong>');
 
         return redirect('/');
-    }
+    }*/
 }
