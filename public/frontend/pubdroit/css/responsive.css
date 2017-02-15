@@ -307,4 +307,10 @@
     #nav .search-bar{
         float: none;
     }
+
+    .selectric .label{
+        color: #fff;
+        opacity: 1;
+        text-align: center;
+    }
 }
