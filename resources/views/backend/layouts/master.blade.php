@@ -9,8 +9,8 @@
     <meta name="author" content="Cindy Leschaud | @DesignPond">
     <meta id="_token" name="_token" content="<?php echo csrf_token(); ?>">
 
-    <script src="https://use.fontawesome.com/fd16a07224.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//use.fontawesome.com/fd16a07224.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/responsive.css');?>">
@@ -21,7 +21,7 @@
 
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/admin.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/inscription.css');?>" media="screen" />
@@ -122,12 +122,12 @@
 
 </div> <!-- page-container -->
 
-<script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.0.0.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="<?php echo asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="//gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo asset('common/js/chosen.jquery.js');?>"></script>
@@ -145,7 +145,7 @@
 @include('backend.scripts.redactor')
 
 <!-- Form plugins -->
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
 <script type="text/javascript" src="{{ asset('newsletter/js/jqColorPicker.min.js') }}"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/placeholdr.js');?>"></script>

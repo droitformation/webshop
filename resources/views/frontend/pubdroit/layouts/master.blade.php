@@ -9,11 +9,11 @@
 	
     <!-- CSS Files
     ================================================== -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 	<!-- All css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/bs.css');?>">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/style.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/responsive.css');?>">
 
@@ -41,7 +41,7 @@
 	</noscript>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
 	<script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo asset('common/js/validation.js');?>"></script>
 
@@ -223,7 +223,7 @@
 
 		<!-- Javascript Files
     	================================================== -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="<?php echo asset('common/js/jquery.selectric.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
