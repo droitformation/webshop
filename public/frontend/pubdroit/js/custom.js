@@ -40,26 +40,6 @@ $(function() {
 
 	// Dropdown Menu Fade
 
-		$(".dropdown").hover(
-			function() { $('.dropdown-menu', this).fadeIn("fast");
-			},
-			function() { $('.dropdown-menu', this).fadeOut("fast");
-		});
-
-         $('.dropdow-select').selectric();
-
-        // Cache the target element
-
-        $('.dropdow-select').selectric().on('change', function() {
-            var id = $(this).val();
-
-            if(id)
-            {
-                $(this).closest('form').submit();
-            }
-            console.log(id);
-        });
-
     $( "#slider-range" ).slider({
 			range: true,
 			min: 0,

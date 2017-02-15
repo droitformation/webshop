@@ -183,23 +183,24 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
 }
     /* Start main Header css */
 #main-header {
-    background: #fff none repeat scroll 0 0;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#edeee9+0,cececc+100 */
     margin: 0;
     padding: 10px 0 0;
     height: auto;
     position: relative;
     height: 160px;
     overflow: hidden;
+    background: url("../../../images/pubdroit/bg_header.jpg") repeat-y;
 }
 
 #header{
     height: 115px;
+    position: relative;
 }
 
-#main-header img{
+#main-header img.bg_header{
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -10px;
     max-width: 100%;
 }
 
@@ -1246,9 +1247,6 @@ a.navbar-btn.navbar-register:focus{
 
 /* MEGA MENU STYLE
 ********************************/
-#main-header{
-    position: relative;
-}
 
 #main-header .dropdown-menu > li {
     padding: 0;
@@ -1855,29 +1853,4 @@ table.order-list {
 
 .logout button{
     padding: 5px 8px;
-}
-
-.sites-logos-wrapper{
-    padding: 15px;
-    background: #ddd;
-    display: block;
-}
-
-.sites-logos{
-
-}
-
-.sites-logos a{
-    display: inline-block;
-    margin-left: 10px;
-    text-align: center;
-    width: 11%;
- }
-
-.sites-logos a:first-child{
-    margin-left: 0;
-}
-
-.sites-logos a img{
-   max-width: 100%;
 }

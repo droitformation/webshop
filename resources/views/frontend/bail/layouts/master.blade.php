@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="<?php echo asset('frontend/common/css/structure.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/bail/css/main.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/common/css/filter.css');?>">
+    <link rel="stylesheet" href="<?php echo asset('common/css/sites.css');?>">
+    <link rel="stylesheet" href="<?php echo asset('frontend/bail/css/responsive.css');?>">
 
     <!-- Javascript Files
     ================================================== -->
@@ -45,10 +47,10 @@
     <!-- Entête et menu -->
     <header class="header" id="app">
         <div class="row">
-            <h1 class="col-md-3">
+            <h1 class="col-md-3 col-xs-12">
                 <a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/logos/bail.svg') }}" alt="Logo Bail.ch"></a>
             </h1>
-            <div class="col-md-7 text-right">
+            <div class="col-md-7 col-xs-12 text-right">
                 <nav id="menu-principal">
                     @if(isset($menu_main))
                         @if(!$menu_main->pages_active->isEmpty())
@@ -59,7 +61,7 @@
                     @endif
                 </nav>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-xs-12">
                 <!--Logo unine -->
                 <div class="sidebar-unine-logo">
                     <p class="text-right ">
@@ -88,6 +90,8 @@
         Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
         <a href="mailto:seminaire.bail@unine.ch">seminaire.bail@unine.ch</a>
     </footer>
+
+    @include('partials.logos', ['class' => 'bail'])
 </div>
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"

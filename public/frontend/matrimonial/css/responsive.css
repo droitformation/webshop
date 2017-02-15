@@ -1,0 +1,87 @@
+@media only screen and (min-width : 320px) and (max-width : 480px) {
+
+    #menu-principal{
+        line-height: 30px;
+        margin-bottom: 5px;
+    }
+
+    #menu-principal > a {
+        display: inline-block;
+        padding: 0;
+        margin-top: 0px;
+        font-size: 13px;
+    }
+
+    .header{
+        position: relative;
+    }
+
+    .header h1 img {
+        height: 40px;
+    }
+
+    .sidebar-unine-logo{
+        position: absolute;
+        top:-175px;
+        right: 0;
+    }
+}
+
+@media only screen and (min-width : 320px) and (max-width : 768px) {
+
+    .header{
+        position: relative;
+    }
+
+    .header h1 img {
+        height: 40px;
+    }
+
+    .sidebar-unine-logo{
+        position: absolute;
+        top:-155px;
+        right: 0;
+    }
+
+    .sidebar-app{
+        padding-left: 0;
+    }
+
+    .faq_list p {
+        width: 47%;
+    }
+}
+@media only screen and (min-width : 479px) and (max-width : 768px) {
+
+    .header h1 a img{
+        max-width: 50%;
+    }
+
+    #menu-principal > a {
+        display: inline-block;
+        padding: 0 3px;
+        margin-top: 0px;
+        font-size: 14px;
+    }
+}
+
+@media only screen and (min-width : 768px) and (max-width : 1030px){
+    #menu-principal > a {
+        display: inline-block;
+        padding: 0 3px;
+        margin-top:15px;
+        font-size: 14px;
+    }
+
+
+    .header h1 a img{
+        max-width: 50%;
+    }
+}
+
+@media only screen and (min-width : 200px) and (max-width : 990px){
+    .header{
+        height:auto;
+    }
+
+}

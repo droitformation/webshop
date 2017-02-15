@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="<?php echo asset('frontend/common/css/structure.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/matrimonial/css/main.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/common/css/filter.css');?>">
-
+    <link rel="stylesheet" href="<?php echo asset('common/css/sites.css');?>">
+    <link rel="stylesheet" href="<?php echo asset('frontend/matrimonial/css/responsive.css');?>">
     <!-- Javascript Files
      ================================================== -->
     <!-- CDN -->
@@ -42,47 +43,53 @@
 
 </head>
 <body>
-<div id="main" class="container">
+<div class="container">
+    <div id="main">
 
-    <header class="header" id="app">
-        <div class="row">
-            <h1 class="col-md-4">
-                <a class="" href="{{ url('matrimonial/page/index') }}">
-                    <img src="{{ asset('logos/droitmatrimonial.svg') }}" alt="Logo droitmatrimonial.ch">
-                </a>
-            </h1>
-            <div class="col-md-6 text-right">
-                <nav id="menu-principal" class="menu-principal-app">
-                    @if(isset($menu_main))
-                        @if(!$menu_main->pages_active->isEmpty())
-                            @foreach($menu_main->pages_active as $page)
-                                <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('matrimonial/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
-                            @endforeach
-                        @endif
-                    @endif
-                </nav>
+        <div id="content-wrapper">
+            <header class="header">
+                <div class="row">
+                    <h1 class="col-md-4 col-xs-12">
+                        <a class="" href="{{ url('matrimonial/page/index') }}">
+                            <img src="{{ asset('logos/droitmatrimonial.svg') }}" alt="Logo droitmatrimonial.ch">
+                        </a>
+                    </h1>
+                    <div class="col-md-6 col-xs-12 text-right">
+                        <nav id="menu-principal" class="menu-principal-app">
+                            @if(isset($menu_main))
+                                @if(!$menu_main->pages_active->isEmpty())
+                                    @foreach($menu_main->pages_active as $page)
+                                        <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('matrimonial/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
+                                    @endforeach
+                                @endif
+                            @endif
+                        </nav>
+                    </div>
+                    <div class="col-md-2  col-xs-12">
+                        @include('frontend.matrimonial.sidebar.logo')
+                    </div>
+                </div>
+            </header>
+
+            <!-- Contenu principal -->
+            <div id="mainContent" class="maincontent">
+
+                <!-- Contenu -->
+                @yield('content')
+                <!-- Fin contenu -->
+
             </div>
-            <div class="col-md-2">
-                @include('frontend.matrimonial.sidebar.logo')
-            </div>
-        </div>
-    </header>
-    <div class="row" id="content-wrapper">
-        <!-- Contenu principal -->
-        <div id="mainContent" class="maincontent">
 
-            <!-- Contenu -->
-            @yield('content')
-            <!-- Fin contenu -->
+            <footer id="mainFooter" class="colorBlock">
+                © {{ date('Y') }} - droitmatrimonial.ch<br/>
+                Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
+                <a href="mailto:droit.matrimonial@unine.ch">droit.matrimonial@unine.ch</a>
+            </footer>
 
+            @include('partials.logos', ['class' => 'matrimonial'])
         </div>
 
     </div>
-    <footer id="mainFooter" class="colorBlock">
-        © {{ date('Y') }} - droitmatrimonial.ch<br/>
-        Université de Neuchâtel, Faculté de droit, Av. du 1er mars 26, 2000 Neuchâtel<br/>
-        <a href="mailto:droit.matrimonial@unine.ch">droit.matrimonial@unine.ch</a>
-    </footer>
 </div>
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"

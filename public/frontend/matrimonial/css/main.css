@@ -105,8 +105,6 @@ a:visited ,
 .header {
     background: #333333;
     height: 100px;
-    margin-left: -15px;
-    margin-right: -15px;
 }
 
 .header h1 {
@@ -339,4 +337,8 @@ a:visited ,
     background-color: #eD3C95;
     border-color: #eD3C95;
     color: #fff !important;
+}
+
+footer{
+    margin: 0;
 }

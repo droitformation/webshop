@@ -1,6 +1,8 @@
 !function ($) {
     $(function(){
 
+        display_select()
+        
         function acceptTermsAndConditions(){
 
             // Terms and conditions have to be checked
@@ -61,6 +63,20 @@
         moreLink : '<a class="morelink" href="#">Lire plus</a>',
         lessLink: '<a class="morelink" href="#">Fermer</a>'
     });
+
+    $( window ).resize(function() {
+        display_select()
+    });
+
+    function display_select(){
+        var w = $( window ).width();
+        if(w > 964){
+            $( "#labels" ).addClass('in');
+        }
+        else{
+            $( "#labels" ).removeClass('in');
+        }
+    }
 
     // Dropdown Menu Fade
 

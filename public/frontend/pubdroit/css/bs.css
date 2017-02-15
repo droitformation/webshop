@@ -1970,9 +1970,10 @@ button.close { padding: 0; cursor: pointer; background: transparent; border: 0; 
  width:480px !important;
 }
  #logo {
-float: none;
-margin: 0 auto;
-width: 280px;
+  float: none;
+  margin: 0 auto;
+  width: 280px;
+  height: 50px;
 }
  .top-nav2 {
 text-align:center;
@@ -2934,8 +2935,7 @@ width: 305px;
  margin-left: 0;
 }
  .nav-collapse,  .nav-collapse.collapse {
- overflow: hidden;
- height: 0;
+
 }
  .navbar .btn-navbar {
  display: block;

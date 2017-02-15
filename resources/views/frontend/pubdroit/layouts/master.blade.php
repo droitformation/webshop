@@ -15,13 +15,13 @@
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/bs.css');?>">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/style.css');?>">
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/responsive.css');?>">
 
 	<!-- Css Files Start -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/skins/red.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/update-responsive.css');?>">
     <link rel="stylesheet" href="<?php echo asset('frontend/common/css/selectric.css');?>">
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/user/profil.css');?>">
+	<link rel="stylesheet" href="<?php echo asset('common/css/sites.css');?>">
 
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/main-slider.css');?>">
@@ -39,6 +39,8 @@
 	<noscript>
 		<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/noJS.css');?>">
 	</noscript>
+
+	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/responsive.css');?>">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
@@ -99,14 +101,14 @@
             </div>
 
             <header id="main-header">
-				<img src="{{ asset('images/pubdroit/book_shelf.jpeg') }}" alt="homepage">
+				<img src="{{ asset('images/pubdroit/book_shelf.jpg') }}" alt="homepage" class="bg_header">
 				<section class="container">
 
 					<section class="row" id="header">
 						<section class="col-md-6 col-xs-12">
 							<h1 id="logo">
 								<a href="{{ url('/') }}">
-									<img style="width:510px; height: 115px" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
+									<img style="max-width:510px; max-height: 115px" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
 								</a>
 							</h1>
 						</section>
@@ -192,22 +194,7 @@
 				</section>
 			</section>
 			<!-- End Footer Top 1 -->
-			<div class="sites-logos-wrapper">
-				<section class="container">
-					<div class="row">
-						<div class="col-md-12 sites-logos">
-							<a target="_blank" href="http://droitmatrimonial.ch/"><img src="{{ asset('files/sites/matrimonial.png') }}" alt="matrimonial" /></a>
-							<a target="_blank" href="http://bail.ch/"><img src="{{ asset('files/sites/bail.png') }}" alt="bail" /></a>
-							<a target="_blank" href="http://droitpraticien.ch"><img src="{{ asset('files/sites/droitpraticien.png') }}" alt="droitpraticien" /></a>
-							<a target="_blank" href="http://tribunauxcivils.ch"><img src="{{ asset('files/sites/tribunaux.png') }}" alt="tribunaux" /></a>
-							<a target="_blank" href="http://droitenschemas.ch"><img src="{{ asset('files/sites/schemas.png') }}" alt="schemas" /></a>
-							<a target="_blank" href="http://droitdutravail.ch"><img src="{{asset('files/sites/droittravail.png')}}" alt="droitdutravail" /></a>
-							<a target="_blank" href="http://rjne.ch"><img src="{{ asset('files/sites/rjn.png') }}" alt="rjn" /></a>
-							<a target="_blank" href="http://rcassurances.ch"><img src="{{ asset('files/sites/rca.png') }}" alt="rcassurances" /></a>
-						</div>
-					</div>
-				</section>
-			</div>
+			@include('partials.logos')
 			<!-- Start Main Footer -->
 			<footer id="main-footer" class="social-ico-bar">
 				<section class="container">
