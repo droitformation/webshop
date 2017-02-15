@@ -48,7 +48,7 @@ class SendReminderEmail extends Job implements ShouldQueue
 
         $mailer->send('emails.reminder', ['reminder' => $this->reminder, 'item' => $item], function ($m)
         {
-            $m->from('droit.formation@unine.ch', 'Droit Formation');
+            $m->from('info@publications-droit.ch', 'Droit Formation');
             $m->to('droit.formation@unine.ch', 'Droit Formation')->subject('Rappel');
         });
 

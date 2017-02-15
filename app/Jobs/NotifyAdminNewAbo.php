@@ -39,8 +39,8 @@ class NotifyAdminNewAbo extends Job implements ShouldQueue
         ];
 
         \Mail::send('emails.notification', $infos, function ($m) {
-            $m->from('droit.formation@unine.ch', 'Administration');
-            $m->to('cindy.leschaud@gmail.com', 'Administration')->subject('Notification');
+            $m->from('info@publications-droit.ch', 'Administration Droit Formation');
+            $m->to('droit.formation@unine.ch', 'Administration')->subject('Notification');
         });
     }
 }

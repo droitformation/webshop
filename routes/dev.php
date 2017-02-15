@@ -724,7 +724,7 @@ Route::get('notifyadmin', function()
     ];
 
     \Mail::send('emails.notification', $infos, function ($m) {
-        $m->from('droit.formation@unine.ch', 'Administration');
+        $m->from('info@publications-droit.ch', 'Admin');
         $m->to('cindy.leschaud@gmail.com', 'Administration')->subject('Notification');
     });
 

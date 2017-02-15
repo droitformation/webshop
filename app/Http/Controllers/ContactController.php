@@ -37,7 +37,7 @@ class ContactController extends Controller
         \Mail::send('emails.contact', $data, function ($message) use ($data,$site) {
 
             $message->from($data['email'], $data['name']);
-            $message->to('secretariat.droit@unine.ch')->subject('Message depuis le site '.$site->nom.'');
+            $message->to('droit.formation@unine.ch')->subject('Message depuis le site '.$site->nom.'');
         });
 
         $request->session()->flash('ContactConfirmation', 'Ok');
