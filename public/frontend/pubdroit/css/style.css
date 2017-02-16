@@ -345,6 +345,10 @@ margin-bottom:0;
 
 /* Start Content Css */
 
+.alert{
+    text-align: center;
+}
+
 #content-holder{
     min-height: 330px;
     box-sizing: border-box;

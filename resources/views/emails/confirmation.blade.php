@@ -1,8 +1,8 @@
 @extends('emails.layouts.notification')
 @section('content')
 
-    <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url('pubdroit') }}" target="_blank">
-        <img width="max-width:100%;" src="{{ asset('frontend/'.$site->slug.'/images/header_email.png') }}" alt="{{ $site->nom }}">
+    <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url($site->url) }}" target="_blank">
+        <img width="max-width:100%;" src="{{ asset('images/'.$site->slug.'/header_email.png') }}" alt="{{ $site->nom }}">
     </a>
     <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
         <tr>
@@ -21,7 +21,7 @@
                 <table style="{{ $style['body_action'] }}" align="center" width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td align="center">
-                            <a href="{{ url('activation/'.$token) }}"
+                            <a href="{{ url('activation/'.$token.'/'.$newsletter_id) }}"
                                style="{{ $fontFamily }} {{ $style['button'] }} {{ $style['button--blue'] }}"
                                class="button" target="_blank">Confirmer l'adresse email
                             </a>

@@ -619,3 +619,6 @@ footer a {
     line-height: 70px;
 }
 
+.alert{
+    margin-bottom: 0 !important;
+}

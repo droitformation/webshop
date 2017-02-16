@@ -45,22 +45,16 @@ class InscriptionController extends Controller
     public function activation($token,$newsletter_id)
     {
         // Activate the email on the website
-        $user = $this->subscription->activate($token);
-
-        if(!$user)
-        {
-            alert()->danger('Le jeton ne correspond pas ou à expiré');
-
-            return redirect('/');
-        }
-
+        $user       = $this->subscription->activate($token);
         $newsletter = $this->newsletter->find($newsletter_id);
 
-        if(!$newsletter)
-        {
-            alert()->danger('Cette newsletter n\'existe pas');
+        if(!$newsletter) {
+            abort(404);
+        }
 
-            return redirect('/');
+        if(!$user) {
+            alert()->danger('Le jeton ne correspond pas ou à expiré');
+            return redirect($newsletter->site->slug);
         }
 
         //Subscribe to mailjet
@@ -68,15 +62,13 @@ class InscriptionController extends Controller
         $result = $this->worker->subscribeEmailToList($user->email);
 
         if(!$result){
-
             alert()->danger('Problème');
-
-            return redirect('/');
+            return redirect($newsletter->site->slug);
         }
 
         alert()->success('Vous êtes maintenant abonné à la newsletter');
 
-        return redirect('/');
+        return redirect($newsletter->site->slug);
     }
 
     /**
@@ -87,11 +79,11 @@ class InscriptionController extends Controller
      */
     public function subscribe(SubscribeRequest $request)
     {
-        $site = $this->site->find($request->input('site_id'));
+        $site      = $this->site->find($request->input('site_id'));
         $subscribe = $this->subscribeworker->subscribe($request->input('email'), $request->input('newsletter_id'));
 
         if(!$subscribe) {
-            $request->session()->flash('alreadySubscribed', 'Already');
+            alert()->danger('<strong>Vous êtes déjà inscrit à cettte newsletter</strong>');
         }
         else {
             
@@ -99,7 +91,7 @@ class InscriptionController extends Controller
                 $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
             });
 
-            $request->session()->flash('confirmationSent', 'Confirmation envoyé');
+            alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
         }
 
         return redirect($request->input('return_path', '/'));
@@ -112,59 +104,38 @@ class InscriptionController extends Controller
      */
     public function unsubscribe(SubscribeRequest $request)
     {
-        // find the abo
-        $abonne = $this->subscription->findByEmail( $request->input('email') );
-
-        // Sync the abos to newsletter we have
-        $abonne->subscriptions()->detach($request->input('newsletter_id'));
-
+        // find the abo and newsletter
+        $abonne     = $this->subscription->findByEmail( $request->input('email') );
         $newsletter = $this->newsletter->find($request->input('newsletter_id'));
 
-        if(!$newsletter)
-        {
+        if(!$newsletter) {
             alert()->danger('Cette newsletter n\'existe pas');
-
-            return redirect('/');
+            return redirect($request->input('return_path', '/').'/unsubscribe');
         }
+
+        if(!$abonne){
+
+            alert()->danger('L\'abonnée n\'existe pas');
+            return redirect($request->input('return_path', '/').'/unsubscribe');
+        }
+        
+        // Sync the abos to newsletter we have
+        $abonne->subscriptions()->detach($request->input('newsletter_id'));
 
         //Subscribe to mailjet
         $this->worker->setList($newsletter->list_id);
         
-        if(!$this->worker->removeContact($abonne->email))
-        {
+        if(!$this->worker->removeContact($abonne->email)) {
             throw new \App\Exceptions\SubscribeUserException('Erreur synchronisation email vers mailjet');
         }
 
         // Delete person only if no subscription left
-        if($abonne->subscriptions->isEmpty())
-        {
+        if($abonne->subscriptions->isEmpty()) {
             $this->subscription->delete($abonne->email);
         }
 
-        $back = $request->input('return_path', '/');
-
         alert()->success('<strong>Vous avez été désinscrit</strong>');
 
-        return redirect($back);
+        return redirect($request->input('return_path', '/'));
     }
-
-    /**
-     * Resend activation link email
-     * POST /inscription/resend/email
-     *
-     * @return Response
-     */
-/*    public function resend(Request $request)
-    {
-        $subscribe = $this->subscription->findByEmail($request->input('email'));
-
-        \Mail::send('emails.newsletter.confirmation', ['token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe)
-        {
-            $message->to($subscribe->email, $subscribe->email)->subject('Inscription!');
-        });
-
-        alert()->success('<strong>Lien d\'activation envoyé</strong>');
-
-        return redirect('/');
-    }*/
 }

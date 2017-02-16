@@ -44,7 +44,7 @@ class NewsletterInscriptionTest extends BrowserKitTest
      */
     public function testSubscription()
     {
-       /* $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
+        $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
         $user->subscriptions()->attach([1]);
 
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn(null);
@@ -54,7 +54,7 @@ class NewsletterInscriptionTest extends BrowserKitTest
 
         $response = $this->call('POST', 'subscribe', ['email' => 'info@leschaud.ch', 'return_path' => '/']);
 
-        $this->assertRedirectedTo('/');*/
+        $this->assertRedirectedTo('/');
     }
 
     /**
@@ -63,29 +63,40 @@ class NewsletterInscriptionTest extends BrowserKitTest
      */
     public function testRemoveSubscription()
     {
-       /* $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
-        $user->subscriptions()->attach([1]);
+        $site       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
+
+        $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
+
+        // 2x subscriptionss
+        $user->subscriptions()->attach(2);
+        $user->subscriptions()->attach($newsletter->id);
 
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn($user);
-        //$this->subscription->shouldReceive('delete')->once();
+
         $this->worker->shouldReceive('setList')->once();
         $this->worker->shouldReceive('removeContact')->once()->andReturn(true);
 
-        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => 1, 'email' => 'info@leschaud.ch']);
+        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => 'bail']);
 
-        $this->assertRedirectedTo('/');*/
+        $this->assertRedirectedTo('/bail');
     }
 
     public function testRemoveAllSubscription()
     {
+        $site       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
         $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
+
+        // 1x subscription, remove and delete
+        $user->subscriptions()->attach($newsletter->id);
 
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn($user);
         $this->worker->shouldReceive('setList')->once();
         $this->worker->shouldReceive('removeContact')->once()->andReturn(true);
         $this->subscription->shouldReceive('delete')->once();
         
-        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => 1, 'email' => 'info@leschaud.ch']);
+        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch']);
 
         $this->assertRedirectedTo('/');
     }
@@ -96,17 +107,59 @@ class NewsletterInscriptionTest extends BrowserKitTest
      */
     public function testActivateSubscription()
     {
+        $site       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
+
         $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
-        $user->subscriptions()->attach([1]);
+        $user->subscriptions()->attach($newsletter->id);
 
         $this->subscription->shouldReceive('activate')->once()->andReturn($user);
         $this->worker->shouldReceive('setList')->once();
         $this->worker->shouldReceive('subscribeEmailToList')->once()->andReturn(true);
 
-        $response = $this->call('GET', 'activation/1234/1');
+        $response = $this->call('GET', 'activation/1234/'.$newsletter->id);
 
-        $this->assertRedirectedTo('/');
-
+        $this->assertRedirectedTo($site->slug);
     }
 
+    public function testActivateFailNewsletterSubscription()
+    {
+        try {
+            $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
+            $this->subscription->shouldReceive('activate')->once()->andReturn($user);
+
+            $response = $this->call('GET', 'activation/1234/0');
+
+        } catch (Exception $e) {
+            $this->assertType('Symfony\Component\HttpKernel\Exception\NotFoundHttpException', $e);
+        }
+    }
+
+    public function testActivateFails()
+    {
+        $site       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
+
+        $this->subscription->shouldReceive('activate')->once()->andReturn(null);
+
+        $response = $this->call('GET', 'activation/edfrgth/'.$newsletter->id);
+
+        $this->assertRedirectedTo($site->slug);
+    }
+
+    public function testUnsubscribeFails()
+    {
+        $site       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
+
+        $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
+        $user->subscriptions()->attach($newsletter->id);
+
+        $this->subscription->shouldReceive('findByEmail')->once()->andReturn(null);
+        
+        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => 'bail']);
+
+        $this->assertRedirectedTo('bail/unsubscribe');
+
+    }
 }

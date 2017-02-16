@@ -55,6 +55,35 @@
     </script>
 @endif
 
+@if(!empty(session('subscriberNotExist')))
+    <script>
+        $(function(){
+            swal({
+                title: "Oho",
+                text: 'Cet abonnée n\'existe pas',
+                timer: 2500,
+                type: "warning",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
+@if(!empty(session('newsletterNotExist')))
+    <script>
+        $(function(){
+            swal({
+                title: "Oho",
+                text: 'Cette newsletter n\'existe pas',
+                timer: 2500,
+                type: "warning",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
+
 @if(!empty(session('confirmationSent')))
     <script>
         $(function(){
@@ -69,6 +98,33 @@
     </script>
 @endif
 
+@if(!empty(session('subscribed')))
+    <script>
+        $(function(){
+            swal({
+                title: "OK",
+                text: 'Vous êtes maintenant abonné à la newsletter',
+                timer: 3500,
+                type: "success",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
+@if(!empty(session('unSubscribed')))
+    <script>
+        $(function(){
+            swal({
+                title: "OK",
+                text: 'Vous avez été désinscrit',
+                timer: 3500,
+                type: "success",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
 
 @if(!empty(session('OrderAbo')))
     <script>

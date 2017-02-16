@@ -94,8 +94,9 @@
 				</section>
 			</div>
 
-            <div class="container">
-                @include('alert::alert')
+			@include('alert::alert')
+
+			<div class="container">
                 @include('backend.partials.message')
                 @include('partials.confirmation')
             </div>

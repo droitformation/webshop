@@ -186,6 +186,16 @@ $factory->define(App\Droit\Member\Entities\Member::class, function (Faker\Genera
     ];
 });
 
+$factory->define(App\Droit\Site\Entities\Site::class, function (Faker\Generator $faker) {
+    return [
+        'nom'    => $faker->word,
+        'url'    => $faker->url,
+        'logo'   => $faker->word,
+        'slug'   => $faker->word,
+        'prefix' => $faker->word
+    ];
+});
+
 $factory->define(App\Droit\Menu\Entities\Menu::class, function (Faker\Generator $faker) {
     return [
         'title'    => $faker->word,

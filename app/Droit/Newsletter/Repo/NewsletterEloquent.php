@@ -19,7 +19,7 @@ class NewsletterEloquent implements NewsletterInterface{
 
 	public function find($id){
 				
-		return $this->newsletter->find($id);
+		return $this->newsletter->with(['site'])->find($id);
 	}
 
 	public function getSite($site_id)

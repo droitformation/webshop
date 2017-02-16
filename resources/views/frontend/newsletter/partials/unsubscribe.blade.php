@@ -2,7 +2,7 @@
     <div class="form-group">
         <label class="control-label">Votre email</label>
         <div class="input-group">
-            <input type="text" class="form-control" name="email" value="{{ old('email') }}">
+            <input type="text" class="form-control" name="email" value="">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">Se désinscrire!</button>
             </span>
@@ -10,6 +10,6 @@
     </div>
     <input type="hidden" name="newsletter_id" value="{{ $newsletter->id }}">
     <input type="hidden" name="site_id" value="{{ $newsletter->site_id }}">
-    <input type="hidden" name="return_path" value="{{ $return_path or '' }}">
+    <input type="hidden" name="return_path" value="{{ $return_path or '/' }}">
 </form>
 

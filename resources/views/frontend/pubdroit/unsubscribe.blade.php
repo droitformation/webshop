@@ -19,7 +19,7 @@
 							@if(!$newsletters->isEmpty())
 								@foreach($newsletters as $newsletter)
 									<h4>{{ $newsletter->titre }}</h4>
-									@include('newsletter::Frontend.partials.unsubscribe', ['newsletter' => $newsletter, 'return_path' => '/'])
+									@include('frontend.newsletter.partials.unsubscribe', ['newsletter' => $newsletter, 'return_path' => 'pubdroit'])
 								@endforeach
 							@endif
                         </div>

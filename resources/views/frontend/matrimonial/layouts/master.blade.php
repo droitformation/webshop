@@ -74,6 +74,9 @@
             <!-- Contenu principal -->
             <div id="mainContent" class="maincontent">
 
+                @include('partials.message')
+                @include('alert::alert')
+
                 <!-- Contenu -->
                 @yield('content')
                 <!-- Fin contenu -->

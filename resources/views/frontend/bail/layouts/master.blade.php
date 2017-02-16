@@ -79,6 +79,9 @@
         <div id="mainContent" class="maincontent">
             <section class="colorBlock min-inner colorSection headerBreadcrumb"></section>
 
+            @include('partials.message')
+            @include('alert::alert')
+
             <!-- Contenu -->
             @yield('content')
             <!-- Fin contenu -->
@@ -100,9 +103,8 @@
 <script src="<?php echo asset('frontend/common/js/sidebar.js');?>"></script>
 <script src="<?php echo asset('frontend/common/js/arrets.js');?>"></script>
 <script src="<?php echo asset('frontend/bail/js/seminaires.js');?>"></script>
-<script src="<?php echo asset('frontend/bail/js/calculette.js');?>"></script>
 <script src="<?php echo asset('frontend/bail/js/main.js');?>"></script>
-<script src="<?php echo asset('common/js/chose.jquery.js');?>"></script>
+<script src="<?php echo asset('common/js/chosen.jquery.js');?>"></script>
 <script src="<?php echo asset('js/app.js');?>"></script>
 
 </body>
