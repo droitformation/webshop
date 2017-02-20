@@ -16,7 +16,7 @@
         <label>Votre loyer actuel (sans les charges)</label>
         <input type="text" class="form-control" name="loyer" id="input-loyer" required>
 
-        <label>Date d'entrée en vigueur de votre loyer actuel</label>
+        <label>Date de la conclusion du bail ou date de réception de la notification de loyer (hausse/baisse)</label>
         <input type="text" class="form-control datepicker" name="date" id="input-datepicker" required>
         <br>
         <p><button class="btn btn-danger btn-sm" type="submit">Calculer</button></p>

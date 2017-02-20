@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend\Shop;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\ProductAttributRequest;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Shop\Product\Repo\ProductInterface;
@@ -25,7 +26,7 @@ class ProductAttributeController extends Controller {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductAttributRequest $request)
     {
         $product = $this->product->find($request->input('product_id'));
 

@@ -30,10 +30,10 @@
                     <hr/>
                     <div class="row form-group">
                         <div class="col-sm-6">
-                            <a target="_blank" href="{{ url('password/reset') }}" class="text-muted">Changer le mot de passe</a>
+                            <a target="_blank" id="resetPassword" href="{{ url('password/reset') }}" class="text-muted">Changer le mot de passe</a>
                         </div>
                         <div class="col-sm-6 text-right">
-                            <button type="submit" class="more-btn">Sauvegarder</button>
+                            <button type="submit" id="saveAccount" class="more-btn">Sauvegarder</button>
                         </div>
                     </div>
                 </fieldset>

@@ -4,7 +4,7 @@
 
         <div class="col-md-6">
             @foreach($blocs as $bloc)
-                <div>{!! $bloc->content !!}</div>
+                <div class="text-justify">{!! $bloc->content !!}</div>
             @endforeach
         </div>
 

@@ -27,7 +27,7 @@ class ProfileTest extends BrowserKitTest {
 	public function testProfilUser()
 	{
 		Honeypot::disable();
-		
+
 		$user = factory(App\Droit\User\Entities\User::class)->create([
 			'email'    => 'cindy.leschaud@unine.ch',
 			'password' => bcrypt('cindy2')
@@ -46,6 +46,29 @@ class ProfileTest extends BrowserKitTest {
         $this->assertTrue(Auth::check());
 
 		$this->assertViewHas('user');
+	}
+
+	public function testUpdateAccountProfilUser()
+	{
+		Honeypot::disable();
+
+		$user = factory(App\Droit\User\Entities\User::class)->create([
+			'email'    => 'cindy.leschaud@unine.ch',
+			'password' => bcrypt('cindy2')
+		]);
+
+		$this->actingAs($user);
+
+		$this->visit('/pubdroit/profil');
+		$this->assertViewHas('user');
+
+		$this->type('Cindy','first_name');
+		$this->press('saveAccount');
+
+		$this->seeInDatabase('users', [
+			'id'         => $user->id,
+			'first_name' => 'Cindy'
+		]);
 	}
 
 	public function testUpdateAdresseLivraison()
