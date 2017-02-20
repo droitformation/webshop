@@ -25,6 +25,7 @@
 		"vinkla/alert": "^1.4",
 		"spatie/laravel-backup": "^4.0",
 		"shvetsgroup/laravel-email-database-log": "^1.0",
+		"msurguy/honeypot": "dev-master",
 		"plank/laravel-mediable": "^2.4"
 	},
 	"require-dev": {

@@ -7,8 +7,7 @@
 
         <h4>Compte</h4>
         <div class="profil-info">
-            <form method="post" action="{{ url('pubdroit/user/'.$user->id) }}" class="form">{!! csrf_field() !!}
-                <input type="hidden" name="_method" value="PUT">
+            <form method="post" action="{{ url('pubdroit/profil/account') }}" class="form">{!! csrf_field() !!}
                 <fieldset>
                     <div class="row form-group">
                         <label class="col-sm-4 control-label">Prénom</label>
@@ -31,14 +30,14 @@
                     <hr/>
                     <div class="row form-group">
                         <div class="col-sm-6">
-                            <a href="{{ url('password/new') }}" class="text-muted">Changer le mot de passe</a>
+                            <a target="_blank" href="{{ url('password/reset') }}" class="text-muted">Changer le mot de passe</a>
                         </div>
                         <div class="col-sm-6 text-right">
                             <button type="submit" class="more-btn">Sauvegarder</button>
                         </div>
                     </div>
                 </fieldset>
-                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                <input type="hidden" name="id" value="{{ $user->id }}">
             </form>
         </div>
     </div>

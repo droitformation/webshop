@@ -80,7 +80,8 @@ Route::group(['middleware' => 'site'], function () {
             Route::get('profil/subscriptions', 'Frontend\ProfileController@subscriptions');
             Route::get('profil/abos', 'Frontend\ProfileController@abos');
             Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
-
+            Route::post('profil/account', 'Frontend\ProfileController@account');
+            
             /* Update user adresse via ajax  */
             Route::post('ajax/adresse/{id}', 'Api\User\AdresseController@ajaxUpdate');
 
@@ -137,13 +138,11 @@ Route::group(['middleware' => 'site'], function () {
     });
 
     Route::group(['prefix' => 'matrimonial'], function () {
-
         Route::get('/', array('uses' => 'Frontend\MatrimonialController@index'));
         Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\MatrimonialController@page'));
         Route::get('jurisprudence', array('uses' => 'Frontend\MatrimonialController@jurisprudence'));
         Route::get('newsletter/{id?}', array('uses' => 'Frontend\MatrimonialController@newsletter'));
         Route::get('unsubscribe', 'Frontend\MatrimonialController@unsubscribe');
-
     });
 
 });
@@ -517,8 +516,7 @@ Route::group(['prefix' => 'vue'], function () {
 */
 
 Auth::routes();
-Route::get('password/new', 'Auth\PasswordController@getNew');
-Route::post('password/define', 'Auth\PasswordController@postDefine');
+Route::post('password/link', 'Auth\PasswordController@postLink');
 
 
 require base_path('routes/email.php');

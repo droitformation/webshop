@@ -26,6 +26,8 @@ class ProfileTest extends BrowserKitTest {
 	 */
 	public function testProfilUser()
 	{
+		Honeypot::disable();
+		
 		$user = factory(App\Droit\User\Entities\User::class)->create([
 			'email'    => 'cindy.leschaud@unine.ch',
 			'password' => bcrypt('cindy2')

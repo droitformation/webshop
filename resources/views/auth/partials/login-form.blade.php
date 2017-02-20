@@ -3,6 +3,7 @@
         <input type="hidden" name="returnPath" value="{{ $returnPath }}">
     @endif
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    {!! Honeypot::generate('my_name', 'my_time') !!}
     <div class="panel-body">
         <h4 class="text-center" style="font-size:14px;margin-bottom: 15px;margin-top:0;">Login</h4>
         <div class="form-group">

@@ -201,7 +201,7 @@
         $(function(){
             swal({
                 title: "Ok",
-                text: "Adresse mise à jour",
+                text: "Données mises à jour",
                 timer: 2500,
                 type: "success",
                 showConfirmButton: false

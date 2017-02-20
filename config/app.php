@@ -170,6 +170,7 @@ return [
 		Vinkla\Alert\AlertServiceProvider::class,
 		Spatie\Backup\BackupServiceProvider::class,
 		ShvetsGroup\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
+		Msurguy\Honeypot\HoneypotServiceProvider::class,
 		App\Providers\NewsletterServiceProvider::class,
 
 		/*
@@ -245,9 +246,9 @@ return [
         'Excel'      => Maatwebsite\Excel\Facades\Excel::class,
         'PDF'        => Barryvdh\DomPDF\Facade::class,
         'QrCode'     => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-		'Registry' => DesignPond\Registry\Facades\Registry::class,
+		'Registry'   => DesignPond\Registry\Facades\Registry::class,
 		'Alert'      => Vinkla\Alert\Facades\Alert::class,
-	
+		'Honeypot'   => Msurguy\Honeypot\HoneypotFacade::class,
 	],
 
 ];

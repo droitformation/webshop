@@ -2,6 +2,25 @@
 
 All notable changes to `laravel-backup` will be documented in this file.
 
+## 4.6.5 - 2017-02-19
+- added `backupName` to `backupDestinationProperties` of notifications
+
+## 4.6.4 - 2017-02-17
+- fix `unhealthy_backup_found_full` translation
+
+## 4.6.3 - 2017-02-17
+- fix `unhealthy_backup_found_full` translation
+
+## 4.6.2 - 2017-02-17
+- fixed translation for `UnhealthyBackupWasFound` notification
+- fixed support for floating point numbers for maximum allow storage
+
+## 4.6.1 - 2017-02-16
+- fixed translations for notifications
+
+## 4.6.0 - 2017-02-15
+- add translations for notifications
+
 ## 4.5.0 - 2017-02-12
 - add SQLite support
 

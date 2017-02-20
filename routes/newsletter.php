@@ -8,7 +8,6 @@ $middleware = !empty(config('newsletter.middlewares')) ? config('newsletter.midd
 |--------------------------------------------------------------------------
 */
 
-
 Route::post('unsubscribe', 'Frontend\InscriptionController@unsubscribe');
 Route::post('subscribe', 'Frontend\InscriptionController@subscribe');
 Route::get('activation/{token}/{newsletter_id}', 'Frontend\InscriptionController@activation');
@@ -17,8 +16,8 @@ Route::get('campagne/{id}', 'Frontend\CampagneController@show');
 Route::get('pdf/{id}', 'Frontend\CampagneController@pdf');
 
 Route::group(['prefix' => 'display'], function () {
-    Route::resource('newsletter', 'Frontend\NewsletterController');
-    Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
+   // Route::resource('newsletter', 'Frontend\NewsletterController');
+    //Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
     Route::resource('campagne', 'Frontend\CampagneController');
 });
 

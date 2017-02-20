@@ -194,13 +194,13 @@
     z-index: 100;
 }
 
- .modal-dialog {
+#uploadModal .modal-dialog {
     width: 95%;
     height: 95%;
     margin-top: 45px;
 }
 
- .modal-content {
+#uploadModal .modal-content {
     height: auto;
     min-height: 95%;
     border-radius: 0;

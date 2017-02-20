@@ -36,12 +36,19 @@ class ProfileController extends Controller
         return view('frontend.pubdroit.profil.account')->with(['current' => '/', 'user' => \Auth::user()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  UpdateAdresse  $request
-     * @return Redirect
-     */
+    public function account(Request $request)
+    {
+        if($request->input('id') != \Auth::user()->id){
+            return abort('404');
+        }
+
+        $this->user->update($request->all());
+
+        $request->session()->flash('updateAdresse', 'Adresse mise à jour');
+
+        return redirect('pubdroit/profil');
+    }
+
     public function update(UpdateAdresse $request)
     {
         $data = $request->all();

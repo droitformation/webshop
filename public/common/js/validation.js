@@ -48,7 +48,7 @@ jQuery(document).ready(function($){
             },
         },
         submitHandler: function(form) {
-            
+
             var first_name = $(form).find("input[name='first_name']").val();
             var last_name  = $(form).find("input[name='last_name']").val();
             var canton_id  = $(form).find("input[name='canton_id']").val();
@@ -58,6 +58,7 @@ jQuery(document).ready(function($){
                 url    : base_url + "check/name",
                 data   : { first_name: first_name, last_name : last_name, canton_id : canton_id , _token: $("meta[name='_token']").attr('content') },
                 success: function(data) {
+                    console.log(data);
                     if(data != 'ok')
                     {
                         bootbox.confirm({
@@ -76,6 +77,8 @@ jQuery(document).ready(function($){
                             }
                         });
                     }
+
+                    form.submit();
                 },
                 error  : function(){}
             });

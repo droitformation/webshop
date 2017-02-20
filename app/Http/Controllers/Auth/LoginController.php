@@ -70,4 +70,20 @@ class LoginController extends Controller
 
         return redirect()->intended('pubdroit/profil');
     }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->username() => 'required',
+            'password' => 'required',
+            'my_name'  => 'honeypot',
+            'my_time'  => 'required|honeytime:1'
+        ]);
+    }
 }
