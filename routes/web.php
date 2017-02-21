@@ -356,6 +356,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::put('order/{id}','Backend\Shop\OrderController@update');
     Route::delete('order/{id}','Backend\Shop\OrderController@destroy');
 
+    Route::get('invoice/{id}', 'Backend\Shop\InvoiceController@show');
+
     /*
     |--------------------------------------------------------------------------
     | Upload files direct, with jquery and redactor Routes

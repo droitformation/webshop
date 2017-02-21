@@ -10,13 +10,13 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'f1fc7a7a353e3515a5d5efd255977059' => __DIR__ . '/..' . '/vinkla/alert/src/helpers.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
@@ -114,11 +114,15 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'C' => 
         array (
             'Cron\\' => 5,
+            'Composer\\CaBundle\\' => 18,
             'Collective\\Html\\' => 16,
             'Carbon\\' => 7,
         ),
         'B' => 
         array (
+            'Bugsnag\\PsrLogger\\' => 18,
+            'Bugsnag\\BugsnagLaravel\\' => 23,
+            'Bugsnag\\' => 8,
             'Box\\Spout\\' => 10,
             'Barryvdh\\DomPDF\\' => 16,
             'Barryvdh\\Debugbar\\' => 18,
@@ -312,6 +316,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
+        'Composer\\CaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
+        ),
         'Collective\\Html\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
@@ -319,6 +327,18 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
+        'Bugsnag\\PsrLogger\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bugsnag/bugsnag-psr-logger/src',
+        ),
+        'Bugsnag\\BugsnagLaravel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src',
+        ),
+        'Bugsnag\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bugsnag/bugsnag/src',
         ),
         'Box\\Spout\\' => 
         array (
@@ -926,6 +946,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'App\\Http\\Requests\\MakeInscriptionRequest' => __DIR__ . '/../..' . '/app/Http/Requests/MakeInscriptionRequest.php',
         'App\\Http\\Requests\\PageCreateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PageCreateRequest.php',
         'App\\Http\\Requests\\PasteRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PasteRequest.php',
+        'App\\Http\\Requests\\ProductAttributRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProductAttributRequest.php',
         'App\\Http\\Requests\\RemoveNewsletterUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RemoveNewsletterUserRequest.php',
         'App\\Http\\Requests\\Request' => __DIR__ . '/../..' . '/app/Http/Requests/Request.php',
         'App\\Http\\Requests\\SearchRequest' => __DIR__ . '/../..' . '/app/Http/Requests/SearchRequest.php',
@@ -1182,6 +1203,43 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Box\\Spout\\Writer\\XLSX\\Internal\\Worksheet' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Internal/Worksheet.php',
         'Box\\Spout\\Writer\\XLSX\\Writer' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Writer.php',
         'BrowserKitTest' => __DIR__ . '/../..' . '/tests/BrowserKitTest.php',
+        'Bugsnag\\Breadcrumbs\\Breadcrumb' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Breadcrumbs/Breadcrumb.php',
+        'Bugsnag\\Breadcrumbs\\Recorder' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Breadcrumbs/Recorder.php',
+        'Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/BugsnagServiceProvider.php',
+        'Bugsnag\\BugsnagLaravel\\Commands\\DeployCommand' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/Commands/DeployCommand.php',
+        'Bugsnag\\BugsnagLaravel\\Facades\\Bugsnag' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/Facades/Bugsnag.php',
+        'Bugsnag\\BugsnagLaravel\\LaravelLogger' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/LaravelLogger.php',
+        'Bugsnag\\BugsnagLaravel\\MultiLogger' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/MultiLogger.php',
+        'Bugsnag\\BugsnagLaravel\\Queue\\Tracker' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/Queue/Tracker.php',
+        'Bugsnag\\BugsnagLaravel\\Request\\LaravelRequest' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/Request/LaravelRequest.php',
+        'Bugsnag\\BugsnagLaravel\\Request\\LaravelResolver' => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src/Request/LaravelResolver.php',
+        'Bugsnag\\Callbacks\\CustomUser' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/CustomUser.php',
+        'Bugsnag\\Callbacks\\EnvironmentData' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/EnvironmentData.php',
+        'Bugsnag\\Callbacks\\GlobalMetaData' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/GlobalMetaData.php',
+        'Bugsnag\\Callbacks\\RequestContext' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/RequestContext.php',
+        'Bugsnag\\Callbacks\\RequestCookies' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/RequestCookies.php',
+        'Bugsnag\\Callbacks\\RequestMetaData' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/RequestMetaData.php',
+        'Bugsnag\\Callbacks\\RequestSession' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/RequestSession.php',
+        'Bugsnag\\Callbacks\\RequestUser' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Callbacks/RequestUser.php',
+        'Bugsnag\\Client' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Client.php',
+        'Bugsnag\\Configuration' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Configuration.php',
+        'Bugsnag\\ErrorTypes' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/ErrorTypes.php',
+        'Bugsnag\\Handler' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Handler.php',
+        'Bugsnag\\HttpClient' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/HttpClient.php',
+        'Bugsnag\\Middleware\\BreadcrumbData' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Middleware/BreadcrumbData.php',
+        'Bugsnag\\Middleware\\CallbackBridge' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Middleware/CallbackBridge.php',
+        'Bugsnag\\Middleware\\NotificationSkipper' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Middleware/NotificationSkipper.php',
+        'Bugsnag\\Pipeline' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Pipeline.php',
+        'Bugsnag\\PsrLogger\\AbstractLogger' => __DIR__ . '/..' . '/bugsnag/bugsnag-psr-logger/src/AbstractLogger.php',
+        'Bugsnag\\PsrLogger\\BugsnagLogger' => __DIR__ . '/..' . '/bugsnag/bugsnag-psr-logger/src/BugsnagLogger.php',
+        'Bugsnag\\PsrLogger\\MultiLogger' => __DIR__ . '/..' . '/bugsnag/bugsnag-psr-logger/src/MultiLogger.php',
+        'Bugsnag\\Report' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Report.php',
+        'Bugsnag\\Request\\BasicResolver' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Request/BasicResolver.php',
+        'Bugsnag\\Request\\NullRequest' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Request/NullRequest.php',
+        'Bugsnag\\Request\\PhpRequest' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Request/PhpRequest.php',
+        'Bugsnag\\Request\\RequestInterface' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Request/RequestInterface.php',
+        'Bugsnag\\Request\\ResolverInterface' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Request/ResolverInterface.php',
+        'Bugsnag\\Stacktrace' => __DIR__ . '/..' . '/bugsnag/bugsnag/src/Stacktrace.php',
         'CantonsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CantonsTableSeeder.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
@@ -1195,6 +1253,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Collective\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlBuilder.php',
         'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
         'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
+        'Composer\\CaBundle\\CaBundle' => __DIR__ . '/..' . '/composer/ca-bundle/src/CaBundle.php',
         'ContentSeeder' => __DIR__ . '/../..' . '/database/seeds/ContentSeeder.php',
         'Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'CreateAboPaymentsTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_23_160616_create_abo_payments_table.php',

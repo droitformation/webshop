@@ -165,7 +165,6 @@
 @endif
 
 <script type="text/javascript" src="{{ asset('newsletter/js/sorting.js') }}"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/search-user.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/search-adresse.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/order.js');?>"></script>
@@ -183,8 +182,9 @@
 <script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
-
+<script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+
 
 </body>
 </html>

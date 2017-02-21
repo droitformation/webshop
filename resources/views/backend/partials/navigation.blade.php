@@ -19,7 +19,7 @@
         </li>
         <li class="<?php echo (Request::is('admin/reminder') || Request::is('admin/reminder/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/reminder') }}">
-                <i class="fa fa-bolt"></i> <span>Rappels</span>
+                <i class="fa fa-bolt"></i> <span>Rappels (livres,colloques)</span>
             </a>
         </li>
 

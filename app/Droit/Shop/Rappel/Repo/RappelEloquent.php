@@ -27,9 +27,7 @@ class RappelEloquent implements RappelInterface
     public function create(array $data)
     {
         $rappel = $this->rappel->create([
-            'order_id' => $data['order_id'],
-            'montant'  => (isset($data['montant']) ? $data['montant'] * 100 : null),
-            'payed_at' => (isset($data['payed_at']) ? $data['payed_at'] : null),
+            'order_id' => $data['order_id']
         ]);
 
         if( ! $rappel )

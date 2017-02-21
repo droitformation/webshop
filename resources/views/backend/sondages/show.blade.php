@@ -77,11 +77,11 @@
                                     @endif
                                 @endforeach
                             </select>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">Ajouter</button>
+                            </span>
                         @endif
 
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit">Ajouter</button>
-                        </span>
                     </div><!-- /input-group -->
                 </form>
 

@@ -24,7 +24,8 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
 
         $data = [
             'site'  => $sites->first(),
-            'token' => '#'
+            'token' => '#',
+            'newsletter_id' => '1'
         ];
 
         return view('emails.confirmation')->with($data);

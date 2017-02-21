@@ -160,29 +160,10 @@ class OrderControllerTest extends BrowserKitTest {
 		$this->assertEquals($total, $result->amount);
 	}
 
-	public function testEditColumnsViaAjax()
-	{
-		// create some orders
-	/*	$make   = new \tests\factories\ObjectFactory();
-
-		$order = $make->order(1);
-		$order = $order->first();
-
-		$data = [
-			'pk'    => $order->id,
-			'name'  => 'payed_at',
-			'value' => \Carbon\Carbon::now()->toDateString()
-		];
-
-		$result = ['OK' => 200, 'etat' => 'Payé', 'color' => 'success'];
-
-		$this->json('POST', 'admin/order/edit', $data)->seeJson($result);
-
-		$this->seeInDatabase('shop_orders', [
-			'id'         => $order->id,
-			'status'     => $order->status,
-			'payed_at'   => \Carbon\Carbon::now()->toDateString(),
-		]);*/
-	}
-
+    public function testStatutObjet()
+    {
+       // $statut = new \App\Droit\Helper\Status('pending', 'payed_at');
+        
+        //$this->assertEquals('wa', $statut->getColor());
+    }
 }

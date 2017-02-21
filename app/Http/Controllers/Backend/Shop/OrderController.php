@@ -75,12 +75,10 @@ class OrderController extends Controller {
         $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
         $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
 
-        if($request->input('order_no',null))
-        {
+        if($request->input('order_no',null)) {
             $orders = $this->order->search($request->input('order_no',null));
         }
-        else
-        {
+        else {
             $orders = $this->order->getPeriod($period, $request->input('status',null), $request->input('send',null), $request->input('onlyfree',null));
         }
         
@@ -140,7 +138,7 @@ class OrderController extends Controller {
      */
     public function create()
     {
-        $products  = $this->product->getAll();
+        $products  = $this->product->listForAdminOrder();
         $shippings = $this->shipping->getAll();
 
         return view('backend.orders.create')->with(['products' => $products, 'shippings' => $shippings]);
@@ -157,10 +155,7 @@ class OrderController extends Controller {
         $shipping = $request->input('shipping_id',null) ? $this->shipping->find($request->input('shipping_id')) : null;
 
         $order = $this->ordermaker->make($request->all(),$shipping);
-
-        // via admin
-        $order->admin = 1;
-        $order->save();
+        $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin
 
         alert()->success('La commande a été crée');
 
@@ -180,7 +175,8 @@ class OrderController extends Controller {
 
         if($order)
         {
-            if($name == 'payed_at'){
+
+            if($name == 'payed_at') {
                 $etat   = ($order->status == 'pending' ? 'En attente' : 'Payé');
                 $status = ($order->status == 'pending' ? 'warning' : 'success');
             }

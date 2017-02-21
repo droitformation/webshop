@@ -68,7 +68,7 @@
                                 <th class="col-md-1"></th>
                             </tr>
                         </thead>
-                        <tbody id="appComponent">
+                        <tbody id="">
                         @if(!$factures->isEmpty())
                             @foreach($factures as $facture)
                                 <tr>
@@ -87,8 +87,6 @@
                                     <td>
                                         @if($facture->doc_facture)
                                             <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->doc_facture) }}">Facture pdf</a>
-                                        @else
-                                            <generate path="facture" order="{{ $facture->id }}"></generate>
                                         @endif
                                     </td>
                                     <td>

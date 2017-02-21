@@ -22,8 +22,7 @@ class RappelWorker implements RappelWorkerInterface
             'colloque_id'    => $inscription->colloque_id,
             'inscription_id' => $inscription->id,
             'user_id'        => $inscription->user_id,
-            'group_id'       => $inscription->group_id,
-            'montant'        => $montant,
+            'group_id'       => $inscription->group_id
         ]);
 
         $this->generator->make('facture', $inscription, $rappel);
@@ -37,8 +36,7 @@ class RappelWorker implements RappelWorkerInterface
             'colloque_id'    => $group->colloque_id,
             'inscription_id' => null,
             'user_id'        => $group->user_id,
-            'group_id'       => $group->id,
-            'montant'        => $montant,
+            'group_id'       => $group->id
         ]);
 
         $this->generator->make('facture', $group, $rappel);

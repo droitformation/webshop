@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="clearfix">
-            <div class="pull-right"><label><input type="checkbox" style="margin-bottom: 0px" checked=""> Se souvenir de moi</label></div>
+            <div class="pull-right"><label><input type="checkbox" name="remember" value="1" style="margin-bottom: 0px" checked=""> Se souvenir de moi</label></div>
         </div>
     </div>
     <div class="panel-footer">

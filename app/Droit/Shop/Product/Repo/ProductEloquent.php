@@ -24,6 +24,11 @@ class ProductEloquent implements ProductInterface{
         return $products->get();
     }
 
+    public function listForAdminOrder()
+    {
+        return $this->product->whereNull('url')->orderBy('created_at', 'DESC')->get();
+    }
+
     // For shop only
     public function getNbr($nbr = null, $visible = true)
     {

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/404.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/common/css/404.css');?>">
 </head>
 <body>
     <div class="container">

@@ -5,6 +5,7 @@ interface ProductInterface {
 	public function getAll($search = null, $nbr = null, $hidden = false);
 	public function getNbr($nbr = null, $hidden = false);
     public function getSome($ids);
+	public function listForAdminOrder();
 	public function forAbos();
 	public function getAbos();
 	public function getByCategorie($id);

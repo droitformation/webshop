@@ -65,7 +65,7 @@ class OrderAdminTest extends BrowserKitTest {
 
         $products = new Illuminate\Database\Eloquent\Collection([$prod1,$prod2]);
 
-        $this->product->shouldReceive('getAll')->once()->andReturn($products);
+        $this->product->shouldReceive('listForAdminOrder')->once()->andReturn($products);
 
         $this->visit('/admin/order/create')->see('Créer une commande');
     }
@@ -88,7 +88,7 @@ class OrderAdminTest extends BrowserKitTest {
         $order = Mockery::mock($order);
 
         $this->maker->shouldReceive('make')->once()->andReturn($order);
-        $order->shouldReceive('save')->once();
+        $this->order->shouldReceive('update')->once();
 
         $response = $this->call('POST', '/admin/order', $data);
 
@@ -115,7 +115,7 @@ class OrderAdminTest extends BrowserKitTest {
         $order = Mockery::mock($order);
 
         $this->maker->shouldReceive('make')->once()->andReturn($order);
-        $order->shouldReceive('save')->once();
+        $this->order->shouldReceive('update')->once();
 
         $response = $this->call('POST', '/admin/order', $data);
 

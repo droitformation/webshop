@@ -249,4 +249,17 @@ class ProductTest extends BrowserKitTest {
         $this->assertFalse($product->attributs->contains('id',$attribute->id));
     }
 
+    public function testExternalProductNotInNewOrderList()
+    {
+        $product   = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['url' => 'http://www.google.ch']);
+
+        $this->visit('/admin/order/create');
+
+        $content = $this->response->getOriginalContent();
+        $content = $content->getData();
+        $products  = $content['products'];
+
+        $this->assertFalse($products->contains('id',$product->id));
+    }
+
 }

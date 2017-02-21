@@ -47,7 +47,7 @@ class AboRappelController extends Controller {
 
 	public function generate(Request $request)
 	{
-        $rappel = $this->rappel->create(['abo_facture_id' => $request->input('id'), 'montant' => $request->input('montant',null)]);
+        $rappel = $this->rappel->create(['abo_facture_id' => $request->input('id')]);
 
         $this->worker->make($rappel, true);
 

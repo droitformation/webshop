@@ -32,7 +32,7 @@
                     @if($order->facture)
                         <a target="_blank" href="{{ $order->facture }}?{{ rand(1,10000) }}" class="btn btn-xs btn-default">Facture en pdf</a>
                     @else
-                        <generate path="order" order="{{ $order->id }}"></generate>
+                        <a target="_blank" href="{{ url('admin/invoice/'.$order->id) }}" class="btn btn-xs btn-default">Facture en pdf</a>
                     @endif
 
                 </td>

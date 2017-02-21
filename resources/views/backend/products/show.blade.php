@@ -193,7 +193,7 @@
                                 @endif
                             </div>
                             <div class="col-md-6">
-                                <label>Valeur</label>
+                                <label>Valeur (ou titre pour rappel)</label>
                                 <div class="input-group">
                                     <input type="text" name="value" class="form-control" placeholder="Valeur">
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">

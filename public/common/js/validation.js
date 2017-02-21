@@ -77,8 +77,10 @@ jQuery(document).ready(function($){
                             }
                         });
                     }
-
-                    form.submit();
+                    else
+                    {
+                        form.submit();
+                    }
                 },
                 error  : function(){}
             });

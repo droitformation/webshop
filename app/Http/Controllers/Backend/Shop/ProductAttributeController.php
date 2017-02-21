@@ -8,16 +8,19 @@ use App\Http\Controllers\Controller;
 
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Attribute\Repo\AttributeInterface;
+use App\Droit\Reminder\Worker\ReminderWorker;
 
 class ProductAttributeController extends Controller {
 
 	protected $product;
     protected $attribute;
+    protected $reminder;
 
-	public function __construct(ProductInterface $product, AttributeInterface $attribute)
+	public function __construct(ProductInterface $product, AttributeInterface $attribute, ReminderWorker $reminder)
 	{
         $this->product   = $product;
         $this->attribute = $attribute;
+        $this->reminder  = $reminder;
 	}
 
     /**
@@ -35,7 +38,7 @@ class ProductAttributeController extends Controller {
 
         if($attribute->reminder)
         {
-            $this->reminder->add($attribute, $product, $request->input('value'), $attribute->interval);
+            $this->reminder->add($attribute, $product, $request->input('value'), $attribute->duration);
         }
 
         $product->attributs()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);

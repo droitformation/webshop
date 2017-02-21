@@ -45,9 +45,9 @@ class Helper {
      * @param  date,string
      * @return date
      */
-    public function addInterval($date,$interval)
+    public function addInterval($date,$duration)
     {
-        switch ($interval) {
+        switch ($duration) {
             case 'week':
                 $date->addWeek();
                 break;

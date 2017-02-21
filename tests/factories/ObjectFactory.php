@@ -184,8 +184,11 @@ class ObjectFactory
             'type'        => 'checkbox',// 'checkbox','choix','text'
         ]);
 
+        $attestation = factory(\App\Droit\Colloque\Entities\Colloque_attestation::class)->create([
+            'colloque_id' => $colloque->id,
+        ]);
+
         return $colloque;
-        
     }
 
     public function colloqueOnlyBon($colloque)
@@ -298,6 +301,7 @@ class ObjectFactory
                 'order_no'    => '2016-0000000'.$x.'',
                 'amount'      => $amount,
                 'shipping_id' => 1,
+                'status' => 'pending',
             ]);
 
             $order->products()->attach($products->pluck('id')->all());

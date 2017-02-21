@@ -215,7 +215,7 @@ class OrderEloquent implements OrderInterface{
 
         $order->$name = empty($data['value']) ? null : $data['value'];
 
-        if($data['name'] == 'payed_at')
+        if($name == 'payed_at')
         {
             $order->status = empty($data['value']) ? 'pending' : 'payed';
         }

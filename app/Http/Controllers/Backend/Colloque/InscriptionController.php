@@ -94,6 +94,9 @@ class InscriptionController extends Controller
         $colloques = $this->colloque->getAll();
         $colloque  = $this->colloque->find($request->input('colloque_id'));
 
+        $validator = new \App\Droit\Colloque\Worker\ColloqueValidation($colloque);
+        $validator->activate();
+
         $user      = $this->user->find($request->input('user_id'));
         $type      = $request->input('type');
 

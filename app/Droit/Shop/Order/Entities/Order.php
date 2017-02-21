@@ -11,7 +11,7 @@ class Order extends Model{
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl', 'comment','admin','send_at','payed_at'];
+    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'status','payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl', 'comment','admin','send_at','payed_at'];
 
     public function getPriceCentsAttribute()
     {

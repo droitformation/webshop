@@ -112,7 +112,7 @@
                 </div>
             </div>
 
-            <div class="panel panel-midnightblue" id="appComponent">
+            <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
                     @if(old('order_no'))
