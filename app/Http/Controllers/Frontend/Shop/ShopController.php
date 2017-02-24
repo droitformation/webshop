@@ -141,8 +141,8 @@ class ShopController extends Controller {
         $model  = str_replace('_id','',$label);
         $title  = $label ? $this->$model->find($id)->title : '';
         
-        $products = $this->product->getAll([$label => $id]);
-
+        $products = $this->product->getAll([$label => $id], null, true);
+        
         return view('frontend.pubdroit.products')->with(['products' => $products, 'label' => $labels[$label], 'title' => $title]);
     }
 
