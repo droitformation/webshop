@@ -55,6 +55,9 @@
                         {!! !empty($colloque->soustitre) ? '<p class="text-muted">'.$colloque->soustitre.'</p>' : '' !!}
                         {!! $colloque->remarques !!}
 
+                        <p><strong>Lieu: </strong>
+                        {{ $colloque->location ? $colloque->location->name : '' }}, {!! $colloque->location ? strip_tags($colloque->location->adresse) : '' !!}</p>
+
                         <hr/>
 
                         @if($colloque->is_active && $colloque->is_open)
