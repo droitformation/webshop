@@ -24,7 +24,7 @@
 							@endif
                         </div>
                     </div>
-                    <p>Je souhaite me <a href="{{ url('unsubscribe') }}">désinscrire</a></p>
+                    <p>Je souhaite me <a href="{{ url('pubdroit/unsubscribe') }}">désinscrire</a></p>
 				</div>
 			</div>
 
