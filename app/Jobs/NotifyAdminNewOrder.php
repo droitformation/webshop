@@ -43,7 +43,7 @@ class NotifyAdminNewOrder extends Job implements ShouldQueue
 
         \Mail::send('emails.notification', $infos, function ($m) {
             $m->from('info@publications-droit.ch', 'Administration Droit Formation');
-            $m->to('cindy.leschaud@gmail.com', 'Administration')->subject('Notification');
+            $m->to('info@publications-droit.ch', 'Administration')->subject('Notification');
         });
     }
 }
