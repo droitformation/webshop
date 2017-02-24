@@ -107,6 +107,9 @@
         <li class="<?php echo (Request::is('admin/shipping') || Request::is('admin/shipping/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/shipping') }}"><i class="fa fa-truck"></i> <span>Frais de port</span></a>
         </li>
+        <li class="<?php echo (Request::is('admin/shopauthor') || Request::is('admin/shopauthor/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/shopauthor') }}"><i class="fa fa-user"></i> <span>Auteurs ouvrages</span></a>
+        </li>
         <li class="<?php echo (Request::is('admin/theme') || Request::is('admin/theme/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/theme') }}"><i class="fa fa-star-half-o"></i> <span>Collections</span></a>
         </li>

@@ -56,7 +56,7 @@ class ProductTest extends BrowserKitTest {
         $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
         $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
 
-        $author = factory(App\Droit\Author\Entities\Author::class)->create();
+        $author = factory(App\Droit\Shop\Author\Entities\Author::class)->create();
 
         $product1->authors()->attach($author->id);
 

@@ -28,6 +28,7 @@ class ShopServiceProvider extends ServiceProvider
         $this->registerRappelService();
         $this->registerAttributeService();
         $this->registerCategorieService();
+        $this->registerAuthorService();
 
         $this->registerCouponService();
         $this->registerShippingService();
@@ -106,6 +107,17 @@ class ShopServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Shop\Attribute\Repo\AttributeInterface', function()
         {
             return new \App\Droit\Shop\Attribute\Repo\AttributeEloquent(new \App\Droit\Shop\Attribute\Entities\Attribute);
+        });
+    }
+
+    /**
+     * Author
+     */
+    protected function registerAuthorService(){
+
+        $this->app->singleton('App\Droit\Shop\Author\Repo\AuthorInterface', function()
+        {
+            return new \App\Droit\Shop\Author\Repo\AuthorEloquent(new \App\Droit\Shop\Author\Entities\Author);
         });
     }
 

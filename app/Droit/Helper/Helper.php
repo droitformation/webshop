@@ -15,7 +15,7 @@ class Helper {
         $this->upload = new UploadWorker();
 
         $categorie = \App::make('App\Droit\Shop\Categorie\Repo\CategorieInterface');
-        $author    = \App::make('App\Droit\Author\Repo\AuthorInterface');
+        $author    = \App::make('App\Droit\Shop\Author\Repo\AuthorInterface');
         $domain    = \App::make('App\Droit\Domain\Repo\DomainInterface');
 
         $this->categories = $categorie->getAll();

@@ -381,6 +381,13 @@ $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Genera
     ];
 });
 
+$factory->define(App\Droit\Shop\Author\Entities\Author::class, function (Faker\Generator $faker) {
+    return [
+        'first_name' => 'Cindy',
+        'last_name'  => 'Leschaud'
+    ];
+});
+
 $factory->define(App\Droit\Arret\Entities\Arret::class, function (Faker\Generator $faker) {
     return [
         'site_id'    => 1,

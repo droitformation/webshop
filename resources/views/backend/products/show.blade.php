@@ -207,7 +207,7 @@
             </div>
 
             @include('backend.products.partials.label',['title' => 'Thème',   'items' => $categories,  'labels' => 'categories'])
-            @include('backend.products.partials.label',['title' => 'Auteur',  'items' => $authors, 'labels' => 'authors'])
+            @include('backend.products.partials.label',['title' => 'Auteur',  'items' => $shopauthors, 'labels' => 'authors'])
             @include('backend.products.partials.label',['title' => 'Domaine', 'items' => $domains, 'labels' => 'domains'])
 
         </div>

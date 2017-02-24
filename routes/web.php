@@ -325,6 +325,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('theme', 'Backend\Shop\ThemeController');
     Route::resource('domain', 'Backend\Shop\DomainController');
     Route::resource('attribut', 'Backend\Shop\AttributController');
+    Route::resource('shopauthor', 'Backend\Shop\ShopAuthorController');
     
     Route::resource('productattribut', 'Backend\Shop\ProductAttributeController');
     Route::resource('productlabel', 'Backend\Shop\ProductLabelController');

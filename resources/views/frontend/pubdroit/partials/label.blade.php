@@ -27,14 +27,14 @@
             </form>
         </li>
     @endif
-    @if(!$authors->isEmpty())
+    @if(!$shopauthors->isEmpty())
         <li>
             <form action="{{ url('pubdroit/sort')}}" method="post">{!! csrf_field() !!}
                 <input type="hidden" name="title" value="Auteur">
                 <input type="hidden" name="label" value="author">
                 <select name="search[author_id]" class="dropdow-select">
                     <option value="">Auteurs</option>
-                    @foreach($authors as $author)
+                    @foreach($shopauthors as $author)
                         <option value="{{ $author->id }}">{{ $author->name }}</option>
                     @endforeach
                 </select>

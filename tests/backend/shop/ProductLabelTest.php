@@ -31,7 +31,7 @@ class ProductLabelTest extends BrowserKitTest {
         
         $product   = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
         $categorie = factory(App\Droit\Shop\Categorie\Entities\Categorie::class)->create();
-        $author    = factory(App\Droit\Author\Entities\Author::class)->create();
+        $author    = factory(App\Droit\Shop\Author\Entities\Author::class)->create();
         $domain    = factory(App\Droit\Domain\Entities\Domain::class)->create();
 
         $this->visit('admin/product/'.$product->id);
@@ -54,7 +54,7 @@ class ProductLabelTest extends BrowserKitTest {
     {
         $product   = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
         $categorie = factory(App\Droit\Shop\Categorie\Entities\Categorie::class)->create();
-        $author    = factory(App\Droit\Author\Entities\Author::class)->create();
+        $author    = factory(App\Droit\Shop\Author\Entities\Author::class)->create();
         $domain    = factory(App\Droit\Domain\Entities\Domain::class)->create();
 
         $product->categories()->attach($categorie->id);
