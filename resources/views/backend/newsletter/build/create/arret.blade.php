@@ -8,7 +8,7 @@
                         <h3>{[{ select.arret.reference }]} <span ng-show="select.arret.reference">du</span> {[{ select.date | date: 'fullDate' }]}</h3>
                         <p class="abstract">{[{ select.arret.abstract }]}</p>
                         <div class="content" ng-bind-html='select.arret.pub_text'></div>
-                        <p><a href="{{ asset(config('newsletter.path.arret').'{[{ select.arret.file }]}') }}">Télécharger en pdf</a></p>
+                        <p><a href="{{ secure_asset(config('newsletter.path.arret').'{[{ select.arret.file }]}') }}">Télécharger en pdf</a></p>
                     </div>
                 </td>
                 <td width="25" class="resetMarge"></td><!-- space -->
@@ -16,7 +16,7 @@
                     <!-- Categories -->
                     <div class="resetMarge" ng-repeat="categorie in select.categories">
                         <a target="_blank" href="{{ url('jurisprudence#'.$bloc->reference) }}">
-                            <img ng-show="categorie.image" width="130" border="0" alt="{[{ categorie.title }]}" ng-src="{{ asset(config('newsletter.path.categorie').'{[{ categorie.image }]}') }}">
+                            <img ng-show="categorie.image" width="130" border="0" alt="{[{ categorie.title }]}" ng-src="{{ secure_asset(config('newsletter.path.categorie').'{[{ categorie.image }]}') }}">
                         </a>
                     </div>
                 </td>

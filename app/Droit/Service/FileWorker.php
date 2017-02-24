@@ -83,7 +83,7 @@ class FileWorker implements FileWorkerInterface{
             {
                 echo '<li>';
                 echo '<form action="'.url('admin/file').'" method="POST"><input type="hidden" name="_method" value="DELETE">'. csrf_field();
-                echo '<a target="_blank" href="'.asset($name.'/'.$subdir).'">'.$name.'/'.$subdir.'</a>';
+                echo '<a target="_blank" href="'.secure_asset($name.'/'.$subdir).'">'.$name.'/'.$subdir.'</a>';
                 echo '<input type="hidden" name="path" value="'.$name.'/'.$subdir.'" />';
                 echo '<button class="btn btn-danger btn-xs pull-right" data-what="Supprimer" data-action="file" type="submit">x</button>';
                 echo '<span class="clearfix"></span></form>';

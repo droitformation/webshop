@@ -22,7 +22,7 @@
                         <div class="col-md-4">
                         <div class="panel panel-midnightblue">
                             <div class="panel-body">
-                                <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ asset('files/main/'.$abo->logo_file) }}" />
+                                <img class="thumbnail" style="height: 80px; float:left; margin-right: 15px;padding: 5px;" src="{{ secure_asset('files/main/'.$abo->logo_file) }}" />
                                 <h4>{{ $abo->title }}  <span class="label label-grape pull-right">{{ $abo->plan_fr }}</span></h4>
                                 <p><strong>&Eacute;dition:</strong> {{ $abo->current_product->title }}</p>
                             </div>

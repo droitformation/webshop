@@ -5,7 +5,7 @@
             <h3>{{ $bloc->groupe->categorie->title }}</h3>
         </div>
         <div class="col-md-3">
-            <img style="max-width: 130px;" border="0" src="{{ asset(config('newsletter.path.categorie').$bloc->groupe->categorie->image) }}" alt="{{ $bloc->groupe->categorie->title }}" />
+            <img style="max-width: 130px;" border="0" src="{{ secure_asset(config('newsletter.path.categorie').$bloc->groupe->categorie->image) }}" alt="{{ $bloc->groupe->categorie->title }}" />
         </div>
     </div>
 
@@ -18,7 +18,7 @@
                 {!! $arret->pub_text !!}
 
                 @if(isset($arret->file))
-                    <p><a target="_blank" href="{{ asset(config('newsletter.path.arret').$arret->file) }}">Télécharger en pdf</a></p>
+                    <p><a target="_blank" href="{{ secure_asset(config('newsletter.path.arret').$arret->file) }}">Télécharger en pdf</a></p>
                 @endif
 
             </div>
@@ -27,7 +27,7 @@
                 @if(!$arret->categories->isEmpty())
                     @foreach($arret->categories as $categorie)
                         <a target="_blank" href="{{ config('newsletter.link.arret') }}#{{ $bloc->reference }}">
-                            <img style="max-width: 130px;" border="0" alt="{{ $categorie->title }}" src="{{ asset(config('newsletter.path.categorie').$categorie->image) }}">
+                            <img style="max-width: 130px;" border="0" alt="{{ $categorie->title }}" src="{{ secure_asset(config('newsletter.path.categorie').$categorie->image) }}">
                         </a>
                     @endforeach
                 @endif

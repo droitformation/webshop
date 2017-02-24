@@ -41,7 +41,7 @@
                                     <td align="center">
                                         @if($organisateur->logo)
                                             <p class="text-center thumbnail">
-                                                <img style="max-height: 45px; max-width: 100px; margin: 0 auto;" src="{{ asset('files/logos/'.$organisateur->logo) }}" alt="{{ $organisateur->name }}"></td>
+                                                <img style="max-height: 45px; max-width: 100px; margin: 0 auto;" src="{{ secure_asset('files/logos/'.$organisateur->logo) }}" alt="{{ $organisateur->name }}"></td>
                                             </p>
                                         @endif
                                     <td>

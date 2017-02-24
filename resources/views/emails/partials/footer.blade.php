@@ -6,9 +6,9 @@
                 <td width="46%" valign="top" align="left">
                     <h3 style="color:#fff; margin-bottom: 5px;">Vers mon compte</h3>
                     <ul style="{{ $resetMargin }}{{ $resetPadding }}">
-                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="{{ url('profil') }}">Mes données</a></li>
-                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="{{ url('profil/orders') }}">Mes achats</a></li>
-                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="{{ url('profil/colloques') }}">Mes inscriptions</a></li>
+                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="{{ url('pubdroit/profil') }}">Mes données</a></li>
+                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="{{ url('pubdroit/profil/orders') }}">Mes achats</a></li>
+                        <li style="color: #fff; list-style: none;"><a style="color: #fff;" href="{{ url('pubdroit/profil/colloques') }}">Mes inscriptions</a></li>
                     </ul>
                 </td>
                 <td width="46%" valign="top" align="right">

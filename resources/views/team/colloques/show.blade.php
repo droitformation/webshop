@@ -12,7 +12,7 @@
                         <div class="col-md-12">
                             <h4>
                                 <?php $illustration = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
-                                <img style="height: 50px; float:left;margin-right: 15px; margin-bottom: 10px;" src="{{ asset('files/colloques/illustration/'.$illustration.'') }}" />
+                                <img style="height: 50px; float:left;margin-right: 15px; margin-bottom: 10px;" src="{{ secure_asset('files/colloques/illustration/'.$illustration.'') }}" />
                                 <p>{{ $colloque->titre }}<br/><small>{{ $colloque->event_date }}</small></p>
                             </h4>
                         </div>

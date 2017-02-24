@@ -9,12 +9,12 @@
                     <a class="file-upload-chosen" title="{{ $file }}" data-targetid="image" data-dismiss="modal" href="{{ $path.'/'.$file }}">
                         @if(in_array($extension, $images))
                             @if(File::exists(public_path($path.'/thumbs/'.$file)))
-                                <img src="{{ asset($path.'/thumbs/'.$file) }}" alt="image" />
+                                <img src="{{ secure_asset($path.'/thumbs/'.$file) }}" alt="image" />
                             @else
-                                <img src="{{ asset($path.'/'.$file) }}" alt="image" />
+                                <img src="{{ secure_asset($path.'/'.$file) }}" alt="image" />
                             @endif
                         @else
-                            <img style="padding: 5px;" src="{{ asset('images/text.svg') }}" alt="Document" />
+                            <img style="padding: 5px;" src="{{ secure_asset('images/text.svg') }}" alt="Document" />
                         @endif
                     </a>
                     <?php $withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file); ?>

@@ -9,7 +9,7 @@
             <div class="panel panel-warning">
                 <div class="panel-body">
 
-                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$abo->current_product->image) }}" />
+                    <img class="thumbnail" style="height: 50px; float:left; margin-right: 15px;padding: 2px;" src="{{ secure_asset('files/products/'.$abo->current_product->image) }}" />
                     <h3 style="margin-bottom:0;line-height:24px">Abo</h3>
                     <p style="margin-bottom: 15px;">&Eacute;dition {{ $abo->title }}</p>
                     <h3 style="margin-bottom: 20px;">Résiliations</h3>

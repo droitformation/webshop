@@ -25,7 +25,7 @@ $paraeset = "font-size: 14px; font-weight: normal; margin: 0 0 10px; padding: 0;
                     <table style="{{ $fontreset }}  width: 100%; {{ $marginreset }}">
                         <tr style="{{ $fontreset }} {{ $marginreset }}">
                             <td style="{{ $fontreset }} {{ $marginreset }}" width="40">
-                                <img style="max-width: 100%; width: 90%;" src="{{ asset('files/logos/facdroit.png') }}" alt="">
+                                <img style="max-width: 100%; width: 90%;" src="{{ secure_asset('files/logos/facdroit.png') }}" alt="">
                             </td>
                             <td style="{{ $fontreset }} {{ $marginreset }}" width="10"></td>
                             <td style="{{ $fontreset }} {{ $marginreset }}" width="50">

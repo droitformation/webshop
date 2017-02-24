@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <p><img height="40" src="{{ asset('logos/'.$site->logo) }}" alt="logo"></p>
+                <p><img height="40" src="{{ secure_asset('logos/'.$site->logo) }}" alt="logo"></p>
                 <div class="panel panel-primary">
                     <div class="panel-body">
 

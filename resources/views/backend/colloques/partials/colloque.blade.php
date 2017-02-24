@@ -9,7 +9,7 @@
                         <div class="media">
                             <div class="media-left">
                                 <a href="{{ url('admin/colloque/'.$colloque->id) }}">
-                                    <img class="media-object" width="50px" src="{{ asset('files/colloques/illustration/'.$illustraton) }}" />
+                                    <img class="media-object" width="50px" src="{{ secure_asset('files/colloques/illustration/'.$illustraton) }}" />
                                 </a>
                             </div>
                             <div class="media-body">

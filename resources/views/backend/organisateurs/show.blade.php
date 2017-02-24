@@ -41,7 +41,7 @@
                                 <div class="col-sm-4">
                                     <div class="list-group">
                                         <div class="list-group-item text-center">
-                                            <a href="#"><img height="150" src="{!! asset('files/logos/'.$organisateur->logo) !!}" alt="{{ $organisateur->name }}" /></a>
+                                            <a href="#"><img height="150" src="{!! secure_asset('files/logos/'.$organisateur->logo) !!}" alt="{{ $organisateur->name }}" /></a>
                                         </div>
                                     </div>
                                 </div>

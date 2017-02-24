@@ -111,7 +111,7 @@ class UploadController extends Controller
             }
             
             $array = [
-                'filelink' => asset('files/uploads/'.$file['name']),
+                'filelink' => secure_asset('files/uploads/'.$file['name']),
                 'filename' => $file['name']
             ];
 
@@ -128,7 +128,7 @@ class UploadController extends Controller
         if($file)
         {
             $array = [
-                'filelink' => asset('files/uploads/'.$file['name']),
+                'filelink' => secure_asset('files/uploads/'.$file['name']),
                 'filename' => $file['name']
             ];
 
@@ -151,7 +151,7 @@ class UploadController extends Controller
 
                 if(substr($mime, 0, 5) == 'image')
                 {
-                    $data[] = ['image' => asset('files/uploads/'.$file), 'thumb' => asset('files/uploads/'.$file), 'title' => $file];
+                    $data[] = ['image' => secure_asset('files/uploads/'.$file), 'thumb' => secure_asset('files/uploads/'.$file), 'title' => $file];
                 }
             }
         }
@@ -172,7 +172,7 @@ class UploadController extends Controller
 
                 if(substr($mime, 0, 5) != 'image')
                 {
-                    $data[] = ['image' => $file, 'title' => asset('files/uploads/'.$file) ];
+                    $data[] = ['image' => $file, 'title' => secure_asset('files/uploads/'.$file) ];
                 }
             }
         }

@@ -33,7 +33,7 @@
                                 @foreach($grouped as $product)
                                     <div class="row order-item">
                                         <div class="col-md-1">
-                                            <a href="#"><img height="40" src="{{ asset('files/products/'.$product->first()->image) }}" alt=""></a>
+                                            <a href="#"><img height="40" src="{{ secure_asset('files/products/'.$product->first()->image) }}" alt=""></a>
                                         </div>
                                         <div class="col-md-8">{{ $product->first()->title }}</div>
                                         <div class="col-md-1"><p class="text-right">{{ $product->count() }} x</p></div>

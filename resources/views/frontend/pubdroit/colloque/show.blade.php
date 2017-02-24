@@ -18,7 +18,7 @@
                     <div class="col-md-3">
                         <div class="b-img-holder">
                             <span class='zoom' id='ex1'>
-                                <img src="{{ asset($colloque->frontend_illustration) }}" height="219" width="300" alt='{{ $colloque->titre }}'/>
+                                <img src="{{ secure_asset($colloque->frontend_illustration) }}" height="219" width="300" alt='{{ $colloque->titre }}'/>
                             </span>
                         </div>
 
@@ -26,13 +26,13 @@
                             @foreach($colloque->documents as $document)
                                 <?php $file = 'files/colloques/'.$document->type.'/'.$document->path; ?>
                                 @if (File::exists($file) && ($document->type == 'programme' || $document->type == 'document'))
-                                    <p><a class="btn btn-inverse btn-sm btn-block" target="_blank" href="{{ asset($file) }}">{{ !empty($document->titre) ? $document->titre : 'Programme' }}</a></p>
+                                    <p><a class="btn btn-inverse btn-sm btn-block" target="_blank" href="{{ secure_asset($file) }}">{{ !empty($document->titre) ? $document->titre : 'Programme' }}</a></p>
                                 @endif
                             @endforeach
                         @endif
 
                         @if($colloque->location && $colloque->location->location_map)
-                            <p><a target="_blank" class="btn btn-default btn-sm btn-block" href="{{ asset($colloque->location->location_map) }}">Plan d'accès</a></p>
+                            <p><a target="_blank" class="btn btn-default btn-sm btn-block" href="{{ secure_asset($colloque->location->location_map) }}">Plan d'accès</a></p>
                         @endif
 
                     </div>
@@ -66,7 +66,7 @@
                                     <?php $message = ($registered ? Registry::get('inscription.messages.registered') : Registry::get('inscription.messages.pending')); ?>
                                 
                                     <div class="text-danger text-center">
-                                        <img style="height: 90px;width: 80px; margin-bottom: 20px; margin-top: 30px;" src="{{ asset('frontend/pubdroit/images/notification.svg') }}" alt="{{ strip_tags($message) }}">
+                                        <img style="height: 90px;width: 80px; margin-bottom: 20px; margin-top: 30px;" src="{{ secure_asset('frontend/pubdroit/images/notification.svg') }}" alt="{{ strip_tags($message) }}">
                                         <h4>{{ strip_tags($message) }}</h4>
                                     </div>
                                 @endif
@@ -91,7 +91,7 @@
                 <div class="col-md-12 colloque-centers">
                     @if(isset($colloque->centres))
                         @foreach($colloque->centres as $center)
-                            <a href="{{ $center->url }}"><img style="max-width: 45%; max-height: 55px;" src="{{ asset('files/logos/'.$center->logo) }}"></a>
+                            <a href="{{ $center->url }}"><img style="max-width: 45%; max-height: 55px;" src="{{ secure_asset('files/logos/'.$center->logo) }}"></a>
                         @endforeach
                     @endif
                 </div>

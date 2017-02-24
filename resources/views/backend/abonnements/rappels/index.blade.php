@@ -8,7 +8,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
+                    <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ secure_asset('files/products/'.$product->image) }}" />
                     <h3 style="margin-bottom:0;line-height:20px;font-size: 18px;"><a href="{{ url('admin/abo/'.$abo->id) }}">{{ $abo->title }}</a></h3>
                     <p style="margin-bottom: 0;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
@@ -57,7 +57,7 @@
                             <div class="btn-group">
                                 @foreach($files as $file)
                                     <?php $name = explode('/',$file); ?>
-                                    <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-download"></i>&nbsp; {{ end($name) }}</a>
+                                    <a href="{{ secure_asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-download"></i>&nbsp; {{ end($name) }}</a>
                                 @endforeach
                             </div>
                         @endif

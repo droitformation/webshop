@@ -25,7 +25,7 @@
                         <div class="post-entry">
                             @if($analyse->document)
                                 <p>
-                                    <a target="_blank" href="{{ asset('files/analyses/'.$analyse->file) }}">
+                                    <a target="_blank" href="{{ secure_asset('files/analyses/'.$analyse->file) }}">
                                         Télécharger cette analyse en PDF &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
                                     </a>
                                 </p>
@@ -38,7 +38,7 @@
             @endforeach
         </div>
         <div class="col-md-3 last listCat listAnalyse text-center">
-            <img style="max-width: 140px;" border="0" alt="Analyses" src="{{ asset('files/pictos/matrimonial/analyse.jpg') }}">
+            <img style="max-width: 140px;" border="0" alt="Analyses" src="{{ secure_asset('files/pictos/matrimonial/analyse.jpg') }}">
         </div>
     </div>
     <div class="divider-border-nofloat"></div>

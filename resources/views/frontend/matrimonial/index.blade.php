@@ -3,7 +3,7 @@
 
 	<!-- Illustration -->
 	<section>
-		<img src="{{ asset('/images/matrimonial/home.jpg') }}" alt="">
+		<img src="{{ secure_asset('/images/matrimonial/home.jpg') }}" alt="">
 	</section>
 
 	<div id="content" class="inner inner-app">

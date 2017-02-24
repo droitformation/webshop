@@ -16,7 +16,7 @@
                     @foreach($sites as $site)
                         <li class="{{ $site->id == 1 ? 'active' : '' }}">
                             <a data-toggle="tab" href="#site{{ $site->id }}">
-                                <img height="25px" src="{{ asset('logos/'.$site->logo) }}" alt="{{ $site->nom }}" />
+                                <img height="25px" src="{{ secure_asset('logos/'.$site->logo) }}" alt="{{ $site->nom }}" />
                             </a>
                         </li>
                     @endforeach

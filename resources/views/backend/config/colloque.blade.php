@@ -30,7 +30,7 @@
 
                                 <div class="thumbnail big" ng-if="!$flow.files.length">
                                     <?php $logo = Registry::get('inscription.infos.logo'); ?>
-                                    <?php $logo = (!empty($logo) ? asset('files/main/'.$logo) : 'http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=Logo'); ?>
+                                    <?php $logo = (!empty($logo) ? secure_asset('files/main/'.$logo) : 'http://www.placehold.it/160x180/EFEFEF/AAAAAA&text=Logo'); ?>
                                     <img style="max-width: 100%;" src="{{ $logo }}" />
                                     <input type="hidden" name="inscription[infos][logo]" value="{{ Registry::get('inscription.infos.logo') }}">
                                 </div>

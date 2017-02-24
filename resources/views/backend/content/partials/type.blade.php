@@ -15,7 +15,7 @@
             <td><strong>{!! $item->name !!}</strong></td>
             <td>
                 @if(!empty($item->image))
-                    <img height="60" src="{{ asset($item->image) }}" alt="{{ $item->title or '' }}" />
+                    <img height="60" src="{{ secure_asset($item->image) }}" alt="{{ $item->title or '' }}" />
                 @endif
             </td>
             <td>{{ $item->type }}</td>

@@ -11,10 +11,10 @@
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/responsive.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?=121');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/responsive.css');?>">
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/admin.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css');?>">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <base href="/">
 
@@ -82,14 +82,14 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script src="//cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
+<script src="<?php echo secure_asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 
 <!-- Layout and fixes plugins -->
-<script type="text/javascript" src="<?php echo asset('backend/js/layouts/enquire.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.nicescroll.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/layouts/application.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/team.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/enquire.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/jquery.nicescroll.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/application.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/team.js');?>"></script>
 
 </body>
 </html>

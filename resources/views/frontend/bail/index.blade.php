@@ -2,7 +2,7 @@
 @section('content')
 
 	<!-- Illustration -->
-	<section><img src=" {{ asset('/images/bail/header.jpg') }}" alt=""></section>
+	<section><img src=" {{ secure_asset('/images/bail/header.jpg') }}" alt=""></section>
 
 	<div id="content" class="inner inner-app ">
 

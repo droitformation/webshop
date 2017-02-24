@@ -21,7 +21,7 @@
                         <td width="25" height="1" class="resetMarge" valign="top" style="font-size: 1px; line-height: 1px;margin: 0;padding: 0;"></td><!-- space -->
                         <td align="center" valign="top" width="160" class="resetMarge">
                             <a target="_blank" href="{{ url('pubdroit/product/'.$bloc->product->id) }}">
-                                <img width="130" border="0" alt="{{ $bloc->product->title }}" src="{{ asset('files/products/'.$bloc->product->image) }}" />
+                                <img width="130" border="0" alt="{{ $bloc->product->title }}" src="{{ secure_asset('files/products/'.$bloc->product->image) }}" />
                             </a>
                         </td>
                     </tr>

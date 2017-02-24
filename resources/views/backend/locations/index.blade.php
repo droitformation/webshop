@@ -35,8 +35,8 @@
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/location/'.$location->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td>
                                         @if($location->location_map)
-                                            <a href="{{ asset($location->location_map) }}" target="_blank">
-                                                <img style="height: 40px;" src="{{ asset($location->location_map) }}" alt="{{ $location->name }}">
+                                            <a href="{{ secure_asset($location->location_map) }}" target="_blank">
+                                                <img style="height: 40px;" src="{{ secure_asset($location->location_map) }}" alt="{{ $location->name }}">
                                             </a>
                                         @else
                                             <p>Pas de carte</p>

@@ -43,7 +43,7 @@
                                                 @foreach($grouped as $product)
                                                     <div class="row order-item">
                                                         <div class="col-md-1">
-                                                            <a href="{{ url('product/'.$product->first()->id) }}"><img height="35" src="{{ asset('files/products/'.$product->first()->image) }}" alt=""></a>
+                                                            <a href="{{ url('product/'.$product->first()->id) }}"><img height="35" src="{{ secure_asset('files/products/'.$product->first()->image) }}" alt=""></a>
                                                         </div>
                                                         <div class="col-md-8">{{ $product->first()->title }}</div>
                                                         <div class="col-md-1"><p class="text-right">{{ $product->count() }} x</p></div>
@@ -60,7 +60,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     @if ($order->facture)
-                                                        <a target="_blank" href="{{ asset($order->facture) }}" class="btn btn-sm btn-default"><i class="fa fa-file"></i> &nbsp;Facture en pdf</a>
+                                                        <a target="_blank" href="{{ secure_asset($order->facture) }}" class="btn btn-sm btn-default"><i class="fa fa-file"></i> &nbsp;Facture en pdf</a>
                                                     @endif
                                                 </div>
                                                 <div class="col-md-5">

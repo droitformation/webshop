@@ -11,7 +11,7 @@
 				<div class="row">
 					<div class="col-md-5">
 						<div class="thumbnail" style="display: inline-block;">
-							<img style="max-height: 350px;" src="{{ asset('files/products/'.$revue->image) }}" alt="{{ $revue->title }}">
+							<img style="max-height: 350px;" src="{{ secure_asset('files/products/'.$revue->image) }}" alt="{{ $revue->title }}">
 						</div>
 					</div>
 					<div class="col-md-7">

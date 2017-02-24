@@ -25,7 +25,7 @@
                 <div class="thumbnail mini" ng-hide="$flow.files.length">
                     <img flow-img="$flow.files[0]" ng-if="notedited"/>
                     <a target="_blank" href="{{ isset($bloc->lien) && !empty($bloc->lien) ? $bloc->link_or_url : url('/') }}">
-                        <img style="max-width: 130px;" alt="{{ $bloc->titre or '' }}" src="{{ asset(config('newsletter.path.upload').$bloc->image) }}" />
+                        <img style="max-width: 130px;" alt="{{ $bloc->titre or '' }}" src="{{ secure_asset(config('newsletter.path.upload').$bloc->image) }}" />
                     </a>
                 </div>
                 <div class="thumbnail mini" ng-show="$flow.files.length"><img flow-img="$flow.files[0]" /></div>

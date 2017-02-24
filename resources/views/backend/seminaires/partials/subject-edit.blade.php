@@ -14,7 +14,7 @@
             <input type="file" name="file">
             @if($subject->file_path)
                 <p>
-                    <br/><a class="btn btn-sm btn-primary" target="_blank" href="{{ asset($subject->file_path) }}">
+                    <br/><a class="btn btn-sm btn-primary" target="_blank" href="{{ secure_asset($subject->file_path) }}">
                        <i class="fa fa-file"></i> &nbsp;{{ $subject->file }}
                     </a>
                 </p>
@@ -27,7 +27,7 @@
             <input type="file" name="appendixes">
             @if($subject->annexe_path)
                 <p>
-                    <br/><a class="btn btn-sm btn-primary" target="_blank" href="{{ asset($subject->annexe_path) }}">
+                    <br/><a class="btn btn-sm btn-primary" target="_blank" href="{{ secure_asset($subject->annexe_path) }}">
                         <i class="fa fa-file"></i> &nbsp;{{ $subject->appendixes }}
                     </a>
                 </p>

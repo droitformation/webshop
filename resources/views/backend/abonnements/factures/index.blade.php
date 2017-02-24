@@ -14,7 +14,7 @@
         <div class="panel-body" style="padding-bottom: 10px;">
             <div class="row">
                 <div class="col-md-2">
-                    <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ asset('files/products/'.$product->image) }}" />
+                    <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ secure_asset('files/products/'.$product->image) }}" />
                     <h3 style="margin-bottom:0;line-height:20px;font-size: 18px;"><a href="{{ url('admin/abo/'.$abo->id) }}">{{ $abo->title }}</a></h3>
                     <p style="margin-bottom: 5px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
@@ -50,7 +50,7 @@
                             <div class="btn-group">
                                 @foreach($files as $file)
                                     <?php $name = explode('/',$file); ?>
-                                    <a href="{{ asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-download"></i>&nbsp; {{ end($name) }}</a>
+                                    <a href="{{ secure_asset($file.'?'.rand(1000,2000)) }}" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-download"></i>&nbsp; {{ end($name) }}</a>
                                 @endforeach
                             </div>
                         @endif
@@ -86,7 +86,7 @@
                                     <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
                                     <td>
                                         @if($facture->doc_facture)
-                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->doc_facture) }}">Facture pdf</a>
+                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ secure_asset($facture->doc_facture) }}">Facture pdf</a>
                                         @endif
                                     </td>
                                     <td>

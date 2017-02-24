@@ -34,10 +34,10 @@
                                                     <div class="col-md-2">{{ $row->authors->implode('name', ', ') }}</div>
                                                     <div class="col-md-2">
                                                         @if($row->file_path)
-                                                            <p><a target="_blank" href="{{ asset($row->file_path) }}">Télécharger</a></p>
+                                                            <p><a target="_blank" href="{{ secure_asset($row->file_path) }}">Télécharger</a></p>
                                                         @endif
                                                         @if($row->annexe_path)
-                                                            <p><a target="_blank" href="{{ asset($row->annexe_path) }}">Télécharger</a></p>
+                                                            <p><a target="_blank" href="{{ secure_asset($row->annexe_path) }}">Télécharger</a></p>
                                                         @endif
                                                     </div>
                                                 </div>

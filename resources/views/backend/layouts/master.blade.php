@@ -12,27 +12,27 @@
     <script src="//use.fontawesome.com/fd16a07224.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/styles.css?=121');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/responsive.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css?=1321');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/chosen.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/chosen-bootstrap.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/jquery.tagit.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?=121');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/responsive.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css?=1321');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen-bootstrap.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.tagit.css');?>">
 
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/admin.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/inscription.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/types.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/js/redactor/redactor.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/inscription.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/types.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/redactor/redactor.css');?>">
 
-    <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
-    <link rel='stylesheet' type='text/css' href="<?php echo asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
+    <link rel='stylesheet' type='text/css' href="<?php echo secure_asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />
+    <link rel='stylesheet' type='text/css' href="<?php echo secure_asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
 
     <!-- Manager -->
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/files.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
 
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
@@ -126,33 +126,33 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="<?php echo asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>
+<script src="<?php echo secure_asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>
 <script src="//gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Filter plugin -->
-<script type="text/javascript" src="<?php echo asset('common/js/chosen.jquery.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
 
 <!-- Layout and fixes plugins -->
-<script type="text/javascript" src="<?php echo asset('backend/js/layouts/enquire.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/jquery/jquery.nicescroll.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/enquire.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/jquery.nicescroll.min.js');?>"></script>
 
 <!-- Scripts -->
-<script type="text/javascript" src="<?php echo asset('backend/js/datatables.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/layouts/application.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/datatables.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/application.js');?>"></script>
 
 @include('backend.scripts.redactor')
 
 <!-- Form plugins -->
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-<script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
-<script type="text/javascript" src="{{ asset('newsletter/js/jqColorPicker.min.js') }}"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/vendor/libraries/placeholdr.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
-<script type='text/javascript' src="<?php echo asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
+<script src="<?php echo secure_asset('common/js/messages_fr.js');?>"></script>
+<script type="text/javascript" src="{{ secure_asset('newsletter/js/jqColorPicker.min.js') }}"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/libraries/placeholdr.js');?>"></script>
+<script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
+<script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
+<script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
+<script type='text/javascript' src="<?php echo secure_asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
 @include('script.config')
 
@@ -160,30 +160,30 @@
     @include('script.date')
     @include('script.angular')
     @include('script.main')
-    <script type="text/javascript" src="<?php echo asset('backend/js/select-list.js');?>"></script>
-    <script type="text/javascript" src="<?php echo asset('backend/js/upload/upload.js');?>"></script>
+    <script type="text/javascript" src="<?php echo secure_asset('backend/js/select-list.js');?>"></script>
+    <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/upload.js');?>"></script>
 @endif
 
-<script type="text/javascript" src="{{ asset('newsletter/js/sorting.js') }}"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/search-user.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/search-adresse.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/order.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/inscription.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/specialisation.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/colloque.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/rappels.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/abo.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/sorting.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/member.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/blocs.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/sondage.js');?>"></script>
+<script type="text/javascript" src="{{ secure_asset('newsletter/js/sorting.js') }}"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/search-user.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/search-adresse.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/order.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/inscription.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/specialisation.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/colloque.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/rappels.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/abo.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/sorting.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/member.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/blocs.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/sondage.js');?>"></script>
 
 <!-- Upload plugins -->
-<script type="text/javascript" src="<?php echo asset('backend/js/manager/manager.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/upload/dropzone.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/tree.js');?>"></script>
-<script type="text/javascript" src="<?php echo asset('backend/js/admin.js');?>"></script>
-<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/manager.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/dropzone.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/tree.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
+<script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 
 
 </body>

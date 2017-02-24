@@ -42,7 +42,7 @@
                             <div class="col-sm-4">
                                 <div class="list-group">
                                     <div class="list-group-item text-center">
-                                        <a href="#"><img height="150" src="{!! asset('files/colloques/cartes/'.$location->map) !!}" alt="{{ $location->name }}" /></a>
+                                        <a href="#"><img height="150" src="{!! secure_asset('files/colloques/cartes/'.$location->map) !!}" alt="{{ $location->name }}" /></a>
                                     </div>
                                 </div>
                             </div>

@@ -3,7 +3,7 @@
         <table border="0" width="375" align="left" cellpadding="0" cellspacing="0" class="resetTable">
             <tr>
                 <td valign="top" width="60" class="resetMarge">
-                    <img style="width: 60px;" width="60" border="0" alt="{{ $author->name }}" src="{{ asset(config('newsletter.path.author').$author->author_photo) }}">
+                    <img style="width: 60px;" width="60" border="0" alt="{{ $author->name }}" src="{{ secure_asset(config('newsletter.path.author').$author->author_photo) }}">
                 </td>
                 <td valign="top" width="10" class="resetMarge"></td>
                 <td valign="top" width="305" class="resetMarge">

@@ -19,7 +19,7 @@
                         <article class="item-holder">
                             <div class="col-md-2">
                                 <a href="{{ url('pubdroit/product/'.$product->id) }}">
-                                    <img src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" />
+                                    <img src="{{ secure_asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" />
                                 </a>
                             </div>
                             <div class="col-md-10">

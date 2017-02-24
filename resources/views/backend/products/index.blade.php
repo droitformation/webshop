@@ -59,7 +59,7 @@
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <p>
-                                                    <img style="height: 50px; float:left; margin-right: 10px;" src="{{ asset('files/products/'.$product->image) }}" />
+                                                    <img style="height: 50px; float:left; margin-right: 10px;" src="{{ secure_asset('files/products/'.$product->image) }}" />
                                                     <a href="{{ url('admin/product/'.$product->id) }}"><span class="title">{{ $product->title }}</span></a>
                                                 </p>
                                             </div>
