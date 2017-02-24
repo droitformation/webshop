@@ -15,12 +15,12 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <!-- Local -->
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/chosen.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('frontend/common/css/structure.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('frontend/bail/css/main.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('frontend/common/css/filter.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('common/css/sites.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('frontend/bail/css/responsive.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('frontend/common/css/structure.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('frontend/bail/css/main.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('frontend/common/css/filter.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('common/css/sites.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('frontend/bail/css/responsive.css');?>">
 
     <!-- Javascript Files
     ================================================== -->
@@ -31,8 +31,8 @@
     <script src="//unpkg.com/bootstrap-vue/dist/bootstrapVue.js"></script>
 
     <!-- Local -->
-    <script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
-    <script src="<?php echo asset('common/js/chosen.jquery.js');?>"></script>
+    <script src="<?php echo secure_asset('common/js/messages_fr.js');?>"></script>
+    <script src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
 
     <script>
         window.Laravel = <?php echo json_encode([
@@ -48,7 +48,7 @@
     <header class="header" id="app">
         <div class="row">
             <h1 class="col-md-3 col-xs-12">
-                <a class="" href="{{ url('bail/page/index') }}"><img src="{{ asset('/logos/bail.svg') }}" alt="Logo Bail.ch"></a>
+                <a class="" href="{{ url('bail/page/index') }}"><img src="{{ secure_asset('/logos/bail.svg') }}" alt="Logo Bail.ch"></a>
             </h1>
             <div class="col-md-7 col-xs-12 text-right">
                 <nav id="menu-principal">
@@ -66,7 +66,7 @@
                 <div class="sidebar-unine-logo">
                     <p class="text-right ">
                         <a href="//www.unine.ch" target="_blank">
-                            <img src="{{ asset('/images/bail/unine.png') }}" alt="">
+                            <img src="{{ secure_asset('/images/bail/unine.png') }}" alt="">
                         </a>
                     </p>
                 </div>
@@ -100,12 +100,12 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-<script src="<?php echo asset('frontend/common/js/sidebar.js');?>"></script>
-<script src="<?php echo asset('frontend/common/js/arrets.js');?>"></script>
-<script src="<?php echo asset('frontend/bail/js/seminaires.js');?>"></script>
-<script src="<?php echo asset('frontend/bail/js/main.js');?>"></script>
-<script src="<?php echo asset('common/js/chosen.jquery.js');?>"></script>
-<script src="<?php echo asset('js/app.js');?>"></script>
+<script src="<?php echo secure_asset('frontend/common/js/sidebar.js');?>"></script>
+<script src="<?php echo secure_asset('frontend/common/js/arrets.js');?>"></script>
+<script src="<?php echo secure_asset('frontend/bail/js/seminaires.js');?>"></script>
+<script src="<?php echo secure_asset('frontend/bail/js/main.js');?>"></script>
+<script src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
+<script src="<?php echo secure_asset('js/app.js');?>"></script>
 
 </body>
 </html>
