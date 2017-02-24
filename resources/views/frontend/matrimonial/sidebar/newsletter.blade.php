@@ -4,5 +4,7 @@
         @foreach($newsletters as $newsletter)
             @include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'matrimonial'])
         @endforeach
+
+        <p>Je souhaite me <a href="{{ url('matrimonial/unsubscribe') }}">désinscrire</a></p>
     </div>
 @endif
