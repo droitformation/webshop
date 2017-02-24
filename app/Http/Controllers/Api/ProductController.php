@@ -29,7 +29,7 @@ class ProductController extends Controller {
 			'id'          => $product->id,
 			'title'       => $product->title,
 			'teaser'      => strip_tags($product->teaser),
-			'image'       => !empty($product->image) ? asset('files/products/'.$product->image) : null,
+			'image'       => !empty($product->image) ? secure_asset('files/products/'.$product->image) : null,
 			'description' => $product->description,
 			'price'       => $product->price_cents,
 			'link'        => url('pubdroit/product/').$product->id

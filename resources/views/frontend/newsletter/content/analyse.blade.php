@@ -26,7 +26,7 @@
                             <div class="post-entry">
                                 @if(!empty($analyse->file ))
                                     <p>
-                                        <a target="_blank" href="{{ asset('files/analyses/'.$analyse->file) }}">
+                                        <a target="_blank" href="{{ secure_asset('files/analyses/'.$analyse->file) }}">
                                             Télécharger ce commentaire en PDF &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
                                         </a>
                                     </p>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="col-md-3 last listCat listAnalyse">
-            <img border="0" alt="Analyses" src="<?php echo asset('newsletter/pictos/analyse.png') ?>">
+            <img border="0" alt="Analyses" src="<?php echo secure_asset('newsletter/pictos/analyse.png') ?>">
         </div>
     </div>
     <div class="divider-border-nofloat"></div>

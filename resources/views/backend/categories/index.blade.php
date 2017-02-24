@@ -26,7 +26,7 @@
                             @foreach($categories as $categorie)
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/categorie/'.$categorie->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td><img height="40" src="{!! asset('files/pictos/'.$categorie->image) !!}" alt="{{ $categorie->title }}" /></td>
+                                    <td><img height="40" src="{!! secure_asset('files/pictos/'.$categorie->image) !!}" alt="{{ $categorie->title }}" /></td>
                                     <td><strong>{{ $categorie->title }}</strong></td>
                                     <td class="text-right">
                                         <form id="deleteCategorieForm_" action="{{ url('admin/categorie/'.$categorie->id) }}" method="POST" class="form-horizontal">

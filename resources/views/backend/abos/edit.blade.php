@@ -101,7 +101,7 @@
                                 <div class="col-sm-4">
                                     <div class="list-group">
                                         <div class="list-group-item text-center">
-                                            <a href="#"><img height="120" src="{!! asset('files/main/'.$abo->logo) !!}" alt="logo" /></a>
+                                            <a href="#"><img height="120" src="{!! secure_asset('files/main/'.$abo->logo) !!}" alt="logo" /></a>
                                         </div>
                                     </div>
                                 </div>

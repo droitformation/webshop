@@ -74,7 +74,7 @@
                         <div class="list-group">
                             <div class="list-group-item">
                                 <?php $rand = rand(200,1000); ?>
-                                <a target="_blank" href="{{ asset('files/analyses/'.$analyse->file.'?'.$rand) }}">
+                                <a target="_blank" href="{{ secure_asset('files/analyses/'.$analyse->file.'?'.$rand) }}">
                                 <i class="fa fa-file"></i> &nbsp;&nbsp;{!! $analyse->file  !!}</a>
                             </div>
                         </div>

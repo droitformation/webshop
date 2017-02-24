@@ -1227,7 +1227,7 @@
                                 <tr>
                                     <td width="25%" style="text-align: center;" valign="middle" align="center">
                                          <a href="{{ url('/') }}" style="{{ $resetPadding }}display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;color: #465059;height: 85px;text-align: center;font-size: 18px;font-weight: bold;line-height: 0;">
-                                             <img class="imageFix" src="{{ asset('emails/logos/facdroit.png') }}" alt="Faculté de droit" style="{{ $resetMargin }}{{ $resetPadding }}outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;vertical-align: top;height: 85px;">
+                                             <img class="imageFix" src="{{ secure_asset('emails/logos/facdroit.png') }}" alt="Faculté de droit" style="{{ $resetMargin }}{{ $resetPadding }}outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;vertical-align: top;height: 85px;">
                                          </a>
                                     </td>
                                     <td width="5%" style="color:#000;" valign="middle" align="center"></td>

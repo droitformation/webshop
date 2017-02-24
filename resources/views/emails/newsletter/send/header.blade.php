@@ -23,7 +23,7 @@
                         @if($campagne->newsletter->logo_soutien)
                             <small style="text-align: left; font-family: sans-serif;color: #fff;font-size: 11px;">Avec le soutien de</small>
                             <a target="_blank" href="#">
-                                <img style="max-width: 105px;" alt="soutien" src="{{ asset($campagne->newsletter->logo_soutien) }}" />
+                                <img style="max-width: 105px;" alt="soutien" src="{{ secure_asset($campagne->newsletter->logo_soutien) }}" />
                             </a>
                         @endif
                     </td>

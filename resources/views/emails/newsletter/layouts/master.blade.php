@@ -6,7 +6,7 @@
         <!-- Responsive Meta Tag -->
         <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
         <title>{{ $campagne->newsletter->titre }}</title><!-- Responsive Styles and Valid Styles -->
-        <link rel="stylesheet" href="<?php echo asset('newsletter/css/frontend/newsletter.css'); ?>">
+        <link rel="stylesheet" href="<?php echo secure_asset('newsletter/css/frontend/newsletter.css'); ?>">
 
         <style type="text/css">
             #StyleNewsletter h2, #StyleNewsletterCreate h2{  color: {{ $campagne->newsletter->color }};  }

@@ -24,7 +24,7 @@
                             @foreach($seminaires as $seminaire)
                                 <tr>
                                     <td><a href="{{ url('admin/seminaire/'.$seminaire->id) }}" class="btn btn-sm btn-info">éditer</a></td>
-                                    <td><img style="max-height: 50px;" src="{{ asset('files/seminaires/'.$seminaire->image) }}" alt="{{ $seminaire->title }}" /></td>
+                                    <td><img style="max-height: 50px;" src="{{ secure_asset('files/seminaires/'.$seminaire->image) }}" alt="{{ $seminaire->title }}" /></td>
                                     <td>{{ $seminaire->title }}</td>
                                     <td>{{ $seminaire->year }} </td>
                                     <td class="text-right">

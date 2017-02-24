@@ -11,7 +11,7 @@
     ?>
 
     <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url('pubdroit') }}" target="_blank">
-        <img width="max-width:100%;" src="{{ asset('files/uploads/header_email.png') }}" alt="{{ config('app.name') }}">
+        <img width="max-width:100%;" src="{{ secure_asset('files/uploads/header_email.png') }}" alt="{{ config('app.name') }}">
     </a>
     <table style="{{ $style['email-body_inner_full'] }}" align="center" width="600" cellpadding="0" cellspacing="0">
         <tr>

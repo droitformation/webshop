@@ -4,7 +4,7 @@
     <?php $config = config('reminder.'.$reminder->type); ?>
 
     <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url('pubdroit') }}" target="_blank">
-        <img width="max-width:100%;" src="{{ asset('images/pubdroit/header_email.png') }}" alt="{{ config('app.name') }}">
+        <img width="max-width:100%;" src="{{ secure_asset('images/pubdroit/header_email.png') }}" alt="{{ config('app.name') }}">
     </a>
     <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
         <tr>

@@ -2,7 +2,7 @@
     <div class="post-img">
         <a href="{{ url('pubdroit/colloque/'.$colloque->id) }}">
             <?php $illustraton = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
-            <img src="{{ asset('files/colloques/illustration/'.$illustraton) }}" alt=""/>
+            <img src="{{ secure_asset('files/colloques/illustration/'.$illustraton) }}" alt=""/>
         </a>
     </div>
     <div class="post-det">

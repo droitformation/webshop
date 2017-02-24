@@ -44,7 +44,7 @@ class Format {
 		
 		if ( \File::exists($url) )
 		{
-			$asset = asset($link);
+			$asset = secure_asset($link);
 
 			if($class){
 				$add = ' class="'.$class.'" ';
@@ -95,7 +95,7 @@ class Format {
 			
 			if ( in_array( $extension , $ext )  )
 			{
-				$asset = asset($path);
+				$asset = secure_asset($path);
 				
 				return '<img src="'.$asset.'" alt="" width="'.$width.'px" />';	
 			}	

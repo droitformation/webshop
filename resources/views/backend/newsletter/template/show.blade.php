@@ -95,7 +95,7 @@
                             <label for="message" class="col-sm-3 control-label">Bannière avec logos</label>
                             <div class="col-sm-6">
                                 @if($newsletter->banniere_logos)
-                                    <p><img style="border: 1px solid #ddd;" src="{{ asset($newsletter->banniere_logos) }}" alt="Logos" /></p>
+                                    <p><img style="border: 1px solid #ddd;" src="{{ secure_asset($newsletter->banniere_logos) }}" alt="Logos" /></p>
                                 @endif
                                 <input type="file" name="logos">
                                 <p class="help-block">Taille max 600x130px</p>
@@ -105,7 +105,7 @@
                             <label for="message" class="col-sm-3 control-label">Bannière de titre</label>
                             <div class="col-sm-6">
                                 @if($newsletter->banniere_header)
-                                    <p><img style="border: 1px solid #ddd;" src="{{ asset($newsletter->banniere_header) }}" alt="Header" /></p>
+                                    <p><img style="border: 1px solid #ddd;" src="{{ secure_asset($newsletter->banniere_header) }}" alt="Header" /></p>
                                 @endif
                                 <input type="file" name="header">
                                 <p class="help-block">Taille max 600x160px</p>
@@ -117,7 +117,7 @@
                             <div class="col-sm-6">
                                 <div class="well">
                                     @if($newsletter->logo_soutien)
-                                        <p><img style="border: 1px solid #ddd;" src="{{ asset($newsletter->logo_soutien) }}" alt="Soutien" /></p>
+                                        <p><img style="border: 1px solid #ddd;" src="{{ secure_asset($newsletter->logo_soutien) }}" alt="Soutien" /></p>
                                     @endif
                                     <input type="file" name="soutien">
                                     <p class="help-block">Taille max 105x50px</p>

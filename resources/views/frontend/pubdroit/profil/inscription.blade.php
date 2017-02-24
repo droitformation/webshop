@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <a href="{{ url('colloque/'.$inscription->colloque->id) }}">
-                        <img src="{{ asset($inscription->colloque->frontend_illustration) }}" alt='{{ $inscription->colloque->titre }}'/>
+                        <img src="{{ secure_asset($inscription->colloque->frontend_illustration) }}" alt='{{ $inscription->colloque->titre }}'/>
                     </a>
                 </div>
                 <div class="col-md-10">
@@ -61,7 +61,7 @@
                                 <?php
                                     $path = config('documents.colloque.'.$type.'');
                                     $file = 'files/colloques/'.$type.'/'.$annexe['name'];
-                                    echo '<a target="_blank" href="'.asset($file).'" class="btn btn-primary btn-block" style="text-align:left;"><i class="fa fa-file"></i> &nbsp;'.ucfirst($type).'</a>';
+                                    echo '<a target="_blank" href="'.secure_asset($file).'" class="btn btn-primary btn-block" style="text-align:left;"><i class="fa fa-file"></i> &nbsp;'.ucfirst($type).'</a>';
                                 ?>
                             @endforeach
                         </div>

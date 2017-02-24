@@ -53,10 +53,10 @@ class Colloque extends Model
   
         if(!$illustration->isEmpty())
         {
-            return asset('files/colloques/illustration/'.$illustration->first()->path);
+            return secure_asset('files/colloques/illustration/'.$illustration->first()->path);
         }
 
-        return asset('files/colloques/illustration/illu.png');
+        return secure_asset('files/colloques/illustration/illu.png');
     }
 
     public function getProgrammeAttribute()

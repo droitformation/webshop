@@ -20,7 +20,7 @@
 						@foreach($products as $product)
 							<article class="row result-item">
 								<a href="{{ url('pubdroit/product/'.$product->id) }}" class="col-md-2">
-									<img width="60" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
+									<img width="60" class="thumbnail" src="{{ secure_asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
 								</a>
 								<div class="col-md-10">
 									<h4><a href="{{ url('pubdroit/product/'.$product->id) }}">{{ $product->title }}</a></h4>
@@ -39,7 +39,7 @@
 						@foreach($colloques as $colloque)
 							<article class="row result-item">
 								<a href="{{ url('pubdroit/colloque/'.$colloque->id) }}" class="col-md-2">
-									<img width="60" class="thumbnail" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
+									<img width="60" class="thumbnail" src="{{ secure_asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
 								</a>
 								<div class="col-md-10">
 									<h4><a href="{{ url('pubdroit/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
@@ -64,7 +64,7 @@
 								@foreach($author->products as $product)
 									<article class="row result-item">
 										<a href="{{ url('pubdroit/product/'.$product->id) }}" class="col-md-2">
-											<img width="60" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
+											<img width="60" class="thumbnail" src="{{ secure_asset('files/products/'.$product->image) }}" alt="{{ $product->title }}"/>
 										</a>
 										<div class="col-md-10">
 											<h4><a href="{{ url('pubdroit/product/'.$product->id) }}">{{ $product->title }}</a></h4>

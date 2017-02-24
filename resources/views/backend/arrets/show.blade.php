@@ -65,7 +65,7 @@
                         <div class="list-group">
                             <div class="list-group-item">
                                 <?php $rand = rand(200,1000); ?>
-                                <a target="_blank" href="{!! asset('files/arrets/'.$arret->file.'?'.$rand) !!}">
+                                <a target="_blank" href="{!! secure_asset('files/arrets/'.$arret->file.'?'.$rand) !!}">
                                     <i class="fa fa-file"></i> &nbsp;&nbsp;
                                     {!! $arret->file !!}
                                 </a>

@@ -40,7 +40,7 @@ class ArretController extends Controller {
                         'date'       => utf8_encode($analyse->pub_date->formatLocalized('%d %B %Y')),
                         'auteurs'    => $analyse->authors->implode('name', ', '),
                         'abstract'   => $analyse->abstract,
-                        'document'   => $analyse->document ? asset('files/analyses/'.$analyse->file) : null,
+                        'document'   => $analyse->document ? secure_asset('files/analyses/'.$analyse->file) : null,
                     ];
                 });
             }
@@ -51,7 +51,7 @@ class ArretController extends Controller {
                 'reference'  => $arret->reference,
                 'abstract'   => $arret->abstract,
                 'pub_text'   => $arret->pub_text,
-                'document'   => $arret->document ? asset('files/arrets/'.$arret->file) : null,
+                'document'   => $arret->document ? secure_asset('files/arrets/'.$arret->file) : null,
                 'categories' => !$arret->categories->isEmpty() ? $arret->categories : null,
                 'analyses'   => isset($analyses) ? $analyses : null,
             ];

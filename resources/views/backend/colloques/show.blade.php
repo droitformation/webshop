@@ -178,7 +178,7 @@
                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                 <button data-action="Vignette" class="btn btn-danger btn-sm deleteAction">x</button>
                             </form>
-                            <img style="height: 140px;" src="{{ asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
+                            <img style="height: 140px;" src="{{ secure_asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
                         </div>
                     @else
                         @include('backend.colloques.partials.upload', ['type' => 'illustration', 'name' => 'Illustration'])

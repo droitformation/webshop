@@ -84,7 +84,7 @@
                             <small class="text-muted">Pour pub ou soutien</small>
                         </label>
                         <div class="col-sm-6">
-                            <p><img style="max-height:120px;" src="{{ asset('files/uploads/'.$bloc->image) }}"></p>
+                            <p><img style="max-height:120px;" src="{{ secure_asset('files/uploads/'.$bloc->image) }}"></p>
                             <div class="list-group">
                                 <div class="list-group-item">{!! Form::file('file') !!}</div>
                             </div>

@@ -37,7 +37,7 @@ class Page extends Node {
                     'id'       => $bloc->id,
                     'title'    => $bloc->name,
                     'content'  => $bloc->content,
-                    'image'    => asset($bloc->image),
+                    'image'    => secure_asset($bloc->image),
                     'url'      => $bloc->url,
                     'rang'     => $bloc->rang,
                     'type'     => $bloc->type,

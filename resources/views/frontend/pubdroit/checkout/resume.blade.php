@@ -34,7 +34,7 @@
                     @foreach($shop_cart as $item)
                         <tr>
                             <td valign="middle" width="15%">
-                                <img style="max-height:80px;" src="{{ asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
+                                <img style="max-height:80px;" src="{{ secure_asset('files/products/'.$item->options->image ) }}" alt="{{ $item->name }}">
                             </td>
                             <td width="40%" align="left"><a href="{{ url('pubdroit/product/'.$item->id) }}">{{ $item->name }}</a></td>
                             <td align="center" width="15%">{{  $item->model->price_cents }} CHF</td>
@@ -46,7 +46,7 @@
                     @foreach($abo_cart as $item)
                         <tr class="order_abo">
                             <td valign="middle" width="15%">
-                                <img src="{{ asset('files/main/'.$item->options->image) }}" />
+                                <img src="{{ secure_asset('files/main/'.$item->options->image) }}" />
                             </td>
                             <td valign="middle" width="40%" class="text-left">
                                 <p>Demande d'abonnement <strong>{{ $item->name }}</strong></p>

@@ -1,1 +1,1 @@
-<script type="text/javascript" src="{{ asset('newsletter/js/env.js') }}"></script>
+<script type="text/javascript" src="{{ secure_asset('newsletter/js/env.js') }}"></script>

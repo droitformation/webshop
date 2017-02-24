@@ -25,7 +25,7 @@
     <td class="col-md-2">{{ $inscription->price_cents }} CHF</td>
     <td class="col-md-1">
         @if($inscription->doc_bon)
-            <a target="_blank" href="{{ asset($inscription->doc_bon) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
+            <a target="_blank" href="{{ secure_asset($inscription->doc_bon) }}{{ '?'.rand(0,1000) }}" class="btn btn-default btn-sm"><i class="fa fa-file"></i> &nbsp;Bon</a>
         @endif
     </td>
     <td class="col-md-4">

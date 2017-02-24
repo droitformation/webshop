@@ -55,7 +55,7 @@
                     <div class="col-sm-4">
                         <div class="list-group">
                             <div class="list-group-item text-center">
-                                <a href="#"><img height="120" src="{{ asset('files/'.$contenu->image) }}" alt="{{ $contenu->titre }}" /></a>
+                                <a href="#"><img height="120" src="{{ secure_asset('files/'.$contenu->image) }}" alt="{{ $contenu->titre }}" /></a>
                             </div>
                         </div>
                     </div>

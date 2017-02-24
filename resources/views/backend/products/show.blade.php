@@ -41,7 +41,7 @@
                             <div class="form-group">
                                 <label for="file" class="col-sm-3 control-label">Image</label>
                                 <div class="col-sm-2">
-                                    <img style="height: 160px;;" class="thumbnail" src="{{ asset('files/products/'.$product->image) }}" alt="" />
+                                    <img style="height: 160px;;" class="thumbnail" src="{{ secure_asset('files/products/'.$product->image) }}" alt="" />
                                 </div>
                             </div>
                         @endif

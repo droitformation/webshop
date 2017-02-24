@@ -64,7 +64,7 @@
                                 <div class="col-sm-3">
                                     <div class="list-group">
                                         <div class="list-group-item text-center">
-                                            <a href="#"><img height="120" src="{!! asset('files/seminaires/'.$seminaire->image) !!}" alt="{{ $seminaire->title }}" /></a>
+                                            <a href="#"><img height="120" src="{!! secure_asset('files/seminaires/'.$seminaire->image) !!}" alt="{{ $seminaire->title }}" /></a>
                                         </div>
                                     </div>
                                 </div>

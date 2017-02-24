@@ -4,7 +4,7 @@
         <a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
 
         @if($facture->doc_facture)
-            <a class="btn btn-default btn-sm" target="_blank" href="{{ asset($facture->doc_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
+            <a class="btn btn-default btn-sm" target="_blank" href="{{ secure_asset($facture->doc_facture) }}"><i class="fa fa-file"></i> &nbsp;Facture pdf</a>
         @endif
     </div>
     <div class="col-md-4">

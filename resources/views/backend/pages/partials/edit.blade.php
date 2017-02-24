@@ -15,7 +15,7 @@
             <label for="file" class="control-label">Image</label><br/>
 
             @if($content->image)
-                <p><img style="max-width: 140px;" src="{{ asset($content->image) }}" alt="image"></p>
+                <p><img style="max-width: 140px;" src="{{ secure_asset($content->image) }}" alt="image"></p>
             @endif
 
             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal_{{ $content->id }}">Choisir un fichier</button>

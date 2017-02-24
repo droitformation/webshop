@@ -33,7 +33,7 @@
                             @foreach($authors as $author)
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/author/'.$author->id) }}">&Eacute;diter</a></td>
-                                    <td><img style="height: 40px;" src="{{ asset('files/authors/'.$author->author_photo) }}" alt="{{ $author->name }}"></td>
+                                    <td><img style="height: 40px;" src="{{ secure_asset('files/authors/'.$author->author_photo) }}" alt="{{ $author->name }}"></td>
                                     <td><strong>{{ $author->first_name }}</strong></td>
                                     <td><strong>{{ $author->last_name }}</strong></td>
                                     <td>{!! $author->occupation !!}</td>

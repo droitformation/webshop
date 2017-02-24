@@ -6,7 +6,7 @@
                 @foreach($fac_sites as $name => $logo)
                     @if($site->slug != $name)
                         <a target="_blank" href="{{ $logo['url'] }}">
-                            <img src="{{ asset('files/sites/'.$logo['image']) }}" alt="{{ $name }}" />
+                            <img src="{{ secure_asset('files/sites/'.$logo['image']) }}" alt="{{ $name }}" />
                         </a>
                     @endif
                 @endforeach

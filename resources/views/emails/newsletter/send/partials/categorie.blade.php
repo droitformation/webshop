@@ -9,7 +9,7 @@
                         <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $bloc->groupe->categorie->title }}</h3>
                     </td>
                     <td width="160" align="center" valign="top" class="resetMarge">
-                        <img width="130" border="0" src="{{ asset(config('newsletter.path.categorie').$bloc->groupe->categorie->image) }}" alt="{{ $bloc->groupe->categorie->title }}" />
+                        <img width="130" border="0" src="{{ secure_asset(config('newsletter.path.categorie').$bloc->groupe->categorie->image) }}" alt="{{ $bloc->groupe->categorie->title }}" />
                     </td>
                 </tr><!-- space -->
                 <tr bgcolor="ffffff"><td height="15"></td></tr><!-- space -->

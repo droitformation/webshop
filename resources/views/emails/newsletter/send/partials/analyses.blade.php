@@ -21,7 +21,7 @@
                                             @include('emails.newsletter.send.partials.authors')
                                             <!-- End Authors -->
                                             <p class="abstract">{!! $analyse->abstract !!}</p>
-                                            <p><a href="{{ asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
+                                            <p><a href="{{ secure_asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
                                         </td>
                                     </tr>
                                     @if( $arret->analyses->count() > 1 && $arret->analyses->count() > $i)
@@ -35,7 +35,7 @@
                         <td align="center" valign="top" width="160" class="resetMarge">
                             <a target="_blank" href="{{ config('newsletter.link.analyse') }}">
                                 <?php $slug = $campagne->newsletter->site_id ? '/'.$campagne->newsletter->site->slug.'/' : ''; ?>
-                                <img border="0" style="max-width: 130px;" alt="Analyses" src="{{ asset(config('newsletter.path.categorie').$slug.'analyse.jpg') }}">
+                                <img border="0" style="max-width: 130px;" alt="Analyses" src="{{ secure_asset(config('newsletter.path.categorie').$slug.'analyse.jpg') }}">
                             </a>
                         </td>
                     </tr>

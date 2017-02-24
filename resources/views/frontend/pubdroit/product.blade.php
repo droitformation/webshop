@@ -16,7 +16,7 @@
 
 					<div class="col-md-3 col-xs-12">
 						<div class="thumbnail">
-							<img src="{{ asset('files/products/'.$product->image) }}" alt="">
+							<img src="{{ secure_asset('files/products/'.$product->image) }}" alt="">
 						</div>
 					</div>
 					<div class="col-md-9 col-xs-12">
