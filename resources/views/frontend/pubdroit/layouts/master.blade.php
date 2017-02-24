@@ -12,40 +12,40 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 	<!-- All css -->
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/bs.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/bs.css');?>">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/style.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/style.css');?>">
 
 	<!-- Css Files Start -->
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/skins/red.css');?>">
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/update-responsive.css');?>">
-    <link rel="stylesheet" href="<?php echo asset('frontend/common/css/selectric.css');?>">
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/user/profil.css');?>">
-	<link rel="stylesheet" href="<?php echo asset('common/css/sites.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/skins/red.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/update-responsive.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('frontend/common/css/selectric.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/user/profil.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('common/css/sites.css');?>">
 
 	<!-- Bootstrap Css -->
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/main-slider.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/main-slider.css');?>">
 
 	<!-- Main Slider Css -->
-	<!--[if lte IE 10]><link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/customIE.css');?>"><![endif]-->
+	<!--[if lte IE 10]><link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/customIE.css');?>"><![endif]-->
 	<!-- Booklet Css -->
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/jquery.booklet.latest.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/jquery.booklet.latest.css');?>">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/parsley.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo asset('common/css/validation.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/checkout/checkout.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/pubdroit/css/sweetalert.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/parsley.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/validation.css');?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/checkout/checkout.css');?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/sweetalert.css');?>">
 
 	<noscript>
-		<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/noJS.css');?>">
+		<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/noJS.css');?>">
 	</noscript>
 
-	<link rel="stylesheet" href="<?php echo asset('frontend/pubdroit/css/responsive.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/responsive.css');?>">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
-	<script src="<?php echo asset('common/js/messages_fr.js');?>"></script>
-    <script src="<?php echo asset('common/js/validation.js');?>"></script>
+	<script src="<?php echo secure_asset('common/js/messages_fr.js');?>"></script>
+    <script src="<?php echo secure_asset('common/js/validation.js');?>"></script>
 
 </head>
 	<body>
@@ -102,14 +102,14 @@
             </div>
 
             <header id="main-header">
-				<img src="{{ asset('images/pubdroit/book_shelf.jpg') }}" alt="homepage" class="bg_header">
+				<img src="{{ secure_asset('images/pubdroit/book_shelf.jpg') }}" alt="homepage" class="bg_header">
 				<section class="container">
 
 					<section class="row" id="header">
 						<section class="col-md-6 col-xs-12">
 							<h1 id="logo">
 								<a href="{{ url('/') }}">
-									<img style="max-width:510px; max-height: 115px" src="{{ asset('frontend/pubdroit/images/logo.svg') }}" />
+									<img style="max-width:510px; max-height: 115px" src="{{ secure_asset('frontend/pubdroit/images/logo.svg') }}" />
 								</a>
 							</h1>
 						</section>
@@ -212,11 +212,11 @@
 		<!-- Javascript Files
     	================================================== -->
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="<?php echo asset('common/js/jquery.selectric.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
-		<script src="<?php echo asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
-        <script src="<?php echo asset('frontend/pubdroit/js/interaction.js');?>"></script>
-        <script src="<?php echo asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
+        <script src="<?php echo secure_asset('common/js/jquery.selectric.js');?>"></script>
+		<script src="<?php echo secure_asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
+		<script src="<?php echo secure_asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
+        <script src="<?php echo secure_asset('frontend/pubdroit/js/interaction.js');?>"></script>
+        <script src="<?php echo secure_asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
 
 	</body>
 </html>
