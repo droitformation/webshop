@@ -21,9 +21,9 @@
                 <h1>404</h1>
                 <h2>Page introuvable</h2>
                 <div>
-                    <a class="btn btn-primary" href="{{ url('/') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour à publication-droit.ch </a>
-                    <a class="btn btn-danger" href="{{ url('/') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour à bail.ch </a>
-                    <a class="btn btn-magenta" href="{{ url('/') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour à droitmatrimonial.ch </a>
+                    <a class="btn btn-primary" href="{{ url('/pubdroit') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour à publication-droit.ch </a>
+                    <a class="btn btn-danger" href="{{ url('/bail') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour à bail.ch </a>
+                    <a class="btn btn-magenta" href="{{ url('/matrimonial') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour à droitmatrimonial.ch </a>
                 </div>
             </div>
         </div>
