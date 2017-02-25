@@ -122,13 +122,6 @@
         margin-bottom: 10px;
     }
 
-    #preheader-menu ul li {
-        width: auto;
-        display: inline-block;
-        margin: 5px auto;
-        line-height: 20px;
-    }
-
     #preheader-menu li a {
         line-height: 20px;
     }
@@ -137,29 +130,71 @@
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-width : 320px) and (max-width : 480px) {
 
-    .container, .testimonials .slide, .best-sellers .slide, .bb-bookblock, .bb-custom-wrapper {
-        width: 320px !important;
+    .container,.testimonials .slide, .best-sellers .slide, .bb-bookblock, .bb-custom-wrapper {
+        width: 100% !important;
+        margin: 0 auto;
+    }
+
+    #preheader .container,
+    #preheader .container .row{
+        padding: 0 ;
+    }
+
+    #preheader .container .row,
+    #preheader .container .col-md-8,
+    #preheader .container .col-md-4{
+        margin: 0;
+        padding: 0;
+    }
+
+    #preheader .container .col-md-4{
+        padding: 0 10px;
     }
 
     .logged-profile a, .logged-profile button{
         margin: 0;
     }
 
-    #preheader-menu li{
+    #preheader-menu ul{
+        background: #0c0c0c;
+        height: 40px;
+        float: none !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    #preheader-menu ul li{
+        width: auto;
         display: inline-block;
-        height:35px;
-        line-height: 35px;
+        margin: 0 auto;
+        line-height: 40px;
+        height: 40px;
+        height: auto;
     }
 
     #preheader-menu li a{
-        color: #666;
+        color: #fff;
         height: auto;
-        line-height: 55px;
+        line-height: 40px;
         display: inline-block;
-        padding: 0 8px;
+        padding: 0 13px;
         font-size: 12px;
         font-style: normal;
         text-transform: capitalize;
+        background: none;
+    }
+
+    #preheader-menu ul li:after{
+        content: "|";
+        color: #5e5e5e;
+    }
+
+    #preheader-menu li a.active:after, #preheader-menu ul li:last-child:after{
+        content: "";
+    }
+
+    #preheader-menu li a.active{
+        color: #000;
     }
 
     #main-header img.bg_header{
@@ -206,24 +241,6 @@
         width: 90%;
         height: 130px;
         padding: 5px 10px;
-    }
-
-    #preheader-menu ul {
-        background: #f1f1f1;
-    }
-
-    #preheader-menu ul li {
-        width: auto;
-        display: inline-block;
-        margin: 5px auto;
-        line-height: 40px;
-        height: auto;
-        margin-bottom: 0;
-    }
-
-    #preheader-menu li a {
-        line-height:40px;
-        height: auto;
     }
     
 }
