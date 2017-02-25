@@ -119,7 +119,7 @@ class NewsletterInscriptionTest extends BrowserKitTest
 
         $response = $this->call('GET', 'activation/1234/'.$newsletter->id);
 
-        $this->assertRedirectedTo($site->slug);
+        $this->assertRedirectedTo($site->url);
     }
 
     public function testActivateFailNewsletterSubscription()
