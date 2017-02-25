@@ -68,7 +68,7 @@ class InscriptionController extends Controller
 
         alert()->success('Vous êtes maintenant abonné à la newsletter');
 
-        return redirect($newsletter->site->slug);
+        return redirect($newsletter->site->url);
     }
 
     /**

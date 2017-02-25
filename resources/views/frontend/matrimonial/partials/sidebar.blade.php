@@ -2,7 +2,7 @@
 <div class="sidebar-app">
 
     <!-- Bloc search -->
-    @include('frontend.matrimonial.sidebar.search')
+{{--    @include('frontend.matrimonial.sidebar.search')--}}
 
     <!-- Bloc inscription newsletter -->
     @include('frontend.matrimonial.sidebar.newsletter')
