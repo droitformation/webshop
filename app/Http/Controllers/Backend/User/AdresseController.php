@@ -74,7 +74,7 @@ class AdresseController extends Controller {
             $user = $this->user->find($request->input('user_id'));
             $user->adresses()->save($adresse);
 
-            return redirect()->back();
+            return redirect('admin/user/'.$user->id);
         }
 
         return redirect('admin/adresse/'.$adresse->id);

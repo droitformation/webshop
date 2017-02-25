@@ -144,7 +144,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     height: 55px;
     line-height: 55px;
     display: block;
-    padding: 0 20px;
+    padding: 0 10px;
     font-size: 13px;
     font-style: normal;
     text-transform: capitalize;
@@ -1138,10 +1138,33 @@ input[type="color"],
 
 .logged-profile{
     line-height: 55px;
+    font-size: 13px;
 }
 
 .btn-profile{
     background: #b01d22;
+    color: #fff;
+    -moz-user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    padding: 5px 7px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.btn-profile:hover{
+    background: #a2181d;
+    color: #fff;
+}
+
+.btn-admin{
+    background: #4f8edc;
     color: #fff;
     -moz-user-select: none;
     border: 1px solid transparent;
@@ -1157,13 +1180,8 @@ input[type="color"],
     white-space: nowrap;
 }
 
-.btn-profile:hover{
-    background: #a2181d;
-    color: #fff;
-}
-
 .logged-profile a, .logged-profile button{
-    margin-left: 10px;
+    margin-left: 8px;
 }
 
 .login-profile .btn-group{

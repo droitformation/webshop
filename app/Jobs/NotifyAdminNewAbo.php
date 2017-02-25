@@ -34,7 +34,7 @@ class NotifyAdminNewAbo extends Job implements ShouldQueue
         $infos = [
             'name'     => $this->abos->first()->user->name,
             'what'     => 'Demande d\'abonnement',
-            'link'     => 'admin/abo',
+            'link'     => url('admin/abo'),
             'abos'     => $this->abos
         ];
 

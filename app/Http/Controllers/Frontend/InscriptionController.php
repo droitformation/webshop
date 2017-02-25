@@ -79,15 +79,17 @@ class InscriptionController extends Controller
      */
     public function subscribe(SubscribeRequest $request)
     {
-        $site      = $this->site->find($request->input('site_id'));
-        $subscribe = $this->subscribeworker->subscribe($request->input('email'), $request->input('newsletter_id'));
+        $site       = $this->site->find($request->input('site_id'));
+        $subscribe  = $this->subscribeworker->subscribe($request->input('email'), $request->input('newsletter_id'));
+        $newsletter = $this->newsletter->find($request->input('newsletter_id'));
 
         if(!$subscribe) {
             alert()->danger('<strong>Vous êtes déjà inscrit à cettte newsletter</strong>');
         }
         else {
             
-            \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe) {
+            \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe,$newsletter) {
+                $message->from($newsletter->from_email, $newsletter->from_name);
                 $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
             });
 

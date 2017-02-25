@@ -38,7 +38,7 @@ class NotifyAdminNewInscription extends Job implements ShouldQueue
             'name'     => $this->inscription->inscrit->name,
             'colloque' => $this->inscription->colloque->titre,
             'what'     => 'inscription',
-            'link'     => 'admin/inscription/colloque/'.$this->inscription->colloque->id
+            'link'     => url('admin/inscription/colloque/'.$this->inscription->colloque->id)
         ];
 
         $email = $this->getEmail($this->inscription->colloque);

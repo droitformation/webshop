@@ -57,8 +57,8 @@
 			<div id="preheader">
 				<section class="container">
 					<section class="row">
-						<section class="col-md-8" id="preheader-menu">
-							<ul class="pull-left">
+						<section class="col-md-7" id="preheader-menu">
+							<ul>
 								@if(!$menus->isEmpty())
 									<?php $menu = $menus->where('position','main'); ?>
 									@if(!$menu->isEmpty())
@@ -73,7 +73,7 @@
 							</ul>
 						</section>
 
-						<section class="col-md-4 text-right login-profile">
+						<section class="col-md-5 text-right login-profile">
 							@if (!Auth::check())
 								<div class="btn-group">
 									<a href="{{ url('login')}}" class="btn btn-default navbar-login "><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
@@ -84,6 +84,11 @@
 								<div class="pull-right logged-profile">
 									Bonjour {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
 									<a class="btn btn-default btn-profile" href="{{ url('pubdroit/profil') }}">Mon compte</a>
+
+                                    @if(Auth::user()->role_admin)
+									    <a class="btn btn-admin" href="{{ url('admin') }}">Admin</a>
+									@endif
+
 									<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
 										<button class="btn btn-default btn-xs" type="submit"><i class="fa fa-power-off" aria-hidden="true"></i></button>
 									</form>

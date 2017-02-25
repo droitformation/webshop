@@ -38,7 +38,7 @@ class NotifyAdminNewOrder extends Job implements ShouldQueue
             'name'  => $this->order->user->name,
             'what'  => 'commande',
             'order' => $this->order->order_no,
-            'link'  => 'admin/orders'
+            'link'  => url('admin/orders')
         ];
 
         \Mail::send('emails.notification', $infos, function ($m) {
