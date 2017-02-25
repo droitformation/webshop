@@ -16,7 +16,7 @@ class SubscriptionWorker{
         $subscriber = $this->exist($email);
 
         // If not subscriber found make one
-        if(!$subscriber){
+        if(!$subscriber || !$subscriber->activation_token){
             $subscriber = $this->make($email,$newsletter_id);
         }
 
