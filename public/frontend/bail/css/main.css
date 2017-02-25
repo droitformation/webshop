@@ -90,7 +90,9 @@ img[style*="float:right"]{
 	Main Blocks
 =======================================*/
 #main {
-  background: #fff;
+    background: #fff;
+    position: relative;
+    z-index: 1;/* fix for calendar jquerui*/
 }
 
 #content{
