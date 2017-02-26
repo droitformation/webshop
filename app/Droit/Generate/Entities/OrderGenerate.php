@@ -20,13 +20,18 @@ class OrderGenerate
 
     public function getAdresse()
     {
-        if($this->order->user_id)
+        if(isset($this->order->user))
         {
             $this->order->user->load('adresses');
             return $this->order->user->adresse_facturation;
         }
-      
-        return $this->order->adresse;
+
+        if(isset($this->order->adresse))
+        {
+            return $this->order->adresse;
+        }
+        
+        throw new \App\Exceptions\AdresseNotExistException('No adresse');
     }
 
     public function getProducts()

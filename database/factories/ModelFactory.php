@@ -314,6 +314,12 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'priceshipping'
     ];
 });
 
+$factory->define(App\Droit\Shop\Rappel\Entities\Rappel::class, function (Faker\Generator $faker) {
+    return [
+        'order_id'  => 1
+    ];
+});
+
 
 $factory->define(App\Droit\Shop\Shipping\Entities\Shipping::class, function (Faker\Generator $faker) {
 
