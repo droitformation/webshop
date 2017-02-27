@@ -38,11 +38,11 @@
 
 						@foreach($colloques as $colloque)
 							<article class="row result-item">
-								<a href="{{ url('pubdroit/colloque/'.$colloque->id) }}" class="col-md-2">
-									@if(isset($colloque->illustration))
+								@if(isset($colloque->illustration))
+									<a href="{{ url('pubdroit/colloque/'.$colloque->id) }}" class="col-md-2">
 										<img width="60" class="thumbnail" src="{{ secure_asset('files/colloques/illustration/'.$colloque->illustration->path) }}" alt=""/>
-									@endif
-								</a>
+									</a>
+								@endif
 								<div class="col-md-10">
 									<h4><a href="{{ url('pubdroit/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
 									<p>{{ $colloque->soustitre }}</p>
