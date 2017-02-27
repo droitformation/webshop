@@ -22,13 +22,18 @@ class Colloque extends Model
 
     public function getIllustrationAttribute()
     {
-        $illustration = $this->documents->filter(function ($item){
-            return $item->type == 'illustration';
-        });
-
-        if(!$illustration->isEmpty())
+        if(isset($this->documents))
         {
-            return $illustration->first();
+            $illustration = $this->documents->filter(function ($item){
+                return $item->type == 'illustration';
+            });
+
+            if(!$illustration->isEmpty())
+            {
+                return $illustration->first();
+            }
+
+            return false;
         }
 
         return false;
