@@ -636,19 +636,14 @@ Route::get('notification', function()
 
 Route::get('demande', function()
 {
-    $model = \App::make('App\Droit\Abo\Repo\AboUserInterface');
-    //$abos  = $model->allByAdresse(4983);
+    $model = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    
+    $colloques = $model->eventList([2,3]);
+    $colloques = $model->eventListArchives([2,3]);
 
-    $inscription = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $rappels     = \App::make('App\Droit\Inscription\Repo\RappelInterface');
-    $rappel     = $rappels->find(1);
-
-    //$job = new App\Jobs\NotifyAdminNewAbo($abos);
-    $job = new App\Jobs\SendRappelEmail($rappel);
-
-    app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
-
-    //return View::make('emails.shop.demande', $data);
+    echo '<pre>';
+    print_r($colloques);
+    echo '</pre>';exit();
 
 });
 

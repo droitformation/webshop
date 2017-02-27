@@ -12,6 +12,7 @@
 */
 
 Route::get('code', 'CodeController@index');
+Route::get('event', 'Api\ColloqueController@event');
 
 /*
 |--------------------------------------------------------------------------

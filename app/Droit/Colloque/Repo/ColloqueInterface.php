@@ -14,5 +14,8 @@ interface ColloqueInterface {
     public function create(array $data);
     public function update(array $data);
     public function delete($id);
+    
+    // API
+    public function eventList($centres = [],$archived = false, $name = null);
 
 }

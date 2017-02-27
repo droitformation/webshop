@@ -230,9 +230,31 @@ class Colloque extends Model
         if($archives) $query->where('start_at','<=',date('Y-m-d'));
     }
 
+    public function scopeArchived($query,$archived = false)
+    {
+        if($archived){
+            $query->where('start_at','<=',date('Y-m-d'));
+        }
+        else{
+            $query->where('start_at','>=',date('Y-m-d'));
+        }
+    }
+
+    public function scopeCentres($query,$centres = null)
+    {
+        if($centres && !empty($centres)) $query->whereHas('centres', function ($query) use ($centres) {
+            $query->whereIn('organisateurs.id', $centres);
+        });
+    }
+    
     public function scopeRegistration($query,$status)
     {
         if($status) $query->where('registration_at', '>=', date('Y-m-d'));
+    }
+
+    public function scopeName($query,$name)
+    {
+        if($name) $query->where('titre', 'LIKE', '%'.$name.'%');
     }
 
     public function scopeFinished($query,$status)

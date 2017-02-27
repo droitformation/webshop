@@ -39,4 +39,37 @@ class ColloqueController extends Controller {
 			'link'         => url('pubdroit/colloque/').$colloque->id
 		];
     }
+
+	public function event(Request $request)
+	{
+        $archived  = $request->input('archive') ? true : false;
+		$centres   = $request->input('centres',[]);
+
+        $colloques = $this->colloque->eventList($request->input('centres',[]), $archived, $request->input('name',null));
+
+        $colloques = $colloques->map(function ($colloque, $key) use ($centres){
+
+            $organisateur = $colloque->centres->filter(function ($center, $key) use ($centres) {
+                return in_array($center->id,$centres);
+            })->map(function ($center) {
+                return $center->id == 2 ? 'cemaj' : 'cert';
+            });
+            
+            if($colloque->location){
+                $location = $colloque->location->name .', '.strip_tags($colloque->location->adresse);
+            }
+            
+            return [
+                'url'          => url('pubdroit/colloque/'.$colloque->id),
+                'event'        => $colloque->toArray(),
+                'prix'         => $colloque->prices_active->toArray(),
+                'location'     => isset($location) ? $location : '',
+                'programme'    => isset($colloque->programme) ? public_path('files/colloques/programme/'.$colloque->programme->path) : '',
+                'organisateur' => $organisateur->toArray(),
+            ];
+        });
+
+		return response()->json(['data' => $colloques->toArray()]);
+	}
+	
 }

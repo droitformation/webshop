@@ -50,6 +50,11 @@ class ColloqueEloquent implements ColloqueInterface{
         return $this->colloque->with(['documents','location','options','options.groupe'])->findOrFail($id);
     }
 
+    public function eventList($centres = [],$archived = false, $name = null)
+    {
+        return $this->colloque->archived($archived)->name($name)->with(['centres'])->centres($centres)->get();
+    }
+
     public function increment($colloque_id)
     {
         $colloque = $this->colloque->find($colloque_id);
@@ -140,6 +145,5 @@ class ColloqueEloquent implements ColloqueInterface{
         $colloque = $this->colloque->find($id);
 
         return $colloque->delete();
-
     }
 }
