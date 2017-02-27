@@ -28,15 +28,14 @@ class Colloque extends Model
                 return $item->type == 'illustration';
             });
 
-            if(!$illustration->isEmpty())
-            {
+            if(!$illustration->isEmpty()) {
                 return $illustration->first();
             }
 
-            return false;
+            return null;
         }
 
-        return false;
+        return null;
     }
 
     public function getIsOpenAttribute()
