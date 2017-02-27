@@ -13,10 +13,10 @@ App.config(function(redactorOptions,__env) {
     redactorOptions.minHeight        = 120;
     redactorOptions.maxHeight        = 240;
     redactorOptions.formattingTags   = ['p', 'h2', 'h3','h4'];
-    redactorOptions.fileUpload       = __env.adminUrl + 'uploadRedactor?_token=' + $('meta[name="_token"]').attr('content');
-    redactorOptions.imageUpload      = __env.adminUrl + 'uploadRedactor?_token=' + $('meta[name="_token"]').attr('content');
-    redactorOptions.imageManagerJson = __env.adminUrl + 'imageJson';
-    redactorOptions.fileManagerJson  = __env.adminUrl + 'fileJson';
+    redactorOptions.fileUpload       = __env.adminUrl + '/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content');
+    redactorOptions.imageUpload      = __env.adminUrl + '/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content');
+    redactorOptions.imageManagerJson = __env.adminUrl + '/imageJson';
+    redactorOptions.fileManagerJson  = __env.adminUrl + '/fileJson';
     redactorOptions.plugins          = ['imagemanager','filemanager','source','iconic','alignment'];
     redactorOptions.lang             = 'fr';
     redactorOptions.buttons          = ['format','bold','italic','|','lists','|','image','file','link','alignment'];
