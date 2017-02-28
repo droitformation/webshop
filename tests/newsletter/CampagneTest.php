@@ -128,8 +128,7 @@ class CampagneTest extends BrowserKitTest
 
         $this->campagne->shouldReceive('find')->once()->andReturn($campagne);
         $this->worker->shouldReceive('html')->once()->andReturn('<html><header></header><body></body></html>');
-        $this->mailjet->shouldReceive('setHtml')->once()->andReturn(true);
-        $this->mailjet->shouldReceive('sendTest')->once()->andReturn(['success' => true]);
+        $this->mailjet->shouldReceive('sendBulk')->once()->andReturn(['Sent' => []]);
 
         $response = $this->call('POST', 'build/send/test', ['id' => '1', 'email' => 'cindy.leschaud@gmail.com']);
 
@@ -142,15 +141,11 @@ class CampagneTest extends BrowserKitTest
         try{
             $campagne = factory(App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->make();
 
-            $result = [
-                'success' => false,
-                'info'    => ['ErrorMessage' => '','StatusCode' => '']
-            ];
+            $result = [];
 
             $this->campagne->shouldReceive('find')->once()->andReturn($campagne);
             $this->worker->shouldReceive('html')->once()->andReturn('<html><header></header><body></body></html>');
-            $this->mailjet->shouldReceive('setHtml')->once()->andReturn(true);
-            $this->mailjet->shouldReceive('sendTest')->once()->andReturn($result);
+            $this->mailjet->shouldReceive('sendBulk')->once()->andReturn($result);
 
             $this->call('POST', 'build/send/test', ['id' => '1', 'email' => 'cindy.leschaud@gmail.com']);
 

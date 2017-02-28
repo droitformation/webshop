@@ -75,4 +75,9 @@ class Newsletter extends Model {
             return $this->belongsTo(config('newsletter.models.site'));
         }
     }
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter_users', 'newsletter_subscriptions', 'newsletter_id','user_id');
+    }
 }

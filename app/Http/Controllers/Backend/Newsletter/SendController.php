@@ -78,38 +78,19 @@ class SendController extends Controller
      */
     public function test(SendTestRequest $request)
     {
-        /*$campagne = $this->campagne->find($request->input('id'));
-        $sujet    = ($campagne->status == 'brouillon' ? 'TEST | '.$campagne->sujet : $campagne->sujet );
-
-        // GET html
-        $html = $this->worker->html($campagne->id);
-
-        // Sync html content to api service and send to newsletter list!
-        $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id);
-
-        if(!$response)
-        {
-            throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
-        }
-        
-        // Send the email
-        $result = $this->mailjet->sendTest($campagne->api_campagne_id,$request->input('email'),$sujet);
-
-        if(!$result['success'])
-        {
-            throw new \App\Exceptions\TestSendException('Problème avec le test: '.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
-        }*/
-
         $campagne = $this->campagne->find($request->input('id'));
-        $sujet    = ($campagne->status == 'brouillon' ? 'TEST | '.$campagne->sujet : $campagne->sujet );
+        
+        $recipients = [
+            ['Email' => $request->input('email'), 'Name'  => ""]
+        ];
 
         // GET html
-        $html  = $this->worker->html($campagne->id);
-        $email = $request->input('email');
+        $html   = $this->worker->html($campagne->id);
+        $result = $this->mailjet->sendBulk($campagne,$html,$recipients);
 
-        \Mail::send([], [], function ($message) use ($html,$email,$sujet) {
-            $message->to($email)->subject($sujet)->setBody($html, 'text/html');
-        });
+        if(!isset($result['Sent'])) {
+            throw new \App\Exceptions\TestSendException('Problème avec le test');
+        }
 
         // If we want to send via ajax just add a send_type "ajax
         $ajax = $request->input('send_type', 'normal');

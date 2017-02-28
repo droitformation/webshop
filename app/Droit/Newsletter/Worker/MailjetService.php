@@ -335,6 +335,41 @@ class MailjetService implements MailjetServiceInterface{
     }
 
     /*
+     * Send transactional
+     * */
+    public function sendBulk($campagne,$html,$recipients)
+    {
+        $sujet = ($campagne->status == 'brouillon' ? 'TEST | '.$campagne->sujet : $campagne->sujet );
+        
+        $body = [
+            'FromEmail'  => $campagne->newsletter->from_email,
+            'FromName'   => $campagne->newsletter->from_name,
+            'Subject'    => $sujet,
+            'Text-part'  => strip_tags($html),
+            'Html-part'  => $html,
+            'Recipients' => $recipients,
+         /*       [
+                [
+                    'Email' => "passenger1@mailjet.com",
+                    'Name' => "passenger 1"
+                ],
+                [
+                    'Email' => "passenger2@mailjet.com",
+                    'Name' => "passenger 2"
+                ]
+            ]*/
+        ];
+        
+        $response = $this->mailjet->post(Resources::$Email, ['body' => $body]);
+
+        if($response->success()){
+            return $response->getData();
+        }
+
+        return false;
+    }
+
+    /*
      * Misc test
      * */
     public function hasList()

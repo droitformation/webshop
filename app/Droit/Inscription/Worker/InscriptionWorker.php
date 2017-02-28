@@ -64,9 +64,6 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
         $this->specialisation($inscription->colloque, $user);
 
-        // Update counter
-        $this->colloque->increment($data['colloque_id']);
-
         return $inscription;
     }
 

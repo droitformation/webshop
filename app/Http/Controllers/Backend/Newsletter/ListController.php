@@ -79,10 +79,16 @@ class ListController extends Controller
 
             return redirect()->back();
         }
+
+        $emails = $results->pluck('email')
+            ->unique()
+            ->filter(function ($value, $key) {
+                return !empty($value);
+            })->all();
         
         $list = $this->list->create([
             'title' => $request->input('title'), 
-            'emails' => $results->pluck('email')->unique()->all(), 
+            'emails' => $emails,
             'specialisations' => $request->input('specialisations')]);
 
         alert()->success('Fichier importé!');
@@ -112,7 +118,11 @@ class ListController extends Controller
                 return redirect()->back();
             }
 
-            $data['emails'] = $results->pluck('email')->unique()->all();
+            $data['emails'] = $results->pluck('email')
+                ->unique()
+                ->filter(function ($value, $key) {
+                    return !empty($value);
+                })->all();
         }
 
         $list = $this->list->update($data);

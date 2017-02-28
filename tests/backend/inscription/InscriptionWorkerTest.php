@@ -281,4 +281,34 @@ class InscriptionWorkerTest extends BrowserKitTest {
 
         $worker->makeDocuments($inscription, true);
     }
+
+    public function testCounter()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+
+        $prices   = $colloque->prices->pluck('id')->all();
+        $options  = $colloque->options->pluck('id')->all();
+
+        $this->assertEquals(0,$colloque->counter);
+
+        $data = [
+            'colloque_id' => $colloque->id,
+            'user_id'     => $person->id,
+            'price_id'    => $prices[0],
+            'options'     => [
+                $options[0]
+            ]
+        ];
+
+        $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $worker->register($data,true);
+
+        $this->seeInDatabase('colloques', [
+            'id'      => $colloque->id,
+            'counter' => 1
+        ]);
+    }
 }

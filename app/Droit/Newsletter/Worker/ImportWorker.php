@@ -130,14 +130,19 @@ class ImportWorker implements ImportWorkerInterface
 
         if(!$list->emails->isEmpty())
         {
-            foreach($list->emails as $email)
-            {
-                \Mail::send([], [], function ($message) use ($campagne,$html,$email)
-                {
-                    $message->to($email->email, $email->email)->subject($campagne->sujet);
-                    $message->setBody($html, 'text/html');
-                });
+            $recipients = $list->emails->map(function ($email) {
+                return  ['Email' => $email->email, 'Name'  => ""];
+            });
+
+            $result = $this->mailjet->sendBulk($campagne,$html,$recipients->toArray());
+
+            if(!isset($result['Sent'])) {
+               throw new \App\Exceptions\TestSendException('Problème avec le test');
             }
+
+            return true;
         }
+
+        return true;
     }
 }
