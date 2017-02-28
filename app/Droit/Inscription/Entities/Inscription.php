@@ -190,11 +190,11 @@ class Inscription extends Model
     {
         if($this->group_id > 0)
         {
-            return $this->participant->name;
+            return ucwords($this->participant->name);
         }
         elseif(isset($this->user))
         {
-            return $this->user->adresse_contact->name;
+            return ucwords($this->user->adresse_contact->name);
         }
 
         return $this->user_id;
