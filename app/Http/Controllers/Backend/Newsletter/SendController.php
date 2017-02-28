@@ -78,7 +78,7 @@ class SendController extends Controller
      */
     public function test(SendTestRequest $request)
     {
-        $campagne = $this->campagne->find($request->input('id'));
+        /*$campagne = $this->campagne->find($request->input('id'));
         $sujet    = ($campagne->status == 'brouillon' ? 'TEST | '.$campagne->sujet : $campagne->sujet );
 
         // GET html
@@ -98,7 +98,18 @@ class SendController extends Controller
         if(!$result['success'])
         {
             throw new \App\Exceptions\TestSendException('Problème avec le test: '.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
-        }
+        }*/
+
+        $campagne = $this->campagne->find($request->input('id'));
+        $sujet    = ($campagne->status == 'brouillon' ? 'TEST | '.$campagne->sujet : $campagne->sujet );
+
+        // GET html
+        $html  = $this->worker->html($campagne->id);
+        $email = $request->input('email');
+
+        \Mail::send([], [], function ($message) use ($html,$email,$sujet) {
+            $message->to($email)->subject($sujet)->setBody($html, 'text/html');
+        });
 
         // If we want to send via ajax just add a send_type "ajax
         $ajax = $request->input('send_type', 'normal');
