@@ -47,12 +47,15 @@ $('input.search-adresse').each(function()
 // Prepare tmeplate for adresse
 function template(data, type)
 {
+    var path = (type == 'adresse_id') ? 'adresse' : 'user';
+
     var company  = data.company ? data.company + '<br/>' : '';
     var cp       = data.cp ? data.cp + '<br/>' : '';
     var compl    = data.complement ? data.complement + '<br/>' : '';
     var civilite = data.civilite ? data.civilite.title : '';
 
-    var html = '<p><a class="btn btn-danger btn-xs remove-adresse">Changer</a></p>'
+    var html = '<p><a class="btn btn-danger btn-xs remove-adresse">Changer de personne</a>'
+             + '<a href="admin/' + path + '/' + data.id + '" target="_blank" class="btn btn-info btn-xs">Modifier l\'adresse</a></p>'
              + '<address>'
              +  company
              +  civilite + ' '
@@ -84,7 +87,8 @@ if($search.length && $search.data('uid'))
         {
             $.get( 'admin/' + res + '/getAdresse/' + uid , function( data )
             {
-                $choice.html(template(data));
+                console.log(data);
+                $choice.html(template(data,type));
                 $(this).html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + name + '" name="type">');
                 $wrapper.find('.adresse-find').removeClass('in');
             });

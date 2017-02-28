@@ -636,13 +636,34 @@ Route::get('notification', function()
 
 Route::get('demande', function()
 {
-    $model = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    
-    $colloques = $model->eventList([2,3]);
-    $colloques = $model->eventListArchives([2,3]);
+    //$model = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    //$colloques = $model->eventList([2,3]);
+    //$colloques = $model->eventListArchives([2,3]);
+
+    $inscriptions = $model->getByColloque(100,false,false);
+
+    $inscriptions = $inscriptions->map(function ($inscription) {
+
+        if($inscription->group_id > 0) {
+            $name = $inscription->participant->name;
+            $name = explode(' ', $name);
+            $name = end($name);
+        }
+        elseif(isset($inscription->user)) {
+            $name = $inscription->user->adresse_contact->last_name;
+        }
+        else{
+            $name = $inscription->user_id;
+        }
+
+        return ['name' => $inscription->name_inscription, 'last_name' => str_slug($name)];
+    });
+
+    $inscriptions = collect($inscriptions)->sortBy('last_name')->pluck('name');
 
     echo '<pre>';
-    print_r($colloques);
+    print_r($inscriptions);
     echo '</pre>';exit();
 
 });
@@ -835,23 +856,12 @@ Route::get('factory', function()
 
 Route::get('merge', function () {
 
-      // Export adresses
-/*    $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-    $exporter->merge();*/
-
-    $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
-
-    // Directory for edition => product_id
-    $dir       = 'files/abos/facture/273';
-    $reference = 'RJN';
-    $edition   = '2014';
-    $name      = 'facture_'.$reference.'_'.$edition;
-    // Get all files in directory
-    $files = \File::files(public_path($dir));
-
-    if(!empty($files))
-    {
-        $worker->merge($files, $name, 1);
+    $newsletters = \App::make('App\Droit\Newsletter\Repo\NewsletterInterface');
+    $newsletter = $newsletters->find(3);
+    $all = $newsletter->subscriptions;
+    $emails = $all->pluck('email');
+    foreach($emails as $email){
+        echo $email;echo '<br/>';
     }
     
 });

@@ -197,7 +197,7 @@ class Inscription extends Model
             return ucwords($this->user->adresse_contact->name);
         }
 
-        return $this->user_id;
+        return $this->user_id.' | '.$this->inscription_no;
     }
 
     public function getAdresseFacturationAttribute()
