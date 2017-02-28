@@ -337,9 +337,9 @@ class MailjetService implements MailjetServiceInterface{
     /*
      * Send transactional
      * */
-    public function sendBulk($campagne,$html,$recipients)
+    public function sendBulk($campagne,$html,$recipients, $test = true)
     {
-        $sujet = ($campagne->status == 'brouillon' ? 'TEST | '.$campagne->sujet : $campagne->sujet );
+        $sujet = ($test ? 'TEST | '.$campagne->sujet : $campagne->sujet );
         
         $body = [
             'FromEmail'  => $campagne->newsletter->from_email,

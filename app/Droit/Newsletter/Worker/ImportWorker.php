@@ -134,7 +134,7 @@ class ImportWorker implements ImportWorkerInterface
                 return  ['Email' => $email->email, 'Name'  => ""];
             });
 
-            $result = $this->mailjet->sendBulk($campagne,$html,$recipients->toArray());
+            $result = $this->mailjet->sendBulk($campagne, $html, $recipients->toArray(), false);
 
             if(!isset($result['Sent'])) {
                throw new \App\Exceptions\TestSendException('Problème avec le test');
