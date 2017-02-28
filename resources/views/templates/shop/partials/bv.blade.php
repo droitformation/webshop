@@ -4,7 +4,7 @@
     {{ ($generate->getProducts()->count() > 7 ? '<p style="page-break-after: always;"></p>' : '') }}
     <?php list($francs,$centimes) = $generate->order()->price_total_explode; ?>
 
-    <table id="bv-table">
+    <table id="bv-table" style="background: none;">
         <tr align="top" valign="top">
             <td width="60mm" align="top" valign="top">
                 <table id="recu" valign="top">
