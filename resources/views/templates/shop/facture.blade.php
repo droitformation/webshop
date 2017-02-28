@@ -68,10 +68,11 @@
                         <tr>
                             <td class="text-left" valign="top">{{ $qty }}</td>
                             <td class="text-left" valign="top">
-                                {{ $product->first()->title }} {!! ($product->first()->isbn ? '<br/><small style="font-size:9px;">Prix public recommandé<br/>(ISBN: '.$product->first()->isbn.')</small>' : '') !!}
+                                {{ $product->first()->title }} {!! ($product->first()->isbn ? '<br/><small style="font-size:9px;">(ISBN: '.$product->first()->isbn.')</small>' : '') !!}
                             </td>
                             <td class="text-right" valign="top">
                                 {!! !$price_unit->isEmpty() ? $price_unit->first()->price_normal.' <span>CHF</span>' : 'gratuit' !!}
+                                {!! !$price_unit->isEmpty() ? '<br/><small style="font-size:9px;">Prix public recommandé</small>' : '' !!}
                             </td>
                             <td class="text-right" valign="top">
                                 {!! !$price_unit->isEmpty() && $price_unit->first()->price_special ? $price_unit->first()->price_special.' CHF' : '' !!}
