@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
-use App\Droit\Author\Repo\AuthorInterface;
+use App\Droit\Shop\Author\Repo\AuthorInterface;
 use App\Droit\Domain\Repo\DomainInterface;
 use App\Droit\Page\Repo\PageInterface;
 use App\Droit\Abo\Repo\AboInterface;
