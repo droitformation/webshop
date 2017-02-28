@@ -16,7 +16,7 @@
                                     <ul>
                                         @foreach($analyse->analyses_arrets as $arret)
                                             <li>
-                                                <a href="#{{ $arret->reference }}">{{ $arret->reference.' du '.$arret->pub_date->formatLocalized('%d %B %Y') }}</a>
+                                                <a href="#{{ $arret->reference }}">{{ $arret->reference.' du '.utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')) }}</a>
                                             </li>
                                         @endforeach
                                     </ul>

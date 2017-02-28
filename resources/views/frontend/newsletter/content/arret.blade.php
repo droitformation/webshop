@@ -1,7 +1,7 @@
 @if(isset($bloc->arret))
 <div class="row">
     <div class="col-md-9">
-        <h2>{{ $bloc->arret->reference }} du {{ $bloc->arret->pub_date->formatLocalized('%d %B %Y') }}</h2>
+        <h2>{{ $bloc->arret->reference }} du {{ utf8_encode($bloc->arret->pub_date->formatLocalized('%d %B %Y')) }}</h2>
         <p>{!! $bloc->arret->abstract !!}</p>
 
         {!! $bloc->arret->pub_text !!}
