@@ -13,7 +13,26 @@ class ExportBadge
     
     public function export($inscriptions, $colloque = null)
     {
-        $inscriptions = $inscriptions->pluck('name_inscription')->all();
+       // $inscriptions = $inscriptions->pluck('name_inscription')->all();
+
+        $inscriptions = $inscriptions->map(function ($inscription) {
+
+            if($inscription->group_id > 0) {
+                $name = $inscription->participant->name;
+                $name = explode(' ', $name);
+                $name = end($name);
+            }
+            elseif(isset($inscription->user)) {
+                $name = $inscription->user->adresse_contact->last_name;
+            }
+            else{
+                $name = $inscription->user_id;
+            }
+
+            return ['name' => $inscription->name_inscription, 'last_name' => str_slug($name)];
+        });
+
+        $inscriptions = collect($inscriptions)->sortBy('last_name')->pluck('name')->toArray();
 
         $data   = $this->chunkData($inscriptions, $this->config['cols'], $this->config['etiquettes']);
 
