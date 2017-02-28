@@ -1,6 +1,6 @@
 <tr {!! ($inscription->group_id ? 'class="isGoupe"' : '') !!}>
     <td>
-        <strong>{{ $inscription->user->name }}</strong><br/>
+        <strong>{{ isset($inscription->user) ? $inscription->user->name : 'pas de user pour no: '.$inscription->inscription_no }}</strong><br/>
         {{ $inscription->inscription_no }}
     </td>
     <td>{{ $inscription->price->price_cents }} CHF</td>

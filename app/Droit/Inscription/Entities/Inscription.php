@@ -92,6 +92,10 @@ class Inscription extends Model
     {
         $path = config('documents.colloque.facture');
 
+        if(!$this->user){
+            return null;
+        }
+        
         $file = $path.'facture'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
 
         return ($this->annexe && \File::exists(public_path($file)) ? $file : null);
