@@ -18,10 +18,10 @@
 						<h4 class="revue-title">{{ $revue->title }}</h4>
 						<p>{!! $revue->teaser !!}</p>
 						<p>
-							<a href="{{ url('pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-default">
+							<a href="{{ url('https://publications-droit.ch/pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-default">
 								<i class="fa fa-shopping-cart"></i> &nbsp;Commander
 							</a>
-							<a href="{{ url('pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-danger">
+							<a href="{{ url('https://publications-droit.ch/pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-danger">
 								<i class="fa fa-download"></i> &nbsp;Télécharger
 							</a>
 						</p>
