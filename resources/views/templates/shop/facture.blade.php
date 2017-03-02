@@ -32,7 +32,7 @@
                         </tr>
                         <tr>
                             <td width="28%"><strong class="blue">Total:</strong></td>
-                            <td width="72%">{{ $generate->order()->price_cents }} CHF</td>
+                            <td width="72%">{{ $generate->order()->total_with_shipping}} CHF</td>
                         </tr>
                         <tr>
                             <td width="20%"><strong class="blue">Date:</strong></td>
