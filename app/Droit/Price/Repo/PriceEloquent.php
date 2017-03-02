@@ -30,7 +30,7 @@ class PriceEloquent implements PriceInterface{
             'type'        => $data['type'],
             'description' => $data['description'],
             'remarque'    => isset($data['remarque']) ? $data['remarque'] : null,
-            'end_at'      => isset($data['end_at']) ? $data['end_at'] : null
+            'end_at'      => isset($data['end_at']) && !empty($data['end_at']) ? $data['end_at'] : null
         ));
 
         if( ! $price )
@@ -57,6 +57,8 @@ class PriceEloquent implements PriceInterface{
         {
             $price->price = $data['price'] * 100;
         }
+
+        $price->end_at = isset($data['end_at']) && !empty($data['end_at']) && $data['end_at'] != '0000-00-00' ? $data['end_at'] : null;
 
         $price->save();
 

@@ -26,7 +26,7 @@
                         <div class="event-post col-md-12">
 
                             <div class="post-img">
-                                <a href="{{ url('colloque/'.$colloque->id) }}">
+                                <a href="{{ url('pubdroit/colloque/'.$colloque->id) }}">
                                     <img src="{{ secure_asset($colloque->frontend_illustration) }}" height="219" width="300" alt='{{ $colloque->titre }}'/>
                                 </a>
                                 <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span>
