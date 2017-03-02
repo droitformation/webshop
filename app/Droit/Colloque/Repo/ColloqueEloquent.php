@@ -27,7 +27,7 @@ class ColloqueEloquent implements ColloqueInterface{
         return $this->colloque
             ->registration($registration)
             ->visible($isVisible)
-            ->orderBy('start_at','DESC')->get();
+            ->orderBy('start_at','ASC')->get();
     }
 
     public function getArchive()
