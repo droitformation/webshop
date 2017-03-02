@@ -18,7 +18,7 @@
 						<h4 class="revue-title">{{ $revue->title }}</h4>
 						<p>{!! $revue->teaser !!}</p>
 						<p>
-							<a href="{{ url('https://publications-droit.ch/pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-default">
+							<a target="_blank" href="{{ url('https://publications-droit.ch/pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-default">
 								<i class="fa fa-shopping-cart"></i> &nbsp;Commander
 							</a>
 						{{--	<a href="{{ url('https://publications-droit.ch/pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-danger">
