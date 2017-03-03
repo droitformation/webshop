@@ -35,7 +35,7 @@ class Product extends Model{
     {
         $attribute = $this->attributs->where('id',4);
 
-        return !$attribute->isEmpty() ? str_replace('/','-' , $attribute->first()->pivot->value) : '';
+        return !$attribute->isEmpty() ? str_replace('/','-' , trim($attribute->first()->pivot->value)) : '';
     }
 
     public function getIsbnAttribute()
