@@ -46,14 +46,10 @@ Route::post('reponse', 'ReponseController@store');
 */
 
 Route::post('sendMessage','ContactController@sendMessage');
+Route::get('/','HomeController@index');
 
 Route::group(['middleware' => 'site'], function () {
-
-    // For now...
-    Route::get('/', function () {
-        return redirect('pubdroit');
-    });
-
+    
     Route::group(['prefix' => 'pubdroit'], function () {
 
         Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\Shop\ShopController@page'));

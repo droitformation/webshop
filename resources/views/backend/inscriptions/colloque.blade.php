@@ -66,6 +66,18 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
+                    @if(!$invalid->isEmpty())
+                        <ul class="list-group">
+                            @foreach($invalid as $register)
+                                <li class="list-group-item">{{ $register->inscription_no }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+            </div>
+
+            <div class="panel panel-midnightblue">
+                <div class="panel-body">
                     <div class="table-responsive">
                         <h3>Inscriptions</h3>
 

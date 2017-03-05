@@ -64,12 +64,24 @@ class InscriptionController extends Controller
         }
 
         // Filter to remove inscriptions without all infos
-        $inscriptions_filter = $inscriptions->filter(function ($inscription, $key) {
+/*        $inscriptions_filter = $inscriptions->filter(function ($inscription, $key) {
+            $display = new \App\Droit\Inscription\Entities\Display($inscription);
+            return $display->isValid();
+        });*/
+
+        list($inscriptions_filter, $invalid) = $inscriptions->partition(function ($inscription) {
             $display = new \App\Droit\Inscription\Entities\Display($inscription);
             return $display->isValid();
         });
   
-        return view('backend.inscriptions.colloque')->with(['inscriptions' => $inscriptions, 'inscriptions_filter' => $inscriptions_filter, 'colloque' => $colloque, 'names' => config('columns.names')]);
+        return view('backend.inscriptions.colloque')
+            ->with([
+                'inscriptions' => $inscriptions,
+                'inscriptions_filter' => $inscriptions_filter,
+                'invalid'  => $invalid,
+                'colloque' => $colloque,
+                'names' => config('columns.names')
+            ]);
     }
 
     /**
