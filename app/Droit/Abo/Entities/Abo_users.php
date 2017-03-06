@@ -54,8 +54,8 @@ class Abo_users extends Model{
 
     public function getUserAdresseAttribute()
     {
-        $user = isset($this->originaluser) ? $this->originaluser : $this->user;
-
+        $user = isset($this->originaluser) && !isset($this->user) ? $this->originaluser : $this->user;
+        
         return isset($user) ? $user : null;
     }
 
