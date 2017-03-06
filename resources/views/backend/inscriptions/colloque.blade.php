@@ -64,7 +64,7 @@
                 <!-- end export filters -->
             @endif
 
-            <div class="panel panel-midnightblue">
+{{--            <div class="panel panel-midnightblue">
                 <div class="panel-body">
                     @if(!$invalid->isEmpty())
                         <ul class="list-group">
@@ -74,7 +74,7 @@
                         </ul>
                     @endif
                 </div>
-            </div>
+            </div>--}}
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
