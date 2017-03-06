@@ -64,17 +64,19 @@
                 <!-- end export filters -->
             @endif
 
-{{--            <div class="panel panel-midnightblue">
-                <div class="panel-body">
-                    @if(!$invalid->isEmpty())
+            @if(!$invalid->isEmpty())
+                <div class="panel panel-midnightblue">
+                    <div class="panel-body">
+                        <h3>Inscriptions invalides</h3>
+                        <p>Il manque probablement l'adresse ou l'utilisateur, ou l'adresse n'est pas de type contact</p>
                         <ul class="list-group">
                             @foreach($invalid as $register)
-                                <li class="list-group-item">{{ $register->inscription_no }}</li>
+                                <li class="list-group-item"><strong>No:</strong> {{ $register->inscription_no }}</li>
                             @endforeach
                         </ul>
-                    @endif
+                    </div>
                 </div>
-            </div>--}}
+            @endif
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
