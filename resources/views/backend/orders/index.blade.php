@@ -112,6 +112,20 @@
                 </div>
             </div>
 
+            @if(!$invalid->isEmpty())
+                <div class="panel panel-midnightblue">
+                    <div class="panel-body">
+                        <h3>Commandes invalides</h3>
+                        <p>Il manque probablement l'adresse ou l'utilisateur, ou l'adresse n'est pas de type contact</p>
+                        <ul class="list-group">
+                            @foreach($invalid as $commande)
+                                <li class="list-group-item"><strong>No:</strong> {{ $commande->order_no }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 

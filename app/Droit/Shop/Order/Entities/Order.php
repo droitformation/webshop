@@ -39,6 +39,8 @@ class Order extends Model{
         {
             return $this->adresse;
         }
+        
+        return null;
     }
 
     public function getStatusCodeAttribute()

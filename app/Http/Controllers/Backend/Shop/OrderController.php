@@ -96,10 +96,20 @@ class OrderController extends Controller {
 
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
 
+        list($orders, $invalid) = $orders->partition(function ($order) {
+            return $order->order_adresse;
+        });
+
         $request->flash();
 
 		return view('backend.orders.index')
-            ->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'],'columns' => config('columns.names'), 'cancelled' => $cancelled] + $data);
+            ->with([
+                'orders'  => $orders,
+                'invalid' => $invalid,
+                'start'   => $period['start'],
+                'end'     => $period['end'],
+                'columns' => config('columns.names'),
+                'cancelled' => $cancelled] + $data);
 	}
 
     /**
