@@ -56,7 +56,7 @@
                                       <div class="form-group">
                                           <label><strong>Indiquer un mot de passe</strong></label>
                                           <div class="input-group">
-                                              <input type="password" class="form-control" required autocomplete="off" placeholder="Mot de passe">
+                                              <input type="password" name="password" class="form-control" required autocomplete="off" placeholder="Mot de passe">
                                               <input type="hidden" value="{{ $adresse->id }}" name="id">
                                               <span class="input-group-btn">
                                                 <button class="btn btn-warning" type="submit">Convertir!</button>
