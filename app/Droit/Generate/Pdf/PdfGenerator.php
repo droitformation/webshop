@@ -98,7 +98,17 @@ class PdfGenerator implements PdfGeneratorInterface
         $data['generate'] = $generate;
         $data['rappel']   = $rappel;
 
-        $view = \PDF::loadView('templates.abonnement.facture', $data)->setPaper('a4');
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ]
+        ]);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        $view = $pdf->loadView('templates.abonnement.facture', $data)->setPaper('a4');
 
         // Do wee need to stream or save the pdf
         $state    = ($this->stream ? 'stream' : 'save');

@@ -116,7 +116,7 @@
                     @endif
 
                     <p class="message">{{ $messages['remerciements'] }}</p><br/>
-                    <p class="message">Neuchâtel, le {{ $date }}</p>
+                    <p class="message">Neuchâtel, le {{ $facture->created_at->formatLocalized('%d %B %Y') }}</p>
                 </div>
 
             </td>
