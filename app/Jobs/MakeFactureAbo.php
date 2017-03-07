@@ -45,25 +45,27 @@ class MakeFactureAbo extends Job implements ShouldQueue
         {
             foreach($this->abos as $abonnement)
             {
-                // Do we already have a facture in the DB?
-                $facture = $this->facture->findByUserAndProduct($abonnement->id,  $this->product->id);
+                if(!$abonnement->deleted_at){
+                    // Do we already have a facture in the DB?
+                    $facture = $this->facture->findByUserAndProduct($abonnement->id,  $this->product->id);
 
-                // If not and the abonnement is an abonne create a facture
-                if(!$facture && $abonnement->status == 'abonne')
-                {
-                    $facture = $this->facture->create([
-                        'abo_user_id' => $abonnement->id,
-                        'product_id'  => $this->product->id,
-                        'created_at'  => date('Y-m-d')
-                    ]);
-                }
+                    // If not and the abonnement is an abonne create a facture
+                    if(!$facture && $abonnement->status == 'abonne')
+                    {
+                        $facture = $this->facture->create([
+                            'abo_user_id' => $abonnement->id,
+                            'product_id'  => $this->product->id,
+                            'created_at'  => date('Y-m-d')
+                        ]);
+                    }
 
-                // If we want all factures to be remade or made if none exist
-                // does an pdf already exist? if not make one
-                // All is for the controller otherwise for sending
-                if($this->all || ($facture && !$facture->abo_facture))
-                {
-                    $generator->makeAbo('facture', $facture);
+                    // If we want all factures to be remade or made if none exist
+                    // does an pdf already exist? if not make one
+                    // All is for the controller otherwise for sending
+                    if($this->all || ($facture && !$facture->abo_facture))
+                    {
+                        $generator->makeAbo('facture', $facture);
+                    }
                 }
             }
         }

@@ -71,7 +71,7 @@
                         <tbody id="">
                         @if(!$factures->isEmpty())
                             @foreach($factures as $facture)
-                                @if(isset($facture->abonnement))
+                                @if(isset($facture->abonnement) && !$facture->abonnement->deleted_at)
                                 <tr>
                                     <td><a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a></td>
                                     <td>{{ $facture->abonnement->numero }}</td>
@@ -106,12 +106,6 @@
                                         </form>
                                     </td>
                                 </tr>
-                                @else
-                                    <tr>
-                                        <td colspan="7">
-                                            Facture sans abo {{ $facture->id }}
-                                        </td>
-                                    </tr>
                                 @endif
                             @endforeach
                         @endif
