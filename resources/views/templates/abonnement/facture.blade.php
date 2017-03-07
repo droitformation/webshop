@@ -94,7 +94,7 @@
                 <td width="70%">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} du numéro {{ $abo->abo->current_product->title }}</td>
                 <td width="30%"></td>
             </tr>
-            @if($abo->tiers_id)
+            @if($abo->tiers_id && $abo->price_cents_remise)
                 <tr>
                     <td width="90%" align="right">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} &nbsp;&nbsp;</td>
                     <td width="10%" align="right"><strong>{{ isset($abo->abo->current_product) ? $abo->abo->current_product->price_cents : '' }} CHF</strong></td>
@@ -105,7 +105,7 @@
                 </tr>
                 <tr>
                     <td width="90%" align="right"></td>
-                    <td width="10%" align="right" height="1" style="border-bottom: 1px solid #000;">&nbsp;</strong></td>
+                    <td width="10%" align="right" height="1" style="border-bottom: 1px solid #000;">&nbsp;</td>
                 </tr>
             @endif
             <tr><td colspan="2" height="1">&nbsp;</td></tr>
