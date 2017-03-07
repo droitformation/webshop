@@ -30,7 +30,7 @@
                                 <div class="autocomplete-wrapper">
                                     <?php $type = old('type'); ?>
                                     <?php $uid  = !empty($type) ? old(old('type')) : ''; ?>
-                                    <div class="input-adresse" data-uid="{{ $uid }}" data-type="{{ old('type') }}"></div>
+                                    <div class="input-adresse" data-uid="{{ $uid }}" data-type="{{ old('type') }}" data-where="order"></div>
                                     <div class="choice-adresse"></div>
                                     <div class="adresse-find">
                                         <div class="form-group">
