@@ -14,7 +14,7 @@
                 <td width="59%" align="top" valign="top"  class="misc-infos">
                     @if(!empty($tva))
                         <ul id="tva">
-                            <li><strong>{{ \Registry::get('shop.infos.tva') }} TVA</strong></li>
+                            <li><strong>{{ \Registry::get('shop.infos.tva') }}</strong></li>
                             {!! "<li>".implode('</li><li>', $tva)."</li>" !!}
                         </ul>
                     @endif
