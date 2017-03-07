@@ -25,7 +25,7 @@ class ColloqueEloquent implements ColloqueInterface{
     public function getCurrent($registration = true, $isVisible = true)
     {
         return $this->colloque
-            ->registration($registration)
+            ->active($registration)
             ->visible($isVisible)
             ->orderBy('start_at','ASC')->get();
     }
