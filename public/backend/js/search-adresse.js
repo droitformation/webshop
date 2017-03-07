@@ -29,7 +29,7 @@ $('input.search-adresse').each(function()
              var uid  = (type == 'adresse_id') || (type == 'tiers_id') ? data.id : ui.item.value;
              var name = (type == 'adresse_id') || (type == 'tiers_id') ? type : 'user_id';
 
-             $input.html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + name + '" name="type">');
+             $input.html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + ui.item.type + '" name="type">');
 
              var html = template(data, ui.item.type);
 
