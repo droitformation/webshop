@@ -72,22 +72,52 @@
     <!-- Total calculations -->
     <div id="abo-table">
         <?php $traduction = ['year' => 'annuelle', 'semester' => 'semestrielle', 'month' => 'mensuelle']; ?>
-        <h2>Abonnement à la publication {{ $traduction[$abo->abo->plan] }} <strong>{{ $abo->abo->title }}</strong></h2>
+        <h2>Abonnement à la publication {{ $traduction[$abo->abo->plan] }} <strong>{{ $abo->abo->title }}</strong>
+          @if($abo->tiers_id)
+            géré par vos soins :
+          @endif
+        </h2>
 
         <table class="content-table content-abo">
-            <tr><td colspan="3" height="1">&nbsp;</td></tr>
+            <tr><td colspan="2" height="1">&nbsp;</td></tr>
+            @if($abo->tiers_id)
+                <tr>
+                    <td colspan="3">
+                        <p><cite>
+                            Destinataire : {{ $abo->user->name }}, {{ $abo->user->company }} {{ isset($abo->reference) && !empty($abo->reference) ? 'n/réf. '.$abo->reference : $abo->numero }}
+                        </cite></p>
+                    </td>
+                </tr>
+            @endif
+            <tr><td colspan="2" height="1">&nbsp;</td></tr>
             <tr>
-                <td width="10%">{{ $abo->exemplaires }}</td>
-                <td width="60%">exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} du numéro {{ $abo->abo->current_product->reference }} ({{ \Registry::get('shop.infos.taux_reduit') }}% TVA incluse)</td>
-                <td width="30%" align="right"><strong><?php echo $abo->price_cents; ?> CHF</strong></td>
+                <td width="70%">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} du numéro {{ $abo->abo->current_product->title }}</td>
+                <td width="30%"></td>
             </tr>
-            <tr><td colspan="3" height="1">&nbsp;</td></tr>
+            @if($abo->tiers_id)
+                <tr>
+                    <td width="90%" align="right">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} &nbsp;&nbsp;</td>
+                    <td width="10%" align="right"><strong>{{ isset($abo->abo->current_product) ? $abo->abo->current_product->price_cents : '' }} CHF</strong></td>
+                </tr>
+                <tr>
+                    <td width="90%" align="right">Votre remise &nbsp;&nbsp;</td>
+                    <td width="10%" align="right"><strong>{{ $abo->price_cents_remise }} CHF</strong></td>
+                </tr>
+                <tr>
+                    <td width="90%" align="right"></td>
+                    <td width="10%" align="right" height="1" style="border-bottom: 1px solid #000;">&nbsp;</strong></td>
+                </tr>
+            @endif
+            <tr><td colspan="2" height="1">&nbsp;</td></tr>
             <tr>
-                <td width="10%"></td>
-                <td width="80%" align="middle">
+                <td width="70%" align="right"><strong>Total</strong> ({{ \Registry::get('shop.infos.taux_reduit') }}% TVA incluse)</td>
+                <td width="30%" align="right"><strong>{{ $abo->price_cents }} CHF</strong></td>
+            </tr>
+            <tr><td colspan="2" height="1">&nbsp;</td></tr>
+            <tr>
+                <td colspan="2" width="80%" align="left">
                     <small>Conditions de paiement {{ \Registry::get('abo.days') }} jours net</small>
                 </td>
-                <td width="10%"></td>
             </tr>
         </table>
 

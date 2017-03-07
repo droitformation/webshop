@@ -72,11 +72,30 @@ class Abo_users extends Model{
         $this->load('abo');
 
         $product = $this->abo->current_product;
-        $price   = ($this->price ? $this->price : $product->price);
+        $price   = ($this->price && !empty($this->price) ? $this->price : $product->price);
         $total   = $price * $this->exemplaires;
         $price   = $total / 100;
 
         return $money->format($price);
+    }
+
+    public function getPriceCentsRemiseAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $this->load('abo');
+
+        $product = $this->abo->current_product;
+
+        if($this->price && !empty($this->price))
+        {
+            $remise = $product->price - $this->price;
+            $remise = $remise * $this->exemplaires;
+            $remise = $remise / 100;
+
+            return $money->format($remise);
+        }
+
+        return null;
     }
 
     public function abo()

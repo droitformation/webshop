@@ -300,24 +300,16 @@ Route::get('cartworker', function()
         return $item->title;
     })->all();
 
-    echo '<pre>';
-    print_r($data);
-    echo '</pre>';exit();
 
-    $data[] = [
-        'abo_id'         => 1,
-        'exemplaires'    => 1,
-        'adresse_id'     => 2,
-        'status'         => 'abonne',
-        'renouvellement' => 'auto'
-    ];
+    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+    $facture = $factures->find(1697);//1697
 
-    $abos = $worker->getAboData($data);
-    //$abos = $abo->max(['abo_id' => 4]) +1;
+    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $generator->stream = true;
+    return $generator->makeAbo('facture', $facture);
 
-    echo '<pre>';
-    print_r($abos);
-    echo '</pre>';exit();
+
 
     /*
         $adresse_specialisation = new \App\Droit\Adresse\Entities\Adresse_specialisation();
@@ -365,12 +357,8 @@ Route::get('cartworker', function()
 //    $item      = $repo->find(82);
 //    $attribute = $item->attributes->where('id',3);
 
-/*    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
-    $abonnement = $abo->find(1);
-
-    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-    $generator->stream = true;
-    return $generator->factureAbo($abonnement);*/
+/*
+*/
 
 /*    $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
 
