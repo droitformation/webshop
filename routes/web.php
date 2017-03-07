@@ -406,6 +406,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     
     Route::post('facture/edit', 'Backend\Abo\AboFactureController@edit');
     Route::post('facture/generate', 'Backend\Abo\AboFactureController@generate');
+    Route::post('facture/make', 'Backend\Abo\AboFactureController@make');
     Route::resource('facture', 'Backend\Abo\AboFactureController');
 
     Route::post('abo/generate', 'Backend\Abo\AboFileController@generate');

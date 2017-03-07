@@ -115,5 +115,21 @@ class AboFactureController extends Controller {
 
         return response()->json(['link' => $facture->doc_facture]);
     }
+
+    /**
+     * Generate the facture
+     *
+     * @return Response
+     */
+    public function make(Request $request)
+    {
+        $facture = $this->facture->find($request->input('id'));
+
+        $this->worker->make($facture);
+
+        alert()->success('La facture a été généré');
+
+        return redirect()->back();
+    }
     
 }

@@ -88,6 +88,12 @@
                                     <td>
                                         @if($facture->doc_facture)
                                             <a class="btn btn-default btn-sm" target="_blank" href="{{ secure_asset($facture->doc_facture) }}">Facture pdf</a>
+                                        @else
+                                            <form action="{{ url('admin/facture/make') }}" method="POST" class="form-horizontal">
+                                                {!! csrf_field() !!}
+                                                <input name="id" type="hidden" value="{{ $facture->id }}">
+                                                <button class="btn btn-default btn-sm">générer</button>
+                                            </form>
                                         @endif
                                     </td>
                                     <td>
