@@ -79,6 +79,18 @@ class Abo_users extends Model{
         return $money->format($price);
     }
 
+    public function getPriceRemiseAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        if($this->price && !empty($this->price)){
+            $price   = $this->price / 100;
+            return $money->format($price);
+        }
+
+        return "";
+    }
+
     public function getPriceCentsRemiseAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
