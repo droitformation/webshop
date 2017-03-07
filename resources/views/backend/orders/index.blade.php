@@ -103,7 +103,7 @@
                                     </div>
                                 @endforeach
                             @endif
-                            <p style="margin-top: 10px;"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
+
                         </div>
 
                         <button class="btn btn-primary pull-right" name="export" value="1" type="submit"><i class="fa fa-download"></i> Télécharger [xls]</button>
