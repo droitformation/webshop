@@ -28,8 +28,10 @@
 
                                 <!-- Autocomplete for adresse -->
                                 <div class="autocomplete-wrapper">
+
                                     <?php $type = old('type'); ?>
                                     <?php $uid  = !empty($type) ? old(old('type')) : ''; ?>
+
                                     <div class="input-adresse" data-uid="{{ $uid }}" data-type="{{ old('type') }}" data-where="order"></div>
                                     <div class="choice-adresse"></div>
                                     <div class="adresse-find">
@@ -83,7 +85,7 @@
                                         <div class="form-group">
                                             <select name="shipping_id" class="form-control">
                                                 @foreach($shippings as $shipping)
-                                                    <option value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
+                                                    <option {{ old('shipping_id') == $shipping->id ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

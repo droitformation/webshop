@@ -82,7 +82,17 @@ class PdfGenerator implements PdfGeneratorInterface
         $data['generate'] = $generate;
         $data['rappel']   = $rappel ? $rappel : null;
 
-        $facture = \PDF::loadView('templates.shop.facture', $data)->setPaper('a4');
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ]
+        ]);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        $facture = $pdf->loadView('templates.shop.facture', $data)->setPaper('a4');
 
         $make = ($this->stream ? 'stream' : 'save');
         $name = $generate->getFilename($rappel);
@@ -151,7 +161,17 @@ class PdfGenerator implements PdfGeneratorInterface
             $data['code'] = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate($url));
         }
 
-        $view = \PDF::loadView('templates.colloque.'.$document, $data)->setPaper('a4');
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ]
+        ]);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        $view = $pdf->loadView('templates.colloque.'.$document, $data)->setPaper('a4');
 
         // Do wee need to stream or save the pdf
         $state    = ($this->stream ? 'stream' : 'save');

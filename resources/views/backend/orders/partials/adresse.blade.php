@@ -5,7 +5,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Entreprise</label>
-        <input type="text" name="adresse[company]" class="form-control" value="" placeholder="Entreprise">
+        <input type="text" name="adresse[company]" class="form-control" value="{{ old('adresse.company') }}" placeholder="Entreprise">
     </div>
     <div class="form-group row">
         <div class="col-md-6">
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">E-mail</label>
-        <input type="email" name="adresse[email]" data-parsley-required class="form-control form-required" value="{{ old('adresse.email') }}" placeholder="E-mail">
+        <input type="email" name="adresse[email]" class="form-control" value="{{ old('adresse.email') }}" placeholder="E-mail">
     </div>
 
 </div>

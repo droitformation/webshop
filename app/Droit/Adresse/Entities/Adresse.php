@@ -83,6 +83,35 @@ class Adresse extends Model {
         return $this->first_name.' '.$this->last_name;
     }
 
+    public function getInvoiceNameAttribute()
+    {
+        $name = [];
+
+        if(!empty($this->civilite_title)){
+            $name[] = $this->civilite_title;
+        }
+        
+        if(!empty($this->first_name) && !empty($this->last_name)){
+            $name[] = $this->first_name.' '.$this->last_name;
+        }
+
+        if(empty($this->first_name) && !empty($this->last_name)){
+            $name[] = $this->last_name;
+        }
+
+        if(!empty($this->first_name) && empty($this->last_name)){
+            $name[] = $this->first_name;
+        }
+
+        if(!empty($this->company)){
+            $name[] = $this->company;
+        }
+
+        $name = array_unique($name);
+
+        return $name;
+    }
+
     public function getCpTrimAttribute()
     {
         $wordlist = array("CP", "case", "postale","Case","Postale","cp","Cp","Postfach","postfach", "C. P." , "PF" , "PO Box");

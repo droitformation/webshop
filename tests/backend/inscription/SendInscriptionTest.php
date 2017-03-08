@@ -94,6 +94,6 @@ class SendInscriptionTest extends BrowserKitTest {
 
         $this->assertRedirectedTo('admin/user/'.$inscription->user_id);
 
-        $this->expectExceptionMessage('Aucune inscription ou groupe trouvé!');
+        //$this->expectExceptionMessage('Aucune inscription ou groupe trouvé!');
     }
 }

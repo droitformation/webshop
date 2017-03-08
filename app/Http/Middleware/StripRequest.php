@@ -19,17 +19,19 @@ class StripRequest
 
         // Validate the adresse if any
         $validator = \Validator::make($request->all(), [
-            'adresse.first_name'     => 'required_without_all:user_id,adresse_id',
-            'adresse.last_name'      => 'required_without_all:user_id,adresse_id',
+            'adresse.first_name'     => 'required_without_all:user_id,adresse_id,adresse.company',
+            'adresse.last_name'      => 'required_without_all:user_id,adresse_id,adresse.company',
             'adresse.adresse'        => 'required_without_all:user_id,adresse_id',
             'adresse.npa'            => 'required_without_all:user_id,adresse_id',
             'adresse.ville'          => 'required_without_all:user_id,adresse_id',
+            'adresse.company'        => 'required_without_all:user_id,adresse_id,adresse.first_name,adresse.last_name',
         ], [
-            'adresse.first_name.required_without'  => 'Une adresse (prénom) est requise sans utilisateur',
-            'adresse.last_name.required_without'   => 'Une adresse (nom) est requise sans utilisateur',
-            'adresse.adresse.required_without'     => 'Une adresse (adresse) est requise sans utilisateur',
-            'adresse.npa.required_without'         => 'Une adresse (npa) est requise sans utilisateur',
-            'adresse.ville.required_without'       => 'Une adresse (ville) est requise sans utilisateur',
+            'adresse.first_name.required_without_all'  => 'Une adresse (prénom) est requise sans utilisateur',
+            'adresse.last_name.required_without_all'   => 'Une adresse (nom) est requise sans utilisateur',
+            'adresse.adresse.required_without_all'     => 'Une adresse (adresse) est requise sans utilisateur',
+            'adresse.npa.required_without_all'         => 'Une adresse (npa) est requise sans utilisateur',
+            'adresse.ville.required_without_all'       => 'Une adresse (ville) est requise sans utilisateur',
+            'adresse.company.required_without_all'     => 'Une nom d\'entreprise est requis sans nom/prénom',
         ]);
 
         $products = array_filter($request->input('order.products'));
