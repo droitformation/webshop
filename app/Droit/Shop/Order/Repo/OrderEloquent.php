@@ -125,6 +125,7 @@ class OrderEloquent implements OrderInterface{
             'adresse_id'  => (isset($data['adresse_id']) ? $data['adresse_id'] : null),
             'coupon_id'   => (isset($data['coupon_id']) ? $data['coupon_id'] : null),
             'shipping_id' => $data['shipping_id'],
+            'paquet'      => (isset($data['paquet']) ? $data['paquet'] : null),
             'payement_id' => $data['payement_id'],
             'amount'      => $data['amount'],
             'order_no'    => $data['order_no'],
