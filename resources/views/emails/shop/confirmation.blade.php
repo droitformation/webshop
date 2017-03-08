@@ -76,7 +76,7 @@
                             <span class="desktopHide" style="display: none;font-size: 0;max-height: 0;width: 0;line-height: 0;overflow: hidden;mso-hide: all;">Subtotal: </span>
                             <span class="amount" style="color: #54565c;">{{ $order->price_cents }} CHF</span><br>
                             <span class="desktopHide" style="display: none;font-size: 0;max-height: 0;width: 0;line-height: 0;overflow: hidden;mso-hide: all;">Frais de port:</span>
-                            <span class="amount" style="color: #54565c;">{{ $order->shipping->price_cents }} CHF</span>
+                            <span class="amount" style="color: #54565c;">{{ $order->total_shipping }} CHF</span>
                         </td>
                     </tr>
 
