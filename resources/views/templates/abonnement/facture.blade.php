@@ -94,6 +94,13 @@
                 <td width="70%">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} du numéro {{ $facture->prod_edition }}</td>
                 <td width="30%"></td>
             </tr>
+            @if($abo->exemplaires > 1)
+                <tr><td colspan="2" height="1">&nbsp;</td></tr>
+                <tr>
+                    <td width="70%">à Fr. {{ $abo->abo->current_product->price_cents }}/pce</td>
+                    <td width="30%"></td>
+                </tr>
+            @endif
             @if($abo->tiers_id && $abo->price_cents_remise)
                 <tr>
                     <td width="90%" align="right">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} &nbsp;&nbsp;</td>

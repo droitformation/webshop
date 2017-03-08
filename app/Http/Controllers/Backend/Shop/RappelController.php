@@ -35,12 +35,14 @@ class RappelController extends Controller
      */
     public function index(Request $request)
     {
-        $data = session()->has('period') ? session('period') : $request->all();
+        $data = session()->has('old_period') ? session('old_period') : $request->all();
 
         $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
         $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
 
         $orders = $this->order->getRappels($period);
+
+        session()->forget('old_period');
         
         return view('backend.orders.rappels.index')->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end']] + $request->all());
     }
@@ -61,7 +63,7 @@ class RappelController extends Controller
 
         alert()->success('La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
 
-        session(['period' => $request->all()]);
+        session(['old_period' => $request->all()]);
 
         return redirect()->back();
     }
