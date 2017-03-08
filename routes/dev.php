@@ -166,7 +166,8 @@ Route::get('testing', function() {
         $generator->stream = true;
         $generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
 
-        return $generator->factureOrder($order,$rappel);*/
+        return $generator->factureOrder($order,$rappel);
+    */
 /*
     $colloque = $colloques->find(39);
     $adresse  = $adresses->find(6005);
@@ -276,6 +277,33 @@ Route::get('sondage_test', function()
     print_r($sondage);
     echo '</pre>';exit();
 
+
+});
+
+Route::get('abo1', function()
+{
+    $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+    $facture = $factures->find(2);//701
+    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    $generator->stream = true;
+    //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+
+    return $generator->makeAbo('facture', $facture);
+});
+
+Route::get('abo2', function()
+{
+    $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+    $facture = $factures->find(381);//1697
+    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    $generator->stream = true;
+    //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+
+    return $generator->makeAbo('facture', $facture);
 });
 
 Route::get('cartworker', function()
@@ -303,10 +331,24 @@ Route::get('cartworker', function()
 
     $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-    $facture = $factures->find(290);//1697
+    $facture = $factures->find(2);//1697
+
+
 
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    //$rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
+    //$model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+
+    //$rappel = $rappel_model->find(1);
+    //$order  = $model->find(3545);
+    //$order->load('rappels');
+
     $generator->stream = true;
+    //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+
+    //return $generator->factureOrder($order,$rappel);
+
     return $generator->makeAbo('facture', $facture);
 
 

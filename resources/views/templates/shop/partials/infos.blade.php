@@ -47,7 +47,7 @@
                 </tr>
                 <tr align="top" valign="top">
                     <td width="40%" align="top" valign="top" class="text-right" style="border: none;"><strong>Frais de port:</strong></td>
-                    <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $generate->order()->shipping->price_cents }} CHF</td>
+                    <td width="60%" align="top" valign="top" class="text-right" style="border: none;">{{ $generate->order()->total_shipping }} CHF</td>
                 </tr>
 
                 <tr align="top" valign="top">

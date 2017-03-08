@@ -81,8 +81,8 @@ class OrderMaker implements OrderMakerInterface{
             'order_no'    => $this->order->newOrderNumber(),
             'amount'      => isset($order['admin']) ? $this->total($order['order']) : \Cart::instance('shop')->total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
-            //'shipping_id' => isset($order['admin']) ? $this->getShipping($order) : $shipping->id,
             'shipping_id' => $shipping ? $shipping->id : $this->getShipping($order),
+            'paquet'      => isset($order['paquet']) ?$order['paquet'] : null,
             'payement_id' => 1,
             'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::instance('shop')->content())
         ];
@@ -326,30 +326,24 @@ class OrderMaker implements OrderMakerInterface{
         $data['shipping_id'] = isset($coupon) && ($coupon->type == 'priceshipping' || $coupon->type == 'shipping')  ? 6 : $shipping_id;
 
         $products = $order->products->map(function ($product, $key) use ($coupon) {
-
             $price = !$product->pivot->isFree ? $product->price_normal : 0;
 
             // search if product eligible for discount is in cart
-            if(isset($coupon->products) && $coupon->products->contains($product->id))
-            {
-                if($coupon->type == 'product')
-                {
+            if(isset($coupon->products) && $coupon->products->contains($product->id)) {
+                if($coupon->type == 'product') {
                     $price = $this->calculPriceWithCoupon($product, $coupon, 'percent');
                 }
 
-                if($coupon->type == 'price' || $coupon->type == 'priceshipping')
-                {
+                if($coupon->type == 'price' || $coupon->type == 'priceshipping') {
                     $price = $this->calculPriceWithCoupon($product, $coupon, 'minus');
                 }
             }
 
-            if(isset($coupon) && $coupon->type == 'global')
-            {
+            if(isset($coupon) && $coupon->type == 'global') {
                 $price = $this->calculPriceWithCoupon($product, $coupon, 'percent');
             }
 
             return ['id' => $product->id, 'price' => $price * 100, 'isFree' => $product->pivot->isFree, 'rabais' => $product->pivot->rabais];
-
         });
 
         $total = $products->sum('price');

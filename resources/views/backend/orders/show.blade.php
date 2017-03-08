@@ -83,6 +83,17 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Nombre de paquets</label>
+                            <div class="col-sm-5 col-xs-8">
+                                <select name="paquet" class="form-control">
+                                    @foreach(range(1,50) as $paquet)
+                                        <option {{ $order->paquet == $paquet ? 'selected' : '' }} value="{{ $paquet }}">{{ $paquet }} paquets</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label"><i class="fa fa-dollar"></i>&nbsp; Modifier les taux de tva</label>
                             <div class="col-sm-2">
                                 <div class="input-group">

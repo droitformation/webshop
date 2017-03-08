@@ -189,11 +189,13 @@ class OrderEloquent implements OrderInterface{
         // All products for order isFree
         if(!empty($data['products']))
         {
+            $order->products()->delete();
+
             foreach($data['products'] as $product)
             {
                 $id = array_pull($product, 'id');
 
-                $order->products()->sync([$id => $product]);
+                $order->products()->attach([$id => $product]);
             }
         }
 

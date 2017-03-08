@@ -84,12 +84,21 @@
                                         <p>-- ou --</p>
                                         <div class="form-group">
                                             <select name="shipping_id" class="form-control">
+                                                <option value="">Choix</option>
                                                 @foreach($shippings as $shipping)
                                                     <option {{ old('shipping_id') == $shipping->id ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     @endif
+                                    <div class="form-group">
+                                        <label>Nombre de paquets</label>
+                                        <select name="paquet" class="form-control">
+                                            @foreach(range(1,50) as $paquet)
+                                                <option {{ old('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">{{ $paquet }} paquets</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3">

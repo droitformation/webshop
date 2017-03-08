@@ -11,7 +11,7 @@ class Order extends Model{
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'status','payement_id', 'order_no', 'amount', 'shipping_id', 'onetimeurl', 'comment','admin','send_at','payed_at'];
+    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'status','payement_id', 'order_no', 'amount', 'shipping_id', 'paquet','onetimeurl', 'comment','admin','send_at','payed_at'];
 
     public function getPriceCentsAttribute()
     {
@@ -64,7 +64,10 @@ class Order extends Model{
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
-        $total = $this->amount + $this->shipping->price;
+        // Shipping x nbr paquets
+        $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+
+        $total = $this->amount + $price;
         $price = $total / 100;
         $price = $money->format($price);
 
@@ -91,7 +94,10 @@ class Order extends Model{
         // Load relations
         $this->load('shipping');
 
-        $total = $this->amount + $this->shipping->price;
+        // Shipping x nbr paquets
+        $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+
+        $total = $this->amount + $price;
         $price = $total / 100;
 
         return $money->format($price);
@@ -127,7 +133,9 @@ class Order extends Model{
 
         if($this->shipping)
         {
-            return $money->format($this->shipping->price/100);
+            $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+
+            return $money->format($price/100);
         }
     }
 

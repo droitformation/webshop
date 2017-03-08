@@ -185,7 +185,6 @@ class OrderController extends Controller {
 
         if($order)
         {
-
             if($name == 'payed_at') {
                 $etat   = ($order->status == 'pending' ? 'En attente' : 'Payé');
                 $status = ($order->status == 'pending' ? 'warning' : 'success');
@@ -211,7 +210,11 @@ class OrderController extends Controller {
         $order  = $this->order->find($request->input('id'));
         
         if($request->input('created_at',null)){
-            $order  = $this->order->update(['id' => $request->input('id'), 'created_at' => $request->input('created_at')]);
+            $order  = $this->order->update([
+                'id'         => $request->input('id'),
+                'created_at' => $request->input('created_at'),
+                'paquet'     => $request->input('paquet',null)
+            ]);
         }
 
         $coupon = $request->input('coupon_id',null) ? $this->coupon->find($request->input('coupon_id')) : null;
