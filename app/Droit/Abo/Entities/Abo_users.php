@@ -74,7 +74,12 @@ class Abo_users extends Model{
         $product = $this->abo->current_product;
         $price   = ($this->price && !empty($this->price) ? $this->price : $product->price);
         $total   = $price * $this->exemplaires;
-        $price   = $total / 100;
+
+        if($this->abo->shipping){
+            $total += $this->abo->shipping;
+        }
+
+        $price = $total / 100;
 
         return $money->format($price);
     }
@@ -83,7 +88,8 @@ class Abo_users extends Model{
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
-        if($this->price && !empty($this->price)){
+        if($this->price && !empty($this->price))
+        {
             $price   = $this->price / 100;
             return $money->format($price);
         }
@@ -108,6 +114,16 @@ class Abo_users extends Model{
         }
 
         return null;
+    }
+
+    public function getShippingCentsAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+        $this->load('abo');
+
+        $shipping = $this->abo->shipping / 100;
+
+        return $money->format($shipping);
     }
 
     public function abo()

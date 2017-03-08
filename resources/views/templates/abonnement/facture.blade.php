@@ -79,12 +79,11 @@
         </h2>
 
         <table class="content-table content-abo">
-            <tr><td colspan="2" height="1">&nbsp;</td></tr>
             @if($abo->tiers_id)
                 <tr>
-                    <td colspan="3">
+                    <td colspan="3" style="padding-top: 4px;">
                         <p><cite>
-                            Destinataire : {{ $abo->user->name }}, {{ $abo->user->company }} {{ isset($abo->reference) && !empty($abo->reference) ? 'n/réf. '.$abo->reference : $abo->numero }}
+                            Destinataire : {{ $abo->user->name }}, {{ $abo->user->company }} n/réf. {{ isset($abo->reference) && !empty($abo->reference) ? $abo->reference : $abo->numero }}
                         </cite></p>
                     </td>
                 </tr>
@@ -101,25 +100,31 @@
                     <td width="30%"></td>
                 </tr>
             @endif
+
+            <tr>
+                <td width="90%" class="pad-b" align="right">{{ $abo->exemplaires }}x &nbsp;&nbsp;</td>
+                <td width="10%" class="pad-b" align="right"><strong>{{ isset($abo->abo->current_product) ? $abo->abo->current_product->price_cents : '' }} CHF</strong></td>
+            </tr>
+
             @if($abo->tiers_id && $abo->price_cents_remise)
                 <tr>
-                    <td width="90%" align="right">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} &nbsp;&nbsp;</td>
-                    <td width="10%" align="right"><strong>{{ isset($abo->abo->current_product) ? $abo->abo->current_product->price_cents : '' }} CHF</strong></td>
-                </tr>
-                <tr>
-                    <td width="90%" align="right">Votre remise &nbsp;&nbsp;</td>
-                    <td width="10%" align="right"><strong>{{ $abo->price_cents_remise }} CHF</strong></td>
-                </tr>
-                <tr>
-                    <td width="90%" align="right"></td>
-                    <td width="10%" align="right" height="1" style="border-bottom: 1px solid #000;">&nbsp;</td>
+                    <td class="pad-b" width="90%" align="right">Votre remise &nbsp;&nbsp;</td>
+                    <td class="pad-b" width="10%" align="right"><strong>{{ $abo->price_cents_remise }} CHF</strong></td>
                 </tr>
             @endif
-            <tr><td colspan="2" height="1">&nbsp;</td></tr>
+
+            @if($abo->abo->shipping)
+                <tr>
+                    <td class="pad-b" width="90%" align="right">Frais de port &nbsp;&nbsp;</td>
+                    <td class="pad-b" width="10%" align="right"><strong>{{ $abo->shipping_cents }} CHF</strong></td>
+                </tr>
+            @endif
+
             <tr>
-                <td width="70%" align="right"><strong>Total</strong> ({{ \Registry::get('shop.infos.taux_reduit') }}% TVA incluse)</td>
-                <td width="30%" align="right"><strong>{{ $abo->price_cents }} CHF</strong></td>
+                <td width="70%" align="right" style="padding-top: 4px;"><strong>Total</strong> ({{ \Registry::get('shop.infos.taux_reduit') }}% TVA incluse)</td>
+                <td width="30%" align="right" style="border-top: 1px solid #000; padding-top: 4px;"><strong>{{ $abo->price_cents }} CHF</strong></td>
             </tr>
+
             <tr><td colspan="2" height="1">&nbsp;</td></tr>
             <tr>
                 <td colspan="2" width="80%" align="left">
@@ -139,8 +144,13 @@
                 <h3>Communications</h3>
                 <div class="communications"><?php echo \Registry::get('shop.abo.message'); ?></div>
                 <div class="communications">
+
                     @if($abo->payed_at)
                         <p class="message special">Acquitté le {{ $abo->payed_at->format('d/m/Y') }}</p>
+                    @endif
+
+                    @if(!empty(\Registry::get('abo.message')))
+                        {!! \Registry::get('abo.message') !!}
                     @endif
 
                     @if(!empty($messages))
@@ -165,7 +175,7 @@
 <!-- BV -->
 <?php list($francs,$centimes) = $abo->price_total_explode; ?>
 
-<table id="bv-table">
+<table id="bv-table" style="background: none;">
     <tr align="top" valign="top">
         <td width="60mm" align="top" valign="top">
             <table id="recu" valign="top">

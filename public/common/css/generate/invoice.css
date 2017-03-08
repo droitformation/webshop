@@ -109,11 +109,16 @@ small{
     margin-left: 12px;
     margin-top: 5px;
     padding-left: 0;
+    list-style: square;
 }
 
 .communications ul li{
     padding-left: 0;
     font-size: 11px;
+}
+
+td.pad-b{
+    padding-bottom: 4px;
 }
 
 /*
