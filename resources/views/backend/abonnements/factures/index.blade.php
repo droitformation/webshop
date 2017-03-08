@@ -87,7 +87,7 @@
                                     <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
                                     <td>
                                         @if($facture->doc_facture)
-                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ secure_asset($facture->doc_facture) }}">Facture pdf</a>
+                                            <a class="btn btn-default btn-sm" target="_blank" href="{{ secure_asset($facture->doc_facture) }}?{{ rand(1,10000) }}">Facture pdf</a>
                                         @else
                                             <form action="{{ url('admin/facture/make') }}" method="POST" class="form-horizontal">
                                                 {!! csrf_field() !!}
