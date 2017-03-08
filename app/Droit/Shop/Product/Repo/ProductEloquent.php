@@ -26,7 +26,7 @@ class ProductEloquent implements ProductInterface{
 
     public function listForAdminOrder()
     {
-        return $this->product->whereNull('url')->orderBy('created_at', 'DESC')->get();
+        return $this->product->whereNull('url')->orderBy('title', 'ASC')->get();
     }
 
     // For shop only

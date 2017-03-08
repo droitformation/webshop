@@ -45,6 +45,13 @@ class Abo_factures extends Model{
         return $this->product->reference;
     }
 
+    public function getProdEditionAttribute()
+    {
+        $this->load('product');
+
+        return $this->product->title;
+    }
+
     public function getProdIdAttribute()
     {
         $this->load('product');

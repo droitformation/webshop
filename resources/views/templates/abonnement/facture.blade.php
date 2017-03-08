@@ -91,7 +91,7 @@
             @endif
             <tr><td colspan="2" height="1">&nbsp;</td></tr>
             <tr>
-                <td width="70%">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} du numéro {{ $abo->abo->current_product->title }}</td>
+                <td width="70%">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} du numéro {{ $facture->prod_edition }}</td>
                 <td width="30%"></td>
             </tr>
             @if($abo->tiers_id && $abo->price_cents_remise)
