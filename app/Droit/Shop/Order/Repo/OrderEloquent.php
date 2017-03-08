@@ -154,34 +154,33 @@ class OrderEloquent implements OrderInterface{
 
         $order = $this->order->findOrFail($data['id']);
 
-        if( ! $order )
-        {
+        if( ! $order ) {
             return false;
         }
 
         $order->fill($data);
 
-        if(isset($data['payed_at']) && !empty($data['payed_at']))
-        {
+        if(isset($data['coupon_id']) && !empty($data['coupon_id'])) {
+            $order->coupon_id = $data['coupon_id'];
+        }
+
+        if(isset($data['payed_at']) && !empty($data['payed_at'])) {
             $valid = (\Carbon\Carbon::createFromFormat('Y-d-m', $data['payed_at']) !== false);
 
             $order->status = !$valid || null ? 'pending' : 'payed';
             $order->payed_at = $data['payed_at'];
         }
 
-        if(isset($data['created_at']))
-        {
+        if(isset($data['created_at'])) {
             $order->created_at = \Carbon\Carbon::createFromFormat('Y-m-d', $data['created_at']);
         }
 
-        if(isset($data['user_id']) && ($data['user_id'] != $order->user_id))
-        {
+        if(isset($data['user_id']) && ($data['user_id'] != $order->user_id)) {
             $order->adresse_id = null;
             $order->user_id    = $data['user_id'];
         }
 
-        if(isset($data['adresse_id']))
-        {
+        if(isset($data['adresse_id'])) {
             $order->user_id    = null;
             $order->adresse_id = $data['adresse_id'];
         }
@@ -189,10 +188,9 @@ class OrderEloquent implements OrderInterface{
         // All products for order isFree
         if(!empty($data['products']))
         {
-            $order->products()->delete();
+            $order->products()->detach();
 
-            foreach($data['products'] as $product)
-            {
+            foreach($data['products'] as $product) {
                 $id = array_pull($product, 'id');
 
                 $order->products()->attach([$id => $product]);

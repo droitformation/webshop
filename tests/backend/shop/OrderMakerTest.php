@@ -303,6 +303,7 @@ class OrderMakerTest extends BrowserKitTest {
             'coupon_id'   => null,
             'shipping_id' => 2,
             'payement_id' => 1,
+            'paquet'      => null,
             'products'    => $products
         ];
 

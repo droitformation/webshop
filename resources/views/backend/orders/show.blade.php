@@ -51,7 +51,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Prix</label>
                             <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control" disabled value="{{ $order->price_cents }}" name="price">
+                                <input type="text" class="form-control" disabled value="{{ $order->total_with_shipping }}" name="price">
                             </div>
                         </div>
 

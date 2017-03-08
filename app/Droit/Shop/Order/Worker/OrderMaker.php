@@ -82,7 +82,7 @@ class OrderMaker implements OrderMakerInterface{
             'amount'      => isset($order['admin']) ? $this->total($order['order']) : \Cart::instance('shop')->total() * 100,
             'coupon_id'   => ($coupon ? $coupon['id'] : null),
             'shipping_id' => $shipping ? $shipping->id : $this->getShipping($order),
-            'paquet'      => isset($order['paquet']) ?$order['paquet'] : null,
+            'paquet'      => isset($order['paquet']) ? $order['paquet'] : null,
             'payement_id' => 1,
             'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::instance('shop')->content())
         ];
@@ -126,12 +126,10 @@ class OrderMaker implements OrderMakerInterface{
     {
         if(isset($order['user_id']) || isset($order['adresse_id']))
         {
-            if(isset($order['user_id']))
-            {
+            if(isset($order['user_id'])) {
                 return ['user_id' => $order['user_id']];
             }
-            else
-            {
+            else {
                 return ['adresse_id' => $order['adresse_id']];
             }
         }
@@ -323,10 +321,11 @@ class OrderMaker implements OrderMakerInterface{
         $data['id']          = $order->id;
         $data['created_at']  = $order->created_at->format('Y-m-d');
         $data['coupon_id']   = isset($coupon) ? $coupon->id : null;
-        $data['shipping_id'] = isset($coupon) && ($coupon->type == 'priceshipping' || $coupon->type == 'shipping')  ? 6 : $shipping_id;
+        $data['shipping_id'] = isset($coupon) && ($coupon->type == 'priceshipping' || $coupon->type == 'shipping') ? 6 : $shipping_id;
 
         $products = $order->products->map(function ($product, $key) use ($coupon) {
-            $price = !$product->pivot->isFree ? $product->price_normal : 0;
+            
+            $price = !$product->pivot->isFree ? $product->price_cents : 0;
 
             // search if product eligible for discount is in cart
             if(isset($coupon->products) && $coupon->products->contains($product->id)) {
@@ -350,7 +349,7 @@ class OrderMaker implements OrderMakerInterface{
 
         $data['amount']   = $total;
         $data['products'] = $products->toArray();
-
+        
         return $data;
     }
 

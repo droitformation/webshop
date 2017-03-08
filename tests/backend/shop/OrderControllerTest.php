@@ -159,11 +159,4 @@ class OrderControllerTest extends BrowserKitTest {
 		$this->assertEquals(6, $result->shipping_id);
 		$this->assertEquals($total, $result->amount);
 	}
-
-    public function testStatutObjet()
-    {
-       // $statut = new \App\Droit\Helper\Status('pending', 'payed_at');
-        
-        //$this->assertEquals('wa', $statut->getColor());
-    }
 }
