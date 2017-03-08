@@ -3,6 +3,8 @@ var App = angular.module('selection', ["dndLists"] , function($interpolateProvid
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
 
+App.constant('__env', window.Laravel);
+
 App.service('myService',  function ($rootScope,$filter) {
     return {
         convertDateArret: function(date){
@@ -114,7 +116,7 @@ App.factory('Arrets', ['$http', '$q', function($http, $q,__env) {
     return {
         query: function(site_id) {
             var deferred = $q.defer();
-            $http.get(window.Laravel.ajax + '/arrets/' + site_id, { cache: true }).success(function(data) {
+            $http.get(window.Laravel.ajaxUrl + '/arrets/' + site_id, { cache: true }).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -123,7 +125,7 @@ App.factory('Arrets', ['$http', '$q', function($http, $q,__env) {
         },
         simple: function(id) {
             var deferred = $q.defer();
-            $http.get(window.Laravel.ajax + '/arret/'+ id).success(function(data) {
+            $http.get(window.Laravel.ajaxUrl + '/arret/'+ id).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -140,7 +142,7 @@ App.factory('Analyses', ['$http', '$q', function($http, $q) {
     return {
         simple: function(id) {
             var deferred = $q.defer();
-            $http.get(window.Laravel.ajax + '/analyses/'+ id).success(function(data) {
+            $http.get(window.Laravel.ajaxUrl + '/analyses/'+ id).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
@@ -158,7 +160,7 @@ App.factory('Categories', ['$http', '$q', function($http, $q) {
         query: function(site_id) {
             var site_id  = site_id ? '/' + site_id : '';
             var deferred = $q.defer();
-            $http.get( window.Laravel.ajax + '/categories' + site_id).success(function(data) {
+            $http.get( window.Laravel.ajaxUrl + '/categories' + site_id).success(function(data) {
                 deferred.resolve(data);
             }).error(function(data) {
                 deferred.reject(data);
