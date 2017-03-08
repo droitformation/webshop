@@ -97,7 +97,7 @@
             @if($abo->exemplaires > 1)
                 <tr><td colspan="2" height="1">&nbsp;</td></tr>
                 <tr>
-                    <td width="70%">à Fr. {{ $abo->abo->current_product->price_cents }}/pce</td>
+                    <td width="70%">à CHF {{ $abo->abo->current_product->price_cents }}/pce</td>
                     <td width="30%"></td>
                 </tr>
             @endif
@@ -211,7 +211,7 @@
                     <td align="top" valign="top" width="64%" height="20mm">
                         <ul class="versement">
                             <li>{{ $abo->abo->title }}</li>
-                            <li>{{ $abo->abo_no }}</li>
+                            <li>{{ $facture->abo_ref }}</li>
                         </ul>
                     </td>
                     <td align="top" valign="top" width="32%" height="20mm"></td>

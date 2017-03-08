@@ -15,7 +15,7 @@ class PdfGenerator implements PdfGeneratorInterface
     /**
      * Facture shop
      **/
-    public $messages = ['remerciements' => 'Avec nos remerciements, nous vous adressons nos salutations les meilleures'];
+    public $messages = ['remerciements' => 'Avec nos remerciements, nous vous adressons nos salutations les meilleures.'];
     public $centre   = 'U. 01852';
     public $motif    = 'Vente ouvrages';
 
