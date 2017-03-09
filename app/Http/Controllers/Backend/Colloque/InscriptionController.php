@@ -64,11 +64,6 @@ class InscriptionController extends Controller
         }
 
         // Filter to remove inscriptions without all infos
-/*        $inscriptions_filter = $inscriptions->filter(function ($inscription, $key) {
-            $display = new \App\Droit\Inscription\Entities\Display($inscription);
-            return $display->isValid();
-        });*/
-
         list($inscriptions_filter, $invalid) = $inscriptions->partition(function ($inscription) {
             $display = new \App\Droit\Inscription\Entities\Display($inscription);
             return $display->isValid();

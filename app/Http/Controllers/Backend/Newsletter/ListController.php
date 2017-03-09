@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Droit\Newsletter\Worker\ImportWorkerInterface;
 use App\Droit\Newsletter\Repo\NewsletterListInterface;
 use App\Droit\Newsletter\Repo\NewsletterEmailInterface;
+use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
+
 use App\Droit\Service\UploadInterface;
 use App\Http\Requests\EmailListRequest;
 use App\Http\Requests\UpdateListRequest;
@@ -18,13 +20,21 @@ class ListController extends Controller
 {
     protected $list;
     protected $import;
+    protected $campagne;
     protected $emails;
     protected $upload;
 
-    public function __construct( NewsletterListInterface $list, NewsletterEmailInterface $emails, ImportWorkerInterface $import, UploadInterface $upload )
+    public function __construct( 
+        NewsletterListInterface $list, 
+        NewsletterEmailInterface $emails,
+        NewsletterCampagneInterface $campagne,
+        ImportWorkerInterface $import, 
+        UploadInterface $upload 
+    )
     {
         $this->list     = $list;
         $this->emails   = $emails;
+        $this->campagne = $campagne;
         $this->import   = $import;
         $this->upload   = $upload;
 
@@ -155,6 +165,14 @@ class ListController extends Controller
         alert()->success('Campagne envoyé à la liste!');
 
         return redirect('build/newsletter');
+    }
+
+    public function confirmation($id)
+    {
+        $campagne = $this->campagne->find($id);
+        $listes   = $this->list->getAll();
+
+        return view('backend.newsletter.lists.confirmation')->with(['campagne' => $campagne, 'listes' => $listes]);
     }
 
     public function export(Request $request)

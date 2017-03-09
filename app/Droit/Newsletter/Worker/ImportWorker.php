@@ -127,7 +127,7 @@ class ImportWorker implements ImportWorkerInterface
     {
         $campagne = $this->campagne->find($campagne_id);
         $html     = $this->worker->html($campagne_id);
-
+        
         if(!$list->emails->isEmpty())
         {
             $recipients = $list->emails->map(function ($email) {

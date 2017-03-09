@@ -52,7 +52,7 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$result = $content['orders'];
 
-		//$this->assertEquals(3, $result->count());
+		$this->assertEquals(3, $result->count());
 
 		// filter to get non sent orders
         $response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'send' => 'pending']);
@@ -62,7 +62,7 @@ class OrderControllerTest extends BrowserKitTest {
 
         $result = $content['orders'];
 
-       // $this->assertEquals(5, $result->count());
+        $this->assertEquals(5, $result->count());
 	}
 
 	/**
@@ -91,7 +91,7 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$result = $content['orders'];
 
-		//$this->assertEquals(5, $result->count());
+		$this->assertEquals(5, $result->count());
 
 		$response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'status' => 'pending']);
 
@@ -100,9 +100,8 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$result = $content['orders'];
 
-		//$this->assertEquals(3, $result->count());
+		$this->assertEquals(3, $result->count());
 	}
-
 
 	public function testUpdateOrderWithCoupon()
 	{

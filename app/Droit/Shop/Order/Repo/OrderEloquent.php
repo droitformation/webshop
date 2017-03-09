@@ -140,8 +140,7 @@ class OrderEloquent implements OrderInterface{
         // All products for order isFree
         if(!empty($data['products']))
         {
-            foreach($data['products'] as $product)
-            {
+            foreach($data['products'] as $product) {
                 $id = array_pull($product, 'id');
 
                 $order->products()->attach([$id => $product]);

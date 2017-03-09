@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="sendToList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="sendToList_{{ $campagne->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <form action="{{ url('build/send/list') }}" method="POST">{!! csrf_field() !!}
             <div class="modal-content">

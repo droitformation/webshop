@@ -208,14 +208,14 @@ class OrderController extends Controller {
     public function update($id, Request $request)
     {
         $order  = $this->order->find($request->input('id'));
-        
-        if($request->input('created_at',null)){
-            $order  = $this->order->update([
-                'id'         => $request->input('id'),
-                'created_at' => $request->input('created_at'),
-                'paquet'     => $request->input('paquet',null)
-            ]);
-        }
+
+        $order  = $this->order->update([
+            'id'         => $request->input('id'),
+            'created_at' => $request->input('created_at',$order->created_at),
+            'paquet'     => $request->input('paquet',null),
+            'user_id'    => $request->input('user_id',null),
+            'adresse_id' => $request->input('adresse_id',null)
+        ]);
 
         $coupon = $request->input('coupon_id',null) ? $this->coupon->find($request->input('coupon_id')) : null;
     

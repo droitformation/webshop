@@ -67,6 +67,7 @@ Route::group(['middleware' => $middleware], function () {
         Route::resource('emails', 'Backend\Newsletter\EmailController');
 
         Route::post('send/list', 'Backend\Newsletter\ListController@send');
+        Route::get('send/confirmation/{id}', 'Backend\Newsletter\ListController@confirmation');
         Route::post('export', 'Backend\Newsletter\ListController@export');
         Route::resource('liste', 'Backend\Newsletter\ListController');
 

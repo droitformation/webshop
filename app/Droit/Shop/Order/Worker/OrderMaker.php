@@ -323,8 +323,22 @@ class OrderMaker implements OrderMakerInterface{
         $data['coupon_id']   = isset($coupon) ? $coupon->id : null;
         $data['shipping_id'] = isset($coupon) && ($coupon->type == 'priceshipping' || $coupon->type == 'shipping') ? 6 : $shipping_id;
 
-        $products = $order->products->map(function ($product, $key) use ($coupon) {
-            
+        $products_updated = $this->updateProducts($order, $coupon);
+
+        $total = $products_updated->map(function ($item, $key) {
+            return $item['price'];
+        })->sum();
+
+        $data['amount']   = number_format($total, 0, '.', '');
+        $data['products'] = $products_updated->toArray();
+        
+        return $data;
+    }
+
+    public function updateProducts($order, $coupon = null)
+    {
+        return $order->products->map(function ($product, $key) use ($coupon) {
+
             $price = !$product->pivot->isFree ? $product->price_cents : 0;
 
             // search if product eligible for discount is in cart
@@ -344,13 +358,6 @@ class OrderMaker implements OrderMakerInterface{
 
             return ['id' => $product->id, 'price' => $price * 100, 'isFree' => $product->pivot->isFree, 'rabais' => $product->pivot->rabais];
         });
-
-        $total = $products->sum('price');
-
-        $data['amount']   = $total;
-        $data['products'] = $products->toArray();
-        
-        return $data;
     }
 
     /**
@@ -360,15 +367,12 @@ class OrderMaker implements OrderMakerInterface{
      * */
     public function calculPriceWithCoupon($product,$coupon,$operand)
     {
-        if($operand == 'percent')
-        {
+        if($operand == 'percent') {
             return $product->price_normal - ($product->price_normal * ($coupon->value)/100);
         }
 
-        if($operand == 'minus')
-        {
+        if($operand == 'minus') {
             return $product->price_normal - $coupon->value;
         }
     }
-
 }

@@ -83,17 +83,18 @@ class SendInscriptionTest extends BrowserKitTest {
 
     public function testSendFails()
     {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1);
+        try {
+            $make     = new \tests\factories\ObjectFactory();
+            $colloque = $make->makeInscriptions(1);
 
-        $inscription = $colloque->inscriptions->first();
+            $inscription = $colloque->inscriptions->first();
 
-        $this->visit('admin/user/'.$inscription->user_id);
+            $this->visit('admin/user/'.$inscription->user_id);
 
-        $response = $this->call('POST', 'admin/inscription/send', ['id' => 0, 'model' => 'inscription', 'email' => 'cindy.leschaud@gmail.com']);
+            $response = $this->call('POST', 'admin/inscription/send', ['id' => 0, 'model' => 'inscription', 'email' => 'cindy.leschaud@gmail.com']);
 
-        $this->assertRedirectedTo('admin/user/'.$inscription->user_id);
-
-        //$this->expectExceptionMessage('Aucune inscription ou groupe trouvé!');
+        } catch (Exception $e) {
+            $this->assertType('\App\Exceptions\InscriptionExistException', $e);
+        }
     }
 }

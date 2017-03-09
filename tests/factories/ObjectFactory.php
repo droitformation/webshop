@@ -294,8 +294,11 @@ class ObjectFactory
             $products = $product->orderByRaw("RAND()")->take(2)->get();
             $amount   = $products->sum('price');
 
+            $user   = $this->makeUser();
+            $person = isset($user_id) ? $user_id : $user->id;
+
             $order = factory(\App\Droit\Shop\Order\Entities\Order::class)->create([
-                'user_id'     => isset($user_id) ? $user_id : 1,
+                'user_id'     => $person,
                 'coupon_id'   => null,
                 'payement_id' => 1,
                 'order_no'    => '2016-0000000'.$x.'',

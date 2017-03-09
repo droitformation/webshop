@@ -71,6 +71,8 @@
                          $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
                      }
 
+                     $colloque->load('options','groupes');
+
                      // Get options and grouped options
                      $this->options = $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray();
                      $this->groupes = $colloque->groupes->pluck('text', 'id')->toArray();
@@ -78,7 +80,7 @@
                      // Prepare the inscriptions with infos
                      $converted = $this->prepareInscription($inscriptions);
 
-                     if ($this->sort && !empty($this->groupes))
+                     if ($this->sort && !empty($this->groupes) && !empty($this->options))
                      {
                          $names['option_title'] = 'Choix';
 

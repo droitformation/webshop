@@ -115,9 +115,16 @@ class CampagneWorker implements CampagneInterface{
      * */
     public function html($id)
     {
+        $context = [
+            "ssl" => [
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+            ]
+        ];
+        
         libxml_use_internal_errors(true);
+        $htmldoc = new InlineStyle( file_get_contents( url('campagne/'.$id), false, stream_context_create($context)));
 
-        $htmldoc = new InlineStyle(file_get_contents( url('campagne/'.$id)));
         $htmldoc->applyStylesheet($htmldoc->extractStylesheets());
 
         $html = $htmldoc->getHTML();
