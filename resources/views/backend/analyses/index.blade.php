@@ -33,7 +33,7 @@
                                             @endforeach
                                         @endif
                                     </td>
-                                    <td>{{ $analyse->pub_date->formatLocalized('%d %B %Y') }}</td>
+                                    <td>{{ utf8_encode($analyse->pub_date->formatLocalized('%d %B %Y')) }}</td>
                                     <td>{{ $analyse->abstract }}</td>
                                     <td>
                                         <form action="{{ url('admin/analyse/'.$analyse->id) }}" method="POST" class="form-horizontal">
