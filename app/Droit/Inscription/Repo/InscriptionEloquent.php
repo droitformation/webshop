@@ -316,12 +316,11 @@ class InscriptionEloquent implements InscriptionInterface{
 
         $inscription->save();
 
-
         // occurrences
         // Remove all and re-attach if any
-        $inscription->occurrences()->detach();
         if(isset($data['occurrences']))
         {
+            $inscription->occurrences()->detach();
             foreach($data['occurrences'] as $occurrence)
             {
                 $inscription->occurrences()->attach($occurrence, ['inscription_id' => $inscription->id]);
@@ -330,10 +329,10 @@ class InscriptionEloquent implements InscriptionInterface{
 
         // Options
         // Remove all and re-attach if any
-        $inscription->options()->detach();
 
         if(isset($data['options']))
         {
+            $inscription->options()->detach();
             foreach($data['options'] as $option)
             {
                 if(is_array($option))
