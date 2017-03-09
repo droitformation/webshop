@@ -189,10 +189,9 @@ class OrderAdminTest extends BrowserKitTest {
     public function testUpdateOrder()
     {
         $order = factory(App\Droit\Shop\Order\Entities\Order::class)->make(['id' => 1]);
-        $this->order->shouldReceive('find')->once()->andReturn($order);
         $this->generator->shouldReceive('factureOrder')->once();
         $this->maker->shouldReceive('updateOrder')->once()->andReturn(['id' => 1]);
-        $this->order->shouldReceive('update')->once()->andReturn($order);
+        $this->order->shouldReceive('update')->twice()->andReturn($order);
 
         $response = $this->call('PUT', '/admin/order/1', ['status' => 'payed', 'tva' => [] , 'message' => []]);
 

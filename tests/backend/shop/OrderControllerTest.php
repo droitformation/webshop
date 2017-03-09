@@ -106,24 +106,10 @@ class OrderControllerTest extends BrowserKitTest {
 	public function testUpdateOrderWithCoupon()
 	{
 		$make  = new \tests\factories\ObjectFactory();
-		$user = $make->user();
 
-		$ordermaker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
-
-		// Prepare and create some orders
-		$make = new \tests\factories\ObjectFactory();
-
-		$products     = $make->product(2);
-		$inital_total = $products->sum('price');
-
-		$order = factory(App\Droit\Shop\Order\Entities\Order::class)->create([
-			'user_id'     => $user->id,
-			'order_no'    => '2016-00020003',
-			'amount'      => $inital_total,
-			'coupon_id'   => null,
-			'shipping_id' => 1,
-			'payement_id' => 1,
-		]);
+		// Create on order
+		$orders = $make->order(1);
+		$order  = $orders->first();
 
 		$coupon = factory(App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
 			'value' => 10, // -10
@@ -132,18 +118,18 @@ class OrderControllerTest extends BrowserKitTest {
 			'expire_at' => \Carbon\Carbon::now()->addDay()->toDateString()
 		]);
 
-		$order->products()->saveMany($products);
-		$coupon->products()->saveMany($products);
+		$coupon->products()->saveMany($order->products);
 
-		$total = $products->map(function ($product, $key) use ($coupon) {
+		$total = $order->products->map(function ($product, $key) use ($coupon) {
 			return ($product->price_normal - $coupon->value) * 100;
 		})->sum();
 
 		$this->visit(url('admin/order/'.$order->id))->see($order->order_no);
 
 		$data = [
-			'id' => $order->id,
-			'shipping_id' => 1,
+			'id'          => $order->id,
+            'user_id'     => $order->user_id,
+            'shipping_id' => 1,
 			'coupon_id'   => $coupon->id
 		];
 
@@ -154,6 +140,7 @@ class OrderControllerTest extends BrowserKitTest {
 		$content = $this->response->getOriginalContent();
 		$content = $content->getData();
 		$result  = $content['order'];
+
 
 		$this->assertEquals(6, $result->shipping_id);
 		$this->assertEquals($total, $result->amount);

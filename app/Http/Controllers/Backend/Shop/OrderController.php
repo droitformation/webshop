@@ -207,16 +207,15 @@ class OrderController extends Controller {
 
     public function update($id, Request $request)
     {
-        $order  = $this->order->find($request->input('id'));
-
-        $order  = $this->order->update([
+        $updates = [
             'id'         => $request->input('id'),
-            'created_at' => $request->input('created_at',$order->created_at),
+            'created_at' => $request->input('created_at',null),
             'paquet'     => $request->input('paquet',null),
             'user_id'    => $request->input('user_id',null),
             'adresse_id' => $request->input('adresse_id',null)
-        ]);
+        ];
 
+        $order  = $this->order->update(array_filter($updates));
         $coupon = $request->input('coupon_id',null) ? $this->coupon->find($request->input('coupon_id')) : null;
     
         // Prepare data and update
