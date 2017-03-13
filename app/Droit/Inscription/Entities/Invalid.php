@@ -2,99 +2,73 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Display
+class Invalid
 {
     public $inscription;
-    public $valid = true;
-    public $errors;
-    public $type;
-    public $inscrit = null;
-    public $detenteur = '';
-    public $adresse   = '';
+    public $user    = null;
+    public $adresse = null;
+    public $invalid = [];
 
     public function __construct(Model $inscription)
     {
         $this->inscription = $inscription;
     }
 
-    public function isValid()
+    public function trashedUser()
     {
-        $this->getType()->getInscrit();
-        
-        if(!$this->valid){
-            return false;
-        }
-
-        return true;
-    }
-
-    public function getModel()
-    {
-        if($this->type == 'group')
+        if($this->inscription->group_id > 0)
         {
-            return $this->inscription->groupe;
-        }
+            if(isset($this->inscription->groupe))
+            {
+                if(!isset($this->inscription->groupe->user))
+                {
+                    $user = $this->inscription->groupe->user()->withTrashed()->get();
 
-        return $this->inscription;
-    }
-    
-    public function getType()
-    {
-        $this->type = (isset($this->inscription->group_id) ? 'group' : 'inscription');
+                    if(!$user->isEmpty()) {
+                        $this->user = $user->first();
+                        $this->invalid[] = 'Compte utilisateur ID '.$user->first()->id.' du groupe ID  supprimé';
+                    }
+                    else{
+                        $this->invalid[] = 'Aucun utilisateur pour le groupe ID '.$groupe->id;
+                    }
+                }
+                else{
+                    $this->user = $this->inscription->groupe->user;
+                }
+            }
+            else{
+                $this->invalid[] = 'Aucun groupe';
+            }
+        }
+        else
+        {
+            $user = $this->inscription->user()->withTrashed()->get();
+            
+            if(!$user->isEmpty()) {
+                $this->user = $user->first();
+                $this->invalid[] = 'Compte ID '.$user->first()->id.' supprimé';
+            }
+            else{
+                $this->invalid[] = 'Aucun utilisateur';
+            }
+        }
         
         return $this;
     }
 
-    public function getInscrit()
+    public function getAdresse()
     {
-        if($this->type == 'group' && isset($this->inscription->groupe))
-        {
-            $this->inscription->groupe->load('user','user.adresses');
+        if($this->user) {
+            $adresses = $this->user->adresses()->withTrashed()->where('type','=',1)->get();
 
-            $this->inscrit   = $this->inscription->groupe->user;
-            $this->detenteur = $this->getDetenteur($this->inscription->groupe->user);
-
-            return $this;
+            if(!$adresses->isEmpty()){
+                $this->adresse = $adresses->first()->invoice_name;
+            }
+            else{
+                $this->invalid[] = 'Aucune adresse';
+            }
         }
 
-        if($this->type == 'inscription' && isset($this->inscription->user))
-        {
-            $this->inscription->user->load('adresses');
-            $this->inscrit = $this->inscription->user;
-
-            $this->detenteur = $this->getDetenteur($this->inscription->user);
-
-            return $this;
-        }
-
-        $this->valid    = false;
-        $this->errors[] = 'Pas de model inscrit valide';
-    }
-
-    public function getDetenteur($inscrit)
-    {
-        $this->adresse = $inscrit->adresses->where('type',1)->map(function($adresse, $key) use ($inscrit) {
-            return $adresse;
-        })->first();
-
-        if(!$this->adresse){
-            $this->valid = false;
-            $this->errors[] = 'Pas de\'adresse pour l\'inscrit';
-
-            return [];
-        }
-
-        return ['id' => $inscrit->id, 'civilite' => $this->adresse->civilite_title, 'name' => $this->adresse->name, 'email' => $this->adresse->email ];
-    }
-
-    public function getParticiants()
-    {
-        $group = $this->getModel();
-
-        return $group->inscriptions->filter(function ($inscription, $key) {
-            return $inscription->group_id;
-        })->map(function ($item, $key) {
-            return $item->participant;
-        });
+        return $this;
     }
 }

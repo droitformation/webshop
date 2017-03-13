@@ -303,8 +303,6 @@ class Inscription extends Model
 
     public function group_rappels()
     {
-        return $this->hasMany(
-            'App\Droit\Inscription\Entities\Rappel','group_id', 'group_id'
-        );
+        return $this->hasMany('App\Droit\Inscription\Entities\Rappel','group_id', 'group_id');
     }
 }

@@ -349,7 +349,7 @@ Route::get('cartworker', function()
 
     //return $generator->factureOrder($order,$rappel);
 
-    return $generator->makeAbo('facture', $facture);
+   // return $generator->makeAbo('facture', $facture);
 
 
 
@@ -457,6 +457,34 @@ Route::get('cartworker', function()
     $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $groupes       = new \App\Droit\Inscription\Entities\Groupe();
     $inscription   = $inscriptions->find(9547);
+
+    $inscriptions = $inscriptions->getByColloque(101,false,false);
+
+    $range = ['a','b','c','d'];
+
+    $inscriptions = $inscriptions->map(function ($inscription) {
+
+        if(!is_numeric($inscription->name_inscription)) {
+            $name = explode(' ', $inscription->name_inscription);
+            $name = end($name);
+        }
+        else{
+            $name = $inscription->name_inscription;
+        }
+
+        return ['name' => $inscription->name_inscription, 'last_name' => str_slug($name)];
+    });
+
+    $inscriptions = $inscriptions->filter(function ($inscription, $key) use ($range) {
+        $first = $inscription['last_name'][0];
+        return in_array($first, $range);
+    });
+
+    echo '<pre>';
+    print_r($inscriptions);
+    echo '</pre>';exit();
+
+
 /*    $groupe        = $groupes->find(1);
 
 

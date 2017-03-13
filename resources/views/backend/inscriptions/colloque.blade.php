@@ -71,7 +71,19 @@
                         <p>Il manque probablement l'adresse ou l'utilisateur, ou l'adresse n'est pas de type contact</p>
                         <ul class="list-group">
                             @foreach($invalid as $register)
-                                <li class="list-group-item"><strong>No:</strong> {{ $register->inscription_no }}</li>
+                                <?php
+                                    $error = new App\Droit\Inscription\Entities\Invalid($register);
+                                    $error->trashedUser()->getAdresse();
+                                ?>
+                                <li class="list-group-item">
+                                    <p><strong>No:</strong> {{ $register->inscription_no }}</p>
+                                    {{ !empty($error->invalid) ? implode(', ', $error->invalid) : '' }}
+                                    @if($error->adresse)
+                                        @foreach($error->adresse as $line)
+                                            <p>{{ $line }}</p>
+                                        @endforeach
+                                    @endif
+                                </li>
                             @endforeach
                         </ul>
                     </div>

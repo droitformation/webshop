@@ -2,9 +2,14 @@
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class DisplayTest extends BrowserKitTest {
+class InvalidTest extends BrowserKitTest {
 
     use DatabaseTransactions;
+
+    protected $colloque;
+    protected $inscription_normal;
+    protected $inscription_group;
+    protected $inscriptions;
 
     public function setUp()
     {
@@ -15,6 +20,24 @@ class DisplayTest extends BrowserKitTest {
         $user = factory(App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
+
+        // Create colloque
+        $make = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1, 1);
+
+        $inscriptions = $colloque->inscriptions;
+
+        $this->inscriptions = $inscriptions;
+        $this->colloque     = $colloque;
+
+        $this->inscription_normal = $inscriptions->filter(function ($inscription, $key) {
+            return $inscription->user_id;
+        })->first();
+
+        $this->inscription_group = $inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        })->first();
+
     }
 
     public function tearDown()
@@ -28,146 +51,73 @@ class DisplayTest extends BrowserKitTest {
      *
      * @return void
      */
-    public function testTypeOfInscription()
+    public function testDeletedUser()
     {
-        // Create colloque
-        $make = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1, 1);
+        $normal = $this->inscription_normal;
 
-        $inscriptions = $colloque->inscriptions;
+        $user = $normal->user;
+        // Test user deleted
+        $normal->user()->delete();
 
-        $normal = $inscriptions->filter(function ($inscription, $key) {
-            return $inscription->user_id;
-        })->first();
+        $display = new \App\Droit\Inscription\Entities\Invalid($normal);
+        $display->trashedUser()->getAdresse();
 
-        $group = $inscriptions->filter(function ($inscription, $key) {
-            return $inscription->group_id;
-        })->first();
-
-        $display = new \App\Droit\Inscription\Entities\Display($normal);
-        $display->getType();
-
-        $this->assertEquals('inscription', $display->type);
-
-        $display2 = new \App\Droit\Inscription\Entities\Display($group);
-        $display2->getType();
-
-        $this->assertEquals('group', $display2->type);
+        $this->assertEquals(['Compte ID '.$user->id.' supprimé'],$display->invalid);
     }
 
-    public function testInscritNormal()
+    /**
+     *
+     * @return void
+     */
+    public function testDeletedGroupUser()
     {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1);
+        $group = $this->inscription_group;
+        // Test user deleted
+        $parent = $group->groupe;
+        $user   = $parent->user;
+        $user->delete();
 
-        $inscription = $colloque->inscriptions->first();
+        $group->load('groupe.user');
 
-        $adresse = $inscription->user->adresses->first();
+        $display = new \App\Droit\Inscription\Entities\Invalid($group);
+        $display->trashedUser()->getAdresse();
 
-        $display = new \App\Droit\Inscription\Entities\Display($inscription);
-        $display->isValid();
-
-        $this->assertEquals($adresse->name, $display->inscrit->name);
+        $this->assertEquals(['Compte utilisateur ID '.$user->id.' du groupe ID  supprimé'],$display->invalid);
     }
 
-    public function testInscritGroup()
+    /**
+     *
+     * @return void
+     */
+    public function testUserNotExist()
     {
-        // Create colloque
-        $make = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1, 1);
+        $normal = $this->inscription_normal;
+        // Test user deleted
+        $normal->user_id = 23456;
+        $normal->load('user');
 
-        $inscriptions = $colloque->inscriptions;
+        $display = new \App\Droit\Inscription\Entities\Invalid($normal);
+        $display->trashedUser()->getAdresse();
 
-        $group = $inscriptions->filter(function ($inscription, $key) {
-            return $inscription->group_id;
-        })->first();
-
-        $adresse = $group->groupe->user->adresses->first();
-
-        $display = new \App\Droit\Inscription\Entities\Display($group);
-        $display->isValid();
-
-        $this->assertEquals($adresse->name, $display->inscrit->name);
+        $this->assertEquals(['Aucun utilisateur'],$display->invalid);
     }
 
-    public function testIsCorrectModel()
+    /**
+     *
+     * @return void
+     */
+    public function testGroupNotExist()
     {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1);
+        $group = $this->inscription_group;
 
-        $inscription = $colloque->inscriptions->first();
+        // Test user deleted
+        $group->group_id = 1234;
+        $group->load('groupe');
 
-        $display = new \App\Droit\Inscription\Entities\Display($inscription);
-        $display->isValid();
+        $display = new \App\Droit\Inscription\Entities\Invalid($group);
+        $display->trashedUser()->getAdresse();
 
-        $this->assertEquals($inscription, $display->getModel());
+        $this->assertEquals(['Aucun groupe'],$display->invalid);
     }
 
-    public function testIsCorrectModelGroupe()
-    {
-        // Create colloque
-        $make = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1, 1);
-
-        $group = $colloque->inscriptions->filter(function ($inscription, $key) {
-            return $inscription->group_id;
-        })->first();
-        
-        $display = new \App\Droit\Inscription\Entities\Display($group);
-        $display->isValid();
-
-        $this->assertEquals('group', $display->type);
-        $this->assertEquals($group->groupe, $display->getModel());
-    }
-
-    public function testNotValid()
-    {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->colloque();
-        $user     = factory(App\Droit\User\Entities\User::class)->create();
-        
-        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create(['user_id' => $user->id, 'group_id' => null, 'colloque_id' => $colloque->id]);
-
-        $display = new \App\Droit\Inscription\Entities\Display($inscription);
-
-        $this->assertFalse($display->isValid());
-        $this->assertEquals(['Pas de\'adresse pour l\'inscrit'], $display->errors);
-    }
-
-    public function testGetParticipants()
-    {
-        // Create colloque
-        $make = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1, 1);
-
-        $inscription = $colloque->inscriptions->filter(function ($inscription, $key) {
-            return $inscription->group_id;
-        })->first();
-
-        $particiants = $inscription->groupe->inscriptions->map(function ($item, $key) {
-            return $item->participant;
-        });
-
-        $display = new \App\Droit\Inscription\Entities\Display($inscription);
-        $display->isValid();
-
-        $this->assertEquals('group', $display->type);
-        $this->assertEquals($particiants, $display->getParticiants());
-
-    }
-
-    public function testNotadresse()
-    {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->makeInscriptions(1);
-
-        $inscription = $colloque->inscriptions->first();
-
-        $inscription->user->adresses()->delete();
-
-        $display = new \App\Droit\Inscription\Entities\Display($inscription);
-        $display->isValid();
-
-        $this->assertFalse( $display->isValid() );
-    }
 }
