@@ -6,6 +6,8 @@
 
     @foreach($bloc->groupe->arrets as $arret)
         @if(isset($arret))
+
+            <?php setlocale(LC_TIME, 'fr_CH.UTF-8'); ?>
             <!-- Bloc content-->
             <table border="0" width="600" align="center" cellpadding="0" cellspacing="0" class="resetTable {{ $arret->dumois ? 'alert-dumois' : '' }}">
                 <tr bgcolor="ffffff"><td height="35"></td></tr><!-- space -->

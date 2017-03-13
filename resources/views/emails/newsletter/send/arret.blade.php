@@ -1,6 +1,8 @@
 <!-- Bloc -->
 <?php $width = isset($isEdit) ? 560 : 600; ?>
 @if(isset($bloc->arret))
+
+    <?php setlocale(LC_TIME, 'fr_CH.UTF-8'); ?>
     <table border="0" width="{{ $width }}" align="center" cellpadding="0" cellspacing="0" class="tableReset {{ $bloc->arret->dumois ? 'alert-dumois' : '' }}">
         <tr bgcolor="ffffff"><td height="35"></td></tr><!-- space -->
         <tr align="center" class="resetMarge">
