@@ -40,9 +40,11 @@ class Newsletter extends Model {
     public function campagnes_visibles()
     {
         return $this->hasMany('\App\Droit\Newsletter\Entities\Newsletter_campagnes')
-            ->whereNull('hidden')
-            ->where('status','envoyé')
-            ->orderBy('updated_at','DESC');
+            ->where('status','=','envoyé')
+            ->where(function ($query) {
+                $query->whereDate('send_at', '<', \Carbon\Carbon::now())->orWhereNull('send_at');
+            })
+            ->orderBy('created_at','DESC');
     }
 
     public function draft()
@@ -65,7 +67,7 @@ class Newsletter extends Model {
             ->where(function ($query) {
                 $query->whereDate('send_at', '<', \Carbon\Carbon::now())->orWhereNull('send_at');
             })
-            ->orderBy('updated_at','DESC');
+            ->orderBy('created_at','DESC');
     }
     
     public function site()
