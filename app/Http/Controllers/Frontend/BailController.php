@@ -116,6 +116,7 @@ class BailController extends Controller
             else
             {
                 $campagnes = $this->newsworker->siteCampagnes($this->site_id);
+                $data['campagne'] = $campagnes->first();
             }
         }
 

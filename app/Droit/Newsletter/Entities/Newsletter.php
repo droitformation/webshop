@@ -43,7 +43,7 @@ class Newsletter extends Model {
             ->where('status','=','envoyé')
             ->where('hidden','=','0')
             ->where(function ($query) {
-                $query->whereDate('send_at', '<', \Carbon\Carbon::now())->orWhereNull('send_at');
+                $query->whereDate('send_at', '<', \Carbon\Carbon::now());
             })
             ->orderBy('created_at','DESC');
     }
