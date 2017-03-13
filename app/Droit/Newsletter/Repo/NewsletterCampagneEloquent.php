@@ -24,7 +24,7 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 
     public function getLastCampagne($newsletter_id = null)
 	{
-        return $this->campagne->where('status','=','envoyé')->whereNull('hidden')->news($newsletter_id)->orderBy('id','DESC')->get();
+        return $this->campagne->where('status','=','envoyé')->whereNull('hidden')->news($newsletter_id)->orderBy('created_at','DESC')->get();
     }
 
 	public function getArchives($newsletter_id,$year)
