@@ -115,8 +115,7 @@ class BailController extends Controller
             }
             else
             {
-                $newsletters = $this->newsworker->siteNewsletters($this->site_id);
-                $campagnes = $newsletters->pluck('campagnes_visibles')->flatten()->sortByDesc('send_at');
+				$campagnes = $this->newsworker->siteCampagnes($this->site_id);
 
                 $data['campagne'] = $campagnes->first();
             }
