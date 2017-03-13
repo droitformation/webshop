@@ -117,6 +117,8 @@ class ExportController extends Controller
         $inscriptions = $this->inscription->getByColloque($request->input('colloque_id'),false,false);
         $colloque     = $this->colloque->find($request->input('colloque_id'));
 
+        $colloque->load('adresse');
+        
         $exporter = new \App\Droit\Generate\Export\ExportBadge();
         $exporter->setConfig($badge);
 

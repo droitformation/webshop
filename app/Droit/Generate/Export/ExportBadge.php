@@ -38,7 +38,17 @@ class ExportBadge
 
         $config = $this->config + ['data' => $data, 'colloque' => $colloque];
 
-        return \PDF::loadView('backend.export.badge', $config)->setPaper('a4')->download('Badges_colloque_' . $colloque->id . '.pdf');
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ]
+        ]);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        return $pdf->loadView('backend.export.badge', $config)->setPaper('a4')->download('Badges_colloque_' . $colloque->id . '.pdf');
     }
 
     public function chunkData($data,$cols,$nbr)

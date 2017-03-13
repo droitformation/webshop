@@ -48,7 +48,7 @@
                                        <tr class="normalize">
                                            <td width="35%" class="normalize height">
                                                <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
-                                               <img style="max-height: 50px;" src="{{ secure_asset('files/main/'.$logo) }}" />
+                                               <img style="max-height: 50px;" src="{{ secure_asset('files/logos/'.$logo) }}" />
                                            </td>
                                            <td width="65%" class="normalize height">
                                                {!! !empty($name) ? '<span>'.$name.'</span>' : '' !!}
