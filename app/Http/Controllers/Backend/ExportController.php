@@ -118,9 +118,16 @@ class ExportController extends Controller
         $colloque     = $this->colloque->find($request->input('colloque_id'));
 
         $colloque->load('adresse');
-        
+
         $exporter = new \App\Droit\Generate\Export\ExportBadge();
         $exporter->setConfig($badge);
+
+        $range = array_filter($request->input('range'));
+
+        if(!empty($range) && count($range) > 1){
+            $range = range($request->input('range')[0], $request->input('range')[1]);
+            $exporter->setRange($range);
+        }
 
         ini_set('memory_limit', '-1');
 

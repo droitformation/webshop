@@ -3,6 +3,24 @@
     <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">{!! csrf_field() !!}
 
     <div class="form-group">
+        <div class="col-md-2">
+            <h4>Lettre de</h4>
+            <select class="form-control" name="range[0]">
+                <option value="">Choix</option>
+                @foreach(range('a','z') as $alpha)
+                    <option value="{{ $alpha }}">{{ $alpha }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-2">
+            <h4>Lettre à</h4>
+            <select class="form-control" name="range[1]">
+                <option value="">Choix</option>
+                @foreach(range('a','z') as $alpha)
+                    <option value="{{ $alpha }}">{{ $alpha }}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="col-md-4">
             <h4>Nombre de badges par page</h4>
             <div class="input-group">

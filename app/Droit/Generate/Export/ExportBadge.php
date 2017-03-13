@@ -5,32 +5,37 @@ namespace App\Droit\Generate\Export;
 class ExportBadge
 {
     protected $config;
+    protected $range = null;
     
     public function setConfig($config)
     {
         $this->config = $config;
     }
+
+    public function setRange($range)
+    {
+        $this->range = $range;
+    }
     
     public function export($inscriptions, $colloque = null)
     {
-       // $inscriptions = $inscriptions->pluck('name_inscription')->all();
-
         $inscriptions = $inscriptions->map(function ($inscription) {
-
-            if($inscription->group_id > 0) {
-                $name = $inscription->participant->name;
-                $name = explode(' ', $name);
-                $name = end($name);
-            }
-            elseif(isset($inscription->user)) {
-                $name = $inscription->user->adresse_contact->last_name;
+            if(!is_numeric($inscription->name_inscription)) {
+                $name = explode(' ', $inscription->name_inscription);
+                $name = count($name) > 2 ? $name[1].' '.$name[2] : end($name);
             }
             else{
-                $name = $inscription->user_id;
+                $name = $inscription->name_inscription;
             }
-
             return ['name' => $inscription->name_inscription, 'last_name' => str_slug($name)];
         });
+
+        if($this->range){
+            $inscriptions = $inscriptions->filter(function ($inscription, $key) {
+                $first = $inscription['last_name'][0];
+                return in_array($first, $this->range);
+            });
+        }
 
         $inscriptions = collect($inscriptions)->sortBy('last_name')->pluck('name')->toArray();
 
