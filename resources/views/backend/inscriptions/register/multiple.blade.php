@@ -22,7 +22,7 @@
 
             <div class="form-group">
                 <label>Email (lier à un compte)</label>
-                <input name="email[]" required class="form-control" value="" type="text">
+                <input name="email[]" class="form-control" value="" type="text">
             </div>
 
             @if(!$colloque->prices->isEmpty())
