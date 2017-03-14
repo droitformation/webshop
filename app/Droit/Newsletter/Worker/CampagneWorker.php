@@ -87,16 +87,12 @@ class CampagneWorker implements CampagneInterface{
      */
     public function siteCampagnes($site_id)
     {
-        if(config('newsletter.multi')) {
-            $newsletters = $this->newsletter->getSite($site_id);
-            $campagnes = $newsletters->map(function ($newsletter, $key) {
-                return $newsletter->campagnes_visibles;
-            })->flatten(1);
+        $newsletters = $this->newsletter->getSite($site_id);
+        $campagnes = $newsletters->map(function ($newsletter, $key) {
+            return $newsletter->campagnes_visibles;
+        })->flatten(1);
 
-            return $campagnes;
-        }
-
-        return null;
+        return $campagnes;
     }
     
     /**
