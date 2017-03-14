@@ -51,6 +51,13 @@ class Display
         {
             $this->inscription->groupe->load('user','user.adresses');
 
+            if(!$this->inscription->groupe->user){
+                $this->valid    = false;
+                $this->errors[] = 'Pas de model inscrit valide';
+
+                return $this;
+            }
+
             $this->inscrit   = $this->inscription->groupe->user;
             $this->detenteur = $this->getDetenteur($this->inscription->groupe->user);
 

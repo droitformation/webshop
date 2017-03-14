@@ -83,4 +83,19 @@ class GroupInscriptionController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Restore the user
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function restore($id)
+    {
+        $this->groupe->restore($id);
+
+        alert()->success('Groupe restauré');
+
+        return redirect()->back();
+    }
+
 }

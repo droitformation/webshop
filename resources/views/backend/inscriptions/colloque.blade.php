@@ -65,29 +65,7 @@
             @endif
 
             @if(!$invalid->isEmpty())
-                <div class="panel panel-midnightblue">
-                    <div class="panel-body">
-                        <h3>Inscriptions invalides</h3>
-                        <p>Il manque probablement l'adresse ou l'utilisateur, ou l'adresse n'est pas de type contact</p>
-                        <ul class="list-group">
-                            @foreach($invalid as $register)
-                                <?php
-                                    $error = new App\Droit\Inscription\Entities\Invalid($register);
-                                    $error->trashedUser()->getAdresse();
-                                ?>
-                                <li class="list-group-item">
-                                    <p><strong>No:</strong> {{ $register->inscription_no }}</p>
-                                    {{ !empty($error->invalid) ? implode(', ', $error->invalid) : '' }}
-                                    @if($error->adresse)
-                                        @foreach($error->adresse as $line)
-                                            <p>{{ $line }}</p>
-                                        @endforeach
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
+                @include('backend.inscriptions.partials.invalid')
             @endif
 
             <div class="panel panel-midnightblue">

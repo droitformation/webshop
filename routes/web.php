@@ -208,6 +208,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('adresse', 'Backend\User\AdresseController');
 
     Route::match(['get', 'post'], 'users', 'Backend\User\UserController@index');
+    Route::get('user/restore/{id}','Backend\User\UserController@restore');
     Route::resource('user', 'Backend\User\UserController');
 
     Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
@@ -259,6 +260,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('desinscription/{id}', 'Backend\Colloque\DesinscriptionController@index');
     Route::post('desinscription/restore/{id}', 'Backend\Colloque\DesinscriptionController@restore');
     Route::resource('desinscription', 'Backend\Colloque\DesinscriptionController');
+
+    Route::get('group/restore/{id}','Backend\Colloque\GroupInscriptionController@restore');
     Route::resource('group', 'Backend\Colloque\GroupInscriptionController');
 
     // Rappels inscription

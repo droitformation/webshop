@@ -62,7 +62,7 @@ class InscriptionController extends Controller
         else {
             $inscriptions = $this->inscription->getByColloque($id,false,true);
         }
-
+        
         // Filter to remove inscriptions without all infos
         list($inscriptions_filter, $invalid) = $inscriptions->partition(function ($inscription) {
             $display = new \App\Droit\Inscription\Entities\Display($inscription);
@@ -211,7 +211,6 @@ class InscriptionController extends Controller
 
         return redirect()->back();
     }
-
 
     /**
      * Remake documents for inscription

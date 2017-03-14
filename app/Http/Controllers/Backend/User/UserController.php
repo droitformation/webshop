@@ -119,4 +119,18 @@ class UserController extends Controller {
         return redirect('admin/search/user');
     }
 
+    /**
+     * Restore the user
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function restore($id)
+    {
+        $this->user->restore($id);
+
+        alert()->success('Utilisateur restauré');
+
+        return redirect()->back();
+    }
 }

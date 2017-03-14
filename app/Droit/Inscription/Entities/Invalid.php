@@ -26,10 +26,10 @@ class Invalid
 
                     if(!$user->isEmpty()) {
                         $this->user = $user->first();
-                        $this->invalid[] = 'Compte utilisateur ID '.$user->first()->id.' du groupe ID  supprimé';
+                        $this->invalid['group_account'] = ['message' => 'Compte utilisateur du groupe supprimé', 'id' => $user->first()->id];
                     }
                     else{
-                        $this->invalid[] = 'Aucun utilisateur pour le groupe ID '.$groupe->id;
+                        $this->invalid['group_user'] = ['message' => 'Aucun utilisateur pour le groupe', 'id' => $this->inscription->groupe->id];
                     }
                 }
                 else{
@@ -37,7 +37,16 @@ class Invalid
                 }
             }
             else{
-                $this->invalid[] = 'Aucun groupe';
+
+                $group = $this->inscription->groupe()->withTrashed()->get();
+
+                if(!$group->isEmpty()){
+                    $group = $group->first();
+                    $this->invalid['group_deleted'] = ['message' => 'Groupe supprimé', 'id' => $group->id];
+                }
+                else{
+                    $this->invalid['group_missing'] = ['message' => 'Aucun groupe', 'id' => null];
+                }
             }
         }
         else
@@ -46,10 +55,10 @@ class Invalid
             
             if(!$user->isEmpty()) {
                 $this->user = $user->first();
-                $this->invalid[] = 'Compte ID '.$user->first()->id.' supprimé';
+                $this->invalid['user'] = ['message' => 'Compte supprimé', 'id' => $user->first()->id];
             }
             else{
-                $this->invalid[] = 'Aucun utilisateur';
+                $this->invalid['user_missing'] = ['message' => 'Aucun utilisateur', 'id' => null];
             }
         }
         
@@ -65,10 +74,29 @@ class Invalid
                 $this->adresse = $adresses->first()->invoice_name;
             }
             else{
-                $this->invalid[] = 'Aucune adresse';
+                $this->invalid['adresse_missing'] = ['message' => 'Aucunw adresse', 'id' => null];
             }
         }
 
         return $this;
+    }
+
+    public function restoreUrl($type)
+    {
+        $paths = [
+            'group_account' => 'user',
+            'group_user'    => 'user',
+            'group_deleted' => 'group',
+            'user'          => 'user'
+        ];
+
+        if(isset($paths[$type])){
+            $id   = $this->invalid[$type]['id'];
+            $path = isset($paths[$type]) ? $paths[$type] : 'user';
+
+            return url('admin/'.$path.'/restore/'.$id);
+        }
+
+        return null;
     }
 }

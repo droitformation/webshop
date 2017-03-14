@@ -548,10 +548,17 @@ Route::get('categoriestest', function()
 
     $results = $model->allForSite(3, ['categories' => [], 'years' => [], 'display' => false]);
 
-    $page = $pages->find(1);
+    $analyses = new \App\Droit\Analyse\Entities\Analyse();
+
+    $all = $analyses->all();
+
+    foreach ($all as $analyse){
+        $analyse->pub_date = $analyse->pub_date->addHours(3);
+        $analyse->save();
+    }
 
     echo '<pre>';
-    print_r($page->bloc_list);
+    print_r($all->pluck('id'));
     echo '</pre>';exit();
 
     // Create colloque

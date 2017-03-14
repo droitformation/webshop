@@ -62,7 +62,9 @@ class InvalidTest extends BrowserKitTest {
         $display = new \App\Droit\Inscription\Entities\Invalid($normal);
         $display->trashedUser()->getAdresse();
 
-        $this->assertEquals(['Compte ID '.$user->id.' supprimé'],$display->invalid);
+        $this->assertEquals(['user' => ['message' => 'Compte supprimé', 'id' => $user->id]],$display->invalid);
+        $this->assertEquals(url('admin/user/restore/'.$user->id),$display->restoreUrl('user'));
+
     }
 
     /**
@@ -82,7 +84,8 @@ class InvalidTest extends BrowserKitTest {
         $display = new \App\Droit\Inscription\Entities\Invalid($group);
         $display->trashedUser()->getAdresse();
 
-        $this->assertEquals(['Compte utilisateur ID '.$user->id.' du groupe ID  supprimé'],$display->invalid);
+        $this->assertEquals(['group_account' => ['message' => 'Compte utilisateur du groupe supprimé', 'id' => $user->id]],$display->invalid);
+        $this->assertEquals(url('admin/user/restore/'.$user->id),$display->restoreUrl('group_account'));
     }
 
     /**
@@ -99,7 +102,7 @@ class InvalidTest extends BrowserKitTest {
         $display = new \App\Droit\Inscription\Entities\Invalid($normal);
         $display->trashedUser()->getAdresse();
 
-        $this->assertEquals(['Aucun utilisateur'],$display->invalid);
+        $this->assertEquals(['user_missing' => ['message' => 'Aucun utilisateur', 'id' => null]],$display->invalid);
     }
 
     /**
@@ -112,12 +115,31 @@ class InvalidTest extends BrowserKitTest {
 
         // Test user deleted
         $group->group_id = 1234;
+
+        $display = new \App\Droit\Inscription\Entities\Invalid($group);
+        $display->trashedUser()->getAdresse();
+
+        $this->assertEquals(['group_missing' => ['message' => 'Aucun groupe', 'id' => null]],$display->invalid);
+    }
+
+    /**
+     *
+     * @return void
+     */
+    public function testGroupDeleted()
+    {
+        $group = $this->inscription_group;
+
+        $group_id = $group->groupe->id;
+
+        // Test user deleted
+        $group->groupe()->delete();
         $group->load('groupe');
 
         $display = new \App\Droit\Inscription\Entities\Invalid($group);
         $display->trashedUser()->getAdresse();
 
-        $this->assertEquals(['Aucun groupe'],$display->invalid);
+        $this->assertEquals(['group_deleted' => ['message' => 'Groupe supprimé', 'id' => $group_id]],$display->invalid);
     }
 
 }

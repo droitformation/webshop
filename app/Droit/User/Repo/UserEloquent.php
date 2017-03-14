@@ -159,6 +159,13 @@ class UserEloquent implements UserInterface{
         return $user->delete($id);
     }
 
+    public function restore($id){
+
+        $restore = $this->user->withTrashed()->find($id);
+
+        return $restore->restore();
+    }
+
     public function findByUserNameOrCreate($userData)
     {
         $user = $this->user->where('email', '=', $userData->email)->first();
