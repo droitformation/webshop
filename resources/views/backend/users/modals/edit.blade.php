@@ -16,7 +16,7 @@
                         @if($inscription->group_id)
                             <div class="form-group participant">
                                 <label><strong>Nom du participant</strong></label>
-                                <input name="participant" required class="form-control" value="{{ $inscription->participant->name }}" type="text">
+                                <input name="participant" required class="form-control" value="{{ isset($inscription->participant) ? $inscription->participant->name : 'problème avec le participant' }}" type="text">
                             </div>
                         @endif
 

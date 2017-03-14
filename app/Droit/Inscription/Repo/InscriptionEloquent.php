@@ -248,8 +248,8 @@ class InscriptionEloquent implements InscriptionInterface{
         if(isset($data['participant']) && !empty($data['participant']))
         {
             $participant = new \App\Droit\Inscription\Entities\Participant();
-
-            $participant->create(['name' => $data['participant'], 'email' => $data['email'], 'inscription_id' => $inscription->id ]);
+            $email = isset($data['email']) ? $data['email'] : null;
+            $participant->create(['name' => $data['participant'], 'email' => $email, 'inscription_id' => $inscription->id ]);
         }
 
         return $inscription;
@@ -359,9 +359,10 @@ class InscriptionEloquent implements InscriptionInterface{
 
         if(isset($data['participant']) && !empty($data['participant']))
         {
+            $email = isset($data['email']) ? $data['email'] : null;
             $participant = new \App\Droit\Inscription\Entities\Participant();
             $participant->where('inscription_id','=',$inscription->id )->delete();
-            $participant->create(['name' => $data['participant'], 'email' => $data['email'], 'inscription_id' => $inscription->id ]);
+            $participant->create(['name' => $data['participant'], 'email' => $email, 'inscription_id' => $inscription->id ]);
         }
 
         return $inscription;
