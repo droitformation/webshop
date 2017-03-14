@@ -27,7 +27,7 @@ $(function() {
 
                 self.append(all);
             },
-            url: window.__env.ajaxUrl + 'categories/' + site_id
+            url:  window.Laravel.ajaxUrl + '/categories/' + site_id
         });
 
     });
