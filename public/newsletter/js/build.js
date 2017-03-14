@@ -19,7 +19,7 @@ App.config(function(redactorOptions,__env) {
     redactorOptions.fileManagerJson  = __env.adminUrl + '/fileJson';
     redactorOptions.plugins          = ['imagemanager','filemanager','source','iconic','alignment'];
     redactorOptions.lang             = 'fr';
-    redactorOptions.buttons          = ['format','bold','italic','|','lists','|','image','file','link','alignment'];
+    redactorOptions.buttons          = ['format','bold','italic','|','lists','|','image','file','link','alignment','|','unorderedlist','orderedlist'];
 
 }).config(['flowFactoryProvider','__env', function (flowFactoryProvider,__env) {
     /* Flow image upload configuration */
