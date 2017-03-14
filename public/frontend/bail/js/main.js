@@ -97,7 +97,11 @@ $(function() {
 	var height  = $('#content-wrapper').height();
 	var content = $('#mainContent').height();
 	content     = content + 60;
+	
+	var width = $('#appComponent').width();
 
-	$('#mainContent').css({ 'height' : height });
+	if(width > 860){
+		$('#mainContent').css({ 'height' : height });
+	}
 
 });
