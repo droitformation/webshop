@@ -146,6 +146,7 @@ class ArretEloquent implements ArretInterface{
 		}
 
         $arret->fill($data);
+        $arret->dumois = isset($data['dumois']) ? 1 : null;
 
         if(isset($data['file']))
         {
