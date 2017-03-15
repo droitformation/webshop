@@ -19,7 +19,7 @@
                             <select name="id" class="form-control">
                                 <option>Choisir un contenu à coller</option>
                                 @foreach($clipboards as $clipboard)
-                                    <option value="{{ $clipboard->id }}">{{ $clipboard->content->content_title }}</option>
+                                    <option value="{{ $clipboard->id }}">{{ isset($clipboard->content) ? $clipboard->content->content_title : 'contenu supprimé' }}</option>
                                 @endforeach
                             </select>
                             <span class="input-group-btn">
