@@ -26,7 +26,7 @@ $( function() {
         imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
         plugins: ['iconic'],
-        buttons  : ['format','bold','italic','link','image','file','|','unorderedlist','orderedlist']
+        buttons  : ['html','format','bold','italic','link','image','file','|','unorderedlist','orderedlist']
     });
 
 });
