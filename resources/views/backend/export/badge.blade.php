@@ -25,7 +25,7 @@
                 font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
                 color: #000;
                 line-height: 16px;
-                font-size: 14px;
+                font-size: 16px;
                 max-resolution: 0;
                 padding: 0;
                 display: block;
@@ -46,7 +46,7 @@
 
                                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                        <tr class="normalize">
-                                           <td width="35%" class="normalize height">
+                                           <td width="35%" class="normalize height" style="padding-left: 15px;">
                                                <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
                                                <img style="max-height: 50px;" src="{{ secure_asset('files/logos/'.$logo) }}" />
                                            </td>
