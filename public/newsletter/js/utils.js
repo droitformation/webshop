@@ -36,8 +36,12 @@ $(function() {
 
     $('#datePickerNewsletter').datetimepicker({
         locale: 'fr-ch',
+        sideBySide: true,
+        widgetPositioning: {
+            horizontal: 'left'
+        },
         format:  'YYYY-MM-DD HH:mm',
-        minDate : moment().format()
+        minDate : moment().add(15, 'm').format()
     });
 
     $('body').on('click','.deleteActionNewsletter',function(event){

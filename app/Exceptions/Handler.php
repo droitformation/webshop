@@ -123,13 +123,13 @@ class Handler extends ExceptionHandler {
 		}
 
 		if ($e instanceof \App\Exceptions\SubscribeUserException){
-			alert()->warning('Erreur synchronisation email vers mailjet');
-			return redirect('/');
+			alert()->warning($e->getMessage());
+			return redirect()->back();
 		}
 
-		if ($e instanceof \App\Exceptions\CampagneSendException){
-			alert()->warning('Erreur avec l\'envoi de la newsletter, mailjet à renvoyé une erreur');
-			return redirect('/');
+		if ($e instanceof \App\Exceptions\CampagneSendException) {
+			alert()->warning($e->getMessage());
+			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\DeleteUserException){
