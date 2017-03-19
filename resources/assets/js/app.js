@@ -32,3 +32,5 @@ Vue.component('manager', require('./components/Manager.vue'));
 const app = new Vue({
     el: '#appComponent'
 });
+
+
