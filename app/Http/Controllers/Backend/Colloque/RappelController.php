@@ -61,9 +61,13 @@ class RappelController extends Controller
 
         if(!$inscriptions->isEmpty())
         {
-            // Make sur we have created all the rappels in pdf
-            $job = (new MakeRappelInscription($inscriptions->pluck('id')->all()));
-            $this->dispatch($job);
+            $chunks = $inscriptions->chunk(5);
+
+            foreach($chunks as $chunk){
+                // Make sur we have created all the rappels in pdf
+                $job = (new MakeRappelInscription($chunk));
+                $this->dispatch($job);
+            }
 
             $job = (new NotifyJobFinished('Les rappels pour le colloque ont été crées.'));
             $this->dispatch($job);

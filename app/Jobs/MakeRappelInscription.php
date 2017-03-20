@@ -24,6 +24,7 @@ class MakeRappelInscription extends Job implements ShouldQueue
     {
         $this->worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
         $this->inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
         $this->inscriptions = $inscriptions;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -36,25 +37,18 @@ class MakeRappelInscription extends Job implements ShouldQueue
      */
     public function handle()
     {
-        if(empty($this->inscriptions)){ return true; }
-
-        $inscriptions = $this->inscription->getMultiple($this->inscriptions);
-
-        if(!$inscriptions->isEmpty())
+        foreach($this->inscriptions as $inscription)
         {
-            foreach($inscriptions as $inscription) {
+            $rappel = $inscription->list_rappel->sortBy('created_at')->last();
 
-                $rappel = $inscription->list_rappel->sortBy('created_at')->last();
-
-                if(!$rappel) 
+            if(!$rappel)
+            {
+                if ($inscription->group_id)
                 {
-                    if ($inscription->group_id)
-                    {
-                        $this->worker->generateMultiple($inscription->groupe);
-                    } 
-                    else {
-                        $this->worker->generateSimple($inscription);
-                    }
+                    $this->worker->generateMultiple($inscription->groupe);
+                }
+                else {
+                    $this->worker->generateSimple($inscription);
                 }
             }
         }
