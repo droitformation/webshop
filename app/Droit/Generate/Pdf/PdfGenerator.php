@@ -168,6 +168,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'allow_self_signed'=> TRUE
             ]
         ]);
+        
         $pdf = \App::make('dompdf.wrapper');
         $pdf->getDomPDF()->setHttpContext($context);
 
@@ -187,7 +188,7 @@ class PdfGenerator implements PdfGeneratorInterface
         }
 
         return $view->$state($filepath);
-        
+
     }
 
     public function getData($document)

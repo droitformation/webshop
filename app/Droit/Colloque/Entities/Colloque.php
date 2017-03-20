@@ -222,7 +222,7 @@ class Colloque extends Model
 
         if($status) $query->where(function ($query) {
             $query->whereNotNull('end_at')->where('end_at','>',date('Y-m-d'));
-        })->orWhere('start_at','>',date('Y-m-d'));
+        })->orWhere('start_at','>',date('Y-m-d'))->orWhere('active_at','>',date('Y-m-d'));
     }
 
     public function scopeArchives($query,$archives = null)
