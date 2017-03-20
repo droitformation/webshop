@@ -16,7 +16,7 @@ class RappelWorker implements RappelWorkerInterface
         $this->generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     }
 
-    public function generateSimple($inscription, $montant = null)
+    public function generateSimple($inscription)
     {
         $rappel = $this->rappel->create([
             'colloque_id'    => $inscription->colloque_id,
@@ -30,7 +30,7 @@ class RappelWorker implements RappelWorkerInterface
         return $rappel;
     }
 
-    public function generateMultiple($group, $montant = null)
+    public function generateMultiple($group)
     {
         $rappel = $this->rappel->create([
             'colloque_id'    => $group->colloque_id,

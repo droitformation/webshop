@@ -187,7 +187,7 @@ class PdfGenerator implements PdfGeneratorInterface
         }
 
         return $view->$state($filepath);
-
+        
     }
 
     public function getData($document)

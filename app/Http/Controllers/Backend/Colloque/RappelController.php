@@ -61,11 +61,11 @@ class RappelController extends Controller
 
         if(!$inscriptions->isEmpty())
         {
-            $chunks = $inscriptions->chunk(5);
+            $chunks = $inscriptions->chunk(1);
 
             foreach($chunks as $chunk){
                 // Make sur we have created all the rappels in pdf
-                $job = (new MakeRappelInscription($chunk));
+                $job = (new MakeRappelInscription($chunk))->delay(2);
                 $this->dispatch($job);
             }
 
