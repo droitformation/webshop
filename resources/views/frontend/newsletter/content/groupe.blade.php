@@ -13,7 +13,7 @@
         <?php $arret->load('categories');  ?>
         <div class="row">
             <div class="col-md-9">
-                <h2>{{ $arret->reference }} du {{ $arret->pub_date->formatLocalized('%d %B %Y') }}</h2>
+                <h2>{{ $arret->reference }} du {{ utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')) }}</h2>
                 <p>{!! $arret->abstract !!}</p>
                 {!! $arret->pub_text !!}
 

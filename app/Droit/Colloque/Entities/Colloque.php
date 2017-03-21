@@ -218,8 +218,6 @@ class Colloque extends Model
 
     public function scopeActive($query,$status)
     {
-        //if($status) $query->addSelect('*',\DB::Raw('COALESCE(end_at,start_at) as start_at'))->where('start_at','>',date('Y-m-d'));
-
         if($status) $query->where(function ($query) {
             $query->whereNotNull('end_at')->where('end_at','>',date('Y-m-d'));
         })->orWhere('start_at','>',date('Y-m-d'));
@@ -227,8 +225,6 @@ class Colloque extends Model
 
     public function scopeAdmin($query,$status)
     {
-        //if($status) $query->addSelect('*',\DB::Raw('COALESCE(end_at,start_at) as start_at'))->where('start_at','>',date('Y-m-d'));
-
         if($status) $query->where(function ($query) {
             $query->whereNotNull('end_at')->where('end_at','>',date('Y-m-d'));
         })->orWhere('start_at','>',date('Y-m-d'))->orWhere('active_at','>',date('Y-m-d'));
