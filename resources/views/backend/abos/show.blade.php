@@ -52,6 +52,7 @@
                             <th>Numéro</th>
                             <th>Nom</th>
                             <th>Entreprise</th>
+                            <th>Adresse</th>
                             <th>Exemplaires</th>
                             <th class="no-sort">Status</th>
                             <th></th>
@@ -64,8 +65,16 @@
                                     <tr>
                                         <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a></td>
                                         <td>{{ $abonnement->numero }}</td>
-                                        <td>{!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}</td>
+                                        <td>
+                                            {!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}
+                                            @if($abonnement->tiers_id && isset($abonnement->tiers))
+                                                <p><strong>Tiers payant:</strong></p>
+                                                {{ $abonnement->tiers->name }}<br/>
+                                                {!! $abonnement->tiers->adresse.'<br/>'.$abonnement->tiers->npa.' '.$abonnement->tiers->ville !!}
+                                            @endif
+                                        </td>
                                         <td>{!! $user ? $user->company : '<p><span class="label label-warning">Duplicata</span></p>' !!}</td>
+                                        <td>{!! $user ? $user->adresse.'<br/>'.$user->npa.' '.$user->ville : '' !!}</td>
                                         <td>{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>
                                         <td class="text-right">
