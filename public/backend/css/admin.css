@@ -957,6 +957,9 @@ label.error{
     z-index: 1000;
     margin: 0;
     padding: 0;
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x:hidden;
 }
 
 .ui-widget-content li {
