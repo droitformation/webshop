@@ -133,7 +133,7 @@ class ColloqueController extends Controller
      */
     public function update(ColloqueRequest $request, $id)
     {
-        $colloque = $this->colloque->find($request->input('id'));
+        $colloque = $this->colloque->update(['id' => $id] + $request->except('visible'));
 
         // if we want the colloque visible validate the required dependencies
         if($request->input('visible') == 1){
@@ -141,7 +141,7 @@ class ColloqueController extends Controller
             $validator->activate();
         }
 
-        $colloque     = $this->colloque->update($request->all());
+        $colloque     = $this->colloque->update(['id' => $id] + $request->only('visible'));
         $illustration = $request->input('illustration',null);
 
         if($illustration && !empty($illustration))

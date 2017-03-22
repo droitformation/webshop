@@ -120,10 +120,6 @@ Route::get('testing', function() {
     $colloque   = $colloques->find(107);
     $user     = $users->find(710);
 
-    echo '<pre>';
-    print_r($user->inscription_participations);
-    echo '</pre>';exit();
-
    // $price  = $colloque->prices->first();
     //$option = $colloque->options->first();
     
@@ -135,27 +131,17 @@ Route::get('testing', function() {
     //$make  = new \tests\factories\ObjectFactory();
    // $make->makeInscriptions(1, 1);
 
-    $inscrit = $users->find(710);
+    $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $inscription = $Inscriptions->find(13828);
 
-    $pending = $inscrit->inscription_pending->mapWithKeys_v2(function ($item, $key) {
-        return [$item->colloque_id => $item->rappels->pluck('id')];
-    })->filter(function ($value, $key) {
-        return !$value->isEmpty();
-    });
 
-/*    if(isset($inscrit->adresses) && !$inscrit->adresses->isEmpty())
-    {
-        $adresse = $inscrit->adresses->where('type',1)->map(function($adresse, $key) use ($inscrit) {
-            return $adresse;
-        })->first();
-        
-        // return ['id' => $inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email ];
-    }*/
-
+    $job = (new \App\Jobs\GenerateRappelInscription($inscription));
+    $job->handle();
+    
+    //app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
+exit;
     //$years = array_keys($years->toArray());
-    echo '<pre>';
-    print_r($inscrit);
-    echo '</pre>';exit();
+
 
     /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
         $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');

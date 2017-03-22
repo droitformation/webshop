@@ -48,14 +48,12 @@ class MakeRappelInscription extends Job implements ShouldQueue
 
                 if(!$rappel)
                 {
-                    $worker = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
-
                     if ($inscription->group_id)
                     {
-                        $worker->generateMultiple($inscription->groupe);
+                        $this->worker->generateMultiple($inscription->groupe);
                     }
                     else {
-                        $worker->generateSimple($inscription);
+                        $this->worker->generateSimple($inscription);
                     }
                 }
             }

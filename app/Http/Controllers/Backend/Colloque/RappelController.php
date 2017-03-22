@@ -59,17 +59,17 @@ class RappelController extends Controller
     {
         $inscriptions = $this->inscription->getRappels($request->input('colloque_id'));
 
-        if(!$inscriptions->isEmpty())
-        {
+        $this->worker->make($inscriptions);
+
             // Make sur we have created all the rappels in pdf
-            $job = (new MakeRappelInscription($inscriptions->pluck('id')->all()));
+   /*         $job = (new MakeRappelInscription($inscriptions->pluck('id')->all()));
             $this->dispatch($job);
 
             $job = (new NotifyJobFinished('Les rappels pour le colloque ont été crées.'));
             $this->dispatch($job);
-        }
+        }*/
 
-        alert()->success('La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
+        alert()->success('Rappels crées.');
 
         return redirect()->back();
     }
@@ -116,9 +116,13 @@ class RappelController extends Controller
     public function send(Request $request)
     {
         // Make sur we have created all the rappels in pdf
-        $job = (new MakeRappelInscription($request->input('inscriptions')));
-        $this->dispatch($job);
-        
+        //$job = (new MakeRappelInscription($request->input('inscriptions')));
+        //$this->dispatch($job);
+
+        $inscriptions = $this->inscription->getMultiple($request->input('inscriptions'));
+
+        $this->worker->make($inscriptions);
+
         // Send the rappels via email
         $job = (new SendRappelEmail($request->input('inscriptions')))->delay(\Carbon\Carbon::now()->addMinutes(1));
         $this->dispatch($job);

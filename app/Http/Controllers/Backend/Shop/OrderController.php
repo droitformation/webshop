@@ -84,14 +84,21 @@ class OrderController extends Controller {
         
         if($request->input('export',null))
         {
-            $exporter = new \App\Droit\Generate\Export\ExportOrder();
+            if(!$orders->isEmpty()){
+                $exporter = new \App\Droit\Generate\Export\ExportOrder();
 
-            $exporter->setColumns($request->input('columns',config('columns.names')))
-                     ->setPeriod($period)
-                     ->setDetail($request->input('details',null))
-                     ->setFree($request->input('onlyfree',null));
+                $exporter->setColumns($request->input('columns',config('columns.names')))
+                    ->setPeriod($period)
+                    ->setDetail($request->input('details',null))
+                    ->setFree($request->input('onlyfree',null));
 
-            $exporter->export($orders);
+                $exporter->export($orders);
+            }
+
+            $request->flash();
+            
+            alert()->success('Aucune commande à exporter');
+
         }
 
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
