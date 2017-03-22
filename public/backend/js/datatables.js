@@ -26,7 +26,7 @@ $(document).ready(function() {
         var column = api.column(6);
 
         var select = $('<select class="form-control"><option value="">Filtrer par status</option></select>')
-            .appendTo( $(column.header()).empty()).on( 'change', function () {
+            .appendTo( $(column.footer()).empty()).on( 'change', function () {
                 var val = $.fn.dataTable.util.escapeRegex($(this).val());
                 column.search( val ? '^'+val+'$' : '', true, false ).draw();
             });
