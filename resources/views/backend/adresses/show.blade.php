@@ -90,15 +90,6 @@
                           </div>
                       </div>
 
-                      <div class="panel panel-midnightblue">
-                          <div class="panel-body">
-                              <h3>Commandes</h3>
-
-
-                          </div>
-                      </div>
-
-
                   </div>
               </div>
 
