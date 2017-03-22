@@ -20,6 +20,22 @@ $(document).ready(function() {
         });
     };
 
+    var initabo = function()
+    {
+        var api    = this.api();
+        var column = api.column(6);
+
+        var select = $('<select class="form-control"><option value="">Filtrer par status</option></select>')
+            .appendTo( $(column.header()).empty()).on( 'change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                column.search( val ? '^'+val+'$' : '', true, false ).draw();
+            });
+
+        column.data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        });
+    };
+
     var langues = {
         processing:     "Traitement en cours...",
         search:         "Rechercher&nbsp;:",
@@ -79,7 +95,7 @@ $(document).ready(function() {
     });
 
     $('#abos-table').DataTable({
-        initComplete: init,
+        initComplete: initabo,
         language: langues,
         pageLength: 50,
         pagingType: 'simple',
