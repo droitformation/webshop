@@ -160,6 +160,11 @@ class OrderEloquent implements OrderInterface{
 
         $order->fill($data);
 
+        if(isset($data['comment']))
+        {
+            $order->comment = serialize($data['comment']);
+        }
+
         if(isset($data['coupon_id']) && !empty($data['coupon_id'])) {
             $order->coupon_id = $data['coupon_id'];
         }

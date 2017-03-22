@@ -107,22 +107,27 @@
                             </div>
                         </div>
 
+                        <?php $messages = unserialize($order->comment); ?>
+                        <?php $warning = isset($messages['warning']) ? $messages['warning'] : old('message.warning'); ?>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label"><i class="fa fa-info-circle"></i>&nbsp; Phrase d'information</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[warning]" value="{{ old('message.warning') }}">
+                                    <input class="form-control" type="text" name="message[warning]" value="{{ $warning }}">
                                 </div>
                             </div>
                         </div>
+
+                        <?php $special = isset($messages['special']) ? $messages['special'] : old('message.special'); ?>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label"><i class="fa fa-info-circle"></i>&nbsp; Information pour librairies</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[special]" value="{{ old('message.special') }}">
+                                    <input class="form-control" type="text" name="message[special]" value="{{ $special }}">
                                 </div>
                             </div>
                         </div>

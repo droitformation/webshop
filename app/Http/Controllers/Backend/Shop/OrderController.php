@@ -212,7 +212,8 @@ class OrderController extends Controller {
             'created_at' => $request->input('created_at',null),
             'paquet'     => $request->input('paquet',null),
             'user_id'    => $request->input('user_id',null),
-            'adresse_id' => $request->input('adresse_id',null)
+            'adresse_id' => $request->input('adresse_id',null),
+            'comment'    => $request->input('message',null)
         ];
 
         $order  = $this->order->update(array_filter($updates));
