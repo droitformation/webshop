@@ -13,6 +13,15 @@ class Abo_factures extends Model{
 
     public function getRappelListAttribute()
     {
+        $this->load('rappels');
+
+        return $this->rappels->map(function ($item, $key) {
+            return ['id' => $item->id ,'date' => 'Rappel '.$item->created_at->format('d/m/Y'), 'doc_rappel' => $item->doc_rappel];
+        });
+    }
+
+    public function getListRappelAttribute()
+    {
         return $this->rappels->map(function ($item, $key) {
             return ['id' => $item->id ,'date' => 'Rappel '.$item->created_at->format('d/m/Y'), 'doc_rappel' => $item->doc_rappel];
         });

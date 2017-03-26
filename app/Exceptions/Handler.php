@@ -52,6 +52,11 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
         }
 
+		if($e instanceof \App\Exceptions\InfoMissingException) {
+			alert()->warning($e->getMessage());
+			return redirect()->back();
+		}
+
 		if($e instanceof \App\Exceptions\FactureColloqueTestException)
 		{
 			alert()->warning($e->getMessage());

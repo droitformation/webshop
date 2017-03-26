@@ -63,6 +63,10 @@
             <directory>./tests/backend/workers/register/</directory>
         </testsuite>
 
+        <testsuite name="rappel">
+            <directory>./tests/backend/workers/rappel/</directory>
+        </testsuite>
+
         <testsuite name="abonnement">
             <directory>./tests/frontend/abonnement/</directory>
         </testsuite>

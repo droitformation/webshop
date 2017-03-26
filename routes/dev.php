@@ -886,10 +886,8 @@ Route::get('factory', function()
 
 Route::get('merge', function () {
 
-      // Export adresses
-/*    $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-    $exporter->merge();*/
-
+    return File::files(public_path('files/logos'));
+    exit;
     $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
 
     // Directory for edition => product_id
