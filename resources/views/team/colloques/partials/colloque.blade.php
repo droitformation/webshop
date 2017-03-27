@@ -20,11 +20,15 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <a class="btn btn-success btn-sm" href="{{ url('team/colloque/'.$colloque->id) }}">Inscriptions &nbsp;
-                            <span class="badge badge-success">{{ $colloque->inscriptions->count() }}</span>
-                        </a>
-                        <div class="pull-right">
-                            {{ isset($colloque->compte) ? $colloque->compte->compte : '' }}
+                        <div class="row">
+                            <div class="col-md-5">
+                                <a class="btn btn-success btn-sm pull-left" href="{{ url('team/colloque/'.$colloque->id) }}">Inscriptions &nbsp;
+                                    <span class="badge badge-success">{{ $colloque->inscriptions->count() }}</span>
+                                </a>
+                            </div>
+                            <div class="col-md-7">
+                                {!! isset($colloque->compte) ? $colloque->compte->motif : '' !!}
+                            </div>
                         </div>
                     </div>
                 </div>
