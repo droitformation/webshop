@@ -59,7 +59,7 @@ class RappelController extends Controller
     {
         $inscriptions = $this->inscription->getRappels($request->input('colloque_id'));
 
-        $this->worker->make($inscriptions);
+        $this->worker->make($inscriptions, $request->input('more',false));
 
             // Make sur we have created all the rappels in pdf
    /*         $job = (new MakeRappelInscription($inscriptions->pluck('id')->all()));

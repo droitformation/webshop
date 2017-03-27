@@ -44,20 +44,24 @@ class RappelWorker implements RappelWorkerInterface
         return $rappel;
     }
 
-    public function make($inscriptions)
+    public function generate($inscription)
+    {
+        if (isset($inscription->groupe)) {
+            $this->generateMultiple($inscription->groupe);
+        } else {
+            $this->generateSimple($inscription);
+        }
+    }
+
+    public function make($inscriptions, $makemore = false)
     {
         if(!$inscriptions->isEmpty()) {
             foreach ($inscriptions as $inscription) {
 
                 $rappel = $inscription->list_rappel->sortBy('created_at')->last();
-
-                if(!$rappel)
-                {
-                    if (isset($inscription->groupe)) {
-                        $this->generateMultiple($inscription->groupe);
-                    } else {
-                        $this->generateSimple($inscription);
-                    }
+                
+                if($makemore || !$rappel){
+                    $this->generate($inscription);
                 }
             }
         }

@@ -6,5 +6,6 @@ interface RappelWorkerInterface
 {
     public function generateSimple($inscription);
     public function generateMultiple($group);
-    public function make($inscriptions);
+    public function make($inscriptions, $makemore = false);
+    public function generate($inscription);
 }
