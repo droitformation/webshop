@@ -113,9 +113,17 @@ class ExportController extends Controller
         $format = explode('|', $request->input('format'));
         $badge  = $this->badges[$format[1]];
 
+        $occurrences = $request->input('occurrence', []);
+
         // Get inscriptions names and chunk data for rows per page
-        $inscriptions = $this->inscription->getByColloque($request->input('colloque_id'),false,false);
         $colloque     = $this->colloque->find($request->input('colloque_id'));
+        $inscriptions = $this->inscription->getByColloqueExport($colloque->id,[]);
+
+        if(!empty($occurrences)){
+            $inscriptions = $inscriptions->filter(function ($inscription, $key) use ($occurrences) {
+                return count(array_intersect($occurrences, $inscription->occurrences->pluck('id')->all())) > 0 ;
+            });
+        }
 
         $colloque->load('adresse');
 

@@ -16,7 +16,6 @@
                                 <h4 class="media-heading"><a href="{{ url('team/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h4>
                                 <p>{{ $colloque->sujet }}</p>
                                 <p><i class="fa fa-calendar"></i> &nbsp;{{ $colloque->event_date }}</p>
-
                             </div>
                         </div>
                     </div>

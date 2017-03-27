@@ -21,7 +21,18 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-4">
+        @if(count($colloque->occurrences))
+            <div class="form-group col-md-3">
+                <h4>Conférences</h4>
+                <select class="form-control" name="occurrence[]">
+                    <option value="">Choix d'une salle/conférence</option>
+                    @foreach($colloque->occurrences as $occurrence)
+                        <option value="{{ $occurrence->id }}">Que {{ $occurrence->title }}</option>
+                    @endforeach
+                </select><br/>
+            </div>
+        @endif
+        <div class="col-md-3">
             <h4>Nombre de badges par page</h4>
             <div class="input-group">
                 <select class="form-control" name="format">

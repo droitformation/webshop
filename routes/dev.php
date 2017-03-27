@@ -131,15 +131,23 @@ Route::get('testing', function() {
     //$make  = new \tests\factories\ObjectFactory();
    // $make->makeInscriptions(1, 1);
 
-    $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $inscription = $Inscriptions->find(13828);
+    $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $inscriptions = $model->getByColloqueExport(100,[]);
 
+    $inscirption = $model->find(14013);
 
-    $job = (new \App\Jobs\GenerateRappelInscription($inscription));
-    $job->handle();
+    $occurrences = [1];
+
+    $inscriptions = $inscriptions->filter(function ($inscription, $key) use ($occurrences) {
+        return count(array_intersect($occurrences,$inscription->occurrences->pluck('id')->all())) > 0 ;
+    });
+
+    echo '<pre>';
+    print_r($inscriptions->toArray());
+    echo '</pre>';exit();
     
     //app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
-exit;
+    exit;
     //$years = array_keys($years->toArray());
 
 

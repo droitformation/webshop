@@ -25,9 +25,36 @@
                         <td style="background-color: #f6f6f6;">
                             <h4 style="font-size: 15px; color:#000; margin-bottom: 5px;"><?php echo $colloque->titre; ?></h4>
                             <h5 style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px; color: #54565a;"><strong><?php echo $colloque->soustitre; ?></strong></h5><br>
-                            <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;"><strong>Date:</strong> <?php echo $colloque->event_date; ?></p>
-                            <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;"><strong>Lieu:</strong> <?php echo $colloque->location->name.', '.strip_tags($colloque->location->adresse); ?></p>
+                            <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
+
+                            @if(isset($inscription) && !isset($inscription->groupe) && !$inscription->occurrences->isEmpty())
+
+                                @foreach($inscription->occurrences as $occurrence)
+                                    <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;"><strong>Titre:</strong> {{ $occurrence->title }}</p>
+                                    <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;"><strong>Lieu:</strong> {{ $occurrence->location->name }}</p>
+                                    <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px; margin-bottom: 10px;"><strong>Date:</strong> {{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}</p>
+                                @endforeach
+
+                            @else
+                                @if(!$colloque->occurrences->isEmpty() && $colloque->occurrences->pluck('starting_at')->unique()->count() > 1)
+
+                                    <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;"><strong>Dates:</strong></p>
+
+                                    <ul style="margin: 5px 5px 5px 5px; padding-left:15px; list-style: disc;">
+                                        @foreach($colloque->occurrences as $occurrence)
+                                            <li style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;">{{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}</li>
+                                        @endforeach
+                                    </ul>
+
+                                @else
+                                    <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;"><strong>Date:</strong> <?php echo $colloque->event_date; ?></p>
+                                @endif
+
+                                <p style="{{ $resetPadding }}{{ $resetMargin }} font-size: 14px; line-height: 20px;"><strong>Lieu:</strong> <?php echo $colloque->location->name.', '.strip_tags($colloque->location->adresse); ?></p>
+                            @endif
+
                         </td>
+
                         <td width="10px" style="background-color: #f6f6f6;">&nbsp;</td>
                     </tr>
                     <tr><td height="5" colspan="3" style="background-color: #f6f6f6;">&nbsp;</td></tr>

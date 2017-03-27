@@ -111,7 +111,7 @@ class Colloque extends Model
 
     public function getIsActiveAttribute()
     {
-        return $this->registration_at >= \Carbon\Carbon::today() ? true : false;
+        return $this->registration_at >= \Carbon\Carbon::today()->toDateString() ? true : false;
     }
 
     public function getIsFullAttribute()

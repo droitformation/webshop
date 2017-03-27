@@ -170,13 +170,14 @@ class InscriptionWorkerTest extends BrowserKitTest {
         $result = $worker->prepareData($inscription);
 
         $data = [
-            'title'     => 'Votre inscription sur publications-droit.ch',
-            'logo'      => 'facdroit.png',
-            'concerne'  => 'Inscription',
-            'date'      => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
-            'annexes'   => $inscription->colloque->annexe,
-            'colloque'  => $inscription->colloque,
-            'user'      => $inscription->user
+            'title'       => 'Votre inscription sur publications-droit.ch',
+            'logo'        => 'facdroit.png',
+            'concerne'    => 'Inscription',
+            'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            'annexes'     => $inscription->colloque->annexe,
+            'colloque'    => $inscription->colloque,
+            'inscription' => $inscription,
+            'user'        => $inscription->user
         ];
 
         $this->assertEquals($data, $result);
@@ -203,6 +204,7 @@ class InscriptionWorkerTest extends BrowserKitTest {
             'annexes'      => $group->groupe->colloque->annexe,
             'colloque'     => $group->groupe->colloque,
             'user'         => $group->groupe->user,
+            'inscription'  => $group->groupe->inscriptions->first(),
             'participants' => $group->groupe->participant_list
         ];
 

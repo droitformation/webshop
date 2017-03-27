@@ -162,25 +162,25 @@ class Generate{
 
     public function getOptions()
     {
-        if(!$this->model->user_options->isEmpty())
-        {
-            foreach($this->model->user_options as $option)
-            {
+        $list = [];
+
+        if(!$this->model->user_options->isEmpty()) {
+            foreach($this->model->user_options as $option) {
                 $option->load('option_groupe');
 
-                $choice['title'] = $option->option->title;
+                if(isset($option->option)){
+                    $choice['title'] = $option->option->title;
 
-                if($option->option->type == 'choix' && $option->option_groupe)
-                {
-                    $choice['choice'] = $option->option_groupe->text;
+                    if($option->option->type == 'choix' && $option->option_groupe) {
+                        $choice['choice'] = $option->option_groupe->text;
+                    }
+
+                    if($option->option->type == 'text') {
+                        $choice['choice'] = $option->reponse;
+                    }
+
+                    $list[] = $choice;
                 }
-
-                if($option->option->type == 'text')
-                {
-                    $choice['choice'] = $option->reponse;
-                }
-
-                $list[] = $choice;
             }
 
             return $list;

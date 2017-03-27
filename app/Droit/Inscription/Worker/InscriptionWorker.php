@@ -121,6 +121,12 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         if($model instanceof \App\Droit\Inscription\Entities\Groupe)
         {
             $data['participants'] = $model->participant_list;
+            $data['inscription']  = $model->inscriptions->first();
+        }
+
+        if($model instanceof \App\Droit\Inscription\Entities\Inscription)
+        {
+            $data['inscription']  = $model;
         }
 
         return $data;

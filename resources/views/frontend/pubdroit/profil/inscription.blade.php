@@ -68,8 +68,11 @@
                     @endif
 
                     <h4>Vos choix</h4>
+                    <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
                     <div class="profil-info">
+
                         @if(!$inscription->user_options->isEmpty())
+                            <h5>Options</h5>
                             <ol>
                                 @foreach($inscription->user_options as $user_options)
 
@@ -84,7 +87,22 @@
                                 @endforeach
                             </ol>
                         @endif
+
+                        @if(!isset($inscription->groupe) && !$inscription->occurrences->isEmpty())
+                            <h5><strong>Conférences</strong></h5>
+                            @foreach($inscription->occurrences as $occurrence)
+                                <dl>
+                                    <dt>Titre:</dt>
+                                    <dd>{{ $occurrence->title }}</dd>
+                                    <dt>Lieu:</dt>
+                                    <dd>{{ $occurrence->location->name }}</dd>
+                                    <dt>Date:</dt>
+                                    <dd>{{ $occurrence->starting_at->formatLocalized('%d %B %Y') }}</dd>
+                                </dl>
+                            @endforeach
+                        @endif
                     </div>
+
                 </div>
             </div>
         @endif

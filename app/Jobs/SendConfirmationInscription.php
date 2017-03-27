@@ -70,6 +70,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             'annexes'     => $this->inscription->colloque->annexe,
             'colloque'    => $this->inscription->colloque,
             'user'        => $this->inscription->user,
+            'inscription' => $this->inscription,
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 

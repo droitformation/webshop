@@ -88,8 +88,8 @@
 
     <table class="content-table" valign="top">
         <tr>
-            <td width="70%"></td>
-            <td width="30%" class="signature-attestation">
+            <td width="60%"></td>
+            <td align="left" width="40%" class="signature-attestation">
                 @if(isset($colloque->attestation))
                     <p><strong>{{ $colloque->attestation->title }}</strong></p>
                     <p>{{ $colloque->attestation->signature }}</p>
