@@ -74,7 +74,7 @@
                      $colloque->load('options','groupes');
 
                      // Get options and grouped options
-                     $this->options = $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray();
+                     $this->options = isset($colloque->options) ? $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray() : [];
                      $this->groupes = $colloque->groupes->pluck('text', 'id')->toArray();
 
                      // Prepare the inscriptions with infos
@@ -200,7 +200,20 @@
      {
          return $inscription->user_options->map(function ($group, $key)
          {
+             if(!isset($group->option)){
+                 $option = $group->option()->withTrashed()->get();
+                 $option = !$option->isEmpty() ? $option->first() : null;
+
+                 if($option){
+                     return 'Ancienne option: '.$option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '');
+                 }
+                 else{
+                     return '';
+                 }
+             }
+
              return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '');
+
          })->implode(';');
      }
  }
