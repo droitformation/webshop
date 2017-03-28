@@ -297,8 +297,14 @@ class AdresseEloquent implements AdresseInterface{
         $adresse->specialisations()->sync(array_unique(array_merge($exist,$data)));
     }
 
-	public function getDeleted($withItems = fé){
-
+	public function getDeleted($term = null)
+    {
+        return $this->adresse->onlyTrashed()
+            ->with(['orders','inscriptions','user'])
+            ->searchEmail($term)
+            ->searchLastName($term)
+            ->searchFirstName($term)
+            ->get();
 	}
 
     public function assignOrdersToUser($id, $user_id)

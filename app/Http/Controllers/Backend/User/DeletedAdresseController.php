@@ -25,7 +25,7 @@ class DeletedAdresseController extends Controller
      * */
     public function index(Request $request)
     {
-        $adresses = $request->input('term',null) ? $this->adresse->allDeleted() : search($term);
+        $adresses = $this->adresse->getDeleted();
     }
 
     /*

@@ -20,7 +20,7 @@ interface AdresseInterface {
 
 	public function assignOrdersToUser($id, $user_id);
 	
-	public function getDeleted();
+	public function getDeleted($term = null);
 	
 	// function for gather infos on adresse to show
 	public function create(array $data);
