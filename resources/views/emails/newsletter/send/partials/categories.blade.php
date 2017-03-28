@@ -6,6 +6,7 @@
                     <a target="_blank" href="{{ config('newsletter.link.arret') }}#{{ $bloc->reference }}">
                        <img width="130" border="0" alt="{{ $categorie->title }}" src="{{ secure_asset(config('newsletter.path.categorie').$categorie->image) }}">
                     </a>
+                    <p style="text-align: center;margin: 0 0 5px 0;padding: 0;">{{ $categorie->title }}</p>
                 @endif
             @endforeach
         </td>
