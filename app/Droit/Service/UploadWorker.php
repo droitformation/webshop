@@ -30,7 +30,7 @@ class UploadWorker implements UploadInterface {
         if($type)
         {
             $sizes = \Config::get('size.'.$type);
-            $this->resize( $path, $newname, $sizes['width'], $sizes['height']);
+            $this->resize( $path, null, $sizes['width'], $sizes['height']);
         }
 
         $newfile = array( 'name' => $newname ,'ext' => $ext ,'size' => $size ,'mime' => $mime ,'path' => $path  );

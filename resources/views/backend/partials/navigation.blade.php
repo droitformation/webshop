@@ -37,6 +37,7 @@
             <ul class="acc-menu">
                 <li><a href="{{ url('admin/adresses') }}"><span>Liste des adresses</span></a></li>
                 <li><a href="{{ url('admin/adresse/create') }}"><span>Ajouter une adresse</span></a></li>
+                <li><a href="{{ url('admin/deletedadresses') }}"><span>Adresses supprimées</span></a></li>
             </ul>
         </li>
 

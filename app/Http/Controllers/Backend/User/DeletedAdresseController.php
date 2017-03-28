@@ -25,7 +25,9 @@ class DeletedAdresseController extends Controller
      * */
     public function index(Request $request)
     {
-        $adresses = $this->adresse->getDeleted();
+        $adresses = $this->adresse->getDeleted($request->input('term'));
+
+        return view('backend.deleted.index')->with(['adresses' => $adresses, 'term' => $request->input('term')]);
     }
 
     /*

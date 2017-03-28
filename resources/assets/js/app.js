@@ -28,6 +28,7 @@ Vue.component('detenteur', require('./components/Detenteur.vue'));
 Vue.component('content-form', require('./components/ContentForm.vue'));
 
 Vue.component('manager', require('./components/Manager.vue'));
+Vue.component('filter-adresse', require('./components/FilterAdresse.vue'));
 
 const app = new Vue({
     el: '#appComponent'

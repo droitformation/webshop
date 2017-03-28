@@ -397,7 +397,7 @@ class Helper {
 
         if(in_array($type,$toResize))
         {
-            $this->upload->resize( public_path('files/uploads/'.$image), $image , 130);
+            $this->upload->resize( public_path('files/uploads/'.$image), public_path('files/uploads/'.$image) , 130);
         }
 
         return true;
