@@ -9,7 +9,7 @@ use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
 use App\Jobs\MakeFactureAbo;
 use App\Jobs\MergeFactures;
-use App\Jobs\NotifyJobFinished;
+use App\Jobs\NotifyJobFinishedEmail;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
@@ -59,7 +59,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
             $this->dispatch($merge);
 
             // Job notify merging is done
-            $job = (new NotifyJobFinished('Les factures ont été crées et attachés. Nom du fichier: factures_'.$product->reference.'_'.$product->edition_clean));
+            $job = (new NotifyJobFinishedEmail('Les factures ont été crées et attachés. Nom du fichier: factures_'.$product->reference.'_'.$product->edition_clean));
             $this->dispatch($job);
 
         }
@@ -101,12 +101,12 @@ class AboFactureWorker implements AboFactureWorkerInterface{
         $merge = (new MergeFactures($product, $abo));
         $this->dispatch($merge);
 
-        $job = (new NotifyJobFinished('Les factures ont été attachés. Nom du fichier: '.'factures_'.$product->reference.'_'.$product->edition_clean));
+        // Job notify merging is done
+        $job = (new NotifyJobFinishedEmail('Les factures ont été crées et attachés. Nom du fichier: factures_'.$product->reference.'_'.$product->edition_clean));
         $this->dispatch($job);
 
         alert()->success('Les factures sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
 
         return redirect()->back();
     }
-
 }
