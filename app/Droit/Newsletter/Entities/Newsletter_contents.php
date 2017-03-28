@@ -10,8 +10,8 @@ class Newsletter_contents extends Model {
 
     public function getContentTitleAttribute()
     {
-        if($this->titre){
-            return $this->titre;
+        if($this->titre || $this->contenu){
+            return !empty(trim($this->titre)) ? $this->titre : str_limit(strip_tags($this->contenu),25);
         }
         elseif(isset($this->arret)){
             return $this->arret->reference;

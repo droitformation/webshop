@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group">
                         <label>Texte</label>
-                        <textarea required redactor bind-content ng-model="edit.contenu" name="contenu" class="form-control" rows="10">{!! $bloc->contenu !!}</textarea>
+                        <textarea redactor bind-content ng-model="edit.contenu" name="contenu" class="form-control" rows="10">{!! $bloc->contenu !!}</textarea>
                     </div>
                     <div class="form-group">
                         <div class="btn-group">

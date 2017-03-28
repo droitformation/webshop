@@ -60,7 +60,7 @@
 
                         <hr/>
 
-                        @if($colloque->is_active && $colloque->is_open)
+                        @if($colloque->is_active && $colloque->is_open && !$colloque->url)
 
                             @if(Auth::check())
                                 @if(!$pending && !$registered)

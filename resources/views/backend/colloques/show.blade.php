@@ -108,6 +108,12 @@
 
                             <div class="form-group">
                                 <div class="row well">
+                                    <label class="col-sm-3 control-label">Inscription externes</label>
+                                    <div class="col-sm-8 col-xs-6">
+                                        <input type="text" class="form-control" name="url" style="margin-top: 10px;" value="{{ $colloque->url }}" placeholder="http://">
+                                    </div>
+                                </div>
+                                <div class="row well">
                                     <label class="col-sm-3 control-label">Envoyer les email de confirmation<br/> à une autre adresse email</label>
                                     <div class="col-sm-8 col-xs-6">
                                         <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email or old('email')  }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">

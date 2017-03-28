@@ -104,15 +104,16 @@
                       <div class="panel-group" id="accordion">
 
                           @if(!$user->adresses->isEmpty())
-                              @foreach ($user->adresses as $adresse)
+                              @foreach ($user->adresses->sortBy('type') as $adresse)
                                   <div class="panel panel-midnightblue">
                                       <div class="panel-body">
                                           <div class="row">
                                               <div class="col-md-7">
-                                                  <h3 style="margin-bottom: 0;">
+                                                  <h4 style="margin-bottom: 5px;"> {{ $adresse->name }} </h4>
+                                                  <p class="text-muted">
                                                       <i class="fa fa-map-marker"></i>&nbsp;Adresse {{ $adresse->type_title }}
-                                                      {!! $adresse->livraison ? '<small class="text-mute">livraison</small>' : '' !!}
-                                                  </h3>
+                                                      {!! $adresse->livraison ? '<small>livraison</small>' : '' !!}
+                                                  </p>
                                               </div>
                                               <div class="col-md-4 text-right">
                                                   @if($adresse->user_id > 0 && !$adresse->livraison)
