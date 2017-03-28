@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <label>Texte</label>
-                    <textarea bind-content redactor ng-model="create.contenu" required name="contenu" class="form-control" rows="10"></textarea>
+                    <textarea bind-content redactor ng-model="create.contenu" name="contenu" class="form-control" rows="10"></textarea>
                 </div>
                 <div class="form-group">
                     <div class="btn-group">

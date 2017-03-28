@@ -76,7 +76,7 @@ class NewsletterContentEloquent implements NewsletterContentInterface{
 			'titre'                  => (isset($data['titre']) ? $data['titre'] : null),
             'contenu'                => (isset($data['contenu']) ? $data['contenu'] : null),
             'image'                  => (isset($data['image']) ? $data['image'] : null),
-            'lien'                   => (isset($data['lien']) ? $helper->sanitizeUrl($data['lien']) : null),
+            'lien'                   => (isset($data['lien']) && !empty($data['lien']) ? $helper->sanitizeUrl($data['lien']) : null),
             'arret_id'               => (isset($data['arret_id']) ? $data['arret_id'] : 0),
             'categorie_id'           => (isset($data['categorie_id']) ? $data['categorie_id'] : 0),
             'groupe_id'              => (isset($data['groupe_id']) ? $data['groupe_id'] : null),
