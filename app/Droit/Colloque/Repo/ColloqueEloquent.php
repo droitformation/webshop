@@ -83,6 +83,7 @@ class ColloqueEloquent implements ColloqueInterface{
             'sujet'           => $data['sujet'],
             'organisateur'    => $data['organisateur'],
             'soustitre'       => (isset($data['soustitre']) ? $data['soustitre'] : null),
+            'url'             => (isset($data['url']) ? $data['url'] : null),
             'remarques'       => (isset($data['remarques']) ? $data['remarques'] : null),
             'location_id'     => (isset($data['location_id']) ? $data['location_id'] : null),
             'adresse_id'      => (isset($data['adresse_id']) ? $data['adresse_id'] : 1),
@@ -128,6 +129,10 @@ class ColloqueEloquent implements ColloqueInterface{
 
         $colloque->end_at    = (isset($data['end_at']) &&  !empty($data['end_at']) ? $data['end_at'] : null);
         $colloque->active_at = (isset($data['active_at']) &&  !empty($data['active_at']) ? $data['active_at'] : null);
+
+        if(isset($data['url'])){
+            $colloque->url  = (!empty($data['url']) ? $data['url'] : null);
+        }
 
         $colloque->save();
 

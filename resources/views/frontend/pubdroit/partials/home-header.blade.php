@@ -24,15 +24,15 @@
                     @foreach($chunk as $colloque)
 
                         <div class="event-post col-md-12">
-
+                            <?php $register_url = $colloque->url ? $colloque->url :  url('pubdroit/colloque/'.$colloque->id); ?>
                             <div class="post-img">
-                                <a href="{{ url('pubdroit/colloque/'.$colloque->id) }}">
+                                <a href="{{ $register_url }}">
                                     <img src="{{ secure_asset($colloque->frontend_illustration) }}" height="219" width="300" alt='{{ $colloque->titre }}'/>
                                 </a>
                                 <span class="post-date"><span>{{ $colloque->start_at->format('d') }}</span> {{ $colloque->start_at->formatLocalized('%b') }}</span>
                             </div>
                             <div class="post-det">
-                                <h3><a href="{{ url('pubdroit/colloque/'.$colloque->id) }}"><strong>{{ $colloque->titre }}</strong></a></h3>
+                                <h3><a href="{{ $register_url }}"><strong>{{ $colloque->titre }}</strong></a></h3>
                                 <span class="comments-num">{{ $colloque->soustitre }}</span>
                                 <p><i class="fa fa-calendar"></i>&nbsp; {{ $colloque->event_date }}</p>
                                 <p><strong>Lieu: </strong>
@@ -40,7 +40,7 @@
                                 {!! $colloque->remarque !!}
 
                                 @if($colloque->is_open)
-                                    <p><a class="more-btn btn-sm" href="{{ url('pubdroit/colloque/'.$colloque->id) }}">Inscription</a></p>
+                                    <p><a class="more-btn btn-sm" href="{{ $register_url }}">Inscription</a></p>
                                 @else
                                     <p class="text-danger text-right">COMPLET</p>
                                 @endif
