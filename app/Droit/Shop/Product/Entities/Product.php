@@ -74,18 +74,23 @@ class Product extends Model{
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
-        $normal = (isset($this->pivot) && $this->pivot->price ? $this->pivot->price : $this->price);
+        if(isset($this->pivot)){
 
-        if(isset($this->pivot) && $this->pivot->rabais)
-        {
-            $price = ($normal - ($normal * $this->pivot->rabais/100)) / 100;
-        }
-        else
-        {
-            return (isset($this->pivot) && $this->pivot->isFree ? 0 : $money->format($normal / 100));
+            if($this->pivot->rabais) {
+                $price = ($this->price - ($this->price * $this->pivot->rabais/100)) / 100;
+                return $money->format($price);
+            }
+
+            if($this->pivot->price){
+                return $money->format($this->pivot->price / 100);
+            }
+
+            if($this->pivot->isFree){
+                return 0;
+            }
         }
 
-        return $money->format($price);
+        return $money->format($this->price / 100);
     }
 
     /* search scopes query */

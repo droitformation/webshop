@@ -338,8 +338,8 @@ class OrderMaker implements OrderMakerInterface{
     public function updateProducts($order, $coupon = null)
     {
         return $order->products->map(function ($product, $key) use ($coupon) {
-
-            $price = !$product->pivot->isFree ? $product->price_cents : 0;
+            
+            $price  = !$product->pivot->isFree ? $product->price_cents : 0;
 
             // search if product eligible for discount is in cart
             if(isset($coupon->products) && $coupon->products->contains($product->id)) {
