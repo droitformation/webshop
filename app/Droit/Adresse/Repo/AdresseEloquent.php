@@ -297,12 +297,25 @@ class AdresseEloquent implements AdresseInterface{
         $adresse->specialisations()->sync(array_unique(array_merge($exist,$data)));
     }
 
-	public function getDeleted()
+	public function getDeleted($terms = [], $operator = null)
     {
-        return $this->adresse->onlyTrashed()
-            ->with(['orders','abos','user'])
-            ->orderBy('last_name','ASC')->take(20)
-            ->get();
+        $adresse = $this->adresse->onlyTrashed()->with(['orders','abos','user']);
+
+		if(!empty($terms)) {
+			$operator = ($operator == 'and' ? 'where' : 'orWhere');
+			$adresse->where(function ($query) use ($terms, $operator) {
+				foreach($terms as $term){
+					$query->$operator($term['column'],'LIKE','%'.$term['value'].'%');
+				}
+			});
+		}
+		
+		return $adresse->orderBy('last_name','ASC')->take(20)->get();
+	}
+
+	public function getMultiple($ids)
+	{
+		return $this->adresse->withTrashed()->whereIn('id',$ids)->orderBy('last_name','ASC')->get();
 	}
 
     public function assignOrdersToUser($id, $user_id)

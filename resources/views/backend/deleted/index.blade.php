@@ -17,61 +17,60 @@
 
                 <form action="{{ url('admin/deletedadresses') }}" method="post">{!! csrf_field() !!}
                     <div class="row">
-
-                        <filter-adresse></filter-adresse>
-
-                        <div class="col-md-4">
-
-                                <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ $term ? $term :'' }}" name="term" placeholder="Recherche...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div><!-- /input-group -->
-
-                        </div>
+                        <filter-adresse selected="{{ $type }}" checked="{{ $group }}" operator="{{ $operator }}" terms="{{ json_encode($terms) }}"></filter-adresse>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <div class="panel panel-midnightblue">
+            <div class="panel-body">
 
                 <div class="table-responsive">
                     @if(!$adresses->isEmpty())
+                        <form target="_blank" action="{{ url('admin/deletedadresses/compare') }}" method="post">{!! csrf_field() !!}
+                            <table class="table" style="margin-bottom: 0px;" >
 
-                        <table class="table" style="margin-bottom: 0px;" >
-                            <thead>
-                            <tr>
-                                <th class="col-sm-1">Action</th>
-                                <th class="col-sm-1">Type</th>
-                                <th class="col-sm-3">Nom</th>
-                                <th class="col-sm-2">Email</th>
-                                <th class="col-sm-2">Entreprise</th>
-                                <th class="col-sm-3">Ville</th>
-                                <th class="col-sm-1"></th>
-                            </tr>
-                            </thead>
-                            <tbody class="selects">
-                                @foreach($adresses as $adresse)
+                                <thead>
+                                <tr>
+                                    <th class="col-sm-1">Action</th>
+                                    <th class="col-sm-1">Appartient</th>
+                                    <th class="col-sm-3">Nom</th>
+                                    <th class="col-sm-2">Email</th>
+                                    <th class="col-sm-3">Adresse</th>
+                                    <th class="col-sm-2">Possède</th>
+                                </tr>
+                                </thead>
+                                <tbody class="selects">
+                                    <?php $adresses = ($group ? $adresses->groupBy($group) : $adresses); ?>
+
+                                    @if($group)
+                                        @foreach($adresses as $group => $grouped)
+                                            <tr><td class="bg-warning" colspan="7">{{ $group }}</td></tr>
+                                            @foreach($grouped as $adresse)
+                                                @include('backend.deleted.partials.row', ['adresse' => $adresse])
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        @foreach($adresses as $adresse)
+                                            @include('backend.deleted.partials.row', ['adresse' => $adresse])
+                                        @endforeach
+                                    @endif
+
+                                </tbody>
+                                <tfoot>
                                     <tr>
-                                        <td><a class="btn btn-sky btn-sm" href="{{ url('admin/adresse/'.$adresse->id) }}">&Eacute;diter</a></td>
-                                        <td>{!! $adresse->user_id > 0 ? '<span class="label label-info">Compte</span>' : '<span class="label label-success">Adresse simple</span>' !!}</td>
-                                        <td><strong>{{ $adresse->name }}</strong></td>
-                                        <td>{{ $adresse->email }}</td>
-                                        <td>{{ $adresse->company }}</td>
-                                        <td>{{ $adresse->ville }}</td>
-                                        <td class="text-right">
-                                            <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <input type="hidden" name="url" value="{{ url('admin/adresses') }}">
-                                                <input type="hidden" name="term" value="{{ session()->get('term') }}">
-                                                <button data-what="Supprimer" data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">x</button>
-                                            </form>
-                                        </td>
+                                        <th colspan="7">
+                                            <button type="submit" class="btn btn-primary btn-sm">Comparer</button>
+                                        </th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </tfoot>
+
+                            </table>
+                        </form>
 
                         @if($adresses instanceof \Illuminate\Pagination\LengthAwarePaginator )
-                            {{$adresses->links()}}
+                            {{ $adresses->links() }}
                         @endif
                     @endif
                 </div>

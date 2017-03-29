@@ -178,6 +178,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/sondage.js');?>"></script>
 
 <!-- Upload plugins -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/$VERSION/dragula.min.js'></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/tree.js');?>"></script>

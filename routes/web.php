@@ -208,7 +208,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('adresse', 'Backend\User\AdresseController');
 
     Route::match(['get', 'post'], 'deletedadresses', 'Backend\User\DeletedAdresseController@index');
-    Route::resource('deletedadresses', 'Backend\User\DeletedAdresseController');
+    Route::post('deletedadresses/compare','Backend\User\DeletedAdresseController@compare');
 
     Route::match(['get', 'post'], 'users', 'Backend\User\UserController@index');
     Route::get('user/restore/{id}','Backend\User\UserController@restore');

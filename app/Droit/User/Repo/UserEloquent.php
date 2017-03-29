@@ -99,6 +99,22 @@ class UserEloquent implements UserInterface{
                             ->get();
     }
 
+    public function getDeleted($terms = [], $operator = null)
+    {
+        $user = $this->user->onlyTrashed()->with(['orders','inscriptions','adresses']);
+
+        if(!empty($terms)) {
+            $operator = ($operator == 'and' ? 'where' : 'orWhere');
+            $user->where(function ($query) use ($terms, $operator) {
+                foreach($terms as $term){
+                    $query->$operator($term['column'],'LIKE','%'.$term['value'].'%');
+                }
+            });
+        }
+
+        return $user->orderBy('last_name','ASC')->take(20)->get();
+    }
+
     public function create(array $data){
 
         $user = $this->user->create(array(

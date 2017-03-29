@@ -9,15 +9,19 @@ use App\Http\Controllers\Controller;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 
+use App\Droit\Adresse\Worker\AdresseWorker;
+
 class DeletedAdresseController extends Controller
 {
     protected $adresse;
     protected $user;
+    protected $worker;
 
-    public function __construct(AdresseInterface $adresse, UserInterface $user)
+    public function __construct(AdresseInterface $adresse, UserInterface $user, AdresseWorker $worker)
     {
         $this->adresse = $adresse;
         $this->user    = $user;
+        $this->worker  = $worker;
     }
 
     /*
@@ -25,9 +29,26 @@ class DeletedAdresseController extends Controller
      * */
     public function index(Request $request)
     {
-        $adresses = $this->adresse->getDeleted($request->input('term'));
+        $type     = $request->input('type','user');
+        $group    = $request->input('group','');
+        $operator = $request->input('operator','and');
+        
+        $terms    = $this->worker->prepareTerms($request->only('terms','columns'),$type);
 
-        return view('backend.deleted.index')->with(['adresses' => $adresses, 'term' => $request->input('term')]);
+        $adresses = $this->$type->getDeleted($terms, $operator);
+
+        return view('backend.deleted.index')->with(['adresses' => $adresses, 'terms' => $terms, 'type'  => $type, 'group' => $group, 'operator' => $operator]);
+    }
+
+
+    /*
+    * Get particular adresse
+    * */
+    public function compare(Request $request)
+    {
+        $adresses = $this->adresse->getMultiple($request->input('adresses'));
+
+        return view('backend.deleted.compare')->with(['adresses' => $adresses]);
     }
 
     /*

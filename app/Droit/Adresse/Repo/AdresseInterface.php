@@ -19,8 +19,10 @@ interface AdresseInterface {
 	public function setSpecialisation($adresse_id,$data);
 
 	public function assignOrdersToUser($id, $user_id);
-	
-	public function getDeleted();
+
+	// Deleted adresses filters
+	public function getDeleted($terms = [], $operator = null);
+	public function getMultiple($ids);
 	
 	// function for gather infos on adresse to show
 	public function create(array $data);
