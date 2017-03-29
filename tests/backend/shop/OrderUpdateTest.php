@@ -95,6 +95,110 @@ class OrderUpdateTest extends BrowserKitTest {
         $this->assertEquals($products, $pivots);
     }
 
+    public function testReCalculateProducts2()
+    {
+        // Dependencies
+        $ordermaker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        // Create on order
+        $orders = $make->order(1);
+        $order  = $orders->first();
+
+        $order->products()->detach();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+
+        $order->products()->attach([
+            $product1->id => ['price'  => null, 'isFree' => null, 'rabais' => null],
+            $product2->id => ['price'  => 3000, 'isFree' => null, 'rabais' => null]
+        ]);
+
+        $result = $ordermaker->updateOrder($order,1); // no coupon
+        $amount = 4000;
+
+        $this->assertEquals($result['amount'], $amount);
+    }
+
+    public function testReCalculateProducts3()
+    {
+        // Dependencies
+        $ordermaker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        // Create on order
+        $orders = $make->order(1);
+        $order  = $orders->first();
+
+        $order->products()->detach();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+
+        $order->products()->attach([
+            $product1->id => ['price'  => null, 'isFree' => null, 'rabais' => null],
+            $product2->id => ['price'  => null, 'isFree' => null, 'rabais' => null]
+        ]);
+
+        $result = $ordermaker->updateOrder($order,1); // no coupon
+        $amount = 2000;
+
+        $this->assertEquals($result['amount'], $amount);
+    }
+
+    public function testReCalculateProducts4()
+    {
+        // Dependencies
+        $ordermaker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        // Create on order
+        $orders = $make->order(1);
+        $order  = $orders->first();
+
+        $order->products()->detach();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+
+        $order->products()->attach([
+            $product1->id => ['price'  => null, 'isFree' => true, 'rabais' => null],
+            $product2->id => ['price'  => 1000, 'isFree' => null, 'rabais' => null]
+        ]);
+
+        $result = $ordermaker->updateOrder($order,1); // no coupon
+        $amount = 1000;
+
+        $this->assertEquals($result['amount'], $amount);
+    }
+
+    public function testReCalculateProducts5()
+    {
+        // Dependencies
+        $ordermaker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        // Create on order
+        $orders = $make->order(1);
+        $order  = $orders->first();
+
+        $order->products()->detach();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+
+        $order->products()->attach([
+            $product1->id => ['price'  => null, 'isFree' => true, 'rabais' => null],
+            $product2->id => ['price'  => 500, 'isFree' => null, 'rabais' => 50]
+        ]);
+
+        $result = $ordermaker->updateOrder($order,1); // no coupon
+        $amount = 500;
+
+        $this->assertEquals($result['amount'], $amount);
+    }
+
     public function testReCalculateProductGlobalCoupon()
     {
         // Dependencies
