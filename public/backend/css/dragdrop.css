@@ -3,16 +3,60 @@
 .wrapper {
     display: table;
     width: 100%;
+    height: 200px;
+    vertical-align: top;
 }
 .container_dd {
     display: table-cell;
     background-color: rgba(255, 255, 255, 0.2);
     width: 50%;
+    height: 200px;
+    height: auto;
+    vertical-align: top;
 }
+
 .wide{
-    display: table-cell;
+    display: table;
     width: 100%;
+    height: 200px;
+    vertical-align: top;
 }
+
+.panel_33{
+    width: 28%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.panel .panel-body.panel-compare {
+    padding: 15px;
+}
+
+.panel-compare h1{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.panel-compare h2{
+    font-size: 15px;
+}
+
+.panel-compare p{
+    font-size:13px;
+    margin-bottom: 0;
+}
+
+.panel-compare dl{
+    margin-top: 5px;
+}
+
+#left-defaults .panel_33,
+#right-defaults .panel_33{
+    width: 90%;
+}
+
+
 /*
  * note that styling gu-mirror directly is a bad practice because it's too generic.
  * you're better off giving the draggable elements a unique class and styling that directly!
@@ -21,7 +65,7 @@
 .wide > div,
 .gu-mirror {
     margin: 10px;
-    padding: 10px;
+    padding: 5px;
     background-color: rgba(0, 0, 0, 0.2);
     transition: opacity 0.4s ease-in-out;
 }
@@ -48,13 +92,37 @@
     cursor: initial;
 }
 
+#left-defaults::before{
+    content: 'De';
+    font-weight: bold;
+    font-size: 22px;
+    color: #8d8d8d;
+}
 
-#left-defaults, #right-defaults{
+#right-defaults::before{
+    content: 'Vers';
+    font-weight: bold;
+    font-size: 22px;
+    color: #8d8d8d;
+}
+
+#middle-defaults::before{
+    content: 'Choix';
+    font-weight: bold;
+    font-size: 22px;
+    color: #8d8d8d;
+}
+
+#left-defaults, #right-defaults,#middle-defaults{
     background-color: #fff;
     border-bottom: 1px solid #dddddd;
     border-left: 1px solid #dddddd;
     border-right: 1px solid #dddddd;
     padding: 10px;
+}
+
+#middle-defaults{
+    margin-bottom: 20px;
 }
 
 .handle {

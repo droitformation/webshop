@@ -15,27 +15,50 @@
         <div class='examples'>
             <div class='parent'>
                 <div class='wrapper'>
-                    <div id='left-defaults' class='container_dd'>
+                    <div id='middle-defaults' class='wide'>
 
                         @if(!$adresses->isEmpty())
                             @foreach($adresses as $adresse)
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <p>{{ $adresse->name }}</p>
+                                <div class="panel panel-default panel_33">
+                                    <div class="panel-body panel-compare">
+
+                                        <h1>{{ $adresse->name }}</h1>
+                                        <h2>{{ $adresse->email }}</h2>
+                                        <p>{{ $adresse->adresse }}</p>
+                                        {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
+                                        {!! !empty($adresse->cp) ? $adresse->cp_trim.'<br>' : '' !!}
+                                        {{ $adresse->npa }} {{ $adresse->ville }}<br>
+                                        {{ isset($adresse->pays) ? $adresse->pays->title : '' }}
+
+                                        <?php $person = isset($adresse->user) ? $adresse->user : $adresse; ?>
+                                        <dl>
+                                            @if(!$person->orders->isEmpty())
+                                                <dt>Commandes</dt>
+                                                @foreach($person->orders as $order)
+                                                    <dd>{{ $order->order_no }}</dd>
+                                                @endforeach
+                                            @endif
+
+                                            @if(isset($adresse->user) && !$adresse->user->inscriptions->isEmpty())
+                                                <dt>Inscriptions</dt>
+                                                @foreach($adresse->user->inscriptions as $inscription)
+                                                    <dd>{{ $inscription->inscription_no }}</dd>
+                                                @endforeach
+                                            @endif
+                                        </dl>
+
                                     </div>
                                 </div>
                             @endforeach
                         @endif
 
                     </div>
-                    <div id='right-defaults' class='container_dd'>
-                        <div>There's also the possibility of moving elements around in the same container, changing their position</div>
-                        <div>This is the default use case. You only need to specify the containers you want to use</div>
+                </div>
+                <div class='wrapper'>
+                    <div id='left-defaults' class='container_dd'>
 
                     </div>
-                    <div id='right-defaults2' class='container_dd'>
-                        <div>There's also the possibility of moving elements around in the same container, changing their position</div>
-                        <div>This is the default use case. You only need to specify the containers you want to use</div>
+                    <div id='right-defaults' class='container_dd'>
 
                     </div>
                 </div>
