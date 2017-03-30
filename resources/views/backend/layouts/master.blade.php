@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?=121');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/responsive.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css?=1321');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/dragdrop/dragula.min.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dragdrop.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen-bootstrap.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.tagit.css');?>">
@@ -134,6 +136,9 @@
 <script type="text/javascript" src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
 
+<script type='text/javascript' src="<?php echo secure_asset('backend/js/dragdrop/dragula.js');?>"></script>
+<script type='text/javascript' src="<?php echo secure_asset('backend/js/dragdrop/dragdrop.js');?>"></script>
+
 <!-- Layout and fixes plugins -->
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/enquire.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>
@@ -178,7 +183,6 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/sondage.js');?>"></script>
 
 <!-- Upload plugins -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/$VERSION/dragula.min.js'></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/tree.js');?>"></script>

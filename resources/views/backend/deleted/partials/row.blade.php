@@ -1,10 +1,11 @@
 <tr>
     <td>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="adresses[]" value="{{ $adresse->id }}"> Séléctionner
-            </label>
+
+        <div class="control-inline">
+            <input class="styled-checkbox" name="adresses[]" id="compare_{{ $adresse->id }}" type="checkbox" value="{{ $adresse->id }}">
+            <label for="compare_{{ $adresse->id }}">&nbsp;</label>
         </div>
+
     </td>
     <td>{!! $adresse->user_id > 0 ? '<span class="label label-info">Compte</span>' : '<span class="label label-success">Adresse simple</span>' !!}</td>
     <td>

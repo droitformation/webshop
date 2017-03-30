@@ -33,7 +33,7 @@
 
                                 <thead>
                                 <tr>
-                                    <th class="col-sm-1">Action</th>
+                                    <th class="col-sm-1">Séléctionner</th>
                                     <th class="col-sm-1">Appartient</th>
                                     <th class="col-sm-3">Nom</th>
                                     <th class="col-sm-2">Email</th>
@@ -45,8 +45,8 @@
                                     <?php $adresses = ($group ? $adresses->groupBy($group) : $adresses); ?>
 
                                     @if($group)
-                                        @foreach($adresses as $group => $grouped)
-                                            <tr><td class="bg-warning" colspan="7">{{ $group }}</td></tr>
+                                        @foreach($adresses as $group_by => $grouped)
+                                            <tr><td class="bg-warning" colspan="7"><strong>{{ $group }}:</strong> {{ $group_by }}</td></tr>
                                             @foreach($grouped as $adresse)
                                                 @include('backend.deleted.partials.row', ['adresse' => $adresse])
                                             @endforeach
