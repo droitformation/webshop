@@ -57,7 +57,9 @@
                 <table id="content-table" class="infos">
                     <tr>
                         <td width="20%"><strong class="blue">Date:</strong></td>
-                        <td width="80%">{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
+                        <td width="80%">
+                            {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') :  $facture->created_at->formatLocalized('%d %B %Y') }}
+                        </td>
                     </tr>
                     <tr>
                         <td width="28%"><strong class="blue">Total:</strong></td>
@@ -163,7 +165,10 @@
                     @endif
 
                     <p class="message">{{ $messages['remerciements'] }}</p><br/>
-                    <p class="message">Neuchâtel, le {{ $facture->created_at->formatLocalized('%d %B %Y') }}</p>
+                    <p class="message">
+                        Neuchâtel, le
+                        {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') :  $facture->created_at->formatLocalized('%d %B %Y') }}
+                    </p>
                 </div>
 
             </td>
