@@ -29,20 +29,30 @@
 }
 
 .panel .panel-body.panel-compare {
-    padding: 15px;
+    padding: 10px;
+    border-top: none;
+}
+
+.panel .panel-body.panel-compare .panel-heading{
+    font-size: 13px;
+    line-height: 20px;
+    height: 20px;
 }
 
 .panel-compare h1{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
+    margin-top: 10px;
 }
 
 .panel-compare h2{
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.panel-compare p{
+.panel-compare p,
+.panel-compare dl dd{
     font-size:13px;
     margin-bottom: 0;
 }

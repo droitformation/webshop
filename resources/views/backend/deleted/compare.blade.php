@@ -19,41 +19,15 @@
 
                         @if(!$adresses->isEmpty())
                             @foreach($adresses as $adresse)
-                                <div class="panel panel-default panel_33">
-                                    <div class="panel-body panel-compare">
-
-                                        <h1>{{ $adresse->name }}</h1>
-                                        <h2>{{ $adresse->email }}</h2>
-                                        <p>{{ $adresse->adresse }}</p>
-                                        {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
-                                        {!! !empty($adresse->cp) ? $adresse->cp_trim.'<br>' : '' !!}
-                                        {{ $adresse->npa }} {{ $adresse->ville }}<br>
-                                        {{ isset($adresse->pays) ? $adresse->pays->title : '' }}
-
-                                        <?php $person = isset($adresse->user) ? $adresse->user : $adresse; ?>
-                                        <dl>
-                                            @if(!$person->orders->isEmpty())
-                                                <dt>Commandes</dt>
-                                                @foreach($person->orders as $order)
-                                                    <dd>{{ $order->order_no }}</dd>
-                                                @endforeach
-                                            @endif
-
-                                            @if(isset($adresse->user) && !$adresse->user->inscriptions->isEmpty())
-                                                <dt>Inscriptions</dt>
-                                                @foreach($adresse->user->inscriptions as $inscription)
-                                                    <dd>{{ $inscription->inscription_no }}</dd>
-                                                @endforeach
-                                            @endif
-                                        </dl>
-
-                                    </div>
-                                </div>
+                                <?php $color = $adresse->user_id > 0 ? 'info' : 'success'; ?>
+                                <?php $heading = $adresse->user_id > 0 ? 'Compte + adresse' : 'Adresse simple'; ?>
+                               @include('backend.deleted.partials.adresse', ['adresse' => $adresse, 'color' => $color, 'heading' => $heading])
                             @endforeach
                         @endif
 
                     </div>
                 </div>
+
                 <div class='wrapper'>
                     <div id='left-defaults' class='container_dd'>
 
@@ -62,20 +36,52 @@
 
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form" id="transvaseForm">
+                            <div class="row">
+                                <div class="col-md-2">
+
+                                   <div class="form-group">
+                                       <label for="exampleInputName2"><strong>Transvaser</strong></label>
+                                       <select style="max-height: 80px;" multiple class="form-control">
+                                           <option value="orders">Commandes</option>
+                                           <option value="inscriptions">Inscriptions</option>
+                                           <option value="abos">Abos</option>
+                                       </select>
+                                   </div>
+
+                               </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for=""><strong>Ensuite</strong></label>
+                                        <div class="checkbox">
+                                            <label><input name="action" type="radio" value="delete" checked> &nbsp;Supprimer l'adresse et/ou compte</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input name="action" type="radio" value=""> &nbsp;Garder l'adresse et/ou compte</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input name="action" type="radio" value="attach"> &nbsp;Attacher l'adresse au compte</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="hidden" id="ids" value="">
+                                    <input type="hidden" id="transvase_id" value="">
+                                    <button type="submit" class="btn btn-orange">Transvaser</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-
-    </div>
-    <div class="col-md-6">
-
-
-    </div>
-</div>
 
 @stop
