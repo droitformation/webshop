@@ -207,6 +207,11 @@ class Adresse extends Model {
         return $this->belongsTo('App\Droit\User\Entities\User','user_id');
     }
 
+    public function trashed_user()
+    {
+        return $this->belongsTo('App\Droit\User\Entities\User','user_id')->withTrashed();
+    }
+
     public function specialisations()
     {
         return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation','adresse_specialisations','adresse_id','specialisation_id');

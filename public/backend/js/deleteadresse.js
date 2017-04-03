@@ -25,8 +25,7 @@ $(function() {
 
                         // find row
                         var $row = $('#user_' + user_id);
-                        $row.empty();
-                        $row.append(data);
+                        $row.replaceWith(data);
                     },
                     error  : function(){
                         alert('problème');
@@ -36,5 +35,29 @@ $(function() {
 
         });
 
+        $('body').on("click", '.restoreAdresseBtn' ,function(e) {
+
+            var id = $(this).data('id');
+            var user_id = $(this).data('user_id');
+
+            var answer = confirm('Voulez-vous vraiment restaurer cette adresse?');
+
+            if (answer){
+                $.ajax({
+                    type   : "POST",
+                    url    : base_url + "admin/deletedadresses/restoreAdresse",
+                    data   : { id: id, user_id: user_id, _token: $("meta[name='_token']").attr('content') },
+                    success: function(data) {
+                        // find row
+                        var $row = user_id ? $('#user_' + user_id) : $('#adresse_' + id);
+                        $row.replaceWith(data);
+                    },
+                    error  : function(){
+                        alert('problème');
+                    }
+                });
+            }
+        });
+        
     }
 });

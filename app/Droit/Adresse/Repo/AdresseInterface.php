@@ -30,6 +30,7 @@ interface AdresseInterface {
     public function updateColumn($id , $column , $value);
     public function changeLivraison($adresse_id , $user_id);
 	public function delete($id);
+	public function restore($id);
 	
 	// Ajax call fot tables
 	public function get_ajax( $sEcho , $iDisplayStart , $iDisplayLength , $sSearch = NULL , $iSortCol_0, $sSortDir_0);

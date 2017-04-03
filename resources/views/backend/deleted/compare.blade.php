@@ -46,7 +46,7 @@
 
                                    <div class="form-group">
                                        <label for="exampleInputName2"><strong>Transvaser</strong></label>
-                                       <select style="max-height: 80px;" multiple class="form-control">
+                                       <select name="types[]" style="max-height: 80px;" multiple class="form-control">
                                            <option value="orders">Commandes</option>
                                            <option value="inscriptions">Inscriptions</option>
                                            <option value="abos">Abos</option>
@@ -66,11 +66,14 @@
                                         <div class="checkbox">
                                             <label><input name="action" type="radio" value="attach"> &nbsp;Attacher l'adresse au compte</label>
                                         </div>
+                                        <div class="checkbox">
+                                            <label><input name="action" type="radio" value="attachdelete"> &nbsp;Transvaser l'adresse et supprimer le compte restant</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="hidden" id="ids" value="">
-                                    <input type="hidden" id="transvase_id" value="">
+                                    <input type="hidden" name="ids" id="ids" value="">
+                                    <input type="hidden" name="transvase_id" id="transvase_id" value="">
                                     <button type="submit" class="btn btn-orange">Transvaser</button>
                                 </div>
                             </div>

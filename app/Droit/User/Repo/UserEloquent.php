@@ -27,6 +27,10 @@ class UserEloquent implements UserInterface{
         return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes'])->findOrFail($id);
     }
 
+    public function findWithTrashed($id){
+        return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes'])->withTrashed()->findOrFail($id);
+    }
+
     public function findByEmail($email)
     {
         $exist = $this->user->where('email', 'like', '%'.$email.'%')->get();

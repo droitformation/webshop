@@ -27,18 +27,21 @@
             <div class="panel-body">
 
                 <div class="table-responsive">
+                    <p class="text-success"><i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;Adresse active</p>
+                    <p class="text-warning"><i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;Adresse supprimée</p>
+
                     @if(!$adresses->isEmpty())
                         <form target="_blank" action="{{ url('admin/deletedadresses/compare') }}" method="post">{!! csrf_field() !!}
                             <table class="table" style="margin-bottom: 0px;" >
-
                                 <thead>
                                 <tr>
                                     <th class="col-sm-1">Séléctionner</th>
                                     <th class="col-sm-1">Appartient</th>
                                     <th class="col-sm-2">Nom</th>
-                                    <th class="col-sm-2">Email</th>
+                                    <th class="col-sm-1">Email</th>
                                     <th class="col-sm-3">Adresse</th>
                                     <th class="col-sm-3">Possède</th>
+                                    <th class="col-sm-1">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="selects" id="searchTable">
@@ -50,8 +53,9 @@
                                         @foreach($grouped as $adresse)
 
                                             <?php $partial = $adresse->user_id > 0 ? 'user' : 'adresse'; ?>
+                                            <?php $user    = $adresse->user_id > 0 ? $adresse->trashed_user : null; ?>
 
-                                            @include('backend.deleted.partials.'.$partial.'-row', ['adresse' => $adresse])
+                                            @include('backend.deleted.partials.'.$partial.'-row', ['adresse' => $adresse, 'user' => $user])
                                         @endforeach
                                     @endforeach
 

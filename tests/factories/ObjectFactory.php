@@ -417,6 +417,18 @@ class ObjectFactory
         ]);
     }
 
+    public function makeAbonnementForAdresse($adresse ,$abo = null)
+    {
+        if(!$abo){
+            $abo = $this->makeAbo();
+        }
+
+        return factory(\App\Droit\Abo\Entities\Abo_users::class)->create([
+            'abo_id'         => $abo->id,
+            'adresse_id'     => $adresse->id,
+        ]);
+    }
+
     public function abonnementFacture($abonnement)
     {
         $abonnement->factures()->create([

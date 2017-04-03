@@ -6,14 +6,14 @@ use App\Droit\Adresse\Worker\AdresseWorkerInterface;
 
 class AdresseWorker implements AdresseWorkerInterface{
 
-    protected $action;
-    protected $items;
+    public $action;
+    public $types = ['orders','inscriptions','abos'];
 
     protected $adresse;
     protected $user;
 
-    protected $recipient;
-    protected $fromadresses;
+    public $recipient;
+    public $fromadresses = [];
 
     public function __construct(AdresseInterface $adresse, UserInterface $user)
     {
@@ -28,9 +28,9 @@ class AdresseWorker implements AdresseWorkerInterface{
         return $this;
     }
 
-    public function setItems($items)
+    public function setTypes($types)
     {
-        $this->items = $items;
+        $this->types = $types;
 
         return $this;
     }
@@ -56,9 +56,9 @@ class AdresseWorker implements AdresseWorkerInterface{
         return $this;
     }
 
-    public function getAdresses($ids)
+    public function getAdresses()
     {
-        return $this->adresse->getMultiple($ids);
+        return $this->adresse->getMultiple($this->fromadresses);
     }
 
     public function transvase()
@@ -72,6 +72,59 @@ class AdresseWorker implements AdresseWorkerInterface{
         // if items
             // get all items from fromadresses and attach to user
         
+    }
+
+    /*
+     * Set from adresses
+     * Set types
+     * Reassign
+     * */
+    public function reassignFor($recipient, $delete = true){
+
+        $adresses = $this->adresse->getMultiple($this->fromadresses);
+
+        $adresses->map(function ($adresse, $key) use ($recipient, $delete) {
+            $this->reassign($adresse, $recipient);
+
+            if($this->action == 'delete'){
+                $adresse->delete();
+            }
+
+            if($this->action == 'attach'){
+                $adresse->user_id = $recipient->id;
+                $adresse->type = 2;
+                $adresse->save();
+            }
+
+            if($this->action == 'attachdelete'){
+                $user = isset($adresse->user) ? $adresse->user->delete() : null;
+            }
+        });
+    }
+
+    public function reassign($model, $recipient)
+    {
+        foreach($this->types as $type){
+            if(!$model->$type->isEmpty()) {
+                foreach($model->$type as $item) {
+
+                    if($type == 'orders'){
+                        $item->adresse_id = null;
+                        $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
+                    }
+
+                    if($type == 'abos'){
+                        $item->adresse_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->adresse_contact->id : $recipient->id);
+                    }
+
+                    if($type == 'inscriptions'){
+                        $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
+                    }
+
+                    $item->save();
+                }
+            }
+        }
     }
 
     public function prepareTerms($terms, $type)

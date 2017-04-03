@@ -268,7 +268,19 @@ class AdresseEloquent implements AdresseInterface{
     {
         $adresse = $this->adresse->find($id);
 
-        return $adresse->delete();
+		if($adresse){
+			return $adresse->delete();
+		}
+
+     	return true;
+    }
+
+    public function restore($id)
+    {
+        $restore = $this->adresse->withTrashed()->find($id);
+        $restore->restore();
+
+        return $restore;
     }
 
     /**
@@ -299,7 +311,7 @@ class AdresseEloquent implements AdresseInterface{
 
 	public function getDeleted($terms = [], $operator = null)
     {
-        $adresse = $this->adresse->onlyTrashed()->with(['orders','abos','user']);
+        $adresse = $this->adresse->withTrashed()->with(['orders','abos','user']);
 
 		if(!empty($terms)) {
 			$operator = ($operator == 'and' ? 'where' : 'orWhere');
@@ -315,12 +327,12 @@ class AdresseEloquent implements AdresseInterface{
 
 	public function getMultiple($ids)
 	{
-		return $this->adresse->withTrashed()->whereIn('id',$ids)->orderBy('last_name','ASC')->get();
+		return $this->adresse->withTrashed()->with('trashed_user')->whereIn('id',$ids)->orderBy('last_name','ASC')->get();
 	}
 
     public function assignOrdersToUser($id, $user_id)
     {
-        $adresse = $this->adresse->find($id);
+        $adresse = $this->adresse->withTrashed()->find($id);
 
         if(!$adresse)  {
             return false;
