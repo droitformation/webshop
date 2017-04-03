@@ -223,6 +223,11 @@ class User extends Authenticatable {
         return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id');
     }
 
+    public function adresses_and_trashed()
+    {
+        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id')->withTrashed();
+    }
+
     public function orders()
     {
         return $this->hasMany('App\Droit\Shop\Order\Entities\Order','user_id', 'id');

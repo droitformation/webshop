@@ -26,6 +26,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerUserService();
         $this->registerRoleService();
         $this->registerAdresseService();
+        $this->registerAdresseWorkerService();
         $this->registerCiviliteService();
         $this->registerCantonService();
         $this->registerPaysService();
@@ -64,6 +65,20 @@ class UserServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Adresse\Repo\AdresseInterface', function()
         {
             return new \App\Droit\Adresse\Repo\AdresseEloquent(new \App\Droit\Adresse\Entities\Adresse);
+        });
+    }
+
+    /**
+     * Adresse worker
+     */
+    protected function registerAdresseWorkerService(){
+
+        $this->app->singleton('App\Droit\Adresse\Worker\AdresseWorkerInterface', function()
+        {
+            return new \App\Droit\Adresse\Worker\AdresseWorker(
+                \App::make('App\Droit\Adresse\Repo\AdresseInterface'),
+                \App::make('App\Droit\User\Repo\UserInterface')
+            );
         });
     }
 

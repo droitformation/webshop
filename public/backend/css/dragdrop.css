@@ -66,7 +66,6 @@
     width: 90%;
 }
 
-
 /*
  * note that styling gu-mirror directly is a bad practice because it's too generic.
  * you're better off giving the draggable elements a unique class and styling that directly!
@@ -123,12 +122,22 @@
     color: #8d8d8d;
 }
 
+#left-defaults::after{
+    content: '» ';
+    font-size: 40px;
+    position: absolute;
+    right: 5px;
+    color: #aaa;
+    top: -5px;
+}
+
 #left-defaults, #right-defaults,#middle-defaults{
     background-color: #fff;
     border-bottom: 1px solid #dddddd;
     border-left: 1px solid #dddddd;
     border-right: 1px solid #dddddd;
     padding: 10px;
+    position: relative;
 }
 
 #middle-defaults{

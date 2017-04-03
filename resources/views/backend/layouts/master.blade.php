@@ -181,6 +181,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/member.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/blocs.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/sondage.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/deleteadresse.js');?>"></script>
 
 <!-- Upload plugins -->
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/manager.js');?>"></script>
