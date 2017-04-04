@@ -85,19 +85,20 @@ class AdresseWorker implements AdresseWorkerInterface{
 
         $adresses->map(function ($adresse, $key) use ($recipient, $delete) {
             $this->reassign($adresse, $recipient);
-
+            
             if($this->action == 'delete'){
-                $adresse->delete();
+                $this->adresse->delete($adresse->id);
             }
 
             if($this->action == 'attach'){
-                $adresse->user_id = $recipient->id;
-                $adresse->type = 2;
-                $adresse->save();
+                $type = (!$recipient->adresses->isEmpty() && $recipient->adresses->count >= 1) ? 2 : 1;;
+                $this->adresse->update(['id' => $adresse->id, 'user_id' => $adresse->user_id, 'type' => $type]);
             }
 
-            if($this->action == 'attachdelete'){
-                $user = isset($adresse->user) ? $adresse->user->delete() : null;
+            $user = isset($adresse->user) ? $adresse->user : null;
+            
+            if($this->action == 'attachdelete' && $user){
+                $this->adresse->delete($user->id);
             }
         });
     }
