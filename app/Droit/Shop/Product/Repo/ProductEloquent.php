@@ -129,7 +129,7 @@ class ProductEloquent implements ProductInterface{
             'hidden'          => 1,
             'price'           => $data['price'] * 100,
             'is_downloadable' => (isset($data['is_downloadable']) ? $data['is_downloadable'] : null),
-            'url'             => (isset($data['url']) ? $data['url'] : null),
+            'url'             => (isset($data['url']) && !empty($data['url']) ? $data['url'] : null),
             'abo_id'          => (isset($data['abo_id']) ? $data['abo_id'] : null),
             'rang'            => (isset($data['rang']) && $data['rang'] > 0 ? $data['rang'] : 0),
             'created_at'      => date('Y-m-d G:i:s'),
@@ -157,6 +157,11 @@ class ProductEloquent implements ProductInterface{
 
         $product->fill($data);
         $product->price = $data['price'] * 100;
+
+        if(isset($data['url']))
+        {
+            $product->url = (!empty($data['url']) ? $data['url'] : null);
+        }
 
         $product->save();
 
