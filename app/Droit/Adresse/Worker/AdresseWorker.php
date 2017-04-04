@@ -79,26 +79,31 @@ class AdresseWorker implements AdresseWorkerInterface{
      * Set types
      * Reassign
      * */
-    public function reassignFor($recipient, $delete = true){
+    public function reassignFor($recipient){
 
         $adresses = $this->adresse->getMultiple($this->fromadresses);
 
-        $adresses->map(function ($adresse, $key) use ($recipient, $delete) {
+        $adresses->map(function ($adresse, $key) use ($recipient) {
+
+            // Re assign types for adresse
             $this->reassign($adresse, $recipient);
-            
-            if($this->action == 'delete'){
+
+            // Re assign types for eventual user
+            $adresseuser = isset($adresse->user) ? $adresse->user : null;
+
+            if(in_array($this->action,['delete','attachdelete'])){
                 $this->adresse->delete($adresse->id);
             }
 
-            if($this->action == 'attach'){
-                $type = (!$recipient->adresses->isEmpty() && $recipient->adresses->count >= 1) ? 2 : 1;;
-                $this->adresse->update(['id' => $adresse->id, 'user_id' => $adresse->user_id, 'type' => $type]);
+            if(in_array($this->action,['attach','attachdelete'])){
+                $type = (!$recipient->adresses->isEmpty() && $recipient->adresses->count() >= 1) ? 2 : 1;;
+                $this->adresse->update(['id' => $adresse->id, 'user_id' => $recipient->id, 'type' => $type]);
             }
 
-            $user = isset($adresse->user) ? $adresse->user : null;
+
             
-            if($this->action == 'attachdelete' && $user){
-                $this->adresse->delete($user->id);
+            if($this->action == 'attachdelete' && $adresseuser){
+                $this->adresse->delete($adresseuser->id);
             }
         });
     }
@@ -123,6 +128,9 @@ class AdresseWorker implements AdresseWorkerInterface{
                     }
 
                     $item->save();
+                    echo '<pre>';
+                    print_r($item);
+                    echo '</pre>';exit();
                 }
             }
         }

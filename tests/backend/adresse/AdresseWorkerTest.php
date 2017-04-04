@@ -13,6 +13,9 @@ class AdresseWorkerTest extends BrowserKitTest {
     {
         parent::setUp();
 
+        $this->user = Mockery::mock('App\Droit\User\Repo\UserInterface');
+        $this->app->instance('App\Droit\User\Repo\UserInterface', $this->user);
+
         $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
@@ -28,7 +31,7 @@ class AdresseWorkerTest extends BrowserKitTest {
         parent::tearDown();
     }
 
-    public function testAdressesWorkerSet()
+  /*  public function testAdressesWorkerSet()
     {
         $worker = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
         $worker->setTypes(['abos']);
@@ -57,7 +60,7 @@ class AdresseWorkerTest extends BrowserKitTest {
         // The user has no orders
         $this->assertTrue($user->orders->isEmpty());
 
-        $worker->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
+        $worker->setAction('delete')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
 
         $user->load('orders');
 
@@ -80,8 +83,7 @@ class AdresseWorkerTest extends BrowserKitTest {
         $make     = new \tests\factories\ObjectFactory();
         $worker   = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
 
-        $adresse1 = $make->adresse();
-
+        $adresse1   = $make->adresse();
         $abonnement = $make->makeAbonnementForAdresse($adresse1);
 
         $user = $make->makeUser();
@@ -96,5 +98,103 @@ class AdresseWorkerTest extends BrowserKitTest {
         $user->load('adresses.abos');
 
         $this->assertTrue($user->adresse_contact->abos->contains('id',$abonnement->id));
+    }*/
+
+    /*
+     * With mocks repo
+     * */
+
+   /* public function testReassignOrdersToUserFromAdressesDeleteMocks()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+
+        $adresse1 = $make->adresse();
+        $adresse2 = $make->adresse();
+
+        $user = $make->makeUser();
+
+        $order1 = $make->makeAdresseOrder($adresse1->id);
+        $order2 = $make->makeAdresseOrder($adresse2->id);
+
+        // Mocks
+        $mockadresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
+        $mockuser    = Mockery::mock('App\Droit\User\Repo\UserInterface');
+
+        $worker = new \App\Droit\Adresse\Worker\AdresseWorker($mockadresse,$mockuser);
+
+        $mockadresse->shouldReceive('getMultiple')->once()->andReturn(collect([$adresse1, $adresse2]));
+        $mockadresse->shouldReceive('delete')->twice();
+
+        $worker->setAction('delete')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
+
+    }
+
+    public function testReassignOrdersToUserFromAdressesAttachMocks()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+
+        $adresse1 = $make->adresse();
+        $adresse2 = $make->adresse();
+
+        $user = $make->makeUser();
+
+        $order1 = $make->makeAdresseOrder($adresse1->id);
+        $order2 = $make->makeAdresseOrder($adresse2->id);
+
+        // Mocks
+        $mockadresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
+        $mockuser    = Mockery::mock('App\Droit\User\Repo\UserInterface');
+
+        $worker = new \App\Droit\Adresse\Worker\AdresseWorker($mockadresse,$mockuser);
+
+        $mockadresse->shouldReceive('getMultiple')->once()->andReturn(collect([$adresse1, $adresse2]));
+        $mockadresse->shouldReceive('update')->twice();
+
+        $worker->setAction('attach')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
+
+    }*/
+
+    public function testReassignOrdersToUserFromAdressesAttachDeleteMocks()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+
+        $recipient = $make->makeUser();
+        $donor     = $make->makeUser();
+
+        $orders   = $make->order(2, $donor->id);
+        $adresses = $donor->adresses;
+
+        // Mocks
+/*        $mockadresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
+        $mockuser    = Mockery::mock('App\Droit\User\Repo\UserInterface');
+
+        $worker = new \App\Droit\Adresse\Worker\AdresseWorker($mockadresse,$mockuser);
+
+        $mockadresse->shouldReceive('getMultiple')->once()->andReturn($donor->adresses);
+        $mockadresse->shouldReceive('update')->twice();*/
+
+        $worker = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+
+        $worker->setAction('attachdelete')->setTypes(['orders'])->setFromAdresses([$adresses->pluck('id')->all()])->reassignFor($recipient);
+
+        // The recipient has now the orders
+        $recipient->load('orders');
+   
+        $orders->map(function ($order, $key)  use ($recipient){
+            $this->assertTrue($recipient->orders->contains($order->id));
+        });
+
+        // The adresses are trashed
+        $adresses->map(function ($adresse, $key) {
+            $this->assertTrue($adresse->fresh()->trashed());
+        });
+
+        // The user is trashed
+        $this->assertTrue($donor->fresh()->trashed());
+    }
+
+    public function testReassignAndUpdate()
+    {
+        
     }
 }

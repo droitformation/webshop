@@ -11,7 +11,7 @@ namespace App\Droit\Adresse\Worker;
 interface AdresseWorkerInterface
 {
     public function fetchUser($adresse_id);
-    public function reassignFor($recipient, $delete = true);
+    public function reassignFor($recipient);
     
     public function prepareTerms($terms, $type);
     public function authorized($column,$type);

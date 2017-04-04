@@ -240,7 +240,7 @@ class AdresseEloquent implements AdresseInterface{
 	
 	public function update(array $data)
     {
-		$adresse = $this->adresse->findOrFail($data['id']);	
+		$adresse = $this->adresse->withTrashed()->findOrFail($data['id']);
 		
 		if( ! $adresse )
 		{
