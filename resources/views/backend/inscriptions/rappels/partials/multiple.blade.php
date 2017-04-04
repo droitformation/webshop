@@ -9,7 +9,7 @@
             </dl>
         @endif
     </td>
-    <td>{{ $group->price }} CHF</td>
+    <td>{{ $group->price_cents }} CHF</td>
     <td>
 
         @if($group->doc_facture)
