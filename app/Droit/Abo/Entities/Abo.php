@@ -41,11 +41,11 @@ class Abo extends Model{
 
     public function getCurrentProductAttribute()
     {
-        $this->load('products');
+        $this->load('active_products');
 
-        if(!$this->products->isEmpty())
+        if(!$this->active_products->isEmpty())
         {
-            $products = $this->products->sortByDesc('created_at');
+            $products = $this->active_products->sortByDesc('created_at');
 
             return $products->first();
         }
@@ -56,6 +56,11 @@ class Abo extends Model{
     public function products()
     {
         return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')->orderBy('created_at','desc');
+    }
+
+    public function active_products()
+    {
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')->where('hidden','=',0)->orderBy('created_at','desc');
     }
 
     public function abonnements()
