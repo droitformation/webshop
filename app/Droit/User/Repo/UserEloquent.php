@@ -176,7 +176,11 @@ class UserEloquent implements UserInterface{
 
         $user = $this->user->find($id);
 
-        return $user->delete($id);
+        if($user){
+            return $user->delete($id);
+        }
+
+        return true;
     }
 
     public function restore($id){

@@ -2,13 +2,15 @@
     <div class="panel-body panel-compare">
         <div class="panel-heading">{{ $heading }} <span class="pull-right badge">{{ $adresse->id }}</span></div>
 
-        <h1>{{ $adresse->name }}</h1>
-        <h2>{{ $adresse->email }}</h2>
-        <p>{{ $adresse->adresse }}</p>
-        {!! !empty($adresse->complement) ? '<p>'.$adresse->complement.'</p>' : '' !!}
-        {!! !empty($adresse->cp) ? '<p>'.$adresse->cp_trim.'</p>' : '' !!}
-        <p>{{ $adresse->npa }} {{ $adresse->ville }}</p>
-        {!! isset($adresse->pays) ? '<p>'.$adresse->pays->title.'</p>' : '' !!}
+        <div class="{{ $adresse->trashed() ? 'isTrashed' : 'isNotTrashed' }}">
+            <h1>{{ $adresse->name }}</h1>
+            <h2>{{ $adresse->email }}</h2>
+            <p>{{ $adresse->adresse }}</p>
+            {!! !empty($adresse->complement) ? '<p>'.$adresse->complement.'</p>' : '' !!}
+            {!! !empty($adresse->cp) ? '<p>'.$adresse->cp_trim.'</p>' : '' !!}
+            <p>{{ $adresse->npa }} {{ $adresse->ville }}</p>
+            {!! isset($adresse->pays) ? '<p>'.$adresse->pays->title.'</p>' : '' !!}
+        </div>
 
         <?php $person = isset($adresse->user) ? $adresse->user : $adresse; ?>
 

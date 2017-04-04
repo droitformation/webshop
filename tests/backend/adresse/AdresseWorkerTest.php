@@ -13,9 +13,6 @@ class AdresseWorkerTest extends BrowserKitTest {
     {
         parent::setUp();
 
-        $this->user = Mockery::mock('App\Droit\User\Repo\UserInterface');
-        $this->app->instance('App\Droit\User\Repo\UserInterface', $this->user);
-
         $user = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
@@ -31,7 +28,7 @@ class AdresseWorkerTest extends BrowserKitTest {
         parent::tearDown();
     }
 
-  /*  public function testAdressesWorkerSet()
+    public function testAdressesWorkerSet()
     {
         $worker = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
         $worker->setTypes(['abos']);
@@ -75,7 +72,36 @@ class AdresseWorkerTest extends BrowserKitTest {
         // The adresse are trashed
         $this->assertTrue($adresse1->fresh()->trashed());
         $this->assertTrue($adresse2->fresh()->trashed());
+    }
 
+    public function testReassignOrdersToUserFromUser()
+    {
+        $make      = new \tests\factories\ObjectFactory();
+        
+        $recipient = $make->makeUser();
+        $donor     = $make->makeUser();
+        $orders    = $make->order(2, $donor->id);
+
+        $worker = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+
+        // The user has no orders
+        $this->assertTrue($recipient->orders->isEmpty());
+
+        $worker->setAction('delete')->setTypes(['orders'])->setFromAdresses([$donor->adresses->pluck('id')->all()])->reassignFor($recipient);
+
+        $recipient->load('orders');
+
+        $orders->map(function ($order, $key)  use ($recipient){
+            $this->assertTrue($recipient->orders->contains($order->id));
+        });
+
+        // The adresses are trashed
+        $donor->adresses->map(function ($adresse, $key) {
+            $this->assertTrue($adresse->fresh()->trashed());
+        });
+
+        // The user is trashed
+        $this->assertTrue($donor->fresh()->trashed());
     }
 
     public function testReassignAbosToUserContactAdress()
@@ -98,13 +124,13 @@ class AdresseWorkerTest extends BrowserKitTest {
         $user->load('adresses.abos');
 
         $this->assertTrue($user->adresse_contact->abos->contains('id',$abonnement->id));
-    }*/
+    }
 
     /*
      * With mocks repo
      * */
 
-   /* public function testReassignOrdersToUserFromAdressesDeleteMocks()
+    public function testReassignOrdersToUserFromAdressesDeleteMocks()
     {
         $make     = new \tests\factories\ObjectFactory();
 
@@ -152,7 +178,7 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $worker->setAction('attach')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
 
-    }*/
+    }
 
     public function testReassignOrdersToUserFromAdressesAttachDeleteMocks()
     {
@@ -165,36 +191,37 @@ class AdresseWorkerTest extends BrowserKitTest {
         $adresses = $donor->adresses;
 
         // Mocks
-/*        $mockadresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
+        $mockadresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
         $mockuser    = Mockery::mock('App\Droit\User\Repo\UserInterface');
 
         $worker = new \App\Droit\Adresse\Worker\AdresseWorker($mockadresse,$mockuser);
 
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn($donor->adresses);
-        $mockadresse->shouldReceive('update')->twice();*/
-
-        $worker = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+        $mockadresse->shouldReceive('update')->once();
+        $mockadresse->shouldReceive('delete')->once();
+        $mockuser->shouldReceive('delete')->once();
 
         $worker->setAction('attachdelete')->setTypes(['orders'])->setFromAdresses([$adresses->pluck('id')->all()])->reassignFor($recipient);
-
-        // The recipient has now the orders
-        $recipient->load('orders');
-   
-        $orders->map(function ($order, $key)  use ($recipient){
-            $this->assertTrue($recipient->orders->contains($order->id));
-        });
-
-        // The adresses are trashed
-        $adresses->map(function ($adresse, $key) {
-            $this->assertTrue($adresse->fresh()->trashed());
-        });
-
-        // The user is trashed
-        $this->assertTrue($donor->fresh()->trashed());
     }
 
-    public function testReassignAndUpdate()
+    /*
+     * Helpers collection
+     * */
+    public function testPartitionTypeAdresseOrUser()
     {
-        
+        $worker  = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+        $make    = new \tests\factories\ObjectFactory();
+
+        $user     = $make->makeUser();
+        $adresse1 = $make->adresse();
+        $adresse2 = $make->adresse();
+
+        $result = $worker->getList(collect([$user->adresse_contact,$adresse1,$adresse2]));
+
+        $this->assertEquals($result->pluck('id'),collect([$user->adresse_contact,$adresse1,$adresse2])->pluck('id'));
+
+        $result = $worker->getList(collect([$user->adresse_contact,$adresse1,$adresse2]), 'user');
+
+        $this->assertEquals($result->pluck('id'),collect([$user])->pluck('id'));
     }
 }

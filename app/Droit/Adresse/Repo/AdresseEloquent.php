@@ -203,6 +203,10 @@ class AdresseEloquent implements AdresseInterface{
 		return $this->adresse->with(['user','orders'])->find($id);
 	}
 
+	public function findWithTrashed($id){
+		return $this->adresse->with(['user','orders'])->withTrashed()->find($id);
+	}
+
 	public function create(array $data)
 	{
 		$adresse = $this->adresse->create(array(

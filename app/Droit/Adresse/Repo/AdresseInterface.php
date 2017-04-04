@@ -23,6 +23,7 @@ interface AdresseInterface {
 	// Deleted adresses filters
 	public function getDeleted($terms = [], $operator = null);
 	public function getMultiple($ids);
+	public function findWithTrashed($id);
 	
 	// function for gather infos on adresse to show
 	public function create(array $data);

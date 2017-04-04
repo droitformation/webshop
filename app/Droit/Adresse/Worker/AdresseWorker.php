@@ -6,7 +6,7 @@ use App\Droit\Adresse\Worker\AdresseWorkerInterface;
 
 class AdresseWorker implements AdresseWorkerInterface{
 
-    public $action;
+    public $action = null;
     public $types = ['orders','inscriptions','abos'];
 
     protected $adresse;
@@ -47,7 +47,7 @@ class AdresseWorker implements AdresseWorkerInterface{
         $recipient = $this->adresse->find($adresse_id);
 
         // we have a user
-        if(!$recipient && isset($recipient->user)){
+        if(!$recipient && !isset($recipient->user)){
             throw new \App\Exceptions\UserNotExistException('Cet utilisateur n\'existe pas');
         }
 
@@ -79,39 +79,50 @@ class AdresseWorker implements AdresseWorkerInterface{
      * Set types
      * Reassign
      * */
-    public function reassignFor($recipient){
+    public function reassignFor($recipient, $compare = true){
 
         $adresses = $this->adresse->getMultiple($this->fromadresses);
 
-        $adresses->map(function ($adresse, $key) use ($recipient) {
+        // mergr all adresse and users, only for compare
+        if($compare){
+            $adresses = $this->getList($adresses, $type = 'adresse');
+            $accounts = $this->getList($adresses, $type = 'user');
+            $adresses   = $adresses->merge($accounts)->reject(function ($value, $key) {
+                return !$value;
+            });
+        }
 
-            // Re assign types for adresse
-            $this->reassign($adresse, $recipient);
+        $adresses->map(function ($model, $key) use ($recipient) {
 
-            // Re assign types for eventual user
-            $adresseuser = isset($adresse->user) ? $adresse->user : null;
+            // Re assign types for model
+            $this->reassign($model, $recipient);
 
-            if(in_array($this->action,['delete','attachdelete'])){
-                $this->adresse->delete($adresse->id);
-            }
-
-            if(in_array($this->action,['attach','attachdelete'])){
-                $type = (!$recipient->adresses->isEmpty() && $recipient->adresses->count() >= 1) ? 2 : 1;;
-                $this->adresse->update(['id' => $adresse->id, 'user_id' => $recipient->id, 'type' => $type]);
-            }
-
-
-            
-            if($this->action == 'attachdelete' && $adresseuser){
-                $this->adresse->delete($adresseuser->id);
+            if($this->action){
+                $this->action($model, $recipient);
             }
         });
+    }
+
+    public function action($model, $recipient)
+    {
+        $user = $model instanceof \App\Droit\User\Entities\User ? $model : null;
+
+        $type = $user ? 'user' : 'adresse';
+
+        if(in_array($this->action,['delete','attachdelete'])){
+            $this->$type->delete($model->id);
+        }
+
+        if(in_array($this->action,['attach','attachdelete']) && !$user){
+            $type = (!$recipient->adresses->isEmpty() && $recipient->adresses->count() >= 1) ? 2 : 1;;
+            $this->adresse->update(['id' => $model->id, 'user_id' => $recipient->id, 'type' => $type]);
+        }
     }
 
     public function reassign($model, $recipient)
     {
         foreach($this->types as $type){
-            if(!$model->$type->isEmpty()) {
+            if(isset($model->$type) && !$model->$type->isEmpty()) {
                 foreach($model->$type as $item) {
 
                     if($type == 'orders'){
@@ -128,12 +139,27 @@ class AdresseWorker implements AdresseWorkerInterface{
                     }
 
                     $item->save();
-                    echo '<pre>';
-                    print_r($item);
-                    echo '</pre>';exit();
                 }
             }
         }
+    }
+
+    public function getList($adresses, $type = 'adresse')
+    {
+        return $adresses->map(function ($adresse, $key) use ($type) {
+
+            $user = isset($adresse->user) ? $adresse->user : null;
+
+            if($type == 'adresse'){
+                $user = isset($adresse->user) ? $adresse->user : null;
+                return  $user ? $user->adresses : collect([$adresse]);
+            }
+
+            return $user ? $user : null;
+
+        })->flatten(1)->reject(function ($value, $key) {
+            return !$value;
+        });
     }
 
     public function prepareTerms($terms, $type)
