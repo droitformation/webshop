@@ -123,6 +123,15 @@ class Generate{
         return $this->getType() == 'group' ? $this->model->inscriptions->pluck('participant.name','inscription_no')->all() : $this->model->inscription_no;
     }
 
+    public function getDate()
+    {
+        if($this->getType() == 'group' && !$this->model->inscriptions->isEmpty()){
+            return $this->model->inscriptions->first()->created_at->formatLocalized('%d %B %Y');
+        }
+        
+        return $this->model->created_at->formatLocalized('%d %B %Y');
+    }
+
     public function getId()
     {
         return $this->model->id;

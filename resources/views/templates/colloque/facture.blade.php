@@ -94,7 +94,7 @@
                 <td valign="top">
                     <p class="message">{{ $messages['remerciements'] }}</p>
                     <p class="message">Neuchâtel, le
-                        {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') :  $generate->getFacture()->created_at->formatLocalized('%d %B %Y') }}
+                        {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') : $generate->getDate() }}
                     </p>
                 </td>
             </tr>
