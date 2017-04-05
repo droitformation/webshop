@@ -17,6 +17,7 @@ interface UserInterface {
     // Deleted adresses filters
     public function getDeleted($terms = [], $operator = null);
     public function findWithTrashed($id);
+    public function getMultiple($ids);
 
     public function get_ajax($draw, $start, $length, $sortCol, $sortDir, $search);
     public function findByUserNameOrCreate($userData);

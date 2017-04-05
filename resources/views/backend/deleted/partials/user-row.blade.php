@@ -4,11 +4,18 @@
 @if($user)
     <tr class="{{ $user->trashed() ? 'isTrashed' : 'isNotTrashed' }}" id="user_{{ $user->id }}">
         <td>
-            @if($adresse)
+            @if($user->adresse_contact)
+            <div class="control-inline">
+                <input class="styled-checkbox" name="adresses[]" id="compare_{{ $user->adresse_contact->id }}" type="checkbox" value="{{ $user->adresse_contact->id }}">
+                <label for="compare_{{ $user->adresse_contact->id }}">&nbsp;</label>
+            </div>
+            @elseif($adresse)
                 <div class="control-inline">
                     <input class="styled-checkbox" name="adresses[]" id="compare_{{ $adresse->id }}" type="checkbox" value="{{ $adresse->id }}">
                     <label for="compare_{{ $adresse->id }}">&nbsp;</label>
                 </div>
+            @else
+                <p>Ne peut pas être comparé, aucune adresse de contact</p>
             @endif
         </td>
         <td><span class="label label-info">Compte {{ $user->id }}</span></td>
@@ -28,15 +35,7 @@
 
                         <div class="clearfix"></div>
 
-                        <address>
-                            <strong>{{ isset($adresse->civilite) ? $adresse->civilite->title : '' }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>
-                            {!! !empty($adresse->company) ? '<p>'.$adresse->company.'</p>' : ''  !!}
-                            {{ $adresse_user->adresse }}<br>
-                            {!! !empty($adresse_user->complement) ? $adresse_user->complement.'<br>' : '' !!}
-                            {!! !empty($adresse_user->cp) ? $adresse_user->cp_trim.'<br>' : '' !!}
-                            {{ $adresse_user->npa }} {{ $adresse_user->ville }}<br>
-                            {{ isset($adresse_user->pays) ? $adresse_user->pays->title : '' }}
-                        </address>
+                        @include('backend.deleted.partials.adresse-bloc', ['adresse' => $adresse_user])
 
                         @if($adresse_user->trashed())
                         <button type="button"

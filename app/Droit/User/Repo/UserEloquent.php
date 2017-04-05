@@ -119,6 +119,11 @@ class UserEloquent implements UserInterface{
         return $user->orderBy('last_name','ASC')->take(20)->get();
     }
 
+    public function getMultiple($ids)
+    {
+        return $this->user->withTrashed()->with(['adresses_and_trashed'])->whereIn('id',$ids)->orderBy('last_name','ASC')->get();
+    }
+
     public function create(array $data){
 
         $user = $this->user->create(array(

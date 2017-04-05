@@ -6,6 +6,7 @@
     height: 200px;
     vertical-align: top;
 }
+
 .container_dd {
     display: table-cell;
     background-color: rgba(255, 255, 255, 0.2);
@@ -62,7 +63,9 @@
 }
 
 #left-defaults .panel_33,
-#right-defaults .panel_33{
+#right-defaults .panel_33,
+#normal .panel_33
+{
     width: 90%;
 }
 
@@ -131,7 +134,7 @@
     top: -5px;
 }
 
-#left-defaults, #right-defaults,#middle-defaults{
+#left-defaults, #right-defaults,#middle-defaults, .normal-inactiv{
     background-color: #fff;
     border-bottom: 1px solid #dddddd;
     border-left: 1px solid #dddddd;
@@ -156,17 +159,21 @@
     text-align: center;
 }
 
-.well-sm.isNotTrashed{
+.well-sm.isNotTrashed, div.isNotTrashed{
     background: #ebfed8;
 }
 
-tr.isTrashed td{
+.div.isTrashed ,tr.isTrashed td{
     background: #f5f5f5;
 }
 
-.well-sm.isTrashed{
+.well-sm.isTrashed, div.isTrashed{
     background: #faf2d4;
     opacity: 0.75;
+}
+
+.div.isTrashed, div.isNotTrashed{
+    padding: 3px 5px;
 }
 
 .well address{

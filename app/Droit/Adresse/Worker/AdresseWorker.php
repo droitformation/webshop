@@ -42,16 +42,10 @@ class AdresseWorker implements AdresseWorkerInterface{
         return $this;
     }
 
-    public function fetchUser($adresse_id)
+    public function removeSession()
     {
-        $recipient = $this->adresse->find($adresse_id);
-
-        // we have a user
-        if(!$recipient && !isset($recipient->user)){
-            throw new \App\Exceptions\UserNotExistException('Cet utilisateur n\'existe pas');
-        }
-
-        $this->recipient = $recipient->user;
+        session()->forget('deleted');
+        session()->forget('transvase');
 
         return $this;
     }
@@ -59,19 +53,6 @@ class AdresseWorker implements AdresseWorkerInterface{
     public function getAdresses()
     {
         return $this->adresse->getMultiple($this->fromadresses);
-    }
-
-    public function transvase()
-    {
-        // get user recipient
-
-        // if attach
-            // attach fromadresses to recipient
-        // if delete
-            // delete fromadresses
-        // if items
-            // get all items from fromadresses and attach to user
-        
     }
 
     /*
@@ -109,8 +90,9 @@ class AdresseWorker implements AdresseWorkerInterface{
 
         $type = $user ? 'user' : 'adresse';
 
-        if(in_array($this->action,['delete','attachdelete'])){
+        if($this->action == 'delete' || ($this->action == 'attachdelete' && $user) ){
             $this->$type->delete($model->id);
+            session()->push('deleted.'.$type, $model->id);
         }
 
         if(in_array($this->action,['attach','attachdelete']) && !$user){

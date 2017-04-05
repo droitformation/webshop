@@ -225,7 +225,7 @@ class User extends Authenticatable {
 
     public function adresses_and_trashed()
     {
-        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id')->withTrashed();
+        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id')->orderBy('deleted_at','ASC')->withTrashed();
     }
 
     public function orders()

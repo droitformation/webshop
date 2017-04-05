@@ -198,7 +198,6 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn($donor->adresses);
         $mockadresse->shouldReceive('update')->once();
-        $mockadresse->shouldReceive('delete')->once();
         $mockuser->shouldReceive('delete')->once();
 
         $worker->setAction('attachdelete')->setTypes(['orders'])->setFromAdresses([$adresses->pluck('id')->all()])->reassignFor($recipient);

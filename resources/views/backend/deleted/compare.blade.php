@@ -61,7 +61,7 @@
                                             <label><input name="action" type="radio" value="delete" checked> &nbsp;Supprimer l'adresse et/ou compte</label>
                                         </div>
                                         <div class="checkbox">
-                                            <label><input name="action" type="radio" value=""> &nbsp;Garder l'adresse et/ou compte</label>
+                                            <label><input name="action" type="radio" value="rien"> &nbsp;Garder l'adresse et/ou compte</label>
                                         </div>
                                         <div class="checkbox">
                                             <label><input name="action" type="radio" value="attach"> &nbsp;Attacher l'adresse au compte</label>

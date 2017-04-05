@@ -2,17 +2,24 @@
     <div class="panel-body panel-compare">
         <div class="panel-heading">{{ $heading }} <span class="pull-right badge">{{ $adresse->id }}</span></div>
 
-        <div class="{{ $adresse->trashed() ? 'isTrashed' : 'isNotTrashed' }}">
-            <h1>{{ $adresse->name }}</h1>
-            <h2>{{ $adresse->email }}</h2>
-            <p>{{ $adresse->adresse }}</p>
-            {!! !empty($adresse->complement) ? '<p>'.$adresse->complement.'</p>' : '' !!}
-            {!! !empty($adresse->cp) ? '<p>'.$adresse->cp_trim.'</p>' : '' !!}
-            <p>{{ $adresse->npa }} {{ $adresse->ville }}</p>
-            {!! isset($adresse->pays) ? '<p>'.$adresse->pays->title.'</p>' : '' !!}
+        <?php $person = isset($adresse->user) ? $adresse->user : $adresse; ?>
+
+        <h4>Compte</h4>
+
+        <div class="{{ $person->trashed() ? 'isTrashed' : 'isNotTrashed' }}">
+            <h1>{{ $person->name }}</h1>
+            <h2>{{ $person->email }}</h2>
         </div>
 
-        <?php $person = isset($adresse->user) ? $adresse->user : $adresse; ?>
+        <h4>Adresses</h4>
+
+        @if(isset($adresse->user))
+            @foreach($adresse->user->adresses as $user_adresse)
+                @include('backend.deleted.partials.adresse-bloc', ['adresse' => $user_adresse])
+            @endforeach
+        @else
+           @include('backend.deleted.partials.adresse-bloc', ['adresse' => $adresse])
+        @endif
 
         @if(!$person->orders->isEmpty())
             <dl>

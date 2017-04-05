@@ -885,9 +885,14 @@ Route::get('factory', function()
 
     // set 5 to payed status
     //$resu = $make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
+    $deleted = [];
+
+    $deleted = collect($deleted)->map(function ($ids, $key) {
+        return ['yop'];
+    });
 
     echo '<pre>';
-    //print_r($membre);
+    print_r($deleted);
     echo '</pre>';
 
 });
