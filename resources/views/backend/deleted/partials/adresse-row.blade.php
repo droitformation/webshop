@@ -27,5 +27,8 @@
         @if($adresse->trashed())
             <button type="button" data-id="{{ $adresse->id }}" class="btn btn-xs btn-warning restoreAdresseBtn">restaurer adresse</button>
         @endif
+        @if(!$adresse->trashed())
+            <button type="button" data-id="{{ $adresse->id }}" class="btn btn-xs btn-danger pull-right deleteAdresseRowBtn">x</button>
+        @endif
     </td>
 </tr>

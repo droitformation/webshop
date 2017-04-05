@@ -213,6 +213,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('deletedadresses/result','Backend\User\DeletedAdresseController@result');
     Route::post('deletedadresses/removeAdresse','Backend\User\DeletedAdresseController@removeAdresse');
     Route::post('deletedadresses/restoreAdresse','Backend\User\DeletedAdresseController@restoreAdresse');
+    Route::post('deletedadresses/removeAdresseRow','Backend\User\DeletedAdresseController@removeAdresseRow');
 
     Route::match(['get', 'post'], 'users', 'Backend\User\UserController@index');
     Route::get('user/restore/{id}','Backend\User\UserController@restore');

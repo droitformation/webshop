@@ -105,7 +105,7 @@ class UserEloquent implements UserInterface{
 
     public function getDeleted($terms = [], $operator = null)
     {
-        $user = $this->user->onlyTrashed()->with(['orders','inscriptions','adresses']);
+        $user = $this->user->withTrashed()->with(['orders','inscriptions','adresses']);
 
         if(!empty($terms)) {
             $operator = ($operator == 'and' ? 'where' : 'orWhere');
@@ -191,8 +191,9 @@ class UserEloquent implements UserInterface{
     public function restore($id){
 
         $restore = $this->user->withTrashed()->find($id);
+        $restore->restore();
 
-        return $restore->restore();
+        return $restore;
     }
 
     public function findByUserNameOrCreate($userData)

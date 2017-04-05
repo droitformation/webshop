@@ -14,13 +14,13 @@
                 <div class="form-group">
                     <label class="control-label">Grouper par</label>
                     <div class="checkbox">
-                        <label><input v-model="checked" name="group" type="radio" value=""> &nbsp;Ne pas grouper</label>
+                        <label><input v-model="checked" name="group" type="radio" value="user_id"> &nbsp;Ne pas grouper</label>
                     </div>
                     <div class="checkbox">
                         <label><input v-model="checked" name="group" type="radio" value="email"> &nbsp;Même email</label>
                     </div>
                     <div class="checkbox">
-                        <label><input v-model="checked" name="group" type="radio" value="nom"> &nbsp;Même Nom</label>
+                        <label><input v-model="checked" name="group" type="radio" value="last_name"> &nbsp;Même Nom</label>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                         </select>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" v-bind:value="term.text" :name="'terms[' + index + ']'" placeholder="Recherche...">
+                        <input type="text" v-model="term.text" class="form-control" v-bind:value="term.text" :name="'terms[' + index + ']'" placeholder="Recherche...">
                     </div>
                 </div>
 
@@ -88,10 +88,7 @@
                    {'name' : 'Compte utilisateur', 'value' : 'user'},
                    {'name' : 'Adresse', 'value' : 'adresse'},
                 ],
-                searchTerms:[
-                    { 'text' : 'Cindy' },
-                    { 'text' : 'Leschaud' }
-                ],
+                searchTerms:[],
                 columns: [
                    {'name' : 'Nom', 'label' : 'last_name'},
                    {'name' : 'Prénom', 'label' : 'first_name'},
@@ -101,6 +98,7 @@
                    {'name' : 'NPA', 'label' : 'npa'},
                    {'name' : 'Ville', 'label' : 'ville'},
                 ],
+
             }
         },
         components:{
@@ -110,7 +108,7 @@
         },
         methods: {
             addTerm : function(){
-                this.searchTerms.push({ 'text' : '' });
+                 this.searchTerms.push({ 'text' : ' ' });
             },
             removeTerm: function(term){
                 this.searchTerms.splice(term, 1)

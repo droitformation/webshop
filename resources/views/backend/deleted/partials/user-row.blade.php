@@ -16,6 +16,7 @@
                 </div>
             @else
                 <p>Ne peut pas être comparé, aucune adresse de contact</p>
+                <p>Restaurer l'adresse si besoin</p>
             @endif
         </td>
         <td><span class="label label-info">Compte {{ $user->id }}</span></td>
@@ -41,13 +42,17 @@
                         <button type="button"
                                 data-user_id="{{ $user->id }}"
                                 data-id="{{ $adresse_user->id }}"
-                                class="btn btn-xs btn-warning pull-left restoreAdresseBtn">restaurer</button>
+                                data-type="adresse"
+                                class="btn btn-xs btn-warning pull-right restoreAdresseBtn">restaurer</button>
                         @endif
 
+                        @if(!$adresse_user->trashed())
                         <button type="button"
                                 data-user_id="{{ $user->id }}"
                                 data-id="{{ $adresse_user->id }}"
+                                data-type="adresse"
                                 class="btn btn-xs btn-danger pull-right deleteAdresseBtn">x</button>
+                        @endif
 
                         <div class="clearfix"></div>
                     </div>
@@ -81,7 +86,7 @@
         </td>
         <td>
             @if($user->trashed())
-                <button type="button" data-user_id="{{ $user->id }}" class="btn btn-xs btn-warning pull-left restoreAdresseBtn">restaurer compte</button>
+                <button type="button" data-type="user" data-user_id="{{ $user->id }}" class="btn btn-xs btn-warning pull-left restoreAdresseBtn">restaurer compte</button>
             @endif
         </td>
     </tr>

@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h3>Adresses supprimées</h3>
+        <h3>Recherche Adresse/Compte</h3>
     </div>
     <div class="col-md-6 text-right"></div>
 </div>
@@ -48,14 +48,32 @@
 
                                     @foreach($adresses as $group_by => $grouped)
                                         @if($group != 'user_id')
-                                            <tr><td class="bg-warning" colspan="7"><strong>{{ $group }}:</strong> {{ $group_by }}</td></tr>
+                                            <tr>
+                                                <td class="bg-warning" colspan="7">
+                                                    <strong>{{ $grouped->first()->$group }}</strong>
+                                                </td>
+                                            </tr>
                                         @endif
-                                        @foreach($grouped as $adresse)
+                                        @foreach($grouped as $item)
 
-                                            <?php $partial = $adresse->user_id > 0 ? 'user' : 'adresse'; ?>
-                                            <?php $user    = $adresse->user_id > 0 ? $adresse->trashed_user : null; ?>
+                                            <?php
+                                                if($item instanceof \App\Droit\User\Entities\User){
+                                                    $user = $item;
+                                                    $adresse = null;
+                                                }
+                                                elseif($item->user_id > 0){
+                                                    $user = $item->trashed_user;
+                                                    $adresse = $item;
+                                                }
+                                                else{
+                                                    $user    =  null;
+                                                    $adresse = $item;
+                                                }
+                                            ?>
+                                            <?php $partial = ($user ? 'user' : 'adresse'); ?>
 
                                             @include('backend.deleted.partials.'.$partial.'-row', ['adresse' => $adresse, 'user' => $user])
+
                                         @endforeach
                                     @endforeach
 

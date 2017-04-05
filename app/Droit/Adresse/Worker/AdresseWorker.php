@@ -103,24 +103,26 @@ class AdresseWorker implements AdresseWorkerInterface{
 
     public function reassign($model, $recipient)
     {
-        foreach($this->types as $type){
-            if(isset($model->$type) && !$model->$type->isEmpty()) {
-                foreach($model->$type as $item) {
+        if(!empty($this->types)){
+            foreach($this->types as $type){
+                if(isset($model->$type) && !$model->$type->isEmpty()) {
+                    foreach($model->$type as $item) {
 
-                    if($type == 'orders'){
-                        $item->adresse_id = null;
-                        $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
+                        if($type == 'orders'){
+                            $item->adresse_id = null;
+                            $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
+                        }
+
+                        if($type == 'abos'){
+                            $item->adresse_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->adresse_contact->id : $recipient->id);
+                        }
+
+                        if($type == 'inscriptions'){
+                            $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
+                        }
+
+                        $item->save();
                     }
-
-                    if($type == 'abos'){
-                        $item->adresse_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->adresse_contact->id : $recipient->id);
-                    }
-
-                    if($type == 'inscriptions'){
-                        $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
-                    }
-
-                    $item->save();
                 }
             }
         }

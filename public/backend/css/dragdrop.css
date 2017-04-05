@@ -163,13 +163,18 @@
     background: #ebfed8;
 }
 
-.div.isTrashed ,tr.isTrashed td{
+.div.isTrashed{
     background: #f5f5f5;
+}
+
+tr.isTrashed td{
+    background: #fffae6;
+    opacity: 0.8;
 }
 
 .well-sm.isTrashed, div.isTrashed{
     background: #faf2d4;
-    opacity: 0.75;
+    opacity: 0.8;
 }
 
 .div.isTrashed, div.isNotTrashed{
