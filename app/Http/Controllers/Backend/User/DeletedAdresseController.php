@@ -29,12 +29,11 @@ class DeletedAdresseController extends Controller
      * */
     public function index(Request $request)
     {
-        session()->forget('adresses');
         $adresses = collect([]);
         $terms    = [];
 
         $type     = !empty($request->input('type')) ? $request->input('type') : 'user';
-        $group    = !empty($request->input('type')) &&  $request->input('group') != 'user_id' ? $request->input('group') : 'user_id';
+        $group    = !empty($request->input('group')) &&  $request->input('group') != 'user_id' ? $request->input('group') : 'id';
         $operator = !empty($request->input('operator')) ? $request->input('operator') : 'and';
 
         if(!empty($request->all())){
@@ -42,8 +41,9 @@ class DeletedAdresseController extends Controller
             $terms    = $this->worker->prepareTerms($request->only('terms','columns'),$type);
             $adresses = $this->$type->getDeleted($terms, $operator);
 
-            $adresses = $adresses->groupBy($group)->map(function ($groupe, $key) {
-                return (!empty($key) && !is_numeric($key)) ? $groupe->unique('user_id') : $groupe;
+            $adresses = $adresses->groupBy($group)->map(function ($groupe, $key) use ($type) {
+                $by = ($type == 'user' ? 'id' : 'user_id');
+                return (!empty($key) && !is_numeric($key)) ? $groupe->unique($by) : $groupe;
             });
         }
 

@@ -116,7 +116,7 @@ class UserEloquent implements UserInterface{
             });
         }
 
-        return $user->orderBy('last_name','ASC')->take(20)->get();
+        return $user->orderBy('last_name','ASC')->get();
     }
 
     public function getMultiple($ids)
