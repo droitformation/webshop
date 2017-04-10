@@ -88,6 +88,9 @@
             @if($user->trashed())
                 <button type="button" data-type="user" data-user_id="{{ $user->id }}" class="btn btn-xs btn-warning pull-left restoreAdresseBtn">restaurer compte</button>
             @endif
+            @if(!$user->trashed())
+                <button type="button" data-type="user" data-user_id="{{ $user->id }}" class="btn btn-xs btn-danger pull-right deleteUserRowBtn">x</button>
+            @endif
         </td>
     </tr>
 @else

@@ -41,10 +41,20 @@ class DeletedAdresseController extends Controller
             $terms    = $this->worker->prepareTerms($request->only('terms','columns'),$type);
             $adresses = $this->$type->getDeleted($terms, $operator);
 
-            $adresses = $adresses->groupBy($group)->map(function ($groupe, $key) use ($type) {
-                $by = ($type == 'user' ? 'id' : 'user_id');
-                return (!empty($key) && !is_numeric($key)) ? $groupe->unique($by) : $groupe;
-            });
+            if($type == 'adresse'){
+
+                list($onlyadresse, $hasuser) = $adresses->partition(function ($adresse) {
+                    return !$adresse->user_id;
+                });
+
+                $hasuser      = $hasuser->sortBy('id')->unique('user_id');
+                $onlyadresse  = $onlyadresse->unique('id');
+
+                $adresses = $onlyadresse->merge($hasuser);
+            }
+
+            $adresses = $adresses->groupBy($group);
+
         }
 
         return view('backend.deleted.index')->with([
@@ -202,5 +212,17 @@ class DeletedAdresseController extends Controller
         $adresse = $this->adresse->findWithTrashed($request->input('id'));
 
         echo view('backend.deleted.partials.adresse-row')->with(['adresse' => $adresse->fresh()]);
+    }
+
+    /*
+      * Delete particular user
+      * */
+    public function removeUser(Request $request)
+    {
+        $this->user->delete($request->input('user_id'));
+        $user = $this->user->findwithtrashed($request->input('user_id'));
+        $adresse = isset($user->adresses) && !$user->adresses->isEmpty() ? $user->adresses->first() : null;
+
+        echo view('backend.deleted.partials.user-row')->with(['user' => $user->fresh(), 'adresse' => $adresse]);
     }
 }

@@ -212,6 +212,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('deletedadresses/transvase','Backend\User\DeletedAdresseController@transvase');
     Route::get('deletedadresses/result','Backend\User\DeletedAdresseController@result');
     Route::post('deletedadresses/removeAdresse','Backend\User\DeletedAdresseController@removeAdresse');
+    Route::post('deletedadresses/removeUser','Backend\User\DeletedAdresseController@removeUser');
     Route::post('deletedadresses/restoreAdresse','Backend\User\DeletedAdresseController@restoreAdresse');
     Route::post('deletedadresses/removeAdresseRow','Backend\User\DeletedAdresseController@removeAdresseRow');
 

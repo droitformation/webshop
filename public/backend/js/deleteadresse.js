@@ -35,6 +35,30 @@ $(function() {
 
         });
 
+        $('body').on("click", '.deleteUserRowBtn' ,function(e) {
+            
+            var user_id = $(this).data('user_id');
+
+            var answer = confirm('Voulez-vous vraiment supprimer ce compte ?');
+
+            if (answer){
+                $.ajax({
+                    type   : "POST",
+                    url    : base_url + "admin/deletedadresses/removeUser",
+                    data   : { user_id: user_id, _token: $("meta[name='_token']").attr('content') },
+                    success: function(data) {
+                        // find row
+                        var $row = $('#user_' + user_id);
+                        $row.replaceWith(data);
+                    },
+                    error  : function(){
+                        alert('problème');
+                    }
+                });
+            }
+
+        });
+
         $('body').on("click", '.deleteAdresseRowBtn' ,function(e) {
 
             var id     = $(this).data('id');
