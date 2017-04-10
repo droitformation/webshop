@@ -57,7 +57,7 @@ class BailComposer
         $view->with('site',  $site);
         $view->with('authors', $this->author->getAll());
         $view->with('categories',  $categories);
-        $view->with('revues', $revues->pluck('title','id'));
+        $view->with('revues', $revues->sortByDesc('id')->pluck('title','id'));
         $view->with('years',  $years);
         $view->with('newsletters',$newsletters);
 
