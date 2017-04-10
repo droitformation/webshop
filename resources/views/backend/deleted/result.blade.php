@@ -25,6 +25,14 @@
                                     @include('backend.deleted.partials.'.$type.'-bloc', [$type => $item])
                                 @endforeach
                             @endforeach
+                        @else
+                            @if(!$adresses->isEmpty())
+                                @foreach($adresses as $adresse)
+                                    <?php $color   = $adresse->user_id > 0 ? 'info' : 'success'; ?>
+                                    <?php $heading = $adresse->user_id > 0 ? 'Compte + adresse' : 'Adresse simple'; ?>
+                                    @include('backend.deleted.partials.adresse', ['adresse' => $adresse, 'color' => $color, 'heading' => $heading])
+                                @endforeach
+                            @endif
                         @endif
 
                     </div>

@@ -14,7 +14,6 @@
 
         <div class="panel panel-midnightblue">
             <div class="panel-body" id="appComponent">
-
                 <form action="{{ url('admin/deletedadresses') }}" method="post">{!! csrf_field() !!}
                     <div class="row">
                         <filter-adresse selected="{{ $type }}" checked="{{ $group }}" operator="{{ $operator }}" terms="{{ json_encode($terms) }}"></filter-adresse>
@@ -27,12 +26,18 @@
             <div class="panel-body">
 
                 <div class="table-responsive">
-                    <p class="text-success"><i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;Adresse active</p>
-                    <p class="text-warning"><i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;Adresse supprimée</p>
+
+                   <div class="row">
+                       <div class="col-md-6">
+                           <span class="text-success"><i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;Adresse active</span><br/>
+                           <span class="text-warning"><i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;Adresse supprimée</span>
+                       </div>
+                       <div class="col-md-6 text-right"><a class="btn btn-warning btn-sm" href="javascript:location.reload(true)">Rafraichir la liste</a></div>
+                   </div>
 
                     @if(!$adresses->isEmpty())
                         <form target="_blank" action="{{ url('admin/deletedadresses/compare') }}" method="post">{!! csrf_field() !!}
-                            <table class="table" style="margin-bottom: 0px;" >
+                            <table class="table" style="margin-bottom: 0px; margin-top: 10px;" >
                                 <thead>
                                 <tr>
                                     <th class="col-sm-1">Séléctionner</th>

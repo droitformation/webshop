@@ -326,7 +326,7 @@ class AdresseEloquent implements AdresseInterface{
 			});
 		}
 		
-		return $adresse->orderBy('last_name','ASC')->take(20)->get();
+		return $adresse->orderBy('last_name','ASC')->get();
 	}
 
 	public function getMultiple($ids)
