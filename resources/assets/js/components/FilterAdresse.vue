@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <label class="control-label">Grouper par</label>
                     <div class="checkbox">
-                        <label><input v-model="checked" name="group" type="radio" value="user_id"> &nbsp;Ne pas grouper</label>
+                        <label><input v-model="checked" name="group" type="radio" value="id"> &nbsp;Ne pas grouper</label>
                     </div>
                     <div class="checkbox">
                         <label><input v-model="checked" name="group" type="radio" value="email"> &nbsp;Même email</label>
@@ -33,12 +33,12 @@
                         <button type="button" class="btn btn-xs btn-danger" @click="removeTerm(index)"><i class="fa fa-minus"></i></button>
                     </div>
                     <div class="col-md-4">
-                        <select :name="'columns[' + index + ']'" class="form-control">
+                        <select v-model="term.column" :name="'columns[' + index + ']'" class="form-control">
                             <option v-for="column in columns" v-bind:value="column.label">{{ column.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" v-model="term.text" class="form-control" v-bind:value="term.text" :name="'terms[' + index + ']'" placeholder="Recherche...">
+                        <input type="text" v-model="term.value" class="form-control" v-bind:value="term.value" :name="'terms[' + index + ']'" placeholder="Recherche...">
                     </div>
                 </div>
 
@@ -85,7 +85,7 @@
                    {'name' : 'Compte utilisateur', 'value' : 'user'},
                    {'name' : 'Adresse', 'value' : 'adresse'},
                 ],
-                searchTerms:[],
+                searchTerms: this.terms,
                 columns: [
                    {'name' : 'Nom', 'label' : 'last_name'},
                    {'name' : 'Prénom', 'label' : 'first_name'},
@@ -101,11 +101,11 @@
         components:{
         },
         mounted: function () {
-            //this.checked = this.checked;
+
         },
         methods: {
             addTerm : function(){
-                 this.searchTerms.push({ 'text' : ' ' });
+                 this.searchTerms.push({ 'column' : 'first_name', 'value' : ' ' });
             },
             removeTerm: function(term){
                 this.searchTerms.splice(term, 1)

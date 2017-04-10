@@ -16,7 +16,7 @@
             <div class="panel-body" id="appComponent">
                 <form action="{{ url('admin/deletedadresses') }}" method="post">{!! csrf_field() !!}
                     <div class="row">
-                        <filter-adresse selected="{{ $type }}" checked="{{ $group }}" operator="{{ $operator }}" terms="{{ json_encode($terms) }}"></filter-adresse>
+                        <filter-adresse selected="{{ $type }}" checked="{{ $group }}" operator="{{ $operator }}" :terms="{{ json_encode($terms) }}"></filter-adresse>
                     </div>
                 </form>
             </div>

@@ -54,7 +54,6 @@ class DeletedAdresseController extends Controller
             }
 
             $adresses = $adresses->groupBy($group);
-
         }
 
         return view('backend.deleted.index')->with([

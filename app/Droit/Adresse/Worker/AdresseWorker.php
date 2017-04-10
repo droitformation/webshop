@@ -151,9 +151,9 @@ class AdresseWorker implements AdresseWorkerInterface{
         $terms = array_filter($terms);
 
         return !empty($terms) ? collect($terms)->transpose()->map(function ($term) {
-            return ['value' => $term[0], 'column' => $term[1]];
-        })->filter(function ($terms, $key) use ($type) {
-            return !empty($terms['value']) && $this->authorized($terms['column'],$type) ? true : false;
+            return ['column' => trim($term[1]),'value' => trim($term[0])];
+        })->filter(function ($term, $key) use ($type) {
+            return !empty($term['value']) && $this->authorized($term['column'],$type) ? $term : false;
         })->toArray() : [];
     }
 

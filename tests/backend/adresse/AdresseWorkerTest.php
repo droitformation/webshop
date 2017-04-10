@@ -223,4 +223,30 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $this->assertEquals($result->pluck('id'),collect([$user])->pluck('id'));
     }
+
+    public function testPrepareTerms()
+    {
+        $worker = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+
+        $terms = [
+            'terms'   => ['Unine', 'cindy.leschaud@gmail.com'],
+            'columns' => ['company','email'],
+        ];
+
+        $expect = [
+            ['column' => 'company', 'value'  => 'Unine'],
+            ['column' => 'email', 'value' => 'cindy.leschaud@gmail.com']
+        ];
+
+        $result = $worker->prepareTerms($terms, 'adresse');
+
+        $this->assertEquals($expect,$result);
+
+        $this->assertTrue($worker->authorized('email','user'));
+        $this->assertTrue($worker->authorized('first_name','user'));
+
+        $this->assertTrue($worker->authorized('first_name','adresse'));
+
+        $this->assertFalse($worker->authorized('company','user'));
+    }
 }
