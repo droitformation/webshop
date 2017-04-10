@@ -40,6 +40,9 @@
                                 <div class="readmore product-description">
                                     <h4>Description</h4>
                                     {!! $product->description !!}
+
+                                    @include('frontend.pubdroit.partials.product-attribut', ['product' => $product])
+
                                 </div>
                                 <div class="b-post-bottom">
                                     <ul class="post-nav">

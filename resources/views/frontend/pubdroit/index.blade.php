@@ -34,7 +34,10 @@
                                     <a href="{{ url('pubdroit/product/'.$product->id) }}">{{ $product->title }}</a>
                                     <span>{!! $product->teaser !!}</span>
                                 </div>
-                                <div class="readmore product-description">{!! $product->description !!}</div>
+                                <div class="readmore product-description">
+                                    {!! $product->description !!}
+                                    @include('frontend.pubdroit.partials.product-attribut', ['product' => $product])
+                                </div>
                                 <!-- Product put in the basket button -->
                                 @include('frontend.pubdroit.partials.basket')
                                 <!-- END Product put in the basket button -->

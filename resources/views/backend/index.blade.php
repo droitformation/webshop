@@ -17,7 +17,6 @@
                     </h4>
 
                     @include('backend.orders.partials.commandes', ['orders' => $orders, 'cancelled' => false])
-
                 </div>
             </div>
 

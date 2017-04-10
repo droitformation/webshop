@@ -78,6 +78,27 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Date d'édition</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input required type="text" class="form-control datePicker" value="" name="edition_at">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Pages</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input required type="text" class="form-control" value="0" name="pages">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Type de reliure</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input required type="text" class="form-control" value="" name="reliure">
+                            </div>
+                        </div>
+
                     </div>
                     <div class="panel-footer text-right">
                         <button type="submit" class="btn btn-info">Créer le produit</button>

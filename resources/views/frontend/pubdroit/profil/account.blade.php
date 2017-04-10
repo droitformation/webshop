@@ -74,12 +74,6 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label class="col-sm-4 control-label">Entreprise</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="company" class="form-control" value="{{ $adresse->company }}" placeholder="Entreprise">
-                        </div>
-                    </div>
-                    <div class="row form-group">
                         <label class="col-sm-4 control-label">Titre</label>
                         <div class="col-sm-7">
                             <select name="civilite_id" class="form-control">

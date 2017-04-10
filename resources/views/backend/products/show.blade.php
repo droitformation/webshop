@@ -117,6 +117,27 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Date d'édition</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input required type="text" class="form-control datePicker" value="{{ $product->edition_at ? $product->edition_at->toDateString() : '' }}" name="edition_at">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Pages</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input required type="text" class="form-control" value="{{ $product->pages }}" name="pages">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Type de reliure</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input required type="text" class="form-control" value="{{ $product->reliure }}" name="reliure">
+                            </div>
+                        </div>
+
                         <hr/>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Existe sous forme d'abonnement</label>

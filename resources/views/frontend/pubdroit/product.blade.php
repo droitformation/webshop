@@ -40,6 +40,7 @@
 									@endforeach
 								</div>
 							@endif
+
 						</div>
 
 						<h3>{{ $product->title }}</h3>
@@ -49,6 +50,8 @@
 
 							<div class="well well-sm product-description">
 								{!!  $product->description !!}
+
+								@include('frontend.pubdroit.partials.product-attribut', ['product' => $product])
 							</div>
 
 							@if(!$product->authors->isEmpty())

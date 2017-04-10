@@ -9,9 +9,9 @@ class Product extends Model{
 
     protected $table = 'shop_products';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at','edition_at'];
 
-    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable','hidden','url','rang'];
+    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable','hidden','url','rang','pages','reliure','edition_at'];
 
     public function getReferenceAttribute()
     {
