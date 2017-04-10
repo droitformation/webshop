@@ -65,9 +65,6 @@
     </div>
 </template>
 <style>
-    body{
-        background-color:#ff0000;
-    }
     .max{
         max-height:80px;
     }
