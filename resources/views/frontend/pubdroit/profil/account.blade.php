@@ -110,7 +110,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label class="col-sm-4 control-label">Entrprise</label>
+                        <label class="col-sm-4 control-label">Entreprise</label>
                         <div class="col-sm-7">
                             <input type="text" name="company" class="form-control form-required" value="{{ $adresse->company }}">
                         </div>
