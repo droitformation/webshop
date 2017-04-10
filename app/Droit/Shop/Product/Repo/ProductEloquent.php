@@ -130,6 +130,9 @@ class ProductEloquent implements ProductInterface{
             'price'           => $data['price'] * 100,
             'is_downloadable' => (isset($data['is_downloadable']) ? $data['is_downloadable'] : null),
             'url'             => (isset($data['url']) && !empty($data['url']) ? $data['url'] : null),
+            'pages'           => (isset($data['pages']) && !empty($data['pages']) ? $data['pages'] : null),
+            'reliure'         => (isset($data['reliure']) && !empty($data['reliure']) ? $data['reliure'] : null),
+            'edition_at'      => (isset($data['edition_at']) && !empty($data['edition_at']) ? $data['edition_at'] : null),
             'abo_id'          => (isset($data['abo_id']) ? $data['abo_id'] : null),
             'rang'            => (isset($data['rang']) && $data['rang'] > 0 ? $data['rang'] : 0),
             'created_at'      => date('Y-m-d G:i:s'),
@@ -146,7 +149,8 @@ class ProductEloquent implements ProductInterface{
 
     public function update(array $data){
 
-        $data['hidden'] = (isset($data['hidden']) && $data['hidden'] ? 1 : 0);
+        $data['hidden']     = (isset($data['hidden']) && $data['hidden'] ? 1 : 0);
+        $data['edition_at'] = (isset($data['edition_at']) && !empty($data['edition_at']) ? $data['edition_at'] : null);
 
         $product = $this->product->findOrFail($data['id']);
 
@@ -157,7 +161,7 @@ class ProductEloquent implements ProductInterface{
 
         $product->fill($data);
         $product->price = $data['price'] * 100;
-
+        
         if(isset($data['url']))
         {
             $product->url = (!empty($data['url']) ? $data['url'] : null);

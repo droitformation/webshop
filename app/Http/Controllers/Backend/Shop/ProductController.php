@@ -114,7 +114,7 @@ class ProductController extends Controller {
     {
         $data = $request->except('file');
         $file = $request->file('file',null);
-
+     
         // Make sur that if it is a abo we have attributes (reference and edition)
         $product = $this->product->find($request->input('id'));
         
