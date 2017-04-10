@@ -63,7 +63,7 @@ class ProductEloquent implements ProductInterface{
                 $query->where('shop_categories.id', '=' ,$id);
                 $query->orWhere('shop_categories.title', 'LIKE' ,'%'.$id.'%');
             })
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('created_at', 'ASC')
             ->get();
     }
 
