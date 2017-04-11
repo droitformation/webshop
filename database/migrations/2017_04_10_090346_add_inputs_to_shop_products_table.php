@@ -17,6 +17,7 @@ class AddInputsToShopProductsTable extends Migration
             $table->string('pages')->nullable();
             $table->dateTime('edition_at')->nullable();
             $table->string('reliure')->nullable();
+            $table->string('format')->nullable();
         });
     }
 
@@ -31,6 +32,7 @@ class AddInputsToShopProductsTable extends Migration
             $table->dropColumn('pages');
             $table->dropColumn('edition_at');
             $table->dropColumn('reliure');
+            $table->dropColumn('format');
         });
     }
 }

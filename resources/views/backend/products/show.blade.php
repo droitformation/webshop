@@ -138,6 +138,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Format</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" value="{{ $product->format }}" name="format">
+                            </div>
+                        </div>
+
                         <hr/>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Existe sous forme d'abonnement</label>

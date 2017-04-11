@@ -132,6 +132,7 @@ class ProductEloquent implements ProductInterface{
             'url'             => (isset($data['url']) && !empty($data['url']) ? $data['url'] : null),
             'pages'           => (isset($data['pages']) && !empty($data['pages']) ? $data['pages'] : null),
             'reliure'         => (isset($data['reliure']) && !empty($data['reliure']) ? $data['reliure'] : null),
+            'format'          => (isset($data['format']) && !empty($data['format']) ? $data['format'] : null),
             'edition_at'      => (isset($data['edition_at']) && !empty($data['edition_at']) ? $data['edition_at'] : null),
             'abo_id'          => (isset($data['abo_id']) ? $data['abo_id'] : null),
             'rang'            => (isset($data['rang']) && $data['rang'] > 0 ? $data['rang'] : 0),

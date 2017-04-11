@@ -99,6 +99,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Format</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" value="" name="format">
+                            </div>
+                        </div>
+
                     </div>
                     <div class="panel-footer text-right">
                         <button type="submit" class="btn btn-info">Créer le produit</button>
