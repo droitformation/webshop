@@ -97,11 +97,11 @@ class DeletedAdresseController extends Controller
         $recipient = $this->adresse->find($transvase_id);
 
         // no user? redirect
-        if(!$recipient && !isset($recipient->user)){
+        if(!$recipient || !isset($recipient->user)){
             alert()->danger('Aucun utilisateur pour accrocher les éléments');
             return redirect('admin/deletedadresses');
         }
-
+        
         $worker->setFromAdresses([$adresses_ids])
             ->setAction($request->input('action'))
             ->setTypes($request->input('types'))

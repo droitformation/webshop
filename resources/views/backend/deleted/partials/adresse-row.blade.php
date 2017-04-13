@@ -6,7 +6,9 @@
         </div>
     </td>
     <td>
-        <span class="label label-success">Adresse simple {{ $adresse->id }}</span>
+        <a target="_blank" href="{{ url('admin/adresse/'.$adresse->id) }}">
+            <span class="label label-success">Adresse simple {{ $adresse->id }}</span>
+        </a>
     </td>
     <td>
         <strong>{{ isset($adresse->civilite) ? $adresse->civilite->title : '' }} {{ $adresse->first_name }} {{ $adresse->last_name }}</strong><br>

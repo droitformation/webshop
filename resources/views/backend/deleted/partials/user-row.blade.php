@@ -19,7 +19,9 @@
                 <p>Restaurer l'adresse si besoin</p>
             @endif
         </td>
-        <td><span class="label label-info">Compte {{ $user->id }}</span></td>
+        <td>
+            <a target="_blank" href="{{ url('admin/user/'.$user->id) }}"><span class="label label-info">Compte {{ $user->id }}</span></a>
+        </td>
         <td>{{ $user->first_name }} {{ $user->last_name }}</td>
         <td>{{ $user->email }}</td>
         <td>

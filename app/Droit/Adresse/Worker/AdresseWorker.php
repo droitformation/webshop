@@ -37,7 +37,7 @@ class AdresseWorker implements AdresseWorkerInterface{
 
     public function setFromAdresses($fromadresses)
     {
-        $this->fromadresses = $fromadresses;
+        $this->fromadresses = isset($fromadresses[0]) ? $fromadresses[0] : [];
 
         return $this;
     }
@@ -74,7 +74,6 @@ class AdresseWorker implements AdresseWorkerInterface{
         }
 
         $adresses->map(function ($model, $key) use ($recipient) {
-
             // Re assign types for model
             $this->reassign($model, $recipient);
 

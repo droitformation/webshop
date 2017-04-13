@@ -41,10 +41,11 @@
                             <tr>
                                 <th class="col-sm-1">Action</th>
                                 <th class="col-sm-1">Type</th>
-                                <th class="col-sm-3">Nom</th>
+                                <th class="col-sm-2">Prénom</th>
+                                <th class="col-sm-2">Nom</th>
                                 <th class="col-sm-2">Email</th>
                                 <th class="col-sm-2">Entreprise</th>
-                                <th class="col-sm-3">Ville</th>
+                                <th class="col-sm-2">Ville</th>
                                 <th class="col-sm-1"></th>
                             </tr>
                             </thead>
@@ -53,7 +54,8 @@
                                     <tr>
                                         <td><a class="btn btn-sky btn-sm" href="{{ url('admin/adresse/'.$adresse->id) }}">&Eacute;diter</a></td>
                                         <td>{!! $adresse->user_id > 0 ? '<span class="label label-info">Compte</span>' : '<span class="label label-success">Adresse simple</span>' !!}</td>
-                                        <td><strong>{{ $adresse->name }}</strong></td>
+                                        <td><strong>{{ $adresse->first_name }}</strong></td>
+                                        <td><strong>{{ $adresse->last_name }}</strong></td>
                                         <td>{{ $adresse->email }}</td>
                                         <td>{{ $adresse->company }}</td>
                                         <td>{{ $adresse->ville }}</td>

@@ -21,9 +21,8 @@ class AdresseEloquent implements AdresseInterface{
     {
 		return $this->adresse->where(function ($query) {
                 $query->where('user_id','=',0)->orWhereNull('user_id');
-            })->orderBy('first_name')
-            ->orderBy('last_name')
-            ->paginate(30);
+            })->orderBy('last_name', 'ASC')->orderBy('first_name', 'ASC')
+            ->paginate(50);
 	}
 
     public function search($term)

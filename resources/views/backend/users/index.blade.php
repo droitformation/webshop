@@ -41,16 +41,18 @@
                                 <thead>
                                 <tr>
                                     <th class="col-sm-1">Action</th>
-                                    <th class="col-sm-4">Nom</th>
+                                    <th class="col-sm-3">Prénom</th>
+                                    <th class="col-sm-3">Nom</th>
                                     <th class="col-sm-4">Email</th>
-                                    <th class="col-sm-3"></th>
+                                    <th class="col-sm-1"></th>
                                 </tr>
                                 </thead>
                                 <tbody class="selects">
                                     @foreach($users as $user)
                                         <tr>
                                             <td><a class="btn btn-sky btn-sm" href="{{ url('admin/user/'.$user->id) }}">&Eacute;diter</a></td>
-                                            <td><strong>{{ $user->name }}</strong></td>
+                                            <td><strong>{{ $user->first_name }}</strong></td>
+                                            <td><strong>{{ $user->last_name }}</strong></td>
                                             <td>{{ $user->email }}</td>
                                             <td class="text-right">
                                                 <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">

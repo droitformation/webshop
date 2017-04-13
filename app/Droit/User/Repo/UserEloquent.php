@@ -14,7 +14,7 @@ class UserEloquent implements UserInterface{
 
     public function getAll()
     {
-        return $this->user->with(['adresses'])->orderBy('first_name')->orderBy('last_name')->paginate(30);
+        return $this->user->with(['adresses'])->orderBy('last_name')->orderBy('first_name')->paginate(50);
     }
 
     public function getPaginate()

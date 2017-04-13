@@ -85,15 +85,14 @@ class AdresseController extends Controller {
         $adresse = $this->adresse->find($request->input('id'));
 
         $data = [
-            'first_name' => $adresse->first_name,
-            'last_name'  => $adresse->last_name,
+            'first_name' => !empty($adresse->first_name) ? $adresse->first_name : $adresse->company, 
+            'last_name'  => !empty($adresse->last_name) ? $adresse->last_name : "",
             'email'      => $adresse->email,
             'password'   => $request->input('password',null),
         ];
 
         $validator = \Validator::make($data, [
             'first_name' => 'required',
-            'last_name'  => 'required',
             'email'      => 'required|email|max:255|unique:users',
             'password'   => 'required|min:5',
         ]);
