@@ -37,7 +37,7 @@ class AdresseWorker implements AdresseWorkerInterface{
 
     public function setFromAdresses($fromadresses)
     {
-        $this->fromadresses = isset($fromadresses[0]) ? $fromadresses[0] : [];
+        $this->fromadresses = array_flatten($fromadresses); //isset($fromadresses[0]) ? $fromadresses[0] : $fromadresses;
 
         return $this;
     }
