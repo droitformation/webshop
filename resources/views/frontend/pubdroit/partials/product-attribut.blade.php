@@ -8,6 +8,10 @@
         <dt>Reliure</dt>
         <dd>{{ $product->reliure }}</dd>
     @endif
+    @if($product->format)
+        <dt>Format</dt>
+        <dd>{{ $product->format }}</dd>
+    @endif
     @if($product->edition_at)
         <dt>Date d'édition</dt>
         <dd>{{ $product->edition_at ? $product->edition_at->formatLocalized('%d %B %Y') : '' }}</dd>
