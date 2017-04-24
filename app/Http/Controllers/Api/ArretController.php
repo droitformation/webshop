@@ -38,7 +38,7 @@ class ArretController extends Controller {
                     return [
                         'id'         => $analyse->id,
                         'date'       => utf8_encode($analyse->pub_date->formatLocalized('%d %B %Y')),
-                        'auteurs'    => $analyse->authors->implode('name', ', '),
+                        'auteurs'    => $analyse->authors->implode('name', '; '),
                         'abstract'   => $analyse->abstract,
                         'document'   => $analyse->document ? secure_asset('files/analyses/'.$analyse->file) : null,
                     ];
@@ -58,9 +58,9 @@ class ArretController extends Controller {
         });
 
 
-        return [
+        return response()->json([
             'arrets'   => $arrets,
-        ];
+        ]);
 
     }
     
