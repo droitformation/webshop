@@ -33,7 +33,8 @@ class ArretEloquent implements ArretInterface{
             ->site($site)
             ->analyses($options['display'])
             ->orderBy('pub_date', 'DESC')
-            ->paginate(10);
+            ->get();
+            //->paginate(10);
     }
 
     public function getCount($site = null)

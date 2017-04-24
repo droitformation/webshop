@@ -30,7 +30,7 @@ class ArretController extends Controller {
                 'display'    => $request->input('display',null)
             ]
         );
-        
+
         $arrets = $results->map(function ($arret, $key) {
 
             if(!$arret->analyses->isEmpty()) {
@@ -44,7 +44,7 @@ class ArretController extends Controller {
                     ];
                 });
             }
-            
+
             return [
                 'id'         => $arret->id,
                 'title'      => $arret->reference.', '.utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')),
@@ -60,14 +60,6 @@ class ArretController extends Controller {
 
         return [
             'arrets'   => $arrets,
-            'pagination' => [
-                'total'    => $results->total(),
-                'per_page' => $results->perPage(),
-                'current_page' => $results->currentPage(),
-                'last_page'    => $results->lastPage(),
-                'from' => $results->firstItem(),
-                'to'   => $results->lastItem()
-            ],
         ];
 
     }

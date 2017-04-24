@@ -24,20 +24,14 @@
 
                                     <!-- Ananlyse -->
                                     <div class="analyse-app" v-for="analyse in arret.analyses">
-                                        <b-collapse-toggle v-bind:target="'reference_' + analyse.id" v-bind:target-group="'analyse_' + arret.id">
-                                            <div><a class="btn btn-sm btn-app" href="#"><i class="fa fa-file"></i> &nbsp;Voir l'analyse</a></div>
-                                        </b-collapse-toggle>
-                                        <b-collapse v-bind:id="'reference_' + analyse.id" v-bind:group="'analyse_' + arret.id">
-                                            <div class="well well-app">
-                                                <h3>Analyse de {{ analyse.auteurs }}</h3>
-                                                <p class="text-muted">{{ analyse.date }}</p>
-                                                <p class="text-abstract-app">{{ analyse.abstract }}</p>
-                                                <a :href="analyse.document" v-if="analyse.document">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a>
-                                            </div>
-                                        </b-collapse>
+                                        <div class="well well-app">
+                                            <h3>Analyse de {{ analyse.auteurs }}</h3>
+                                            <p class="text-muted">{{ analyse.date }}</p>
+                                            <p class="text-abstract-app">{{ analyse.abstract }}</p>
+                                            <a :href="analyse.document" v-if="analyse.document">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a>
+                                        </div>
                                     </div>
                                     <!-- END Ananlyse -->
-
                                 </div>
                             </div>
                         </div>
@@ -49,22 +43,6 @@
                         </div>
 
                     </article>
-
-                    <!-- pagination -->
-                    <nav>
-                        <ul class="pagination">
-                            <li v-if="pagination.current_page > 1">
-                                <a href="#" @click.prevent="changePage(pagination.current_page - 1)"><span aria-hidden="true">&laquo;</span></a>
-                            </li>
-                            <li v-for="page in pagesNumber" v-bind:class="[ page == isActived ? 'active' : '']">
-                                <a href="#" @click.prevent="changePage(page)">{{ page }}</a>
-                            </li>
-                            <li v-if="pagination.current_page < pagination.last_page">
-                                <a href="#" @click.prevent="changePage(pagination.current_page + 1)"><span aria-hidden="true">&raquo;</span></a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- pagination -->
 
                 </section>
             </div>
@@ -130,41 +108,11 @@
                 loading: false,
                 display:0,
                 url: location.protocol + "//" + location.host+"/",
-                pagination: {
-                    total: 0,
-                    per_page: 10,
-                    from: 1,
-                    to: 0,
-                    current_page: 1
-                },
-                offset: 4,// left and right padding from the pagination <span>,just change it to see effects
             }
         },
         computed: {
             computedSite: function () {
                 return this.site
-            },
-            isActived: function () {
-                return this.pagination.current_page;
-            },
-            pagesNumber: function () {
-                if (!this.pagination.to) {
-                    return [];
-                }
-                var from = this.pagination.current_page - this.offset;
-                if (from < 1) {
-                    from = 1;
-                }
-                var to = from + (this.offset * 2);
-                if (to >= this.pagination.last_page) {
-                    to = this.pagination.last_page;
-                }
-                var pagesArray = [];
-                while (from <= to) {
-                    pagesArray.push(from);
-                    from++;
-                }
-                return pagesArray;
             }
         },
         mounted: function ()  {
@@ -175,7 +123,7 @@
             let self = this;
             this.loading = true;
 
-            this.changed(this.pagination.current_page,[],[]);
+            this.changed([],[]);
 
             this.$nextTick(function() {
 
@@ -187,7 +135,7 @@
                      var categories = $(this).val();
                      var years      = self.checked ? self.checked : null;
 
-                     self.changed(1, categories , years);
+                     self.changed(categories , years);
                  });
             });
         },
@@ -196,7 +144,7 @@
                  var categories = $('#chosen-select-app').val();
                  var years      = this.checked ? this.checked : null;
 
-                 this.changed(1,categories, years);
+                 this.changed(categories, years);
             },
             getCategories : function(){
                this.list = this.categories;
@@ -207,21 +155,18 @@
             updateArrets : function(arrets){
                this.blocs = arrets;
             },
-            updatePagination : function(pagination){
-               this.pagination = pagination;
-            },
-            changed: function(page, selected, checked) {
+            changed: function(selected, checked) {
                   this.loading = true;
 
                   // POST
-                  this.$http.post('/vue/arrets', { site: this.site, categories : selected, years : checked, page: page, display : this.display  }).then((response) => {
+                  this.$http.post('/vue/arrets', { site: this.site, categories : selected, years : checked, display : this.display  }).then((response) => {
 
                       var self = this;
                       //small delay for pdf generation completion
                       setTimeout(function(){
 
                            self.updateArrets(response.body.arrets);
-                           self.updatePagination(response.body.pagination);
+                           //self.updatePagination(response.body.pagination);
 
                            self.loading = false;
                       }, 500);
@@ -230,14 +175,6 @@
                     // error callback
                   }).bind(this);
             },
-            changePage: function (page) {
-                this.pagination.current_page = page;
-
-                var categories = $('#chosen-select-app').val();
-                var years      = this.checked ? this.checked : null;
-
-                this.changed(page, categories, years);
-            }
         }
     }
 </script>
