@@ -106,7 +106,7 @@
 
                  $info['Numero']  = $order->order_no;
                  $info['Date']    = $order->created_at->format('d.m.Y');
-                 $info['Montant'] = $order->price_cents;
+                 $info['Montant'] = $order->total_with_shipping;
                  $info['Port']    = $order->total_shipping;
                  $info['Paye']    = $order->payed_at ? $order->payed_at->format('d.m.Y') : '';
                  $info['Status']  = $order->status_code['status'];
