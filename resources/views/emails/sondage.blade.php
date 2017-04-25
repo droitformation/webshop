@@ -8,7 +8,7 @@
         <tr>
             <td style="{{ $fontFamily }} {{ $style['email-body_cell_header'] }}">
                 <!-- Greeting -->
-                <h1 style="{{ $style['header-1'] }}">Formulaire d’évaluation</h1>
+                <h1 style="{{ $style['header-1'] }}">Formulaire de commande</h1>
                 <h2 style="{{ $style['header-2'] }}">{{ $sondage->colloque->titre }}<br/></h2>
                 <p style="color: #000;margin-top: 5px;margin-bottom: 10px;">{{ $sondage->colloque->event_date }}</p>
             </td>
@@ -16,7 +16,7 @@
         <tr>
             <td style="{{ $fontFamily }} {{ $style['email-body_cell_content'] }}">
                 <!-- Intro -->
-                <p style="{{ $style['paragraph'] }}">Votre avis nous intéresse !</p>
+                <!-- p style="{{ $style['paragraph'] }}">Votre avis nous intéresse !</p -->
 
                 <table style="{{ $style['body_action'] }}" align="center" width="100%" cellpadding="0" cellspacing="0">
                     <tr>
@@ -30,7 +30,7 @@
                 </table>
 
                 <!-- Salutation -->
-                <p style="{{ $style['paragraph'] }}">Nous vous remercions pour votre participation.</p>
+                
                 <p style="{{ $style['paragraph'] }}"><strong>Le secrétariat de la Faculté de droit</strong></p>
 
             </td>
