@@ -60,6 +60,15 @@ class Order extends Model{
         return $status;
     }
 
+    public function getStatusTitleAttribute()
+    {
+        if($this->total_with_shipping > 0){
+            return $this->payed_at ? 'Payé' : 'En Attente';
+        }
+
+        return 'Gratuit';
+    }
+
     public function getPriceTotalExplodeAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

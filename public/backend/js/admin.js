@@ -14,6 +14,14 @@ $( function() {
         $excelGroup.find('.collapse.in').collapse('hide');
     });
 
+    var options = {
+        valueNames: [
+            { attr: 'data-statut', name: 'statut' }
+        ]
+    };
+
+    var ordersList = new List('ordersList', options);
+
     /*
      * Datepicker
      * */
