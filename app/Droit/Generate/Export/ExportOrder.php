@@ -109,7 +109,7 @@
                  $info['Montant'] = $order->total_with_shipping;
                  $info['Port']    = $order->total_shipping;
                  $info['Paye']    = $order->payed_at ? $order->payed_at->format('d.m.Y') : '';
-                 $info['Status']  = $order->status_code['status'];
+                 $info['Status']  = $order->total_with_shipping > 0 ? $order->status_code['status']: 'Gratuit';
 
                  if($this->details)
                  {
