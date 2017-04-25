@@ -81,6 +81,7 @@ class PdfGenerator implements PdfGeneratorInterface
 
         $data['generate'] = $generate;
         $data['rappel']   = $rappel ? $rappel : null;
+        $data['date']     = isset($order->created_at) ? $order->created_at->formatLocalized('%d %B %Y') : Carbon::now()->formatLocalized('%d %B %Y');
 
         $context = stream_context_create([
             'ssl' => [

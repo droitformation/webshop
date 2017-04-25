@@ -41,9 +41,11 @@ class InvoiceController extends Controller {
             
             $this->pdfgenerator->stream = true;
             
-            if(!empty($order->comment))
-                $this->pdfgenerator->setMsg(unserialize($order->comment));
-            
+            if(!empty($order->comment)){
+                $string = (is_string($order->comment) && preg_match('/^O:\d+:"\w+"/', $order->comment) === 1) ? unserialize($order->comment) : [];
+                $this->pdfgenerator->setMsg($string);
+            }
+
             return  $this->pdfgenerator->factureOrder($order);
         }
     }

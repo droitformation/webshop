@@ -81,7 +81,9 @@ class OrderController extends Controller {
         else {
             $orders = $this->order->getPeriod($period, $request->input('status',null), $request->input('send',null), $request->input('onlyfree',null));
         }
-        
+
+        $request->flash();
+
         if($request->input('export',null))
         {
             if(!$orders->isEmpty()){
@@ -94,11 +96,7 @@ class OrderController extends Controller {
 
                 $exporter->export($orders);
             }
-
-            $request->flash();
-            
             alert()->success('Aucune commande à exporter');
-
         }
 
         $cancelled = $this->order->getTrashed($period['start'],$period['end']);
@@ -106,8 +104,6 @@ class OrderController extends Controller {
         list($orders, $invalid) = $orders->partition(function ($order) {
             return $order->order_adresse;
         });
-
-        $request->flash();
 
 		return view('backend.orders.index')
             ->with([

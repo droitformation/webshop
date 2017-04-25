@@ -17,7 +17,7 @@
             @foreach($orders as $order)
                 <tr>
                     <td>{{ $order->order_no }}</td>
-                    <td>{{ $order->price_cents }} CHF</td>
+                    <td>{{ $order->total_with_shipping }} CHF</td>
                     <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
                     <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
                     <td>{{ $order->status_code['status'] }}</td>
@@ -29,7 +29,7 @@
     <table>
         <tr>
             <td><strong>Total:</strong></td>
-            <td>{{ $orders->sum('price_cents') }} CHF</td>
+            <td>{{ $orders->sum('total_with_shipping') }} CHF</td>
         </tr>
     </table>
 @endif

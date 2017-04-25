@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-12">
-           <p> <a href="{{ url('admin/products')}}" class="btn btn-sm btn-default">Retour à la liste</a></p>
+           <p> <a href="{{ url('admin/products/back')}}" class="btn btn-sm btn-default">Retour à la liste</a></p>
         </div>
     </div>
 

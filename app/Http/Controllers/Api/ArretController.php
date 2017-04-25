@@ -30,7 +30,7 @@ class ArretController extends Controller {
                 'display'    => $request->input('display',null)
             ]
         );
-        
+
         $arrets = $results->map(function ($arret, $key) {
 
             if(!$arret->analyses->isEmpty()) {
@@ -38,13 +38,13 @@ class ArretController extends Controller {
                     return [
                         'id'         => $analyse->id,
                         'date'       => utf8_encode($analyse->pub_date->formatLocalized('%d %B %Y')),
-                        'auteurs'    => $analyse->authors->implode('name', ', '),
+                        'auteurs'    => $analyse->authors->implode('name', '; '),
                         'abstract'   => $analyse->abstract,
                         'document'   => $analyse->document ? secure_asset('files/analyses/'.$analyse->file) : null,
                     ];
                 });
             }
-            
+
             return [
                 'id'         => $arret->id,
                 'title'      => $arret->reference.', '.utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')),
@@ -58,17 +58,9 @@ class ArretController extends Controller {
         });
 
 
-        return [
+        return response()->json([
             'arrets'   => $arrets,
-            'pagination' => [
-                'total'    => $results->total(),
-                'per_page' => $results->perPage(),
-                'current_page' => $results->currentPage(),
-                'last_page'    => $results->lastPage(),
-                'from' => $results->firstItem(),
-                'to'   => $results->lastItem()
-            ],
-        ];
+        ]);
 
     }
     
