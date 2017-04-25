@@ -339,7 +339,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('productattribut', 'Backend\Shop\ProductAttributeController');
     Route::resource('productlabel', 'Backend\Shop\ProductLabelController');
 
-    Route::match(['get', 'post'], 'products', 'Backend\Shop\ProductController@index');
+    Route::match(['get', 'post'], 'products/{back?}', 'Backend\Shop\ProductController@index');
     Route::resource('product', 'Backend\Shop\ProductController');
 
     Route::post('stock/change', 'Backend\Shop\StockController@update');

@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <p><a href="{{ url('admin/product') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+            <p><a href="{{ url('admin/products/back') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
         <div class="col-md-6 text-right">
             <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">

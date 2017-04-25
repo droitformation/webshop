@@ -38,16 +38,29 @@ class ProductController extends Controller {
      * @param  \Illuminate\Http\Request $request
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index(Request $request,$back = null)
 	{
-        $sort = $request->input('sort') ? array_filter($request->input('sort')) : null;
-  
+        if($back){
+            $search = session()->get('product_search');
+            $sort = isset($search['sort']) && !empty($search['sort']) ? $search['sort'] : null;
+            $term = isset($search['term']) && !empty($search['term']) ? $search['term'] : null;
+        }
+        else{
+            $sort = $request->input('sort') ? array_filter($request->input('sort')) : null;
+            $term = $request->input('term',null);
+
+            session(['product_search' => [
+                'term' => $term,
+                'sort' => $sort,
+            ]]);
+        }
+
         // results for search
         if($sort) {
             $products = $this->product->getAll($sort, null, true);
         }
-        elseif($request->input('term',null)) {
-            $products = $this->product->search(trim($request->input('term')),true);
+        elseif($term) {
+            $products = $this->product->search(trim($term),true);
         }
         else{
             $products = $this->product->getNbr(20,false);
