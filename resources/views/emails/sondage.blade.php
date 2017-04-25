@@ -10,7 +10,7 @@
                 <!-- Greeting -->
                 <h1 style="{{ $style['header-1'] }}">Formulaire de commande</h1>
                 <h2 style="{{ $style['header-2'] }}">{{ $sondage->colloque->titre }}<br/></h2>
-                <p style="color: #000;margin-top: 5px;margin-bottom: 10px;">{{ $sondage->colloque->event_date }}</p>
+                <!-- p style="color: #000;margin-top: 5px;margin-bottom: 10px;">{{ $sondage->colloque->event_date }}</p -->
             </td>
         </tr>
         <tr>
