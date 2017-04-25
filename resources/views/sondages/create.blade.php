@@ -1,9 +1,6 @@
 @extends('sondages.layouts.master')
 @section('content')
 
-    @if($isTest)
-        <div class="alert alert-warning">Ceci est un sondage test</div>
-    @endif
 
     <h3>Sondage pour {{ $sondage->colloque->titre }}</h3>
 
@@ -11,7 +8,6 @@
 
         <input type="hidden" name="sondage_id" value="{{ $sondage->id }}" />
         <input type="hidden" name="email" value="{{ $email }}" />
-        <input type="hidden" name="isTest" value="{{ $isTest }}" />
 
         @if(!$sondage->avis->isEmpty())
             @foreach($sondage->avis as $avis)
