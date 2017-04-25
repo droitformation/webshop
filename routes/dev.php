@@ -102,7 +102,7 @@ Route::get('mapped', function () {
 
 Route::get('testing', function() {
     
-    $worker  = \App::make('App\Droit\Inscription\Worker\InscriptionWorker');
+
     $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
@@ -113,12 +113,30 @@ Route::get('testing', function() {
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
 
-    $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
+   // $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
     //$occurrence   = $occurrences->find(1);
 
-    $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $colloque   = $colloques->find(107);
-    $user     = $users->find(710);
+   // $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+   // $colloque   = $colloques->find(107);
+    //$user     = $users->find(710);
+
+
+    $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $orders = $model->getPeriod(['start' => '2016-11-08', 'end' => '2017-02-23'])->where('admin',null);
+
+    $orders = $orders->map(function ($order, $key) {
+
+        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $data = $worker->updateOrder($order, $order->shipping_id);
+
+        $order->amount = $data['amount'];
+        $order->save();
+        return $data + ['order_no' => $order->order_no, 'old_amount' => $order->amount, 'amount' => $data['amount']];
+    });
+
+    echo '<pre>';
+    print_r($orders);
+    echo '</pre>';exit();
 
    // $price  = $colloque->prices->first();
     //$option = $colloque->options->first();

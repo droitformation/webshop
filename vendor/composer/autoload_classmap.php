@@ -14,6 +14,7 @@ return array(
     'AddPaquetToShopOrdersTable' => $baseDir . '/database/migrations/2017_03_08_140954_add_paquet_to_shop_orders_table.php',
     'AddRemarqueToAbosTable' => $baseDir . '/database/migrations/2017_02_13_160331_add_remarque_to_abos_table.php',
     'AddSendAtToNewsletterCampagnesTable' => $baseDir . '/database/migrations/2014_08_12_090838_add_send_at_to_newsletter_campagnes_table.php',
+    'AddTypeToSondagesTable' => $baseDir . '/database/migrations/2017_04_24_094438_add_type_to_sondages_table.php',
     'Adresse_typesTableSeeder' => $baseDir . '/database/seeds/Adresse_typesTableSeeder.php',
     'AdressesTableSeeder' => $baseDir . '/database/seeds/AdressesTableSeeder.php',
     'AttributTableSeeder' => $baseDir . '/database/seeds/AttributTableSeeder.php',

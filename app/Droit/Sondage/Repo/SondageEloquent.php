@@ -25,7 +25,7 @@ class SondageEloquent implements SondageInterface{
     public function create(array $data)
     {
         $sondage = $this->sondage->create(array(
-            'colloque_id' => $data['colloque_id'],
+            'colloque_id' => isset($data['colloque_id']) ? $data['colloque_id'] : null,
             'valid_at'    => $data['valid_at']
         ));
 

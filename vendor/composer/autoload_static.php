@@ -474,6 +474,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'AddPaquetToShopOrdersTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_08_140954_add_paquet_to_shop_orders_table.php',
         'AddRemarqueToAbosTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_13_160331_add_remarque_to_abos_table.php',
         'AddSendAtToNewsletterCampagnesTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_12_090838_add_send_at_to_newsletter_campagnes_table.php',
+        'AddTypeToSondagesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_24_094438_add_type_to_sondages_table.php',
         'Adresse_typesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/Adresse_typesTableSeeder.php',
         'AdressesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AdressesTableSeeder.php',
         'AttributTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AttributTableSeeder.php',
