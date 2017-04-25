@@ -46,7 +46,7 @@ class SendSondage implements ShouldQueue
         
         \Mail::send('emails.sondage', $donnes, function ($m) use($donnes) {
             $m->from('info@publications-droit.ch', 'www.publications-droit.ch');
-            $m->to($donnes['email'], 'Sondage')->subject('Sondage pour le colloque '. $this->sondage->colloque->titre);
+            $m->to($donnes['email'], 'Sondage')->subject('Sondage pour la commande du livre '. $this->sondage->colloque->titre);
         });
     }
 }
