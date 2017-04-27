@@ -64,7 +64,7 @@ class ColloqueController extends Controller {
                 'event'        => $colloque->toArray(),
                 'prix'         => $colloque->prices_active->toArray(),
                 'location'     => isset($location) ? $location : '',
-                'programme'    => isset($colloque->programme) ? public_path('files/colloques/programme/'.$colloque->programme->path) : '',
+                'programme'    => isset($colloque->programme) ? url('files/colloques/programme/'.$colloque->programme->path) : '',
                 'organisateur' => $organisateur->toArray(),
             ];
         });
