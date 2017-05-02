@@ -139,7 +139,10 @@
 
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
-                              <h3><i class="fa fa-table"></i> &nbsp;Inscriptions</h3>
+                              <h3>
+                                  <i class="fa fa-table"></i> &nbsp;Inscriptions
+                                  <a href="{{ url('admin/inscription/create') }}" class="btn btn-success btn-sm  pull-right">Ajouter une inscription</a>
+                              </h3>
                               @include('backend.users.partials.inscriptions')
                           </div>
                       </div>
