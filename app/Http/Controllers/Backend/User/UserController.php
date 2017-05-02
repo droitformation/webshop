@@ -83,7 +83,7 @@ class UserController extends Controller {
     public function show($id, Request $request)
     {
         $user = $this->user->find($id);
-
+        
         return view('backend.users.show')->with(compact('user'));
     }
 

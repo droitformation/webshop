@@ -156,11 +156,11 @@
                           </div>
                       @endif
 
-                      @if(isset($user->inscription_participations) && !$user->inscription_participations->isEmpty())
+                      @if(isset($user->participations) && !$user->inscription_participations->isEmpty())
                           <div class="panel panel-midnightblue">
                               <div class="panel-body">
                                   <h3><i class="fa fa-table"></i> &nbsp;Participe aux inscriptions</h3>
-                                  @include('backend.users.partials.groups', ['inscriptions_groupe' => $user->inscription_participations])
+                                  @include('backend.users.partials.participations')
                               </div>
                           </div>
                       @endif
