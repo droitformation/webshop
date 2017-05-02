@@ -30,19 +30,19 @@ class AdresseController extends Controller {
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request,$back = null)
     {
-        $term = $request->input('term',session()->get('term'));
-
-        if($term)
-        {
-            session(['term' => $term]);
-            $adresses = $this->adresse->search($term);
+        if($back){
+            $search = session()->get('adresse_search');
+            $term   = isset($search['term']) && !empty($search['term']) ? $search['term'] : null;
         }
         else{
-            $adresses = $this->adresse->getAll();
+            $term = $request->input('term',null);
+            session(['adresse_search' => ['term' => $term]]);
         }
 
+        $adresses = $term ? $this->adresse->search($term) : $this->adresse->getAll();
+        
         return view('backend.adresses.index')->with(['adresses' => $adresses, 'term' => $term]);
     }
 

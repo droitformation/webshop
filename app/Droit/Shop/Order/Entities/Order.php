@@ -169,7 +169,12 @@ class Order extends Model{
 
     public function scopePeriod($query, $period)
     {
-        if ($period) $query->whereBetween('created_at', [$period['start'], $period['end']]);
+        if ($period) {
+            $start = \Carbon\Carbon::parse($period['start'])->startOfDay();
+            $end   = \Carbon\Carbon::parse($period['end'])->endOfDay();
+
+            $query->whereBetween('created_at', [$start, $end]);
+        };
     }
 
     public function scopeSearch($query, $order_no)

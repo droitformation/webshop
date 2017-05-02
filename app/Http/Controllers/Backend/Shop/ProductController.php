@@ -66,7 +66,7 @@ class ProductController extends Controller {
             $products = $this->product->getNbr(20,false);
         }
 
-		return view('backend.products.index')->with(['products' => $products, 'sort' => $sort, 'term' => $request->input('term')]);
+		return view('backend.products.index')->with(['products' => $products, 'sort' => $sort, 'term' => trim($term)]);
 	}
 
     /**

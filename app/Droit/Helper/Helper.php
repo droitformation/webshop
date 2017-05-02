@@ -39,6 +39,20 @@ class Helper {
         return $start->formatLocalized($format).' au '.$end->formatLocalized('%d %B %Y');
     }
 
+    public function betweenTwoDates($start,$end)
+    {
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+        $start = \Carbon\Carbon::parse($start);
+        $end   = \Carbon\Carbon::parse($end);
+
+        $month  = ($start->month == $end->month ? '%d' : '%d %B');
+        $year   = ($start->year ==  $end->year ? '' : '%Y');
+        $format = $month.' '.$year;
+
+        return $start->formatLocalized($format).' au '.$end->formatLocalized('%d %B %Y');
+    }
+
     /**
      * Add interval of time for reminder
      *

@@ -45,7 +45,13 @@ class OrderControllerTest extends BrowserKitTest {
         $this->visit(url('admin/orders'))->see('Commandes');
 
 		// filter to get all send orders
-		$response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'send' => 'send']);
+		$response = $this->call('POST', url('admin/orders'), [
+			'period' => [
+				'start' => $start,
+				'end'   => $end,
+			],
+			'send'  => 'send'
+		]);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();
@@ -84,7 +90,12 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$this->visit(url('admin/orders'))->see('Commandes');
 
-		$response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'status' => 'payed']);
+		$response = $this->call('POST', url('admin/orders'), [
+			'period' => [
+				'start' => $start,
+				'end'   => $end,
+			],
+			'status' => 'payed']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();
@@ -93,7 +104,11 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$this->assertEquals(5, $result->count());
 
-		$response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'status' => 'pending']);
+		$response = $this->call('POST', url('admin/orders'), [
+			'period' => [
+				'start' => $start,
+				'end'   => $end,
+			],'status' => 'pending']);
 
 		$content = $response->getOriginalContent();
 		$content = $content->getData();
@@ -144,5 +159,33 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$this->assertEquals(6, $result->shipping_id);
 		$this->assertEquals($total, $result->amount);
+	}
+
+	public function testSortPeriodNoResult()
+	{
+		// Prepare and create some orders
+		$make   = new \tests\factories\ObjectFactory();
+		$orders = $make->order(3);
+
+		// set 3 with date sent
+		$make->updateOrder($orders, ['column' => 'send_at', 'date' => '2016-09-10']);
+
+		$this->visit(url('admin/orders'))->see('Commandes');
+
+		// filter to get all send orders
+		$response = $this->call('POST', url('admin/orders'), [
+			'period' => [
+				'start' => '2016-10-08',
+				'end'   => '2016-10-18',
+			],
+			'send'  => 'send'
+		]);
+
+		$content = $response->getOriginalContent();
+		$content = $content->getData();
+
+		$result = $content['orders'];
+
+		$this->assertEquals(0, $result->count());
 	}
 }

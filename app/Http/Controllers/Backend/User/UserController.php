@@ -24,19 +24,20 @@ class UserController extends Controller {
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request,$back = null)
     {
-        if($request->input('term')) {
-            $term = $request->input('term',session()->get('term', null));
-            session(['term' => $request->input('term')]);
-
-            $users = $this->user->search($term);
+        if($back){
+            $search = session()->get('user_search');
+            $term   = isset($search['term']) && !empty($search['term']) ? $search['term'] : null;
         }
         else{
-            $users = $this->user->getAll();
+            $term = $request->input('term',null);
+            session(['user_search' => ['term' => $term]]);
         }
+        
+        $users = $term ? $this->user->search($term) : $this->user->getAll();
 
-        return view('backend.users.index')->with(['users' => $users, 'term' => $request->input('term','')]);
+        return view('backend.users.index')->with(['users' => $users, 'term' => $term]);
     }
 
     public function users(Request $request)

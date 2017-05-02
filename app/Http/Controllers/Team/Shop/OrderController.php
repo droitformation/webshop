@@ -37,38 +37,37 @@ class OrderController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index(Request $request, $back = null)
 	{
-        $data = $request->all();
+        $data = ['period' => ['start' => \Carbon\Carbon::now()->startOfMonth()->toDateString(), 'end' => \Carbon\Carbon::now()->endOfMonth()->toDateString() ]];
 
-        $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
-        $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
+        if($back){
+            $data = array_merge($data,session()->get('order_search'));
+        }
+        else{
+            $data = array_filter(array_merge($data,$request->except('_token')));
+            session(['order_search' => $data]);
+        }
 
-        $orders = $this->order->getPeriod(
-            $period,
-            $request->input('status',null),
-            $request->input('send',null),
-            $request->input('onlyfree',null)
-        );
+        $orders    = isset($data['order_no']) ? $this->order->search($data['order_no']) : $this->order->getPeriod($data);
+        $cancelled = $this->order->getTrashed($data['period']);
 
-        if($request->input('export',null))
-        {
+        list($orders, $invalid) = $orders->partition(function ($order) {
+            return $order->order_adresse;
+        });
+
+        if(isset($data['export'])) {
+            if($orders->isEmpty()){ alert()->success('Aucune commande à exporter'); }
             $exporter = new \App\Droit\Generate\Export\ExportOrder();
-
-            $exporter->setColumns($request->input('columns',config('columns.names')))
-                ->setPeriod($period)
-                ->setDetail($request->input('details',null))
-                ->setFree($request->input('onlyfree',null));
-
+            $details  = isset($data['details']) ? true : null;
+            $onlyfree = isset($data['onlyfree']) ? true : null;
+            $exporter->setColumns($request->input('columns',config('columns.names')))->setPeriod($data['period'])->setDetail($details)->setFree($onlyfree);
             $exporter->export($orders);
         }
 
-        $cancelled = $this->order->getTrashed($period['start'],$period['end']);
-
         $request->flash();
-
-		return view('team.orders.index')
-            ->with(['orders' => $orders, 'start' => $period['start'], 'end' => $period['end'],'columns' => config('columns.names'), 'cancelled' => $cancelled] + $data);
+        return view('team.orders.index')
+            ->with(['orders' => $orders, 'invalid' => $invalid, 'period' => $data['period'], 'columns' => config('columns.names'), 'cancelled' => $cancelled] + $data);
 	}
 
     /**

@@ -27,10 +27,8 @@
                     @endif
                 </td>
                 <td>
-                    @if($cancelled)
-                        {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}&nbsp;
-                        <span class="label label-{{ $order->payed_at ? 'success' : '' }}">{{ $order->payed_at ? 'payé' : 'en attente' }}</span>
-                    @endif
+                    {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}&nbsp;
+                    <span class="label label-{{ $order->payed_at ? 'success' : '' }}">{{ $order->payed_at ? 'payé' : 'en attente' }}</span>
                 </td>
                 <td>{!! $order->admin ? '<i class="fa fa-check"></i>' : '' !!}</td>
             </tr>
