@@ -292,6 +292,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('sondageavis', 'Backend\Sondage\SondageAvisController');
     
     // Add, edit, delete items for colloque
+    //Route::get('colloque/{back?}', 'Backend\Colloque\ColloqueController@index')->middleware('back');
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
 
     Route::post('price/change', 'Backend\Colloque\PriceController@change');

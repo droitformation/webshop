@@ -2,7 +2,11 @@
 @section('content')
     <?php $helper = new \App\Droit\Helper\Helper(); ?>
 
-    <p><a href="{{ url('admin/inscription/colloque/'.$colloque->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour aux inscription</a></p>
+    <p>
+        <?php $back = session()->has('colloque_archive') ? url('admin/colloque/archive/'.session()->get('colloque_archive')) : url('admin/colloque'); ?>
+        <a href="{{ $back }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour aux colloques</a>
+        <a href="{{ url('admin/inscription/colloque/'.$colloque->id) }}" class="btn btn-success"><i class="fa fa-arrow-left"></i> &nbsp;Retour aux inscriptions</a>
+    </p>
 
     <div class="panel panel-default">
         <div class="panel-body">

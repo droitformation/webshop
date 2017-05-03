@@ -24,6 +24,25 @@ class ProductEloquent implements ProductInterface{
         return $products->get();
     }
 
+    public function getList($terms){
+
+        // If term first
+        if(isset($terms['term'])) {
+            return $this->search($terms['term']);
+        }
+
+        // if sort
+        if(isset($terms['sort'])) {
+            $terms['sort'] = array_filter($terms['sort']);
+            if(!empty($terms['sort'])){
+                return $this->product->search($terms['sort'])->visible(true)->orderBy('created_at', 'DESC')->get();
+            }
+        }
+
+        // else pagination
+        return $this->product->orderBy('created_at', 'DESC')->paginate(20);
+    }
+
     public function listForAdminOrder()
     {
         return $this->product->whereNull('url')->orderBy('title', 'ASC')->get();

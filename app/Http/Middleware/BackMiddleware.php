@@ -31,6 +31,10 @@ class BackMiddleware
             if(!$fragment == 'adresses' && !$fragment == 'adresse'){
                 session()->forget('adresse_search');
             }
+
+            if(!$fragment == 'colloque'){
+                session()->forget('colloque_archive');
+            }
         }
 
         return $next($request);

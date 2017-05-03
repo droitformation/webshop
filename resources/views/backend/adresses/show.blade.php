@@ -4,7 +4,7 @@
 <div class="row"><!-- row -->
     <div class="col-md-6"><!-- col -->
         <?php $back = redirect()->getUrlGenerator()->previous(); ?>
-        <?php $back = $back && $back != url('admin/adresses') ? $back : url('admin/adresses/back'); ?>
+        <?php $back = $back && ($back != url('admin/adresses') && $back != url()->current()) ? $back : url('admin/adresses/back'); ?>
         <p><a class="btn btn-default" href="{{ $back }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
     <div class="col-md-6 text-right"><!-- col -->

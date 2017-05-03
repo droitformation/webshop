@@ -34,39 +34,24 @@ class ProductController extends Controller {
 	}
 
 	/**
-	 * Show the application welcome screen to the user.
      * @param  \Illuminate\Http\Request $request
+     * @param  String $back
 	 * @return Response
 	 */
 	public function index(Request $request,$back = null)
 	{
-        if($back){
-            $search = session()->get('product_search');
-            $sort = isset($search['sort']) && !empty($search['sort']) ? $search['sort'] : null;
-            $term = isset($search['term']) && !empty($search['term']) ? $search['term'] : null;
-        }
-        else{
-            $sort = $request->input('sort') ? array_filter($request->input('sort')) : null;
-            $term = $request->input('term',null);
+        // Get session search terms or sort if any when we return from a page else get request inputs with defaults
+        $data = ['sort' => [], 'term' => null];
+        $data = $back ? session()->get('product_search') : array_merge($data,$request->except('_token'));
+        array_walk_recursive($data, 'trim');
 
-            session(['product_search' => [
-                'term' => $term,
-                'sort' => $sort,
-            ]]);
-        }
+        // Put search terms and sort in session
+        session(['product_search' => $data]);
 
-        // results for search
-        if($sort) {
-            $products = $this->product->getAll($sort, null, true);
-        }
-        elseif($term) {
-            $products = $this->product->search(trim($term),true);
-        }
-        else{
-            $products = $this->product->getNbr(20,false);
-        }
+        // Return products if sorted or search results or else paginate
+        $products = $this->product->getList($data);
 
-		return view('backend.products.index')->with(['products' => $products, 'sort' => $sort, 'term' => trim($term)]);
+		return view('backend.products.index')->with(['products' => $products, 'sort' => $data['sort'], 'term' => $data['term']]);
 	}
 
     /**

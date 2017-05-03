@@ -4,7 +4,7 @@
 <div class="row"><!-- row -->
     <div class="col-md-6"><!-- col -->
         <?php $back = redirect()->getUrlGenerator()->previous(); ?>
-        <?php $back = $back && $back != url('admin/users') ? $back : url('admin/users/back'); ?>
+        <?php $back = $back && ($back != url('admin/users') && $back != url()->current()) ? $back : url('admin/users/back'); ?>
         <a href="{{ $back }}" class="btn btn-default">Retour</a>
     </div>
     <div class="col-md-6 text-right"><!-- col -->
