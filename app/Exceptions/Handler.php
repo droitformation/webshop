@@ -73,7 +73,25 @@ class Handler extends ExceptionHandler {
 		if($e instanceof \App\Exceptions\AdresseRemoveException)
 		{
 			alert()->warning($e->getMessage());
-			return redirect()->back();
+
+			$back = redirect()->getUrlGenerator()->previous();
+
+			$uri      = explode('/',$back);
+			$fragment = isset($uri[1]) ? $uri[1] : null;
+
+			if($fragment == 'users' && $fragment == 'user'){
+				session()->keep('user_search');
+			}
+
+			if($fragment == 'adresses' && $fragment == 'adresse'){
+				session()->keep('adresse_search');
+			}
+
+			if($back == url('admin/users') || $back == url('admin/adresses')){
+				$back = $back.'/back';
+			}
+
+			return redirect($back);
 		}
 
 		if($e instanceof \App\Exceptions\OrderAboException)

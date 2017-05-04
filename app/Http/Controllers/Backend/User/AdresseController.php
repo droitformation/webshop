@@ -152,7 +152,7 @@ class AdresseController extends Controller {
      */
     public function destroy($id, Request $request)
     {
-       $adresse = $this->adresse->find($id);
+        $adresse = $this->adresse->find($id);
 
         // Validate deletion, if no user or user with no orders or inscriptions delete the adresse
         $validator = new \App\Droit\Adresse\Worker\AdresseValidation($adresse);
@@ -160,11 +160,12 @@ class AdresseController extends Controller {
 
         $this->adresse->delete($id);
 
-        $request->session()->keep(['term']);
+        $back = $request->input('url',null);
+        $back = $back && $back == url('admin/adresses') ? url('admin/adresses/back') : $back;
 
         alert()->success('Adresse supprimée');
 
-        return redirect($request->input('url','admin'));
+        return redirect($back);
     }
     
     public function livraison(Request $request)

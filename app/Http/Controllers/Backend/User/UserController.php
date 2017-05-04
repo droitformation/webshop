@@ -84,7 +84,11 @@ class UserController extends Controller {
     public function show($id, Request $request)
     {
         $user = $this->user->find($id);
-        
+
+        if(isset($_GET['path'])){
+            session(['return_path' => ['user_'.$id => redirect()->getUrlGenerator()->previous()]]);
+        }
+
         return view('backend.users.show')->with(compact('user'));
     }
 
@@ -102,7 +106,7 @@ class UserController extends Controller {
 
         alert()->success('Utilisateur mis à jour');
 
-        return redirect()->back();
+        return redirect('admin/user/'.$id);
     }
 
     /**
@@ -113,6 +117,11 @@ class UserController extends Controller {
      */
     public function destroy($id)
     {
+        $user = $this->user->find($id);
+        
+        $validator = new \App\Droit\User\Worker\UserValidation($user);
+        $validator->activate();
+
         $this->user->delete($id);
 
         alert()->success('Utilisateur supprimé');

@@ -26,8 +26,7 @@ class AdresseValidation
 
     public function hasUser()
     {
-        if(isset($this->adresse->user))
-        {
+        if(isset($this->adresse->user)) {
             $this->errors[] = 'L\'adresse est rattaché à un compte utilisateur';
         }
 
@@ -36,22 +35,22 @@ class AdresseValidation
 
     public function hasOrdersOrInscriptions()
     {
-        if(isset($this->adresse->user))
-        {
-            if(!$this->adresse->user->orders->isEmpty())
-            {
+        if(isset($this->adresse->user)) {
+            if(!$this->adresse->user->orders->isEmpty()) {
                 $this->errors[] = 'L\'adresse est lié à des commandes';
             }
 
-            if(!$this->adresse->user->inscriptions->isEmpty())
-            {
+            if(!$this->adresse->user->inscriptions->isEmpty()) {
                 $this->errors[] = 'L\'adresse est lié à des inscriptions';
             }
         }
 
-        if(!$this->adresse->orders->isEmpty())
-        {
+        if(!$this->adresse->orders->isEmpty()) {
             $this->errors[] = 'L\'adresse est lié à des commandes';
+        }
+
+        if(!$this->adresse->abos->isEmpty()) {
+            $this->errors[] = 'L\'adresse est lié à des abonnements';
         }
 
         return $this;

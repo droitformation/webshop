@@ -3,8 +3,8 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-6"><!-- col -->
-        <?php $back = redirect()->getUrlGenerator()->previous(); ?>
-        <?php $back = $back && ($back != url('admin/users') && $back != url()->current()) ? $back : url('admin/users/back'); ?>
+        <?php $back = session()->has('return_path.user_'.$user->id) ? session()->get('return_path.user_'.$user->id) : redirect()->getUrlGenerator()->previous(); ?>
+        <?php $back = ($back != url('admin/users') && $back != url()->current() && $back != url()->current().'?path') ? $back : url('admin/users/back'); ?>
         <a href="{{ $back }}" class="btn btn-default">Retour</a>
     </div>
     <div class="col-md-6 text-right"><!-- col -->

@@ -27,13 +27,15 @@ class ProductEloquent implements ProductInterface{
     public function getList($terms){
 
         // If term first
-        if(isset($terms['term'])) {
+        if(isset($terms['term']) && !empty($terms['term'])) {
             return $this->search($terms['term']);
         }
 
         // if sort
         if(isset($terms['sort'])) {
+
             $terms['sort'] = array_filter($terms['sort']);
+
             if(!empty($terms['sort'])){
                 return $this->product->search($terms['sort'])->visible(true)->orderBy('created_at', 'DESC')->get();
             }
