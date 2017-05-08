@@ -42,7 +42,8 @@ class OrderController extends Controller {
         $data = ['period' => ['start' => \Carbon\Carbon::now()->startOfMonth()->toDateString(), 'end' => \Carbon\Carbon::now()->endOfMonth()->toDateString() ]];
 
         if($back){
-            $data = array_merge($data,session()->get('order_search'));
+            $session = session()->has('order_search') ? session()->get('order_search') : [];
+            $data = array_merge($data,$session);
         }
         else{
             $data = array_filter(array_merge($data,$request->except('_token')));
