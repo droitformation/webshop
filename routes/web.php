@@ -356,7 +356,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::post('order/edit', 'Backend\Shop\OrderController@edit');
     Route::post('order/export', 'Backend\Shop\OrderController@export');
-    Route::match(['get', 'post'],'orders/resume', 'Backend\Shop\OrderController@resume');
+    Route::match(['get', 'post'],'resume', 'Backend\Shop\OrderController@resume');
     Route::post('order/restore/{id}', 'Backend\Shop\OrderController@restore');
     Route::post('order/generate', 'Backend\Shop\OrderController@generate');
 

@@ -262,20 +262,14 @@ class OrderController extends Controller {
 
     public function resume(Request $request)
     {
-        $data   = $request->all();
- 
-        $status = $request->input('status',null) ? $request->input('status') : 'pending';
-        $send   = $request->input('send',null)   ? $request->input('send') : 'pending';
+        $data   = ['period' => ['start' => \Carbon\Carbon::now()->startOfMonth()->toDateString(), 'end' => \Carbon\Carbon::now()->endOfMonth()->toDateString() ]];
 
-        $period['start'] = (!isset($data['start']) ? \Carbon\Carbon::now()->startOfMonth() : \Carbon\Carbon::parse($data['start']) );
-        $period['end']   = (!isset($data['end'])   ? \Carbon\Carbon::now()->endOfMonth()   : \Carbon\Carbon::parse($data['end']) );
-
-        $orders = $this->order->getPeriod($period, $request->input('status',null), $request->input('send',null), $request->input('onlyfree',null));
+        $data   = array_merge($data,$request->except('_token'));
+        $orders = $this->order->getPeriod($data);
 
         $request->flash();
 
-        return view('backend.orders.resume')
-            ->with(['orders' => $orders, 'status' => $status, 'send' => $send, 'start' => $period['start'], 'end' => $period['end']] + $data);
+        return view('backend.orders.resume')->with(['orders' => $orders] + $data);
     }
 
 }
