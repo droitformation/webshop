@@ -136,7 +136,7 @@ class ExportTest extends BrowserKitTest {
 
 		$names = $result->pluck('name')->unique()->values()->all();
 
-		$this->assertEquals([$adresse->first_name.' '.$adresse->last_name], $names);
+		$this->assertTrue(in_array($adresse->first_name.' '.$adresse->last_name,$names));
 	}
 
 	public function testExportWithoutDeletedUsersAdresse()
