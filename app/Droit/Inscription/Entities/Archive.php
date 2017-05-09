@@ -52,7 +52,7 @@ class Archive
 
     public function isInvalid()
     {
-        $this->invalid = (!isset($this->user) || $this->user->trashed()) || !$this->inscription ? true : false;
+        $this->invalid = !$this->inscription ? true : false;
 
         return $this;
     }

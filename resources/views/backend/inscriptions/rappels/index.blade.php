@@ -101,6 +101,7 @@
                                     @foreach($archives as $archive)
                                         <tr>
                                             <td>
+                                                {!! $archive['user']->trashed() ? '<span class="label label-danger"><i class="fa fa-exclamation"></i> Utilisateur supprimé</span>' : '' !!}
                                                 <strong>{{ $archive['user']->name }}</strong><br/>
                                                 {{ $archive['inscription']->inscription_no }}
                                             </td>

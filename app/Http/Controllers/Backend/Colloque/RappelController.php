@@ -11,7 +11,6 @@ use App\Droit\Inscription\Worker\RappelWorkerInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
-use App\Droit\User\Repo\UserInterface;
 use App\Jobs\SendRappelEmail;
 use App\Jobs\MakeRappelInscription;
 use App\Jobs\NotifyJobFinished;
@@ -30,8 +29,7 @@ class RappelController extends Controller
         RappelInterface $rappel,
         RappelWorkerInterface $worker,
         ColloqueInterface $colloque,
-        GroupeInterface $group,
-        UserInterface $user
+        GroupeInterface $group
     )
     {
         $this->inscription = $inscription;
@@ -39,7 +37,6 @@ class RappelController extends Controller
         $this->group       = $group;
         $this->rappel      = $rappel;
         $this->worker      = $worker;
-        $this->user        = $user;
     }
 
     /**
