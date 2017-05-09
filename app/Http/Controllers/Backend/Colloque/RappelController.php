@@ -11,6 +11,7 @@ use App\Droit\Inscription\Worker\RappelWorkerInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
+use App\Droit\User\Repo\UserInterface;
 use App\Jobs\SendRappelEmail;
 use App\Jobs\MakeRappelInscription;
 use App\Jobs\NotifyJobFinished;
@@ -22,14 +23,23 @@ class RappelController extends Controller
     protected $group;
     protected $rappel;
     protected $worker;
+    protected $user;
 
-    public function __construct(InscriptionInterface $inscription, RappelInterface $rappel, RappelWorkerInterface $worker, ColloqueInterface $colloque, GroupeInterface $group)
+    public function __construct(
+        InscriptionInterface $inscription,
+        RappelInterface $rappel,
+        RappelWorkerInterface $worker,
+        ColloqueInterface $colloque,
+        GroupeInterface $group,
+        UserInterface $user
+    )
     {
         $this->inscription = $inscription;
         $this->colloque    = $colloque;
         $this->group       = $group;
         $this->rappel      = $rappel;
         $this->worker      = $worker;
+        $this->user        = $user;
     }
 
     /**
@@ -43,8 +53,7 @@ class RappelController extends Controller
         $colloque     = $this->colloque->find($id);
         $inscriptions = $this->inscription->getRappels($id);
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
             $rappel = $inscriptions->map(function ($item, $key) {
                 return ['id' => $item->id, 'name' => $item->inscrit->name, 'inscription_no' => $item->inscription_no];
             });
@@ -52,7 +61,16 @@ class RappelController extends Controller
             return response()->json($rappel);
         }
 
-        return view('backend.inscriptions.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
+        $files = \File::glob('files/colloques/rappel/archives/pdfrappel_'.$colloque->id.'-*.pdf');
+
+        $archives = !empty($files) ? collect($files)->map(function ($file, $key) use ($id) {
+            $get = new \App\Droit\Inscription\Entities\Archive($file,$id);
+            return $get->archives();
+        })->reject(function ($value, $key) {
+            return empty($value);
+        }) : collect([]);
+
+        return view('backend.inscriptions.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque, 'archives' => $archives]);
     }
 
     public function make(Request $request)

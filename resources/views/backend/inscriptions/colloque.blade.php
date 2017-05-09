@@ -91,7 +91,7 @@
                             <thead>
                             <tr>
                                 <th class="col-sm-1 no-sort">Action</th>
-                                <th class="col-sm-2">Déteteur</th>
+                                <th class="col-sm-2">Détenteur</th>
                                 <th class="col-sm-2">No</th>
                                 <th class="col-sm-1">Prix</th>
                                 <th class="col-sm-1">Date</th>
