@@ -138,4 +138,30 @@ class ExportTest extends BrowserKitTest {
 
 		$this->assertEquals([$adresse->first_name.' '.$adresse->last_name], $names);
 	}
+
+	public function testExportWithoutDeletedUsersAdresse()
+	{
+		$repo = App::make('App\Droit\Adresse\Repo\AdresseInterface');
+		$make = new \tests\factories\ObjectFactory();
+
+		$specs   = $make->items('Specialisation', 2)->pluck('id')->all();
+		$members = $make->items('Member', 2)->pluck('id')->all();
+
+		$infos = [
+			['canton' => 10, 'profession' => 1, 'members' => $members, 'specialisations' => $specs],
+			['canton' => 10, 'profession' => 1, 'members' => $members, 'specialisations' => $specs],
+			['canton' => 10, 'profession' => 1, 'members' => $members, 'specialisations' => $specs], // will be deleted
+		];
+
+		$users = $make->user($infos);
+
+		$last    = $users->pop();
+		$adresse = $last->adresses->first();
+
+		$last->delete(); // delete the user
+
+		$results = $repo->searchMultiple(['cantons' => [10], 'specialisations' => $specs, 'members' => $members], false);
+		$this->assertEquals(2, $results->count());
+
+	}
 }
