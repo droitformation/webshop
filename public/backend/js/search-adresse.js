@@ -42,7 +42,7 @@ $('input.search-adresse').each(function()
              return false;
         }
     }).autocomplete( "instance" )._renderItem = function( ul, item ){
-        return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span></a>").appendTo(ul);
+        return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span><span>" + item.company + "</span></a>").appendTo(ul);
     };
 
 });

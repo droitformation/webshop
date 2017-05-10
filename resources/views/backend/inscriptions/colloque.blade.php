@@ -1,3 +1,4 @@
+
 @extends('backend.layouts.master')
 @section('content')
 
@@ -5,7 +6,8 @@
         <div class="col-md-12">
 
             <p>
-                <a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
+                <?php $back = session()->has('colloque_archive') ? url('admin/colloque/archive/'.session()->get('colloque_archive')) : url('admin/colloque'); ?>
+                <a href="{{ $back }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
                 <a class="btn btn-brown pull-right" href="{{ url('admin/inscription/rappels/'.$colloque->id) }}"><i class="fa fa-exclamation-triangle"></i> &nbsp; Tous les rappels</a>
             </p>
 
@@ -89,7 +91,7 @@
                             <thead>
                             <tr>
                                 <th class="col-sm-1 no-sort">Action</th>
-                                <th class="col-sm-2">Déteteur</th>
+                                <th class="col-sm-2">Détenteur</th>
                                 <th class="col-sm-2">No</th>
                                 <th class="col-sm-1">Prix</th>
                                 <th class="col-sm-1">Date</th>

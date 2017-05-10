@@ -16,7 +16,7 @@ class ReponseTest extends BrowserKitTest {
 		parent::tearDown();
 	}
 
-	public function testReponseTestPage()
+/*	public function testReponseTestPage()
 	{
 		// Create colloque
 		$make     = new \tests\factories\ObjectFactory();
@@ -110,7 +110,7 @@ class ReponseTest extends BrowserKitTest {
 			->seePageIs('reponse')
 			->see('Vous avez déjà répondu au sondage!');
 	}
-
+*/
 	public function testCreateQuestion()
 	{
 		$user = factory(App\Droit\User\Entities\User::class)->create();

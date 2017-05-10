@@ -3,7 +3,9 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-6"><!-- col -->
-        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-default">Retour</a>
+        <?php $back = session()->has('return_path.user_'.$user->id) ? session()->get('return_path.user_'.$user->id) : redirect()->getUrlGenerator()->previous(); ?>
+        <?php $back = ($back != url('admin/users') && $back != url()->current() && $back != url()->current().'?path') ? $back : url('admin/users/back'); ?>
+        <a href="{{ $back }}" class="btn btn-default">Retour</a>
     </div>
     <div class="col-md-6 text-right"><!-- col -->
         <a href="{{ url('admin/adresse/create/'.$user->id) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une adresse</a>
@@ -139,7 +141,10 @@
 
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
-                              <h3><i class="fa fa-table"></i> &nbsp;Inscriptions</h3>
+                              <h3>
+                                  <i class="fa fa-table"></i> &nbsp;Inscriptions
+                                  <a href="{{ url('admin/inscription/create') }}" class="btn btn-success btn-sm  pull-right">Ajouter une inscription</a>
+                              </h3>
                               @include('backend.users.partials.inscriptions')
                           </div>
                       </div>
@@ -153,11 +158,11 @@
                           </div>
                       @endif
 
-                      @if(isset($user->inscription_participations) && !$user->inscription_participations->isEmpty())
+                      @if(isset($user->participations) && !$user->inscription_participations->isEmpty())
                           <div class="panel panel-midnightblue">
                               <div class="panel-body">
                                   <h3><i class="fa fa-table"></i> &nbsp;Participe aux inscriptions</h3>
-                                  @include('backend.users.partials.groups', ['inscriptions_groupe' => $user->inscription_participations])
+                                  @include('backend.users.partials.participations')
                               </div>
                           </div>
                       @endif

@@ -163,8 +163,8 @@ class User extends Authenticatable {
 
     public function getInscriptionParticipationsAttribute()
     {
-        return $this->participations->map(function ($participation) {
-            return $participation->inscription->groupe;
+        return $this->participations->reject(function ($participation, $key) {
+            return $participation->inscription->inscrit->id == $this->id;
         });
     }
 

@@ -7,7 +7,7 @@
     </td>
     <td>
         <p><strong>{{ $inscription->detenteur['civilite'] }}</strong></p>
-        <p><a href="{{ url('admin/user/'.$inscription->detenteur['id']) }}">{{ $inscription->detenteur['name'] }}</a></p>
+        <p><a href="{{ url('admin/user/'.$inscription->detenteur['id']).'?path' }}">{{ $inscription->detenteur['name'] }}</a></p>
         <p>{{ $inscription->detenteur['email'] }}</p>
     </td>
     <td>

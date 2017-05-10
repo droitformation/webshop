@@ -43,12 +43,10 @@
                                         <td>
                                             <?php
                                                 echo '<p><strong>'.($inscription->inscrit && $inscription->adresse_facturation ? $inscription->adresse_facturation->civilite_title : '').'</strong></p>';
-                                                if($inscription->inscrit)
-                                                {
+                                                if($inscription->inscrit) {
                                                     echo '<p><a class="text-info" href="'.url('admin/user/'.$inscription->inscrit->id).'">'. $inscription->inscrit->name.'</a></p>';
                                                 }
-                                                else
-                                                {
+                                                else {
                                                     echo '<p><span class="label label-warning">Duplicata</span></p>';
                                                 }
                                             ?>

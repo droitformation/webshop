@@ -17,15 +17,19 @@ class OrderEloquent implements OrderInterface{
         return $this->order->with(['products','user','user.adresses','adresse'])->orderBy('created_at','DESC')->take($nbr)->get();
     }
 
-    public function getTrashed($start, $end)
+    public function getTrashed($period)
     {
-        return $this->order->with(['products','user'])->whereBetween('created_at', [$start, $end])->onlyTrashed()->orderBy('created_at','DESC')->get();
+        return $this->order->with(['products','user'])->whereBetween('created_at', [$period['start'], $period['end']])->onlyTrashed()->orderBy('created_at','DESC')->get();
     }
 
-    public function getPeriod($period, $status = null, $send = null, $onlyfree = null)
+    public function getPeriod($data)
     {
+        $status   = isset($data['status']) ? $data['status'] : null;
+        $send     = isset($data['send']) ? $data['send'] : null;
+        $onlyfree = isset($data['onlyfree']) ? $data['onlyfree'] : null;
+        
         return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])
-            ->period($period)
+            ->period($data['period'])
             ->status($status)
             ->send($send)
             ->isfree($onlyfree)

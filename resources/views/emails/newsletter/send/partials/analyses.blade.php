@@ -33,7 +33,9 @@
                         </td>
                         <td width="25" class="resetMarge"></td><!-- space -->
                         <td align="center" valign="top" width="160" class="resetMarge">
-                            <a target="_blank" href="{{ config('newsletter.link.analyse') }}">
+                            <?php $site = isset($campagne->newsletter->site) ? $campagne->newsletter->preview.'/'.$campagne->newsletter->site->slug : 'pubdroit'; ?>
+
+                            <a target="_blank" href="{{ $site }}/page/jurisprudence">
                                 <?php $slug = $campagne->newsletter->site_id ? '/'.$campagne->newsletter->site->slug.'/' : ''; ?>
                                 <img border="0" style="max-width: 130px;" alt="Analyses" src="{{ secure_asset(config('newsletter.path.categorie').$slug.'analyse.jpg') }}">
                             </a>

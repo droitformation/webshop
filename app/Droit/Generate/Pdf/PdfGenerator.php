@@ -154,8 +154,7 @@ class PdfGenerator implements PdfGeneratorInterface
         }
 
         // Qrcode for bon
-        if(\Registry::get('inscription.qrcode') && $document == 'bon')
-        {
+        if(\Registry::get('inscription.qrcode') && $document == 'bon') {
             // url for qrcode if there is occurrences
             $occurrence   = $generate->getOccurrences() ? 'occurrence/' : '';
             $url          = url('presence/'.$occurrence.$model->id.'/'.config('services.qrcode.key'));

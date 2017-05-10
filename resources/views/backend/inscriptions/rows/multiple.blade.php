@@ -2,7 +2,7 @@
     <td></td>
     <td>
         <p><strong>{{ $inscription->detenteur['civilite'] }}</strong></p>
-        <p><a href="{{ url('admin/user/'.$inscription->detenteur['id']) }}">{{ $inscription->detenteur['name'] }}</a></p>
+        <p><a href="{{ url('admin/user/'.$inscription->detenteur['id'].'?path') }}">{{ $inscription->detenteur['name'] }}</a></p>
         <p>{{ $inscription->detenteur['email'] }}</p>
 
         <p><a class="btn btn-info btn-xs btn-isGroupe" data-toggle="modal" data-target="#editGroup_{{ $inscription->groupe->id }}">Changer le détenteur</a></p>

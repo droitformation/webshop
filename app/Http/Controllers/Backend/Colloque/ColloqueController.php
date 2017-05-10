@@ -54,6 +54,8 @@ class ColloqueController extends Controller
      */
     public function index()
     {
+        session()->forget('colloque_archive');
+
         $colloques = $this->colloque->getCurrent(true,false);
         $years     = $this->colloque->getYears();
 
@@ -66,6 +68,8 @@ class ColloqueController extends Controller
 
     public function archive($year)
     {
+        session(['colloque_archive' => $year]);
+
         $colloques = $this->colloque->getByYear($year);
         $years     = $this->colloque->getYears();
 

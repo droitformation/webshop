@@ -3,7 +3,8 @@
 
     <div class="row">
         <div class="col-md-6">
-            <p><a href="{{ url('admin/colloque') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+            <?php $back = session()->has('colloque_archive') ? url('admin/colloque/archive/'.session()->get('colloque_archive')) : url('admin/colloque'); ?>
+            <p><a href="{{ $back }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
         </div>
         <div class="col-md-6 text-right">
             <?php $path =  $colloque->attestation ? url('admin/attestation/'.$colloque->attestation->id) : url('admin/attestation/colloque/'.$colloque->id); ?>
