@@ -29,39 +29,38 @@ class AdresseEloquent implements AdresseInterface{
     {
 		$terms = explode(' ',trim($term));
 
-		if(count($terms) > 1)
-		{
-			return $this->adresse
-				->where('email', 'like', '%'.$term.'%')
-				->orWhere('first_name', 'like', '%'.$term.'%')
-				->orWhere('last_name', 'like', '%'.$term.'%')
-				->orWhere('company', 'like', '%'.$term.'%')
-				->orWhere(function ($query) use($term,$terms) {
-					if(count($terms) == 2)
-					{
-						$query->where(function ($query1) use ($terms) {
-							$query1->where('first_name', 'like', '%'.$terms[0].'%')->where('last_name', 'like', '%'.$terms[1].'%');
-						})->orWhere(function ($query2) use ($terms){
-							$query2->where('first_name', 'like', '%'.$terms[1].'%')->where('last_name', 'like', '%'.$terms[0].'%');
-						});
-					}
+		$columns = [
+			'adresse' => ['email','first_name','last_name','company'],
+			'user' => ['email','first_name','last_name']
+		];
 
-					if(count($terms) == 3)
-					{
-						$query->where(function ($query1) use ($terms) {
-							$query1->where('first_name', 'like', '%'.$terms[0].' '.$terms[1].'%')->where('last_name', 'like', '%'.$terms[2].'%');
-						})->orWhere(function ($query2) use ($terms){
-							$query2->where('first_name', 'like', '%'.$terms[0].'%')->where('last_name', 'like', '%'.$terms[1].' '.$terms[2].'%');
-						});
-					}
-				})->get();
-		}
+		return $this->adresse
+			->where(function ($query) {
+				$query->where(function ($query) {
+					$query->where('user_id','=',0);
+				})->orWhere(function ($query) {
+					$query->where('user_id','>',0)->has('user');
+				});
+			})
+			->where(function ($query) use ($terms,$columns) {
 
-		return $this->adresse->where('email', 'like', '%'.$term.'%')
-			->orWhere('first_name', 'like', '%'.$term.'%')
-			->orWhere('last_name', 'like', '%'.$term.'%')
-			->orWhere('company', 'like', '%'.$term.'%')
-			->get();
+			foreach($columns['adresse'] as $column){
+				foreach($terms as $term){
+					$query->orWhere($column,'LIKE','%'.$term.'%');
+				}
+			}
+		
+			$query->orWhereHas('user', function ($query) use($terms,$columns) {
+				$query->where(function ($q) use ($columns,$terms) {
+					foreach($columns['user'] as $column){
+						foreach($terms as $term){
+							$q->orWhere($column,'LIKE','%'.$term.'%');
+						}
+					}
+				});
+			});
+		})->get();
+
     }
 
 	public function findByEmail($email)
@@ -94,24 +93,20 @@ class AdresseEloquent implements AdresseInterface{
         $searchSpecialisation = ($each ? 'searchSpecialisationEach' : 'searchSpecialisation');
         $searchMember         = ($each ? 'searchMemberEach' : 'searchMember');
 
-        if($paginate)
-        {
-            return $this->adresse->with(['user'])
-				->has('user')
-                ->searchPays($pays)->searchCanton($cantons)->searchProfession($professions)
-                ->$searchSpecialisation($specialisations)
-                ->$searchMember($members)
-                ->paginate($paginate);
-        }
-        else
-        {
-            return $this->adresse->with(['user'])
-				->has('user')
-                ->searchPays($pays)->searchCanton($cantons)->searchProfession($professions)
-                ->$searchSpecialisation($specialisations)
-                ->$searchMember($members)
-                ->get();
-        }
+		$adresses = $this->adresse->with(['user'])
+			->where(function ($query) {
+				$query->where(function ($query) {
+					$query->where('user_id','=',0);
+				})->orWhere(function ($query) {
+					$query->where('user_id','>',0)->has('user');
+				});
+			})
+			->searchPays($pays)->searchCanton($cantons)->searchProfession($professions)
+			->$searchSpecialisation($specialisations)
+			->$searchMember($members);
+
+		//return  $adresses->toSql();
+		return $paginate ? $adresses->paginate($paginate) : $adresses->get();
     }
 
 	public function duplicates()

@@ -52,15 +52,20 @@ class SearchController extends Controller
 
         session(['term' => $term]);
 
-        $users    = $this->user->search($term);
         $adresses = $this->adresse->search($term);
 
-        // reject non single adresses
-        $singles = $adresses->reject(function ($adresse, $key) {
-            return $adresse->user_id > 0;
+        $results = $adresses->groupBy(function ($adresse, $key) {
+            return $adresse->user_id > 0 &&  isset($adresse->user) ? 'users' : 'adresses';
+        })->map(function ($items, $key) {
+            return $items->map(function ($item, $i) use ($key) {
+                return $key == 'users' ? $item->user : $item;
+            })->unique('id');
         });
 
-        return view('backend.results')->with(['users' => $users, 'adresses' => $singles, 'term' => $term]);
+        $users    = isset($results['users']) ? $results['users'] : collect([]);
+        $adresses = isset($results['adresses']) ? $results['adresses'] : collect([]);
+
+        return view('backend.results')->with(['users' => $users, 'adresses' => $adresses, 'term' => $term]);
     }
 
     /**
