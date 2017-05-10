@@ -18,7 +18,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | App version
+    | App Type
     |--------------------------------------------------------------------------
     |
     | Set the type of application executing the current code.
@@ -84,7 +84,7 @@ return [
     | Hostname
     |--------------------------------------------------------------------------
     |
-    | You can set the hostame of your server to something specific for you to
+    | You can set the hostname of your server to something specific for you to
     | identify it by if needed.
     |
     */
@@ -109,7 +109,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Protect Root
+    | Project Root
     |--------------------------------------------------------------------------
     |
     | Bugsnag marks stacktrace lines as in-project if they come from files
@@ -126,7 +126,7 @@ return [
     | Strip Path
     |--------------------------------------------------------------------------
     |
-    | You can set a strip path to have it also trimed from the start of any
+    | You can set a strip path to have it also trimmed from the start of any
     | filepath in your stacktraces.
     |
     | If this is not set, we will automatically try to detect it.
@@ -208,9 +208,8 @@ return [
     | Enable this if you'd like us to set the current user logged in via
     | Laravel's authentication system.
     |
-    | If you'd like to add your own user resolver, you can call the
-    | Bugsnag::registerUserResolver method from the boot method of your app
-    | service provider.
+    | If you'd like to add your own user resolver, you can do this by using
+    | callbacks via Bugsnag::registerCallback.
     |
     */
 

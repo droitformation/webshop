@@ -16,6 +16,8 @@ class AddTypeToSondagesTable extends Migration
         Schema::table('sondages', function (Blueprint $table) {
             $table->integer('colloque_id')->nullable()->change();
             $table->tinyInteger('marketing')->nullable();
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
         });
     }
 
@@ -29,6 +31,8 @@ class AddTypeToSondagesTable extends Migration
         Schema::table('sondages', function (Blueprint $table) {
             $table->integer('colloque_id')->change();
             $table->dropColumn('marketing');
+            $table->dropColumn('title');
+            $table->dropColumn('description');
         });
     }
 }

@@ -17,6 +17,9 @@ class MySql extends DbDumper
     /** @var bool */
     protected $useSingleTransaction = false;
 
+    /** @var string */
+    protected $defaultCharacterSet = '';
+
     public function __construct()
     {
         $this->port = 3306;
@@ -83,6 +86,18 @@ class MySql extends DbDumper
     }
 
     /**
+     * @param string $characterSet
+     *
+     * @return $this
+     */
+    public function setDefaultCharacterSet(string $characterSet)
+    {
+        $this->defaultCharacterSet = $characterSet;
+
+        return $this;
+    }
+
+    /**
      * Dump the contents of the database to the given file.
      *
      * @param string $dumpFile
@@ -142,21 +157,25 @@ class MySql extends DbDumper
             $command[] = "--socket={$this->socket}";
         }
 
-        if (! empty($this->excludeTables)) {
-            $command[] = '--ignore-table='.implode(' --ignore-table=', $this->excludeTables);
+        foreach ($this->excludeTables as $tableName) {
+            $command[] = "--ignore-table={$this->dbName}.{$tableName}";
+        }
+
+        if (! empty($this->defaultCharacterSet)) {
+            $command[] = '--default-character-set='.$this->defaultCharacterSet;
         }
 
         foreach ($this->extraOptions as $extraOption) {
             $command[] = $extraOption;
         }
 
+        $command[] = "--result-file=\"{$dumpFile}\"";
+
         $command[] = "{$this->dbName}";
 
         if (! empty($this->includeTables)) {
             $command[] = implode(' ', $this->includeTables);
         }
-
-        $command[] = "> \"{$dumpFile}\"";
 
         return implode(' ', $command);
     }

@@ -8,7 +8,7 @@ class Sondage extends Model{
 
     protected $table = 'sondages';
     protected $dates = ['valid_at'];
-    protected $fillable = ['colloque_id','valid_at'];
+    protected $fillable = ['colloque_id','valid_at','description','marketing','title'];
 
     public function reponses()
     {

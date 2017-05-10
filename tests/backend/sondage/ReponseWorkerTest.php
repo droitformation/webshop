@@ -64,4 +64,22 @@ class ReponseWorkerTest extends BrowserKitTest {
         $this->assertEquals('Ceci est une réponse', $reponse->items()->first()->reponse);
         $this->assertEquals($sondage->id, $reponse->sondage_id);
 	}
+
+    public function testCreateSondageMarketing()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $this->withSession(['colloques' => collect([$colloque])])
+            ->visit('admin/sondage/create')
+            ->see('Type de sondage')
+            ->submitForm('Envoyer', [
+                'title' => 'Ceci est un titre',
+                'description' => 'Ceci est une description',
+                'marketing'   => 1,
+                'valid_at'    => \Carbon\Carbon::now()->addDay(5)
+            ])
+            ->see('Ceci est un titre');
+    }
 }

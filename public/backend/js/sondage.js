@@ -38,4 +38,18 @@ $(function() {
         });
     });
 
+    $('.typeSondage').change(function() {
+
+        var value = $(this).val();
+
+        if(value == 1) {
+            $('#sondageMarketing').show();
+            $('#sondageColloque').hide();
+        }
+        else{
+            $('#sondageColloque').show();
+            $('#sondageMarketing').hide();
+        }
+    });
+
 });

@@ -1,6 +1,19 @@
 # Changelog
 
-All Notable changes to `db-dumper` will be documented in this file
+All notable changes to `db-dumper` will be documented in this file
+
+## 2.6.0 - 2017-04-13
+
+- add support for MongoDB
+
+## 2.5.1 - 2017-04-07
+
+- prefix excluded tables with database name when dumping a MySql db
+
+## 2.5.0 - 2017-04-05
+
+- add `--default-character-set` option for MySql
+- improve the preservation of the used charset when dumping a MySql db
 
 ## 2.4.1 - 2016-12-31
 
@@ -8,11 +21,11 @@ All Notable changes to `db-dumper` will be documented in this file
 
 ## 2.4.0 - 2016-12-30
 
-- Add `skipComments`
+- add `skipComments`
 
 ## 2.3.0 - 2016-11-21
 
-- Add support for SQLite
+- add support for SQLite
 
 ## 2.1.1 - 2016-11-19
 

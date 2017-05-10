@@ -26,6 +26,7 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
+                            <th class="col-sm-1">Type</th>
                             <th class="col-sm-4">Colloque</th>
                             <th class="col-sm-2">Réponses</th>
                             <th class="col-sm-3">Envoyer</th>
@@ -37,9 +38,11 @@
                             @foreach($sondages as $sondage)
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/sondage/'.$sondage->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td><strong>{{ $sondage->colloque->titre }}</strong></td>
+                                    <td><strong>{{ !$sondage->marketing ? 'Colloque' : 'Marketing' }}</strong></td>
+                                    <td><strong>{{ !$sondage->marketing ? $sondage->colloque->titre : str_limit(strip_tags($sondage->description),100) }}</strong></td>
                                     <td><a class="btn btn-sm btn-info" href="{{ url('admin/reponse/'.$sondage->id) }}"><i class="fa fa-bullhorn"></i> &nbsp;Voir les réponses</a></td>
                                     <td>
+                                        <a class="btn btn-primary btn-sm" href="{{ url('admin/sondage/confirmation/'.$sondage->id) }}">Envoyer à une liste</a>
                                         <button data-id="{{ $sondage->id }}" data-user_id="{{ \Auth::user()->id }}" id="sendTestSondage" class="btn btn-inverse btn-sm">
                                             <i class="fa fa-paper-plane"></i> &nbsp;Envoyer un test
                                         </button>

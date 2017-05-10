@@ -15,7 +15,7 @@
     <div class="col-md-9">
 
         <!-- form start -->
-        <form action="{{ url('admin/sondage/'.$sondage->id) }}" method="POST" class="validate-form form-horizontal" data-validate="parsley">
+        <form action="{{ url('admin/sondage/'.$sondage->id) }}" method="POST" class="form-horizontal">
             <input type="hidden" name="_method" value="PUT">
             {!! csrf_field() !!}
 
@@ -25,9 +25,17 @@
                     <h3>Sondage</h3>
 
                     <div class="form-group">
+                        <label class="col-sm-3 control-label"><strong>Type de sondage</strong></label>
+                        <div class="col-sm-8">
+                            <label class="radio-inline"><input class="typeSondage" type="radio" {{ $sondage->marketing ? 'checked' : '' }} name="marketing" value="1"> Sondage marketing</label>
+                            <label class="radio-inline"><input class="typeSondage" type="radio" {{ !$sondage->marketing ? 'checked' : '' }} name="marketing" value=""> Sondage pour colloque</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="sondageColloque" style="display:{{ $sondage->marketing ? 'none' : 'block' }};">
                         <label for="message" class="col-sm-3 control-label">Colloque</label>
                         <div class="col-sm-6">
-                            <select autocomplete="off" name="colloque_id" required class="form-control">
+                            <select autocomplete="off" name="colloque_id" class="form-control">
                                 <option value="">Choisir le colloque</option>
                                 @if(!$colloques->isEmpty())
                                     @foreach($colloques as $colloque)
@@ -38,10 +46,25 @@
                         </div>
                     </div>
 
+                    <div id="sondageMarketing" style="display: {{ !$sondage->marketing ? 'none' : 'block' }};">
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Titre</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="title" value="{{ $sondage->title }}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Description du sondage marketing</label>
+                            <div class="col-sm-6">
+                                <textarea name="description" class="form-control redactorSimple">{{ $sondage->description }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Valide jusqu'au</label>
                         <div class="col-sm-4">
-                            <input type="text" name="valid_at" value="{{ $sondage->valid_at->format('Y-m-d') }}" class="form-control datePicker required">
+                            <input type="text" name="valid_at" required value="{{ $sondage->valid_at->format('Y-m-d') }}" class="form-control datePicker required">
                         </div>
                     </div>
 

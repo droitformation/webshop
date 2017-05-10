@@ -25,7 +25,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.4.0';
+    const VERSION = '2.5.0';
 
     /**
      * Boot the service provider.
@@ -50,7 +50,7 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupConfig(Container $app)
     {
-        $source = realpath(__DIR__.'/../config/bugsnag.php');
+        $source = realpath($raw = __DIR__.'/../config/bugsnag.php') ?: $raw;
 
         if ($app instanceof LaravelApplication && $app->runningInConsole()) {
             $this->publishes([$source => config_path('bugsnag.php')]);
