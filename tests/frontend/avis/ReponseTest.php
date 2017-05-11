@@ -194,7 +194,7 @@ class ReponseTest extends BrowserKitTest {
 
 		$this->visit('admin/sondage');
 		$this->assertViewHas('sondages');
-		$this->click('Envoyer à une liste')->seePageIs(url('admin/sondage/confirmation/'.$sondage->id));
+		$this->visit(url('admin/sondage/confirmation/'.$sondage->id));
 
 		$this->assertViewHas('listes')->see($colloque->titre);
 		$this->select($list->id, 'list_id')->press('Envoyer');
