@@ -11,8 +11,8 @@ class SendSondage implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $sondage;
-    protected $data;
+    public $sondage;
+    public $data;
 
     /**
      * Create a new job instance.

@@ -16,8 +16,7 @@
 
         <!-- form start -->
         <form action="{{ url('admin/sondage/'.$sondage->id) }}" method="POST" class="form-horizontal">
-            <input type="hidden" name="_method" value="PUT">
-            {!! csrf_field() !!}
+            <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">

@@ -134,14 +134,24 @@ class SondageController extends Controller
     public function send(Request $request)
     {
         $sondage = $this->sondage->find($request->input('sondage_id'));
-        $list    = $this->list->find($request->input('list_id'));
-
-        $emails = $list->emails->pluck('email');
         
-        if(!empty($emails)){
-            foreach ($emails as $email) {
-                $this->dispatch(new SendSondage($sondage, ['email' => $email]));
+        // Test if there are questions in sondage
+        if($sondage->avis->isEmpty()){
+            throw new \App\Exceptions\MissingException('Aucune question dans ce sondage!');
+        }
+        
+        if($request->input('list_id',null)){
+            $list    = $this->list->find($request->input('list_id'));
+            $emails  = $list->emails->pluck('email');
+
+            if(!empty($emails)){
+                foreach ($emails as $email) {
+                    $this->dispatch(new SendSondage($sondage, ['email' => $email]));
+                }
             }
+        }
+        else{
+            $this->dispatch(new SendSondage($sondage, $request->except(['_token','sondage_id'])));
         }
 
         alert()->success('Le sondage a été envoyé');
