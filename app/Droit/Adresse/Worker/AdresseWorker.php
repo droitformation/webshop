@@ -79,6 +79,7 @@ class AdresseWorker implements AdresseWorkerInterface{
 
             if($this->action){
                 $this->action($model, $recipient);
+                $this->reasignMembership($model,$recipient);
             }
         });
     }
@@ -130,7 +131,6 @@ class AdresseWorker implements AdresseWorkerInterface{
     public function getList($adresses, $type = 'adresse')
     {
         return $adresses->map(function ($adresse, $key) use ($type) {
-
             $user = isset($adresse->user) ? $adresse->user : null;
 
             if($type == 'adresse'){
@@ -143,6 +143,29 @@ class AdresseWorker implements AdresseWorkerInterface{
         })->flatten(1)->reject(function ($value, $key) {
             return !$value;
         });
+    }
+
+    /* If deleted or attach action
+     * list all specialisations/members from all adresses
+     * Reassign to recipient contact adresse
+    */
+    public function reasignMembership($model, $recipient)
+    {
+        if($this->action != 'rien')
+        {
+            $list  = $model instanceof \App\Droit\User\Entities\User ? $model->adresses : collect([$model]);
+
+            $specs = $list->pluck('specialisations')->flatten(1)->pluck('id')->all();
+            $mems  = $list->pluck('members')->flatten(1)->pluck('id')->all();
+
+            $list->each(function ($item, $key){
+                $item->specialisations()->detach();
+                $item->members()->detach();
+            });
+
+            $recipient->adresse_contact->specialisations()->attach($specs);
+            $recipient->adresse_contact->members()->attach($mems);
+        }
     }
 
     public function prepareTerms($terms, $type)

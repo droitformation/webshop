@@ -89,9 +89,9 @@ class User extends Authenticatable {
     {
         if(isset($this->adresses))
         {
-            $contact = $this->adresses->filter(function($adresse)
-            {
+            $contact = $this->adresses->filter(function($adresse) {
                 if ($adresse->type == 1) {
+                    $adresse->load('specialisations','members');
                     return true;
                 }
             });

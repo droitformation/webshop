@@ -66,7 +66,7 @@ h3, .h3{
 }
 
 .inscription_wrapper .row{
-   padding: 10px 0;
+   padding: 5px 0 0px 0;
 }
 
 .divider-hidden{
@@ -218,6 +218,14 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
 .order-item{
     margin-bottom: 5px;
     line-height: 40px;
+}
+
+.order_row{
+    line-height: 30px;
+}
+
+.mainRow_order{
+    background: #f7f8fa;
 }
 
 .table > tbody > tr > td.nopadding{
@@ -510,7 +518,7 @@ a.editable-click:hover {
     width: 70%;
     display: table-cell;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.016) inset !important;
-    background: transparent;
+    background: #fff;
 }
 
 a.editable-click.editableOptionGroup{

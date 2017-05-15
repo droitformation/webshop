@@ -7,3 +7,11 @@
     <p>{{ $adresse->npa }} {{ $adresse->ville }}</p>
     {!! isset($adresse->pays) ? '<p>'.$adresse->pays->title.'</p>' : '' !!}
 </div>
+
+@if(!$adresse->specialisations->isEmpty())
+    <p>{{ $adresse->specialisations->implode('title',', ') }}</p>
+@endif
+
+@if(!$adresse->members->isEmpty())
+    <p>{{ $adresse->members->implode('title',', ') }}</p>
+@endif
