@@ -14,13 +14,27 @@ $( function() {
         $excelGroup.find('.collapse.in').collapse('hide');
     });
 
-    var options = {
-        valueNames: [
-            { attr: 'data-statut', name: 'statut' }
-        ]
-    };
+    var ordersList    = $('#ordersList');
+    var selectStatus  = $('.order-filter-status');
 
-    var ordersList = new List('ordersList', options);
+    if(ordersList.length) {
+        selectStatus.val('');
+        selectStatus.change(function() { orderFilter(); });
+    }
+
+    function orderFilter()
+    {
+        var status = selectStatus.val();
+
+        if(status){
+            console.log('status:' + status);
+            $('tr.mainRow').addClass('hidden');
+            $('tr[data-status="' + status + '"]').removeClass('hidden');
+        }
+        else{
+            $('tr.mainRow').removeClass('hidden');
+        }
+    }
 
     /*
      * Datepicker
