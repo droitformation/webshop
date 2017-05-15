@@ -75,7 +75,7 @@ class RegisterTest extends BrowserKitTest {
         $this->visit('/pubdroit/colloque/'.$colloque->id);
         $this->assertViewHas('colloque');
 
-        $this->see('Vous avez des payements en attente');
+        $this->see('Vous avez des paiements en attente, veuillez contacter le secrétariat: droit.formation@unine.ch');
 
     }
 }

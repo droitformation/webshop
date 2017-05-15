@@ -25,12 +25,14 @@ class SondageEloquent implements SondageInterface{
     public function create(array $data)
     {
         $sondage = $this->sondage->create(array(
-            'colloque_id' => $data['colloque_id'],
+            'marketing'   => isset($data['marketing']) && !empty($data['marketing']) ? 1 : null,
+            'colloque_id' => isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null,
+            'title'       => isset($data['title']) && !empty($data['title']) ? $data['title'] : null,
+            'description' => isset($data['description']) && !empty($data['description']) ? $data['description'] : null,
             'valid_at'    => $data['valid_at']
         ));
 
-        if(!$sondage)
-        {
+        if(!$sondage) {
             return false;
         }
 
@@ -41,12 +43,16 @@ class SondageEloquent implements SondageInterface{
     {
         $sondage = $this->sondage->findOrFail($data['id']);
 
-        if(!$sondage)
-        {
+        if(!$sondage) {
             return false;
         }
 
-        $sondage->fill($data);
+        $sondage->marketing   = isset($data['marketing']) && !empty($data['marketing']) ? 1 : null;
+        $sondage->colloque_id = isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null;
+        $sondage->title       = isset($data['title']) && !empty($data['title']) ? $data['title'] : null;
+        $sondage->description = isset($data['description']) && !empty($data['description']) ? $data['description'] : null;
+        $sondage->valid_at    = $data['valid_at'];
+
         $sondage->save();
 
         return $sondage;
@@ -56,28 +62,28 @@ class SondageEloquent implements SondageInterface{
     {
         if(!empty($data))
         {
-            $sorting = collect($data)->map(function($item,$key) {
-                return ['key' => $key, 'id' => $item];
-            })->mapWithKeys(function($item) {
-                return [['key' => $item['id'], 'rang' => $item['key']]];
-            })->keyBy('key')->map(function ($item, $key) {
-                unset($item['key']);
-                return $item;
-            })->toArray();
-            
             $sondage = $this->find($id);
 
-            if( ! $sondage )
-            {
+            if( ! $sondage ) {
                 return false;
             }
-
+            
+            $sorting = $this->sorting($data);
+            
             $sondage->avis()->sync($sorting);
 
             return true;
         }
     }
 
+    public function sorting($data)
+    {
+        return collect(array_filter($data))->map(function($item,$key) {
+            return ['key' => $key, 'id' => $item];
+        })->mapWithKeys(function($item,$key) {
+            return [$item['id'] => ['rang' => $item['key']]];
+        })->toArray();
+    }
 
     public function delete($id)
     {

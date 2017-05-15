@@ -394,6 +394,19 @@ $factory->define(App\Droit\Shop\Author\Entities\Author::class, function (Faker\G
     ];
 });
 
+
+$factory->define(App\Droit\Organisateur\Entities\Organisateur::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'Mon organisateur',
+        'description' => 'Lorem ipsum',
+        'url' => '',
+        'logo' => 'facdroit.jpg',
+        'centre' => 1,
+        'tva' => '',
+        'adresse' => 'Avenue du test 24',
+    ];
+});
+
 $factory->define(App\Droit\Arret\Entities\Arret::class, function (Faker\Generator $faker) {
     return [
         'site_id'    => 1,

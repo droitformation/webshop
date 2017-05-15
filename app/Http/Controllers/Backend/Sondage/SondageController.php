@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Backend\Sondage;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\SondageRequest;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendSondage;
 use App\Droit\Sondage\Repo\SondageInterface;
 use App\Droit\Sondage\Repo\AvisInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Sondage\Repo\ReponseInterface;
+use App\Droit\Newsletter\Repo\NewsletterListInterface;
 
 class SondageController extends Controller
 {
@@ -18,13 +20,15 @@ class SondageController extends Controller
     protected $reponse;
     protected $avis;
     protected $colloque;
+    protected $list;
 
-    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque, ReponseInterface $reponse)
+    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque, ReponseInterface $reponse, NewsletterListInterface $list)
     {
         $this->sondage  = $sondage;
         $this->avis     = $avis;
         $this->colloque = $colloque;
         $this->reponse  = $reponse;
+        $this->list     = $list;
     }
 
     /**
@@ -46,7 +50,7 @@ class SondageController extends Controller
      */
     public function create()
     {
-        $colloques = $this->colloque->getAll(false,false);
+        $colloques = $this->colloque->getAllAdmin(true,false);
         
         return view('backend.sondages.create')->with(['colloques' => $colloques]);
     }
@@ -56,7 +60,7 @@ class SondageController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(SondageRequest $request)
     {
         $sondage = $this->sondage->create($request->all());
 
@@ -86,7 +90,7 @@ class SondageController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id, Request $request)
+    public function update($id, SondageRequest $request)
     {
         $sondage = $this->sondage->update($request->all());
 
@@ -119,12 +123,39 @@ class SondageController extends Controller
         echo 'ok';die();
     }
 
+    public function confirmation($id)
+    {
+        $sondage = $this->sondage->find($id);
+        $listes  = $this->list->getAll();
+
+        return view('backend.sondages.confirmation')->with(['sondage' => $sondage, 'listes' => $listes]);
+    }
+
     public function send(Request $request)
     {
         $sondage = $this->sondage->find($request->input('sondage_id'));
+        
+        // Test if there are questions in sondage
+        if($sondage->avis->isEmpty()){
+            throw new \App\Exceptions\MissingException('Aucune question dans ce sondage!');
+        }
+        
+        if($request->input('list_id',null)){
+            $list    = $this->list->find($request->input('list_id'));
+            $emails  = $list->emails->pluck('email');
 
-        $this->dispatch(new SendSondage($sondage, $request->except(['_token','sondage_id'])));
+            if(!empty($emails)){
+                foreach ($emails as $email) {
+                    $this->dispatch(new SendSondage($sondage, ['email' => $email]));
+                }
+            }
+        }
+        else{
+            $this->dispatch(new SendSondage($sondage, $request->except(['_token','sondage_id'])));
+        }
 
-        return response()->json($request->all());
+        alert()->success('Le sondage a été envoyé');
+
+        return redirect('admin/sondage');
     }
 }

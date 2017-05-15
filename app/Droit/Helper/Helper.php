@@ -39,6 +39,20 @@ class Helper {
         return $start->formatLocalized($format).' au '.$end->formatLocalized('%d %B %Y');
     }
 
+    public function betweenTwoDates($start,$end)
+    {
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+        $start = \Carbon\Carbon::parse($start);
+        $end   = \Carbon\Carbon::parse($end);
+
+        $month  = ($start->month == $end->month ? '%d' : '%d %B');
+        $year   = ($start->year ==  $end->year ? '' : '%Y');
+        $format = $month.' '.$year;
+
+        return $start->formatLocalized($format).' au '.$end->formatLocalized('%d %B %Y');
+    }
+
     /**
      * Add interval of time for reminder
      *
@@ -468,6 +482,7 @@ class Helper {
                         'desc'     => $result->email,
                         'value'    => ($adresse->user_id > 0 ? $adresse->user_id : $adresse->id),
                         'type'     => ($adresse->user_id > 0 ? 'user_id' : 'adresse_id'),
+                        'company'  => $adresse->company,
                         'adresse'  => $adresse,
                         'civilite' => $adresse->civilite_title,
                         'cp'       => $adresse->cp_trim
@@ -603,15 +618,18 @@ class Helper {
         return $result;
     }
 
-    public function displaySearch($search = null)
+    public function displaySearch($sort = null, $term = null)
     {
-        if($search){
-            $key  = key($search);
-            $name = str_replace('_id','',$key).'s';
-            $id   = $search[$key];
+        $sort = array_filter($sort);
 
-            echo '<h3>'.$this->$name->find($id)->title.'</h3>';
+        if(!empty($sort) && empty($term)){
+            collect($sort)->each(function ($id, $key) {
+                $name  = str_replace('_id','',$key).'s';
+                echo '<h3>'.$this->$name->find($id)->title.'</h3>';
+            });
         }
+
+        echo isset($term) && !empty($term) ? '<h3>Recherche '.$term.'</h3>' : '';
     }
 
 }

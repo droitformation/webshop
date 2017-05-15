@@ -2,10 +2,16 @@
 @section('content')
 
     @if($isTest)
-        <div class="alert alert-warning">Ceci est un sondage test</div>
+       <div class="alert alert-warning">Ceci est un sondage test</div>
     @endif
 
-    <h3>Sondage pour {{ $sondage->colloque->titre }}</h3>
+    @if($sondage->marketing)
+        <h3>{{ $sondage->title }}</h3>
+        {!! $sondage->description !!}
+    @else
+        <h3>Formulaire d'évaluation</h3>
+        <p><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></p>
+    @endif
 
     <form class="form-sondage" action="{{ url('reponse') }}" method="POST">{!! csrf_field() !!}
 

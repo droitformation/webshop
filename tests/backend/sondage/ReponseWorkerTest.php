@@ -40,7 +40,7 @@ class ReponseWorkerTest extends BrowserKitTest {
             'valid_at'    => \Carbon\Carbon::now()->addDay(5),
         ]);
 
-        // Create and attach a questioin to sondage
+        // Create and attach a question to sondage
         $question = factory(App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'text','question' => 'One question' ,'choices' => null]);
         $sondage->avis()->attach($question->id, ['rang' => 1]);
 
@@ -64,4 +64,20 @@ class ReponseWorkerTest extends BrowserKitTest {
         $this->assertEquals('Ceci est une réponse', $reponse->items()->first()->reponse);
         $this->assertEquals($sondage->id, $reponse->sondage_id);
 	}
+
+    public function testUpdateSorting()
+    {
+        $data     = [2,3,1,4];
+        $expected = [
+            2 => ['rang' => 0],
+            3 => ['rang' => 1],
+            1 => ['rang' => 2],
+            4 => ['rang' => 3]
+        ];
+
+        $repo   = \App::make('App\Droit\Sondage\Repo\SondageInterface');
+        $result = $repo->sorting($data);
+
+        $this->assertEquals($result, $expected);
+    }
 }

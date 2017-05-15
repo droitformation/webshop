@@ -1,5 +1,5 @@
 <ul id="facdroit">
-    @if(isset($colloque) && isset($colloque->adresse))
+    @if(isset($colloque->adresse))
         <li class="mb-5">{!! $colloque->adresse->adresse !!}</li>
     @else
         <li>{!! \Registry::get('inscription.infos.nom') !!}</li>

@@ -55,7 +55,7 @@
      public function export($orders)
      {
          // Title and sum of all orders
-         $title = ($this->period ? 'Commandes du '.$this->helper->formatTwoDates($this->period['start'],$this->period['end']) : 'Commandes');
+         $title = ($this->period ? 'Commandes du '.$this->helper->betweenTwoDates($this->period['start'],$this->period['end']) : 'Commandes');
          $sum   = $orders->sum('price_cents');
 
          // prepare orders

@@ -97,14 +97,13 @@ class Product extends Model{
 
     public function scopeSearch($query, $search)
     {
-        if($search && !empty($search))
-        {
-            foreach($search as $item => $value)
-            {
+        if($search && !empty($search)) {
+            $search = array_filter($search);
+            
+            foreach($search as $item => $value) {
                 $name = str_replace('_id','',$item).'s';
 
-                $query->whereHas($name, function ($query) use ($item,$value)
-                {
+                $query->whereHas($name, function ($query) use ($item,$value) {
                     $query->where($item, $value);
                 });
             }

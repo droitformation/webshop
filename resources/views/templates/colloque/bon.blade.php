@@ -21,7 +21,7 @@
                 <tr><td colspan="2" height="10">&nbsp;</td></tr>
                 <tr align="top">
                     <td align="top" width="60%" valign="top">
-                        @include('templates.colloque.partials.adresse', ['colloque' => isset($colloque) ? : null])
+                        @include('templates.colloque.partials.adresse', ['colloque' => $generate->getColloque() ? : null])
                     </td>
                     <td align="top" width="40%" valign="top">
 

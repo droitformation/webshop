@@ -102,9 +102,14 @@ class Generate{
     public function getColloque()
     {
         $this->model->load('colloque');
-        $this->model->colloque->load('location','compte','attestation');
 
-        return $this->model->colloque;
+        if(isset($this->model->colloque)){
+            $this->model->colloque->load('location','compte','attestation','adresse');
+
+            return $this->model->colloque;
+        }
+
+        throw new \App\Exceptions\ColloqueMissingInfoException('No Colloque');
     }
 
     public function getAbo()

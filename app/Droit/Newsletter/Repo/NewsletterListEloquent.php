@@ -41,10 +41,8 @@ class NewsletterListEloquent implements NewsletterListInterface{
             return false;
         }
 
-        if(isset($data['emails']) && !empty($data['emails']))
-        {
-            foreach($data['emails'] as $email)
-            {
+        if(isset($data['emails']) && !empty($data['emails'])) {
+            foreach($data['emails'] as $email) {
                 $list->emails()->save(new \App\Droit\Newsletter\Entities\Newsletter_emails(['list_id' => $list->id, 'email' => $email]));
             }
         }

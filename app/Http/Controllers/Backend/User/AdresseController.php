@@ -30,19 +30,19 @@ class AdresseController extends Controller {
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request,$back = null)
     {
-        $term = $request->input('term',session()->get('term'));
-
-        if($term)
-        {
-            session(['term' => $term]);
-            $adresses = $this->adresse->search($term);
+        if($back){
+            $search = session()->get('adresse_search');
+            $term   = isset($search['term']) && !empty($search['term']) ? $search['term'] : null;
         }
         else{
-            $adresses = $this->adresse->getAll();
+            $term = $request->input('term',null);
+            session(['adresse_search' => ['term' => $term]]);
         }
 
+        $adresses = $term ? $this->adresse->search($term) : $this->adresse->getAll();
+        
         return view('backend.adresses.index')->with(['adresses' => $adresses, 'term' => $term]);
     }
 
@@ -152,7 +152,7 @@ class AdresseController extends Controller {
      */
     public function destroy($id, Request $request)
     {
-       $adresse = $this->adresse->find($id);
+        $adresse = $this->adresse->find($id);
 
         // Validate deletion, if no user or user with no orders or inscriptions delete the adresse
         $validator = new \App\Droit\Adresse\Worker\AdresseValidation($adresse);
@@ -160,11 +160,12 @@ class AdresseController extends Controller {
 
         $this->adresse->delete($id);
 
-        $request->session()->keep(['term']);
+        $back = $request->input('url',null);
+        $back = $back && $back == url('admin/adresses') ? url('admin/adresses/back') : $back;
 
         alert()->success('Adresse supprimée');
 
-        return redirect($request->input('url','admin'));
+        return redirect($back);
     }
     
     public function livraison(Request $request)

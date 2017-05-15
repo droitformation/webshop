@@ -8,8 +8,8 @@
 [![StyleCI](https://styleci.io/repos/49829051/shield?branch=master)](https://styleci.io/repos/49829051)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/db-dumper.svg?style=flat-square)](https://packagist.org/packages/spatie/db-dumper)
 
-This repo contains an easy to use class to dump a database using PHP. Currently MySQL, PostgreSQL and SQLite are supported. Behind
-the scenes `mysqldump`, `pg_dump` and `sqlite3` are used.
+This repo contains an easy to use class to dump a database using PHP. Currently MySQL, PostgreSQL, SQLite and MongoDB are supported. Behind
+the scenes `mysqldump`, `pg_dump`, `sqlite3` and `mongodump` are used.
 
 Here's are simple examples of how to create a database dump with different drivers:
 
@@ -40,6 +40,16 @@ Spatie\DbDumper\Databases\Sqlite::create()
     ->dumpToFile('dump.sql');
 ```
 
+**MongoDB**
+
+```php
+Spatie\DbDumper\Databases\MongoDb::create()
+    ->setDbName($databaseName)
+    ->setUserName($userName)
+    ->setPassword($password)
+    ->dumpToFile('dump.gz');
+```
+
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
 ## Requirements
@@ -49,13 +59,15 @@ For dumping PostgreSQL-db's `pg_dump` should be installed.
 
 For dumping SQLite-db's `sqlite3` should be installed.
 
+For dumping MongoDB-db's `mongodump` should be installed.
+
 ## Postcardware
 
-You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment you are required to send us a postcard from your hometown, mentioning which of our package(s) you are using.
+You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment we appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
 
 Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
 
-The best postcards will get published on the open source page on our website.
+All postcards are published [on our website](https://spatie.be/en/opensource/postcards).
 
 ## Installation
 

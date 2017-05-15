@@ -11,8 +11,8 @@ class SendSondage implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $sondage;
-    protected $data;
+    public $sondage;
+    public $data;
 
     /**
      * Create a new job instance.
@@ -35,7 +35,7 @@ class SendSondage implements ShouldQueue
         $url = base64_encode(json_encode([
             'sondage_id' => $this->sondage->id,
             'email'      => $this->data['email'],
-            'isTest'     => $this->data['isTest'],
+            'isTest'     => isset($this->data['isTest']) ? $this->data['isTest'] : null,
         ]));
 
         $donnes = [
@@ -43,10 +43,12 @@ class SendSondage implements ShouldQueue
             'email'   => $this->data['email'],
             'url'     => $url
         ];
-        
-        \Mail::send('emails.sondage', $donnes, function ($m) use($donnes) {
+
+        $subject = $this->sondage->marketing ? $this->sondage->title : 'le colloque '.$this->sondage->colloque->titre;
+
+        \Mail::send('emails.sondage', $donnes, function ($m) use($donnes,$subject) {
             $m->from('info@publications-droit.ch', 'www.publications-droit.ch');
-            $m->to($donnes['email'], 'Sondage')->subject('Sondage pour le colloque '. $this->sondage->colloque->titre);
+            $m->to($donnes['email'], 'Sondage')->subject('Sondage pour '.$subject);
         });
     }
 }

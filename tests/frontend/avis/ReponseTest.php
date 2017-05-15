@@ -9,11 +9,50 @@ class ReponseTest extends BrowserKitTest {
 	public function setUp()
 	{
 		parent::setUp();
+
+		$user = factory(App\Droit\User\Entities\User::class)->create();
+		$user->roles()->attach(1);
+		$this->actingAs($user);
 	}
 
 	public function tearDown()
 	{
 		parent::tearDown();
+	}
+
+	public function testCreateSondageMarketing()
+	{
+		// Create colloque
+		$make     = new \tests\factories\ObjectFactory();
+		$colloque = $make->colloque();
+
+		$this->withSession(['colloques' => collect([$colloque])])
+			->visit('admin/sondage/create')
+			->see('Type de sondage')
+			->submitForm('Envoyer', [
+				'title' => 'Ceci est un titre',
+				'description' => 'Ceci est une description',
+				'marketing'   => 1,
+				'valid_at'    => \Carbon\Carbon::now()->addDay(5)
+			])
+			->see('Ceci est un titre');
+	}
+
+	public function testCreateSondage()
+	{
+		// Create colloque
+		$make     = new \tests\factories\ObjectFactory();
+		$colloque = $make->colloque();
+
+		$this->withSession(['colloques' => collect([$colloque])])
+			->visit('admin/sondage/create')
+			->see('Type de sondage')
+			->submitForm('Envoyer', [
+				'colloque_id' => $colloque->id,
+				'marketing'   => null,
+				'valid_at'    => \Carbon\Carbon::now()->addDay(5)
+			])
+			->see($colloque->titre);
 	}
 
 	public function testReponseTestPage()
@@ -113,10 +152,6 @@ class ReponseTest extends BrowserKitTest {
 
 	public function testCreateQuestion()
 	{
-		$user = factory(App\Droit\User\Entities\User::class)->create();
-		$user->roles()->attach(1);
-		$this->actingAs($user);
-
 		$this->visit('admin/avis');
 		$this->assertViewHas('avis');
 
@@ -130,5 +165,89 @@ class ReponseTest extends BrowserKitTest {
 			'type'    => 'text',
 			'question' => 'Une nouvelle question'
 		]);
+	}
+
+	public function testSendToList()
+	{
+		Queue::fake();
+		// Create colloque
+		$make     = new \tests\factories\ObjectFactory();
+		$colloque = $make->colloque();
+
+		// Create a sondage for the colloque
+		$sondage = factory(App\Droit\Sondage\Entities\Sondage::class)->create([
+			'colloque_id' => $colloque->id,
+			'valid_at'    => \Carbon\Carbon::now()->addDay(5),
+		]);
+
+		// Create and attach a question to sondage
+		$question = factory(App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'text','question' => 'One question' ,'choices' => null]);
+		$sondage->avis()->attach($question->id, ['rang' => 1]);
+
+		// Create list
+		$list   = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One liste']);
+		$email1 = factory(App\Droit\Newsletter\Entities\Newsletter_emails::class)->create(['email' => 'contact@domain.com']);
+		$email2 = factory(App\Droit\Newsletter\Entities\Newsletter_emails::class)->create(['email' => 'info@domain.com']);
+
+		$list->emails()->save($email1);
+		$list->emails()->save($email2);
+
+		$this->visit('admin/sondage');
+		$this->assertViewHas('sondages');
+		$this->visit(url('admin/sondage/confirmation/'.$sondage->id));
+
+		$this->assertViewHas('listes')->see($colloque->titre);
+		$this->select($list->id, 'list_id')->press('Envoyer');
+
+		Queue::assertPushed(\App\Jobs\SendSondage::class, function ($job) use ($sondage,$email1) {
+			return $job->sondage->id === $sondage->id && $email1->email === $job->data['email'];
+		});
+
+		Queue::assertPushed(\App\Jobs\SendSondage::class, function ($job) use ($sondage,$email2) {
+			return $job->sondage->id === $sondage->id && $email2->email === $job->data['email'];
+		});
+	}
+
+	public function testSendTestEmail()
+	{
+		//Mail::fake();
+		// Create colloque
+		$make     = new \tests\factories\ObjectFactory();
+		$colloque = $make->colloque();
+
+		// Create a sondage for the colloque
+		$sondage = factory(App\Droit\Sondage\Entities\Sondage::class)->create([
+			'colloque_id' => $colloque->id,
+			'valid_at'    => \Carbon\Carbon::now()->addDay(5),
+		]);
+
+		// Create and attach a question to sondage
+		$question = factory(App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'text','question' => 'One question' ,'choices' => null]);
+		$sondage->avis()->attach($question->id, ['rang' => 1]);
+
+		// filter to get all send orders
+		$response = $this->call('POST', url('admin/sondage/send'), ['sondage_id' =>  $sondage->id,'email' => 'info@domain.ch']);
+
+		$this->assertRedirectedTo('admin/sondage');
+	}
+
+	public function testMissingAvis()
+	{
+		// Create colloque
+		$make     = new \tests\factories\ObjectFactory();
+		$colloque = $make->colloque();
+
+		// Create a sondage for the colloque
+		$sondage = factory(App\Droit\Sondage\Entities\Sondage::class)->create([
+			'colloque_id' => $colloque->id,
+			'valid_at'    => \Carbon\Carbon::now()->addDay(5),
+		]);
+
+		try {
+			$response = $this->call('POST', url('admin/sondage/send'), ['sondage_id' =>  $sondage->id, 'email' => 'info@domain.ch']);
+
+		} catch (Exception $e) {
+			$this->assertType('App\Exceptions\MissingException', $e);
+		}
 	}
 }

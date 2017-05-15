@@ -18,7 +18,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h3>Réponses au sondage</h3>
-                                <p><strong>{{ $sondage->colloque->titre }}</strong></p>
+                                @if($sondage->marketing)
+                                    <h4>{{ $sondage->title }}</h4>
+                                    {!! $sondage->description !!}
+                                @else
+                                    <p><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></p>
+                                @endif
                             </div>
                             <div class="col-md-6">
                                 <label for="message" class="control-label">

@@ -8,19 +8,19 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" action="{{ url('admin/orders/resume') }}" method="post">{!! csrf_field() !!}
+                    <form class="form-horizontal" action="{{ url('admin/resume') }}" method="post">{!! csrf_field() !!}
                         <h4>Période</h4>
                         <div class="row">
                             <div class="col-lg-2 col-md-3 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon">Du</span>
-                                    <input type="text" name="start" class="form-control datePicker" value="{{ $start->format('Y-m-d') }}" placeholder="Début">
+                                    <input type="text" name="period[start]" class="form-control datePicker" value="{{ $period['start'] }}" placeholder="Début">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-3 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon">au</span>
-                                    <input type="text" name="end" class="form-control datePicker" value="{{ $end->format('Y-m-d') }}" placeholder="Fin">
+                                    <input type="text" name="period[end]" class="form-control datePicker" value="{{ $period['end'] }}" placeholder="Fin">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-xs-12" style="min-width:130px;">
@@ -39,7 +39,7 @@
                                     <span class="input-group-addon">Paquet</span>
                                     <select class="form-control" name="send">
                                         <option value="">Tous</option>
-                                        <option {{ old('send') == 'payed' ? 'selected' : '' }} value="payed">Envoyés</option>
+                                        <option {{ old('send') == 'send' ? 'selected' : '' }} value="send">Envoyés</option>
                                         <option {{ old('send') == 'pending' ? 'selected' : '' }} value="pending">En attente</option>
                                     </select>
                                 </div>
@@ -57,9 +57,11 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
-                    <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->formatTwoDates($start,$end) }}</span></h3>
-                    <h4><strong>Status payement</strong>: {{ $status_list[$status] }}</h4>
-                    <h4><strong>Status envoi</strong>: {{ $send_list[$send] }}</h4>
+                    <h3><i class="fa fa-shopping-cart"></i> &nbsp;Commandes du <span class="text-primary">{{ $helper->betweenTwoDates($period['start'],$period['end']) }}</span></h3>
+                    @if(isset($status))
+                        <h4><strong>Status payement</strong>: {{ isset($status_list[$status]) ? $status_list[$status] : '' }}</h4>
+                        <h4><strong>Status envoi</strong>: {{ isset($send_list[$send]) ? $send_list[$send] : '' }}</h4>
+                    @endif
 
                     <?php
                     $count = $orders->map(function ($item, $key) {

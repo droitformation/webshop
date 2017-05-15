@@ -98,6 +98,7 @@ $(document).ready(function() {
         initComplete: initabo,
         language: langues,
         pageLength: 50,
+        stateSave: true,
         pagingType: 'simple',
         "columnDefs": [{
             "targets"  : 'no-sort',

@@ -22,13 +22,13 @@ class UserEloquent implements UserInterface{
         return $this->user->with(['adresses'])->orderBy('created_at','DESC')->take(5)->get();
     }
 
-    public function find($id){
-
+    public function find($id)
+    {
         return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes'])->findOrFail($id);
     }
 
     public function findWithTrashed($id){
-        return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes'])->withTrashed()->findOrFail($id);
+        return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes'])->withTrashed()->find($id);
     }
 
     public function findByEmail($email)

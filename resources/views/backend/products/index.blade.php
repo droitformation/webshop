@@ -14,7 +14,7 @@
                                 @include('backend.products.partials.sort',['title' => 'Catégories', 'items' => $categories, 'types' => 'categories', 'type' => 'categorie_id'])
                             </div>
                             <div class="col-md-2">
-                                @include('backend.products.partials.sort',['title' => 'Auteurs',    'items' => $authors, 'types' => 'authors', 'type' => 'author_id'])
+                                @include('backend.products.partials.sort',['title' => 'Auteurs',    'items' => $shopauthors, 'types' => 'authors', 'type' => 'author_id'])
                             </div>
                             <div class="col-md-2">
                                 @include('backend.products.partials.sort',['title' => 'Domaines',   'items' => $domains,  'types' => 'domains', 'type' => 'domain_id'])
@@ -44,8 +44,7 @@
             </div>
 
             @inject('helper', 'App\Droit\Helper\Helper')
-
-           {{ $helper->displaySearch($sort) }}
+            {{ $helper->displaySearch($sort,$term) }}
 
             @if(!$products->isEmpty())
 

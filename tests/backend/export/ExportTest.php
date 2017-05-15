@@ -136,6 +136,58 @@ class ExportTest extends BrowserKitTest {
 
 		$names = $result->pluck('name')->unique()->values()->all();
 
-		$this->assertEquals([$adresse->first_name.' '.$adresse->last_name], $names);
+		$this->assertTrue(in_array($adresse->first_name.' '.$adresse->last_name,$names));
+	}
+
+	public function testSearchUserDeleted()
+	{
+		$user = factory(App\Droit\User\Entities\User::class)->create();
+		$user->roles()->attach(1);
+		$this->actingAs($user);
+
+		$make = new \tests\factories\ObjectFactory();
+		$user = $make->makeUser();
+
+		$user->delete(); // delete user
+
+		$this->visit('/admin/search/user')->see('Rechercher');
+
+		$response = $this->call('POST', '/admin/search/user',['term' => $user->first_name]);
+
+		$content = $response->getOriginalContent();
+		$content = $content->getData();
+
+		$users    = $content['users'];
+		$adresses = $content['adresses'];
+
+		// There should be no adresse in results because the user has been deleted and the adresse shouldn't apprear
+		$this->assertTrue($users->isEmpty());
+		$this->assertTrue($adresses->isEmpty());
+	}
+
+	public function testExportWithoutDeletedUsersAdresse()
+	{
+		$repo = App::make('App\Droit\Adresse\Repo\AdresseInterface');
+		$make = new \tests\factories\ObjectFactory();
+
+		$specs   = $make->items('Specialisation', 2)->pluck('id')->all();
+		$members = $make->items('Member', 2)->pluck('id')->all();
+
+		$infos = [
+			['canton' => 10, 'profession' => 1, 'members' => $members, 'specialisations' => $specs],
+			['canton' => 10, 'profession' => 1, 'members' => $members, 'specialisations' => $specs],
+			['canton' => 10, 'profession' => 1, 'members' => $members, 'specialisations' => $specs], // will be deleted
+		];
+
+		$users = $make->user($infos);
+
+		$last    = $users->pop();
+		$adresse = $last->adresses->first();
+
+		$last->delete(); // delete one user
+
+		$results = $repo->searchMultiple(['cantons' => [10], 'specialisations' => $specs, 'members' => $members], false);
+		$this->assertEquals(2, $results->count());
+
 	}
 }

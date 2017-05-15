@@ -144,11 +144,11 @@ Route::group(['middleware' => 'site'], function () {
 
 });
 
-Route::group(['prefix' => 'team' , 'middleware' => ['auth','team']], function () {
+Route::group(['prefix' => 'team' , 'middleware' => ['auth','team','back']], function () {
     Route::get('/','Team\TeamController@index');
     
     Route::get('order/{id}','Team\Shop\OrderController@show');
-    Route::match(['get', 'post'],'orders', 'Team\Shop\OrderController@index');
+    Route::match(['get', 'post'],'orders/{back?}', 'Team\Shop\OrderController@index');
 
     Route::get('colloque','Team\Colloque\ColloqueController@index');
     Route::get('colloque/{id}','Team\Colloque\ColloqueController@show');
@@ -204,7 +204,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('adresse/convert','Backend\User\AdresseController@convert');
     Route::post('adresse/livraison','Backend\User\AdresseController@livraison');
     Route::get('adresse/create/{user_id?}','Backend\User\AdresseController@create');
-    Route::match(['get', 'post'], 'adresses', 'Backend\User\AdresseController@index');
+    Route::match(['get', 'post'], 'adresses/{back?}', 'Backend\User\AdresseController@index');
     Route::resource('adresse', 'Backend\User\AdresseController');
 
     Route::match(['get', 'post'], 'deletedadresses', 'Backend\User\DeletedAdresseController@index');
@@ -216,7 +216,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('deletedadresses/restoreAdresse','Backend\User\DeletedAdresseController@restoreAdresse');
     Route::post('deletedadresses/removeAdresseRow','Backend\User\DeletedAdresseController@removeAdresseRow');
 
-    Route::match(['get', 'post'], 'users', 'Backend\User\UserController@index');
+    Route::match(['get', 'post'], 'users/{back?}', 'Backend\User\UserController@index');
     Route::get('user/restore/{id}','Backend\User\UserController@restore');
     Route::resource('user', 'Backend\User\UserController');
 
@@ -285,6 +285,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('sondage/remove','Backend\Sondage\SondageController@remove');
     Route::post('sondage/sorting','Backend\Sondage\SondageController@sorting');
     Route::post('sondage/send','Backend\Sondage\SondageController@send');
+    Route::get('sondage/confirmation/{id}','Backend\Sondage\SondageController@confirmation');
     Route::resource('sondage', 'Backend\Sondage\SondageController');
     Route::resource('avis', 'Backend\Sondage\AvisController');
     Route::match(['get', 'post'], 'reponse/{id}', 'Backend\Sondage\ReponseController@show');
@@ -292,6 +293,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('sondageavis', 'Backend\Sondage\SondageAvisController');
     
     // Add, edit, delete items for colloque
+    //Route::get('colloque/{back?}', 'Backend\Colloque\ColloqueController@index')->middleware('back');
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
 
     Route::post('price/change', 'Backend\Colloque\PriceController@change');
@@ -339,14 +341,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('productattribut', 'Backend\Shop\ProductAttributeController');
     Route::resource('productlabel', 'Backend\Shop\ProductLabelController');
 
-    Route::match(['get', 'post'], 'products', 'Backend\Shop\ProductController@index');
+    Route::match(['get', 'post'], 'products/{back?}', 'Backend\Shop\ProductController@index');
     Route::resource('product', 'Backend\Shop\ProductController');
 
     Route::post('stock/change', 'Backend\Shop\StockController@update');
     Route::get('stock/product/{id}', 'Backend\Shop\StockController@product');
     Route::get('stock/export/{id}', 'Backend\Shop\StockController@export');
 
-    Route::match(['get', 'post'],'orders', 'Backend\Shop\OrderController@index');
+    Route::match(['get', 'post'],'orders/{back?}', 'Backend\Shop\OrderController@index');
     Route::match(['get', 'post'],'order/rappels', 'Backend\Shop\RappelController@index');
 
     Route::post('order/rappel/generate', 'Backend\Shop\RappelController@generate');
@@ -355,7 +357,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::post('order/edit', 'Backend\Shop\OrderController@edit');
     Route::post('order/export', 'Backend\Shop\OrderController@export');
-    Route::match(['get', 'post'],'orders/resume', 'Backend\Shop\OrderController@resume');
+    Route::match(['get', 'post'],'resume', 'Backend\Shop\OrderController@resume');
     Route::post('order/restore/{id}', 'Backend\Shop\OrderController@restore');
     Route::post('order/generate', 'Backend\Shop\OrderController@generate');
 
