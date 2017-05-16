@@ -18,7 +18,7 @@ class EmailController extends Controller
 
     public function index(Request $request)
     {
-        $emails = $this->email->getAll(array_filter($request->except('_token')));
+        $emails = $this->email->getAll(array_filter($request->except('_token','page')));
 
         return view('backend.email.index')->with(['emails' => $emails]);
     }
