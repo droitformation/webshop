@@ -187,6 +187,19 @@
                           @endforeach
                       @endif
 
+                      @if(!$user->user_abos->isEmpty())
+                          <div class="panel panel-midnightblue">
+                              <div class="panel-body">
+                                  <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
+                                  <ul>
+                                      @foreach($user->user_abos as $abo)
+                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}">{{ $abo->abo->title }}</a></li>
+                                      @endforeach
+                                  </ul>
+                              </div>
+                          </div>
+                      @endif
+
                   </div>
               </div>
 
