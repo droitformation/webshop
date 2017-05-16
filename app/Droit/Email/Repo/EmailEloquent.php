@@ -14,7 +14,11 @@ class EmailEloquent implements EmailInterface{
 
     public function getAll($period)
     {
-        return $this->email->period($period)->orderBy('id','desc')->simplePaginate(15);
+        if(empty($period)){
+            return $this->email->orderBy('id','desc')->paginate(15);
+        }
+
+        return $this->email->period($period)->orderBy('id','desc')->get();
     }
 
     public function search($email)

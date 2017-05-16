@@ -68,7 +68,9 @@
                         @endforeach
                     </table>
 
-                    {{ $emails->links() }}
+                    @if($emails instanceof \Illuminate\Pagination\LengthAwarePaginator )
+                        {!! $emails->links()!!}
+                    @endif
 
                     <!-- Modal -->
                     <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
