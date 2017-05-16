@@ -75,6 +75,8 @@ class ObjectFactory
             $user->adresse_contact->members()->attach($data['members']);
         }
 
+        $user->load('adresses.specialisations','adresses.members');
+
         return $user;
     }
 

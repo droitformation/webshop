@@ -150,6 +150,8 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn(collect([$adresse1, $adresse2]));
         $mockadresse->shouldReceive('delete')->twice();
+        $mockadresse->shouldReceive('setSpecialisation');
+        $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('delete')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
 
@@ -175,6 +177,8 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn(collect([$adresse1, $adresse2]));
         $mockadresse->shouldReceive('update')->twice();
+        $mockadresse->shouldReceive('setSpecialisation');
+        $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('attach')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
 
@@ -196,6 +200,8 @@ class AdresseWorkerTest extends BrowserKitTest {
         // Add specialisations
         $make->addMemberships($donor,['specialisations' => $spec_data]);
         $make->addMemberships($donor,['members' => $mem_data]);
+
+        $donor->fresh();
 
         // The recipient has no specialisation
         $this->assertTrue(!$donor->adresse_contact->specialisations->isEmpty());
@@ -236,6 +242,8 @@ class AdresseWorkerTest extends BrowserKitTest {
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn($donor->adresses);
         $mockadresse->shouldReceive('update')->once();
         $mockuser->shouldReceive('delete')->once();
+        $mockadresse->shouldReceive('setSpecialisation');
+        $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('attachdelete')->setTypes(['orders'])->setFromAdresses([$adresses->pluck('id')->all()])->reassignFor($recipient);
     }

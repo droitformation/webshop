@@ -155,16 +155,19 @@ class AdresseWorker implements AdresseWorkerInterface{
         {
             $list  = $model instanceof \App\Droit\User\Entities\User ? $model->adresses : collect([$model]);
 
-            $specs = $list->pluck('specialisations')->flatten(1)->pluck('id')->all();
-            $mems  = $list->pluck('members')->flatten(1)->pluck('id')->all();
+            if($recipient instanceof \App\Droit\User\Entities\User){
 
-            $list->each(function ($item, $key){
-                $item->specialisations()->detach();
-                $item->members()->detach();
-            });
+                $specs = $list->pluck('specialisations')->flatten(1)->pluck('id')->all();
+                $mems  = $list->pluck('members')->flatten(1)->pluck('id')->all();
 
-            $recipient->adresse_contact->specialisations()->attach($specs);
-            $recipient->adresse_contact->members()->attach($mems);
+                $list->each(function ($item, $key){
+                    $item->specialisations()->detach();
+                    $item->members()->detach();
+                });
+
+                $this->adresse->setSpecialisation($recipient->adresse_contact->id,$specs);
+                $this->adresse->setMember($recipient->adresse_contact->id,$mems);
+            }
         }
     }
 

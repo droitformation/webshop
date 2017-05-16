@@ -17,6 +17,7 @@ interface AdresseInterface {
     public function searchMultiple($terms, $each = false);
 	public function duplicates();
 	public function setSpecialisation($adresse_id,$data);
+	public function setMember($adresse_id,$data);
 
 	public function assignOrdersToUser($id, $user_id);
 
