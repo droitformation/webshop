@@ -474,6 +474,7 @@ $factory->define(App\Droit\Abo\Entities\Abo_users::class, function (Faker\Genera
         'exemplaires'    => 1,
         'adresse_id'     => '1',
         'tiers_id'       => null,
+        'user_id'        => null,
         'price'          => null,
         'reference'      => null,
         'remarque'       => null,
@@ -487,6 +488,12 @@ $factory->define(App\Droit\Abo\Entities\Abo_factures::class, function (Faker\Gen
         'abo_user_id' => 1,
         'product_id'  => 1,
         'payed_at'    => null
+    ];
+});
+
+$factory->define(App\Droit\Abo\Entities\Abo_rappels::class, function (Faker\Generator $faker) {
+    return [
+        'abo_facture_id' => 1
     ];
 });
 

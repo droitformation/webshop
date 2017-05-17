@@ -1,0 +1,184 @@
+.autocomplete-input {
+    position: relative;
+    height: 50px;
+}
+
+.autocomplete-input input {
+    width: 100%;
+}
+
+ul.options-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: -12px;
+    border: 1px solid #dbdbdb;
+    border-radius: 0 0 3px 3px;
+    position: absolute;
+    width: 100%;
+    overflow-y: scroll;
+    list-style: none;
+    padding-left: 0px;
+    max-height: 300px;
+    z-index: 100;
+    box-shadow: 0px 2px 4px 0 #ccc;
+}
+
+ul.options-list li {
+    width: 100%;
+    flex-wrap: wrap;
+    background: white;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+    color: #363636;
+    padding: 7px;
+    cursor: pointer;
+}
+
+ul.options-list li.highlighted {
+    background: #f8f8f8
+}
+
+.control {
+    font-size: 1rem;
+    position: relative;
+    text-align: left;
+}
+
+.control.has-icon .icon {
+    color: #dbdbdb;
+    height: 2.25em;
+    pointer-events: none;
+    position: absolute;
+    top: 10px;
+    width: 1.5em;
+    z-index: 4;
+}
+
+.control.has-icon .input:focus + .icon {
+    color: #7a7a7a;
+}
+
+.control.has-icon .input.is-small + .icon {
+    font-size: 0.75rem;
+}
+
+.control.has-icon .input.is-medium + .icon {
+    font-size: 1.25rem;
+}
+
+.control.has-icon .input.is-large + .icon {
+    font-size: 1.5rem;
+}
+
+.control.has-icon:not(.has-icon-right) .icon {
+    left: 0;
+}
+
+.control.has-icon:not(.has-icon-right) .input {
+    padding-left: 2.25em;
+}
+
+.control.has-icon.has-icon-right .icon {
+    right: 0;
+}
+
+.control.has-icon.has-icon-right .input {
+    padding-right: 2.25em;
+}
+
+.control.has-icons-right .icon.is-right {
+    right: 0;
+}
+
+input,
+.textarea {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: none;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.25em;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: calc(0.625em - 1px);
+    padding-right: calc(0.625em - 1px);
+    padding-top: calc(0.375em - 1px);
+    position: relative;
+    vertical-align: top;
+    background-color: white;
+    border-color: #dbdbdb;
+    color: #363636;
+    box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+    max-width: 100%;
+    width: 100%;
+}
+
+.input:focus, .input.is-focused, .input:active, .input.is-active,
+.textarea:focus,
+.textarea.is-focused,
+.textarea:active,
+.textarea.is-active {
+    outline: none;
+}
+
+.input[disabled],
+.textarea[disabled] {
+    cursor: not-allowed;
+}
+
+.input:hover, .input.is-hovered,
+.textarea:hover,
+.textarea.is-hovered {
+    border-color: #b5b5b5;
+}
+
+.input:focus, .input.is-focused, .input:active, .input.is-active,
+.textarea:focus,
+.textarea.is-focused,
+.textarea:active,
+.textarea.is-active {
+    border-color: #00d1b2;
+}
+
+.input[disabled],
+.textarea[disabled] {
+    background-color: whitesmoke;
+    border-color: whitesmoke;
+    box-shadow: none;
+    color: #7a7a7a;
+}
+
+.input[disabled]::-moz-placeholder,
+.textarea[disabled]::-moz-placeholder {
+    color: rgba(54, 54, 54, 0.3);
+}
+
+.input[disabled]::-webkit-input-placeholder,
+.textarea[disabled]::-webkit-input-placeholder {
+    color: rgba(54, 54, 54, 0.3);
+}
+
+.input[disabled]:-moz-placeholder,
+.textarea[disabled]:-moz-placeholder {
+    color: rgba(54, 54, 54, 0.3);
+}
+
+.input[disabled]:-ms-input-placeholder,
+.textarea[disabled]:-ms-input-placeholder {
+    color: rgba(54, 54, 54, 0.3);
+}
+
+.input.is-large,
+.textarea.is-large {
+    font-size: 1.5rem;
+}

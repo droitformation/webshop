@@ -17,7 +17,7 @@
                 <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
-                    <div class="panel-body">
+                    <div class="panel-body" id="appComponent">
                         <h4><i class="fa fa-edit"></i> &nbsp;Abonnement</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>

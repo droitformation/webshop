@@ -29,6 +29,7 @@ Vue.component('content-form', require('./components/ContentForm.vue'));
 
 Vue.component('manager', require('./components/Manager.vue'));
 Vue.component('filter-adresse', require('./components/FilterAdresse.vue'));
+Vue.component('list-autocomplete', require('./components/ListAutocomplete.vue'));
 
 const app = new Vue({
     el: '#appComponent'

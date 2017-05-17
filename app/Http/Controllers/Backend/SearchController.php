@@ -86,6 +86,19 @@ class SearchController extends Controller
      *
      * @return Response
      */
+    public function recherche(Request $request)
+    {
+        $results = $this->user->search($request->input('term'));
+        $results = $this->helper->convertAutocomplete($results);
+
+        return response()->json($results);
+    }
+
+    /**
+     * Search user for inscription autocomplete
+     *
+     * @return Response
+     */
     public function adresse(Request $request)
     {
         $results = $this->adresse->search($request->input('term'));

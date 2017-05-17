@@ -296,13 +296,15 @@ Route::get('abo1', function()
 {
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-    $facture = $factures->find(2);//701
+    $facture   = $factures->find(2546);//701
+
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $generator->stream = true;
     //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
 
-    return $generator->makeAbo('facture', $facture);
+    //return $generator->makeAbo('facture', $facture);
+    return $generator->makeAbo('facture', $facture,  null,  null);
 });
 
 Route::get('abo2', function()

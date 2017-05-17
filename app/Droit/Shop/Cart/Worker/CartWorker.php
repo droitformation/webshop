@@ -378,12 +378,13 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
 
          $adresse_id = $user->adresse_livraison->id;
 
-         return $order->map(function ($item, $key) use ($adresse_id) {
+         return $order->map(function ($item, $key) use ($adresse_id,$user) {
              return [
                  'abo_id'         => $item->id,
                  'product_id'     => $item->options->product_id,
                  'exemplaires'    => 1,
-                 'adresse_id'     => $adresse_id,
+                 'adresse_id'     => null,
+                 'user_id'        => $user->id,
                  'status'         => 'abonne',
                  'renouvellement' => 'auto'
              ];

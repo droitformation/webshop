@@ -35,7 +35,7 @@ class SendAboConfirmation extends Job implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
-        $user = $this->abos->first()->user;
+        $user = $this->abos->first()->user_facturation;
 
         $total = $this->abos->map(function($item, $key){
             return $item->abo->price;

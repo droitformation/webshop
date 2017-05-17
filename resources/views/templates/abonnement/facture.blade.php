@@ -75,17 +75,19 @@
     <div id="abo-table">
         <?php $traduction = ['year' => 'annuelle', 'semester' => 'semestrielle', 'month' => 'mensuelle']; ?>
         <h2>Abonnement à la publication {{ $traduction[$abo->abo->plan] }} <strong>{{ $abo->abo->title }}</strong>
-          @if($abo->tiers_id)
+          @if($generate->isTiers())
             géré par vos soins :
           @endif
         </h2>
 
         <table class="content-table content-abo">
-            @if($abo->tiers_id)
+            @if($generate->isTiers())
                 <tr>
                     <td colspan="3" style="padding-top: 4px;">
                         <p><cite>
-                            Destinataire : {{ $abo->user->name }}, {{ $abo->user->company }} n/réf. {{ isset($abo->reference) && !empty($abo->reference) ? $abo->reference : $abo->numero }}
+                            Destinataire : {{ $generate->getDetenteur()->name }},
+                                {{ $generate->getDetenteur()->company }} n/réf.
+                                {{ isset($abo->reference) && !empty($abo->reference) ? $abo->reference : $abo->numero }}
                         </cite></p>
                     </td>
                 </tr>
@@ -108,7 +110,7 @@
                 <td width="10%" class="pad-b" align="right"><strong>{{ isset($abo->abo->current_product) ? $abo->abo->current_product->price_cents : '' }} CHF</strong></td>
             </tr>
 
-            @if($abo->tiers_id && $abo->price_cents_remise)
+            @if($generate->isTiers() && $abo->price_cents_remise)
                 <tr>
                     <td class="pad-b" width="90%" align="right">Votre remise &nbsp;&nbsp;</td>
                     <td class="pad-b" width="10%" align="right"><strong>{{ $abo->price_cents_remise }} CHF</strong></td>

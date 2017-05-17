@@ -417,6 +417,25 @@ class ObjectFactory
         ]);
     }
 
+    public function makeUserAbonnement($abo = null, $user = null,$isTiers = false)
+    {
+        if(!$abo){
+            $abo = $this->makeAbo();
+        }
+
+        if(!$user){
+            $user = $this->makeUser();
+        }
+
+        $tiers = $this->makeUser();
+
+        return factory(\App\Droit\Abo\Entities\Abo_users::class)->create([
+            'abo_id'   => $abo->id,
+            'user_id'  => $user->id,
+            'tiers_user_id' => $isTiers ? $tiers->id : null,
+        ]);
+    }
+
     public function makeAbonnementForAdresse($adresse ,$abo = null)
     {
         if(!$abo){

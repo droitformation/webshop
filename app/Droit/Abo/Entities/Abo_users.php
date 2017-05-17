@@ -9,7 +9,7 @@ class Abo_users extends Model{
 
     protected $table = 'abo_users';
 
-    protected $fillable = ['abo_id','numero','exemplaires','adresse_id','tiers_id','price','reference','remarque','status','renouvellement'];
+    protected $fillable = ['abo_id','numero','exemplaires','adresse_id','tiers_id','user_id','tiers_user_id','price','reference','remarque','status','renouvellement'];
 
     public function getAboNoAttribute()
     {
@@ -54,16 +54,26 @@ class Abo_users extends Model{
 
     public function getUserAdresseAttribute()
     {
+        // Change to user
+        if(isset($this->realuser)) {
+            return isset($this->realuser->adresse_contact) ? $this->realuser->adresse_contact : null;
+        }
+
+        // Fallback to adresse
         $user = isset($this->originaluser) && !isset($this->user) ? $this->originaluser : $this->user;
-        
+
         return isset($user) ? $user : null;
     }
 
     public function getUserFacturationAttribute()
     {
-        $user = isset($this->tiers) ? $this->tiers : $this->user;
+        // Change to user
+        if(isset($this->tiers_user) && isset($this->tiers_user->adresse_contact)){
+            return $this->tiers_user->adresse_contact;
+        }
 
-        return isset($user) ? $user : null;
+        // Fallback to adresse
+        return isset($this->tiers) ? $this->tiers : $this->user_adresse;
     }
 
     public function getPriceCentsAttribute()
@@ -141,6 +151,11 @@ class Abo_users extends Model{
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id')->withTrashed();
     }
 
+    public function realuser()
+    {
+        return $this->belongsTo('App\Droit\User\Entities\User','user_id')->withTrashed();
+    }
+
     public function originaltiers()
     {
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','tiers_id','old_id')->withTrashed();
@@ -149,6 +164,11 @@ class Abo_users extends Model{
     public function tiers()
     {
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','tiers_id')->withTrashed();
+    }
+
+    public function tiers_user()
+    {
+        return $this->belongsTo('App\Droit\User\Entities\User','tiers_user_id')->withTrashed();
     }
 
     public function factures()

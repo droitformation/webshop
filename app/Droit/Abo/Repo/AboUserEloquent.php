@@ -25,7 +25,7 @@ class AboUserEloquent implements AboUserInterface{
 
     public function find($id)
     {
-        return $this->abo_user->with(['tiers','user','abo','abo.products','factures','factures.rappels','originaltiers','originaluser'])->find($id);
+        return $this->abo_user->with(['tiers','user','realuser','abo','abo.products','factures','factures.rappels','originaltiers','originaluser'])->find($id);
     }
 
     public function allByAdresse($id)
@@ -64,6 +64,7 @@ class AboUserEloquent implements AboUserInterface{
             'exemplaires'    => $data['exemplaires'],
             'adresse_id'     => $data['adresse_id'],
             'tiers_id'       => isset($data['tiers_id']) && $data['tiers_id'] > 0 ? $data['tiers_id'] : null,
+            'user_id'        => isset($data['user_id']) && $data['user_id'] > 0 ? $data['user_id'] : null,
             'price'          => isset($data['price']) && $data['price'] > 0 ? $data['price'] : null,
             'reference'      => isset($data['reference']) ? $data['reference'] : null,
             'remarque'       => isset($data['remarque']) ? $data['remarque'] : null,
@@ -83,13 +84,24 @@ class AboUserEloquent implements AboUserInterface{
 
         $abo_user = $this->abo_user->findOrFail($data['id']);
 
-        if( ! $abo_user )
-        {
+        if( ! $abo_user ) {
             return false;
         }
 
         $abo_user->fill($data);
         $abo_user->price = (isset($data['price']) && $data['price'] > 0 ? $data['price'] * 100 : null);
+
+        if(isset($data['adresse_id']) && $data['adresse_id'] > 0 && !isset($data['user_id'])) {
+            $abo_user->user_id    = null;
+            $abo_user->adresse_id = $data['adresse_id'];
+        }
+
+        if( (isset($data['user_id']) && $data['user_id'] > 0) || (isset($data['adresse_id']) && isset($data['user_id'])) ) {
+            $abo_user->adresse_id = null;
+            $abo_user->user_id    = $data['user_id'];
+        }
+
+        $abo_user->tiers_id = (isset($data['tiers_id']) && $data['tiers_id'] > 0) ? $data['tiers_id'] : null;
 
         $abo_user->save();
 

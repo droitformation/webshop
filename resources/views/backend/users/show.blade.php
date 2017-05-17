@@ -191,9 +191,9 @@
                           <div class="panel panel-midnightblue">
                               <div class="panel-body">
                                   <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
-                                  <ul>
+                                  <ul class="list-unstyled">
                                       @foreach($user->user_abos as $abo)
-                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}">{{ $abo->abo->title }}</a></li>
+                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}"><i class="fa fa-bookmark"></i> &nbsp;{{ $abo->abo->title }}</a></li>
                                       @endforeach
                                   </ul>
                               </div>

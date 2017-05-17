@@ -58,6 +58,57 @@ class AbonnementAdminTest extends BrowserKitTest {
         ]);
     }
 
+    public function testUpdateAboUser()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $abo        = $make->makeAbo();
+        $abonnement = $make->makeAbonnement($abo);
+        $user       = $make->makeUser();
+
+        $defaults = [
+            'id'             => $abonnement->id,
+            'abo_id'         => $abo->id,
+            'numero'         => $abonnement->numero,
+            'exemplaires'    => $abonnement->exemplaires,
+            'status'         => $abonnement->status,
+            'renouvellement' => $abonnement->renouvellement,
+        ];
+
+        // Only user_id
+        $data = array_merge($defaults,['adresse_id' => '', 'user_id' => $user->id]);
+
+        $response = $this->call('PUT', '/admin/abonnement/'.$abonnement->id, $data);
+
+        $this->seeInDatabase('abo_users', [
+            'abo_id'     => $abo->id,
+            'adresse_id' => null,
+            'user_id'    => $user->id,
+        ]);
+
+        // Both but we need only user_id
+        $data = array_merge($defaults,['adresse_id' => 12, 'user_id' => $user->id]);
+
+        $response = $this->call('PUT', '/admin/abonnement/'.$abonnement->id, $data);
+
+        $this->seeInDatabase('abo_users', [
+            'abo_id'     => $abo->id,
+            'adresse_id' => null,
+            'user_id'    => $user->id,
+        ]);
+
+        // Only adresse_id
+        $data = array_merge($defaults,['adresse_id' => 12, 'user_id' => null]);
+
+        $response = $this->call('PUT', '/admin/abonnement/'.$abonnement->id, $data);
+
+        $this->seeInDatabase('abo_users', [
+            'abo_id'     => $abo->id,
+            'adresse_id' => 12,
+            'user_id'    => null
+        ]);
+    }
+
     public function testFactureUserEdition()
     {
         $make = new \tests\factories\ObjectFactory();

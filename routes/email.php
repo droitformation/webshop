@@ -215,7 +215,7 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             'logo'      => 'facdroit.png',
             'abos'      => collect([$abonnement]),
             'total'     => number_format((float) (20000/100), 2, '.', ''),
-            'user'      => $abonnement->user,
+            'user'      => $abonnement->user_facturation,
             'date'      => \Carbon\Carbon::now()->formatLocalized('%d %B %Y')
         ];
 

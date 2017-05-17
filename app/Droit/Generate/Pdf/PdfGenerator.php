@@ -104,7 +104,7 @@ class PdfGenerator implements PdfGeneratorInterface
     public function makeAbo($document, $model, $rappel = null, $rappel_model = null)
     {
         $data     = $this->getData('abo');
-        $generate = new \App\Droit\Generate\Entities\Generate($model);
+        $generate = new \App\Droit\Generate\Entities\AboGenerate($model);
 
         $data['generate'] = $generate;
         $data['rappel']   = $rappel;
