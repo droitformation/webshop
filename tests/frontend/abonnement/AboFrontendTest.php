@@ -110,7 +110,7 @@ class AboFrontendTest extends BrowserKitTest {
 
         $this->seeInDatabase('abo_users', [
             'abo_id'     => $abo->id,
-            'adresse_id' => $user->adresses->first()->id,
+            'user_id' => $user->id,
         ]);
 
     }
