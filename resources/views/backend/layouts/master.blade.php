@@ -20,7 +20,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen-bootstrap.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.tagit.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/autocomplete.css');?>">
 
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>

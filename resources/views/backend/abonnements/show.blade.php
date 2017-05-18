@@ -19,10 +19,25 @@
 
                     <div class="panel-body" id="appComponent">
                         <h4><i class="fa fa-edit"></i> &nbsp;Abonnement</h4>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
                             <div class="col-sm-4 col-xs-5">
                                 <input type="text" class="form-control" value="{{ $abonnement->numero }}" name="numero">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Compte</label>
+                            <div class="col-sm-4 col-xs-5">
+                                <list-autocomplete type="user_id" chosen_id="{{ $abonnement->user_id ? $abonnement->user_id : null }}"></list-autocomplete>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Tiers payant</label>
+                            <div class="col-sm-4 col-xs-5">
+                                <list-autocomplete type="tiers_user_id" chosen_id="{{ $abonnement->tiers_user_id ? $abonnement->tiers_user_id : null }}"></list-autocomplete>
                             </div>
                         </div>
 

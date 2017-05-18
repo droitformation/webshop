@@ -113,13 +113,16 @@ class UserController extends Controller {
     public function getUser($id)
     {
         $user    = $this->user->find($id);
-        $adresse = $user->adresse_facturation;
 
         return [
-            'id'       => $id ,
-            'adresse'  => $adresse,
-            'civilite' => $adresse->civilite_title,
-            'cp'       => $adresse->cp_trim
+            'user_id'  => $id,
+            'civilite' => $user->adresse_contact->civilite_title,
+            'name'     => $user->adresse_contact->name ,
+            'company'  => $user->adresse_contact->company,
+            'cp'       => $user->adresse_contact->cp_trim,
+            'adresse'  => $user->adresse_contact->adresse,
+            'npa'      => $user->adresse_contact->npa,
+            'ville'    => $user->adresse_contact->ville,
         ];
 
         die();

@@ -23,22 +23,15 @@ $('input.search-adresse').each(function()
     $( "#" + idAutocomplete ).autocomplete({
         source    : base_url + 'admin/search/adresse',
         minLength : 3,
-        select    : function( event, ui )
-        {
+        select    : function( event, ui ) {
              var data = ui.item.adresse;
-
              type = (where == 'order') ? ui.item.type : type;
-            
              var uid  = (type == 'adresse_id') || (type == 'tiers_id') ? data.id : ui.item.value;
              var name = (type == 'adresse_id') || (type == 'tiers_id') ? type : 'user_id';
-
              $input.html('<input type="hidden" value="' + uid + '" name="' + name + '"><input type="hidden" value="' + name + '" name="type">');
-
              var html = template(data, ui.item.type);
-
              $choice.html(html);
              $find.removeClass('in');
-
              return false;
         }
     }).autocomplete( "instance" )._renderItem = function( ul, item ){

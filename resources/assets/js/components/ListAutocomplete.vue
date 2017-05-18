@@ -1,83 +1,110 @@
 <template>
     <div>
-        <div class="autocomplete-input">
-            <p class="control has-icon has-icon-right">
-                <input class="input is-large"
-                       v-model="keyword"
-                       @input="onInput($event.target.value)"
-                       @keyup.esc="isOpen = false"
-                       @blur="isOpen = false"
-                       @keydown.down="moveDown"
-                       @keydown.up="moveUp"
-                       @keydown.enter="select"
-                       placeholder="Search...">
-                <i class="icon fa fa-angle-down"></i>
-            </p>
-            <ul class="options-list" v-show="isOpen">
-                <li v-for="option in options" :class="{'highlighted': index === highlightedPosition }"
-                    v-on:mouseenter="highlightedPosition = index"  v-on:mousedown="select"
-                >
-                    <strong>{{ option.label }}</strong><br>
-                    {{ option.desc }}
-                </li>
-            </ul>
+        <input v-show="!hasChosen" :class="'form-control search-adresse-autocomplete_' + type" placeholder="Chercher une adresse..." type="text">
+        <div v-if="hasChosen" class="choice-adresse autocomplete-bloc">
+            <input :name="type" :value="chosen.user_id" type="hidden">
+
+            <button type="button" class="btn btn-danger btn-xs" @click.prevent="remove">changer</button>
+
+            <span>{{ chosen.civilite }}</span>
+            <span><a target="_blank" :href="'admin/user/' + chosen.user_id">{{ chosen.name }}</span>
+            <span v-if="chosen.cp">{{ chosen.cp }}</span>
+            <span>{{ chosen.adresse }}</span>
+            <span>{{ chosen.npa }} {{ chosen.ville }}</span>
+
+           <!-- <a class="btn btn-info btn-xs" href="">éditer</a>-->
         </div>
     </div>
 </template>
 <style>
+    .autocomplete-bloc{
+        padding:10px 0;
+        margin-top:5px;
+    }
+    .autocomplete-bloc span{
+        display:block;
+    }
+    .autocomplete-bloc .btn.btn-info{
+        margin-top:8px;
+    }
+    .autocomplete-bloc .btn.btn-danger{
+        margin-bottom:8px;
+    }
 </style>
 
 <script>
     export default{
+        props: ['type','chosen_id'],
         data(){
             return{
-                options: [],
-                isOpen: false,
-                highlightedPosition: 0,
-                keyword: ''
+                chosen: {
+                    civilite : '',
+                    name : '',
+                    company: '',
+                    adresse: '',
+                    cp: '',
+                    npa: '',
+                    ville: '',
+                    user_id: null
+                },
+                hasChosen: false,
             }
         },
-        computed: {
-            fOptions () {
+        mounted: function ()  {
 
-                //const re = new RegExp(this.keyword, 'i')
-                //return this.options.filter(o => o.title.match(re))
-            }
+             if(this.chosen_id){
+
+               this.fetch();
+             }
+
+            this.$nextTick(function() {
+
+                let self = this;
+
+                $(".search-adresse-autocomplete_" + this.type).autocomplete({
+                    source    : base_url + 'vue/autocomplete',
+                    minLength : 3,
+                    select    : function( event, ui ) {
+
+                         self.chosen = ui.item.user;
+                         self.hasChosen = true;
+                         console.log(ui.item.user);
+                         return false;
+                    }
+                }).autocomplete( "instance" )._renderItem = function( ul, item ){
+                    return $("<li>").append("<a>" + item.label + "<span>" + item.desc + "</span><span>" + item.company + "</span></a>").appendTo(ul);
+                };
+
+            });
         },
         methods: {
-            onInput (value) {
-                this.isOpen = !!value
-                this.highlightedPosition = 0,
-                this.search();
-            },
-            moveDown () {
-                if (!this.isOpen) {
-                    return
-                }
-                this.highlightedPosition = (this.highlightedPosition + 1) % this.fOptions.length;
-            },
-            moveUp () {
-              if (!this.isOpen) {
-                return
-              }
-              this.highlightedPosition = this.highlightedPosition - 1 < 0  ? this.fOptions.length - 1 : this.highlightedPosition - 1;
-            },
-            select () {
-                const selectedOption = this.options[this.highlightedPosition]
-                this.keyword = selectedOption.title
-                this.isOpen = false
-                this.$emit('select', selectedOption)
+            remove () {
+                this.hasChosen = false;
+                this.chosen = {
+                    civilite : '',
+                    name : '',
+                    company: '',
+                    adresse: '',
+                    cp: '',
+                    npa: '',
+                    ville: '',
+                    user_id: null
+                };
+                this.user_id = null;
             },
             updateOptions(options){
                 this.options = options;
             },
-            search: function() {
-                  //this.loading = true;
-                  this.$http.post('vue/recherche', { term:this.keyword }).then((response) => {
-                      //this.updateArrets(response.body.options);
-                      console.log(response);
-                        // self.loading = false;
-                  }, (response) => { }).bind(this);
+            fetch () {
+
+                this.$http.get('admin/user/getUser/' + this.chosen_id, {}).then((response) => {
+
+                    console.log(response.body);
+                    this.chosen = response.body;
+                    this.hasChosen = true;
+
+                    // self.loading = false;
+                }, (response) => { }).bind(this);
             },
         }
     }
