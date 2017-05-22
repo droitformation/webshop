@@ -32,18 +32,25 @@ class MergeFactures extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
+       // ini_set('memory_limit', '512M');
 
-        // Directory for edition => product_id
-        $dir   = 'files/abos/facture/'.$this->product->id;
-        $name  = 'factures_'.$this->product->reference.'_'.$this->product->edition_clean;
+        $datadir = 'files/abos/facture/'.$this->product->id;
+        $files   = \File::files(public_path($datadir));
 
-        // Get all files in directory
-        $files = \File::files(public_path($dir));
+        $outputDir =  public_path('files/abos/bound/'.$this->abo->id);
+        $name = 'factures_'.$this->product->reference.'_'.$this->product->edition_clean.'.pdf';
+        $outputName = $outputDir.'/'.$name.'.pdf';
 
-        if(!empty($files))
-        {
-            $worker->merge($files, $name, $this->abo->id);
+        if(!empty($files)) {
+            $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outputName ";
+
+            //Every pdf file should come at the end of the command
+            foreach($files as $file) {
+                $cmd .= $file." ";
+            }
+
+            $result = shell_exec($cmd);
         }
+
     }
 }
