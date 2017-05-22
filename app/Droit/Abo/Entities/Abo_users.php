@@ -52,6 +52,20 @@ class Abo_users extends Model{
         return explode('.',$this->price_cents);
     }
 
+    public function getAboTiersUserAttribute()
+    {
+        if($this->tiers_id > 0){
+            return isset($this->tiers_user) ? $this->tiers_user : false;
+        }
+
+        return true;
+    }
+
+    public function getAboUserAttribute()
+    {
+       return isset($this->realuser) ? $this->realuser : false;
+    }
+
     public function getUserAdresseAttribute()
     {
         // Change to user

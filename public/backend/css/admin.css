@@ -1353,3 +1353,8 @@ input[type="checkbox"].rappel-input {
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+.change_abo_user{
+    padding: 10px;
+    background: #fbeed5;
+}

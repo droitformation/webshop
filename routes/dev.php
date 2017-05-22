@@ -10,17 +10,32 @@ Route::get('abos_test', function () {
 
     $all = $abo->getAll()->where('abo_id',2);
 
-
+/*
     list($hasUser, $noUser) = $all->partition(function ($abo_user) {
         return isset($abo_user->user->user);
+    });*/
+
+    $all->map(function ($abo, $key) {
+        if(isset($abo->user->user)){
+            $abo->user_id = $abo->user->user->id;
+        }
+
+        if(isset($abo->tiers->user)){
+            $abo->tiers_user_id = $abo->tiers->user->id;
+        }
+
+        echo '<pre>';
+        print_r($abo->toArray());
+        echo '</pre>';
+        $abo->save();
     });
 
-    echo '<pre>';
+/*    echo '<pre>';
     echo 'has user <br/>';
     print_r($hasUser->count());
     echo '<br/>no user <br/>';
     print_r($noUser->count());
-    echo '</pre>';exit();
+    echo '</pre>';exit();*/
 
 });
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input v-show="!hasChosen" :class="'form-control search-adresse-autocomplete_' + type" placeholder="Chercher une adresse..." type="text">
+        <input v-show="!hasChosen" :class="'form-control search-adresse-autocomplete_' + type" placeholder="Chercher..." type="text">
         <div v-if="hasChosen" class="choice-adresse autocomplete-bloc">
             <input :name="type" :value="chosen.user_id" type="hidden">
 
