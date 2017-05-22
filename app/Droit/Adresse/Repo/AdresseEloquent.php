@@ -309,6 +309,14 @@ class AdresseEloquent implements AdresseInterface{
         $adresse->specialisations()->sync(array_unique(array_merge($exist,$data)));
     }
 
+	public function setMember($adresse_id,$data)
+	{
+		$adresse = $this->adresse->find($adresse_id);
+		$exist   = $adresse->members->pluck('id')->all();
+
+		$adresse->members()->sync(array_unique(array_merge($exist,$data)));
+	}
+
 	public function getDeleted($terms = [], $operator = null)
     {
         $adresse = $this->adresse->withTrashed()->with(['orders','abos','user']);

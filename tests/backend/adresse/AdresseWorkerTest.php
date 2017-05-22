@@ -150,6 +150,8 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn(collect([$adresse1, $adresse2]));
         $mockadresse->shouldReceive('delete')->twice();
+        $mockadresse->shouldReceive('setSpecialisation');
+        $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('delete')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
 
@@ -175,9 +177,50 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn(collect([$adresse1, $adresse2]));
         $mockadresse->shouldReceive('update')->twice();
+        $mockadresse->shouldReceive('setSpecialisation');
+        $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('attach')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
 
+    }
+
+    public function testReassignSpecialisationsAndMembers()
+    {
+        $worker = App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+        $make   = new \tests\factories\ObjectFactory();
+
+        $specialisations = $make->items('Specialisation', 2);
+        $spec_data       = $specialisations->pluck('id')->all();
+        $members         = $make->items('Member', 2);
+        $mem_data        = $members->pluck('id')->all();
+        
+        $recipient = $make->makeUser();
+        $donor     = $make->makeUser();
+
+        // Add specialisations
+        $make->addMemberships($donor,['specialisations' => $spec_data]);
+        $make->addMemberships($donor,['members' => $mem_data]);
+
+        $donor->fresh();
+
+        // The recipient has no specialisation
+        $this->assertTrue(!$donor->adresse_contact->specialisations->isEmpty());
+        $this->assertTrue($recipient->adresse_contact->specialisations->isEmpty());
+        $this->assertTrue(!$donor->adresse_contact->members->isEmpty());
+        $this->assertTrue($recipient->adresse_contact->members->isEmpty());
+
+        $worker->setAction('attachdelete')->reasignMembership($donor,$recipient);
+
+        $recipient->fresh();
+        $recipient->load('adresses.specialisations','adresses.members');
+
+        $this->assertTrue($donor->adresse_contact->specialisations->isEmpty());
+        $this->assertTrue(!$recipient->adresse_contact->specialisations->isEmpty());
+        $this->assertEquals($spec_data,$recipient->adresse_contact->specialisations->pluck('id')->all());
+
+        $this->assertTrue($donor->adresse_contact->members->isEmpty());
+        $this->assertTrue(!$recipient->adresse_contact->members->isEmpty());
+        $this->assertEquals($mem_data,$recipient->adresse_contact->members->pluck('id')->all());
     }
 
     public function testReassignOrdersToUserFromAdressesAttachDeleteMocks()
@@ -199,6 +242,8 @@ class AdresseWorkerTest extends BrowserKitTest {
         $mockadresse->shouldReceive('getMultiple')->once()->andReturn($donor->adresses);
         $mockadresse->shouldReceive('update')->once();
         $mockuser->shouldReceive('delete')->once();
+        $mockadresse->shouldReceive('setSpecialisation');
+        $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('attachdelete')->setTypes(['orders'])->setFromAdresses([$adresses->pluck('id')->all()])->reassignFor($recipient);
     }

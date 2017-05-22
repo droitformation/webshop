@@ -37,6 +37,11 @@ class Email extends Model{
         return '';
     }
 
+    public function scopeSearch($query, $term)
+    {
+        if ($term) $query->where('to', 'like' ,'%'.$term.'%')->orWhere('body', 'like' ,'%'.$term.'%');
+    }
+
     /**
      * Set timestamps off
      */

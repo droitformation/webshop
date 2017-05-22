@@ -33,7 +33,7 @@
                             <div class="col-md-4 col-xs-12" style="min-width:130px;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="order_no" placeholder="Recherche par destinataire, sujet ou contenu...">
+                                        <input type="text" class="form-control" name="term" placeholder="Recherche par destinataire, sujet ou contenu...">
                                         <span class="input-group-btn">
                                             <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
                                         </span>
@@ -68,7 +68,9 @@
                         @endforeach
                     </table>
 
-                    {{ $emails->links() }}
+                    @if($emails instanceof \Illuminate\Pagination\LengthAwarePaginator )
+                        {!! $emails->links()!!}
+                    @endif
 
                     <!-- Modal -->
                     <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModal">

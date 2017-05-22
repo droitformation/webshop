@@ -18,12 +18,7 @@ class EmailController extends Controller
 
     public function index(Request $request)
     {
-        $data = $request->all();
-
-        $period['start'] = (isset($data['start']) ? \Carbon\Carbon::parse($data['start']) : null);
-        $period['end']   = (isset($data['end'])   ? \Carbon\Carbon::parse($data['end'])   : null);
-        
-        $emails = $this->email->getAll($period);
+        $emails = $this->email->getAll(array_filter($request->except('_token','page')));
 
         return view('backend.email.index')->with(['emails' => $emails]);
     }

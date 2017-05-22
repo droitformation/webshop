@@ -85,13 +85,23 @@ class User extends Authenticatable {
         return null;
     }
 
+    public function getUserAbosAttribute()
+    {
+        if(isset($this->adresses))
+        {
+            return $this->adresses->pluck('abos')->flatten(1);
+        }
+
+        return collect([]);
+    }
+
     public function getAdresseContactAttribute()
     {
         if(isset($this->adresses))
         {
-            $contact = $this->adresses->filter(function($adresse)
-            {
+            $contact = $this->adresses->filter(function($adresse) {
                 if ($adresse->type == 1) {
+                    $adresse->load('specialisations','members');
                     return true;
                 }
             });

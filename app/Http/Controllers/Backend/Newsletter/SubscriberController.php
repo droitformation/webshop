@@ -195,14 +195,13 @@ class SubscriberController extends Controller
 
         $newsletters = $this->newsletter->getAll();
 
-        foreach($newsletters as $newsletter)
-        {
-            $this->worker->setList($newsletter->list_id);
-
-            // Remove subscriber from list mailjet
-            if(!$this->worker->removeContact($subscriber->email))
-            {
-                throw new \designpond\newsletter\Exceptions\DeleteUserException('Erreur avec la suppression de l\'abonnés sur mailjet');
+        if(!$newsletters->isEmpty()){
+            foreach($newsletters as $newsletter) {
+                $this->worker->setList($newsletter->list_id);
+                // Remove subscriber from list mailjet
+                if(!$this->worker->removeContact($subscriber->email)) {
+                    throw new \App\Exceptions\DeleteUserException('Erreur avec la suppression de l\'abonnés sur mailjet');
+                }
             }
         }
 

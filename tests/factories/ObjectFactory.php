@@ -67,15 +67,15 @@ class ObjectFactory
 
     public function addMemberships($user, $data)
     {
-        if(isset($data['specialisations']))
-        {
+        if(isset($data['specialisations'])) {
             $user->adresse_contact->specialisations()->attach($data['specialisations']);
         }
 
-        if(isset($data['members']))
-        {
+        if(isset($data['members'])) {
             $user->adresse_contact->members()->attach($data['members']);
         }
+
+        $user->load('adresses.specialisations','adresses.members');
 
         return $user;
     }
@@ -97,7 +97,7 @@ class ObjectFactory
         return $this->makeUser();
     }
 
-    public function adresse()
+    public function adresse($user = null)
     {
         return factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
             'civilite_id'   => $this->faker->numberBetween(1,4),
@@ -115,7 +115,7 @@ class ObjectFactory
             'canton_id'     => isset($data['canton']) ? $data['canton'] : 0,
             'pays_id'       => 208,
             'type'         => 1,
-            'user_id'      => 0,
+            'user_id'      => isset($user) ? $user->id : null,
             'livraison'    => 1
         ]);
     }
