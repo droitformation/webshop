@@ -4,15 +4,20 @@
         <div v-if="hasChosen" class="choice-adresse autocomplete-bloc">
             <input :name="type" :value="chosen.user_id" type="hidden">
 
-            <button type="button" class="btn btn-danger btn-xs" @click.prevent="remove">changer</button>
+            <div class="panel panel-primary">
+                <div class="panel-body panel-colloque">
+                    <span class="no-adresse">{{ chosen.user_id }}</span>
 
-            <span>{{ chosen.civilite }}</span>
-            <span><a target="_blank" :href="'admin/user/' + chosen.user_id">{{ chosen.name }}</span>
-            <span v-if="chosen.cp">{{ chosen.cp }}</span>
-            <span>{{ chosen.adresse }}</span>
-            <span>{{ chosen.npa }} {{ chosen.ville }}</span>
+                    <span v-if="chosen.company">{{ chosen.company }}</span>
+                    <span>{{ chosen.civilite }}</span>
+                    <span><a target="_blank" :href="'admin/user/' + chosen.user_id">{{ chosen.name }}</span>
+                    <span v-if="chosen.cp">{{ chosen.cp }}</span>
+                    <span>{{ chosen.adresse }}</span>
+                    <span>{{ chosen.npa }} {{ chosen.ville }}</span>
+                    <button type="button" class="btn btn-danger btn-xs pull-right" @click.prevent="remove">changer</button>
+                </div>
+            </div>
 
-           <!-- <a class="btn btn-info btn-xs" href="">éditer</a>-->
         </div>
     </div>
 </template>
@@ -24,11 +29,20 @@
     .autocomplete-bloc span{
         display:block;
     }
-    .autocomplete-bloc .btn.btn-info{
-        margin-top:8px;
-    }
     .autocomplete-bloc .btn.btn-danger{
-        margin-bottom:8px;
+           margin-top:8px;
+    }
+    .no-adresse {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: block;
+        color: #7b7b7b;
+        font-size: 12px;
+        border: 1px solid #d4d4d4;
+        padding: 3px;
+        width:auto;
+        text-align: center;
     }
 </style>
 
