@@ -139,7 +139,7 @@
                         <h4>Status {{ $status_list[old('$status')] }}</h4>
                     @endif
 
-                    @include('backend.orders.partials.commandes', ['orders' => $orders, 'cancelled' => false])
+                    @include('backend.orders.partials.orders', ['orders' => $orders, 'cancelled' => false])
 
                     <hr/>
 

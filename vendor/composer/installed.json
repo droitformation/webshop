@@ -420,109 +420,6 @@
         ]
     },
     {
-        "name": "sebastian/diff",
-        "version": "1.4.1",
-        "version_normalized": "1.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/diff.git",
-            "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/13edfd8706462032c2f52b4b862974dd46b71c9e",
-            "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.8"
-        },
-        "time": "2015-12-08 07:14:41",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Kore Nordmann",
-                "email": "mail@kore-nordmann.de"
-            },
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de"
-            }
-        ],
-        "description": "Diff implementation",
-        "homepage": "https://github.com/sebastianbergmann/diff",
-        "keywords": [
-            "diff"
-        ]
-    },
-    {
-        "name": "inlinestyle/inlinestyle",
-        "version": "1.2.6",
-        "version_normalized": "1.2.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/christiaan/InlineStyle.git",
-            "reference": "ed9e0a7bf38e6c1e11ce4c6d3d73b857d4fef7d2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/christiaan/InlineStyle/zipball/ed9e0a7bf38e6c1e11ce4c6d3d73b857d4fef7d2",
-            "reference": "ed9e0a7bf38e6c1e11ce4c6d3d73b857d4fef7d2",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "symfony/css-selector": ">=2.1"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*"
-        },
-        "time": "2015-12-11 12:04:11",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "InlineStyle": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Christiaan Baartse"
-            },
-            {
-                "name": "Michael Tibben"
-            }
-        ],
-        "description": "Apply CSS stylesheets directly as inline styles to a HTML document",
-        "keywords": [
-            "css",
-            "email",
-            "inline"
-        ]
-    },
-    {
         "name": "bacon/bacon-qr-code",
         "version": "1.0.1",
         "version_normalized": "1.0.1.0",
@@ -1219,41 +1116,6 @@
         "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock."
     },
     {
-        "name": "clegginabox/pdf-merger",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/clegginabox/pdf-merger.git",
-            "reference": "88e641ca2aa732b4f05e423a8ebc662af495e6ad"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/clegginabox/pdf-merger/zipball/88e641ca2aa732b4f05e423a8ebc662af495e6ad",
-            "reference": "88e641ca2aa732b4f05e423a8ebc662af495e6ad",
-            "shasum": ""
-        },
-        "require": {
-            "itbz/fpdi": "dev-master"
-        },
-        "time": "2016-10-13 11:57:21",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/PDFMerger/PDFMerger.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "authors": [
-            {
-                "name": "Paul Clegg",
-                "email": "paul@clegginabox.co.uk"
-            }
-        ],
-        "description": "PDF File Merger for PHP5"
-    },
-    {
         "name": "shvetsgroup/laravel-email-database-log",
         "version": "v1.0.3",
         "version_normalized": "1.0.3.0",
@@ -1897,49 +1759,6 @@
         ]
     },
     {
-        "name": "itbz/fpdi",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hanneskod/fpdi.git",
-            "reference": "004ce22954cdf16b94ad841bda406e422b446325"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hanneskod/fpdi/zipball/004ce22954cdf16b94ad841bda406e422b446325",
-            "reference": "004ce22954cdf16b94ad841bda406e422b446325",
-            "shasum": ""
-        },
-        "require": {
-            "itbz/fpdf": "~1.7",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "hanneskod/classtools": "~1.0",
-            "nikic/php-parser": "~1.0",
-            "phpunit/phpunit": "4.*",
-            "symfony/finder": "~2.3",
-            "tecnickcom/tcpdf": "^6.2.12"
-        },
-        "suggest": {
-            "tecnickcom/tcpdf": "FPDI supports TCPDF as a replacement for FPDF"
-        },
-        "time": "2017-01-08 13:02:41",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "fpdi\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "Unofficial PSR-4 compliant version of the FPDI library"
-    },
-    {
         "name": "mtdowling/cron-expression",
         "version": "v1.2.0",
         "version_normalized": "1.2.0.0",
@@ -2304,62 +2123,6 @@
         "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles"
     },
     {
-        "name": "laravelcollective/html",
-        "version": "v5.4.1",
-        "version_normalized": "5.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/LaravelCollective/html.git",
-            "reference": "7570f25d58a00fd6909c0563808590f9cdb14d47"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/LaravelCollective/html/zipball/7570f25d58a00fd6909c0563808590f9cdb14d47",
-            "reference": "7570f25d58a00fd6909c0563808590f9cdb14d47",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/http": "5.4.*",
-            "illuminate/routing": "5.4.*",
-            "illuminate/session": "5.4.*",
-            "illuminate/support": "5.4.*",
-            "illuminate/view": "5.4.*",
-            "php": ">=5.6.4"
-        },
-        "require-dev": {
-            "illuminate/database": "5.4.*",
-            "mockery/mockery": "~0.9.4",
-            "phpunit/phpunit": "~5.4"
-        },
-        "time": "2017-01-26 19:27:05",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Collective\\Html\\": "src/"
-            },
-            "files": [
-                "src/helpers.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Taylor Otwell",
-                "email": "taylorotwell@gmail.com"
-            },
-            {
-                "name": "Adam Engebretson",
-                "email": "adam@laravelcollective.com"
-            }
-        ],
-        "description": "HTML and Form Builders for the Laravel Framework",
-        "homepage": "http://laravelcollective.com"
-    },
-    {
         "name": "gloudemans/shoppingcart",
         "version": "2.3.0",
         "version_normalized": "2.3.0.0",
@@ -2457,90 +2220,6 @@
         "keywords": [
             "spatie",
             "temporary-directory"
-        ]
-    },
-    {
-        "name": "itbz/fpdf",
-        "version": "1.7.3",
-        "version_normalized": "1.7.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hanneskod/fpdf.git",
-            "reference": "63340096907ef7525a9002d1ae3d0fd1ff376a6d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hanneskod/fpdf/zipball/63340096907ef7525a9002d1ae3d0fd1ff376a6d",
-            "reference": "63340096907ef7525a9002d1ae3d0fd1ff376a6d",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2016-05-27 09:02:54",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "fpdf": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "no usage restriction"
-        ],
-        "description": "Unofficial PSR-0 compliant version of the FPDF library",
-        "homepage": "http://www.fpdf.org/"
-    },
-    {
-        "name": "mailjet/mailjet-apiv3-php",
-        "version": "v1.1.8",
-        "version_normalized": "1.1.8.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/mailjet/mailjet-apiv3-php.git",
-            "reference": "dcf05767a69ad7b9c824f148435760d97bcdead7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/mailjet/mailjet-apiv3-php/zipball/dcf05767a69ad7b9c824f148435760d97bcdead7",
-            "reference": "dcf05767a69ad7b9c824f148435760d97bcdead7",
-            "shasum": ""
-        },
-        "require": {
-            "guzzlehttp/guzzle": "~6.0|~5.3",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^4.8"
-        },
-        "time": "2016-11-22 14:53:36",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Mailjet": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Mailjet",
-                "email": "dev@mailjet.com",
-                "homepage": "https://dev.mailjet.com"
-            }
-        ],
-        "description": "PHP wrapper for the Mailjet API",
-        "homepage": "https://github.com/mailjet/mailjet-apiv3-php/",
-        "keywords": [
-            "Mailjet",
-            "api",
-            "email",
-            "php",
-            "v3"
         ]
     },
     {
@@ -3639,71 +3318,6 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "symfony/console",
-        "version": "v3.2.8",
-        "version_normalized": "3.2.8.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/console.git",
-            "reference": "a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/console/zipball/a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38",
-            "reference": "a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.9",
-            "symfony/debug": "~2.8|~3.0",
-            "symfony/polyfill-mbstring": "~1.0"
-        },
-        "require-dev": {
-            "psr/log": "~1.0",
-            "symfony/event-dispatcher": "~2.8|~3.0",
-            "symfony/filesystem": "~2.8|~3.0",
-            "symfony/process": "~2.8|~3.0"
-        },
-        "suggest": {
-            "psr/log": "For using the console logger",
-            "symfony/event-dispatcher": "",
-            "symfony/filesystem": "",
-            "symfony/process": ""
-        },
-        "time": "2017-04-26 01:39:17",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.2-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Console\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Console Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "swiftmailer/swiftmailer",
         "version": "v5.4.8",
         "version_normalized": "5.4.8.0",
@@ -4103,137 +3717,6 @@
         ]
     },
     {
-        "name": "laravel/framework",
-        "version": "v5.4.22",
-        "version_normalized": "5.4.22.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/laravel/framework.git",
-            "reference": "fc5c7a18644f231bcb8d02f4ec2f3a2517f5015d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/laravel/framework/zipball/fc5c7a18644f231bcb8d02f4ec2f3a2517f5015d",
-            "reference": "fc5c7a18644f231bcb8d02f4ec2f3a2517f5015d",
-            "shasum": ""
-        },
-        "require": {
-            "doctrine/inflector": "~1.0",
-            "erusev/parsedown": "~1.6",
-            "ext-mbstring": "*",
-            "ext-openssl": "*",
-            "league/flysystem": "~1.0",
-            "monolog/monolog": "~1.11",
-            "mtdowling/cron-expression": "~1.0",
-            "nesbot/carbon": "~1.20",
-            "paragonie/random_compat": "~1.4|~2.0",
-            "php": ">=5.6.4",
-            "ramsey/uuid": "~3.0",
-            "swiftmailer/swiftmailer": "~5.4",
-            "symfony/console": "~3.2",
-            "symfony/debug": "~3.2",
-            "symfony/finder": "~3.2",
-            "symfony/http-foundation": "~3.2",
-            "symfony/http-kernel": "~3.2",
-            "symfony/process": "~3.2",
-            "symfony/routing": "~3.2",
-            "symfony/var-dumper": "~3.2",
-            "tijsverkoyen/css-to-inline-styles": "~2.2",
-            "vlucas/phpdotenv": "~2.2"
-        },
-        "replace": {
-            "illuminate/auth": "self.version",
-            "illuminate/broadcasting": "self.version",
-            "illuminate/bus": "self.version",
-            "illuminate/cache": "self.version",
-            "illuminate/config": "self.version",
-            "illuminate/console": "self.version",
-            "illuminate/container": "self.version",
-            "illuminate/contracts": "self.version",
-            "illuminate/cookie": "self.version",
-            "illuminate/database": "self.version",
-            "illuminate/encryption": "self.version",
-            "illuminate/events": "self.version",
-            "illuminate/exception": "self.version",
-            "illuminate/filesystem": "self.version",
-            "illuminate/hashing": "self.version",
-            "illuminate/http": "self.version",
-            "illuminate/log": "self.version",
-            "illuminate/mail": "self.version",
-            "illuminate/notifications": "self.version",
-            "illuminate/pagination": "self.version",
-            "illuminate/pipeline": "self.version",
-            "illuminate/queue": "self.version",
-            "illuminate/redis": "self.version",
-            "illuminate/routing": "self.version",
-            "illuminate/session": "self.version",
-            "illuminate/support": "self.version",
-            "illuminate/translation": "self.version",
-            "illuminate/validation": "self.version",
-            "illuminate/view": "self.version",
-            "tightenco/collect": "self.version"
-        },
-        "require-dev": {
-            "aws/aws-sdk-php": "~3.0",
-            "doctrine/dbal": "~2.5",
-            "mockery/mockery": "~0.9.4",
-            "pda/pheanstalk": "~3.0",
-            "phpunit/phpunit": "~5.7",
-            "predis/predis": "~1.0",
-            "symfony/css-selector": "~3.2",
-            "symfony/dom-crawler": "~3.2"
-        },
-        "suggest": {
-            "aws/aws-sdk-php": "Required to use the SQS queue driver and SES mail driver (~3.0).",
-            "doctrine/dbal": "Required to rename columns and drop SQLite columns (~2.5).",
-            "fzaninotto/faker": "Required to use the eloquent factory builder (~1.4).",
-            "guzzlehttp/guzzle": "Required to use the Mailgun and Mandrill mail drivers and the ping methods on schedules (~6.0).",
-            "laravel/tinker": "Required to use the tinker console command (~1.0).",
-            "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (~1.0).",
-            "league/flysystem-rackspace": "Required to use the Flysystem Rackspace driver (~1.0).",
-            "nexmo/client": "Required to use the Nexmo transport (~1.0).",
-            "pda/pheanstalk": "Required to use the beanstalk queue driver (~3.0).",
-            "predis/predis": "Required to use the redis cache and queue drivers (~1.0).",
-            "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (~2.0).",
-            "symfony/css-selector": "Required to use some of the crawler integration testing tools (~3.2).",
-            "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~3.2).",
-            "symfony/psr-http-message-bridge": "Required to psr7 bridging features (0.2.*)."
-        },
-        "time": "2017-05-08 21:45:45",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "5.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "src/Illuminate/Foundation/helpers.php",
-                "src/Illuminate/Support/helpers.php"
-            ],
-            "psr-4": {
-                "Illuminate\\": "src/Illuminate/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Taylor Otwell",
-                "email": "taylor@laravel.com"
-            }
-        ],
-        "description": "The Laravel Framework.",
-        "homepage": "https://laravel.com",
-        "keywords": [
-            "framework",
-            "laravel"
-        ]
-    },
-    {
         "name": "maatwebsite/excel",
         "version": "2.1.17",
         "version_normalized": "2.1.17.0",
@@ -4301,126 +3784,6 @@
             "export",
             "import",
             "laravel"
-        ]
-    },
-    {
-        "name": "spatie/db-dumper",
-        "version": "2.6.0",
-        "version_normalized": "2.6.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spatie/db-dumper.git",
-            "reference": "ab73fe5230541438caf1597b585c09f540c7243e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spatie/db-dumper/zipball/ab73fe5230541438caf1597b585c09f540c7243e",
-            "reference": "ab73fe5230541438caf1597b585c09f540c7243e",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^7.0",
-            "symfony/process": "^3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^6.0"
-        },
-        "time": "2017-04-13 18:13:10",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Spatie\\DbDumper\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Freek Van der Herten",
-                "email": "freek@spatie.be",
-                "homepage": "https://spatie.be",
-                "role": "Developer"
-            }
-        ],
-        "description": "Dump databases",
-        "homepage": "https://github.com/spatie/db-dumper",
-        "keywords": [
-            "database",
-            "db-dumper",
-            "dump",
-            "mysqldump",
-            "spatie"
-        ]
-    },
-    {
-        "name": "spatie/laravel-backup",
-        "version": "4.14.0",
-        "version_normalized": "4.14.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spatie/laravel-backup.git",
-            "reference": "09585a737029001bb0f994ed0531712f1da646e5"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/09585a737029001bb0f994ed0531712f1da646e5",
-            "reference": "09585a737029001bb0f994ed0531712f1da646e5",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/console": "~5.3.28|~5.4.0",
-            "illuminate/contracts": "~5.3.28|~5.4.0",
-            "illuminate/events": "~5.3.28|~5.4.0",
-            "illuminate/filesystem": "~5.3.28|~5.4.0",
-            "illuminate/notifications": "~5.3.28|~5.4.0",
-            "illuminate/support": "~5.3.28|~5.4.0",
-            "league/flysystem": "^1.0.27",
-            "php": "^7.0",
-            "spatie/db-dumper": "^2.6",
-            "spatie/temporary-directory": "^1.1",
-            "symfony/finder": "^3.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "^0.9.5",
-            "orchestra/testbench": "~3.3.3|~3.4.0",
-            "phpunit/phpunit": "^5.3.0"
-        },
-        "suggest": {
-            "guzzlehttp/guzzle": "Allows notifications to be sent via Slack"
-        },
-        "time": "2017-05-09 15:33:55",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Spatie\\Backup\\": "src"
-            },
-            "files": [
-                "src/Helpers/functions.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Freek Van der Herten",
-                "email": "freek@spatie.be",
-                "homepage": "https://spatie.be",
-                "role": "Developer"
-            }
-        ],
-        "description": "A Laravel 5 package to backup your application",
-        "homepage": "https://github.com/spatie/laravel-backup",
-        "keywords": [
-            "backup",
-            "database",
-            "laravel-backup",
-            "spatie"
         ]
     },
     {
@@ -5214,170 +4577,6 @@
         ]
     },
     {
-        "name": "phpunit/phpunit",
-        "version": "5.7.19",
-        "version_normalized": "5.7.19.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "69c4f49ff376af2692bad9cebd883d17ebaa98a1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/69c4f49ff376af2692bad9cebd883d17ebaa98a1",
-            "reference": "69c4f49ff376af2692bad9cebd883d17ebaa98a1",
-            "shasum": ""
-        },
-        "require": {
-            "ext-dom": "*",
-            "ext-json": "*",
-            "ext-libxml": "*",
-            "ext-mbstring": "*",
-            "ext-xml": "*",
-            "myclabs/deep-copy": "~1.3",
-            "php": "^5.6 || ^7.0",
-            "phpspec/prophecy": "^1.6.2",
-            "phpunit/php-code-coverage": "^4.0.4",
-            "phpunit/php-file-iterator": "~1.4",
-            "phpunit/php-text-template": "~1.2",
-            "phpunit/php-timer": "^1.0.6",
-            "phpunit/phpunit-mock-objects": "^3.2",
-            "sebastian/comparator": "^1.2.4",
-            "sebastian/diff": "~1.2",
-            "sebastian/environment": "^1.3.4 || ^2.0",
-            "sebastian/exporter": "~2.0",
-            "sebastian/global-state": "^1.1",
-            "sebastian/object-enumerator": "~2.0",
-            "sebastian/resource-operations": "~1.0",
-            "sebastian/version": "~1.0.3|~2.0",
-            "symfony/yaml": "~2.1|~3.0"
-        },
-        "conflict": {
-            "phpdocumentor/reflection-docblock": "3.0.2"
-        },
-        "require-dev": {
-            "ext-pdo": "*"
-        },
-        "suggest": {
-            "ext-xdebug": "*",
-            "phpunit/php-invoker": "~1.1"
-        },
-        "time": "2017-04-03 02:22:27",
-        "bin": [
-            "phpunit"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "5.7.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de",
-                "role": "lead"
-            }
-        ],
-        "description": "The PHP Unit Testing framework.",
-        "homepage": "https://phpunit.de/",
-        "keywords": [
-            "phpunit",
-            "testing",
-            "xunit"
-        ]
-    },
-    {
-        "name": "phpspec/phpspec",
-        "version": "2.5.6",
-        "version_normalized": "2.5.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/phpspec/phpspec.git",
-            "reference": "39ff2d5f82c4fbd42ef2e5661f2461426c436ef8"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/phpspec/phpspec/zipball/39ff2d5f82c4fbd42ef2e5661f2461426c436ef8",
-            "reference": "39ff2d5f82c4fbd42ef2e5661f2461426c436ef8",
-            "shasum": ""
-        },
-        "require": {
-            "doctrine/instantiator": "^1.0.1",
-            "ext-tokenizer": "*",
-            "php": ">=5.3.3",
-            "phpspec/php-diff": "~1.0.0",
-            "phpspec/prophecy": "~1.4",
-            "sebastian/exporter": "~1.0|~2.0|^3.0",
-            "symfony/console": "~2.3|~3.0",
-            "symfony/event-dispatcher": "~2.1|~3.0",
-            "symfony/finder": "~2.1|~3.0",
-            "symfony/process": "^2.6|~3.0",
-            "symfony/yaml": "~2.1|~3.0"
-        },
-        "require-dev": {
-            "behat/behat": "^3.0.11",
-            "ciaranmcnulty/versionbasedtestskipper": "^0.2.1",
-            "phpunit/phpunit": "~4.4",
-            "symfony/filesystem": "~2.1|~3.0"
-        },
-        "suggest": {
-            "phpspec/nyan-formatters": "~1.0 – Adds Nyan formatters"
-        },
-        "time": "2017-04-27 12:15:45",
-        "bin": [
-            "bin/phpspec"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.5.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "PhpSpec": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Konstantin Kudryashov",
-                "email": "ever.zet@gmail.com",
-                "homepage": "http://everzet.com"
-            },
-            {
-                "name": "Marcello Duarte",
-                "homepage": "http://marcelloduarte.net/"
-            }
-        ],
-        "description": "Specification-oriented BDD framework for PHP 5.3+",
-        "homepage": "http://phpspec.net/",
-        "keywords": [
-            "BDD",
-            "SpecBDD",
-            "TDD",
-            "spec",
-            "specification",
-            "testing",
-            "tests"
-        ]
-    },
-    {
         "name": "mockery/mockery",
         "version": "0.9.9",
         "version_normalized": "0.9.9.0",
@@ -5501,50 +4700,6 @@
         ],
         "description": "Symfony DomCrawler Component",
         "homepage": "https://symfony.com"
-    },
-    {
-        "name": "tightenco/mailthief",
-        "version": "v0.3.5",
-        "version_normalized": "0.3.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/tightenco/mailthief.git",
-            "reference": "3269c0baf1b926ee759b5eee6cccca783beecfed"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/tightenco/mailthief/zipball/3269c0baf1b926ee759b5eee6cccca783beecfed",
-            "reference": "3269c0baf1b926ee759b5eee6cccca783beecfed",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/mail": "^5.0",
-            "illuminate/view": "^5.0"
-        },
-        "require-dev": {
-            "laravel/framework": "^5.1",
-            "mockery/mockery": "^0.9.5",
-            "phpunit/phpunit": "^5.5"
-        },
-        "time": "2017-04-22 17:42:32",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "MailThief\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adam Wathan",
-                "email": "adam.wathan@gmail.com"
-            }
-        ],
-        "description": "A fake Mailer for Laravel applications that takes the pain out of testing mail."
     },
     {
         "name": "doctrine/lexer",
@@ -6011,5 +5166,739 @@
             "laravel",
             "spam"
         ]
+    },
+    {
+        "name": "symfony/console",
+        "version": "v3.2.7",
+        "version_normalized": "3.2.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/console.git",
+            "reference": "c30243cc51f726812be3551316b109a2f5deaf8d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/console/zipball/c30243cc51f726812be3551316b109a2f5deaf8d",
+            "reference": "c30243cc51f726812be3551316b109a2f5deaf8d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9",
+            "symfony/debug": "~2.8|~3.0",
+            "symfony/polyfill-mbstring": "~1.0"
+        },
+        "require-dev": {
+            "psr/log": "~1.0",
+            "symfony/event-dispatcher": "~2.8|~3.0",
+            "symfony/filesystem": "~2.8|~3.0",
+            "symfony/process": "~2.8|~3.0"
+        },
+        "suggest": {
+            "psr/log": "For using the console logger",
+            "symfony/event-dispatcher": "",
+            "symfony/filesystem": "",
+            "symfony/process": ""
+        },
+        "time": "2017-04-04 14:33:42",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Console\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Console Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "laravel/framework",
+        "version": "v5.4.23",
+        "version_normalized": "5.4.23.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/laravel/framework.git",
+            "reference": "ad82327705658dbf5f0ce72805caa950dfbe150d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/laravel/framework/zipball/ad82327705658dbf5f0ce72805caa950dfbe150d",
+            "reference": "ad82327705658dbf5f0ce72805caa950dfbe150d",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/inflector": "~1.0",
+            "erusev/parsedown": "~1.6",
+            "ext-mbstring": "*",
+            "ext-openssl": "*",
+            "league/flysystem": "~1.0",
+            "monolog/monolog": "~1.11",
+            "mtdowling/cron-expression": "~1.0",
+            "nesbot/carbon": "~1.20",
+            "paragonie/random_compat": "~1.4|~2.0",
+            "php": ">=5.6.4",
+            "ramsey/uuid": "~3.0",
+            "swiftmailer/swiftmailer": "~5.4",
+            "symfony/console": "~3.2",
+            "symfony/debug": "~3.2",
+            "symfony/finder": "~3.2",
+            "symfony/http-foundation": "~3.2",
+            "symfony/http-kernel": "~3.2",
+            "symfony/process": "~3.2",
+            "symfony/routing": "~3.2",
+            "symfony/var-dumper": "~3.2",
+            "tijsverkoyen/css-to-inline-styles": "~2.2",
+            "vlucas/phpdotenv": "~2.2"
+        },
+        "replace": {
+            "illuminate/auth": "self.version",
+            "illuminate/broadcasting": "self.version",
+            "illuminate/bus": "self.version",
+            "illuminate/cache": "self.version",
+            "illuminate/config": "self.version",
+            "illuminate/console": "self.version",
+            "illuminate/container": "self.version",
+            "illuminate/contracts": "self.version",
+            "illuminate/cookie": "self.version",
+            "illuminate/database": "self.version",
+            "illuminate/encryption": "self.version",
+            "illuminate/events": "self.version",
+            "illuminate/exception": "self.version",
+            "illuminate/filesystem": "self.version",
+            "illuminate/hashing": "self.version",
+            "illuminate/http": "self.version",
+            "illuminate/log": "self.version",
+            "illuminate/mail": "self.version",
+            "illuminate/notifications": "self.version",
+            "illuminate/pagination": "self.version",
+            "illuminate/pipeline": "self.version",
+            "illuminate/queue": "self.version",
+            "illuminate/redis": "self.version",
+            "illuminate/routing": "self.version",
+            "illuminate/session": "self.version",
+            "illuminate/support": "self.version",
+            "illuminate/translation": "self.version",
+            "illuminate/validation": "self.version",
+            "illuminate/view": "self.version",
+            "tightenco/collect": "self.version"
+        },
+        "require-dev": {
+            "aws/aws-sdk-php": "~3.0",
+            "doctrine/dbal": "~2.5",
+            "mockery/mockery": "~0.9.4",
+            "pda/pheanstalk": "~3.0",
+            "phpunit/phpunit": "~5.7",
+            "predis/predis": "~1.0",
+            "symfony/css-selector": "~3.2",
+            "symfony/dom-crawler": "~3.2"
+        },
+        "suggest": {
+            "aws/aws-sdk-php": "Required to use the SQS queue driver and SES mail driver (~3.0).",
+            "doctrine/dbal": "Required to rename columns and drop SQLite columns (~2.5).",
+            "fzaninotto/faker": "Required to use the eloquent factory builder (~1.4).",
+            "guzzlehttp/guzzle": "Required to use the Mailgun and Mandrill mail drivers and the ping methods on schedules (~6.0).",
+            "laravel/tinker": "Required to use the tinker console command (~1.0).",
+            "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (~1.0).",
+            "league/flysystem-rackspace": "Required to use the Flysystem Rackspace driver (~1.0).",
+            "nexmo/client": "Required to use the Nexmo transport (~1.0).",
+            "pda/pheanstalk": "Required to use the beanstalk queue driver (~3.0).",
+            "predis/predis": "Required to use the redis cache and queue drivers (~1.0).",
+            "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (~2.0).",
+            "symfony/css-selector": "Required to use some of the crawler integration testing tools (~3.2).",
+            "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~3.2).",
+            "symfony/psr-http-message-bridge": "Required to psr7 bridging features (0.2.*)."
+        },
+        "time": "2017-05-11 20:10:35",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "src/Illuminate/Foundation/helpers.php",
+                "src/Illuminate/Support/helpers.php"
+            ],
+            "psr-4": {
+                "Illuminate\\": "src/Illuminate/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Taylor Otwell",
+                "email": "taylor@laravel.com"
+            }
+        ],
+        "description": "The Laravel Framework.",
+        "homepage": "https://laravel.com",
+        "keywords": [
+            "framework",
+            "laravel"
+        ]
+    },
+    {
+        "name": "laravelcollective/html",
+        "version": "v5.4.8",
+        "version_normalized": "5.4.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/LaravelCollective/html.git",
+            "reference": "9b8f51e7a2368911c896f5d42757886bae0717b5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/LaravelCollective/html/zipball/9b8f51e7a2368911c896f5d42757886bae0717b5",
+            "reference": "9b8f51e7a2368911c896f5d42757886bae0717b5",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/http": "5.4.*",
+            "illuminate/routing": "5.4.*",
+            "illuminate/session": "5.4.*",
+            "illuminate/support": "5.4.*",
+            "illuminate/view": "5.4.*",
+            "php": ">=5.6.4"
+        },
+        "require-dev": {
+            "illuminate/database": "5.4.*",
+            "mockery/mockery": "~0.9.4",
+            "phpunit/phpunit": "~5.4"
+        },
+        "time": "2017-05-22 06:35:07",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Collective\\Html\\": "src/"
+            },
+            "files": [
+                "src/helpers.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Taylor Otwell",
+                "email": "taylorotwell@gmail.com"
+            },
+            {
+                "name": "Adam Engebretson",
+                "email": "adam@laravelcollective.com"
+            }
+        ],
+        "description": "HTML and Form Builders for the Laravel Framework",
+        "homepage": "http://laravelcollective.com"
+    },
+    {
+        "name": "inlinestyle/inlinestyle",
+        "version": "1.2.7",
+        "version_normalized": "1.2.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/christiaan/InlineStyle.git",
+            "reference": "66ad09318c9f120cc3246d4f1c728848258154b5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/christiaan/InlineStyle/zipball/66ad09318c9f120cc3246d4f1c728848258154b5",
+            "reference": "66ad09318c9f120cc3246d4f1c728848258154b5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "symfony/css-selector": ">=2.1"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2015-12-13 20:30:25",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "InlineStyle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Christiaan Baartse"
+            },
+            {
+                "name": "Michael Tibben"
+            }
+        ],
+        "description": "Apply CSS stylesheets directly as inline styles to a HTML document",
+        "keywords": [
+            "css",
+            "email",
+            "inline"
+        ]
+    },
+    {
+        "name": "mailjet/mailjet-apiv3-php",
+        "version": "v1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mailjet/mailjet-apiv3-php.git",
+            "reference": "d578bb6edc8cbbf39230d1ce5534427b7172fc7f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mailjet/mailjet-apiv3-php/zipball/d578bb6edc8cbbf39230d1ce5534427b7172fc7f",
+            "reference": "d578bb6edc8cbbf39230d1ce5534427b7172fc7f",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/guzzle": "~6.0|~5.3",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.8"
+        },
+        "time": "2017-05-22 12:38:16",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Mailjet": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mailjet",
+                "email": "dev@mailjet.com",
+                "homepage": "https://dev.mailjet.com"
+            }
+        ],
+        "description": "PHP wrapper for the Mailjet API",
+        "homepage": "https://github.com/mailjet/mailjet-apiv3-php/",
+        "keywords": [
+            "Mailjet",
+            "api",
+            "email",
+            "php",
+            "v3"
+        ]
+    },
+    {
+        "name": "spatie/db-dumper",
+        "version": "2.6.1",
+        "version_normalized": "2.6.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spatie/db-dumper.git",
+            "reference": "3495a15545643a4fc19e914cd5e55d35f2734a88"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spatie/db-dumper/zipball/3495a15545643a4fc19e914cd5e55d35f2734a88",
+            "reference": "3495a15545643a4fc19e914cd5e55d35f2734a88",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0",
+            "symfony/process": "^3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^6.0"
+        },
+        "time": "2017-05-15 14:52:41",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Spatie\\DbDumper\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Freek Van der Herten",
+                "email": "freek@spatie.be",
+                "homepage": "https://spatie.be",
+                "role": "Developer"
+            }
+        ],
+        "description": "Dump databases",
+        "homepage": "https://github.com/spatie/db-dumper",
+        "keywords": [
+            "database",
+            "db-dumper",
+            "dump",
+            "mysqldump",
+            "spatie"
+        ]
+    },
+    {
+        "name": "spatie/laravel-backup",
+        "version": "4.15.0",
+        "version_normalized": "4.15.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spatie/laravel-backup.git",
+            "reference": "d9b70073d32eb7ec96b885e0c25563e78f9bdb19"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/d9b70073d32eb7ec96b885e0c25563e78f9bdb19",
+            "reference": "d9b70073d32eb7ec96b885e0c25563e78f9bdb19",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/console": "~5.3.28|~5.4.0",
+            "illuminate/contracts": "~5.3.28|~5.4.0",
+            "illuminate/events": "~5.3.28|~5.4.0",
+            "illuminate/filesystem": "~5.3.28|~5.4.0",
+            "illuminate/notifications": "~5.3.28|~5.4.0",
+            "illuminate/support": "~5.3.28|~5.4.0",
+            "league/flysystem": "^1.0.27",
+            "php": "^7.0",
+            "spatie/db-dumper": "^2.6",
+            "spatie/temporary-directory": "^1.1",
+            "symfony/finder": "^3.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "^0.9.5",
+            "orchestra/testbench": "~3.3.3|~3.4.0",
+            "phpunit/phpunit": "^5.3.0"
+        },
+        "suggest": {
+            "guzzlehttp/guzzle": "Allows notifications to be sent via Slack"
+        },
+        "time": "2017-05-20 08:03:14",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Spatie\\Backup\\": "src"
+            },
+            "files": [
+                "src/Helpers/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Freek Van der Herten",
+                "email": "freek@spatie.be",
+                "homepage": "https://spatie.be",
+                "role": "Developer"
+            }
+        ],
+        "description": "A Laravel 5 package to backup your application",
+        "homepage": "https://github.com/spatie/laravel-backup",
+        "keywords": [
+            "backup",
+            "database",
+            "laravel-backup",
+            "spatie"
+        ]
+    },
+    {
+        "name": "sebastian/diff",
+        "version": "1.4.3",
+        "version_normalized": "1.4.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/diff.git",
+            "reference": "7f066a26a962dbe58ddea9f72a4e82874a3975a4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/7f066a26a962dbe58ddea9f72a4e82874a3975a4",
+            "reference": "7f066a26a962dbe58ddea9f72a4e82874a3975a4",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3 || ^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
+        },
+        "time": "2017-05-22 07:24:03",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kore Nordmann",
+                "email": "mail@kore-nordmann.de"
+            },
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de"
+            }
+        ],
+        "description": "Diff implementation",
+        "homepage": "https://github.com/sebastianbergmann/diff",
+        "keywords": [
+            "diff"
+        ]
+    },
+    {
+        "name": "phpunit/phpunit",
+        "version": "5.7.20",
+        "version_normalized": "5.7.20.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/phpunit.git",
+            "reference": "3cb94a5f8c07a03c8b7527ed7468a2926203f58b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3cb94a5f8c07a03c8b7527ed7468a2926203f58b",
+            "reference": "3cb94a5f8c07a03c8b7527ed7468a2926203f58b",
+            "shasum": ""
+        },
+        "require": {
+            "ext-dom": "*",
+            "ext-json": "*",
+            "ext-libxml": "*",
+            "ext-mbstring": "*",
+            "ext-xml": "*",
+            "myclabs/deep-copy": "~1.3",
+            "php": "^5.6 || ^7.0",
+            "phpspec/prophecy": "^1.6.2",
+            "phpunit/php-code-coverage": "^4.0.4",
+            "phpunit/php-file-iterator": "~1.4",
+            "phpunit/php-text-template": "~1.2",
+            "phpunit/php-timer": "^1.0.6",
+            "phpunit/phpunit-mock-objects": "^3.2",
+            "sebastian/comparator": "^1.2.4",
+            "sebastian/diff": "^1.4.3",
+            "sebastian/environment": "^1.3.4 || ^2.0",
+            "sebastian/exporter": "~2.0",
+            "sebastian/global-state": "^1.1",
+            "sebastian/object-enumerator": "~2.0",
+            "sebastian/resource-operations": "~1.0",
+            "sebastian/version": "~1.0.3|~2.0",
+            "symfony/yaml": "~2.1|~3.0"
+        },
+        "conflict": {
+            "phpdocumentor/reflection-docblock": "3.0.2"
+        },
+        "require-dev": {
+            "ext-pdo": "*"
+        },
+        "suggest": {
+            "ext-xdebug": "*",
+            "phpunit/php-invoker": "~1.1"
+        },
+        "time": "2017-05-22 07:42:55",
+        "bin": [
+            "phpunit"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.7.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de",
+                "role": "lead"
+            }
+        ],
+        "description": "The PHP Unit Testing framework.",
+        "homepage": "https://phpunit.de/",
+        "keywords": [
+            "phpunit",
+            "testing",
+            "xunit"
+        ]
+    },
+    {
+        "name": "phpspec/phpspec",
+        "version": "2.5.7",
+        "version_normalized": "2.5.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/phpspec/phpspec.git",
+            "reference": "a1dd5db803e75591c0e3cc1a054f7942133b4d05"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/phpspec/phpspec/zipball/a1dd5db803e75591c0e3cc1a054f7942133b4d05",
+            "reference": "a1dd5db803e75591c0e3cc1a054f7942133b4d05",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/instantiator": "^1.0.1",
+            "ext-tokenizer": "*",
+            "php": ">=5.3.3",
+            "phpspec/php-diff": "~1.0.0",
+            "phpspec/prophecy": "~1.4",
+            "sebastian/exporter": "~1.0|~2.0|^3.0",
+            "symfony/console": "~2.3|~3.0,!=3.2.8",
+            "symfony/event-dispatcher": "~2.1|~3.0",
+            "symfony/finder": "~2.1|~3.0",
+            "symfony/process": "^2.6|~3.0",
+            "symfony/yaml": "~2.1|~3.0"
+        },
+        "require-dev": {
+            "behat/behat": "^3.0.11",
+            "ciaranmcnulty/versionbasedtestskipper": "^0.2.1",
+            "phpunit/phpunit": "~4.4",
+            "symfony/filesystem": "~2.1|~3.0"
+        },
+        "suggest": {
+            "phpspec/nyan-formatters": "~1.0 – Adds Nyan formatters"
+        },
+        "time": "2017-05-12 06:09:08",
+        "bin": [
+            "bin/phpspec"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.5.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "PhpSpec": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Konstantin Kudryashov",
+                "email": "ever.zet@gmail.com",
+                "homepage": "http://everzet.com"
+            },
+            {
+                "name": "Marcello Duarte",
+                "homepage": "http://marcelloduarte.net/"
+            }
+        ],
+        "description": "Specification-oriented BDD framework for PHP 5.3+",
+        "homepage": "http://phpspec.net/",
+        "keywords": [
+            "BDD",
+            "SpecBDD",
+            "TDD",
+            "spec",
+            "specification",
+            "testing",
+            "tests"
+        ]
+    },
+    {
+        "name": "tightenco/mailthief",
+        "version": "v0.3.6",
+        "version_normalized": "0.3.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tightenco/mailthief.git",
+            "reference": "fda78fe3dc649ea405378fe77c016d96a1d2eae7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tightenco/mailthief/zipball/fda78fe3dc649ea405378fe77c016d96a1d2eae7",
+            "reference": "fda78fe3dc649ea405378fe77c016d96a1d2eae7",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/mail": "^5.0",
+            "illuminate/view": "^5.0"
+        },
+        "require-dev": {
+            "laravel/framework": "^5.1",
+            "mockery/mockery": "^0.9.5",
+            "phpunit/phpunit": "^5.5"
+        },
+        "time": "2017-05-16 15:04:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "MailThief\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adam Wathan",
+                "email": "adam.wathan@gmail.com"
+            }
+        ],
+        "description": "A fake Mailer for Laravel applications that takes the pain out of testing mail."
     }
 ]
