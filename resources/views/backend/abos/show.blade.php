@@ -67,10 +67,11 @@
                                         <td>{{ $abonnement->numero }}</td>
                                         <td>
                                             {!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}
-                                            @if($abonnement->tiers_id && isset($abonnement->tiers))
+
+                                            @if($abonnement->tiers_user_id || $abonnement->tiers_id)
                                                 <p><strong>Tiers payant:</strong></p>
-                                                {{ $abonnement->tiers->name }}<br/>
-                                                {!! $abonnement->tiers->adresse.'<br/>'.$abonnement->tiers->npa.' '.$abonnement->tiers->ville !!}
+                                                {{ $abonnement->user_facturation->name }}<br/>
+                                                {!! $abonnement->user_facturation->adresse.'<br/>'.$abonnement->user_facturation->npa.' '.$abonnement->user_facturation->ville !!}
                                             @endif
                                         </td>
                                         <td>{!! $user ? $user->company : '<p><span class="label label-warning">Duplicata</span></p>' !!}</td>

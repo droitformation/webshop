@@ -99,14 +99,9 @@ class User extends Authenticatable {
     {
         if(isset($this->adresses))
         {
-            $contact = $this->adresses->filter(function($adresse) {
-                if ($adresse->type == 1) {
-                    $adresse->load('specialisations','members');
-                    return true;
-                }
+            return $this->adresses->first(function ($adresse, $key) {
+                return $adresse->type == 1;
             });
-
-            return $contact->first();
         }
 
         return false;
@@ -116,14 +111,9 @@ class User extends Authenticatable {
     {
         if(isset($this->adresses))
         {
-            $contact = $this->adresses->filter(function($adresse)
-            {
-                if ($adresse->type == 1) {
-                    return true;
-                }
+            return $this->adresses->first(function ($adresse, $key) {
+                return $adresse->type == 1;
             });
-
-            return $contact->first();
         }
 
         return false;
@@ -231,6 +221,11 @@ class User extends Authenticatable {
     public function adresses()
     {
         return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id');
+    }
+
+    public function primary_adresse()
+    {
+        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id')->where('type', '=', 1);
     }
 
     public function adresses_and_trashed()

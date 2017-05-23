@@ -35,27 +35,25 @@ class AboWorker implements AboWorkerInterface{
      */
     public function merge($files, $name, $abo_id)
     {
+        // Prepare names output directory and output filename
         $outputDir =  public_path('files/abos/bound/'.$abo_id);
         $outputName = $outputDir.'/'.$name.'.pdf';
 
-        if (!\File::exists($outputDir))
-        {
-            \File::makeDirectory($outputDir);
+        // Create output directory if doesn't exist. Delete output file if exist
+        if (!\File::exists($outputDir)) { \File::makeDirectory($outputDir); }
+        if (\File::exists($outputName)) { \File::delete($outputName); }
+
+        // create command if we have files
+        if(!empty($files)) {
+            $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outputName ";
+
+            //Every pdf file should come at the end of the command
+            foreach($files as $file) {
+                $cmd .= $file." ";
+            }
+
+            $result = shell_exec($cmd);
         }
-
-        if (!\File::exists($outputName))
-        {
-            \File::delete($outputName);
-        }
-
-        $pdf = new \Clegginabox\PDFMerger\PDFMerger;
-
-        foreach($files as $file)
-        {
-            $pdf->addPDF($file, 'all');
-        }
-
-        $pdf->merge('file', $outputName, 'P');
     }
 
     /**

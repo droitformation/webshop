@@ -34,7 +34,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
         if(!$abo->abonnements->isEmpty())
         {
             // Take only abonnes
-            $abonnes = $abo->abonnements->whereIn('status',['abonne']);
+            $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
             // chunk for not to many
             $chunks  = $abonnes->chunk(15);
