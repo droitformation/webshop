@@ -52,17 +52,28 @@ class Abo_users extends Model{
         return explode('.',$this->price_cents);
     }
 
+    public function getAboTiersUserAttribute()
+    {
+        if($this->tiers_id > 0){
+            return isset($this->tiers_user) ? $this->tiers_user : false;
+        }
+
+        return true;
+    }
+
+    public function getAboUserAttribute()
+    {
+       return isset($this->realuser) ? $this->realuser : false;
+    }
+
     public function getUserAdresseAttribute()
     {
         // Change to user
         if(isset($this->realuser)) {
-            return isset($this->realuser->adresse_contact) ? $this->realuser->adresse_contact : null;
+            return !$this->realuser->primary_adresse->isEmpty() ? $this->realuser->primary_adresse->first() : null;
         }
 
-        // Fallback to adresse
-        $user = isset($this->originaluser) && !isset($this->user) ? $this->originaluser : $this->user;
-
-        return isset($user) ? $user : null;
+        return isset($this->user) ? $this->user : null;
     }
 
     public function getUserFacturationAttribute()
@@ -141,11 +152,6 @@ class Abo_users extends Model{
         return $this->belongsTo('App\Droit\Abo\Entities\Abo','abo_id');
     }
 
-    public function originaluser()
-    {
-        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id','old_id')->withTrashed();
-    }
-
     public function user()
     {
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id')->withTrashed();
@@ -154,11 +160,6 @@ class Abo_users extends Model{
     public function realuser()
     {
         return $this->belongsTo('App\Droit\User\Entities\User','user_id')->withTrashed();
-    }
-
-    public function originaltiers()
-    {
-        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','tiers_id','old_id')->withTrashed();
     }
 
     public function tiers()

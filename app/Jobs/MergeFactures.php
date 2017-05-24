@@ -40,10 +40,6 @@ class MergeFactures extends Job implements ShouldQueue
 
         // Get all files in directory
         $files = \File::files(public_path($dir));
-
-        if(!empty($files))
-        {
-            $worker->merge($files, $name, $this->abo->id);
-        }
+        $worker->merge($files, $name, $this->abo->id);
     }
 }

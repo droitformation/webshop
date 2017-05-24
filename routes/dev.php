@@ -5,17 +5,73 @@
 
 Route::get('abos_test', function () {
 
-    $infos = [
-        ['canton' => 6, 'profession' => 1],
-        ['canton' => 6, 'profession' => 2],
-        ['canton' => 8, 'profession' => 3],
-        ['canton' => 10, 'profession' => 1],
-        ['canton' => 10, 'profession' => 2],
-        ['canton' => 10, 'profession' => 1]
-    ];
+    $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
-    $make  = new \tests\factories\ObjectFactory();
-    $users = $make->user($infos);
+    $all = $abo->getAll()->where('abo_id',2);
+
+/*
+    list($hasUser, $noUser) = $all->partition(function ($abo_user) {
+        return isset($abo_user->user->user);
+    });*/
+
+   /* $all->map(function ($abo, $key) {
+        if(isset($abo->user->user)){
+            $abo->user_id = $abo->user->user->id;
+        }
+
+        if(isset($abo->tiers->user)){
+            $abo->tiers_user_id = $abo->tiers->user->id;
+        }
+
+        echo '<pre>';
+        print_r($abo->toArray());
+        echo '</pre>';
+        $abo->save();
+    });*/
+
+    function getNumPagesPdf($filepath) {
+        $fp = @fopen(preg_replace("/\[(.*?)\]/i", "", $filepath), "r");
+        $max = 0;
+        if (!$fp) {
+            return "Could not open file: $filepath";
+        } else {
+            while (!@feof($fp)) {
+                $line = @fgets($fp, 255);
+                if (preg_match('/\/Count [0-9]+/', $line, $matches)) {
+                    preg_match('/[0-9]+/', $matches[0], $matches2);
+                    if ($max < $matches2[0]) {
+                        $max = trim($matches2[0]);
+                        break;
+                    }
+                }
+            }
+            @fclose($fp);
+        }
+
+        return $max;
+    }
+   // $image = new Imagick();
+    $tmpfname = 'files/abos/bound/2/factures_REV_28-2016.pdf';
+    echo getNumPagesPdf($tmpfname);
+/*
+    $image = new Imagick($tmpfname);
+    $ident = $image->identifyImage();
+
+    echo '<pre>';
+    print_r($ident);
+    echo '</pre>';exit();*/
+
+    exec('/Volumes/Macintosh HD/Applications/PDFInfo.app '.$tmpfname.' | awk \'/Pages/ {print $2}\'', $output);
+    //echo exec('/usr/bin/pdfinfo '.$tmpfname.' | awk \'/Pages/ {print $2}\'', $output);
+
+/*    echo '<pre>';
+    echo 'has user <br/>';
+    print_r($hasUser->count());
+    echo '<br/>no user <br/>';
+    print_r($noUser->count());
+    echo '</pre>';exit();*/
+
 });
 
 Route::get('resize', function () {
@@ -122,16 +178,20 @@ Route::get('testing', function() {
 
 
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $orders = $model->getPeriod(['start' => '2016-11-08', 'end' => '2017-02-23'])->where('admin',null);
+    $orders = $model->getPeriod(['period' => ['start' => '2011-09-01', 'end' => '2011-12-31']])->where('admin',null);
 
     $orders = $orders->map(function ($order, $key) {
 
-        $worker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
-        $data = $worker->updateOrder($order, $order->shipping_id);
+        if(!$order->products->isEmpty()){
+            $worker = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+            $data = $worker->updateOrder($order, $order->shipping_id);
 
-        $order->amount = $data['amount'];
-        $order->save();
-        return $data + ['order_no' => $order->order_no, 'old_amount' => $order->amount, 'amount' => $data['amount']];
+            //$order->amount = $data['amount'];
+            //$order->save();
+            return $data + ['order_no' => $order->order_no, 'old_amount' => $order->amount, 'amount' => $data['amount']];
+        }
+
+        return ['order_no' => $order->order_no, 'old_amount' => $order->amount, 'amount' => $order->amount];
     });
 
     echo '<pre>';
@@ -296,7 +356,7 @@ Route::get('abo1', function()
 {
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-    $facture   = $factures->find(2546);//701
+    $facture   = $factures->find(1581);//701
 
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 

@@ -213,6 +213,7 @@ class AdresseWorkerTest extends BrowserKitTest {
 
         $recipient->fresh();
         $recipient->load('adresses.specialisations','adresses.members');
+        $donor->load('adresses.specialisations','adresses.members');
 
         $this->assertTrue($donor->adresse_contact->specialisations->isEmpty());
         $this->assertTrue(!$recipient->adresse_contact->specialisations->isEmpty());

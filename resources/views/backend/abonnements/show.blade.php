@@ -41,21 +41,43 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Adresse</label>
-                            <div class="col-sm-8 col-xs-12">
-                                <!-- Autocomplete for tiers adresse -->
-                                @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->adresse_id, 'type' => 'adresse_id'])
+                        @if(!$abonnement->abo_user)
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-12 control-label">
+                                    Adresse sans utilisateur
+                                    <p><strong class="text-danger">A changer</strong></p>
+                                </label>
+                                <div class="col-sm-8 col-xs-12">
+                                   {{-- @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->adresse_id, 'type' => 'adresse_id'])--}}
+                                    <div class="change_abo_user">
+                                        <strong>{{ $abonnement->user->civilite_title }} {{ $abonnement->user->name }}</strong><br>
+                                        {!! !empty($abonnement->user->company) ? $abonnement->user->company.'<br>' : '' !!}
+                                        {{ $abonnement->user->adresse }}<br>
+                                        {!! !empty($abonnement->user->cp) ? $abonnement->user->cp_trim.'<br>' : '' !!}
+                                        {{ $abonnement->user->npa }} {{ $abonnement->user->ville }}<br>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Tiers payant</label>
-                            <div class="col-sm-4 col-xs-5">
-                                <!-- Autocomplete for tiers adresse -->
-                                @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->tiers_id, 'type' => 'tiers_id'])
+                        @if(!$abonnement->abo_tiers_user)
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-12 control-label">
+                                    Tiers payant sans utilisateur
+                                    <p><strong class="text-danger">A changer</strong></p>
+                                </label>
+                                <div class="col-sm-8 col-xs-12">
+                                    {{--  @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->tiers_id, 'type' => 'tiers_id']) --}}
+                                    <div class="change_abo_user">
+                                        <strong>{{ $abonnement->tiers->civilite_title }} {{ $abonnement->tiers->name }}</strong><br>
+                                        {!! !empty($abonnement->tiers->company) ? $abonnement->tiers->company.'<br>' : '' !!}
+                                        {{ $abonnement->tiers->adresse }}<br>
+                                        {!! !empty($abonnement->tiers->cp) ? $abonnement->tiers->cp_trim.'<br>' : '' !!}
+                                        {{ $abonnement->tiers->npa }} {{ $abonnement->tiers->ville }}<br>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Prix spécial</label>

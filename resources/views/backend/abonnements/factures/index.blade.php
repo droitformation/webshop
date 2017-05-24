@@ -23,6 +23,7 @@
                         <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="worker" value="facture">
+                        <input type="hidden" name="all" value="1">
                         <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer toutes les factures</button>
                     </form>
                 </div>
@@ -71,15 +72,13 @@
                         <tbody id="">
                         @if(!$factures->isEmpty())
                             @foreach($factures as $facture)
-                                @if(isset($facture->abonnement) && !$facture->abonnement->deleted_at)
+                                <?php $user = $facture->abonnement->user_adresse; ?>
                                 <tr>
                                     <td><a href="{{ url('admin/facture/'.$facture->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a></td>
                                     <td>{{ $facture->abonnement->numero }}</td>
                                     <td>
-                                        @if($facture->abonnement->user)
-                                            <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->user->name }}</a>
-                                        @elseif($facture->abonnement->originaluser)
-                                            <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->originaluser->name }}</a>
+                                        @if($user)
+                                            <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $user->name }}</a>
                                         @else
                                             <p><span class="label label-warning">Duplicata</span></p>
                                         @endif
@@ -89,8 +88,7 @@
                                         @if($facture->doc_facture)
                                             <a class="btn btn-default btn-sm" target="_blank" href="{{ secure_asset($facture->doc_facture) }}?{{ rand(1,10000) }}">Facture pdf</a>
                                         @else
-                                            <form action="{{ url('admin/facture/make') }}" method="POST" class="form-horizontal">
-                                                {!! csrf_field() !!}
+                                            <form action="{{ url('admin/facture/make') }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
                                                 <input name="id" type="hidden" value="{{ $facture->id }}">
                                                 <button class="btn btn-default btn-sm">générer</button>
                                             </form>
@@ -106,7 +104,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                                @endif
+
                             @endforeach
                         @endif
                         </tbody>
