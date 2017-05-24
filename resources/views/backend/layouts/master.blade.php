@@ -147,6 +147,7 @@
 <!-- Scripts -->
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/datatables.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/application.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/list.min.js');?>"></script>
 
 @include('backend.scripts.redactor')
 

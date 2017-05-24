@@ -14,6 +14,28 @@ $( function() {
         $excelGroup.find('.collapse.in').collapse('hide');
     });
 
+    var ordersList    = $('#ordersList');
+    var selectStatus  = $('.order-filter-status');
+
+    if(ordersList.length) {
+        selectStatus.val('');
+        selectStatus.change(function() { orderFilter(); });
+    }
+
+    function orderFilter()
+    {
+        var status = selectStatus.val();
+
+        if(status){
+            console.log('status:' + status);
+            $('tr.mainRow').addClass('hidden');
+            $('tr[data-status="' + status + '"]').removeClass('hidden');
+        }
+        else{
+            $('tr.mainRow').removeClass('hidden');
+        }
+    }
+
     /*
      * Datepicker
      * */
