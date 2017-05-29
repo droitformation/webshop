@@ -91,22 +91,26 @@ class SearchController extends Controller
         $results = $this->user->search($request->input('term'));
 
         $results = $results->map(function ($result, $key) {
-            return  [
-                'value'    => $result->id,
-                'label'    => $result->adresse_contact->name ,
-                'desc'     => $result->adresse_contact->email,
-                'company'  => $result->adresse_contact->company,
-                'user'     => [
-                    'user_id'  => $result->id,
-                    'civilite' => $result->adresse_contact->civilite_title,
-                    'name'     => $result->adresse_contact->name ,
+            if(isset($result->adresse_contact)){
+                return  [
+                    'value'    => $result->id,
+                    'label'    => $result->adresse_contact->name ,
+                    'desc'     => $result->adresse_contact->email,
                     'company'  => $result->adresse_contact->company,
-                    'cp'       => $result->adresse_contact->cp_trim,
-                    'adresse'  => $result->adresse_contact->adresse,
-                    'npa'      => $result->adresse_contact->npa,
-                    'ville'    => $result->adresse_contact->ville,
-                ]
-            ];
+                    'user'     => [
+                        'user_id'  => $result->id,
+                        'civilite' => $result->adresse_contact->civilite_title,
+                        'name'     => $result->adresse_contact->name ,
+                        'company'  => $result->adresse_contact->company,
+                        'cp'       => $result->adresse_contact->cp_trim,
+                        'adresse'  => $result->adresse_contact->adresse,
+                        'npa'      => $result->adresse_contact->npa,
+                        'ville'    => $result->adresse_contact->ville,
+                    ]
+                ];
+            }
+        })->reject(function ($value, $key) {
+            return empty($value);
         });
 
         return response()->json($results);
