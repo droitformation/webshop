@@ -71,7 +71,8 @@ class AboAdminWorkerTest extends BrowserKitTest {
     {
         // Clean directories, empty or make
         array_map('unlink', glob('files/abos/bound/'.$abo->id));
-        if (!\File::exists($factureDir)) { \File::makeDirectory($factureDir); }
+
+        if (!\File::exists($factureDir)) { \File::makeDirectory($factureDir, 0777 , true); }
         $this->delTree($factureDir);
     }
 
