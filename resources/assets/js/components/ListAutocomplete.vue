@@ -125,6 +125,7 @@
                     },
                     change: function(event, ui) {
                         console.log($(this).val());
+                         self.searching = false;
                         if($(this).val() === '') {
                              self.noResult = false;
                         }
