@@ -111,8 +111,27 @@ class AboAdminWorkerTest extends BrowserKitTest {
         return true;
     }
 
-    public function getNumPagesPdf($filepath) {
-        $fp = @fopen(preg_replace("/\[(.*?)\]/i", "", $filepath), "r");
+    public function getNumPagesPdf($PDFPath) {
+        
+        $stream     = @fopen($PDFPath, "r");
+        $PDFContent = @fread ($stream, filesize($PDFPath));
+        if(!$stream || !$PDFContent)
+            return false;
+
+        $firstValue = 0;
+        $secondValue = 0;
+
+        if(preg_match("/\/N\s+([0-9]+)/", $PDFContent, $matches)) {
+            $firstValue = $matches[1];
+        }
+
+        if(preg_match_all("/\/Count\s+([0-9]+)/s", $PDFContent, $matches)) {
+            $secondValue = max($matches[1]);
+        }
+
+        return (($secondValue != 0) ? $secondValue : max($firstValue, $secondValue));
+
+  /*      $fp = @fopen(preg_replace("/\[(.*?)\]/i", "", $filepath), "r");
         $max = 0;
         if (!$fp) {
             return "Could not open file: $filepath";
@@ -130,7 +149,7 @@ class AboAdminWorkerTest extends BrowserKitTest {
             @fclose($fp);
         }
 
-        return $max;
+        return $max;*/
     }
 
 }
