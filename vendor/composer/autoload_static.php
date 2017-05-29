@@ -609,6 +609,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'App\\Droit\\Faq\\Repo\\FaqQuestionInterface' => __DIR__ . '/../..' . '/app/Droit/Faq/Repo/FaqQuestionInterface.php',
         'App\\Droit\\Faq\\Worker\\FaqWorker' => __DIR__ . '/../..' . '/app/Droit/Faq/Worker/FaqWorker.php',
         'App\\Droit\\Faq\\Worker\\FaqWorkerInterface' => __DIR__ . '/../..' . '/app/Droit/Faq/Worker/FaqWorkerInterface.php',
+        'App\\Droit\\Generate\\Entities\\AboGenerate' => __DIR__ . '/../..' . '/app/Droit/Generate/Entities/AboGenerate.php',
         'App\\Droit\\Generate\\Entities\\Generate' => __DIR__ . '/../..' . '/app/Droit/Generate/Entities/Generate.php',
         'App\\Droit\\Generate\\Entities\\OrderGenerate' => __DIR__ . '/../..' . '/app/Droit/Generate/Entities/OrderGenerate.php',
         'App\\Droit\\Generate\\Excel\\ExcelAdresse' => __DIR__ . '/../..' . '/app/Droit/Generate/Excel/ExcelAdresse.php',

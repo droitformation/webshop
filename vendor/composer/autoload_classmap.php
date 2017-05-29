@@ -117,6 +117,7 @@ return array(
     'App\\Droit\\Faq\\Repo\\FaqQuestionInterface' => $baseDir . '/app/Droit/Faq/Repo/FaqQuestionInterface.php',
     'App\\Droit\\Faq\\Worker\\FaqWorker' => $baseDir . '/app/Droit/Faq/Worker/FaqWorker.php',
     'App\\Droit\\Faq\\Worker\\FaqWorkerInterface' => $baseDir . '/app/Droit/Faq/Worker/FaqWorkerInterface.php',
+    'App\\Droit\\Generate\\Entities\\AboGenerate' => $baseDir . '/app/Droit/Generate/Entities/AboGenerate.php',
     'App\\Droit\\Generate\\Entities\\Generate' => $baseDir . '/app/Droit/Generate/Entities/Generate.php',
     'App\\Droit\\Generate\\Entities\\OrderGenerate' => $baseDir . '/app/Droit/Generate/Entities/OrderGenerate.php',
     'App\\Droit\\Generate\\Excel\\ExcelAdresse' => $baseDir . '/app/Droit/Generate/Excel/ExcelAdresse.php',
