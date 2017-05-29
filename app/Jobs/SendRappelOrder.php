@@ -69,7 +69,8 @@ class SendRappelOrder implements ShouldQueue
 
             $message->to($user->email, $user->name)->subject('Rappel');
             $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
-            
+            $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
+            $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
         });
     }
 }

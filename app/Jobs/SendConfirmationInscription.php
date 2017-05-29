@@ -78,6 +78,8 @@ class SendConfirmationInscription extends Job implements ShouldQueue
 
             $message->to($user->email, $user->name)->subject('Confirmation d\'inscription');
             $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
+            $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
+
             // Attach all documents
             if(!empty($attachements))
             {
