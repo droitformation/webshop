@@ -46,8 +46,9 @@ class AboAdminWorkerTest extends BrowserKitTest {
         $name       = 'factures_'.$product->reference.'_'.$product->edition_clean;
         $filename   = 'files/abos/bound/'.$abo->id.'/'.$name.'.pdf';
         $factureDir = public_path($dir);
+        $boundDir   = public_path('files/abos/bound/'.$abo->id);
 
-        $this->clean($abo,$factureDir);
+        $this->clean($abo,$factureDir,$boundDir);
 
         $this->assertEquals(3,$factures->count());
 
@@ -67,12 +68,19 @@ class AboAdminWorkerTest extends BrowserKitTest {
         $this->assertEquals(3, $this->getNumPagesPdf(public_path($filename)));
     }
 
-    public function clean($abo,$factureDir)
+    public function clean($abo,$factureDir,$boundDir)
     {
         // Clean directories, empty or make
         array_map('unlink', glob('files/abos/bound/'.$abo->id));
 
-        if (!\File::exists($factureDir)) { \File::makeDirectory($factureDir, 0777 , true); }
+        if (!\File::exists($factureDir)) {
+            \File::makeDirectory($factureDir, 0777 , true);
+        }
+        
+        if (!\File::exists($boundDir)) {
+            \File::makeDirectory($boundDir, 0777 , true);
+        }
+
         $this->delTree($factureDir);
     }
 
