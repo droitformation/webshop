@@ -14,7 +14,7 @@
             <div class="panel panel-primary">
                 <form id="formOrder" action="{{ url('admin/order') }}" class="validate-form" data-validate="parsley" method="POST">
                     {!! csrf_field() !!}
-                    <div class="panel-body">
+                    <div class="panel-body" id="appComponent">
                         <h3>Créer une commande</h3>
 
                         <!-- Indicate it's from admin -->
@@ -25,13 +25,10 @@
                             <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter une adresse</a>
 
                             <div class="collapse {{ !empty(old('type')) ? 'in' : '' }}" id="adresseFind" style="width: 400px;">
-
                                 <!-- Autocomplete for adresse -->
                                 <div class="autocomplete-wrapper">
-
                                     <?php $type = old('type'); ?>
                                     <?php $uid  = !empty($type) ? old(old('type')) : ''; ?>
-
                                     <div class="input-adresse" data-uid="{{ $uid }}" data-type="{{ old('type') }}" data-where="order"></div>
                                     <div class="choice-adresse"></div>
                                     <div class="adresse-find">
@@ -41,7 +38,6 @@
                                     </div>
                                 </div>
                                 <!-- End Autocomplete for adresse -->
-
                             </div>
                             <div class="collapse {{ !empty(Session::get('adresse')) ? 'in' : '' }}" id="adresseMake">
                                 <div class="row">
@@ -49,6 +45,9 @@
                                 </div>
                             </div>
                         </div>
+
+                        <list-autocomplete type="user_id" chosen_id="{{ old('user_id') ? old('user_id') : null }}"></list-autocomplete>
+                        <br/>
 
                         <div id="wrapper_clone_order">
                             @if(Session::has('old_products'))

@@ -10,12 +10,7 @@ Route::get('abos_test', function () {
 
     $all = $abo->getAll()->where('abo_id',2);
 
-/*
-    list($hasUser, $noUser) = $all->partition(function ($abo_user) {
-        return isset($abo_user->user->user);
-    });*/
-
-   /* $all->map(function ($abo, $key) {
+    $all->map(function ($abo, $key) {
         if(isset($abo->user->user)){
             $abo->user_id = $abo->user->user->id;
         }
@@ -24,36 +19,17 @@ Route::get('abos_test', function () {
             $abo->tiers_user_id = $abo->tiers->user->id;
         }
 
+        $abo->save();
+
         echo '<pre>';
         print_r($abo->toArray());
         echo '</pre>';
-        $abo->save();
-    });*/
+    });
 
-    function getNumPagesPdf($filepath) {
-        $fp = @fopen(preg_replace("/\[(.*?)\]/i", "", $filepath), "r");
-        $max = 0;
-        if (!$fp) {
-            return "Could not open file: $filepath";
-        } else {
-            while (!@feof($fp)) {
-                $line = @fgets($fp, 255);
-                if (preg_match('/\/Count [0-9]+/', $line, $matches)) {
-                    preg_match('/[0-9]+/', $matches[0], $matches2);
-                    if ($max < $matches2[0]) {
-                        $max = trim($matches2[0]);
-                        break;
-                    }
-                }
-            }
-            @fclose($fp);
-        }
-
-        return $max;
-    }
-   // $image = new Imagick();
-    $tmpfname = 'files/abos/bound/2/factures_REV_28-2016.pdf';
-    echo getNumPagesPdf($tmpfname);
+    /*
+        list($hasUser, $noUser) = $all->partition(function ($abo_user) {
+            return isset($abo_user->user->user);
+        });*/
 /*
     $image = new Imagick($tmpfname);
     $ident = $image->identifyImage();
@@ -61,9 +37,6 @@ Route::get('abos_test', function () {
     echo '<pre>';
     print_r($ident);
     echo '</pre>';exit();*/
-
-    exec('/Volumes/Macintosh HD/Applications/PDFInfo.app '.$tmpfname.' | awk \'/Pages/ {print $2}\'', $output);
-    //echo exec('/usr/bin/pdfinfo '.$tmpfname.' | awk \'/Pages/ {print $2}\'', $output);
 
 /*    echo '<pre>';
     echo 'has user <br/>';
