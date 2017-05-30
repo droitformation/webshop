@@ -74,6 +74,9 @@ class AboAdminWorkerTest extends BrowserKitTest {
 
     public function clean($abo,$factureDir,$boundDir)
     {
+        \File::deleteDirectory($factureDir);
+        \File::deleteDirectory($boundDir);
+        
         // Clean directories, empty or make
         if (!\File::exists($factureDir)) {
             \File::makeDirectory($factureDir, 0777 , true);

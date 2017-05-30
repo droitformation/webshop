@@ -206,10 +206,10 @@ class AdresseEloquent implements AdresseInterface{
 	public function create(array $data)
 	{
 		$adresse = $this->adresse->create(array(
-			'civilite_id'   => $data['civilite_id'],
+			'civilite_id'   => (isset($data['civilite_id']) ? $data['civilite_id'] : 4),
 			'first_name'    => $this->format->format_name($data['first_name']),
 			'last_name'     => $this->format->format_name($data['last_name']),
-			'email'         => $data['email'],
+			'email'         => (isset($data['email']) ? $data['email'] : ''),
 			'company'       => (isset($data['company']) ? $data['company'] : null),
 			'profession_id' => (isset($data['profession_id']) ? $data['profession_id'] : null),
 			'telephone'     => (isset($data['telephone']) ? $data['telephone'] : null),

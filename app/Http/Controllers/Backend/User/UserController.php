@@ -68,7 +68,7 @@ class UserController extends Controller {
      */
     public function store(CreateUser $request)
     {
-        $user = $this->user->create($request->all());
+        $user = $this->user->create(array_filter($request->all()));
 
         alert()->success('Utilisateur crée');
 

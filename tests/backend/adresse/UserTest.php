@@ -50,6 +50,30 @@ class UserTest extends BrowserKitTest {
         ]);
     }
 
+    public function testCreateNewUserOnlyCompany()
+    {
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $this->assertTrue(Auth::check());
+
+        $this->visit(url('admin/user/create'));
+
+        // Create new user
+        $this->type('DesignPond', 'company');
+        $this->type('info@designpond.ch', 'email');
+        $this->type('123456', 'password');
+
+        $this->press('Envoyer');
+
+        $this->seeInDatabase('users', [
+            'company' => 'DesignPond',
+            'email'   => 'info@designpond.ch'
+        ]);
+    }
+
     public function testDeleteThenCreateUserWithSameEmail()
     {
         $admin = factory(App\Droit\User\Entities\User::class)->create();
@@ -108,6 +132,72 @@ class UserTest extends BrowserKitTest {
             'id'         => $user->id,
             'first_name' => 'Terry'
         ]);
+    }
+
+    public function testUpdateUserOnlyCompany()
+    {
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+
+        $user->roles()->attach(1);
+
+        $this->actingAs($user);
+
+        $this->assertTrue(Auth::check());
+
+        $this->visit(url('admin/user/'.$user->id));
+        $this->seePageIs(url('admin/user/'.$user->id));
+        $this->assertViewHas('user');
+
+        $this->type('', 'first_name');
+        $this->type('', 'last_name');
+        $this->type('DesignPond', 'company');
+
+        $this->press('Enregistrer');
+
+        $this->seeInDatabase('users', [
+            'id'         => $user->id,
+            'first_name' => '',
+            'last_name' => '',
+            'company' => 'DesignPond'
+        ]);
+    }
+
+    public function testUserName()
+    {
+        $user1 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => 'Jane',
+            'last_name'  => 'Doe',
+        ]);
+
+        $user2 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => '',
+            'last_name'  => '',
+            'company'  => 'Acme',
+        ]);
+
+        $user3 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => 'George',
+            'last_name'  => '',
+            'company'    => '',
+        ]);
+
+        $user4 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => '',
+            'last_name'  => 'Martin',
+            'company'    => '',
+        ]);
+
+        $user5 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => '',
+            'last_name'  => 'Martin',
+            'company'    => 'Acme',
+        ]);
+
+        $this->assertSame('Jane Doe',$user1->name);
+        $this->assertSame('Acme',$user2->name);
+        $this->assertSame('George',$user3->name);
+        $this->assertSame('Martin',$user4->name);
+        $this->assertSame('Acme',$user5->name);
     }
 
 }

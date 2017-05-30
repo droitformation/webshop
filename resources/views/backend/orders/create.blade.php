@@ -47,7 +47,7 @@
                         </div>
 
                         <list-autocomplete type="user_id" chosen_id="{{ old('user_id') ? old('user_id') : null }}"></list-autocomplete>
-                        <br/>
+
 
                         <div id="wrapper_clone_order">
                             @if(Session::has('old_products'))

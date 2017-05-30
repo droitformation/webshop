@@ -41,6 +41,15 @@
                                       <label for="message" class="control-label">Nom</label>
                                       <input type="text" name="last_name" class="form-control" value="{{ $user->last_name }}">
                                   </div>
+                                  <p style="margin-bottom: 15px;">
+                                      <strong class="text-danger">OU</strong> &nbsp;&nbsp;
+                                      <span class="text-muted">(Prénom et nom sont pris en compte en premier si existant)</span>
+                                  </p>
+                                  <div class="form-group">
+                                      <label for="message" class="control-label">Entreprise</label>
+                                      <input type="text" name="company" class="form-control" value="{{ $user->company }}">
+                                  </div>
+
                                   <div class="form-group">
                                       <label for="message" class="control-label">Email</label>
                                       <input type="email" name="email" class="form-control" value="{{ $user->email }}">
