@@ -192,7 +192,7 @@ class Inscription extends Model
         {
             return ucwords($this->participant->name);
         }
-        elseif(isset($this->user))
+        elseif(isset($this->user) && isset($this->user->adresse_contact))
         {
             return ucwords($this->user->adresse_contact->name);
         }
