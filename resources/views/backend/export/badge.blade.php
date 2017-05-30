@@ -46,11 +46,12 @@
 
                                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                        <tr class="normalize">
-                                           <td width="35%" class="normalize height" style="padding-left: 15px;">
+                                           <td width="34%" class="normalize height" style="padding-left: 15px;">
                                                <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
-                                               <img style="max-height: 50px;" src="{{ secure_asset('files/logos/'.$logo) }}" />
+                                               <img style="max-height: 48px;" src="{{ secure_asset('files/logos/'.$logo) }}" />
                                            </td>
-                                           <td width="65%" class="normalize height">
+                                           <td width="4%" class="normalize height"></td>
+                                           <td width="62%" class="normalize height">
                                                {!! !empty($name) ? '<span>'.$name.'</span>' : '' !!}
                                            </td>
                                        </tr>
