@@ -214,4 +214,18 @@ class ProfileTest extends BrowserKitTest {
 
         $this->seePageIs('pubdroit');
 	}
+
+	public function testAboUser()
+	{
+		$user = factory(App\Droit\User\Entities\User::class)->create();
+		$this->actingAs($user);
+
+		$make = new \tests\factories\ObjectFactory();
+		$abo  = $make->makeUserAbonnement(null, $user);
+
+		$this->visit('/pubdroit/profil/abos');
+		$this->assertViewHas('user');
+
+		$this->see($abo->title);
+	}
 }

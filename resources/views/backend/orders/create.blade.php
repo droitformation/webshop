@@ -23,7 +23,7 @@
                         <div id="appComponent">
                             <div id="adresseParent">
                                 <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher un utilisateur</a>
-                                <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter un compte et adresse</a>
+                                <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter un compte</a>
 
                                 <div class="collapse {{ !empty(old('type')) ? 'in' : '' }}" id="adresseFind" style="width: 500px;">
                                     <list-autocomplete type="user_id" chosen_id="{{ old('user_id') ? old('user_id') : null }}"></list-autocomplete>
