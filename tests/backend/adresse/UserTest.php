@@ -200,4 +200,34 @@ class UserTest extends BrowserKitTest {
         $this->assertSame('Acme',$user5->name);
     }
 
+    public function testDeleteUserConfirmation()
+    {
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $site         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
+        $subscription = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
+
+        $subscription->subscriptions()->attach($newsletter->id);
+
+        $this->visit(url('admin/user/confirm/'.$user->id));
+        $this->assertViewHas('user');
+        $this->see($newsletter->titre);
+        
+        $form = $this->getForm('confirmUserDelete');
+
+        $form['newsletter_id'][0]->untick();
+
+   /*     $this->type('Terry', 'first_name');
+
+        $this->press('Enregistrer');
+
+        $this->seeInDatabase('users', [
+            'id'         => $user->id,
+            'first_name' => 'Terry'
+        ]);*/
+    }
 }

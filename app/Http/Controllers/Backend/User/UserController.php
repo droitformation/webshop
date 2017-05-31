@@ -109,6 +109,16 @@ class UserController extends Controller {
         return redirect('admin/user/'.$id);
     }
 
+    public function confirm($id)
+    {
+        $user = $this->user->find($id);
+
+        //$validator = new \App\Droit\User\Worker\UserValidation($user);
+        //$messages  = $validator->activate();
+
+        return view('backend.users.confirm')->with(compact('user'));
+    }
+    
     /**
      * Remove the specified resource from storage.
      *

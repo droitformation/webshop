@@ -220,8 +220,13 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
 	public function delete($email){
 
-		return $this->user->where('email', '=', $email)->delete();
+        $user = $this->findByEmail($email);
 
+        if($user){
+            $user->delete();
+        }
+
+        return true;
 	}
 
 }
