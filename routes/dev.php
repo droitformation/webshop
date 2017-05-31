@@ -147,12 +147,12 @@ Route::get('testing', function() {
 
    // $colloques  = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
    // $colloque   = $colloques->find(107);
-    $user = new \App\Droit\User\Entities\User();
+    //$user = new \App\Droit\User\Entities\User();
    // $dup  = $user->with(['adresses'])->get();
-    $dup = $user->with(['adresses'])->get();
+    //$dup = $user->with(['adresses'])->get();
 
 
-    $multiplied = $dup->reject(function ($item, $key) {
+/*    $multiplied = $dup->reject(function ($item, $key) {
         return $item->adresses->count() == 1 && $item->adresses->contains('type',1);
     })->reject(function ($item, $key) {
         return $item->adresses->count() > 1 && $item->adresses->contains('type',1);
@@ -160,10 +160,10 @@ Route::get('testing', function() {
 
     echo '<pre>';
     print_r($multiplied->toArray());
-    echo '</pre>';exit();
+    echo '</pre>';exit();*/
 
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $orders = $model->getPeriod(['period' => ['start' => '2011-09-01', 'end' => '2011-12-31']])->where('admin',null);
+    $orders = $model->getPeriod(['period' => ['start' => '2016-01-01', 'end' => '2016-12-31']])->where('admin',null);
 
     $orders = $orders->map(function ($order, $key) {
 

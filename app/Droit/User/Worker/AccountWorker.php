@@ -44,8 +44,6 @@ class AccountWorker implements AccountWorkerInterface
     
     public function makeUser()
     {
-        $this->data['password'] = bcrypt($this->data['password']);
-
         // Create user account
         $this->user = $this->repo_user->create(array_only($this->data,['email','password','first_name','last_name','company']));
 
@@ -73,7 +71,7 @@ class AccountWorker implements AccountWorkerInterface
         ]);
 
         if($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            throw new \Illuminate\Validation\ValidationException($validator->errors());
         }
 
         return $this;

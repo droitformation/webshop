@@ -92,6 +92,19 @@
                           </div>
                       </div>
 
+                      @if(!$user->abos->isEmpty())
+                          <div class="panel panel-midnightblue">
+                              <div class="panel-body">
+                                  <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
+                                  <ul class="list-unstyled">
+                                      @foreach($user->abos as $abo)
+                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}"><i class="fa fa-bookmark"></i> &nbsp;{{ $abo->abo->title }}</a></li>
+                                      @endforeach
+                                  </ul>
+                              </div>
+                          </div>
+                      @endif
+
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
                               <h3><i class="fa fa-tags"></i>&nbsp;Spécialisations</h3>
@@ -194,19 +207,6 @@
                                   </div>
                               @endif
                           @endforeach
-                      @endif
-
-                      @if(!$user->user_abos->isEmpty())
-                          <div class="panel panel-midnightblue">
-                              <div class="panel-body">
-                                  <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
-                                  <ul class="list-unstyled">
-                                      @foreach($user->user_abos as $abo)
-                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}"><i class="fa fa-bookmark"></i> &nbsp;{{ $abo->abo->title }}</a></li>
-                                      @endforeach
-                                  </ul>
-                              </div>
-                          </div>
                       @endif
 
                   </div>

@@ -12,6 +12,7 @@ use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Droit\Shop\Cart\Repo\CartInterface;
 use App\Droit\Shop\Cart\Worker\CartWorkerInterface;
 use App\Droit\Shop\Stock\Repo\StockInterface;
+use Illuminate\Support\Facades\App;
 
 class OrderMaker implements OrderMakerInterface{
 
@@ -124,20 +125,14 @@ class OrderMaker implements OrderMakerInterface{
      * */
     public function getUser($order)
     {
-        if(isset($order['user_id']) || isset($order['adresse_id']))
-        {
-            if(isset($order['user_id'])) {
-                return ['user_id' => $order['user_id']];
-            }
-            else {
-                return ['adresse_id' => $order['adresse_id']];
-            }
+        if(isset($order['user_id'])) {
+            return ['user_id' => $order['user_id']];
         }
-        else
-        {
-            $adresse = $this->adresse->create($order['adresse']);
-            return ['adresse_id' => $adresse->id];
-        }
+
+        $account = \App::make('App\Droit\User\Worker\AccountWorkerInterface');
+        $user    = $account->createAccount($order['adresse']);
+        
+        return ['user_id' => $user->id];
     }
 
     /*
@@ -215,10 +210,8 @@ class OrderMaker implements OrderMakerInterface{
     {
         $ids = [];
 
-        $cart->each(function($product) use (&$ids)
-        {
-            for($x = 0; $x < $product->qty; $x++)
-            {
+        $cart->each(function($product) use (&$ids) {
+            for($x = 0; $x < $product->qty; $x++) {
                 $ids[] = ['id' => $product->id];
             }
         });

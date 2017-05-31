@@ -110,9 +110,11 @@ class AccountWorkerTest extends BrowserKitTest {
         $this->assertTrue(isset($user->adresse_contact));
         $this->assertSame('Jane Doe',$user->adresse_contact->name);
 
+        $attempt = Auth::attempt(['email' => 'info@designpond.ch', 'password' => '123456']);
+        $this->assertTrue($attempt);
     }
 
-/*    public function testValidationFails()
+    public function testValidationFails()
     {
         $worker = App::make('App\Droit\User\Worker\AccountWorkerInterface');
         
@@ -122,5 +124,5 @@ class AccountWorkerTest extends BrowserKitTest {
         catch (Exception $e) {
             $this->assertInstanceOf('Illuminate\Validation\ValidationException', $e);
         }
-    }*/
+    }
 }

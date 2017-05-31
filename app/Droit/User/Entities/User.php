@@ -280,4 +280,9 @@ class User extends Authenticatable {
     {
         return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_subscriptions', 'user_id', 'id');
     }
+
+    public function abos()
+    {
+        return $this->hasMany('App\Droit\Abo\Entities\Abo_users','user_id', 'id');
+    }
 }
