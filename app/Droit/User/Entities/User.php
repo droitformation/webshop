@@ -23,7 +23,7 @@ class User extends Authenticatable {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['first_name','last_name', 'email', 'password'];
+	protected $fillable = ['first_name','last_name', 'company','email', 'password'];
 
     /**
      * Send the password reset notification.
@@ -58,6 +58,11 @@ class User extends Authenticatable {
         $this->attributes['last_name'] = trim($value);
     }
 
+    public function setCompanyAttribute($value)
+    {
+        $this->attributes['company'] = trim($value);
+    }
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
@@ -83,16 +88,6 @@ class User extends Authenticatable {
         }
 
         return null;
-    }
-
-    public function getUserAbosAttribute()
-    {
-        if(isset($this->adresses))
-        {
-            return $this->adresses->pluck('abos')->flatten(1);
-        }
-
-        return collect([]);
     }
 
     public function getAdresseContactAttribute()
@@ -153,7 +148,15 @@ class User extends Authenticatable {
 
     public function getNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        if(!empty($this->first_name) && !empty($this->last_name)){
+            return $this->first_name.' '.$this->last_name;
+        }
+
+        if(!empty($this->company)){
+            return $this->company;
+        }
+
+        return trim($this->first_name.' '.$this->last_name);
     }
 
     public function getRoleAdminAttribute()
@@ -266,5 +269,15 @@ class User extends Authenticatable {
     public function subscriptions()
     {
         return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_subscriptions', 'user_id', 'id');
+    }
+
+    public function email_subscriptions()
+    {
+        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_users', 'email', 'email');
+    }
+
+    public function abos()
+    {
+        return $this->hasMany('App\Droit\Abo\Entities\Abo_users','user_id', 'id');
     }
 }

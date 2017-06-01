@@ -95,12 +95,7 @@ class ProfileController extends Controller
 
     public function abos()
     {
-        $abos =  \Auth::user()->adresses->map(function ($item, $key) {
-            return $item->abos;
-        })->flatten(1);
-
-
-        return view('frontend.pubdroit.profil.abos')->with(['user' => \Auth::user(), 'abos' => $abos]);
+        return view('frontend.pubdroit.profil.abos')->with(['user' => \Auth::user()]);
     }
 
     public function subscriptions()
@@ -108,6 +103,9 @@ class ProfileController extends Controller
         $emails = array_merge([\Auth::user()->email], isset(\Auth::user()->adresses) ? \Auth::user()->adresses->pluck('email')->all() : []);
 
         $subscriptions = $this->newsworker->hasSubscriptions(array_unique($emails));
+        $subscriptions = $subscriptions->groupBy('email')->map(function($subscription,$key){
+            return $subscription->pluck('subscriptions')->flatten(1)->unique('list_id');
+        });
 
         return view('frontend.pubdroit.profil.subscription')->with(['user' => \Auth::user(), 'subscriptions' => $subscriptions]);
     }

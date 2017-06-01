@@ -50,6 +50,30 @@ class UserTest extends BrowserKitTest {
         ]);
     }
 
+    public function testCreateNewUserOnlyCompany()
+    {
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $this->assertTrue(Auth::check());
+
+        $this->visit(url('admin/user/create'));
+
+        // Create new user
+        $this->type('DesignPond', 'company');
+        $this->type('info@designpond.ch', 'email');
+        $this->type('123456', 'password');
+
+        $this->press('Envoyer');
+
+        $this->seeInDatabase('users', [
+            'company' => 'DesignPond',
+            'email'   => 'info@designpond.ch'
+        ]);
+    }
+
     public function testDeleteThenCreateUserWithSameEmail()
     {
         $admin = factory(App\Droit\User\Entities\User::class)->create();
@@ -110,4 +134,100 @@ class UserTest extends BrowserKitTest {
         ]);
     }
 
+    public function testUpdateUserOnlyCompany()
+    {
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+
+        $user->roles()->attach(1);
+
+        $this->actingAs($user);
+
+        $this->assertTrue(Auth::check());
+
+        $this->visit(url('admin/user/'.$user->id));
+        $this->seePageIs(url('admin/user/'.$user->id));
+        $this->assertViewHas('user');
+
+        $this->type('', 'first_name');
+        $this->type('', 'last_name');
+        $this->type('DesignPond', 'company');
+
+        $this->press('Enregistrer');
+
+        $this->seeInDatabase('users', [
+            'id'         => $user->id,
+            'first_name' => '',
+            'last_name' => '',
+            'company' => 'DesignPond'
+        ]);
+    }
+
+    public function testUserName()
+    {
+        $user1 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => 'Jane',
+            'last_name'  => 'Doe',
+        ]);
+
+        $user2 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => '',
+            'last_name'  => '',
+            'company'  => 'Acme',
+        ]);
+
+        $user3 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => 'George',
+            'last_name'  => '',
+            'company'    => '',
+        ]);
+
+        $user4 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => '',
+            'last_name'  => 'Martin',
+            'company'    => '',
+        ]);
+
+        $user5 = factory(App\Droit\User\Entities\User::class)->create([
+            'first_name' => '',
+            'last_name'  => 'Martin',
+            'company'    => 'Acme',
+        ]);
+
+        $this->assertSame('Jane Doe',$user1->name);
+        $this->assertSame('Acme',$user2->name);
+        $this->assertSame('George',$user3->name);
+        $this->assertSame('Martin',$user4->name);
+        $this->assertSame('Acme',$user5->name);
+    }
+
+    public function testDeleteUserConfirmation()
+    {
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $site         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
+        $subscription = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
+
+        $subscription->subscriptions()->attach($newsletter->id);
+
+        $this->visit(url('admin/user/confirm/'.$user->id));
+        $this->assertViewHas('user');
+        $this->see($newsletter->titre);
+        
+        $form = $this->getForm('confirmUserDelete');
+
+        $form['newsletter_id'][0]->untick();
+
+   /*     $this->type('Terry', 'first_name');
+
+        $this->press('Enregistrer');
+
+        $this->seeInDatabase('users', [
+            'id'         => $user->id,
+            'first_name' => 'Terry'
+        ]);*/
+    }
 }

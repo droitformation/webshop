@@ -41,6 +41,15 @@
                                       <label for="message" class="control-label">Nom</label>
                                       <input type="text" name="last_name" class="form-control" value="{{ $user->last_name }}">
                                   </div>
+                                  <p style="margin-bottom: 15px;">
+                                      <strong class="text-danger">OU</strong> &nbsp;&nbsp;
+                                      <span class="text-muted">(Prénom et nom sont pris en compte en premier si existant)</span>
+                                  </p>
+                                  <div class="form-group">
+                                      <label for="message" class="control-label">Entreprise</label>
+                                      <input type="text" name="company" class="form-control" value="{{ $user->company }}">
+                                  </div>
+
                                   <div class="form-group">
                                       <label for="message" class="control-label">Email</label>
                                       <input type="email" name="email" class="form-control" value="{{ $user->email }}">
@@ -82,6 +91,19 @@
                               </form>
                           </div>
                       </div>
+
+                      @if(!$user->abos->isEmpty())
+                          <div class="panel panel-midnightblue">
+                              <div class="panel-body">
+                                  <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
+                                  <ul class="list-unstyled">
+                                      @foreach($user->abos as $abo)
+                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}"><i class="fa fa-bookmark"></i> &nbsp;{{ $abo->abo->title }}</a></li>
+                                      @endforeach
+                                  </ul>
+                              </div>
+                          </div>
+                      @endif
 
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
@@ -185,19 +207,6 @@
                                   </div>
                               @endif
                           @endforeach
-                      @endif
-
-                      @if(!$user->user_abos->isEmpty())
-                          <div class="panel panel-midnightblue">
-                              <div class="panel-body">
-                                  <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
-                                  <ul class="list-unstyled">
-                                      @foreach($user->user_abos as $abo)
-                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}"><i class="fa fa-bookmark"></i> &nbsp;{{ $abo->abo->title }}</a></li>
-                                      @endforeach
-                                  </ul>
-                              </div>
-                          </div>
                       @endif
 
                   </div>

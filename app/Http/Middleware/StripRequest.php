@@ -19,38 +19,39 @@ class StripRequest
 
         // Validate the adresse if any
         $validator = \Validator::make($request->all(), [
-            'adresse.first_name'     => 'required_without_all:user_id,adresse_id,adresse.company',
-            'adresse.last_name'      => 'required_without_all:user_id,adresse_id,adresse.company',
-            'adresse.adresse'        => 'required_without_all:user_id,adresse_id',
-            'adresse.npa'            => 'required_without_all:user_id,adresse_id',
-            'adresse.ville'          => 'required_without_all:user_id,adresse_id',
-            'adresse.company'        => 'required_without_all:user_id,adresse_id,adresse.first_name,adresse.last_name',
+            'adresse.first_name' => 'required_without_all:adresse.company,user_id',
+            'adresse.last_name'  => 'required_without_all:adresse.company,user_id',
+            'adresse.company'    => 'required_without_all:adresse.first_name,adresse.last_name,user_id',
+            'adresse.adresse'    => 'required_without:user_id',
+            'adresse.npa'        => 'required_without:user_id',
+            'adresse.ville'      => 'required_without:user_id',
+            'adresse.email'      => 'email|max:255|unique:users,email|required_without:user_id',
+            'adresse.password'   => 'min:6|required_without:user_id',
         ], [
-            'adresse.first_name.required_without_all'  => 'Une adresse (prénom) est requise sans utilisateur',
+            'adresse.first_name.required_without_all'  => 'Le prénom est requise sans utilisateur',
             'adresse.last_name.required_without_all'   => 'Une adresse (nom) est requise sans utilisateur',
-            'adresse.adresse.required_without_all'     => 'Une adresse (adresse) est requise sans utilisateur',
-            'adresse.npa.required_without_all'         => 'Une adresse (npa) est requise sans utilisateur',
-            'adresse.ville.required_without_all'       => 'Une adresse (ville) est requise sans utilisateur',
             'adresse.company.required_without_all'     => 'Une nom d\'entreprise est requis sans nom/prénom',
+            'adresse.adresse.required_without'         => 'Une adresse (adresse) est requise sans utilisateur',
+            'adresse.npa.required_without'             => 'Une adresse (npa) est requise sans utilisateur',
+            'adresse.password.required_without'        => 'Un mot de passe est requis sans utilisateur',
+            'adresse.email.required_without'           => 'Un email est requis sans utilisateur',
         ]);
 
         $products = array_filter($request->input('order.products'));
 
         $validator->after(function($validator) use ($products) {
-            if(empty($products))
-            {
+            if(empty($products)) {
                 $validator->errors()->add('order.products', 'Au moins un livre est requis');
             }
         });
 
         // Resend products along to refill form
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
+
             // resend adress if any
             $adresse = $request->input('adresse',[]);
 
-            if(!empty($adresse))
-            {
+            if(!empty($adresse)) {
                 // unset defaults, we can now test if we had other infos present, if not dont show form in view
                 unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
 
@@ -59,8 +60,7 @@ class StripRequest
 
             $order = $request->input('order',[]);
 
-            if(!empty($order))
-            {
+            if(!empty($order)) {
                 $products = $helper->convertProducts($order);
             }
 

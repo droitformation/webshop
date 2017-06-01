@@ -12,6 +12,7 @@ class OrderMakerTest extends BrowserKitTest {
     protected $mockorder;
     protected $generator;
     protected $adresse;
+    protected $user;
     protected $stock;
 
     public function setUp()
@@ -34,6 +35,9 @@ class OrderMakerTest extends BrowserKitTest {
 
         $this->adresse = Mockery::mock('App\Droit\Adresse\Repo\AdresseInterface');
         $this->app->instance('App\Droit\Adresse\Repo\AdresseInterface', $this->adresse);
+
+        $this->user = Mockery::mock('App\Droit\User\Repo\UserInterface');
+        $this->app->instance('App\Droit\User\Repo\UserInterface', $this->user);
 
         $this->stock = Mockery::mock('App\Droit\Shop\Stock\Repo\StockInterface');
         $this->app->instance('App\Droit\Shop\Stock\Repo\StockInterface', $this->stock);
@@ -406,26 +410,45 @@ class OrderMakerTest extends BrowserKitTest {
     public function testGetUserOrCreateAdresseFromOrder()
     {
         $make    = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
-        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->make(['id' => 2]);
 
         // Create a new adresse
+        // Validation fails
         $data = ['adresse' => []];
 
-        $this->adresse->shouldReceive('create')->once()->andReturn($adresse);
+        try{
+            $make->getUser($data);
+        }
+        catch (Exception $e) {
+            $this->assertInstanceOf('Illuminate\Validation\ValidationException', $e);
+        }
+    }
 
-        $make->getUser($data);
+    public function testGetUserOrCreateAdresseFromOrderMakeNewAccountWithData()
+    {
+        $make    = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $factory = new \tests\factories\ObjectFactory();
+        
+        $user = $factory->user();
 
-        // Adresse id
-        $data2    = ['adresse_id' => 12];
-        $response = $make->getUser($data2);
+        $this->user->shouldReceive('create')->once()->andReturn($user);
+        $this->adresse->shouldReceive('create')->once()->andReturn($user->adresses->first());
+        $this->adresse->shouldReceive('update')->once()->andReturn($user->adresses->first());
 
-        $this->assertEquals($data2, $response);
+        // Create new Adresse
+        $new = ['adresse' => [
+            'civilite_id' => 1,
+            'first_name'  => 'Jane',
+            'last_name'   => 'Doe',
+            'company'     => 'DesignPond',
+            'email'       => 'info@designpond.ch',
+            'password'    =>  123456,
+            'adresse'     => 'Rue du test 45',
+            'npa'         => '2345',
+            'ville'       => 'Bienne',
+        ]];
 
-        // User id
-        $data3    = ['user_id' => 12];
-        $response = $make->getUser($data3);
+        $response = $make->getUser($new);
 
-        $this->assertEquals($data3, $response);
-
+        $this->assertEquals(['user_id' => $user->id], $response);
     }
 }

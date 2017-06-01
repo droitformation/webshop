@@ -12,6 +12,7 @@ class OrderAdminTest extends BrowserKitTest {
     protected $product;
     protected $generator;
     protected $stock;
+    protected $account;
 
     /**
      * @var \Illuminate\Session\SessionManager
@@ -26,6 +27,9 @@ class OrderAdminTest extends BrowserKitTest {
 
         $this->user = Mockery::mock('App\Droit\User\Repo\UserInterface');
         $this->app->instance('App\Droit\User\Repo\UserInterface', $this->user);
+
+        $this->account = Mockery::mock('App\Droit\User\Worker\AccountWorkerInterface');
+        $this->app->instance('App\Droit\User\Worker\AccountWorkerInterface', $this->account);
 
         $this->maker = Mockery::mock('App\Droit\Shop\Order\Worker\OrderMakerInterface');
         $this->app->instance('App\Droit\Shop\Order\Worker\OrderMakerInterface', $this->maker);
@@ -91,26 +95,39 @@ class OrderAdminTest extends BrowserKitTest {
         $this->order->shouldReceive('update')->once();
 
         $response = $this->call('POST', '/admin/order', $data);
-
+        
         $this->assertRedirectedTo('/admin/orders');
     }
 
-
-    public function testValidationPassWithAdresse()
+    public function testValidationPassWithAccountCreation()
     {
         $data = [
-            'adresse_id' => 1,
-            'order'   => [
+            'adresse' => [
+                'civilite_id' => 1,
+                'first_name'  => 'Jane',
+                'last_name'   => 'Doe',
+                'company'     => 'DesignPond',
+                'email'       => 'info@designpond.ch',
+                'password'    => 123456,
+                'adresse'     => 'Rue du test 45',
+                'npa'         => '2345',
+                'ville'       => 'Bienne',
+            ],
+            'order' => [
                 'products' => [0 => 22, 1 => 12],
                 'qty'      => [0 => 2, 1 => 2],
                 'rabais'   => [0 => 25],
                 'gratuit'  => [1 => 1]
             ],
-            'admin'   => 1,
-            'adresse' => []
+            'admin' => 1,
         ];
 
-        $order = factory(App\Droit\Shop\Order\Entities\Order::class)->make(['adresse_id' => 1]);
+        $factory = new \tests\factories\ObjectFactory();
+        $user = $factory->user();
+
+        $this->account->shouldReceive('createAccount')->andReturn($user);
+
+        $order = factory(App\Droit\Shop\Order\Entities\Order::class)->make(['user_id' => $user->id]);
 
         $order = Mockery::mock($order);
 
@@ -144,7 +161,7 @@ class OrderAdminTest extends BrowserKitTest {
         $this->visit('/admin/orders')->see('Commandes');
     }
 
-    public function testValidationFailsWithoutUser()
+    public function testValidationFailsWithoutUserOrAdresse()
     {
         $data = [
             'user_id' => null,

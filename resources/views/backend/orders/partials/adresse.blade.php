@@ -4,22 +4,28 @@
         {!! Form::select('adresse[civilite_id]', [4 => '',1 => 'Monsieur',2 => 'Madame',3 => 'Me'] , old('adresse.civilite_id') , ['class' => 'form-control']) !!}
     </div>
     <div class="form-group">
-        <label class="control-label">Entreprise</label>
-        <input type="text" name="adresse[company]" class="form-control" value="{{ old('adresse.company') }}" placeholder="Entreprise">
+        <label class="control-label"><span class="text-info">Entreprise</span></label>
+        <input type="text" name="adresse[company]" class="form-control form-required" value="{{ old('adresse.company') }}" placeholder="Entreprise">
     </div>
     <div class="form-group row">
         <div class="col-md-6">
-            <label class="control-label"><span class="text-danger">Prénom</span></label>
-            <input type="text" name="adresse[first_name]" data-parsley-required class="form-control form-required" value="{{ old('adresse.first_name') }}" placeholder="Prénom">
+            <label class="control-label"><span class="text-info">Prénom</span></label>
+            <input type="text" name="adresse[first_name]" class="form-control form-required" value="{{ old('adresse.first_name') }}" placeholder="Prénom">
         </div>
         <div class="col-md-6">
-            <label class="control-label"><span class="text-danger">Nom</span></label>
-            <input type="text" name="adresse[last_name]" data-parsley-required class="form-control form-required" value="{{ old('adresse.last_name') }}" placeholder="Nom">
+            <label class="control-label"><span class="text-info">Nom</span></label>
+            <input type="text" name="adresse[last_name]" class="form-control form-required" value="{{ old('adresse.last_name') }}" placeholder="Nom">
         </div>
     </div>
-    <div class="form-group">
-        <label class="control-label">E-mail</label>
-        <input type="email" name="adresse[email]" class="form-control" value="{{ old('adresse.email') }}" placeholder="E-mail">
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label class="control-label"><span class="text-danger">E-mail</span></label>
+            <input type="email" name="adresse[email]" data-parsley-required class="form-control form-required" value="{{ old('adresse.email') }}" placeholder="E-mail">
+        </div>
+        <div class="col-md-6">
+            <label class="control-label"><span class="text-danger">Mot de passe</span></label>
+            <input type="password" name="adresse[password]" data-parsley-required class="form-control form-required" value="{{ old('adresse.password') }}">
+        </div>
     </div>
 
 </div>

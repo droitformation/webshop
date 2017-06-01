@@ -24,7 +24,7 @@ class UserEloquent implements UserInterface{
 
     public function find($id)
     {
-        return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes'])->findOrFail($id);
+        return $this->user->with(['adresses','orders','inscriptions','roles','inscription_groupes','abos'])->findOrFail($id);
     }
 
     public function findWithTrashed($id){
@@ -67,6 +67,7 @@ class UserEloquent implements UserInterface{
                 ->where('email', 'like', '%'.$term.'%')
                 ->orWhere('first_name', 'like', '%'.$term.'%')
                 ->orWhere('last_name', 'like', '%'.$term.'%')
+                ->orWhere('company', 'like', '%'.$term.'%')
                 ->orWhere(function ($query) use($term,$terms) {
                     if(count($terms) == 2)
                     {
@@ -74,7 +75,10 @@ class UserEloquent implements UserInterface{
                             $query1->where('first_name', 'like', '%'.$terms[0].'%')->where('last_name', 'like', '%'.$terms[1].'%');
                         })->orWhere(function ($query2) use ($terms){
                             $query2->where('first_name', 'like', '%'.$terms[1].'%')->where('last_name', 'like', '%'.$terms[0].'%');
+                        })->orWhere(function ($query3) use ($terms){
+                            $query3->where('company', 'like', '%'.$terms[1].'%')->where('company', 'like', '%'.$terms[0].'%');
                         });
+
                     }
 
                     if(count($terms) == 3)
@@ -91,6 +95,7 @@ class UserEloquent implements UserInterface{
         return $this->user->where('email', 'like', '%'.$term.'%')
             ->orWhere('first_name', 'like', '%'.$term.'%')
             ->orWhere('last_name', 'like', '%'.$term.'%')
+            ->orWhere('company', 'like', '%'.$term.'%')
             ->get();
     }
 
@@ -127,8 +132,9 @@ class UserEloquent implements UserInterface{
     public function create(array $data){
 
         $user = $this->user->create(array(
-            'first_name'     => $data['first_name'],
-            'last_name'      => $data['last_name'],
+            'first_name'     => isset($data['first_name']) && !empty($data['first_name']) ? $data['first_name'] : null,
+            'last_name'      => isset($data['last_name']) && !empty($data['last_name']) ? $data['last_name'] : null,
+            'company'        => isset($data['company']) && !empty($data['company']) ? $data['company'] : null,
             'email'          => $data['email'],
             'password'       => bcrypt($data['password']),
             'created_at'     => date('Y-m-d G:i:s'),

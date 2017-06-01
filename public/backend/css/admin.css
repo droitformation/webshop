@@ -413,11 +413,29 @@ a:hover, a:active, a:focus {
     padding-bottom: 0px;
 }
 
-#adresseMake,#adresseFind, .adresse-find-abo{
+#adresseMake, .adresse-find-abo{
     border: 1px solid #d2d3d6;
     margin-top: 20px;
     padding: 20px;
     background: #f5f5f5;
+}
+
+#adresseFind{
+    padding: 10px 0 20px 0;
+    margin: 20px 0;
+}
+
+.field_clone_order label{
+    margin-top: 10px;
+    margin-bottom: 3px;
+}
+
+.field_clone_order:first-child label{
+    margin-top: 0px;
+}
+
+hr.line-delimit{
+    margin: 30px 0 30px 0;
 }
 
 #adresseFind , .adresse-find{

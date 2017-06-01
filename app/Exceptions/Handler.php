@@ -75,6 +75,12 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
+		if($e instanceof \App\Exceptions\AccountValidationException)
+		{
+			alert()->warning($e->getMessage());
+			return redirect()->back()->withInput();
+		}
+
 		if($e instanceof \App\Exceptions\AdresseRemoveException)
 		{
 			alert()->warning($e->getMessage());

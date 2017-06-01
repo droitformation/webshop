@@ -20,35 +20,23 @@
                         <!-- Indicate it's from admin -->
                         <input type="hidden" name="admin" value="1">
 
-                        <div id="adresseParent">
-                            <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher un utilisateur</a>
-                            <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter une adresse</a>
+                        <div id="appComponent">
+                            <div id="adresseParent">
+                                <a class="btn btn-primary accordion-toggle" data-toggle="adresseFind">Rechercher un utilisateur</a>
+                                <a class="btn btn-info accordion-toggle" data-toggle="adresseMake">Ajouter un compte</a>
 
-                            <div class="collapse {{ !empty(old('type')) ? 'in' : '' }}" id="adresseFind" style="width: 400px;">
-
-                                <!-- Autocomplete for adresse -->
-                                <div class="autocomplete-wrapper">
-
-                                    <?php $type = old('type'); ?>
-                                    <?php $uid  = !empty($type) ? old(old('type')) : ''; ?>
-
-                                    <div class="input-adresse" data-uid="{{ $uid }}" data-type="{{ old('type') }}" data-where="order"></div>
-                                    <div class="choice-adresse"></div>
-                                    <div class="adresse-find">
-                                        <div class="form-group">
-                                            <input id="search-adresse1" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
-                                        </div>
-                                    </div>
+                                <div class="collapse {{ !empty(old('type')) ? 'in' : '' }}" id="adresseFind" style="width: 500px;">
+                                    <list-autocomplete type="user_id" chosen_id="{{ old('user_id') ? old('user_id') : null }}"></list-autocomplete>
                                 </div>
-                                <!-- End Autocomplete for adresse -->
-
-                            </div>
-                            <div class="collapse {{ !empty(Session::get('adresse')) ? 'in' : '' }}" id="adresseMake">
-                                <div class="row">
-                                    @include('backend.orders.partials.adresse')
+                                <div class="collapse {{ !empty(Session::get('adresse')) ? 'in' : '' }}" id="adresseMake">
+                                    <div class="row">
+                                        @include('backend.orders.partials.adresse')
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <hr class="line-delimit"/>
 
                         <div id="wrapper_clone_order">
                             @if(Session::has('old_products'))
@@ -70,7 +58,7 @@
                         </div>
 
                         <p><a href="#" class="btn btn-sm btn-default" id="cloneBtnOrder"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un produit</a></p>
-                        <hr/>
+                        <hr class="line-delimit"/>
 
                         <fieldset class="row">
                             <div class="col-md-3">

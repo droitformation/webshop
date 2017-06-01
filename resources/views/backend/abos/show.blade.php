@@ -64,7 +64,12 @@
                                     <?php $user = $abonnement->user_adresse; ?>
                                     <tr>
                                         <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a></td>
-                                        <td>{{ $abonnement->numero }}</td>
+                                        <td>
+                                            {{ $abonnement->numero }}
+                                            @if(!$abonnement->user_id && $abonnement->adresse_id)
+                                                &nbsp; &nbsp;<i class="fa fa-bolt text-danger" aria-hidden="true"></i>
+                                            @endif
+                                        </td>
                                         <td>
                                             {!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}
 
@@ -74,7 +79,7 @@
                                                 {!! $abonnement->user_facturation->adresse.'<br/>'.$abonnement->user_facturation->npa.' '.$abonnement->user_facturation->ville !!}
                                             @endif
                                         </td>
-                                        <td>{!! $user ? $user->company : '<p><span class="label label-warning">Duplicata</span></p>' !!}</td>
+                                        <td>{!! $user ? $user->company : '' !!}</td>
                                         <td>{!! $user ? $user->adresse.'<br/>'.$user->npa.' '.$user->ville : '' !!}</td>
                                         <td>{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>

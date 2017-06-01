@@ -79,6 +79,36 @@ class AdresseTest extends BrowserKitTest {
         $this->assertEquals($order2->id, $user->orders->contains('id',$order2->id));
 	}
 
+    public function testConvertAdresseToUserWithOnlyCompanyName()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
+            'first_name' => '',
+            'last_name'  => '',
+            'company'    => 'Our Company',
+            'email'      => 'new.user@gmail.com',
+        ]);
+
+        $response = $this->call('POST', 'admin/adresse/convert', ['id' => $adresse->id, 'password' => 'cindy2']);
+
+        $content = $this->followRedirects()->response->getOriginalContent();
+        $content = $content->getData();
+        $user    = $content['user'];
+
+        $this->visit(url('admin/user/'.$user->id));
+
+        $this->assertEquals('Our Company', $user->name);
+        $this->assertEquals('new.user@gmail.com', $user->email);
+
+        $this->seeInDatabase('users', [
+            'id'         => $user->id,
+            'first_name' => '',
+            'last_name'  => '',
+            'company'    => 'Our Company'
+        ]);
+    }
+
     public function testConvertAdresseToUserFails()
     {
         $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([

@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="appComponent">
         <div class="col-md-6">
 
             <div class="panel panel-midnightblue">
@@ -17,7 +17,7 @@
                 <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
-                    <div class="panel-body" id="appComponent">
+                    <div class="panel-body">
                         <h4><i class="fa fa-edit"></i> &nbsp;Abonnement</h4>
 
                         <div class="form-group">
@@ -29,14 +29,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Compte</label>
-                            <div class="col-sm-4 col-xs-5">
+                            <div class="col-sm-7 col-xs-5">
                                 <list-autocomplete type="user_id" chosen_id="{{ $abonnement->user_id ? $abonnement->user_id : null }}"></list-autocomplete>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tiers payant</label>
-                            <div class="col-sm-4 col-xs-5">
+                            <div class="col-sm-7 col-xs-5">
                                 <list-autocomplete type="tiers_user_id" chosen_id="{{ $abonnement->tiers_user_id ? $abonnement->tiers_user_id : null }}"></list-autocomplete>
                             </div>
                         </div>
@@ -50,7 +50,9 @@
                                 <div class="col-sm-8 col-xs-12">
                                    {{-- @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->adresse_id, 'type' => 'adresse_id'])--}}
                                     <div class="change_abo_user">
-                                        <strong>{{ $abonnement->user->civilite_title }} {{ $abonnement->user->name }}</strong><br>
+                                        <strong>
+                                            <a target="_blank" href="{{ url('admin/adresse/'.$abonnement->user->id) }}">{{ $abonnement->user->civilite_title }} {{ $abonnement->user->name }}</a>
+                                        </strong><br>
                                         {!! !empty($abonnement->user->company) ? $abonnement->user->company.'<br>' : '' !!}
                                         {{ $abonnement->user->adresse }}<br>
                                         {!! !empty($abonnement->user->cp) ? $abonnement->user->cp_trim.'<br>' : '' !!}
@@ -69,7 +71,9 @@
                                 <div class="col-sm-8 col-xs-12">
                                     {{--  @include('backend.partials.search-adresse', ['adresse_id' => $abonnement->tiers_id, 'type' => 'tiers_id']) --}}
                                     <div class="change_abo_user">
-                                        <strong>{{ $abonnement->tiers->civilite_title }} {{ $abonnement->tiers->name }}</strong><br>
+                                        <strong>
+                                            <a target="_blank" href="{{ url('admin/adresse/'.$abonnement->tiers->id) }}">{{ $abonnement->tiers->civilite_title }} {{ $abonnement->tiers->name }}</a>
+                                        </strong><br>
                                         {!! !empty($abonnement->tiers->company) ? $abonnement->tiers->company.'<br>' : '' !!}
                                         {{ $abonnement->tiers->adresse }}<br>
                                         {!! !empty($abonnement->tiers->cp) ? $abonnement->tiers->cp_trim.'<br>' : '' !!}
@@ -142,7 +146,7 @@
 
             @if( $abonnement->status == 'abonne')
 
-                <div class="panel panel-midnightblue" id="appComponent">
+                <div class="panel panel-midnightblue">
                     <div class="panel-heading">
                         <h4><i class="fa fa-star-half-empty"></i> &nbsp;Payements</h4>
                     </div>

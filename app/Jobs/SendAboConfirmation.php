@@ -54,6 +54,7 @@ class SendAboConfirmation extends Job implements ShouldQueue
         $mailer->send('emails.shop.demande', $data , function ($message) use ($user) {
             $message->to($user->email, $user->name)->subject('Confirmation');
             $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
+            $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
         });
 
     }

@@ -27,6 +27,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerRoleService();
         $this->registerAdresseService();
         $this->registerAdresseWorkerService();
+        $this->registerAccountWorkerService();
         $this->registerCiviliteService();
         $this->registerCantonService();
         $this->registerPaysService();
@@ -81,6 +82,21 @@ class UserServiceProvider extends ServiceProvider
             );
         });
     }
+
+    /**
+     * Account Worker
+     */
+    protected function registerAccountWorkerService(){
+
+        $this->app->singleton('App\Droit\User\Worker\AccountWorkerInterface', function()
+        {
+            return new \App\Droit\User\Worker\AccountWorker(
+                \App::make('App\Droit\Adresse\Repo\AdresseInterface'),
+                \App::make('App\Droit\User\Repo\UserInterface')
+            );
+        });
+    }
+
 
     /**
      * Pays

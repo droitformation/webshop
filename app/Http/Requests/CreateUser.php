@@ -27,11 +27,21 @@ class CreateUser extends Request {
 	public function rules()
 	{
         return [
-            'first_name' => 'required',
-            'last_name'  => 'required',
+            'first_name' => 'required_without:company',
+            'last_name'  => 'required_without:company',
+			'company'    => 'required_without_all:first_name,last_name',
 			'email'      => 'required|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
             'password'   => 'required|min:6',
         ];
+	}
+
+	public function messages()
+	{
+		return [
+			'first_name.required_without'  => 'Un prénom est requis sans nom d\'entreprise',
+			'last_name.required_without'   => 'Un nom est requis sans nom d\'entreprise',
+			'company.required_without_all' => 'Une nom d\'entreprise est requis sans nom/prénom',
+		];
 	}
 
 }

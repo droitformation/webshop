@@ -171,7 +171,7 @@ return [
 		Spatie\Backup\BackupServiceProvider::class,
 		ShvetsGroup\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
 		Msurguy\Honeypot\HoneypotServiceProvider::class,
-		Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+		//Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 		App\Providers\NewsletterServiceProvider::class,
 
 		/*
@@ -250,7 +250,7 @@ return [
 		'Registry'   => DesignPond\Registry\Facades\Registry::class,
 		'Alert'      => Vinkla\Alert\Facades\Alert::class,
 		'Honeypot'   => Msurguy\Honeypot\HoneypotFacade::class,
-		'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
+		//'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
 	],
 
 ];
