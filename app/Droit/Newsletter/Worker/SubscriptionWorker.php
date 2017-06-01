@@ -71,7 +71,7 @@ class SubscriptionWorker{
         $subscriber->load('subscriptions');
 
         if($subscriber->subscriptions->isEmpty()){
-            $this->subscription->delete($subscriber->email);
+            $subscriber->delete();
         }
     }
 }

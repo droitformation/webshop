@@ -91,6 +91,9 @@ class SubscriptionWorkerTest extends BrowserKitTest
         $results = !$user->email_subscriptions->isEmpty() ? $user->email_subscriptions->pluck('subscriptions')->flatten(1) : collect([]);
 
         $this->assertTrue($results->isEmpty());
-        //$this->assertTrue($subscription->trashed());
+
+        $this->seeIsSoftDeletedInDatabase('newsletter_users', [
+            'id'  => $subscription->id
+        ]);
     }
 }
