@@ -37,6 +37,7 @@
                     <div class="col-sm-9">
                         <select class="form-control" name="canton" required>
                             <option value="">Choix</option>
+                            <option value="u">Fédéral</option>
                             @foreach($calcantons as $canton_id => $canton)
                                 <option value="{{ $canton_id }}">{{ $canton }}</option>
                             @endforeach
