@@ -127,11 +127,21 @@ class ColloqueEloquent implements ColloqueInterface{
 
         $colloque->fill($data);
 
-        $colloque->end_at    = (isset($data['end_at']) &&  !empty($data['end_at']) ? $data['end_at'] : null);
-        $colloque->active_at = (isset($data['active_at']) &&  !empty($data['active_at']) ? $data['active_at'] : null);
+        if(isset($data['end_at'])){
+            $colloque->end_at  = (!empty($data['end_at']) ? $data['end_at'] : null);
+        }
+
+        if(isset($data['active_at'])){
+            $colloque->active_at  = (!empty($data['active_at']) ? $data['active_at'] : null);
+        }
 
         if(isset($data['url'])){
             $colloque->url  = (!empty($data['url']) ? $data['url'] : null);
+        }
+
+        if(isset($data['capacite']))
+        {
+            $colloque->capacite = $data['capacite'] > 0 ? $data['capacite'] : null;
         }
 
         $colloque->save();
@@ -140,11 +150,6 @@ class ColloqueEloquent implements ColloqueInterface{
         if(isset($data['centres']))
         {
             $colloque->centres()->sync($data['centres']);
-        }
-
-        if(isset($data['capacite']))
-        {
-            $colloque->capacite = $data['capacite'] > 0 ? $data['capacite'] : null;
         }
 
         return $colloque;
