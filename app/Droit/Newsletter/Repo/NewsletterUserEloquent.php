@@ -122,8 +122,7 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 
         $user = $this->user->where('activation_token','=',$token)->get()->first();
 
-        if( ! $user )
-        {
+        if( ! $user ) {
             return false;
         }
 
@@ -131,7 +130,6 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
         $user->save();
 
         return $user;
-
     }
 
     public function subscribe($id,$newsletter_id)

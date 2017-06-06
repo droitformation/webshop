@@ -49,22 +49,16 @@ class InscriptionController extends Controller
         $newsletter = $this->newsletter->find($newsletter_id);
 
         if(!$newsletter) { abort(404); }
-
-        if(!$subscriber) {
-            alert()->danger('Le jeton ne correspond pas ou à expiré');
+        
+        if(!$subscriber){
+            alert()->success('Le jeton ne correspond pas ou a expiré');
             return redirect($newsletter->site->url);
         }
 
         //Subscribe to mailjet
-        $result = $this->subscribeworker->subscribe($subscriber,[$newsletter_id]);
-
-        if(!$result){
-            alert()->danger('Problème');
-            return redirect($newsletter->site->url);
-        }
+        $this->subscribeworker->subscribe($subscriber,[$newsletter_id]);
 
         alert()->success('Vous êtes maintenant abonné à la newsletter');
-
         return redirect($newsletter->site->url);
     }
 
@@ -107,20 +101,15 @@ class InscriptionController extends Controller
         $subscriber = $this->subscription->findByEmail( $request->input('email') );
         $newsletter = $this->newsletter->find($request->input('newsletter_id'));
 
-        if(!$newsletter) {
-            alert()->danger('Cette newsletter n\'existe pas');
-            return redirect($request->input('return_path', '/').'/unsubscribe');
-        }
-
-        if(!$subscriber){
-            alert()->danger('L\'abonnée n\'existe pas');
+        if(!$newsletter || !$subscriber) {
+            $msg = !$newsletter ? 'Cette newsletter n\'existe pas': 'L\'abonnée n\'existe pas';
+            alert()->danger($msg);
             return redirect($request->input('return_path', '/').'/unsubscribe');
         }
 
         $this->subscribeworker->unsubscribe($subscriber,[$newsletter->id]);
 
         alert()->success('<strong>Vous avez été désinscrit</strong>');
-
         return redirect($request->input('return_path', '/'));
     }
 }

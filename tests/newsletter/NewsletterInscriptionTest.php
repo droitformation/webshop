@@ -114,8 +114,7 @@ class NewsletterInscriptionTest extends BrowserKitTest
         $user->subscriptions()->attach($newsletter->id);
 
         $this->subscription->shouldReceive('activate')->once()->andReturn($user);
-        $this->worker->shouldReceive('setList')->once();
-        $this->worker->shouldReceive('subscribeEmailToList')->once()->andReturn(true);
+        $this->subscription_worker->shouldReceive('subscribe')->once();
 
         $response = $this->call('GET', 'activation/1234/'.$newsletter->id);
 
@@ -140,11 +139,11 @@ class NewsletterInscriptionTest extends BrowserKitTest
         $site       = factory(App\Droit\Site\Entities\Site::class)->create();
         $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
 
-        $this->subscription->shouldReceive('activate')->once()->andReturn(null);
+        $this->subscription->shouldReceive('activate')->once()->andReturn(false);
 
-        $response = $this->call('GET', 'activation/edfrgth/'.$newsletter->id);
+        $response = $this->call('GET', 'activation/edfrgth/'.$newsletter->id, [], [], ['HTTP_REFERER' => $site->url]);
 
-        $this->assertRedirectedTo($site->slug);
+        $this->assertRedirectedTo($site->url);
     }
 
     public function testUnsubscribeFails()

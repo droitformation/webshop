@@ -22,7 +22,7 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
     {
         $newsletters = $this->newsletter->findMultiple($newsletter_ids);
         
-        $subscriber->subscriptions()->sync($newsletter_ids);
+        $subscriber->subscriptions()->attach($newsletter_ids);
 
         if(!$newsletters->isEmpty()){
             foreach ($newsletters as $newsletter){
