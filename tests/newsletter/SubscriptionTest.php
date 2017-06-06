@@ -8,6 +8,7 @@ class SubscriptionTest extends BrowserKitTest
     protected $subscription;
     protected $worker;
     protected $newsletter;
+    protected $subscription_worker;
 
     use WithoutMiddleware, DatabaseTransactions;
 
@@ -23,6 +24,9 @@ class SubscriptionTest extends BrowserKitTest
 
         $this->newsletter = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterInterface', $this->newsletter);
+
+        $this->subscription_worker = Mockery::mock('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface', $this->subscription_worker);
 
         DB::beginTransaction();
 
@@ -55,9 +59,7 @@ class SubscriptionTest extends BrowserKitTest
         /******************************/
 
         $this->subscription->shouldReceive('create')->once()->andReturn($user);
-        $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
-        $this->worker->shouldReceive('setList')->once();
-        $this->worker->shouldReceive('subscribeEmailToList')->once()->andReturn(true);
+        $this->subscription_worker->shouldReceive('subscribe')->once();
 
         $response = $this->call('POST', 'build/subscriber', ['email' => $user->email, 'newsletter_id' => [3]]);
 
@@ -83,11 +85,8 @@ class SubscriptionTest extends BrowserKitTest
         /******************************/
 
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn($user);
-        $this->subscription->shouldReceive('delete')->once();
-
         $this->newsletter->shouldReceive('getAll')->andReturn($newsletters);
-        $this->worker->shouldReceive('setList')->twice();
-        $this->worker->shouldReceive('removeContact')->twice()->andReturn(true);
+        $this->subscription_worker->shouldReceive('unsubscribe')->once();
 
         $response = $this->call('DELETE', 'build/subscriber/'.$user->id, ['email' => $user->email]);
 

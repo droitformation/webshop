@@ -56,7 +56,7 @@ class SubscriptionWorkerTest extends BrowserKitTest
         $subscriber = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => 'info@publications-droit.ch']);
         $subscriber->subscriptions()->attach(1);
 
-        $result = $worker->subscribe('info@publications-droit.ch',1);
+        $result = $worker->activate('info@publications-droit.ch',1);
 
         $this->assertFalse($result);
     }
@@ -82,7 +82,7 @@ class SubscriptionWorkerTest extends BrowserKitTest
         $subscriptions = !$user->email_subscriptions->isEmpty() ? $user->email_subscriptions->pluck('subscriptions')->flatten(1) : collect([]);
         $this->assertTrue($subscriptions->contains('id',$newsletter->id));
 
-        $worker->unsubscribe($subscription->email,$newsletter->id);
+        $worker->unsubscribe($subscription,[$newsletter->id]);
 
         $user->fresh();
         $user->load('email_subscriptions');
