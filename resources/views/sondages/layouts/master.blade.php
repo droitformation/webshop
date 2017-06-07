@@ -35,7 +35,7 @@
 
                 <div class="panel panel-default panel-sondage">
                    <div class="panel-body">
-                       <h1 class="sondage-logo text-center">
+                       <h1 class="sondage-logo text-right">
                            <a class="text-inverse" href="{{ url('/') }}">
                                <img style="max-height: 100px;" src="{{ secure_asset('emails/logos/pubdroit.png') }}" alt="{{ url('/pubdroit') }}">
                            </a>

@@ -67,12 +67,14 @@ class SendRappelEmail implements ShouldQueue
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 
-        \Mail::send('emails.colloque.rappel', $data , function ($message) use ($user,$rappel) {
+        \Mail::send('emails.colloque.rappel', $data , function ($message) use ($user,$rappel,$inscription) {
 
             $message->to($user->email, $user->name)->subject('Rappel');
-            $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
             $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
             $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
+            
+            $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
+			$message->attach(public_path($inscription->doc_bv), array('as' => 'bv.pdf', 'mime' => 'application/pdf'));
 
         });
     }

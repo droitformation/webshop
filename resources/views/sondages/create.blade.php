@@ -26,6 +26,8 @@
 
                     @if($avis->type == 'text')
                         <textarea class="form-control form-control-sondage" name="reponses[{{ $avis->id }}]"></textarea>
+					@else if($avis->type == 'chapitre')
+						<h4><strong>{!! strip_tags($avis->question) !!}</strong></h4>
                     @else
                         <?php $choices = explode(',', $avis->choices); ?>
                         @foreach($choices as $choices)
@@ -40,6 +42,7 @@
                 </div>
             @endforeach
             <hr/>
+			<h3> <strong>Merci d'avoir participer.</strong></h3> 
             <button type="submit" class="btn btn-primary">Envoyer le sondage</button>
 
         @endif
