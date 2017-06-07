@@ -210,7 +210,7 @@ class ReponseTest extends BrowserKitTest {
 
 	public function testSendTestEmail()
 	{
-		//Mail::fake();
+		Mail::fake();
 		// Create colloque
 		$make     = new \tests\factories\ObjectFactory();
 		$colloque = $make->colloque();

@@ -12,7 +12,6 @@ use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
 
 use App\Http\Requests\RemoveNewsletterUserRequest;
-
 use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 
 class SubscriberController extends Controller

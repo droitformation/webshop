@@ -7,16 +7,19 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\User\Repo\UserInterface;
+use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
 
 class UserController extends Controller {
 
     protected $user;
+    protected $subscription_worker;
 
-    public function __construct(UserInterface $user)
+    public function __construct(UserInterface $user, SubscriptionWorkerInterface $subscription_worker)
     {
         $this->user = $user;
+        $this->subscription_worker = $subscription_worker;
     }
 
     /**
@@ -113,9 +116,6 @@ class UserController extends Controller {
     {
         $user = $this->user->find($id);
 
-        //$validator = new \App\Droit\User\Worker\UserValidation($user);
-        //$messages  = $validator->activate();
-
         return view('backend.users.confirm')->with(compact('user'));
     }
     
@@ -125,12 +125,18 @@ class UserController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $user = $this->user->find($id);
-        
-        $validator = new \App\Droit\User\Worker\UserValidation($user);
-        $validator->activate();
+
+        if($request->input('confirm') && !empty($request->input('newsletter_id'))){
+            $subscriber = $this->subscription_worker->exist($user->email);
+            $this->subscription_worker->unsubscribe($subscriber,$request->input('newsletter_id'));
+        }
+        else{
+            $validator = new \App\Droit\User\Worker\UserValidation($user);
+            $validator->activate();
+        }
 
         $this->user->delete($id);
 
