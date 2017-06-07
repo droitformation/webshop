@@ -29,9 +29,9 @@
 
     <div class="content">
 
-        <?php $rappel = (isset($rappel) && $rappel > 0 ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span>' : ''); ?>
+        <?php $rappel = (isset($rappel) && $rappel > 0 ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'e' : 'er').' Rappel</span>' : ''); ?>
         <h1 class="title blue">
-            {!! $rappel !!} FACTURE {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
+            {!! $rappel !!} Facture {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
         </h1>
 
         @if(is_array($generate->getNo()))
