@@ -534,13 +534,16 @@ Route::group(['prefix' => 'vue'], function () {
 Auth::routes();
 Route::post('password/link', 'Auth\PasswordController@postLink');
 
-
 require base_path('routes/email.php');
 
 /*
  * Only for development
  * */
-if (App::environment('local'))
-{
+if (App::environment('local')) {
     require base_path('routes/dev.php');
 }
+
+/*
+ * Only for test CF
+ * */
+require base_path('routes/test.php');
