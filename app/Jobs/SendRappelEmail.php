@@ -42,10 +42,8 @@ class SendRappelEmail implements ShouldQueue
 
         $inscriptions = $this->inscription->getMultiple($this->inscriptions);
 
-        if(!$inscriptions->isEmpty())
-        {
-            foreach($inscriptions as $inscription)
-            {
+        if(!$inscriptions->isEmpty()) {
+            foreach($inscriptions as $inscription) {
                 $this->send($inscription);
             }
         }
@@ -72,10 +70,12 @@ class SendRappelEmail implements ShouldQueue
             $message->to($user->email, $user->name)->subject('Rappel');
             $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
             $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
-            
-            $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
-			$message->attach(public_path($inscription->doc_bv), array('as' => 'bv.pdf', 'mime' => 'application/pdf'));
 
+            $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
+
+            if($inscription->doc_bv){
+                $message->attach(public_path($inscription->doc_bv), array('as' => 'Bv.pdf', 'mime' => 'application/pdf'));
+            }
         });
     }
 }

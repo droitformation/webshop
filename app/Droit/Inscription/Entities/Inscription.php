@@ -100,11 +100,11 @@ class Inscription extends Model
 
         return ($this->annexe && \File::exists(public_path($file)) ? $file : null);
     }
+
 	/* Get bv */
-	
-	    public function getDocBvAttribute()
+    public function getDocBvAttribute()
     {
-        $path = config('documents.colloque.facture');
+        $path = config('documents.colloque.bv');
 
         if(!$this->user){
             return null;

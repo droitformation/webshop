@@ -26,7 +26,7 @@
 
                     @if($avis->type == 'text')
                         <textarea class="form-control form-control-sondage" name="reponses[{{ $avis->id }}]"></textarea>
-					@else if($avis->type == 'chapitre')
+					@elseif($avis->type == 'chapitre')
 						<h4><strong>{!! strip_tags($avis->question) !!}</strong></h4>
                     @else
                         <?php $choices = explode(',', $avis->choices); ?>
