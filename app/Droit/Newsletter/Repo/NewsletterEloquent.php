@@ -22,6 +22,11 @@ class NewsletterEloquent implements NewsletterInterface{
 		return $this->newsletter->with(['site'])->find($id);
 	}
 
+	public function findMultiple($ids)
+	{
+		return $this->newsletter->with(['site'])->whereIn('id',$ids)->get();
+	}
+
 	public function getSite($site_id)
 	{
 		return $this->newsletter->with(['campagnes'])->where('site_id', '=', $site_id)->get();

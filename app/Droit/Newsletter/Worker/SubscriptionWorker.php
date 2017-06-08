@@ -3,8 +3,9 @@
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 
-class SubscriptionWorker{
+class SubscriptionWorker implements SubscriptionWorkerInterface{
     
     protected $newsletter;
     protected $subscription;
@@ -17,7 +18,23 @@ class SubscriptionWorker{
         $this->mailjet = $mailjet;
     }
 
-    public function subscribe($email,$newsletter_id)
+    public function subscribe($subscriber,$newsletter_ids)
+    {
+        $newsletters = $this->newsletter->findMultiple($newsletter_ids);
+        
+        $subscriber->subscriptions()->attach($newsletter_ids);
+
+        if(!$newsletters->isEmpty()){
+            foreach ($newsletters as $newsletter){
+                $this->mailjet->setList($newsletter->list_id);
+                $this->mailjet->subscribeEmailToList($subscriber->email);
+            }
+        }
+
+        return $subscriber;
+    }
+
+    public function activate($email,$newsletter_id)
     {
         $subscriber = $this->exist($email);
 
@@ -53,18 +70,27 @@ class SubscriptionWorker{
         return $this->subscription->findByEmail($email);
     }
 
-    public function unsubscribe($email,$newsletter_id)
+    /**
+     *
+     *
+     * @param  \App\Droit\Newsletter\Entities\Newsletter_users $subscriber
+     * @param  int $newsletter_ids
+     * @throws \App\Exceptions\DeleteUserException
+     * @return void
+     */
+    public function unsubscribe($subscriber,$newsletter_ids)
     {
-        $subscriber = $this->exist($email);
-        $subscriber->subscriptions()->detach($newsletter_id);
+        $subscriber->subscriptions()->detach($newsletter_ids);
 
-        $newsletter = $this->newsletter->find($newsletter_id);
+        $newsletters = $this->newsletter->findMultiple($newsletter_ids);
 
-        if($newsletter){
-            $this->mailjet->setList($newsletter->list_id);
-            // Remove subscriber from list mailjet
-            if(!$this->mailjet->removeContact($email)) {
-                throw new \App\Exceptions\DeleteUserException('Erreur avec la suppression de l\'abonnés sur mailjet');
+        if(!$newsletters->isEmpty()){
+            foreach ($newsletters as $newsletter){
+                $this->mailjet->setList($newsletter->list_id);
+                // Remove subscriber from list mailjet
+                if(!$this->mailjet->removeContact($subscriber->email)) {
+                    throw new \App\Exceptions\DeleteUserException('Erreur avec la suppression de l\'abonnés sur mailjet');
+                }
             }
         }
 

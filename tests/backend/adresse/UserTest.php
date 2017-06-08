@@ -14,6 +14,9 @@ class UserTest extends BrowserKitTest {
     {
         parent::setUp();
 
+        $this->mailjet = Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\MailjetServiceInterface', $this->mailjet);
+
         DB::beginTransaction();
     }
 
@@ -24,7 +27,7 @@ class UserTest extends BrowserKitTest {
         parent::tearDown();
     }
 
-    public function testCreateNewUser()
+  /*  public function testCreateNewUser()
     {
          $user = factory(App\Droit\User\Entities\User::class)->create();
 
@@ -198,36 +201,48 @@ class UserTest extends BrowserKitTest {
         $this->assertSame('George',$user3->name);
         $this->assertSame('Martin',$user4->name);
         $this->assertSame('Acme',$user5->name);
-    }
+    }*/
 
     public function testDeleteUserConfirmation()
     {
-        $user = factory(App\Droit\User\Entities\User::class)->create();
+        $user   = factory(App\Droit\User\Entities\User::class)->create();
+        $person = factory(App\Droit\User\Entities\User::class)->create();
 
         $user->roles()->attach(1);
         $this->actingAs($user);
 
-        $site         = factory(App\Droit\Site\Entities\Site::class)->create();
-        $newsletter   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
-        $subscription = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
+        $site       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
 
-        $subscription->subscriptions()->attach($newsletter->id);
+        $site2       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter2 = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 2, 'site_id' => $site2->id]);
 
-        $this->visit(url('admin/user/confirm/'.$user->id));
+        $subscriber = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $person->email]);
+
+        $subscriber->subscriptions()->attach([$newsletter->id, $newsletter2->id]);
+
+        $this->mailjet->shouldReceive('setList')->once();
+        $this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
+
+        $this->visit(url('admin/user/confirm/'.$person->id));
         $this->assertViewHas('user');
         $this->see($newsletter->titre);
-        
-        $form = $this->getForm('confirmUserDelete');
 
-        $form['newsletter_id'][0]->untick();
+        $content = $this->response->getOriginalContent();
+        $content = $content->getData();
 
-   /*     $this->type('Terry', 'first_name');
+        $this->assertSame([$newsletter->id, $newsletter2->id],$content['user']->email_subscriptions->pluck('subscriptions')->flatten(1)->pluck('id')->all());
 
-        $this->press('Enregistrer');
+        $response = $this->call('DELETE', 'admin/user/'.$person->id, ['newsletter_id' => [$newsletter->id], 'confirm' => 1, 'url' => url('admin/users'), 'term' => '']);
 
-        $this->seeInDatabase('users', [
-            'id'         => $user->id,
-            'first_name' => 'Terry'
-        ]);*/
+        $subscriber->fresh();
+        $subscriber->load('subscriptions');
+
+        $this->assertSame(1,$subscriber->subscriptions->count(1));
+        $this->assertTrue($subscriber->subscriptions->contains('id',$newsletter2->id));
+
+        $this->seeIsSoftDeletedInDatabase('users', [
+            'id' => $person->id
+        ]);
     }
 }

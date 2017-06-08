@@ -43,6 +43,7 @@
                                     <th class="col-sm-1">Action</th>
                                     <th class="col-sm-3">Prénom</th>
                                     <th class="col-sm-3">Nom</th>
+                                    <th class="col-sm-3">Entreprise</th>
                                     <th class="col-sm-4">Email</th>
                                     <th class="col-sm-1"></th>
                                 </tr>
@@ -53,6 +54,7 @@
                                             <td><a class="btn btn-sky btn-sm" href="{{ url('admin/user/'.$user->id.'?path') }}">&Eacute;diter</a></td>
                                             <td><strong>{{ $user->first_name }}</strong></td>
                                             <td><strong>{{ $user->last_name }}</strong></td>
+                                            <td><strong>{{ $user->company }}</strong></td>
                                             <td>{{ $user->email }}</td>
                                             <td class="text-right">
                                                 <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer</a>

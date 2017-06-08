@@ -8,6 +8,7 @@ class SubscriptionTest extends BrowserKitTest
     protected $subscription;
     protected $worker;
     protected $newsletter;
+    protected $subscription_worker;
 
     use WithoutMiddleware, DatabaseTransactions;
 
@@ -23,6 +24,9 @@ class SubscriptionTest extends BrowserKitTest
 
         $this->newsletter = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterInterface', $this->newsletter);
+
+        $this->subscription_worker = Mockery::mock('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface', $this->subscription_worker);
 
         DB::beginTransaction();
 
@@ -55,9 +59,7 @@ class SubscriptionTest extends BrowserKitTest
         /******************************/
 
         $this->subscription->shouldReceive('create')->once()->andReturn($user);
-        $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
-        $this->worker->shouldReceive('setList')->once();
-        $this->worker->shouldReceive('subscribeEmailToList')->once()->andReturn(true);
+        $this->subscription_worker->shouldReceive('subscribe')->once();
 
         $response = $this->call('POST', 'build/subscriber', ['email' => $user->email, 'newsletter_id' => [3]]);
 
@@ -83,11 +85,8 @@ class SubscriptionTest extends BrowserKitTest
         /******************************/
 
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn($user);
-        $this->subscription->shouldReceive('delete')->once();
-
         $this->newsletter->shouldReceive('getAll')->andReturn($newsletters);
-        $this->worker->shouldReceive('setList')->twice();
-        $this->worker->shouldReceive('removeContact')->twice()->andReturn(true);
+        $this->subscription_worker->shouldReceive('unsubscribe')->once();
 
         $response = $this->call('DELETE', 'build/subscriber/'.$user->id, ['email' => $user->email]);
 
@@ -101,30 +100,45 @@ class SubscriptionTest extends BrowserKitTest
     public function testUpdateSubscriptions()
     {
         /******************************/
-        $newsletter1 = factory(App\Droit\Newsletter\Entities\Newsletter::class)->make(['id' => 1, 'list_id' => 1]);
-        $newsletter2 = factory(App\Droit\Newsletter\Entities\Newsletter::class)->make(['id' => 2,'list_id' => 2]);
-        $newsletter3 = factory(App\Droit\Newsletter\Entities\Newsletter::class)->make(['id' => 3,'list_id' => 3]);
+        $user         = factory(App\Droit\User\Entities\User::class)->create();
+        $subscriber = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
 
-        $user  = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->make(['id' => 1]);
-        $user2 = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->make(['id' => 1]);
+        $site1         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter1   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site1->id]);
 
-        $user->subscriptions  = new \Illuminate\Support\Collection([$newsletter1,$newsletter2]);
-        $user2->subscriptions = new \Illuminate\Support\Collection([$newsletter1,$newsletter3]);
+        $site2         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter2   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site2->id]);
+
+        $site3         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter3   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site3->id]);
+
+        $site4         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter4   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site4->id]);
+
+        $site5         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter5   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site5->id]);
+
+        $has = [$newsletter1->id, $newsletter2->id, $newsletter3->id];
+        $subscriber->subscriptions()->attach($has);
+
         /******************************/
 
-        $this->subscription->shouldReceive('find')->once()->andReturn($user);
-        $this->subscription->shouldReceive('update')->once()->andReturn($user2);
+        $this->subscription->shouldReceive('update')->once()->andReturn($subscriber);
+        $this->subscription_worker->shouldReceive('subscribe')->once();
+        $this->subscription_worker->shouldReceive('unsubscribe')->once();
 
-        $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter1);
-        $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter2);
+        /*
+            $new = [1,4,5];
+            $has = [1,2,3];
 
-        $this->worker->shouldReceive('setList')->twice();
-        $this->worker->shouldReceive('subscribeEmailToList')->once()->andReturn(true);
-        $this->worker->shouldReceive('removeContact')->once()->andReturn(true);
+            $added   = [4,5];
+            $removed = [2,3];
+        */
 
-        $response = $this->call('PUT', 'build/subscriber/1', ['id' => 1 , 'email' => 'cindy.leschaud@gmail.com', 'newsletter_id' => [1,3], 'activation' => 1]);
+        $new = [$newsletter1->id, $newsletter4->id, $newsletter5->id];
+        $response = $this->call('PUT', 'build/subscriber/'.$subscriber->id, ['id' => $subscriber->id , 'email' => $subscriber->email, 'newsletter_id' => $new, 'activation' => 1]);
 
-        $this->assertRedirectedTo('build/subscriber/1');
+        $this->assertRedirectedTo('build/subscriber/'.$subscriber->id);
     }
     
 }

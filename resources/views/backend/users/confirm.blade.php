@@ -14,7 +14,7 @@
             <div class="panel-body">
                 <h3>Confirmer la suppression du compte {{ $user->name }}</h3>
 
-                <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal text-right">
+                <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
 
                     <div class="row">
@@ -50,15 +50,16 @@
                         @if(!$subscriptions->isEmpty())
                             <div class="col-md-3">
                                 <h4>Newsletter</h4>
-                                <p class="text-muted">Cocher les abonnements à supprimer</p>
                                 @foreach($subscriptions as $subscription)
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" name="newsletter_id[]" checked  value="{{ $subscription->id }}">
-                                            {{ $subscription->titre }}
+                                            &nbsp; {{ $subscription->titre }}
                                         </label>
                                     </div>
                                 @endforeach
+                                <hr/>
+                                <p class="text-muted">Cocher les abonnements à supprimer pour l'adresse email: {{ $user->email }}</p>
                             </div>
                         @endif
 
@@ -68,7 +69,8 @@
 
                     <input type="hidden" name="term" value="{{ session()->get('term') }}">
                     <input type="hidden" name="url" value="{{ url('admin/users') }}">
-                    <button class="btn btn-danger deleteAction" id="confirmUserDelete">Oui Supprimer</button>
+                    <input type="hidden" name="confirm" value="true">
+                    <p class="text-right"><button class="btn btn-danger deleteAction" id="confirmUserDelete">Oui Supprimer</button></p>
                 </form>
             </div>
         </div>

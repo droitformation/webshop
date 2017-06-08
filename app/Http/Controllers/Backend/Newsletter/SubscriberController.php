@@ -5,24 +5,28 @@ namespace App\Http\Controllers\Backend\Newsletter;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteSubscriberRequest;
 
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
 
 use App\Http\Requests\RemoveNewsletterUserRequest;
+use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 
 class SubscriberController extends Controller
 {
     protected $subscriber;
     protected $newsletter;
     protected $worker;
+    protected $subscription_worker;
 
-    public function __construct(NewsletterUserInterface $subscriber, NewsletterInterface $newsletter, MailjetServiceInterface $worker)
+    public function __construct(NewsletterUserInterface $subscriber, NewsletterInterface $newsletter, MailjetServiceInterface $worker, SubscriptionWorkerInterface $subscription_worker)
     {
         $this->subscriber = $subscriber;
         $this->newsletter = $newsletter;
         $this->worker     = $worker;
+        $this->subscription_worker = $subscription_worker;
 
         view()->share('isNewsletter',true);
     }
@@ -77,26 +81,9 @@ class SubscriberController extends Controller
     public function store(Request $request)
     {
         // Subscribe user with activation token to website list and sync newsletter abos
-        $subscribe = $this->subscriber->create(
-            [
-                'email'         => $request->input('email'),
-                'activated_at'  => \Carbon\Carbon::now(),
-                'newsletter_id' => $request->input('newsletter_id')
-            ]
-        );
+        $subscriber = $this->subscriber->create(['email' => $request->input('email'), 'activated_at' => \Carbon\Carbon::now() ]);
 
-        //Subscribe to mailjet
-        $lists = $request->input('newsletter_id');
-
-        if(!empty($lists))
-        {
-            foreach($lists as $list)
-            {
-                $newsletter = $this->newsletter->find($list);
-                $this->worker->setList($newsletter->list_id);
-                $this->worker->subscribeEmailToList($subscribe->email);
-            }
-        }
+        $this->subscription_worker->subscribe($subscriber,[$request->input('newsletter_id')]);
 
         alert()->success('Abonné ajouté');
 
@@ -127,49 +114,20 @@ class SubscriberController extends Controller
      */
     public function update(RemoveNewsletterUserRequest $request, $id)
     {
-        $activated_at = ($request->input('activation') ? date('Y-m-d G:i:s') : null);
-        $subscriber   = $this->subscriber->find($id);
+        $subscriber = $this->subscriber->update(['id' => $id, 'email' => $request->input('email'),'activated_at' => $request->input('activation') ? date('Y-m-d G:i:s') : null]);
 
-        $hadAbos = $subscriber->subscriptions->pluck('id')->all();
+        $new = $request->input('newsletter_id');
+        $has = $subscriber->subscriptions->pluck('id')->all();
 
-        $subscriber = $this->subscriber->update([
-            'id'            => $id,
-            'email'         => $request->input('email'),
-            'newsletter_id' => $request->input('newsletter_id',[]),
-            'activated_at'  => $activated_at
-        ]);
+        $added   = array_diff($new, $has);
+        $removed = array_diff(array_unique(array_merge($new, $has)), $new);
 
-        $hasAbos = $subscriber->subscriptions->pluck('id')->all();
-
-        $added   = array_filter(array_diff($hasAbos,$hadAbos));
-        $removed = array_filter(array_diff($hadAbos,$hasAbos));
-
-        if(!empty($added) && $activated_at)
-        {
-            foreach($added as $list)
-            {
-                $newsletter = $this->newsletter->find($list);
-
-                $this->worker->setList($newsletter->list_id);
-                $this->worker->subscribeEmailToList($subscriber->email);
-            }
-        }
-
-        if(!empty($removed))
-        {
-            foreach($removed as $list)
-            {
-                $newsletter = $this->newsletter->find($list);
-                
-                $this->worker->setList($newsletter->list_id);
-                $this->worker->removeContact($subscriber->email);
-            }
-        }
+        $this->subscription_worker->subscribe($subscriber,$added);
+        $this->subscription_worker->unsubscribe($subscriber,$removed);
 
         alert()->success('Abonné édité');
 
         return redirect('build/subscriber/'.$id);
-
     }
 
     /**
@@ -179,31 +137,13 @@ class SubscriberController extends Controller
      * @param  int  $email
      * @return Response
      */
-    public function destroy($id,Request $request)
+    public function destroy($id, DeleteSubscriberRequest $request)
     {
-        // Validate the email
-        $this->validate($request, array('email' => 'required'));
-
         // find the abo
-        $subscriber = $this->subscriber->findByEmail($request->email);
-
-        // Remove all the abos we have
-        $subscriber->subscriptions()->detach();
-
-        // Delete the subscriber from DB
-        $this->subscriber->delete($subscriber->email);
-
+        $subscriber  = $this->subscriber->findByEmail($request->input('email'));
         $newsletters = $this->newsletter->getAll();
 
-        if(!$newsletters->isEmpty()){
-            foreach($newsletters as $newsletter) {
-                $this->worker->setList($newsletter->list_id);
-                // Remove subscriber from list mailjet
-                if(!$this->worker->removeContact($subscriber->email)) {
-                    throw new \App\Exceptions\DeleteUserException('Erreur avec la suppression de l\'abonnés sur mailjet');
-                }
-            }
-        }
+        $this->subscription_worker->unsubscribe($subscriber,$newsletters->pluck('id')->all());
 
         alert()->success('Abonné supprimé');
 

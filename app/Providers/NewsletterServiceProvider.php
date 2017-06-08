@@ -48,6 +48,7 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerCampagneWorkerService();
         $this->registerInscriptionService();
         $this->registerSubscribeService();
+        $this->registerSubscribeWorkerService();
         $this->registerImportService();
         $this->registerListService();
         $this->registerEmailService();
@@ -165,6 +166,21 @@ class NewsletterServiceProvider extends ServiceProvider
         {
             return new \App\Droit\Newsletter\Repo\NewsletterSubscriptionEloquent(
                 new \App\Droit\Newsletter\Entities\Newsletter_subscriptions
+            );
+        });
+    }
+
+    /**
+     * Newsletter subscriber service
+     */
+    protected function registerSubscribeWorkerService(){
+
+        $this->app->bind('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface', function()
+        {
+            return new \App\Droit\Newsletter\Worker\SubscriptionWorker(
+                \App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
+                \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
+                \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface')
             );
         });
     }
