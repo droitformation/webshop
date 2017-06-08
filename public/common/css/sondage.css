@@ -20,6 +20,14 @@ textarea.form-control-sondage{
     font-size: 16px;
     line-height: 20px;
 }
+.checkbox, .radio-sondage{
+	font-size: 16px;
+	display: inline-block;
+    min-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
 
 .panel-sondage{
     box-shadow: 0 1px 1px 0 #B3B3B3;
