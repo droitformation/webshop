@@ -142,6 +142,23 @@ Route::get('testing', function() {
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
 
+
+    $user = new \App\Droit\User\Entities\User();
+    $dup  = $user->with(['adresses'])->get();
+
+    $multiplied = $dup->reject(function ($item, $key) {
+        return $item->adresses->contains('type',1);
+    });
+
+/*    $multiplied = $dup->reject(function ($item, $key) {
+        return !$item->adresses->contains('type',2);
+    })->groupBy('user_id');*/
+
+    echo '<pre>';
+    print_r($multiplied->toArray());
+    echo '</pre>';exit();
+
+
    // $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
     //$occurrence   = $occurrences->find(1);
 

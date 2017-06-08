@@ -171,7 +171,6 @@ return [
 		Spatie\Backup\BackupServiceProvider::class,
 		ShvetsGroup\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
 		Msurguy\Honeypot\HoneypotServiceProvider::class,
-		//Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 		App\Providers\NewsletterServiceProvider::class,
 
 		/*

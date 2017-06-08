@@ -153,4 +153,51 @@ class SubscriptionWorkerTest extends BrowserKitTest
 
         $this->assertSame($new,$effective);
     }
+
+    /**
+     *
+     * @return void
+     */
+    public function testUpdateRemoveAllSubscriptions()
+    {
+        /******************************/
+        $user         = factory(App\Droit\User\Entities\User::class)->create();
+        $subscriber = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
+
+        $site1         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter1   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site1->id]);
+
+        $site2         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter2   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site2->id]);
+
+        $site3         = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter3   = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site3->id]);
+
+        $has = [$newsletter1->id, $newsletter2->id, $newsletter3->id];
+        $subscriber->subscriptions()->attach($has);
+
+        /******************************/
+
+        $worker = new App\Droit\Newsletter\Worker\SubscriptionWorker(
+            App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
+            App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
+            $this->mailjet
+        );
+
+        $this->app->instance('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface', $worker);
+
+        $this->mailjet->shouldReceive('setList')->times(3);
+        $this->mailjet->shouldReceive('removeContact')->times(3)->andReturn(true);
+
+        $new      = [];
+        $response = $this->call('PUT', 'build/subscriber/'.$subscriber->id, ['id' => $subscriber->id , 'email' => $subscriber->email, 'newsletter_id' => $new, 'activation' => 1]);
+
+        $this->assertRedirectedTo('build/subscriber');
+
+        $subscriber->fresh();
+
+        $effective = $subscriber->subscriptions->pluck('id')->all();
+
+        $this->assertSame($new,$effective);
+    }
 }

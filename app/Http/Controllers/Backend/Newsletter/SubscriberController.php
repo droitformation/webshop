@@ -81,9 +81,12 @@ class SubscriberController extends Controller
     public function store(Request $request)
     {
         // Subscribe user with activation token to website list and sync newsletter abos
-        $subscriber = $this->subscriber->create(['email' => $request->input('email'), 'activated_at' => \Carbon\Carbon::now() ]);
+        $subscriber = $this->subscriber->create([
+            'email' => $request->input('email'),
+            'activated_at' => \Carbon\Carbon::now()
+        ]);
 
-        $this->subscription_worker->subscribe($subscriber,[$request->input('newsletter_id')]);
+        $this->subscription_worker->subscribe($subscriber,$request->input('newsletter_id'));
 
         alert()->success('Abonné ajouté');
 
@@ -116,7 +119,7 @@ class SubscriberController extends Controller
     {
         $subscriber = $this->subscriber->update(['id' => $id, 'email' => $request->input('email'),'activated_at' => $request->input('activation') ? date('Y-m-d G:i:s') : null]);
 
-        $new = $request->input('newsletter_id');
+        $new = $request->input('newsletter_id',[]);
         $has = $subscriber->subscriptions->pluck('id')->all();
 
         $added   = array_diff($new, $has);
@@ -125,9 +128,15 @@ class SubscriberController extends Controller
         $this->subscription_worker->subscribe($subscriber,$added);
         $this->subscription_worker->unsubscribe($subscriber,$removed);
 
-        alert()->success('Abonné édité');
+        $subscriber->fresh();
 
-        return redirect('build/subscriber/'.$id);
+        if($subscriber->trashed()){
+            alert()->success('Abonné édité et supprimé');
+            return redirect('build/subscriber');
+        }
+
+        alert()->success('Abonné édité');
+        return redirect('build/subscriber/'.$subscriber->id);
     }
 
     /**

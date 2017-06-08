@@ -32,7 +32,6 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Abonnements</label>
                         <div class="col-sm-6">
-
                             <?php $abos = (!$subscriber->subscriptions->isEmpty() ? $subscriber->subscriptions->pluck('id')->all() : []);?>
 
                             @if(!$newsletter->isEmpty())
@@ -46,6 +45,15 @@
                                 @endforeach
                             @endif
 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <p class="text-danger" style="margin-top:8px;">
+                                <strong>Attention!</strong><br/>
+                                Si aucun abonnement n'est coché l'adresse email sera supprimé à la prochaine mise a jour.
+                            </p>
                         </div>
                     </div>
                 </div>

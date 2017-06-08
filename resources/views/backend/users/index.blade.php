@@ -25,9 +25,9 @@
                             <form action="{{ url('admin/users') }}" method="post">{!! csrf_field() !!}
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="{{ $term ? $term :'' }}" name="term" placeholder="Recherche...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
-                                </span>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                                    </span>
                                 </div><!-- /input-group -->
                             </form>
                         </div>

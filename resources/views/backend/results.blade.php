@@ -66,7 +66,7 @@
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                                 <input type="hidden" name="url" value="{{ url('admin/search/user') }}">
                                                 <input type="hidden" name="term" value="{{ session()->get('term') }}">
-                                                <button data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
+                                                <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm">Supprimer</a>
                                             </form>
                                         </td>
                                     </tr>

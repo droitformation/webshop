@@ -18,10 +18,15 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
         $this->mailjet = $mailjet;
     }
 
-    public function subscribe($subscriber,$newsletter_ids)
+    /**
+     * @param  \App\Droit\Newsletter\Entities\Newsletter_users $subscriber
+     * @param  array $newsletter_ids
+     * @return void
+     */
+    public function subscribe($subscriber, array $newsletter_ids)
     {
         $newsletters = $this->newsletter->findMultiple($newsletter_ids);
-        
+
         $subscriber->subscriptions()->attach($newsletter_ids);
 
         if(!$newsletters->isEmpty()){
@@ -74,11 +79,11 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
      *
      *
      * @param  \App\Droit\Newsletter\Entities\Newsletter_users $subscriber
-     * @param  int $newsletter_ids
+     * @param  array $newsletter_ids
      * @throws \App\Exceptions\DeleteUserException
      * @return void
      */
-    public function unsubscribe($subscriber,$newsletter_ids)
+    public function unsubscribe($subscriber,array $newsletter_ids)
     {
         $subscriber->subscriptions()->detach($newsletter_ids);
 

@@ -8,19 +8,19 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'f1fc7a7a353e3515a5d5efd255977059' => __DIR__ . '/..' . '/vinkla/alert/src/helpers.php',
-        '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
+        '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '0c3c22e27afa83be19b4c938f4c6e9ea' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/functions.php',
         '4b69412694a85d7780e1934ebfeb0c1b' => __DIR__ . '/../..' . '/tests/factories/ObjectFactory.php',
     );
@@ -74,7 +74,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
-            'Plank\\Mediable\\' => 15,
             'PhpParser\\' => 10,
         ),
         'M' => 
@@ -101,6 +100,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         ),
         'F' => 
         array (
+            'FontLib\\' => 8,
             'Faker\\' => 6,
         ),
         'D' => 
@@ -117,15 +117,11 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'C' => 
         array (
             'Cron\\' => 5,
-            'Composer\\CaBundle\\' => 18,
             'Collective\\Html\\' => 16,
             'Carbon\\' => 7,
         ),
         'B' => 
         array (
-            'Bugsnag\\PsrLogger\\' => 18,
-            'Bugsnag\\BugsnagLaravel\\' => 23,
-            'Bugsnag\\' => 8,
             'Box\\Spout\\' => 10,
             'Barryvdh\\DomPDF\\' => 16,
             'Barryvdh\\Debugbar\\' => 18,
@@ -251,10 +247,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Plank\\Mediable\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/plank/laravel-mediable/src',
-        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
@@ -299,6 +291,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             0 => __DIR__ . '/..' . '/gloudemans/shoppingcart/src',
         ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
@@ -339,10 +335,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
-        'Composer\\CaBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
-        ),
         'Collective\\Html\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
@@ -350,18 +342,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
-        'Bugsnag\\PsrLogger\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/bugsnag/bugsnag-psr-logger/src',
-        ),
-        'Bugsnag\\BugsnagLaravel\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/bugsnag/bugsnag-laravel/src',
-        ),
-        'Bugsnag\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/bugsnag/bugsnag/src',
         ),
         'Box\\Spout\\' => 
         array (
@@ -402,6 +382,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             'ShvetsGroup\\LaravelEmailDatabaseLog\\' => 
             array (
                 0 => __DIR__ . '/..' . '/shvetsgroup/laravel-email-database-log/src',
+            ),
+            'Sabberworm\\CSS' => 
+            array (
+                0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
             ),
         ),
         'P' => 
@@ -448,13 +432,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             'InlineStyle' => 
             array (
                 0 => __DIR__ . '/..' . '/inlinestyle/inlinestyle',
-            ),
-        ),
-        'F' => 
-        array (
-            'FontLib\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/phenx/php-font-lib/src',
             ),
         ),
         'D' => 
