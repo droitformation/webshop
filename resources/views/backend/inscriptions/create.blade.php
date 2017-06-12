@@ -39,9 +39,11 @@
                         </select>
                     </div>
 
-                    <h5>Détenteur de l'inscription</h5>
+                    <h5><strong>Détenteur de l'inscription</strong></h5>
                     <!-- Search user autocomplete -->
-                    @include('backend.partials.search-user')
+                    <div class="form-group" id="appComponent">
+                        <list-autocomplete type="user_id" chosen_id="{{ old('user_id') ? old('user_id') : null }}"></list-autocomplete>
+                    </div>
 
                     <div id="inputColloque"></div>
                     <div id="choiceColloque"></div>
