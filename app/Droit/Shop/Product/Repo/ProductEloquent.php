@@ -14,7 +14,8 @@ class ProductEloquent implements ProductInterface{
 
     public function getAll($search = null, $nbr = null, $visible = false)
     {
-        $products = $this->product->search($search)->visible($visible)->orderBy('created_at', 'DESC');
+        $products = $this->product->search($search)->visible($visible)
+            ->orderByRaw(\DB::raw('CASE WHEN edition_at IS NOT NULL THEN edition_at ELSE created_at END DESC'));
 
         if($nbr)
         {

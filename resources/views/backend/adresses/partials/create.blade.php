@@ -12,7 +12,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label">Entreprise</label>
         <div class="col-sm-7">
-            <input type="text" name="company" class="form-control form-required-if" value="">
+            <input type="text" name="company" class="form-control form-required-if" value="{{ isset($user) ? $user->company : '' }}">
         </div>
     </div>
     <div class="form-group">

@@ -141,8 +141,17 @@ Route::get('testing', function() {
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
+    $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
 
+    $all = $products->getAll(null,50);
 
+    foreach ($all as $prod){
+        echo '<pre>';
+        print_r($prod->toArray());
+        echo '</pre>';
+    }
+exit;
+    /*
     $user = new \App\Droit\User\Entities\User();
     $dup  = $user->with(['adresses'])->get();
 
@@ -150,14 +159,14 @@ Route::get('testing', function() {
         return $item->adresses->contains('type',1);
     });
 
-/*    $multiplied = $dup->reject(function ($item, $key) {
+   $multiplied = $dup->reject(function ($item, $key) {
         return !$item->adresses->contains('type',2);
-    })->groupBy('user_id');*/
+    })->groupBy('user_id');
 
     echo '<pre>';
     print_r($multiplied->toArray());
     echo '</pre>';exit();
-
+*/
 
    // $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
     //$occurrence   = $occurrences->find(1);
