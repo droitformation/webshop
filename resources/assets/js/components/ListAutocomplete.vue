@@ -18,8 +18,8 @@
                 <div class="panel-body panel-colloque">
                     <span class="no-adresse">{{ chosen.user_id }}</span>
 
-                    <span v-if="chosen.company"><strong>{{ chosen.company }}</strong></span>
-                    <span>{{ chosen.civilite }}</span>
+                    <span v-if="chosen.company && (chosen.company != chosen.company)"><strong>{{ chosen.company }}</strong></span>
+                    <span v-if="chosen.civilite">{{ chosen.civilite }}</span>
                     <span><a target="_blank" :href="'admin/user/' + chosen.user_id">{{ chosen.name }}</span>
                     <span v-if="chosen.cp">{{ chosen.cp }}</span>
                     <span>{{ chosen.adresse }}</span>
