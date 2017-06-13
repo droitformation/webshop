@@ -221,6 +221,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::get('user/confirm/{id}','Backend\User\UserController@confirm');
     Route::resource('user', 'Backend\User\UserController');
 
+    Route::match(['get', 'post'], 'archives', 'Backend\User\ArchiveController@index');
+
     Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
     Route::resource('duplicate', 'Backend\User\DuplicateController');
 

@@ -100,9 +100,6 @@ class Order extends Model{
         // formatter
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
-        // Load relations
-        $this->load('shipping');
-
         // Shipping x nbr paquets
         $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
 

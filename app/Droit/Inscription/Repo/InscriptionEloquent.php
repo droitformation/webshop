@@ -33,6 +33,18 @@ class InscriptionEloquent implements InscriptionInterface{
             ->get();
     }
 
+    public function getYear($year)
+    {
+        return $this->inscription->with(['user','participant','groupe','price'])
+            ->where(function($query) use ($year) {
+                $start = \Carbon\Carbon::parse($year.'-01-01')->startOfDay();
+                $end   = \Carbon\Carbon::parse($year.'-12-31')->endOfDay();
+
+                $query->whereBetween('created_at', [$start, $end]);
+            })
+            ->get();
+    }
+
     public function getByColloque($id, $type = false, $paginate = false)
     {
         $inscription = $this->inscription
