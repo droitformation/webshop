@@ -57,6 +57,7 @@ $(function() {
 
 			 	if(data)
 			 	{
+					$div.empty();
 		 			var newLoyer = '<div class="lines result">\
 									  <div class="nouveau_loyer lines clear">\
 									  	  <span class="label-input">Votre nouveau loyer (CHF)</span><span class="value">'  + data.loyer + '</span>\
@@ -67,10 +68,10 @@ $(function() {
 									</div>\
 									<div class="details">\
 										<div class="lines taux_start clear">\
-											<span class="label-input">Taux hypothécaire de départ</span><span class="value">'  + data.taux_depart + '</span>\
+											<span class="label-input">Taux d\'intérêt de référence de départ</span><span class="value">'  + data.taux_depart + '</span>\
 										</div>\
 										<div class="lines taux_dest clear">\
-											<span class="label-input">Taux hypothécaire actuel</span>\
+											<span class="label-input">Taux d\'intérêt de référence actuel</span>\
 											<span class="value">'  + data.taux_actuel + '</span>\
 											<span class="dates">('  + data.taux_date + ')</span>\
 										</div>\
