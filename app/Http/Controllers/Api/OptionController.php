@@ -63,7 +63,7 @@ class OptionController extends Controller {
         $option = $this->option->find($id);
         
         if($option->inscriptions->count() > 0) {
-            return response('ERROR', 400);
+            return response('ERROR il exist déjà un inscription pour cette option', 400);
         }
 
         $this->option->delete($option->id);
