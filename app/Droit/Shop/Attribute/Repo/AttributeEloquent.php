@@ -58,7 +58,9 @@ class AttributeEloquent implements AttributeInterface{
 
     public function delete($id){
 
-        return $this->attribute->delete($id);
+        $attribute = $this->attribute->find($id);
+
+        return $attribute->delete();
     }
 
 }
