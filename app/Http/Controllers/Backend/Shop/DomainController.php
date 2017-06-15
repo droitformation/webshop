@@ -24,7 +24,7 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains  = $this->domain->getAll();
+        $domains = $this->domain->getAll();
 
         return view('backend.domains.index')->with(['domains' => $domains]);
     }
@@ -94,8 +94,8 @@ class DomainController extends Controller
      */
     public function destroy($id)
     {
-        $this->domain->delete($id);
-
+        $domain = $this->domain->delete($id);
+   
         alert()->success('Collection supprimée');
 
         return redirect()->back();

@@ -26,15 +26,6 @@ class AdminIndexPagesTest extends BrowserKitTest {
         parent::tearDown();
     }
 
-	/**
-	 * @return void
-	 */
-	public function testIndexDomain()
-	{
-        $this->visit('admin/domain')->see('Collections');
-        $this->assertViewHas('domains');
-	}
-
     /**
      * @return void
      */

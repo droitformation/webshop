@@ -19,6 +19,7 @@ class CreateColloqueInscriptionsGroupesTable extends Migration
             $table->string('description')->nullable();
             $table->integer('adresse_id')->nullable();
             $table->softDeletes();
+            $table->timestamps();
         });
 
     }

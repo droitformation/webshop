@@ -18,6 +18,7 @@ class CreateDomainsTable extends Migration {
             $table->string('title');
             $table->tinyInteger('type');
             $table->tinyInteger('hidden');
+			$table->timestamps();
             $table->softDeletes();
         });
 	}

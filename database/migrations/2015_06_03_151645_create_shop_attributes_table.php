@@ -19,6 +19,7 @@ class CreateShopAttributesTable extends Migration {
             $table->string('duration');
 			$table->tinyInteger('reminder')->nullable();
             $table->text('text')->nullable();
+			$table->timestamps();
             $table->softDeletes();
         });
 	}

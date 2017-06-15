@@ -19,6 +19,7 @@ class CreateColloqueOptionUsersTable extends Migration
             $table->integer('option_id');
             $table->integer('groupe_id')->nullable();
             $table->text('reponse');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

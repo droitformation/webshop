@@ -51,8 +51,7 @@ class DomainEloquent implements DomainInterface{
             return false;
         }
 
-        $domain->domain = $data['domain'];
-
+        $domain->title = $data['title'];
         $domain->save();
 
         return $domain;
@@ -63,6 +62,5 @@ class DomainEloquent implements DomainInterface{
         $domain = $this->domain->find($id);
 
         return $domain->delete();
-
     }
 }
