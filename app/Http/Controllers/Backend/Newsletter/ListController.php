@@ -72,9 +72,9 @@ class ListController extends Controller
     {
         $file = $this->upload->upload( $request->file('file') , 'files/import');
 
-        if(!$file)
-        {
-            throw new \App\Exceptions\FileUploadException('Upload failed');
+        if(!$file) {
+            alert()->danger('Le téléchargement a échoué');
+            return redirect()->back();
         }
 
         // path to xls
@@ -83,16 +83,8 @@ class ListController extends Controller
         // Read uploded xls
         $results = $this->import->read($path);
 
-        if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') )
-        {
-            alert()->danger('Le fichier est vide ou mal formaté');
-
-            return redirect()->back();
-        }
-
         $emails = $results->pluck('email')
-            ->unique()
-            ->filter(function ($value, $key) {
+            ->unique()->filter(function ($value, $key) {
                 return !empty($value);
             })->all();
         

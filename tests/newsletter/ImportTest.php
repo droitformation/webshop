@@ -84,6 +84,18 @@ class ImportTest extends BrowserKitTest
     }
 
     /**
+     * @expectedException \App\Exceptions\BadFormatException
+     */
+    public function testReadFails()
+    {
+        $file = dirname(__DIR__).'/excel/test-notok.xlsx';
+
+        $this->excel->shouldReceive('load->get')->andReturn(collect([]));
+
+        $results = $this->import->read($file);
+    }
+
+    /**
      *
      * @return void
      */
@@ -171,22 +183,6 @@ class ImportTest extends BrowserKitTest
             ->press('Envoyer');
 
         $this->seePageIs('build/import');
-    }
-
-    /**
-     * @expectedException App\Exceptions\BadFormatException
-     */
-    public function testImportListFormatFails()
-    {
-        $file       = dirname(__DIR__).'/excel/test-notok.xlsx';
-
-        $upload     = $this->prepareFileUpload($file);
-        $collection = new Maatwebsite\Excel\Collections\RowCollection([]);
-
-        $this->upload->shouldReceive('upload')->once()->andReturn(['name' => 'test.xlsx']);
-        $this->excel->shouldReceive('load->get')->andReturn($collection);
-
-        $results = $this->import->import(['title' => 'Titre', 'newsletter_id' => 3],$upload);
     }
 
     /**
