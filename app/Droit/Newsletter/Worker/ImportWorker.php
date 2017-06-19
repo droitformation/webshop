@@ -12,7 +12,8 @@ use Maatwebsite\Excel\Excel;
 
 class ImportWorker implements ImportWorkerInterface
 {
-    protected $mailjet;
+    public $mailjet;
+    
     protected $subscriber;
     protected $newsletter;
     protected $excel;
@@ -128,7 +129,7 @@ class ImportWorker implements ImportWorkerInterface
         $campagne = $this->campagne->find($campagne_id);
         $html     = $this->worker->html($campagne_id);
         
-        if(!$list->emails->isEmpty())
+        if(!$list->emails->isEmpty() && $campagne && $html)
         {
             $recipients = $list->emails->map(function ($email) {
                 return  ['Email' => $email->email, 'Name'  => ""];
@@ -136,8 +137,8 @@ class ImportWorker implements ImportWorkerInterface
 
             $result = $this->mailjet->sendBulk($campagne, $html, $recipients->toArray(), false);
 
-            if(!isset($result['Sent'])) {
-               throw new \App\Exceptions\TestSendException('Problème avec le test');
+            if(!$result) {
+               throw new \App\Exceptions\TestSendException('Mailjet a renvoyé un problème avec l\'envoi');
             }
 
             return true;

@@ -65,12 +65,12 @@ class DomainAdminTest extends BrowserKitTest {
 
     public function testDomainDelete()
     {
-        $domain = factory(App\Droit\Domain\Entities\Domain::class)->create();
+        $domain = factory(App\Droit\Domain\Entities\Domain::class)->create(['title' => 'New']);
 
         $this->visit('admin/domain');
 
         $response = $this->call('DELETE','admin/domain/'.$domain->id);
 
-        $this->seeIsSoftDeletedInDatabase('domains', ['id' => $domain->id]);
+        $this->notSeeInDatabase('domains', ['id' => $domain->id, 'deleted_at' => null]);
     }
 }

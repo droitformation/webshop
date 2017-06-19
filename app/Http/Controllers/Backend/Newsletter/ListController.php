@@ -159,8 +159,18 @@ class ListController extends Controller
     public function send(SendListRequest $request)
     {
         $list = $this->list->find($request->input('list_id'));
+  
+        if(!$list) {
+            alert()->danger('Les emails de la liste n\'ont pas pu être récupérés');
+            return redirect('build/newsletter');
+        }
+        
+        $results = $this->import->send($request->input('campagne_id'),$list);
 
-        $this->import->send($request->input('campagne_id'),$list);
+        if(!$results){
+            alert()->danger('Problème avec l\'envoi, vérifier sur mailjet.com');
+            return redirect('build/newsletter');
+        }
 
         alert()->success('Campagne envoyé à la liste!');
 
