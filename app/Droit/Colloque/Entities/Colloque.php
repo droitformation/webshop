@@ -186,6 +186,7 @@ class Colloque extends Model
                 'type_name'   => isset($choix[$option->type]) ? $choix[$option->type] : '',
                 'groupe'      => $option->groupe->mapWithKeys(function ($item) {return [$item['id'] => [ 'text' => $item['text'], 'id' => $item['id'] ]];}),
                 'state'       => false,
+                'isUsed'      => $option->inscriptions->count() > 0 ? true : false,
             ]];
         });
     }
