@@ -211,8 +211,8 @@
                      return '';
                  }
              }
-
-             return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '');
+             
+             return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id && isset($group->option_groupe) ? $group->option_groupe->text : '');
 
          })->implode(';');
      }
