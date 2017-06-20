@@ -31,19 +31,27 @@
                         @if(!$shippings->isEmpty())
                             @foreach($shippings as $shipping)
                                 <tr>
-                                    <td><a href="{{ url('admin/shipping/'.$shipping->id) }}" class="btn btn-sm btn-info">éditer</a></td>
+                                    <td>
+                                        @if(!$shipping->hidden)
+                                            <a href="{{ url('admin/shipping/'.$shipping->id) }}" class="btn btn-sm btn-info">éditer</a>
+                                        @endif
+                                    </td>
                                     <td>{{ $shipping->title }}</td>
                                     <td>{{ $shipping->weight }} grammes</td>
                                     <td>{{ $shipping->price_cents  }}</td>
                                     <td>{{ $shipping->type }}</td>
                                     <td class="text-right">
-                                        @if($shipping->orders->isEmpty())
-                                        <form action="{{ url('admin/shipping/'.$shipping->id) }}" method="POST" class="form-horizontal">
-                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-what="Supprimer" data-action="{{ $shipping->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
-                                        </form>
+                                        @if(!$shipping->hidden)
+                                            @if($shipping->orders->isEmpty())
+                                                <form action="{{ url('admin/shipping/'.$shipping->id) }}" method="POST" class="form-horizontal">
+                                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                    <button data-what="Supprimer" data-action="{{ $shipping->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                </form>
+                                            @else
+                                                <span class="text-warning">Frais de port utilisés</span>
+                                            @endif
                                         @else
-                                            <span class="text-danger">Frais de port utilisés</span>
+                                            <span class="text-danger">Frais de port archivés</span>
                                         @endif
                                     </td>
                                 </tr>
