@@ -63,10 +63,21 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <form action="{{ url('build/campagne/'.$campagne->id) }}" method="POST">
+
+                        @if($campagne->status == 'brouillon')
+
+                            <form action="{{ url('build/campagne/archive') }}" method="POST" class="pull-left">{!! csrf_field() !!}
+                                <input name="id" type="hidden" value="{{ $campagne->id }}">
+                                <button type="submit" class="btn btn-default btn-xs">Archiver</button>
+                            </form>
+
+                        @endif
+
+                        <form action="{{ url('build/campagne/'.$campagne->id) }}" method="POST" class="pull-left">
                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                             <button type="submit" data-action="campagne {{ $campagne->sujet }}" data-what="Supprimer" class="btn btn-danger btn-xs deleteNewsAction"><i class="fa fa-remove"></i></button>
                         </form>
+
                     </td>
                 </tr>
             @endforeach

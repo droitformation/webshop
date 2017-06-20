@@ -44,6 +44,8 @@ Route::group(['middleware' => $middleware], function () {
         Route::get('campagne/simple/{id}', 'Backend\Newsletter\CampagneController@simple');
         Route::get('campagne/preview/{id}', 'Backend\Newsletter\CampagneController@preview');
         Route::get('campagne/cancel/{id}', 'Backend\Newsletter\CampagneController@cancel');
+        Route::post('campagne/archive', 'Backend\Newsletter\CampagneController@archive');
+
         Route::resource('campagne', 'Backend\Newsletter\CampagneController');
 
         // Content building blocs
