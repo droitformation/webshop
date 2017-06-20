@@ -42,6 +42,7 @@ class AvisController extends Controller
         $avis = $this->avis->getAll();
 
         $examples = $avis->map(function ($avi, $key) {
+            
             $choices = trim($avi->choices);
             $choices = array_map('trim',explode(',',$choices));
             $choices = implode(',',$choices);

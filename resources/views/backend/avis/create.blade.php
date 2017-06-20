@@ -9,7 +9,7 @@
 <!-- start row -->
 <div class="row">
 
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
@@ -23,7 +23,7 @@
 
                         <div class="form-group">
                             <label for="message" class="col-sm-3 control-label">Type</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <select name="type" class="form-control" id="sondageTypeSelect">
                                     <option value="text">Texte</option>
                                     <option value="checkbox">Case à cocher</option>
@@ -32,17 +32,25 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="sondageChoices" style="display: none;">
-                            <label for="message" class="col-sm-3 control-label">Choix (séparés par virgules)</label>
-                            <div class="col-sm-6">
-                                <textarea style="height: 100px;" name="choices" class="form-control"></textarea>
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Question</label>
+                            <div class="col-sm-5">
+                                <textarea name="question" required class="form-control redactorSimple"></textarea>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="message" class="col-sm-3 control-label">Question</label>
-                            <div class="col-sm-6">
-                                <textarea name="question" required class="form-control redactorSimple"></textarea>
+                        <div class="form-group" id="sondageChoices" style="display: none;">
+                            <label for="message" class="col-sm-3 control-label">Choix (séparés par virgules)</label>
+                            <div class="col-sm-4">
+                                <textarea id="textareaSondageChoices" style="height: 80px;" name="choices" class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-5">
+                                @if(!$examples->isEmpty())
+                                    <h5>Exemples déjà crées, cliquer pour reprendre</h5>
+                                    @foreach($examples as $example)
+                                        <p><button class="btn btn-default btn-sm choice-example">{{ $example }}</button></p>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
 

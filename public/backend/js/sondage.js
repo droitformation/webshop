@@ -52,4 +52,10 @@ $(function() {
         }
     });
 
+    var $textarea_choices = $('#textareaSondageChoices');
+    $('#sondageChoices').on('click', '.choice-example', function() {
+        $textarea_choices.empty();
+        $textarea_choices.val($(this).text());
+    });
+
 });
