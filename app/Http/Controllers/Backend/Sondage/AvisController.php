@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Sondage\Repo\AvisInterface;
+use App\Droit\Sondage\Repo\SondageInterface;
 
 class AvisController extends Controller
 {
     protected $avis;
+    protected $sondage;
 
-    public function __construct(AvisInterface $avis)
+    public function __construct(AvisInterface $avis, SondageInterface $sondage)
     {
         $this->avis = $avis;
+        $this->sondage  = $sondage;
     }
 
     /**
@@ -36,7 +39,19 @@ class AvisController extends Controller
      */
     public function create()
     {
-        return view('backend.avis.create');
+        $avis = $this->avis->getAll();
+
+        $examples = $avis->map(function ($avi, $key) {
+            $choices = trim($avi->choices);
+            $choices = array_map('trim',explode(',',$choices));
+            $choices = implode(',',$choices);
+
+            return $avi->type == 'radio' ?  $choices: '';
+        })->reject(function ($value, $key) {
+            return empty($value);
+        })->unique();
+
+        return view('backend.avis.create')->with(['examples' => $examples]);
     }
 
     /**

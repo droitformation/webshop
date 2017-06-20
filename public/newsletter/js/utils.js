@@ -34,7 +34,7 @@ $(function() {
 
     //datePickerNewsletter
 
-    $('#datePickerNewsletter').datetimepicker({
+    $('.datePickerNewsletter').datetimepicker({
         locale: 'fr-ch',
         sideBySide: true,
         widgetPositioning: {
