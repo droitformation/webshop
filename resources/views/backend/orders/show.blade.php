@@ -57,10 +57,30 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Client</label>
-                            <div class="col-sm-6 col-xs-8">
-                                @include('backend.partials.search-adresse', ['adresse_id' => $order->order_adresse->id, 'type' => 'adresse_id'])
+                            <div class="col-sm-6 col-xs-8" id="appComponent">
+                                <list-autocomplete type="user_id" chosen_id="{{ $order->user_id }}"></list-autocomplete>
                             </div>
                         </div>
+
+                        @if(!$order->user_id)
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-12 control-label">
+                                    Adresse sans utilisateur <p><strong class="text-danger">A changer</strong></p>
+                                </label>
+                                <div class="col-sm-8 col-xs-12">
+                                    <div class="change_abo_user">
+                                        <?php $adresse = $order->order_adresse; ?>
+                                        <strong>
+                                            <a target="_blank" href="{{ url('admin/adresse/'.$adresse->id) }}">{{ $adresse->civilite_title }} {{ $adresse->name }}</a>
+                                        </strong><br>
+                                        {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
+                                        {{ $adresse->adresse }}<br>
+                                        {!! !empty($adresse->cp) ? $adresse->cp_trim.'<br>' : '' !!}
+                                        {{ $adresse->npa }} {{ $adresse->ville }}<br>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Date de la facture</label>
