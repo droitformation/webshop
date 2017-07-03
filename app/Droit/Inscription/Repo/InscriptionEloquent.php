@@ -33,11 +33,10 @@ class InscriptionEloquent implements InscriptionInterface{
             ->get();
     }
 
-    public function getYear($year,$month = null)
+    public function getYear($year = null,$month = null)
     {
-        return $this->inscription->with(['user','participant','groupe','price'])
+        return $this->inscription
             ->where(function($query) use ($year,$month) {
-
                 $start_month = $month ? $month : '01';
                 $end_month   = $month ? $month : '12';
 

@@ -60,11 +60,12 @@
                                 // A labels array that can contain any sort of values
                                 labels: <?php echo json_encode(array_values($months)); ?>,
                                 // Our series array that contains series objects or in this case series data arrays
-                                series: [<?php echo json_encode(array_values($list)); ?>]
+                                series: [<?php echo json_encode(array_values($list)); ?>],
                             };
 
                             var options = {
-                                width: 600,
+                                stretch: true,
+                                low: 0,
                                 height: 450
                             };
                             // Create a new line chart object where as first parameter we pass in a selector

@@ -1376,3 +1376,17 @@ input[type="checkbox"].rappel-input {
     padding: 10px;
     background: #fbeed5;
 }
+
+/* Use this selector to override the line style on a given series */
+.ct-series-a .ct-line {
+    /* Control the thikness of your lines */
+    stroke-width: 2px;
+}
+
+
+.ct-label{
+    fill: rgba(0,0,0,.7);
+    color: rgba(0,0,0,.7);
+    font-size: 1.5rem;
+    line-height: 1;
+}
