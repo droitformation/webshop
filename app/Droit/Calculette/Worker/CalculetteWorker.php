@@ -30,7 +30,7 @@ class CalculetteWorker implements CalculetteWorkerInterface {
 		$new          = $this->calcul($canton, $date , $loyer); 
 		
 		$newloyer   = number_format($new,2,'.',"'");
-		$difference = number_format($newloyer-$loyer,2,'.',"'");
+		$difference = number_format($new - $loyer,2,'.',"'");
 		
 		setlocale(LC_ALL, 'fr_FR');
 

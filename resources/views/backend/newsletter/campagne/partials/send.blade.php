@@ -13,7 +13,7 @@
                     <h3>"{{ $campagne->sujet }}"</h3>
                     <br/>
                         <label class="control-label text-primary">Spécifier une date et heure d'envoi</label>
-                        <p><input type="text" class="form-control" id="datePickerNewsletter" value="" name="date"></p>
+                        <p><input type="text" class="form-control datePickerNewsletter" id="datePickerNewsletter" value="" name="date"></p>
                     <hr/>
                     <p class="text-danger">
                         <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Attention</h4>

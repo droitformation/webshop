@@ -45,8 +45,7 @@ class ImportWorker implements ImportWorkerInterface
         $file          = $this->upload->upload( $file , 'files/import' );
         $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
 
-        if(!$file)
-        {
+        if(!$file) {
             throw new \App\Exceptions\FileUploadException('Upload failed');
         }
 
@@ -56,15 +55,8 @@ class ImportWorker implements ImportWorkerInterface
         // Read uploaded xls
         $results = $this->read($path);
 
-        // If the upload is not formatted correctly redirect back
-        if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') )
-        {
-            throw new \App\Exceptions\BadFormatException('Le fichier est vide ou mal formaté');
-        }
-
         // we want to import in one of the newsletter subscriber's list
-        if($newsletter_id)
-        {
+        if($newsletter_id) {
             // Subscribe the new emails
             $this->subscribe($results,$newsletter_id);
 
@@ -99,15 +91,25 @@ class ImportWorker implements ImportWorkerInterface
 
     public function read($file)
     {
-        return $this->excel->load($file, function($reader) {
+        $results = $this->excel->load($file, function($reader) {
             $reader->ignoreEmpty();
             $reader->setSeparator('\r\n');
         })->get();
+
+
+        // If the upload is not formatted correctly redirect back
+        if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') ) {
+            throw new \App\Exceptions\BadFormatException('Le fichier est vide ou mal formaté');
+        }
+        
+        return $results;
     }
 
+    /*
+     * Convert to csv
+     * */
     public function store($file)
     {
-        // Convert to csv
         $this->excel->load($file)->store('csv', public_path('files/import'));
     }
 
@@ -128,7 +130,7 @@ class ImportWorker implements ImportWorkerInterface
         $campagne = $this->campagne->find($campagne_id);
         $html     = $this->worker->html($campagne_id);
         
-        if(!$list->emails->isEmpty())
+        if(!$list->emails->isEmpty() && $campagne && $html)
         {
             $recipients = $list->emails->map(function ($email) {
                 return  ['Email' => $email->email, 'Name'  => ""];
@@ -136,8 +138,8 @@ class ImportWorker implements ImportWorkerInterface
 
             $result = $this->mailjet->sendBulk($campagne, $html, $recipients->toArray(), false);
 
-            if(!isset($result['Sent'])) {
-               throw new \App\Exceptions\TestSendException('Problème avec le test');
+            if(!$result) {
+               throw new \App\Exceptions\TestSendException('Mailjet a renvoyé un problème avec l\'envoi');
             }
 
             return true;

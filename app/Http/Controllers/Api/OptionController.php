@@ -61,15 +61,10 @@ class OptionController extends Controller {
     public function destroy($id)
     {
         $option = $this->option->find($id);
-        
-        if($option->inscriptions->count() > 0) {
-            return response('ERROR', 400);
-        }
 
         $this->option->delete($option->id);
         $colloque = $this->colloque->find($option->colloque_id);
 
         return response()->json(['options' => $colloque->option_display]);
     }
-
 }

@@ -6,7 +6,7 @@ class Shipping extends Model{
 
     protected $table = 'shop_shipping';
 
-    protected $fillable = array('title','value','price','type');
+    protected $fillable = ['title','value','price','type','hidden'];
     /**
      * Set timestamps off
      */

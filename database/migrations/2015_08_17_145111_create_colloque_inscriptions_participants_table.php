@@ -17,6 +17,7 @@ class CreateColloqueInscriptionsParticipantsTable extends Migration
             $table->string('name');
             $table->integer('inscription_id')->unsigned()->index();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

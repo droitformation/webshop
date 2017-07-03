@@ -97,10 +97,7 @@ class AttributController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = $request->input('id');
-
-        $attribu = $this->attr->find($id);
-        $attribu->delete($id);
+        $attribu = $this->attr->delete($request->input('id'));
 
         alert()->success('Attribut supprimée');
 

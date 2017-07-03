@@ -31,6 +31,7 @@ class ListTest extends BrowserKitTest
 
         $user = factory(App\Droit\User\Entities\User::class)->create();
         $this->actingAs($user);
+
     }
 
     public function tearDown()
@@ -72,11 +73,45 @@ class ListTest extends BrowserKitTest
         $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
 
         $this->list->shouldReceive('find')->once()->andReturn($liste);
-        $mock->shouldReceive('send')->once();
+        $mock->shouldReceive('send')->once()->andReturn(['Result' => []]);
 
         $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
 
         $this->assertRedirectedTo('build/newsletter');
+
+        $this->assertSessionHas('alert.style','success');
+        $this->assertSessionHas('alert.message','Campagne envoyé à la liste!');
+    }
+
+    public function testSendGetTheListFails()
+    {
+        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
+
+        $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
+
+        // No list of emails
+        $this->list->shouldReceive('find')->once()->andReturn(null);
+        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
+
+        $this->assertSessionHas('alert.style','danger');
+        $this->assertSessionHas('alert.message','Les emails de la liste n\'ont pas pu être récupérés');
+    }
+
+    public function testSendToListFails()
+    {
+        $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
+
+        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
+
+        $this->list->shouldReceive('find')->once()->andReturn($liste);
+        $mock->shouldReceive('send')->once()->andReturn(false);
+
+        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
+
+        $this->assertSessionHas('alert.style','danger');
+        $this->assertSessionHas('alert.message','Problème avec l\'envoi, vérifier sur mailjet.com');
     }
 
     public function testStoreListe()
@@ -107,41 +142,12 @@ class ListTest extends BrowserKitTest
 
     public function testStoreListeUploadFails()
     {
-        try{
-            $file   = dirname(__DIR__).'/excel/test.xlsx';
-            $upload = $this->prepareFileUpload($file);
+        $file   = dirname(__DIR__).'/excel/test.xlsx';
+        $upload = $this->prepareFileUpload($file);
 
-            $response = $this->call('POST', 'build/liste', ['title' => 'Un titre' ,'list_id' => 1, 'campagne_id' => 1], [], ['file' => $upload]);
+        $response = $this->call('POST', 'build/liste', ['title' => 'Un titre' ,'list_id' => 1, 'campagne_id' => 1], [], ['file' => $upload]);
 
-        } catch (Exception $e) {
-            $this->assertType('App\Droit\Exceptions\FileUploadException', $e);
-        }
-    }
-
-    public function testStoreListeFormatFails()
-    {
-        try{
-
-            $file   = dirname(__DIR__).'/excel/test-notok.xlsx';
-            $upload = $this->prepareFileUpload($file);
-
-            $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
-            $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
-
-            $this->upload->shouldReceive('upload')->once()->andReturn(['name' => 'title']);
-            $this->list->shouldReceive('getAll')->twice()->andReturn(collect([]));
-            $collection = new Maatwebsite\Excel\Collections\RowCollection([]);
-            $mock->shouldReceive('read')->once()->andReturn($collection);
-
-            $this->visit('/build/liste')
-                ->type('Un titre','title')
-                ->attach($file, 'file')
-                ->press('Envoyer');
-
-        } catch (Exception $e) {
-            $this->assertType('\App\Droit\Exceptions\BadFormatException', $e);
-        }
-
+        $this->assertSessionHasErrors();
     }
     
     function prepareFileUpload($path)

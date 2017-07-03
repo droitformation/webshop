@@ -174,10 +174,21 @@ export default {
         },
         deleteOption :function(option){
 
-            this.$http.post('/vue/option/' + option.id, { '_method' : 'DELETE' }).then((response) => {
-                this.list = _.orderBy(response.body.options, ['type'],['desc']);
-            }, (response) => {}).bind(this);
+            var shouldDelete = false;
 
+            if(option.isUsed){
+                var answer = confirm('Cette option est lié à des inscription, voulez-vous vraiment supprimer?');
+                shouldDelete = answer ? true : false;
+            }
+            else{
+                shouldDelete = true;
+            }
+
+            if(shouldDelete){
+                   this.$http.post('/vue/option/' + option.id, { '_method' : 'DELETE' }).then((response) => {
+                    this.list = _.orderBy(response.body.options, ['type'],['desc']);
+                }, (response) => {}).bind(this);
+            }
         }
     }
 }

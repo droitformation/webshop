@@ -173,4 +173,13 @@ class CampagneController extends Controller
         return redirect()->back();
     }
 
+    public function archive(Request $request)
+    {
+        $this->campagne->archive($request->input('id'));
+
+        alert()->success('Campagne archivé');
+
+        return redirect('build/newsletter');
+    }
+
 }

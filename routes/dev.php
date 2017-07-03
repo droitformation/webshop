@@ -143,14 +143,15 @@ Route::get('testing', function() {
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
     $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
 
-    $all = $products->getAll(null,50);
+    $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
 
-    foreach ($all as $prod){
-        echo '<pre>';
-        print_r($prod->toArray());
-        echo '</pre>';
-    }
-exit;
+    //$import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+    $liste = $newslist->find(13);
+    echo '<pre>';
+    print_r($liste->toArray());
+    echo '</pre>';exit();
+
+
     /*
     $user = new \App\Droit\User\Entities\User();
     $dup  = $user->with(['adresses'])->get();

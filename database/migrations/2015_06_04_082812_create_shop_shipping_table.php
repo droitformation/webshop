@@ -19,6 +19,7 @@ class CreateShopShippingTable extends Migration {
             $table->integer('value');
             $table->integer('price');
             $table->string('type');
+			$table->tinyInteger('hidden')->nullable();
         });
 	}
 

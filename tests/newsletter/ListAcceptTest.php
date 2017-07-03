@@ -46,20 +46,6 @@ class ListAcceptTest extends BrowserKitTest
         $this->see('One Title');
     }
 
-    public function testSendToList()
-    {
-        $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
-
-        $mock->shouldReceive('send')->once();
-
-        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
-
-        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
-
-        $this->followRedirects()->seePageIs('build/newsletter');
-    }
-
     public function testAddSpecialisations()
     {
         $list = App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');

@@ -25,14 +25,6 @@ class AdminCreatePagesTest extends BrowserKitTest {
         DB::rollBack();
         parent::tearDown();
     }
-    
-	/**
-	 * @return void
-	 */
-	public function testIndexDomain()
-	{
-        $this->visit('admin/domain/create')->see('Ajouter une collection');
-	}
 
     /**
      * @return void

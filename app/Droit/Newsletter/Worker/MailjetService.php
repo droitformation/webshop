@@ -348,16 +348,6 @@ class MailjetService implements MailjetServiceInterface{
             'Text-part'  => strip_tags($html),
             'Html-part'  => $html,
             'Recipients' => $recipients,
-         /*       [
-                [
-                    'Email' => "passenger1@mailjet.com",
-                    'Name' => "passenger 1"
-                ],
-                [
-                    'Email' => "passenger2@mailjet.com",
-                    'Name' => "passenger 2"
-                ]
-            ]*/
         ];
         
         $response = $this->mailjet->post(Resources::$Email, ['body' => $body]);

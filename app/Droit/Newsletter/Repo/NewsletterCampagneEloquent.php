@@ -50,6 +50,16 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 		return $this->campagne->with($with)->find($id);
 	}
 
+	public function archive($id)
+	{
+		$campagne = $this->campagne->find($id);
+		
+		$campagne->send_at = \Carbon\Carbon::now()->toDateTimeString();
+		$campagne->status  = 'envoyé';
+
+		return $campagne->save();
+	}
+
 	public function create(array $data){
 
 		$campagne = $this->campagne->create(array(

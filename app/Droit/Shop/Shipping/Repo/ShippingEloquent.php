@@ -19,18 +19,18 @@ class ShippingEloquent implements ShippingInterface{
             return $this->shipping->with(['orders'])->where('type','=',$type)->get();
         }
 
-        return $this->shipping->with(['orders'])->get();
-
+        return $this->shipping->with(['orders'])->orderByRaw("-hidden",'ASC')->get();
     }
 
-    public function getShipping($weight = null){
-
+    public function getShipping($weight = null)
+    {
         if($weight)
         {
              return $this->shipping
                 ->select('shop_shipping.*',\DB::raw('CAST( value as UNSIGNED ) as weight'))
-                ->where('type','=','poids')
+                ->where('shop_shipping.type','=','poids')
                 ->where('shop_shipping.value','>=',$weight)
+                ->whereNull('shop_shipping.hidden')
                 ->orderBy('weight', 'asc')
                 ->take(1)->get()->first();
         }
@@ -84,7 +84,6 @@ class ShippingEloquent implements ShippingInterface{
         $shipping = $this->shipping->find($id);
 
         return $shipping->delete();
-
     }
 
 }
