@@ -98,13 +98,14 @@ class AdresseEloquent implements AdresseInterface{
 				$query->where(function ($query) {
 					$query->where('user_id','=',0)->orWhereNull('user_id');
 				})->orWhere(function ($query) {
-					$query->where('user_id','>',0)->has('user');
+					$query->where('user_id','>',0)->orWhereNotNull('user_id')->has('user');
 				});
 			})
 			->searchPays($pays)->searchCanton($cantons)->searchProfession($professions)
 			->$searchSpecialisation($specialisations)
 			->$searchMember($members);
 
+		return  $adresses->toSql();
 		return $paginate ? $adresses->paginate($paginate) : $adresses->get();
     }
 
