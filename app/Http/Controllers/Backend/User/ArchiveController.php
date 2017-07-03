@@ -29,6 +29,6 @@ class ArchiveController extends Controller
         //$orders = $this->order->getPeriod($request->input('year',date('Y')));
         $inscriptions = $this->inscription->getYear($request->input('year',date('Y')));
  
-        return view('backend.archives.index')->with(['inscriptions' => $inscriptions]);
+        return view('backend.archives.index')->with(['inscriptions' => $inscriptions, 'year' => $request->input('year',date('Y'))]);
     }
 }
