@@ -105,7 +105,6 @@ class AdresseEloquent implements AdresseInterface{
 			->$searchSpecialisation($specialisations)
 			->$searchMember($members);
 
-		return  $adresses->toSql();
 		return $paginate ? $adresses->paginate($paginate) : $adresses->get();
     }
 
