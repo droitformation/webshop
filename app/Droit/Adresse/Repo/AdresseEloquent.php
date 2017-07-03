@@ -96,7 +96,7 @@ class AdresseEloquent implements AdresseInterface{
 		$adresses = $this->adresse->with(['user'])
 			->where(function ($query) {
 				$query->where(function ($query) {
-					$query->where('user_id','=',0);
+					$query->where('user_id','=',0)->orWhereNull('user_id');
 				})->orWhere(function ($query) {
 					$query->where('user_id','>',0)->has('user');
 				});
@@ -105,7 +105,6 @@ class AdresseEloquent implements AdresseInterface{
 			->$searchSpecialisation($specialisations)
 			->$searchMember($members);
 
-		//return  $adresses->toSql();
 		return $paginate ? $adresses->paginate($paginate) : $adresses->get();
     }
 
