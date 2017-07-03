@@ -28,6 +28,7 @@
                                     <option value="text">Texte</option>
                                     <option value="checkbox">Case à cocher</option>
                                     <option value="radio">Options à choix</option>
+									<option value="chapitre">Chapitre</option>
                                 </select>
                             </div>
                         </div>

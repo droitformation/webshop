@@ -22,12 +22,14 @@
         @if(!$sondage->avis->isEmpty())
             @foreach($sondage->avis as $avis)
                 <div class="form-group form-group-sondage">
-                    <label for="message" class="control-label label-question"><strong>{!! strip_tags($avis->question) !!}</strong></label>
+				@if($avis->type != 'chapitre')
+                    <label for="message" class="control-label label-question"><p class="label-question">{!! strip_tags($avis->question) !!}</p>
+				@endif
 
                     @if($avis->type == 'text')
                         <textarea class="form-control form-control-sondage" name="reponses[{{ $avis->id }}]"></textarea>
 					@elseif($avis->type == 'chapitre')
-						<h4><strong>{!! strip_tags($avis->question) !!}</strong></h4>
+						<p class="label-question">{!! strip_tags($avis->question) !!}</p>
                     @else
                         <?php $choices = explode(',', $avis->choices); ?>
                         @foreach($choices as $choices)
