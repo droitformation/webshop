@@ -48,7 +48,8 @@
 			"Tests\\": "tests/"
 		},
 		"files": [
-			"tests/factories/ObjectFactory.php"
+			"tests/factories/ObjectFactory.php",
+			"app/Http/helpers.php"
 		]
 	},
 	"autoload-dev": {

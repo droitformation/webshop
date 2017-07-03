@@ -40,6 +40,23 @@ class AboUserEloquent implements AboUserInterface{
         return $abos->where('adresse_id', '=', $id)->get();
     }
 
+    public function getYear($year,$month = null)
+    {
+        return $this->abo_user->with(['user','abo'])
+            ->where(function($query) use ($year,$month) {
+
+                $start_month = $month ? $month : '01';
+                $end_month   = $month ? $month : '12';
+
+                $start = \Carbon\Carbon::parse($year.'-'.$start_month.'-01')->startOfDay();
+                $end   = \Carbon\Carbon::parse($year.'-'.$end_month.'-31')->endOfDay();
+
+                $query->whereBetween('created_at', [$start, $end]);
+            })
+            ->orderBy('created_at','DESC')
+            ->get();
+    }
+
     public function findByAdresse($id, $abo_id)
     {
         $abo = $this->abo_user->where('abo_id', '=', $abo_id)->where('adresse_id', '=', $id)->get();

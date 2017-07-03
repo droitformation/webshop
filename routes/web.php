@@ -222,6 +222,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('user', 'Backend\User\UserController');
 
     Route::match(['get', 'post'], 'archives', 'Backend\User\ArchiveController@index');
+    Route::match(['get', 'post'], 'archive/year', 'Backend\User\ArchiveController@year');
 
     Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
     Route::resource('duplicate', 'Backend\User\DuplicateController');

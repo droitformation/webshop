@@ -302,6 +302,8 @@ $( function() {
              $('#sondageChoices').show();
          }
      });
+
+
     
 });
 
