@@ -46,21 +46,15 @@ class OrderEloquent implements OrderInterface{
             ->get();
     }
 
-    public function getYear($year,$month = null)
+    public function getYear($year = null,$month = null)
     {
-        return $this->order->with(['products','user'])
-            ->where(function($query) use ($year,$month) {
+        $orders = $this->order->year($year,$month)->selectRaw('MONTH(created_at) as month, Year(created_at) as year')->orderBy('created_at','DESC')->get();
 
-                $start_month = $month ? $month : '01';
-                $end_month   = $month ? $month : '12';
-
-                $start = \Carbon\Carbon::parse($year.'-'.$start_month.'-01')->startOfDay();
-                $end   = \Carbon\Carbon::parse($year.'-'.$end_month.'-31')->endOfDay();
-
-                $query->whereBetween('created_at', [$start, $end]);
-            })
-            ->orderBy('created_at','DESC')
-            ->get();
+        return $orders->groupBy('year')->map(function ($group, $key) {
+            return $group->groupBy('month')->map(function ($months, $key) {
+                return $months->count();
+            });
+        })->pad(12);
     }
 
     public function getMultiple($orders)

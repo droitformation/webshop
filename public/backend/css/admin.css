@@ -1390,3 +1390,21 @@ input[type="checkbox"].rappel-input {
     font-size: 1.5rem;
     line-height: 1;
 }
+
+.chart-description{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.chart-description li{
+    display: inline-block;
+    padding: 0 3px;
+    margin-right: 6px;
+}
+
+.chart-description li span{
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 2px;
+}

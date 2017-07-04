@@ -188,6 +188,26 @@ class Order extends Model{
         if ($order_no) $query->where('order_no','=',$order_no);
     }
 
+    /**
+     * Scope a query to select per year
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeYear($query,$year,$month = null)
+    {
+        if($year){
+            return $query->where(function($query) use ($year,$month) {
+                $start_month = $month ? $month : '01';
+                $end_month   = $month ? $month : '12';
+
+                $start = \Carbon\Carbon::parse($year.'-'.$start_month.'-01')->startOfDay();
+                $end   = \Carbon\Carbon::parse($year.'-'.$end_month.'-31')->endOfDay();
+
+                $query->whereBetween('created_at', [$start, $end]);
+            });
+        }
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'shop_order_products', 'order_id', 'product_id')

@@ -46,6 +46,13 @@ class CollectionExtensions extends ServiceProvider
 
             return new static($items);
         });
+
+
+        Collection::macro('pad', function ($number) {
+            return $this->map(function ($item, $key) use ($number) {
+                return array_pad_keys($item->toArray(),$number);
+            });
+        });
     }
 
     /**

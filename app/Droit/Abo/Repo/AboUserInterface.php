@@ -7,7 +7,7 @@ interface AboUserInterface {
     public function max($abo_id);
     public function findByAdresse($id, $abo_id);
     public function allByAdresse($id);
-    public function getYear($year,$month = null);
+    public function getYear($year = null,$month = null);
     public function create(array $data);
     public function update(array $data);
     public function restore($id);

@@ -48,22 +48,22 @@ class ArchiveController extends Controller
     public function year(Request $request)
     {
         $model = $request->input('model','inscription');
-        $year  = $request->input('year',date('Y'));
+        $year  = $request->input('year',null);
 
         $list = $this->$model->getYear($year);
 
-        $list = $list->groupBy(function ($item, $key) {
-            return $item->created_at->month;
-        })->map(function ($group, $key) {
-            return $group->count();
+        $colors = collect(array_keys($list->toArray()))->mapWithKeys(function($year,$key){
+            $alphabet = range('a', 'z');
+            $letter = isset($alphabet[$key]) ? $alphabet[$key] : 'zz';
+
+            return [$letter => ['color' => rand_color(), 'year' => $year]];
         });
 
-        $list = array_pad_keys($list->toArray(),12);
-
         return view('backend.archives.year')->with([
-            'list'  => $list,
-            'year'  => $year,
-            'model' => $model,
+            'list'   => array_map('array_values', $list->toArray()),
+            'year'   => $year,
+            'model'  => $model,
+            'colors' => array_reverse($colors->toArray())
         ]);
     }
 }

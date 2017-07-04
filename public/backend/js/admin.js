@@ -313,3 +313,43 @@ function ajustamodal() {
     var altura = $(window).height() - 255; //value corresponding to the modal heading + footer
     $(".ativa-scroll").css({"height":altura,"overflow-y":"auto"});
 }
+
+function injectStyles(rule) {
+    var div = $("<div />", {
+        html: '&shy;<style>' + rule + '</style>'
+    }).appendTo("body");
+}
+
+
+function charts_styles() {
+    var width = $( document ).width();
+
+    console.log(width);
+
+    if(width < 500){
+        injectStyles('.ct-perfect-fourth:before { padding-bottom:95%; }');
+    }
+    else if(width > 500 && width < 1000){
+        injectStyles('.ct-perfect-fourth:before { padding-bottom:75%; }');
+    }
+    else if(width > 1000 && width < 1400){
+        injectStyles('.ct-perfect-fourth:before { padding-bottom:55%; }');
+    }
+    else if(width > 1400 && width < 1700){
+        injectStyles('.ct-perfect-fourth:before { padding-bottom:45%; }');
+    }
+    else if(width > 1700 && width < 2000){
+        injectStyles('.ct-perfect-fourth:before { padding-bottom:30%; }');
+    }
+    else{
+        injectStyles('.ct-perfect-fourth:before { padding-bottom:75%; }');
+    }
+}
+
+$( function() {
+    charts_styles();
+});
+
+$(window).on('resize', function () {
+    charts_styles();
+});

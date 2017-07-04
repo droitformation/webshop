@@ -27,6 +27,7 @@
                                     <?php $years = range(2011,date('Y')); ?>
                                     <span class="input-group-addon">Année</span>
                                     <select class="form-control" name="year">
+                                        <option value="">Choisir</option>
                                         @foreach($years as $annee)
                                             <option {{ $year == $annee ? 'selected' : '' }} value="{{ $annee }}">{{ $annee }}</option>
                                         @endforeach
@@ -50,30 +51,57 @@
         <div class="col-md-12">
 
             <div class="panel panel-primary">
-                <div class="panel-body">
+                <div class="panel-body" id="appComponent">
 
                     <h4><i class="fa fa-list"></i> &nbsp;{{ ucfirst($model).'s' }} {{ $year }}</h4>
 
-                    <script>
-                        $( function() {
-                            var data = {
-                                // A labels array that can contain any sort of values
-                                labels: <?php echo json_encode(array_values($months)); ?>,
-                                // Our series array that contains series objects or in this case series data arrays
-                                series: [<?php echo json_encode(array_values($list)); ?>],
-                            };
+                    <ul class="chart-description">
+                        @foreach($colors as $letter => $color)
+                            <li>
+                                <input checked class="year-item" type="checkbox" value="{{ $color['year'] }}"> &nbsp;{{ $color['year'] }}
+                            </li>
+                        @endforeach
+                    </ul>
 
-                            var options = {
-                                stretch: true,
-                                low: 0,
-                                height: 450
-                            };
-                            // Create a new line chart object where as first parameter we pass in a selector
-                            // that is resolving to our chart container element. The Second parameter is the actual data object.
-                            new Chartist.Line('.ct-chart', data, options);
-                        });
-                    </script>
-                    <div class="ct-chart ct-perfect-fourth"></div>
+                    @if(!empty($list))
+
+                        <script>
+                            $( function() {
+
+                                var series = <?php echo json_encode($list); ?>;
+
+                                var data = {
+                                    labels: <?php echo json_encode(array_values($months)); ?>,
+                                    series: <?php echo json_encode(array_values($list)); ?>,
+                                };
+
+                                var options = {stretch: true, low: 0, height: '450px'};
+                                var chart   = new Chartist.Line('.ct-chart', data, options);
+
+                                $( ".year-item" ).change(function() {
+
+                                    var allkeys = $('.chart-description input:checkbox:checked').map(function() {return this.value;}).get();
+                                    var years   = [];
+
+                                    allkeys.forEach(function(year) {
+                                        if(series.hasOwnProperty(year)) {
+                                            years.push(series[year]);
+                                        }
+                                    });
+
+                                    var data = {labels: <?php echo json_encode(array_values($months)); ?>, series: years,};
+
+                                    chart.update(data);
+                                });
+
+                            });
+                        </script>
+                        <div class="ct-chart ct-perfect-fourth"></div>
+
+                    @else
+                        <p>Aucun résultat pour cette année</p>
+                    @endif
+
                 </div>
             </div>
 
