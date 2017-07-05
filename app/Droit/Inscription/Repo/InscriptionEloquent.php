@@ -35,6 +35,12 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getYear($year = null,$month = null)
     {
+        return $this->inscription->year($year,$month)->orderBy('created_at','DESC')->get();
+    }
+
+
+    public function getYearStats($year = null,$month = null)
+    {
         $inscriptions = $this->inscription->year($year,$month)->selectRaw('MONTH(created_at) as month, Year(created_at) as year')->orderBy('created_at','DESC')->get();
 
         return $inscriptions->groupBy('year')->map(function ($group, $key) {

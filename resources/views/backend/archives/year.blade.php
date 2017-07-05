@@ -58,7 +58,10 @@
                     <ul class="chart-description">
                         @foreach($colors as $letter => $color)
                             <li>
-                                <input checked class="year-item" type="checkbox" value="{{ $color['year'] }}"> &nbsp;{{ $color['year'] }}
+                                <input checked class="year-item" type="checkbox" value="{{ $color['year'] }}">
+                                <span style="background: {{ $color['color'] }}; color: #fff;">
+                                    &nbsp;{{ $color['year'] }}
+                                </span>
                             </li>
                         @endforeach
                     </ul>
@@ -73,8 +76,22 @@
                                     series: <?php echo json_encode(array_values($list)); ?>,
                                 };
 
-                                var options = {stretch: true, low: 0, height: '450px'};
+                                var options = {stretch: true, low: 1, height: '450px'};
                                 var chart   = new Chartist.Line('.ct-chart', data, options);
+
+                                var colors = <?php echo json_encode(array_values($colors)); ?>;
+
+                                chart.on('draw', function(context) {
+                                    console.log(context);
+                                    // First we want to make sure that only do something when the draw event is for bars. Draw events do get fired for labels and grids too.
+                                    if(context.type === 'line' || context.type === 'point') {
+                                        // With the Chartist.Svg API we can easily set an attribute on our bar that just got drawn
+                                        var index = context.type === 'line' ? context.index : context.seriesIndex;
+
+                                        var color = Object.values(colors)[index].color;
+                                        context.element.attr({ style: 'stroke: ' + color + ';'});
+                                    }
+                                });
 
                                 $( ".year-item" ).change(function() {
 
@@ -89,11 +106,7 @@
                                     });
 
                                     allkeys.forEach(function(year,index) {
-                                        if(selected.includes(year)) {
-                                            years[index] = series[year];
-                                        }else{
-                                            years[index] = empty;
-                                        }
+                                        years[index] = selected.includes(year) ? series[year] : empty;
                                     });
 
                                     years = years.filter(function(){return true;});

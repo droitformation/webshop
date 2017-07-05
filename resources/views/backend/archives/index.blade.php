@@ -65,6 +65,7 @@
                     <h4><i class="fa fa-list"></i> &nbsp;{{ ucfirst($model).'s' }} {{ $months[$month] }} {{ $year }}</h4>
 
                     @if(!$list->isEmpty())
+
                         <p><span class="label label-primary">Nombre {{ $list->count() }}</span></p>
                         <table class="table table-striped">
                             <thead>

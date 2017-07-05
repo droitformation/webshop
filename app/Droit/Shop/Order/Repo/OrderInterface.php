@@ -10,6 +10,7 @@ interface OrderInterface {
     public function search($order_no);
     public function lastYear();
     public function getYear($year = null,$month = null);
+    public function getYearStats($year = null,$month = null);
 	public function find($data);
     public function maxOrder($year);
     public function hasPayed($user_id);

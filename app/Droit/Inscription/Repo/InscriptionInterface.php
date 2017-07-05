@@ -13,6 +13,7 @@ interface InscriptionInterface {
     public function getByGroupe($groupe_id);
     public function hasPayed($user_id);
     public function getYear($year = null,$month = null);
+    public function getYearStats($year = null,$month = null);
     public function find($id);
     public function findByNumero($numero,$colloque_id);
     public function restore($id);

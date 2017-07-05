@@ -36,7 +36,7 @@ class ArchiveController extends Controller
         $month = $request->input('month',date('m'));
 
         $list = $this->$model->getYear($year,$month);
- 
+
         return view('backend.archives.index')->with([
             'list'  => $list,
             'year'  => $year,
@@ -54,7 +54,7 @@ class ArchiveController extends Controller
 
         $colors = collect(array_keys($list->toArray()))->mapWithKeys(function($year,$key){
             $alphabet = range('a', 'z');
-            $letter = isset($alphabet[$key]) ? $alphabet[$key] : 'zz';
+            $letter   = isset($alphabet[$key]) ? $alphabet[$key] : 'zz';
 
             return [$letter => ['color' => rand_color(), 'year' => $year]];
         });

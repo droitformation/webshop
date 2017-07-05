@@ -48,6 +48,11 @@ class OrderEloquent implements OrderInterface{
 
     public function getYear($year = null,$month = null)
     {
+        return $this->order->year($year,$month)->orderBy('created_at','DESC')->get();
+    }
+
+    public function getYearStats($year = null,$month = null)
+    {
         $orders = $this->order->year($year,$month)->selectRaw('MONTH(created_at) as month, Year(created_at) as year')->orderBy('created_at','DESC')->get();
 
         return $orders->groupBy('year')->map(function ($group, $key) {

@@ -42,6 +42,11 @@ class AboUserEloquent implements AboUserInterface{
 
     public function getYear($year = null,$month = null)
     {
+        return $this->abo_user->year($year,$month)->whereYear('created_at', '>', 2010)->orderBy('created_at','DESC')->get();
+    }
+
+    public function getYearStats($year = null,$month = null)
+    {
         $abos = $this->abo_user->year($year,$month)->selectRaw('MONTH(created_at) as month, Year(created_at) as year')->whereYear('created_at', '>', 2010)->orderBy('created_at','DESC')->get();
 
         return $abos->groupBy('year')->map(function ($group, $key) {
