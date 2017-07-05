@@ -24,7 +24,7 @@ class EmailController extends Controller
         view()->share('isNewsletter',true);
     }
 
-    public function store(Request $request)
+    public function store(EmailRequest $request)
     {
         $exist = $this->list->emailExist($request->input('list_id'),$request->input('email'));
 
@@ -47,7 +47,7 @@ class EmailController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id,Request $request)
+    public function update($id,EmailRequest $request)
     {
         $email = $this->emails->update( $request->all() );
 
