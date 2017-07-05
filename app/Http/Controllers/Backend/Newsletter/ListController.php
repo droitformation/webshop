@@ -84,8 +84,8 @@ class ListController extends Controller
         $results = $this->import->read($path);
 
         $emails = $results->pluck('email')
-            ->unique()->filter(function ($value, $key) {
-                return !empty($value);
+            ->unique()->reject(function ($value, $key) {
+                return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
             })->all();
         
         $list = $this->list->create([
@@ -121,9 +121,8 @@ class ListController extends Controller
             }
 
             $data['emails'] = $results->pluck('email')
-                ->unique()
-                ->filter(function ($value, $key) {
-                    return !empty($value);
+                ->unique()->reject(function ($value, $key) {
+                    return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
                 })->all();
         }
 

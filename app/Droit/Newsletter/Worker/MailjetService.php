@@ -355,8 +355,13 @@ class MailjetService implements MailjetServiceInterface{
         if($response->success()){
             return $response->getData();
         }
-
-        return false;
+        else{
+            echo '<h3><br/>Merci de faire une copie d\'écran de ce message d\'erreur et de la transmettre à cindy.leschaud@gmail.com</h3>';
+            var_dump($response->getStatus());
+            var_dump($response->getReasonPhrase());
+            var_dump($response->getData());
+            exit;
+        }
     }
 
     /*
