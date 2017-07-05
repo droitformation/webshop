@@ -68,8 +68,6 @@
                         <script>
                             $( function() {
 
-                                var series = <?php echo json_encode($list); ?>;
-
                                 var data = {
                                     labels: <?php echo json_encode(array_values($months)); ?>,
                                     series: <?php echo json_encode(array_values($list)); ?>,
@@ -80,16 +78,30 @@
 
                                 $( ".year-item" ).change(function() {
 
-                                    var allkeys = $('.chart-description input:checkbox:checked').map(function() {return this.value;}).get();
-                                    var years   = [];
+                                    var allkeys = [];
+                                    var selected = $('.chart-description input:checkbox:checked').map(function() {return this.value;}).get();
+                                    var series   = <?php echo json_encode($list); ?>;
+                                    var years    = <?php echo json_encode(array_values($list)); ?>;
+                                    var empty    = Array.apply(null, Array(12)).map(Number.prototype.valueOf,0);
 
-                                    allkeys.forEach(function(year) {
-                                        if(series.hasOwnProperty(year)) {
-                                            years.push(series[year]);
+                                    Object.keys(series).forEach(function(key) {
+                                        allkeys.push(key);
+                                    });
+
+                                    allkeys.forEach(function(year,index) {
+                                        if(selected.includes(year)) {
+                                            years[index] = series[year];
+                                        }else{
+                                            years[index] = empty;
                                         }
                                     });
 
-                                    var data = {labels: <?php echo json_encode(array_values($months)); ?>, series: years,};
+                                    years = years.filter(function(){return true;});
+
+                                    var data = {
+                                        labels: <?php echo json_encode(array_values($months)); ?>,
+                                        series: years,
+                                    };
 
                                     chart.update(data);
                                 });
