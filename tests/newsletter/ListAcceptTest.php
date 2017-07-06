@@ -108,6 +108,17 @@ class ListAcceptTest extends BrowserKitTest
             'deleted_at' => null
         ]);
     }
+
+    public function testValidEmails()
+    {
+        $results = collect([['email' => 'cindy.leschaud@gmail.com'],['email' => 'cindy.leschaud@gmail.com'],['email' => 'prundaf.ch']]);
+        $emails = $results->pluck('email')
+            ->unique()->reject(function ($value, $key) {
+                return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
+            });
+
+        $this->assertSame(1,$emails->count());
+    }
     
     function prepareFileUpload($path)
     {

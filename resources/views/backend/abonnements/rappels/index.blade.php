@@ -77,22 +77,23 @@
 
                             @if(!$factures->isEmpty())
                                 @foreach($factures as $facture)
-                                    <tr>
-                                        <td>{{ $facture->abonnement->numero }}</td>
-                                        <td>
-                                            @if($facture->abonnement->user)
-                                                <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->user->name }}</a>
-                                            @elseif($facture->abonnement->originaluser)
-                                                <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $facture->abonnement->originaluser->name }}</a>
-                                            @else
-                                                <p><span class="label label-warning">Duplicata</span></p>
-                                            @endif
-                                        </td>
-                                        <td>{{ $facture->abonnement->abo->price_cents }} CHF</td>
-                                        <td>
-                                            <rappel path="abonnement" :rappels="{{ $facture->rappel_list }}" item="{{ $facture->id }}"></rappel>
-                                        </td>
-                                    </tr>
+                                    @if(isset($facture->abonnement))
+                                        <tr>
+                                            <td>{{ $facture->abonnement->numero }}</td>
+                                            <td>
+                                                <?php $user = $facture->abonnement->user_adresse; ?>
+                                                @if($user)
+                                                    <a href="{{ url('admin/abonnement/'.$facture->abonnement->id) }}">{{ $user->name }}</a>
+                                                @else
+                                                    <p><span class="label label-warning">Duplicata</span></p>
+                                                @endif
+                                            </td>
+                                            <td>{{ $facture->abonnement->abo->price_cents }} CHF</td>
+                                            <td>
+                                                <rappel path="abonnement" :rappels="{{ $facture->rappel_list }}" item="{{ $facture->id }}"></rappel>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             @endif
                             </tbody>

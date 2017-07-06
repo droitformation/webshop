@@ -132,7 +132,9 @@ class ImportWorker implements ImportWorkerInterface
         
         if(!$list->emails->isEmpty() && $campagne && $html)
         {
-            $recipients = $list->emails->map(function ($email) {
+            $recipients = $list->emails->unique()->reject(function ($email, $key) {
+                return !filter_var($email->email, FILTER_VALIDATE_EMAIL) || empty($email->email);
+            })->map(function ($email) {
                 return  ['Email' => $email->email, 'Name'  => ""];
             });
 
