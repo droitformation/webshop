@@ -20,7 +20,7 @@
 
                     <?php $numero = $abo->abonnements->max('numero') + 1; ?>
 
-                    <div class="panel-body">
+                    <div class="panel-body" id="appComponent">
                         <h4>Ajouter un abonné</h4>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
@@ -30,40 +30,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Adresse</label>
-                            <div class="col-sm-4 col-xs-12">
-
-                                <!-- Autocomplete for adresse -->
-                                <div class="autocomplete-wrapper">
-                                    <div class="input-adresse" data-adresse="{{ old('adresse_id') }}" data-type="adresse_id"></div>
-                                    <div class="choice-adresse"></div>
-                                    <div class="collapse in adresse-find adresse-find-abo">
-                                        <div class="form-group">
-                                            <input id="search-adresse1" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Autocomplete for adresse -->
-
+                            <label class="col-sm-3 control-label">Compte</label>
+                            <div class="col-sm-7 col-xs-5">
+                                <list-autocomplete type="user_id" chosen_id=""></list-autocomplete>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tiers payant</label>
-                            <div class="col-sm-4 col-xs-5">
-
-                                <!-- Autocomplete for tiers adresse -->
-                                <div class="autocomplete-wrapper">
-                                    <div class="input-adresse" data-adresse="{{ old('tiers_id') }}" data-type="tiers_id"></div>
-                                    <div class="choice-adresse"></div>
-                                    <div class="collapse in adresse-find adresse-find-abo">
-                                        <div class="form-group">
-                                            <input id="search-adresse2" class="form-control search-adresse" placeholder="Chercher une adresse..." type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Autocomplete for tiers adresse -->
-
+                            <div class="col-sm-7 col-xs-5">
+                                <list-autocomplete type="tiers_user_id" chosen_id=""></list-autocomplete>
                             </div>
                         </div>
 
@@ -80,7 +56,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Exemplaires</label>
                             <div class="col-sm-4 col-xs-5">
-                                <input type="text" class="form-control" value="" name="exemplaires">
+                                <input type="text" class="form-control" value="1" name="exemplaires">
                             </div>
                         </div>
 
