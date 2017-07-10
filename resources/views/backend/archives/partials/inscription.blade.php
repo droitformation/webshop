@@ -1,4 +1,4 @@
-<tr>
+<tr class="{{ $row->trashed() ? 'bg-warning' : '' }}">
     <td>
         @if($row->inscrit)
             <p><strong>{!! $row->inscrit->name !!}</strong></p>

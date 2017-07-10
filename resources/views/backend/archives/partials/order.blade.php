@@ -1,6 +1,12 @@
-<tr>
+<tr class="{{ $row->trashed() ? 'bg-warning' : '' }}">
     <td>
-        {{ $row->order_adresse ? $row->order_adresse->name : 'Admin' }}
+        @if($row->order_adresse)
+            {{ $row->order_adresse->name}}
+        @elseif($row->order_adresse_deleted)
+            {{ $row->order_adresse_deleted->name }}
+        @else
+            Admin
+        @endif
     </td>
     <td>
         @if($row->facture)

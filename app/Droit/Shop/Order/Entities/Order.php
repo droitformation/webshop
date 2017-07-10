@@ -30,16 +30,41 @@ class Order extends Model{
 
     public function getOrderAdresseAttribute()
     {
-        if(isset($this->user))
-        {
+        if(isset($this->user)) {
             return $this->user->adresses->where('type',1)->first();
         }
 
-        if(isset($this->adresse))
-        {
+        if(isset($this->adresse)) {
             return $this->adresse;
         }
         
+        return null;
+    }
+
+    public function getOrderAdresseDeletedAttribute(){
+
+        if($this->user_id > 0){
+           $user = $this->user()->withTrashed()->get()->first();
+
+           if($user){
+               $adresse = $user->adresses()->withTrashed()->get();
+
+               if(!$adresse->isEmpty()){
+                   $adresse = $adresse->where('type',1)->first();
+
+                   return $adresse->where('type',1)->first();
+               }
+           }
+        }
+
+        if($this->adresse_id > 0 && $this->user_id == null){
+            $adresse = $this->adresse()->withTrashed()->get();
+
+            if(!$adresse->isEmpty()){
+                return $adresse->first();
+            }
+        }
+
         return null;
     }
 
@@ -224,6 +249,16 @@ class Order extends Model{
     public function adresse()
     {
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse');
+    }
+
+    public function user_deleted()
+    {
+        return $this->belongsTo('App\Droit\User\Entities\User')->withTrashed();
+    }
+
+    public function adresse_deleted()
+    {
+        return $this->belongsTo('App\Droit\Adresse\Entities\Adresse')->withTrashed();
     }
 
     public function shipping()
