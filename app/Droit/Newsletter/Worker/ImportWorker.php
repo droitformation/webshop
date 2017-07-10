@@ -138,10 +138,11 @@ class ImportWorker implements ImportWorkerInterface
                 return  ['Email' => $email->email, 'Name'  => ""];
             });
 
-            $result = $this->mailjet->sendBulk($campagne, $html, $recipients->toArray(), false);
+            // Send only 100 at the time to avoid timeout
+            $chunks = $recipients->chunk(100);
 
-            if(!$result) {
-               throw new \App\Exceptions\TestSendException('Mailjet a renvoyé un problème avec l\'envoi');
+            foreach ($chunks as $chunk){
+               $this->mailjet->sendBulk($campagne, $html, $chunk->toArray(), false);
             }
 
             return true;
