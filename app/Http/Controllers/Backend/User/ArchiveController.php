@@ -50,7 +50,7 @@ class ArchiveController extends Controller
         $model = $request->input('model','inscription');
         $year  = $request->input('year',null);
 
-        $list = $this->$model->getYear($year);
+        $list = $this->$model->getYearStats($year);
 
         $colors = collect(array_keys($list->toArray()))->mapWithKeys(function($year,$key){
             $alphabet = range('a', 'z');

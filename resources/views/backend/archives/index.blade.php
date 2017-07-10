@@ -62,7 +62,24 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
 
-                    <h4><i class="fa fa-list"></i> &nbsp;{{ ucfirst($model).'s' }} {{ $months[$month] }} {{ $year }}</h4>
+                    <?php
+                    switch ($model) {
+                        case 'inscription':
+                            $row_title = "Participant";
+                            $title = 'Inscriptions';
+                            break;
+                        case 'order':
+                            $row_title = "Facture";
+                            $title = 'Commandes';
+                            break;
+                        case 'abo':
+                            $row_title = "Abonnement";
+                            $title = 'Abonnements';
+                            break;
+                    }
+                    ?>
+
+                    <h4><i class="fa fa-list"></i> &nbsp;{{ $title }} {{ $months[$month] }} {{ $year }}</h4>
 
                     @if(!$list->isEmpty())
 
@@ -71,21 +88,7 @@
                             <thead>
                             <tr>
                                 <th class="col-sm-3">Nom</th>
-                                <th class="col-sm-3">
-                                    <?php
-                                    switch ($model) {
-                                        case 'inscription':
-                                            echo "Participant";
-                                            break;
-                                        case 'order':
-                                            echo "Facture";
-                                            break;
-                                        case 'abo':
-                                            echo "Abonnement";
-                                            break;
-                                    }
-                                    ?>
-                                </th>
+                                <th class="col-sm-3">{{ $row_title }}</th>
                                 <th class="col-sm-2">N°</th>
                                 <th class="col-sm-2">Prix</th>
                                 <th class="col-sm-2">Date</th>

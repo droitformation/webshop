@@ -78,18 +78,29 @@
 
                                 var options = {stretch: true, low: 1, height: '450px'};
                                 var chart   = new Chartist.Line('.ct-chart', data, options);
-
-                                var colors = <?php echo json_encode(array_values($colors)); ?>;
+                                var colors  = <?php echo json_encode(array_values($colors)); ?>;
 
                                 chart.on('draw', function(context) {
-                                    console.log(context);
                                     // First we want to make sure that only do something when the draw event is for bars. Draw events do get fired for labels and grids too.
                                     if(context.type === 'line' || context.type === 'point') {
+
+                                        var max = Math.max(...context.series);
                                         // With the Chartist.Svg API we can easily set an attribute on our bar that just got drawn
                                         var index = context.type === 'line' ? context.index : context.seriesIndex;
 
-                                        var color = Object.values(colors)[index].color;
-                                        context.element.attr({ style: 'stroke: ' + color + ';'});
+                                        var color  = Object.values(colors)[index].color;
+                                        color  = max > 0 ? color : '#fff';
+
+                                        if(context.type === 'line'){
+                                            var stroke = 2;
+                                            stroke = max > 0 ? stroke : 0;
+                                            context.element.attr({ style: 'stroke: ' + color + '; stroke-width : ' + stroke + 'px;'});
+                                        }
+                                        else{
+                                            var stroke = 10;
+                                            stroke = max > 0 ? stroke : 0;
+                                            context.element.attr({ style: 'stroke: ' + color + '; stroke-width : ' + stroke + 'px;' });
+                                        }
                                     }
                                 });
 
