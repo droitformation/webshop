@@ -71,8 +71,9 @@ class Account
 
             if(!$this->model->adresses->isEmpty()){
                 $this->adresses     = $this->model->adresses;
-                $this->main_adresse = $this->adresses->where('type',1)->first();
                 $this->name         = $this->main_adresse->name;
+                $this->main_adresse = $this->adresses->where('type',1)->first();
+                $this->main_adresse_deleted = $this->main_adresse->trashed();
             }
             else{
                 $adresses = $this->model->adresses()->withTrashed()->get();

@@ -97,6 +97,7 @@ class AccountClassTest extends BrowserKitTest {
         $user    = $make->makeUser();
         $adresse = $user->adresses->first();
         $adresse->delete();
+        $user->fresh();
 
         $account = new App\Droit\Adresse\Entities\Account($user);
 
