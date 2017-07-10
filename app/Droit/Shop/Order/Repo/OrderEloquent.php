@@ -48,7 +48,7 @@ class OrderEloquent implements OrderInterface{
 
     public function getYear($year = null,$month = null)
     {
-        return $this->order->year($year,$month)->orderBy('created_at','DESC')->withTrashed()->get();
+        return $this->order->year($year,$month)->with(['user','shipping','user.adresses','adresse'])->orderBy('created_at','DESC')->get();
     }
 
     public function getYearStats($year = null,$month = null)

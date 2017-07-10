@@ -81,6 +81,9 @@
 
                     <h4><i class="fa fa-list"></i> &nbsp;{{ $title }} {{ $months[$month] }} {{ $year }}</h4>
 
+                    <p><i class="text-warning fa fa-warning">&nbsp;</i>&nbsp; Adresse principale du compte supprimée</p>
+                    <p><i class="text-danger fa fa-warning">&nbsp;</i>&nbsp;  Utilisateur supprimé</p>
+
                     @if(!$list->isEmpty())
 
                         <p><span class="label label-primary">Nombre {{ $list->count() }}</span></p>

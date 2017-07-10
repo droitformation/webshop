@@ -1,12 +1,8 @@
-<tr class="{{ $row->trashed() ? 'bg-warning' : '' }}">
+<tr>
     <td>
-        @if($row->order_adresse)
-            {{ $row->order_adresse->name}}
-        @elseif($row->order_adresse_deleted)
-            {{ $row->order_adresse_deleted->name }}
-        @else
-            Admin
-        @endif
+        {{ $row->order_account->name }}
+        {!! $row->order_account->main_adresse_deleted ? '<i class="text-warning fa fa-warning pull-right">&nbsp;</i>' : '' !!}
+        {!! $row->order_account->user_deleted ? '<i class="text-danger fa fa-warning pull-right">&nbsp;</i>' : '' !!}
     </td>
     <td>
         @if($row->facture)

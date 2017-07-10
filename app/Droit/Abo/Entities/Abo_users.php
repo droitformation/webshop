@@ -87,6 +87,22 @@ class Abo_users extends Model{
         return isset($this->tiers) ? $this->tiers : $this->user_adresse;
     }
 
+    public function getAboAccountAttribute()
+    {
+        if($this->user_Adresse) {
+            return new \App\Droit\Adresse\Entities\Account($this->user_Adresse);
+        }
+        else{
+            $user = $this->realuser()->withTrashed()->get();
+
+            if(!$user->isEmpty()){
+                return new \App\Droit\Adresse\Entities\Account($user->first());
+            }
+        }
+
+        return new \App\Droit\Adresse\Entities\Account();
+    }
+
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

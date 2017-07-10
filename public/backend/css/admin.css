@@ -1409,3 +1409,8 @@ input[type="checkbox"].rappel-input {
     display: inline-block;
     margin-right: 2px;
 }
+
+.badge.badge-point{
+    padding: 1px 4px;
+    margin: 5px 1px 0 1px;
+}

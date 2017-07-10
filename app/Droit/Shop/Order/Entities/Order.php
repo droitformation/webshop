@@ -37,35 +37,40 @@ class Order extends Model{
         if(isset($this->adresse)) {
             return $this->adresse;
         }
-        
+
         return null;
     }
 
-    public function getOrderAdresseDeletedAttribute(){
+    public function getOrderAccountAttribute()
+    {
+        $user = null;
 
         if($this->user_id > 0){
-           $user = $this->user()->withTrashed()->get()->first();
 
-           if($user){
-               $adresse = $user->adresses()->withTrashed()->get();
+            if(isset($this->user)) {
+                return new \App\Droit\Adresse\Entities\Account($this->user);
+            }
+            else{
+                $user = $this->user()->withTrashed()->get()->first();
 
-               if(!$adresse->isEmpty()){
-                   $adresse = $adresse->where('type',1)->first();
-
-                   return $adresse->where('type',1)->first();
-               }
-           }
-        }
-
-        if($this->adresse_id > 0 && $this->user_id == null){
-            $adresse = $this->adresse()->withTrashed()->get();
-
-            if(!$adresse->isEmpty()){
-                return $adresse->first();
+                return new \App\Droit\Adresse\Entities\Account($user);
             }
         }
 
-        return null;
+        if($this->adresse_id > 0 && $this->user_id == null){
+            if(isset($this->adresse)) {
+                return new \App\Droit\Adresse\Entities\Account( $this->adresse);
+            }
+            else{
+                $adresse = $this->adresse()->withTrashed()->get();
+
+                if(!$adresse->isEmpty()){
+                    return new \App\Droit\Adresse\Entities\Account($adresse->first());
+                }
+            }
+        }
+
+        return new \App\Droit\Adresse\Entities\Account();
     }
 
     public function getStatusCodeAttribute()

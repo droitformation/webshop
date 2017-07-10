@@ -173,6 +173,31 @@ class Inscription extends Model
         return null;
     }
 
+    public function getInscritAccountAttribute()
+    {
+        $user = null;
+
+        if(isset($this->groupe)) {
+            if(isset($this->groupe->user)){
+                $user = new \App\Droit\Adresse\Entities\Account($this->groupe->user);
+            }
+            else{
+                $user = new \App\Droit\Adresse\Entities\Account($this->groupe->user()->withTrashed()->get()->first());
+            }
+
+            return new \App\Droit\Adresse\Entities\Account($user);
+        }
+
+        if(isset($this->user)) {
+            $user = $this->user;
+        }
+        else{
+            $user = $this->user()->withTrashed()->get()->first();
+        }
+
+        return new \App\Droit\Adresse\Entities\Account($user);
+    }
+
     public function getDetenteurAttribute()
     {
         $adresse = $this->inscrit->adresses->where('type',1)->first();

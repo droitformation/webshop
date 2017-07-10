@@ -1,9 +1,12 @@
 <tr class="{{ $row->trashed() ? 'bg-warning' : '' }}">
     <td>
-        @if($row->inscrit)
-            <p><strong>{!! $row->inscrit->name !!}</strong></p>
-            <p>{!! $row->inscrit->email !!}</p>
-        @endif
+        <p>
+            <strong>{!! $row->inscrit_account->name !!}</strong><br/>
+            {!! isset($row->inscrit_account->main_adresse) ? $row->inscrit_account->main_adresse->email : '' !!}
+            {!! $row->inscrit_account->main_adresse_deleted ? '<i class="text-warning fa fa-warning pull-right">&nbsp;</i>' : '' !!}
+            {!! $row->inscrit_account->user_deleted ? '<i class="text-danger fa fa-warning pull-right">&nbsp;</i>' : '' !!}
+        </p>
+
     </td>
     <td>
         @if($row->participant)

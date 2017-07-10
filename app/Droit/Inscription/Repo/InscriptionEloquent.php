@@ -35,7 +35,10 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function getYear($year = null,$month = null)
     {
-        return $this->inscription->year($year,$month)->withTrashed()->orderBy('created_at','DESC')->get();
+        return $this->inscription->with(['groupe','groupe.user','groupe.user.adresses','user','user.adresses','participant','colloque','colloque.prices','price'])
+            ->year($year,$month)
+            ->orderBy('created_at','DESC')
+            ->get();
     }
 
     public function getYearStats($year = null,$month = null)
