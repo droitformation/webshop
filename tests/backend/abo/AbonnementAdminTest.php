@@ -32,7 +32,7 @@ class AbonnementAdminTest extends BrowserKitTest {
     {
         $make = new \tests\factories\ObjectFactory();
         $abo     = $make->makeAbo();
-        $adresse = $make->user();
+        $user = $make->user();
 
         $this->visit('admin/abonnements/'.$abo->id);
         $this->assertViewHas('abo');
@@ -45,7 +45,7 @@ class AbonnementAdminTest extends BrowserKitTest {
             'abo_id'         => $abo->id,
             'numero'         => 1,
             'exemplaires'    => 1,
-            'adresse_id'     => $adresse->adresses->first()->id,
+            'user_id'        => $user->id,
             'status'         => 'abonne',
             'renouvellement' => 'auto',
         ];
@@ -53,8 +53,8 @@ class AbonnementAdminTest extends BrowserKitTest {
         $response = $this->call('POST', '/admin/abonnement', $data);
 
         $this->seeInDatabase('abo_users', [
-            'abo_id'     => $abo->id,
-            'adresse_id' => $adresse->adresses->first()->id,
+            'abo_id'  => $abo->id,
+            'user_id' => $user->id,
         ]);
     }
 

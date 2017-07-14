@@ -109,7 +109,7 @@ class AboFrontendTest extends BrowserKitTest {
         $this->click('btn-invoice');
 
         $this->seeInDatabase('abo_users', [
-            'abo_id'     => $abo->id,
+            'abo_id'  => $abo->id,
             'user_id' => $user->id,
         ]);
 
