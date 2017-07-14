@@ -21,31 +21,37 @@
 
         @if(!$sondage->avis->isEmpty())
             @foreach($sondage->avis as $avis)
-                <div class="form-group form-group-sondage">
-				@if($avis->type != 'chapitre')
-                    <label for="message" class="control-label label-question"><p class="label-question">{!! strip_tags($avis->question) !!}</p>
-				@endif
-
-                    @if($avis->type == 'text')
-                        <textarea class="form-control form-control-sondage" name="reponses[{{ $avis->id }}]"></textarea>
-					@elseif($avis->type == 'chapitre')
-						<p class="label-chapitre">{!! strip_tags($avis->question) !!}</p>
-                    @else
-                        <?php $choices = explode(',', $avis->choices); ?>
-                        @foreach($choices as $choices)
-                            <div class="{{ $avis->type }}">
-                                <label>
-                                    <input type="{{ $avis->type }}" name="reponses[{{ $avis->id }}]" value="{{ $choices }}">{{ $choices }}
-                                </label>
-                            </div>
-                        @endforeach
-                    @endif
+		
+                <div class="form-group-sondage">
+				@if($avis->type == 'chapitre')
+					<h4 class="label-chapitre"><strong>{!! strip_tags($avis->question) !!}</strong></h4>
+				
+				@elseif($avis->type == 'text')
+					<label for="message" class="control-label">Remarques :</label>
+					<textarea class="form-control sondage" name="reponses[{{ $avis->id }}]"></textarea>
+				
+				@else($avis->type == 'question')
+					<ul>
+						<li class="sondage-question"><label for="message" class="control-label label-question">{!! strip_tags($avis->question) !!}</li>
+					</ul>
+					<ul>
+                    <?php $choices = explode(',', $avis->choices); ?>
+                    @foreach($choices as $choices)
+                        <li class="radio-sondage">
+                            <input class="sondage" type="{{ $avis->type }}" name="reponses[{{ $avis->id }}]" value="{{ $choices }}">{{ $choices }}
+                        </li>
+					
+                    @endforeach
+					</ul>
+                @endif
 
                 </div>
             @endforeach
-            <hr/>
+            <hr class="sondage"/>
+			<div class="remerciements sondage">
 			<h3> <strong>Merci d'avoir participer.</strong></h3> 
             <button type="submit" class="btn btn-primary">Envoyer le sondage</button>
+			</div>
 
         @endif
 
