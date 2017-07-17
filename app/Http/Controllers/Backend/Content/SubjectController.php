@@ -60,8 +60,7 @@ class SubjectController extends Controller
         }
 
         $seminaire = $this->seminaire->find($request->input('seminaire_id'));
-
-        $subject = $this->subject->create($data);
+        $subject   = $this->subject->create($data);
         
         $seminaire->subjects()->save($subject);
 

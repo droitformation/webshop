@@ -27,7 +27,7 @@ class SeminaireEloquent implements SeminaireInterface{
         $seminaire = $this->seminaire->create(array(
             'title'      => $data['title'],
             'year'       => $data['year'],
-            'image'      => $data['image'],
+            'image'      => isset($data['image']) ? $data['image'] : null,
             'product_id' => isset($data['product_id']) ? $data['product_id'] : null,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()

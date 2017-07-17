@@ -66,9 +66,12 @@ class SeminaireController extends Controller {
 	public function store(Request $request)
 	{
         $data = $request->except('file');
-        $file = $this->upload->upload( $request->file('file') , 'files/seminaires' , 'product');
 
-        $data['image'] = $file['name'];
+        if( $request->file('file')){
+            $file = $this->upload->upload( $request->file('file') ,  public_path('files/seminaires') , 'product');
+
+            $data['image'] = $file['name'];
+        }
 
         $seminaire = $this->seminaire->create($data);
 
@@ -107,7 +110,7 @@ class SeminaireController extends Controller {
 
         if($_file)
         {
-            $file = $this->upload->upload( $_file , 'files/seminaires' , 'product');
+            $file = $this->upload->upload( $_file , public_path('files/seminaires') , 'product');
             $data['image'] = $file['name'];
         }
 

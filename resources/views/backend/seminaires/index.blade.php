@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-10">
 
-            <h3>Seminaires <a href="{{ url('admin/seminaire/create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></h3>
+            <h3>Seminaires <a href="{{ url('admin/seminaire/create') }}" id="addSeminaire" class="btn btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter</a></h3>
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body">

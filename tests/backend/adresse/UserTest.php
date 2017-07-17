@@ -27,7 +27,7 @@ class UserTest extends BrowserKitTest {
         parent::tearDown();
     }
 
-  /*  public function testCreateNewUser()
+    public function testCreateNewUser()
     {
          $user = factory(App\Droit\User\Entities\User::class)->create();
 
@@ -201,7 +201,7 @@ class UserTest extends BrowserKitTest {
         $this->assertSame('George',$user3->name);
         $this->assertSame('Martin',$user4->name);
         $this->assertSame('Acme',$user5->name);
-    }*/
+    }
 
     public function testDeleteUserConfirmation()
     {

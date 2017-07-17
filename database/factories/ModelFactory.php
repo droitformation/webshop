@@ -204,6 +204,22 @@ $factory->define(App\Droit\Menu\Entities\Menu::class, function (Faker\Generator 
     ];
 });
 
+$factory->define(App\Droit\Seminaire\Entities\Seminaire::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->word,
+        'year'  => $faker->year
+    ];
+});
+
+$factory->define(App\Droit\Seminaire\Entities\Subject::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->word,
+        'rang'  => $faker->numberBetween(1,10),
+        'file'  => 'test.pdf',
+        'appendixes'  => 'test1.pdf, test2.pdf'
+    ];
+});
+
 $factory->define(App\Droit\Location\Entities\Location::class, function (Faker\Generator $faker) {
     return [
         'name'    => 'Un lieux',
