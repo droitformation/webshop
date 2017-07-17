@@ -25,6 +25,16 @@ class SubjectController extends Controller
         view()->share('current_site', 2);
     }
 
+    public function annexe(Request $request)
+    {
+        if($request->input('link') && $request->input('id')){
+            $subject = $this->subject->find($request->input('id'));
+            $subject = $this->subject->update(['id' => $request->input('id'),'appendixes' => delete_in_array($subject->appendixes,$request->input('link'))]);
+        }
+
+        return view('backend.seminaires.partials.annexes')->with(['subject' => $subject]);
+    }
+
     /**
      * Store a newly created resource in storage.
      * POST /subject
@@ -40,9 +50,13 @@ class SubjectController extends Controller
             $data['file'] = $file['name'];
         }
 
-        if($request->file('appendixes')){
-            $appendixes = $this->upload->upload( $request->file('appendixes') , 'files/subjects');
-            $data['appendixes'] = $appendixes['name'];
+        if(!empty($request->file('appendixes',[]))){
+            foreach ($request->file('appendixes') as $annexe){
+                $appendixe = $this->upload->upload( $annexe , 'files/subjects');
+                $files[] = $appendixe['name'];
+            }
+
+            $data['appendixes'] = implode(',',$files);
         }
 
         $seminaire = $this->seminaire->find($request->input('seminaire_id'));
@@ -65,21 +79,29 @@ class SubjectController extends Controller
      */
     public function update($id,Request $request)
     {
-        $data  = $request->except('file','appendixes');
+        $data = $request->except('file','appendixes');
+        $subject = $this->subject->find($request->input('id'));
 
         if($request->file('file')){
             $file  = $this->upload->upload( $request->file('file') , 'files/subjects');
             $data['file'] = $file['name'];
         }
 
-        if($request->file('appendixes')){
-            $appendixes = $this->upload->upload( $request->file('appendixes') , 'files/subjects');
-            $data['appendixes'] = $appendixes['name'];
+        if(!empty($request->file('appendixes',[]))){
+            foreach ($request->file('appendixes') as $annexe){
+                $appendixe = $this->upload->upload( $annexe , 'files/subjects');
+                $files[] = $appendixe['name'];
+            }
+
+            $exist      = explode(',',$subject->appendixes);
+            $appendixes = array_merge($files,$exist);
+
+            $data['appendixes'] = implode(',',$appendixes);
         }
 
-        $this->subject->update( $data );
+        $subject = $this->subject->update( $data );
 
-        alert()->success('Sujet mise à jour');
+        alert()->success('Sujet mis à jour');
 
         return redirect()->back();
     }

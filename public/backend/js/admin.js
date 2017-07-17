@@ -302,6 +302,32 @@ $( function() {
              $('#sondageChoices').show();
          }
      });
+
+     // Delete subject seminiaire annexes links
+     if($('.annexes_delete').length){
+
+         $('body').on('click','.annexes_delete_btn',function () {
+             var id   = $(this).data('id');
+             var link = $(this).data('link');
+
+             var $wrapper = $('#delete_annexe_' + id);
+
+             console.log($wrapper);
+             console.log(link);
+
+             $.ajax({
+                 type   : "POST",
+                 url    : base_url + "admin/subject/annexe",
+                 data   : { link: link, id : id,  _token: $("meta[name='_token']").attr('content') },
+                 success: function(data) {
+                     $wrapper.empty().html(data);
+                 },
+                 error  : function(){ alert('problème'); }
+             });
+
+         });
+
+     }
     
 });
 

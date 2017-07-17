@@ -15,7 +15,9 @@
     <div class="form-group">
         <label class="col-md-2 col-xs-12 control-label">Annexe</label>
         <div class="col-md-10 col-xs-12">
-            <input type="file" name="appendixes">
+            <input type="file" name="appendixes[]">
+            <input type="file" name="appendixes[]">
+            <input type="file" name="appendixes[]">
         </div>
     </div>
 

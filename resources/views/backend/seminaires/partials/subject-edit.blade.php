@@ -1,4 +1,4 @@
-<form data-validate-parsley action="{{ url('admin/subject/'.$subject->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
+<form data-validate-parsley action="{{ url('admin/subject/'.$subject->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal edit-subject-form">
     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
     
     <div class="form-group">
@@ -11,27 +11,31 @@
     <div class="form-group">
         <label class="col-md-2 col-xs-12 control-label">Fichier</label>
         <div class="col-md-10 col-xs-12">
-            <input type="file" name="file">
+            <button style="margin-bottom: 5px;" class="btn btn-warning btn-sm" type="button" data-toggle="collapse" data-target="#collapseFile_{{ $subject->id }}">Changer le fichier</button>
+            <div style="margin-top: 5px;" class="collapse" id="collapseFile_{{ $subject->id }}">
+                <input type="file" name="file">
+            </div><br/>
             @if($subject->file_path)
-                <p>
-                    <br/><a class="btn btn-sm btn-primary" target="_blank" href="{{ secure_asset($subject->file_path) }}">
-                       <i class="fa fa-file"></i> &nbsp;{{ $subject->file }}
-                    </a>
-                </p>
+                <p><a class="btn btn-sm btn-primary" target="_blank" href="{{ secure_asset($subject->file_path) }}"><i class="fa fa-file"></i> &nbsp;{{ $subject->file }}</a></p>
             @endif
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-2 col-xs-12 control-label">Annexe</label>
+        <label class="col-md-2 col-xs-12 control-label">Annexes</label>
         <div class="col-md-10 col-xs-12">
-            <input type="file" name="appendixes">
-            @if($subject->annexe_path)
-                <p>
-                    <br/><a class="btn btn-sm btn-primary" target="_blank" href="{{ secure_asset($subject->annexe_path) }}">
-                        <i class="fa fa-file"></i> &nbsp;{{ $subject->appendixes }}
-                    </a>
-                </p>
-            @endif
+
+            <button style="margin-bottom: 5px;" class="btn btn-warning btn-sm" type="button" data-toggle="collapse" data-target="#collapseAnnexes_{{ $subject->id }}">Ajouter des annexes</button>
+            <div style="margin-top: 5px;" class="collapse" id="collapseAnnexes_{{ $subject->id }}">
+                <input type="file" name="appendixes[]">
+                <input type="file" name="appendixes[]">
+                <input type="file" name="appendixes[]">
+            </div>
+
+            <br/>
+            <div class="annexes_delete" id="delete_annexe_{{ $subject->id }}">
+                @include('backend.seminaires.partials.annexes', ['subject' => $subject])
+            </div>
+
         </div>
     </div>
 
@@ -72,7 +76,7 @@
 
     <div class="form-group">
         <div class="col-md-12 col-xs-12 text-right">
-            <input type="hidden" name="seminaire_id" value="{{ $seminaire->id }}">
+            <input type="hidden" name="id" value="{{ $subject->id }}">
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </div>
     </div>

@@ -403,6 +403,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     */
 
     Route::resource('seminaire', 'Backend\Content\SeminaireController');
+
+    Route::post('subject/annexe', 'Backend\Content\SubjectController@annexe');
     Route::resource('subject', 'Backend\Content\SubjectController');
 
     /*

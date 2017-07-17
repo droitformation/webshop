@@ -32,7 +32,7 @@ class SeminaireController extends Controller {
 
     /**
      * Show the form for creating a new resource.
-     * GET /admin/seminaire/create
+     * GET /admin/seminaire
      *
      * @return Response
      */

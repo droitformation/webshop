@@ -20,9 +20,17 @@ class Subject extends Model{
 
     public function getAnnexePathAttribute()
     {
-        $file = 'files/subjects/'.$this->appendixes;
+        if(!empty($this->appendixes)){
+            $links = explode(',',$this->appendixes);
+            foreach($links as $appendixe){
+                $file = 'files/subjects/'.$appendixe;
+                $annexes[] = \File::exists(public_path($file)) ? ['link' => $file, 'name' => $appendixe] : null;
+            }
 
-        return ($this->appendixes && \File::exists(public_path($file)) ? $file : null);
+            $annexes = array_filter($annexes);
+        }
+
+        return (isset($annexes) && !empty($annexes)) ? $annexes : null;
     }
 
     public function getMainCategorieAttribute()

@@ -1064,9 +1064,9 @@ label.error{
 }
 
 #accordion .panel.panel-default .panel-heading h4{
-    height: 36px;
+    height: 45px;
     line-height: 36px;
-    padding: 0 5px;
+    padding: 4px 8px 3px 8px;
     position: relative;
 }
 
@@ -1095,6 +1095,10 @@ label.error{
 
 #accordion .panel-noborder{
     border: none;
+}
+
+.edit-subject-form{
+    margin-top: 10px;
 }
 
 /*

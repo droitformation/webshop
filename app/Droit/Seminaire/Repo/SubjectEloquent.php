@@ -67,14 +67,12 @@ class SubjectEloquent implements SubjectInterface{
         $subject->save();
 
         // Insert related categories
-        if(isset($data['categories']))
-        {
+        if(isset($data['categories'])) {
             $subject->categories()->sync($data['categories']);
         }
 
         // Insert related authors
-        if(isset($data['authors']))
-        {
+        if(isset($data['authors'])) {
             $subject->authors()->sync($data['authors']);
         }
 

@@ -37,7 +37,9 @@
                                                             <p><a target="_blank" href="{{ secure_asset($row->file_path) }}">Télécharger</a></p>
                                                         @endif
                                                         @if($row->annexe_path)
-                                                            <p><a target="_blank" href="{{ secure_asset($row->annexe_path) }}">Télécharger</a></p>
+                                                            @foreach($row->annexe_path as $annexe)
+                                                                <p><a target="_blank" href="{{ secure_asset($annexe['link']) }}">Télécharger</a></p>
+                                                            @endforeach
                                                         @endif
                                                     </div>
                                                 </div>
