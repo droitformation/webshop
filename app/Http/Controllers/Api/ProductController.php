@@ -35,4 +35,11 @@ class ProductController extends Controller {
 			'link'        => url('pubdroit/product/').$product->id
 		];
     }
+
+    public function remove_link(Request $request)
+    {
+        $product = $this->product->update(['id' => $request->input('id'), 'download_link' => null]);
+
+        return view('backend.products.partials.link')->with(['product' => $product]);
+    }
 }

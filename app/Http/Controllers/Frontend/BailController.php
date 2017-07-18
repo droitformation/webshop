@@ -94,7 +94,7 @@ class BailController extends Controller
                 $revue = $this->product->find($var);
             }
             else{
-                $revue = $this->product->getByCategorie('Revue')->last();
+                $revue = $this->product->getByCategorie('Revue')->first();
             }
 
             $data['revue'] = $revue;

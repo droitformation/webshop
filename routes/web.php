@@ -504,6 +504,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('ajax/product',  'Api\ProductController@index');
     Route::get('ajax/product/{id}', 'Api\ProductController@show');
+    Route::post('ajax/product/remove_link', 'Api\ProductController@remove_link');
 
     Route::get('ajax/colloque',  'Api\ColloqueController@index');
     Route::get('ajax/colloque/{id}', 'Api\ColloqueController@show');

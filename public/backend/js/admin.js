@@ -326,9 +326,23 @@ $( function() {
              });
 
          });
-
      }
-    
+
+    $('body').on('click','.link_delete_btn',function () {
+        var id   = $(this).data('id');
+        var $wrapper = $('#download_link');
+
+        $.ajax({
+            type   : "POST",
+            url    : base_url + "admin/ajax/product/remove_link",
+            data   : { id : id,  _token: $("meta[name='_token']").attr('content') },
+            success: function(data) {
+                $wrapper.empty().html(data);
+            },
+            error  : function(){ alert('problème'); }
+        });
+    });
+
 });
 
 $(document).ready(ajustamodal);

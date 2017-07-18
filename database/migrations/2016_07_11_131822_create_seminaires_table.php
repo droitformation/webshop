@@ -16,7 +16,7 @@ class CreateSeminairesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('year');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->integer('product_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

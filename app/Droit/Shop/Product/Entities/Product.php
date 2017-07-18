@@ -11,7 +11,7 @@ class Product extends Model{
 
     protected $dates = ['deleted_at','edition_at'];
 
-    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable','hidden','url','rang','pages','reliure','edition_at','format'];
+    protected $fillable = ['title', 'teaser', 'image', 'description', 'weight','price', 'sku', 'is_downloadable','download_link','hidden','url','rang','pages','reliure','edition_at','format'];
 
     public function getReferenceAttribute()
     {

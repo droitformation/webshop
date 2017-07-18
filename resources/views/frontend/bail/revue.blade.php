@@ -21,9 +21,11 @@
 							<a target="_blank" href="{{ url('https://publications-droit.ch/pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-default">
 								<i class="fa fa-shopping-cart"></i> &nbsp;Commander
 							</a>
-						{{--	<a href="{{ url('https://publications-droit.ch/pubdroit/product/'.$revue->id) }}" class="btn btn-sm btn-danger">
-								<i class="fa fa-download"></i> &nbsp;Télécharger
-							</a>--}}
+							@if($revue->download_link)
+								<a target="_blank" href="{{ asset('files/downloads/'.$revue->download_link) }}" class="btn btn-sm btn-danger">
+									<i class="fa fa-download"></i> &nbsp;Télécharger
+								</a>
+							@endif
 						</p>
 					</div>
 				</div>

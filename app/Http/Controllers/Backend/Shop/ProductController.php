@@ -91,6 +91,11 @@ class ProductController extends Controller {
             $data['image'] = $file['name'];
         }
 
+        if($request->file('download_link',null)) {
+            $file = $this->upload->upload( $request->file('download_link') , public_path('files/downloads'));
+            $data['download_link'] = $file['name'];
+        }
+
         $product = $this->product->create($data);
         
         // Create a entry in stock history
@@ -121,10 +126,14 @@ class ProductController extends Controller {
             $validator->activate();
         }
         
-        if($file)
-        {
+        if($file) {
             $file = $this->upload->upload( $request->file('file') , 'files/products');
             $data['image'] = $file['name'];
+        }
+
+        if($request->file('download_link',null)) {
+            $file = $this->upload->upload( $request->file('download_link') , public_path('files/downloads'));
+            $data['download_link'] = $file['name'];
         }
 
         $product = $this->product->update($data);

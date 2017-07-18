@@ -151,6 +151,7 @@ class ProductEloquent implements ProductInterface{
             'hidden'          => 1,
             'price'           => $data['price'] * 100,
             'is_downloadable' => (isset($data['is_downloadable']) ? $data['is_downloadable'] : null),
+            'download_link'   => (isset($data['download_link']) && empty($data['download_link']) ? $data['download_link'] : null),
             'url'             => (isset($data['url']) && !empty($data['url']) ? $data['url'] : null),
             'pages'           => (isset($data['pages']) && !empty($data['pages']) ? $data['pages'] : null),
             'reliure'         => (isset($data['reliure']) && !empty($data['reliure']) ? $data['reliure'] : null),
@@ -174,16 +175,19 @@ class ProductEloquent implements ProductInterface{
 
         $data['hidden']     = (isset($data['hidden']) && $data['hidden'] ? 1 : 0);
         $data['edition_at'] = (isset($data['edition_at']) && !empty($data['edition_at']) ? $data['edition_at'] : null);
+        $data['download_link'] = (isset($data['download_link']) && !empty($data['download_link']) ? $data['download_link'] : null);
 
         $product = $this->product->findOrFail($data['id']);
 
-        if( ! $product )
-        {
+        if( ! $product ) {
             return false;
         }
 
         $product->fill($data);
-        $product->price = $data['price'] * 100;
+
+        if(isset($data['price'])){
+            $product->price = $data['price'] * 100;
+        }
         
         if(isset($data['url']))
         {

@@ -23,6 +23,7 @@ class CreateShopProductsTable extends Migration {
             $table->integer('sku');
             $table->integer('price');
             $table->boolean('is_downloadable')->nullable();
+            $table->string('download_link')->nullable();
             $table->tinyInteger('hidden')->nullable();
             $table->text('url')->nullable();
             $table->integer('rang')->default(0);

@@ -27,6 +27,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="file" class="col-sm-3 control-label">&Eacute;dition en pdf</label>
+                            <div class="col-sm-8">
+                                {!! Form::file('download_link') !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
                             <div class="col-sm-7 col-xs-6">
                                 <input type="text" class="form-control" name="title">

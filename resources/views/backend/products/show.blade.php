@@ -22,8 +22,7 @@
 
             <div class="panel panel-midnightblue">
                 <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                    <input type="hidden" name="_method" value="PUT">
-                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                     <div class="panel-body">
                         <h3>&Eacute;diter le livre</h3>
@@ -52,6 +51,17 @@
                             <label for="file" class="col-sm-3 control-label">Changer l'image</label>
                             <div class="col-sm-8">
                                 {!! Form::file('file') !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file" class="col-sm-3 control-label">&Eacute;dition en pdf</label>
+                            <div class="col-sm-4">
+
+                                <div id="download_link">
+                                    @include('backend.products.partials.link', ['product' => $product])
+                                </div>
+
                             </div>
                         </div>
 

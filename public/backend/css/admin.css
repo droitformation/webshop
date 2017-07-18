@@ -1101,6 +1101,10 @@ label.error{
     margin-top: 10px;
 }
 
+.collapse_download{
+    margin-bottom: 10px;
+}
+
 /*
     Dateticker
 */
