@@ -36,10 +36,15 @@
                                                         @if($row->file_path)
                                                             <p><a target="_blank" href="{{ secure_asset($row->file_path) }}">Télécharger</a></p>
                                                         @endif
+
                                                         @if($row->annexe_path)
                                                             @foreach($row->annexe_path as $annexe)
                                                                 <p><a target="_blank" href="{{ secure_asset($annexe['link']) }}">Télécharger</a></p>
                                                             @endforeach
+                                                        @endif
+
+                                                        @if(isset($row->seminaire) && ($row->seminaire->year > 2007) && isset($row->seminaire->product))
+                                                            <p><a target="_blank" href="{{ secure_url('http://publications-droit.ch/pubdroit/product/'.$row->seminaire->product->id) }}">Ouvrage</a></p>
                                                         @endif
                                                     </div>
                                                 </div>
