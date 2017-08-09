@@ -97,4 +97,32 @@ class SendInscriptionTest extends BrowserKitTest {
             $this->assertType('\App\Exceptions\InscriptionExistException', $e);
         }
     }
+
+    public function testUpdateInscriptionAfterSendingKeepConferencesAndOptions()
+    {
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $occurence = factory(App\Droit\Occurrence\Entities\Occurrence::class)->create([
+            'colloque_id'  => $colloque->id,
+            'title'        => 'Titre de la conférence'
+        ]);
+
+        $inscription->occurrences()->attach($occurence->id);
+        $inscription->fresh();
+        $inscription->load('occurrences');
+
+        $this->assertEquals(1,$inscription->occurrences->count());
+
+        $results = $worker->updateInscription($inscription);
+
+        $updated = $results->first();
+        $updated->load('occurrences');
+
+        $this->assertEquals(1,$updated->occurrences->count());
+
+    }
 }

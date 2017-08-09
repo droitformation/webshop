@@ -138,7 +138,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $list = $model instanceof \App\Droit\Inscription\Entities\Groupe ? $model->inscriptions->pluck('id') : collect([$model->id]);
 
         // update all of them
-        $inscriptions = $list->map(function ($id, $key) {
+        return $list->map(function ($id, $key) {
             return $this->inscription->updateColumn(['id' => $id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
         });
     }
