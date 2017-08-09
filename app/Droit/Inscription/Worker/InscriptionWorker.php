@@ -139,7 +139,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
         // update all of them
         $inscriptions = $list->map(function ($id, $key) {
-            return $this->inscription->update(['id' => $id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
+            return $this->inscription->updateColumn(['id' => $id, 'send_at' => date('Y-m-d'), 'admin' => 1]);
         });
     }
 
