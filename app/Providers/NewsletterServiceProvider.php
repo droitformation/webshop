@@ -53,6 +53,7 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerListService();
         $this->registerEmailService();
         $this->registerClipboardService();
+        $this->registerTrackingService();
     }
 
     /**
@@ -234,6 +235,17 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterClipboardInterface', function()
         {
             return new \App\Droit\Newsletter\Repo\NewsletterClipboardEloquent( new \App\Droit\Newsletter\Entities\Newsletter_clipboards() );
+        });
+    }
+
+    /**
+     * Newsletter Tracking
+     */
+    protected function registerTrackingService(){
+
+        $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterTrackingInterface', function()
+        {
+            return new \App\Droit\Newsletter\Repo\NewsletterTrackingEloquent( new \App\Droit\Newsletter\Entities\Newsletter_tracking() );
         });
     }
 }

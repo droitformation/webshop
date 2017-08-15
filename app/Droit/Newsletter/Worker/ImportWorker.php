@@ -10,8 +10,13 @@ use App\Droit\Newsletter\Worker\CampagneInterface;
 use App\Droit\Service\UploadInterface;
 use Maatwebsite\Excel\Excel;
 
+use App\Jobs\SendBulkEmail;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+
 class ImportWorker implements ImportWorkerInterface
 {
+    use DispatchesJobs;
+
     protected $mailjet;
     protected $subscriber;
     protected $newsletter;
@@ -139,10 +144,12 @@ class ImportWorker implements ImportWorkerInterface
             });
 
             // Send only 100 at the time to avoid timeout
+            // dispatch to jobs
             $chunks = $recipients->chunk(100);
 
             foreach ($chunks as $chunk){
-               $this->mailjet->sendBulk($campagne, $html, $chunk->toArray(), false);
+                $job = (new SendBulkEmail($campagne,$html,$chunk->toArray()));
+                $this->dispatch($job);
             }
 
             return true;

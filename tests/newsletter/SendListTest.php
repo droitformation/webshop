@@ -70,6 +70,8 @@ class SendListTest extends BrowserKitTest
      */
     public function testSendListEmail()
     {
+        Queue::fake();
+
         // Prepare list of emails
         $campagne = factory(App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->make();
         $html = '<html><head></head><body></body></html>';
@@ -78,16 +80,34 @@ class SendListTest extends BrowserKitTest
         $this->campagne->shouldReceive('find')->once()->andReturn($campagne);
 
         $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
-        $emails = factory(App\Droit\Newsletter\Entities\Newsletter_emails::class, 230)->make();
+        $emails = factory(App\Droit\Newsletter\Entities\Newsletter_emails::class, 210)->make();
 
         foreach ($emails as $email){
             $liste->emails()->save($email);
         }
 
-        // Send list of emailsby chunk, 100 at the time 230/100 => rounded to 3 times
-        $this->mailjet->shouldReceive('sendBulk')->times(3)->andReturn(true);
+        $chunks = $liste->emails->chunk(100);
+        $chunk1  = $chunks->shift();
+        $chunk2  = $chunks->shift();
+        $chunk3  = $chunks->shift();
+
+        $this->assertEquals(10, count($chunk3));
+
+        // Send job of emails by chunk, 100 at the time 210/100 => rounded to 3 times
 
         $this->import->send(1,$liste);
+
+        Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk1) {
+            return count($job->emails) === count($chunk1);
+        });
+
+        Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk2) {
+            return count($job->emails) === count($chunk2);
+        });
+
+        Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk3) {
+            return count($job->emails) === count($chunk3);
+        });
     }
 
 }
