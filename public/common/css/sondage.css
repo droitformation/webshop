@@ -1,36 +1,47 @@
-.sondage-logo{
-    margin-bottom: 40px;
-}
-
-.form-sondage{
-   padding: 20px 0;
-}
-
-.label-question{
-    font-size: 17px;
-    color: #000;
-}
-
-textarea.form-control-sondage{
-    border: 1px solid #accafb;
-    height: 130px;
-}
-
-.radio label, .checkbox label{
-    font-size: 16px;
-    line-height: 20px;
-}
-.checkbox, .radio-sondage{
-	font-size: 16px;
-	display: inline-block;
-    min-height: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-left: 20px;
-}
-
 .panel-sondage{
     box-shadow: 0 1px 1px 0 #B3B3B3;
     border: none;
     border-radius: 0px;
 }
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px 3px 0;
+}
+.sondage{
+    margin-bottom: 24px;
+}
+.radio-sondage{
+    margin: 0px 0px 0px 20px;
+}
+
+h4 .label-chapitre{
+    font-size: 17px;
+    color: #000;
+    font-weight: bold;
+}
+
+textarea.sondage{
+    border: 1px solid #d2d3d6;
+    height: 60px;
+}
+.imgSondage{
+    margin-Top : 10px;
+}
+li{
+    display: inline-block;
+}
+.sondage-question {
+    width:460px;
+}
+ul{
+    display: inline-block;
+    margin:0px;
+    padding: 0px 0px 2px 0px;
+}
+.remerciements{
+    text-align: center;
+}
+.remerciements h3{
+    margin-bottom: 24px;
+}
+
