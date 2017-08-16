@@ -30,13 +30,16 @@
                                         <li><a href="{{ url('build/campagne/'.$campagne->id) }}">Composer</a></li>
                                         <li><a href="{{ url('build/statistics/'.$campagne->id) }}">Statistiques</a></li>
                                         <li><a href="javascript:;" class="sendEmailNewsletter" data-campagne="{{ $campagne->id }}">Envoyer par email</a></li>
-                      {{--                  <li><a href="javascript:;" data-toggle="modal" data-target="#sendToList_{{ $campagne->id }}">Envoyer à une liste</a></li>--}}
                                         <li><a href="{{ url('build/send/confirmation/'.$campagne->id) }}">Envoyer à une liste</a></li>
                                     </ul>
                                 </div>
                             @else
                                 <a class="btn btn-info btn-sm" href="{{ url('build/campagne/'.$campagne->id) }}">Composer</a>
                                 <a class="btn btn-primary btn-sm" href="{{ url('build/send/confirmation/'.$campagne->id) }}">Envoyer à une liste</a>
+                            @endif
+
+                            @if(!$campagne->tracking->isEmpty())
+                                <a class="btn btn-admin btn-sm" href="{{ url('build/tracking/stats/'.$campagne->id) }}">Tracking</a>
                             @endif
 
                             @include('backend.newsletter.template.partials.send', ['campagne' => $campagne])

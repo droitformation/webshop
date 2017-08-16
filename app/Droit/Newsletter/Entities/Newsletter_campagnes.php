@@ -25,4 +25,9 @@ class Newsletter_campagnes extends Model {
 
         return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_contents', 'newsletter_campagne_id')->orderBy('rang');
     }
+
+    public function tracking()
+    {
+        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_tracking', 'CustomID');
+    }
 }

@@ -19,7 +19,7 @@ class NewsletterTrackingEloquent implements NewsletterTrackingInterface{
 	
 	public function find($id){
 
-		return $this->tracking->findOrFail($id);
+		return $this->tracking->where('CustomID','=',$id)->get();
 	}
 
     public function create(array $data){

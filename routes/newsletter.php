@@ -73,6 +73,8 @@ Route::group(['middleware' => $middleware], function () {
         Route::post('export', 'Backend\Newsletter\ListController@export');
         Route::resource('liste', 'Backend\Newsletter\ListController');
 
+        Route::get('tracking/stats/{id}', 'Backend\Newsletter\TrackingController@stats');
+
     });
 
 });

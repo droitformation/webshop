@@ -342,14 +342,16 @@ class MailjetService implements MailjetServiceInterface{
         $sujet = ($test ? 'TEST | '.$campagne->sujet : $campagne->sujet );
         
         $body = [
-            'FromEmail'  => $campagne->newsletter->from_email,
-            'FromName'   => $campagne->newsletter->from_name,
-            'Subject'    => $sujet,
-            'Text-part'  => strip_tags($html),
-            'Html-part'  => $html,
-            'Recipients' => $recipients,
+            'FromEmail'   => $campagne->newsletter->from_email,
+            'FromName'    => $campagne->newsletter->from_name,
+            'Subject'     => $sujet,
+            'Text-part'   => strip_tags($html),
+            'Html-part'   => $html,
+            'Mj-CustomID' => $campagne->id,
+            'Recipients'  => $recipients,
         ];
-        
+        // CustomID
+
         $response = $this->mailjet->post(Resources::$Email, ['body' => $body]);
 
         if($response->success()){
