@@ -25,17 +25,17 @@ class NewsletterTrackingEloquent implements NewsletterTrackingInterface{
     public function create(array $data){
 
         $tracking = $this->tracking->create(array(
-            'event'          => $data['event'],
+            'event'          => isset($data['event']) ? $data['event'] : null,
             'time'           => \Carbon\Carbon::createFromTimestamp($data['time'])->toDateTimeString(),
-            'MessageID'      => $data['MessageID'],
-            'email'          => $data['email'],
-            'mj_campaign_id' => $data['mj_campaign_id'],
-            'mj_contact_id'  => $data['mj_contact_id'],
-            'customcampaign' => $data['customcampaign'],
-            'mj_message_id'  => $data['mj_message_id'],
-            'smtp_reply'     => $data['smtp_reply'],
-            'CustomID'       => $data['CustomID'],
-            'Payload'        => $data['Payload'],
+            'MessageID'      => isset($data['MessageID']) ? $data['MessageID'] : null,
+            'email'          => isset($data['email']) ? $data['email'] : null,
+            'mj_campaign_id' => isset($data['mj_campaign_id']) ? $data['mj_campaign_id'] : null,
+            'mj_contact_id'  => isset($data['mj_contact_id']) ? $data['mj_contact_id'] : null,
+            'customcampaign' => isset($data['customcampaign']) ? $data['customcampaign'] : null,
+            'mj_message_id'  => isset($data['mj_message_id']) ? $data['mj_message_id'] : null,
+            'smtp_reply'     => isset($data['smtp_reply']) ? $data['smtp_reply'] : null,
+            'CustomID'       => isset($data['CustomID']) ? $data['CustomID'] : null,
+            'Payload'        => isset($data['Payload']) ? $data['Payload'] : null,
         ));
 
         if( ! $tracking )
