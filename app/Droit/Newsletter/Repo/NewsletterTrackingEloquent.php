@@ -25,17 +25,17 @@ class NewsletterTrackingEloquent implements NewsletterTrackingInterface{
     public function create(array $data){
 
         $tracking = $this->tracking->create(array(
-            'event' => $data['event'],
-            'time' => $data['time'],
-            'MessageID' => $data['MessageID'],
-            'email' => $data['email'],
+            'event'          => $data['event'],
+            'time'           => \Carbon\Carbon::createFromTimestamp($data['time'])->toDateTimeString(),
+            'MessageID'      => $data['MessageID'],
+            'email'          => $data['email'],
             'mj_campaign_id' => $data['mj_campaign_id'],
-            'mj_contact_id' => $data['mj_contact_id'],
+            'mj_contact_id'  => $data['mj_contact_id'],
             'customcampaign' => $data['customcampaign'],
-            'mj_message_id' => $data['mj_message_id'],
-            'smtp_reply' => $data['smtp_reply'],
-            'CustomID' => $data['CustomID'],
-            'Payload' => $data['Payload'],
+            'mj_message_id'  => $data['mj_message_id'],
+            'smtp_reply'     => $data['smtp_reply'],
+            'CustomID'       => $data['CustomID'],
+            'Payload'        => $data['Payload'],
         ));
 
         if( ! $tracking )

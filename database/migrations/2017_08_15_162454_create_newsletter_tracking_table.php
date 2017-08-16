@@ -16,7 +16,7 @@ class CreateNewsletterTrackingTable extends Migration
         Schema::create('newsletter_tracking', function (Blueprint $table) {
             $table->increments('id');
             $table->string('event')->nullable();
-            $table->timestamp('time')->nullable();
+            $table->dateTime('time')->nullable();
             $table->string('MessageID')->nullable();
             $table->string('email')->nullable();
             $table->integer('mj_campaign_id')->nullable();

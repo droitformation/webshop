@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Newsletter;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TrackingRequest;
 use App\Http\Controllers\Controller;
 use App\Droit\Newsletter\Repo\NewsletterTrackingInterface;
 
@@ -17,6 +18,12 @@ class TrackingController extends Controller
 
     public function tracking(Request $request)
     {
-        $this->tracking->create($request->all());
+        $data = $request->input('Data',null);
+
+        if($data && !empty($data)){
+            foreach ($data as $event){
+                $tracking = $this->tracking->create($event);
+            }
+        }
     }
 }

@@ -15,8 +15,6 @@ Route::get('activation/{token}/{newsletter_id}', 'Frontend\InscriptionController
 Route::get('campagne/{id}', 'Frontend\CampagneController@show');
 Route::get('pdf/{id}', 'Frontend\CampagneController@pdf');
 
-Route::get('tracking', 'Backend\Newsletter\TrackingController@tracking');
-
 Route::group(['prefix' => 'display'], function () {
    // Route::resource('newsletter', 'Frontend\NewsletterController');
     //Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');

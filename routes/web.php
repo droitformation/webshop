@@ -14,6 +14,9 @@
 Route::get('code', 'CodeController@index');
 Route::get('event', 'Api\ColloqueController@event');
 
+//Route::post('tracking', 'Backend\Newsletter\TrackingController@tracking');
+Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@tracking');
+
 /*
 |--------------------------------------------------------------------------
 | Validate presence for inscriptions
