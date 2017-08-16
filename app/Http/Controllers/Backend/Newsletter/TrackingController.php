@@ -19,13 +19,10 @@ class TrackingController extends Controller
 
     public function tracking(Request $request)
     {
-
         \Log::info(json_encode($request->all()));
 
-        $data = $request->input('Data',null);
-
-        if($data && !empty($data)){
-            foreach ($data as $event){
+        if(!empty($request->all())){
+            foreach ($request->all() as $event){
                 $tracking = $this->tracking->create($event);
             }
         }
