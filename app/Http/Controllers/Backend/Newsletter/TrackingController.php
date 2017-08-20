@@ -37,7 +37,7 @@ class TrackingController extends Controller
     {
         $stats = $this->tracking->find($id);
         $stats = $stats->groupBy(function ($stat, $key) {
-            return $stat->time->toDateTimeString();
+            return $stat->time->toDateString();
         });
 
         $campagne = $this->campagne->find($id);
