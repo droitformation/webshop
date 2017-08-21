@@ -157,13 +157,13 @@ class ListController extends Controller
         }
         
         $results = $this->import->send($request->input('campagne_id'),$list);
-
+/*
         if(!$results){
             alert()->danger('Problème avec l\'envoi, vérifier sur mailjet.com');
             return redirect('build/newsletter');
-        }
+        }*/
 
-        alert()->success('Campagne envoyé à la liste!');
+        alert()->success('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailjet.');
 
         return redirect('build/newsletter');
     }
