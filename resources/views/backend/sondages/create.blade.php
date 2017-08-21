@@ -1,60 +1,82 @@
-@extends('sondages.layouts.master')
+@extends('backend.layouts.master')
 @section('content')
 
-    @if($isTest)
-        <div class="alert alert-warning">Ceci est un sondage test</div>
-    @endif
+<div class="row"><!-- row -->
+    <div class="col-md-12"><!-- col -->
+        <p><a class="btn btn-default" href="{!!  url('admin/sondage')!!}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+    </div>
+</div>
+<!-- start row -->
+<div class="row">
 
-    @if($sondage->marketing)
-        <h3>{{ $sondage->title }}</h3>
-        {!! $sondage->description !!}
-    @else
-        <h3>Formulaire d'évaluation</h3>
-        <p><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></p>
-    @endif
+    <div class="col-md-9">
+        <div class="panel panel-midnightblue">
 
-    <form class="form-sondage" action="{{ url('reponse') }}" method="POST">{!! csrf_field() !!}
+            <!-- form start -->
+            <form action="{{ url('admin/sondage') }}" method="POST" class="validate-form form-horizontal" data-validate="parsley">{!! csrf_field() !!}
 
-        <input type="hidden" name="sondage_id" value="{{ $sondage->id }}" />
-        <input type="hidden" name="email" value="{{ $email }}" />
-        <input type="hidden" name="isTest" value="{{ $isTest }}" />
+                <div class="panel panel-midnightblue">
+                    <div class="panel-body">
 
-        @if(!$sondage->avis->isEmpty())
-            @foreach($sondage->avis as $avis)
+                        <h3>Sondage</h3>
 
-                <div class="form-group-sondage">
-                    @if($avis->type == 'chapitre')
-                        <h4 class="label-chapitre"><strong>{!! strip_tags($avis->question) !!}</strong></h4>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><strong>Type de sondage</strong></label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline"><input type="radio" class="typeSondage" name="marketing" value="1"> Sondage marketing</label>
+                                <label class="radio-inline"><input type="radio" class="typeSondage" name="marketing" checked value=""> Sondage pour colloque</label>
+                            </div>
+                        </div>
 
-                    @elseif($avis->type == 'text')
-                        <label for="message" class="control-label">Remarques :</label>
-                        <textarea class="form-control sondage" name="reponses[{{ $avis->id }}]"></textarea>
+                        <div class="form-group" id="sondageColloque">
+                            <label for="message" class="col-sm-3 control-label">Colloque</label>
+                            <div class="col-sm-6">
+                                <select autocomplete="off" name="colloque_id" class="form-control">
+                                    <option value="">Choisir le colloque</option>
+                                    @if(!$colloques->isEmpty())
+                                        @foreach($colloques as $colloque)
+                                            <option {{ (old('colloque_id') == $colloque->id ) ? 'selected' : '' }} value="{{ $colloque->id }}">{{ $colloque->titre }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
 
-                    @else($avis->type == 'question')
-                        <ul>
-                            <li class="sondage-question"><label for="message" class="control-label label-question">{!! strip_tags($avis->question) !!}</li>
-                        </ul>
-                        <ul>
-                            <?php $choices = explode(',', $avis->choices); ?>
-                            @foreach($choices as $choices)
-                                <li class="radio-sondage">
-                                    <input class="sondage" type="{{ $avis->type }}" name="reponses[{{ $avis->id }}]" value="{{ $choices }}">{{ $choices }}
-                                </li>
+                        <div id="sondageMarketing" style="display: none;">
+                            <div class="form-group">
+                                <label for="message" class="col-sm-3 control-label">Titre</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="title" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="col-sm-3 control-label">Description du sondage marketing</label>
+                                <div class="col-sm-6">
+                                    <textarea name="description" class="form-control redactorSimple"></textarea>
+                                </div>
+                            </div>
+                        </div>
 
-                            @endforeach
-                        </ul>
-                    @endif
-
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Valide jusqu'au</label>
+                            <div class="col-sm-3">
+                                <input type="text" name="valid_at" value="" class="form-control datePicker required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer mini-footer ">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <button class="btn btn-primary" type="submit">Envoyer</button>
+                        </div>
+                    </div>
                 </div>
-            @endforeach
-            <hr class="sondage"/>
-            <div class="remerciements sondage">
-                <h3> <strong>Merci d'avoir participé</strong></h3>
-                <button type="submit" class="btn btn-primary">Envoyer le sondage</button>
-            </div>
+            </form>
 
-        @endif
+        </div>
+    </div>
 
-    </form>
+</div>
+<!-- end row -->
 
 @stop
