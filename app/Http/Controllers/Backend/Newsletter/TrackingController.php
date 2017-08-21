@@ -28,7 +28,7 @@ class TrackingController extends Controller
 
         if(!empty($request->all())){
             foreach ($request->all() as $event){
-                $tracking = $this->tracking->create($event);
+                $this->tracking->create($event);
             }
         }
     }
