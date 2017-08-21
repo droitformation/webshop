@@ -26,6 +26,7 @@
                             <div class="col-sm-5">
                                 <select name="type" class="form-control" id="sondageTypeSelect">
                                     <option value="text">Texte</option>
+                                    <option value="chapitre">Chapitre</option>
                                     <option value="checkbox">Case à cocher</option>
                                     <option value="radio">Options à choix</option>
                                 </select>

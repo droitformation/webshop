@@ -26,13 +26,14 @@
                         <div class="col-sm-6">
                             <select name="type" class="form-control" id="sondageTypeSelect">
                                 <option {{ $avis->type == 'text' ? 'selected' : '' }} value="text">Texte</option>
+                                <option {{ $avis->type == 'chapitre' ? 'selected' : '' }} value="chapitre">Chapitre</option>
                                 <option {{ $avis->type == 'checkbox' ? 'selected' : '' }} value="checkbox">Case à cocher</option>
                                 <option {{ $avis->type == 'radio' ? 'selected' : '' }} value="radio">Options à choix</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="form-group" id="sondageChoices" style="display: {{ $avis->type != 'text' ? 'block' : 'none' }};">
+                    <div class="form-group" id="sondageChoices" style="display: {{ $avis->type != 'text' && $avis->type != 'chapitre' ? 'block' : 'none' }};">
                         <label for="message" class="col-sm-3 control-label">Choix (séparés par virgules)</label>
                         <div class="col-sm-6">
                             <textarea style="height: 100px;" name="choices" class="form-control">{{ $avis->choices }}</textarea>
