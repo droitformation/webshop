@@ -25,6 +25,8 @@ class TrackingController extends Controller
     public function tracking(Request $request)
     {
         \Log::info(json_encode($request->all()));
+        \Log::info(json_encode($request->getMethod()));
+        \Log::info(json_encode($request->getRequestUri()));
 
         if(!empty($request->all())){
             foreach ($request->all() as $event){
