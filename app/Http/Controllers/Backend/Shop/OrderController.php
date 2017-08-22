@@ -145,6 +145,11 @@ class OrderController extends Controller {
         return view('backend.orders.create')->with(['products' => $products, 'shippings' => $shippings]);
     }
 
+    public function verification(Request $request)
+    {
+        return view('backend.orders.verification')->with(['data' => $request->all()]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -153,9 +158,11 @@ class OrderController extends Controller {
      */
     public function store(Request $request)
     {
-        $shipping = $request->input('shipping_id',null) ? $this->shipping->find($request->input('shipping_id')) : null;
+        $data = json_decode($request->input('data'),true);
 
-        $order = $this->ordermaker->make($request->all(),$shipping);
+        $shipping = isset($data['shipping_id']) && !empty($data['shipping_id']) ? $this->shipping->find($data['shipping_id']) : null;
+
+        $order = $this->ordermaker->make($data,$shipping);
         $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin
 
         alert()->success('La commande a été crée');
