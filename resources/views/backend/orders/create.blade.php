@@ -83,7 +83,9 @@
                                         <label>Nombre de paquets</label>
                                         <select name="paquet" class="form-control">
                                             @foreach(range(1,50) as $paquet)
-                                                <option {{ old('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">{{ $paquet }} paquets</option>
+                                                <option {{ old('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">
+                                                    {{ $paquet }} paquet{{ $paquet > 1 ? 's' : '' }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
