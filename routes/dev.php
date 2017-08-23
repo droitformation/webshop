@@ -785,15 +785,49 @@ Route::get('notification', function()
 
 });
 
-Route::get('demande', function()
+Route::get('test_transpose', function()
 {
-    $model = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    
-    $colloques = $model->eventList([2,3]);
-    $colloques = $model->eventListArchives([2,3]);
+
+    $data = [
+        'user_id' => 710,
+        'adresse' => [
+            'civilite_id' => 2,
+            'company'     => 'Unine',
+            'first_name'  => 'Jane',
+            'last_name'   => 'Doe',
+            'email'       => 'jane.doe@domain.ch',
+            'password'    => '1235',
+            'adresse'     => 'Rue du Marché_neuf 14',
+            'complement'  => '',
+            'cp'          => '',
+            'npa'         => '2502',
+            'ville'       => 'Bienne',
+            'canton_id'   => 6,
+            'pays_id'     => 208,
+        ],
+        'order' => [
+            'products' => [
+                0 => 233, 1 => 309
+            ],
+            'qty' => [
+                0 => 1, 1 => 2
+            ],
+            'rabais' => [
+                null,
+                null
+            ],
+            'price'  => [
+                null,
+                10
+            ]
+        ]
+    ];
+
+    $preview  = new App\Droit\Shop\Order\Entities\OrderPreview($data);
+    $prepared = $preview->adresse();
 
     echo '<pre>';
-    print_r($colloques);
+    print_r($prepared);
     echo '</pre>';exit();
 
 });

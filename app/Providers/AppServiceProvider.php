@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider {
             'backend.export.user',
             'frontend.pubdroit.checkout.billing',
             'backend.orders.partials.adresse',
+            'backend.orders.verification',
             'backend.inscriptions.colloque',
             'backend.inscriptions.desinscription',
             'backend.adresses.*',

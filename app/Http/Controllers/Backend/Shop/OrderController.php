@@ -147,7 +147,28 @@ class OrderController extends Controller {
 
     public function verification(Request $request)
     {
-        return view('backend.orders.verification')->with(['data' => $request->all()]);
+        $preview = new \App\Droit\Shop\Order\Entities\OrderPreview($request->all());
+
+        return view('backend.orders.verification')->with(['data' => $request->all(), 'preview' => $preview]);
+    }
+
+    public function correction(Request $request)
+    {
+        $data    = json_decode($request->input('data'),true);
+        $preview = new \App\Droit\Shop\Order\Entities\OrderPreview($data);
+
+        $data = [
+            'old_products'   => $preview->products(true)->toArray(),
+            'user_id'        => $data['user_id'],
+            'shipping_id' => $data['shipping_id'],
+            'tva'            => $data['tva'],
+            'message'        => $data['message'],
+            'paquet'         => $data['paquet'],
+            'free'           => isset($data['free']) ? 1 : null,
+            'adresse'        => $preview->adresse(true)
+        ];
+
+        return redirect('admin/order/create')->with($data);
     }
 
     /**

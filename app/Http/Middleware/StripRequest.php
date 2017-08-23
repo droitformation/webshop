@@ -64,7 +64,18 @@ class StripRequest
                 $products = $helper->convertProducts($order);
             }
 
-            return redirect('admin/order/create')->withErrors($validator)->with(['old_products' => $products, 'adresse' => $adresse])->withInput();
+            $data =[
+                'old_products'   => $products,
+                'user_id'        => $request->input('user_id'),
+                'shipping_id' => $request->input('shipping_id'),
+                'tva'            => $request->input('tva'),
+                'message'        => $request->input('message'),
+                'paquet'         => $request->input('paquet'),
+                'free'           => $request->input('free',null) ? 1 : null,
+                'adresse'        => $adresse
+            ];
+
+            return redirect('admin/order/create')->withErrors($validator)->with($data)->withInput();
         }
 
         return $next($request);

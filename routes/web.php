@@ -366,11 +366,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('order/generate', 'Backend\Shop\OrderController@generate');
 
     Route::post('order/verification', ['middleware' => 'strip', 'uses' => 'Backend\Shop\OrderController@verification']);
+    Route::post('order/correction', ['uses' => 'Backend\Shop\OrderController@correction']);
+
     //Route::post('order', ['middleware' => 'strip', 'uses' => 'Backend\Shop\OrderController@store']);
     Route::post('order', [ 'uses' => 'Backend\Shop\OrderController@store']);
 
     Route::get('order','Backend\Shop\OrderController@index');
-    Route::get('order/create','Backend\Shop\OrderController@create');
+    Route::match(['get', 'post'],'order/create','Backend\Shop\OrderController@create');
     Route::get('order/{id}','Backend\Shop\OrderController@show');
     Route::put('order/{id}','Backend\Shop\OrderController@update');
     Route::delete('order/{id}','Backend\Shop\OrderController@destroy');
