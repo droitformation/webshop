@@ -160,12 +160,12 @@ class OrderController extends Controller {
         $data = [
             'old_products'   => $preview->products(true)->toArray(),
             'user_id'        => $data['user_id'],
-            'shipping_id' => $data['shipping_id'],
+            'shipping_id'    => $data['shipping_id'],
             'tva'            => $data['tva'],
             'message'        => $data['message'],
-            'paquet'         => $data['paquet'],
+            'paquet'         => isset($data['paquet']) ? $data['paquet'] : null,
             'free'           => isset($data['free']) ? 1 : null,
-            'adresse'        => $preview->adresse(true)
+            'adresse'        => $data['adresse']
         ];
 
         return redirect('admin/order/create')->with($data);

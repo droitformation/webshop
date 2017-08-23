@@ -67,7 +67,7 @@ class StripRequest
             $data =[
                 'old_products'   => $products,
                 'user_id'        => $request->input('user_id'),
-                'shipping_id' => $request->input('shipping_id'),
+                'shipping_id'   => $request->input('shipping_id'),
                 'tva'            => $request->input('tva'),
                 'message'        => $request->input('message'),
                 'paquet'         => $request->input('paquet'),

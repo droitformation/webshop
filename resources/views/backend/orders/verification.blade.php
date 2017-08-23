@@ -64,7 +64,7 @@
 
                         <form action="{{ url('admin/order/correction') }}" method="POST" class="pull-left">{!! csrf_field() !!}
                             <input name="data" value="{{ json_encode($data) }}" type="hidden">
-                            <button type="submit" class="btn btn-default">Retour</button>
+                            <button id="returnOrderPage" type="submit" class="btn btn-default">Retour</button>
                         </form>
 
                         <form action="{{ url('admin/order') }}" method="POST" class="pull-right">{!! csrf_field() !!}

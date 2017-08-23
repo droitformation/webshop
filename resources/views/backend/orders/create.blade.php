@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <div class="checkbox">
                                         <label>
-                                            <i class="fa fa-truck"></i>&nbsp;&nbsp;Frais de port gratuit&nbsp;<input type="checkbox" {{ Session::get('free') == 1 ? 'checked' : '' }} name="free" value="1">
+                                            <i class="fa fa-truck"></i>&nbsp;&nbsp;Frais de port gratuit&nbsp;<input type="checkbox" {{ Session::has('free') && Session::get('free') == 1 ? 'checked' : '' }} name="free" value="1">
                                         </label>
                                     </div>
                                     @if(!$shippings->isEmpty())
@@ -73,7 +73,7 @@
                                             <select name="shipping_id" class="form-control">
                                                 <option value="">Choix</option>
                                                 @foreach($shippings as $shipping)
-                                                    <option {{ Session::get('shipping_id') == $shipping->id ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
+                                                    <option {{ Session::has('shipping_id') && Session::get('shipping_id') == $shipping->id ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -82,7 +82,7 @@
                                         <label>Nombre de paquets</label>
                                         <select name="paquet" class="form-control">
                                             @foreach(range(1,50) as $paquet)
-                                                <option {{ Session::get('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">
+                                                <option {{ Session::has('paquet') && Session::get('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">
                                                     {{ $paquet }} paquet{{ $paquet > 1 ? 's' : '' }}
                                                 </option>
                                             @endforeach
@@ -94,11 +94,11 @@
                                 <label><i class="fa fa-dollar"></i>&nbsp; Modifier les taux de tva</label><br/>
 
                                 <div class="form-group input-group">
-                                    <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ Session::get('tva.taux_reduit') }}" placeholder="Réduit">
+                                    <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ Session::has('tva.taux_reduit') && Session::get('tva.taux_reduit') }}" placeholder="Réduit">
                                     <span class="input-group-addon">%</span>
                                 </div><!-- /input-group -->
                                 <div class="input-group">
-                                    <input class="form-control" type="text" name="tva[taux_normal]" value="{{ Session::get('tva.taux_normal') }}" placeholder="Normal">
+                                    <input class="form-control" type="text" name="tva[taux_normal]" value="{{ Session::has('tva.taux_normal') && Session::get('tva.taux_normal') }}" placeholder="Normal">
                                     <span class="input-group-addon">%</span>
                                 </div><!-- /input-group -->
                             </div>
@@ -106,11 +106,11 @@
                                 <label><i class="fa fa-info-circle"></i>&nbsp; Phrases d'informations</label><br/>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[warning]" value="{{ Session::get('message.warning') }}" placeholder="Ajouter une phrase d'information">
+                                    <input class="form-control" type="text" name="message[warning]" value="{{ Session::has('message.warning') && Session::get('message.warning') }}" placeholder="Ajouter une phrase d'information">
                                 </div>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[special]" value="{{ Session::get('message.special') }}" placeholder="Information pour librairies">
+                                    <input class="form-control" type="text" name="message[special]" value="{{ Session::has('message.special') && Session::get('message.special') }}" placeholder="Information pour librairies">
                                 </div>
                             </div>
                         </fieldset>

@@ -257,4 +257,78 @@ class OrderAdminTest extends BrowserKitTest {
 
         $this->assertRedirectedTo('/admin/orders');
     }
+
+    /**
+     * Test verification process
+     */
+
+    public function testVerificationAndReturnCreatePagePage()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create();
+
+        $data = [
+            'user_id' => $user->id,
+            'order' => [
+                'products' => [0 => $product1->id, 1 => $product2->id],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
+            ],
+            'admin'   => 1,
+            'shipping_id' => 1,
+            'adresse' => [],
+            'tva'     => [],
+            'message' => []
+        ];
+
+        $data_product = [
+            [
+                'product' => $product1->id ,
+                'qty'     => 2,
+                'rabais'  => '25%',
+                'price'   => null,
+                'gratuit' => null,
+            ],
+            [
+                'product' => $product2->id ,
+                'qty'     => 2,
+                'rabais'  => null,
+                'price'   => null,
+                'gratuit' => 'oui',
+            ]
+        ];
+
+        $this->user->shouldReceive('find')->once()->andReturn($user);
+        $this->product->shouldReceive('find')->once()->andReturn($product1);
+        $this->product->shouldReceive('find')->once()->andReturn($product2);
+
+        $response = $this->call('POST', '/admin/order/verification', $data);
+
+        $content = $this->response->getOriginalContent();
+        $result = $content['data'];
+
+        $this->assertEquals($result, $data);
+
+        // Correction
+        $this->product->shouldReceive('find')->times(1)->andReturn($product1);
+        $this->product->shouldReceive('find')->times(1)->andReturn($product2);
+
+        // Go back to creation
+        $response = $this->call('POST', '/admin/order/correction', ['data' => json_encode($data)]);
+
+        $this->assertRedirectedTo('admin/order/create');
+
+        $products    = $this->app['session.store']->get('old_products');
+        $shipping_id = $this->app['session.store']->get('shipping_id');
+        $user_id     = $this->app['session.store']->get('user_id');
+
+        $this->assertSessionHas('old_products');
+        $this->assertEquals($data_product,$products);
+        $this->assertEquals($user->id,$user_id);
+        $this->assertEquals(1,$shipping_id);
+    }
 }

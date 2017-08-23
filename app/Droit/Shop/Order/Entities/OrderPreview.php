@@ -53,23 +53,29 @@ class OrderPreview
 
     public function shipping()
     {
-        $shipping = $this->repo_shipping->find($this->data['shipping_id']);
+        if(isset($this->data['shipping_id'])){
+            $shipping = $this->repo_shipping->find($this->data['shipping_id']);
 
-        return isset($this->data['free']) ? 'Gratuit' : $shipping->title;
+            return isset($this->data['free']) ? 'Gratuit' : $shipping->title;
+        }
+
+        return null;
     }
 
     public function paquet()
     {
-        return $this->data['paquet'] > 1 ? $this->data['paquet'].' paquets' : $this->data['paquet'].' paquet';
+        if(isset($this->data['paquet'])){
+            return $this->data['paquet'] > 1 ? $this->data['paquet'].' paquets' : $this->data['paquet'].' paquet';
+        }
     }
 
     public function tva()
     {
-        return $this->data['tva'];
+        return isset($this->data['tva']) ? $this->data['tva'] : null;
     }
 
     public function messages()
     {
-        return $this->data['message'];
+        return isset($this->data['message']) ? $this->data['message'] : null;
     }
 }
