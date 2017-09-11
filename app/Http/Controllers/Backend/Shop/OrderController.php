@@ -157,6 +157,11 @@ class OrderController extends Controller {
         $data    = json_decode($request->input('data'),true);
         $preview = new \App\Droit\Shop\Order\Entities\OrderPreview($data);
 
+        $adresse = $data['adresse'];
+
+        unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
+        $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
+
         $data = [
             'old_products'   => $preview->products(true)->toArray(),
             'user_id'        => $data['user_id'],
@@ -165,7 +170,7 @@ class OrderController extends Controller {
             'message'        => $data['message'],
             'paquet'         => isset($data['paquet']) ? $data['paquet'] : null,
             'free'           => isset($data['free']) ? 1 : null,
-            'adresse'        => $data['adresse']
+            'adresse'        => $adresse
         ];
 
         return redirect('admin/order/create')->with($data);

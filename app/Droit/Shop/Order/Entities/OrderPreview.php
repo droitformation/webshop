@@ -5,6 +5,7 @@ class OrderPreview
     protected $repo_product;
     protected $repo_user;
     protected $repo_shipping;
+    protected $order_maker;
 
     public $data;
 
@@ -13,6 +14,7 @@ class OrderPreview
         $this->repo_product  = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
         $this->repo_user     = \App::make('App\Droit\User\Repo\UserInterface');
         $this->repo_shipping = \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface');
+        $this->order_maker   = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
         $this->data = $data;
     }
@@ -31,6 +33,7 @@ class OrderPreview
                 'rabais'  => isset($order['rabais'][$key]) && !empty($order['rabais'][$key]) ? $order['rabais'][$key].'%' : null,
                 'price'   => isset($order['price'][$key]) && !empty($order['price'][$key]) ? $order['price'][$key].' CHF' : null,
                 'gratuit' => isset($order['gratuit'][$key]) && !empty($order['gratuit'][$key]) ? 'oui' : null,
+                'prix'    => $model->price_cents,
             ];
         });
     }
@@ -56,7 +59,7 @@ class OrderPreview
         if(isset($this->data['shipping_id'])){
             $shipping = $this->repo_shipping->find($this->data['shipping_id']);
 
-            return isset($this->data['free']) ? 'Gratuit' : $shipping->title;
+            return isset($this->data['free']) ? 'Gratuit' : $shipping->title.' | '.$shipping->price_cents. ' CHF';
         }
 
         return null;
@@ -65,6 +68,7 @@ class OrderPreview
     public function paquet()
     {
         if(isset($this->data['paquet'])){
+
             return $this->data['paquet'] > 1 ? $this->data['paquet'].' paquets' : $this->data['paquet'].' paquet';
         }
     }
@@ -76,6 +80,28 @@ class OrderPreview
 
     public function messages()
     {
-        return isset($this->data['message']) ? $this->data['message'] : null;
+        return isset($this->data['message']) && !empty(array_filter($this->data['message'])) ? $this->data['message'] : null;
+    }
+
+    public function shipping_total()
+    {
+        if(isset($this->data['shipping_id'])){
+            $shipping = $this->repo_shipping->find($this->data['shipping_id']);
+            return isset($this->data['free']) ? 0 : $this->data['paquet'] * $shipping->price_cents;
+        }
+
+        return 0;
+    }
+
+    public function order_total()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        $product_prices = $this->order_maker->total($this->data['order']);
+        $product_prices = $money->format($product_prices / 100);
+
+        $shipping_price = $this->shipping_total();
+
+        return $product_prices + $shipping_price;
     }
 }

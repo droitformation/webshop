@@ -1388,7 +1388,7 @@ input[type="checkbox"].rappel-input {
 .user-adresse{
     width: auto;
     display: inline-block;
-    padding: 20px;
+    padding: 20px 30px;
     background: #f5f5f5;
 }
 
@@ -1419,4 +1419,37 @@ input[type="checkbox"].rappel-input {
 
 .special{
     color: #056734;
+}
+
+.panel dl.config-commande{
+    width: 200px;
+    float: left;
+}
+
+.config-commande dt{
+    margin-bottom: 8px;
+}
+
+.panel dl.config-commande dd{
+    margin-bottom:0;
+}
+
+.btn-order{
+    margin-top: 40px;
+}
+
+.table > tbody > tr > td.no-border{
+    border: none;
+}
+
+.mt-10{
+    margin-top: 10px !important;
+}
+
+.pb-5{
+    padding-bottom: 5px !important;
+}
+
+.pt-10{
+    padding-top: 10px !important;
 }

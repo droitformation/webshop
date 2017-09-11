@@ -27,6 +27,7 @@
                                 <div class="collapse {{ !empty(Session::get('user_id')) ? 'in' : '' }}" id="adresseFind" style="width: 500px;">
                                     <list-autocomplete type="user_id" chosen_id="{{ Session::get('user_id') ? Session::get('user_id') : null }}"></list-autocomplete>
                                 </div>
+
                                 <div class="collapse {{ !empty(Session::get('adresse')) ? 'in' : '' }}" id="adresseMake">
                                     <div class="row">
                                         @include('backend.orders.partials.adresse')
@@ -40,8 +41,8 @@
                         <div id="wrapper_clone_order">
                             @if(Session::has('old_products'))
                                 <?php
-                                    // wee want to repopulate the form with all the products and only assign an id to the first one
-                                    // the others are just clones fileds with jquery
+                                    // we want to repopulate the form with all the products and only assign an id to the first one
+                                    // the others are just clones filed with jquery
                                     $old_products  = Session::get('old_products');
                                     $first_product = array_shift($old_products);
                                 ?>
