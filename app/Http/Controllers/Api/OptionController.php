@@ -47,6 +47,10 @@ class OptionController extends Controller {
     {
         $data = $request->input('option');
 
+        $data['groupe'] = isset($data['groupe']) && !empty($data['groupe']) ? collect($data['groupe'])->reject(function ($item, $key) {
+            return empty($item['text']);
+        })->toArray() : [];
+
         $item     = $this->option->update($data);
         $colloque = $this->colloque->find($data['colloque_id']);
 

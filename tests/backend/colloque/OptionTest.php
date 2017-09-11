@@ -49,6 +49,41 @@ class OptionTest extends BrowserKitTest {
         ]);
     }
 
+    public function testCreateNewOptionWithGroupes()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $this->visit('/admin/colloque/'.$colloque->id)->see($colloque->titre);
+
+        $options = [
+            'colloque_id' => $colloque->id,
+            'title'       => 'testing',
+            'type'        => 'checkbox',
+            'groupe'      => [
+                [
+                    'text'       => 'Premier groupe',
+                    'colloque_id'=> $colloque->id,
+                ]
+            ]
+        ];
+
+        $data = ['option' => $options];
+
+        $this->json('POST', '/vue/option', $data);
+
+        $this->seeInDatabase('colloque_options', [
+            'colloque_id' => $colloque->id,
+            'title'       => 'testing',
+            'type'        => 'checkbox'
+        ]);
+
+        $this->seeInDatabase('colloque_option_groupes', [
+            'colloque_id' => $colloque->id,
+            'text'       => 'Premier groupe',
+        ]);
+    }
+
     public function testUpdateOption()
     {
         $make     = new \tests\factories\ObjectFactory();
@@ -79,6 +114,25 @@ class OptionTest extends BrowserKitTest {
             'colloque_id' => $colloque->id,
             'title'       => 'other',
             'type'        => 'checkbox'
+        ]);
+    }
+
+    public function testAddNewGroupItem()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $groupe = [
+            'text'       => 'Premier groupe',
+            'colloque_id'=> $colloque->id,
+            'option_id'  => $colloque->options->first()->id
+        ];
+
+        $this->json('POST', '/vue/groupe', $groupe);
+
+        $this->seeInDatabase('colloque_option_groupes', [
+            'colloque_id' => $colloque->id,
+            'text'       => 'Premier groupe',
         ]);
     }
 

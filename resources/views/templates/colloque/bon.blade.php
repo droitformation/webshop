@@ -58,7 +58,9 @@
                         <h4>Choix:</h4>
                         <ul class="options">
                             @foreach($options as $option)
-                                <li>{{ $option['title'] }}</li>
+                                <li>
+                                    {!! isset($option['choice']) ? '<strong>'.$option['title'].' :</strong>' : $option['title'] !!}
+                                </li>
                                 {!! isset($option['choice']) ? '<li class="blue text-indent">'.$option['choice'].'</li>' : '' !!}
                             @endforeach
                         </ul>

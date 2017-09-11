@@ -59,8 +59,19 @@
                             <p v-for="groupe in option.groupe">
                                 <input class="form-control" :value="groupe.text" v-model="groupe.text">
                             </p>
-                            <a class="btn btn-xs btn-info" @click="addGroupe(option)"><i class="fa fa-plus"></i></a>
+
+                            <div class="row" v-if="newgroupitem" style="margin-bottom:8px;">
+                                <div class="col-md-11">
+                                    <input class="form-control" value="" v-model="groupeitem.text">
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" @click="saveGroup(option)" class="btn btn-sm btn-primary btn-input-h pull-right">ajouter</button>
+                                </div>
+                            </div>
+
+                            <a class="btn btn-xs btn-info" @click="addNewGroupeItem(option)"><i class="fa fa-plus"></i></a>
                         </div>
+
                     </div>
                 </div>
             </li>
@@ -97,6 +108,9 @@
     .option-title{
         border-color:#6f7271;
     }
+    .btn-input-h{
+        height:34px;
+    }
 </style>
 <script>
 
@@ -109,10 +123,12 @@ export default {
             nouveau:{
                 title: '',
                 type: 'checkbox',
-                groupe: [],
+                groupe: new Array(),
                 colloque_id: this.colloque,
             },
+            groupeitem: {},
             add : false,
+            newgroupitem: false,
             isText: false
         }
     },
@@ -122,13 +138,12 @@ export default {
     methods: {
         getOptions : function(){
              this.list = _.orderBy(this.options, ['type'],['desc']);
-             console.log(this.list);
         },
         selectType : function(){
 
             if(this.nouveau.type == 'choix')
             {
-                this.nouveau.groupe.push({ text: ''});
+                 this.nouveau.groupe.push({ text: ''});
             }
             else{
                 this.nouveau.groupe = [];
@@ -143,8 +158,11 @@ export default {
         addNewGroupe: function(option) {
             this.nouveau.groupe.push({text: ''});
         },
-        addGroupe: function(option) {
-            option.groupe.push({ text: ''});
+        addNewGroupeItem: function(option) {
+            this.newgroupitem = true;
+            this.groupeitem.text = '';
+            this.groupeitem.option_id = option.id;
+            this.groupeitem.colloque_id = this.colloque;
         },
         resetform :function(){
             this.add = false;
@@ -171,6 +189,18 @@ export default {
                this.list = _.orderBy(response.body.options, ['type'],['desc']);
             }, (response) => {}).bind(this);
 
+        },
+        saveGroup : function(option){
+
+            if(this.groupeitem.text.length){
+                this.$http.post('/vue/groupe', this.groupeitem ).then((response) => {
+                   console.log(response.body.options);
+                   this.list = _.orderBy(response.body.options, ['type'],['desc']);
+                }, (response) => {}).bind(this);
+            }
+
+            this.newgroupitem = false;
+            this.groupeitem = {};
         },
         deleteOption :function(option){
 
