@@ -114,6 +114,12 @@ h4.colloque-attestation{
     list-style: none;
 }
 
+.options li.text-indent{
+    padding-left: 0;
+    margin-left: -2px;
+    list-style-type: none;
+}
+
 .organisateur{
     font-weight: normal;
     font-size: 12px;

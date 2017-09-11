@@ -529,6 +529,9 @@ Route::group(['prefix' => 'vue'], function () {
     Route::post('option','Api\OptionController@store');
     Route::put('option/{id}','Api\OptionController@update');
     Route::delete('option/{id}','Api\OptionController@destroy');
+
+    Route::post('groupe','Api\OptionGroupeController@store');
+
     Route::get('autocomplete', 'Backend\SearchController@autocomplete');
     
 });
