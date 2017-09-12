@@ -25,15 +25,26 @@ class OrderPreview
 
         return collect($order['products'])->map(function ($product,$key) use ($order,$onlyid) {
 
-            $model = $this->repo_product->find($order['products'][$key]);
+            $money = new \App\Droit\Shop\Product\Entities\Money;
+
+            $model    = $this->repo_product->find($order['products'][$key]);
+
+            $rabais   = isset($order['rabais'][$key]) && !empty($order['rabais'][$key]) ? $order['rabais'][$key] : null;
+            $special  = isset($order['price'][$key]) && !empty($order['price'][$key]) ? $order['price'][$key] : null;
+            $gratuit  = isset($order['gratuit'][$key]) && !empty($order['gratuit'][$key]) ? true : false;
+
+            $computed = $rabais  ? ($model->price - ($model->price * $rabais/100)) / 100 : $model->price_cents;
+            $computed = $special ? $special : $computed;
+            $computed = $gratuit ? 0 : $computed;
 
             return [
-                'product' => $onlyid ? $model->id : $model ,
-                'qty'     => $order['qty'][$key],
-                'rabais'  => isset($order['rabais'][$key]) && !empty($order['rabais'][$key]) ? $order['rabais'][$key].'%' : null,
-                'price'   => isset($order['price'][$key]) && !empty($order['price'][$key]) ? $order['price'][$key].' CHF' : null,
-                'gratuit' => isset($order['gratuit'][$key]) && !empty($order['gratuit'][$key]) ? 'oui' : null,
-                'prix'    => $model->price_cents,
+                'product'  => $onlyid ? $model->id : $model ,
+                'qty'      => $order['qty'][$key],
+                'rabais'   => $rabais,
+                'price'    => $special,
+                'gratuit'  => $gratuit ? 'oui' : null,
+                'prix'     => $model->price_cents,
+                'computed' => $money->format($computed * $order['qty'][$key])
             ];
         });
     }
@@ -103,7 +114,8 @@ class OrderPreview
         $product_prices = $money->format($product_prices / 100);
 
         $shipping_price = $this->shipping_total();
+        $total = $product_prices + $shipping_price;
 
-        return $product_prices + $shipping_price;
+        return $money->format($total);
     }
 }

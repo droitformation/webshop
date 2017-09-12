@@ -24,7 +24,10 @@
         </div>
         <div class="col-lg-1 col-md-2 col-xs-12">
             <label>Prix spécial</label>
-            <input class="form-control" value="{{ isset($old_product['price']) ? $old_product['price'] : '' }}" type="text" name="order[price][{{ $index }}]">
+            <div class="input-group">
+                <input class="form-control" value="{{ isset($old_product['price']) ? $old_product['price'] : '' }}" type="text" name="order[price][{{ $index }}]">
+                <span class="input-group-addon">CHF</span>
+            </div>
         </div>
         <div class="col-lg-2 col-md-1 col-xs-12">
             <label></label>

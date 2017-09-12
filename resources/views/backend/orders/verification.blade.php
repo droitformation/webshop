@@ -44,9 +44,10 @@
                                 <tr class="active">
                                     <th>Titre</th>
                                     <th class="text-right">Rabais</th>
-                                    <th class="text-right">Prix spécial</th>
                                     <th class="text-right">Livre gratuit</th>
                                     <th class="text-right">Quantité</th>
+                                    <th class="text-right">Prix unité</th>
+                                    <th class="text-right">Prix spécial</th>
                                     <th class="text-right">Prix</th>
                                 </tr>
                             </thead>
@@ -54,23 +55,24 @@
                                 @foreach($preview->products() as $product)
                                     <tr>
                                         <td><strong>{{ $product['product']->title }}</strong></td>
-                                        <td class="text-right">{{ $product['rabais'] }}</td>
-                                        <td class="text-right">{{ $product['price'] }}</td>
+                                        <td class="text-right">{{ !empty($product['rabais']) ? $product['rabais'].'%' : '' }}</td>
                                         <td class="text-right">{{ $product['gratuit'] }}</td>
                                         <td class="text-right">{{ $product['qty'] }}</td>
-                                        <td class="text-right">{{ $product['prix'] }}</td>
+                                        <td class="text-right">{{ $product['prix'] }} CHF</td>
+                                        <td class="text-right">{{ isset($product['price']) ? $product['price'].' CHF' : '' }}</td>
+                                        <td class="text-right">{{ $product['computed'] }} CHF</td>
                                     </tr>
                                 @endforeach
-                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="7">&nbsp;</td></tr>
                                 <tr>
-                                    <td colspan="4" class="text-right no-border"></td>
+                                    <td colspan="5" class="text-right no-border"></td>
                                     <td class="text-right no-border">Frais de port</td>
                                     <td class="text-right no-border">{{ $preview->shipping_total() }} CHF</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-right mt-10 pb-0 no-border"></td>
+                                    <td colspan="5" class="text-right mt-10 pb-0 no-border"></td>
                                     <td class="text-right" style="width: 110px; border-color: #999;"><strong>Total</strong></td>
-                                    <td class="text-right" style="border-color: #999;"">{{ $preview->order_total() }} CHF</td>
+                                    <td class="text-right" style="border-color: #999;">{{ $preview->order_total() }} CHF</td>
                                 </tr>
                             </tbody>
 

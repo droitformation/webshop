@@ -1422,12 +1422,13 @@ input[type="checkbox"].rappel-input {
 }
 
 .panel dl.config-commande{
-    width: 200px;
+    width: 100%;
     float: left;
 }
 
 .config-commande dt{
-    margin-bottom: 8px;
+    margin-bottom: 5px;
+    margin-top: 10px;
 }
 
 .panel dl.config-commande dd{

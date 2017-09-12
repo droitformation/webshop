@@ -444,6 +444,11 @@ class Helper {
                 $product['gratuit'] = 1;
             }
 
+            if(isset($data['price'][$x]) && !empty($data['price'][$x]))
+            {
+                $product['price'] = $data['price'][$x];
+            }
+
             $products[] = $product;
         }
 

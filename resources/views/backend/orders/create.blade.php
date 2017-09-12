@@ -74,7 +74,7 @@
                                             <select name="shipping_id" class="form-control">
                                                 <option value="">Choix</option>
                                                 @foreach($shippings as $shipping)
-                                                    <option {{ Session::has('shipping_id') && Session::get('shipping_id') == $shipping->id ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
+                                                    <option {{ (Session::has('shipping_id') && Session::get('shipping_id') == $shipping->id) || $shipping->id == 1 ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -118,7 +118,7 @@
 
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-info">Valider la commande</button>
+                        <button type="submit" class="btn btn-info">Vérifier la commande</button>
                     </div>
                 </form>
             </div>
