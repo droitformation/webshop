@@ -12,7 +12,7 @@
         <div class="col-md-12 col-xs-12">
 
             <div class="panel panel-primary">
-                <form id="formOrder" action="{{ url('admin/order/verification') }}" class="validate-form" data-validate="parsley" method="POST">{!! csrf_field() !!}
+                <form id="formOrder" action="{{ url('admin/order/verification') }}" class="validate-form" data-validate="parsley" autocomplete="off" method="POST">{!! csrf_field() !!}
                     <div class="panel-body">
                         <h3>Créer une commande</h3>
 

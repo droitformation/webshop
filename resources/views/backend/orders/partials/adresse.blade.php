@@ -20,11 +20,11 @@
     <div class="form-group row">
         <div class="col-md-6">
             <label class="control-label"><span class="text-danger">E-mail</span></label>
-            <input type="email" name="adresse[email]" data-parsley-required autocomplete="off" class="form-control form-required" value="{{ old('adresse.email') }}" placeholder="E-mail">
+            <input type="email" name="adresse[email]" data-parsley-required class="form-control form-required" value="{{ old('adresse.email') }}" placeholder="E-mail">
         </div>
         <div class="col-md-6">
             <label class="control-label"><span class="text-danger">Mot de passe</span></label>
-            <input type="password" name="adresse[password]" data-parsley-required autocomplete="off" class="form-control form-required" value="{{ old('adresse.password') }}">
+            <input type="password" name="adresse[password]" data-parsley-required class="form-control form-required" value="{{ old('adresse.password') }}">
         </div>
     </div>
 
