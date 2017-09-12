@@ -175,7 +175,7 @@ class OrderAdminTest extends BrowserKitTest {
             'adresse' => []
         ];
 
-        $response = $this->call('POST', '/admin/order', $data);
+        $response = $this->call('POST', '/admin/order/verification', $data);
 
         $this->assertRedirectedTo('/admin/order/create');
         $this->assertSessionHas('old_products');
@@ -196,7 +196,7 @@ class OrderAdminTest extends BrowserKitTest {
             'adresse' => []
         ];
 
-        $response = $this->call('POST', '/admin/order', $data);
+        $response = $this->call('POST', '/admin/order/verification', $data);
 
         $this->assertRedirectedTo('/admin/order/create');
         $this->assertSessionHas('old_products');
@@ -285,22 +285,29 @@ class OrderAdminTest extends BrowserKitTest {
             'message' => []
         ];
 
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        $price1 = $product1->price_cents - ($product1->price_cents * 0.25);
+        $price1 = $price1 * 2;
+
         $data_product = [
             [
-                'product' => $product1->id ,
-                'qty'     => 2,
-                'rabais'  => '25%',
-                'price'   => null,
-                'gratuit' => null,
-                'prix'    => $product1->price_cents,
+                'product'  => $product1->id ,
+                'qty'      => 2,
+                'rabais'   => '25',
+                'price'    => null,
+                'gratuit'  => null,
+                'prix'     => $product1->price_cents,
+                'computed' => $money->format($price1),
             ],
             [
-                'product' => $product2->id ,
-                'qty'     => 2,
-                'rabais'  => null,
-                'price'   => null,
-                'gratuit' => 'oui',
-                'prix'    => $product2->price_cents,
+                'product'  => $product2->id ,
+                'qty'      => 2,
+                'rabais'   => null,
+                'price'    => null,
+                'gratuit'  => 'oui',
+                'prix'     => $product2->price_cents,
+                'computed' => $money->format(0),
             ]
         ];
 
