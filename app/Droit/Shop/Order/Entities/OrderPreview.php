@@ -87,7 +87,9 @@ class OrderPreview
     {
         if(isset($this->data['shipping_id'])){
             $shipping = $this->repo_shipping->find($this->data['shipping_id']);
-            return isset($this->data['free']) ? 0 : $this->data['paquet'] * $shipping->price_cents;
+            $paquet   = isset($this->data['paquet']) ? $this->data['paquet'] : 1;
+
+            return isset($this->data['free']) ? 0 : $paquet * $shipping->price_cents;
         }
 
         return 0;

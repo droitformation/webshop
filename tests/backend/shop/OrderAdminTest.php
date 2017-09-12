@@ -292,6 +292,7 @@ class OrderAdminTest extends BrowserKitTest {
                 'rabais'  => '25%',
                 'price'   => null,
                 'gratuit' => null,
+                'prix'    => $product1->price_cents,
             ],
             [
                 'product' => $product2->id ,
@@ -299,17 +300,21 @@ class OrderAdminTest extends BrowserKitTest {
                 'rabais'  => null,
                 'price'   => null,
                 'gratuit' => 'oui',
+                'prix'    => $product2->price_cents,
             ]
         ];
+
+        $total = $product1->price_cents + $product2->price_cents + 10;
 
         $this->user->shouldReceive('find')->once()->andReturn($user);
         $this->product->shouldReceive('find')->once()->andReturn($product1);
         $this->product->shouldReceive('find')->once()->andReturn($product2);
+        $this->maker->shouldReceive('total')->once()->andReturn($total);;
 
         $response = $this->call('POST', '/admin/order/verification', $data);
 
         $content = $this->response->getOriginalContent();
-        $result = $content['data'];
+        $result  = $content['data'];
 
         $this->assertEquals($result, $data);
 
