@@ -107,11 +107,11 @@
                                 <label><i class="fa fa-info-circle"></i>&nbsp; Phrases d'informations</label><br/>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[warning]" value="{{ Session::has('message.warning') && Session::get('message.warning') }}" placeholder="Ajouter une phrase d'information">
+                                    <input class="form-control" type="text" name="message[warning]" value="{{ Session::has('message.warning') ? Session::get('message.warning') : old('message.warning') }}" placeholder="Ajouter une phrase d'information">
                                 </div>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[special]" value="{{ Session::has('message.special') && Session::get('message.special') }}" placeholder="Information pour librairies">
+                                    <input class="form-control" type="text" name="message[special]" value="{{ Session::has('message.special') ? Session::get('message.special') : old('message.special') }}" placeholder="Information pour librairies">
                                 </div>
                             </div>
                         </fieldset>
