@@ -147,7 +147,7 @@ a img:hover { opacity:0.6; transition: width 1s; -moz-transition: 1s; /* Firefox
     padding: 0 10px;
     font-size: 13px;
     font-style: normal;
-    text-transform: capitalize;
+
 }
 
 #preheader-menu ul.menu li a {
