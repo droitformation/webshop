@@ -10,7 +10,7 @@
         {!! $sondage->description !!}
     @else
         <h3>Formulaire d'évaluation</h3>
-        <p><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></p>
+        <h4 class="sondage-title-colloque"><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></h4>
     @endif
 
     <form class="form-sondage" action="{{ url('reponse') }}" method="POST">{!! csrf_field() !!}
@@ -27,7 +27,7 @@
                         <h4 class="label-chapitre"><strong>{!! strip_tags($avis->question) !!}</strong></h4>
 
                     @elseif($avis->type == 'text')
-                        <label for="message" class="control-label">Remarques :</label>
+                        <label for="message" class="control-label">{!! strip_tags($avis->question) !!}</label>
                         <textarea class="form-control sondage" name="reponses[{{ $avis->id }}]"></textarea>
 
                     @else($avis->type == 'question')
@@ -36,7 +36,8 @@
                                 <label for="message" class="control-label label-question">{!! $avis->question !!}
                             </li>
                         </ul>
-                        <ul>
+
+                        <ul class="question-{{ $avis->type  }}">
                             <?php $choices = explode(',', $avis->choices); ?>
                             @foreach($choices as $choices)
                                 <li class="radio-sondage">
@@ -44,6 +45,7 @@
                                 </li>
                             @endforeach
                         </ul>
+
                     @endif
 
                 </div>

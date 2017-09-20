@@ -113,7 +113,7 @@
                                 <div class="sondage-question-list">
                                     {!! $avis->question !!}
                                 </div>
-                                <form action="{{ url('admin/sondageavis/'.$avis->sondage_id) }}" method="POST" class="pull-right">
+                                <form action="{{ url('admin/sondageavis/'.$sondage->id) }}" method="POST" class="pull-right">
                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                     <input type="hidden" name="question_id" value="{{ $avis->id }}" />
                                     <button class="btn btn-danger btn-xs">Retirer</button>

@@ -38,6 +38,8 @@ class SondageAvisController extends Controller
 
         $sondage->avis()->detach($request->input('question_id'));
 
+        alert()->success('Question retirée');
+
         return redirect()->back();
     }
 }

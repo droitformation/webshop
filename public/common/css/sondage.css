@@ -4,6 +4,13 @@
     border-radius: 0px;
 }
 
+.sondage-title-colloque{
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    font-style: italic;
+    border-bottom: 1px dashed #e5e5e5;
+}
+
 input[type="radio"], input[type="checkbox"] {
     margin: 4px 3px 0;
 }
@@ -30,14 +37,24 @@ textarea.sondage{
 li{
     display: inline-block;
 }
+.form-group-sondage{
+    margin: 8px 0 5px 0;
+}
+
+.form-group-sondage ul{
+    vertical-align: top;
+}
+
 .sondage-question {
     width:460px;
 }
+
 .sondage-question h4{
     font-size: 17px;
     font-weight: bold;
     margin-bottom: 5px;
-    margin-top: 0;
+    margin-top: -10px;
+    line-height: 20px;
  }
 
 .sondage-question h4 strong{
@@ -45,8 +62,25 @@ li{
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+.control-label{
+    margin-top: 5px;
+}
+
 .label-question{
     margin-bottom: 0;
+}
+
+.label-question p{
+    margin-bottom: 2px;
+}
+.question-checkbox{
+    margin: 20px 0;
+}
+
+.question-checkbox li{
+    display: block;
+    padding: 3px 0;
 }
 
 ul{
