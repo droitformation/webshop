@@ -49,7 +49,7 @@ li{
     width:460px;
 }
 
-.sondage-question h4, .label-question{
+.sondage-question h4, .label-question h4{
     font-size: 17px;
     font-weight: bold;
     margin-bottom: 5px;
