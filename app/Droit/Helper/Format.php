@@ -139,73 +139,20 @@ class Format {
 	 * Format name with hyphens or lisaisons 
 	 *
 	 * @return string
-	 */			
-	public function format_name($string){
-	
-			// liaisons word
-			$liaison = array('de','des','du','von','dela','del','le','les','la','sur');
-			$words   = array();
-			$final   = '';
-			// explode the name by space
-			$mots =  explode(' ', $string);
-						
-			if(count($mots) > 0)
-			{	
-				// si mots composé plus de 1 mot				
-				foreach($mots as $i => $mot)
-				{
-			   		// si il existe un hyphen
-		   			if (strpos($mot,'-') !== false) {
-		   				
-		   				// 2eme explode delimiteur hyphens
-		   				$parts =  explode('-', $mot);
-		   				
-		   				// tout en minuscule
-		   				$parts = array_map('strtolower', $parts);			   				
-		   				$nbr   = count($parts);
-		   				$loop  = 1;
-		   				
-		   				foreach($parts as $part){
-			   	  	
-					   	  	  if( !in_array($part, $liaison))
-					   	  	  {						   	  	  	
-						   	  	 $part = ucfirst($part);
-					   	  	  }
-					   	  		
-						   	  $words[] = $part;
-						   	  
-						   	  if($loop < $nbr)
-						   	  {
-							   	 $words[] = '-'; // remet delmiteur hyphen 
-						   	  }
-						   	  
-						   	  $loop++;  
-					   	}
-		   			}
-		   			else
-		   			{ 
-		   				// sans hyphens mais plusieurs mots
-			   			$mot = strtolower($mot);
-			   			
-	   					if( !in_array($mot, $liaison) || $i == 0)
-	   					{
-						   	$mot = ucfirst($mot);
-					   	}
-					   	  		
-						$words[] = $mot;
-						$words[] = ' '; // remet delmiteur espace
-		   			}
-				}
-	
-				$final = implode('',$words);				
-			}
-			else
-			{ 
-				// un seul mot
-	   			$final = $string;
-			}
-			
-		return $final;
+	 */
+    public function formatingName($string)
+    {
+        $liaison = ['de','des','du','von','dela','del','le','les','la','sur'];
+
+        $mots = collect(explode(' ', strtolower($string)));
+
+        if($mots->count() == 1){ return $string; }
+
+        return collect(explode(' ', $string))->map(function ($mot, $key) use ($liaison) {
+
+            return !in_array($mot,$liaison) || strpos($mot,'-') !== false ? implode('-', array_map('ucfirst', explode('-', $mot))) : $mot;
+
+        })->implode(' ');
 	}
 	
 	/*

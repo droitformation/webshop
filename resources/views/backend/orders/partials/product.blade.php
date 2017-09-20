@@ -6,7 +6,7 @@
                 <option value="">Choix</option>
                 @if(!$products->isEmpty())
                     @foreach($products as $product)
-                        <option {{ isset($old_product['product']) && $old_product['product'] == $product->id ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->title }}</option>
+                        <option {{ isset($old_product['product']) && $old_product['product'] == $product->id ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->title }} | {{ $product->price_cents  }} CHF</option>
                     @endforeach
                 @endif
             </select>

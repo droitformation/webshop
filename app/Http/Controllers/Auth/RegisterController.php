@@ -74,8 +74,8 @@ class RegisterController extends Controller
         $format  = new \App\Droit\Helper\Format();
 
         return User::create([
-            'first_name' => $format->format_name($data['first_name']),
-            'last_name'  => $format->format_name($data['last_name']),
+            'first_name' => $format->formatingName($data['first_name']),
+            'last_name'  => $format->formatingName($data['last_name']),
             'email'      => $data['email'],
             'password'   => bcrypt($data['password']),
         ]);

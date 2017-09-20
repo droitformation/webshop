@@ -171,11 +171,11 @@ class AdresseEloquent implements AdresseInterface{
 		{
 			$row = array();
 		
-			$row['prenom']  = $this->format->format_name($adresse['prenom']);
-			$row['nom']     = $this->format->format_name($adresse['nom']);
+			$row['prenom']  = $this->format->formatingName($adresse['prenom']);
+			$row['nom']     = $this->format->formatingName($adresse['nom']);
 			$row['email']   = "<a href=".url('admin/adresses/'.$adresse['id']).">".$adresse['email'].'</a>';
-			$row['adresse'] = $this->format->format_name($adresse['adresse']);
-			$row['ville']   = $this->format->format_name($adresse['ville']);
+			$row['adresse'] = $this->format->formatingName($adresse['adresse']);
+			$row['ville']   = $this->format->formatingName($adresse['ville']);
 			
 			$row['options'] = '<a class="btn btn-info edit_btn" type="button" href="'.url('admin/adresses/'.$adresse['id']).'">&Eacute;diter</a> ';
 			// Reset keys
@@ -206,8 +206,8 @@ class AdresseEloquent implements AdresseInterface{
 	{
 		$adresse = $this->adresse->create(array(
 			'civilite_id'   => (isset($data['civilite_id']) ? $data['civilite_id'] : 4),
-			'first_name'    => $this->format->format_name($data['first_name']),
-			'last_name'     => $this->format->format_name($data['last_name']),
+			'first_name'    => $this->format->formatingName($data['first_name']),
+			'last_name'     => $this->format->formatingName($data['last_name']),
 			'email'         => (isset($data['email']) ? $data['email'] : ''),
 			'company'       => (isset($data['company']) ? $data['company'] : null),
 			'profession_id' => (isset($data['profession_id']) ? $data['profession_id'] : null),
@@ -250,10 +250,10 @@ class AdresseEloquent implements AdresseInterface{
 		// Général
 
 		if(isset($data['first_name'])){
-			$adresse->first_name  = $this->format->format_name($data['first_name']);
+			$adresse->first_name  = $this->format->formatingName($data['first_name']);
 		}
 		if(isset($data['last_name'])){
-			$adresse->last_name   = $this->format->format_name($data['last_name']);
+			$adresse->last_name   = $this->format->formatingName($data['last_name']);
 		}
 
 		$adresse->updated_at  = date('Y-m-d G:i:s');

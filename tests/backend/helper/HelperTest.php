@@ -72,19 +72,20 @@ class HelperTest extends BrowserKitTest {
         $this->assertEquals(['Cindy' => 2, 0 => 'first',4 => 'second'],$result);
     }
 
-    public function testFormatName()
+    public function testFormatNameOther()
     {
         $names = [
-            'Coralie von allmen'     => 'Coralie von Allmen',
-            'Sandra de monmoulin'    => 'Sandra de Monmoulin',
-            'sandra dela les chemin' => 'Sandra dela les Chemin',
-            'cindy leschaud'         => 'Cindy Leschaud'
+            'Coralie von allmen'       => 'Coralie von Allmen',
+            'Sandra de mon-moulin'      => 'Sandra de Mon-Moulin',
+            'sandra dela les chemin'   => 'Sandra dela les Chemin',
+            'cindy leschaud'           => 'Cindy Leschaud',
+            'Coralie amhetaj-leschaud' => 'Coralie Amhetaj-Leschaud',
+            'françois de voma'         => 'François de Voma'
         ];
 
         foreach($names as $input => $output)
         {
-            $result = $this->helper->format_name($input);
-
+            $result = $this->format->formatingName($input);
             $this->assertEquals($output, $result);
         }
     }
