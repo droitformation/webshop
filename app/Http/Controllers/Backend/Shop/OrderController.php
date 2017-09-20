@@ -158,13 +158,16 @@ class OrderController extends Controller {
         $preview = new \App\Droit\Shop\Order\Entities\OrderPreview($data);
 
         $adresse = $data['adresse'];
+        $user_id = isset($data['user_id']) ? $data['user_id'] : null;
 
-        unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
-        $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
+        if($user_id){
+            unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
+            $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
+        }
 
         $data = [
             'old_products'   => $preview->products(true)->toArray(),
-            'user_id'        => $data['user_id'],
+            'user_id'        => $user_id,
             'shipping_id'    => $data['shipping_id'],
             'tva'            => $data['tva'],
             'message'        => $data['message'],
