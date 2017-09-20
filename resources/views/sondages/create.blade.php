@@ -27,7 +27,7 @@
                         <h4 class="label-chapitre"><strong>{!! strip_tags($avis->question) !!}</strong></h4>
 
                     @elseif($avis->type == 'text')
-                        <label for="message" class="control-label">{!! $avis->question !!}</label>
+                        <label for="message" class="control-label label-question">{!! $avis->question !!}</label>
                         <textarea class="form-control sondage" name="reponses[{{ $avis->id }}]"></textarea>
 
                     @else($avis->type == 'question')
