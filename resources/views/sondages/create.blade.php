@@ -32,7 +32,9 @@
 
                     @else($avis->type == 'question')
                         <ul>
-                            <li class="sondage-question"><label for="message" class="control-label label-question">{!! strip_tags($avis->question) !!}</li>
+                            <li class="sondage-question">
+                                <label for="message" class="control-label label-question">{!! $avis->question !!}
+                            </li>
                         </ul>
                         <ul>
                             <?php $choices = explode(',', $avis->choices); ?>
@@ -40,7 +42,6 @@
                                 <li class="radio-sondage">
                                     <input class="sondage" type="{{ $avis->type }}" name="reponses[{{ $avis->id }}]" value="{{ $choices }}">{{ $choices }}
                                 </li>
-
                             @endforeach
                         </ul>
                     @endif

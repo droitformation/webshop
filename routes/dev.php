@@ -1000,9 +1000,9 @@ Route::get('/calculette', function () {
 
 Route::get('factory', function()
 {
-    $make = new \tests\factories\ObjectFactory();
-    $products = $make->product(15);
-    $colloque = $make->colloque();
+    //$make = new \tests\factories\ObjectFactory();
+   // $products = $make->product(15);
+    //$colloque = $make->colloque();
     //$orders = $make->order(5);
     //$membre = $make->items('Member', 1);
 
@@ -1011,14 +1011,13 @@ Route::get('factory', function()
 
     // set 5 to payed status
     //$resu = $make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
-    $deleted = [];
-
-    $deleted = collect($deleted)->map(function ($ids, $key) {
-        return ['yop'];
+    $max  = 2;
+    $avis = collect([1,2,3,4])->map(function ($item, $key) use ($max) {
+        return [$item => ['rang' => $max + $key]];
     });
 
     echo '<pre>';
-    print_r($deleted);
+    print_r($avis);
     echo '</pre>';
 
 });

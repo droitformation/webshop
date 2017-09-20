@@ -14,8 +14,8 @@ input[type="radio"], input[type="checkbox"] {
     margin: 0px 0px 0px 20px;
 }
 
-h4 .label-chapitre{
-    font-size: 17px;
+h4.label-chapitre{
+    font-size: 15px;
     color: #000;
     font-weight: bold;
 }
@@ -33,6 +33,22 @@ li{
 .sondage-question {
     width:460px;
 }
+.sondage-question h4{
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 0;
+ }
+
+.sondage-question h4 strong{
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.label-question{
+    margin-bottom: 0;
+}
+
 ul{
     display: inline-block;
     margin:0px;

@@ -1150,6 +1150,21 @@ input[type="checkbox"].rappel-input {
     margin-bottom: 10px;
 }
 
+.sondage-question-list{
+    width: 90%;
+    display: inline-block;
+}
+
+.question-item.sondage-question-item{
+    padding-bottom: 8px;
+}
+
+.sondage-question-list p,
+.sondage-question-list h4{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
 .sortquestion{
     margin-left: 5px;
     padding-left: 15px;

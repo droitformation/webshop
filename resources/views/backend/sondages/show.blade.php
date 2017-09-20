@@ -82,24 +82,19 @@
             <div class="panel-body">
                 <h3 style="margin-bottom: 20px;">Questions  <a href="{{ url('admin/avis/create') }}" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> &nbsp;Ajouter une question au catalogue</a></h3>
 
-                <h4>Ajouter une question</h4>
+                <h4>Ajouter des questions</h4>
 
                 <form action="{{ url('admin/sondageavis') }}" method="POST">{!! csrf_field() !!}
                     <input type="hidden" name="id" value="{{ $sondage->id }}" />
                     <div class="input-group">
 
-                        <?php $inList = !$sondage->avis->isEmpty() ? $sondage->avis->pluck('id') : collect([]); ?>
-
                         @if(!$avis->isEmpty())
-                            <select class="form-control" name="question_id">
-                                <option value="">Choix</option>
+                            <select class="form-control" name="question_id[]" multiple>
                                 @foreach($avis as $question)
-                                    @if(!$inList->contains($question->id))
-                                        <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
-                                    @endif
+                                    <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
                                 @endforeach
                             </select>
-                            <span class="input-group-btn">
+                            <span class="input-group-btn" style="vertical-align:top; padding-left: 5px;">
                                 <button class="btn btn-primary" type="submit">Ajouter</button>
                             </span>
                         @endif
@@ -114,8 +109,10 @@
                 @if(!$sondage->avis->isEmpty())
                     <ol class="sortquestion" data-id="{{ $sondage->id }}">
                         @foreach($sondage->avis as $avis)
-                            <li class="form-group type-choix question-item" id="question_rang_{{ $avis->id }}">
-                                <strong style="width: 90%;display: inline-block;">{{ strip_tags( $avis->question) }}</strong>
+                            <li class="form-group type-choix question-item sondage-question-item" id="question_rang_{{ $avis->id }}">
+                                <div class="sondage-question-list">
+                                    {!! $avis->question !!}
+                                </div>
                                 <form action="{{ url('admin/sondageavis/'.$avis->sondage_id) }}" method="POST" class="pull-right">
                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                     <input type="hidden" name="question_id" value="{{ $avis->id }}" />

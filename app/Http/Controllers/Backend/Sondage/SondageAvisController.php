@@ -20,16 +20,12 @@ class SondageAvisController extends Controller
     public function store(Request $request)
     {
         $sondage = $this->sondage->find($request->input('id'));
-
-        if($sondage->avis->contains('id',$request->input('question_id')))
-        {
-            alert()->warning('La question existe déjà');
-            return redirect()->back();
-        }
-
         $max = $sondage->avis->max('pivot.rang') ? $sondage->avis->max('pivot.rang') : 0;
 
-        $sondage->avis()->attach($request->input('question_id'), ['rang' => $max]);
+        // multiple questions add
+        $avis = collect($request->input('question_id'))->map(function ($item, $key) use ($max, $sondage) {
+            $sondage->avis()->attach($item, ['rang' => ($max + 1) + $key]);
+        });
 
         alert()->success('Question ajouté');
 
