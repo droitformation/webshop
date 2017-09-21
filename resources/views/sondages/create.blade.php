@@ -9,8 +9,20 @@
         <h3>{{ $sondage->title }}</h3>
         {!! $sondage->description !!}
     @else
-        <h3>Formulaire d'évaluation</h3>
-        <h4 class="sondage-title-colloque"><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></h4>
+
+        <div class="media media-sondage">
+            <div class="media-left">
+                <a href="{{ url('pubdroit/colloque/'.$sondage->colloque->id) }}">
+                    <img src="{{ secure_asset($sondage->colloque->frontend_illustration) }}" height="170" alt='{{ $sondage->colloque->titre }}'/>
+                </a>
+            </div>
+            <div class="media-body">
+                <p>Formulaire d'évaluation</p>
+                <h4 class="sondage-title-colloque"><strong>{{ $sondage->colloque->titre }}</strong></h4>
+                <p><strong>{{ $sondage->colloque->event_date }}</strong></p>
+            </div>
+        </div>
+
     @endif
 
     <form class="form-sondage" action="{{ url('reponse') }}" method="POST">{!! csrf_field() !!}
