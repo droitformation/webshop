@@ -95,7 +95,7 @@ class OrderAdminTest extends BrowserKitTest {
         $this->order->shouldReceive('update')->once();
 
         $response = $this->call('POST', '/admin/order', $data);
-        
+
         $this->assertRedirectedTo('/admin/orders');
     }
 

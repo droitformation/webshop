@@ -11,6 +11,10 @@ function delete_in_array($string,$value){
     return '';
 }
 
-function var_exist(array $data, $index){
-    return isset($data[$index]) && !empty($data[$index]) ? true : false;
+function var_exist($data, $index){
+    if($data && is_array($data)){
+        return isset($data[$index]) && !empty($data[$index]) ? true : false;
+    }
+
+    return false;
 }
