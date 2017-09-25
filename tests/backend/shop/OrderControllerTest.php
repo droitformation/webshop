@@ -25,6 +25,104 @@ class OrderControllerTest extends BrowserKitTest {
         parent::tearDown();
 	}
 
+    public function testCreateOrderWithStep()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
+            'price' => 1000,
+        ]);
+
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
+            'price' => 1000,
+        ]);
+
+        $data = [
+            'user_id' => $user->id,
+            'order' => [
+                'products' => [0 => $product1->id, 1 => $product2->id],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 50],
+                'gratuit'  => [1 => 1]
+            ],
+            'admin'   => 1,
+            'shipping_id' => 1,
+            'adresse' => [],
+            'tva'     => [],
+            'message' => []
+        ];
+
+        $data_product = [
+            [
+                'product'  => $product1->id ,
+                'qty'      => 2,
+                'rabais'   => '25',
+                'price'    => null,
+                'gratuit'  => null,
+                'prix'     => $product1->price_cents,
+                'computed' => 10.00,
+            ],
+            [
+                'product'  => $product2->id ,
+                'qty'      => 2,
+                'rabais'   => null,
+                'price'    => null,
+                'gratuit'  => 'oui',
+                'prix'     => $product2->price_cents,
+                'computed' => 0.00,
+            ]
+        ];
+
+        $total = 20.00;
+
+        $response = $this->call('POST', '/admin/order/verification', $data);
+
+        $content = $this->response->getOriginalContent();
+        $result  = $content['data'];
+
+        $this->assertEquals($result, $data);
+
+        $response = $this->call('POST', '/admin/order', ['data' => json_encode($data)]);
+
+        $model  = App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $order  = $model->getLast(1)->first();
+
+        $this->assertEquals($total,$order->total_with_shipping);
+    }
+
+    public function testCreateOrderWithStepFree()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000,]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000,]);
+
+        $data = [
+            'user_id' => $user->id,
+            'order' => [
+                'products' => [0 => $product1->id, 1 => $product2->id],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 50],
+                'gratuit'  => [1 => 1]
+            ],
+            'admin'   => 1,
+            'shipping_id' => 1,
+            'free'    => 1,
+            'adresse' => [],
+            'tva'     => [],
+            'message' => []
+        ];
+
+        $response = $this->call('POST', '/admin/order', ['data' => json_encode($data)]);
+
+        $model  = App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $order  = $model->getLast(1)->first();
+
+        $this->assertEquals('10.00',$order->total_with_shipping);
+    }
+
 	/**
 	 * @return void
 	 */

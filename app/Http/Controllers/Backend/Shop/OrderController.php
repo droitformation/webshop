@@ -189,7 +189,8 @@ class OrderController extends Controller {
     {
         $data = json_decode($request->input('data'),true);
 
-        $shipping = isset($data['shipping_id']) && !empty($data['shipping_id']) ? $this->shipping->find($data['shipping_id']) : null;
+        $shipping = var_exist($data,'shipping_id') ? $this->shipping->find($data['shipping_id']) : null;
+        $shipping = var_exist($data,'free') ? null : $shipping;
 
         $order = $this->ordermaker->make($data,$shipping);
         $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin

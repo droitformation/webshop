@@ -10,3 +10,7 @@ function delete_in_array($string,$value){
 
     return '';
 }
+
+function var_exist(array $data, $index){
+    return isset($data[$index]) && !empty($data[$index]) ? true : false;
+}
