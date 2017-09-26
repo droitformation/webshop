@@ -60,14 +60,16 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Téléphone</label>
         <div class="col-sm-7">
-            <input type="text" name="telephone" class="form-control" value="{{ $adresse->telephone }}">
+            <input type="text" name="telephone" class="form-control mask_tel" value="{{ $adresse->telephone }}">
+            <button type="button" class="mask_international btn btn-default btn-xs">Changer pour un N° international</button>
+            <button type="button" style="display: none;" class="mask_suisse btn btn-default btn-xs">Changer pour un N° Suisse</button>
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-sm-4 control-label">Mobile</label>
         <div class="col-sm-7">
-            <input type="text" name="mobile" class="form-control" value="{{ $adresse->mobile }}">
+            <input type="text" name="mobile" class="form-control mask_tel" value="{{ $adresse->mobile }}">
         </div>
     </div>
 

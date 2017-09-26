@@ -188,6 +188,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/tree.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.mask.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 

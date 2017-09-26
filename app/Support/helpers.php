@@ -18,3 +18,9 @@ function var_exist($data, $index){
 
     return false;
 }
+
+function floor_last_page($values){
+    $last = array_keys($values);
+    $last = array_pop($last);
+    return floor($last/10) * 10;
+}

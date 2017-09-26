@@ -238,6 +238,29 @@ $( function() {
         $(this).closest('label').tab('show');
     });
 
+    $(".mask_tel").mask('000 000 00 00');
+
+    $('body').on('click','.mask_international',function () {
+        $('.mask_tel').unmask();
+        $('.mask_international').hide();
+        $('.mask_suisse').show();
+    });
+
+    $('body').on('click','.mask_suisse',function () {
+        $(".mask_tel").mask('000 000 00 00');
+        $('.mask_suisse').hide();
+        $('.mask_international').show();
+    });
+
+    $("#editForm").submit(function (e) {
+        $inputs.each( function( index, element ){
+            var intlNumber = $(this).intlTelInput("getNumber");
+            if(intlNumber != ''){
+                $(this).val(intlNumber);
+            }
+        });
+    });
+
     // Emails modal
     $('#emailModal').on('show.bs.modal', function (event) {
         var target = $(event.relatedTarget)
