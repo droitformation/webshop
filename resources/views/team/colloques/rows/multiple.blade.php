@@ -13,5 +13,5 @@
     </td>
     <td>{{ $inscription->groupe->price_cents }} CHF</td>
     <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
-    <td>{{ $inscription->status_name['status'] }}</td>
+    <td>{{ $inscription->price_cents > 0 ? $inscription->status_name['status'] : 'Gratuit'}}</td>
 </tr>

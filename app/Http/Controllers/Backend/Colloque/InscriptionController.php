@@ -54,14 +54,11 @@ class InscriptionController extends Controller
      */
     public function colloque($id, Request $request)
     {
-        $colloque = $this->colloque->find($id);
+        $colloque   = $this->colloque->find($id);
+        $filters    = array_filter($request->only(['search','status']));
+        $pagination = !empty($filters) ? false : true;
 
-        if($request->input('inscription_no',null)) {
-            $inscriptions = $this->inscription->findByNumero($request->input('inscription_no',null),$id);
-        }
-        else {
-            $inscriptions = $this->inscription->getByColloque($id,false,true);
-        }
+        $inscriptions = $this->inscription->getColloqe($id ,$pagination, $filters);
         
         // Filter to remove inscriptions without all infos
         list($inscriptions_filter, $invalid) = $inscriptions->partition(function ($inscription) {
@@ -75,6 +72,7 @@ class InscriptionController extends Controller
                 'inscriptions_filter' => $inscriptions_filter,
                 'invalid'  => $invalid,
                 'colloque' => $colloque,
+                'current'  => isset($filters['status']) ? $filters['status'] : '',
                 'names' => config('columns.names')
             ]);
     }

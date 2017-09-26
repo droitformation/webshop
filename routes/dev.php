@@ -146,11 +146,16 @@ Route::get('testing', function() {
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
 
     //$import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
-    $liste = $newslist->find(13);
-    echo '<pre>';
-    print_r($liste->toArray());
-    echo '</pre>';exit();
 
+    $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
+    $inscriptions = $model->getColloqe(113, $filters = ['status' => 'free'],false);
+
+
+    echo '<pre>';
+    print_r($inscriptions->count());
+    print_r($inscriptions->toArray());
+    echo '</pre>';exit();
 
     /*
     $user = new \App\Droit\User\Entities\User();
@@ -221,23 +226,8 @@ Route::get('testing', function() {
     //$make  = new \tests\factories\ObjectFactory();
    // $make->makeInscriptions(1, 1);
 
-    $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
-    $inscriptions = $model->getByColloqueExport(100,[]);
-
-    $inscirption = $model->find(14013);
-
-    $occurrences = [1];
-
-    $inscriptions = $inscriptions->filter(function ($inscription, $key) use ($occurrences) {
-        return count(array_intersect($occurrences,$inscription->occurrences->pluck('id')->all())) > 0 ;
-    });
-
-    echo '<pre>';
-    print_r($inscriptions->toArray());
-    echo '</pre>';exit();
     
     //app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
-    exit;
     //$years = array_keys($years->toArray());
 
 

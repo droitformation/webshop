@@ -231,6 +231,51 @@ class Inscription extends Model
         return null;
     }
 
+    public function scopeColloque($query,$id = null)
+    {
+        if($id){
+            return $query->where('colloque_id','=', $id);
+        }
+    }
+
+    public function scopeFilter($query,$filter = [])
+    {
+        if(!empty($filter)){
+
+            if(isset($filter['search']) && !empty($filter['search'])){
+
+                $search = $filter['search'];
+
+                return $query->where(function($query) use ($search) {
+                    $query->where('inscription_no','=',$search)->orWhereHas('user', function($q) use ($search){
+                        $q->where('users.first_name','LIKE', '%'.$search.'%')->orWhere('users.last_name','LIKE', '%'.$search.'%');
+                    })->orWhereHas('participant', function($q) use ($search){
+                        $q->where('colloque_inscriptions_participants.name','LIKE', '%'.$search.'%');
+                    })->orWhereHas('groupe', function($q) use ($search){
+                        $q->whereHas('user', function($second) use ($search){
+                            $second->where('users.first_name','LIKE', '%'.$search.'%')->orWhere('users.last_name','LIKE', '%'.$search.'%');
+                        });
+                    });
+                });
+            }
+
+            if(isset($filter['status']) && !empty($filter['status'])){
+                if($filter['status'] == 'free')
+                {
+                    return $query->whereHas('price', function($q){
+                        $q->where('price','=', 0);
+                    });
+                }
+                else{
+                    return $query->where('status','=',$filter['status'])
+                        ->whereHas('price', function($q){
+                            $q->where('price','>', 0);
+                        });
+                }
+            }
+        }
+    }
+
     /**
      * Scope a query to only include simple inscription
      *

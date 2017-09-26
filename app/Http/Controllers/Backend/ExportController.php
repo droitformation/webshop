@@ -144,7 +144,7 @@ class ExportController extends Controller
 
     public function qrcodes($id)
     {
-        $inscriptions = $this->inscription->getByColloque($id,false,false);
+        $inscriptions = $this->inscription->getColloqe($id);
         $colloque     = $this->colloque->find($id);
 
         $exporter = new \App\Droit\Generate\Export\ExportQrcode();

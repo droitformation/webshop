@@ -4,7 +4,7 @@ interface InscriptionInterface {
 
     public function getAll($nbr = null);
     public function getMultiple(array $inscriptions);
-    public function getByColloque($id,$type = false,$paginate = false);
+    public function getColloqe($colloque_id, $pagination = false, $filters = []);
     public function getByColloqueExport($id,$occurrence = []);
     public function getRappels($id);
     public function getByUser($colloque_id,$user_id);

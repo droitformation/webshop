@@ -313,4 +313,40 @@ class InscriptionWorkerTest extends BrowserKitTest {
             'counter' => 1
         ]);
     }
+
+    public function testGetInscriptionForColloque()
+    {
+        $model    = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(3);
+
+        $first  = $colloque->inscriptions->shift();
+        $second = $colloque->inscriptions->shift();
+        $third  = $colloque->inscriptions->shift();
+
+        $first->status   = 'payed';
+        $first->payed_at = '2017-09-25';
+        $first->save();
+
+        $price = factory(\App\Droit\Price\Entities\Price::class)->create(['price' => 0, 'colloque_id' => $colloque->id]);
+
+        $second->price_id = $price->id;
+        $second->save();
+
+        $inscriptions = $model->getColloqe($colloque->id);
+        $this->assertEquals(3, $inscriptions->count());
+
+        $inscriptions = $model->getColloqe($colloque->id, false, ['status' => 'pending']);
+        $this->assertEquals(1, $inscriptions->count());
+        $this->assertEquals($third->id, $inscriptions->first()->id);
+
+        $inscriptions = $model->getColloqe($colloque->id, false, ['status' => 'free']);
+        $this->assertEquals(1, $inscriptions->count());
+        $this->assertEquals($second->id, $inscriptions->first()->id);
+
+        $inscriptions = $model->getColloqe($colloque->id, false, ['status' => 'payed']);
+        $this->assertEquals(1, $inscriptions->count());
+        $this->assertEquals($first->id, $inscriptions->first()->id);
+
+    }
 }

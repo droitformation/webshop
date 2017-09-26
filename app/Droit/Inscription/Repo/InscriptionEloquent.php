@@ -33,25 +33,16 @@ class InscriptionEloquent implements InscriptionInterface{
             ->get();
     }
 
-    public function getByColloque($id, $type = false, $paginate = false)
+    public function getColloqe($colloque_id, $pagination = false, $filters = [])
     {
         $inscription = $this->inscription
-            //->select(\DB::raw('colloque_inscriptions.*, concat(CASE WHEN group_id IS NOT NULL THEN group_id ELSE user_id END) AS `grouped`'))
             ->with(['user','user.adresses','groupe','groupe.user.adresses','price','user_options','colloque.options','colloque.documents'])
-            ->where('colloque_id','=',$id);
+            ->colloque($colloque_id)
+            ->filter($filters)
+            ->groupBy('user_id')->groupBy('group_id')
+            ->orderBy('created_at','DESC');
 
-        if($type)
-        {
-            $inscription->$type;
-        }
-
-        if($paginate) 
-        {
-            return $inscription->groupBy('user_id')->groupBy('group_id')->orderBy('created_at','DESC')->paginate(30);
-            //return $inscription->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))->orderBy('created_at','DESC')->paginate(50);
-        }
-
-        return $inscription->orderBy('created_at','DESC')->get();
+        return $pagination ? $inscription->paginate(30) : $inscription->get();
     }
 
     public function getByColloqueExport($id, $occurrences = [])

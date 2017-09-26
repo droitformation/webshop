@@ -49,7 +49,7 @@ class ColloqueController extends Controller
     public function show($id)
     {
         $colloque     = $this->colloque->find($id);
-        $inscriptions = $this->inscription->getByColloque($id,false,true);
+        $inscriptions = $this->inscription->getColloqe($id,true);
         
         // Filter to remove inscriptions without all infos
         $inscriptions_filter = $inscriptions->filter(function ($inscription, $key) {

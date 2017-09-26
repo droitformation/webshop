@@ -75,17 +75,7 @@
                     <div class="table-responsive">
                         <h3>Inscriptions</h3>
 
-                        <a class="btn btn-default pull-right" style="margin-left: 10px;" href="{{ url('admin/inscription/colloque/'.$colloque->id) }}">Tous</a>
-
-                        <form class="form-horizontal pull-right" style="width: 320px;" action="{{ url('admin/inscription/colloque/'.$colloque->id) }}" method="post">
-                            {!! csrf_field() !!}
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="inscription_no" placeholder="Recherche par numéro ou prénom/nom...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div>
-                        </form><div class="clearfix"></div>
+                        @include('backend.inscriptions.partials.filters')
 
                         <table class="table" style="margin-bottom: 0px; margin-top:20px;"><!-- Start inscriptions -->
                             <thead>

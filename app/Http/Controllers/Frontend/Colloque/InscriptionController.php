@@ -30,18 +30,6 @@ class InscriptionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index($id)
-    {
-        $inscriptions = $this->inscription->getByColloque($id);
-
-        return view('inscriptions.index')->with(['inscriptions' => $inscriptions]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
@@ -49,7 +37,6 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
-
         $inscription = $this->register->register($request->all(), $request->input('colloque_id'), true);
 
         event(new InscriptionWasRegistered($inscription));
@@ -58,18 +45,4 @@ class InscriptionController extends Controller
 
         return redirect('pubdroit');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        $inscription = $this->inscription->find($id);
-
-        return view('inscriptions.show')->with(['inscription' => $inscription]);
-    }
-
 }

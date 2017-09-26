@@ -105,4 +105,5 @@ class InscriptionTest extends BrowserKitTest {
 
         $this->assertRedirectedTo('/admin/user/'.$user->id);
     }
+
 }
