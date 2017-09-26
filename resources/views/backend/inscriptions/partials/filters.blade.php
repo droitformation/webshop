@@ -7,7 +7,7 @@
     </form>
 @endforeach
 
-<form class="form-horizontal pull-right" style="width: 320px;" action="{{ url('admin/inscription/colloque/'.$colloque->id) }}" method="post">{!! csrf_field() !!}
+<form class="form-horizontal pull-right" style="width: 310px; margin-right:10px;" action="{{ url('admin/inscription/colloque/'.$colloque->id) }}" method="post">{!! csrf_field() !!}
     <div class="input-group">
         <input type="text" class="form-control" name="search" placeholder="Recherche par numéro ou prénom/nom...">
         <span class="input-group-btn">
