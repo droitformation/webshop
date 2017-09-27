@@ -17,4 +17,9 @@ class Avis extends Model{
         return isset($types[$this->type]) ? $types[$this->type] : $this->type;
     }
 
+    public function responses()
+    {
+        return $this->hasMany('App\Droit\Sondage\Entities\Sondage_reponse', 'avis_id', 'id');
+    }
+
 }

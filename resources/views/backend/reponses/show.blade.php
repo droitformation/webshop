@@ -57,16 +57,28 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="question-title">{!! $response->first()->avis->question !!}</div>
-                                                @foreach($response as $avis)
-                                                    @if($avis->response->isTest)
+
+                                                @if($response->first()->avis->type == 'radio' || $response->first()->avis->type == 'checkbox')
+                                                <?php $grouped = $response->groupBy('reponse'); ?>
+                                                    <dl class="dl-horizontal dl-sondage">
+                                                        @foreach($grouped as $q => $note)
+                                                            <dt>{{ $q }}: </dt>
+                                                            <dd>{{ $note->count() }}</dd>
+                                                        @endforeach
+                                                    </dl>
+                                                @else
+                                                    @foreach($response as $avis)
+                                                        @if($avis->response->isTest)
                                                         <div class="question-reponse question-reponse-multi sondage-reponse-istest">
                                                             <span class="label label-warning">Test</span>
-                                                    @else
-                                                        <div class="question-reponse question-reponse-multi">
-                                                    @endif
-                                                        {!! $avis->reponse !!}
-                                                    </div>
-                                                @endforeach
+                                                        @else
+                                                            <div class="question-reponse question-reponse-multi">
+                                                        @endif
+                                                            {!! $avis->reponse !!}
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+
                                             </div>
                                         </div>
                                     @else

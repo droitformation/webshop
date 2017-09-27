@@ -911,15 +911,33 @@ Route::get('sondage', function()
 {
     $sondages = new App\Droit\Sondage\Entities\Sondage();
     $sondage  = $sondages->find(1);
+    $sondage->load('avis','avis.responses');
 
-    $data = [
-        'email'    => 'cindy.leschaud@gmail.com',
-        'isTest'   => 1,
-    ];
+    $grouped = $sondage->avis->mapWithKeys(function ($item, $key) {
 
-   // $decoded = json_decode(base64_decode($url));
-    $job = new \App\Jobs\SendSondage($sondage,$data);
-    $job->handle();
+        if($item->type == 'radio' || $item->type == 'checkbox'){
+            $reponses = $item->responses->groupBy('reponse')->mapWithKeys(function ($reponses,$key) {
+                return [$key => $reponses->count()];
+            });
+
+        }
+        else if($item->type == 'chapitre'){
+            $reponses = null;
+        }
+        else{
+            $reponses =  $item->responses->pluck('reponse');
+        }
+
+        return [
+            $item->id => [
+                $item->question => $reponses
+            ]
+        ];
+    });
+
+    echo '<pre>';
+    print_r($grouped);
+    echo '</pre>';exit();
 
    // app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
 
