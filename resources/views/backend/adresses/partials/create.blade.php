@@ -51,8 +51,8 @@
             <input type="text" name="telephone" class="form-control mask_tel" value="">
         </div>
         <div class="col-sm-2">
-            <button type="button" class="mask_international btn btn-default btn-xs">Changer pour un N° international</button>
-            <button type="button" style="display: none;" class="mask_suisse btn btn-default btn-xs">Changer pour un N° Suisse</button>
+            <button type="button" class="mask_international btn btn-default btn-xs">Enlever blocage pour N° international</button>
+            <button type="button" style="display: none;" class="mask_suisse btn btn-default btn-xs">Mettre blocage pour un N° Suisse</button>
         </div>
     </div>
 
