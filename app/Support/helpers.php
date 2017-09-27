@@ -24,3 +24,44 @@ function floor_last_page($values){
     $last = array_pop($last);
     return floor($last/10) * 10;
 }
+
+function range_before_current_page($current){
+
+    $range = [];
+
+    $threshold_before = floor($current/10) * 10;
+
+    if(($current - 4 < $threshold_before) && ($threshold_before - 10) >= 0){
+        $threshold_before = $threshold_before - 10;
+    }
+
+    if($threshold_before >= 10){
+        foreach (range(10,$threshold_before,10) as $dix){
+            $range[] = $dix;
+        }
+    }
+
+    return $range;
+}
+
+function range_after_current_page($current, $last){
+
+    $range = [];
+
+    $threshold_after = ceil($current/10) * 10;
+    $threshold_last  = floor($last/10) * 10;
+
+    if($current + 4 > $threshold_after){
+        $threshold_after = $threshold_after + 10;
+    }
+
+    if($threshold_after < $threshold_last){
+        foreach (range($threshold_after,$threshold_last,10) as $dix){
+            if($dix < $last){
+                $range[] = $dix;
+            }
+        }
+    }
+
+    return $range;
+}

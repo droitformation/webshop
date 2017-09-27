@@ -145,4 +145,53 @@ class HelperTest extends BrowserKitTest {
 
         $this->assertEquals($expect, $result);
     }
+
+    public function testRangeBeforeCurrentPage()
+    {
+        $current = [
+            21, 45, 76, 33, 88
+        ];
+
+        $expect  = [
+            [10],
+            [10,20,30,40],
+            [10,20,30,40,50,60,70],
+            [10,20],
+            [10,20,30,40,50,60,70,80],
+        ];
+
+        for ($i = 0; $i < count($current); $i++) {
+
+            $result = range_before_current_page($current[$i]);
+
+            $this->assertEquals($expect[$i], $result);
+        }
+    }
+
+    public function testRangeAfterCurrentPage()
+    {
+        $current = [
+            21, 45, 76, 33, 1
+        ];
+
+        $last = [
+            45, 98, 80, 85, 50
+        ];
+
+        $expect  = [
+            [30,40],
+            [50,60,70,80,90],
+            [],
+            [40,50,60,70,80],
+            [10,20,30,40],
+        ];
+
+        for ($i = 0; $i < count($current); $i++) {
+
+            $result = range_after_current_page($current[$i],$last[$i]);
+
+            $this->assertEquals($expect[$i], $result);
+        }
+    }
+
 }
