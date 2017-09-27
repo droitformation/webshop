@@ -121,6 +121,31 @@
                           </div>
                       </div>
 
+                      <div class="panel panel-midnightblue">
+                          <div class="panel-body">
+                              <h3><i class="fa fa-envelope"></i>&nbsp; Newsletters</h3>
+
+                              @if(!$account->subscriptions()->isEmpty())
+                                  @foreach($account->subscriptions() as $email => $subscriptions)
+                                      <h4>{{ $email }}</h4>
+                                      <ul class="list-group">
+                                         @foreach($subscriptions as $subscription)
+                                              <li class="list-group-item">
+                                                  {{ $subscription->titre }}
+                                                  <form action="{{ url('admin/user/unsubscribe') }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                                                     <input type="hidden" name="email" value="{{ $email }}">
+                                                     <input type="hidden" name="newsletter_id" value="{{ $subscription->id }}">
+                                                     <button type="submit" class="btn btn-danger btn-xs">désinscrire</button>
+                                                  </form>
+                                              </li>
+                                         @endforeach
+                                      </ul>
+                                  @endforeach
+                              @endif
+
+                          </div>
+                      </div>
+
                   </div>
                   <div class="col-md-8">
 

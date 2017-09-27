@@ -245,4 +245,34 @@ class UserTest extends BrowserKitTest {
             'id' => $person->id
         ]);
     }
+
+    public function testUnsubscribeFromUserPage()
+    {
+        $user   = factory(App\Droit\User\Entities\User::class)->create();
+        $person = factory(App\Droit\User\Entities\User::class)->create();
+
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        // Prepare
+        $site       = factory(App\Droit\Site\Entities\Site::class)->create();
+        $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
+
+        $subscriber = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $person->email]);
+
+        $subscriber->subscriptions()->attach([$newsletter->id]);
+
+        // Assert
+        $this->mailjet->shouldReceive('setList')->once();
+        $this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
+
+        $this->visit(url('admin/user/'.$person->id))->see('désinscrire')->press('désinscrire');
+
+        $subscriber->fresh();
+        $subscriber->load('subscriptions');
+
+        $this->assertSame(0,$subscriber->subscriptions->count());
+        $this->assertFalse($subscriber->subscriptions->contains('id',$newsletter->id));
+
+    }
 }

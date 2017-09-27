@@ -86,13 +86,14 @@ class UserController extends Controller {
      */
     public function show($id, Request $request)
     {
-        $user = $this->user->find($id);
+        $user    = $this->user->find($id);
+        $account = new \App\Droit\User\Entities\Account($user);
 
         if(isset($_GET['path'])){
             session(['return_path' => ['user_'.$id => redirect()->getUrlGenerator()->previous()]]);
         }
 
-        return view('backend.users.show')->with(compact('user'));
+        return view('backend.users.show')->with(['user' => $user, 'account' => $account]);
     }
 
     /**
@@ -156,6 +157,16 @@ class UserController extends Controller {
         $this->user->restore($id);
 
         alert()->success('Utilisateur restauré');
+
+        return redirect()->back();
+    }
+
+    public function unsubscribe(Request $request)
+    {
+        $subscriber = $this->subscription_worker->exist($request->input('email'));
+        $this->subscription_worker->unsubscribe($subscriber,[$request->input('newsletter_id')]);
+
+        alert()->success('Abonnement à la newsletter supprimé');
 
         return redirect()->back();
     }
