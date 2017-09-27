@@ -22,7 +22,6 @@
                 <option selected value="4"></option>
                 <option value="1">Monsieur</option>
                 <option value="2">Madame</option>
-                <option value="3">Me</option>
             </select>
         </div>
     </div>

@@ -247,7 +247,6 @@ class AdresseEloquent implements AdresseInterface{
 		}
 
         $adresse->fill($data);
-		// Général
 
 		if(isset($data['first_name'])){
 			$adresse->first_name  = $this->format->formatingName($data['first_name']);
@@ -257,7 +256,7 @@ class AdresseEloquent implements AdresseInterface{
 		}
 
 		$adresse->updated_at  = date('Y-m-d G:i:s');
-		
+
 		$adresse->save();	
 		
 		return $adresse;

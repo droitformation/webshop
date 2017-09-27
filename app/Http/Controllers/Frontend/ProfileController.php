@@ -38,10 +38,6 @@ class ProfileController extends Controller
 
     public function account(Request $request)
     {
-        if($request->input('id') != \Auth::user()->id){
-            return abort('404');
-        }
-
         $this->user->update($request->all());
 
         $request->session()->flash('updateAdresse', 'Adresse mise à jour');

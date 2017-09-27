@@ -33,7 +33,7 @@
             <select class="form-control" name="civilite_id">
                 <option {{ $adresse->civilite_id == 1 ? 'selected' : '' }} value="1">Monsieur</option>
                 <option {{ $adresse->civilite_id == 2 ? 'selected' : '' }} value="2">Madame</option>
-                <option {{ $adresse->civilite_id == 3 ? 'selected' : '' }} value="3">Me</option>
+                <option {{ $adresse->civilite_id == 3 ? 'selected' : '' }} value="3">(ancien Me à changer)</option>
                 <option {{ $adresse->civilite_id == 4 ? 'selected' : '' }} value="4"></option>
             </select>
         </div>

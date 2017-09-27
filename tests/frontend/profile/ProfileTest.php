@@ -228,4 +228,14 @@ class ProfileTest extends BrowserKitTest {
 
 		$this->see($abo->title);
 	}
+
+    public function testAccountMiddleware()
+    {
+        $user = factory(App\Droit\User\Entities\User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->call('POST', 'profil/account', ['id' => '123']);
+
+        $this->assertResponseStatus(404);
+	}
 }

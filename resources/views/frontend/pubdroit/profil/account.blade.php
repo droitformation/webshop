@@ -52,35 +52,47 @@
             <div class="profil-info">
                 <form action="{{ url('pubdroit/profil/update') }}" method="POST" class="form">
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
-                    <div class="row form-group">
-                        <label class="col-sm-4 control-label">Adresse de livraison</label>
-                        <div class="col-sm-7">
-                            <label class="radio-inline">
-                                <input type="radio" {{ $adresse->livraison ? 'checked' : '' }} name="livraison" value="1"> Oui
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" {{ !$adresse->livraison ? 'checked' : '' }} name="livraison" value="0"> Non
-                            </label>
+
+                    @if($user->adresses->count() == 1)
+                        <input type="hidden" name="livraison" value="1">
+
+                        <div class="row form-group">
+                            <label class="col-sm-4 control-label">Type d'adresse</label>
+                            <div class="col-sm-7">
+                                <input type="text" disabled class="form-control" value="Contact">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row form-group">
-                        <label class="col-sm-4 control-label">Type d'adresse</label>
-                        <div class="col-sm-7">
-                            <select class="form-control" name="type">
-                                <option {{ $adresse->type == 1 ? 'checked' : '' }} value="1">Contact</option>
-                                <option {{ $adresse->type == 2 ? 'checked' : '' }} value="2">Privé</option>
-                                <option {{ $adresse->type == 3 ? 'checked' : '' }} value="3">Professionnelle</option>
-                            </select>
+                    @else
+                        <div class="row form-group">
+                            <label class="col-sm-4 control-label">Adresse de livraison</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" {{ $adresse->livraison ? 'checked' : '' }} name="livraison" value="1"> Oui
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" {{ !$adresse->livraison ? 'checked' : '' }} name="livraison" value="0"> Non
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row form-group">
+                            <label class="col-sm-4 control-label">Type d'adresse</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="type">
+                                    <option {{ $adresse->type == 1 ? 'checked' : '' }} value="1">Contact</option>
+                                    <option {{ $adresse->type == 2 ? 'checked' : '' }} value="2">Privé</option>
+                                    <option {{ $adresse->type == 3 ? 'checked' : '' }} value="3">Professionnelle</option>
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="row form-group">
                         <label class="col-sm-4 control-label">Titre</label>
                         <div class="col-sm-7">
                             <select name="civilite_id" class="form-control">
-                                <option {{ $adresse && $adresse->civilite_id == 4 ? 'selected' : '' }} value="4"></option>
+                                <option {{ $adresse && ($adresse->civilite_id == 4 || $adresse->civilite_id == 3) ? 'selected' : '' }} value="4"></option>
                                 <option {{ $adresse && $adresse->civilite_id == 1 ? 'selected' : '' }} value="1">Monsieur</option>
                                 <option {{ $adresse && $adresse->civilite_id == 2 ? 'selected' : '' }} value="2">Madame</option>
-                                <option {{ $adresse && $adresse->civilite_id == 3 ? 'selected' : '' }} value="3">Me</option>
                             </select>
                         </div>
                     </div>

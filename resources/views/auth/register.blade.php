@@ -18,7 +18,6 @@
                                     <option {{ old('civilite_id') == 4 ? 'selected' : '' }} value="4">Choix</option>
                                     <option {{ old('civilite_id') == 1 ? 'selected' : '' }} value="1">Monsieur</option>
                                     <option {{ old('civilite_id') == 2 ? 'selected' : '' }} value="2">Madame</option>
-                                    <option {{ old('civilite_id') == 3 ? 'selected' : '' }} value="3">Me</option>
                                 </select>
                             </div>
                         </div>

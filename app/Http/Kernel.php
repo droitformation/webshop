@@ -61,6 +61,7 @@ class Kernel extends HttpKernel {
 		'abo'            =>'App\Http\Middleware\OrderAbo',
 		'already'        =>'App\Http\Middleware\AlreadyRegistered',
 		'back'           =>'App\Http\Middleware\BackMiddleware',
+        'account'        =>'App\Http\Middleware\AccountUpdateMiddleware',
 	];
 
 }

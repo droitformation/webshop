@@ -617,24 +617,19 @@ Route::get('cartworker', function()
 
 Route::get('categoriestest', function()
 {
-    $model = App::make('App\Droit\Arret\Repo\ArretInterface');
-    $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
+    //$model = App::make('App\Droit\Arret\Repo\ArretInterface');
+   // $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
+   // $pages = App::make('App\Droit\Page\Repo\PageInterface');
 
-    $pages = App::make('App\Droit\Page\Repo\PageInterface');
+    $model  = \App::make('App\Droit\User\Repo\UserInterface');
+    $user = $model->find(710);
 
-    $results = $model->allForSite(3, ['categories' => [], 'years' => [], 'display' => false]);
-
-    $analyses = new \App\Droit\Analyse\Entities\Analyse();
-
-    $all = $analyses->all();
-
-    foreach ($all as $analyse){
-        $analyse->pub_date = $analyse->pub_date->addHours(3);
-        $analyse->save();
-    }
+    $adresses = $user->adresses->map(function ($item) use ($current) {
+        return [$item->id => $item->type];
+    });
 
     echo '<pre>';
-    print_r($all->pluck('id'));
+    print_r($adresses);
     echo '</pre>';exit();
 
     // Create colloque
@@ -730,9 +725,6 @@ Route::get('categoriestest', function()
         ];
     });*/
 
-    echo '<pre>';
-    print_r($results->pluck('reference')->all());
-    echo '</pre>';exit();
 
 });
 

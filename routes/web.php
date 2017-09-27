@@ -80,7 +80,7 @@ Route::group(['middleware' => 'site'], function () {
             Route::get('profil/subscriptions', 'Frontend\ProfileController@subscriptions');
             Route::get('profil/abos', 'Frontend\ProfileController@abos');
             Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
-            Route::post('profil/account', 'Frontend\ProfileController@account');
+            Route::post('profil/account', 'Frontend\ProfileController@account')->middleware('account');
             
             /* Update user adresse via ajax  */
             Route::post('ajax/adresse/{id}', 'Api\User\AdresseController@ajaxUpdate');
