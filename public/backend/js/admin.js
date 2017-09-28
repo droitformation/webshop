@@ -56,6 +56,23 @@ $( function() {
 
     $('.select-chosen').chosen();
 
+    $("#printSondage").on('click', function() {
+        $("#sondagePrintDiv").print({
+            globalStyles: true,
+            mediaPrint: true,
+            stylesheet: null,
+            noPrintSelector: ".no-print",
+            iframe: true,
+            append: null,
+            prepend: null,
+            manuallyCopyFormValues: true,
+            deferred: $.Deferred(),
+            timeout: 750,
+            title: null,
+            doctype: '<!doctype html>'
+        });
+    });
+
     /*
      * delete action confirmation
      * */

@@ -919,24 +919,22 @@ Route::get('sondage', function()
             $reponses = $item->responses->groupBy('reponse')->mapWithKeys(function ($reponses,$key) {
                 return [$key => $reponses->count()];
             });
-
-        }
-        else if($item->type == 'chapitre'){
-            $reponses = null;
         }
         else{
-            $reponses =  $item->responses->pluck('reponse');
+            $reponses = $item->type == 'chapitre' ? null : $item->responses->pluck('reponse');
         }
 
         return [
-            $item->id => [
-                $item->question => $reponses
+            $item->id =>
+            [
+                'title'    => $item->question,
+                'reponses' => $reponses
             ]
         ];
     });
 
     echo '<pre>';
-    print_r($grouped);
+    print_r($grouped->toArray());
     echo '</pre>';exit();
 
    // app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);

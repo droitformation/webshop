@@ -1,0 +1,13 @@
+/**
+ * Print stylesheet for yourwebsite.com
+* @version         1.0
+* @lastmodified    16.06.2016
+*/
+
+@media print {
+    @page { margin: 1cm }
+
+    .reponses-wrapper {
+        padding: 10px;
+    }
+}

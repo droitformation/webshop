@@ -1139,7 +1139,7 @@ input[type="checkbox"].rappel-input {
 }
 
 .reponses-wrapper{
-    padding: 20px;
+    padding: 0 20px;
 }
 
 .reponses-wrapper form{
@@ -1180,6 +1180,10 @@ input[type="checkbox"].rappel-input {
 }
 
 .question-reponse{
+    margin-bottom: 5px;
+}
+
+.question-reponse p{
     margin-bottom: 5px;
 }
 
@@ -1249,6 +1253,11 @@ input[type="checkbox"].rappel-input {
     margin-left: 220px;
 }
 
+.dl-horizontal.dl-sondage{
+    margin-left: 5px;
+    margin-bottom: 20px;
+}
+
 .dl-horizontal.dl-sondage dt{
     width: 330px;
     text-align: left;
@@ -1259,6 +1268,8 @@ input[type="checkbox"].rappel-input {
 
 .dl-horizontal.dl-sondage dd{
     margin-left: 240px;
+    line-height: 15px;
+    margin-bottom: 6px;
 }
 
 .btn-isGroupe{

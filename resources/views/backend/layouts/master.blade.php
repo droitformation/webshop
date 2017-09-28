@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/dragdrop/dragula.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('backend/css/dragdrop.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/print.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/chosen-bootstrap.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.tagit.css');?>">
 
@@ -189,6 +190,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/tree.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.mask.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/jQuery.print.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 
