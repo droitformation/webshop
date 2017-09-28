@@ -11,10 +11,10 @@
 
 <div class="content">
 
-    <h2>Réponses au sondage</h2>
+    <h1 style="margin-top: 20px; font-size: 22px;">Réponses au sondage</h1>
 
     @if($sondage->marketing)
-        <h3>{{ $sondage->title }}</h3>
+        <h3 style="margin-top: 5px; font-size: 18px;">{{ $sondage->title }}</h3>
         {!! $sondage->description !!}
     @else
         <p><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></p>
