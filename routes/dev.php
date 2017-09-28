@@ -913,15 +913,55 @@ Route::get('sondage', function()
     $sondage  = $sondages->find(1);
     $sondage->load('avis','avis.responses');
 
-    $grouped = $sondage->avis->mapWithKeys(function ($item, $key) {
+    echo '<pre>';
+    /*    print_r($sondage->reponses->map(function ($item, $key) {
+           return $item->load('items');
+       }));*/
 
-        if($item->type == 'radio' || $item->type == 'checkbox'){
-            $reponses = $item->responses->groupBy('reponse')->mapWithKeys(function ($reponses,$key) {
-                return [$key => $reponses->count()];
-            });
+
+    echo '<pre>';
+    print_r($sondage->avis->pluck('id'));
+
+    echo '</pre>';exit;
+
+    $reg = $sondage->reponses->map(function ($item, $key) {
+        return $item->items;
+    })->flatten()
+        ->groupBy('avis_id')
+        ->mapWithKeys(function ($item, $key) {
+
+            if($item->first()->avis->type == 'radio' || $item->first()->avis->type == 'checkbox'){
+                $reponses = $item->groupBy('reponse')->map(function ($av, $key) use ($item) {
+                    return $av->count();
+                });
+            }
+            else{
+                $reponses = $item->first()->avis->type == 'chapitre' ? null : $item->pluck('reponse');
+            }
+
+            $title = $item->first()->avis->type == 'chapitre' ? ['chapitre' => $item->first()->avis->question] : ['title' => $item->first()->avis->question];
+
+            return [$item->first()->avis_id => $title +  ['reponses' => $reponses, 'type' => $item->first()->avis->type]];
+
+            return [
+                $item->first()->avis_id => $title + ['reponses' => $reponses, 'type' => $item->type]
+            ];
+        });
+
+    echo '<pre>';
+    print_r($reg);
+    echo '</pre>';
+    echo '</pre>';exit;
+
+    $grouped = $sondage->reponses->map(function ($item, $key) {
+        return $item->items;
+    })->flatten()->mapWithKeys(function ($item, $key) {
+
+        if($item->first()->avis->type == 'radio' || $item->first()->avis->type == 'checkbox'){
+            $reponses = [$item->first()->reponse => $item->count()];
         }
         else{
-            $reponses = $item->type == 'chapitre' ? null : $item->responses->pluck('reponse');
+            $reponses = $item->first()->avis->type == 'chapitre' ? null : $item->responses->pluck('reponse');
         }
 
         return [
