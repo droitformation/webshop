@@ -1,7 +1,7 @@
 <html>
 <head>
     <style type="text/css">
-        @page { margin: 10mm; background: #fff; font-family: Arial, Helvetica, sans-serif; age-break-before: always;}
+        @page { margin: 10mm; padding-top: 5mm; background: #fff; font-family: Arial, Helvetica, sans-serif; age-break-before: always;}
     </style>
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/common.css') }}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/bon.css') }}" media="screen" />
