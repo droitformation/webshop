@@ -11,10 +11,10 @@
 
 <div class="content">
 
-    <h3>Réponses au sondage</h3>
+    <h2>Réponses au sondage</h2>
 
     @if($sondage->marketing)
-        <h4>{{ $sondage->title }}</h4>
+        <h3>{{ $sondage->title }}</h3>
         {!! $sondage->description !!}
     @else
         <p><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></p>
@@ -48,7 +48,7 @@
 
                     @else
 
-                        <ul>
+                        <ul style="margin-left: 10px;padding-left: 10px;">
                             @foreach($avis['reponses'] as $note)
                                 <li>{!! strip_tags($note) !!}</li>
                             @endforeach
