@@ -11,7 +11,7 @@
 
 <div class="content">
 
-    <h1 style="margin-top: 20px; font-size: 22px;">Réponses au sondage</h1>
+    <h1 style="margin:20px 0; font-size: 22px;">Réponses au sondage</h1>
 
     @if($sondage->marketing)
         <h3 style="margin-top: 5px; font-size: 18px;">{{ $sondage->title }}</h3>
@@ -48,7 +48,7 @@
 
                     @else
 
-                        <ul style="margin-left: 10px;padding-left: 10px;">
+                        <ul style="margin-left: 10px;padding-left: 10px; margin-top: 10px;margin-bottom: 10px;">
                             @foreach($avis['reponses'] as $note)
                                 <li>{!! strip_tags($note) !!}</li>
                             @endforeach
