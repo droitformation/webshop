@@ -1,13 +1,13 @@
 <html>
 <head>
     <style type="text/css">
-        @page { margin: 10mm; padding-top: 5mm; background: #fff; font-family: Arial, Helvetica, sans-serif; age-break-before: always;}
+        @page { margin: 10mm; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-before: always;}
     </style>
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/common.css') }}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/bon.css') }}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/invoice.css') }}" media="screen" />
 </head>
-<body>
+<body style="padding: 2mm; position: relative;height:297mm;">
 
 <div class="content">
 
@@ -40,17 +40,17 @@
                         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;">
                             @foreach($avis['reponses'] as $q => $note)
                                 <tr>
-                                    <td>{{ $q }}: </td>
-                                    <td>{{ $note }}</td>
+                                    <td style="padding: 6px; line-height: 16px;">{{ $q }}: </td>
+                                    <td style="padding: 6px; line-height: 16px;">{{ $note }}</td>
                                 </tr>
                             @endforeach
                         </table>
 
                     @else
 
-                        <ul style="margin-left: 10px;padding-left: 10px; margin-top: 10px;margin-bottom: 10px;">
+                        <ul style="margin-left: 10px;padding-left: 10px; margin-top: 10px;margin-bottom: 10px; page-break-inside: avoid;">
                             @foreach($avis['reponses'] as $note)
-                                <li>{!! strip_tags($note) !!}</li>
+                                <li style="padding: 8px; line-height: 17px;">{!! strip_tags($note) !!}</li>
                             @endforeach
                         </ul>
 
