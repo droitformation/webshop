@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/bon.css') }}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/invoice.css') }}" media="screen" />
 </head>
-<body style="padding: 2mm; position: relative;height:297mm;">
+<body style="padding: 2mm; position: relative;">
 
 <div class="content">
 
@@ -37,11 +37,11 @@
                 @if(isset($avis['reponses']) && !$avis['reponses']->isEmpty())
                     @if($avis['type'] != 'text')
 
-                        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;">
+                        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;page-break-inside: avoid;">
                             @foreach($avis['reponses'] as $q => $note)
                                 <tr>
-                                    <td style="padding: 6px; line-height: 16px;">{{ $q }}: </td>
-                                    <td style="padding: 6px; line-height: 16px;">{{ $note }}</td>
+                                    <td>{{ $q }}: </td>
+                                    <td>{{ $note }}</td>
                                 </tr>
                             @endforeach
                         </table>
@@ -50,7 +50,7 @@
 
                         <ul style="margin-left: 10px;padding-left: 10px; margin-top: 10px;margin-bottom: 10px; page-break-inside: avoid;">
                             @foreach($avis['reponses'] as $note)
-                                <li style="padding: 8px; line-height: 17px;">{!! strip_tags($note) !!}</li>
+                                <li>{!! strip_tags($note) !!}</li>
                             @endforeach
                         </ul>
 
