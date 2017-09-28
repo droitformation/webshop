@@ -73,6 +73,7 @@ $( function() {
         });
     });
 
+
     /*
      * delete action confirmation
      * */

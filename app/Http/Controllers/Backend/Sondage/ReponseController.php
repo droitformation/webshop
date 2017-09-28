@@ -59,4 +59,21 @@ class ReponseController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function download($id, Request $request)
+    {
+        $sondage  = $this->sondage->find($id);
+        $sort     = $request->input('sort',null) ? $request->input('sort') : 'avis_id';
+        $reponses = $sort == 'reponse_id' ? $this->worker->sortByPerson($sondage->reponses) : $this->worker->sortByQuestion($sondage);
+
+        return \PDF::loadView('templates.sondage.index', ['sondage' => $sondage, 'reponses' => $reponses, 'sort' => $sort])
+            ->setPaper('a4')
+            ->download('Sondage_reponse_' . $sondage->id . '.pdf');
+    }
 }

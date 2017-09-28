@@ -17,9 +17,14 @@
 
                     <div id="sondagePrintDiv">
 
-                        <button type="button" id="printSondage" class="no-print btn btn btn-default btn-sm pull-right">imprimer</button>
+                            <div class="btn-group pull-right">
+                                <form action="{{ url('admin/sondage/download/'.$sondage->id) }}" method="POST"> {!! csrf_field() !!}
+                                    <input type="hidden" name="sort" value="{{ $sort }}">
+                                    <button type="button" id="printSondage" class="no-print btn btn btn-default btn-sm">imprimer</button>
+                                    <button name="download" class="btn btn btn-info btn-sm" type="submit">Télécharger</button>
+                                </form>
+                            </div>
 
-                        <form action="{{ url('admin/reponse/'.$sondage->id) }}" method="POST" data-validate="parsley"> {!! csrf_field() !!}
                             <div class="row">
                                 <div class="col-md-6">
                                     <h3>Réponses au sondage</h3>
@@ -31,26 +36,26 @@
                                     @endif
                                 </div>
                                 <div class="col-md-6 no-print">
-                                    <label for="message" class="control-label">
-                                        Trier par
-                                        <div class="checkbox">
-                                            <label>
-                                                <input name="isTest" {{ $isTest ? 'checked' : '' }} value="1" type="checkbox"> Afficher les tests
-                                            </label>
+                                    <form action="{{ url('admin/reponse/'.$sondage->id) }}" method="POST" data-validate="parsley"> {!! csrf_field() !!}
+                                        <label for="message" class="control-label">
+                                            Trier par
+                                            <div class="checkbox">
+                                                <label><input name="isTest" {{ $isTest ? 'checked' : '' }} value="1" type="checkbox"> Afficher les tests</label>
+                                            </div>
+                                        </label>
+                                        <div class="input-group">
+                                            <select name="sort" class="form-control">
+                                                <option {{ $sort == 'avis_id' ? 'selected' : '' }} value="avis_id">Question</option>
+                                                <option {{ $sort == 'reponse_id' ? 'selected' : '' }} value="reponse_id">Personne</option>
+                                            </select>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="submit">Trier</button>
+                                            </span>
                                         </div>
-                                    </label>
-                                    <div class="input-group">
-                                        <select name="sort" class="form-control">
-                                            <option {{ $sort == 'avis_id' ? 'selected' : '' }} value="avis_id">Question</option>
-                                            <option {{ $sort == 'reponse_id' ? 'selected' : '' }} value="reponse_id">Personne</option>
-                                        </select>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="submit">Envoyer</button>
-                                        </span>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                        </form>
+
 
                         <hr class="no-print"/>
 
@@ -122,8 +127,8 @@
 
                            @endif
                        </div>
-
                     </div>
+
                 </div>
             </div>
         @endif
