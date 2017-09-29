@@ -910,23 +910,27 @@ Route::get('confirmation_newsletter', function()
 Route::get('sondage', function()
 {
     $sondages = new App\Droit\Sondage\Entities\Sondage();
-    $sondage  = $sondages->find(1);
-    $sondage->load('avis','avis.responses');
+    $sondage  = $sondages->find(5);
 
-    echo '<pre>';
-    /*    print_r($sondage->reponses->map(function ($item, $key) {
-           return $item->load('items');
-       }));*/
+    $rep_model = new App\Droit\Sondage\Entities\Sondage_reponse();
+    $find = $rep_model->find('15');
 
+/*    echo '<pre>';
+        print_r($find->avis);
+       print_r($sondage->reponses->map(function ($item, $key) {
+           return $item->items;
+       })->flatten());
+    echo '<pre>';exit;*/
 
-    echo '<pre>';
-    print_r($sondage->avis->pluck('id'));
-
-    echo '</pre>';exit;
+    $sort = $sondage->avis->pluck('id')->all();
 
     $reg = $sondage->reponses->map(function ($item, $key) {
         return $item->items;
     })->flatten()
+        ->reject(function ($item, $key) {
+            $item->load('avis');
+            return !isset($item->avis);
+        })
         ->groupBy('avis_id')
         ->mapWithKeys(function ($item, $key) {
 
@@ -946,36 +950,13 @@ Route::get('sondage', function()
             return [
                 $item->first()->avis_id => $title + ['reponses' => $reponses, 'type' => $item->type]
             ];
-        });
+        })->toArray();
+
+    $reg = sortArrayByArray($reg, $sort);
 
     echo '<pre>';
     print_r($reg);
     echo '</pre>';
-    echo '</pre>';exit;
-
-    $grouped = $sondage->reponses->map(function ($item, $key) {
-        return $item->items;
-    })->flatten()->mapWithKeys(function ($item, $key) {
-
-        if($item->first()->avis->type == 'radio' || $item->first()->avis->type == 'checkbox'){
-            $reponses = [$item->first()->reponse => $item->count()];
-        }
-        else{
-            $reponses = $item->first()->avis->type == 'chapitre' ? null : $item->responses->pluck('reponse');
-        }
-
-        return [
-            $item->id =>
-            [
-                'title'    => $item->question,
-                'reponses' => $reponses
-            ]
-        ];
-    });
-
-    echo '<pre>';
-    print_r($grouped->toArray());
-    echo '</pre>';exit();
 
    // app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
 

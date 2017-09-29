@@ -65,3 +65,18 @@ function range_after_current_page($current, $last){
 
     return $range;
 }
+
+function sortArrayByArray(Array $array, Array $orderArray){
+    $ordered = array();
+
+    foreach($orderArray as $key)
+    {
+        if(array_key_exists($key,$array))
+        {
+            $ordered[$key] = $array[$key];
+            unset($array[$key]);
+        }
+    }
+
+    return $ordered + $array;
+}

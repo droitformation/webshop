@@ -44,12 +44,18 @@ class ReponseWorker
 
     public function sortByQuestion($sondage)
     {
+        $sort = $sondage->avis->pluck('id')->all();
 
-        return $sondage->reponses->map(function ($item, $key) {
+        $reponses = $sondage->reponses->map(function ($item, $key) {
             return $item->items;
         })->flatten()
+            ->reject(function ($item, $key) {
+                $item->load('avis');
+                return !isset($item->avis);
+            })
             ->groupBy('avis_id')
             ->mapWithKeys(function ($item, $key) {
+
                 if($item->first()->avis->type == 'radio' || $item->first()->avis->type == 'checkbox'){
                     $reponses = $item->groupBy('reponse')->map(function ($av, $key) use ($item) {
                         return $av->count();
@@ -62,7 +68,8 @@ class ReponseWorker
                 $title = $item->first()->avis->type == 'chapitre' ? ['chapitre' => $item->first()->avis->question] : ['title' => $item->first()->avis->question];
 
                 return [$item->first()->avis_id => $title +  ['reponses' => $reponses, 'type' => $item->first()->avis->type]];
-            });
+            })->toArray();
 
+        return collect(sortArrayByArray($reponses,$sort));
     }
 }

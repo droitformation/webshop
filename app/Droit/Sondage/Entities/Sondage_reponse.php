@@ -17,7 +17,7 @@ class Sondage_reponse extends Model{
     
     public function avis()
     {
-        return $this->belongsTo('App\Droit\Sondage\Entities\Avis');
+        return $this->belongsTo('App\Droit\Sondage\Entities\Avis', 'avis_id');
     }
 
     public function response()
