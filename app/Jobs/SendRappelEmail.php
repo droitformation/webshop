@@ -61,6 +61,7 @@ class SendRappelEmail implements ShouldQueue
             'concerne'    => 'Rappel',
             'annexes'     => $inscription->colloque->annexe,
             'colloque'    => $inscription->colloque,
+            'inscription' => $inscription,
             'user'        => $user,
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];

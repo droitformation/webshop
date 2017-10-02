@@ -27,13 +27,9 @@
                     </form>
                 </div>
                 <div class="col-md-2">
-                    <form action="{{ url('admin/inscription/rappel/send') }}" method="POST" class="pull-right" style="margin-left: 20px;">{!! csrf_field() !!}
-                        <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
-                        <input type="hidden" name="count" value="{{ !$inscriptions->isEmpty() ? $inscriptions->count() : 0 }}">
-                        <button class="btn btn-inverse pull-right" id="confirmSendRappels">
-                            <i class="fa fa-paper-plane"></i> &nbsp;Envoyer les rappel
-                        </button>
-                    </form>
+                    <a href="{{ url('admin/register/rappel/confirmation/'.$colloque->id) }}" class="btn btn-inverse pull-right" >
+                        <i class="fa fa-paper-plane"></i> &nbsp; Confirmer la liste et envoyer
+                    </a>
                 </div>
             </div>
         </div>
@@ -43,7 +39,7 @@
         <div class="col-md-12">
             <div class="panel panel-midnightblue">
                 <div class="panel-body"  id="appComponent">
-                    <h3><i class="fa fa-gavel"></i> &nbsp;Rappel inscriptions</h3>
+                    <h3><i class="fa fa-gavel"></i> &nbsp;Rappel inscriptions </h3>
 
                     <div class="table-responsive">
                         <table class="table table-striped">

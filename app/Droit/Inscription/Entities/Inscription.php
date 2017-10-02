@@ -21,7 +21,23 @@ class Inscription extends Model
             return ['id' => $item->id ,'date' => 'Rappel '.$item->created_at->format('d/m/Y'), 'doc_rappel' => $item->doc_rappel];
         });
     }
-    
+
+    public function getOccurrenceDoneAttribute()
+    {
+        // get all finished
+        return !$this->occurrences->isEmpty() ? $this->occurrences->filter(function ($value, $key) {
+            return $value->starting_at <= \Carbon\Carbon::today();
+        }) : null;
+    }
+
+    public function getOccurrenceActiveAttribute()
+    {
+        // get all finished
+        return !$this->occurrences->isEmpty() ? $this->occurrences->filter(function ($value, $key) {
+            return $value->starting_at > \Carbon\Carbon::today();
+        }) : null;
+    }
+
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

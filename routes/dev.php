@@ -149,13 +149,19 @@ Route::get('testing', function() {
 
     $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
+    $inscription = $model->find(15362);
+
+    echo '<pre>';
+    print_r($inscription->occurrence_done);
+    echo '</pre>';exit();
+/*
     $inscriptions = $model->getColloqe(113, $filters = ['status' => 'free'],false);
 
 
     echo '<pre>';
     print_r($inscriptions->count());
     print_r($inscriptions->toArray());
-    echo '</pre>';exit();
+    echo '</pre>';exit();*/
 
     /*
     $user = new \App\Droit\User\Entities\User();
@@ -173,7 +179,6 @@ Route::get('testing', function() {
     print_r($multiplied->toArray());
     echo '</pre>';exit();
 */
-
    // $occurrences  = \App::make('App\Droit\Occurrence\Repo\OccurrenceInterface');
     //$occurrence   = $occurrences->find(1);
 

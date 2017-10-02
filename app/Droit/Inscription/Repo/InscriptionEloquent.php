@@ -65,7 +65,7 @@ class InscriptionEloquent implements InscriptionInterface{
     {
         return $this->inscription->where('colloque_id','=',$id)
             ->whereNull('payed_at')
-            ->with(['price','colloque','user','participant','groupe','duplicate'])
+            ->with(['price','colloque','user','participant','groupe','duplicate', 'occurrences'])
             ->whereHas('price', function($q){
                 $q->where('price','>', 0);
             })

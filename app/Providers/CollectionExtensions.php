@@ -46,6 +46,14 @@ class CollectionExtensions extends ServiceProvider
 
             return new static($items);
         });
+
+        Collection::macro('dateBiggerThan', function ($column,$date) {
+
+            return collect($this->items)->filter(function ($value, $key) use ($column,$date) {
+                return $value->$column < $date;
+            });
+
+        });
     }
 
     /**

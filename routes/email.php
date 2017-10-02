@@ -178,6 +178,7 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             'concerne'     => 'Inscription',
             'annexes'      => $inscription->colloque->annexe,
             'colloque'     => $inscription->colloque,
+            'inscription'  => $inscription,
             'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 

@@ -50,6 +50,11 @@ class RappelController extends Controller
         $colloque     = $this->colloque->find($id);
         $inscriptions = $this->inscription->getRappels($id);
 
+        // Filter for occurrences
+        $inscriptions = !$colloque->occurrences->isEmpty() ? $inscriptions->reject(function ($inscription, $key) {
+            return $inscription->occurrence_done->isEmpty();
+        }) : $inscriptions;
+
         if($request->ajax()) {
             $rappel = $inscriptions->map(function ($item, $key) {
                 return ['id' => $item->id, 'name' => $item->inscrit->name, 'inscription_no' => $item->inscription_no];
@@ -70,19 +75,24 @@ class RappelController extends Controller
         return view('backend.inscriptions.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque, 'archives' => $archives]);
     }
 
+    public function confirmation($id)
+    {
+        $colloque     = $this->colloque->find($id);
+        $inscriptions = $this->inscription->getRappels($id);
+
+        // Filter for occurrences
+        $inscriptions = !$colloque->occurrences->isEmpty() ? $inscriptions->reject(function ($inscription, $key) {
+            return $inscription->occurrence_done->isEmpty();
+        }) : $inscriptions;
+
+        return view('backend.inscriptions.rappels.confirmation')->with(['inscriptions' => $inscriptions,'colloque' => $colloque]);
+    }
+
     public function make(Request $request)
     {
         $inscriptions = $this->inscription->getRappels($request->input('colloque_id'));
 
         $this->worker->make($inscriptions, $request->input('more',false));
-
-            // Make sur we have created all the rappels in pdf
-   /*         $job = (new MakeRappelInscription($inscriptions->pluck('id')->all()));
-            $this->dispatch($job);
-
-            $job = (new NotifyJobFinished('Les rappels pour le colloque ont été crées.'));
-            $this->dispatch($job);
-        }*/
 
         alert()->success('Rappels crées.');
 
@@ -130,10 +140,6 @@ class RappelController extends Controller
 
     public function send(Request $request)
     {
-        // Make sur we have created all the rappels in pdf
-        //$job = (new MakeRappelInscription($request->input('inscriptions')));
-        //$this->dispatch($job);
-
         $inscriptions = $this->inscription->getMultiple($request->input('inscriptions'));
 
         $this->worker->make($inscriptions);
@@ -144,7 +150,7 @@ class RappelController extends Controller
 
         alert()->success('Rappels envoyés');
 
-        return redirect()->back();
+        return redirect('admin/inscription/rappels/'.$request->input('colloque_id'));exit;
     }
 
     public function generate(Request $request)

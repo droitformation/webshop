@@ -55,11 +55,16 @@
     padding: 5px;
 }
 
-.type-choix, .checkbox_all p{
+.type-choix, .checkbox_all div.input-wrapper{
     padding: 3px 5px;
     border: 1px solid #ddd;
     margin-bottom: 3px;
     background: #fff;
+    margin-bottom: 5px;
+}
+
+.input-wrapper a{
+    margin: 3px;
 }
 
 .question-item{
