@@ -44,32 +44,31 @@ class ReponseWorker
 
     public function sortByQuestion($sondage)
     {
-        $sort = $sondage->avis->pluck('id')->all();
-
         $reponses = $sondage->reponses->map(function ($item, $key) {
             return $item->items;
-        })->flatten()
-            ->reject(function ($item, $key) {
-                $item->load('avis');
-                return !isset($item->avis);
-            })
-            ->groupBy('avis_id')
-            ->mapWithKeys(function ($item, $key) {
+        })->flatten();
 
-                if($item->first()->avis->type == 'radio' || $item->first()->avis->type == 'checkbox'){
-                    $reponses = $item->groupBy('reponse')->map(function ($av, $key) use ($item) {
-                        return $av->count();
-                    });
-                }
-                else{
-                    $reponses = $item->first()->avis->type == 'chapitre' ? null : $item->pluck('reponse');
-                }
+        return $sondage->avis->mapWithKeys(function ($item, $key) use ($sondage, $reponses) {
 
-                $title = $item->first()->avis->type == 'chapitre' ? ['chapitre' => $item->first()->avis->question] : ['title' => $item->first()->avis->question];
+            $rep = $reponses->where('avis_id', $item->id);
 
-                return [$item->first()->avis_id => $title +  ['reponses' => $reponses, 'type' => $item->first()->avis->type]];
-            })->toArray();
+            if($item->type == 'radio' || $item->type == 'checkbox'){
+                $answers = $rep->groupBy('reponse')->map(function ($av, $key) use ($item) {
+                    return $av->count();
+                });
+            }
+            else{
+                $answers = $item->type == 'chapitre' ? '' : $rep->pluck('reponse');
+            }
 
-        return collect(sortArrayByArray($reponses,$sort));
+            return [
+                $item->id => [
+                    'title'    => $item->question,
+                    'reponses' => $item->type != 'chapitre' ?  $answers : null,
+                    'type'     => $item->type,
+                ]
+            ];
+        });
+
     }
 }

@@ -915,14 +915,42 @@ Route::get('sondage', function()
     $rep_model = new App\Droit\Sondage\Entities\Sondage_reponse();
     $find = $rep_model->find('15');
 
-/*    echo '<pre>';
-        print_r($find->avis);
-       print_r($sondage->reponses->map(function ($item, $key) {
-           return $item->items;
-       })->flatten());
-    echo '<pre>';exit;*/
+    $avis = $sondage->avis->pluck('question','id');
 
-    $sort = $sondage->avis->pluck('id')->all();
+    $reponses = $sondage->reponses->map(function ($item, $key) {
+        return $item->items;
+    })->flatten();
+
+    $rep = $reponses->where('avis_id',13);
+
+/*   echo '<pre>';
+    print_r($rep->groupBy('reponse'));
+    echo '</pre>';exit();*/
+
+    $multiplied = $sondage->avis->mapWithKeys(function ($item, $key) use ($sondage, $reponses) {
+
+        $rep = $reponses->where('avis_id', $item->id);
+
+        if($item->type == 'radio' || $item->type == 'checkbox'){
+            $answers = $rep->groupBy('reponse')->map(function ($av, $key) use ($item) {
+                return $av->count();
+            });
+        }
+        else{
+            $answers = $item->type == 'chapitre' ? '' : $rep->pluck('reponse');
+        }
+
+        return [
+            $item->id => [
+                'title'    => $item->question,
+                'reponses' =>  $item->type != 'chapitre' ?  $answers : null
+            ]
+        ];
+    });
+
+    echo '<pre>';
+    print_r($multiplied);
+    echo '</pre>';exit();
 
     $reg = $sondage->reponses->map(function ($item, $key) {
         return $item->items;
@@ -940,19 +968,16 @@ Route::get('sondage', function()
                 });
             }
             else{
-                $reponses = $item->first()->avis->type == 'chapitre' ? null : $item->pluck('reponse');
+                $reponses = $item->first()->avis->type == 'chapitre' ? '' : $item->pluck('reponse');
             }
 
             $title = $item->first()->avis->type == 'chapitre' ? ['chapitre' => $item->first()->avis->question] : ['title' => $item->first()->avis->question];
 
             return [$item->first()->avis_id => $title +  ['reponses' => $reponses, 'type' => $item->first()->avis->type]];
 
-            return [
-                $item->first()->avis_id => $title + ['reponses' => $reponses, 'type' => $item->type]
-            ];
         })->toArray();
 
-    $reg = sortArrayByArray($reg, $sort);
+   // $reg = sortArrayByArray($reg, $avis->keys('id')->all());
 
     echo '<pre>';
     print_r($reg);
