@@ -21,7 +21,7 @@
                             {!! !$sondage->marketing ? '<p><strong>'.$sondage->colloque->titre.'</strong></p>' : $sondage->description !!}
                         </div>
 
-                        <h3>Liste:</h3>
+                        <h3>Liste: (attention pour le moment même que newsletter hors campagne)</h3>
                         <div class="form-group">
                             <div class="col-sm-10">
                                 @if(!$listes->isEmpty())
