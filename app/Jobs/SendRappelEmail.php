@@ -66,6 +66,11 @@ class SendRappelEmail implements ShouldQueue
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 
+        if($inscription->group_id && isset($inscription->groupe))
+        {
+            $data['participants'] = $inscription->groupe->participant_list;
+        }
+
         \Mail::send('emails.colloque.rappel', $data , function ($message) use ($user,$rappel,$inscription) {
 
             $message->to($user->email, $user->name)->subject('Rappel');
