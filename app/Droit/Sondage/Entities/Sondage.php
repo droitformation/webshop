@@ -29,4 +29,5 @@ class Sondage extends Model{
     {
         return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');
     }
+
 }

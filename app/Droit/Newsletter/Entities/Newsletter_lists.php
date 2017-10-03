@@ -7,7 +7,7 @@ class Newsletter_lists extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['title'];
+	protected $fillable = ['title','colloque_id'];
 
     public function emails()
     {
@@ -17,5 +17,10 @@ class Newsletter_lists extends Model {
     public function specialisations()
     {
         return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation', 'list_specialisations', 'list_id', 'specialisation_id');
+    }
+
+    public function colloque()
+    {
+        return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');
     }
 }

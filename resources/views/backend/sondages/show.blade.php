@@ -14,7 +14,14 @@
 <div class="row">
     <div class="col-md-9">
 
-        <!-- form start -->
+        @if($sondage->colloque_id)
+            <form action="{{ url('admin/sondage/updateList') }}" method="POST" class="pull-right" style="margin-top: 8px;margin-right: 8px;">{!! csrf_field() !!}
+                <input type="hidden" name="id" value="{{ $sondage->id }}" />
+                <input type="hidden" name="colloque_id" value="{{ $sondage->colloque_id }}" />
+                <button class="btn btn-primary" type="submit">Mettre à jour la liste des participants</button>
+            </form>
+        @endif
+
         <form action="{{ url('admin/sondage/'.$sondage->id) }}" method="POST" class="form-horizontal">
             <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 

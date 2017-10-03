@@ -64,6 +64,11 @@ class SondageController extends Controller
     {
         $sondage = $this->sondage->create($request->all());
 
+        if($sondage->colloque_id){
+            $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+            $worker->createList($sondage->colloque_id);
+        }
+
         alert()->success('Le sondage a été crée');
 
         return redirect('admin/sondage/'.$sondage->id);
@@ -77,11 +82,17 @@ class SondageController extends Controller
      */
     public function show($id)
     {
+        $emails    = [];
         $sondage   = $this->sondage->find($id);
         $avis      = $this->avis->getAll();
         $colloques = $this->colloque->getAll(false,false);
+
+        if($sondage->colloque_id){
+            $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+            $emails = $worker->getEmails($sondage->colloque_id);
+        }
         
-        return view('backend.sondages.show')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques]);
+        return view('backend.sondages.show')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques, 'emails' => $emails]);
     }
 
     /**
@@ -94,9 +105,24 @@ class SondageController extends Controller
     {
         $sondage = $this->sondage->update($request->all());
 
+        if($sondage->colloque_id){
+            $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+            $worker->updateList($sondage->colloque_id);
+        }
+
         alert()->success('Le sondage a été mis à jour');
 
         return redirect('admin/sondage/'.$sondage->id);
+    }
+
+    public function updateList(Request $request)
+    {
+        $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+        $worker->updateList($request->input('colloque_id'));
+
+        alert()->success('La liste pour le sondage a été mis à jour');
+
+        return redirect()->back();
     }
 
     /**

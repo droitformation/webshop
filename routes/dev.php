@@ -145,18 +145,26 @@ Route::get('testing', function() {
 
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
 
+    $colloque = $colloques->find(113);
+
+    $worker = new App\Droit\Sondage\Worker\SondageWorker();
+    $worker->createList(113);
+   // $array = array_pluck($emails->toArray(), 'email');
+
+    exit();
+
     //$import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
 
-    $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+   // $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
-    $inscription = $model->find(14825);
+   // $inscription = $model->find(14825);
 
     //$generate = new \App\Droit\Generate\Entities\Generate($inscription);
 
     //$bon = $generate->getFilename('bon', 'bon');
     //$bv  = $generate->getFilename('bv', 'bv');
 
-    $docs = [$inscription->doc_bv,$inscription->doc_facture];
+    //$docs = [$inscription->doc_bv,$inscription->doc_facture];
 /*
     collect(array_filter($docs))->map(function ($doc, $key) {
 
@@ -166,9 +174,9 @@ Route::get('testing', function() {
         \File::move($doc, public_path('files/colloques/bak/'.$filename));
     });*/
 
-    collect(array_filter($docs))->map(function ($doc, $key) {
+ /*   collect(array_filter($docs))->map(function ($doc, $key) {
         \File::move($doc, public_path('files/colloques/bak/'.basename($doc)));
-    });
+    });*/
 
 exit();
    // File::move($old_path, $new_path);

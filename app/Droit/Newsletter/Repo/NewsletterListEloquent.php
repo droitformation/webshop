@@ -22,6 +22,11 @@ class NewsletterListEloquent implements NewsletterListInterface{
 		return $this->list->with(['emails'])->find($id);
 	}
 
+    public function findByColloque($colloque_id)
+    {
+	    return $this->list->where('colloque_id','=',$colloque_id)->firstOrFail();
+    }
+
     public function emailExist($id,$email)
     {
         return $this->list->where('id','=',$id)->whereHas('emails', function($q) use ($email) {
@@ -33,6 +38,7 @@ class NewsletterListEloquent implements NewsletterListInterface{
 
         $list = $this->list->create(array(
             'title'        => $data['title'],
+            'colloque_id'  => isset($data['colloque_id']) ? $data['colloque_id'] : null,
             'created_at'   => date('Y-m-d G:i:s'),
             'updated_at'   => date('Y-m-d G:i:s')
         ));
