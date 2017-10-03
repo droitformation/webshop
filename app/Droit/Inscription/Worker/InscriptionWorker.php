@@ -167,6 +167,11 @@ class InscriptionWorker implements InscriptionWorkerInterface{
                 if($model->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')) {
                     $this->generator->make($annexe, $model);
                 }
+
+                // Delete the invoice/bv if the price is 0
+                if($model->price_cents == 0) {
+                    $this->bakupDocuments($model);
+                }
             });
         }
     }
@@ -176,4 +181,16 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         \File::delete(collect($model->documents)->pluck('file')->all());
     }
 
+    public function bakupDocuments($model)
+    {
+        $docs = [$model->doc_bv,$model->doc_facture];
+
+        collect(array_filter($docs))->map(function ($doc, $key) {
+
+            $filename = explode('/', $doc);
+            $filename = end($filename);
+
+            \File::move($doc, public_path('files/colloques/bak/'.$filename));
+        });
+    }
 }

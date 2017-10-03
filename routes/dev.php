@@ -149,11 +149,30 @@ Route::get('testing', function() {
 
     $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
-    $inscription = $model->find(15362);
+    $inscription = $model->find(14825);
+
+    //$generate = new \App\Droit\Generate\Entities\Generate($inscription);
+
+    //$bon = $generate->getFilename('bon', 'bon');
+    //$bv  = $generate->getFilename('bv', 'bv');
+
+/*    $docs = [$inscription->doc_bv,$inscription->doc_facture];
+
+    collect(array_filter($docs))->map(function ($doc, $key) {
+
+        $filename = explode('/', $doc);
+        $filename = end($filename);
+
+        \File::move($doc, public_path('files/colloques/bak/'.$filename));
+    });*/
+
+    $name = basename($inscription->doc_bv);
 
     echo '<pre>';
-    print_r($inscription->occurrence_done);
+    print_r($name);
     echo '</pre>';exit();
+   // File::move($old_path, $new_path);
+
 /*
     $inscriptions = $model->getColloqe(113, $filters = ['status' => 'free'],false);
 
