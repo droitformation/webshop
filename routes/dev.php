@@ -156,8 +156,8 @@ Route::get('testing', function() {
     //$bon = $generate->getFilename('bon', 'bon');
     //$bv  = $generate->getFilename('bv', 'bv');
 
-/*    $docs = [$inscription->doc_bv,$inscription->doc_facture];
-
+    $docs = [$inscription->doc_bv,$inscription->doc_facture];
+/*
     collect(array_filter($docs))->map(function ($doc, $key) {
 
         $filename = explode('/', $doc);
@@ -166,11 +166,11 @@ Route::get('testing', function() {
         \File::move($doc, public_path('files/colloques/bak/'.$filename));
     });*/
 
-    $name = basename($inscription->doc_bv);
+    collect(array_filter($docs))->map(function ($doc, $key) {
+        \File::move($doc, public_path('files/colloques/bak/'.basename($doc)));
+    });
 
-    echo '<pre>';
-    print_r($name);
-    echo '</pre>';exit();
+exit();
    // File::move($old_path, $new_path);
 
 /*

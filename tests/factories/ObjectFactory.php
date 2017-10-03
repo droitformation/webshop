@@ -466,6 +466,7 @@ class ObjectFactory
         for($x = 1; $x <= $nbr; $x++)
         {
             $personne  = $this->makeUser();
+
             factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
                 'user_id'     => $personne->id,
                 'group_id'    => null,
@@ -499,7 +500,7 @@ class ObjectFactory
             });
         }
 
-        return $colloque->load('inscriptions');
+        return $colloque->load(['inscriptions','prices']);
     }
 
     public function makeInscriptionForUser($user, $date)

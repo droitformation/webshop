@@ -43,6 +43,7 @@
 
                         <input name="{{ $user }}" value="{{ $inscription->$user }}" type="hidden">
                         <input name="colloque_id" value="{{ $inscription->colloque->id }}" type="hidden">
+                        <input name="payed_at" value="{{ $inscription->payed_at ? $inscription->payed_at->format('Y-m-d') : null }}" type="hidden">
                     </fieldset>
 
                     <p class="text-warning"><i class="fa fa-warning"></i> &nbsp;La mise a jour prend quelques secondes car les documents sont regénérés</p>

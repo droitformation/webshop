@@ -349,4 +349,5 @@ class InscriptionWorkerTest extends BrowserKitTest {
         $this->assertEquals($first->id, $inscriptions->first()->id);
 
     }
+
 }

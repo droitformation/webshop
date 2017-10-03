@@ -267,4 +267,113 @@ class InscriptionControllerTest extends BrowserKitTest {
             ]);
         }
     }
+
+    public function testUpdateInscriptionAndDocs()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+
+        $prices   = $colloque->prices->pluck('id')->all();
+        $options  = $colloque->options->pluck('id')->all();
+
+        $date = \Carbon\Carbon::now()->toDateString();
+
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id' => $person->id,
+            'group_id' => null,
+            'colloque_id' => $colloque->id,
+            'payed_at'    => null,
+        ]);
+
+        $data = [
+            'id'          => $inscription->id,
+            'colloque_id' => $colloque->id,
+            'user_id'     => $person->id,
+            'payed_at'    => $date,
+            'price_id'    => $prices[0],
+            'options'     => [
+                $options[0]
+            ]
+        ];
+
+        $this->call('PUT', 'admin/inscription/'.$inscription->id, $data);
+
+        $this->seeInDatabase('colloque_inscriptions', [
+            'id'          => $inscription->id,
+            'colloque_id' => $colloque->id,
+            'payed_at'    => $date,
+        ]);
+    }
+
+/*
+    won't work in travis
+    public function testMakeBackupDocs()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $this->assertNull($inscription->doc_bon);
+        $this->assertNull($inscription->doc_bv);
+        $this->assertNull($inscription->doc_facture);
+
+        $this->makeDoc($inscription,'bon');
+        $this->makeDoc($inscription,'facture');
+        $this->makeDoc($inscription,'bv');
+
+        sleep(3);
+
+        $this->assertNotNull($inscription->doc_bon);
+        $this->assertNotNull($inscription->doc_bv);
+        $this->assertNotNull($inscription->doc_facture);
+
+        $price = factory(\App\Droit\Price\Entities\Price::class)->create(['price' => 0, 'colloque_id' => $colloque->id]);
+
+        $inscription->price_id = $price->id;
+        $inscription->save();
+        $inscription->fresh();
+        $inscription->load('price');
+
+        $worker->makeDocuments($inscription,true);
+
+        sleep(3);
+
+        $inscription->fresh();
+
+        $this->assertNotNull($inscription->doc_bon);
+        $this->assertNull($inscription->doc_bv);
+        $this->assertNull($inscription->doc_facture);
+    }*/
+
+    public function makeDoc($model,$document)
+    {
+        $data['messages']  = ['remerciements' => 'Avec nos remerciements, nous vous adressons nos salutations les meilleures.'];
+        $data['signature'] = 'Le secrétariat de la Faculté de droit';
+        $data['tva']       = [
+            'numero'      => \Registry::get('shop.infos.tva'),
+            'taux_reduit' => \Registry::get('shop.infos.taux_reduit'),
+            'taux_normal' => \Registry::get('shop.infos.taux_normal')
+        ];
+
+        $generate = new \App\Droit\Generate\Entities\Generate($model);
+        $data['generate']  = $generate;
+
+        $context = stream_context_create([
+            'ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]
+        ]);
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        $view = $pdf->loadView('templates.colloque.'.$document, $data)->setPaper('a4');
+
+        $filepath = $generate->getFilename($document, $document);
+
+        $view->save($filepath);
+    }
 }
