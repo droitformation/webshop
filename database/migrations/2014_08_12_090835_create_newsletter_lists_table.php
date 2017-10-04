@@ -15,6 +15,7 @@ class CreateNewsletterListsTable extends Migration
         Schema::create('newsletter_lists', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->integer('colloque_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
