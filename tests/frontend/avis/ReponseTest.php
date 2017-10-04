@@ -185,7 +185,7 @@ class ReponseTest extends BrowserKitTest {
 		$sondage->avis()->attach($question->id, ['rang' => 1]);
 
 		// Create list
-		$list   = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One liste']);
+		$list   = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One liste', 'colloque_id' => $colloque->id]);
 		$email1 = factory(App\Droit\Newsletter\Entities\Newsletter_emails::class)->create(['email' => 'contact@domain.com']);
 		$email2 = factory(App\Droit\Newsletter\Entities\Newsletter_emails::class)->create(['email' => 'info@domain.com']);
 
