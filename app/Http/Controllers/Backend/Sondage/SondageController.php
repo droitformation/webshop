@@ -125,6 +125,16 @@ class SondageController extends Controller
         return redirect()->back();
     }
 
+    public function createList(Request $request)
+    {
+        $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+        $worker->createList($request->input('colloque_id'));
+
+        alert()->success('La liste pour le sondage a été crée');
+
+        return redirect()->back();
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -152,7 +162,7 @@ class SondageController extends Controller
     public function confirmation($id)
     {
         $sondage = $this->sondage->find($id);
-        $listes  = $this->list->getAll();
+        $listes  = $this->list->getForColloques();
 
         return view('backend.sondages.confirmation')->with(['sondage' => $sondage, 'listes' => $listes]);
     }

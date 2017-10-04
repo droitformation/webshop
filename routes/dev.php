@@ -130,7 +130,11 @@ Route::get('mapped', function () {
 
 
 Route::get('testing', function() {
-    
+
+    $mailjet = \App::make('App\Droit\Newsletter\Service\Mailjet');
+    echo '<pre>';
+    print_r($mailjet);
+    echo '</pre>';exit();
 
     $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');

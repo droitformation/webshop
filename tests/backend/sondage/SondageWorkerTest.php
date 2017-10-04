@@ -42,7 +42,7 @@ class SondageWorkerTest extends BrowserKitTest {
 
         $this->assertEquals(4, $list->emails->count());
 
-        $person   = $make->makeUser();
+        $person  = $make->makeUser();
 
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
             'user_id'     => $person->id,
@@ -57,6 +57,30 @@ class SondageWorkerTest extends BrowserKitTest {
 
         $this->assertEquals(5, $list->emails->count());
 
+	}
+
+    public function testRemoveEmailsFromList()
+    {
+        $worker = new App\Droit\Sondage\Worker\SondageWorker();
+
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(4);
+
+        $list  = $worker->createList($colloque->id);
+
+        // 4 emails because 4 inscriptions
+        $this->assertEquals(4, $list->emails->count());
+
+        // Remove one email/inscription
+        $first = $colloque->inscriptions->shift();
+        $first->delete();
+        $colloque->fresh();
+
+        $list = $worker->updateList($colloque->id);
+        $list->fresh();
+        $list->load('emails');
+
+        $this->assertEquals(3, $list->emails->count());
 	}
 
 }

@@ -16,6 +16,10 @@ class NewsletterListEloquent implements NewsletterListInterface{
 		
 		return $this->list->all();
 	}
+
+    public function getForColloques(){
+        return $this->list->whereNotNull('colloque_id')->get();
+    }
 	
 	public function find($id){
 
@@ -74,10 +78,9 @@ class NewsletterListEloquent implements NewsletterListInterface{
 
         if(isset($data['emails']) && !empty($data['emails']))
         {
-            $exists = $list->emails->pluck('email')->all();
-            $emails = array_diff($data['emails'],$exists);
+            $list->emails()->delete();
 
-            foreach($emails as $email) {
+            foreach($data['emails'] as $email) {
                 $list->emails()->save(new \App\Droit\Newsletter\Entities\Newsletter_emails(['list_id' => $list->id, 'email' => $email]));
             }
         }

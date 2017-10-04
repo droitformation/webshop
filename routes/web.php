@@ -294,6 +294,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::post('sondage/send','Backend\Sondage\SondageController@send');
     Route::get('sondage/confirmation/{id}','Backend\Sondage\SondageController@confirmation');
     Route::post('sondage/download/{id}', 'Backend\Sondage\ReponseController@download');
+    Route::post('sondage/createList', 'Backend\Sondage\SondageController@createList');
     Route::post('sondage/updateList', 'Backend\Sondage\SondageController@updateList');
     Route::resource('sondage', 'Backend\Sondage\SondageController');
     Route::resource('avis', 'Backend\Sondage\AvisController');

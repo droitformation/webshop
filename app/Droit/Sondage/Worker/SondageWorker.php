@@ -38,7 +38,12 @@ class SondageWorker
             return false;
         }
 
-        return $this->list->update(['id' => $list->id, 'title' => 'SONDAGE | '.$this->colloque->titre, 'emails' => $emails, 'colloque_id' => $this->colloque->id]);
+        return $this->list->update([
+            'id'     => $list->id,
+            'title'  => 'SONDAGE | '.$this->colloque->titre,
+            'emails' => $emails, 'colloque_id' => $this->colloque->id,
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
     }
 
     public function getEmails($colloque_id)

@@ -30,4 +30,9 @@ class Sondage extends Model{
         return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');
     }
 
+    public function liste()
+    {
+        return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter_lists', 'colloque_id', 'colloque_id');
+    }
+
 }
