@@ -54,6 +54,7 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerEmailService();
         $this->registerClipboardService();
         $this->registerTrackingService();
+        $this->registerSendgridNewService();
     }
 
     /**
@@ -246,6 +247,19 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterTrackingInterface', function()
         {
             return new \App\Droit\Newsletter\Repo\NewsletterTrackingEloquent( new \App\Droit\Newsletter\Entities\Newsletter_tracking() );
+        });
+    }
+
+    /**
+     * Newsletter service
+     */
+    protected function registerSendgridNewService(){
+
+        $this->app->bind('App\Droit\Newsletter\Worker\SendgridInterface', function()
+        {
+            return new \App\Droit\Newsletter\Worker\SendgridService(
+                new \SendGrid(env('SENDGRID_API'))
+            );
         });
     }
 }
