@@ -22,6 +22,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '0c3c22e27afa83be19b4c938f4c6e9ea' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/functions.php',
+        '3f8bdd3b35094c73a26f0106e3c0f8b2' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/SendGrid.php',
+        '9dda55337a76a24e949fbcc5d905a2c7' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/mail/Mail.php',
         '4b69412694a85d7780e1934ebfeb0c1b' => __DIR__ . '/../..' . '/tests/factories/ObjectFactory.php',
         '6f63623309b417353d909e0e864f4beb' => __DIR__ . '/../..' . '/app/Support/helpers.php',
     );
@@ -66,6 +68,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             'Spatie\\TemporaryDirectory\\' => 26,
             'Spatie\\DbDumper\\' => 16,
             'Spatie\\Backup\\' => 14,
+            'SendGrid\\' => 9,
         ),
         'R' => 
         array (
@@ -235,6 +238,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Spatie\\Backup\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-backup/src',
+        ),
+        'SendGrid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sendgrid/php-http-client/lib',
         ),
         'Ramsey\\Uuid\\' => 
         array (

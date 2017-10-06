@@ -19,8 +19,8 @@ class CampagneTest extends BrowserKitTest
         $this->mock = Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
         $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);
 
-        $this->mailjet = Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\MailjetServiceInterface', $this->mailjet);
+        $this->mailjet = Mockery::mock('App\Droit\Newsletter\Worker\SendgridInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\SendgridInterface', $this->mailjet);
 
         $this->worker = Mockery::mock('App\Droit\Newsletter\Worker\CampagneInterface');
         $this->app->instance('App\Droit\Newsletter\Worker\CampagneInterface', $this->worker);

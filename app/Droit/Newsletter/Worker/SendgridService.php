@@ -8,12 +8,6 @@ use \SendGrid\Mail;
 use \SendGrid\Email;
 use \SendGrid\Content;
 
-/**
- * Created by PhpStorm.
- * User: cindyleschaud
- * Date: 05.10.17
- * Time: 09:56
- */
 class SendgridService implements SendgridInterface
 {
     protected $sendgrid;
@@ -279,7 +273,7 @@ class SendgridService implements SendgridInterface
         return false;
     }
 
-    public function sendTest($id,$email)
+    public function sendTest($id,$email, $sujet = null)
     {
         $request_body = ['to' => $email];
 

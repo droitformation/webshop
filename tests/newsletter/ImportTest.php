@@ -20,8 +20,8 @@ class ImportTest extends BrowserKitTest
     {
         parent::setUp();
 
-        $this->worker = Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\MailjetServiceInterface', $this->worker);
+        $this->worker = Mockery::mock('App\Droit\Newsletter\Worker\SendgridInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\SendgridInterface', $this->worker);
 
         $this->subscription = Mockery::mock('App\Droit\Newsletter\Repo\NewsletterUserInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterUserInterface', $this->subscription);

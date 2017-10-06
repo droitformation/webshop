@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SubscribeRequest;
 
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
-use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SendgridInterface;
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 use App\Droit\Site\Repo\SiteInterface;
@@ -22,7 +22,7 @@ class InscriptionController extends Controller
     protected $site;
 
     public function __construct(
-        MailjetServiceInterface $worker,
+        SendgridInterface $worker,
         NewsletterUserInterface $subscription,
         NewsletterInterface $newsletter,
         SubscriptionWorkerInterface $subscribeworker,

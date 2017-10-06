@@ -77,7 +77,7 @@ class NewsletterServiceProvider extends ServiceProvider
      */
     protected function registerMailjetNewService(){
 
-        $this->app->bind('App\Droit\Newsletter\Worker\MailjetServiceInterface', function()
+        $this->app->bind('App\Droit\Newsletter\Worker\SendgridInterface', function()
         {
             return new \App\Droit\Newsletter\Worker\MailjetService(
                 new \Mailjet\Client(config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')),
@@ -182,7 +182,7 @@ class NewsletterServiceProvider extends ServiceProvider
             return new \App\Droit\Newsletter\Worker\SubscriptionWorker(
                 \App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
                 \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
-                \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface')
+                \App::make('App\Droit\Newsletter\Worker\SendgridInterface')
             );
         });
     }
@@ -195,7 +195,7 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Newsletter\Worker\ImportWorkerInterface', function()
         {
             return new \App\Droit\Newsletter\Worker\ImportWorker(
-                \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface'),
+                \App::make('App\Droit\Newsletter\Worker\SendgridInterface'),
                 \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
                 \App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
                 \App::make('Maatwebsite\Excel\Excel'),

@@ -2,7 +2,7 @@
 
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
-use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SendgridInterface;
 use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 
 class SubscriptionWorker implements SubscriptionWorkerInterface{
@@ -11,7 +11,7 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
     protected $subscription;
     protected $mailjet;
 
-    public function __construct(NewsletterInterface $newsletter, NewsletterUserInterface $subscription, MailjetServiceInterface $mailjet)
+    public function __construct(NewsletterInterface $newsletter, NewsletterUserInterface $subscription, SendgridInterface $mailjet)
     {
         $this->newsletter = $newsletter;
         $this->subscription = $subscription;

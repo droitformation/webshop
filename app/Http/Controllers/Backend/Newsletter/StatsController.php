@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SendgridInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\StatsWorker;
 
@@ -17,7 +17,7 @@ class StatsController extends Controller
     protected $statsworker;
     protected $charts;
 
-    public function __construct( MailjetServiceInterface $worker, NewsletterCampagneInterface $campagne, StatsWorker $statsworker)
+    public function __construct( SendgridInterface $worker, NewsletterCampagneInterface $campagne, StatsWorker $statsworker)
     {
         $this->worker       = $worker;
         $this->campagne     = $campagne;

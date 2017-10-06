@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
-use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SendgridInterface;
 use App\Droit\Newsletter\Repo\NewsletterListInterface;
 
 use App\Droit\Service\UploadWorker;
@@ -21,7 +21,7 @@ class NewsletterController extends Controller
     protected $mailjet;
     protected $list;
 
-    public function __construct(NewsletterInterface $newsletter, UploadWorker $upload, MailjetServiceInterface $mailjet, NewsletterListInterface $list, NewsletterCampagneInterface  $campagne)
+    public function __construct(NewsletterInterface $newsletter, UploadWorker $upload, SendgridInterface $mailjet, NewsletterListInterface $list, NewsletterCampagneInterface  $campagne)
     {
         $this->campagne   = $campagne;
         $this->newsletter = $newsletter;

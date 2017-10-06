@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SendTestRequest;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\CampagneInterface;
-use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SendgridInterface;
 
 class SendController extends Controller
 {
@@ -17,7 +17,7 @@ class SendController extends Controller
     protected $worker;
     protected $mailjet;
 
-    public function __construct(NewsletterCampagneInterface $campagne, CampagneInterface $worker, MailjetServiceInterface $mailjet)
+    public function __construct(NewsletterCampagneInterface $campagne, CampagneInterface $worker, SendgridInterface $mailjet)
     {
         $this->campagne = $campagne;
         $this->worker   = $worker;

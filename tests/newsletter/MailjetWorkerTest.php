@@ -40,7 +40,7 @@ class MailjetWorkerTest extends BrowserKitTest
      */
     public function testSetList()
     {
-        $worker = \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+        $worker = \App::make('App\Droit\Newsletter\Worker\SendgridInterface');
 
         $worker->setList(1);
 

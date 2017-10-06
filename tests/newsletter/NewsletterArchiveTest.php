@@ -17,8 +17,8 @@ class NewsletterArchiveTest extends BrowserKitTest
         $user->roles()->attach(1);
         $this->actingAs($user);
 
-        $this->mailjet = Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\MailjetServiceInterface', $this->mailjet);
+        $this->mailjet = Mockery::mock('App\Droit\Newsletter\Worker\SendgridInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\SendgridInterface', $this->mailjet);
 
     }
 

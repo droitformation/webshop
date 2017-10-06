@@ -14,8 +14,8 @@ class UserTest extends BrowserKitTest {
     {
         parent::setUp();
 
-        $this->mailjet = Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\MailjetServiceInterface', $this->mailjet);
+        $this->mailjet = Mockery::mock('App\Droit\Newsletter\Worker\SendgridInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\SendgridInterface', $this->mailjet);
 
         DB::beginTransaction();
     }

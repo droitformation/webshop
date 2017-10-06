@@ -9,7 +9,7 @@ use App\Http\Requests\DeleteSubscriberRequest;
 
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
-use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SendgridInterface;
 
 use App\Http\Requests\RemoveNewsletterUserRequest;
 use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
@@ -21,7 +21,7 @@ class SubscriberController extends Controller
     protected $worker;
     protected $subscription_worker;
 
-    public function __construct(NewsletterUserInterface $subscriber, NewsletterInterface $newsletter, MailjetServiceInterface $worker, SubscriptionWorkerInterface $subscription_worker)
+    public function __construct(NewsletterUserInterface $subscriber, NewsletterInterface $newsletter, SendgridInterface $worker, SubscriptionWorkerInterface $subscription_worker)
     {
         $this->subscriber = $subscriber;
         $this->newsletter = $newsletter;

@@ -1,10 +1,9 @@
-<?php
-namespace App\Droit\Newsletter\Worker;
+<?php namespace App\Droit\Newsletter\Worker;
 
 interface SendgridInterface
 {
-    public function setSenderEmail($email);
     public function setList($list);
+    public function setSenderEmail($email);
 
     public function getList();
     public function getAllLists();
@@ -35,7 +34,7 @@ interface SendgridInterface
     public function setHtml($html,$id);
     public function getHtml($id);
 
-    public function sendTest($id,$email);
+    public function sendTest($id,$email, $sujet = null);
     public function sendCampagne($id, $date = null);
 
     /**

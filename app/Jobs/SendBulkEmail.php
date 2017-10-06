@@ -35,7 +35,7 @@ class SendBulkEmail implements ShouldQueue
      */
     public function handle()
     {
-        $mailjet = \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+        $mailjet = \App::make('App\Droit\Newsletter\Worker\SendgridInterface');
 
         $mailjet->sendBulk($this->campagne, $this->html, $this->emails, false);
     }

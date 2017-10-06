@@ -3,7 +3,7 @@
 namespace App\Droit\Newsletter\Worker;
 
 use App\Droit\Newsletter\Repo\NewsletterInterface;
-use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\SendgridInterface;
 use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\CampagneInterface;
@@ -26,7 +26,7 @@ class ImportWorker implements ImportWorkerInterface
     protected $upload;
 
     public function __construct(
-        MailjetServiceInterface $mailjet ,
+        SendgridInterface $mailjet ,
         NewsletterUserInterface $subscriber,
         NewsletterInterface $newsletter,
         Excel $excel,
