@@ -39,8 +39,17 @@ class SendgridService implements SendgridInterface
     {
         $response = $this->sendgrid->client->contactdb()->lists()->get();
 
-        if($response->statusCode() == 200)
-            return json_decode($response->body());
+        if($response->statusCode() == 200){
+            $data = json_decode($response->body());
+            $data = $data->lists;
+            return collect((array) $data)->map(function ($item, $key) {
+                return [
+                    'ID' => $item->id,
+                    'Name' => $item->name,
+                    'SubscriberCount' => $item->recipient_count,
+                ];
+            });
+        }
         else
             throw new \App\Exceptions\SendgridImplementationException($message = $response->body(), $response->statusCode());
     }
@@ -218,28 +227,28 @@ class SendgridService implements SendgridInterface
 
         # Parameters
         $request_body = [
-            'title'          => $campagne->titre,
+            'title'          => $campagne->newsletter->titre,
             'subject'        => $campagne->sujet,
             'list_ids'       => [$this->list],
             'categories'     => $categories,
             'segment_ids'    => [],
-            'plain_content'  => 'FirstCampagne',
+            'plain_content'  => 'First Draft',
             'suppression_group_id' => 3927,
             'sender_id'      => 171948,
-            'html_content'   => '<html><head><title></title></head><body><p>FirstCampagne</p></body></html>',
-            'SenderEmail'    => $campagne->from_email,
-            'Sender'         => $campagne->from_name
+            'html_content'   => '<html><head><title></title></head><body><p>First Draft</p></body></html>',
+            'SenderEmail'    => $campagne->newsletter->from_email,
+            'Sender'         => $campagne->newsletter->from_name
         ];
 
         # Call
         $response = $this->sendgrid->client->campaigns()->post($request_body);
 
         if($response->statusCode() == 201){
-            return $response->body();
+            $data = json_decode($response->body());
+            return $data->id;
         }
 
         throw new \App\Exceptions\SendgridImplementationException($message = $response->body(), $response->statusCode());
-
     }
 
     public function setHtml($html,$id, $updates = null)
@@ -258,7 +267,7 @@ class SendgridService implements SendgridInterface
         if($response->statusCode() == 200)
             return json_decode($response->body());
         else
-            return false;
+            return json_decode($response->body());
     }
 
     public function getHtml($id)
@@ -294,11 +303,11 @@ class SendgridService implements SendgridInterface
 
         $response = $this->sendgrid->client->campaigns()->_($id)->schedules()->post($request_body);
 
-        if($response->statusCode() == 200){
+        if($response->statusCode() == 201){
             return true;
         }
 
-        return json_decode($response->body());
+        throw new \App\Exceptions\SendgridImplementationException($message = $response->body(), $response->statusCode());
     }
 
     public function deleteCampagne($id)
@@ -380,7 +389,12 @@ class SendgridService implements SendgridInterface
      * */
     public function sendBulk($campagne,$html,$recipients, $test = true)
     {
-        $sujet = ($test ? 'TEST | '.$campagne->sujet : $campagne->sujet );
+
+
+        $request_body = collect($recipients)->map(function ($email, $key) {
+            return ['email' => $email];
+        })->toArray();
+
 
         $body = [
             'FromEmail'   => $campagne->newsletter->from_email,

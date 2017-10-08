@@ -77,7 +77,7 @@ class NewsletterServiceProvider extends ServiceProvider
      */
     protected function registerMailjetNewService(){
 
-        $this->app->bind('App\Droit\Newsletter\Worker\SendgridInterface', function()
+        $this->app->bind('App\Droit\Newsletter\Worker\MailjetServiceInterface', function()
         {
             return new \App\Droit\Newsletter\Worker\MailjetService(
                 new \Mailjet\Client(config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')),

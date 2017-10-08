@@ -66,10 +66,8 @@
                         <table border="0" width="600" cellpadding="0" cellspacing="0" class="tableReset">
                             <tr><td height="15"></td></tr><!-- space -->
                             <tr>
-                                <td align="center" class="linkGrey">Si vous ne désirez plus recevoir cette newsletter, vous pouvez vous désinscrire à tout moment en
-                                    <a href="[[UNSUB_LINK_EN]]"></a>
-                                    <?php $site = isset($campagne->newsletter->site) ? $campagne->newsletter->preview.'/'.$campagne->newsletter->site->slug : 'pubdroit'; ?>
-                                    <a class="linkGrey" href="{{ url($site.'/unsubscribe') }}">cliquant ici</a>.
+                                <td align="center" class="linkGrey">Si vous ne désirez plus recevoir cette newsletter, vous pouvez vous désinscrire à tout moment via ce lien:<br/>
+                                    [Unsubscribe]
                                 </td>
                             </tr>
                             <tr><td height="15"></td></tr><!-- space bottom -->

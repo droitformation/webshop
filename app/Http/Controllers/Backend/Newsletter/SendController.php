@@ -43,25 +43,25 @@ class SendController extends Controller
 
         $this->mailjet->setList($campagne->newsletter->list_id); // list id
 
-        // Sync html content to api service and send to newsletter list!
-        $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id);
+        $site = isset($campagne->newsletter->site) ? $campagne->newsletter->preview.'/'.$campagne->newsletter->site->slug : 'pubdroit';
 
-        if(!$response)
-        {
+        // Sync html content to api service and send to newsletter list!
+        $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id, [
+            'subject' => $campagne->sujet,
+            'custom_unsubscribe_url' => url($site.'/unsubscribe'),
+            'suppression_group_id' => null,
+        ]);
+
+        if(!$response) {
             throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
         }
 
         /*
          *  Send at specified date or delay for 15 minutes before sending just in case
          */
-        $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
-        
-        $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
+        $toSend = $date ? \Carbon\Carbon::parse($date)->timestamp : \Carbon\Carbon::now()->addMinutes(15)->timestamp;
 
-        if(!$result['success'])
-        {
-            throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi'.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
-        }
+        $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend);
 
         // Update campagne status
         $this->campagne->update(['id' => $campagne->id, 'status' => 'envoyé', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => $toSend]);
@@ -79,16 +79,27 @@ class SendController extends Controller
     public function test(SendTestRequest $request)
     {
         $campagne = $this->campagne->find($request->input('id'));
-        
-        $recipients = [
-            ['Email' => $request->input('email'), 'Name'  => ""]
-        ];
 
         // GET html
-        $html   = $this->worker->html($campagne->id);
-        $result = $this->mailjet->sendBulk($campagne,$html,$recipients);
+        $this->mailjet->setList($campagne->newsletter->list_id); // list id
 
-        if(!isset($result['Sent'])) {
+        $html     = $this->worker->html($campagne->id);
+
+        $site = isset($campagne->newsletter->site) ? $campagne->newsletter->preview.'/'.$campagne->newsletter->site->slug : 'pubdroit';
+
+        $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id, [
+            'subject' => $campagne->sujet,
+            'custom_unsubscribe_url' => url($site.'/unsubscribe'),
+            'suppression_group_id' => null,
+        ]);
+
+        if(!$response) {
+            throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
+        }
+
+        $result = $this->mailjet->sendTest($campagne->api_campagne_id, $request->input('email'), $campagne->sujet);
+
+        if(!$result) {
             throw new \App\Exceptions\TestSendException('Problème avec le test');
         }
 

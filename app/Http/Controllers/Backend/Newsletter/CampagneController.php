@@ -127,9 +127,8 @@ class CampagneController extends Controller
 
         $created = $this->mailjet->createCampagne($campagne); // return Mailjet ID
 
-        if(!$created)
-        {
-            throw new \App\Exceptions\CampagneCreationException('Problème avec la création de campagne sur mailjet');
+        if(!$created) {
+            throw new \App\Exceptions\CampagneCreationException('Problème avec la création de campagne sur le relai');
         }
 
         $this->campagne->update(['id' => $campagne->id, 'api_campagne_id' => $created]);
