@@ -54,6 +54,7 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerEmailService();
         $this->registerClipboardService();
         $this->registerTrackingService();
+        $this->registerMailgunService();
     }
 
     /**
@@ -146,6 +147,20 @@ class NewsletterServiceProvider extends ServiceProvider
         });
     }
 
+
+    /*
+   * CleanSubscriber
+   */
+    protected function registerCleanSubscriberService(){
+
+        $this->app->bind('App\Droit\Generate\Clean\CleanSubscriber', function()
+        {
+            return new \App\Droit\Generate\Clean\CleanSubscriber(
+                \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface'),
+                \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface')
+            );
+        });
+    }
 
     /**
      * Newsletter user abo service
@@ -246,6 +261,21 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterTrackingInterface', function()
         {
             return new \App\Droit\Newsletter\Repo\NewsletterTrackingEloquent( new \App\Droit\Newsletter\Entities\Newsletter_tracking() );
+        });
+    }
+
+    protected function registerMailgunService(){
+
+        $this->app->bind('App\Droit\Newsletter\Worker\MailgunInterface', function()
+        {
+            if (\App::environment('testing')) {
+                $mailgun = \Mockery::mock('\Mailgun\Mailgun');
+            }
+            else{
+                $mailgun = new \Mailgun\Mailgun(env('MAILGUN_KEY'));
+            }
+
+            return new \App\Droit\Newsletter\Worker\MailgunService($mailgun);
         });
     }
 }

@@ -10,18 +10,23 @@ use App\Http\Requests\SendTestRequest;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\CampagneInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Newsletter\Worker\MailgunInterface;
+
+use App\Jobs\SendCampagne;
 
 class SendController extends Controller
 {
     protected $campagne;
     protected $worker;
     protected $mailjet;
+    protected $mailgun;
 
-    public function __construct(NewsletterCampagneInterface $campagne, CampagneInterface $worker, MailjetServiceInterface $mailjet)
+    public function __construct(NewsletterCampagneInterface $campagne, CampagneInterface $worker, MailjetServiceInterface $mailjet, MailgunInterface $mailgun)
     {
         $this->campagne = $campagne;
         $this->worker   = $worker;
         $this->mailjet  = $mailjet;
+        $this->mailgun  = $mailgun;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         view()->share('isNewsletter',true);
@@ -39,29 +44,26 @@ class SendController extends Controller
         $date     = $request->input('date',null);
 
         //set or update html
-        $html = $this->worker->html($campagne->id);
+        $html   = $this->worker->html($campagne->id);
+        $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
 
+        //TODO: Commented for mailgun integration, remove after success
+/*
         $this->mailjet->setList($campagne->newsletter->list_id); // list id
-
-        // Sync html content to api service and send to newsletter list!
         $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id);
 
-        if(!$response)
-        {
+        if(!$response) {
             throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
         }
-
-        /*
-         *  Send at specified date or delay for 15 minutes before sending just in case
-         */
-        $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
-        
         $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
 
-        if(!$result['success'])
-        {
+        if(!$result['success']) {
             throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi'.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
         }
+*/
+        $job = (new SendCampagne($campagne,$html,$emails))->delay($toSend);
+
+        dispatch($job);
 
         // Update campagne status
         $this->campagne->update(['id' => $campagne->id, 'status' => 'envoyé', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => $toSend]);
@@ -79,18 +81,18 @@ class SendController extends Controller
     public function test(SendTestRequest $request)
     {
         $campagne = $this->campagne->find($request->input('id'));
-        
-        $recipients = [
-            ['Email' => $request->input('email'), 'Name'  => ""]
-        ];
 
         // GET html
-        $html   = $this->worker->html($campagne->id);
-        $result = $this->mailjet->sendBulk($campagne,$html,$recipients);
+        $html = $this->worker->html($campagne->id);
 
-        if(!isset($result['Sent'])) {
-            throw new \App\Exceptions\TestSendException('Problème avec le test');
-        }
+        //TODO: Commented for mailgun integration, remove after success
+        // $result = $this->mailjet->sendBulk($campagne,$html,$recipients);
+
+        $this->mailgun->setSender($campagne->newsletter->from_email,$campagne->newsletter->from_name)
+            ->setRecipients([$request->input('email')])
+            ->setHtml($html);
+
+        $this->mailgun->sendTransactional('TEST | '.$campagne->sujet);
 
         // If we want to send via ajax just add a send_type "ajax
         $ajax = $request->input('send_type', 'normal');

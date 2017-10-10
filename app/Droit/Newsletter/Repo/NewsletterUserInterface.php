@@ -4,6 +4,7 @@ interface NewsletterUserInterface {
 
 	public function getAll();
     public function getAllNbr($nbr);
+    public function getByNewsletter($id);
 	public function find($id);
 	public function findByEmail($email);
     public function get_ajax($draw, $start, $length, $sortCol, $sortDir, $search);

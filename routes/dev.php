@@ -131,12 +131,8 @@ Route::get('mapped', function () {
 
 Route::get('testing', function() {
 
-    $mailjet = \App::make('App\Droit\Newsletter\Service\Mailjet');
-    echo '<pre>';
-    print_r($mailjet);
-    echo '</pre>';exit();
 
-    $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
+/*    $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     $users        = \App::make('App\Droit\User\Repo\UserInterface');
@@ -147,12 +143,57 @@ Route::get('testing', function() {
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
     $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
 
-    $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
+    $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');*/
+    //$newuser     = \App::make('App\Droit\Newsletter\Repo\NewsletterSubscriptionInterface');
+    $newuser     = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
 
-    $colloque = $colloques->find(113);
+    $clean     = \App::make('App\Droit\Generate\Clean\CleanSubscriber');
 
-    $worker = new App\Droit\Sondage\Worker\SondageWorker();
-    $worker->createList(113);
+    echo '<pre>';
+    print_r($clean->emails);
+    echo '</pre>';exit();
+    $dta = [1,2,3];
+    $oth = [2];
+
+    echo '<pre>';
+    print_r($dta + $oth);
+    echo '</pre>';exit();
+
+
+    $users = $newuser->getByNewsletter(1);
+   // $users = $users->pluck('user.email')->unique()->toArray();
+
+    $subscription = $users->take(3);
+
+
+    echo '<pre>';
+    print_r($subscription->first()->subscriptions->pluck('id'));
+    echo '</pre>';exit();
+
+/*    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+
+    $mailjet->setList(1781405);
+
+
+    foreach (range(0, 6000, 1000) as $i) {
+        $users = $mailjet->getSubscribers($i);
+        $users = collect($users)->map(function ($item, $key) {
+            return $item['Email'];
+        })->implode('<br/>');
+        print_r($users);
+    }*/
+
+    $results = \Excel::load('public/files/import/MailjetBail_1017.xlsx', function($reader) {
+        $reader->ignoreEmpty();
+        $reader->setSeparator('\r\n');
+    })->get();
+
+    echo '<pre>';
+    print_r($results->pluck('email'));
+    echo '</pre>';exit();
+
+    //$worker = new App\Droit\Sondage\Worker\SondageWorker();
+   // $worker->createList(113);
    // $array = array_pluck($emails->toArray(), 'email');
 
     exit();

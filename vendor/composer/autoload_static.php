@@ -10,14 +10,16 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'ddc0a4d7e61c0286f0f8593b1903e894' => __DIR__ . '/..' . '/clue/stream-filter/src/functions.php',
+        '8cff32064859f4559445b89279f3199c' => __DIR__ . '/..' . '/php-http/message/src/filters.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'f1fc7a7a353e3515a5d5efd255977059' => __DIR__ . '/..' . '/vinkla/alert/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
@@ -54,6 +56,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Routing\\' => 26,
             'Symfony\\Component\\Process\\' => 26,
+            'Symfony\\Component\\OptionsResolver\\' => 34,
             'Symfony\\Component\\HttpKernel\\' => 29,
             'Symfony\\Component\\HttpFoundation\\' => 33,
             'Symfony\\Component\\Finder\\' => 25,
@@ -85,12 +88,23 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'L' => 
         array (
             'League\\Flysystem\\' => 17,
+            'Laravel\\Dusk\\' => 13,
             'Laravel\\BrowserKitTesting\\' => 26,
         ),
         'I' => 
         array (
             'Intervention\\Image\\' => 19,
             'Illuminate\\' => 11,
+        ),
+        'H' => 
+        array (
+            'Http\\Promise\\' => 13,
+            'Http\\Message\\MultipartStream\\' => 29,
+            'Http\\Message\\' => 13,
+            'Http\\Discovery\\' => 15,
+            'Http\\Client\\Common\\' => 19,
+            'Http\\Client\\' => 12,
+            'Http\\Adapter\\Guzzle6\\' => 21,
         ),
         'G' => 
         array (
@@ -103,6 +117,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             'FontLib\\' => 8,
             'Faker\\' => 6,
+            'Facebook\\WebDriver\\' => 19,
         ),
         'D' => 
         array (
@@ -119,6 +134,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             'Cron\\' => 5,
             'Collective\\Html\\' => 16,
+            'Clue\\StreamFilter\\' => 18,
             'Carbon\\' => 7,
         ),
         'B' => 
@@ -187,6 +203,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Symfony\\Component\\Process\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
+        ),
+        'Symfony\\Component\\OptionsResolver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/options-resolver',
         ),
         'Symfony\\Component\\HttpKernel\\' => 
         array (
@@ -264,6 +284,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
+        'Laravel\\Dusk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/dusk/src',
+        ),
         'Laravel\\BrowserKitTesting\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/browser-kit-testing/src',
@@ -275,6 +299,35 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
+        ),
+        'Http\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/promise/src',
+        ),
+        'Http\\Message\\MultipartStream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/multipart-stream-builder/src',
+        ),
+        'Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
+            1 => __DIR__ . '/..' . '/php-http/message/src',
+        ),
+        'Http\\Discovery\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/discovery/src',
+        ),
+        'Http\\Client\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/client-common/src',
+        ),
+        'Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/httplug/src',
+        ),
+        'Http\\Adapter\\Guzzle6\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/guzzle6-adapter/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -299,6 +352,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
+        ),
+        'Facebook\\WebDriver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/webdriver/lib',
         ),
         'Dotenv\\' => 
         array (
@@ -339,6 +396,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Collective\\Html\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
+        ),
+        'Clue\\StreamFilter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/clue/stream-filter/src',
         ),
         'Carbon\\' => 
         array (
@@ -423,6 +484,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             array (
                 0 => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src',
             ),
+            'Mailgun' => 
+            array (
+                0 => __DIR__ . '/..' . '/mailgun/mailgun-php/src',
+            ),
             'Maatwebsite\\Excel\\' => 
             array (
                 0 => __DIR__ . '/..' . '/maatwebsite/excel/src',
@@ -483,6 +548,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'AddEmailToColloqueInscriptionsParticipantsTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_14_095508_add_email_to_colloque_inscriptions_participants_table.php',
         'AddEndAtToColloquePricesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_25_091232_add_end_at_to_colloque_prices_table.php',
         'AddInputsToShopProductsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_10_090346_add_inputs_to_shop_products_table.php',
+        'AddJobHashToNewsletterCampagnes' => __DIR__ . '/../..' . '/database/migrations/2017_10_10_115050_add_job_hash_to_newsletter_campagnes.php',
         'AddPaquetToShopOrdersTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_08_140954_add_paquet_to_shop_orders_table.php',
         'AddRemarqueToAbosTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_13_160331_add_remarque_to_abos_table.php',
         'AddSendAtToNewsletterCampagnesTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_12_090838_add_send_at_to_newsletter_campagnes_table.php',

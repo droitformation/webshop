@@ -18,6 +18,7 @@ return array(
     'Msurguy\\Honeypot\\' => array($vendorDir . '/msurguy/honeypot/src'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Mailjet' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src'),
+    'Mailgun' => array($vendorDir . '/mailgun/mailgun-php/src'),
     'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
     'InlineStyle' => array($vendorDir . '/inlinestyle/inlinestyle'),
     'Doctrine\\DBAL\\' => array($vendorDir . '/doctrine/dbal/lib'),

@@ -9,7 +9,7 @@ interface MailjetServiceInterface {
     /**
      * Subscriptions
      */
-    public function getSubscribers();
+    public function getSubscribers($Offset);
     public function getAllSubscribers();
     public function addContact($email);
     public function getContactByEmail($contactEmail);

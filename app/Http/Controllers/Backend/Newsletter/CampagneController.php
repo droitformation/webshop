@@ -78,7 +78,9 @@ class CampagneController extends Controller
     public function cancel($id)
     {
         $campagne = $this->campagne->find($id);
-        $this->mailjet->deleteCampagne($campagne->api_campagne_id);
+
+        //TODO: Commented for mailgun integration, remove after success
+        // $this->mailjet->deleteCampagne($campagne->api_campagne_id);
 
         // Update campagne status
         $this->campagne->update(['id' => $campagne->id, 'status' => 'brouillon', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => null]);
@@ -123,16 +125,16 @@ class CampagneController extends Controller
     {
         $campagne = $this->campagne->create(['sujet' => $request->input('sujet'), 'auteurs' => $request->input('auteurs'), 'newsletter_id' => $request->input('newsletter_id') ] );
 
+        //TODO: Commented for mailgun integration, remove after success
+  /*
         $this->mailjet->setList($campagne->newsletter->list_id);
-
         $created = $this->mailjet->createCampagne($campagne); // return Mailjet ID
 
-        if(!$created)
-        {
+        if(!$created){
             throw new \App\Exceptions\CampagneCreationException('Problème avec la création de campagne sur mailjet');
         }
-
         $this->campagne->update(['id' => $campagne->id, 'api_campagne_id' => $created]);
+  */
 
         alert()->success('Campagne crée');
 

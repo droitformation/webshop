@@ -13,6 +13,7 @@ return array(
     'AddEmailToColloqueInscriptionsParticipantsTable' => $baseDir . '/database/migrations/2017_02_14_095508_add_email_to_colloque_inscriptions_participants_table.php',
     'AddEndAtToColloquePricesTable' => $baseDir . '/database/migrations/2016_12_25_091232_add_end_at_to_colloque_prices_table.php',
     'AddInputsToShopProductsTable' => $baseDir . '/database/migrations/2017_04_10_090346_add_inputs_to_shop_products_table.php',
+    'AddJobHashToNewsletterCampagnes' => $baseDir . '/database/migrations/2017_10_10_115050_add_job_hash_to_newsletter_campagnes.php',
     'AddPaquetToShopOrdersTable' => $baseDir . '/database/migrations/2017_03_08_140954_add_paquet_to_shop_orders_table.php',
     'AddRemarqueToAbosTable' => $baseDir . '/database/migrations/2017_02_13_160331_add_remarque_to_abos_table.php',
     'AddSendAtToNewsletterCampagnesTable' => $baseDir . '/database/migrations/2014_08_12_090838_add_send_at_to_newsletter_campagnes_table.php',

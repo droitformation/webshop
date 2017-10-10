@@ -12,4 +12,14 @@ class Newsletter_subscriptions extends Model {
     {
         return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter');
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter_users','id','user_id')->whereNotNull('activated_at');
+    }
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter', 'newsletter_subscriptions', 'user_id', 'newsletter_id');
+    }
 }

@@ -17,7 +17,7 @@ class NewsletterSubscriptionEloquent implements NewsletterSubscriptionInterface{
 	
 	public function getAll($newsletter_id){
 		
-		return $this->subscribe->where('newsletter_id','=',$newsletter_id)->get();
+		return $this->subscribe->with(['user'])->where('newsletter_id','=',$newsletter_id)->get();
 	}
 
 	public function find($id){

@@ -23,6 +23,14 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
         return $this->user->with(['subscriptions'])->take(5)->orderBy('id', 'desc')->get();
     }
 
+    public function getByNewsletter($id)
+    {
+        return $this->user->with(['subscriptions'])
+            ->join('newsletter_subscriptions', 'newsletter_users.id', '=', 'newsletter_subscriptions.user_id')
+            ->where('newsletter_subscriptions.newsletter_id', '=', $id)
+            ->groupBy('email')->get();
+    }
+
 	public function find($id)
     {
 		return $this->user->with(['subscriptions'])->findOrFail($id);
