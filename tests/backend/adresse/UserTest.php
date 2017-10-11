@@ -221,8 +221,8 @@ class UserTest extends BrowserKitTest {
 
         $subscriber->subscriptions()->attach([$newsletter->id, $newsletter2->id]);
 
-        $this->mailjet->shouldReceive('setList')->once();
-        $this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
+        //$this->mailjet->shouldReceive('setList')->once();
+        //$this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
 
         $this->visit(url('admin/user/confirm/'.$person->id));
         $this->assertViewHas('user');
@@ -263,8 +263,8 @@ class UserTest extends BrowserKitTest {
         $subscriber->subscriptions()->attach([$newsletter->id]);
 
         // Assert
-        $this->mailjet->shouldReceive('setList')->once();
-        $this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
+        //$this->mailjet->shouldReceive('setList')->once();
+       // $this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
 
         $this->visit(url('admin/user/'.$person->id))->see('désinscrire')->press('désinscrire');
 
