@@ -28,13 +28,13 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
         $newsletters = $this->newsletter->findMultiple($newsletter_ids);
 
         $subscriber->subscriptions()->attach($newsletter_ids);
-
+/*
         if(!$newsletters->isEmpty()){
             foreach ($newsletters as $newsletter){
                 $this->mailjet->setList($newsletter->list_id);
                 $this->mailjet->subscribeEmailToList($subscriber->email);
             }
-        }
+        }*/
 
         return $subscriber;
     }
@@ -89,7 +89,7 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
 
         $newsletters = $this->newsletter->findMultiple($newsletter_ids);
 
-        if(!$newsletters->isEmpty()){
+ /*       if(!$newsletters->isEmpty()){
             foreach ($newsletters as $newsletter){
                 $this->mailjet->setList($newsletter->list_id);
                 // Remove subscriber from list mailjet
@@ -97,7 +97,7 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
                     throw new \App\Exceptions\DeleteUserException('Erreur avec la suppression de l\'abonnés sur mailjet');
                 }
             }
-        }
+        }*/
 
         $subscriber->load('subscriptions');
 

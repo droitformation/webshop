@@ -18,6 +18,11 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 		return $this->user->with(['subscriptions'])->get();
 	}
 
+    public function getListWithTrashed($emails)
+    {
+        return $this->user->whereIn('email',$emails)->with(['subscriptions'])->withTrashed()->get();
+    }
+
     public function getAllNbr($nbr)
     {
         return $this->user->with(['subscriptions'])->take(5)->orderBy('id', 'desc')->get();
@@ -191,8 +196,12 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
 			return false;
 		}
 
-        $user->email            = $data['email'];
-        $user->activation_token = (isset($data['activation_token']) ? $data['activation_token'] : null);
+		if(isset($data['activation_token']))
+		{
+            $user->activation_token = $data['activation_token'];
+        }
+
+        $user->email = $data['email'];
         $user->activated_at     = (isset($data['activated_at']) ? $data['activated_at'] : null);
 		$user->updated_at = date('Y-m-d G:i:s');
 

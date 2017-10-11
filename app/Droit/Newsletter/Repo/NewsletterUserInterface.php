@@ -3,6 +3,7 @@
 interface NewsletterUserInterface {
 
 	public function getAll();
+    public function getListWithTrashed($emails);
     public function getAllNbr($nbr);
     public function getByNewsletter($id);
 	public function find($id);

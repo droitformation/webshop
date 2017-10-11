@@ -82,8 +82,16 @@ class CampagneController extends Controller
         //TODO: Commented for mailgun integration, remove after success
         // $this->mailjet->deleteCampagne($campagne->api_campagne_id);
 
+
+
         // Update campagne status
-        $this->campagne->update(['id' => $campagne->id, 'status' => 'brouillon', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => null]);
+        $this->campagne->update([
+            'id' => $campagne->id,
+            'status' => 'brouillon',
+            'updated_at' => date('Y-m-d G:i:s'),
+            'send_at' => null,
+            'job_id' => null
+        ]);
 
         alert()->success('Envoi de la campagne annulé');
 

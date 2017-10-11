@@ -126,7 +126,8 @@ class MailgunService implements MailgunInterface
         $response = $this->mailgun->sendMessage(config('mailgun.domain'), $data);
 
         if($response->http_response_code == 200){
-            return $response->http_response_body->id;
+            // local env is configured with pastebin no id returned, faking it
+            return isset($response->http_response_body->id) ? $response->http_response_body->id : 1982;
         }
 
         throw new \App\Exceptions\NewsletterImplementationException($response->http_response_body, $response->http_response_code);

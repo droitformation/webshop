@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Mailgun\Mailgun;
 
 class NewsletterServiceProvider extends ServiceProvider
 {
@@ -271,8 +272,16 @@ class NewsletterServiceProvider extends ServiceProvider
             if (\App::environment('testing')) {
                 $mailgun = \Mockery::mock('\Mailgun\Mailgun');
             }
+            elseif (\App::environment('local') || \App::environment('staging')) {
+                $configurator = new \Mailgun\HttpClientConfigurator();
+                $configurator->setEndpoint('http://bin.mailgun.net/0bcf24d5');
+                $configurator->setDebug(true);
+                $configurator->setApiKey(env('MAILGUN_KEY'));
+
+                $mailgun = Mailgun::configure($configurator);
+            }
             else{
-                $mailgun = new \Mailgun\Mailgun(env('MAILGUN_KEY'));
+                $mailgun = Mailgun::create(env('MAILGUN_KEY'));
             }
 
             return new \App\Droit\Newsletter\Worker\MailgunService($mailgun);

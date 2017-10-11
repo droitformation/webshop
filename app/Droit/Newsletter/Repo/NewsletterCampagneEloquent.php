@@ -103,9 +103,12 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 
         $campagne = $this->campagne->findOrFail($data['id']);
 
-        if( ! $campagne )
-        {
+        if( ! $campagne ) {
             return false;
+        }
+
+        if(isset($data['job_id'])){
+            $campagne->status = $data['job_id'];
         }
 
         $campagne->status      = $data['status'];

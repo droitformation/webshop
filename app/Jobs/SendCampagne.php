@@ -40,5 +40,7 @@ class SendCampagne implements ShouldQueue
             ->setHtml($this->html);
 
         $worker->sendCampagne($this->campagne);
+
+        return $this->job->getJobId();
     }
 }

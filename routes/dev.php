@@ -3,6 +3,8 @@
  * Test routes
  ============================================ */
 
+
+
 Route::get('abos_test', function () {
 
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
@@ -147,28 +149,48 @@ Route::get('testing', function() {
     //$newuser     = \App::make('App\Droit\Newsletter\Repo\NewsletterSubscriptionInterface');
     $newuser     = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
 
-    $clean     = \App::make('App\Droit\Generate\Clean\CleanSubscriber');
+    //$clean     = \App::make('App\Droit\Generate\Clean\CleanSubscriber');
+
+    //$clean->chargeEmailsFrom(public_path('files/import/MailjetBail_1017.xlsx'))->cleanSubscribersFor(2);
+    //exit;
+    /*
+        $clean->chargeEmailsFrom(public_path('files/import/MailjetBail_1017.xlsx'))->chargeUsers(2)->deleteExtra();
+    */
+       // $clean->chargeEmailsFrom(public_path('files/import/MailjetMatrimonial_1017.xlsx'))->addSubscriberFor(3);
+    $process = new App\Droit\Process\Entities\Job();
+    $job     =  $process->find(2)->delete();
 
     echo '<pre>';
-    print_r($clean->emails);
-    echo '</pre>';exit();
-    $dta = [1,2,3];
-    $oth = [2];
-
-    echo '<pre>';
-    print_r($dta + $oth);
+    print_r($job);
     echo '</pre>';exit();
 
-
-    $users = $newuser->getByNewsletter(1);
-   // $users = $users->pluck('user.email')->unique()->toArray();
-
-    $subscription = $users->take(3);
+    //$users  = $newuser->getByNewsletter(7);
 
 
-    echo '<pre>';
-    print_r($subscription->first()->subscriptions->pluck('id'));
-    echo '</pre>';exit();
+ /*       $emails = $clean->emails->toArray();
+
+        $users  = $users->pluck('email')->unique()->toArray();
+
+        //$subscription = $users->take(3);
+
+        $dontexist = array_diff($users,$emails);
+        $manque = array_diff($emails,$users);
+        $same   = array_intersect($users,$emails);
+       // $diff = array_diff([1,2,3,4],[1,2,3]);
+;*/
+
+/*        $mailgun = App::make('App\Droit\Newsletter\Worker\MailgunInterface');
+
+        $mailgun->setSender('info@droitne.ch','DroitNe')
+            ->setRecipients(['cindy.leschaud@gmail.com'])
+            ->setHtml('<html><header></header><body><h1>Hey!!</h1></body></html>');
+
+        $response = $mailgun->sendTransactional('TEST');
+
+        echo '<pre>';
+        print_r($response);
+        echo '</pre>';exit();*/
+
 
 /*    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
 

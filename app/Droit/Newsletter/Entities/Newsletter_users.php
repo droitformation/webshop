@@ -8,7 +8,7 @@ class Newsletter_users extends Model {
     use SoftDeletes;
 
     protected $dates    = ['activated_at','deleted_at'];
-	protected $fillable = ['email','activation_token','activated_at'];
+	protected $fillable = ['email','activation_token','activated_at','deleted_at'];
 
     public function getActivatedAttribute()
     {

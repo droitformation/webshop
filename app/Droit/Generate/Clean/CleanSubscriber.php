@@ -10,8 +10,10 @@ use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 class CleanSubscriber
 {
     protected $import;
-    protected $emails;
     protected $newsletter_user;
+
+    public $emails;
+    public $users;
 
     public function __construct(ImportWorkerInterface $import, NewsletterUserInterface $newsletter_user)
     {
@@ -21,25 +23,63 @@ class CleanSubscriber
 
     public function cleanSubscribersFor($newsletter_id)
     {
-        $users = $this->newsletter_user->getAll();
+        if($this->emails->isEmpty()){ return; }
 
-        if($users->isEmpty()){ return; }
+        $users = $this->newsletter_user->getListWithTrashed($this->emails);
 
         $users->each(function ($user, $key) use ($newsletter_id) {
 
-            // if not subscriptions and not in the list, delete the subscription
-            if($user->subscriptions->isEmpty() && !$this->emails->contains($user->email)){
+            // if no subscriptions delete the user
+            if($user->subscriptions->isEmpty()){
                 $this->newsletter_user->delete($user->email);
             }
 
-            // if not subscriptions and in the list, attach the newsletter subscription
-            elseif($user->subscriptions->isEmpty() && $this->emails->contains($user->email)){
+            // if no subscription attach the newsletter subscription
+            if($user->subscriptions->isEmpty()){
+                // if is trashed, restore
+                if ($user->trashed()) { $user->restore(); $user->fresh(); }
                 $user->subscriptions()->attach($newsletter_id);
                 $user->load('subscriptions');
             }
 
             // if subscriptions and in the list, sync the newsletter subscription to the already existing
-            elseif(!$user->subscriptions->isEmpty() && $this->emails->contains($user->email))
+            elseif(!$user->subscriptions->isEmpty())
+            {
+                // if is trashed, restore
+                if ($user->trashed()) { $user->restore(); $user->fresh(); }
+
+                $subscriptions = $user->subscriptions->pluck('id')->all();
+                $subscriptions = array_merge([$newsletter_id], $subscriptions);
+
+                $user->subscriptions()->sync(array_unique($subscriptions));
+                $user->load('subscriptions');
+            }
+        });
+    }
+
+    public function addSubscriberFor($newsletter_id)
+    {
+        $this->emails->each(function ($email, $key) use ($newsletter_id) {
+
+            $user = $this->newsletter_user->findByEmail($email);
+
+            if(!$user){
+                $user = $this->newsletter_user->create([
+                    'email'            => $email,
+                    'activated_at'     => \Carbon\Carbon::now()->toDateTimeString(),
+                    'activation_token' => md5($email.\Carbon\Carbon::now()->toDateTimeString())
+                ]);
+            }
+
+            // if no subscription attach the newsletter subscription
+            if($user->subscriptions->isEmpty()){
+                // if is trashed, restore
+                $user->subscriptions()->attach($newsletter_id);
+                $user->load('subscriptions');
+            }
+
+            // if subscriptions and in the list, sync the newsletter subscription to the already existing
+            elseif(!$user->subscriptions->isEmpty())
             {
                 $subscriptions = $user->subscriptions->pluck('id')->all();
                 $subscriptions = array_merge([$newsletter_id], $subscriptions);
@@ -58,5 +98,34 @@ class CleanSubscriber
 
         return $this;
     }
-    
+
+    public function chargeUsers($newsletter_id)
+    {
+        $users = $this->newsletter_user->getByNewsletter($newsletter_id);
+
+        $this->users = $users->pluck('email')->unique();
+
+        return $this;
+    }
+
+    public function missing()
+    {
+        return  array_diff($this->emails->toArray(),$this->users->toArray());
+    }
+
+    public function extra()
+    {
+        return array_diff($this->users->toArray(),$this->emails->toArray());
+    }
+
+    public function deleteExtra()
+    {
+        $extra = $this->extra();
+
+        if(!empty($extra)){
+            foreach ($extra as $user){
+                $this->newsletter_user->delete($user);
+            }
+        }
+    }
 }

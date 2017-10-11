@@ -90,5 +90,5 @@ return [
      * Link to pdf
      * */
 
-    'pdf' => env('PDF_MAKE', false)
+    'pdf' => env('PDF_MAKE', false),
 ];

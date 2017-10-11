@@ -63,9 +63,9 @@ class NewsletterController extends Controller
      */
     public function create()
     {
-        $lists = $this->mailjet->getAllLists();
+        $newsletters = $this->newsletter->getAll();
 
-        return view('backend.newsletter.template.create')->with(['lists' => $lists]);
+        return view('backend.newsletter.template.create')->with(['lists' => $newsletters]);
     }
 
     /**
@@ -108,10 +108,10 @@ class NewsletterController extends Controller
      */
     public function show($id)
     {
-        $lists      = $this->mailjet->getAllLists();
+        $newsletters = $this->newsletter->getAll();
         $newsletter = $this->newsletter->find($id);
 
-        return view('backend.newsletter.template.show')->with(['newsletter' => $newsletter, 'lists' => $lists]);
+        return view('backend.newsletter.template.show')->with(['newsletter' => $newsletter, 'lists' => $newsletters]);
     }
 
     /**

@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Newsletter_campagnes extends Model {
 
-	protected $fillable = ['sujet','auteurs','newsletter_id','status','send_at','api_campagne_id', 'hidden'];
+	protected $fillable = ['sujet','auteurs','newsletter_id','status','send_at','api_campagne_id', 'hidden','job_id'];
 
     use SoftDeletes;
 
@@ -29,5 +29,10 @@ class Newsletter_campagnes extends Model {
     public function tracking()
     {
         return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_tracking', 'CustomID');
+    }
+
+    public function subscribers(){
+
+        return $this->hasManyThrough('App\Droit\Newsletter\Entities\Newsletter', 'newsletter_id', 'id');
     }
 }

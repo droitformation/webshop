@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SendTestRequest;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\CampagneInterface;
+use App\Droit\Newsletter\Repo\NewsletterUserInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
 use App\Droit\Newsletter\Worker\MailgunInterface;
 
@@ -20,13 +21,15 @@ class SendController extends Controller
     protected $worker;
     protected $mailjet;
     protected $mailgun;
+    protected $subscriber;
 
-    public function __construct(NewsletterCampagneInterface $campagne, CampagneInterface $worker, MailjetServiceInterface $mailjet, MailgunInterface $mailgun)
+    public function __construct(NewsletterCampagneInterface $campagne, CampagneInterface $worker, MailjetServiceInterface $mailjet, MailgunInterface $mailgun, NewsletterUserInterface $subscriber)
     {
         $this->campagne = $campagne;
         $this->worker   = $worker;
         $this->mailjet  = $mailjet;
         $this->mailgun  = $mailgun;
+        $this->subscriber = $subscriber;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         view()->share('isNewsletter',true);
@@ -47,26 +50,34 @@ class SendController extends Controller
         $html   = $this->worker->html($campagne->id);
         $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
 
+        if(!$html || empty($html)) {
+            throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
+        }
+
         //TODO: Commented for mailgun integration, remove after success
 /*
         $this->mailjet->setList($campagne->newsletter->list_id); // list id
         $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id);
-
-        if(!$response) {
-            throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
-        }
         $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
 
         if(!$result['success']) {
             throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi'.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
         }
 */
-        $job = (new SendCampagne($campagne,$html,$emails))->delay($toSend);
+        $emails = $this->subscriber->getByNewsletter($campagne->newsletter_id);
 
-        dispatch($job);
+        $job = (new SendCampagne($campagne,$html,$emails->toArray()))->delay($toSend);
+
+        $job_id = $this->dispatch($job);
 
         // Update campagne status
-        $this->campagne->update(['id' => $campagne->id, 'status' => 'envoyé', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => $toSend]);
+        $this->campagne->update([
+            'id'         => $campagne->id,
+            'job_id'     => $job_id,
+            'status'     => 'envoyé',
+            'updated_at' => date('Y-m-d G:i:s'),
+            'send_at'    => $toSend
+        ]);
 
         alert()->success('Campagne envoyé!');
 
