@@ -52,7 +52,7 @@ class SendController extends Controller
 
         $emails = $this->subscriber->getByNewsletter($campagne->newsletter_id);
 
-        $job = (new SendCampagne($campagne,$html,$emails->toArray()))->delay($toSend);
+        $job = (new SendCampagne($campagne,$html,$emails->pluck('email')->toArray()))->delay($toSend);
 
         $job_id = $this->dispatch($job);
 
