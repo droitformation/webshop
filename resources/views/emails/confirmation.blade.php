@@ -18,16 +18,11 @@
                     Pour confirmer votre inscription à la newsletter sur {{ $site->nom }} veuillez suivre ce lien:
                 </div>
 
-                <table style="{{ $style['body_action'] }}" align="center" width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="center">
-                            <a href="{{ url('activation/'.$token.'/'.$newsletter_id) }}"
-                               style="{{ $fontFamily }} {{ $style['button'] }} {{ $style['button--blue'] }}"
-                               class="button" target="_blank">Confirmer l'adresse email
-                            </a>
-                        </td>
-                    </tr>
-                </table>
+                <tr>
+                    <td style="{{ $fontFamily }} {{ $style['email-body_cell_header'] }}">
+                        <h1 style="{{ $style['header-2'] }}text-align:left;">Demande depuis <br/><small style=" font-size: 20px; color: #1c4d79;">{{ $site->nom }}</small></h1>
+                    </td>
+                </tr>
 
                 <p style="{{ $style['paragraph'] }}"><a href="{{ url($site->url) }}">{{ $site->nom }}</a></p>
             </td>

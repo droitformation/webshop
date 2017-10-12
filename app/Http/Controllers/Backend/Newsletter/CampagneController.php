@@ -10,6 +10,7 @@ use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Repo\NewsletterTypesInterface;
 use App\Droit\Newsletter\Repo\NewsletterContentInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
+use App\Droit\Process\Repo\JobInterface;
 
 class CampagneController extends Controller
 {
@@ -17,13 +18,20 @@ class CampagneController extends Controller
     protected $type;
     protected $content;
     protected $mailjet;
+    protected $job_repo;
 
-    public function __construct(NewsletterCampagneInterface $campagne, NewsletterTypesInterface $type, NewsletterContentInterface $content, MailjetServiceInterface $mailjet)
+    public function __construct(
+        NewsletterCampagneInterface $campagne,
+        NewsletterTypesInterface $type,
+        NewsletterContentInterface $content,
+        MailjetServiceInterface $mailjet,
+        JobInterface $jop_repo)
     {
         $this->campagne = $campagne;
         $this->type     = $type;
         $this->content  = $content;
         $this->mailjet  = $mailjet;
+        $this->job_repo = $jop_repo;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
@@ -79,14 +87,11 @@ class CampagneController extends Controller
     {
         $campagne = $this->campagne->find($id);
 
-        //TODO: Commented for mailgun integration, remove after success
-        // $this->mailjet->deleteCampagne($campagne->api_campagne_id);
-
-
+        $this->job_repo->delete($campagne->job_id);
 
         // Update campagne status
         $this->campagne->update([
-            'id' => $campagne->id,
+            'id'     => $campagne->id,
             'status' => 'brouillon',
             'updated_at' => date('Y-m-d G:i:s'),
             'send_at' => null,
@@ -132,17 +137,6 @@ class CampagneController extends Controller
     public function store(Request $request)
     {
         $campagne = $this->campagne->create(['sujet' => $request->input('sujet'), 'auteurs' => $request->input('auteurs'), 'newsletter_id' => $request->input('newsletter_id') ] );
-
-        //TODO: Commented for mailgun integration, remove after success
-  /*
-        $this->mailjet->setList($campagne->newsletter->list_id);
-        $created = $this->mailjet->createCampagne($campagne); // return Mailjet ID
-
-        if(!$created){
-            throw new \App\Exceptions\CampagneCreationException('Problème avec la création de campagne sur mailjet');
-        }
-        $this->campagne->update(['id' => $campagne->id, 'api_campagne_id' => $created]);
-  */
 
         alert()->success('Campagne crée');
 

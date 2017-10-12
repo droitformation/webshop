@@ -126,6 +126,10 @@ class CampagneWorker implements CampagneInterface{
         $html = $htmldoc->getHTML();
         $html = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $html);
 
+        if(!$html || empty($html)) {
+            throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
+        }
+
         return $html;
     }
 }

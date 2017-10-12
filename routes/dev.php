@@ -154,11 +154,11 @@ Route::get('testing', function() {
     //$clean->chargeEmailsFrom(public_path('files/import/MailjetBail_1017.xlsx'))->cleanSubscribersFor(2);
     //exit;
     /*
-        $clean->chargeEmailsFrom(public_path('files/import/MailjetBail_1017.xlsx'))->chargeUsers(2)->deleteExtra();
+        $clean->chargeEmailsFrom(public_path('files/import/MailjetBail_1017.xlsx'))->chargeUsers(2)->deleteExtra();appse
     */
        // $clean->chargeEmailsFrom(public_path('files/import/MailjetMatrimonial_1017.xlsx'))->addSubscriberFor(3);
-    $process = new App\Droit\Process\Entities\Job();
-    $job     =  $process->find(2)->delete();
+    $process = App::make('App\Droit\Process\Repo\JobInterface');
+    $job     = $process->delete(1);
 
     echo '<pre>';
     print_r($job);

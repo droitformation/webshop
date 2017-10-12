@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Contracts\View\Factory;
+use MailThief\MailThiefFiveFourCompatible;
+use MailThief\NullMessageForView;
+
 class MailThiefTest extends TestCase
 {
     public function test_send_to_one_recipient()
@@ -11,6 +15,18 @@ class MailThiefTest extends TestCase
         });
 
         $this->assertTrue($mailer->hasMessageFor('john@example.com'));
+    }
+    
+    public function test_overwrite_recipient()
+    {
+        $mailer = $this->getMailThief();
+
+        $mailer->send('example-view', [], function ($m) {
+            $m->to('john@example.com')->to('jane@example.com', null, true);
+        });
+
+        $this->assertFalse($mailer->hasMessageFor('john@example.com'));
+        $this->assertTrue($mailer->hasMessageFor('jane@example.com'));
     }
 
     public function test_send_to_multiple_recipients()
@@ -364,6 +380,22 @@ class MailThiefTest extends TestCase
         });
 
         $this->assertEquals('Raw text content', $mailer->lastMessage()->getBody());
+    }
+
+    public function test_email_view_automatically_receives_null_message_object()
+    {
+        $viewFactory = Mockery::mock(Factory::class);
+        $viewFactory->shouldReceive('make')
+            ->with(Mockery::any(), Mockery::on(function ($arg) {
+                return $arg['message'] instanceof NullMessageForView;
+            }))
+            ->andReturn($this->getView());
+
+        $mailer = new MailThiefFiveFourCompatible($viewFactory, $this->getConfigFactory());;
+
+        $mailer->send('example-view', [], function ($m) {
+            $m->subject('Second message');
+        });
     }
 
     public function test_valid_message_method_not_in_mailthief_return_this_instance()

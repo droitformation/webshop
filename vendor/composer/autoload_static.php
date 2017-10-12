@@ -8,8 +8,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
@@ -17,9 +17,9 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         '8cff32064859f4559445b89279f3199c' => __DIR__ . '/..' . '/php-http/message/src/filters.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'f1fc7a7a353e3515a5d5efd255977059' => __DIR__ . '/..' . '/vinkla/alert/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
@@ -88,7 +88,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'L' => 
         array (
             'League\\Flysystem\\' => 17,
-            'Laravel\\Dusk\\' => 13,
             'Laravel\\BrowserKitTesting\\' => 26,
         ),
         'I' => 
@@ -117,13 +116,13 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             'FontLib\\' => 8,
             'Faker\\' => 6,
-            'Facebook\\WebDriver\\' => 19,
         ),
         'D' => 
         array (
             'Dotenv\\' => 7,
             'Dompdf\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Inflector\\' => 26,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'DesignPond\\Registry\\' => 20,
@@ -153,8 +152,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -284,10 +283,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
-        'Laravel\\Dusk\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/dusk/src',
-        ),
         'Laravel\\BrowserKitTesting\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/browser-kit-testing/src',
@@ -353,10 +348,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
-        'Facebook\\WebDriver\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/facebook/webdriver/lib',
-        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
@@ -368,6 +359,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
+        ),
+        'Doctrine\\Common\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
         ),
         'Doctrine\\Common\\Cache\\' => 
         array (
@@ -509,10 +504,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             'Doctrine\\Common\\Lexer\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
-            ),
-            'Doctrine\\Common\\Inflector\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
             ),
             'Doctrine\\Common\\Collections\\' => 
             array (
@@ -783,9 +774,12 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'NewsletterTableSeeder' => __DIR__ . '/../..' . '/database/seeds/NewsletterTableSeeder.php',
         'OrganisateursTableSeeder' => __DIR__ . '/../..' . '/database/seeds/OrganisateursTableSeeder.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
+        'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
+        'PHPUnit\\Framework\\Test' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Test.php',
         'PHPUnit\\Framework\\TestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
         'PHPUnit\\Framework\\TestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestListener.php',
+        'PHPUnit\\Framework\\TestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestSuite.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',

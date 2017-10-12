@@ -152,4 +152,5 @@ class CampagneTest extends BrowserKitTest
 
         $this->assertRedirectedTo('build/campagne/'.$campagne->id);
     }
+
 }

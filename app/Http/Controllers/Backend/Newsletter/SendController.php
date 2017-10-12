@@ -50,20 +50,6 @@ class SendController extends Controller
         $html   = $this->worker->html($campagne->id);
         $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
 
-        if(!$html || empty($html)) {
-            throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
-        }
-
-        //TODO: Commented for mailgun integration, remove after success
-/*
-        $this->mailjet->setList($campagne->newsletter->list_id); // list id
-        $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id);
-        $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
-
-        if(!$result['success']) {
-            throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi'.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
-        }
-*/
         $emails = $this->subscriber->getByNewsletter($campagne->newsletter_id);
 
         $job = (new SendCampagne($campagne,$html,$emails->toArray()))->delay($toSend);
@@ -96,9 +82,6 @@ class SendController extends Controller
         // GET html
         $html = $this->worker->html($campagne->id);
 
-        //TODO: Commented for mailgun integration, remove after success
-        // $result = $this->mailjet->sendBulk($campagne,$html,$recipients);
-
         $this->mailgun->setSender($campagne->newsletter->from_email,$campagne->newsletter->from_name)
             ->setRecipients([$request->input('email')])
             ->setHtml($html);
@@ -108,9 +91,7 @@ class SendController extends Controller
         // If we want to send via ajax just add a send_type "ajax
         $ajax = $request->input('send_type', 'normal');
 
-        if($ajax == 'ajax') {
-            echo 'ok'; exit;
-        }
+        if($ajax == 'ajax') { echo 'ok'; exit; }
 
         alert()->success('Email de test envoyé!');
 

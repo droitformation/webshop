@@ -555,12 +555,15 @@ $factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($fact
     ];
 });
 
-$factory->defineAs(App\Droit\User\Entities\User::class, 'user' ,function ($factory){
+$factory->define(App\Droit\Process\Entities\Job::class ,function ($factory){
     return [
-        'first_name' => 'Jane',
-        'last_name'  => 'Doe',
-        'email'      => 'jane.doe@gmail.com',
-        'password'   => bcrypt('jane2')
+        'queue' => 'default',
+        'payload' => serialize(['defaultName' => 'Queue job']),
+        'attempts' => 0,
+        'reserved' => 0,
+        'reserved_at'   => null,
+        'available_at' => \Carbon\Carbon::now()->addMinutes(5)->toDateTimeString(),
+        'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
     ];
 });
 
