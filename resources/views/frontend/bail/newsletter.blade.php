@@ -17,7 +17,9 @@
 				<div id="newsletter">
 					@if(!$campagne->content->isEmpty())
 						@foreach($campagne->content as $bloc)
+						@if($bloc->type->partial != 'product')
 							{!! view('frontend.newsletter.content.'.$bloc->type->partial)->with(['bloc' => $bloc, 'campagne' => $campagne])->__toString() !!}
+						@endif
 						@endforeach
 					@endif
 				</div>
