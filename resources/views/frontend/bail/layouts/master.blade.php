@@ -79,7 +79,7 @@
             <section class="colorBlock min-inner colorSection headerBreadcrumb"></section>
 
             @include('partials.message')
-            @include('alert::alert')
+            @include('alert::bootstrap')
 
             <!-- Contenu -->
             @yield('content')

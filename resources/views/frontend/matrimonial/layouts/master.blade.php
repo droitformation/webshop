@@ -74,7 +74,7 @@
             <div id="mainContent" class="maincontent">
 
                 @include('partials.message')
-                @include('alert::alert')
+                @include('alert::bootstrap')
 
                 <!-- Contenu -->
                 @yield('content')

@@ -2,6 +2,40 @@
 
 All notable changes to `laravel-backup` will be documented in this file.
 
+# 5.0.5 - 2017-10-15
+- use all configuration keys when using `read` database connections
+
+# 5.0.4 - 2017-10-01
+- fix CleanupHasFailed application_name translations
+
+# 5.0.3 - 2017-09-29
+- use `APP_NAME` instead of `APP_URL` to name the backup
+
+# 5.0.2 - 2017-09-29
+- renamed temporary directory
+
+# 5.0.1 - 2017-09-26
+- type hint config contract instead of concreate config class on `EventHandler`
+
+# 5.0.0 - 2017-08-30
+- added support for Laravel 5.5, dropped support for older versions of the framework
+- renamed config file from `laravel-backup` to `backup`
+
+# 4.19.2 - 2017-08-29
+- make sure the temp directory is empty before starting the backup
+
+# 4.19.1 - 2017-08-03
+ - fix bug in default cleaning strategy
+
+# 4.19.0 - 2017-08-02
+ - add Spanish translations
+
+# 4.18.1 - 2017-07-13
+- close resource in backup destination if this was not already done by Flysystem
+
+# 4.18.0 - 2017-06-15
+ - add `disable-notifications` option to `backup` and `clean` commands
+
 # 4.17.0 - 2017-06-01
  - add Danish translation
 

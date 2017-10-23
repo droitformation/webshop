@@ -2,10 +2,10 @@
 
 namespace Spatie\Backup\Notifications;
 
-use Illuminate\Config\Repository;
 use Spatie\Backup\Events\BackupHasFailed;
 use Illuminate\Notifications\Notification;
 use Spatie\Backup\Events\CleanupHasFailed;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Spatie\Backup\Events\BackupWasSuccessful;
 use Spatie\Backup\Events\CleanupWasSuccessful;
@@ -15,7 +15,7 @@ use Spatie\Backup\Exceptions\NotificationCouldNotBeSent;
 
 class EventHandler
 {
-    /** @var \Illuminate\Config\Repository */
+    /** @var \Illuminate\Contracts\Config\Repository */
     protected $config;
 
     public function __construct(Repository $config)
@@ -36,7 +36,7 @@ class EventHandler
 
     protected function determineNotifiable()
     {
-        $notifiableClass = $this->config->get('laravel-backup.notifications.notifiable');
+        $notifiableClass = $this->config->get('backup.notifications.notifiable');
 
         return app($notifiableClass);
     }
@@ -45,7 +45,7 @@ class EventHandler
     {
         $eventName = class_basename($event);
 
-        $notificationClass = collect($this->config->get('laravel-backup.notifications.notifications'))
+        $notificationClass = collect($this->config->get('backup.notifications.notifications'))
             ->keys()
             ->first(function ($notificationClass) use ($eventName) {
                 $notificationName = class_basename($notificationClass);

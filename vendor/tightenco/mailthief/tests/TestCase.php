@@ -1,23 +1,27 @@
 <?php
 
-use MailThief\MailThief;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
+use Illuminate\Contracts\View\Factory;
+use MailThief\MailThiefFiveFourCompatible;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase {
 
     protected function getViewFactory()
     {
-        $factory = Mockery::mock(Factory::class);
-        $factory->shouldReceive('make')->andReturnUsing(function ($template, $data) {
-            return new class {
-                public function render()
-                {
-                    return 'stubbed rendered view';
-                }
-            };
+        return tap(Mockery::mock(Factory::class), function ($factory) {
+            $factory->shouldReceive('make')
+                ->andReturn($this->getView());
         });
-        return $factory;
+    }
+
+    public function getView()
+    {
+        return new class {
+            public function render()
+            {
+                return 'stubbed rendered view';
+            }
+        };
     }
 
     protected function getConfigFactory()
@@ -29,7 +33,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
         $config = Mockery::mock(ConfigRepository::class);
         $config->shouldReceive('has')->andReturnUsing(function ($key) use ($configKeys) {
-            if( isset($configKeys[$key]) ){
+            if (isset($configKeys[$key])) {
                 return true;
             }
 
@@ -37,7 +41,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
         });
 
         $config->shouldReceive('get')->andReturnUsing(function ($key) use ($configKeys) {
-            if( isset($configKeys[$key]) ){
+            if (isset($configKeys[$key])) {
                 return $configKeys[$key];
             }
 
@@ -49,7 +53,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
     protected function getMailThief()
     {
-        return new MailThief($this->getViewFactory(), $this->getConfigFactory());
+        return new MailThiefFiveFourCompatible($this->getViewFactory(), $this->getConfigFactory());
     }
 
 }
