@@ -49,22 +49,6 @@ class ReponseTest extends TestCase
         $response->assertSee('Ceci est une description');
     }
 
-   /* public function testCreateSondage()
-    {
-        // Create colloque
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->colloque();
-
-        $this->withSession(['colloques' => collect([$colloque])])
-            ->visit('admin/sondage/create')
-            ->see('Type de sondage')
-            ->submitForm('Envoyer', [
-                'colloque_id' => $colloque->id,
-                'marketing'   => null,
-                'valid_at'    => \Carbon\Carbon::now()->addDay(5)
-            ])
-            ->see($colloque->titre);
-    }
 
     public function testReponseTestPage()
     {
@@ -73,13 +57,13 @@ class ReponseTest extends TestCase
         $colloque = $make->colloque();
 
         // Create a sondage for the colloque
-        $sondage = factory(App\Droit\Sondage\Entities\Sondage::class)->create([
+        $sondage = factory(\App\Droit\Sondage\Entities\Sondage::class)->create([
             'colloque_id' => $colloque->id,
             'valid_at'    => \Carbon\Carbon::now()->addDay(5),
         ]);
 
         // Create and attach a questioin to sondage
-        $question = factory(App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'text','question' => 'One question' ,'choices' => null]);
+        $question = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'text','question' => 'One question' ,'choices' => null]);
         $sondage->avis()->attach($question->id, ['rang' => 1]);
 
         // Make the token with the infos
@@ -103,7 +87,7 @@ class ReponseTest extends TestCase
             ->see('Merci pour votre participation au sondage!');
 
         // See if the reponse is in the database
-        $this->seeInDatabase('sondage_reponses', [
+        $this->assertDatabaseHas('sondage_reponses', [
             'sondage_id' => $sondage->id,
             'email'      => 'cindy.leschaud@gmail.com',
             'isTest'     => 1
@@ -112,6 +96,10 @@ class ReponseTest extends TestCase
         // Return see the sondage, it's a test so we can do the sondage again
         $this->visit('reponse/create/'.$token);
     }
+
+   /*
+
+
 
     public function testReponseNormalPage()
     {

@@ -31,7 +31,8 @@ class ProfileTest extends DuskTestCase
                 ->type('password', 'cindy2')
                 ->press('Envoyer');
 
-            $browser->assertSee('Compte');
+            $browser->visit('/pubdroit/profil');
+
         });
     }
 
@@ -71,7 +72,7 @@ class ProfileTest extends DuskTestCase
         });
     }
 
-/*    public function testInscriptionColloque()
+    public function testInscriptionColloque()
     {
         $make = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
@@ -83,14 +84,12 @@ class ProfileTest extends DuskTestCase
 
             $browser->loginAs($person)->visit('/pubdroit/colloque/'.$colloque->id);
 
-            $browser->value('input[name="price_id[]"]', $prices[0]);
-            $browser->value('input[name="user_id"]', $person->id);
-            $browser->value('input[name="colloque_id"]', $colloque->id);
+            $browser->radio('price_id', $prices[0]);
             $browser->press('ENVOYER');
 
             $browser->visit('/pubdroit/profil/colloques');
             $browser->assertSee($colloque->titre);
 
         });
-    }*/
+    }
 }

@@ -40,4 +40,20 @@ abstract class DuskTestCase extends BaseTestCase
             )
         );
     }
+
+    /**
+     * Assert that the given text appears within the given selector.
+     *
+     * @param  string  $selector
+     * @param  string  $text
+     * @return $this
+     */
+    public function assertSeeIn($selector, $text)
+    {
+        if (strpos($this->resolver->findOrFail($selector)->getText(), $text) !== false) {
+            return $this;
+        }
+
+        return parent::assertSeeIn($selector, $text);
+    }
 }
