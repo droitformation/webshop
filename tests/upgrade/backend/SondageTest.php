@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ReponseTest extends TestCase
+class SondageTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -40,22 +40,16 @@ class ReponseTest extends TestCase
             'title' => 'Ceci est un titre',
             'description' => 'Ceci est une description',
             'marketing'   => 1,
-            'valid_at'    => \Carbon\Carbon::today()->addDay(5)->toDateString()
+            'valid_at'    => \Carbon\Carbon::now()->addDay(5)
         ]);
 
         $response->isRedirect(url('admin/sondage'));
 
         $response = $this->get('admin/sondage');
         $response->assertSee('Ceci est une description');
-
-        // See if the reponse is in the database
-        $this->assertDatabaseHas('sondages', [
-            'title'       => 'Ceci est un titre',
-            'description' => 'Ceci est une description',
-            'marketing'   => 1,
-            'valid_at'    => \Carbon\Carbon::today()->addDay(5)->toDateString()
-        ]);
     }
+
+
 
    /*
 

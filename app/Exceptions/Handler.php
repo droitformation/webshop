@@ -201,7 +201,7 @@ class Handler extends ExceptionHandler {
 		}
 
 		if($e instanceof \Illuminate\Database\Eloquent\ProductNotFoundException){
-			alert()->warning('Aucune livre trouvé pour abonnent');
+			alert()->warning('Aucune livre trouvé pour abonnement');
 			return redirect()->back();
 		}
 

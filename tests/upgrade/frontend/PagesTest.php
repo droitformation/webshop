@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PagesTest extends TestCase
 {
-    protected  $site;
+    protected $site;
 
     public function setUp()
     {
