@@ -157,12 +157,14 @@ class RappelController extends Controller
     {
         $inscription = $this->inscription->find($request->input('id'));
 
+        $print = $request->input('print',false);
+
         if($inscription->group_id) {
-            $this->worker->generateMultiple($inscription->groupe);
+            $this->worker->generateMultiple($inscription->groupe, $print);
             $list = $inscription->groupe->rappel_list;
         }
         else{
-            $this->worker->generateSimple($inscription);
+            $this->worker->generateSimple($inscription, $print);
             $list = $inscription->rappel_list;
         }
 

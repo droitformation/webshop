@@ -3,7 +3,12 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-               <form><button @click="generate" :id="getButtonId()" class="btn btn-brown btn-sm">Générer un rappel</button></form>
+               <form>
+                   <button @click="generate" :id="getButtonId()" class="btn btn-brown btn-sm">Générer un rappel</button>
+                   <div class="checkbox">
+                       <label><input v-model="toPrint" value="1" type="checkbox"> à imprimer</label>
+                   </div>
+               </form>
             </div>
             <div class="col-md-8">
                 <ol>
@@ -18,6 +23,7 @@
                 <i v-show="loading" class="fa fa-spinner fa-spin"></i>
             </div>
         </div>
+
     </div>
 </template>
 <styles></styles>
@@ -29,7 +35,8 @@ export default {
         return {
             list: [],
             loading: true,
-            isVisible: true
+            isVisible: true,
+            toPrint:false,
         }
     },
     computed: {
@@ -59,8 +66,8 @@ export default {
               this.isVisible = false;
 
               e.preventDefault();
-              // POST
-              this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item }).then((response) => {
+              var print = this.toPrint ? 1 : null;
+              this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item , print: print}).then((response) => {
 
                   var self = this;
                   //small delay for pdf generation completion

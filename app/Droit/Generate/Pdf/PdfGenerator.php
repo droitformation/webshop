@@ -11,6 +11,7 @@ class PdfGenerator implements PdfGeneratorInterface
     protected $now;
 
     public $stream = false;
+    public $toPrint = false;
 
     /**
      * Facture shop
@@ -72,6 +73,11 @@ class PdfGenerator implements PdfGeneratorInterface
     public function setTva($tva)
     {
         $this->tva = $tva;
+    }
+
+    public function setPrint($print)
+    {
+        $this->toPrint = $print;
     }
 
     public function factureOrder($order, $rappel = null)
@@ -148,6 +154,7 @@ class PdfGenerator implements PdfGeneratorInterface
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
+        $data['print']    = $this->toPrint;
 
         if($rappel){
             $data['rappel'] = $model->load('rappels')->rappels->count();
@@ -182,8 +189,7 @@ class PdfGenerator implements PdfGeneratorInterface
         // Path for saving document
         $filepath = $generate->getFilename($document, $name);
 
-        if( env('APP_ENV') == 'testing' )
-        {
+        if( env('APP_ENV') == 'testing' ) {
             $filepath =  storage_path('test/test.pdf');
         }
 

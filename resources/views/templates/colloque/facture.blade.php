@@ -79,8 +79,7 @@
                     </table>
                 </td>
             </tr>
-
-            <tr><td height="20">&nbsp;</td></tr>
+            <tr><td height="10">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top">
                     <div class="coordonnees">
@@ -89,7 +88,7 @@
                     </div>
                 </td>
             </tr>
-            <tr><td height="30">&nbsp;</td></tr>
+            <tr><td height="20">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top">
                     <p class="message">{{ $messages['remerciements'] }}</p>
@@ -98,25 +97,27 @@
                     </p>
                 </td>
             </tr>
-            <tr><td height="10">&nbsp;</td></tr>
-            <tr>
-                <td align="right" valign="top"><p class="message"><strong>{{ $signature }}</strong></p></td>
-            </tr>
-            <tr><td height="20">&nbsp;</td></tr>
-            <tr valign="top">
-                <td valign="top" style="margin-top: 20px;">
+            <tr><td height="5">&nbsp;</td></tr>
+            <tr><td align="right" valign="top"><p class="message"><strong>{{ $signature }}</strong></p></td></tr>
 
-                    @if(!empty($generate->getColloque()->annexe) && in_array('bon',$generate->getColloque()->annexe) && !$rappel)
+            @if(!empty($generate->getColloque()->annexe) && in_array('bon',$generate->getColloque()->annexe) && !$rappel)
+                <tr><td height="20">&nbsp;</td></tr>
+                <tr valign="top">
+                    <td valign="top" style="margin-top: 20px;">
                         @if(is_array($generate->getNo()))
                             <p class="red"><strong>Annexes : bons de participation à présenter à l'entrée</strong></p>
                         @else
                             <p class="red"><strong>Annexe : bon de participation à présenter à l'entrée</strong></p>
                         @endif
-                    @endif
+                    </td>
+                </tr>
+            @endif
 
-                </td>
-            </tr>
         </table>
     </div>
+
+    @if(isset($print) && ($print == true))
+        @include('templates.colloque.partials.bv')
+    @endif
 
 @stop

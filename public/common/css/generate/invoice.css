@@ -209,6 +209,20 @@ td.pad-b{
     background-image: url("../../../images/bvr.jpg");
 }
 
+#bv-table-print{
+    position: absolute;
+    height: 106mm;
+    width: 210mm;
+    z-index: 3;
+    bottom: 4mm;
+    left: 0;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+
 #recu{
     margin: 0;
     padding: 0;
