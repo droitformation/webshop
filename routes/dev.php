@@ -132,9 +132,7 @@ Route::get('mapped', function () {
 Route::get('testing', function() {
 
     $mailjet = \App::make('App\Droit\Newsletter\Service\Mailjet');
-    echo '<pre>';
-    print_r($mailjet);
-    echo '</pre>';exit();
+
 
     $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
@@ -149,11 +147,17 @@ Route::get('testing', function() {
 
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
 
-    $colloque = $colloques->find(113);
+    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $rappels       = \App::make('App\Droit\Inscription\Repo\RappelInterface');
+    $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-    $worker = new App\Droit\Sondage\Worker\SondageWorker();
-    $worker->createList(113);
-   // $array = array_pluck($emails->toArray(), 'email');
+    $inscription = $inscriptions->find(14892);
+    $rappel      = $rappels->find(455);
+
+    $generator->stream = true;
+    $generator->toPrint = true;
+
+    return $generator->make('facture', $inscription, $rappel);
 
     exit();
 
@@ -446,17 +450,6 @@ Route::get('cartworker', function()
     $facture = $factures->find(2);//1697
 
 
-
-    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-
-    //$rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
-    //$model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-
-    //$rappel = $rappel_model->find(1);
-    //$order  = $model->find(3545);
-    //$order->load('rappels');
-
-    $generator->stream = true;
     //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
 
     //return $generator->factureOrder($order,$rappel);
@@ -566,13 +559,11 @@ Route::get('cartworker', function()
 
     $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $abousers      = \App::make('App\Droit\Abo\Repo\AboUserInterface');
-    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
     $groupes       = new \App\Droit\Inscription\Entities\Groupe();
-    $inscription   = $inscriptions->find(9547);
 
-    $inscriptions = $inscriptions->getByColloque(101,false,false);
 
-    $range = ['a','b','c','d'];
+    /*$range = ['a','b','c','d'];
 
     $inscriptions = $inscriptions->map(function ($inscription) {
 
@@ -594,7 +585,7 @@ Route::get('cartworker', function()
 
     echo '<pre>';
     print_r($inscriptions);
-    echo '</pre>';exit();
+    echo '</pre>';exit();*/
 
 
 /*    $groupe        = $groupes->find(1);
@@ -603,7 +594,6 @@ Route::get('cartworker', function()
     $abofacture    = $abofactures->find(939);
     $abouser   = $abousers->find(531);*/
 
-    //$generator     = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     //$job = new \App\Jobs\MakeDocument($inscription);
     //$job->handle();
