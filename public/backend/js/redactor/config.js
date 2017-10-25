@@ -1,7 +1,7 @@
 $( function() {
 
         
-    $('.redactor').redactor({
+    var redactor = $('.redactor').redactor({
         minHeight  : 250,
         maxHeight: 450,
         removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],
