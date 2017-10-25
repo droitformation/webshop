@@ -16,8 +16,7 @@ class CheckoutMiddleware {
 		$user    = \Auth::user();
 		$adresse = $user->load('adresses')->adresse_livraison;
 
-		if(empty($adresse))
-        {
+		if(empty($adresse)) {
             throw new \App\Exceptions\AdresseNotExistException('No adresse');
 		}
 

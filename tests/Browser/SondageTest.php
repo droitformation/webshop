@@ -20,6 +20,11 @@ class SondageTest extends DuskTestCase
         $this->actingAs($user);
     }
 
+    /**
+     * Answer a test sondage
+     * We can go back because it's a test sondage
+     * @group avis
+     */
     public function testAnswerSondageIsTest()
     {
         // Create colloque
@@ -46,7 +51,7 @@ class SondageTest extends DuskTestCase
         $this->withSession(['sondage' => $sondage, 'email' => 'cindy.leschaud@gmail.com', 'isTest' => 1]);
 
         $this->browse(function (Browser $browser) use ($token,$sondage,$question) {
-            $browser->visit('reponse/create/'.$token);
+            $browser->visit('reponse/create/'.$token)->assertSee('Ceci est un sondage test');
             $browser->check('input[name="reponses['.$question->id.']"]', 'Ceci est une réponse');
             $browser->press('Envoyer le sondage');
             $browser->assertSee('Merci pour votre participation au sondage!');
@@ -58,11 +63,16 @@ class SondageTest extends DuskTestCase
                 'isTest'     => 1
             ]);
 
-            $browser->visit('reponse/create/'.$token);
+            $browser->visit('reponse/create/'.$token)
+                ->assertSee('Ceci est un sondage test');
 
         });
     }
 
+    /**
+     * Answer a normal sondage but get warning if back because we have already an answer in the db
+     * @group avis
+     */
     public function testAnswerSondageNormal()
     {
         // Create colloque
@@ -108,4 +118,5 @@ class SondageTest extends DuskTestCase
 
         });
     }
+
 }

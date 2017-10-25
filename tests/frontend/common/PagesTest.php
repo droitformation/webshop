@@ -11,6 +11,16 @@ class PagesTest extends BrowserKitTest {
 	{
         parent::tearDown();
 	}
+	
+    public function testFrontPage()
+    {
+        $slugs = $this->site->getAll();
+
+        foreach ($slugs as $slug)
+        {
+            $this->visit('/'.$slug->slug);
+        }
+    }
 
 	/**
 	 * @return void

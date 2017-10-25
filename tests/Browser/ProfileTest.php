@@ -17,17 +17,8 @@ class ProfileTest extends DuskTestCase
         $this->artisan("db:seed");
     }
 
-    public function testSeeHomePage()
-    {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->colloque();
-
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/pubdroit')->assertSee('Prochains événements');
-        });
-    }
-
     /**
+     * Register as new user
      * @group register
      */
     public function testRegisterUser()
@@ -47,8 +38,8 @@ class ProfileTest extends DuskTestCase
                 ->select('civilite_id', 2)
                 ->select('canton_id', 2);
 
-                $browser->pause(3100); // Wait because of the honeypot :|
-                $browser->press('Envoyer');
+            $browser->pause(3100); // Wait because of the honeypot :|
+            $browser->press('Envoyer');
 
             $browser->visit('/pubdroit/profil');
             $browser->assertSee('Jane');
@@ -58,6 +49,8 @@ class ProfileTest extends DuskTestCase
     }
 
     /**
+     * Login as user
+     * Go to profil and see user name
      * @group profil
      */
     public function testProfilUser()
@@ -85,6 +78,9 @@ class ProfileTest extends DuskTestCase
     }
 
     /**
+     * Login, go to profile
+     * Update first name
+     *
      * @group profil
      */
     public function testUpdateAccountProfilUser()
@@ -107,7 +103,8 @@ class ProfileTest extends DuskTestCase
     }
 
     /**
-     * @group achats
+     * Login go to user orders pages and see 1 order n°
+     * @group buy
      */
     public function testProfilCommandesUser()
     {
@@ -126,10 +123,15 @@ class ProfileTest extends DuskTestCase
     }
 
     /**
-     * @group achats
+     * Login as user, browse in shop and buy 1 product
+     * See product title in user orders page
+     * @group buy
      */
     public function testPassNewOrder()
     {
+        \Mail::fake();
+        \Queue::fake();
+
         $make     = new \tests\factories\ObjectFactory();
         $person   = $make->makeUser();
         $product  = $make->makeProduct([]);
@@ -146,16 +148,25 @@ class ProfileTest extends DuskTestCase
             $browser->visit('pubdroit/profil/orders')
                 ->waitFor('.text-info-order')
                 ->click('.text-info-order');
+
+            $browser->pause('200');
+
             $browser->assertSee($product->title);
 
         });
     }
 
     /**
-     * @group achats
+     * Login as user, browse to colloques
+     * Register for 1 colloque
+     * Go to user inscriptions page and see colloque title
+     * @group buy
      */
     public function testInscriptionColloque()
     {
+        \Mail::fake();
+        \Queue::fake();
+
         $make = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
         $person   = $make->makeUser();

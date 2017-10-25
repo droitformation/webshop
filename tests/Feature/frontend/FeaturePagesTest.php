@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class PagesTest extends TestCase
+class FeaturePagesTest extends TestCase
 {
     protected $site;
 
