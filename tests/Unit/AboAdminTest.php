@@ -24,7 +24,6 @@ class AboAdminTest extends TestCase
         parent::tearDown();
     }
 
-
     public function testGetAboProductWithAttributes()
     {
         $user = factory(\App\Droit\User\Entities\User::class)->create();
