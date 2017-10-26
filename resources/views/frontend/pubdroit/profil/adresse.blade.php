@@ -83,7 +83,7 @@
     <hr/>
     <div class="row form-group">
         <div class="col-sm-12 text-right">
-            <button type="submit" class="more-btn">Sauvegarder</button>
+            <button type="submit" id="btn-save-adresse" class="more-btn">Sauvegarder</button>
         </div>
     </div>
 

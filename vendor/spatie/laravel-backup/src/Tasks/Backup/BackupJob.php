@@ -32,6 +32,9 @@ class BackupJob
     /** @var \Spatie\TemporaryDirectory\TemporaryDirectory */
     protected $temporaryDirectory;
 
+    /** @var bool */
+    protected $sendNotifications = true;
+
     public function __construct()
     {
         $this->dontBackupFilesystem();
@@ -51,6 +54,13 @@ class BackupJob
     public function dontBackupDatabases(): BackupJob
     {
         $this->dbDumpers = new Collection();
+
+        return $this;
+    }
+
+    public function disableNotifications(): BackupJob
+    {
+        $this->sendNotifications = false;
 
         return $this;
     }
@@ -105,10 +115,11 @@ class BackupJob
 
     public function run()
     {
-        $this->temporaryDirectory = (new TemporaryDirectory(storage_path('app/laravel-backup')))
+        $this->temporaryDirectory = (new TemporaryDirectory(storage_path('app/backup-temp')))
             ->name('temp')
             ->force()
-            ->create();
+            ->create()
+            ->empty();
 
         try {
             if (! count($this->backupDestinations)) {
@@ -127,7 +138,7 @@ class BackupJob
         } catch (Exception $exception) {
             consoleOutput()->error("Backup failed because {$exception->getMessage()}.".PHP_EOL.$exception->getTraceAsString());
 
-            event(new BackupHasFailed($exception));
+            $this->sendNotification(new BackupHasFailed($exception));
         }
 
         $this->temporaryDirectory->delete();
@@ -143,7 +154,7 @@ class BackupJob
             ->addFiles($databaseDumps)
             ->addFiles($this->filesToBeBackedUp());
 
-        event(new BackupManifestWasCreated($manifest));
+        $this->sendNotification(new BackupManifestWasCreated($manifest));
 
         return $manifest;
     }
@@ -175,13 +186,13 @@ class BackupJob
     {
         consoleOutput()->info("Zipping {$manifest->count()} files...");
 
-        $pathToZip = $this->temporaryDirectory->path(config('laravel-backup.backup.destination.filename_prefix').$this->filename);
+        $pathToZip = $this->temporaryDirectory->path(config('backup.backup.destination.filename_prefix').$this->filename);
 
         $zip = Zip::createForManifest($manifest, $pathToZip);
 
         consoleOutput()->info("Created zip containing {$zip->count()} files. Size is {$zip->humanReadableSize()}");
 
-        event(new BackupZipWasCreated($pathToZip));
+        $this->sendNotification(new BackupZipWasCreated($pathToZip));
 
         return $pathToZip;
     }
@@ -207,7 +218,7 @@ class BackupJob
 
             $dbDumper->dumpToFile($temporaryFilePath);
 
-            if (config('laravel-backup.backup.gzip_database_dump')) {
+            if (config('backup.backup.gzip_database_dump')) {
                 consoleOutput()->info("Gzipping {$dbDumper->getDbName()}...");
 
                 $compressedDumpPath = Gzip::compress($temporaryFilePath);
@@ -229,12 +240,19 @@ class BackupJob
 
                 consoleOutput()->info("Successfully copied zip to disk named {$backupDestination->diskName()}.");
 
-                event(new BackupWasSuccessful($backupDestination));
+                $this->sendNotification(new BackupWasSuccessful($backupDestination));
             } catch (Exception $exception) {
                 consoleOutput()->error("Copying zip failed because: {$exception->getMessage()}.");
 
-                event(new BackupHasFailed($exception, $backupDestination ?? null));
+                $this->sendNotification(new BackupHasFailed($exception, $backupDestination ?? null));
             }
         });
+    }
+
+    protected function sendNotification($notification)
+    {
+        if ($this->sendNotifications) {
+            event($notification);
+        }
     }
 }

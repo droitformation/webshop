@@ -186,7 +186,7 @@
             </div>
             @endforeach
         @else
-            <p><a href="#addAdress" data-toggle="collapse"><i class="fa fa-plus-circle"></i>&nbsp;Ajouter une adresse de livraison</a></p>
+            <p><a href="#addAdress" id="btn-addAdress" data-toggle="collapse"><i class="fa fa-plus-circle"></i>&nbsp;Ajouter une adresse de livraison</a></p>
 
             <div class="collapse" id="addAdress">
                 <!-- start wrapper -->

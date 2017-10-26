@@ -64,6 +64,10 @@ class AppServiceProvider extends ServiceProvider {
             $this->mock = \Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
             $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);
         }
+
+        if ($this->app->environment('local', 'testing')) {
+            $this->app->register(DuskServiceProvider::class);
+        }
     }
 
 	/**

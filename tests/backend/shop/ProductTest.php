@@ -99,6 +99,8 @@ class ProductTest extends BrowserKitTest {
         ]);
 	}
 
+
+
     public function testUpdateProduct()
     {
         $product = factory(App\Droit\Shop\Product\Entities\Product::class)->create([

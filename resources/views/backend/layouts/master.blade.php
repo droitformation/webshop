@@ -92,7 +92,7 @@
         <div id='wrap'>
 
             <!-- messages and errors -->
-            @include('alert::alert')
+            @include('alert::bootstrap')
             @include('backend.partials.message')
 
             <div id="page-heading">

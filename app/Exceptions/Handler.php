@@ -182,8 +182,9 @@ class Handler extends ExceptionHandler {
 		}
 
 		if ($e instanceof \App\Exceptions\AdresseNotExistException){
-			alert()->warning('Il n\'existe aucune adresse de livraison, veuillez indiquer une adresse valide dans');
-			return redirect('/')->with(['link' => 'profil']);
+			//alert()->warning('Il n\'existe aucune adresse de livraison, veuillez indiquer une adresse valide dans');
+            $request->session()->flash('AdresseMissing', 'Ok');
+			return redirect('/pubdroit/profil');
 		}
 
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
@@ -201,7 +202,7 @@ class Handler extends ExceptionHandler {
 		}
 
 		if($e instanceof \Illuminate\Database\Eloquent\ProductNotFoundException){
-			alert()->warning('Aucune livre trouvé pour abonnent');
+			alert()->warning('Aucune livre trouvé pour abonnement');
 			return redirect()->back();
 		}
 
