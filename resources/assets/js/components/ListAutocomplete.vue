@@ -5,7 +5,7 @@
             <span class="input-group-addon">
                 <img v-show="searching" height="15px" src="images/default.svg">
             </span>
-            <input :class="'search-input form-control search-adresse-autocomplete_' + type" placeholder="Chercher..." type="text">
+            <input name="autocomplete_input" :class="'search-input form-control search-adresse-autocomplete_' + type" placeholder="Chercher..." type="text">
             <span class="input-group-addon" style="border:none;background:#fff; width:100px;">
                 <span class="empty-text text-danger pull-right" v-show="noResult">Aucun résultat</span>
             </span>

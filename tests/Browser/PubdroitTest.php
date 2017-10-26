@@ -169,7 +169,7 @@ class PubdroitTest extends DuskTestCase
                 ->pause(1100)
                 ->press('Envoyer');
 
-            $browser->pause(3500);// pause for alert
+            $browser->pause(4000);// pause for alert
             $browser->assertSee('Ajouter une adresse de livraison');
             $browser->click('#btn-addAdress')->waitForText('Nouvelle adresse');
 

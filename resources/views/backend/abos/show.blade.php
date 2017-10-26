@@ -48,8 +48,8 @@
                     <table class="table" id="abos-table">
                         <thead>
                         <tr>
-                            <th>Action</th>
-                            <th>Numéro</th>
+                            <th width="30px;">Action</th>
+                            <th width="30px;">Numéro</th>
                             <th>Nom</th>
                             <th>Entreprise</th>
                             <th>Adresse</th>
@@ -63,7 +63,7 @@
                                 @foreach($abo->abonnements as $abonnement)
                                     <?php $user = $abonnement->user_adresse; ?>
                                     <tr>
-                                        <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a></td>
+                                        <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a></td>
                                         <td>
                                             {{ $abonnement->numero }}
                                             @if(!$abonnement->user_id && $abonnement->adresse_id)
@@ -86,7 +86,7 @@
                                         <td class="text-right">
                                             <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button id="deleteAbo_{{ $abonnement->id }}" type="submit" data-what="Supprimer l'abonné n°" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-sm deleteAction">Désabonner</button>
+                                                <button id="deleteAbo_{{ $abonnement->id }}" type="submit" data-what="Supprimer l'abonné n°" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-xs deleteAction">Désabonner</button>
                                             </form>
                                         </td>
                                     </tr>

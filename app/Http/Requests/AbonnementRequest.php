@@ -32,7 +32,7 @@ class AbonnementRequest extends Request
             'abo_id'         => 'required',
             'numero'         => 'required',
             'exemplaires'    => 'required',
-            'user_id'     => 'required',
+            'user_id'        => 'required',
             'status'         => 'required',
             'renouvellement' => 'required',
         ];

@@ -99,7 +99,7 @@
 
                     </div>
                     <div class="panel-footer text-right">
-                        <button type="submit" class="btn btn-info">Créer un abo</button>
+                        <button type="submit" id="createAbo" class="btn btn-info">Créer un abo</button>
                     </div>
                 </form>
             </div>
