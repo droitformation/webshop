@@ -27,4 +27,9 @@ class Rappel extends Model
     {
         return $this->belongsTo('App\Droit\Inscription\Entities\Inscription');
     }
+
+    public function groupe()
+    {
+        return $this->belongsTo('App\Droit\Inscription\Entities\Groupe','group_id');
+    }
 }

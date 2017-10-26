@@ -34,7 +34,7 @@
             {!! $rappel !!} Facture {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
         </h1>
 
-        @if(is_array($generate->getNo()))
+        @if(is_array($generate->getNo()) && !isset($print))
             <table class="content-table" valign="top">
                 <tr><td height="5">&nbsp;</td></tr>
                 <tr valign="top">

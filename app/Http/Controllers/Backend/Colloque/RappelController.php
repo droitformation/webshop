@@ -177,8 +177,8 @@ class RappelController extends Controller
 
         $rappel = $this->rappel->find($id);
 
-        if($rappel->inscription->group_id) {
-            $model = $rappel->inscription->groupe;
+        if($rappel->group_id > 0) {
+            $model = $rappel->groupe;
         }
         else{
             $model = $rappel->inscription;
