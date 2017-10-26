@@ -170,4 +170,23 @@ class RappelController extends Controller
 
         return ['rappels' => $list];
     }
+
+    public function show($id)
+    {
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+        $rappel = $this->rappel->find($id);
+
+        if($rappel->inscription->group_id) {
+            $model = $rappel->inscription->groupe;
+        }
+        else{
+            $model = $rappel->inscription;
+        }
+
+        $generator->stream = true;
+        $generator->setPrint(true);
+
+        return $generator->make('facture', $model, $rappel);
+    }
 }

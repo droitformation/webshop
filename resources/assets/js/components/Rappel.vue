@@ -2,25 +2,29 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-4">
-               <form>
-                   <button @click="generate" :id="getButtonId()" class="btn btn-brown btn-sm">Générer un rappel</button>
-                   <div class="checkbox">
-                       <label><input v-model="toPrint" value="1" type="checkbox"> à imprimer</label>
-                   </div>
-               </form>
+            <div class="col-md-3">
+               <form><button @click="generate" :id="getButtonId()" class="btn btn-brown btn-sm">Générer</button></form>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <ol>
                     <li class="rappel-item" v-for="rappel in list">
                         <a :href="rappel.doc_rappel" target="_blank" class="text-primary">
-                            {{ rappel.date }} <span v-if="!rappel.doc_rappel">pdf non crée</span>
+                            {{ rappel.date }} <small v-if="!rappel.doc_rappel" class="text-muted">pdf non crée</small>
                         </a>
                         <button @click="remove(rappel.id)" class="btn btn-danger btn-xs pull-right"><i class="fa fa-times"></i></button>
                         <div class="clearfix"></div>
                     </li>
                 </ol>
                 <i v-show="loading" class="fa fa-spinner fa-spin"></i>
+            </div>
+            <div class="col-md-2">
+                <ol style="margin-left: 5px;padding-left: 3px;">
+                    <li class="rappel-item" v-for="rappel in list">
+                        <a :href="'admin/inscription/rappel/' +rappel.id" target="_blank" class="btn btn-default btn-xs">
+                             + BV
+                        </a>
+                    </li>
+                </ol>
             </div>
         </div>
 
