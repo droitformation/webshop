@@ -152,7 +152,8 @@ Route::get('testing', function() {
     $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $inscription = $inscriptions->find(14892);
-    $rappel      = $rappels->find(455);
+
+    $rappel      = $rappels->find(12);
 
     $generator->stream = true;
     $generator->toPrint = true;
