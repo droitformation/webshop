@@ -41,7 +41,7 @@ class SubjectTest extends BrowserKitTest {
 
           $this->visit('admin/seminaire')->click('addSeminaire');
           $this->seePageIs('admin/seminaire/create');
-  
+
           $this->type('Un sujet', 'title')->type('2014', 'year');
 
           $this->select($product->id, 'product_id');
