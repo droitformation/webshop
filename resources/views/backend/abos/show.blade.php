@@ -45,59 +45,61 @@
                         <a class="btn btn-warning btn-sm" href="{{ url('admin/abo/desinscription/'.$abo->id) }}">Désabonnements</a>
                     </p><div class="clearfix"></div><br/>
 
-                    <table class="table" id="abos-table">
-                        <thead>
-                        <tr>
-                            <th width="30px;">Action</th>
-                            <th width="30px;">Numéro</th>
-                            <th>Nom</th>
-                            <th>Entreprise</th>
-                            <th>Adresse</th>
-                            <th>Exemplaires</th>
-                            <th class="no-sort">Status</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @if(!$abo->abonnements->isEmpty())
-                                @foreach($abo->abonnements as $abonnement)
-                                    <?php $user = $abonnement->user_adresse; ?>
-                                    <tr>
-                                        <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a></td>
-                                        <td>
-                                            {{ $abonnement->numero }}
-                                            @if(!$abonnement->user_id && $abonnement->adresse_id)
-                                                &nbsp; &nbsp;<i class="fa fa-bolt text-danger" aria-hidden="true"></i>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}
+                    <div class="table-responsive">
+                        <table class="table" id="abos-table">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">Action</th>
+                                <th class="col-md-1">Numéro</th>
+                                <th class="col-md-3">Nom</th>
+                                <th class="col-md-4">Adresse</th>
+                                <th class="col-md-1">Exemplaires</th>
+                                <th class="no-sort col-md-1">Status</th>
+                                <th class="col-md-1"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @if(!$abo->abonnements->isEmpty())
+                                    @foreach($abo->abonnements as $abonnement)
+                                        <?php $user = $abonnement->user_adresse; ?>
+                                        <tr>
+                                            <td><a href="{{ url('admin/abonnement/'.$abonnement->id) }}" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a></td>
+                                            <td>
+                                                {{ $abonnement->numero }}
+                                                @if(!$abonnement->user_id && $abonnement->adresse_id)
+                                                    &nbsp; &nbsp;<i class="fa fa-bolt text-danger" aria-hidden="true"></i>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}
 
-                                            @if($abonnement->tiers_user_id || $abonnement->tiers_id)
-                                                <p><strong>Tiers payant:</strong></p>
-                                                {{ $abonnement->user_facturation->name }}<br/>
-                                                {!! $abonnement->user_facturation->adresse.'<br/>'.$abonnement->user_facturation->npa.' '.$abonnement->user_facturation->ville !!}
-                                            @endif
-                                        </td>
-                                        <td>{!! $user ? $user->company : '' !!}</td>
-                                        <td>{!! $user ? $user->adresse.'<br/>'.$user->npa.' '.$user->ville : '' !!}</td>
-                                        <td>{{ $abonnement->exemplaires }}</td>
-                                        <td>{{ $abonnement->status }}</td>
-                                        <td class="text-right">
-                                            <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button id="deleteAbo_{{ $abonnement->id }}" type="submit" data-what="Supprimer l'abonné n°" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-xs deleteAction">Désabonner</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
-                        <tfoot>
-                            <tr><th></th><th></th><th></th><th></th><th></th><th>Status</th><th></th></tr>
-                        </tfoot>
-                    </table>
-
+                                                @if($abonnement->tiers_user_id || $abonnement->tiers_id)
+                                                    <p><strong>Tiers payant:</strong></p>
+                                                    {{ $abonnement->user_facturation->name }}<br/>
+                                                    {!! $abonnement->user_facturation->adresse.'<br/>'.$abonnement->user_facturation->npa.' '.$abonnement->user_facturation->ville !!}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {!! $user && !empty($user->company) ? $user->company.'<br/>' : '' !!}
+                                                {!! $user ? $user->adresse.'<br/>'.$user->npa.' '.$user->ville : '' !!}
+                                            </td>
+                                            <td>{{ $abonnement->exemplaires }}</td>
+                                            <td>{{ $abonnement->status }}</td>
+                                            <td class="text-right">
+                                                <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
+                                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                    <button id="deleteAbo_{{ $abonnement->id }}" type="submit" data-what="Supprimer l'abonné n°" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-xs deleteAction">Désabonner</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                            <tfoot>
+                                <tr><th></th><th></th><th></th><th></th><th></th><th>Status</th><th></th></tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
 
