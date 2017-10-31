@@ -255,9 +255,9 @@ class ProductTest extends BrowserKitTest {
     {
         $product   = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['url' => 'http://www.google.ch']);
 
-        $this->visit('/admin/order/create');
+        $response = $this->get('/admin/order/create');
 
-        $content = $this->response->getOriginalContent();
+        $content = $response->getOriginalContent();
         $content = $content->getData();
         $products  = $content['products'];
 

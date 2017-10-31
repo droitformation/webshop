@@ -183,4 +183,159 @@ class ProductTest extends DuskTestCase
 
         });
     }
+
+    /**
+     * Add attribute
+     * @group product_attribut
+     */
+    public function testProductAddAttribute()
+    {
+        $this->browse(function (Browser $browser) {
+
+            $user = factory(\App\Droit\User\Entities\User::class)->create();
+            $user->roles()->attach(1);
+
+            $make      = new \tests\factories\ObjectFactory();
+            $product   = $make->makeProduct([]);
+            $attribute = factory(\App\Droit\Shop\Attribute\Entities\Attribute::class)->create();
+
+            $browser->loginAs($user)->visit('admin/product/'.$product->id);
+
+            $browser->type('value','new')
+                ->select('attribute_id',$attribute->id)
+                ->press('#addAttribute');
+
+            $product->load('attributs');
+
+            $this->assertTrue($product->attributs->contains('id',$attribute->id));
+        });
+    }
+
+    /**
+     * Remove attribute
+     * @group product_attribut
+     */
+    public function testProductDeleteAttribute()
+    {
+        $this->browse(function (Browser $browser) {
+
+            $user = factory(\App\Droit\User\Entities\User::class)->create();
+            $user->roles()->attach(1);
+
+            $make      = new \tests\factories\ObjectFactory();
+
+            $product   = $make->makeProduct([]);
+            $attribute = factory(\App\Droit\Shop\Attribute\Entities\Attribute::class)->create();
+            $product->attributs()->attach($attribute->id, ['value' => 'NewAttribute']);
+
+            $browser->loginAs($user)->visit('admin/product/'.$product->id);
+            $browser->assertSee('NewAttribute');
+            $browser->pause(100);
+            $browser->press('#deleteAttribute_'.$attribute->id);
+            $browser->driver->switchTo()->alert()->accept();
+
+            $browser->visit('admin/product/'.$product->id);
+            $product->fresh();
+            $product->load('attributs');
+
+            $this->assertFalse($product->attributs->contains('id',$attribute->id));
+        });
+    }
+
+    /**
+     * Add Label
+     * @group product_label
+     */
+    public function testProductLabels()
+    {
+        $this->browse(function (Browser $browser) {
+
+            $product   = factory(\App\Droit\Shop\Product\Entities\Product::class)->create();
+            $categorie = factory(\App\Droit\Shop\Categorie\Entities\Categorie::class)->create();
+            $author    = factory(\App\Droit\Shop\Author\Entities\Author::class)->create();
+            $domain    = factory(\App\Droit\Domain\Entities\Domain::class)->create();
+
+            $user = factory(\App\Droit\User\Entities\User::class)->create();
+            $user->roles()->attach(1);
+
+            $browser->loginAs($user)->visit('admin/product/'.$product->id);
+
+            $browser->assertSee($categorie->title);
+            $browser->assertSee($author->name);
+            $browser->assertSee($domain->title);
+
+            $browser->pause(400);
+            $browser->select('type_id[]',$categorie->id)->press('#addCategories');
+            $browser->visit('admin/product/'.$product->id);
+            $browser->pause(400);
+
+            $browser->select('type_id[]',$author->id)->press('#addAuthors');
+            $browser->visit('admin/product/'.$product->id);
+            $browser->pause(400);
+
+            $browser->select('type_id[]',$domain->id)->press('#addDomains');
+            $browser->visit('admin/product/'.$product->id);
+
+            $product->fresh();
+            $product->load('categories','authors','domains');
+
+            $this->assertTrue($product->categories->contains('id',$categorie->id));
+            $this->assertTrue($product->authors->contains('id',$author->id));
+            $this->assertTrue($product->domains->contains('id',$domain->id));
+
+        });
+    }
+
+    /**
+     * Remove Label
+     * @group product_label
+     */
+    public function testProductRemoveLabels()
+    {
+        $this->browse(function (Browser $browser) {
+
+            $user = factory(\App\Droit\User\Entities\User::class)->create();
+            $user->roles()->attach(1);
+
+            $product   = factory(\App\Droit\Shop\Product\Entities\Product::class)->create();
+            $categorie = factory(\App\Droit\Shop\Categorie\Entities\Categorie::class)->create();
+            $author    = factory(\App\Droit\Shop\Author\Entities\Author::class)->create();
+            $domain    = factory(\App\Droit\Domain\Entities\Domain::class)->create();
+
+            $product->categories()->attach($categorie->id);
+            $product->authors()->attach($author->id);
+            $product->domains()->attach($domain->id);
+
+            $browser->loginAs($user)->visit('admin/product/'.$product->id);
+
+            $browser->assertSee($categorie->title);
+            $browser->assertSee($author->name);
+            $browser->assertSee($domain->title);
+
+            $browser->element('#deleteCategories_'.$categorie->id)->getLocationOnScreenOnceScrolledIntoView();
+            $browser->press('#deleteCategories_'.$categorie->id);
+            $browser->driver->switchTo()->alert()->accept();
+            $browser->visit('admin/product/'.$product->id);
+
+            $browser->pause(400);
+            $browser->element('#deleteAuthors_'.$author->id)->getLocationOnScreenOnceScrolledIntoView();
+            $browser->press('#deleteAuthors_'.$author->id);
+            $browser->driver->switchTo()->alert()->accept();
+            $browser->visit('admin/product/'.$product->id);
+
+            $browser->pause(400);
+            $browser->element('#deleteDomains_'.$domain->id)->getLocationOnScreenOnceScrolledIntoView();
+            $browser->press('#deleteDomains_'.$domain->id);
+            $browser->driver->switchTo()->alert()->accept();
+            $browser->visit('admin/product/'.$product->id);
+
+            $product->fresh();
+            $product->load('categories','authors','domains');
+
+            $this->assertTrue(!$product->categories->contains('id',$categorie->id));
+            $this->assertTrue(!$product->authors->contains('id',$author->id));
+            $this->assertTrue(!$product->domains->contains('id',$domain->id));
+
+        });
+    }
 }

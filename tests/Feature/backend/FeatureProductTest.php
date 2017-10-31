@@ -114,20 +114,17 @@ class FeatureProductTest extends TestCase
         $this->expectExceptionMessage('Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement');
     }
 
-    /*public function testProductAddAttribute()
+    public function testExternalProductNotInNewOrderList()
     {
-        $product   = factory(\App\Droit\Shop\Product\Entities\Product::class)->create();
-        $attribute = factory(\App\Droit\Shop\Attribute\Entities\Attribute::class)->create();
+        $product   = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['url' => 'http://www.google.ch']);
 
-        $this->visit('admin/product/'.$product->id);
+        $response = $this->get('/admin/order/create');
 
-        $this->type('new', 'value')
-            ->select($attribute->id, 'attribute_id')
-            ->press('addAttribute');
+        $content  = $response->getOriginalContent();
+        $content  = $content->getData();
+        $products = $content['products'];
 
-        $product->load('attributs');
-
-        $this->assertTrue($product->attributs->contains('id',$attribute->id));
+        $this->assertFalse($products->contains('id',$product->id));
     }
 
     public function testProductDeleteAttribute()
@@ -137,25 +134,11 @@ class FeatureProductTest extends TestCase
 
         $product->attributs()->attach($attribute->id, ['value' => 'new']);
 
-        $this->visit('admin/product/'.$product->id);
-        $this->press('deleteAttribute_'.$attribute->id);
+        $response = $this->delete( url('admin/productattribut/'.$attribute->id), ['product_id' => $product->id]);
 
         $product->load('attributs');
 
         $this->assertFalse($product->attributs->contains('id',$attribute->id));
     }
-
-    public function testExternalProductNotInNewOrderList()
-    {
-        $product   = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['url' => 'http://www.google.ch']);
-
-        $this->visit('/admin/order/create');
-
-        $content = $this->response->getOriginalContent();
-        $content = $content->getData();
-        $products  = $content['products'];
-
-        $this->assertFalse($products->contains('id',$product->id));
-    }*/
 
 }
