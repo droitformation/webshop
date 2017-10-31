@@ -503,11 +503,14 @@ class ObjectFactory
         return $colloque->load(['inscriptions','prices']);
     }
 
-    public function makeInscriptionForUser($user, $date)
+    public function makeInscriptionForUser($user, $date, $colloque)
     {
         // Create colloque
-        $colloque = $this->colloque();
-        $prices   = $colloque->prices->pluck('id')->all();
+        if(!$colloque){
+            $colloque = $this->colloque();
+        }
+
+        $prices = $colloque->prices->pluck('id')->all();
 
         return factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
             'user_id'     => $user->id,

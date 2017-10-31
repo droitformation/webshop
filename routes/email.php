@@ -157,6 +157,41 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         return view('emails.colloque.confirmation')->with($data);
     });
 
+    Route::get('inscriptioncolloque/{id}', function ($id) {
+
+        $model    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+        $colloque = $model->find($id);
+
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $date = \Carbon\Carbon::now()->subDays(32)->toDateString();
+
+        $inscription = $make->makeInscriptionForUser($user, $date, $colloque);
+
+        $data = [
+            'title'        => 'Votre inscription sur publications-droit.ch',
+            'concerne'     => 'Inscription',
+            'annexes'      => $inscription->colloque->annexe,
+            'colloque'     => $inscription->colloque,
+            'inscription'  => $inscription,
+            'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+        ];
+
+        if($inscription->group_id)
+        {
+            $data['participants'] = $inscription->groupe->participant_list;
+            $data['user']         = $inscription->groupe->user;
+        }
+
+        if($inscription->user_id)
+        {
+            $data['user'] = $inscription->user;
+        }
+
+        return view('emails.colloque.confirmation')->with($data);
+    });
+
     Route::get('rappel/{id?}', function ($id = null) {
 
         $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
