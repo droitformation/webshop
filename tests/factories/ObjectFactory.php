@@ -503,7 +503,7 @@ class ObjectFactory
         return $colloque->load(['inscriptions','prices']);
     }
 
-    public function makeInscriptionForUser($user, $date, $colloque)
+    public function makeInscriptionForUser($user, $date, $colloque = null)
     {
         // Create colloque
         if(!$colloque){
