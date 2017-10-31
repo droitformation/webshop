@@ -1095,10 +1095,6 @@ Route::get('factory', function()
 
 Route::get('merge', function () {
 
-      // Export adresses
-/*    $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-    $exporter->merge();*/
-
     $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
 
     // Directory for edition => product_id
@@ -1109,10 +1105,37 @@ Route::get('merge', function () {
     // Get all files in directory
     $files = \File::files(public_path($dir));
 
-    if(!empty($files))
-    {
+    if(!empty($files)) {
         $worker->merge($files, $name, 1);
     }
     
 });
 
+
+Route::get('getlist', function () {
+
+    //$mailjet = new \Mailjet\Client(config('newsletter.mailjet.api'),config('newsletter.mailjet.secret'));
+
+    //$response = $mailjet->post(\Mailjet\Resources::$Contact, ["id" => 5162, $filters = ['Limit' => '150'];]);
+
+    $mailjet = new \App\Droit\Newsletter\Worker\MailjetService(
+        new \Mailjet\Client(config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')),
+        new \Mailjet\Resources()
+    );
+
+    $mailjet->setList(5162);
+    //$subscribers = $mailjet->getSubscribers();
+
+   // $all = collect([]);
+
+    foreach (range(0,6000,1000) as $offset){
+        $subscribers = $mailjet->getSubscribers($offset);
+
+        $all[] = $subscribers;
+    }
+    $all = collect($all)->flatten(1)->pluck('Email');
+
+    echo '<pre>';
+    print_r($all);
+    echo '</pre>';exit();
+});

@@ -18,7 +18,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-7  col-xs-12">
+        <div class="col-md-7 col-sm-12 col-xs-12">
 
             <div class="panel panel-midnightblue">
                 <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
@@ -195,7 +195,7 @@
 
             </div>
         </div>
-        <div class="col-md-5 col-xs-12">
+        <div class="col-md-5 col-sm-12 col-xs-12">
 
             <div class="panel panel-midnightblue">
                 <div class="panel-heading">

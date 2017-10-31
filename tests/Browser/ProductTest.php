@@ -243,50 +243,6 @@ class ProductTest extends DuskTestCase
     }
 
     /**
-     * Add Label
-     * @group product_label
-     */
-    public function testProductLabels()
-    {
-        $this->browse(function (Browser $browser) {
-
-            $product   = factory(\App\Droit\Shop\Product\Entities\Product::class)->create();
-            $categorie = factory(\App\Droit\Shop\Categorie\Entities\Categorie::class)->create();
-            $author    = factory(\App\Droit\Shop\Author\Entities\Author::class)->create();
-            $domain    = factory(\App\Droit\Domain\Entities\Domain::class)->create();
-
-            $user = factory(\App\Droit\User\Entities\User::class)->create();
-            $user->roles()->attach(1);
-
-            $browser->loginAs($user)->visit('admin/product/'.$product->id);
-
-            $browser->assertSee($categorie->title);
-            $browser->assertSee($author->name);
-            $browser->assertSee($domain->title);
-
-            $browser->pause(400);
-            $browser->select('type_id[]',$categorie->id)->press('#addCategories');
-            $browser->visit('admin/product/'.$product->id);
-            $browser->pause(400);
-
-            $browser->select('type_id[]',$author->id)->press('#addAuthors');
-            $browser->visit('admin/product/'.$product->id);
-            $browser->pause(400);
-
-            $browser->select('type_id[]',$domain->id)->press('#addDomains');
-            $browser->visit('admin/product/'.$product->id);
-
-            $product->fresh();
-            $product->load('categories','authors','domains');
-
-            $this->assertTrue($product->categories->contains('id',$categorie->id));
-            $this->assertTrue($product->authors->contains('id',$author->id));
-            $this->assertTrue($product->domains->contains('id',$domain->id));
-
-        });
-    }
-
-    /**
      * Remove Label
      * @group product_label
      */

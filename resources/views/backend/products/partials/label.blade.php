@@ -26,7 +26,7 @@
             <input type="hidden" name="product_id" value="{{ $product->id }}" />
             <div class="form-group">
                 @if(!$items->isEmpty())
-                    <p><select class="form-control multi-selection" name="type_id[]" multiple>
+                    <p><select class="form-control multi-selection select_{{ $labels }}" name="type_id[]" multiple>
                         @foreach($items as $item)
                             <option {{ isset($choices) && in_array($item->id, $choices) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
                         @endforeach
