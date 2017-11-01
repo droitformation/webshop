@@ -45,18 +45,18 @@ class MailjetService implements MailjetServiceInterface{
             return [];
     }
 
-    public function getSubscribers($offset = 0)
+    public function getSubscribers($Offset = 0)
     {
         $this->hasList();
 
-        $filters = ['Limit' => 1000, 'Offset' => $offset];
+        $filters = ['Limit' => '1000', 'Offset' => $Offset, "ContactsList" => $this->list];
 
-        $response = $this->mailjet->get(Resources::$Listrecipient, ['ContactsList' => $this->list,'filters' => $filters]);
+        $response = $this->mailjet->get(Resources::$Contact, ['filters' => $filters]);
 
         if($response->success())
             return $response->getData();
         else
-            return $response->getStatus();
+            return false;
     }
 
     public function getAllSubscribers()

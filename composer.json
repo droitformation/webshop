@@ -20,7 +20,7 @@
 		"designPond/config-registry": "0.1.x-dev",
         "baum/baum": "~1.1",
         "inlinestyle/inlinestyle": "1.*",
-		"mailjet/mailjet-apiv3-php": "^1.1",
+		"mailjet/mailjet-apiv3-php": "^1.2.0",
 		"vinkla/alert": "^2.2.0",
 		"spatie/laravel-backup": "^5.0.5",
 		"shvetsgroup/laravel-email-database-log": "^1.0",

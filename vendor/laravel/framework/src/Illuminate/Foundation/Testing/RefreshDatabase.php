@@ -51,7 +51,6 @@ trait RefreshDatabase
     {
         if (! RefreshDatabaseState::$migrated) {
             $this->artisan('migrate:fresh');
-            $this->artisan("db:seed");
 
             $this->app[Kernel::class]->setArtisan(null);
 
