@@ -70,7 +70,7 @@
                     <div class="panel-footer mini-footer ">
                         <div class="col-sm-3"><input type="hidden" name="colloque_id" value="{{ $colloque->id }}"></div>
                         <div class="col-sm-7">
-                            <button class="btn btn-primary" type="submit">Envoyer</button>
+                            <button class="btn btn-primary" id="addAttestation" type="submit">Envoyer</button>
                         </div>
                     </div>
                 </div>

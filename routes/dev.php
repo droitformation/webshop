@@ -1116,10 +1116,8 @@ Route::get('getlist', function () {
 
     $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
 
-    $mailjet->setList(5162);
-    echo '<pre>';
-    print_r($mailjet);
-    echo '</pre>';exit();
+    $mailjet->setList(1560509);
+
     foreach (range(0, 6000, 1000) as $i) {
         $users = $mailjet->getSubscribers($i);
         $users = collect($users)->map(function ($item, $key) {

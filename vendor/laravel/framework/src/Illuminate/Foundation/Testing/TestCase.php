@@ -102,6 +102,7 @@ abstract class TestCase extends BaseTestCase
 
         if (isset($uses[RefreshDatabase::class])) {
             $this->refreshDatabase();
+            $this->artisan('db:seed');
         }
 
         if (isset($uses[DatabaseMigrations::class])) {
