@@ -78,6 +78,8 @@ class OrderTest extends TestCase
         $order  = $model->getLast(1)->first();
 
         $this->assertEquals($total,$order->total_with_shipping);
+
+        \DB::table('shop_orders')->truncate();
     }
 
     public function testCreateOrderWithStepFree()
@@ -110,6 +112,8 @@ class OrderTest extends TestCase
         $order  = $model->getLast(1)->first();
 
         $this->assertEquals('10.00',$order->total_with_shipping);
+
+        \DB::table('shop_orders')->truncate();
     }
 
     /**
@@ -154,6 +158,8 @@ class OrderTest extends TestCase
         $result = $content['orders'];
 
         $this->assertEquals(5, $result->count());
+
+        \DB::table('shop_orders')->truncate();
     }
 
     /**
@@ -199,6 +205,8 @@ class OrderTest extends TestCase
         $result = $content['orders'];
 
         $this->assertEquals(3, $result->count());
+
+        \DB::table('shop_orders')->truncate();
     }
 
     public function testUpdateOrderWithCoupon()
@@ -231,12 +239,16 @@ class OrderTest extends TestCase
 
         $this->call('PUT', url('admin/order/'.$order->id), $data);
 
-        $content = $this->response->getOriginalContent();
+        $response = $this->get( 'admin/order/'.$order->id);
+
+        $content = $response->getOriginalContent();
         $content = $content->getData();
         $result  = $content['order'];
 
         $this->assertEquals(6, $result->shipping_id);
         $this->assertEquals($total, $result->amount);
+
+        \DB::table('shop_orders')->truncate();
     }
 
     public function testSortPeriodNoResult()
@@ -263,5 +275,7 @@ class OrderTest extends TestCase
         $result = $content['orders'];
 
         $this->assertEquals(0, $result->count());
+
+        \DB::table('shop_orders')->truncate();
     }
 }

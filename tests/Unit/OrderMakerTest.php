@@ -294,8 +294,6 @@ class OrderMakerTest extends TestCase
 
     public function testPrepareOrderDataFromAdmin()
     {
-
-
         $factory = new \tests\factories\ObjectFactory();
         $person  = $factory->makeUser();
 
@@ -343,8 +341,9 @@ class OrderMakerTest extends TestCase
 
         $mockorder = \Mockery::mock('App\Droit\Shop\Order\Repo\OrderInterface');
         $this->app->instance('App\Droit\Shop\Order\Repo\OrderInterface', $mockorder);
-        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
+        // Mock before creating worker!!
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
         $mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
 
         $result = $make->prepare($order);
@@ -396,13 +395,15 @@ class OrderMakerTest extends TestCase
         ]);
 
     }
-/*
     public function testMakeOrderFromAdmin()
     {
         $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
 
+        $factory = new \tests\factories\ObjectFactory();
+        $user = $factory->makeUser([]);
+
         $order = factory(\App\Droit\Shop\Order\Entities\Order::class)->make([
-            'user_id'     => 710,
+            'user_id'     => $user->id,
             'order_no'    => '2016-00020003',
             'amount'      => '1500',
             'coupon_id'   => null,
@@ -410,15 +411,15 @@ class OrderMakerTest extends TestCase
             'payement_id' => 1,
         ]);
 
-        $prod1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->make(['id' => 22, 'weight' => 1000, 'price'  => 1000,]);
-        $prod2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->make(['id' => 12, 'weight' => 1000, 'price'  => 2000,]);
+        $prod1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price'  => 1000,]);
+        $prod2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price'  => 2000,]);
 
-        $order->products = new Illuminate\Database\Eloquent\Collection([$prod1,$prod2,$prod1,$prod2]);
+        $order->products = new \Illuminate\Database\Eloquent\Collection([$prod1,$prod2,$prod1,$prod2]);
 
         $data = [
-            'user_id' => 710,
+            'user_id' => $user->id,
             'order'   => [
-                'products' => [0 => 22, 1 => 12],
+                'products' => [0 => $prod1->id, 1 => $prod2->id],
                 'qty'      => [0 => 2, 1 => 2],
                 'rabais'   => [0 => 25],
                 'gratuit'  => [1 => 1]
@@ -426,40 +427,45 @@ class OrderMakerTest extends TestCase
             'admin' => 1
         ];
 
-        $this->mock->shouldReceive('find')->twice()->andReturn($prod1);
-        $this->mock->shouldReceive('find')->twice()->andReturn($prod2);
-        $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
-        $this->mockorder->shouldReceive('create')->once()->andReturn($order);
-        $this->mock->shouldReceive('sku')->times(2);
-        $this->stock->shouldReceive('create')->times(2);
-        $this->generator->shouldReceive('factureOrder')->once();
-
         $make->make($data);
 
+        $orders = new \App\Droit\Shop\Order\Entities\Order();
+        $order  = $orders->orderBy('id','DESC')->take(1)->get()->first();
+
+        $this->assertEquals($order->user_id,$order->user_id);
     }
 
     public function testPrepareOrderDataFromAdminPassShipping()
     {
         $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
-        $product  = factory(\App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000]);
+
+        $factory = new \tests\factories\ObjectFactory();
+        $user = $factory->makeUser([]);
+
+        $prod1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price'  => 1000,]);
+        $prod2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price'  => 2000,]);
+
         $shipping = factory(\App\Droit\Shop\Shipping\Entities\Shipping::class)->create();
 
         $order = [
-            'user_id' => 710,
+            'user_id' => $user->id,
             'order'   => [
-                'products' => [0 => 11, 1 => 12],
+                'products' => [0 => $prod1->id, 1 => $prod2->id],
                 'qty'      => [0 => 2, 1 => 2],
                 'rabais'   => [0 => 25],
                 'gratuit'  => [1 => 1]
             ],
             'admin' => 1
         ];
-        $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
-        $this->mock->shouldReceive('find')->twice()->andReturn($product);
+
         $result = $make->prepare($order, $shipping);
+
         $this->assertEquals($shipping->id,$result['shipping_id']);
     }
 
+    /**
+     * @expectedException \Illuminate\Validation\ValidationException
+     */
     public function testGetUserOrCreateAdresseFromOrder()
     {
         $make    = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
@@ -467,25 +473,12 @@ class OrderMakerTest extends TestCase
         // Create a new adresse
         // Validation fails
         $data = ['adresse' => []];
-
-        try{
-            $make->getUser($data);
-        }
-        catch (Exception $e) {
-            $this->assertInstanceOf('Illuminate\Validation\ValidationException', $e);
-        }
+        $make->getUser($data);
     }
 
     public function testGetUserOrCreateAdresseFromOrderMakeNewAccountWithData()
     {
         $make    = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
-        $factory = new \tests\factories\ObjectFactory();
-
-        $user = $factory->user();
-
-        $this->user->shouldReceive('create')->once()->andReturn($user);
-        $this->adresse->shouldReceive('create')->once()->andReturn($user->adresses->first());
-        $this->adresse->shouldReceive('update')->once()->andReturn($user->adresses->first());
 
         // Create new Adresse
         $new = ['adresse' => [
@@ -502,6 +495,9 @@ class OrderMakerTest extends TestCase
 
         $response = $make->getUser($new);
 
+        $users = new\App\Droit\User\Entities\User();
+        $user = $users->orderBy('id','DESC')->take(1)->get()->first();
+
         $this->assertEquals(['user_id' => $user->id], $response);
-    }*/
+    }
 }
