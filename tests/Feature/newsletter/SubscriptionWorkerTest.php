@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SubscriptionTest extends TestCase
+class SubscriptionWorkerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -44,43 +44,8 @@ class SubscriptionTest extends TestCase
         $this->assertTrue($result->subscriptions->contains('id',1));
     }
 
-    public function testSubscriberExist()
-    {
-        \DB::table('newsletter_subscriptions')->truncate();
-        \DB::table('newsletter_users')->truncate();
-        \DB::table('newsletters')->truncate();
-        \DB::table('sites')->truncate();
-
-        $worker = new \App\Droit\Newsletter\Worker\SubscriptionWorker(
-            \App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
-            \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
-            $this->mailjet
-        );
-
-        $site         = factory(\App\Droit\Site\Entities\Site::class)->create();
-        $newsletter   = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
-
-        $subscriber = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create([
-            'email' => 'info@publications-droit.ch',
-            'activation_token' => 'adsfgtgtfwswd',
-            'activated_at' => \Carbon\Carbon::now()->toDateTimeString()
-        ]);
-
-        $subscriber->subscriptions()->attach($newsletter->id);
-        $subscriber->fresh();
-
-        $result = $worker->activate('info@publications-droit.ch',$newsletter->id);
-
-        $this->assertFalse($result);
-    }
-
     public function testUnsubscribe()
     {
-        \DB::table('newsletter_subscriptions')->truncate();
-        \DB::table('newsletter_users')->truncate();
-        \DB::table('newsletters')->truncate();
-        \DB::table('sites')->truncate();
-
         $worker = new \App\Droit\Newsletter\Worker\SubscriptionWorker(
             \App::make('App\Droit\Newsletter\Repo\NewsletterInterface'),
             \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface'),
@@ -111,7 +76,7 @@ class SubscriptionTest extends TestCase
         $this->assertTrue($results->isEmpty());
 
         $this->assertDatabaseMissing('newsletter_users', [
-            'id'  => $subscription->id,
+            'id'          => $subscription->id,
             'deleted_at'  => null
         ]);
     }
@@ -122,10 +87,6 @@ class SubscriptionTest extends TestCase
      */
     public function testUpdateSubscriptions()
     {
-        \DB::table('newsletter_subscriptions')->truncate();
-        \DB::table('newsletter_users')->truncate();
-        \DB::table('newsletters')->truncate();
-        \DB::table('sites')->truncate();
         /******************************/
         $user         = factory(\App\Droit\User\Entities\User::class)->create();
         $subscriber   = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
@@ -166,7 +127,6 @@ class SubscriptionTest extends TestCase
         $response = $this->call('PUT', 'build/subscriber/'.$subscriber->id, ['id' => $subscriber->id , 'email' => $subscriber->email, 'newsletter_id' => $new, 'activation' => 1]);
 
         $response->assertRedirect('build/subscriber/'.$subscriber->id);
-
         $response = $this->get('build/subscriber/'.$subscriber->id);
 
         $content = $response->getOriginalContent();
@@ -185,14 +145,9 @@ class SubscriptionTest extends TestCase
      */
     public function testUpdateRemoveAllSubscriptions()
     {
-        \DB::table('newsletter_subscriptions')->truncate();
-        \DB::table('newsletter_users')->truncate();
-        \DB::table('newsletters')->truncate();
-        \DB::table('sites')->truncate();
-
         /******************************/
         $user         = factory(\App\Droit\User\Entities\User::class)->create();
-        $subscriber   = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
+        $subscriber = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $user->email]);
 
         $site1         = factory(\App\Droit\Site\Entities\Site::class)->create();
         $newsletter1   = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site1->id]);
@@ -230,4 +185,5 @@ class SubscriptionTest extends TestCase
 
         $this->assertSame($new,$effective);
     }
+
 }

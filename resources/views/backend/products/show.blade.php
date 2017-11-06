@@ -11,7 +11,7 @@
             <form action="{{ url('admin/product/'.$product->id) }}" method="POST" class="form-horizontal">
                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                 @if($product->orders->count() == 0)
-                    <button id="deleteProduct" data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger deleteAction">Supprimer</button>
+                    <button id="deleteProduct" style="min-width:50px; padding: 4px 7px;"  data-what="Supprimer" data-action="{{ $product->title }}" class="btn btn-danger deleteAction">Supprimer</button>
                 @endif
             </form>
         </div>
@@ -210,7 +210,7 @@
                                 <form action="{{ url('admin/productattribut/'.$attribute->id) }}" method="POST" class="pull-right">
                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <button id="deleteAttribute_{{ $attribute->id }}" data-what="Supprimer" data-action="{{ $attribute->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
+                                    <button id="deleteAttribute_{{ $attribute->id }}"  style="min-width:30px; padding: 4px 4px;" data-what="Supprimer" data-action="{{ $attribute->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
                                 </form>
                             </div>
                         @endforeach

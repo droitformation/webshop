@@ -45,6 +45,8 @@ class ListTest extends TestCase
 
     public function testListPage()
     {
+        \DB::table('newsletter_lists')->truncate();
+
         $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
 
         $this->list->shouldReceive('getAll')->once()->andReturn(collect([$liste]));
@@ -58,6 +60,8 @@ class ListTest extends TestCase
 
     public function testSendToList()
     {
+        \DB::table('newsletter_lists')->truncate();
+
         $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
 
         $mock = \Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
@@ -75,6 +79,8 @@ class ListTest extends TestCase
 
     public function testSendGetTheListFails()
     {
+        \DB::table('newsletter_lists')->truncate();
+
         $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
 
         $mock = \Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
@@ -86,16 +92,6 @@ class ListTest extends TestCase
 
         $response->assertSessionHas('alert.style','danger');
         $response->assertSessionHas('alert.message','Les emails de la liste n\'ont pas pu être récupérés');
-    }
-
-    public function testStoreListeUploadFails()
-    {
-        $file   = dirname(__DIR__).'/excel/test.xlsx';
-        $upload = $this->prepareFileUpload($file);
-
-        $response = $this->call('POST', 'build/liste', ['title' => 'Un titre' ,'list_id' => 1, 'campagne_id' => 1], [], ['file' => $upload]);
-
-        $response->assertSessionHasErrors();
     }
 
     function prepareFileUpload($path)

@@ -45,13 +45,7 @@ class ProductTest extends DuskTestCase
 
             $user->roles()->attach(1);
 
-            $browser->logout()->visit('login')
-                ->type('email', $user->email)
-                ->type('password', 'jane2')
-                ->pause(1100)
-                ->press('Envoyer');
-
-            $browser->visit('/admin')
+            $browser->loginAs($user)->visit('/admin')
                 ->visit('admin/products')
                 ->click('#addProduct');
 
@@ -95,12 +89,6 @@ class ProductTest extends DuskTestCase
 
             $user->roles()->attach(1);
 
-            $browser->logout()->visit('login')
-                ->type('email', $user->email)
-                ->type('password', 'jane2')
-                ->pause(1100)
-                ->press('Envoyer');
-
             $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
                 'title'           => 'Test product',
                 'teaser'          => 'One test product',
@@ -111,8 +99,8 @@ class ProductTest extends DuskTestCase
                 'price'           => 1000,
             ]);
 
-            $browser->visit('admin/product/'.$product->id);
-            $browser->pause(300);
+            $browser->loginAs($user)->visit('admin/product/'.$product->id);
+            $browser->pause(1000);
             $browser->type('title','Un livre2')->type('teaser','Dapibus ante çunc, primiés?');
             $browser->driver->executeScript('$(\'.redactor\').redactor(\'code.set\', \'Dapibus suscipurcusit, primiés?\');');
             $browser->attach('file',public_path('images/avatar.jpg'))
@@ -149,9 +137,6 @@ class ProductTest extends DuskTestCase
 
             $user->roles()->attach(1);
 
-            $browser->logout()->visit('login')->type('email', $user->email)->type('password', 'jane2')->pause(1100)
-                ->press('Envoyer');
-
             $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create();
 
             // Make order and attach product
@@ -160,7 +145,7 @@ class ProductTest extends DuskTestCase
             $order = $order->first();
             $order->products()->attach($product->id);
 
-            $browser->visit('admin/product/'.$product->id);
+            $browser->loginAs($user)->visit('admin/product/'.$product->id)->pause(100);
 
             // we should see the delete button
             $browser->assertDontSee('Supprimer');
@@ -168,7 +153,7 @@ class ProductTest extends DuskTestCase
             // Detach the product, we schould see the delete button
             $order->products()->detach($product->id);
 
-            $browser->visit('admin/product/'.$product->id);
+            $browser->visit('admin/product/'.$product->id)->pause(100);
 
             $browser->assertSee('Supprimer');
             $browser->click('#deleteProduct');
@@ -230,7 +215,9 @@ class ProductTest extends DuskTestCase
 
             $browser->loginAs($user)->visit('admin/product/'.$product->id);
             $browser->assertSee('NewAttribute');
-            $browser->pause(100);
+            $element = '#deleteAttribute_'.$attribute->id;
+            $browser->driver->executeScript("$('html, body').animate({ scrollTop: $('$element').offset().top }, 0);");
+            $browser->pause(1000);
             $browser->press('#deleteAttribute_'.$attribute->id);
             $browser->driver->switchTo()->alert()->accept();
 

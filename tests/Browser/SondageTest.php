@@ -13,7 +13,8 @@ class SondageTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->artisan("db:seed");
+
+        $this->app['config']->set('database.default','testing');
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);

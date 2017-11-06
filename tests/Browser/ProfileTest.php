@@ -14,7 +14,7 @@ class ProfileTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->artisan("db:seed");
+        $this->app['config']->set('database.default','testing');
     }
 
     /**

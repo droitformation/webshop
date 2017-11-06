@@ -31,6 +31,8 @@ class ImportListTest extends DuskTestCase
      */
     public function testExample()
     {
+        \DB::table('newsletter_lists')->truncate();
+
         $this->browse(function (Browser $browser) {
 
             $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);

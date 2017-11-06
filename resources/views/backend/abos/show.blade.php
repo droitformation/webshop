@@ -88,7 +88,7 @@
                                             <td class="text-right">
                                                 <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
                                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                    <button id="deleteAbo_{{ $abonnement->id }}" type="submit" data-what="Supprimer l'abonné n°" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-xs deleteAction">Désabonner</button>
+                                                    <button style="min-width: 100px;" id="deleteAbo_{{ $abonnement->id }}" type="submit" data-what="Supprimer l'abonné n°" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-xs deleteAction">Désabonner</button>
                                                 </form>
                                             </td>
                                         </tr>

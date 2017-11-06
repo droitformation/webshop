@@ -18,7 +18,6 @@ class AdminColloqueTest extends DuskTestCase
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
-
     }
 
     public function tearDown()

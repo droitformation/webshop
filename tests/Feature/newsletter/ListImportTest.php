@@ -46,4 +46,35 @@ class ListImportTest extends TestCase
         $response->assertSessionHas('alert.message','Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailjet.');
     }
 
+    public function testAddEmailToList()
+    {
+        $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
+
+        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'cindy.leschaud@gmail.com']);
+
+        $this->assertDatabaseHas('newsletter_emails', [
+            'list_id'  => $liste->id,
+            'email'    => 'cindy.leschaud@gmail.com'
+        ]);
+
+        // Add same email
+        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'cindy.leschaud@gmail.com']);
+
+        $liste->load('emails');
+
+        $this->assertEquals(1, $liste->emails->count());
+    }
+
+    public function testDeleteEmailFromList()
+    {
+        $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
+        $email = factory(\App\Droit\Newsletter\Entities\Newsletter_emails::class)->create();
+
+        $response = $this->call('DELETE','build/emails/'.$email->id);
+
+        $this->assertDatabaseMissing('newsletter_emails', [
+            'email'   => $email->email,
+            'list_id' => $liste->id
+        ]);
+    }
 }

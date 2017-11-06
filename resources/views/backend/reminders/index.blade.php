@@ -51,7 +51,7 @@
                                         <td class="text-right">
                                             <form action="{{ url('admin/reminder/'.$reminder->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button id="deleteReminder_{{ $reminder->id }}" data-what="Supprimer" data-action="{{ $reminder->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                <button style="width: 30px; padding: 4px 4px;" id="deleteReminder_{{ $reminder->id }}" data-what="Supprimer" data-action="{{ $reminder->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                             </form>
                                         </td>
                                     </tr>

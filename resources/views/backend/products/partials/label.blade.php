@@ -12,7 +12,7 @@
                         <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                         <input type="hidden" name="type" value="{{ $labels }}" />
-                        <button id="delete{{ ucfirst($labels) }}_{{ $type->id }}" data-what="Supprimer" data-action="{{ $type->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
+                        <button id="delete{{ ucfirst($labels) }}_{{ $type->id }}" style="min-width:30px; padding: 4px 4px;"  data-what="Supprimer" data-action="{{ $type->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
                     </form>
                 </div>
                 <?php $choices[] = $type->id; ?>

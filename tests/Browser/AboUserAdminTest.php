@@ -144,8 +144,8 @@ class AboUserAdminTest extends DuskTestCase
             $make->abonnementFacture($abonnement);
             $facture = $abonnement->factures->first();
 
-            $browser->visit(url('admin/abonnements/'.$abo->id));
-            $browser->pause(1500); // datatable rendering
+            $browser->loginAs($this->user)->visit(url('admin/abonnements/'.$abo->id));
+            $browser->pause(3500); // datatable rendering
 
             // desinscription
             $browser->click('#deleteAbo_'.$abonnement->id);

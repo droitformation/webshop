@@ -20,7 +20,7 @@ class SubscriptionWorkerTest extends BrowserKitTest
 
         DB::beginTransaction();
 
-        $user = factory(App\Droit\User\Entities\User::class)->create();
+        $user = factory(\App\Droit\User\Entities\User::class)->create();
         $this->actingAs($user);
         
     }

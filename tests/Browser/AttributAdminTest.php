@@ -96,7 +96,7 @@ class AttributAdminTest extends DuskTestCase
                 'duration' => 'week'
             ]);
 
-            $browser->visit(url('admin/attribut'))->press('#deleteAttribut_'.$attribute->id);
+            $browser->loginAs($this->user)->visit(url('admin/attribut'))->press('#deleteAttribut_'.$attribute->id);
 
             $this->assertDatabaseHas('shop_attributes', [
                 'id' => $attribute->id,
@@ -105,21 +105,26 @@ class AttributAdminTest extends DuskTestCase
         });
     }
 
+    /**
+     * @group reminder
+     */
     public function testCreateNewReminder()
     {
+        \DB::table('reminders')->truncate();
+
         $this->browse(function (Browser $browser) {
             // Make a product
             $make    = new \tests\factories\ObjectFactory();
             $product = $make->product();
 
-            $browser->visit(url('admin/reminder'))->click('#reminder_product');
-
-            $browser->type('title','Rappel pour le livre')
-                ->type('text','Dapibus ante suscipurcusit çunc, primiés?')
-                ->select('start','created_at')
+            $browser->loginAs($this->user)->visit(url('admin/reminder'))->click('#reminder_product');
+            $browser->pause(4000);
+            $browser->type('title','Rappel pour le livre');
+                $browser->driver->executeScript('$(\'.redactor\').redactor(\'code.set\', \'<p>Dapibus ante suscipurcusit çunc, primiés?</p>\');');
+                $browser->select('start','created_at')
                 ->select('duration','week')
-                ->select('model_id'.$product->id)
-                ->press('Envoyer');
+                ->select('model_id',$product->id)
+                ->click('#createReminder');
 
             // Calculat the date for 1 week
             $send_at = $product->created_at->addWeek();
@@ -134,8 +139,13 @@ class AttributAdminTest extends DuskTestCase
         });
     }
 
+    /**
+     * @group reminder
+     */
     public function testUpdateReminder()
     {
+        \DB::table('reminders')->truncate();
+
         $this->browse(function (Browser $browser) {
 
             $make    = new \tests\factories\ObjectFactory();
@@ -150,18 +160,17 @@ class AttributAdminTest extends DuskTestCase
                 'send_at'  => $send_at->toDateString()
             ]);
 
-            $browser->visit(url('admin/reminder/'.$reminder->id));
+            $browser->loginAs($this->user)->visit(url('admin/reminder/'.$reminder->id));
 
             $this->assertEquals($reminder->send_at->toDateString(), $send_at->toDateString());
 
             // Update and add 1 week this time
-            $browser->type('title','Rappel pour le livre')
-                ->type('text','Dapibus ante suscipurcusit çunc, primiés?')
-                ->select('duration','week')
+            $browser->type('title','Rappel pour le livre');
+            $browser->driver->executeScript('$(\'.redactor\').redactor(\'code.set\', \'<p>Dapibus ante suscipurcusit çunc, primiés?</p>\');');
+            $browser->select('duration','week')
                 ->select('start','start_at')
-                ->select('type','colloque')
                 ->select('model_id',$colloque->id)
-                ->press('Envoyer');
+                ->click('#editReminder');
 
             $send_at = $colloque->start_at->addWeek();
 

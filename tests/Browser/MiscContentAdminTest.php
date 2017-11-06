@@ -104,11 +104,11 @@ class MiscContentAdminTest extends DuskTestCase
             $menu = factory(\App\Droit\Menu\Entities\Menu::class)->create();
             $page = factory(\App\Droit\Page\Entities\Page::class)->create(['menu_id' => $menu->id]);
 
-            $browser->loginAs($this->user)->visit('admin/blocs/2')->click('#addBloc');
+            $browser->loginAs($this->user)->visit('admin/blocs/2')->click('#addBloc')->pause(1000);
 
-            $browser->select('title','Lorem ipsum')
-                ->type('content','Amet dolor')
-                ->type('rang',1)
+            $browser->type('title','Lorem ipsum');
+            $browser->driver->executeScript('$(\'.redactor\').redactor(\'code.set\', \'Amet dolor\');');
+            $browser->type('rang',1)
                 ->select('type','pub')
                 ->select('position', 'sidebar')
                 ->select('page_id[]',$page->id)
@@ -116,7 +116,7 @@ class MiscContentAdminTest extends DuskTestCase
 
             $this->assertDatabaseHas('blocs', [
                 'title'    => 'Lorem ipsum',
-                'content'  => 'Amet dolor',
+                'content'  => '<p>Amet dolor</p>',
                 'type'     => 'pub',
                 'rang'     => 1,
                 'position' => 'sidebar'
