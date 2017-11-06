@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-8 text-right">
-                                <button class="btn btn-primary" type="submit">Envoyer</button>
+                                <button id="importList" class="btn btn-primary" type="submit">Envoyer</button>
                             </div>
                         </div>
                     </div>

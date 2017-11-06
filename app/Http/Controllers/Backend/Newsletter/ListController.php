@@ -68,8 +68,13 @@ class ListController extends Controller
         return view('backend.newsletter.lists.show')->with(['lists' => $lists, 'list' => $list]);
     }
 
-    public function store(EmailListRequest $request)
+    public function store(Request $request)
     {
+        if(!$request->file('file')) {
+            alert()->danger('Aucun fichier séléctionné');
+            return redirect()->back();
+        }
+
         $file = $this->upload->upload( $request->file('file') , 'files/import');
 
         if(!$file) {
@@ -150,15 +155,15 @@ class ListController extends Controller
     public function send(SendListRequest $request)
     {
         $list = $this->list->find($request->input('list_id'));
-  
+
         if(!$list) {
             alert()->danger('Les emails de la liste n\'ont pas pu être récupérés');
             return redirect('build/newsletter');
         }
         
         $results = $this->import->send($request->input('campagne_id'),$list);
-/*
-        if(!$results){
+
+  /*      if(!$results){
             alert()->danger('Problème avec l\'envoi, vérifier sur mailjet.com');
             return redirect('build/newsletter');
         }*/
