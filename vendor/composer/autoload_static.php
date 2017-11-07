@@ -19,10 +19,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '0c3c22e27afa83be19b4c938f4c6e9ea' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/functions.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         'f1fc7a7a353e3515a5d5efd255977059' => __DIR__ . '/..' . '/vinkla/alert/src/helpers.php',
+        '0c3c22e27afa83be19b4c938f4c6e9ea' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/functions.php',
         '4b69412694a85d7780e1934ebfeb0c1b' => __DIR__ . '/../..' . '/tests/factories/ObjectFactory.php',
         '6f63623309b417353d909e0e864f4beb' => __DIR__ . '/../..' . '/app/Support/helpers.php',
     );
@@ -89,7 +89,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             'League\\Flysystem\\' => 17,
             'Laravel\\Dusk\\' => 13,
-            'Laravel\\BrowserKitTesting\\' => 26,
         ),
         'I' => 
         array (
@@ -285,10 +284,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Laravel\\Dusk\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/dusk/src',
-        ),
-        'Laravel\\BrowserKitTesting\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/browser-kit-testing/src',
         ),
         'Intervention\\Image\\' => 
         array (
@@ -521,7 +516,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Adresse_typesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/Adresse_typesTableSeeder.php',
         'AdressesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AdressesTableSeeder.php',
         'AttributTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AttributTableSeeder.php',
-        'BrowserKitTest' => __DIR__ . '/../..' . '/tests/BrowserKitTest.php',
         'CantonsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CantonsTableSeeder.php',
         'CivilitesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CivilitesTableSeeder.php',
         'ContentSeeder' => __DIR__ . '/../..' . '/database/seeds/ContentSeeder.php',

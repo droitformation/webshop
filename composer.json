@@ -35,7 +35,6 @@
         "symfony/dom-crawler":"~3.0",
         "symfony/css-selector" : "~3.0",
 		"tightenco/mailthief": "^0.3.3",
-		"laravel/browser-kit-testing": "^1.0",
 		"doctrine/dbal": "2.5.0",
 		"laravel/dusk": "^2.0"
 	},
@@ -55,8 +54,7 @@
 	},
 	"autoload-dev": {
 		"classmap": [
-			"tests/TestCase.php",
-			"tests/BrowserKitTest.php"
+			"tests/TestCase.php"
 		]
 	},
 	"scripts": {

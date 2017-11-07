@@ -21,7 +21,6 @@ return array(
     'Adresse_typesTableSeeder' => $baseDir . '/database/seeds/Adresse_typesTableSeeder.php',
     'AdressesTableSeeder' => $baseDir . '/database/seeds/AdressesTableSeeder.php',
     'AttributTableSeeder' => $baseDir . '/database/seeds/AttributTableSeeder.php',
-    'BrowserKitTest' => $baseDir . '/tests/BrowserKitTest.php',
     'CantonsTableSeeder' => $baseDir . '/database/seeds/CantonsTableSeeder.php',
     'CivilitesTableSeeder' => $baseDir . '/database/seeds/CivilitesTableSeeder.php',
     'ContentSeeder' => $baseDir . '/database/seeds/ContentSeeder.php',
