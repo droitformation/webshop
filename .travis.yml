@@ -13,5 +13,4 @@ script:
   - php artisan migrate --env=testing --no-interaction
   - php artisan db:seed --env=testing --no-interaction
   - composer dumpautoload
-  - vendor/bin/phpunit --testsuite Unit
-  - vendor/bin/phpunit --testsuite Feature
+  - vendor/bin/phpunit

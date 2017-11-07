@@ -16,7 +16,6 @@ class FeaturePagesTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $this->site = \App::make('App\Droit\Site\Repo\SiteInterface');
