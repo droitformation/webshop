@@ -4,14 +4,18 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class FeatureProductTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);

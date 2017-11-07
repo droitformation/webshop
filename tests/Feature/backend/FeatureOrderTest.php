@@ -4,16 +4,20 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class FeatureOrderTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     protected $account;
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->account = \Mockery::mock('App\Droit\User\Worker\AccountWorkerInterface');
         $this->app->instance('App\Droit\User\Worker\AccountWorkerInterface', $this->account);

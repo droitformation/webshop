@@ -4,10 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class MailjetServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     protected $mailjet;
     protected $resources;
@@ -18,6 +19,7 @@ class MailjetServiceTest extends TestCase
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->mailjet = \Mockery::mock('\Mailjet\Client');
         $this->app->instance('\Mailjet\Client', $this->mailjet);

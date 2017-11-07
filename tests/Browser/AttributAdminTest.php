@@ -33,7 +33,7 @@ class AttributAdminTest extends DuskTestCase
     }
 
     /**
-     * @group attribut
+     * @group attribut_or_reminder
      */
     public function testCreateNewAttribut()
     {
@@ -63,7 +63,7 @@ class AttributAdminTest extends DuskTestCase
     }
 
     /**
-     * @group attribut
+     * @group attribut_or_reminder
      */
     public function testUpdateAttribut()
     {
@@ -85,7 +85,7 @@ class AttributAdminTest extends DuskTestCase
     }
 
     /**
-     * @group attribut
+     * @group attribut_or_reminder
      */
     public function testDeleteReminder()
     {
@@ -96,7 +96,11 @@ class AttributAdminTest extends DuskTestCase
                 'duration' => 'week'
             ]);
 
-            $browser->loginAs($this->user)->visit(url('admin/attribut'))->press('#deleteAttribut_'.$attribute->id);
+            $browser->loginAs($this->user)
+                ->visit(url('admin/attribut'))
+                ->press('#deleteAttribut_'.$attribute->id);
+
+            $browser->driver->switchTo()->alert()->accept();
 
             $this->assertDatabaseHas('shop_attributes', [
                 'id' => $attribute->id,
@@ -106,7 +110,7 @@ class AttributAdminTest extends DuskTestCase
     }
 
     /**
-     * @group reminder
+     * @group attribut_or_reminder
      */
     public function testCreateNewReminder()
     {
@@ -140,7 +144,7 @@ class AttributAdminTest extends DuskTestCase
     }
 
     /**
-     * @group reminder
+     * @group attribut_or_reminder
      */
     public function testUpdateReminder()
     {

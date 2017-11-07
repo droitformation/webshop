@@ -10,7 +10,7 @@ Route::get('abos_test', function () {
 
     $all = $abo->getAll()->where('abo_id',2);
 
-    $all->map(function ($abo, $key) {
+/*    $all->map(function ($abo, $key) {
         if(isset($abo->user->user)){
             $abo->user_id = $abo->user->user->id;
         }
@@ -24,7 +24,16 @@ Route::get('abos_test', function () {
         echo '<pre>';
         print_r($abo->toArray());
         echo '</pre>';
-    });
+    });*/
+
+    $make  = new \tests\factories\ObjectFactory();
+    $user  = factory(\App\Droit\User\Entities\User::class)->create();
+
+    $order = $make->order(1, 1);
+    $order = $order->first();
+
+    $generate = new \App\Droit\Generate\Entities\OrderGenerate($order);
+    $adresse  = $generate->getAdresse();
 
     /*
         list($hasUser, $noUser) = $all->partition(function ($abo_user) {

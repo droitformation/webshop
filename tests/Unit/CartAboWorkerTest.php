@@ -4,15 +4,17 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class CartAboWorkerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     public function setUp()
     {
         parent::setUp();
-        $this->artisan("db:seed");
+
+        $this->reset_all();
 
         \Cart::instance('shop')->destroy();
         \Cart::instance('abonnement')->destroy();

@@ -5,11 +5,12 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AdminAdresseTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,DatabaseTransactions;
 
     public function setUp()
     {
@@ -25,10 +26,12 @@ class AdminAdresseTest extends DuskTestCase
     }
 
     /**
-     * @group adresse
+     * @group adresse_or_user
      */
     public function testCreateAdresseForUserForm()
     {
+        \DB::table('adresses')->truncate();
+
         $this->browse(function (Browser $browser) {
 
             $user = factory(\App\Droit\User\Entities\User::class)->create();
@@ -47,6 +50,8 @@ class AdminAdresseTest extends DuskTestCase
             $browser->type('ville','Bienne');
             $browser->press('#createAdresse');
 
+            $browser->visit(url('admin'));
+
             $this->assertDatabaseHas('adresses', [
                 'user_id'    => $person->id,
                 'first_name' => $person->first_name,
@@ -61,10 +66,12 @@ class AdminAdresseTest extends DuskTestCase
     }
 
     /**
-     * @group adresse
+     * @group adresse_or_user
      */
     public function testNewAdresse()
     {
+        \DB::table('adresses')->truncate();
+
         $this->browse(function (Browser $browser) {
 
             $user = factory(\App\Droit\User\Entities\User::class)->create();
@@ -80,6 +87,8 @@ class AdminAdresseTest extends DuskTestCase
             $browser->type('ville','Bienne');
             $browser->press('#createAdresse');
 
+            $browser->visit(url('admin'));
+
             $this->assertDatabaseHas('adresses', [
                 'first_name' => 'Terry',
                 'last_name'  => 'Jones',
@@ -92,7 +101,7 @@ class AdminAdresseTest extends DuskTestCase
     }
 
     /**
-     * @group user
+     * @group adresse_or_user
      */
     public function testNewUser()
     {
@@ -118,7 +127,7 @@ class AdminAdresseTest extends DuskTestCase
     }
 
     /**
-     * @group user
+     * @group adresse_or_user
      */
     public function testNewUserOnlyCompany()
     {
@@ -142,7 +151,7 @@ class AdminAdresseTest extends DuskTestCase
     }
 
     /**
-     * @group user
+     * @group adresse_or_user
      */
     public function testDeleteThenCreateUserWithSameEmail()
     {
@@ -183,7 +192,7 @@ class AdminAdresseTest extends DuskTestCase
     }
 
     /**
-     * @group user
+     * @group adresse_or_user
      */
     public function testUpdateUser()
     {
@@ -210,7 +219,7 @@ class AdminAdresseTest extends DuskTestCase
     }
 
     /**
-     * @group user
+     * @group adresse_or_user
      */
     public function testUpdateUserOnlyCompany()
     {

@@ -4,10 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class ListImportTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     protected $worker;
 
@@ -16,6 +17,7 @@ class ListImportTest extends TestCase
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->worker = \Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
         $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $this->worker);

@@ -4,14 +4,17 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class WorkerAdresseTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->reset_all();
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
@@ -150,7 +153,7 @@ class WorkerAdresseTest extends TestCase
         $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('delete')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
-
+        $this->assertTrue(true);
     }
 
     public function testReassignOrdersToUserFromAdressesAttachMocks()
@@ -178,6 +181,7 @@ class WorkerAdresseTest extends TestCase
 
         $worker->setAction('attach')->setTypes(['orders'])->setFromAdresses([$adresse1->id, $adresse2->id])->reassignFor($user);
 
+        $this->assertTrue(true);
     }
 
     public function testReassignSpecialisationsAndMembers()
@@ -243,6 +247,8 @@ class WorkerAdresseTest extends TestCase
         $mockadresse->shouldReceive('setMember');
 
         $worker->setAction('attachdelete')->setTypes(['orders'])->setFromAdresses([$adresses->pluck('id')->all()])->reassignFor($recipient);
+
+        $this->assertTrue(true);
     }
 
     /*

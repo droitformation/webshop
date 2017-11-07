@@ -4,10 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class SubscriptionAcceptTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     protected $worker;
     protected $newsletter;
@@ -20,6 +21,7 @@ class SubscriptionAcceptTest extends TestCase
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->worker = \Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');
         $this->app->instance('App\Droit\Newsletter\Worker\MailjetServiceInterface', $this->worker);

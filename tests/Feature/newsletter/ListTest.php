@@ -4,10 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class ListTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     protected $subscription;
     protected $newsletter;
@@ -19,6 +20,7 @@ class ListTest extends TestCase
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->subscription = \Mockery::mock('App\Droit\Newsletter\Repo\NewsletterUserInterface');
         $this->app->instance('App\Droit\Newsletter\Repo\NewsletterUserInterface', $this->subscription);

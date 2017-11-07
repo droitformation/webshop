@@ -4,10 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class CampagneTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
     
     protected $mock;
     protected $worker;
@@ -19,6 +20,7 @@ class CampagneTest extends TestCase
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->mock = \Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
         $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);

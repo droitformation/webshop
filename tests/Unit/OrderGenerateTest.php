@@ -4,14 +4,17 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class OrderGenerateTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->reset_all();
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
@@ -80,9 +83,6 @@ class OrderGenerateTest extends TestCase
         $this->assertEquals($generate->getAdresse()->name, $adresse->name);
     }
 
-    /**
-     * @expectedException \App\Exceptions\AdresseNotExistException
-     */
     public function testGetNoAdresse()
     {
         $make  = new \tests\factories\ObjectFactory();
@@ -94,5 +94,7 @@ class OrderGenerateTest extends TestCase
         $generate = new \App\Droit\Generate\Entities\OrderGenerate($order);
         $adresse  = $generate->getAdresse();
 
+        $this->assertNull($adresse);
+        //$this->expectException(\App\Exceptions\AdresseNotExistPrepareException::class);
     }
 }

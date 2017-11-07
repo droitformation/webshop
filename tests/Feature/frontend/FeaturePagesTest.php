@@ -4,14 +4,20 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class FeaturePagesTest extends TestCase
 {
+    use ResetTbl;
+
     protected $site;
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->site = \App::make('App\Droit\Site\Repo\SiteInterface');
     }

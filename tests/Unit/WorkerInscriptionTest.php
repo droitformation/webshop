@@ -4,16 +4,19 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class WorkerInscriptionTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     protected $generator;
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->reset_all();
 
         $this->generator = \Mockery::mock('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $this->app->instance('App\Droit\Generate\Pdf\PdfGeneratorInterface', $this->generator);

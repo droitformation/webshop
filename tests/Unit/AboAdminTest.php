@@ -4,14 +4,17 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class AboAdminTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->reset_all();
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
@@ -41,7 +44,7 @@ class AboAdminTest extends TestCase
             'title'       => 'TestAbo',
             'price'       => 50,
             'plan'        => 'year',
-            'shipping'    => '12',
+            'shipping'    => 12,
             'products_id' => [$product->id]
         ];
 
