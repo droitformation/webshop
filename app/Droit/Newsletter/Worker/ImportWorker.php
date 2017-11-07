@@ -147,9 +147,11 @@ class ImportWorker implements ImportWorkerInterface
             // dispatch to jobs
             $chunks = $recipients->chunk(100);
 
+            $min = 1;
             foreach ($chunks as $chunk){
-                $job = (new SendBulkEmail($campagne,$html,$chunk->toArray()))->delay(\Carbon\Carbon::now()->addMinutes(2));
+                $job = (new SendBulkEmail($campagne,$html,$chunk->toArray()))->delay(\Carbon\Carbon::now()->addMinutes($min));
                 $this->dispatch($job);
+                $min += 1;
             }
 
             return true;
