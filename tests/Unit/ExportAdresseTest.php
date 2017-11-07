@@ -130,14 +130,22 @@ class ExportAdresseTest extends TestCase
         $make = new \tests\factories\ObjectFactory();
         $adresse = $make->user();
 
-        $response = $this->call('POST', '/admin/search/user',['term' => $adresse->first_name]);
+        $repo = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
 
-        $content = $response->getOriginalContent();
-        $content = $content->getData();
+        $adresses = $repo->search($adresse->first_name);
 
-        $result = $content['users'];
+        $results = $adresses->groupBy(function ($adresse, $key) {
+            return $adresse->user_id > 0 &&  isset($adresse->user) ? 'users' : 'adresses';
+        })->map(function ($items, $key) {
+            return $items->map(function ($item, $i) use ($key) {
+                return $key == 'users' ? $item->user : $item;
+            })->unique('id');
+        });
 
-        $names = $result->pluck('name')->unique()->values()->all();
+        $users    = isset($results['users']) ? $results['users'] : collect([]);
+        $adresses = isset($results['adresses']) ? $results['adresses'] : collect([]);
+
+        $names = $users->pluck('name')->unique()->values()->all();
 
         $this->assertTrue(in_array($adresse->first_name.' '.$adresse->last_name,$names));
     }
@@ -153,13 +161,20 @@ class ExportAdresseTest extends TestCase
 
         $user->delete(); // delete user
 
-        $response = $this->call('POST', '/admin/search/user',['term' => $user->first_name]);
+        $repo = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
 
-        $content = $response->getOriginalContent();
-        $content = $content->getData();
+        $adresses = $repo->search($user->first_name);
 
-        $users    = $content['users'];
-        $adresses = $content['adresses'];
+        $results = $adresses->groupBy(function ($adresse, $key) {
+            return $adresse->user_id > 0 &&  isset($adresse->user) ? 'users' : 'adresses';
+        })->map(function ($items, $key) {
+            return $items->map(function ($item, $i) use ($key) {
+                return $key == 'users' ? $item->user : $item;
+            })->unique('id');
+        });
+
+        $users    = isset($results['users']) ? $results['users'] : collect([]);
+        $adresses = isset($results['adresses']) ? $results['adresses'] : collect([]);
 
         // There should be no adresse in results because the user has been deleted and the adresse shouldn't apprear
         $this->assertTrue($users->isEmpty());

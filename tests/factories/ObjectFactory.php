@@ -251,14 +251,18 @@ class ObjectFactory
 
     public function getImages()
     {
-        $images = \File::files(public_path('files/products'));
-        
-        return collect($images)->map(function ($name) {
-            $file = explode('/', $name);
-            $file = end($file);
+        if(\File::exists(public_path('files/products'))){
+            $images = \File::files(public_path('files/products'));
 
-            return $file;
-        })->toArray();
+            return collect($images)->map(function ($name) {
+                $file = explode('/', $name);
+                $file = end($file);
+
+                return $file;
+            })->toArray();
+        }
+
+        return ['product.jpg','product1.jpg','product2.jpg'];
     }
 
     public function makeProduct($images)
