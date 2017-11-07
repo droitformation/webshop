@@ -57,7 +57,7 @@ return [
 			'host'      => env('DB_TEST_HOST', 'localhost'),
 			'database'  => env('DB_TEST_DATABASE', 'staging'),
 			'username'  => env('DB_TEST_USERNAME', 'root'),
-			'password'  => env('DB_TEST_PASSWORD', 'root'),
+			'password'  => env('DB_TEST_PASSWORD', ''),
 			'unix_socket' => env('DB_SOCKET', ''),
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
