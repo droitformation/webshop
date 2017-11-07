@@ -13,7 +13,7 @@ class AboAdminTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();

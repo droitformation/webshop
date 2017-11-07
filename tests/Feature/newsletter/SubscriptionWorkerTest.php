@@ -16,7 +16,7 @@ class SubscriptionWorkerTest extends TestCase
     {
         parent::setUp();
 
-
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $this->mailjet = \Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');

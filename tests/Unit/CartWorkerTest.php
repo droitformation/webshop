@@ -17,6 +17,8 @@ class CartWorkerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->app['config']->set('database.default','testing');
+        $this->reset_all();
 
         $this->shipping = \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface');
 

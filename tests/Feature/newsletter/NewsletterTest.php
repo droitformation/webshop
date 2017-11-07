@@ -14,7 +14,7 @@ class NewsletterTest extends TestCase
     {
         parent::setUp();
 
-
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();

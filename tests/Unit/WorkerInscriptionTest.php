@@ -16,6 +16,7 @@ class WorkerInscriptionTest extends TestCase
     {
         parent::setUp();
 
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $this->generator = \Mockery::mock('App\Droit\Generate\Pdf\PdfGeneratorInterface');

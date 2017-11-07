@@ -13,7 +13,7 @@ class CartAboWorkerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         \Cart::instance('shop')->destroy();

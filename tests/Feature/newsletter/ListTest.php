@@ -19,7 +19,7 @@ class ListTest extends TestCase
     {
         parent::setUp();
 
-
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $this->subscription = \Mockery::mock('App\Droit\Newsletter\Repo\NewsletterUserInterface');

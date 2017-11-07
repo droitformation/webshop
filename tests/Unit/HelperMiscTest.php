@@ -14,6 +14,9 @@ class HelperMiscTest extends TestCase
     {
         parent::setUp();
 
+        $this->app['config']->set('database.default','testing');
+        $this->reset_all();
+
         $this->format  = new \App\Droit\Helper\Format();
         $this->helper  = new \App\Droit\Helper\Helper();
     }

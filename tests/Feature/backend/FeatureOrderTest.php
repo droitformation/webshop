@@ -16,6 +16,7 @@ class FeatureOrderTest extends TestCase
     {
         parent::setUp();
 
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $this->account = \Mockery::mock('App\Droit\User\Worker\AccountWorkerInterface');

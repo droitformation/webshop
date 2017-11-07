@@ -19,7 +19,7 @@ class NewsletterInscriptionTest extends TestCase
     {
         parent::setUp();
 
-
+        $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
         $this->mock = \Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
