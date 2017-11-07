@@ -1,0 +1,26 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041482527
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/test.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041482630
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041482630
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041482672
+    }
+]

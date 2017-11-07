@@ -1,0 +1,50 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041510677
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041510717
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041513057
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/testing.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041513082
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/test.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041513093
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041513133
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041513467
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041514475
+    }
+]

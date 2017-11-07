@@ -1,0 +1,92 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041522157
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/testing.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041522173
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041522202
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/test.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041522270
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041522520
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041524120
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041524188
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041525657
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041525731
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041527679
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041527695
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041528880
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041528950
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041530171
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041530180
+    }
+]

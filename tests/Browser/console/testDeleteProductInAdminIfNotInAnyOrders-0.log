@@ -1,0 +1,50 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041437660
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/test.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041437808
+    },
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041439028
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/test.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041439254
+    },
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041441482
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/test.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041441683
+    },
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041442665
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/test.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041442955
+    }
+]

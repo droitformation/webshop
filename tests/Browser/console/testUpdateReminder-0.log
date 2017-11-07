@@ -1,0 +1,14 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041279171
+    },
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041281617
+    }
+]

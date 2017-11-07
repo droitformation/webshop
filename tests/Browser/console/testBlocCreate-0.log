@@ -1,0 +1,26 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041351501
+    },
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041353534
+    },
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041358887
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/uploads - Failed to load resource: net::ERR_TOO_MANY_REDIRECTS",
+        "source": "network",
+        "timestamp": 1510041359310
+    }
+]

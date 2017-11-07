@@ -1,0 +1,20 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041236953
+    },
+    {
+        "level": "SEVERE",
+        "message": "console-api 512:14 \"[Vue warn]: Cannot find element: #appComponent \"",
+        "source": "console-api",
+        "timestamp": 1510041238350
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/cdn.datatables.net\/r\/bs\/dt-1.10.9\/datatables.min.js 131:322 Uncaught TypeError: Cannot read property 'nTf' of undefined",
+        "source": "javascript",
+        "timestamp": 1510041238383
+    }
+]

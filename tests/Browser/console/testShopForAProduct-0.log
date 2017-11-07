@@ -1,0 +1,128 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041533015
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041533026
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/testing.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041533048
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041533135
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041534264
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041534286
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041535746
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041535792
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041540725
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041540744
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041541601
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041541655
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041542943
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041544428
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041544492
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/testing.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041548003
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/colloques\/illustration\/teamweb.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041548009
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041548024
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041548058
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/files\/products\/text.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041549024
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/shop.local\/frontend\/pubdroit\/images\/glyphicons-halflings.png - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1510041549069
+    }
+]
