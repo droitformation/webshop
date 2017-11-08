@@ -1069,6 +1069,27 @@ Route::get('/calculette', function () {
 
 });
 
+Route::get('/test_mailgun', function () {
+
+    $worker  = \App::make('App\Droit\Newsletter\Worker\CampagneInterface');
+    $mailgun = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
+
+    $toSend = \Carbon\Carbon::now()->addMinutes(1)->toRfc2822String();
+    $html    = $worker->html(1665);
+
+    $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
+        ->setHtml($html)
+        ->setSendDate($toSend)
+        ->setRecipients(['cindy.leschaud@gmail.com','cindy.leschaud@unine.ch']);
+
+    $response = $mailgun->sendTransactional('Test mailgun newsleter');
+
+    echo '<pre>';
+    print_r($response);
+    echo '</pre>';exit();
+});
+
+
 Route::get('factory', function()
 {
     //$make = new \tests\factories\ObjectFactory();

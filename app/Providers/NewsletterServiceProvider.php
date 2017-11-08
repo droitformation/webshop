@@ -34,10 +34,11 @@ class NewsletterServiceProvider extends ServiceProvider
     public function register()
     {
         // Custom Facade for CampagneWorker
-
         $this->app->singleton('newsworker', function ($app) {
             return $app->make('App\Droit\Newsletter\Worker\CampagneInterface');
         });
+
+        $this->registerMailgunNewService();
 
         $this->registerMailjetService();
         $this->registerMailjetNewService();
@@ -54,6 +55,22 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerEmailService();
         $this->registerClipboardService();
         $this->registerTrackingService();
+    }
+
+
+    protected function registerMailgunNewService(){
+
+        $this->app->bind('App\Droit\Newsletter\Worker\MailgunInterface', function()
+        {
+            if (\App::environment('testing')) {
+                $mailgun = \Mockery::mock('\Mailgun\Mailgun');
+            }
+            else{
+                $mailgun = new \Mailgun\Mailgun(env('MAILGUN_SECRET'));
+            }
+
+            return new \App\Droit\Newsletter\Worker\MailgunService($mailgun);
+        });
     }
 
     /**

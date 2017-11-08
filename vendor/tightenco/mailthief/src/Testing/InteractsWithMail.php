@@ -18,7 +18,11 @@ trait InteractsWithMail
 
     private function getMailer()
     {
-        return $this->mailer ?: MailThief::getFacadeRoot();
+        if (! $this->mailer) {
+            $this->setMailer(MailThief::getFacadeRoot());
+        }
+
+        return $this->mailer;
     }
 
     /**
@@ -56,7 +60,13 @@ trait InteractsWithMail
     /** @before */
     public function hijackMail()
     {
-        $this->getMailer()->hijack();
+        if (method_exists($this, 'afterApplicationCreated')) {
+            $this->afterApplicationCreated(function () {
+                $this->getMailer()->hijack();
+            });
+        } else {
+            $this->getMailer()->hijack();
+        }
     }
 
     public function seeMessageFor($email)
@@ -90,23 +100,40 @@ trait InteractsWithMail
         return $this;
     }
 
-    public function seeMessageFrom($email)
+    public function seeMessageFrom($email, $name = NULL)
     {
         $this->seeMessage();
 
-        $from = $this->lastMessage()->from->map(function ($value, $key) {
-            return is_numeric($key) ? $value : $key;
-        })->first();
+        $this->lastMessage()->from->each(function ($nameOrEmail, $emailOrIndex) use ($email, $name) {
+            // If no name is specified, the structure is ['hello@example.org'], if specified, it's
+            // ['hello@example.org' => 'From Example']
+            $fromEmail = is_int($emailOrIndex) ? $nameOrEmail : $emailOrIndex;
+            $fromName = is_int($emailOrIndex) ? null : $nameOrEmail;
 
-        $this->assertEquals(
-            $email,
-            $from,
-            sprintf(
-                'Expected to find message from "[%s]", but found "[%s]".',
+            $this->assertEquals(
                 $email,
-                $from
-            )
-        );
+                $fromEmail,
+                sprintf(
+                    'Expected to find message from "[%s]", but found "[%s]".',
+                    $email,
+                    $fromEmail
+                )
+            );
+
+            if (! $name) {
+                return;
+            }
+
+            $this->assertEquals(
+                $name,
+                $fromName,
+                sprintf(
+                    'Expected to find message from "[%s]", but found "[%s]".',
+                    $name,
+                    $fromName
+                )
+            );
+        });
 
         return $this;
     }
@@ -143,6 +170,16 @@ trait InteractsWithMail
         $this->assertNotNull(
             $this->lastMessage(),
             'Unable to find a generated email.'
+        );
+
+        return $this;
+    }
+
+    protected function dontSeeMessage()
+    {
+        $this->assertNull(
+            $this->lastMessage(),
+            'Generated email found.'
         );
 
         return $this;
