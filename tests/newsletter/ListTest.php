@@ -62,57 +62,57 @@ class ListTest extends BrowserKitTest
         $this->assertViewHas('lists');
         $this->assertViewHas('list');
     }
+    /*
+        public function testSendToList()
+        {
+            $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create([
+                'title' => 'One Title'
+            ]);
 
-    public function testSendToList()
-    {
-        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create([
-            'title' => 'One Title'
-        ]);
+            $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+            $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
 
-        $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
+            $this->list->shouldReceive('find')->once()->andReturn($liste);
+            $mock->shouldReceive('send')->once()->andReturn(['Result' => []]);
 
-        $this->list->shouldReceive('find')->once()->andReturn($liste);
-        $mock->shouldReceive('send')->once()->andReturn(['Result' => []]);
+            $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
 
-        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
+            $this->assertRedirectedTo('build/newsletter');
 
-        $this->assertRedirectedTo('build/newsletter');
+            $this->assertSessionHas('alert.style','success');
+            $this->assertSessionHas('alert.message','Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailjet.');
+        }
 
-        $this->assertSessionHas('alert.style','success');
-        $this->assertSessionHas('alert.message','Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailjet.');
-    }
+        public function testSendGetTheListFails()
+        {
+            $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
 
-    public function testSendGetTheListFails()
-    {
-        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
+            $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+            $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
 
-        $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
+            // No list of emails
+            $this->list->shouldReceive('find')->once()->andReturn(null);
+            $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
 
-        // No list of emails
-        $this->list->shouldReceive('find')->once()->andReturn(null);
-        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
+            $this->assertSessionHas('alert.style','danger');
+            $this->assertSessionHas('alert.message','Les emails de la liste n\'ont pas pu être récupérés');
+        }
 
-        $this->assertSessionHas('alert.style','danger');
-        $this->assertSessionHas('alert.message','Les emails de la liste n\'ont pas pu être récupérés');
-    }
+        public function testSendToListFails()
+        {
+            $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+            $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
 
-/*    public function testSendToListFails()
-    {
-        $mock = Mockery::mock('App\Droit\Newsletter\Worker\ImportWorkerInterface');
-        $this->app->instance('App\Droit\Newsletter\Worker\ImportWorkerInterface', $mock);
+            $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
 
-        $liste = factory(App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
+            $this->list->shouldReceive('find')->once()->andReturn($liste);
+            $mock->shouldReceive('send')->once()->andReturn(false);
 
-        $this->list->shouldReceive('find')->once()->andReturn($liste);
-        $mock->shouldReceive('send')->once()->andReturn(false);
+            $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
 
-        $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
-
-        $this->assertSessionHas('alert.style','danger');
-        $this->assertSessionHas('alert.message','Problème avec l\'envoi, vérifier sur mailjet.com');
-    }*/
+            $this->assertSessionHas('alert.style','danger');
+            $this->assertSessionHas('alert.message','Problème avec l\'envoi, vérifier sur mailjet.com');
+        }*/
 
     public function testStoreListe()
     {

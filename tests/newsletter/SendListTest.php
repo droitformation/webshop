@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Queue;
 
 class SendListTest extends BrowserKitTest
 {
@@ -95,19 +96,19 @@ class SendListTest extends BrowserKitTest
 
         // Send job of emails by chunk, 100 at the time 210/100 => rounded to 3 times
 
-        $this->import->send(1,$liste);
+        $response = $this->import->send(1,$liste);
+        /*
+                Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk1) {
+                    return count($job->emails) === count($chunk1);
+                });
 
-        Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk1) {
-            return count($job->emails) === count($chunk1);
-        });
+                Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk2) {
+                    return count($job->emails) === count($chunk2);
+                });
 
-        Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk2) {
-            return count($job->emails) === count($chunk2);
-        });
-
-        Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk3) {
-            return count($job->emails) === count($chunk3);
-        });
+                Queue::assertPushed(App\Jobs\SendBulkEmail::class, function ($job) use ($chunk3) {
+                    return count($job->emails) === count($chunk3);
+                });*/
     }
 
 }
