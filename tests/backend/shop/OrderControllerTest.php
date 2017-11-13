@@ -143,7 +143,7 @@ class OrderControllerTest extends BrowserKitTest {
         $this->visit('admin/orders')->see('Commandes');
 
 		// filter to get all send orders
-		$response = $this->call('POST', url('admin/orders'), [
+		$response = $this->call('POST', 'admin/orders', [
 			'period' => [
 				'start' => $start,
 				'end'   => $end,
@@ -159,7 +159,7 @@ class OrderControllerTest extends BrowserKitTest {
 		$this->assertEquals(3, $result->count());
 
 		// filter to get non sent orders
-        $response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'send' => 'pending']);
+        $response = $this->call('POST', 'admin/orders', ['start' => $start, 'end' => $end, 'send' => 'pending']);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();
@@ -188,7 +188,7 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$this->visit('admin/orders')->see('Commandes');
 
-		$response = $this->call('POST', url('admin/orders'), [
+		$response = $this->call('POST', 'admin/orders', [
 			'period' => [
 				'start' => $start,
 				'end'   => $end,
@@ -202,7 +202,7 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$this->assertEquals(5, $result->count());
 
-		$response = $this->call('POST', url('admin/orders'), [
+		$response = $this->call('POST', 'admin/orders', [
 			'period' => [
 				'start' => $start,
 				'end'   => $end,
@@ -246,7 +246,7 @@ class OrderControllerTest extends BrowserKitTest {
 			'coupon_id'   => $coupon->id
 		];
 
-		$this->call('PUT', url('admin/order/'.$order->id), $data);
+		$this->call('PUT', 'admin/order/'.$order->id, $data);
 
 		$this->visit('admin/order/'.$order->id)->see($order->order_no);
 
@@ -271,7 +271,7 @@ class OrderControllerTest extends BrowserKitTest {
 		$this->visit('admin/orders')->see('Commandes');
 
 		// filter to get all send orders
-		$response = $this->call('POST', url('admin/orders'), [
+		$response = $this->call('POST', 'admin/orders', [
 			'period' => [
 				'start' => '2016-10-08',
 				'end'   => '2016-10-18',

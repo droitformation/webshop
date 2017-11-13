@@ -233,7 +233,7 @@ class UserTest extends BrowserKitTest {
 
         $this->assertSame([$newsletter->id, $newsletter2->id],$content['user']->email_subscriptions->pluck('subscriptions')->flatten(1)->pluck('id')->all());
 
-        $response = $this->call('DELETE', 'admin/user/'.$person->id, ['newsletter_id' => [$newsletter->id], 'confirm' => 1, 'url' => url('admin/users'), 'term' => '']);
+        $response = $this->call('DELETE', 'admin/user/'.$person->id, ['newsletter_id' => [$newsletter->id], 'confirm' => 1, 'url' => 'admin/users', 'term' => '']);
 
         $subscriber->fresh();
         $subscriber->load('subscriptions');

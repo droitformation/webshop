@@ -53,7 +53,7 @@ class TrackingTest extends BrowserKitTest
            ]
        ];
 
-        $response = $this->call('POST', url('tracking'), $events);
+        $response = $this->call('POST', 'tracking', $events);
 
         $tracking = App\Droit\Newsletter\Entities\Newsletter_tracking::all();
 

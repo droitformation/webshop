@@ -41,7 +41,7 @@ class ProductTest extends BrowserKitTest {
         $this->visit('admin/products');
 
         // filter to get all send orders
-        $response = $this->call('POST', url('admin/products'), ['term' => $product->title]);
+        $response = $this->call('POST', 'admin/products', ['term' => $product->title]);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();
@@ -63,7 +63,7 @@ class ProductTest extends BrowserKitTest {
         $this->visit('admin/products');
 
         // filter to get all send orders
-        $response = $this->call('POST', url('admin/products'), ['sort' => ['author_id' => $author->id]]);
+        $response = $this->call('POST', 'admin/products', ['sort' => ['author_id' => $author->id]]);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();

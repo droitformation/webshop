@@ -210,7 +210,7 @@ class ReponseTest extends BrowserKitTest {
 
 	public function testSendTestEmail()
 	{
-		Mail::fake();
+		\Mail::fake();
 		// Create colloque
 		$make     = new \tests\factories\ObjectFactory();
 		$colloque = $make->colloque();
@@ -226,7 +226,7 @@ class ReponseTest extends BrowserKitTest {
 		$sondage->avis()->attach($question->id, ['rang' => 1]);
 
 		// filter to get all send orders
-		$response = $this->call('POST', url('admin/sondage/send'), ['sondage_id' =>  $sondage->id,'email' => 'info@domain.ch']);
+		$response = $this->call('POST', 'admin/sondage/send', ['sondage_id' =>  $sondage->id,'email' => 'info@domain.ch']);
 
 		$this->assertRedirectedTo('admin/sondage');
 	}
@@ -244,7 +244,7 @@ class ReponseTest extends BrowserKitTest {
 		]);
 
 		try {
-			$response = $this->call('POST', url('admin/sondage/send'), ['sondage_id' =>  $sondage->id, 'email' => 'info@domain.ch']);
+			$response = $this->call('POST', 'admin/sondage/send', ['sondage_id' =>  $sondage->id, 'email' => 'info@domain.ch']);
 
 		} catch (Exception $e) {
 			$this->assertType('App\Exceptions\MissingException', $e);
