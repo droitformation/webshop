@@ -27,7 +27,7 @@ class AnalyseTest extends BrowserKitTest {
 
 	public function testAnalyseCreationForm()
 	{
-		$this->visit(url('admin/analyses/1'));
+		$this->visit('admin/analyses/1');
 		$this->assertViewHas('analyses');
 
 		$this->click('addAnalyse');
@@ -37,7 +37,7 @@ class AnalyseTest extends BrowserKitTest {
 
 	public function testCreateNewAnalyse()
 	{
-		$this->visit(url('admin/arret/create/1'));
+		$this->visit('admin/arret/create/1');
 
 		//Create a categorie
 		$categorie = factory(App\Droit\Categorie\Entities\Categorie::class)->create();
@@ -85,7 +85,7 @@ class AnalyseTest extends BrowserKitTest {
 
 		$this->assertEquals(1, $analyse->authors->count());
 
-		$this->visit(url('admin/analyse/'.$analyse->id));
+		$this->visit('admin/analyse/'.$analyse->id);
 
 		$response = $this->call('PUT', '/admin/analyse/'.$analyse->id, ['id' => $analyse->id, 'site_id' => 2, 'author_id' => [$author1->id, $author2->id]]);
 
@@ -106,7 +106,7 @@ class AnalyseTest extends BrowserKitTest {
 	{
 		$analyse = factory(App\Droit\Analyse\Entities\Analyse::class)->create();
 
-		$this->visit(url('admin/analyses/1'));
+		$this->visit('admin/analyses/1');
 
 		$response = $this->call('DELETE','admin/analyse/'.$analyse->id);
 

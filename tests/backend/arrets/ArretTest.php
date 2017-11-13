@@ -27,17 +27,17 @@ class ArretTest extends BrowserKitTest {
 
 	public function testArretCreationForm()
 	{
-		$this->visit(url('admin/arrets/1'));
+		$this->visit('admin/arrets/1');
 		$this->assertViewHas('arrets');
 
 		$this->click('addArret');
 
-		$this->seePageIs(url('admin/arret/create/1'));
+		$this->seePageIs('admin/arret/create/1');
 	}
 
 	public function testCreateNewArret()
 	{
-		$this->visit(url('admin/arret/create/1'));
+		$this->visit('admin/arret/create/1');
 
 		// Create an analyse
 		$author  = factory(App\Droit\Author\Entities\Author::class)->create();
@@ -78,7 +78,7 @@ class ArretTest extends BrowserKitTest {
 	{
 		$arret = factory(App\Droit\Arret\Entities\Arret::class)->create();
 
-		$this->visit(url('admin/arret/'.$arret->id));
+		$this->visit('admin/arret/'.$arret->id);
 
 		$response = $this->call('PUT', '/admin/arret/'.$arret->id, ['id' => $arret->id, 'dumois' => 1]);
 
@@ -97,7 +97,7 @@ class ArretTest extends BrowserKitTest {
 
 		$arret = factory(App\Droit\Arret\Entities\Arret::class)->create();
 
-		$this->visit(url('admin/arrets/1'));
+		$this->visit('admin/arrets/1');
 
         $response = $this->call('DELETE','admin/arret/'.$arret->id, [] ,['id' => $arret->id]);
 

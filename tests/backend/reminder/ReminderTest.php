@@ -31,7 +31,7 @@ class ReminderTest extends BrowserKitTest {
         $make    = new \tests\factories\ObjectFactory();
         $product = $make->product();
 
-		$this->visit(url('admin/reminder'));
+		$this->visit('admin/reminder');
 		$this->click('reminder_product');
 
         $this->seePageIs(url('admin/reminder/create/product'));
@@ -68,7 +68,7 @@ class ReminderTest extends BrowserKitTest {
             'send_at'  => $send_at->toDateString()
         ]);
 
-		$this->visit(url('admin/reminder/'.$reminder->id));
+		$this->visit('admin/reminder/'.$reminder->id);
 
         $this->assertEquals($reminder->send_at->toDateString(), $send_at->toDateString());
 

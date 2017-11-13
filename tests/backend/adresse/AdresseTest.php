@@ -30,7 +30,7 @@ class AdresseTest extends BrowserKitTest {
 
     public function testAdressesList()
     {
-        $this->visit(url('admin/adresses'));
+        $this->visit('admin/adresses');
         $this->assertViewHas('adresses');
 
         $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
@@ -70,7 +70,7 @@ class AdresseTest extends BrowserKitTest {
         $content = $content->getData();
         $user    = $content['user'];
 
-        $this->visit(url('admin/user/'.$user->id));
+        $this->visit('admin/user/'.$user->id);
 
         $this->assertEquals('New User', $user->name);
         $this->assertEquals('new.user@gmail.com', $user->email);
@@ -96,7 +96,7 @@ class AdresseTest extends BrowserKitTest {
         $content = $content->getData();
         $user    = $content['user'];
 
-        $this->visit(url('admin/user/'.$user->id));
+        $this->visit('admin/user/'.$user->id);
 
         $this->assertEquals('Our Company', $user->name);
         $this->assertEquals('new.user@gmail.com', $user->email);
@@ -127,7 +127,7 @@ class AdresseTest extends BrowserKitTest {
     {
         $user  = factory(App\Droit\User\Entities\User::class)->create();
 
-        $this->visit(url('admin/adresse/create/'.$user->id));
+        $this->visit('admin/adresse/create/'.$user->id);
         $this->assertViewHas('user');
 
         // Create adresse with user data but change last_name
@@ -152,7 +152,7 @@ class AdresseTest extends BrowserKitTest {
 
     public function testNewAdresse()
     {
-        $this->visit(url('admin/adresse/create'));
+        $this->visit('admin/adresse/create');
 
         $this->type('Terry', 'first_name');
         $this->type('Jones', 'last_name');
@@ -180,7 +180,7 @@ class AdresseTest extends BrowserKitTest {
             'email'      => null,
         ]);
 
-        $this->visit(url('admin/adresse/'.$adresse->id));
+        $this->visit('admin/adresse/'.$adresse->id);
 
         $response = $this->call('DELETE','admin/adresse/'.$adresse->id);
 

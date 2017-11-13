@@ -140,7 +140,7 @@ class OrderControllerTest extends BrowserKitTest {
 		// set 3 with date sent
 		$make->updateOrder($send, ['column' => 'send_at', 'date' => '2016-09-10']);
 
-        $this->visit(url('admin/orders'))->see('Commandes');
+        $this->visit('admin/orders')->see('Commandes');
 
 		// filter to get all send orders
 		$response = $this->call('POST', url('admin/orders'), [
@@ -186,7 +186,7 @@ class OrderControllerTest extends BrowserKitTest {
 		// set 5 to payed status
 		$make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
 
-		$this->visit(url('admin/orders'))->see('Commandes');
+		$this->visit('admin/orders')->see('Commandes');
 
 		$response = $this->call('POST', url('admin/orders'), [
 			'period' => [
@@ -237,7 +237,7 @@ class OrderControllerTest extends BrowserKitTest {
 			return ($product->price_normal - $coupon->value) * 100;
 		})->sum();
 
-		$this->visit(url('admin/order/'.$order->id))->see($order->order_no);
+		$this->visit('admin/order/'.$order->id)->see($order->order_no);
 
 		$data = [
 			'id'          => $order->id,
@@ -248,7 +248,7 @@ class OrderControllerTest extends BrowserKitTest {
 
 		$this->call('PUT', url('admin/order/'.$order->id), $data);
 
-		$this->visit(url('admin/order/'.$order->id))->see($order->order_no);
+		$this->visit('admin/order/'.$order->id)->see($order->order_no);
 
 		$content = $this->response->getOriginalContent();
 		$content = $content->getData();
@@ -268,7 +268,7 @@ class OrderControllerTest extends BrowserKitTest {
 		// set 3 with date sent
 		$make->updateOrder($orders, ['column' => 'send_at', 'date' => '2016-09-10']);
 
-		$this->visit(url('admin/orders'))->see('Commandes');
+		$this->visit('admin/orders')->see('Commandes');
 
 		// filter to get all send orders
 		$response = $this->call('POST', url('admin/orders'), [

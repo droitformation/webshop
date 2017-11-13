@@ -125,7 +125,7 @@ class AbonnementAdminTest extends BrowserKitTest {
         $abonnement = $make->makeAbonnement();
         $make->abonnementFacture($abonnement);
 
-        $this->visit(url('admin/rappel/'.$abonnement->abo->current_product->id));
+        $this->visit('admin/rappel/'.$abonnement->abo->current_product->id);
         $this->assertViewHas('factures');
     }
 
@@ -138,7 +138,7 @@ class AbonnementAdminTest extends BrowserKitTest {
 
         $facture = $abonnement->factures->first();
 
-        $this->visit(url('admin/facture/'.$facture->id));
+        $this->visit('admin/facture/'.$facture->id);
         $this->type('2016-12-31', 'payed_at');
         $this->type('2016-12-31', 'created_at');
         $this->press('editFacture');
@@ -159,7 +159,7 @@ class AbonnementAdminTest extends BrowserKitTest {
 
         $facture = $abonnement->factures->first();
 
-        $this->visit(url('admin/facture/'.$facture->id));
+        $this->visit('admin/facture/'.$facture->id);
         $this->type('2016-12-31', 'payed_at');
         $this->press('editFacture');
 
@@ -179,7 +179,7 @@ class AbonnementAdminTest extends BrowserKitTest {
 
         $facture = $abonnement->factures->first();
 
-        $this->visit(url('admin/facture/'.$facture->id));
+        $this->visit('admin/facture/'.$facture->id);
         $this->type('2016-12-31', 'payed_at');
         $this->press('editFacture');
 
@@ -188,7 +188,7 @@ class AbonnementAdminTest extends BrowserKitTest {
             'payed_at' => '2016-12-31'
         ]);
 
-        $this->visit(url('admin/abonnement/'.$facture->abo_user_id));
+        $this->visit('admin/abonnement/'.$facture->abo_user_id);
         $this->see('Payé le 2016-12-31');
 
     }
@@ -198,7 +198,7 @@ class AbonnementAdminTest extends BrowserKitTest {
         $make = new \tests\factories\ObjectFactory();
         $abo  = $make->makeAbo();
 
-        $this->visit(url('admin/abo/desinscription/'.$abo->id));
+        $this->visit('admin/abo/desinscription/'.$abo->id);
         $this->assertViewHas('abo');
     }
 
@@ -209,7 +209,7 @@ class AbonnementAdminTest extends BrowserKitTest {
         $abonnement = $make->makeAbonnement();
         $make->abonnementFacture($abonnement);
 
-        $this->visit(url('admin/abonnements/'.$abonnement->abo_id));
+        $this->visit('admin/abonnements/'.$abonnement->abo_id);
         $this->assertViewHas('abo');
 
         // desinscription
@@ -220,7 +220,7 @@ class AbonnementAdminTest extends BrowserKitTest {
             'deleted_at' => null
         ]);
 
-        $this->visit(url('admin/abo/desinscription/'.$abonnement->abo_id));
+        $this->visit('admin/abo/desinscription/'.$abonnement->abo_id);
         $this->assertViewHas('abo');
 
         // restore abo

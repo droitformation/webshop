@@ -26,7 +26,7 @@ class PagesTest extends BrowserKitTest {
             $page_url = ($p->isExternal ? $p->url : $prefix.'/page/'.$p->slug);
             $page_url = ($p->template != 'page' ? $prefix : $page_url);
 
-            $this->visit(url($page_url));
+            $this->visit($page_url);
 		}
 	}
 }

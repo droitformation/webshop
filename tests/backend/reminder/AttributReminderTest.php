@@ -27,10 +27,10 @@ class AttributReminderTest extends BrowserKitTest {
 
 	public function testCreateNewAttribut()
 	{
-		$this->visit(url('admin/attribut'));
+		$this->visit('admin/attribut');
 		$this->click('attribut_create');
 
-        $this->seePageIs(url('admin/attribut/create'));
+        $this->seePageIs('admin/attribut/create');
 
         $this->type('Rappel pour le livre', 'title')
             ->type('Dapibus ante suscipurcusit çunc, primiés?', 'text')
@@ -55,7 +55,7 @@ class AttributReminderTest extends BrowserKitTest {
 			'duration' => 'week'
 		]);
 
-		$this->visit(url('admin/attribut/'.$attribute->id));
+		$this->visit('admin/attribut/'.$attribute->id);
 
 		$this->type('Two title', 'title')->press('Envoyer');
 
@@ -72,7 +72,7 @@ class AttributReminderTest extends BrowserKitTest {
 			'duration' => 'week'
 		]);
 
-		$this->visit(url('admin/attribut'))->press('deleteAttribut_'.$attribute->id);
+		$this->visit('admin/attribut')->press('deleteAttribut_'.$attribute->id);
 		
 		$this->notSeeInDatabase('shop_attributes', [
 			'id' => $attribute->id,

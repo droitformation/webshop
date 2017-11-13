@@ -36,7 +36,7 @@ class UserTest extends BrowserKitTest {
 
         $this->assertTrue(Auth::check());
 
-        $this->visit(url('admin/user/create'));
+        $this->visit('admin/user/create');
 
         // Create new user
         $this->type('Terry', 'first_name');
@@ -62,7 +62,7 @@ class UserTest extends BrowserKitTest {
 
         $this->assertTrue(Auth::check());
 
-        $this->visit(url('admin/user/create'));
+        $this->visit('admin/user/create');
 
         // Create new user
         $this->type('DesignPond', 'company');
@@ -87,7 +87,7 @@ class UserTest extends BrowserKitTest {
             'email' => 'terry.jonesy@domain.ch'
         ]);
 
-        $this->visit(url('admin/user/'.$user->id));
+        $this->visit('admin/user/'.$user->id);
         // delete user
         $this->press('deleteUser_'.$user->id);
 
@@ -96,7 +96,7 @@ class UserTest extends BrowserKitTest {
             'deleted_at' => null
         ]);
 
-        $this->visit(url('admin/user/create'));
+        $this->visit('admin/user/create');
 
         // Create new user
         $this->type('Terry', 'first_name');
@@ -123,8 +123,8 @@ class UserTest extends BrowserKitTest {
 
         $this->assertTrue(Auth::check());
 
-        $this->visit(url('admin/user/'.$user->id));
-        $this->seePageIs(url('admin/user/'.$user->id));
+        $this->visit('admin/user/'.$user->id);
+        $this->seePageIs('admin/user/'.$user->id);
         $this->assertViewHas('user');
 
         $this->type('Terry', 'first_name');
@@ -147,8 +147,8 @@ class UserTest extends BrowserKitTest {
 
         $this->assertTrue(Auth::check());
 
-        $this->visit(url('admin/user/'.$user->id));
-        $this->seePageIs(url('admin/user/'.$user->id));
+        $this->visit('admin/user/'.$user->id);
+        $this->seePageIs('admin/user/'.$user->id);
         $this->assertViewHas('user');
 
         $this->type('', 'first_name');
@@ -224,7 +224,7 @@ class UserTest extends BrowserKitTest {
         $this->mailjet->shouldReceive('setList')->once();
         $this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
 
-        $this->visit(url('admin/user/confirm/'.$person->id));
+        $this->visit('admin/user/confirm/'.$person->id);
         $this->assertViewHas('user');
         $this->see($newsletter->titre);
 
@@ -266,7 +266,7 @@ class UserTest extends BrowserKitTest {
         $this->mailjet->shouldReceive('setList')->once();
         $this->mailjet->shouldReceive('removeContact')->once()->andReturn(true);
 
-        $this->visit(url('admin/user/'.$person->id))->see('désinscrire')->press('désinscrire');
+        $this->visit('admin/user/'.$person->id)->see('désinscrire')->press('désinscrire');
 
         $subscriber->fresh();
         $subscriber->load('subscriptions');

@@ -150,7 +150,7 @@ class ColloqueTest extends BrowserKitTest {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
 
-        $this->visit(url('admin/colloque/'.$colloque->id));
+        $this->visit('admin/colloque/'.$colloque->id);
 
         $response = $this->call('DELETE','admin/colloque/'.$colloque->id);
 
