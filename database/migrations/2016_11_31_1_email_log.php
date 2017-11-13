@@ -12,13 +12,15 @@ class CreateEmailLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_log', function (Blueprint $table) {
-            $table->increments('id');
-            $table->dateTime('date');
-            $table->string('to');
-            $table->string('subject');
-            $table->text('body');
-        });
+        if (!Schema::hasTable('email_log')) {
+            Schema::create('email_log', function (Blueprint $table) {
+                $table->increments('id');
+                $table->dateTime('date');
+                $table->string('to');
+                $table->string('subject');
+                $table->text('body');
+            });
+        }
     }
 
     /**
@@ -28,6 +30,8 @@ class CreateEmailLogTable extends Migration
      */
     public function down()
     {
-        Schema::drop('email_log');
+        if (Schema::hasTable('email_log')) {
+            Schema::drop('email_log');
+        }
     }
 }
