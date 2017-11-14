@@ -28,7 +28,7 @@ class ImportListTest extends DuskTestCase
     /**
      * @group import
      */
-    public function testImport()
+/*    public function testImport()
     {
         \DB::table('newsletter_lists')->truncate();
 
@@ -42,7 +42,7 @@ class ImportListTest extends DuskTestCase
             $user->roles()->attach(1);
 
             $browser->loginAs($user)->visit('/build/import')
-                ->pause(2000)
+                ->pause(1000)
                 ->select('newsletter_id',$newsletter->id)
                 ->attach('file', $file)
                 ->click('#importList');
@@ -53,7 +53,7 @@ class ImportListTest extends DuskTestCase
                 ->assertSee('prunturt@yahoo.fr');
 
         });
-    }
+    }*/
 
     /**
      * @group import
@@ -75,10 +75,17 @@ class ImportListTest extends DuskTestCase
                 ->attach('file', $file)
                 ->click('#importList');
 
-            $browser->visit('/build/liste')->pause(3000)->assertSee('Un titre 6543');
+            $browser->visit('/build/liste')
+                ->pause(1000)
+                ->assertSee('Un titre 6543');
 
             $this->assertDatabaseHas('newsletter_lists', [
                 'title' => 'Un titre 6543'
+            ]);
+
+            $this->assertDatabaseHas('newsletter_emails', [
+                'email' => 'cindy.leschaud@gmail.com',
+                'email' => 'prunturt@yahoo.fr',
             ]);
 
         });

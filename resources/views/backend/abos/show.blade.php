@@ -52,8 +52,8 @@
                             <th>Numéro</th>
                             <th>Nom</th>
                             <th>Entreprise</th>
-                            <th>Adresse</th>
-                            <th>Exemplaires</th>
+                            <th class="hidden-small-table">Adresse</th>
+                            <th class="hidden-small-table">Exemplaires</th>
                             <th class="no-sort">Status</th>
                             <th></th>
                         </tr>
@@ -80,8 +80,8 @@
                                             @endif
                                         </td>
                                         <td>{!! $user ? $user->company : '' !!}</td>
-                                        <td>{!! $user ? $user->adresse.'<br/>'.$user->npa.' '.$user->ville : '' !!}</td>
-                                        <td>{{ $abonnement->exemplaires }}</td>
+                                        <td class="hidden-small-table">{!! $user ? $user->adresse.'<br/>'.$user->npa.' '.$user->ville : '' !!}</td>
+                                        <td class="hidden-small-table">{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>
                                         <td class="text-right">
                                             <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
@@ -94,7 +94,7 @@
                             @endif
                         </tbody>
                         <tfoot>
-                            <tr><th></th><th></th><th></th><th></th><th></th><th>Status</th><th></th></tr>
+                            <tr><th></th><th></th><th></th><th></th><th class="hidden-small-table"></th><th>Status</th><th></th></tr>
                         </tfoot>
                     </table>
 

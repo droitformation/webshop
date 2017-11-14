@@ -42,7 +42,7 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
-     * Assert that the given text appears within the given selector.
+     * Assert that the given text appears within thel given selector.
      *
      * @param  string  $selector
      * @param  string  $text
