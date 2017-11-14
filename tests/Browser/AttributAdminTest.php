@@ -9,17 +9,21 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AttributAdminTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     protected $user;
 
     public function setUp()
     {
         parent::setUp();
-
         $this->app['config']->set('database.default','testing');
 
-        $user = factory(\App\Droit\User\Entities\User::class)->create();
+        $user = factory(\App\Droit\User\Entities\User::class)->create([
+            'first_name' => 'Jane',
+            'last_name'  => 'Doe',
+            'email'      => 'jane.doe@gmail.com',
+            'password'   => bcrypt('jane2')
+        ]);
 
         $user->roles()->attach(1);
 
@@ -114,15 +118,12 @@ class AttributAdminTest extends DuskTestCase
      */
     public function testCreateNewReminder()
     {
-        \DB::table('reminders')->truncate();
-
         $this->browse(function (Browser $browser) {
             // Make a product
             $make    = new \tests\factories\ObjectFactory();
             $product = $make->product();
 
             $browser->loginAs($this->user)->visit(url('admin/reminder'))->click('#reminder_product');
-            $browser->pause(4000);
             $browser->type('title','Rappel pour le livre');
                 $browser->driver->executeScript('$(\'.redactor\').redactor(\'code.set\', \'<p>Dapibus ante suscipurcusit çunc, primiés?</p>\');');
                 $browser->select('start','created_at')
@@ -148,8 +149,6 @@ class AttributAdminTest extends DuskTestCase
      */
     public function testUpdateReminder()
     {
-        \DB::table('reminders')->truncate();
-
         $this->browse(function (Browser $browser) {
 
             $make    = new \tests\factories\ObjectFactory();

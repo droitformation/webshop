@@ -170,9 +170,9 @@ class SondageController extends Controller
     public function send(Request $request)
     {
         $sondage = $this->sondage->find($request->input('sondage_id'));
-
+        
         // Test if there are questions in sondage
-        if(!$sondage || $sondage->avis->isEmpty()){
+        if($sondage->avis->isEmpty()){
             throw new \App\Exceptions\MissingException('Aucun sondage trouvé ou aucune question dans ce sondage!');
         }
         

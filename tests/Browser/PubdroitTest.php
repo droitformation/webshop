@@ -4,11 +4,11 @@ namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class PubdroitTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function setUp()
     {
@@ -141,19 +141,19 @@ class PubdroitTest extends DuskTestCase
 
     /**
      * Buy a book without adresse
-     * @group buy2
+     * @group pubdroit_no
      */
     public function testShopForAProductWithoutAnAddress()
     {
+        \DB::table('adresses')->truncate();
+        \DB::table('users')->truncate();
+
         $this->browse(function (Browser $browser) {
 
             $make     = new \tests\factories\ObjectFactory();
             $colloque = $make->colloque();
             $product  = $make->makeProduct([]);
-            $person   = $make->makeUser();
-
-            $person->adresses()->delete();
-            $person->fresh();
+            $person   = factory(\App\Droit\User\Entities\User::class)->create(['password' => bcrypt('secret')]);
 
             $browser->logout();
 

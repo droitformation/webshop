@@ -1417,7 +1417,7 @@ th {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  padding: 8px;
+  padding: 10px;
   line-height: 1.428571429;
   vertical-align: top;
   border-top: 1px solid #e6e7e8;
@@ -1425,7 +1425,6 @@ th {
 .table > thead > tr > th {
   vertical-align: bottom;
   border-bottom: 2px solid #e6e7e8;
-  font-size: 12px;
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,

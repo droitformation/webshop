@@ -4,19 +4,17 @@ namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AboUserAdminTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     protected $user;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->app['config']->set('database.default','testing');
 
         $user = factory(\App\Droit\User\Entities\User::class)->create([
             'first_name' => 'Jane',
@@ -29,7 +27,6 @@ class AboUserAdminTest extends DuskTestCase
 
         $this->user = $user;
     }
-
 
     /**
      * Go see facture for user abo

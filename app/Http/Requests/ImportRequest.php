@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class ImportRequest extends Request
+class ImportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

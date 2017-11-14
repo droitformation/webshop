@@ -251,18 +251,14 @@ class ObjectFactory
 
     public function getImages()
     {
-        if(\File::exists(public_path('files/products'))){
-            $images = \File::files(public_path('files/products'));
+        $images = \File::files(public_path('files/products'));
+        
+        return collect($images)->map(function ($name) {
+            $file = explode('/', $name);
+            $file = end($file);
 
-            return collect($images)->map(function ($name) {
-                $file = explode('/', $name);
-                $file = end($file);
-
-                return $file;
-            })->toArray();
-        }
-
-        return ['product.jpg','product1.jpg','product2.jpg'];
+            return $file;
+        })->toArray();
     }
 
     public function makeProduct($images)
@@ -507,11 +503,14 @@ class ObjectFactory
         return $colloque->load(['inscriptions','prices']);
     }
 
-    public function makeInscriptionForUser($user, $date)
+    public function makeInscriptionForUser($user, $date, $colloque = null)
     {
         // Create colloque
-        $colloque = $this->colloque();
-        $prices   = $colloque->prices->pluck('id')->all();
+        if(!$colloque){
+            $colloque = $this->colloque();
+        }
+
+        $prices = $colloque->prices->pluck('id')->all();
 
         return factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
             'user_id'     => $user->id,

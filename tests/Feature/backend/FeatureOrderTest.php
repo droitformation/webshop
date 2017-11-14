@@ -50,6 +50,8 @@ class FeatureOrderTest extends TestCase
 
     public function testCreateNewOrderViaAdminPassValidationWithUser()
     {
+        \DB::table('shop_orders')->truncate();
+
         $prod1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price' => 1000,]);
         $prod2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price' => 2000, 'hidden' => 1]);
 
@@ -60,9 +62,9 @@ class FeatureOrderTest extends TestCase
             'user_id' => $user->id,
             'order' => [
                 'products' => [0 => $prod1->id, 1 => $prod2->id],
-                'qty' => [0 => 2, 1 => 2],
-                'rabais' => [0 => 25],
-                'gratuit' => [1 => 1]
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
             ],
             'admin' => 1
         ];
@@ -72,7 +74,7 @@ class FeatureOrderTest extends TestCase
 
         $this->assertDatabaseHas('shop_orders', [
             'user_id' => $user->id,
-            'admin' => 1
+            'admin'   => 1
         ]);
 
         $response = $this->get('admin/orders');

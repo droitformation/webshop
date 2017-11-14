@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MiscContentAdminTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function setUp()
     {
@@ -18,7 +18,6 @@ class MiscContentAdminTest extends DuskTestCase
         $this->app['config']->set('database.default','testing');
 
         $user = factory(\App\Droit\User\Entities\User::class)->create();
-
         $user->roles()->attach(1);
 
         $this->user = $user;
@@ -128,8 +127,7 @@ class MiscContentAdminTest extends DuskTestCase
     /**
      * @group adminpages
      */
-    public function 
-    testMiscCreationPagesInAdmin()
+    public function testMiscCreationPagesInAdmin()
     {
         $this->browse(function (Browser $browser) {
 

@@ -4,11 +4,11 @@ namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ProfileTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function setUp()
     {
@@ -19,7 +19,7 @@ class ProfileTest extends DuskTestCase
 
     /**
      * Register as new user
-     * @group register
+     * @group profil
      */
     public function testRegisterUser()
     {
@@ -125,7 +125,7 @@ class ProfileTest extends DuskTestCase
     /**
      * Login as user, browse in shop and buy 1 product
      * See product title in user orders page
-     * @group buy
+     * @group buy_product
      */
     public function testPassNewOrder()
     {
@@ -146,7 +146,7 @@ class ProfileTest extends DuskTestCase
                 ->click('#btn-invoice');
 
             $browser->visit('pubdroit/profil/orders')
-                ->waitFor('.text-info-order')
+                ->waitFor('.text-info-order')->pause('200')
                 ->click('.text-info-order');
 
             $browser->pause('200');

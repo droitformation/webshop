@@ -9,15 +9,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BuildNewsletterTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
-
-        $this->artisan("db:seed");
     }
 
     public function tearDown()

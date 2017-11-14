@@ -1,53 +1,57 @@
-<?php namespace App\Exceptions;
+<?php
+
+namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
-
-class Handler extends ExceptionHandler {
-
-	/**
-	 * A list of the exception types that should not be reported.
-	 *
-	 * @var array
-	 */
-	protected $dontReport = [
-		AuthorizationException::class,
+class Handler extends ExceptionHandler
+{
+    /**
+     * A list of the exception types that are not reported.
+     *
+     * @var array
+     */
+    protected $dontReport = [
+      	AuthorizationException::class,
 		HttpException::class,
 		ModelNotFoundException::class,
 		ValidationException::class,
-	];
+    ];
 
-	/**
-	 * Report or log an exception.
-	 *
-	 * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-	 *
-	 * @param  \Exception  $e
-	 * @return void
-	 */
-	public function report(Exception $e)
-	{
-        \Log::error($e);
+    /**
+     * A list of the inputs that are never flashed for validation exceptions.
+     *
+     * @var array
+     */
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+    ];
 
-		return parent::report($e);
-	}
+    /**
+     * Report or log an exception.
+     *
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     *
+     * @param  \Exception  $exception
+     * @return void
+     */
+    public function report(Exception $exception)
+    {
+        parent::report($exception);
+    }
 
-	/**
-	 * Render an exception into an HTTP response.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Exception  $e
-	 * @return \Illuminate\Http\Response
-	 */
-	public function render($request, Exception $e)
-	{
-        if ($e instanceof \App\Exceptions\CouponException){
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, Exception $e)
+    {
+	    if ($e instanceof \App\Exceptions\CouponException){
 			$request->session()->flash('wrongCoupon', $e->getMessage());
 			return redirect()->back();
         }
@@ -181,13 +185,7 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
-        if ($e instanceof \App\Exceptions\AdresseNotExistPrepareException){
-            alert()->warning('Attention! Aucune adresse');
-            return redirect()->back();
-        }
-
 		if ($e instanceof \App\Exceptions\AdresseNotExistException){
-			//alert()->warning('Il n\'existe aucune adresse de livraison, veuillez indiquer une adresse valide dans');
             $request->session()->flash('AdresseMissing', 'Ok');
 			return redirect('/pubdroit/profil');
 		}
@@ -207,29 +205,13 @@ class Handler extends ExceptionHandler {
 		}
 
 		if($e instanceof \Illuminate\Database\Eloquent\ProductNotFoundException){
-			alert()->warning('Aucune livre trouvé pour abonnement');
+			alert()->warning('Aucune livre trouvé pour abonnent');
 			return redirect()->back();
 		}
 
 		if ($e instanceof \Illuminate\Session\TokenMismatchException)
 			return redirect('login');
-
-		return parent::render($request, $e);
-	}
-
-	/**
-	 * Convert an authentication exception into an unauthenticated response.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Illuminate\Auth\AuthenticationException  $exception
-	 * @return \Illuminate\Http\Response
-	 */
-	protected function unauthenticated($request, AuthenticationException $exception)
-	{
-		if ($request->expectsJson()) {
-			return response()->json(['error' => 'Unauthenticated.'], 401);
-		}
-
-		return redirect()->guest('login');
-	}
+			
+        return parent::render($request, $e);
+    }
 }

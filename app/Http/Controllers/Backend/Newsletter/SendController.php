@@ -58,7 +58,8 @@ class SendController extends Controller
         
         $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
 
-        if(!$result['success']) {
+        if(!$result['success'])
+        {
             throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi'.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
         }
 

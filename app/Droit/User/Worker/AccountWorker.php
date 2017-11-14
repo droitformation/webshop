@@ -59,7 +59,6 @@ class AccountWorker implements AccountWorkerInterface
 
     public function validate()
     {
-
         $validator = \Validator::make($this->data, [
             'first_name' => 'required_without:company',
             'last_name'  => 'required_without:company',

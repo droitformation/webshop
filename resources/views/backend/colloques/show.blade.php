@@ -266,6 +266,9 @@
                         <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/document/'.$colloque->id.'/facture') }}">Tester la facture</a>
                         <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/document/'.$colloque->id.'/bv') }}">Tester le bv</a>
                     @endif
+
+                    <a target="_blank" class="btn btn-sm btn-default" href="{{ url('preview/inscriptioncolloque/'.$colloque->id) }}">Voir l'email</a>
+
                 </div>
             </div>
 

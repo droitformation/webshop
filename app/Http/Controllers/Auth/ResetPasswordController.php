@@ -17,8 +17,15 @@ class ResetPasswordController extends Controller
     | explore this trait and override any methods you wish to tweak.
     |
     */
-    protected $redirectTo = '/pubdroit';
+
     use ResetsPasswords;
+
+    /**
+     * Where to redirect users after resetting their password.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/pubdroit';
 
     /**
      * Create a new controller instance.
@@ -27,6 +34,6 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('guest');
+       // $this->middleware('guest');
     }
 }

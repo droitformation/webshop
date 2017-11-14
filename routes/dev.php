@@ -10,7 +10,7 @@ Route::get('abos_test', function () {
 
     $all = $abo->getAll()->where('abo_id',2);
 
-/*    $all->map(function ($abo, $key) {
+    $all->map(function ($abo, $key) {
         if(isset($abo->user->user)){
             $abo->user_id = $abo->user->user->id;
         }
@@ -24,16 +24,7 @@ Route::get('abos_test', function () {
         echo '<pre>';
         print_r($abo->toArray());
         echo '</pre>';
-    });*/
-
-    $make  = new \tests\factories\ObjectFactory();
-    $user  = factory(\App\Droit\User\Entities\User::class)->create();
-
-    $order = $make->order(1, 1);
-    $order = $order->first();
-
-    $generate = new \App\Droit\Generate\Entities\OrderGenerate($order);
-    $adresse  = $generate->getAdresse();
+    });
 
     /*
         list($hasUser, $noUser) = $all->partition(function ($abo_user) {
@@ -1078,6 +1069,27 @@ Route::get('/calculette', function () {
 
 });
 
+Route::get('/test_mailgun', function () {
+
+    $worker  = \App::make('App\Droit\Newsletter\Worker\CampagneInterface');
+    $mailgun = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
+
+    $toSend = \Carbon\Carbon::now()->addMinutes(1)->toRfc2822String();
+    $html    = $worker->html(1665);
+
+    $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
+        ->setHtml($html)
+        ->setSendDate($toSend)
+        ->setRecipients(['cindy.leschaud@gmail.com','cindy.leschaud@unine.ch']);
+
+    $response = $mailgun->sendTransactional('Test mailgun newsleter');
+
+    echo '<pre>';
+    print_r($response);
+    echo '</pre>';exit();
+});
+
+
 Route::get('factory', function()
 {
     //$make = new \tests\factories\ObjectFactory();
@@ -1100,9 +1112,14 @@ Route::get('factory', function()
     print_r($avis);
     echo '</pre>';
 
+
 });
 
 Route::get('merge', function () {
+
+      // Export adresses
+/*    $exporter = new \App\Droit\Generate\Export\ExportAdresse();
+    $exporter->merge();*/
 
     $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
 
@@ -1114,26 +1131,10 @@ Route::get('merge', function () {
     // Get all files in directory
     $files = \File::files(public_path($dir));
 
-    if(!empty($files)) {
+    if(!empty($files))
+    {
         $worker->merge($files, $name, 1);
     }
     
 });
 
-
-Route::get('getlist', function () {
-
-    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
-
-    $mailjet->setList(1560509);
-
-    foreach (range(0, 6000, 1000) as $i) {
-        $users = $mailjet->getSubscribers($i);
-        $users = collect($users)->map(function ($item, $key) {
-            return $item['Email'];
-        })->implode('<br/>');
-
-        print_r($users);
-    }
-
-});

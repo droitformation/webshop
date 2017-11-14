@@ -139,17 +139,18 @@ class ImportWorker implements ImportWorkerInterface
         {
             $recipients = $list->emails->unique()->reject(function ($email, $key) {
                 return !filter_var($email->email, FILTER_VALIDATE_EMAIL) || empty($email->email);
-            })->map(function ($email) {
-                return  ['Email' => $email->email, 'Name'  => ""];
-            });
+            })->pluck('email');
 
-            // Send only 100 at the time to avoid timeout
+            // Send only 200 at the time to avoid timeout
             // dispatch to jobs
-            $chunks = $recipients->chunk(100);
+            $chunks = $recipients->chunk(200);
 
+            $min = 1;
             foreach ($chunks as $chunk){
-                $job = (new SendBulkEmail($campagne,$html,$chunk->toArray()));
-                $this->dispatch($job);
+               // $job = (new SendBulkEmail($campagne,$html,$chunk->toArray()))->delay(\Carbon\Carbon::now()->addMinutes($min));
+               // $this->dispatch($job);
+                SendBulkEmail::dispatch($campagne,$html,$chunk->toArray())->delay(\Carbon\Carbon::now()->addMinutes($min));
+                $min += 1;
             }
 
             return true;

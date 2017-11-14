@@ -35,8 +35,8 @@ class ListAcceptTest extends TestCase
 
         $response = $this->call('POST', 'build/liste', ['title' => 'Un titre' ,'list_id' => 1, 'campagne_id' => 1], []);
 
-        $response->assertSessionHas('alert.style','danger');
-        $response->assertSessionHas('alert.message','Aucun fichier séléctionné');
+        $response->assertSessionHasErrors('file','Le champ file est obligatoire.');
+
     }
 
     public function testAddSpecialisations()

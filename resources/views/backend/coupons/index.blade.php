@@ -41,7 +41,7 @@
                                         @if($coupon->orders->isEmpty())
                                             <form action="{{ url('admin/coupon/'.$coupon->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button data-what="Supprimer" id="deleteCoupon_{{ $coupon->id }}" data-action="{{ $coupon->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                <button  id="deleteCoupon_{{ $coupon->id }}" data-what="Supprimer" data-action="{{ $coupon->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                             </form>
                                         @else
                                             <span class="text-danger">Coupon utilisé</span>

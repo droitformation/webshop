@@ -236,9 +236,9 @@ class OrderMaker implements OrderMakerInterface{
         $products = new \Illuminate\Support\Collection($order['products']);
 
         $data['qty']     = $this->removeEmpty($order['qty']);
-        $data['gratuit'] = (isset($order['gratuit']) && !empty($order['gratuit']) ? $this->removeEmpty($order['gratuit']) : []);
-        $data['rabais']  = (isset($order['rabais']) && !empty($order['rabais']) ?  $this->removeEmpty($order['rabais'])  : []);
-        $data['price']   = (isset($order['price']) && !empty($order['price']) ?  $this->removeEmpty($order['price'])  : []);
+        $data['gratuit'] = (isset($order['gratuit']) ? $this->removeEmpty($order['gratuit']) : []);
+        $data['rabais']  = (isset($order['rabais']) ?  $this->removeEmpty($order['rabais'])  : []);
+        $data['price']   = (isset($order['price']) ?  $this->removeEmpty($order['price'])  : []);
 
         $products->map(function($product,$index) use (&$ids, $data)
         {

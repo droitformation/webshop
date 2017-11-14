@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Droit\User\Entities\User;
 use App\Droit\Adresse\Repo\AdresseInterface;
 
-use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -26,7 +26,7 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Where to redirect users after login / registration.
+     * Where to redirect users after registration.
      *
      * @var string
      */
@@ -41,7 +41,7 @@ class RegisterController extends Controller
     public function __construct(AdresseInterface $adresse)
     {
         $this->middleware('guest');
-        
+
         $this->adresse = $adresse;
     }
 
@@ -58,8 +58,8 @@ class RegisterController extends Controller
             'last_name'  => 'required|max:255',
             'email'      => 'required|email|max:255|unique:users',
             'password'   => 'required|confirmed|min:6',
-            'my_name'    => 'honeypot',
-            'my_time'    => 'required|honeytime:3'
+            'my_name'  => 'honeypot',
+            'my_time'  => 'required|honeytime:5'
         ]);
     }
 
@@ -67,7 +67,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return User
+     * @return \App\User
      */
     protected function create(array $data)
     {

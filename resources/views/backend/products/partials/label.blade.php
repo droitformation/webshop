@@ -12,7 +12,7 @@
                         <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                         <input type="hidden" name="type" value="{{ $labels }}" />
-                        <button id="delete{{ ucfirst($labels) }}_{{ $type->id }}" style="min-width:30px; padding: 4px 4px;"  data-what="Supprimer" data-action="{{ $type->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
+                        <button id="delete{{ ucfirst($labels) }}_{{ $type->id }}" data-what="Supprimer" data-action="{{ $type->title }}" class="btn btn-danger btn-xs deleteAction">x</button>
                     </form>
                 </div>
                 <?php $choices[] = $type->id; ?>
@@ -26,7 +26,7 @@
             <input type="hidden" name="product_id" value="{{ $product->id }}" />
             <div class="form-group">
                 @if(!$items->isEmpty())
-                    <p><select class="form-control multi-selection select_{{ $labels }}" name="type_id[]" multiple>
+                    <p><select class="form-control multi-selection" name="type_id[]" multiple>
                         @foreach($items as $item)
                             <option {{ isset($choices) && in_array($item->id, $choices) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
                         @endforeach

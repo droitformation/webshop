@@ -23,7 +23,7 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login / registration.
+     * Where to redirect users after login.
      *
      * @var string
      */
@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest')->except('logout');
     }
 
     /**
@@ -53,19 +53,18 @@ class LoginController extends Controller
     {
         $user->load('roles');
 
-        $returnPath = $request->input('returnPath',null);
-        $roles      = $user->roles->pluck('id')->all();
+        $roles = $user->roles->pluck('id')->all();
+
+        $path = session()->pull('url.intended');
 
         // Logic that determines where to send the user
-        if (in_array(1,$roles))
-        {
-            $returnPath = $returnPath ? $returnPath : 'admin';
+        if (in_array(1,$roles)) {
+            $returnPath = $path ? $path : 'admin';
             return redirect()->intended($returnPath);
         }
 
-        if($returnPath)
-        {
-            return redirect($returnPath);
+        if($path) {
+            return redirect($path);
         }
 
         return redirect()->intended('pubdroit/profil');

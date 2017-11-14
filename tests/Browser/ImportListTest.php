@@ -5,11 +5,10 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ImportListTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     protected $user;
 
@@ -29,7 +28,7 @@ class ImportListTest extends DuskTestCase
     /**
      * @group import
      */
-    public function testExample()
+    public function testImport()
     {
         \DB::table('newsletter_lists')->truncate();
 
@@ -43,7 +42,7 @@ class ImportListTest extends DuskTestCase
             $user->roles()->attach(1);
 
             $browser->loginAs($user)->visit('/build/import')
-                ->pause(1000)
+                ->pause(2000)
                 ->select('newsletter_id',$newsletter->id)
                 ->attach('file', $file)
                 ->click('#importList');

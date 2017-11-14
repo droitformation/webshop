@@ -42,7 +42,6 @@ class SubscriptionWorker implements SubscriptionWorkerInterface{
     public function activate($email,$newsletter_id)
     {
         $subscriber = $this->exist($email);
-        $subscriber->load('subscriptions');
 
         // If not subscriber found make one
         if(!$subscriber || !$subscriber->activation_token){

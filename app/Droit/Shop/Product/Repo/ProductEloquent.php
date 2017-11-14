@@ -196,9 +196,9 @@ class ProductEloquent implements ProductInterface{
 
         $product->save();
 
-        if(isset($data['abo_id'])) {
-            $product->abos()->detach();
-            $product->abos()->attach($data['abo_id']);
+        if(isset($data['abo_id']))
+        {
+            $product->abos()->sync($data['abo_id']);
         }
 
         if(!isset($data['abo_id']) || (isset($data['abo_id']) && empty($data['abo_id'])))

@@ -37,8 +37,7 @@ class AboUserController extends Controller {
 
         // Get files bound froma all factures
         $dir   = './files/abos/bound/'.$id;
-
-        $files = \File::exists($dir) ? \File::files($dir) : collect([]);
+        $files = \File::files($dir);
 
         return view('backend.abos.show')->with(['abo' => $abo, 'files' => $files]);
     }

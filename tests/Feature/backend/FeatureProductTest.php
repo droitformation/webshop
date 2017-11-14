@@ -88,7 +88,7 @@ class FeatureProductTest extends TestCase
         $make->addAttributesAbo($product);
 
         // filter to get all send orders
-        $response = $this->put('admin/product/'.$product->id, ['id' => $product->id, 'abo_id[]' => $abo->id]);
+        $response = $this->put('admin/product/'.$product->id, ['id' => $product->id, 'abo_id' => $abo->id]);
 
         $product->fresh();
 

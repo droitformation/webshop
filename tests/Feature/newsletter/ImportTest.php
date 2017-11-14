@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Illuminate\Support\Facades\Queue;
 
 class ImportTest extends TestCase
 {
@@ -236,7 +237,7 @@ class ImportTest extends TestCase
 
     public function testSendListEmail()
     {
-        \Queue::fake();
+        Queue::fake();
 
         // Prepare list of emails
         $campagne = factory(\App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->make();
@@ -246,13 +247,13 @@ class ImportTest extends TestCase
         $this->campagne->shouldReceive('find')->once()->andReturn($campagne);
 
         $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
-        $emails = factory(\App\Droit\Newsletter\Entities\Newsletter_emails::class, 210)->make();
+        $emails = factory(\App\Droit\Newsletter\Entities\Newsletter_emails::class, 410)->make();
 
         foreach ($emails as $email){
             $liste->emails()->save($email);
         }
 
-        $chunks = $liste->emails->chunk(100);
+        $chunks = $liste->emails->chunk(200);
         $chunk1  = $chunks->shift();
         $chunk2  = $chunks->shift();
         $chunk3  = $chunks->shift();
@@ -263,16 +264,16 @@ class ImportTest extends TestCase
 
         $this->import->send(1,$liste);
 
-        \Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk1) {
-            return count($job->emails) === count($chunk1);
+        Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk1) {
+            return count($job->emails) == $chunk1->count();
         });
 
-        \Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk2) {
-            return count($job->emails) === count($chunk2);
+        Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk2) {
+            return count($job->emails) == $chunk2->count();
         });
 
-        \Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk3) {
-            return count($job->emails) === count($chunk3);
+        Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk3) {
+            return count($job->emails) == $chunk3->count();
         });
     }
 }

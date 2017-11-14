@@ -4,10 +4,11 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class ExportInscriptionsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     public function setUp()
     {

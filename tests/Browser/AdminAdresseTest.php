@@ -4,13 +4,12 @@ namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AdminAdresseTest extends DuskTestCase
 {
-    use RefreshDatabase,DatabaseTransactions;
+    use DatabaseMigrations;
 
     public function setUp()
     {
@@ -31,6 +30,7 @@ class AdminAdresseTest extends DuskTestCase
     public function testCreateAdresseForUserForm()
     {
         \DB::table('adresses')->truncate();
+        \DB::table('users')->truncate();
 
         $this->browse(function (Browser $browser) {
 
@@ -48,7 +48,7 @@ class AdminAdresseTest extends DuskTestCase
             $browser->type('adresse','Rue du test 23');
             $browser->type('npa',1234);
             $browser->type('ville','Bienne');
-            $browser->press('#createAdresse');
+            $browser->click('#createAdresse');
 
             $browser->visit(url('admin'));
 

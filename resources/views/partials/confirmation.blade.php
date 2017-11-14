@@ -160,7 +160,7 @@
             swal({
                 title: "Oho",
                 text: 'Vous n\'avez pas indiqué d\'adresse, veuillez ajouter une adresse dans votre profil et recommencer.',
-                timer: 4000,
+                timer: 2500,
                 type: "warning",
                 showConfirmButton: false
             });
@@ -237,7 +237,5 @@
         });
     </script>
 @endif
-
-
 
 

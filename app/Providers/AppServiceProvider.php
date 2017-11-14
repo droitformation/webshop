@@ -1,18 +1,18 @@
-<?php namespace App\Providers;
+<?php
+
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Dusk\DuskServiceProvider;
 
-class AppServiceProvider extends ServiceProvider {
-
-	/**
-	 * Bootstrap any application services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
         view()->composer([
             'backend.partials.sites',
             'backend.menus.*',
@@ -59,46 +59,29 @@ class AppServiceProvider extends ServiceProvider {
 
         view()->composer(['frontend.bail.*','backend.seminaires.*'], 'App\Http\ViewComposers\BailComposer');
         view()->composer(['frontend.matrimonial.*'], 'App\Http\ViewComposers\MatrimonialComposer');
-
-        if (\App::environment('local')) {
-            $this->mock = \Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
-            $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);
-        }
-
-        if ($this->app->environment('local', 'testing')) {
-            $this->app->register(DuskServiceProvider::class);
-        }
     }
 
-	/**
-	 * Register any application services.
-	 *
-	 * This service provider is a great spot to register your various container
-	 * bindings with the application. As you can see, we are registering our
-	 * "Registrar" implementation here. You can add your own bindings too!
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $this->registerSiteService();
-        
         $this->registerDuplicateService();
         $this->registerDuplicateWorkerService();
-
         $this->registerUploadService();
         $this->registerReminderService();
         $this->registerReminderWorkerService();
-
         $this->registerFileWorkerService();
         $this->registerPageService();
         $this->registerContentService();
         $this->registerBlocService();
         $this->registerMenuService();
-
         $this->registerEmailService();
-	}
-    
+    }
+
     /**
      * Site
      */
@@ -232,4 +215,5 @@ class AppServiceProvider extends ServiceProvider {
             return new \App\Droit\Email\Repo\EmailEloquent(new \App\Droit\Email\Entities\Email);
         });
     }
+
 }

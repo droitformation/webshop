@@ -120,11 +120,10 @@ class ProductController extends Controller {
      
         // Make sur that if it is a abo we have attributes (reference and edition)
         $product = $this->product->find($request->input('id'));
-
-        if($request->input('abo_id[]',null)){
+        
+        if($request->input('abo_id',null)){
             $validator = new \App\Droit\Shop\Product\Worker\ProductValidation($product);
             $validator->activate();
-            $data['abo_id'] = $request->input('abo_id[]');
         }
         
         if($file) {

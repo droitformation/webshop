@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class AbonnementRequest extends Request
+class AbonnementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +32,7 @@ class AbonnementRequest extends Request
             'abo_id'         => 'required',
             'numero'         => 'required',
             'exemplaires'    => 'required',
-            'user_id'        => 'required',
+            'user_id'     => 'required',
             'status'         => 'required',
             'renouvellement' => 'required',
         ];

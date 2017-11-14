@@ -20,6 +20,16 @@ class MailjetService implements MailjetServiceInterface{
         $this->ressource = $ressource;
     }
 
+    public function getClient()
+    {
+        return $this->mailjet;
+    }
+
+    public function getResource()
+    {
+        return $this->ressource;
+    }
+
     public function setSenderEmail($email)
     {
         $this->sender = $email;
@@ -45,13 +55,11 @@ class MailjetService implements MailjetServiceInterface{
             return [];
     }
 
-    public function getSubscribers($Offset = 0)
+    public function getSubscribers()
     {
         $this->hasList();
 
-        $filters = ['Limit' => '1000', 'Offset' => $Offset, "ContactsList" => $this->list];
-
-        $response = $this->mailjet->get(Resources::$Contact, ['filters' => $filters]);
+        $response = $this->mailjet->get(Resources::$Contactslist, ["ID" => $this->list]);
 
         if($response->success())
             return $response->getData();

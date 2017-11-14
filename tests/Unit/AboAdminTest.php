@@ -29,11 +29,6 @@ class AboAdminTest extends TestCase
 
     public function testGetAboProductWithAttributes()
     {
-        $user = factory(\App\Droit\User\Entities\User::class)->create();
-
-        $user->roles()->attach(1);
-        $this->actingAs($user);
-
         // Make new product and add the attributes
         $make = new \tests\factories\ObjectFactory();
 

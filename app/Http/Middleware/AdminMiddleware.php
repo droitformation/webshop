@@ -14,10 +14,8 @@ class AdminMiddleware {
 	public function handle($request, Closure $next)
 	{
 		\Auth::user()->load('roles');
-		
-        if(!\Auth::user()->roles->contains('id',1))
-        {
 
+        if(!\Auth::user()->roles->contains('id',1)) {
             return redirect()->to('/');
         }
 

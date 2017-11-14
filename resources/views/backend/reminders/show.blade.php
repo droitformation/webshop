@@ -85,13 +85,12 @@
                         <input type="hidden" name="type" value="{{ $reminder->type }}">
                     </div>
                     <div class="col-sm-9">
-                        <button id="editReminder" class="btn btn-primary" type="submit">Envoyer </button>
+                        <button class="btn btn-primary" id="editReminder" type="submit">Envoyer </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
 
 </div>
 <!-- end row -->

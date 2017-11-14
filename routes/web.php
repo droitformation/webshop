@@ -52,7 +52,7 @@ Route::post('sendMessage','ContactController@sendMessage');
 Route::get('/','HomeController@index');
 
 Route::group(['middleware' => 'site'], function () {
-    
+
     Route::group(['prefix' => 'pubdroit'], function () {
 
         Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\Shop\ShopController@page'));
@@ -81,7 +81,7 @@ Route::group(['middleware' => 'site'], function () {
             Route::get('profil/abos', 'Frontend\ProfileController@abos');
             Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
             Route::post('profil/account', 'Frontend\ProfileController@account')->middleware('account');
-            
+
             /* Update user adresse via ajax  */
             Route::post('ajax/adresse/{id}', 'Api\User\AdresseController@ajaxUpdate');
 
@@ -149,7 +149,7 @@ Route::group(['middleware' => 'site'], function () {
 
 Route::group(['prefix' => 'team' , 'middleware' => ['auth','team','back']], function () {
     Route::get('/','Team\TeamController@index');
-    
+
     Route::get('order/{id}','Team\Shop\OrderController@show');
     Route::match(['get', 'post'],'orders/{back?}', 'Team\Shop\OrderController@index');
 
@@ -171,7 +171,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('menu', 'Backend\MenuController');
 
     Route::resource('site', 'Backend\SiteController');
-    
+
     Route::get('user/search', 'Backend\User\UserController@search');
     Route::get('config/shop', 'Backend\ConfigController@shop');
     Route::get('config/abo', 'Backend\ConfigController@abo');
@@ -254,7 +254,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     |--------------------------------------------------------------------------
     */
     //Route::get('inscription/test/{id}', 'Backend\Colloque\InscriptionController@test');// tests routes
-    
+
     Route::match(['get', 'post'], 'inscription/colloque/{id}', 'Backend\Colloque\InscriptionController@colloque');
     Route::get('inscription/create/{id?}', 'Backend\Colloque\InscriptionController@create');
     Route::get('inscription/regenerate/{id}', 'Backend\Colloque\InscriptionController@regenerate');
@@ -287,7 +287,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('register/rappel/confirmation/{id}','Backend\Colloque\RappelController@confirmation');
     Route::post('register/rappel/send','Backend\Colloque\RappelController@send');
-    
+
     Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
 
     Route::post('sondage/remove','Backend\Sondage\SondageController@remove');
@@ -302,7 +302,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::match(['get', 'post'], 'reponse/{id}', 'Backend\Sondage\ReponseController@show');
 
     Route::resource('sondageavis', 'Backend\Sondage\SondageAvisController');
-    
+
     // Add, edit, delete items for colloque
     //Route::get('colloque/{back?}', 'Backend\Colloque\ColloqueController@index')->middleware('back');
     Route::resource('colloque', 'Backend\Colloque\ColloqueController');
@@ -348,7 +348,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('domain', 'Backend\Shop\DomainController');
     Route::resource('attribut', 'Backend\Shop\AttributController');
     Route::resource('shopauthor', 'Backend\Shop\ShopAuthorController');
-    
+
     Route::resource('productattribut', 'Backend\Shop\ProductAttributeController');
     Route::resource('productlabel', 'Backend\Shop\ProductLabelController');
 
@@ -401,7 +401,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::post('getfiles', ['uses' => 'Backend\FileController@getfiles']);
     Route::get('gettree', ['uses' => 'Backend\FileController@gettree']);
-    
+
     Route::post('files', ['uses' => 'Backend\FileController@files']);
     Route::get('tree', ['uses' => 'Backend\FileController@tree']);
     Route::get('export', ['uses' => 'Backend\FileController@tree']);
@@ -434,7 +434,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
     Route::resource('abonnement', 'Backend\Abo\AboUserController');
 
     Route::match(['get', 'post'],'factures/{id}', 'Backend\Abo\AboFactureController@index');
-    
+
     Route::post('facture/edit', 'Backend\Abo\AboFactureController@edit');
     Route::post('facture/generate', 'Backend\Abo\AboFactureController@generate');
     Route::post('facture/make', 'Backend\Abo\AboFactureController@make');
@@ -456,7 +456,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     // Ajax
     Route::get('abo/rappels/{id}','Backend\Abo\AboRappelController@rappels');
-    
+
     /*
     |--------------------------------------------------------------------------
     | Content, arrets and analyses Routes
@@ -503,7 +503,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::match(['get', 'post'], 'email', 'Backend\EmailController@index');
     Route::get('email/{id}','Backend\EmailController@show');
-  
+
     /*
     |--------------------------------------------------------------------------
     | Backend subscriptions, newsletters and campagnes Routes
@@ -544,7 +544,7 @@ Route::group(['prefix' => 'vue'], function () {
     Route::post('groupe','Api\OptionGroupeController@store');
 
     Route::get('autocomplete', 'Backend\SearchController@autocomplete');
-    
+
 });
 /*
 |--------------------------------------------------------------------------
@@ -555,6 +555,7 @@ Route::group(['prefix' => 'vue'], function () {
 Auth::routes();
 Route::post('password/link', 'Auth\PasswordController@postLink');
 
+require base_path('routes/newsletter.php');
 require base_path('routes/email.php');
 
 /*

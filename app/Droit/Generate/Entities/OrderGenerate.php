@@ -31,7 +31,7 @@ class OrderGenerate
             return $this->order->adresse;
         }
         
-        throw new \App\Exceptions\AdresseNotExistPrepareException('No adresse');
+        throw new \App\Exceptions\AdresseNotExistException('No adresse');
     }
 
     public function getProducts()

@@ -7,7 +7,7 @@ use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable {
 
-	use  SoftDeletes, Notifiable;
+	use SoftDeletes, Notifiable;
 
 	/**
 	 * The database table used by the model.

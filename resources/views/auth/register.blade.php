@@ -142,7 +142,7 @@
 		</div><!-- END panel body -->
 		<div class="panel-footer">
 			<div class="pull-right">
-				<button type="submit" id="btn_register" class="btn btn-inverse">Envoyer</button>
+				<button type="submit" class="btn btn-inverse">Envoyer</button>
 			</div>
 			<div class="clearfix"></div>
 		</div>

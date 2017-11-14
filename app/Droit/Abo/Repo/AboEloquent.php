@@ -53,7 +53,7 @@ class AboEloquent implements AboInterface{
             'adresse'  => (isset($data['adresse']) ? $data['adresse']: null),
             'remarque'  => (isset($data['remarque']) ? $data['remarque']: null),
             'price'    => $data['price'] * 100,
-            'shipping' => isset($data['shipping']) && !empty($data['shipping']) && is_int($data['shipping']) ? $data['shipping'] * 100 : null,
+            'shipping' => isset($data['shipping']) ? $data['shipping'] * 100 : null,
             'plan'     => $data['plan']
         ));
 

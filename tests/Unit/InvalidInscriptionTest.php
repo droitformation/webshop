@@ -4,10 +4,11 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
 
 class InvalidInscriptionTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,ResetTbl;
 
     protected $colloque;
     protected $inscription_normal;

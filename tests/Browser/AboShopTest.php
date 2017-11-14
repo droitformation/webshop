@@ -4,17 +4,15 @@ namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AboShopTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->app['config']->set('database.default','testing');
     }
 
     /**
@@ -31,6 +29,7 @@ class AboShopTest extends DuskTestCase
             $make     = new \tests\factories\ObjectFactory();
             $person   = $make->makeUser();
             $abo      = $make->makeAbo();
+            $colloque = $make->colloque();
 
             $browser->logout();
 
@@ -44,7 +43,7 @@ class AboShopTest extends DuskTestCase
                 ->assertSee('Panier')
                 ->assertSee('Demande d\'abonnement '.$abo->title);
 
-            $browser->click('#btn-next-checkout')->assertSee('Livraison');
+            $browser->pause(1000)->click('#btn-next-checkout')->assertSee('Livraison');
 
             $browser->click('#btn-next-confirm')
                 ->assertSee('Résumé de votre commande')
