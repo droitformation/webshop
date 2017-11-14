@@ -39,7 +39,8 @@ class ExportBadge
 
         $inscriptions = collect($inscriptions)->sortBy('last_name')->pluck('name')->toArray();
 
-        $data   = $this->chunkData($inscriptions, $this->config['cols'], $this->config['etiquettes']);
+        $data = $this->chunkData($inscriptions, $this->config['cols'], $this->config['etiquettes']);
+        $data = $this->good($data);
 
         $config = $this->config + ['data' => $data, 'colloque' => $colloque];
 
@@ -65,6 +66,21 @@ class ExportBadge
 
             return $chunks;
         }
+
         return [];
+    }
+
+    public function good($collection)
+    {
+        return collect($collection)->map(function ($items) {
+            return collect($items)->map(function ($item, $key) {
+
+                if(count($item) < 3){
+                    array_push($item,'');
+                }
+
+                return $item;
+            })->toArray();
+        })->toArray();
     }
 }

@@ -137,6 +137,7 @@ Route::get('testing', function() {
     $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $users        = \App::make('App\Droit\User\Repo\UserInterface');
 
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
@@ -147,7 +148,7 @@ Route::get('testing', function() {
 
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
 
-    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
     $rappels       = \App::make('App\Droit\Inscription\Repo\RappelInterface');
     $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
@@ -1111,6 +1112,52 @@ Route::get('factory', function()
     echo '<pre>';
     print_r($avis);
     echo '</pre>';
+
+});
+
+Route::get('badges_test', function () {
+
+    $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
+    $badges = config('badge');
+    // Get badge format
+    $format = explode('|', 'pdf|zweckform27');
+    $badge  = $badges[$format[1]];
+
+    // Get inscriptions names and chunk data for rows per page
+    $colloque     = $colloques->find(112);
+    $inscriptions = $inscriptions->getByColloqueExport($colloque->id,[]);
+
+    $colloque->load('adresse');
+
+    $exporter = new \App\Droit\Generate\Export\ExportBadge();
+    $exporter->setConfig($badge);
+
+    $range = range('h', 'l');
+    $exporter->setRange($range);
+
+    ini_set('memory_limit', '-1');
+
+/*    $inscriptions = $inscriptions->map(function ($inscription) {
+        if(!is_numeric($inscription->name_inscription)) {
+            $name = explode(' ', $inscription->name_inscription);
+            $name = count($name) > 2 ? $name[1].' '.$name[2] : end($name);
+        }
+        else{
+            $name = $inscription->name_inscription;
+        }
+        return ['name' => $inscription->name_inscription, 'last_name' => str_slug($name)];
+    })->filter(function ($inscription, $key) use ($range) {
+        $first = $inscription['last_name'][0];
+        return in_array($first, $range);
+    });
+
+    $inscriptions = collect($inscriptions)->sortBy('last_name')->pluck('name')->toArray();*/
+    //$results = $exporter->chunkData($inscriptions,3,27);
+    //$results = $exporter->good(collect($results));
+
+    return $exporter->export($inscriptions, $colloque);
 
 });
 

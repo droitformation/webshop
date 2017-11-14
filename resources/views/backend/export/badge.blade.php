@@ -37,7 +37,7 @@
 
         @if(!empty($data))
             @foreach($data as $table)
-                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="page-break-after:always;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="">
                    @foreach($table as $row)
                         <tr class="normalize">
                         @foreach($row as $name)
@@ -47,8 +47,10 @@
                                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                        <tr class="normalize">
                                            <td width="34%" class="normalize height" style="padding-left: 15px;">
+                                               @if(!empty($name))
                                                <?php $logo = isset($colloque) && isset($colloque->adresse) ? $colloque->adresse->logo : \Registry::get('inscription.infos.logo'); ?>
                                                <img style="max-height: 48px;" src="{{ secure_asset('files/logos/'.$logo) }}" />
+                                               @endif
                                            </td>
                                            <td width="4%" class="normalize height"></td>
                                            <td width="62%" class="normalize height">
