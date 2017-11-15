@@ -11,6 +11,6 @@
     <input type="hidden" name="newsletter_id" value="{{ $newsletter->id }}">
     <input type="hidden" name="site_id" value="{{ $newsletter->site_id }}">
     <input type="hidden" name="return_path" value="{{ $return_path or old('return_path') or '' }}">
-    <input type="hidden" name="honey_pot" value="">
+    <input type="hidden" name="honey_pot" id="honey_pot" value="">
 </form>
 

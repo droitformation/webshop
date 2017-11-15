@@ -104,7 +104,7 @@ class AttributAdminTest extends DuskTestCase
                 ->visit(url('admin/attribut'))
                 ->press('#deleteAttribut_'.$attribute->id);
 
-            $browser->driver->switchTo()->alert()->accept();
+            $browser->pause(100)->driver->switchTo()->alert()->accept();
 
             $this->assertDatabaseHas('shop_attributes', [
                 'id' => $attribute->id,
