@@ -10,6 +10,18 @@ before_script:
   - composer self-update
   - composer install --no-interaction
   - php artisan key:generate
+  - mkdir public/files/products
+  - mkdir public/files/abos
+  - mkdir public/files/arrets
+  - mkdir public/files/analyses
+  - mkdir public/files/uploads
+  - mkdir public/files/colloques
+  - mkdir public/files/pictos
+  - mkdir public/files/shop
+  - mkdir public/files/shop/factures
+  - mkdir storage/excel/exports
+  - mkdir public/files/seminaires
+  - mkdir public/colloques
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - ./vendor/laravel/dusk/bin/chromedriver-linux &
