@@ -20,14 +20,9 @@ before_script:
   - mkdir public/files/shop
   - mkdir public/files/shop/factures
   - mkdir storage/excel/exports
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - ./vendor/laravel/dusk/bin/chromedriver-linux &
-  - php artisan serve &
 
 script:
   - php artisan migrate --env=testing --no-interaction
   - php artisan db:seed --env=testing --no-interaction
   - composer dumpautoload
-  - php artisan dusk
   - vendor/bin/phpunit
