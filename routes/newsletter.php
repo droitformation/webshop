@@ -9,7 +9,7 @@ $middleware = !empty(config('newsletter.middlewares')) ? config('newsletter.midd
 */
 
 Route::post('unsubscribe', 'Frontend\InscriptionController@unsubscribe');
-Route::post('subscribe', 'Frontend\InscriptionController@subscribe');
+Route::post('subscribe', 'Frontend\InscriptionController@subscribe')->middleware('honeybot');
 Route::get('activation/{token}/{newsletter_id}', 'Frontend\InscriptionController@activation');
 
 Route::get('campagne/{id}', 'Frontend\CampagneController@show');

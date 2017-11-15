@@ -55,9 +55,9 @@ class NewsletterInscriptionTest extends TestCase
 
         \Mail::shouldReceive('send')->once();
 
-        $response = $this->call('POST', 'subscribe', ['email' => 'info@leschaud.ch', 'return_path' => '/', 'newsletter_id' => $newsletter->id , 'site_id' => 1]);
+        $response = $this->call('POST', 'subscribe', ['email' => 'info@leschaud.ch', 'return_path' => '/pubdroit', 'newsletter_id' => $newsletter->id , 'site_id' => 1]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/pubdroit');
     }
 
     /**
@@ -66,7 +66,10 @@ class NewsletterInscriptionTest extends TestCase
      */
     public function testRemoveSubscription()
     {
-        $site       = factory(\App\Droit\Site\Entities\Site::class)->create();
+        $honeypot = new \Msurguy\Honeypot\Honeypot;
+        $time = $honeypot->getEncryptedTime();
+
+        $site       = factory(\App\Droit\Site\Entities\Site::class)->create(['slug' => 'test']);
         $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
 
         $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
@@ -78,14 +81,18 @@ class NewsletterInscriptionTest extends TestCase
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn($user);
         $this->subscription_worker->shouldReceive('unsubscribe')->once();
 
-        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => 'bail']);
+        $response = $this->call('POST', 'unsubscribe', [
+            'newsletter_id' => $newsletter->id,
+            'email' => 'info@leschaud.ch',
+            'return_path' => 'test',
+        ]);
 
-        $response->assertRedirect('/bail');
+        $response->assertRedirect('/test');
     }
 
     public function testRemoveAllSubscription()
     {
-        $site       = factory(\App\Droit\Site\Entities\Site::class)->create();
+        $site       = factory(\App\Droit\Site\Entities\Site::class)->create(['slug' => 'test']);
         $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
         $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
 
@@ -95,9 +102,9 @@ class NewsletterInscriptionTest extends TestCase
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn($user);
         $this->subscription_worker->shouldReceive('unsubscribe')->once();
 
-        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch']);
+        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => '/test']);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/test');
     }
 
     /**
@@ -144,7 +151,7 @@ class NewsletterInscriptionTest extends TestCase
 
     public function testUnsubscribeFails()
     {
-        $site       = factory(\App\Droit\Site\Entities\Site::class)->create();
+        $site       = factory(\App\Droit\Site\Entities\Site::class)->create(['slug' => 'test']);
         $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
 
         $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
@@ -152,10 +159,9 @@ class NewsletterInscriptionTest extends TestCase
 
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn(null);
 
-        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => 'bail']);
+        $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => '/test']);
 
-        $response->assertRedirect('bail/unsubscribe');
+        $response->assertRedirect('test/unsubscribe');
 
     }
-    
 }

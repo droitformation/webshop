@@ -48,8 +48,6 @@ trait AuthenticatesUsers
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        $request->flash();
-
         return $this->sendFailedLoginResponse($request);
     }
 

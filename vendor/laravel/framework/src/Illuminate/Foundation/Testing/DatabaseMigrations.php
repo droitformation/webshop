@@ -19,8 +19,7 @@ trait DatabaseMigrations
         $this->app[Kernel::class]->setArtisan(null);
 
         $this->beforeApplicationDestroyed(function () {
-            $this->artisan('migrate:fresh');
-            $this->artisan('db:seed');
+            $this->artisan('migrate:rollback');
 
             RefreshDatabaseState::$migrated = false;
         });

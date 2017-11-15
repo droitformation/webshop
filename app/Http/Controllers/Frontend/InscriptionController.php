@@ -13,6 +13,7 @@ use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 use App\Droit\Site\Repo\SiteInterface;
 
+
 class InscriptionController extends Controller
 {
     protected $subscription;
@@ -78,13 +79,17 @@ class InscriptionController extends Controller
             alert()->danger('<strong>Vous êtes déjà inscrit à cettte newsletter</strong>');
         }
         else {
-            
+
             \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe,$newsletter) {
                 $message->from($newsletter->from_email, $newsletter->from_name);
                 $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
             });
 
             alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
+        }
+
+        if(isset($site)) {
+            return redirect($site->slug);
         }
 
         return redirect($request->input('return_path', '/'));
@@ -110,6 +115,7 @@ class InscriptionController extends Controller
         $this->subscribeworker->unsubscribe($subscriber,[$newsletter->id]);
 
         alert()->success('<strong>Vous avez été désinscrit</strong>');
+
         return redirect($request->input('return_path', '/'));
     }
 }

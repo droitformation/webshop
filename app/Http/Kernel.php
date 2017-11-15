@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'already'        => \App\Http\Middleware\AlreadyRegistered::class,
         'back'           => \App\Http\Middleware\BackMiddleware::class,
         'account'        => \App\Http\Middleware\AccountUpdateMiddleware::class,
+        'honeybot'       => \App\Http\Middleware\HoneyBot::class,
     ];
 }
