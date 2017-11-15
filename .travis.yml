@@ -20,8 +20,6 @@ before_script:
   - mkdir public/files/shop
   - mkdir public/files/shop/factures
   - mkdir storage/excel/exports
-  - mkdir public/files/seminaires
-  - mkdir public/colloques
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - ./vendor/laravel/dusk/bin/chromedriver-linux &
