@@ -38,7 +38,7 @@ class ProfileTest extends DuskTestCase
                 ->select('civilite_id', 2)
                 ->select('canton_id', 2);
 
-            $browser->pause(3100); // Wait because of the honeypot :|
+            $browser->pause(3800); // Wait because of the honeypot :|
             $browser->press('Envoyer');
 
             $browser->visit('/pubdroit/profil');

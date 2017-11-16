@@ -216,8 +216,8 @@ class ProductTest extends DuskTestCase
             $browser->loginAs($user)->visit('admin/product/'.$product->id);
             $browser->assertSee('NewAttribute');
             $element = '#deleteAttribute_'.$attribute->id;
-            $browser->driver->executeScript("$('html, body').animate({ scrollTop: $('$element').offset().top }, 0);");
-            $browser->pause(1000);
+            //$browser->driver->executeScript("$('html, body').animate({ scrollTop: $('$element').offset().top }, 0);");
+            $browser->pause(2000);
             $browser->press('#deleteAttribute_'.$attribute->id);
             $browser->driver->switchTo()->alert()->accept();
 
