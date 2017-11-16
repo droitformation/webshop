@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use function GuzzleHttp\Psr7\uri_for;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;

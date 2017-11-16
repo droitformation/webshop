@@ -46,7 +46,7 @@ class FeatureReponseTest extends TestCase
             'valid_at'    => \Carbon\Carbon::today()->addDay(5)->toDateString()
         ]);
 
-        $response->isRedirect(url('admin/sondage'));
+        $response->isRedirect('admin/sondage');
 
         $response = $this->get('admin/sondage');
         $response->assertSee('Ceci est une description');

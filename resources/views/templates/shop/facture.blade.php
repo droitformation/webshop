@@ -6,7 +6,7 @@
         @include('templates.shop.partials.header')
 
         <h1 class="title blue">
-            {!! isset($rappel) ? '<span class="red">'.$generate->order()->rappels->count().''.($generate->order()->rappels->count() > 1 ? 'ème' : 'er').' Rappel</span> Facture' : 'Facture' !!}
+            {!! isset($rappel) ? '<span class="red">'.$generate->order()->rappels->count().''.($generate->order()->rappels->count() > 1 ? 'ème' : 'er').' Rappel</span> ife' : 'Facture' !!}
         </h1>
 
         <table class="content-table">
@@ -77,9 +77,15 @@
                             <td class="text-right" valign="top">
                                 {!! !$price_unit->isEmpty() && $price_unit->first()->price_special ? $price_unit->first()->price_special.' CHF' : '' !!}
                             </td>
+
                             <!-- Calculate price with quantitiy -->
-                            <?php $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit') * $qty; ?>
-                            <td class="text-right" valign="top">{{ number_format((float)$subtotal, 2, '.', '') }} <span>CHF</span></td>
+                            @if(!$price_unit->isEmpty())
+                                <?php $subtotal = $price_unit->first()->price_cents * $qty; ?>
+                                <td class="text-right" valign="top">{{ number_format((float)$subtotal, 2, '.', '') }} <span>CHF</span></td>
+                            @else
+                                <td class="text-right" valign="top">gratuit</td>
+                            @endif
+
                        </tr>
                    @endforeach
                 @endif

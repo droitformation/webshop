@@ -51,7 +51,6 @@ class FeatureOrderTest extends TestCase
     public function testCreateNewOrderViaAdminPassValidationWithUser()
     {
         \DB::table('shop_orders')->truncate();
-        \DB::table('shop_order_products')->truncate();
 
         $prod1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price' => 1000,]);
         $prod2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price' => 2000, 'hidden' => 1]);
@@ -226,8 +225,6 @@ class FeatureOrderTest extends TestCase
 
     public function testDeleteOrderAndResetQty()
     {
-        \DB::table('shop_orders')->truncate();
-
         $prod1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price' => 1000, 'sku' => 5]);
         $prod2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price' => 2000]);
 

@@ -26,7 +26,7 @@ $( "#searchUser" ).autocomplete({
         $('#choiceUser').html(html);
 
         return false;
-    }
+    },
 }).autocomplete( "instance" )._renderItem = function( ul, item ) {
 
     $('#searchUser').prev('.input-group-addon').html('');

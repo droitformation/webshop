@@ -83,6 +83,10 @@ class SubscriptionWorkerTest extends TestCase
         ]);
     }
 
+    /**
+     *
+     * @return void
+     */
     public function testUpdateSubscriptions()
     {
         /******************************/

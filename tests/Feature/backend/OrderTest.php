@@ -136,7 +136,7 @@ class OrderTest extends TestCase
         $make->updateOrder($send, ['column' => 'send_at', 'date' => '2016-09-10']);
 
         // filter to get all send orders
-        $response = $this->call('POST', url('admin/orders'), [
+        $response = $this->call('POST', 'admin/orders', [
             'period' => [
                 'start' => $start,
                 'end'   => $end,
@@ -152,7 +152,7 @@ class OrderTest extends TestCase
         $this->assertEquals(3, $result->count());
 
         // filter to get non sent orders
-        $response = $this->call('POST', url('admin/orders'), ['start' => $start, 'end' => $end, 'send' => 'pending']);
+        $response = $this->call('POST', 'admin/orders', ['start' => $start, 'end' => $end, 'send' => 'pending']);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();
@@ -181,7 +181,7 @@ class OrderTest extends TestCase
         // set 5 to payed status
         $make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
 
-        $response = $this->call('POST', url('admin/orders'), [
+        $response = $this->call('POST', 'admin/orders', [
             'period' => [
                 'start' => $start,
                 'end'   => $end,
@@ -195,7 +195,7 @@ class OrderTest extends TestCase
 
         $this->assertEquals(5, $result->count());
 
-        $response = $this->call('POST', url('admin/orders'), [
+        $response = $this->call('POST', 'admin/orders', [
             'period' => [
                 'start' => $start,
                 'end'   => $end,
@@ -239,8 +239,7 @@ class OrderTest extends TestCase
             'coupon_id'   => $coupon->id
         ];
 
-        $this->call('PUT', url('admin/order/'.$order->id), $data);
-
+        $this->call('PUT', 'admin/order/'.$order->id, $data);
         $response = $this->get( 'admin/order/'.$order->id);
 
         $content = $response->getOriginalContent();
@@ -250,7 +249,6 @@ class OrderTest extends TestCase
         $this->assertEquals(6, $result->shipping_id);
         $this->assertEquals($total, $result->amount);
 
-        \DB::table('shop_orders')->truncate();
     }
 
     public function testSortPeriodNoResult()
@@ -263,7 +261,7 @@ class OrderTest extends TestCase
         $make->updateOrder($orders, ['column' => 'send_at', 'date' => '2016-09-10']);
 
         // filter to get all send orders
-        $response = $this->call('POST', url('admin/orders'), [
+        $response = $this->call('POST', 'admin/orders', [
             'period' => [
                 'start' => '2016-10-08',
                 'end'   => '2016-10-18',

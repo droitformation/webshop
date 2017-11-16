@@ -98,7 +98,6 @@ class PdfGenerator implements PdfGeneratorInterface
         ]);
         $pdf = \App::make('dompdf.wrapper');
         $pdf->getDomPDF()->setHttpContext($context);
-
         $facture = $pdf->loadView('templates.shop.facture', $data)->setPaper('a4');
 
         $make = ($this->stream ? 'stream' : 'save');

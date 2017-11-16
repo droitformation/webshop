@@ -119,8 +119,14 @@ class PDF{
      * @param string $encoding Not used yet
      * @return static
      */
+ /*   public function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
+        $html = $this->view->make($view, $data, $mergeData)->render();
+        return $this->loadHTML($html, $encoding);
+    }*/
+
     public function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
         $html = $this->view->make($view, $data, $mergeData)->render();
+        $html = preg_replace('/>\s+</', '><', $html);
         return $this->loadHTML($html, $encoding);
     }
 

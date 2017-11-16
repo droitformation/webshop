@@ -39,7 +39,7 @@ class FeatureProductTest extends TestCase
         $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create();
 
         // filter to get all send orders
-        $response = $this->call('POST', url('admin/products'), ['term' => $product->title]);
+        $response = $this->call('POST', 'admin/products', ['term' => $product->title]);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();
@@ -59,7 +59,7 @@ class FeatureProductTest extends TestCase
         $product1->authors()->attach($author->id);
 
         // filter to get all send orders
-        $response = $this->call('POST', url('admin/products'), ['sort' => ['author_id' => $author->id]]);
+        $response = $this->call('POST', 'admin/products', ['sort' => ['author_id' => $author->id]]);
 
         $content = $response->getOriginalContent();
         $content = $content->getData();
@@ -138,7 +138,7 @@ class FeatureProductTest extends TestCase
 
         $product->attributs()->attach($attribute->id, ['value' => 'new']);
 
-        $response = $this->delete( url('admin/productattribut/'.$attribute->id), ['product_id' => $product->id]);
+        $response = $this->delete( 'admin/productattribut/'.$attribute->id, ['product_id' => $product->id]);
 
         $product->load('attributs');
 
