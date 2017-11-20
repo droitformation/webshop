@@ -159,6 +159,28 @@ class MailgunService implements MailgunInterface
         $batchMsg->finalize();
     }
 
+    public function getStats($date){
+
+        $carbon = new \Carbon\Carbon::today();
+
+        $formatted = $carbon->toRfc2822String();
+
+        $data = [
+            'event' => array('accepted', 'delivered', 'failed'),
+            'start' => '1m'
+        ];
+
+        $response = $this->mailgun->stats()->total();
+
+        if($response->http_response_code == 200){
+            // local env is configured with pastebin no id returned, faking it
+            return isset($response->http_response_body->id) ? $response->http_response_body->id : 1982;
+        }
+
+        throw new \App\Exceptions\NewsletterImplementationException($response->http_response_body, $response->http_response_code);
+
+    }
+
     /*
      * Misc test
      * */

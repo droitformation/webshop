@@ -45,6 +45,7 @@ interface MailgunInterface
      */
     //public function statsCampagne($id);
     //public function clickStatistics($id, $offset = 0);
+    public function getStats($date);
 
     /*
      * Misc test
