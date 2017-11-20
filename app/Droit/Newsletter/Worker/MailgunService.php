@@ -16,6 +16,7 @@ class MailgunService implements MailgunInterface
     protected $html   = null;
     protected $recipients = [];
     protected $sendDate = null;
+    protected $tags = ['transactionnal'];
 
     //protected $list   = null;
 
@@ -64,6 +65,13 @@ class MailgunService implements MailgunInterface
         return $this;
     }
 
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
     public function getHtml()
     {
         return $this->html;
@@ -90,7 +98,7 @@ class MailgunService implements MailgunInterface
             "recipient-variables" => json_encode($this->prepareRecipients()), // Required for batch sending, matches to recipient details
             "v:messageId"         => $id ? 'message_'.$id : null, // Custom variable used for webhooks
             'o:deliverytime'      => $this->sendDate ? $this->sendDate : null,
-            'o:tag'               => $id ? ['message_'.$id] : null
+            'o:tag'               => $id ? ['message_'.$id] : $this->tags
         ];
 
         return array_filter($data);
@@ -161,20 +169,22 @@ class MailgunService implements MailgunInterface
 
     public function getStats($date){
 
-        $carbon = new \Carbon\Carbon::today();
-
-        $formatted = $carbon->toRfc2822String();
-
+        $yesterday     = \Carbon\Carbon::now()->subDay()->startOfDay()->timestamp;
+        $today = \Carbon\Carbon::now()->endOfDay()->timestamp;
+        $tag = 'testing';
         $data = [
-            'event' => array('accepted', 'delivered', 'failed'),
-            'start' => '1m'
+            'event' => ['accepted', 'delivered', 'failed'],
+            'start' => $yesterday,
+            'end'   => $today,
         ];
+        $domain = env('MAILGUN_DOMAIN');
 
-        $response = $this->mailgun->stats()->total();
+        $response = $this->mailgun->get($domain.'/tags');
+        //$response = $this->mailgun->domains()->tags()->stats();
 
         if($response->http_response_code == 200){
             // local env is configured with pastebin no id returned, faking it
-            return isset($response->http_response_body->id) ? $response->http_response_body->id : 1982;
+            return $response->http_response_body;
         }
 
         throw new \App\Exceptions\NewsletterImplementationException($response->http_response_body, $response->http_response_code);
