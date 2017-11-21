@@ -23,6 +23,12 @@ class SubscribeRequest extends FormRequest
      */
     public function rules()
     {
+        if (\App::environment('testing')) {
+            return [
+                'email' => 'required|email',
+            ];
+        }
+
         return [
             'email' => 'required|email',
             'my_name'  => 'honeypot',

@@ -48,6 +48,8 @@ class NewsletterInscriptionTest extends BrowserKitTest
      */
     public function testSubscription()
     {
+        Honeypot::disable();
+
         $newsletter = factory(App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1]);
         $user = factory(App\Droit\Newsletter\Entities\Newsletter_users::class)->create();
         $user->subscriptions()->attach([1]);
