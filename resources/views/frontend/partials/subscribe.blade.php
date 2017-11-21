@@ -11,5 +11,6 @@
     </div>
     <input type="hidden" name="newsletter_id" value="{{ $newsletter_id }}">
     <input type="hidden" name="site_id" value="{{ $site->id }}">
+    {!! Honeypot::generate('my_name', 'my_time') !!}
 </form>
 
