@@ -172,20 +172,19 @@ class MailgunService implements MailgunInterface
         $batchMsg->finalize();
     }
 
-    public function getStats($date){
+    public function getStats($date,$tag){
 
-        $yesterday     = \Carbon\Carbon::now()->subDay()->startOfDay()->timestamp;
-        $today = \Carbon\Carbon::now()->endOfDay()->timestamp;
-        $tag = 'testing';
+        $yesterday  = \Carbon\Carbon::parse($date)->startOfDay()->timestamp;
+        $today      = \Carbon\Carbon::parse($date)->endOfDay()->timestamp;
+
         $data = [
             'event' => ['accepted', 'delivered', 'failed'],
             'start' => $yesterday,
             'end'   => $today,
         ];
-        $domain = env('MAILGUN_DOMAIN');
 
-        $response = $this->mailgun->get($domain.'/tags');
-        //$response = $this->mailgun->domains()->tags()->stats();
+        $domain   = env('MAILGUN_DOMAIN');
+        $response = $this->mailgun->get($domain.'/tags/'.$tag.'/stats',$data);
 
         if($response->http_response_code == 200){
             // local env is configured with pastebin no id returned, faking it
@@ -224,5 +223,24 @@ class MailgunService implements MailgunInterface
         }
 
         return $this;
+    }
+
+    public function mailgun_agregate($data)
+    {
+        if(isset($data->stats)){
+            $agg = collect($data->stats)->map(function ($item, $key) {
+                return [
+                    'accepted'  => $item->accepted->total,
+                    'delivered' => $item->delivered->total
+                ];
+            });
+
+            return [
+                'accepted'  => $agg->pluck('accepted')->sum(),
+                'delivered' => $agg->pluck('delivered')->sum()
+            ];
+        }
+
+        return null;
     }
 }

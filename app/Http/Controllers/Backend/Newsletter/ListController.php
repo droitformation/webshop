@@ -10,6 +10,7 @@ use App\Droit\Newsletter\Worker\ImportWorkerInterface;
 use App\Droit\Newsletter\Repo\NewsletterListInterface;
 use App\Droit\Newsletter\Repo\NewsletterEmailInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
+use App\Droit\Newsletter\Repo\NewsletterTrackingInterface;
 
 use App\Droit\Service\UploadInterface;
 use App\Http\Requests\EmailListRequest;
@@ -23,13 +24,15 @@ class ListController extends Controller
     protected $campagne;
     protected $emails;
     protected $upload;
+    protected $tracking;
 
     public function __construct( 
         NewsletterListInterface $list, 
         NewsletterEmailInterface $emails,
         NewsletterCampagneInterface $campagne,
         ImportWorkerInterface $import, 
-        UploadInterface $upload 
+        UploadInterface $upload ,
+        NewsletterTrackingInterface $tracking
     )
     {
         $this->list     = $list;
@@ -37,6 +40,7 @@ class ListController extends Controller
         $this->campagne = $campagne;
         $this->import   = $import;
         $this->upload   = $upload;
+        $this->tracking = $tracking;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
@@ -157,13 +161,15 @@ class ListController extends Controller
         }
         
         $results = $this->import->send($request->input('campagne_id'),$list);
-/*
-        if(!$results){
-            alert()->danger('Problème avec l\'envoi, vérifier sur mailjet.com');
-            return redirect('build/newsletter');
-        }*/
 
-        alert()->success('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailjet.');
+        // add mailgun tracking
+        $this->tracking->logSent([
+            'campagne_id'    => $request->input('campagne_id'),
+            'send_at'        => \Carbon\Carbon::now()->toDateTimeString(),
+            'list_id'        => $request->input('list_id'),
+        ]);
+
+        alert()->success('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.');
 
         return redirect('build/newsletter');
     }

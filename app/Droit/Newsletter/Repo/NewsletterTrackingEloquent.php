@@ -1,15 +1,18 @@
 <?php namespace App\Droit\Newsletter\Repo;
 
 use App\Droit\Newsletter\Entities\Newsletter_tracking as M;
+use App\Droit\Newsletter\Entities\Newsletter_sent as S;
 use App\Droit\Newsletter\Repo\NewsletterTrackingInterface;
 
 class NewsletterTrackingEloquent implements NewsletterTrackingInterface{
 
 	protected $tracking;
+    protected $sent;
 
-	public function __construct(M $tracking)
+	public function __construct(M $tracking, S $sent)
 	{
 		$this->tracking = $tracking;
+        $this->sent = $sent;
 	}
 	
 	public function getAll(){
@@ -66,5 +69,21 @@ class NewsletterTrackingEloquent implements NewsletterTrackingInterface{
         $tracking = $this->tracking->find($id);
 
         return $tracking->delete();
+    }
+
+    public function logSent($data)
+    {
+        $sent = $this->sent->create(array(
+            'campagne_id'    => $data['campagne_id'],
+            'send_at'        => \Carbon\Carbon::now()->toDateTimeString(),
+            'list_id'        => $data['list_id'],
+        ));
+
+        if( ! $sent )
+        {
+            return false;
+        }
+
+        return $sent;
     }
 }

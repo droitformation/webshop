@@ -37,12 +37,21 @@ class TrackingController extends Controller
 
     public function stats($id)
     {
+        $campagne = $this->campagne->find($id);
+
+        //Mailgun stats
+        $mailgun = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
+        $date     = '2017-11-20';
+        $tag      = 'campagne_'.$campagne->id;
+        $response = $mailgun->getStats($date,$tag);
+
+        $results = $mailgun->mailgun_agregate($response);
+
+
         $stats = $this->tracking->find($id);
         $stats = $stats->groupBy(function ($stat, $key) {
             return $stat->time->toDateString();
         });
-
-        $campagne = $this->campagne->find($id);
 
         return view('backend.newsletter.lists.stats')->with(['campagne' => $campagne, 'stats' => $stats]);
     }
