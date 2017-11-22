@@ -9,4 +9,8 @@ class Newsletter_sent extends Model {
 
 	protected $fillable = ['campagne_id','list_id','send_at'];
 
+    public function liste()
+    {
+        return $this->belongsTo('App\Droit\Newsletter\Entities\Newsletter_lists','list_id');
+    }
 }
