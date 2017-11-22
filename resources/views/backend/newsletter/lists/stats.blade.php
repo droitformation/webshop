@@ -30,6 +30,21 @@
                                 @endforeach
                             </ul>
                         @endif
+
+                        @if(!empty($mailgun_stats))
+                            <ul>
+                                @foreach($mailgun_stats as $date => $mailgun_stat)
+                                    <li>{{ $mailgun_stat['stats']['delivered'] }} emails envoyés
+                                        @foreach($mailgun_stat['time'] as $time)
+                                           <p style="margin-bottom: 0;">
+                                               Envoyé à la liste: {{ $time['liste'] }} le <strong>{{ $time['day'] }}</strong>
+                                           </p>
+                                        @endforeach
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                     </form>
                 </div>
             </div>

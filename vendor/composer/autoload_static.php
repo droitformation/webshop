@@ -1396,6 +1396,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'CreateNewsletterContentsTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_05_105041_create_newsletter_contents_table.php',
         'CreateNewsletterListEmailsTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_12_090836_create_newsletter_list_emails_table.php',
         'CreateNewsletterListsTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_12_090835_create_newsletter_lists_table.php',
+        'CreateNewsletterSentTable' => __DIR__ . '/../..' . '/database/migrations/2017_11_20_142006_create_newsletter_sent_table.php',
         'CreateNewsletterSubscriptionsTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_12_090834_create_newsletter_subscriptions_table.php',
         'CreateNewsletterTrackingTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_15_162454_create_newsletter_tracking_table.php',
         'CreateNewsletterTypesTable' => __DIR__ . '/../..' . '/database/migrations/2014_08_05_105320_create_newsletter_types_table.php',

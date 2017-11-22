@@ -30,4 +30,9 @@ class Newsletter_campagnes extends Model {
     {
         return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_tracking', 'CustomID');
     }
+
+    public function sent()
+    {
+        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_sent', 'campagne_id');
+    }
 }

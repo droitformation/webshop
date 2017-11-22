@@ -42,6 +42,7 @@ class SendBulkEmail implements ShouldQueue
         $mailgun->setSender($this->campagne->newsletter->from_email,$this->campagne->newsletter->from_name)
             ->setHtml($this->html)
             ->setSendDate($toSend)
+            ->setTags(['campagne_'.$this->campagne->id])
             ->setRecipients($this->emails);
 
         $response = $mailgun->sendTransactional($this->campagne->sujet);

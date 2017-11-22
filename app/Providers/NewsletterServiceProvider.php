@@ -262,7 +262,10 @@ class NewsletterServiceProvider extends ServiceProvider
 
         $this->app->singleton('App\Droit\Newsletter\Repo\NewsletterTrackingInterface', function()
         {
-            return new \App\Droit\Newsletter\Repo\NewsletterTrackingEloquent( new \App\Droit\Newsletter\Entities\Newsletter_tracking() );
+            return new \App\Droit\Newsletter\Repo\NewsletterTrackingEloquent(
+                new \App\Droit\Newsletter\Entities\Newsletter_tracking(),
+                new \App\Droit\Newsletter\Entities\Newsletter_sent()
+            );
         });
     }
 }

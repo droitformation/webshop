@@ -869,6 +869,7 @@ return array(
     'CreateNewsletterContentsTable' => $baseDir . '/database/migrations/2014_08_05_105041_create_newsletter_contents_table.php',
     'CreateNewsletterListEmailsTable' => $baseDir . '/database/migrations/2014_08_12_090836_create_newsletter_list_emails_table.php',
     'CreateNewsletterListsTable' => $baseDir . '/database/migrations/2014_08_12_090835_create_newsletter_lists_table.php',
+    'CreateNewsletterSentTable' => $baseDir . '/database/migrations/2017_11_20_142006_create_newsletter_sent_table.php',
     'CreateNewsletterSubscriptionsTable' => $baseDir . '/database/migrations/2014_08_12_090834_create_newsletter_subscriptions_table.php',
     'CreateNewsletterTrackingTable' => $baseDir . '/database/migrations/2017_08_15_162454_create_newsletter_tracking_table.php',
     'CreateNewsletterTypesTable' => $baseDir . '/database/migrations/2014_08_05_105320_create_newsletter_types_table.php',

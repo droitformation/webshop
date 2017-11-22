@@ -1081,12 +1081,29 @@ Route::get('/test_mailgun', function () {
     $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
         ->setHtml($html)
         ->setSendDate($toSend)
+        ->setTags(['testing_123'])
         ->setRecipients(['cindy.leschaud@gmail.com','cindy.leschaud@unine.ch']);
 
-    $response = $mailgun->sendTransactional('Test mailgun newsleter');
+    $date     = '2017-11-21';
+    $tag      = 'campagne_1669';
+    $response = $mailgun->getStats($date,$tag);
+
+    $results = $mailgun->mailgun_agregate($response);
+/*
+    $tracking = App::make('App\Droit\Newsletter\Repo\NewsletterTrackingInterface');
+    $tracking->logSent([
+        'campagne_id'    => 1,
+        'send_at'        => \Carbon\Carbon::now()->toDateTimeString(),
+        'list_id'        => 12,
+    ]);*/
 
     echo '<pre>';
     print_r($response);
+    echo '</pre>';
+   // $response = $mailgun->sendTransactional('testing');
+
+    echo '<pre>';
+    print_r($results);
     echo '</pre>';exit();
 });
 
