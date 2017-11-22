@@ -1084,7 +1084,7 @@ Route::get('/test_mailgun', function () {
         ->setTags(['testing_123'])
         ->setRecipients(['cindy.leschaud@gmail.com','cindy.leschaud@unine.ch']);
 
-    $date     = '2017-11-22';
+    $date     = '2017-11-21';
     $tag      = 'campagne_1669';
     $response = $mailgun->getStats($date,$tag);
 

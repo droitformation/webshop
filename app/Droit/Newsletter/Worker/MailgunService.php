@@ -180,9 +180,9 @@ class MailgunService implements MailgunInterface
 
         $domain   = env('MAILGUN_DOMAIN');
         $response = $this->mailgun->get($domain.'/tags/'.$tag.'/stats',$data);
+        //$response = $this->mailgun->get($domain.'/tags');
 
         if($response->http_response_code == 200){
-            // local env is configured with pastebin no id returned, faking it
             return $response->http_response_body;
         }
 
