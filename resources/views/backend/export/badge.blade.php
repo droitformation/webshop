@@ -24,8 +24,9 @@
             span{
                 font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
                 color: #000;
-                line-height: 16px;
+
                 font-size: 16px;
+                font-size: 18px;
                 max-resolution: 0;
                 padding: 0;
                 display: block;
