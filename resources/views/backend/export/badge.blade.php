@@ -25,6 +25,7 @@
                 font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
                 color: #000;
                 font-size: 18px;
+                line-height: 16px;
                 max-resolution: 0;
                 padding: 0;
                 display: block;
@@ -36,7 +37,7 @@
 
         @if(!empty($data))
             @foreach($data as $table)
-                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="page-break-after:always;">
                    @foreach($table as $row)
                         <tr class="normalize">
                         @foreach($row as $name)
