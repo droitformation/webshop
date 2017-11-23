@@ -27,6 +27,7 @@
 
                 font-size: 16px;
                 font-size: 18px;
+                line-height: 16px;
                 max-resolution: 0;
                 padding: 0;
                 display: block;
