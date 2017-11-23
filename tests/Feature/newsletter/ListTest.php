@@ -76,7 +76,7 @@ class ListTest extends TestCase
 
         $response->assertRedirect('build/newsletter');
         $response->assertSessionHas('alert.style','success');
-        $response->assertSessionHas('alert.message','Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailjet.');
+        $response->assertSessionHas('alert.message','Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.');
     }
 
     public function testSendGetTheListFails()

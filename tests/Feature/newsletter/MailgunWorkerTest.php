@@ -115,6 +115,7 @@ class MailgunWorkerTest extends TestCase
             "html"                => $this->html,
             "text"                => strip_tags($this->html,'<a>'),
             "recipient-variables" => json_encode($prepared), // Required for batch sending, matches to recipient details
+            'o:tag'               => ['transactionnal']
         ];
 
         // Assert
@@ -122,7 +123,9 @@ class MailgunWorkerTest extends TestCase
             ->setRecipients($this->recipients)
             ->setHtml($this->html);
 
-        $this->assertEquals($expected, $worker->prepareEmail($sujet));
+        $results = $worker->prepareEmail($sujet);
+
+        $this->assertEquals($expected, $results);
     }
 
     public function testPrepareEmailCampagne()
