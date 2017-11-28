@@ -84,7 +84,11 @@
                                                     @if(isset($avis['reponses']) && !$avis['reponses']->isEmpty())
                                                         @if($avis['type'] != 'text')
                                                         <dl class="dl-horizontal dl-sondage">
-                                                            @foreach($avis['reponses'] as $q => $note)
+                                                            <?php
+                                                                $reponses = $avis['reponses'];
+                                                                $reponses = sortArrayByArray($reponses->toArray(), ['Excellent','Bon','Satisfaisant','Insatisfaisant']);
+                                                            ?>
+                                                            @foreach($reponses as $q => $note)
                                                                 <dt>{{ $q }}: </dt>
                                                                 <dd>{{ $note }}</dd>
                                                             @endforeach
