@@ -32,10 +32,10 @@ class NotifyJobFinishedEmail extends Job implements ShouldQueue
     {
         Mail::send('emails.notify', ['text' => $this->text], function ($m) {
 
-            $email = env('MAIL_TEST') ? env('MAIL_TEST') : 'info@publications-droit.ch';
+            $email = env('MAIL_TEST') ? env('MAIL_TEST') : 'droit.formation@unine.ch';
 
             $m->from('info@publications-droit.ch', 'Administration Droit Formation');
-            $m->to($email, 'Administration')->subject('Notification');
+            $m->to($email, 'Administration')->subject('Le job pour lancé est terminé');
         });
     }
 }

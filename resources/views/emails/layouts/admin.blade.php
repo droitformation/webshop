@@ -9,7 +9,7 @@ $paraeset = "font-size: 14px; font-weight: normal; margin: 0 0 10px; padding: 0;
 <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Notification Droit Formation</title>
+    <title>Administration Droit Formation</title>
 </head>
 <body bgcolor="#f6f6f6" style="{{ $fontreset }} -webkit-font-smoothing: antialiased; height: 100%; -webkit-text-size-adjust: none; width: 100% !important; {{ $marginreset }}">
 
@@ -29,7 +29,7 @@ $paraeset = "font-size: 14px; font-weight: normal; margin: 0 0 10px; padding: 0;
                             </td>
                             <td style="{{ $fontreset }} {{ $marginreset }}" width="10"></td>
                             <td style="{{ $fontreset }} {{ $marginreset }}" width="50">
-                                <h1 style="{{ $fontreset }} font-size: 24px; line-height: 1.2em; color: #111111; font-weight: 500; margin: 20px 0 10px; padding: 0;">Notification</h1>
+                                <h1 style="{{ $fontreset }} font-size: 24px; line-height: 1.2em; color: #111111; font-weight: 500; margin: 20px 0 10px; padding: 0;">Nouvelle Notification</h1>
                             </td>
                         </tr>
                         <tr style="{{ $fontreset }} {{ $marginreset }}">
