@@ -21,7 +21,7 @@
                         Bonjour {{ $user->name }}
                     </h2>
                     <p style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }}">
-                        Nous vous remercions pour votre demande d'abonnement sur <a href="http://www.publications-droit.ch" style="color: #1a446e;">www.publications-droit.ch</a>.
+                        Nous vous remercions pour votre demande d'abonnement sur <a href="http://publications-droit.ch" style="color: #1a446e;">publications-droit.ch</a>.
                     </p>
                     <p style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }}">Le premier ouvrage vous sera envoyé dans les plus brefs délais.</p>
                     <p style="{{$resetMargin}}margin-bottom: 5px;{{ $resetPadding }} color: #000; margin-top: 15px;"><strong>Résumé:</strong></p>
