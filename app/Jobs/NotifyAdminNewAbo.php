@@ -40,7 +40,7 @@ class NotifyAdminNewAbo extends Job implements ShouldQueue
 
         \Mail::send('emails.notification', $infos, function ($m) {
             $m->from('info@publications-droit.ch', 'Administration Droit Formation');
-            $m->to('info@publications-droit.ch', 'Administration')->subject('Notification');
+            $m->to('droit.formation@unine.ch', 'Administration')->subject('Nouvelle demande d\'abonnement depuis le site publications-droit.ch');
         });
     }
 }

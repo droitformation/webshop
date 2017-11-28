@@ -45,7 +45,7 @@ class NotifyAdminNewInscription extends Job implements ShouldQueue
 
         \Mail::send('emails.notification', $infos, function ($m) use ($email) {
             $m->from('info@publications-droit.ch', 'Administration Droit Formation');
-            $m->to($email, 'Administration')->subject('Notification');
+            $m->to($email, 'Administration')->subject('Nouvelle inscription depuis le site publications-droit.ch');
         });
     }
 

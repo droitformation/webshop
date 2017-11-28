@@ -14,7 +14,7 @@
             <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}padding:5px 35px 35px 35px;">
 
                 {!! isset($colloque) ? '<p '.$style['paragraph'].'>'.$name.' vient de s\'inscrire au colloque<br/> <strong>'.$colloque.'</strong></p>' : ''  !!}
-                {!! isset($order) ? '<p '.$style['paragraph'].'>Commander passé par '.$name.'<br/> n° <strong>'.$order.'</strong></p>' : ''  !!}
+                {!! isset($order) ? '<p '.$style['paragraph'].'>Commande passé par '.$name.'<br/> n° <strong>'.$order.'</strong></p>' : ''  !!}
 
                 <div style="{{ $style['paragraph'] }}">
                     @if(isset($abos))
