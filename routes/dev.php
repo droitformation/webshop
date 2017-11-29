@@ -131,35 +131,30 @@ Route::get('mapped', function () {
 
 Route::get('testing', function() {
 
-    $mailjet = \App::make('App\Droit\Newsletter\Service\Mailjet');
-
-
+    //$mailjet = \App::make('App\Droit\Newsletter\Service\Mailjet');
     $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
     $colloques    = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
-    $inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $model_inscriptions  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $users        = \App::make('App\Droit\User\Repo\UserInterface');
-
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
     $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
-
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
-
-
     $rappels       = \App::make('App\Droit\Inscription\Repo\RappelInterface');
     $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
-    $inscription = $inscriptions->find(14892);
+    $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
+    //$rappel      = $rappels->find(522);
+    //$inscription = $inscriptions->find(14892);
 
-    $rappel      = $rappels->find(12);
+    $inscriptions = $model_inscriptions->getMultiple([14861,14870,14902]);
 
-    $generator->stream = true;
-    $generator->toPrint = true;
+    $worker->generateWithBv($inscriptions);
 
-    return $generator->make('facture', $inscription, $rappel);
+    //emptyDirectory(public_path('files/colloques/temp'));
 
     exit();
 

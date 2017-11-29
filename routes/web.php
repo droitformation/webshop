@@ -287,6 +287,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::get('register/rappel/confirmation/{id}','Backend\Colloque\RappelController@confirmation');
     Route::post('register/rappel/send','Backend\Colloque\RappelController@send');
+    Route::get('register/rappel/toprint/{id}','Backend\Colloque\RappelController@toprint');
     
     Route::get('colloque/archive/{year}', 'Backend\Colloque\ColloqueController@archive');
 

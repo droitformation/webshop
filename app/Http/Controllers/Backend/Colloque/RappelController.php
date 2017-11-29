@@ -52,7 +52,7 @@ class RappelController extends Controller
 
         // Filter for occurrences
         $inscriptions = !$colloque->occurrences->isEmpty() ? $inscriptions->reject(function ($inscription, $key) {
-            return $inscription->occurrence_done->isEmpty();
+            return isset($inscription->occurrence_done) && $inscription->occurrence_done->isEmpty();
         }) : $inscriptions;
 
         if($request->ajax()) {
@@ -138,6 +138,21 @@ class RappelController extends Controller
 
     }
 
+    public function toprint($id)
+    {
+        $colloque     = $this->colloque->find($id);
+        $inscriptions = $this->inscription->getRappels($id);
+
+        // Filter for occurrences
+        $inscriptions = !$colloque->occurrences->isEmpty() ? $inscriptions->reject(function ($inscription, $key) {
+            return isset($inscription->occurrence_done) && $inscription->occurrence_done->isEmpty();
+        }) : $inscriptions;
+
+        $file = $this->worker->generateWithBv($inscriptions);
+
+        return response()->download($file);
+    }
+
     public function send(Request $request)
     {
         $inscriptions = $this->inscription->getMultiple($request->input('inscriptions'));
@@ -189,4 +204,6 @@ class RappelController extends Controller
 
         return $generator->make('facture', $model, $rappel);
     }
+
+
 }

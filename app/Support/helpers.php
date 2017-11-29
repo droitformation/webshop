@@ -81,3 +81,19 @@ function sortArrayByArray(Array $array, Array $orderArray){
     return $ordered + $array;
 }
 
+function emptyDirectory($dir) {
+
+    if (!is_dir($dir)) {
+        return unlink($dir);
+    }
+
+    foreach (scandir($dir) as $item) {
+        if ($item == '.' || $item == '..') {
+            continue;
+        }
+
+        if (!emptyDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+            return false;
+        }
+    }
+}

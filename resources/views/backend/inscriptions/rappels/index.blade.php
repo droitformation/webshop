@@ -11,13 +11,13 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <?php $illustration = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
                     <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ secure_asset('files/colloques/illustration/'.$illustration) }}" />
                     <h3 style="margin-bottom:0px;line-height:20px;font-size: 18px;"><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h3>
                     <p style="margin-bottom: 0;">{{ $colloque->event_date }}</p>
                 </div>
-                <div class="col-md-4" style="border-right: 1px solid #cecece;">
+                <div class="col-md-3" style="border-right: 1px solid #cecece;">
                     <form action="{{ url('admin/inscription/rappel/make') }}" method="POST" class="form-inline">{!! csrf_field() !!}
                         <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
                         <div class="checkbox text-right" style="border-left: 1px solid #cecece; padding-left: 10px;">
@@ -25,6 +25,11 @@
                         </div>
                         <button class="btn btn-brown pull-right" type="submit"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</button>
                     </form>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url('admin/register/rappel/toprint/'.$colloque->id) }}" class="btn btn-primary pull-right">
+                        <i class="fa fa-download"></i> &nbsp; Rappels + BV
+                    </a>
                 </div>
                 <div class="col-md-2">
                     <a href="{{ url('admin/register/rappel/confirmation/'.$colloque->id) }}" class="btn btn-inverse pull-right" >

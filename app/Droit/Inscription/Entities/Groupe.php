@@ -31,6 +31,11 @@ class Groupe extends Model
         });
     }
 
+    public function getListRappelAttribute()
+    {
+        return $this->rappels;
+    }
+
     public function getParticipantListAttribute()
     {
         $this->load('inscriptions.participant');

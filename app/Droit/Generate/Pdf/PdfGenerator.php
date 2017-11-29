@@ -197,6 +197,27 @@ class PdfGenerator implements PdfGeneratorInterface
 
     }
 
+    public function makeInscriptionRappel($model, $rappel ,$filepath){
+
+        $data     = $this->getData('facture');
+        $generate = new \App\Droit\Generate\Entities\Generate($model);
+
+        $data['generate'] = $generate;
+        $data['print']    = $this->toPrint;
+        $data['rappel']   = $model->load('rappels')->rappels->count();
+
+        $context = stream_context_create(['ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]]);
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        $view = $pdf->loadView('templates.colloque.facture', $data)->setPaper('a4');
+
+        $state = ($this->stream ? 'stream' : 'save');
+
+        return $view->$state($filepath);
+    }
+
     public function getData($document)
     {
         $data['expediteur']  = $this->expediteur;
