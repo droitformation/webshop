@@ -37,8 +37,12 @@
                 @if(isset($avis['reponses']) && !$avis['reponses']->isEmpty())
                     @if($avis['type'] != 'text')
 
-                        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;page-break-inside: avoid;">
-                            @foreach($avis['reponses'] as $q => $note)
+                        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px; display: table">
+                            <?php
+                                $reponses = $avis['reponses'];
+                                $reponses = sortArrayByArray($reponses->toArray(), ['Excellent','Bon','Satisfaisant','Insatisfaisant']);
+                            ?>
+                            @foreach($reponses as $q => $note)
                                 <tr>
                                     <td>{{ $q }}: </td>
                                     <td>{{ $note }}</td>
@@ -47,13 +51,9 @@
                         </table>
 
                     @else
-
-                        <ul style="margin-left: 10px;padding-left: 10px; margin-top: 10px;margin-bottom: 10px; page-break-inside: avoid;">
-                            @foreach($avis['reponses'] as $note)
-                                <li>{!! strip_tags($note) !!}</li>
-                            @endforeach
-                        </ul>
-
+                        @foreach($avis['reponses'] as $note)
+                            <p>{!! strip_tags($note) !!}</p>
+                        @endforeach
                     @endif
                 @endif
 
@@ -61,9 +61,9 @@
         @endif
 
         @if($sort == 'reponse_id')
-            @foreach($reponses as $id => $response)
+            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px; display: table">
+                @foreach($reponses as $id => $response)
 
-                <table>
                     <tr>
                         <td><h4>{{ $response->first()->response->email }}</h4></td>
                         <td>
@@ -73,9 +73,9 @@
                             @endforeach
                         </td>
                     </tr>
-                </table>
 
-            @endforeach
+                @endforeach
+            </table>
         @endif
     @endif
 
