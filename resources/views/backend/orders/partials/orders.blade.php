@@ -12,6 +12,7 @@
                 <option value="">Tous</option>
                 <option value="pending">En attente</option>
                 <option value="payed">Payé</option>
+                <option value="free">Gratuits</option>
             </select>
         </div>
     </div>
@@ -32,7 +33,11 @@
         <tbody class="list">
         @foreach($orders as $order)
 
-            <tr class="mainRow" data-status="{{ $order->payed_at ? 'payed' : 'pending' }}" data-channel="{{ $order->admin ? 'yes' : 'no' }}">
+            <?php
+               $status = $order->payed_at ? 'payed' : 'pending';
+               $status = $order->amount == 0 ? 'free' : $status;
+            ?>
+            <tr class="mainRow" data-status="{{ $status }}" data-channel="{{ $order->admin ? 'yes' : 'no' }}">
                 <td colspan="8" class="mainRow_order">
                     <div class="row order_row">
                         <div class="col-md-2">
@@ -65,7 +70,9 @@
                             @endif
                         </div>
                         <div class="col-md-2 statut" data-statut="{{ $order->status_title }}">
-                            @if($cancelled)
+                            @if($order->amount == 0)
+                                <span class="label label-default">Gratuit</span>
+                            @elseif($cancelled)
                                 {{ $order->payed_at ? $order->payed_at->format('Y-m-d') : '' }}&nbsp;
                                 <span class="label label-{{ $order->payed_at ? 'success' : '' }}">{{ $order->payed_at ? 'payé' : 'en attente' }}</span>
                             @else
