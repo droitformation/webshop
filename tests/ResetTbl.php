@@ -77,5 +77,8 @@ trait ResetTbl
         \DB::table('users')->truncate();
 
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $this->artisan('db:seed');
+
     }
 }
