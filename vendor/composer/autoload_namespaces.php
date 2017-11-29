@@ -15,6 +15,7 @@ return array(
     'PhpSpec' => array($vendorDir . '/benconstable/phpspec-laravel/src', $vendorDir . '/phpspec/phpspec/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
+    'PDFMerger' => array($vendorDir . '/rguedes/pdfmerger/Classes'),
     'Msurguy\\Honeypot\\' => array($vendorDir . '/msurguy/honeypot/src'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Mailjet' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src'),

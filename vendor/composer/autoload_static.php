@@ -465,6 +465,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
             array (
                 0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
             ),
+            'PDFMerger' => 
+            array (
+                0 => __DIR__ . '/..' . '/rguedes/pdfmerger/Classes',
+            ),
         ),
         'M' => 
         array (
@@ -699,6 +703,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'App\\Droit\\Newsletter\\Entities\\Newsletter_contents' => __DIR__ . '/../..' . '/app/Droit/Newsletter/Entities/Newsletter_contents.php',
         'App\\Droit\\Newsletter\\Entities\\Newsletter_emails' => __DIR__ . '/../..' . '/app/Droit/Newsletter/Entities/Newsletter_emails.php',
         'App\\Droit\\Newsletter\\Entities\\Newsletter_lists' => __DIR__ . '/../..' . '/app/Droit/Newsletter/Entities/Newsletter_lists.php',
+        'App\\Droit\\Newsletter\\Entities\\Newsletter_sent' => __DIR__ . '/../..' . '/app/Droit/Newsletter/Entities/Newsletter_sent.php',
         'App\\Droit\\Newsletter\\Entities\\Newsletter_subscriptions' => __DIR__ . '/../..' . '/app/Droit/Newsletter/Entities/Newsletter_subscriptions.php',
         'App\\Droit\\Newsletter\\Entities\\Newsletter_tracking' => __DIR__ . '/../..' . '/app/Droit/Newsletter/Entities/Newsletter_tracking.php',
         'App\\Droit\\Newsletter\\Entities\\Newsletter_types' => __DIR__ . '/../..' . '/app/Droit/Newsletter/Entities/Newsletter_types.php',
@@ -1109,6 +1114,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'App\\Listeners\\EmailAboConfirmation' => __DIR__ . '/../..' . '/app/Listeners/EmailAboConfirmation.php',
         'App\\Listeners\\EmailInscriptionConfirmation' => __DIR__ . '/../..' . '/app/Listeners/EmailInscriptionConfirmation.php',
         'App\\Listeners\\EmailOrderConfirmation' => __DIR__ . '/../..' . '/app/Listeners/EmailOrderConfirmation.php',
+        'App\\Mail\\SendSondageMail' => __DIR__ . '/../..' . '/app/Mail/SendSondageMail.php',
         'App\\Notifications\\ResetPassword' => __DIR__ . '/../..' . '/app/Notifications/ResetPassword.php',
         'App\\Providers\\AboServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AboServiceProvider.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -3990,6 +3996,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Msurguy\\Honeypot\\HoneypotServiceProvider' => __DIR__ . '/..' . '/msurguy/honeypot/src/Msurguy/Honeypot/HoneypotServiceProvider.php',
         'NewsletterTableSeeder' => __DIR__ . '/../..' . '/database/seeds/NewsletterTableSeeder.php',
         'OrganisateursTableSeeder' => __DIR__ . '/../..' . '/database/seeds/OrganisateursTableSeeder.php',
+        'PDFMerger' => __DIR__ . '/..' . '/rguedes/pdfmerger/Classes/PDFMerger.php',
         'PHPExcel' => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes/PHPExcel.php',
         'PHPExcel_Autoloader' => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes/PHPExcel/Autoloader.php',
         'PHPExcel_Best_Fit' => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes/PHPExcel/Shared/trend/bestFitClass.php',
