@@ -75,7 +75,7 @@ class AboFileController extends Controller {
         $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
         $writer = WriterFactory::create(Type::XLSX); // for XLSX files
 
-        $filename = storage_path("excel/file.xlsx");
+        $filename = storage_path('excel/abo_statut_'.$request->input('status').'.xlsx');
         $columns = array_values(config('columns.names'));
 
         $writer->openToBrowser($filename);
