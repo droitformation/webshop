@@ -70,7 +70,7 @@ class Abo_users extends Model{
     {
         // Change to user
         if(isset($this->realuser)) {
-            return !$this->realuser->primary_adresse->isEmpty() ? $this->realuser->primary_adresse->first() : null;
+            return !$this->realuser->primary_adresse->isEmpty() ? $this->realuser->primary_adresse->first() : $this->user;
         }
 
         return isset($this->user) ? $this->user : null;

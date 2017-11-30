@@ -443,6 +443,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     Route::post('abo/generate', 'Backend\Abo\AboFileController@generate');
     Route::post('abo/bind', 'Backend\Abo\AboFileController@bind');
+    Route::post('abo/export', 'Backend\Abo\AboFileController@export');
 
     Route::post('abonnement/rappel/generate','Backend\Abo\AboRappelController@generate');
     Route::delete('abonnement/rappel/{id}', 'Backend\Abo\AboRappelController@destroy');

@@ -10,6 +10,10 @@ use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Abo\Worker\AboFactureWorkerInterface;
 use App\Droit\Abo\Worker\AboRappelWorkerInterface;
 
+use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Writer\Style\StyleBuilder;
+use Box\Spout\Common\Type;
+
 class AboFileController extends Controller {
     
     protected $abo;
@@ -60,5 +64,38 @@ class AboFileController extends Controller {
 
         return redirect()->back();
     }
-    
+
+    public function export(Request $request){
+
+        $abo     = $this->abo->find($request->input('id'));
+        $abonnes = $abo->abonnements->whereIn('status',$request->input('status'));
+
+        $adresses = $this->prepareAdresse($abonnes->pluck('user_adresse'));
+
+        $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
+        $writer = WriterFactory::create(Type::XLSX); // for XLSX files
+
+        $filename = storage_path("excel/file.xlsx");
+        $columns = array_values(config('columns.names'));
+
+        $writer->openToBrowser($filename);
+        $writer->addRowWithStyle($columns,$defaultStyle); // add multiple rows at a time
+
+        if(!$adresses->isEmpty()){
+            $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
+        }
+
+        $writer->close();exit;
+    }
+
+    public function prepareAdresse($adresses)
+    {
+        $columns = collect(array_keys(config('columns.names')));
+
+        return $adresses->map(function ($adresse) use ($columns) {
+            return $columns->map(function ($column) use ($adresse) {
+                return isset($adresse) ? trim($adresse->$column) : '';
+            });
+        });
+    }
 }
