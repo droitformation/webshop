@@ -50,7 +50,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
                     $facture = $this->facture->findByUserAndProduct($abonnement->id,  $this->product->id);
 
                     // If not and the abonnement is an abonne create a facture
-                    if(!$facture && $abonnement->status == 'abonne')
+                    if(!$facture && ($abonnement->status == 'abonne' || $abonnement->status == 'tiers'))
                     {
                         $facture = $this->facture->create([
                             'abo_user_id' => $abonnement->id,
