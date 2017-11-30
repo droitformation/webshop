@@ -56,14 +56,14 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Statut</span>
                                         <select class="form-control" name="status">
-                                            <option {{ old('status') == 'abonne' ? 'selected' : '' }} value="abonne">Abonne</option>
+                                            <option {{ old('status') == 'abonne' ? 'selected' : '' }} value="abonne">Abonné</option>
                                             <option {{ old('status') == 'tiers'  ? 'selected' : '' }} value="tiers">Tiers</option>
                                             <option {{ old('status') == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> &nbsp;Export par status</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> &nbsp;Export par statut</button>
                                 </div>
                             </form>
                         </div>
