@@ -26,6 +26,8 @@ class ShippingEloquent implements ShippingInterface{
     {
         if($weight)
         {
+            $weight = $weight > 30000 ? 30000 : $weight;
+
              return $this->shipping
                 ->select('shop_shipping.*',\DB::raw('CAST( value as UNSIGNED ) as weight'))
                 ->where('shop_shipping.type','=','poids')

@@ -67,13 +67,15 @@ class OrderPreview
 
     public function shipping()
     {
-        if(isset($this->data['shipping_id'])){
+        if(isset($this->data['shipping_id']) && $this->data['shipping_id'] > 0){
             $shipping = $this->repo_shipping->find($this->data['shipping_id']);
-
-            return isset($this->data['free']) ? 'Gratuit' : $shipping->title.' | '.$shipping->price_cents. ' CHF';
+        }
+        else{
+            $weight   = $this->order_maker->total($this->data['order'], 'weight');
+            $shipping = $this->repo_shipping->getShipping($weight);
         }
 
-        return null;
+        return isset($this->data['free']) ? 'Gratuit' : $shipping->title.' | '.$shipping->price_cents. ' CHF';
     }
 
     public function paquet()
@@ -96,14 +98,25 @@ class OrderPreview
 
     public function shipping_total()
     {
-        if(isset($this->data['shipping_id'])){
+        $paquet   = isset($this->data['paquet']) ? $this->data['paquet'] : 1;
+
+        if(isset($this->data['shipping_id']) && $this->data['shipping_id'] > 0){
+
             $shipping = $this->repo_shipping->find($this->data['shipping_id']);
-            $paquet   = isset($this->data['paquet']) ? $this->data['paquet'] : 1;
 
             return isset($this->data['free']) ? 0 : $paquet * $shipping->price_cents;
         }
+        else{
+            $weight   = $this->order_maker->total($this->data['order'], 'weight');
+            $shipping = $this->repo_shipping->getShipping($weight);
 
-        return 0;
+            // Calculate nbr of paquets with weight
+          /*  if(!isset($this->data['free'])){
+                $paquet = floor($weight / 30000);
+            }*/
+
+            return isset($this->data['free']) ? 0 : $paquet * $shipping->price_cents;
+        }
     }
 
     public function order_total()

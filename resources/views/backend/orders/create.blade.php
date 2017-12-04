@@ -72,9 +72,9 @@
                                         <p>-- ou --</p>
                                         <div class="form-group">
                                             <select name="shipping_id" class="form-control">
-                                                <option value="">Choix</option>
+                                                <option value="" selected>Choix</option>
                                                 @foreach($shippings as $shipping)
-                                                    <option {{ (Session::has('shipping_id') && Session::get('shipping_id') == $shipping->id) || $shipping->id == 1 ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
+                                                    <option {{ (Session::has('shipping_id') && Session::get('shipping_id') == $shipping->id) }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
