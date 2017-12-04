@@ -30,13 +30,8 @@ class OrderControllerTest extends BrowserKitTest {
         $make = new \tests\factories\ObjectFactory();
         $user = $make->makeUser();
 
-        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
-            'price' => 1000,
-        ]);
-
-        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create([
-            'price' => 1000,
-        ]);
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000,]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000,]);
 
         $data = [
             'user_id' => $user->id,
@@ -75,6 +70,64 @@ class OrderControllerTest extends BrowserKitTest {
         ];
 
         $total = 20.00;
+
+        $response = $this->call('POST', '/admin/order/verification', $data);
+
+        $content = $this->response->getOriginalContent();
+        $result  = $content['data'];
+
+        $this->assertEquals($result, $data);
+
+        $response = $this->call('POST', '/admin/order', ['data' => json_encode($data)]);
+
+        $model  = App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $order  = $model->getLast(1)->first();
+
+        $this->assertEquals($total,$order->total_with_shipping);
+    }
+
+    public function testCreateOrderWithStepNoShippingSet()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $product1 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000, 'weight' => 1000]);
+        $product2 = factory(App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000, 'weight' => 1000]);
+
+        $data = [
+            'user_id' => $user->id,
+            'order' => [
+                'products' => [0 => $product1->id, 1 => $product2->id],
+                'qty'      => [0 => 2, 1 => 2],
+            ],
+            'admin'   => 1,
+            'adresse' => [],
+            'tva'     => [],
+            'message' => []
+        ];
+
+        $data_product = [
+            [
+                'product'  => $product1->id ,
+                'qty'      => 2,
+                'rabais'   => null,
+                'price'    => null,
+                'gratuit'  => null,
+                'prix'     => $product1->price_cents,
+                'computed' => $product1->price_cents,
+            ],
+            [
+                'product'  => $product2->id ,
+                'qty'      => 2,
+                'rabais'   => null,
+                'price'    => null,
+                'gratuit'  => null,
+                'prix'     => $product2->price_cents,
+                'computed' => $product2->price_cents,
+            ]
+        ];
+
+        $total = 51.00; // 40 product + shipping 11
 
         $response = $this->call('POST', '/admin/order/verification', $data);
 
