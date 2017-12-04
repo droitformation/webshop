@@ -47,7 +47,7 @@
                         <div class="col-md-6"><h3><i class="fa fa-gavel"></i> &nbsp;Rappel inscriptions </h3></div>
                         <div class="col-md-6 text-right">
                             @if($rappels_bv)
-                                <a class="text-info" href="{{ $rappels_bv }}"><i class="fa fa-download"></i> &nbsp;Télécharger Rappels + BV</a>
+                                <a class="text-info" href="{{ $rappels_bv }}" target="_blank"><i class="fa fa-download"></i> &nbsp;Télécharger Rappels + BV</a>
                             @endif
                         </div>
                     </div>
