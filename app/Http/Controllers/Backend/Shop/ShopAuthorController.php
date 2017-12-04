@@ -51,6 +51,14 @@ class ShopAuthorController extends Controller
      */
     public function store(Request $request)
     {
+        $exist = $this->author->findByName($request->input('first_name'),$request->input('last_name'));
+
+        if($exist){
+            alert()->danger('<b>Attention</b> Cet auteur existe déjà!!');
+
+            return redirect()->back()->withInput();
+        }
+
         $shopauthor = $this->author->create($request->all());
 
         alert()->success('Auteur crée');

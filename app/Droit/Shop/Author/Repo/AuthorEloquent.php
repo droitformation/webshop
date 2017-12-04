@@ -27,6 +27,14 @@ class AuthorEloquent implements AuthorInterface{
         return $this->author->with(['products'])->where('first_name', 'like', '%'.$term.'%')->orWhere('last_name', 'like', '%'.$term.'%')->get();
     }
 
+    public function findByName($first_name,$last_name)
+    {
+        return $this->author->where('first_name', '=', $first_name)
+            ->where('last_name', '=', $last_name)
+            ->get()
+            ->first();
+    }
+
     public function create(array $data){
 
         $author = $this->author->create(array(
