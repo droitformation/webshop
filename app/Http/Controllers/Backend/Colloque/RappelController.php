@@ -72,8 +72,8 @@ class RappelController extends Controller
             return empty($value);
         }) : collect([]);
 
-        $rappels_bv = public_path('files/colloques/rappel/rappels_colloque_'.$colloque->id.'.pdf');
-        $rappels_bv = \File::exists($rappels_bv) ? $rappels_bv : null;
+        $rappels_bv = 'files/colloques/rappel/rappels_colloque_'.$colloque->id.'.pdf';
+        $rappels_bv = \File::exists(public_path($rappels_bv)) ? $rappels_bv : null;
 
         return view('backend.inscriptions.rappels.index')->with(['inscriptions' => $inscriptions,'colloque' => $colloque, 'archives' => $archives, 'rappels_bv' => $rappels_bv]);
     }
