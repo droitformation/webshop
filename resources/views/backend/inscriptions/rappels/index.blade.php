@@ -27,9 +27,7 @@
                     </form>
                 </div>
                 <div class="col-md-2">
-                    <a href="{{ url('admin/register/rappel/toprint/'.$colloque->id) }}" class="btn btn-primary pull-right">
-                        <i class="fa fa-download"></i> &nbsp; Rappels + BV
-                    </a>
+                    <a href="{{ url('admin/register/rappel/toprint/'.$colloque->id) }}" class="btn btn-primary pull-right"><i class="fa fa-download"></i> &nbsp Créer Rappels + BV</a>
                 </div>
                 <div class="col-md-2">
                     <a href="{{ url('admin/register/rappel/confirmation/'.$colloque->id) }}" class="btn btn-inverse pull-right" >
@@ -44,7 +42,16 @@
         <div class="col-md-12">
             <div class="panel panel-midnightblue">
                 <div class="panel-body"  id="appComponent">
-                    <h3><i class="fa fa-gavel"></i> &nbsp;Rappel inscriptions </h3>
+
+                    <div class="row">
+                        <div class="col-md-6"><h3><i class="fa fa-gavel"></i> &nbsp;Rappel inscriptions </h3></div>
+                        <div class="col-md-6 text-right">
+                            @if($rappels_bv)
+                                <a class="text-info" href="{{ $rappels_bv }}"><i class="fa fa-download"></i> &nbsp;Télécharger Rappels + BV</a>
+                            @endif
+                        </div>
+                    </div>
+
 
                     <div class="table-responsive">
                         <table class="table table-striped">
