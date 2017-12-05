@@ -5,11 +5,14 @@
     <div class="panel panel-midnightblue">
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3">
-                    <a href="{{ url('access/adresse/create') }}" class="btn btn-success" id="addAdresse"><i class="fa fa-plus"></i> &nbsp;Ajouter une adresse</a>
+                <div class="col-md-8">
+                    <h3>Vos listes</h3>
+                    @foreach(\Auth::user()->access as $specialisation)
+                        <p><strong>{{ $specialisation->title }}</strong></p>
+                    @endforeach
                 </div>
-                <div class="col-md-9">
-
+                <div class="col-md-4 text-right">
+                    <a href="{{ url('access/adresse/create') }}" class="btn btn-success" id="addAdresse"><i class="fa fa-plus"></i> &nbsp;Ajouter une adresse</a>
                 </div>
             </div>
         </div>
