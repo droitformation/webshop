@@ -158,6 +158,14 @@ Route::group(['prefix' => 'team' , 'middleware' => ['auth','team','back']], func
     Route::get('colloque/archive/{year}', 'Team\Colloque\ColloqueController@archive');
 });
 
+Route::group(['prefix' => 'access' , 'middleware' => ['auth','access']], function () {
+
+    Route::get('/','Access\AccessController@index');
+    Route::resource('adresse', 'Access\AdresseController');
+
+});
+
+
 /* *
 * Administration routes
 * */

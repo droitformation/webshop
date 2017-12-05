@@ -35,8 +35,7 @@ class SpecialisationController extends Controller {
             return $item->title;
         })->all();
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
             return response()->json( $data, 200 );
         }
 
@@ -47,23 +46,21 @@ class SpecialisationController extends Controller {
     {
         $specialisations = $this->specialisation->search($request->input('term'),true);
 
+        // Restrict access if any for current user
         $data = $specialisations->map(function ($item, $key) {
             return ['label' => $item->title, 'value' => $item->id];
         })->all();
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
             return response()->json( $data, 200 );
         }
     }
 
-    public function create()
-    {
+    public function create(){
         return view('backend.specialisations.create');
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $specialisation = $this->specialisation->find($id);
 
         return view('backend.specialisations.show')->with(['specialisation' => $specialisation]);

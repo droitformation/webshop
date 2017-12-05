@@ -1,4 +1,6 @@
-<form action="{{ url('admin/adresse') }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">{!! csrf_field() !!}
+<?php $formpath = isset($formpath) ? $formpath : 'admin/adresse'; ?>
+
+<form action="{{ url($formpath) }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">{!! csrf_field() !!}
     <h3>Créer une adresse</h3>
 
     <div class="form-group">

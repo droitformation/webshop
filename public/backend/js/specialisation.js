@@ -4,6 +4,9 @@ $( function() {
 
     if($("#specialisations").length)
     {
+        var tags = $("#specialisations").data('tags');
+        console.log(tags);
+
         $.get(base_url + 'admin/specialisation', function( data )
         {
             $("#specialisations").tagit({
@@ -24,9 +27,7 @@ $( function() {
                             type     : 'POST',
                             url      : base_url + 'admin/specialisation',
                             data: { id : id, model : model, specialisation : specialisation , _token: $("meta[name='_token']").attr('content') },
-                            success: function( data ) {
-                                console.log('added');
-                            },
+                            success: function( data ) {console.log('added');},
                             error: function(data) {  console.log('error');  }
                         });
                     }
@@ -44,20 +45,15 @@ $( function() {
                             type     : 'POST',
                             url      : base_url + 'admin/specialisation/destroy',
                             data     : { _method: 'delete', id: id, model : model, specialisation: specialisation, _token: $("meta[name='_token']").attr('content')},
-                            success: function (data) {
-                                console.log('removed');
-                            },
+                            success: function (data) {console.log('removed');},
                             error: function (data) {console.log('error');}
                         });
                     }
                     else { return false; }
                 },
-                beforeTagAdded: function(event, ui)
-                {
-                    if ($.inArray(ui.tagLabel, data) == -1)
-                    {
-                        return false;
-                    }
+                beforeTagAdded: function(event, ui) {
+                    if ($.inArray(ui.tagLabel, data) == -1) {return false;}
+                    if ($.inArray(ui.tagLabel, tags) == -1) {return false;}
                 }
             });
         });

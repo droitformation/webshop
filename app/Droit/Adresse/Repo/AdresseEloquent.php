@@ -82,6 +82,21 @@ class AdresseEloquent implements AdresseInterface{
             ->get();
     }
 
+    public function getBySpecialisations($specialisations)
+    {
+        return $this->adresse->with(['user'])
+            ->where(function ($query) {
+                $query->where(function ($query) {
+                    $query->where('user_id','=',0)->orWhereNull('user_id');
+                })->orWhere(function ($query) {
+                    $query->orWhereNotNull('user_id')->has('user');
+                });
+            })
+            ->searchSpecialisationEach($specialisations)
+            ->orderBy('last_name', 'ASC')
+            ->get();
+    }
+
     public function searchMultiple($terms, $each = false, $paginate = false)
     {
         $cantons         = (isset($terms['cantons']) ? $terms['cantons'] : null);

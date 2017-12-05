@@ -36,6 +36,16 @@ $(document).ready(function() {
         });
     };
 
+    var resizeHeight = function(){
+        var content = $("#page-content").height();
+
+        if (content > 900) {
+            console.log(content);
+            var dh=1280;
+            $("#page-content").css("min-height",dh+"px");
+        }
+    }
+
     var langues = {
         processing:     "Traitement en cours...",
         search:         "Rechercher&nbsp;:",
@@ -85,12 +95,22 @@ $(document).ready(function() {
     });
 
     $('#generic').DataTable({
+        initComplete: resizeHeight,
         language: langues,
         pagingType: 'simple',
         pageLength: 25,
         "columnDefs": [{
-            "targets"  : 'no-sort',
-            "orderable": false
+            "targets"  : 'no-sort', "orderable": false
+        }]
+    });
+
+    $('#specialisations_table').DataTable({
+        initComplete: resizeHeight,
+        language: langues,
+        pagingType: 'simple_numbers',
+        pageLength: 100,
+        "columnDefs": [{
+            "targets"  : 'no-sort', "orderable": false
         }]
     });
 

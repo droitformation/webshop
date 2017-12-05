@@ -33,6 +33,7 @@ interface AdresseInterface {
     public function changeLivraison($adresse_id , $user_id);
 	public function delete($id);
 	public function restore($id);
+	public function getBySpecialisations($specialisations);
 	
 	// Ajax call fot tables
 	public function get_ajax( $sEcho , $iDisplayStart , $iDisplayLength , $sSearch = NULL , $iSortCol_0, $sSortDir_0);

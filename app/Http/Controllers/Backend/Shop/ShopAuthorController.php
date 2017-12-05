@@ -51,6 +51,7 @@ class ShopAuthorController extends Controller
      */
     public function store(Request $request)
     {
+
         $exist = $this->author->findByName($request->input('first_name'),$request->input('last_name'));
 
         if($exist){

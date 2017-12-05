@@ -15,5 +15,9 @@ class Specialisation extends Model{
      */
     public $timestamps = false;
 
+    public function adresses()
+    {
+        return $this->belongsToMany('App\Droit\Adresse\Entities\Adresse','adresse_specialisations','specialisation_id','adresse_id');
+    }
 
 }

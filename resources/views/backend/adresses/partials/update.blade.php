@@ -4,7 +4,9 @@
     <div class="form-group">
         <div class="col-sm-11">
             <p class="text-required-if">* Champ obligatoire sans prénom/nom</p>
-            <p class="text-required">* Champs obligatoire pour commandes et inscriptions ou conversion en compte utilisateur</p>
+            @if(!Request::is('access/*'))
+                <p class="text-required">* Champs obligatoire pour commandes et inscriptions ou conversion en compte utilisateur</p>
+            @endif
         </div>
     </div>
     @if($adresse->user_id > 0)
