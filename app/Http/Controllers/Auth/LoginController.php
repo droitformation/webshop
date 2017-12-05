@@ -57,14 +57,17 @@ class LoginController extends Controller
         $roles      = $user->roles->pluck('id')->all();
 
         // Logic that determines where to send the user
-        if (in_array(1,$roles))
-        {
+        if (in_array(1,$roles)) {
             $returnPath = $returnPath ? $returnPath : 'admin';
             return redirect()->intended($returnPath);
         }
 
-        if($returnPath)
-        {
+        if (in_array(3,$roles)) {
+            $returnPath = $returnPath ? $returnPath : 'access';
+            return redirect()->intended($returnPath);
+        }
+
+        if($returnPath) {
             return redirect($returnPath);
         }
 
