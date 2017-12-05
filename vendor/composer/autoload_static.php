@@ -658,6 +658,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'CreateSitesTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_10_084404_create_sites_table.php',
         'CreateSondageAvisTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_16_134735_create_sondage_avis_table.php',
         'CreateSondagesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_16_134158_create_sondages_table.php',
+        'CreateSpecialisationsAccessTable' => __DIR__ . '/../..' . '/database/migrations/2017_12_04_145347_create_specialisations_access_table.php',
         'CreateSpecialisationsTable' => __DIR__ . '/../..' . '/database/migrations/2015_07_20_161012_create_specialisations_table.php',
         'CreateSubjectAuthorsTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_140400_create_subject_authors_table.php',
         'CreateSubjectCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_140404_create_subject_categories_table.php',

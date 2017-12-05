@@ -150,10 +150,14 @@ Route::get('testing', function() {
     //$rappel      = $rappels->find(522);
     //$inscription = $inscriptions->find(14892);
 
-    $inscriptions = $model_inscriptions->getMultiple([14861,14870,14902]);
+    //$inscriptions = $model_inscriptions->getMultiple([14861,14870,14902]);
 
-    $worker->generateWithBv($inscriptions);
+    //$worker->generateWithBv($inscriptions);
 
+    $paquet = floor(345000 / 30000);
+    echo '<pre>';
+    print_r($paquet);
+    echo '</pre>';exit();
     //emptyDirectory(public_path('files/colloques/temp'));
 
     exit();

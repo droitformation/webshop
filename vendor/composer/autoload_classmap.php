@@ -127,6 +127,7 @@ return array(
     'CreateSitesTable' => $baseDir . '/database/migrations/2016_07_10_084404_create_sites_table.php',
     'CreateSondageAvisTable' => $baseDir . '/database/migrations/2016_11_16_134735_create_sondage_avis_table.php',
     'CreateSondagesTable' => $baseDir . '/database/migrations/2016_11_16_134158_create_sondages_table.php',
+    'CreateSpecialisationsAccessTable' => $baseDir . '/database/migrations/2017_12_04_145347_create_specialisations_access_table.php',
     'CreateSpecialisationsTable' => $baseDir . '/database/migrations/2015_07_20_161012_create_specialisations_table.php',
     'CreateSubjectAuthorsTable' => $baseDir . '/database/migrations/2016_07_11_140400_create_subject_authors_table.php',
     'CreateSubjectCategoriesTable' => $baseDir . '/database/migrations/2016_07_11_140404_create_subject_categories_table.php',
