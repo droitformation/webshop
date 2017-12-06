@@ -194,4 +194,27 @@ class HelperTest extends BrowserKitTest {
         }
     }
 
+    public function testOrderBox()
+    {
+        $weight = 75000;
+
+        $boxes = orderBoxes($weight);
+        $expect = collect(['30 Kg | 26.00' => 2, '20 Kg | 19.00' => 1]);
+
+        $this->assertEquals($expect, $boxes);
+
+        $weight = 85000;
+
+        $boxes = orderBoxes($weight);
+        $expect = collect(['30 Kg | 26.00' => 3]);
+
+        $this->assertEquals($expect, $boxes);
+
+        $weight = 95000;
+
+        $boxes = orderBoxes($weight);
+        $expect = collect(['30 Kg | 26.00' => 3, '5 Kg | 11.00' => 1]);
+
+        $this->assertEquals($expect, $boxes);
+    }
 }

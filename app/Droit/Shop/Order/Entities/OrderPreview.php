@@ -65,25 +65,20 @@ class OrderPreview
         return factory(\App\Droit\Adresse\Entities\Adresse::class)->make($this->data['adresse']);
     }
 
-    public function shipping()
-    {
-        if(isset($this->data['shipping_id']) && $this->data['shipping_id'] > 0){
-            $shipping = $this->repo_shipping->find($this->data['shipping_id']);
-        }
-        else{
-            $weight   = $this->order_maker->total($this->data['order'], 'weight');
-            $shipping = $this->repo_shipping->getShipping($weight);
-        }
-
-        return isset($this->data['free']) ? 'Gratuit' : $shipping->title.' | '.$shipping->price_cents. ' CHF';
-    }
-
     public function paquet()
     {
-        if(isset($this->data['paquet'])){
-
+        if(isset($this->data['paquet']) && !empty($this->data['paquet'])){
             return $this->data['paquet'] > 1 ? $this->data['paquet'].' paquets' : $this->data['paquet'].' paquet';
         }
+
+        $weight = $this->order_maker->total($this->data['order'], 'weight');
+        $boxes  = orderBoxes($weight);
+
+        return $boxes->map(function ($nbr,$boxe) {
+            return $nbr .' paquet à '.$boxe;
+        })->reduce(function ($carry, $item) {
+            return $carry.'<span>'.$item.'</span><br/>';
+        }, '');
     }
 
     public function tva()
@@ -98,25 +93,39 @@ class OrderPreview
 
     public function shipping_total()
     {
-        $paquet   = isset($this->data['paquet']) ? $this->data['paquet'] : 1;
+        // if is free return 0
+        if(isset($this->data['free']) && !empty($this->data['free'])){ return 0; }
 
         if(isset($this->data['shipping_id']) && $this->data['shipping_id'] > 0){
-
+            // Get paquet nbr and shipping costs
+            $paquet   = isset($this->data['paquet']) ? $this->data['paquet'] : 1;
             $shipping = $this->repo_shipping->find($this->data['shipping_id']);
 
-            return isset($this->data['free']) ? 0 : $paquet * $shipping->price_cents;
+            return $paquet * $shipping->price_cents;
         }
         else{
-            $weight   = $this->order_maker->total($this->data['order'], 'weight');
-            $shipping = $this->repo_shipping->getShipping($weight);
-
             // Calculate nbr of paquets with weight
-          /*  if(!isset($this->data['free'])){
-                $paquet = floor($weight / 30000);
-            }*/
+            $weight = $this->order_maker->total($this->data['order'], 'weight');
+            $boxes  = orderBoxesShipping($weight);
 
-            return isset($this->data['free']) ? 0 : $paquet * $shipping->price_cents;
+            // Format price correctly
+            $money       = new \App\Droit\Shop\Product\Entities\Money;
+            $price_total = collect($boxes)->sum('price');
+            $price       = $price_total/ 100;
+
+            return $money->format($price);
         }
+    }
+
+    public function shipping()
+    {
+        if(isset($this->data['shipping_id']) && $this->data['shipping_id'] > 0){
+            $shipping = $this->repo_shipping->find($this->data['shipping_id']);
+
+            return isset($this->data['free']) ? 'Gratuit' : $shipping->title.' | '.$shipping->price_cents. ' CHF';
+        }
+
+        return '';
     }
 
     public function order_total()

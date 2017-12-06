@@ -97,3 +97,28 @@ function emptyDirectory($dir) {
         }
     }
 }
+
+function orderBoxes($weight){
+
+    $shippings = orderBoxesShipping($weight);
+
+    return collect($shippings)->groupBy(function ($item, $key) {
+        return ($item->value/1000).' Kg | '.$item->price_cents;
+    })->map(function ($item, $key) {
+        return $item->count();
+    });
+}
+
+function orderBoxesShipping($weight, $paquets = []){
+
+    $model = \App::make('App\Droit\Shop\Shipping\Repo\ShippingInterface');
+
+    if($weight > 0){
+        $shipping  = $model->getShipping($weight);
+        $paquets[] = $shipping;
+        $newweight = $weight - $shipping->value;
+        $paquets = array_merge(orderBoxesShipping($newweight, $paquets));
+    }
+
+    return $paquets;
+}

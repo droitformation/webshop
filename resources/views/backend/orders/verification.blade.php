@@ -22,7 +22,7 @@
 
                                     <dt>Frais de port</dt>
                                     <dd>{{ $preview->shipping() }}</dd>
-                                    <dd>{{ $preview->paquet() }}</dd>
+                                    <dd>{!! $preview->paquet() !!}</dd>
 
                                     @if($preview->messages())
                                         <dt>Messages</dt>

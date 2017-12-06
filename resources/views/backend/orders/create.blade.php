@@ -82,6 +82,7 @@
                                     <div class="form-group">
                                         <label>Nombre de paquets</label>
                                         <select name="paquet" class="form-control">
+                                            <option value="" selected>Choix</option>
                                             @foreach(range(1,50) as $paquet)
                                                 <option {{ Session::has('paquet') && Session::get('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">
                                                     {{ $paquet }} paquet{{ $paquet > 1 ? 's' : '' }}

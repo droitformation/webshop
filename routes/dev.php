@@ -104,27 +104,41 @@ Route::get('resize', function () {
 
 Route::get('mapped', function () {
 
-    $CampagneInterface = \App::make('App\Droit\Newsletter\Repo\NewsletterCampagneInterface');
+    // PI2 = 54
+    // Ruedin 26
+    // kraus 29
+    $model = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+    $adresses_ruedin = $model->getBySpecialisations([26]);
+    $adresses_kraus = $model->getBySpecialisations([29]);
 
-    $campagnes = $CampagneInterface->getNotSent(2);
+    $change = collect([]);
+    $change = $change->merge($adresses_ruedin);
+    $change = $change->merge($adresses_kraus);
 
-    $arrets = $campagnes->flatMap(function ($campagne) {
-            return $campagne->content;
-        })->map(function ($content, $key) {
+    $change = $change->unique('id');
 
-            if($content->arret_id)
-                return $content->arret_id ;
 
-            if($content->groupe_id > 0)
-               return $content->groupe->arrets_groupes->pluck('id')->all();
-
-        })->filter(function ($value, $key) {
-            return !empty($value);
-    });
+    $adressespi2 = $model->getBySpecialisations([54]);
 
     echo '<pre>';
-    print_r($campagnes);
-    echo '</pre>';
+    print_r($adressespi2->count());
+    echo '</pre>';exit();
+
+    foreach($change as $adresse){
+        $lists = $adresse->specialisations->pluck('title','id')->all();
+     /*   unset($lists[26]);
+        unset($lists[29]);
+        $lists[54] = '[PI]2';
+        $lists = array_unique($lists);
+
+        echo '<pre>';
+        print_r(array_keys($lists));
+        echo '</pre>';*/
+
+        //$adresse->specialisations()->sync(array_keys($lists));
+    }
+
+    exit();
 
 });
 
@@ -1109,25 +1123,16 @@ Route::get('/test_mailgun', function () {
 
 Route::get('factory', function()
 {
-    //$make = new \tests\factories\ObjectFactory();
-   // $products = $make->product(15);
-    //$colloque = $make->colloque();
-    //$orders = $make->order(5);
-    //$membre = $make->items('Member', 1);
+    $weight = 75000;
 
-    //$payed   = $make->order(5);
-    //$pending = $make->order(3);
-
-    // set 5 to payed status
-    //$resu = $make->updateOrder($payed, ['column' => 'payed_at', 'date' => '2016-09-10']);
-    $max  = 2;
-    $avis = collect([1,2,3,4])->map(function ($item, $key) use ($max) {
-        return [$item => ['rang' => $max + $key]];
-    });
+    $newweight = orderBoxesShipping($weight);
 
     echo '<pre>';
-    print_r($avis);
-    echo '</pre>';
+    print_r(collect($newweight)->sum('price'));
+    echo '</pre>';exit();
+
+    //$boxes = orderBoxes($weight,$shippings);
+
 
 });
 
