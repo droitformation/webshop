@@ -1184,9 +1184,53 @@ Route::get('merge', function () {
     $exporter->merge();*/
 
     $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
+    $abos   = \App::make('App\Droit\Abo\Repo\AboInterface');
+    $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
 
+    $product = $products->find(347);
+    $abo     = $abos->findAboByProduct(347);
+    $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
+
+    $grouped = $abonnes->mapToGroups(function ($item, $key) use($product) {
+        $path = 'facture_'.$product->reference.'-'.$item->id.'_'.$product->id.'.pdf';
+
+        if($item->status == 'tiers'){
+            return ['tiers' => $path];
+        }
+        if($item->exemplaires > 1){
+            return ['multiple' => $path];
+        }
+
+        return ['abonne' => $path];
+    });
+
+    echo '<pre>';
+    print_r($grouped);
+    echo '</pre>';exit();
+    $dir   = 'files/abos/facture/347';
+
+    // Get all files in directory
+    $files = \File::files(public_path($dir));
+
+    $path = collect($files)->map(function ($file, $key) {
+        return basename($file);
+    })->filter(function ($value, $key) use ($grouped) {
+        return $grouped['tiers']->contains($value);
+    });
+
+    echo '<pre>';
+    print_r($path);
+    echo '</pre>';exit();
+
+    echo '<pre>';
+    print_r($grouped['abonne']->count());
+    echo '<pre>';
+    print_r($grouped['multiple']->count());
+    echo '<pre>';
+    print_r($grouped['tiers']->count());
+    echo '</pre>';exit();
     // Directory for edition => product_id
-    $dir       = 'files/abos/facture/273';
+/*    $dir       = 'files/abos/facture/273';
     $reference = 'RJN';
     $edition   = '2014';
     $name      = 'facture_'.$reference.'_'.$edition;
@@ -1196,7 +1240,9 @@ Route::get('merge', function () {
     if(!empty($files))
     {
         $worker->merge($files, $name, 1);
-    }
+    }*/
+
+    $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
     
 });
 

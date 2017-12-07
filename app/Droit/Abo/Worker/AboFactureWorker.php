@@ -37,7 +37,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
             $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
             // chunk for not to many
-            $chunks  = $abonnes->chunk(15);
+            $chunks = $abonnes->chunk(15);
 
             foreach($chunks as $chunk) {
                 // dispatch job to make 15 factures
@@ -53,6 +53,21 @@ class AboFactureWorker implements AboFactureWorkerInterface{
             if(!$product) {
                 throw new \App\Exceptions\ProductNotFoundException('Product not found');
             }
+
+            // dispatch types of abos ¯\_(ツ)_/¯
+            $grouped = $abonnes->mapToGroups(function ($item, $key) use ($product) {
+
+                $path = 'facture_'.$product->reference.'-'.$item->abo_user_id.'_'.$product->id.'.pdf';
+
+                if($item->status == 'tiers'){
+                    return ['tiers' => $path];
+                }
+                if($item->exemplaires > 1){
+                    return ['multiple' => $path];
+                }
+
+                return ['abonne' => $path];
+            });
 
             // Job for merging documents
             $merge = (new MergeFactures($product, $abo));
