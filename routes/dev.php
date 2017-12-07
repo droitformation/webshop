@@ -1192,21 +1192,25 @@ Route::get('merge', function () {
     $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
     $grouped = $abonnes->mapToGroups(function ($item, $key) use($product) {
+        $dir  = 'files/abos/facture/'.$product->id;
         $path = 'facture_'.$product->reference.'-'.$item->id.'_'.$product->id.'.pdf';
-
-        if($item->status == 'tiers'){
-            return ['tiers' => $path];
-        }
-        if($item->exemplaires > 1){
-            return ['multiple' => $path];
-        }
-
-        return ['abonne' => $path];
+        $filename = public_path($dir.'/'.$path);
+        if($item->status == 'tiers'){return ['tiers' => $filename];}
+        if($item->exemplaires > 1){return ['multiple' => $filename];}
+        return ['abonne' => $filename];
     });
 
+    // Directory for edition => product_id
+    $dir   = 'files/abos/facture/'.$product->id;
+    // Get all files in directory
+    $files = \File::files(public_path($dir));
+
+    $exist = array_intersect($files,$grouped['abonne']->toArray());
+
     echo '<pre>';
-    print_r($grouped);
+    print_r($exist);
     echo '</pre>';exit();
+
     $dir   = 'files/abos/facture/347';
 
     // Get all files in directory

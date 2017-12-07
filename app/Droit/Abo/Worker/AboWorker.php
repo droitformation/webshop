@@ -33,11 +33,11 @@ class AboWorker implements AboWorkerInterface{
     /**
      *  Merging pdfs
      */
-    public function merge($files, $name, $abo_id, $status)
+    public function merge($files, $name, $abo_id)
     {
         // Prepare names output directory and output filename
         $outputDir =  public_path('files/abos/bound/'.$abo_id);
-        $outputName = $outputDir.'/'.$name.'_'.$status.'.pdf';
+        $outputName = $outputDir.'/'.$name.'.pdf';
 
         // Create output directory if doesn't exist. Delete output file if exist
         if (!\File::exists($outputDir)) { \File::makeDirectory($outputDir); }

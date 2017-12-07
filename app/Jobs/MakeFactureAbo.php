@@ -15,18 +15,20 @@ class MakeFactureAbo extends Job implements ShouldQueue
     protected $all;
     protected $abos;
     protected $product;
+    protected $date_creation;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($abos, $product, $all)
+    public function __construct($abos, $product, $all, $date_creation)
     {
         $this->facture    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
         $this->all        = $all;
         $this->abos       = $abos;
         $this->product    = $product;
+        $this->date_creation = $date_creation;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -55,7 +57,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
                         $facture = $this->facture->create([
                             'abo_user_id' => $abonnement->id,
                             'product_id'  => $this->product->id,
-                            'created_at'  => date('Y-m-d')
+                            'created_at'  => $this->date_creation
                         ]);
                     }
 

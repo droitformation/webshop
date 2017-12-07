@@ -41,7 +41,10 @@ class AboFileController extends Controller {
 
         $worker  = $request->input('worker');
 
-        $this->$worker->generate($product,$abo, $request->input('all',false));
+        //$date = $request->input('date',date('Y-m-d'));
+        $date = \Carbon\Carbon::parse('2017-12-20')->toDateTimeString();
+
+        $this->$worker->generate($product,$abo, $request->input('all',false), $date);
 
         alert()->success('La création des '.$worker.'s est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
 
