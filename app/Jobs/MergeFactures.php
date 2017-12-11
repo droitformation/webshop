@@ -13,16 +13,18 @@ class MergeFactures extends Job implements ShouldQueue
 
     protected $product;
     protected $abo;
+    protected $status_files;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($product, $abo)
+    public function __construct($product, $abo, $status_files)
     {
         $this->product = $product;
         $this->abo     = $abo;
+        $this->status_files  = $status_files;
     }
 
     /**
@@ -36,10 +38,21 @@ class MergeFactures extends Job implements ShouldQueue
 
         // Directory for edition => product_id
         $dir   = 'files/abos/facture/'.$this->product->id;
-        $name  = 'factures_'.$this->product->reference.'_'.$this->product->edition_clean;
 
         // Get all files in directory
         $files = \File::files(public_path($dir));
-        $worker->merge($files, $name, $this->abo->id);
+
+        // Make each types
+        if(!$this->status_files->isEmpty()){
+            foreach ($this->status_files as $status => $abos){
+
+                // Make sur file/pdf exist
+                $exist = array_intersect($files,$abos->toArray());
+
+                $name  = 'factures_'.$status.'_'.$this->product->reference.'_'.$this->product->edition_clean;
+                $worker->merge($exist, $name, $this->abo->id);
+            }
+        }
+
     }
 }
