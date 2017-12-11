@@ -117,7 +117,7 @@ function orderBoxesShipping($weight, $paquets = []){
         $shipping  = $model->getShipping($weight);
         $paquets[] = $shipping;
         $newweight = $weight - $shipping->value;
-        $paquets = array_merge(orderBoxesShipping($newweight, $paquets));
+        $paquets   = array_merge(orderBoxesShipping($newweight, $paquets));
     }
 
     return $paquets;

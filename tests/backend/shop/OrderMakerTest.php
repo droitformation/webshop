@@ -217,12 +217,12 @@ class OrderMakerTest extends BrowserKitTest {
         $this->mock->shouldReceive('find')->once()->andReturn($prod1);
         $this->mock->shouldReceive('find')->once()->andReturn($prod2);
 
+        //TODO
         // 4000gr
         $shipping = $make->getShipping($order);
 
         $this->assertEquals(2, $shipping);
     }
-
 
     public function testCalculateFreeShipping()
     {
@@ -245,6 +245,7 @@ class OrderMakerTest extends BrowserKitTest {
         $this->mock->shouldReceive('find')->once()->andReturn($prod1);
         $this->mock->shouldReceive('find')->once()->andReturn($prod2);
 
+        //TODO
         // Free
         $shipping = $make->getShipping($order);
 
@@ -401,6 +402,8 @@ class OrderMakerTest extends BrowserKitTest {
             ],
             'admin' => 1
         ];
+
+        //TODO
         $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
         $this->mock->shouldReceive('find')->twice()->andReturn($product);
         $result = $make->prepare($order, $shipping);

@@ -1123,14 +1123,26 @@ Route::get('/test_mailgun', function () {
 
 Route::get('factory', function()
 {
-    $weight = 75000;
 
-    $newweight = orderBoxesShipping($weight);
+    $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 10000, 'price'  => 1000]);
+
+    $order = [
+        'user_id' => 710,
+        'order'   => [
+            'products' => [0 => 11, 1 => 12],
+            'qty'      => [0 => 2, 1 => 2],
+            'rabais'   => [0 => 25],
+            'gratuit'  => [1 => 1]
+        ],
+        'admin' => 1
+    ];
+
+    $order = $model->find(3877);
 
     echo '<pre>';
-    print_r(collect($newweight)->sum('price'));
+    print_r($order->paquets);
     echo '</pre>';exit();
-
     //$boxes = orderBoxes($weight,$shippings);
 
 

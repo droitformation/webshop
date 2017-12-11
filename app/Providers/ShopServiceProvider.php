@@ -32,6 +32,7 @@ class ShopServiceProvider extends ServiceProvider
 
         $this->registerCouponService();
         $this->registerShippingService();
+        $this->registerPaquetService();
         $this->registerPaymentService();
         $this->registerCartService();
         $this->registerStockService();
@@ -72,7 +73,10 @@ class ShopServiceProvider extends ServiceProvider
 
         $this->app->singleton('App\Droit\Shop\Order\Repo\OrderInterface', function()
         {
-            return new \App\Droit\Shop\Order\Repo\OrderEloquent(new \App\Droit\Shop\Order\Entities\Order);
+            return new \App\Droit\Shop\Order\Repo\OrderEloquent(
+                new \App\Droit\Shop\Order\Entities\Order(),
+                new \App\Droit\Shop\Shipping\Entities\Paquet()
+            );
         });
     }
 
@@ -98,6 +102,16 @@ class ShopServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Paquet
+     */
+    protected function registerPaquetService(){
+
+        $this->app->singleton('App\Droit\Shop\Shipping\Repo\PaquetInterface', function()
+        {
+            return new \App\Droit\Shop\Shipping\Repo\PaquetEloquent(new \App\Droit\Shop\Shipping\Entities\Paquet);
+        });
+    }
 
     /**
      * Attribute

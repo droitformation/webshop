@@ -101,10 +101,13 @@ class Order extends Model{
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         // Load relations
-        $this->load('shipping');
+        $this->load(['shipping','paquets']);
 
         // Shipping x nbr paquets
-        $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+        //$price = !$this->paquets->isEmpty() ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+        $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
+            return $carry + ($item->shipping->price * $item->qty);
+        }) : $this->shipping->price;
 
         $total = $this->amount + $price;
         $price = $total / 100;
@@ -117,7 +120,11 @@ class Order extends Model{
         // Load relations
         $this->load('shipping');
 
-        $total = $this->amount + $this->shipping->price;
+        $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
+            return $carry + ($item->shipping->price * $item->qty);
+        }) : $this->shipping->price;
+
+        $total = $this->amount + $price;
         $price = $total / 100;
 
         // Calcul with TVA
@@ -133,16 +140,17 @@ class Order extends Model{
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         // Load relations
-        $this->load('shipping','coupon');
+        $this->load(['shipping','coupon','paquets']);
 
-        if(count($this->coupon) && $this->coupon->type == 'shipping')
-        {
+        if(count($this->coupon) && $this->coupon->type == 'shipping') {
             return 0;
         }
 
-        if($this->shipping)
-        {
-            $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+        if($this->shipping || !$this->paquets->isEmpty()) {
+
+            $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
+                return $carry + ($item->shipping->price * $item->qty);
+            }) : $this->shipping->price;
 
             return $money->format($price/100);
         }
@@ -212,6 +220,11 @@ class Order extends Model{
     public function shipping()
     {
         return $this->belongsTo('App\Droit\Shop\Shipping\Entities\Shipping');
+    }
+
+    public function paquets()
+    {
+        return $this->belongsToMany('App\Droit\Shop\Shipping\Entities\Paquet','shop_order_paquets','order_id','paquet_id');
     }
 
     public function payement()
