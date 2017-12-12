@@ -316,7 +316,7 @@ class OrderAdminTest extends BrowserKitTest {
         $this->user->shouldReceive('find')->once()->andReturn($user);
         $this->product->shouldReceive('find')->once()->andReturn($product1);
         $this->product->shouldReceive('find')->once()->andReturn($product2);
-        $this->maker->shouldReceive('total')->once()->andReturn($total);;
+        $this->maker->shouldReceive('total')->twice()->andReturn($total);;
 
         $response = $this->call('POST', '/admin/order/verification', $data);
 
