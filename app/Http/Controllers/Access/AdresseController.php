@@ -49,6 +49,15 @@ class AdresseController extends Controller {
         return redirect('access/adresse/'.$adresse->id);
     }
 
+    public function update($id,CreateAdresse $request)
+    {
+        $adresse = $this->adresse->update($request->all());
+
+        alert()->success('Adresse mise à jour');
+
+        return redirect()->back();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -78,12 +87,9 @@ class AdresseController extends Controller {
 
         $this->adresse->delete($id);
 
-        $back = $request->input('url',null);
-        $back = $back && $back == url('admin/adresses') ? url('admin/adresses/back') : $back;
-
         alert()->success('Adresse supprimée');
 
-        return redirect($back);
+        return redirect('access/adresses');
     }
 
 }
