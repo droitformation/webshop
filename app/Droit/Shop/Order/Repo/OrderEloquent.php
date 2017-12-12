@@ -147,12 +147,11 @@ class OrderEloquent implements OrderInterface{
         }
 
         if(isset($data['shipping']) && !isset($data['shipping']['shipping_id'])){
-            $this->setPaquets($data['shipping']);
+            $order = $this->setPaquets($order,$data['shipping']);
         }
 
         // All products for order isFree
-        if(!empty($data['products']))
-        {
+        if(!empty($data['products'])) {
             foreach($data['products'] as $product) {
                 $id = array_pull($product, 'id');
 

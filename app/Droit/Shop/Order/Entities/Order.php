@@ -100,8 +100,12 @@ class Order extends Model{
         // Load relations
         $this->load(['shipping','paquets']);
 
+        // safe guard
+        if(!isset($this->shipping) && $this->paquets->isEmpty()){
+            return 'un problème avec les frais de port';
+        }
+
         // Shipping x nbr paquets
-        //$price = !$this->paquets->isEmpty() ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
         $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
             return $carry + ($item->shipping->price * $item->qty);
         }) : $this->shipping->price;
@@ -116,6 +120,11 @@ class Order extends Model{
     {
         // Load relations
         $this->load('shipping');
+
+        // safe guard
+        if(!isset($this->shipping) && $this->paquets->isEmpty()){
+            return 'un problème avec les frais de port';
+        }
 
         $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
             return $carry + ($item->shipping->price * $item->qty);
@@ -143,13 +152,17 @@ class Order extends Model{
             return 0;
         }
 
-        if($this->shipping || !$this->paquets->isEmpty()) {
+        if(isset($this->shipping) || !$this->paquets->isEmpty()) {
 
             $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
                 return $carry + ($item->shipping->price * $item->qty);
             }) : $this->shipping->price;
 
             return $money->format($price/100);
+        }
+        else{
+            // safe guard
+            return 'un problème avec les frais de port';
         }
     }
 
