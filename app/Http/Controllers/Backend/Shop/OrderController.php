@@ -264,6 +264,26 @@ class OrderController extends Controller {
         return redirect('admin/order/'.$order->id);
     }
 
+    public function recalculate(Request $request)
+    {
+        $order    = $this->order->update(['id' => $request->input('id'), 'shipping_id' => null, 'paquet' => null]);
+        $orderbox = new \App\Droit\Shop\Order\Entities\OrderBox($order);
+        $paquets  = $orderbox->calculate($order->weight)->getShippingList();
+
+        $this->order->setPaquets($order,$paquets);
+
+        $messages = isset($order->comment) ? unserialize($order->comment) : null;
+
+        if($messages)
+            $this->pdfgenerator->setMsg($messages);
+
+        $this->pdfgenerator->factureOrder($order);
+
+        alert()->success('La commande a été mise à jour');
+
+        return redirect('admin/order/'.$order->id);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

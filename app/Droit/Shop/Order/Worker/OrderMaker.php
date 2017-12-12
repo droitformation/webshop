@@ -330,6 +330,13 @@ class OrderMaker implements OrderMakerInterface{
 
         $data['amount']   = number_format($total, 0, '.', '');
         $data['products'] = $products_updated->toArray();
+
+        // We passed a shipping_id it replaces calculated ones
+        if(isset($data['shipping_id'])) {
+            $paquets = $order->paquets();
+            $order->paquets()->detach();
+            $paquets->delete();
+        }
         
         return $data;
     }

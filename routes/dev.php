@@ -1141,7 +1141,7 @@ Route::get('factory', function()
     $order = $model->find(3877);
 
     echo '<pre>';
-    print_r($order->paquets);
+    print_r($order->weight);
     echo '</pre>';exit();
     //$boxes = orderBoxes($weight,$shippings);
 

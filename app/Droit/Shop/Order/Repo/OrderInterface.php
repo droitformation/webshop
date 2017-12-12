@@ -16,6 +16,7 @@ interface OrderInterface {
 	public function create(array $data);
 	public function update(array $data);
     public function updateDate(array $data);
+    public function setPaquets($order,$paquets);
 	public function delete($id);
     public function restore($id);
 }

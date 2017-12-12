@@ -2,8 +2,14 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-2">
             <p><a href="{{ url('admin/orders/back') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+        <div class="col-md-5">
+            <form action="{{ url('admin/order/recalculate') }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                <input name="id" value="{{ $order->id }}" type="hidden">
+                <button type="submit" class="btn btn-warning btn-sm">Calculer les frais de port automatiquement</button>
+            </form>
         </div>
     </div>
 
@@ -12,8 +18,7 @@
 
             <div class="panel panel-midnightblue">
                 <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
-                    <input type="hidden" name="_method" value="PUT">
-                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                     <div class="panel-body">
                         <h4><i class="fa fa-edit"></i> &nbsp;Editer la commande</h4>
@@ -115,12 +120,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label"></label>
-                                <div class="col-sm-5 col-xs-8"><p class="delimiter">-- ou --</p></div>
-                            </div>
-
                             @if(!$order->paquets->isEmpty())
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"></label>
+                                    <div class="col-sm-5 col-xs-8">
+                                        <p class="delimiter">-- ou --</p>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Frais de ports calculés</label>
                                     <div class="col-sm-5 col-xs-8">
@@ -138,9 +146,11 @@
                                                 @endforeach
                                             @endif
                                         </ul>
+
                                     </div>
                                 </div>
                             @endif
+
                         </div>
 
                         <div class="form-group">
@@ -204,8 +214,8 @@
                         <button type="submit" class="btn btn-info">Envoyer</button>
                     </div>
                 </form>
-
             </div>
+
         </div>
     </div>
 

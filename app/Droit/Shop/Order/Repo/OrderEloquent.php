@@ -147,15 +147,7 @@ class OrderEloquent implements OrderInterface{
         }
 
         if(isset($data['shipping']) && !isset($data['shipping']['shipping_id'])){
-            foreach($data['shipping'] as $paquet){
-                $box = $this->paquet->create([
-                    'qty'         => $paquet['qty'],
-                    'shipping_id' => $paquet['shipping_id'],
-                    'remarque'    => isset($paquet['remarque']) ? $paquet['remarque'] : null
-                ]);
-
-                $order->paquets()->save($box);
-            }
+            $this->setPaquets($data['shipping']);
         }
 
         // All products for order isFree
@@ -171,6 +163,21 @@ class OrderEloquent implements OrderInterface{
         return $order;
     }
 
+    public function setPaquets($order,$paquets)
+    {
+        foreach($paquets as $paquet){
+            $box = $this->paquet->create([
+                'qty'         => $paquet['qty'],
+                'shipping_id' => $paquet['shipping_id'],
+                'remarque'    => isset($paquet['remarque']) ? $paquet['remarque'] : null
+            ]);
+
+            $order->paquets()->save($box);
+        }
+
+        return $order;
+    }
+
     public function update(array $data){
 
         $order = $this->order->findOrFail($data['id']);
@@ -181,8 +188,7 @@ class OrderEloquent implements OrderInterface{
 
         $order->fill($data);
 
-        if(isset($data['comment']))
-        {
+        if(isset($data['comment'])) {
             $order->comment = serialize($data['comment']);
         }
 

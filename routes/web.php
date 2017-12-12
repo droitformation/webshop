@@ -368,6 +368,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::post('order/verification', ['middleware' => 'strip', 'uses' => 'Backend\Shop\OrderController@verification']);
         Route::post('order/correction', ['uses' => 'Backend\Shop\OrderController@correction']);
+        Route::post('order/recalculate', ['uses' => 'Backend\Shop\OrderController@recalculate']);
         Route::post('order', ['uses' => 'Backend\Shop\OrderController@store']);
         //Route::post('order', [ 'uses' => 'Backend\Shop\OrderController@store']);
 

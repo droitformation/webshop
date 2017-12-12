@@ -28,6 +28,13 @@ class Order extends Model{
         });
     }
 
+    public function getWeightAttribute()
+    {
+        return $this->products->reduce(function ($carry, $product) {
+            return $carry +$product->weight;
+        }, 0);
+    }
+
     public function getOrderAdresseAttribute()
     {
         if(isset($this->user))
