@@ -140,7 +140,7 @@ class Order extends Model{
             return 0;
         }
 
-        if($this->shipping)
+        if(isset($this->shipping))
         {
             $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
 

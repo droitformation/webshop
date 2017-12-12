@@ -54,6 +54,7 @@ class Kernel extends HttpKernel {
 		'checkout'       => 'App\Http\Middleware\CheckoutMiddleware',
         'cart'           => 'App\Http\Middleware\CartMiddleware',
         'administration' =>'App\Http\Middleware\AdminMiddleware',
+        'gestion'        =>'App\Http\Middleware\GestionMiddleware',
 		'team'           =>'App\Http\Middleware\TeamMiddleware',
         'pending'        =>'App\Http\Middleware\PendingPayement',
         'registered'     =>'App\Http\Middleware\Registered',
