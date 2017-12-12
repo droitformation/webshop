@@ -71,24 +71,14 @@ class Order extends Model{
 
     public function getPriceTotalExplodeAttribute()
     {
-        $money = new \App\Droit\Shop\Product\Entities\Money;
-
-        // Shipping x nbr paquets
-        $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
-
-        $total = $this->amount + $price;
-        $price = $total / 100;
-        $price = $money->format($price);
-
-        return explode('.',$price);
+        return explode('.',$this->total_with_shipping);
     }
 
     public function getFactureAttribute()
     {
         $facture = public_path('files/shop/factures/facture_'.$this->order_no.'.pdf');
 
-        if (\File::exists($facture))
-        {
+        if (\File::exists($facture)) {
             return 'files/shop/factures/facture_'.$this->order_no.'.pdf';
         }
 

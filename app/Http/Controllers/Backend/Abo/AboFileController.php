@@ -41,8 +41,8 @@ class AboFileController extends Controller {
 
         $worker  = $request->input('worker');
 
-        //$date = $request->input('date',date('Y-m-d'));
-        $date = \Carbon\Carbon::parse('2017-12-20')->toDateTimeString();
+        $date = $request->input('date',date('Y-m-d'));
+        $date = \Carbon\Carbon::parse($date)->toDateTimeString();
 
         $this->$worker->generate($product,$abo, $request->input('all',false), $date);
 

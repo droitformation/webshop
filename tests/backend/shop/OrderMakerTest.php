@@ -211,17 +211,18 @@ class OrderMakerTest extends BrowserKitTest {
         ];
 
         // Calculations products weight: 4000 => id: 2
-        $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000,]);
-        $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 2000,]);
+        $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000]);
+        $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 2000]);
 
         $this->mock->shouldReceive('find')->once()->andReturn($prod1);
         $this->mock->shouldReceive('find')->once()->andReturn($prod2);
 
-        //TODO
         // 4000gr
         $shipping = $make->getShipping($order);
 
-        $this->assertEquals(2, $shipping);
+        $expect = collect([2 => ['shipping_id' => 2, 'qty' => 1]]);
+
+        $this->assertEquals($expect, $shipping);
     }
 
     public function testCalculateFreeShipping()
@@ -242,14 +243,11 @@ class OrderMakerTest extends BrowserKitTest {
         $prod1 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 1000,]);
         $prod2 = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 1000, 'price'  => 2000,]);
 
-        $this->mock->shouldReceive('find')->once()->andReturn($prod1);
-        $this->mock->shouldReceive('find')->once()->andReturn($prod2);
-
-        //TODO
+        $expect = ['shipping_id' => 6];
         // Free
         $shipping = $make->getShipping($order);
 
-        $this->assertEquals(6, $shipping);
+        $this->assertEquals($expect, $shipping);
     }
 
     public function testProductLoopWithGratuit()
@@ -306,7 +304,7 @@ class OrderMakerTest extends BrowserKitTest {
             'order_no'    => '2016-00020003',
             'amount'      => '1500',
             'coupon_id'   => null,
-            'shipping_id' => 2,
+            'shipping'    => collect([2 => ['shipping_id' => 2, 'qty' => 1]]),
             'payement_id' => 1,
             'paquet'      => null,
             'products'    => $products
@@ -403,11 +401,10 @@ class OrderMakerTest extends BrowserKitTest {
             'admin' => 1
         ];
 
-        //TODO
         $this->mockorder->shouldReceive('newOrderNumber')->once()->andReturn('2016-00020003');
         $this->mock->shouldReceive('find')->twice()->andReturn($product);
         $result = $make->prepare($order, $shipping);
-        $this->assertEquals($shipping->id,$result['shipping_id']);
+        $this->assertEquals($shipping->id, $result['shipping']['shipping_id']);
     }
 
     public function testGetUserOrCreateAdresseFromOrder()

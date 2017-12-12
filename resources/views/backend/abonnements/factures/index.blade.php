@@ -24,7 +24,13 @@
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="worker" value="facture">
                         <input type="hidden" name="all" value="1">
-                        <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer toutes les factures</button>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control datePicker" name="date" placeholder="Date">
+                            <span class="input-group-btn">
+                                 <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer toutes les factures</button>
+                            </span>
+                        </div><!-- /input-group -->
                     </form>
                 </div>
                 <div class="col-md-1 text-right">
