@@ -41,7 +41,7 @@ class DefaultStrategy extends CleanupStrategy
 
     protected function calculateDateRanges(): Collection
     {
-        $config = $this->config->get('laravel-backup.cleanup.defaultStrategy');
+        $config = $this->config->get('backup.cleanup.defaultStrategy');
 
         $daily = new Period(
             Carbon::now()->subDays($config['keepAllBackupsForDays']),
@@ -106,7 +106,7 @@ class DefaultStrategy extends CleanupStrategy
             return;
         }
 
-        $maximumSize = $this->config->get('laravel-backup.cleanup.defaultStrategy.deleteOldestBackupsWhenUsingMoreMegabytesThan')
+        $maximumSize = $this->config->get('backup.cleanup.defaultStrategy.deleteOldestBackupsWhenUsingMoreMegabytesThan')
             * 1024 * 1024;
 
         if (($backups->size() + $this->newestBackup->size()) <= $maximumSize) {
@@ -114,6 +114,8 @@ class DefaultStrategy extends CleanupStrategy
         }
 
         $oldest->delete();
+
+        $backups = $backups->filter->exists();
 
         $this->removeOldBackupsUntilUsingLessThanMaximumStorage($backups);
     }

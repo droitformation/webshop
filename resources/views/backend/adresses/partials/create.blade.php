@@ -139,5 +139,5 @@
 
     <input type="hidden" name="type" value="1">
 
-    <br/><p class="pull-right"><button class="btn btn-primary" type="submit">Enregistrer</button></p>
+    <br/><p class="pull-right"><button class="btn btn-primary" id="createAdresse" type="submit">Enregistrer</button></p>
 </form>

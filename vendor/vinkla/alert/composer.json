@@ -12,14 +12,16 @@
     ],
     "require": {
         "php": "^7.0",
-        "illuminate/contracts": "5.3.* || 5.4.*",
-        "illuminate/session": "5.3.* || 5.4.*",
-        "illuminate/support": "5.3.* || 5.4.*"
+        "illuminate/contracts": "5.5.*",
+        "illuminate/session": "5.5.*",
+        "illuminate/support": "5.5.*"
     },
     "require-dev": {
-        "graham-campbell/testbench": "^3.3",
-        "mockery/mockery": "^0.9.5",
-        "phpunit/phpunit": "^5.7"
+        "graham-campbell/analyzer": "^1.1",
+        "graham-campbell/testbench": "^4.0",
+        "mockery/mockery": "dev-master#c90a17247147543081e4d00f46911e422b49e583",
+        "orchestra/testbench": "^3.5",
+        "phpunit/phpunit": "^6.3"
     },
     "autoload": {
         "psr-4": {
@@ -39,7 +41,15 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.4-dev"
+            "dev-master": "2.2-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Vinkla\\Alert\\AlertServiceProvider"
+            ],
+            "aliases": {
+                "Alert": "Vinkla\\Alert\\Facades\\Alert"
+            }
         }
     },
     "minimum-stability": "dev",

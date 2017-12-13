@@ -155,7 +155,7 @@
 
         </div>
         <div class="col-md-6 text-right">
-            <button class="btn btn-primary" type="submit">Enregistrer</button>
+            <button class="btn btn-primary" id="updateUser" type="submit">Enregistrer</button>
         </div>
     </div>
 </form>

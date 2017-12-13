@@ -173,7 +173,7 @@ class SondageController extends Controller
         
         // Test if there are questions in sondage
         if($sondage->avis->isEmpty()){
-            throw new \App\Exceptions\MissingException('Aucune question dans ce sondage!');
+            throw new \App\Exceptions\MissingException('Aucun sondage trouvé ou aucune question dans ce sondage!');
         }
         
         if($request->input('list_id',null)){

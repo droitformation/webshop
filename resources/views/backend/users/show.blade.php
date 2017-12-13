@@ -78,7 +78,7 @@
                                   </div><br>
                                   <div class="form-group">
                                       <input value="{{ $user->id }}" type="hidden" name="id">
-                                      <button class="btn btn-primary pull-right" type="submit">Enregistrer</button>
+                                      <button class="btn btn-primary pull-right" id="updateUser" type="submit">Enregistrer</button>
                                   </div>
                                   <div class="clearfix"></div>
                               </form>

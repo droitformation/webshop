@@ -137,7 +137,7 @@
                         <input type="hidden" value="{{ $abonnement->abo_id }}" name="abo_id">
 
                     </div>
-                    <div class="panel-footer text-right"><button type="submit" class="btn btn-info">Envoyer</button></div>
+                    <div class="panel-footer text-right"><button id="editFacture" type="submit" class="btn btn-info">Envoyer</button></div>
                 </form>
 
             </div>

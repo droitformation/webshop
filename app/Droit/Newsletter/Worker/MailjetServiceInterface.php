@@ -2,6 +2,8 @@
 
 interface MailjetServiceInterface {
 
+    public function getClient();
+    public function getResource();
     public function setList($list);
     public function setSenderEmail($email);
     public function getList();

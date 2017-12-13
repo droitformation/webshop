@@ -15,9 +15,7 @@ class CreateAboProductsTable extends Migration
         Schema::create('abo_products', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('shop_products');
             $table->integer('abo_id')->unsigned();
-            $table->foreign('abo_id')->references('id')->on('abos');
         });
     }
 

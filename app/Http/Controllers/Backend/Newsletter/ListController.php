@@ -154,7 +154,7 @@ class ListController extends Controller
     public function send(SendListRequest $request)
     {
         $list = $this->list->find($request->input('list_id'));
-  
+
         if(!$list) {
             alert()->danger('Les emails de la liste n\'ont pas pu être récupérés');
             return redirect('build/newsletter');
@@ -171,10 +171,10 @@ class ListController extends Controller
 
         // Update campagne status
         $this->campagne->update([
-            'id' => $request->input('campagne_id'),
-            'status' => 'envoyé',
+            'id'         => $request->input('campagne_id'),
+            'status'     => 'envoyé',
             'updated_at' => date('Y-m-d G:i:s'),
-            'send_at' => \Carbon\Carbon::now()->toDateTimeString()
+            'send_at'    => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
         alert()->success('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.');

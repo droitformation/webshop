@@ -61,7 +61,7 @@
             <div class="container">
 
                 <!-- messages and errors -->
-                @include('alert::alert')
+                @include('alert::bootstrap')
 
                 <!-- Contenu -->
                 @yield('content')

@@ -9,7 +9,7 @@
                 <h4>Prix applicable</h4>
                 @foreach($colloque->prices_active as $price)
                     <input class="prices" required type="radio" id="price_{{ $price->id }}" name="price_id" value="{{ $price->id }}">
-                    <label for="price_{{ $price->id }}">
+                    <label id="label_price_{{ $price->id }}" for="price_{{ $price->id }}">
                         <div class='package'>
                             <div class='name'>{{ $price->description }}</div>
                             <div class='price_cents'>{{ $price->price_cents > 0 ? $price->price_cents.' CHF' : 'Gratuit' }}</div>
