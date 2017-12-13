@@ -36,7 +36,7 @@
                       <div class="panel panel-midnightblue">
                           <div class="panel-body">
                               <h3 style="margin-bottom: 0;"><i class="fa fa-map-marker"></i> &nbsp;Adresse {{ $adresse->type_title }}</h3>
-                              @include('backend.adresses.partials.update',['adresse' => $adresse])
+                              @include('backend.adresses.partials.update',['adresse' => $adresse, 'path' => 'access'])
                           </div>
                       </div>
                   </div>

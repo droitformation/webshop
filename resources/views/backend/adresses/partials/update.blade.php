@@ -1,4 +1,5 @@
-<form action="{{ url('admin/adresse/'.$adresse->id) }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">
+<?php $path = isset($path) ? $path : 'admin'; ?>
+<form action="{{ url(''.$path.'/adresse/'.$adresse->id) }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">
     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
     <hr/>
     <div class="form-group">
