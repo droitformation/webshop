@@ -98,7 +98,7 @@ class Order extends Model{
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         // Load relations
-        $this->load(['shipping','paquets']);
+        $this->load('shipping','paquets');
 
         // safe guard
         if(!isset($this->shipping) && $this->paquets->isEmpty()){
