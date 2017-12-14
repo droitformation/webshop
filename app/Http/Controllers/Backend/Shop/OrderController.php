@@ -193,7 +193,7 @@ class OrderController extends Controller {
         $shipping = var_exist($data,'free') ? null : $shipping;
 
         $order = $this->ordermaker->make($data,$shipping);
-        $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin
+        $order = $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin
 
         alert()->success('La commande a été crée');
 
