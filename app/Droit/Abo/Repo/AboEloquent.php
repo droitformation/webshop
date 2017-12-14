@@ -65,8 +65,7 @@ class AboEloquent implements AboInterface{
         }
 
         // products
-        if(isset($data['products_id']))
-        {
+        if(isset($data['products_id'])) {
             $abo->products()->attach($data['products_id']);
         }
 

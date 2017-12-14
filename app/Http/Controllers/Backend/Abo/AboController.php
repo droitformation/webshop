@@ -42,7 +42,7 @@ class AboController extends Controller {
     public function create()
     {
         $plans    = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
-        $products = $this->product->forAbos(); // all with hidden ones
+        $products = $this->product->forAbos(true); // all with hidden ones
 
         return view('backend.abos.create')->with(['plans' => $plans, 'products' => $products]);
     }
@@ -51,7 +51,7 @@ class AboController extends Controller {
     {
         $abo      = $this->abo->find($id);
         $plans    = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
-        $products = $this->product->forAbos();
+        $products = $this->product->forAbos(true);
 
         return view('backend.abos.edit')->with(['abo' => $abo, 'plans' => $plans, 'products' => $products]);
     }

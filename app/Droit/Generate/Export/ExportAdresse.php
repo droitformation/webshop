@@ -21,6 +21,8 @@
 
      public function export($adresses)
      {
+         $adresses = $this->prepareAdresse($adresses);
+
          $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
 
          $writer = WriterFactory::create(Type::XLSX); // for XLSX files
@@ -29,8 +31,6 @@
 
          $writer->openToBrowser($filename); // write data to a file or to a PHP stream
          //$writer->openToBrowser($fileName); // stream data directly to the browser
-
-         $adresses = $this->prepareAdresse($adresses);
 
          if(!$adresses->isEmpty()){
              $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time

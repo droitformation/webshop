@@ -7,7 +7,7 @@ interface ProductInterface {
 	public function getList($terms);
     public function getSome($ids);
 	public function listForAdminOrder();
-	public function forAbos();
+	public function forAbos($admin = null);
 	public function getAbos();
 	public function getByCategorie($id);
 	public function search($term, $hidden = false);

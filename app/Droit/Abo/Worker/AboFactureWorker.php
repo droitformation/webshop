@@ -88,7 +88,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
             foreach($factures as $facture) {
 
                 // Make or remake the facture is the status is abonne
-                if($abonnement->status == 'abonne') {
+                if($abonnement->status == 'abonne' || $abonnement->status == 'tiers') {
                     $this->generator->makeAbo('facture', $facture);
                 }
                 else

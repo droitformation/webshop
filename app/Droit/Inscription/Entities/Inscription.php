@@ -191,9 +191,13 @@ class Inscription extends Model
 
     public function getDetenteurAttribute()
     {
-        $adresse = $this->inscrit->adresses->where('type',1)->first();
+        if(!isset($this->inscrit)){
+            return ['id' => 1, 'civilite' => '', 'name' => 'Problème avec inscription: '.$this->id, 'email' => ''];
+        }
 
-        return ['id' => $this->inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email ];
+        $adresse =  $this->inscrit->adresses->where('type',1)->first();
+
+        return ['id' => $this->inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email];
     }
 
     public function getAdresseInscritAttribute()

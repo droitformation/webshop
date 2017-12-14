@@ -95,7 +95,7 @@
                         </div>
 
                         <input type="hidden" value="{{ $abo->id }}" name="abo_id">
-                        <input type="hidden" value="{{ $abo->current_product['id'] }}" name="product_id">
+                        <input type="hidden" value="{{ $abo->current_product->id }}" name="product_id">
 
                     </div>
                     <div class="panel-footer text-right">

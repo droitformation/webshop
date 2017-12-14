@@ -57,9 +57,14 @@ class ProductEloquent implements ProductInterface{
         return $this->product->with(['categories'])->visible($visible)->orderBy('created_at', 'DESC')->paginate($nbr);
     }
 
-    public function forAbos()
+    public function forAbos($admin = null)
     {
-        $product = $this->product->with(['attributs'])->where('hidden','=',0);
+        if($admin){
+            $product = $this->product->with(['attributs']);
+        }
+        else{
+            $product = $this->product->with(['attributs'])->where('hidden','=',0);
+        }
 
         foreach([3,4] as $attr){
             $product->whereHas('attributs', function($q) use ($attr){

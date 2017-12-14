@@ -5,7 +5,7 @@ $( function() {
     if($("#specialisations").length)
     {
         var tags = $("#specialisations").data('tags');
-        console.log(tags);
+        tags = tags ? tags : null;
 
         $.get(base_url + 'admin/specialisation', function( data )
         {
@@ -53,7 +53,9 @@ $( function() {
                 },
                 beforeTagAdded: function(event, ui) {
                     if ($.inArray(ui.tagLabel, data) == -1) {return false;}
-                    if ($.inArray(ui.tagLabel, tags) == -1) {return false;}
+                    if(tags){
+                        if ($.inArray(ui.tagLabel, tags) == -1) {return false;}
+                    }
                 }
             });
         });
