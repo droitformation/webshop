@@ -164,6 +164,9 @@ class OrderEloquent implements OrderInterface{
 
     public function setPaquets($order,$paquets)
     {
+        // Remove existing paquets
+        $order->paquets()->delete();
+
         foreach($paquets as $paquet){
             $box = $this->paquet->create([
                 'qty'         => $paquet['qty'],

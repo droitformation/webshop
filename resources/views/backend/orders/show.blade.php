@@ -136,7 +136,7 @@
                                             $paquets = collect($order->paquets)->groupBy(function ($item, $key) {
                                                 return ($item->shipping->value/1000).' Kg | '.$item->shipping->price_cents;
                                             })->map(function ($item, $key) {
-                                                return $item->count();
+                                                return $item->sum('qty');
                                             });
                                         ?>
                                         <ul class="list-group mb-0">

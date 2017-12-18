@@ -22,7 +22,7 @@
                     </a>
                 </td>
                 <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
-                <td class="text-right">{{ $order->price_cents }} CHF</td>
+                <td class="text-right">{{ $order->total_with_shipping }} CHF</td>
                 <td class="text-right"><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
             </tr>
             @if(!empty($order->products))
@@ -64,8 +64,8 @@
                                             <?php $order->load('coupon'); ?>
                                             <p class="text-right text-muted"><?php echo ($order->coupon->type == 'shipping' ? 'Frais de port offerts' : $order->coupon->value.'%') ?></p>
                                         @endif
-                                        <p class="text-right">{{ $order->shipping->price_cents }} CHF</p>
-                                        <p class="text-right">{{ $order->price_cents }} CHF</p>
+                                        <p class="text-right">{{ $order->total_shipping }} CHF</p>
+                                        <p class="text-right">{{ $order->total_with_shipping }} CHF</p>
                                     </div>
                                 </div>
                             </div>

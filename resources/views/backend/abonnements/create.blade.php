@@ -76,6 +76,7 @@
                                 <select class="form-control" name="status">
                                     <option value="abonne">Abonné</option>
                                     <option value="gratuit">Gratuit</option>
+                                    <option value="tiers">Abonné Tiers payant</option>
                                 </select>
                             </div>
                         </div>

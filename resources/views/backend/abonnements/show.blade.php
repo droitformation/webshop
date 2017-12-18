@@ -114,6 +114,7 @@
                             <div class="col-sm-4 col-xs-8">
                                 <select class="form-control" name="status">
                                     <option {{ ($abonnement->status == 'abonne' ?  'selected' : '') }} value="abonne">Abonné</option>
+                                    <option {{ ($abonnement->status == 'tiers' ?  'selected' : '') }} value="tiers">Abonné Tiers payant</option>
                                     <option {{ ($abonnement->status == 'gratuit' ? 'selected' : '') }} value="gratuit">Gratuit</option>
                                 </select>
                             </div>

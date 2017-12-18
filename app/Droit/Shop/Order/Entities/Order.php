@@ -105,10 +105,18 @@ class Order extends Model{
             return 'un problème avec les frais de port';
         }
 
+        $shipping_price = 0;
+
+        // simple shipping
+        if(isset($this->shipping)){
+            $paquet = isset($this->paquet) ? $this->paquet : 1 ;
+            $shipping_price = $this->shipping->price * $paquet;
+        }
+
         // Shipping x nbr paquets
         $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
             return $carry + ($item->shipping->price * $item->qty);
-        }) : $this->shipping->price;
+        }) : $shipping_price;
 
         $total = $this->amount + $price;
         $price = $total / 100;
@@ -152,11 +160,19 @@ class Order extends Model{
             return 0;
         }
 
+        $shipping_price = 0;
+
+        // simple shipping
+        if(isset($this->shipping)){
+            $paquet = isset($this->paquet) ? $this->paquet : 1 ;
+            $shipping_price = $this->shipping->price * $paquet;
+        }
+
         if(isset($this->shipping) || !$this->paquets->isEmpty()) {
 
             $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
                 return $carry + ($item->shipping->price * $item->qty);
-            }) : $this->shipping->price;
+            }) : $shipping_price;
 
             return $money->format($price/100);
         }

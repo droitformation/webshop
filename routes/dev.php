@@ -168,14 +168,6 @@ Route::get('testing', function() {
 
     //$worker->generateWithBv($inscriptions);
 
-    $paquet = floor(345000 / 30000);
-    echo '<pre>';
-    print_r($paquet);
-    echo '</pre>';exit();
-    //emptyDirectory(public_path('files/colloques/temp'));
-
-    exit();
-
     //$import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
 
    // $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
@@ -1138,12 +1130,17 @@ Route::get('factory', function()
         'admin' => 1
     ];
 
-    $order = $model->find(3877);
+    $order = $model->find(3891);
+
+    $paquets = collect($order->paquets)->groupBy(function ($item, $key) {
+        return ($item->shipping->value/1000).' Kg | '.$item->shipping->price_cents;
+    })->map(function ($item, $key) {
+        return $item->sum('qty');
+    });
 
     echo '<pre>';
-    print_r($order->weight);
+    print_r($paquets);
     echo '</pre>';exit();
-    //$boxes = orderBoxes($weight,$shippings);
 
 
 });

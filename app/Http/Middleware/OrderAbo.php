@@ -34,24 +34,20 @@ class OrderAbo
         $abos = $this->getAbos($request);
 
         // if user is authenticated
-        if(\Auth::check())
-        {
-            $user = \Auth::user()->load('adresses');
+        if(\Auth::check()) {
+
+            $user = \Auth::user()->load('adresses','abos');
 
             // No adresse , no abo yet
             if(!isset($user->adresse_livraison)) {
-
                 $request->session()->flash('AdresseMissing', 'Error');
-
                 return redirect()->back();
             }
 
-            foreach($abos as $abo)
-            {
+            foreach($abos as $abo) {
                 $exist = $this->abonnement->findByAdresse($user->adresse_livraison->id, $abo);
 
-                if($exist)
-                {
+                if($exist || $user->abos->contains('abo_id',$abo)) {
                     $this->worker->removeById('abonnement', $abo);
                     $redirect = true;
                 }
@@ -61,7 +57,6 @@ class OrderAbo
         if(isset($redirect))
         {
             $request->session()->flash('OrderAbo', 'Error');
-
             return redirect('pubdroit');
         }
 
