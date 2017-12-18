@@ -87,7 +87,7 @@ class ProductController extends Controller {
         $data = $request->except('file');
 
         if($request->file('file',null)) {
-            $file = $this->upload->upload( $request->file('file') , public_path('files/products'));
+            $file = $this->upload->upload( $request->file('file') , public_path('files/products'), 'product');
             $data['image'] = $file['name'];
         }
 
@@ -127,7 +127,7 @@ class ProductController extends Controller {
         }
         
         if($file) {
-            $file = $this->upload->upload( $request->file('file') , 'files/products');
+            $file = $this->upload->upload( $request->file('file') , 'files/products', 'product');
             $data['image'] = $file['name'];
         }
 
