@@ -102,6 +102,7 @@ class AboUserEloquent implements AboUserInterface{
         }
 
         $abo_user->tiers_id = (isset($data['tiers_id']) && $data['tiers_id'] > 0) ? $data['tiers_id'] : null;
+        $abo_user->tiers_user_id = (isset($data['tiers_user_id']) && $data['tiers_user_id'] > 0) ? $data['tiers_user_id'] : null;
 
         $abo_user->save();
 
