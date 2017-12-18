@@ -27,7 +27,7 @@ class AboEloquent implements AboInterface{
                 $q->where('title', '=', 'Édition');
             });
 
-            $query->where('hidden','=', 0);
+            $query->where('hidden','=', 0)->orWhereNull('hidden');
         })->get();
     }
 

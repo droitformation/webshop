@@ -71,7 +71,7 @@ class ShopController extends Controller {
         $abos       = $this->abo->getAllFrontend();
 
         $abos = $abos->map(function($abo, $key) {
-            return $abo->current_product->load('abos');
+            return $abo->frontend_product->load('abos');
         });
 
 		return view('frontend.pubdroit.index')->with([

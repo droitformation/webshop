@@ -53,14 +53,31 @@ class Abo extends Model{
         return factory(\App\Droit\Shop\Product\Entities\Product::class)->make(['image' => 'placeholder.jpg', 'title' => $this->title , 'id' => null]);
     }
 
+    public function getFrontendProductAttribute()
+    {
+        $this->load('active_products');
+
+        if(!$this->active_products->isEmpty())
+        {
+            $products = $this->active_products->sortByDesc('created_at');
+
+            return $products->first();
+        }
+
+        return factory(\App\Droit\Shop\Product\Entities\Product::class)->make(['image' => 'placeholder.jpg', 'title' => $this->title , 'id' => null]);
+    }
+
     public function products()
     {
-        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')->orderBy('created_at','desc');
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')
+            ->orderBy('created_at','desc');
     }
 
     public function active_products()
     {
-        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')->orderBy('created_at','desc');
+        return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')
+            ->where('hidden','=',0)->orWhereNull('hidden')
+            ->orderBy('created_at','desc');
     }
 
     public function abonnements()
