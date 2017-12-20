@@ -5,13 +5,14 @@
             <tr bgcolor="{{ $campagne->newsletter->color }}"><td colspan="4" height="10"></td></tr><!-- space -->
 
             <tr bgcolor="{{ $campagne->newsletter->color }}">
-                <td width="430">
-                    <table width="430" bgcolor="{{ $campagne->newsletter->color }}" border="0" cellpadding="0" cellspacing="0" align="center" class="resetTable">
+	            <?php $width_tbl = $campagne->newsletter->logo_soutien ? 430 : 600; ?>
+                <td width="{{ $width_tbl }}">
+                    <table width="{{ $width_tbl }}" bgcolor="{{ $campagne->newsletter->color }}" border="0" cellpadding="0" cellspacing="0" align="center" class="resetTable">
                         @if(!empty($campagne->sujet ))
                         <tr bgcolor="{{ $campagne->newsletter->color }}">
                             <td width="20"></td>
                             <td colspan="2" align="left">
-                                <h1 class="header"><span style="color: #fff;font-size: 18px;display: block;">{{ $campagne->sujet }}&nbsp;</span></h1>
+                                <h1 class="header"><span style="color: #fff;font-size: 16px;display: block;">{!! $campagne->sujet !!}&nbsp;</span></h1>
                             </td>
                             <td width="20"></td>
                         </tr>
@@ -30,14 +31,14 @@
                         @endif
                     </table>
                 </td>
-                <td width="110" style="text-align: left; ">
-                    @if($campagne->newsletter->logo_soutien)
+                @if($campagne->newsletter->logo_soutien)
+	                <td width="110" style="text-align: left; ">
                         <small style="text-align: left; font-family: sans-serif;color: #fff;font-size: 11px;">Avec le soutien de</small>
                         <a target="_blank" href="#">
                             <img style="max-width: 105px;" alt="soutien" src="{{ secure_asset($campagne->newsletter->logo_soutien) }}" />
                         </a>
-                    @endif
-                </td>
+	                </td>
+                @endif
             </tr><!-- space -->
 
             <tr bgcolor="{{ $campagne->newsletter->color }}"><td colspan="4" height="10"></td></tr><!-- space -->
