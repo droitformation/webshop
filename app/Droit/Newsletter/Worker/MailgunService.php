@@ -131,7 +131,7 @@ class MailgunService implements MailgunInterface
     {
         $this->hasHtml()->hasRecipients();
 
-        $response = $this->mailgun->sendMessage(env('MAILGUN_DOMAIN'), $data);
+        $response = $this->mailgun->sendMessage(config('mailgun.domain'), $data);
 
         if($response->http_response_code == 200){
             // local env is configured with pastebin no id returned, faking it
