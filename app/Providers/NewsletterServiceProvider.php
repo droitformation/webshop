@@ -64,7 +64,7 @@ class NewsletterServiceProvider extends ServiceProvider
                 $mailgun = \Mockery::mock('\Mailgun\Mailgun');
             }
             else{
-                $mailgun = new \Mailgun\Mailgun(env('MAILGUN_SECRET'));
+                $mailgun = new \Mailgun\Mailgun(config('mailgun.api_key'));
             }
 
             return new \App\Droit\Newsletter\Worker\MailgunService($mailgun);
