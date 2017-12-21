@@ -1026,21 +1026,24 @@ Route::get('testproduct', function()
     $reminders  = \App::make('App\Droit\Reminder\Repo\ReminderInterface');
     $list = $reminders->toSend();
 
+    echo '<pre>';
+    print_r($list);
+    echo '</pre>';exit();
     foreach($list as $reminder)
     {
         $model = new $reminder->model;
 
         if ($model instanceof Illuminate\Database\Eloquent\Model)
         {
-            $model_id = $reminder->model_id;
-            $item     = $model->find($model_id);
+           // $model_id = $reminder->model_id;
+           // $item     = $model->find($model_id);
 
       /*      echo '<pre>';
             print_r($item);
             echo '</pre>';exit;*/
 
-            return View::make('emails.reminder', ['reminder' => $reminder, 'item' => $item]);
-            exit;
+           // return View::make('emails.reminder', ['reminder' => $reminder, 'item' => $item]);
+            //exit;
         }
     }
 
