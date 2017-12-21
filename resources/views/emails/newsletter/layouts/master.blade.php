@@ -21,6 +21,9 @@
         <!--[if gte mso 9]>
         <style type="text/css">
             img.header-logo { width: 600px; } /* or something like that */
+            ul li{
+                list-style-type: disc;
+            }
         </style>
         <![endif]-->
     </head>
