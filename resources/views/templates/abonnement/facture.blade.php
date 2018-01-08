@@ -24,7 +24,11 @@
                         <li>{!! \Registry::get('abo.infos.nom') !!}</li>
                         <li class="mb-5">{!! \Registry::get('abo.infos.adresse') !!}</li>
                         {!!  !empty(\Registry::get('shop.infos.telephone')) ? '<li>Tél. '.\Registry::get('shop.infos.telephone').'</li>' : '' !!}
-                        {!!  !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
+                        @if($abo->abo->id == 2)
+                            <li>seminaire@bail.ch</li>
+                        @else
+                            {!! !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
+                        @endif
                     </div>
                 </td>
                 <td align="top" width="40%" valign="top">
