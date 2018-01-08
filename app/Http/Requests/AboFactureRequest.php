@@ -36,6 +36,7 @@ class AboFactureRequest extends FormRequest
                 Rule::unique('abo_factures')->where(function ($query) use ($request) {
                     $query->where('abo_user_id', $request->get('abo_user_id'));
                     $query->where('product_id', $request->get('product_id'));
+                    $query->whereNull('deleted_at');
                 })
             ],
         ];
