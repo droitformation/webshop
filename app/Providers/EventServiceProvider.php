@@ -17,9 +17,11 @@ class EventServiceProvider extends ServiceProvider {
         'App\Events\InscriptionWasRegistered' => [
             'App\Listeners\EmailInscriptionConfirmation'
         ],
-		'App\Events\NewAboRequest' => [
+        'App\Events\NewAboRequest' => [
             'App\Listeners\EmailAboConfirmation'
-        ]
+        ],
+        'App\Events\SubscriptionAddTag' => ['App\Listeners\SubscribeToNewsletter'],
+        'App\Events\SubscriptionRemoveTag' => ['App\Listeners\UnsubscribeFromNewsletter']
 	];
 
 	/**
