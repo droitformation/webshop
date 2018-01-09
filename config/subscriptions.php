@@ -2,16 +2,15 @@
 
 /*
 |--------------------------------------------------------------------------
-| Inscriptions config for frontend
+| Subscriptions to sync to newsletter
 |--------------------------------------------------------------------------
 */
 
 return [
 
-    'messages' => [
-        'pending'    => '<p>Vous avez des payements en attente, veuillez contacter le sécrétariat <a href="mailto:droit.formation@unine.ch">droit.formation@unine.ch</a> </p>',
-        'registered' => '<p>Vous êtes déjà inscrit à ce colloque.</p>'
+    'pi2' => [
+        'id'    => 54,
+        'newsletter_id' => 10
     ],
-    'days' => 40
 
 ];

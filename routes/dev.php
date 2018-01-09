@@ -1123,17 +1123,49 @@ Route::get('/test_mailgun', function () {
 
 Route::get('factory', function()
 {
-    $weight = 75000;
+    $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
+    $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
+    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+    $mailjet->setList(1590782);
 
-    $newweight = orderBoxesShipping($weight);
+    $emails = [];
+    $allusers = [];
+/*
+    foreach (range(0, 6000, 1000) as $i) {
+        $users = $mailjet->getSubscribers($i);
+        $allusers[] = collect($users)->map(function ($item, $key) {
+            return $item['Email'];
+        });
+    }
+
+    $emails = array_flatten($allusers);
 
     echo '<pre>';
-    print_r(collect($newweight)->sum('price'));
+    print_r(implode('<br>',$emails));
     echo '</pre>';exit();
+*/
 
-    //$boxes = orderBoxes($weight,$shippings);
+    $results = \Excel::load('public/files/import/pi2.xlsx', function($reader) {
+        $reader->ignoreEmpty();
+        $reader->setSeparator('\r\n');
+    })->get();
 
+    $results = $results->pluck('email');
 
+    foreach($results as $email){
+        $exist = $worker->exist($email);
+        if($exist){
+            echo '<br/>is in '.$email;
+            $exist->subscriptions()->detach(10);
+            $exist->subscriptions()->attach(10);
+        }
+        else{
+            echo '<br/>is not in '.$email;
+            $worker->make($email,10);
+        }
+    }
+
+    exit;
 });
 
 Route::get('badges_test', function () {
