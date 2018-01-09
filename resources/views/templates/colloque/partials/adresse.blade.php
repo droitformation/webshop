@@ -7,7 +7,7 @@
     @endif
     {!! !empty(\Registry::get('shop.infos.telephone')) ? '<li>Tél. '.\Registry::get('shop.infos.telephone').'</li>' : '' !!}
     @if(isset($colloque->adresse) && $colloque->adresse->name == 'Bail')
-        <li>seminaire@bail.ch</li>
+        <li>seminaire.bail@unine.ch</li>
     @else
         {!! !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
     @endif

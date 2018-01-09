@@ -13,7 +13,7 @@ use App\Jobs\NotifyAdminNewAbo;
 class EmailAboConfirmation
 {
     use DispatchesJobs;
-    
+
     /**
      * Create the event listener.
      *
