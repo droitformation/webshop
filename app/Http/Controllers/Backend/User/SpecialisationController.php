@@ -92,6 +92,7 @@ class SpecialisationController extends Controller {
             }
 
             $item = $this->$model->find($id);
+            $item->specialisations()->attach($find->id);
 
             // put on ev. list
             if($model == 'adresse'){
@@ -102,8 +103,6 @@ class SpecialisationController extends Controller {
                     }
                 }
             }
-
-            $item->specialisations()->attach($find->id);
 
             return response()->json( $find , 200 );
         }
