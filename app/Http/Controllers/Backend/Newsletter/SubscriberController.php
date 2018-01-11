@@ -117,7 +117,7 @@ class SubscriberController extends Controller
      */
     public function update(RemoveNewsletterUserRequest $request, $id)
     {
-        $subscriber = $this->subscriber->update(['id' => $id, 'email' => $request->input('email'),'activated_at' => $request->input('activation') ? date('Y-m-d G:i:s') : null]);
+        $subscriber = $this->subscriber->find($id);
 
         $new = $request->input('newsletter_id',[]);
         $has = $subscriber->subscriptions->pluck('id')->all();
@@ -125,18 +125,41 @@ class SubscriberController extends Controller
         $added   = array_diff($new, $has);
         $removed = array_diff(array_unique(array_merge($new, $has)), $new);
 
-        $this->subscription_worker->subscribe($subscriber,$added);
-        $this->subscription_worker->unsubscribe($subscriber,$removed);
+        // if email edited we have to change it
+        if($request->input('email') != $subscriber->email){
 
-        $subscriber->fresh();
+            // unsubscribe all and delete
+            $this->subscription_worker->unsubscribe($subscriber,$has);
 
-        if($subscriber->trashed()){
-            alert()->success('Abonné édité et supprimé');
-            return redirect('build/subscriber');
+            // make new subscriber and add all
+            $newsubscriber = $this->subscriber->create([
+                'email' => $request->input('email'),
+                'activated_at' => \Carbon\Carbon::now(),
+                'activation_token' => md5($request->input('email').\Carbon\Carbon::now()),
+            ]);
+
+            $this->subscription_worker->subscribe($newsubscriber,$new);
+
+            alert()->success('Abonné édité');
+            return redirect('build/subscriber/'.$newsubscriber->id);
+        }
+        else{
+            $subscriber = $this->subscriber->update(['id' => $id,'activated_at' => $request->input('activation') ? date('Y-m-d G:i:s') : null]);
+
+            $this->subscription_worker->subscribe($subscriber,$added);
+            $this->subscription_worker->unsubscribe($subscriber,$removed);
+
+            $subscriber->fresh();
+
+            if($subscriber->trashed()){
+                alert()->success('Abonné édité et supprimé');
+                return redirect('build/subscriber');
+            }
+
+            alert()->success('Abonné édité');
+            return redirect('build/subscriber/'.$subscriber->id);
         }
 
-        alert()->success('Abonné édité');
-        return redirect('build/subscriber/'.$subscriber->id);
     }
 
     /**
