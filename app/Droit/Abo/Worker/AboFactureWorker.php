@@ -41,6 +41,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
 
             foreach($chunks as $chunk) {
                 // dispatch job to make 15 factures
+                \Log::info('date worker'.$date);
                 $job = (new MakeFactureAbo($chunk, $product, $all, $date));
                 $this->dispatch($job);
             }

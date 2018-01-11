@@ -1256,7 +1256,18 @@ Route::get('merge', function () {
 
     $product = $products->find(347);
     $abo     = $abos->findAboByProduct(347);
-    $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
+
+    $model = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+
+    $date = \Carbon\Carbon::parse(date('Y-m-d'))->toDateTimeString();
+
+    $facture = $model->update(['id' => 4501, 'created_at' => $date]);
+    \File::delete(public_path($facture->doc_facture));
+
+    echo '<pre>';
+    print_r($facture->doc_facture);
+    echo '</pre>';exit();
+    /*$abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
     $grouped = $abonnes->mapToGroups(function ($item, $key) use($product) {
         $dir  = 'files/abos/facture/'.$product->id;
@@ -1299,7 +1310,7 @@ Route::get('merge', function () {
     print_r($grouped['multiple']->count());
     echo '<pre>';
     print_r($grouped['tiers']->count());
-    echo '</pre>';exit();
+    echo '</pre>';exit();*/
     // Directory for edition => product_id
 /*    $dir       = 'files/abos/facture/273';
     $reference = 'RJN';
