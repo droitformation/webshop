@@ -1160,7 +1160,7 @@ Route::get('factory', function()
 
     echo '<pre>';
     print_r(implode('<br>',$emails));
->>>>>>> 4ed37a022b7ad6a5b7acb79cac93f4d74179cfb9
+
     echo '</pre>';exit();
 */
 
@@ -1184,7 +1184,18 @@ Route::get('factory', function()
         }
     }
 
-    exit;
+    foreach($results as $email){
+        $exist = $worker->exist($email);
+        if($exist){
+            echo '<br/>is in '.$email;
+            $exist->subscriptions()->detach(10);
+            $exist->subscriptions()->attach(10);
+        }
+        else{
+            echo '<br/>is not in '.$email;
+            $worker->make($email,10);
+        }
+    }
 });
 
 Route::get('badges_test', function () {
