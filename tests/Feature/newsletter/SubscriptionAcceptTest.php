@@ -118,7 +118,7 @@ class SubscriptionAcceptTest extends TestCase
         $subscriber->subscriptions()->attach($has);
 
         /******************************/
-
+        $this->subscription->shouldReceive('find')->once()->andReturn($subscriber);
         $this->subscription->shouldReceive('update')->once()->andReturn($subscriber);
         $this->subscription_worker->shouldReceive('subscribe')->once();
         $this->subscription_worker->shouldReceive('unsubscribe')->once();
