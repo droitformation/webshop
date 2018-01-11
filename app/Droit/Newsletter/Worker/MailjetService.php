@@ -55,12 +55,11 @@ class MailjetService implements MailjetServiceInterface{
             return [];
     }
 
-    public function getSubscribers()
+    public function getSubscribers($Offset = 0)
     {
         $this->hasList();
-
-        $response = $this->mailjet->get(Resources::$Contactslist, ["ID" => $this->list]);
-
+        $filters = ['Limit' => '1000', 'Offset' => $Offset, "ContactsList" => $this->list];
+        $response = $this->mailjet->get(Resources::$Contact, ['filters' => $filters]);
         if($response->success())
             return $response->getData();
         else

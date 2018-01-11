@@ -3,6 +3,8 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Events\SubscriptionAddTag;
+use App\Events\SubscriptionRemoveTag;
 
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
@@ -85,13 +87,22 @@ class SpecialisationController extends Controller {
             $find           = $this->specialisation->search($specialisation);
 
             // If specialisation not found
-            if(!$find)
-            {
+            if(!$find) {
                 $find = $this->specialisation->create(['title' => $specialisation, $model.'_id' => $id]);
             }
 
             $item = $this->$model->find($id);
             $item->specialisations()->attach($find->id);
+
+            // put on ev. list
+            if($model == 'adresse'){
+                $subscriptions = config('subscriptions');
+                foreach ($subscriptions as $subscription){
+                    if($subscription['id'] == $find->id){
+                        event(new SubscriptionAddTag($item,$subscription['newsletter_id']));
+                    }
+                }
+            }
 
             return response()->json( $find , 200 );
         }
@@ -115,6 +126,16 @@ class SpecialisationController extends Controller {
 
             $item   = $this->$model->find($id);
             $item->specialisations()->detach($find->id);
+
+            // put on ev. list
+            if($model == 'adresse'){
+                $subscriptions = config('subscriptions');
+                foreach ($subscriptions as $subscription){
+                    if($subscription['id'] == $find->id){
+                        event(new SubscriptionRemoveTag($item,$subscription['newsletter_id']));
+                    }
+                }
+            }
 
             return response()->json( $specialisation, 200 );
         }

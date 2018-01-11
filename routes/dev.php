@@ -608,9 +608,6 @@ Route::get('cartworker', function()
 
     //$generate = new \App\Droit\Generate\Entities\Generate($abofacture);
 
-
-    exit;
-
     /*
         $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
 
@@ -648,8 +645,7 @@ Route::get('cartworker', function()
     */
 });
 
-Route::get('categoriestest', function()
-{
+Route::get('categoriestest', function() {
     //$model = App::make('App\Droit\Arret\Repo\ArretInterface');
    // $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
    // $pages = App::make('App\Droit\Page\Repo\PageInterface');
@@ -1119,6 +1115,7 @@ Route::get('/test_mailgun', function () {
 Route::get('factory', function()
 {
 
+
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 10000, 'price'  => 1000]);
 
@@ -1143,9 +1140,51 @@ Route::get('factory', function()
 
     echo '<pre>';
     print_r($paquets);
+
+    $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
+    $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
+    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+    $mailjet->setList(1590782);
+
+    $emails = [];
+    $allusers = [];
+/*
+    foreach (range(0, 6000, 1000) as $i) {
+        $users = $mailjet->getSubscribers($i);
+        $allusers[] = collect($users)->map(function ($item, $key) {
+            return $item['Email'];
+        });
+    }
+
+    $emails = array_flatten($allusers);
+
+    echo '<pre>';
+    print_r(implode('<br>',$emails));
+>>>>>>> 4ed37a022b7ad6a5b7acb79cac93f4d74179cfb9
     echo '</pre>';exit();
+*/
 
+    $results = \Excel::load('public/files/import/pi2.xlsx', function($reader) {
+        $reader->ignoreEmpty();
+        $reader->setSeparator('\r\n');
+    })->get();
 
+    $results = $results->pluck('email');
+
+    foreach($results as $email){
+        $exist = $worker->exist($email);
+        if($exist){
+            echo '<br/>is in '.$email;
+            $exist->subscriptions()->detach(10);
+            $exist->subscriptions()->attach(10);
+        }
+        else{
+            echo '<br/>is not in '.$email;
+            $worker->make($email,10);
+        }
+    }
+
+    exit;
 });
 
 Route::get('badges_test', function () {
