@@ -83,12 +83,7 @@
                                   <div class="clearfix"></div>
                               </form>
                               <hr>
-                              <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
-                                  <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                  <button id="deleteUser_{{ $user->id }}" data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger btn-xs deleteAction" type="submit">
-                                      <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer le compte
-                                  </button>
-                              </form>
+                              <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
                           </div>
                       </div>
 
