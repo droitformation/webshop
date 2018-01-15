@@ -83,7 +83,7 @@
                                   <div class="clearfix"></div>
                               </form>
                               <hr>
-                              <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
+                              <a id="confirm_delete" href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
                           </div>
                       </div>
 
