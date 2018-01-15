@@ -89,7 +89,8 @@ class UserTest extends BrowserKitTest {
 
         $this->visit('admin/user/'.$user->id);
         // delete user
-        $this->press('deleteUser_'.$user->id);
+        $this->click('Supprimer le compte');
+        $this->press('Oui Supprimer');
 
         $this->notSeeInDatabase('users', [
             'id'         => $user->id,
