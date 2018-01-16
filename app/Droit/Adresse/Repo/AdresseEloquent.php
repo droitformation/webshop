@@ -36,11 +36,13 @@ class AdresseEloquent implements AdresseInterface{
 
 		return $this->adresse
 			->where(function ($query) {
-				$query->where(function ($query) {
-					$query->where('user_id','=',0);
-				})->orWhere(function ($query) {
-					$query->where('user_id','>',0)->has('user');
-				});
+                $query->where(function ($query) {
+                    $query->where('user_id','=',0)->orWhereNull('user_id');
+                })->orWhere(function ($query) {
+                    $query->where('user_id','>',0)->has('user');
+                })->orWhere(function ($query) {
+                    $query->whereNotNull('user_id')->has('user');
+                });
 			})
 			->where(function ($query) use ($terms,$columns) {
 
