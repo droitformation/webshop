@@ -58,6 +58,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="email" value="" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="contenu" class="col-sm-3 control-label">Description</label>
                         <div class="col-sm-7">
                             {!! Form::textarea('description', null, ['class' => 'form-control  redactorSimple', 'cols' => '50' , 'rows' => '4']) !!}

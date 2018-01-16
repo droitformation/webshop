@@ -35,6 +35,7 @@ class OrganisateurEloquent implements OrganisateurInterface{
             'description' => isset($data['description']) ? $data['description'] : '',
             'adresse'     => isset($data['adresse']) ? $data['adresse'] : '',
             'tva'         => isset($data['tva']) ? $data['tva'] : '',
+            'email'       => isset($data['email']) ? $data['email'] : null,
             'url'         => isset($data['url']) ? $data['url'] : '',
             'logo'        => isset($data['logo']) ? $data['logo'] : '',
         ));
