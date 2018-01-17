@@ -50,7 +50,8 @@
                         <div class="form-group">
                             <label for="file" class="col-sm-3 control-label">Changer l'image</label>
                             <div class="col-sm-8">
-                                {!! Form::file('file') !!}
+                                <div id="lblSize" class="alert alert-danger" style="display: none;"></div>
+                                <input type="file" name="file" id="flUpload">
                             </div>
                         </div>
 

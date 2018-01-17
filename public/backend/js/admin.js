@@ -9,6 +9,17 @@ $( function() {
 
     $('.colorpicker').colorPicker();
 
+    $("#flUpload").change(function ()
+    {
+        $("#lblSize").empty().show();
+
+        var iSize = ($("#flUpload")[0].files[0].size / 1024);
+
+        if(iSize > 1500){
+            $("#lblSize").html("L'image est trop lourde, merci de prendre un image de moins de 1.5Mb").show();
+        }
+    });
+
     var $excelGroup = $('#excelGroup');
     $excelGroup.on('show.bs.collapse','.collapse', function() {
         $excelGroup.find('.collapse.in').collapse('hide');

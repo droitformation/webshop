@@ -22,6 +22,7 @@ class UploadWorker implements UploadInterface {
 
         // Get the name first because after moving, the file doesn't exist anymore
         $new  = $file->move($destination,$newname);
+
         $size = $new->getSize();
         $mime = $new->getMimeType();
         $path = $new->getRealPath();
@@ -56,6 +57,8 @@ class UploadWorker implements UploadInterface {
 	*/	
 	public function resize($path, $destination = null, $width = null , $height = null)
     {
+        ini_set('memory_limit','2048M');
+
         $img = \Image::make($path)->orientate();
 
         $destination = $destination ? $destination : $path;

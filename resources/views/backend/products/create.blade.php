@@ -22,7 +22,8 @@
                         <div class="form-group">
                             <label for="file" class="col-sm-3 control-label">Image</label>
                             <div class="col-sm-7">
-                                {!! Form::file('file') !!}
+                                <div id="lblSize" class="alert alert-danger" style="display: none;"></div>
+                                <input type="file" name="file" id="flUpload">
                             </div>
                         </div>
 
