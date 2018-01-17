@@ -18,6 +18,7 @@ class CreateOrganisateursTable extends Migration
             $table->text('description')->nullable();
             $table->string('url')->nullable();
             $table->string('logo')->nullable();
+            $table->string('email')->nullable();
             $table->text('adresse')->nullable();
             $table->string('tva')->nullable();
             $table->tinyInteger('centre');

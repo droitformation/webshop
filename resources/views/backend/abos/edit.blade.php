@@ -30,6 +30,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-3 col-xs-6">
+                                <input type="text" class="form-control" value="{{ $abo->email }}" name="email">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Prix</label>
                             <div class="col-sm-3 col-xs-6">
                                 <input type="text" class="form-control" value="{{ $abo->price_cents }}" name="price">
