@@ -533,6 +533,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     /*|--------------------------------------------------------------------------|*/
 
+    Route::post('access/add','Access\AccessController@add');
+    Route::post('access/remove','Access\AccessController@remove');
+
 });
 
 Route::group(['prefix' => 'vue'], function () {
@@ -553,9 +556,7 @@ Route::group(['prefix' => 'vue'], function () {
 
     Route::post('groupe','Api\OptionGroupeController@store');
     Route::get('autocomplete', 'Backend\SearchController@autocomplete');
-    
 });
-
 
 Route::group(['prefix' => 'access' , 'middleware' => ['auth','access']], function () {
 
