@@ -24,68 +24,68 @@
                         <h3>&Eacute;diter abo</h3>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
-                            <div class="col-sm-4 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" value="{{ $abo->title }}" name="title">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Prix</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" value="{{ $abo->price_cents }}" name="price">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Frais de port</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" value="{{ $abo->shipping_cents }}" name="shipping">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Centre/institut</label>
-                            <div class="col-sm-4 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="name" value="{{ $abo->name }}">
                             </div>
-                            <div class="col-sm-3 col-xs-12">
+                            <div class="col-sm-4 col-xs-12">
                                 <p class="help-block">facultatif</p>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Compte pour BV</label>
-                            <div class="col-sm-4 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="compte" value="{{ $abo->compte }}" placeholder="facultatif">
                             </div>
-                            <div class="col-sm-3 col-xs-12">
+                            <div class="col-sm-4 col-xs-12">
                                 <p class="help-block">Par défaut le compte est celui indiqué dans la configuration des abos</p>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Adresse pour BV</label>
-                            <div class="col-sm-4 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <textarea class="form-control redactorSimple" name="adresse">{{ \Registry::get('abo.infos.adresse') }}</textarea>
                             </div>
-                            <div class="col-sm-3 col-xs-12">
+                            <div class="col-sm-4 col-xs-12">
                                 <p class="help-block">Par défaut l'adresse est celle indiquée dans la configuration des abos</p>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Remarques</label>
-                            <div class="col-sm-4 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <textarea class="form-control redactorSimple" name="remarque">{!! $abo->remarque !!}</textarea>
                             </div>
-                            <div class="col-sm-3 col-xs-12">
+                            <div class="col-sm-4 col-xs-12">
                                 <p class="help-block">Indiqué dans le shop (panier)</p>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Récurrence</label>
-                            <div class="col-sm-4 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <select class="form-control" name="plan">
                                     <option value=""></option>
                                     @foreach($plans as $name => $plan)
@@ -98,7 +98,7 @@
                         @if(!empty($abo->logo ))
                             <div class="form-group">
                                 <label for="file" class="col-sm-3 control-label">Fichier</label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <div class="list-group">
                                         <div class="list-group-item text-center">
                                             <a href="#"><img height="120" src="{!! secure_asset('files/main/'.$abo->logo) !!}" alt="logo" /></a>
@@ -119,7 +119,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="message" class="col-sm-3 col-xs-12 control-label">Produits</label>
+                            <label for="message" class="col-sm-3 control-label">Produits
+                                <p class="help-block">Seul les livres ayant les éléments de références pour la facture sont affichés</p>
+                            </label>
                             <div class="col-sm-5 col-xs-12">
                                 <select multiple class="form-control" id="multi-select" name="products_id[]">
                                     <?php $product_abos = !$abo->products->isEmpty() ? $abo->products->pluck('id')->all() : []; ?>
@@ -129,9 +131,6 @@
                                         @endforeach
                                     @endif
                                 </select>
-                            </div>
-                            <div class="col-sm-3 col-xs-12">
-                                <p class="help-block">Seul les livres ayant les éléments de références pour la facture sont affichés</p>
                             </div>
                         </div>
 
