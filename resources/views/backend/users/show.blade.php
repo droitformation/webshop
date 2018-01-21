@@ -55,17 +55,7 @@
                                       <input type="email" name="email" class="form-control" value="{{ $user->email }}">
                                   </div>
 
-                                  <div class="form-group">
-                                      <label class="control-label">Role</label>&nbsp;
-                                      <label class="radio"><input {{ empty($user->all_roles) ? 'checked' : '' }} type="radio" name="role" value="0"> Utilisateur simple</label>
-                                      @if(isset($roles))
-                                          @foreach($roles as $role)
-                                              <label class="radio">
-                                                  <input type="radio" name="role" {{ in_array($role->id ,$user->all_roles) ? 'checked' : '' }} value="{{ $role->id }}"> {{ $role->name }}
-                                              </label>
-                                          @endforeach
-                                      @endif
-                                  </div>
+                                  @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
 
                                   <a class="text-danger" data-toggle="collapse" href="#changePassword" href="#">
                                       <i class="fa fa-exclamation-circle"></i>&nbsp;Modifier le mot de passe
@@ -83,12 +73,7 @@
                                   <div class="clearfix"></div>
                               </form>
                               <hr>
-                              <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
-                                  <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                  <button id="deleteUser_{{ $user->id }}" data-what="Supprimer" data-action="{{ $user->name }}" class="btn btn-danger btn-xs deleteAction" type="submit">
-                                      <span class="fa fa-exclamation-circle"></span> &nbsp;  Supprimer le compte
-                                  </button>
-                              </form>
+                              <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
                           </div>
                       </div>
 

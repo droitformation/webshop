@@ -75,8 +75,7 @@
          return $adresses->map(function ($adresse) use ($columns) {
              return $columns->map(function ($column) use ($adresse)
              {
-                 return trim($adresse->$column);
-                 //return iconv(mb_detect_encoding($adresse->$column, mb_detect_order(), true), "UTF-8", $adresse->$column);
+                 return trim(html_entity_decode($adresse->$column));
              });
          });
      }

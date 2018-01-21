@@ -130,6 +130,13 @@ class User extends Authenticatable {
         return '';
     }
 
+    public function getAccessListAttribute()
+    {
+        return $this->access->reduce(function ($carry, $item) {
+            return $carry.'<li>'.$item->title.'</li>';
+        }, '');
+    }
+
     public function getAdresseMembresAttribute()
     {
         if(isset($this->adresses))
