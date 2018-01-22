@@ -1485,6 +1485,10 @@ input[type="checkbox"].rappel-input {
     margin-top: 10px !important;
 }
 
+.mb-40{
+    margin-bottom: 40px;
+}
+
 .pb-5{
     padding-bottom: 5px !important;
 }

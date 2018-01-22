@@ -3,6 +3,7 @@
 
     <p><a href="{{ url('admin/abo') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
 
+    <h2>Abonnés</h2>
     <div class="panel panel-midnightblue">
         <div class="panel-body">
             <div class="row">
@@ -23,7 +24,7 @@
                             ?>
                             @foreach($products as $product)
                                 <a class="btn btn-default btn-sm" href="{{ url('admin/factures/'.$product->id) }}">
-                                    &nbsp;<i class="fa fa-folder-open"></i>&nbsp; &Eacute;dition <strong>{{ $product->reference }} {{ $product->edition }}</strong>
+                                    &nbsp;<i class="fa fa-folder-open"></i>&nbsp; List factures <strong>{{ $product->reference }} {{ $product->edition }}</strong>
                                 </a>
                             @endforeach
                         @endif
@@ -39,35 +40,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
-                    <div content="row">
-                        <div class="col-md-4">
-                            <h3 class="pull-left">Tous les abonnés</h3>
-                        </div>
-                        <div class="col-md-4">
-                            <p class="text-right">
-                                <a href="{{ url('admin/abonnement/create/'.$abo->id) }}" class="btn btn-success" id="addAbonne"><i class="fa fa-plus"></i> &nbsp;Ajouter un abonné</a>
-                                <a class="btn btn-warning" href="{{ url('admin/abo/desinscription/'.$abo->id) }}">Désabonnements</a>
-                            </p>
-                        </div>
-                        <div class="col-md-4">
-                            <form action="{{ url('admin/abo/export') }}" method="POST" class="row">{!! csrf_field() !!}
-                                <input type="hidden" name="id" value="{{ $abo->id }}">
-                                <div class="form-group col-md-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Statut</span>
-                                        <select class="form-control" name="status">
-                                            <option {{ old('status') == 'abonne' ? 'selected' : '' }} value="abonne">Abonné</option>
-                                            <option {{ old('status') == 'tiers'  ? 'selected' : '' }} value="tiers">Tiers</option>
-                                            <option {{ old('status') == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> &nbsp;Export par statut</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    @include('backend.abos.partials.options')
 
                     <table class="table" id="abos-table">
                         <thead>
@@ -78,7 +51,7 @@
                             <th>Entreprise</th>
                             <th>Adresse</th>
                             <th>Exemplaires</th>
-                            <th class="no-sort">Status</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                         </thead>
