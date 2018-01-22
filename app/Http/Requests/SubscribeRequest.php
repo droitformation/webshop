@@ -30,7 +30,9 @@ class SubscribeRequest extends FormRequest
         }
 
         return [
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'my_name'  => 'honeypot',
+            'my_time'  => 'required|honeytime:2'
         ];
     }
 

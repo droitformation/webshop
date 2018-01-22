@@ -95,8 +95,13 @@ class InscriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function unsubscribe(SubscribeRequest $request)
+    public function unsubscribe(Request $request)
     {
+        if(empty($request->input('email'))){
+            alert()->danger('<strong>Merci d\'indiquer une adresse email</strong>');
+            return redirect()->back();
+        }
+
         // find the abo and newsletter
         $subscriber = $this->subscription->findByEmail( $request->input('email') );
         $newsletter = $this->newsletter->find($request->input('newsletter_id'));
