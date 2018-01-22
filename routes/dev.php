@@ -161,12 +161,19 @@ Route::get('testing', function() {
     $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
-    //$rappel      = $rappels->find(522);
+
+    $me      = $users->find(710);
     //$inscription = $inscriptions->find(14892);
 
     //$inscriptions = $model_inscriptions->getMultiple([14861,14870,14902]);
 
     //$worker->generateWithBv($inscriptions);
+
+    $adresses = $me->adresses->where('type',1);
+    echo '<pre>';
+    print_r($adresses);
+    echo '</pre>';
+    exit();
 
     //$import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
 

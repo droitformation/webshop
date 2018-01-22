@@ -63,7 +63,7 @@
                         @endif
                     </div>
                     <div class="clearfix"></div><br/>
-                    <table class="table" id="abos-table">
+                    <table class="table" id="facture-table">
                         <thead>
                             <tr>
                                 <th class="col-md-1">Action</th>
