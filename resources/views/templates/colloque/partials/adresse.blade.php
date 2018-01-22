@@ -9,6 +9,6 @@
     @if(isset($colloque->adresse) && !empty($colloque->adresse->email))
         {{ $colloque->adresse->email }}
     @else
-        {!! !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
+        {!! !empty(\Registry::get('inscription.infos.email')) ? '<li>'.\Registry::get('inscription.infos.email').'</li>' : '' !!}
     @endif
 </ul>

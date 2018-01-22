@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubscribeRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,12 @@ class SubscribeRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if (\Auth::check())
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -23,15 +28,8 @@ class SubscribeRequest extends FormRequest
      */
     public function rules()
     {
-        if (\App::environment('testing')) {
-            return [
-                'email' => 'required|email',
-            ];
-        }
-
         return [
-            'email' => 'required|email'
+            'file' => 'image|max:1500'
         ];
     }
-
 }

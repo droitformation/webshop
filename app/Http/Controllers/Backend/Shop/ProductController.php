@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend\Shop;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Service\UploadInterface;
@@ -82,12 +83,12 @@ class ProductController extends Controller {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $data = $request->except('file');
 
         if($request->file('file',null)) {
-            $file = $this->upload->upload( $request->file('file') , public_path('files/products'));
+            $file = $this->upload->upload( $request->file('file'), public_path('files/products'), 'product');
             $data['image'] = $file['name'];
         }
 
@@ -113,7 +114,7 @@ class ProductController extends Controller {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $data = $request->except('file');
         $file = $request->file('file',null);
@@ -127,7 +128,7 @@ class ProductController extends Controller {
         }
         
         if($file) {
-            $file = $this->upload->upload( $request->file('file') , 'files/products');
+            $file = $this->upload->upload( $request->file('file') , 'files/products', 'product');
             $data['image'] = $file['name'];
         }
 
