@@ -165,14 +165,14 @@ class UserEloquent implements UserInterface{
         }
 
         // If email change update newsletter subscriptions
-        if($data['email'] != $user->email){
+        if(isset($data['email']) && ($data['email'] != $user->email)){
             event(new \App\Events\SubscriberEmailUpdated($user->email,$data['email']));
             event(new \App\Events\EmailAccountUpdated($user,$data['email']));
         }
 
         $user->fill($data);
 
-        if(!empty($data['password'])) {
+        if(isset($data['password']) && !empty($data['password'])) {
             $user->password = bcrypt($data['password']);
         }
 
