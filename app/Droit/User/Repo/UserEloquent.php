@@ -166,7 +166,6 @@ class UserEloquent implements UserInterface{
 
         // If email change update newsletter subscriptions
         if(isset($data['email']) && ($data['email'] != $user->email)){
-            event(new \App\Events\SubscriberEmailUpdated($user->email,$data['email']));
             event(new \App\Events\EmailAccountUpdated($user,$data['email']));
         }
 

@@ -40,10 +40,15 @@ class UpdateSubscriberEmail
             // unsubscribe all and delete
             $worker->unsubscribe($subscriber,$has);
 
-            // make new subscriber and add all
-            $new = $repo->create(['email' => $email_new, 'activated_at' => \Carbon\Carbon::now(), 'activation_token' => md5($email_new.\Carbon\Carbon::now())]);
+            $new = $worker->exist($email_new);
+
+            if(!$new){
+                // make new subscriber if not exist and add all
+                $new = $repo->create(['email' => $email_new, 'activated_at' => \Carbon\Carbon::now(), 'activation_token' => md5($email_new.\Carbon\Carbon::now())]);
+            }
 
             $worker->subscribe($new,$has);
         }
+
     }
 }

@@ -264,7 +264,6 @@ class AdresseEloquent implements AdresseInterface{
 
         // If email change update newsletter subscriptions
         if(isset($data['email']) && !empty($adresse->email) && ($data['email'] != $adresse->email)){
-            event(new \App\Events\SubscriberEmailUpdated($adresse->email,$data['email']));
             event(new \App\Events\EmailAccountUpdated($adresse,$data['email']));
         }
 
