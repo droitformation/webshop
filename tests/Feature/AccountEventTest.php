@@ -32,10 +32,38 @@ class AccountEventTest extends BrowserKitTest
      *
      * @return void
      */
-    public function testupdateuser()
+    public function testUpdateUserKeepPassword()
     {
         $make = new \tests\factories\objectfactory();
-        $person = $make->makeuser(['email' => 'info@domain.ch','first_name' => 'cindy', 'last_name' => 'leschaud']);
+
+        $person = factory(\App\Droit\User\Entities\User::class)->create([
+            'email'      => 'info@domain.ch',
+            'first_name' => 'cindy',
+            'last_name'  => 'leschaud',
+            'password'   => bcrypt('secret')
+        ]);
+
+        $new_email = 'new.user@gmail.com';
+
+        // we change the email from the user account
+        $response = $this->put('admin/user/'.$person->id, [
+            'id'    => $person->id,
+            'first_name' => $person->first_name,
+            'last_name'  => $person->last_name,
+            'email' => $new_email
+        ]);
+
+        $person = $person->fresh();
+
+        // the new email is set, for user, adresse
+        $this->assertequals($person->email,$new_email);
+        $this->assertNotEmpty($person->password);
+    }
+
+    public function testUpdateUser()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $person = $make->makeUser(['email' => 'info@domain.ch','first_name' => 'cindy', 'last_name' => 'leschaud']);
 
         $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1]);
         $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $person->email]);
@@ -84,7 +112,6 @@ class AccountEventTest extends BrowserKitTest
      */
     public function testUpdateAdresse()
     {
-
         $person = factory(\App\Droit\User\Entities\User::class)->create(['email' => 'info@domain.ch']);
         $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create(['email' => 'old_adresse@gmail.com','user_id' => $person->id]);
 
@@ -130,4 +157,6 @@ class AccountEventTest extends BrowserKitTest
         $this->dontSeeInDatabase('adresses', ['email' => $old_email_a]);
 
     }
+
+
 }

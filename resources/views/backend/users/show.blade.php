@@ -73,7 +73,7 @@
                                   <div class="collapse" id="changePassword">
                                       <div class="form-group">
                                            <label for="pasword" class="control-label">Nouveau mot de passe</label>
-                                          <input type="password" id="password" name="password" class="form-control">
+                                           <input type="password" id="newpassword" name="password" autocomplete="false" value="" class="form-control">
                                       </div>
                                   </div><br>
                                   <div class="form-group">
