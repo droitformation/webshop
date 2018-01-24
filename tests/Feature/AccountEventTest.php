@@ -44,8 +44,8 @@ class AccountEventTest extends TestCase
         $make = new \tests\factories\objectfactory();
         $person = $make->makeuser(['email' => 'info@domain.ch','first_name' => 'cindy', 'last_name' => 'leschaud']);
 
-        $newsletter = factory(\app\droit\newsletter\entities\newsletter::class)->create(['list_id' => 1]);
-        $user = factory(\app\droit\newsletter\entities\newsletter_users::class)->create(['email' => $person->email]);
+        $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1]);
+        $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->create(['email' => $person->email]);
         $user->subscriptions()->attach([$newsletter->id]);
 
         $old_email = $person->email;
