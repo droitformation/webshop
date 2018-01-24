@@ -20,16 +20,12 @@ class AccountEventTest extends TestCase
         $user->roles()->attach(1);
         $this->actingAs($user);
 
-        \DB::beginTransaction();
     }
 
     public function tearDown()
     {
         \Mockery::close();
-        \DB::rollBack();
-        \DB::table('users')->truncate();
-        \DB::table('adresses')->truncate();
-        \DB::table('newsletter_users')->truncate();
+
 
         parent::tearDown();
     }
@@ -41,6 +37,11 @@ class AccountEventTest extends TestCase
      */
     public function testupdateuser()
     {
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('newsletters')->truncate();
+
         $make = new \tests\factories\objectfactory();
         $person = $make->makeuser(['email' => 'info@domain.ch','first_name' => 'cindy', 'last_name' => 'leschaud']);
 
@@ -82,6 +83,10 @@ class AccountEventTest extends TestCase
         $this->assertdatabasemissing('users', ['email' => $old_email]);
         $this->assertdatabasemissing('adresses', ['email' => $old_email]);
 
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('newsletters')->truncate();
     }
 
     /**
@@ -91,6 +96,11 @@ class AccountEventTest extends TestCase
      */
     public function testUpdateAdresse()
     {
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('newsletters')->truncate();
+
         $make = new \tests\factories\ObjectFactory();
 
         $person = factory(\App\Droit\User\Entities\User::class)->create(['email' => 'info@domain.ch']);
@@ -137,5 +147,9 @@ class AccountEventTest extends TestCase
         $this->assertDatabaseMissing('users', ['email' => $old_email_u]);
         $this->assertDatabaseMissing('adresses', ['email' => $old_email_a]);
 
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('newsletters')->truncate();
     }
 }
