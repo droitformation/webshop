@@ -2,6 +2,7 @@
 
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\User\Entities\User as M;
+use App\Events\SubscriberEmailUpdated;
 
 class UserEloquent implements UserInterface{
 
@@ -159,20 +160,26 @@ class UserEloquent implements UserInterface{
 
         $user = $this->user->findOrFail($data['id']);
 
-        if( ! $user )
-        {
+        if( ! $user ) {
             return false;
         }
 
-        $user->fill($data);
+        // If email change update newsletter subscriptions
+        if(isset($data['email']) && ($data['email'] != $user->email)){
+            event(new \App\Events\EmailAccountUpdated($user,$data['email']));
+            $user->email = $data['email'];
+        }
 
-        if(!empty($data['password']))
-        {
+        //$user->fill($data);
+        $user->first_name = isset($data['first_name']) && !empty($data['first_name']) ? $data['first_name'] : null;
+        $user->last_name = isset($data['last_name']) && !empty($data['last_name']) ? $data['last_name'] : null;
+        $user->company = isset($data['company']) && !empty($data['company']) ? $data['company'] : null;
+
+        if(isset($data['password']) && !empty($data['password'])) {
             $user->password = bcrypt($data['password']);
         }
 
-        if(isset($data['role']))
-        {
+        if(isset($data['role'])) {
             $user->roles()->sync([$data['role']]);
         }
 

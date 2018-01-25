@@ -104,7 +104,7 @@ class UserController extends Controller {
      */
     public function update($id,UpdateUser $request)
     {
-        $user = $this->user->update($request->all());
+        $user = $this->user->update(array_filter($request->all()));
 
         $request->ajax();
 

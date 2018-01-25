@@ -10,7 +10,7 @@ $(document).ready(function() {
         var column = api.column(5);
 
         var select = $('<select class="form-control"><option value="">Filtrer par status</option></select>')
-            .appendTo( $(column.footer()).empty()).on( 'change', function () {
+            .appendTo( $(column.header()).empty()).on( 'change', function () {
                 var val = $.fn.dataTable.util.escapeRegex($(this).val());
                 column.search( val ? '^'+val+'$' : '', true, false ).draw();
         });
@@ -26,7 +26,7 @@ $(document).ready(function() {
         var column = api.column(6);
 
         var select = $('<select class="form-control"><option value="">Filtrer par status</option></select>')
-            .appendTo( $(column.footer()).empty()).on( 'change', function () {
+            .appendTo( $(column.header()).empty()).on( 'change', function () {
                 var val = $.fn.dataTable.util.escapeRegex($(this).val());
                 column.search( val ? '^'+val+'$' : '', true, false ).draw();
             });
@@ -116,6 +116,17 @@ $(document).ready(function() {
 
     $('#abos-table').DataTable({
         initComplete: initabo,
+        language: langues,
+        pageLength: 50,
+        stateSave: true,
+        pagingType: 'simple',
+        "columnDefs": [{
+            "targets"  : 'no-sort',
+            "orderable": false
+        }]
+    });
+
+    $('#facture-table').DataTable({
         language: langues,
         pageLength: 50,
         stateSave: true,

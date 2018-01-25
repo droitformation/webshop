@@ -258,10 +258,14 @@ class AdresseEloquent implements AdresseInterface{
     {
 		$adresse = $this->adresse->withTrashed()->findOrFail($data['id']);
 		
-		if( ! $adresse )
-		{
+		if( ! $adresse ) {
 			return false;
 		}
+
+        // If email change update newsletter subscriptions
+        if(isset($data['email']) && !empty($adresse->email) && ($data['email'] != $adresse->email)){
+            event(new \App\Events\EmailAccountUpdated($adresse,$data['email']));
+        }
 
         $adresse->fill($data);
 

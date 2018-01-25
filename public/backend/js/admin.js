@@ -9,6 +9,8 @@ $( function() {
 
     $('.colorpicker').colorPicker();
 
+    $('#newpassword').val('');
+
     $("#flUpload").change(function ()
     {
         $("#lblSize").empty().show();
