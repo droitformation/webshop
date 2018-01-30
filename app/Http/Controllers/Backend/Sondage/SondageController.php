@@ -161,8 +161,10 @@ class SondageController extends Controller
 
     public function confirmation($id)
     {
-        $sondage = $this->sondage->find($id);
-        $listes  = $this->list->getForColloques();
+        $sondage  = $this->sondage->find($id);
+        $colloque = isset($sondage->liste) ? true : null;
+
+        $listes  = $this->list->getForSondages($colloque);
 
         return view('backend.sondages.confirmation')->with(['sondage' => $sondage, 'listes' => $listes]);
     }

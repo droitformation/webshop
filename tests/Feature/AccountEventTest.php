@@ -64,6 +64,11 @@ class AccountEventTest extends TestCase
         // the new email is set, for user, adresse
         $this->assertequals($person->email,$new_email);
         $this->assertNotEmpty($person->password);
+
+        \DB::table('newsletters')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
     }
 
     public function testUpdateUser()
@@ -112,6 +117,11 @@ class AccountEventTest extends TestCase
         $this->assertDatabaseHas('adresses', ['email' => $new_email]);
         $this->assertDatabaseMissing('users', ['email' => $old_email]);
         $this->assertDatabaseMissing('adresses', ['email' => $old_email]);
+
+        \DB::table('newsletters')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
 
     }
 
@@ -170,6 +180,10 @@ class AccountEventTest extends TestCase
         $this->assertDatabaseMissing('users', ['email' => $old_email_u]);
         $this->assertDatabaseMissing('adresses', ['email' => $old_email_a]);
 
+        \DB::table('newsletters')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
     }
 
 

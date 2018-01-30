@@ -1,7 +1,7 @@
 <fieldset class="field_clone_order" id="{{ $id }}">
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-xs-12">
-            <label>Produit</label>
+        <div class="col-lg-6 col-md-5 col-xs-12">
+            <label style="display: block;">Produit</label>
             <select name="order[products][]" class="chosen-select form-control" data-placeholder="produits">
                 <option value="">Choix</option>
                 @if(!$products->isEmpty())

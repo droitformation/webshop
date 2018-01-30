@@ -17,8 +17,13 @@ class NewsletterListEloquent implements NewsletterListInterface{
 		return $this->list->all();
 	}
 
-    public function getForColloques(){
-        return $this->list->whereNotNull('colloque_id')->get();
+    public function getForSondages($colloque = false){
+
+	    if($colloque){
+            return $this->list->whereNotNull('colloque_id')->get();
+        }
+
+        return $this->list->whereNull('colloque_id')->get();
     }
 	
 	public function find($id){

@@ -24,7 +24,7 @@
                             ?>
                             @foreach($products as $product)
                                 <a class="btn btn-default btn-sm" href="{{ url('admin/factures/'.$product->id) }}">
-                                    &nbsp;<i class="fa fa-folder-open"></i>&nbsp; List factures <strong>{{ $product->reference }} {{ $product->edition }}</strong>
+                                    &nbsp;<i class="fa fa-folder-open"></i>&nbsp; Liste factures <strong>{{ $product->reference }} {{ $product->edition }}</strong>
                                 </a>
                             @endforeach
                         @endif
