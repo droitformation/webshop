@@ -181,6 +181,11 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
+        if ($e instanceof \App\Exceptions\AdresseTypeException){
+            alert()->warning('Attention! Un compte doit avoir une adresse de contact!');
+            return redirect()->back();
+        }
+
 		if ($e instanceof \App\Exceptions\AdresseNotExistException){
 			alert()->warning('Il n\'existe aucune adresse de livraison, veuillez indiquer une adresse valide dans');
 			return redirect('/')->with(['link' => 'profil']);

@@ -284,6 +284,27 @@ class AdresseEloquent implements AdresseInterface{
 		return $adresse;
 	}
 
+    public function changeType($adresse,$type)
+    {
+        // If there is a user for thei adresse and we change the type
+        // Make sure we keep one contact adresse
+        if(isset($adresse->user) && $adresse->type != $type){
+            $contact = $adresse->user->adresses->where('type',1);
+
+            // If the current adresse is contact and no other we can't change
+            if($adresse->type == 1 && $contact->count() == 1){
+                throw new \App\Exceptions\AdresseTypeException('we can\'t change no type contact');
+            }
+
+            // If it is not a contact adresse and there is others ok but we need to set warning message
+            if($adresse->type != 1 && $type == 1){
+               session()->put('warning','adresses');
+            }
+            // If it is not a contact and no other it's ok
+            return true;
+        }
+	}
+
     public function delete($id)
     {
         $adresse = $this->adresse->find($id);
