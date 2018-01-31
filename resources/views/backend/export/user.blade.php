@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <h3>Exporter ou rechercher</h3>
+            <h3>Exporter</h3>
 
             <div class="row">
                 <div class="col-md-12">
@@ -12,24 +12,6 @@
                     <!-- START Export criteria -->
                     <div class="panel panel-midnightblue">
                         <fieldset class="panel-body">
-
-                            <!-- START search -->
-                            <h4><i class="fa fa-search"></i> &nbsp;Rechercher</h4>
-                            <form action="{{ url('admin/search/user') }}" method="post">{!! csrf_field() !!}
-                                <div class="form-group">
-                                    <div class="col-md-4 col-sm-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="term" placeholder="Recherche...">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="clearfix"></div>
-                            <!-- END search -->
-                            <hr/>
 
                             <form action="{{ url('admin/export/search') }}" method="post">{!! csrf_field() !!}
                                 <h4><i class="fa fa-globe"></i> &nbsp;Pays</h4>

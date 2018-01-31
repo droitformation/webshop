@@ -268,6 +268,11 @@ class AdresseEloquent implements AdresseInterface{
             event(new \App\Events\EmailAccountUpdated($adresse,$data['email']));
         }
 
+        // if the type is changed
+        if(isset($data['type'])){
+            $this->changeType($adresse,$data['type']);
+        }
+
         $adresse->fill($data);
 
 		if(isset($data['first_name'])){
@@ -289,6 +294,8 @@ class AdresseEloquent implements AdresseInterface{
         // If there is a user for thei adresse and we change the type
         // Make sure we keep one contact adresse
         if(isset($adresse->user) && $adresse->type != $type){
+
+            session()->remove('warning_type');
             $contact = $adresse->user->adresses->where('type',1);
 
             // If the current adresse is contact and no other we can't change
@@ -297,9 +304,10 @@ class AdresseEloquent implements AdresseInterface{
             }
 
             // If it is not a contact adresse and there is others ok but we need to set warning message
-            if($adresse->type != 1 && $type == 1){
-               session()->put('warning','adresses');
+            if($adresse->type != 1 && $type == 1 && $contact->count() > 0){
+                session(['warning_type' => 'Adresse mise à jour. Il existe déjà un adresse de contact, seul la première crée sera pris en compte pour les transactions!']);
             }
+
             // If it is not a contact and no other it's ok
             return true;
         }

@@ -85,6 +85,9 @@ class FeatureInscriptionAdminTest extends TestCase
 
     public function testDesinscription()
     {
+        \DB::table('colloque_inscriptions')->truncate();
+        \DB::table('colloque_inscriptions_participants')->truncate();
+
         // Create colloque
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
@@ -107,6 +110,40 @@ class FeatureInscriptionAdminTest extends TestCase
             'user_id'     => $person->id,
             'deleted_at'  => null
         ]);
+    }
+
+    public function testDesinscriptionGroup()
+    {
+        \DB::table('colloque_inscriptions')->truncate();
+        \DB::table('colloque_inscriptions_participants')->truncate();
+
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1, 1);
+
+        $inscriptions = $colloque->inscriptions->filter(function ($inscription, $key) {
+            return $inscription->group_id;
+        });
+
+        $participants = $inscriptions->pluck('participant');
+
+        $groupe = $inscriptions->first();
+
+        $response = $this->call('DELETE', 'admin/group/'.$groupe->groupe->id);
+
+        $this->assertDatabaseMissing('colloque_inscriptions', [
+            'colloque_id' => $colloque->id,
+            'group_id'    => $groupe->groupe->id,
+            'deleted_at'  => null
+        ]);
+
+        foreach ($participants as $participant){
+            $this->assertDatabaseMissing('colloque_inscriptions_participants', [
+                'id' => $participant->id,
+                'deleted_at'  => null
+            ]);
+        }
+
     }
 
     public function testMakeSimpleInscription()

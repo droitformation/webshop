@@ -173,9 +173,9 @@ class User extends Authenticatable {
 
     public function getInscriptionParticipationsAttribute()
     {
-        return $this->participations->reject(function ($participation, $key) {
-            return $participation->inscription->inscrit->id == $this->id;
-        });
+        return !$this->participations->isEmpty() ? $this->participations->reject(function ($participation, $key) {
+            return isset($participation->inscription) && $participation->inscription->inscrit->id == $this->id;
+        }) : collect([]);
     }
 
     public function getAllRolesAttribute()

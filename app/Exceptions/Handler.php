@@ -182,7 +182,7 @@ class Handler extends ExceptionHandler {
 		}
 
         if ($e instanceof \App\Exceptions\AdresseTypeException){
-            alert()->warning('Attention! Un compte doit avoir une adresse de contact!');
+            alert()->danger('Attention! Un compte doit avoir une adresse de contact!');
             return redirect()->back();
         }
 

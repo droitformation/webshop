@@ -24,8 +24,8 @@ class DocumentController extends Controller
         $colloque = $this->colloque->find($colloque_id);
         $user     = \Auth::user();
 
-        if($colloque->prices->isEmpty()){
-            throw new \App\Exceptions\FactureColloqueTestException('Il n\'existe pas de prix pour ce colloque');
+        if($colloque->prices->isEmpty() || !isset($colloque->location)){
+            throw new \App\Exceptions\FactureColloqueTestException('Il n\'existe pas de prix ou de lieu pour ce colloque');
         }
 
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->make([
