@@ -74,7 +74,7 @@ class Colloque extends Model
             return $programme->first();
         }
 
-        return false;
+        return null;
     }
 
     public function getProgrammeAttachementAttribute()
