@@ -104,26 +104,26 @@ class WorkerAdresseTest extends TestCase
         $this->assertTrue($donor->fresh()->trashed());
     }
 
-    public function testReassignAbosToUserContactAdress()
+    public function testReassignAbosFromAdresseToUser()
     {
-        $make     = new \tests\factories\ObjectFactory();
-        $worker   = \App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+        $make    = new \tests\factories\ObjectFactory();
+        $worker  = \App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
+        $user    = $make->makeUser();
+        $adresse = $make->adresse();
 
-        $adresse1   = $make->adresse();
-        $abonnement = $make->makeAbonnementForAdresse($adresse1);
+        $abonnement = $make->makeAbonnementForAdresse($adresse);
 
-        $user = $make->makeUser();
+        $adresse->load('abos');
 
-        // The user has one adresse
-        $this->assertTrue(isset($user->adresse_contact));
-        $this->assertTrue($user->adresse_contact->abos->isEmpty());
-        $this->assertTrue($adresse1->abos->contains('id',$abonnement->id));
+        // The adresse has one abo
+        $this->assertTrue($user->abos->isEmpty());
+        $this->assertTrue($adresse->abos->contains('id',$abonnement->id));
 
-        $worker->setTypes(['abos'])->setFromAdresses([$adresse1->id])->reassignFor($user);
+        $worker->setTypes(['abos'])->setFromAdresses([$adresse->id])->reassignFor($user);
 
-        $user->load('adresses.abos');
+        $user->load('abos');
 
-        $this->assertTrue($user->adresse_contact->abos->contains('id',$abonnement->id));
+        $this->assertTrue($user->abos->contains('id',$abonnement->id));
     }
 
     /*

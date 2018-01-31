@@ -108,18 +108,12 @@ class AdresseWorker implements AdresseWorkerInterface{
                 if(isset($model->$type) && !$model->$type->isEmpty()) {
                     foreach($model->$type as $item) {
 
-                        if($type == 'orders'){
+                        // Legacy code, set old adresse_id to null
+                        if($type == 'orders' || $type == 'abos'){
                             $item->adresse_id = null;
-                            $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
                         }
 
-                        if($type == 'abos'){
-                            $item->adresse_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->adresse_contact->id : $recipient->id);
-                        }
-
-                        if($type == 'inscriptions'){
-                            $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
-                        }
+                        $item->user_id = ($recipient instanceof \App\Droit\User\Entities\User ? $recipient->id : $recipient->user_id);
 
                         $item->save();
                     }
