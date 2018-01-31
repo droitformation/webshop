@@ -231,7 +231,7 @@ class Colloque extends Model
         })->orWhere('start_at','>',date('Y-m-d'))->orWhere('active_at','>',date('Y-m-d'));
     }
 
-    public function scopeArchives($query,$archives = null)
+    public function scopeArchives($query,$archives = false)
     {
         if($archives) $query->where('start_at','<=',date('Y-m-d'));
     }
@@ -239,10 +239,10 @@ class Colloque extends Model
     public function scopeArchived($query,$archived = false)
     {
         if($archived){
-            $query->where('start_at','<=',date('Y-m-d'));
+            return $query->where('start_at','<=',\Carbon\Carbon::now()->toDateTimeString());
         }
         else{
-            $query->where('start_at','>=',date('Y-m-d'));
+            return $query->where('start_at','>=',\Carbon\Carbon::now()->toDateTimeString());
         }
     }
 

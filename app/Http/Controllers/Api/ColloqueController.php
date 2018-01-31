@@ -58,7 +58,7 @@ class ColloqueController extends Controller {
             if($colloque->location){
                 $location = $colloque->location->name .', '.strip_tags($colloque->location->adresse);
             }
-            
+
             return [
                 'url'          => url('pubdroit/colloque/'.$colloque->id),
                 'event'        => $colloque->toArray(),

@@ -57,7 +57,7 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function eventList($centres = [],$archived = false, $name = null)
     {
-        return $this->colloque->archived($archived)->name($name)->with(['centres'])->centres($centres)->get();
+        return $this->colloque->archived($archived)->visible(true)->name($name)->with(['centres'])->centres($centres)->get();
     }
 
     public function increment($colloque_id)
