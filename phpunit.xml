@@ -17,7 +17,7 @@
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
         <testsuite name="Unituser">
-            <directory suffix="Test.php">./tests/Feature/backend/user</directory>
+            <directory suffix="Test.php">./tests/Unit/user</directory>
         </testsuite>
         <testsuite name="Inscription">
             <directory suffix="Test.php">./tests/Feature/backend/inscription</directory>

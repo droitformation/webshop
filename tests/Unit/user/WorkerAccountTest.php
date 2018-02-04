@@ -114,6 +114,42 @@ class WorkerAccountTest extends TestCase
         $this->assertTrue($attempt);
     }
 
+    public function testsRestoreAccount()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $adresse = $user->adresses->first();
+        $adresse->delete();
+        $user->delete();
+
+        $this->assertDatabaseMissing('users', [
+            'id' => $user->id,
+            'deleted_at' => null
+        ]);
+
+        $this->assertDatabaseMissing('adresses', [
+            'id' => $adresse->id,
+            'user_id' => $user->id,
+            'deleted_at' => null
+        ]);
+
+        $worker = \App::make('App\Droit\User\Worker\AccountWorkerInterface');
+        $worker->restore($user->id);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'deleted_at' => null
+        ]);
+
+        $this->assertDatabaseHas('adresses', [
+            'id' => $adresse->id,
+            'user_id' => $user->id,
+            'deleted_at' => null
+        ]);
+
+    }
+
     /**
      * @expectedException \Illuminate\Validation\ValidationException
      */
