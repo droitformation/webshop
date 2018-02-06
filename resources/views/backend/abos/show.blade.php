@@ -76,7 +76,7 @@
                                                 {!! $abonnement->user_facturation->adresse.'<br/>'.$abonnement->user_facturation->npa.' '.$abonnement->user_facturation->ville !!}
                                             @endif
                                         </td>
-                                        <td>{!! $user ? $user->company : '' !!}</td>
+                                        <td>{!! $user && ($user->company != $user->name) ? $user->company  : '' !!}</td>
                                         <td>{!! $user ? $user->adresse.'<br/>'.$user->npa.' '.$user->ville : '' !!}</td>
                                         <td>{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>

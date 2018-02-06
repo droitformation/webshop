@@ -13,7 +13,7 @@ $( function() {
 
     $("#flUpload").change(function ()
     {
-        $("#lblSize").empty().show();
+        $("#lblSize").empty().hide();
 
         var iSize = ($("#flUpload")[0].files[0].size / 1024);
 
