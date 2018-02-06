@@ -53,7 +53,7 @@
                                         <strong>
                                             <a target="_blank" href="{{ url('admin/adresse/'.$abonnement->user->id) }}">{{ $abonnement->user->civilite_title }} {{ $abonnement->user->name }}</a>
                                         </strong><br>
-                                        {!! !empty($abonnement->user->company) ? $abonnement->user->company.'<br>' : '' !!}
+                                        {!! !empty($abonnement->user->company) && ($abonnement->user->company != $abonnement->user->name) ? $abonnement->user->company.'<br>' : '' !!}
                                         {{ $abonnement->user->adresse }}<br>
                                         {!! !empty($abonnement->user->cp) ? $abonnement->user->cp_trim.'<br>' : '' !!}
                                         {{ $abonnement->user->npa }} {{ $abonnement->user->ville }}<br>
@@ -110,7 +110,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Statut</label>
+                            <label class="col-sm-3 control-label">Statut {{ $abonnement->status }}</label>
                             <div class="col-sm-4 col-xs-8">
                                 <select class="form-control" name="status">
                                     <option {{ ($abonnement->status == 'abonne' ?  'selected' : '') }} value="abonne">Abonné</option>
