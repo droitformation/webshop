@@ -40,13 +40,14 @@
                             </div>
 
                             @if(isset($adresses) && !$adresses->isEmpty())
-                                <table class="table simple" style="margin-bottom: 0px;" >
+                                <table class="table" style="margin-bottom: 0px;" >
                                     <thead>
                                     <tr>
                                         <th class="col-sm-1">Action</th>
                                         <th class="col-sm-3">Nom</th>
-                                        <th class="col-sm-3">Email</th>
+                                        <th class="col-sm-2">Email</th>
                                         <th class="col-sm-2">Entreprise</th>
+                                        <th class="col-sm-2">Adresse</th>
                                         <th class="col-sm-2">Ville</th>
                                     </tr>
                                     </thead>
@@ -58,13 +59,8 @@
                                                 <td><strong>{{ $adresse->name }}</strong></td>
                                                 <td>{{ $adresse->email }}</td>
                                                 <td>{{ $adresse->company }}</td>
-                                                <td>{{ $adresse->ville }}</td>
-                                                <td class="text-right">
-                                                    <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="form-horizontal">
-                                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                        <button data-what="Supprimer" data-action="{{ $adresse->name }}" class="btn btn-danger btn-sm deleteAction">Supprimer</button>
-                                                    </form>
-                                                </td>
+                                                <td>{{ $adresse->adresse }}</td>
+                                                <td>{{ $adresse->npa }} {{ $adresse->ville }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

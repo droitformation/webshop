@@ -40,6 +40,7 @@ class SondageWorker
 
         return $this->list->update([
             'id'     => $list->id,
+            'update' => true,
             'title'  => 'SONDAGE | '.$this->colloque->titre,
             'emails' => $emails, 'colloque_id' => $this->colloque->id,
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
