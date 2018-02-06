@@ -1,2 +1,0 @@
-<script type="text/javascript" src="<?php echo e(asset('newsletter/js/moment-with-locales.min.js')); ?>"></script>
-<script type="text/javascript" src="<?php echo e(asset('newsletter/js/bootstrap-datetimepicker.min.js')); ?>"></script>
