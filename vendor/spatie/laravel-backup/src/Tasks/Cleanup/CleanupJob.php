@@ -14,7 +14,7 @@ class CleanupJob
     /** @var \Illuminate\Support\Collection */
     protected $backupDestinations;
 
-    /** @var \Spatie\Backup\Tasks\Cleanup\Strategies\CleanupStrategy */
+    /** @var \Spatie\Backup\Tasks\Cleanup\CleanupStrategy */
     protected $strategy;
 
     /** @var bool */
@@ -48,6 +48,8 @@ class CleanupJob
                 consoleOutput()->error("Cleanup failed because: {$exception->getMessage()}.");
 
                 $this->sendNotification(new CleanupHasFailed($exception));
+
+                throw $exception;
             }
         });
     }
