@@ -77,6 +77,18 @@ class AccountWorker implements AccountWorkerInterface
         return $this;
     }
 
+    public function restore($user_id){
 
+        $user    = $this->repo_user->findWithTrashed($user_id);
+        $user->restore();
+
+        $adresse = $user->adresses_and_trashed->first(function ($adresse, $key) {
+            return $adresse->type = 1;
+        });
+
+        if($user && $adresse->trashed()){
+            $adresse->restore();
+        }
+    }
     
 }

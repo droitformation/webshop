@@ -20,7 +20,7 @@
         @foreach($adresses as $adresse)
             <tr>
                 @foreach($adresse as $column)
-                   <td>{!! $column !!}</td>
+                   <td>{{ $column }}</td>
                 @endforeach
             </tr>
         @endforeach

@@ -1,16 +1,30 @@
+sudo: required
+dist: trusty
 language: php
 php:
-  - '7.0'
+  - '7.1'
 
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database staging;'
   - composer self-update
   - composer install --no-interaction
+  - composer update --no-interaction
   - php artisan key:generate
+  - mkdir public/files/products
+  - mkdir public/files/abos
+  - mkdir public/files/arrets
+  - mkdir public/files/analyses
+  - mkdir public/files/uploads
+  - mkdir public/files/colloques
+  - mkdir public/files/pictos
+  - mkdir public/files/shop
+  - mkdir public/files/shop/factures
+  - mkdir storage/excel/exports
 
 script:
   - php artisan migrate --env=testing --no-interaction
   - php artisan db:seed --env=testing --no-interaction
+  - php artisan config:clear
   - composer dumpautoload
   - vendor/bin/phpunit

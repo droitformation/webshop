@@ -193,7 +193,7 @@ class OrderController extends Controller {
         $shipping = var_exist($data,'free') ? null : $shipping;
 
         $order = $this->ordermaker->make($data,$shipping);
-        $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin
+        $order = $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin
 
         alert()->success('La commande a été crée');
 
@@ -256,6 +256,26 @@ class OrderController extends Controller {
 
         if(!empty(array_filter($request->input('message',[]))))
             $this->pdfgenerator->setMsg(array_filter($request->input('message')));
+
+        $this->pdfgenerator->factureOrder($order);
+
+        alert()->success('La commande a été mise à jour');
+
+        return redirect('admin/order/'.$order->id);
+    }
+
+    public function recalculate(Request $request)
+    {
+        $order    = $this->order->update(['id' => $request->input('id'), 'shipping_id' => null, 'paquet' => null]);
+        $orderbox = new \App\Droit\Shop\Order\Entities\OrderBox($order);
+        $paquets  = $orderbox->calculate($order->weight)->getShippingList();
+
+        $this->order->setPaquets($order,$paquets);
+
+        $messages = isset($order->comment) ? unserialize($order->comment) : null;
+
+        if($messages)
+            $this->pdfgenerator->setMsg($messages);
 
         $this->pdfgenerator->factureOrder($order);
 

@@ -28,7 +28,7 @@
                                 <td><span class="label label-{{ $order->status_code['color'] }}">{{ $order->status_code['status'] }}</span></td>
                                 <td>{{ $order->total_with_shipping }}</td>
                                 <td class="text-right">
-                                    <a class="text-info" data-toggle="collapse" href="#order_no_{{ $order->id }}" aria-expanded="false" aria-controls="order_no_{{ $order->id }}">Voir la commande</a>
+                                    <a class="text-info text-info-order" data-toggle="collapse" href="#order_no_{{ $order->id }}" aria-expanded="false" aria-controls="order_no_{{ $order->id }}">Voir la commande</a>
                                 </td>
                             </tr>
 

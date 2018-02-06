@@ -74,7 +74,7 @@
                             <input type="hidden" name="colloque_id" value="{{ $attestation->colloque_id }}">
                         </div>
                         <div class="col-sm-7">
-                            <button class="btn btn-primary" type="submit">Envoyer</button>
+                            <button class="btn btn-primary" id="updateAttestation" type="submit">Envoyer</button>
                         </div>
                     </div>
                 </div>

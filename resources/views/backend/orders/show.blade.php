@@ -2,8 +2,14 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-2">
             <p><a href="{{ url('admin/orders/back') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a></p>
+        </div>
+        <div class="col-md-5">
+            <form action="{{ url('admin/order/recalculate') }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                <input name="id" value="{{ $order->id }}" type="hidden">
+                <button type="submit" class="btn btn-warning btn-sm">Calculer les frais de port automatiquement</button>
+            </form>
         </div>
     </div>
 
@@ -12,8 +18,7 @@
 
             <div class="panel panel-midnightblue">
                 <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
-                    <input type="hidden" name="_method" value="PUT">
-                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                     <div class="panel-body">
                         <h4><i class="fa fa-edit"></i> &nbsp;Editer la commande</h4>
@@ -89,28 +94,63 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Frais de ports</label>
-                            <div class="col-sm-5 col-xs-8">
-                                @if(!$shippings->isEmpty())
-                                    <select class="form-control" name="shipping_id">
-                                        @foreach($shippings as $shipping)
-                                            <option {{ $order->shipping_id ==  $shipping->id ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }}</option>
+                        <div class="well pt-0">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Frais de ports</label>
+                                <div class="col-sm-5 col-xs-8">
+                                    @if(!$shippings->isEmpty())
+                                        <select class="form-control" name="shipping_id">
+                                            <option value="">Choix</option>
+                                            @foreach($shippings as $shipping)
+                                                <option {{ $order->shipping_id ==  $shipping->id ? 'selected' : '' }} value="{{ $shipping->id }}">{{ $shipping->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Nombre de paquets</label>
+                                <div class="col-sm-5 col-xs-8">
+                                    <select name="paquet" class="form-control">
+                                        <option value="">Choix</option>
+                                        @foreach(range(1,50) as $paquet)
+                                            <option {{ $order->paquet == $paquet ? 'selected' : '' }} value="{{ $paquet }}">{{ $paquet }} paquets</option>
                                         @endforeach
                                     </select>
-                                @endif
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Nombre de paquets</label>
-                            <div class="col-sm-5 col-xs-8">
-                                <select name="paquet" class="form-control">
-                                    @foreach(range(1,50) as $paquet)
-                                        <option {{ $order->paquet == $paquet ? 'selected' : '' }} value="{{ $paquet }}">{{ $paquet }} paquets</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            @if(!$order->paquets->isEmpty())
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"></label>
+                                    <div class="col-sm-5 col-xs-8">
+                                        <p class="delimiter">-- ou --</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Frais de ports calculés</label>
+                                    <div class="col-sm-5 col-xs-8">
+                                        <?php
+                                            $paquets = collect($order->paquets)->groupBy(function ($item, $key) {
+                                                return ($item->shipping->value/1000).' Kg | '.$item->shipping->price_cents;
+                                            })->map(function ($item, $key) {
+                                                return $item->sum('qty');
+                                            });
+                                        ?>
+                                        <ul class="list-group mb-0">
+                                            @if(!$paquets->isEmpty())
+                                                @foreach($paquets as $count => $paquet)
+                                                    <li class="list-group-item"><span class="label label-default" style="min-width: 30px;">{{ $paquet }}x</span> &nbsp;{{ $count }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
 
                         <div class="form-group">
@@ -174,8 +214,8 @@
                         <button type="submit" class="btn btn-info">Envoyer</button>
                     </div>
                 </form>
-
             </div>
+
         </div>
     </div>
 

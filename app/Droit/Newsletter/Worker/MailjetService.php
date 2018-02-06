@@ -20,6 +20,16 @@ class MailjetService implements MailjetServiceInterface{
         $this->ressource = $ressource;
     }
 
+    public function getClient()
+    {
+        return $this->mailjet;
+    }
+
+    public function getResource()
+    {
+        return $this->ressource;
+    }
+
     public function setSenderEmail($email)
     {
         $this->sender = $email;

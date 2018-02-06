@@ -28,6 +28,13 @@ class Order extends Model{
         });
     }
 
+    public function getWeightAttribute()
+    {
+        return $this->products->reduce(function ($carry, $product) {
+            return $carry +$product->weight;
+        }, 0);
+    }
+
     public function getOrderAdresseAttribute()
     {
         if(isset($this->user))
@@ -71,24 +78,14 @@ class Order extends Model{
 
     public function getPriceTotalExplodeAttribute()
     {
-        $money = new \App\Droit\Shop\Product\Entities\Money;
-
-        // Shipping x nbr paquets
-        $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
-
-        $total = $this->amount + $price;
-        $price = $total / 100;
-        $price = $money->format($price);
-
-        return explode('.',$price);
+        return explode('.',$this->total_with_shipping);
     }
 
     public function getFactureAttribute()
     {
         $facture = public_path('files/shop/factures/facture_'.$this->order_no.'.pdf');
 
-        if (\File::exists($facture))
-        {
+        if (\File::exists($facture)) {
             return 'files/shop/factures/facture_'.$this->order_no.'.pdf';
         }
 
@@ -101,10 +98,25 @@ class Order extends Model{
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         // Load relations
-        $this->load('shipping');
+        $this->load('shipping','paquets');
+
+        // safe guard
+        if(!isset($this->shipping) && $this->paquets->isEmpty()){
+            return 'un problème avec les frais de port';
+        }
+
+        $shipping_price = 0;
+
+        // simple shipping
+        if(isset($this->shipping)){
+            $paquet = isset($this->paquet) ? $this->paquet : 1 ;
+            $shipping_price = $this->shipping->price * $paquet;
+        }
 
         // Shipping x nbr paquets
-        $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+        $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
+            return $carry + ($item->shipping->price * $item->qty);
+        }) : $shipping_price;
 
         $total = $this->amount + $price;
         $price = $total / 100;
@@ -117,7 +129,16 @@ class Order extends Model{
         // Load relations
         $this->load('shipping');
 
-        $total = $this->amount + $this->shipping->price;
+        // safe guard
+        if(!isset($this->shipping) && $this->paquets->isEmpty()){
+            return 'un problème avec les frais de port';
+        }
+
+        $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
+            return $carry + ($item->shipping->price * $item->qty);
+        }) : $this->shipping->price;
+
+        $total = $this->amount + $price;
         $price = $total / 100;
 
         // Calcul with TVA
@@ -133,18 +154,31 @@ class Order extends Model{
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         // Load relations
-        $this->load('shipping','coupon');
+        $this->load(['shipping','coupon','paquets']);
 
-        if(count($this->coupon) && $this->coupon->type == 'shipping')
-        {
+        if(count($this->coupon) && $this->coupon->type == 'shipping') {
             return 0;
         }
 
-        if(isset($this->shipping))
-        {
-            $price = $this->paquet ? ($this->shipping->price * $this->paquet) : $this->shipping->price;
+        $shipping_price = 0;
+
+        // simple shipping
+        if(isset($this->shipping)){
+            $paquet = isset($this->paquet) ? $this->paquet : 1 ;
+            $shipping_price = $this->shipping->price * $paquet;
+        }
+
+        if(isset($this->shipping) || !$this->paquets->isEmpty()) {
+
+            $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
+                return $carry + ($item->shipping->price * $item->qty);
+            }) : $shipping_price;
 
             return $money->format($price/100);
+        }
+        else{
+            // safe guard
+            return 'un problème avec les frais de port';
         }
     }
 
@@ -212,6 +246,11 @@ class Order extends Model{
     public function shipping()
     {
         return $this->belongsTo('App\Droit\Shop\Shipping\Entities\Shipping');
+    }
+
+    public function paquets()
+    {
+        return $this->belongsToMany('App\Droit\Shop\Shipping\Entities\Paquet','shop_order_paquets','order_id','paquet_id');
     }
 
     public function payement()

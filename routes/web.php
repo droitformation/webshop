@@ -118,7 +118,7 @@ Route::group(['middleware' => 'site'], function () {
         Route::post('cart/quantityProduct', 'Frontend\Shop\CartController@quantityProduct');
         Route::post('cart/applyCoupon', 'Frontend\Shop\CartController@applyCoupon');
 
-        Route::post('cart/addAbo', 'Frontend\Shop\AboController@addAbo');
+        Route::post('cart/addAbo', 'Frontend\Shop\AboController@addAbo')->middleware('abo');
         Route::post('cart/removeAbo', 'Frontend\Shop\AboController@removeAbo');
         Route::post('cart/quantityAbo', 'Frontend\Shop\AboController@quantityAbo');
 
@@ -368,6 +368,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::post('order/verification', ['middleware' => 'strip', 'uses' => 'Backend\Shop\OrderController@verification']);
         Route::post('order/correction', ['uses' => 'Backend\Shop\OrderController@correction']);
+        Route::post('order/recalculate', ['uses' => 'Backend\Shop\OrderController@recalculate']);
         Route::post('order', ['uses' => 'Backend\Shop\OrderController@store']);
         //Route::post('order', [ 'uses' => 'Backend\Shop\OrderController@store']);
 
@@ -532,6 +533,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
     /*|--------------------------------------------------------------------------|*/
 
+    Route::post('access/add','Access\AccessController@add');
+    Route::post('access/remove','Access\AccessController@remove');
+
 });
 
 Route::group(['prefix' => 'vue'], function () {
@@ -552,9 +556,7 @@ Route::group(['prefix' => 'vue'], function () {
 
     Route::post('groupe','Api\OptionGroupeController@store');
     Route::get('autocomplete', 'Backend\SearchController@autocomplete');
-    
 });
-
 
 Route::group(['prefix' => 'access' , 'middleware' => ['auth','access']], function () {
 

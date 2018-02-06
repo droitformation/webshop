@@ -23,8 +23,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
     public function register($data, $simple = false)
     {
-        if($simple)
-        {
+        if($simple) {
             return $this->inscription($data);
         }
 
@@ -34,15 +33,15 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         // create new group
         $group = $this->group->create(['colloque_id' => $colloque_id, 'user_id' => $user_id]);
 
-        collect($data)->transpose()->map(function ($register) {
-            return [
-                'participant' => $register[0],
-                'email'       => $register[1],
-                'price_id'    => $register[2],
-                'occurrences' => isset($register[3]) ? $register[3] : null,
-                'options'     => isset($register[4]) ? $register[4] : null,
-                'groupes'     => isset($register[5]) ? $register[5] : null,
-            ];
+        collect($data['participant'])->map(function ($register,$key) use ($data) {
+            return array_filter([
+                'participant' => $data['participant'][$key],
+                'email'       => $data['email'][$key],
+                'price_id'    => isset($data['price_id'][$key]) ? $data['price_id'][$key] : null,
+                'occurrences' => isset($data['occurrences'][$key]) ? $data['occurrences'][$key] : null,
+                'options'     => isset($data['options'][$key]) ? $data['options'][$key] : null,
+                'groupes'     => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
+            ]);
         })->each(function ($item) use ($group) {
             $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;
             $this->inscription($data);
@@ -56,7 +55,8 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $inscription_no = $this->colloque->getNewNoInscription($data['colloque_id']);
 
         // Prepare data
-        $data        = $data + ['inscription_no' => $inscription_no];
+        $data = $data + ['inscription_no' => $inscription_no];
+
         $inscription = $this->inscription->create($data);
 
         // Attach specialisations

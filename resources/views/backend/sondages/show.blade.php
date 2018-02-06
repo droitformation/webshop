@@ -144,7 +144,7 @@
                         <p><i>Dernière mise à jour: </i> &nbsp;<strong>{{ $sondage->liste->updated_at->formatLocalized('%d %b %Y') }}</strong></p>
                     </div>
                 </form>
-            @else
+            @elseif($sondage->colloque_id)
                 <form action="{{ url('admin/sondage/createList') }}" style="margin-top: 10px;" method="POST">{!! csrf_field() !!}
                     <input type="hidden" name="colloque_id" value="{{ $sondage->colloque_id }}" />
                     <button class="btn btn-warning btn-block" type="submit"><i class="fa fa-users"></i> &nbsp;Créer une liste de participants</button>

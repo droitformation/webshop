@@ -39,9 +39,7 @@ class NewsletterServiceProvider extends ServiceProvider
         });
 
         $this->registerMailgunNewService();
-
         $this->registerMailjetService();
-        $this->registerMailjetNewService();
         $this->registerNewsletterService();
         $this->registerContentService();
         $this->registerTypesService();
@@ -78,27 +76,21 @@ class NewsletterServiceProvider extends ServiceProvider
      */
     protected function registerMailjetService(){
 
-        $this->app->bind('App\Droit\Newsletter\Worker\MailjetInterface', function()
-        {
-            return new \App\Droit\Newsletter\Worker\MailjetWorker(
-                new \App\Droit\Newsletter\Service\Mailjet(
-                    config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')
-                )
-            );
-        });
-    }
-
-    /**
-     * Newsletter Content service
-     */
-    protected function registerMailjetNewService(){
-
         $this->app->bind('App\Droit\Newsletter\Worker\MailjetServiceInterface', function()
         {
-            return new \App\Droit\Newsletter\Worker\MailjetService(
-                new \Mailjet\Client(config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')),
-                new \Mailjet\Resources()
-            );
+            if (\App::environment('testing')) {
+
+                $client   = \Mockery::mock('Mailjet\Client');
+                $resource = \Mockery::mock('Mailjet\Resources');
+
+                return new \App\Droit\Newsletter\Worker\MailjetService($client,$resource);
+            }
+            else{
+                return new \App\Droit\Newsletter\Worker\MailjetService(
+                    new \Mailjet\Client(config('newsletter.mailjet.api'),config('newsletter.mailjet.secret')),
+                    new \Mailjet\Resources()
+                );
+            }
         });
     }
 

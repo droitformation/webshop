@@ -143,9 +143,14 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->update($request->all());
 
-        alert()->success('Adresse mise à jour');
+        if(session()->has('warning_type')){
+            alert()->warning(session()->get('warning_type'));
+            return redirect()->back();
+        }
 
+        alert()->success('Adresse mise à jour');
         return redirect()->back();
+
     }
 
     /**

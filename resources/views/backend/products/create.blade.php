@@ -116,7 +116,7 @@
 
                     </div>
                     <div class="panel-footer text-right">
-                        <button type="submit" class="btn btn-info">Créer le produit</button>
+                        <button type="submit" id="addProduct" class="btn btn-info">Créer le produit</button>
                     </div>
                 </form>
             </div>

@@ -118,8 +118,6 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     white-space: pre-wrap;
 }
 
-
-
 .normalTable p{
     margin-bottom: 0;
 }
@@ -613,10 +611,6 @@ form.rappel button.btn.btn-xs{
     z-index: 20;
 }
 
-#bloc-wrapper{
-
-}
-
 .bloc-content{
     margin: 20px 0;
     padding: 10px 15px;
@@ -958,8 +952,12 @@ label.error{
     margin-top: 20px;
 }
 
-.list_rappels ol{
-    padding-left: 20px;
+.list_rappels ul li{
+    margin-bottom: 5px;
+}
+
+.list_rappels ul li .btn{
+    padding: 2px 4px;
 }
 
 .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px;  min-height: 20px;padding: 2px 7px;min-width: 25px;}
@@ -1485,6 +1483,9 @@ input[type="checkbox"].rappel-input {
     margin-top: 10px !important;
 }
 
+.mb-0 {
+    margin-bottom: 0 !important;
+}
 .mb-40{
     margin-bottom: 40px;
 }
@@ -1495,4 +1496,8 @@ input[type="checkbox"].rappel-input {
 
 .pt-10{
     padding-top: 10px !important;
+}
+
+.pt-0{
+    padding-bottom: 0px !important;
 }

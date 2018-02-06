@@ -46,9 +46,7 @@ class SearchController extends Controller
     {
         $term = $request->input('term',session()->get('term'));
      
-        if(!$term) {
-            return view('backend.results');
-        }
+        if(!$term) {return view('backend.results');}
 
         session(['term' => $term]);
 

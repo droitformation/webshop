@@ -8,4 +8,5 @@ interface AccountWorkerInterface
     public function createAccount($data);
     public function makeUser();
     public function prepareData($data);
+    public function restore($user_id);
 }

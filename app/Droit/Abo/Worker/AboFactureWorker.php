@@ -41,6 +41,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
 
             foreach($chunks as $chunk) {
                 // dispatch job to make 15 factures
+                \Log::info('date worker'.$date);
                 $job = (new MakeFactureAbo($chunk, $product, $all, $date));
                 $this->dispatch($job);
             }
@@ -88,7 +89,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
             foreach($factures as $facture) {
 
                 // Make or remake the facture is the status is abonne
-                if($abonnement->status == 'abonne') {
+                if($abonnement->status == 'abonne' || $abonnement->status == 'tiers') {
                     $this->generator->makeAbo('facture', $facture);
                 }
                 else

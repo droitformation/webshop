@@ -62,12 +62,7 @@
                                         <td><strong>{{ $user->name }}</strong></td>
                                         <td>{{ $user->email }}</td>
                                         <td class="text-right">
-                                            <form action="{{ url('admin/user/'.$user->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <input type="hidden" name="url" value="{{ url('admin/search/user') }}">
-                                                <input type="hidden" name="term" value="{{ session()->get('term') }}">
-                                                <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm">Supprimer</a>
-                                            </form>
+                                            <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
                                         </td>
                                     </tr>
                                     @if(!$user->adresses->isEmpty())

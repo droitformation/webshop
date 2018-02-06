@@ -41,7 +41,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
     public function handle()
     {
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
-
+        $repo    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
         // All abonnements for the product
         if(!$this->abos->isEmpty())
         {
@@ -49,7 +49,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
             {
                 if(!$abonnement->deleted_at){
                     // Do we already have a facture in the DB?
-                    $facture = $this->facture->findByUserAndProduct($abonnement->id,  $this->product->id);
+                    $facture = $repo->findByUserAndProduct($abonnement->id,  $this->product->id);
 
                     // If not and the abonnement is an abonne create a facture
                     if(!$facture && ($abonnement->status == 'abonne' || $abonnement->status == 'tiers'))
@@ -61,10 +61,15 @@ class MakeFactureAbo extends Job implements ShouldQueue
                         ]);
                     }
 
+                    $facture = $repo->update(['id' => $facture->id, 'created_at' => $this->date_creation]);
+
                     // If we want all factures to be remade or made if none exist
                     // does an pdf already exist? if not make one
                     // All is for the controller otherwise for sending
-                    if($this->all || ($facture && !$facture->abo_facture)) {
+                    if($this->all || ($facture && !$facture->doc_facture)) {
+
+                        if($facture->doc_facture){ \File::delete(public_path($facture->doc_facture)); }
+
                         $generator->makeAbo('facture', $facture);
                     }
                 }

@@ -99,7 +99,7 @@
 				</section>
 			</div>
 
-			@include('alert::alert')
+			@include('alert::bootstrap')
 
 			<div class="container">
                 @include('backend.partials.message')

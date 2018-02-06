@@ -8,7 +8,7 @@ class Abo_factures extends Model{
     use SoftDeletes;
 
     protected $table    = 'abo_factures';
-    protected $dates    = ['payed_at'];
+    protected $dates    = ['payed_at','created_at'];
     protected $fillable = ['abo_user_id','product_id','payed_at','created_at'];
 
     public function getRappelListAttribute()

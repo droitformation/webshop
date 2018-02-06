@@ -19,7 +19,7 @@ class CreateShopOrdersTable extends Migration {
             $table->integer('adresse_id')->nullable();
 			$table->tinyInteger('admin')->nullable();
             $table->integer('coupon_id')->nullable();
-            $table->integer('shipping_id');
+            $table->integer('shipping_id')->nullable();
             $table->integer('payement_id');
             $table->integer('amount');
             $table->string('order_no');

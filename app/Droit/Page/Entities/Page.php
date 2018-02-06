@@ -93,7 +93,7 @@ class Page extends Node {
 
     public function contents()
     {
-        return $this->hasMany('App\Droit\Content\Entities\Content')->orderBy('rang','ASC');
+        return $this->hasMany('App\Droit\Content\Entities\Content')->orderBy('id','DESC');
     }
 
     public function blocs()

@@ -82,7 +82,7 @@
                     </div>
                     <div class="panel-footer text-right">
                         <input type="hidden" value="{{ $seminaire->id }}" name="id">
-                        <button type="submit" class="btn btn-info">Envoyer</button>
+                        <button type="submit" id="updateSeminaire" class="btn btn-info">Envoyer</button>
                     </div>
                 </form>
 

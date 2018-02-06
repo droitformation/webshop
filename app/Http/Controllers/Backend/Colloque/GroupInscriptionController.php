@@ -73,7 +73,13 @@ class GroupInscriptionController extends Controller
         $group = $this->groupe->find($id);
 
         // Delete all inscriptions for group
+        $inscriptions =  $group->inscriptions;
+        $inscriptions->map(function ($item, $key) {
+            return $item->participant()->delete();
+        });
+
         $group->inscriptions()->delete();
+        $group->rappels()->delete();
 
         // Delete the group
         $this->groupe->delete($id);

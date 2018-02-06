@@ -114,6 +114,7 @@
                             <div class="col-sm-4 col-xs-8">
                                 <select class="form-control" name="status">
                                     <option {{ ($abonnement->status == 'abonne' ?  'selected' : '') }} value="abonne">Abonné</option>
+                                    <option {{ ($abonnement->status == 'tiers' ?  'selected' : '') }} value="tiers">Abonné Tiers payant</option>
                                     <option {{ ($abonnement->status == 'gratuit' ? 'selected' : '') }} value="gratuit">Gratuit</option>
                                 </select>
                             </div>
@@ -137,7 +138,7 @@
                         <input type="hidden" value="{{ $abonnement->abo_id }}" name="abo_id">
 
                     </div>
-                    <div class="panel-footer text-right"><button type="submit" class="btn btn-info">Envoyer</button></div>
+                    <div class="panel-footer text-right"><button id="editFacture" type="submit" class="btn btn-info">Envoyer</button></div>
                 </form>
 
             </div>

@@ -27,7 +27,7 @@ class AboEloquent implements AboInterface{
                 $q->where('title', '=', 'Édition');
             });
 
-            $query->where('hidden','=', 0);
+            $query->where('hidden','=', 0)->orWhereNull('hidden');
         })->get();
     }
 
@@ -66,8 +66,7 @@ class AboEloquent implements AboInterface{
         }
 
         // products
-        if(isset($data['products_id']))
-        {
+        if(isset($data['products_id'])) {
             $abo->products()->attach($data['products_id']);
         }
 

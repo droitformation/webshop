@@ -90,5 +90,11 @@ return [
      * Link to pdf
      * */
 
-    'pdf' => env('PDF_MAKE', false)
+    'pdf' => env('PDF_MAKE', false),
+
+    /*
+      * Link to pdf
+      * */
+
+    'lists' => [1,2,3,10],
 ];

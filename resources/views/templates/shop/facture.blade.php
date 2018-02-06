@@ -78,8 +78,12 @@
                                 {!! !$price_unit->isEmpty() && $price_unit->first()->price_special ? $price_unit->first()->price_special.' CHF' : '' !!}
                             </td>
                             <!-- Calculate price with quantitiy -->
-                            <?php $subtotal = (!$price_unit->isEmpty() ? $price_unit->first()->price_cents  : 'gratuit') * $qty; ?>
-                            <td class="text-right" valign="top">{{ number_format((float)$subtotal, 2, '.', '') }} <span>CHF</span></td>
+                            @if(!$price_unit->isEmpty())
+                                <?php $subtotal = $price_unit->first()->price_cents * $qty; ?>
+                                <td class="text-right" valign="top">{{ number_format((float)$subtotal, 2, '.', '') }} <span>CHF</span></td>
+                            @else
+                                <td class="text-right" valign="top">gratuit</td>
+                            @endif
                        </tr>
                    @endforeach
                 @endif

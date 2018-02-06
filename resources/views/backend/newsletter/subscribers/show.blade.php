@@ -36,12 +36,14 @@
 
                             @if(!$newsletter->isEmpty())
                                 @foreach($newsletter as $abonnement)
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="newsletter_id[]" <?php if(in_array($abonnement->id,$abos)){ echo 'checked'; } ?> value="{{ $abonnement->id }}">
-                                            {{ $abonnement->titre }}
-                                        </label>
-                                    </div>
+                                    @if(in_array($abonnement->id,config('newsletter.lists')))
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="newsletter_id[]" <?php if(in_array($abonnement->id,$abos)){ echo 'checked'; } ?> value="{{ $abonnement->id }}">
+                                                {{ $abonnement->titre }}
+                                            </label>
+                                        </div>
+                                    @endif
                                 @endforeach
                             @endif
 

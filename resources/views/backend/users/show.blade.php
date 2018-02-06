@@ -55,17 +55,7 @@
                                       <input type="email" name="email" class="form-control" value="{{ $user->email }}">
                                   </div>
 
-                                  <div class="form-group">
-                                      <label class="control-label">Role</label>&nbsp;
-                                      <label class="radio"><input {{ empty($user->all_roles) ? 'checked' : '' }} type="radio" name="role" value="0"> Utilisateur simple</label>
-                                      @if(isset($roles))
-                                          @foreach($roles as $role)
-                                              <label class="radio">
-                                                  <input type="radio" name="role" {{ in_array($role->id ,$user->all_roles) ? 'checked' : '' }} value="{{ $role->id }}"> {{ $role->name }}
-                                              </label>
-                                          @endforeach
-                                      @endif
-                                  </div>
+                                  @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
 
                                   <a class="text-danger" data-toggle="collapse" href="#changePassword" href="#">
                                       <i class="fa fa-exclamation-circle"></i>&nbsp;Modifier le mot de passe
@@ -78,12 +68,12 @@
                                   </div><br>
                                   <div class="form-group">
                                       <input value="{{ $user->id }}" type="hidden" name="id">
-                                      <button class="btn btn-primary pull-right" type="submit">Enregistrer</button>
+                                      <button class="btn btn-primary pull-right" id="updateUser" type="submit">Enregistrer</button>
                                   </div>
                                   <div class="clearfix"></div>
                               </form>
                               <hr>
-                              <a id="confirm_delete" href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
+                              <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
                           </div>
                       </div>
 

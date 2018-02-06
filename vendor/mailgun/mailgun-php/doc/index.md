@@ -25,6 +25,12 @@ $mailgun->domains()->index();
 $mailgun->domains()->show('example.com');
 ```
 
+#### Verify a domain
+
+```php
+$mailgun->domains()->verify('example.com');
+```
+
 #### Create a new domain
 
 ```php
@@ -207,7 +213,7 @@ $mailgun->suppressions()->bounces()->deleteAll('example.com');
 ### Complaint API
 #### Get all complaints
 ```php
-$mailgun->suppressions()->complaints->index('example.com');
+$mailgun->suppressions()->complaints()->index('example.com');
 ```
 
 #### Show complaints for a specific address
@@ -292,7 +298,7 @@ $timestamp = $_POST['timestamp'];
 $token = $_POST['token'];
 $signature = $_POST['signature'];
 
-$mailgun = Maingun::create('my_api_key');
+$mailgun = Mailgun::create('my_api_key');
 $valid = $mailgun->webhooks()->verifyWebhookSignature($timestamp, $token, $signature);
 
 if (!$valid) {

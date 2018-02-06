@@ -76,6 +76,7 @@
                                 <select class="form-control" name="status">
                                     <option value="abonne">Abonné</option>
                                     <option value="gratuit">Gratuit</option>
+                                    <option value="tiers">Abonné Tiers payant</option>
                                 </select>
                             </div>
                         </div>
@@ -95,11 +96,11 @@
                         </div>
 
                         <input type="hidden" value="{{ $abo->id }}" name="abo_id">
-                        <input type="hidden" value="{{ $abo->current_product['id'] }}" name="product_id">
+                        <input type="hidden" value="{{ $abo->current_product->id }}" name="product_id">
 
                     </div>
                     <div class="panel-footer text-right">
-                        <button type="submit" class="btn btn-info">Créer un abo</button>
+                        <button type="submit" id="createAbo" class="btn btn-info">Créer un abo</button>
                     </div>
                 </form>
             </div>

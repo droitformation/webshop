@@ -26,7 +26,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Titre</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="title">
                             </div>
                         </div>
@@ -40,21 +40,21 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Prix</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="price">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Frais de port</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="shipping">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Centre/institut</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="name">
                             </div>
                             <div class="col-sm-3 col-xs-12">
@@ -64,7 +64,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Compte pour BV</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="compte" value="{{ \Registry::get('abo.compte') }}">
                             </div>
                             <div class="col-sm-3 col-xs-12">
@@ -74,7 +74,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Adresse pour BV</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <textarea class="form-control redactorSimple" name="adresse">{{ \Registry::get('abo.infos.adresse') }}</textarea>
                             </div>
                             <div class="col-sm-3 col-xs-12">
@@ -84,7 +84,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Remarques</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <textarea class="form-control redactorSimple" name="remarque"></textarea>
                             </div>
                             <div class="col-sm-3 col-xs-12">
@@ -94,7 +94,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Récurrence</label>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-sm-5 col-xs-6">
                                 <select class="form-control" name="plan">
                                     <option value=""></option>
                                     @foreach($plans as $name => $plan)

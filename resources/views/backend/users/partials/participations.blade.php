@@ -9,7 +9,9 @@
     </thead>
     <tbody>
         <!-- Group start -->
+
         @foreach($user->inscription_participations as $participant)
+            @if(isset($participant->inscription))
             <tr class="mainRow">
                 <td><strong>{{ $participant->inscription->colloque->titre }}</strong></td>
                 <td>
@@ -23,7 +25,9 @@
                 <td class="text-right">{{ $participant->inscription->price_cents }} CHF</td>
                 <td class="text-right">{{ $participant->inscription->groupe->price_cents }} CHF</td>
             </tr>
+            @endif
         @endforeach
+
         <!-- Group end -->
     </tbody>
 </table>

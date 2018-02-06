@@ -1,94 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="bootstrap/autoload.php"
+         bootstrap="vendor/autoload.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="true"
-         syntaxCheck="false">
+         strict="false"
+         stopOnFailure="true">
     <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests/</directory>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
-        <testsuite name="abo">
-            <directory>./tests/backend/abo/</directory>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-        <testsuite name="adresse">
-            <directory>./tests/backend/adresse/</directory>
+        <testsuite name="Unituser">
+            <directory suffix="Test.php">./tests/Unit/user</directory>
         </testsuite>
-        <testsuite name="arrets">
-            <directory>./tests/backend/arrets/</directory>
-        </testsuite>
-        <testsuite name="colloque">
-            <directory>./tests/backend/colloque/</directory>
-        </testsuite>
-        <testsuite name="content">
-            <directory>./tests/backend/content/</directory>
-        </testsuite>
-        <testsuite name="page">
-            <directory>./tests/backend/page/</directory>
-        </testsuite>
-        <testsuite name="create">
-            <directory>./tests/backend/create/</directory>
-        </testsuite>
-        <testsuite name="export">
-            <directory>./tests/backend/export/</directory>
-        </testsuite>
-        <testsuite name="helper">
-            <directory>./tests/backend/helper/</directory>
-        </testsuite>
-        <testsuite name="inscription">
-            <directory>./tests/backend/inscription/</directory>
-        </testsuite>
-        <testsuite name="reminder">
-            <directory>./tests/backend/reminder/</directory>
-        </testsuite>
-        <testsuite name="shop">
-            <directory>./tests/backend/shop/</directory>
-        </testsuite>
-        <testsuite name="sondage">
-            <directory>./tests/backend/sondage/</directory>
-        </testsuite>
-
-        <testsuite name="cart">
-            <directory>./tests/backend/workers/cart/</directory>
-        </testsuite>
-        <testsuite name="generate">
-            <directory>./tests/backend/workers/generate/</directory>
-        </testsuite>
-        <testsuite name="registeradmin">
-            <directory>./tests/backend/workers/register/</directory>
-        </testsuite>
-
-        <testsuite name="abonnement">
-            <directory>./tests/frontend/abonnement/</directory>
-        </testsuite>
-        <testsuite name="avis">
-            <directory>./tests/frontend/avis/</directory>
-        </testsuite>
-        <testsuite name="common">
-            <directory>./tests/frontend/common/</directory>
-        </testsuite>
-        <testsuite name="commande">
-            <directory>./tests/frontend/commande/</directory>
-        </testsuite>
-        <testsuite name="profile">
-            <directory>./tests/frontend/profile/</directory>
-        </testsuite>
-        <testsuite name="register">
-            <directory>./tests/frontend/register/</directory>
-        </testsuite>
-        <testsuite name="newsletter">
-            <directory>./tests/newsletter/</directory>
+        <testsuite name="Inscription">
+            <directory suffix="Test.php">./tests/Feature/backend/inscription</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app/Droit</directory>
-            <directory suffix=".php">./app/Http/Controllers</directory>
+            <directory suffix=".php">./app</directory>
         </whitelist>
     </filter>
     <php>

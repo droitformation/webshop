@@ -1,29 +1,35 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+namespace Tests\Feature;
 
-class AccountEventTest extends BrowserKitTest
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ResetTbl;
+
+class AccountEventTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase,ResetTbl;
+
+    protected $mailjet;
 
     public function setUp()
     {
         parent::setUp();
-        DB::beginTransaction();
-
+        $this->app['config']->set('database.default','testing');
+        $this->reset_all();
+     
         $user = factory(\App\Droit\User\Entities\User::class)->create();
+
+        $this->mailjet = \Mockery::mock('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+        $this->app->instance('App\Droit\Newsletter\Worker\MailjetServiceInterface', $this->mailjet);
 
         $user->roles()->attach(1);
         $this->actingAs($user);
-
     }
 
     public function tearDown()
     {
         \Mockery::close();
-        DB::rollBack();
         parent::tearDown();
     }
 
@@ -34,7 +40,7 @@ class AccountEventTest extends BrowserKitTest
      */
     public function testUpdateUserKeepPassword()
     {
-        $make = new \tests\factories\objectfactory();
+        $make = new \tests\factories\Objectfactory();
 
         $person = factory(\App\Droit\User\Entities\User::class)->create([
             'email'      => 'info@domain.ch',
@@ -58,6 +64,11 @@ class AccountEventTest extends BrowserKitTest
         // the new email is set, for user, adresse
         $this->assertequals($person->email,$new_email);
         $this->assertNotEmpty($person->password);
+
+        \DB::table('newsletters')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
     }
 
     public function testUpdateUser()
@@ -75,12 +86,16 @@ class AccountEventTest extends BrowserKitTest
         $this->assertequals('info@domain.ch',$old_email);
 
         // user and adresse has the same email
-        $this->seeInDatabase('users', ['email' => $old_email]);
-        $this->seeInDatabase('adresses', ['email' => $old_email]);
+        $this->assertDatabaseHas('users', ['email' => $old_email]);
+        $this->assertDatabaseHas('adresses', ['email' => $old_email]);
 
         // only the old email exist in the database
-        $this->seeInDatabase('newsletter_users', ['email' => $old_email]);
-        $this->dontSeeInDatabase('newsletter_users', ['email' => $new_email]);
+        $this->assertDatabaseHas('newsletter_users', ['email' => $old_email]);
+        $this->assertDatabaseMissing('newsletter_users', ['email' => $new_email]);
+
+        $this->mailjet->shouldReceive('setList')->times(2);
+        $this->mailjet->shouldReceive('removeContact')->times(1)->andReturn(true);
+        $this->mailjet->shouldReceive('subscribeEmailToList')->times(1)->andReturn(true);
 
         // we change the email from the user account
         $response = $this->put('admin/user/'.$person->id, [
@@ -91,17 +106,22 @@ class AccountEventTest extends BrowserKitTest
         ]);
 
         // the new email exist in the db and the old one is deleted
-        $this->seeInDatabase('newsletter_users', ['email' => $new_email]);
-        $this->dontSeeInDatabase('newsletter_users', ['email' => $old_email, 'deleted_at' => null]);
+        $this->assertDatabaseHas('newsletter_users', ['email' => $new_email]);
+        $this->assertDatabaseMissing('newsletter_users', ['email' => $old_email, 'deleted_at' => null]);
 
         $person = $person->fresh();
 
         // the new email is set, for user, adresse
         $this->assertequals($person->email,$new_email);
-        $this->seeInDatabase('users', ['email' => $new_email]);
-        $this->seeInDatabase('adresses', ['email' => $new_email]);
-        $this->dontSeeInDatabase('users', ['email' => $old_email]);
-        $this->dontSeeInDatabase('adresses', ['email' => $old_email]);
+        $this->assertDatabaseHas('users', ['email' => $new_email]);
+        $this->assertDatabaseHas('adresses', ['email' => $new_email]);
+        $this->assertDatabaseMissing('users', ['email' => $old_email]);
+        $this->assertDatabaseMissing('adresses', ['email' => $old_email]);
+
+        \DB::table('newsletters')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
 
     }
 
@@ -125,12 +145,16 @@ class AccountEventTest extends BrowserKitTest
         $new_email = 'new.user@gmail.com';
 
         // user and adresse don't have the same email
-        $this->seeInDatabase('users', ['email' => $person->email]);
-        $this->seeInDatabase('adresses', ['email' => $adresse->email]);
+        $this->assertDatabaseHas('users', ['email' => $person->email]);
+        $this->assertDatabaseHas('adresses', ['email' => $adresse->email]);
 
         // only the old email exist in the database
-        $this->seeInDatabase('newsletter_users', ['email' => $person->email]);
-        $this->dontSeeInDatabase('newsletter_users', ['email' => $new_email]);
+        $this->assertDatabaseHas('newsletter_users', ['email' => $person->email]);
+        $this->assertDatabaseMissing('newsletter_users', ['email' => $new_email]);
+
+        $this->mailjet->shouldReceive('setList')->times(2);
+        $this->mailjet->shouldReceive('removeContact')->times(1)->andReturn(true);
+        $this->mailjet->shouldReceive('subscribeEmailToList')->times(1)->andReturn(true);
 
         // We change the email from the adresse account
         $response = $this->put('admin/adresse/'.$adresse->id, [
@@ -144,18 +168,22 @@ class AccountEventTest extends BrowserKitTest
         ]);
 
         // the new email exist in the db and the old one is deleted
-        $this->seeInDatabase('newsletter_users', ['email' => $new_email]);
-        $this->dontSeeInDatabase('newsletter_users', ['email' => $old_email_u, 'deleted_at' => null]);
+        $this->assertDatabaseHas('newsletter_users', ['email' => $new_email]);
+        $this->assertDatabaseMissing('newsletter_users', ['email' => $old_email_u, 'deleted_at' => null]);
 
         $person = $person->fresh();
 
         // the new email is set, for user, adresse
         $this->assertEquals($person->email,$new_email);
-        $this->seeInDatabase('users', ['email' => $new_email]);
-        $this->seeInDatabase('adresses', ['email' => $new_email]);
-        $this->dontSeeInDatabase('users', ['email' => $old_email_u]);
-        $this->dontSeeInDatabase('adresses', ['email' => $old_email_a]);
+        $this->assertDatabaseHas('users', ['email' => $new_email]);
+        $this->assertDatabaseHas('adresses', ['email' => $new_email]);
+        $this->assertDatabaseMissing('users', ['email' => $old_email_u]);
+        $this->assertDatabaseMissing('adresses', ['email' => $old_email_a]);
 
+        \DB::table('newsletters')->truncate();
+        \DB::table('newsletter_users')->truncate();
+        \DB::table('users')->truncate();
+        \DB::table('adresses')->truncate();
     }
 
 

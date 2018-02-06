@@ -2,14 +2,17 @@
 
 use App\Droit\Shop\Order\Repo\OrderInterface;
 use App\Droit\Shop\Order\Entities\Order as M;
+use App\Droit\Shop\Shipping\Entities\Paquet as P;
 
 class OrderEloquent implements OrderInterface{
 
     protected $order;
+    protected $paquet;
 
-    public function __construct(M $order)
+    public function __construct(M $order, P $paquet)
     {
-        $this->order = $order;
+        $this->order  = $order;
+        $this->paquet = $paquet;
     }
 
     public function getLast($nbr)
@@ -124,11 +127,14 @@ class OrderEloquent implements OrderInterface{
 
     public function create(array $data){
 
+        // Shipping passed
+        // only shipping_id => free | from admin set shipping
+        // array with shippings models | calculation
         $order = $this->order->create(array(
             'user_id'     => (isset($data['user_id']) ? $data['user_id'] : null),
             'adresse_id'  => (isset($data['adresse_id']) ? $data['adresse_id'] : null),
             'coupon_id'   => (isset($data['coupon_id']) ? $data['coupon_id'] : null),
-            'shipping_id' => $data['shipping_id'],
+            'shipping_id' => (isset($data['shipping']['shipping_id']) ? $data['shipping']['shipping_id'] : null),
             'paquet'      => (isset($data['paquet']) ? $data['paquet'] : null),
             'payement_id' => $data['payement_id'],
             'amount'      => $data['amount'],
@@ -136,19 +142,39 @@ class OrderEloquent implements OrderInterface{
             'comment'     => (isset($data['comment']) ? $data['comment'] : null),
         ));
 
-        if( ! $order )
-        {
+        if( ! $order ) {
             return false;
         }
 
+        if(isset($data['shipping']) && !isset($data['shipping']['shipping_id'])){
+            $order = $this->setPaquets($order,$data['shipping']);
+        }
+
         // All products for order isFree
-        if(!empty($data['products']))
-        {
+        if(!empty($data['products'])) {
             foreach($data['products'] as $product) {
                 $id = array_pull($product, 'id');
 
                 $order->products()->attach([$id => $product]);
             }
+        }
+
+        return $order;
+    }
+
+    public function setPaquets($order,$paquets)
+    {
+        // Remove existing paquets
+        $order->paquets()->delete();
+
+        foreach($paquets as $paquet){
+            $box = $this->paquet->create([
+                'qty'         => $paquet['qty'],
+                'shipping_id' => $paquet['shipping_id'],
+                'remarque'    => isset($paquet['remarque']) ? $paquet['remarque'] : null
+            ]);
+
+            $order->paquets()->save($box);
         }
 
         return $order;
@@ -164,8 +190,7 @@ class OrderEloquent implements OrderInterface{
 
         $order->fill($data);
 
-        if(isset($data['comment']))
-        {
+        if(isset($data['comment'])) {
             $order->comment = serialize($data['comment']);
         }
 

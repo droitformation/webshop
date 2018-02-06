@@ -116,7 +116,7 @@
                                             </tr>
                                             <tr>
                                                 <td width="85%" class="text-right">Frais de port</td>
-                                                <td width="15%" class="text-right">{{ $order->shipping->price_cents }} CHF</td>
+                                                <td width="15%" class="text-right">{{ $order->total_shipping }} CHF</td>
                                             </tr>
                                             <tr><td colspan="2" style="line-height: 10px;">&nbsp;</td></tr>
                                             <tr>

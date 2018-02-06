@@ -37,7 +37,7 @@ class AboUserController extends Controller {
 
         // Get files bound froma all factures
         $dir   = './files/abos/bound/'.$id;
-        $files = \File::files($dir);
+        $files = \File::exists($dir) ? \File::files($dir) : [];
 
         return view('backend.abos.show')->with(['abo' => $abo, 'files' => $files]);
     }
@@ -58,12 +58,17 @@ class AboUserController extends Controller {
 
     public function store(AbonnementRequest $request)
     {
+        $abo = $this->abo->find($request->input('abo_id'));
+
+        if($abo->products->isEmpty()){
+            alert()->danger('Aucun livre attaché à cet abonnement!');
+            return redirect()->back()->withInput();
+        }
+
         $abonnement = $this->abonnement->create($request->all());
 
-        if($abonnement->status == 'abonne')
-        {
+        if($abonnement->status == 'abonne') {
             $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $request->input('product_id')]);
-
             $this->worker->make($facture);
         }
 

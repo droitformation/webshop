@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Droit\User\Repo\UserInterface;
+use App\Droit\User\Worker\AccountWorkerInterface;
 use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
@@ -14,11 +15,13 @@ use App\Http\Requests\UpdateUser;
 class UserController extends Controller {
 
     protected $user;
+    protected $account;
     protected $subscription_worker;
 
-    public function __construct(UserInterface $user, SubscriptionWorkerInterface $subscription_worker)
+    public function __construct(UserInterface $user, AccountWorkerInterface $account, SubscriptionWorkerInterface $subscription_worker)
     {
         $this->user = $user;
+        $this->account = $account;
         $this->subscription_worker = $subscription_worker;
     }
 
@@ -104,7 +107,7 @@ class UserController extends Controller {
      */
     public function update($id,UpdateUser $request)
     {
-        $user = $this->user->update($request->all());
+        $user = $this->user->update(array_filter($request->all()));
 
         $request->ajax();
 
@@ -154,7 +157,7 @@ class UserController extends Controller {
      */
     public function restore($id)
     {
-        $this->user->restore($id);
+        $this->account->restore($id);
 
         alert()->success('Utilisateur restauré');
 

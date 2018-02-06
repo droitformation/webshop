@@ -74,7 +74,7 @@ class Colloque extends Model
             return $programme->first();
         }
 
-        return null;
+        return false;
     }
 
     public function getProgrammeAttachementAttribute()
@@ -231,7 +231,7 @@ class Colloque extends Model
         })->orWhere('start_at','>',date('Y-m-d'))->orWhere('active_at','>',date('Y-m-d'));
     }
 
-    public function scopeArchives($query,$archives = false)
+    public function scopeArchives($query,$archives = null)
     {
         if($archives) $query->where('start_at','<=',date('Y-m-d'));
     }
@@ -239,10 +239,10 @@ class Colloque extends Model
     public function scopeArchived($query,$archived = false)
     {
         if($archived){
-            return $query->where('start_at','<=',\Carbon\Carbon::now()->toDateTimeString());
+            $query->where('start_at','<=',date('Y-m-d'));
         }
         else{
-            return $query->where('start_at','>=',\Carbon\Carbon::now()->toDateTimeString());
+            $query->where('start_at','>=',date('Y-m-d'));
         }
     }
 

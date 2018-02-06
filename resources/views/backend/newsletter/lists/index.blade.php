@@ -87,7 +87,7 @@
                         <div class="row">
                             <div class="col-sm-3"><input type="hidden" value="" name="newsletter_id"></div>
                             <div class="col-sm-8 text-right">
-                                <button class="btn btn-primary" type="submit">Envoyer</button>
+                                <button class="btn btn-primary" id="importList" type="submit">Envoyer</button>
                             </div>
                         </div>
                     </div>

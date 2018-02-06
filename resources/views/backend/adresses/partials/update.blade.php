@@ -15,9 +15,9 @@
             <label class="col-sm-4 control-label">Type d'adresse</label>
             <div class="col-sm-7">
                 <select class="form-control" name="type">
-                    <option {{ $adresse->type == 1 ? 'checked' : '' }} value="1">Contact</option>
-                    <option {{ $adresse->type == 2 ? 'checked' : '' }} value="2">Privé</option>
-                    <option {{ $adresse->type == 3 ? 'checked' : '' }} value="3">Professionnelle</option>
+                    <option {{ $adresse->type == 1 ? 'selected' : '' }} value="1">Contact</option>
+                    <option {{ $adresse->type == 2 ? 'selected' : '' }} value="2">Privé</option>
+                    <option {{ $adresse->type == 3 ? 'selected' : '' }} value="3">Professionnelle</option>
                 </select>
             </div>
         </div>
@@ -155,7 +155,7 @@
 
         </div>
         <div class="col-md-6 text-right">
-            <button class="btn btn-primary" type="submit">Enregistrer</button>
+            <button class="btn btn-primary" id="updateUser" type="submit">Enregistrer</button>
         </div>
     </div>
 </form>

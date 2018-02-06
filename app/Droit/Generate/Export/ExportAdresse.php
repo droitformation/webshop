@@ -21,6 +21,8 @@
 
      public function export($adresses)
      {
+         $adresses = $this->prepareAdresse($adresses);
+
          $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
 
          $writer = WriterFactory::create(Type::XLSX); // for XLSX files
@@ -29,8 +31,6 @@
 
          $writer->openToBrowser($filename); // write data to a file or to a PHP stream
          //$writer->openToBrowser($fileName); // stream data directly to the browser
-
-         $adresses = $this->prepareAdresse($adresses);
 
          if(!$adresses->isEmpty()){
              $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
@@ -76,8 +76,6 @@
              return $columns->map(function ($column) use ($adresse)
              {
                  return trim(html_entity_decode($adresse->$column));
-
-                 //return iconv(mb_detect_encoding($adresse->$column, mb_detect_order(), true), "UTF-8", $adresse->$column);
              });
          });
      }

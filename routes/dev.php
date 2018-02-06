@@ -168,6 +168,7 @@ Route::get('testing', function() {
     //$inscriptions = $model_inscriptions->getMultiple([14861,14870,14902]);
 
     //$worker->generateWithBv($inscriptions);
+
     $adresses = $me->adresses->where('type',1);
     echo '<pre>';
     print_r($adresses);
@@ -614,9 +615,6 @@ Route::get('cartworker', function()
 
     //$generate = new \App\Droit\Generate\Entities\Generate($abofacture);
 
-
-    exit;
-
     /*
         $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
 
@@ -654,8 +652,7 @@ Route::get('cartworker', function()
     */
 });
 
-Route::get('categoriestest', function()
-{
+Route::get('categoriestest', function() {
     //$model = App::make('App\Droit\Arret\Repo\ArretInterface');
    // $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
    // $pages = App::make('App\Droit\Page\Repo\PageInterface');
@@ -1032,21 +1029,24 @@ Route::get('testproduct', function()
     $reminders  = \App::make('App\Droit\Reminder\Repo\ReminderInterface');
     $list = $reminders->toSend();
 
+    echo '<pre>';
+    print_r($list);
+    echo '</pre>';exit();
     foreach($list as $reminder)
     {
         $model = new $reminder->model;
 
         if ($model instanceof Illuminate\Database\Eloquent\Model)
         {
-            $model_id = $reminder->model_id;
-            $item     = $model->find($model_id);
+           // $model_id = $reminder->model_id;
+           // $item     = $model->find($model_id);
 
       /*      echo '<pre>';
             print_r($item);
             echo '</pre>';exit;*/
 
-            return View::make('emails.reminder', ['reminder' => $reminder, 'item' => $item]);
-            exit;
+           // return View::make('emails.reminder', ['reminder' => $reminder, 'item' => $item]);
+            //exit;
         }
     }
 
@@ -1121,6 +1121,33 @@ Route::get('/test_mailgun', function () {
 
 Route::get('factory', function()
 {
+
+
+    $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 10000, 'price'  => 1000]);
+
+    $order = [
+        'user_id' => 710,
+        'order'   => [
+            'products' => [0 => 11, 1 => 12],
+            'qty'      => [0 => 2, 1 => 2],
+            'rabais'   => [0 => 25],
+            'gratuit'  => [1 => 1]
+        ],
+        'admin' => 1
+    ];
+
+    $order = $model->find(3891);
+
+    $paquets = collect($order->paquets)->groupBy(function ($item, $key) {
+        return ($item->shipping->value/1000).' Kg | '.$item->shipping->price_cents;
+    })->map(function ($item, $key) {
+        return $item->sum('qty');
+    });
+
+    echo '<pre>';
+    print_r($paquets);
+
     $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
     $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
     $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
@@ -1140,6 +1167,7 @@ Route::get('factory', function()
 
     echo '<pre>';
     print_r(implode('<br>',$emails));
+
     echo '</pre>';exit();
 */
 
@@ -1163,7 +1191,18 @@ Route::get('factory', function()
         }
     }
 
-    exit;
+    foreach($results as $email){
+        $exist = $worker->exist($email);
+        if($exist){
+            echo '<br/>is in '.$email;
+            $exist->subscriptions()->detach(10);
+            $exist->subscriptions()->attach(10);
+        }
+        else{
+            echo '<br/>is not in '.$email;
+            $worker->make($email,10);
+        }
+    }
 });
 
 Route::get('badges_test', function () {
@@ -1224,7 +1263,18 @@ Route::get('merge', function () {
 
     $product = $products->find(347);
     $abo     = $abos->findAboByProduct(347);
-    $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
+
+    $model = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+
+    $date = \Carbon\Carbon::parse(date('Y-m-d'))->toDateTimeString();
+
+    $facture = $model->update(['id' => 4501, 'created_at' => $date]);
+    \File::delete(public_path($facture->doc_facture));
+
+    echo '<pre>';
+    print_r($facture->doc_facture);
+    echo '</pre>';exit();
+    /*$abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
     $grouped = $abonnes->mapToGroups(function ($item, $key) use($product) {
         $dir  = 'files/abos/facture/'.$product->id;
@@ -1267,7 +1317,7 @@ Route::get('merge', function () {
     print_r($grouped['multiple']->count());
     echo '<pre>';
     print_r($grouped['tiers']->count());
-    echo '</pre>';exit();
+    echo '</pre>';exit();*/
     // Directory for edition => product_id
 /*    $dir       = 'files/abos/facture/273';
     $reference = 'RJN';
