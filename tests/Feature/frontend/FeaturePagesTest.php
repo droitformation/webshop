@@ -53,4 +53,29 @@ class FeaturePagesTest extends TestCase
             $response->assertStatus(200);
         }
     }
+
+
+    public function testListSearchCurrentColloques()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $visible = $make->colloque(); // colloque visible
+        $hidden = $make->colloque(); // colloque hidden
+
+        $visible->titre = 'ids';
+        $visible->visible = 1;
+        $visible->save();
+
+        $hidden->titre = 'ids';
+        $hidden->visible = 0;
+        $hidden->save();
+
+        $response = $this->post('pubdroit/search', ['term' => 'ids']);
+
+        $content   = $response->getOriginalContent();
+        $content   = $content->getData();
+        $colloques = $content['colloques'];
+
+        $this->assertEquals(1, $colloques->count());
+    }
 }
