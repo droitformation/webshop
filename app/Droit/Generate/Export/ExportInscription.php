@@ -181,6 +181,9 @@
              })->toArray();
          }
 
+         $data['filter_checkboxes'] = collect([]);
+         $data['filter_choices'] = collect([]);
+
          // String with the options
          if (!$inscription->user_options->isEmpty()) {
              $data['all_options'] = $this->userOptionsHtml($inscription->user_options);
@@ -225,6 +228,9 @@
 
      public function sortByOption($filter, $data, $depth = 2)
      {
+         if(empty($filter)){
+             return false;
+         }
          // Sort each person in each options
          array_walk($filter, function (&$value,$key) use ($data,$depth) {
              if($depth == 1){

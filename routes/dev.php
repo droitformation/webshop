@@ -943,6 +943,46 @@ Route::get('confirmation_newsletter', function()
     return View::make('emails.confirmation', $data);
 });
 
+Route::get('extract_stats', function()
+{
+    $model  = new \App\Droit\Inscription\Entities\Inscription();
+
+    $inscriptions = $model->take(1)->get();
+
+    $all = [];
+
+    foreach($inscriptions as $inscription){
+        $data = $inscription->toArray();
+
+        $data['canton_id'] = isset($inscription->inscrit) && isset($inscription->inscrit->adresse_contact) ? $inscription->inscrit->adresse_contact->canton_id : '';
+        $data['profession_id'] = isset($inscription->inscrit) && isset($inscription->inscrit->adresse_contact) ? $inscription->inscrit->adresse_contact->profession_id : '';
+        $data['civilite_id'] = isset($inscription->inscrit) && isset($inscription->inscrit->adresse_contact)  ? $inscription->inscrit->adresse_contact->civilite_id : '';
+
+        $data['price'] = isset($inscription->price) ? $inscription->price->price_cents : '';
+
+        unset($data['deleted_at']);
+        unset($data['price_id']);
+        unset($data['user_id']);
+        unset($data['group_id']);
+
+        $all[] = $data;
+    }
+
+  /*  \Excel::create('Export inscriptions', function ($excel) use ($all) {
+        $excel->sheet('Export', function ($sheet) use ($all) {
+            $sheet->setOrientation('landscape');
+            $sheet->appendRow(array_keys($all[0]));
+            $sheet->rows($all);
+        });
+
+    })->export('csv');*/
+
+    echo '<pre>';
+    print_r(implode(',',array_keys($all[0])));
+    echo '</pre>';exit();
+
+});
+
 Route::get('sondage', function()
 {
     $sondages = new App\Droit\Sondage\Entities\Sondage();
