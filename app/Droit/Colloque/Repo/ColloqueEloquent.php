@@ -24,7 +24,12 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function search($term)
     {
-        return $this->colloque->where('titre', 'like', '%'.$term.'%')->orWhere('sujet', 'like', '%'.$term.'%')->orWhere('soustitre', 'like', '%'.$term.'%')->get();
+        return $this->colloque->where('visible','=',1)
+            ->where(function($q) use ($term){
+                $q ->where('titre', 'like', '%'.$term.'%')
+                    ->orWhere('sujet', 'like', '%'.$term.'%')
+                    ->orWhere('soustitre', 'like', '%'.$term.'%');
+            })->get();
     }
 
     public function getCurrent($registration = true, $isVisible = true)
