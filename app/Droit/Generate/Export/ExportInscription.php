@@ -9,6 +9,8 @@
      
      public $options = null;
      public $groupes = null;
+     public $checkboxes = null;
+     public $sorted = [];
 
      public function __construct()
      {
@@ -42,12 +44,17 @@
       * */
      public function export($inscriptions, $colloque = null, $occurences = null)
      {
+         $colloque->load('options','groupes');
+
+         // Get options and grouped options
+         $this->options    = isset($colloque->options) ? $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray() : [];
+         $this->groupes    = $colloque->groupes->pluck('text', 'id')->toArray();
+         $this->checkboxes = isset($colloque->options) ? $colloque->options->where('type', 'checkbox')->pluck('title', 'id')->toArray() : [];
+
          // Group by occurrences if any else just group on 0 to have a loop
          $grouped = $inscriptions->groupBy(function ($item, $key) use ($occurences){
-             if($this->dispatch)
-             {
-                 if(!empty(array_filter($occurences)))
-                 {
+             if($this->dispatch) {
+                 if(!empty(array_filter($occurences))) {
                      return $item->occurrences->whereIn('id',$occurences)->pluck('title')->all();
                  }
 
@@ -56,59 +63,31 @@
              return 0;
          });
 
-         \Excel::create('Export inscriptions', function ($excel) use ($grouped,$colloque) {
-             $excel->sheet('Export', function ($sheet) use ($grouped,$colloque) {
-
+         \Excel::create('Export inscriptions', function ($excel) use ($grouped) {
+             $excel->sheet('Export', function ($sheet) use ($grouped) {
                  $sheet->setOrientation('landscape');
 
                  // start grouped loop and test if we need to display the name of the occureence
-                 foreach ($grouped as $group => $inscriptions)
-                 {
-                     if(!empty($group))
-                     {
-                         $sheet->appendRow([$group]);
-                         $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#009cff');});
-                         $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
-                     }
-
-                     $colloque->load('options','groupes');
-
-                     // Get options and grouped options
-                     $this->options = isset($colloque->options) ? $colloque->options->where('type', 'choix')->pluck('title', 'id')->toArray() : [];
-                     $this->groupes = $colloque->groupes->pluck('text', 'id')->toArray();
+                 foreach ($grouped as $group => $inscriptions) {
 
                      // Prepare the inscriptions with infos
                      $converted = $this->prepareInscription($inscriptions);
 
-                     if ($this->sort && !empty($this->groupes) && !empty($this->options))
+                     if($this->sort && !empty($this->options))
                      {
-                         $names['option_title'] = 'Choix';
+                         if($this->sort == 'choice' && !empty($this->groupes)) {
+                             $this->makeTitle($sheet,$group);
+                             $this->sortChoices($sheet,$converted);
+                         }
 
-                         foreach ($converted as $option_id => $option)
-                         {
-                             $sheet->appendRow([$this->options[$option_id]]);
-                             $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#595959');});
-                             $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
-
-                             foreach ($option as $group_id => $group)
-                             {
-                                 $sheet->appendRow([isset($this->groupes[$group_id]) ? '- '.$this->groupes[$group_id] : 'aucun']);
-                                 $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14)->setFontColor('#003e65'); })->appendRow(['']);
-
-                                 $this->makeHeader($sheet);
-
-                                 $sheet->rows($group)->appendRow(['']);
-                             }
+                         if($this->sort == 'checkbox') {
+                             $this->sortCheckboxes($sheet,$converted);
                          }
                      }
-                     else
-                     {
+                     else {
                          $this->makeHeader($sheet);
-
-                         $sheet->rows($converted);
+                         $sheet->rows($this->unsetFilters($converted->toArray()));
                      }
-
-                     $sheet->appendRow(['']);
 
                  } // end grouped loop
              });
@@ -127,89 +106,154 @@
          });
      }
 
-     public function prepareInscription($inscriptions)
+     protected function makeTitle($sheet,$title)
      {
-         $converted = [];
+         if(!empty($title)) {
+             $sheet->appendRow([$title]);
+             $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#009cff');});
+             $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
+         }
+     }
 
-         if(!$inscriptions->isEmpty())
+     protected function sortChoices($sheet,$converted){
+
+         $names['option_title'] = 'Choix';
+
+         foreach ($converted as $option_id => $options)
          {
-             foreach($inscriptions as $inscription)
+             $sheet->appendRow([$this->options[$option_id]]);
+             $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#595959');});
+             $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
+
+             foreach ($options as $group_id => $data)
              {
-                 $user = $inscription->inscrit;
-                 $data = [];
+                 $sheet->appendRow([isset($this->groupes[$group_id]) ? '- '.$this->groupes[$group_id] : 'aucun']);
+                 $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(14)->setFontColor('#003e65'); })->appendRow(['']);
 
-                 $data['Present']     = $inscription->present ? 'Oui' : '';
-                 $data['Numéro']      = $inscription->inscription_no;
-                 $data['Prix']        = $inscription->price_cents;
-                 $data['Status']      = $inscription->status_name['status'];
-                 $data['Date']        = $inscription->created_at->format('m/d/Y');
-                 $data['Participant'] = ($inscription->group_id > 0 ? $inscription->participant->name : '');
+                 $this->makeHeader($sheet);
 
-                 // Adresse columns
-                 if($user && !$user->adresses->isEmpty())
-                 {
-                     $names = collect($this->columns);
-                     $data += $names->map(function ($item, $key) use ($user) {
-                         return $user->adresses->first()->$key;
-                     })->toArray();
-                 }
+                 $data = $this->unsetFilters($data);
 
-                 // Options checkbox
-                 if(!$inscription->user_options->isEmpty())
-                 {
-                     $data['checkbox'] = $inscription->user_options->load('option')->where('groupe_id', null)->implode('option.title', PHP_EOL);
-                 }
-
-                 // Do we need to sort, Sort by choix options
-                 if ($this->sort && !empty($this->options))
-                 {
-                     $converted = $this->sortByOption($inscription, $data, $converted);
-                 }
-                 else
-                 {
-                     // String with the options
-                     if (!$inscription->user_options->isEmpty())
-                     {
-                         $data['checkbox'] = $this->userOptionsHtml($inscription);
-                     }
-
-                     $converted[] = $data;
-                 }
+                 $sheet->rows($data)->appendRow(['']);
              }
          }
 
-         return isset($converted) ? $converted : [];
+         $sheet->appendRow(['']);
      }
 
-     public function sortByOption($inscription, $data, $result)
+     public function sortCheckboxes($sheet,$converted)
      {
-         // Filter the options that exist
-         $filter = $inscription->user_options->filter(function ($option, $key) {
-             return in_array($option->option_id, array_keys($this->options)) ? true : false;
-         })->toArray();
+         $names['option_title'] = 'Choix';
 
+         foreach ($converted as $option_id => $data)
+         {
+             $data = $this->unsetFilters($data);
+
+             $sheet->appendRow([$this->checkboxes[$option_id]]);
+             $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#595959');});
+             $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
+
+             $this->makeHeader($sheet);
+             $sheet->rows($data)->appendRow(['']);
+         }
+
+         $sheet->appendRow(['']);
+     }
+
+     public function formatInscription($inscription)
+     {
+         $data = [];
+         $user = $inscription->inscrit;
+
+         $data['Present']     = $inscription->present ? 'Oui' : '';
+         $data['Numéro']      = $inscription->inscription_no;
+         $data['Prix']        = $inscription->price_cents;
+         $data['Status']      = $inscription->status_name['status'];
+         $data['Date']        = $inscription->created_at->format('m/d/Y');
+         $data['Participant'] = ($inscription->group_id > 0 ? $inscription->participant->name : '');
+
+         // Adresse columns
+         if($user && !$user->adresses->isEmpty())
+         {
+             $names = collect($this->columns);
+             $data += $names->map(function ($item, $key) use ($user) {
+                 return $user->adresses->first()->$key;
+             })->toArray();
+         }
+
+         // String with the options
+         if (!$inscription->user_options->isEmpty()) {
+             $data['all_options'] = $this->userOptionsHtml($inscription->user_options);
+
+             $data['filter_choices'] = $inscription->user_options->filter(function ($option, $key) {
+                 return in_array($option->option_id, array_keys($this->options)) ? true : false;
+             })->toArray();
+
+             $data['filter_checkboxes'] = $inscription->user_options->filter(function ($option, $key) {
+                 return in_array($option->option_id, array_keys($this->checkboxes)) ? true : false;
+             })->toArray();
+         }
+
+         return $data;
+     }
+
+     public function prepareInscription($inscriptions)
+     {
+         if(!$inscriptions->isEmpty()) {
+
+             $converted = $inscriptions->map(function ($inscription, $key){
+                 return $this->formatInscription($inscription);
+             });
+
+             // Do we need to sort, Sort by choix options
+             if($this->sort) {
+                 foreach($converted as $inscription){
+                     // Sort each person in each options
+                     $depth  = $this->sort == 'choice' ? 2 : 1;
+                     $filter = $this->sort == 'choice' ? $inscription['filter_choices'] : $inscription['filter_checkboxes'];
+                     $this->sortByOption($filter, $inscription, $depth);
+                 }
+             }
+             else{
+                $this->sorted =  $converted;
+             }
+
+         }
+
+         return $this->sorted;
+     }
+
+     public function sortByOption($filter, $data, $depth = 2)
+     {
          // Sort each person in each options
-         array_walk($filter, function (&$value,$key) use (&$result, $data) {
-             $result[$value['option_id']][$value['groupe_id']][] = $data;
+         array_walk($filter, function (&$value,$key) use ($data,$depth) {
+             if($depth == 1){
+                 $this->sorted[$value['option_id']][] = $data;
+             }
+             if($depth == 2){
+                 $this->sorted[$value['option_id']][$value['groupe_id']][] = $data;
+             }
          });
-
-         return $result;
      }
 
-     public function userOptionsHtml($inscription)
+     public function unsetFilters($data)
      {
-         return $inscription->user_options->map(function ($group, $key)
+        return collect($data)->map(function ($data, $key) {
+             unset($data['filter_choices']);
+             unset($data['filter_checkboxes']);
+             return $data;
+         })->toArray();
+     }
+
+     public function userOptionsHtml($user_options)
+     {
+         return $user_options->map(function ($group, $key)
          {
              if(!isset($group->option)){
                  $option = $group->option()->withTrashed()->get();
                  $option = !$option->isEmpty() ? $option->first() : null;
 
-                 if($option){
-                     return 'Ancienne option: '.$option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '');
-                 }
-                 else{
-                     return '';
-                 }
+                 return $option ? 'Ancienne option: '.$option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '') : '';
              }
              
              return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id && isset($group->option_groupe) ? $group->option_groupe->text : '');

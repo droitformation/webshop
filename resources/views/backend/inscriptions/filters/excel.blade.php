@@ -15,8 +15,9 @@
         </div>
         <div class="form-group col-md-3">
             <h4>Options</h4>
-            <div class="radio"><label><input type="radio" name="sort" value="" checked> Normal</label></div>
-            <div class="radio"><label><input type="radio" name="sort" value="1"> Trier par options à choix</label></div>
+            <div class="radio"><label><input type="radio" name="sort" value="" checked> Pas de tri</label></div>
+            <div class="radio"><label><input type="radio" name="sort" value="checkbox"> Trier par options</label></div>
+            <div class="radio"><label><input type="radio" name="sort" value="choice"> Trier par choix</label></div>
         </div>
         @if(count($colloque->occurrences))
             <div class="form-group col-md-3">
