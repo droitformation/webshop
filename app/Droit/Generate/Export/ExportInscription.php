@@ -73,20 +73,21 @@
                      // Prepare the inscriptions with infos
                      $converted = $this->prepareInscription($inscriptions);
 
-                     if($this->sort && !empty($this->options))
+                     if($this->sort)
                      {
-                         if($this->sort == 'choice' && !empty($this->groupes)) {
+                         if($this->sort == 'choice' && !empty($this->options)) {
                              $this->makeTitle($sheet,$group);
                              $this->sortChoices($sheet,$converted);
                          }
 
-                         if($this->sort == 'checkbox') {
+                         if($this->sort == 'checkbox' && !empty($this->checkboxes)) {
+                             $this->makeTitle($sheet,$group);
                              $this->sortCheckboxes($sheet,$converted);
                          }
                      }
                      else {
-                         $this->makeHeader($sheet);
-                         $sheet->rows($this->unsetFilters($converted->toArray()));
+                         $this->makeHeader($sheet,$group);
+                         $sheet->rows($this->unsetFilters($converted));
                      }
 
                  } // end grouped loop
@@ -96,9 +97,18 @@
 
      }
 
-     protected function makeHeader($sheet)
+     protected function makeHeader($sheet, $group = '')
      {
          $header = ['Présent', 'Numéro', 'Prix', 'Status', 'Date', 'Participant'] + $this->columns;
+
+         if($this->dispatch) {
+             $sheet->appendRow(['']);
+             $sheet->appendRow([$group]);
+             $sheet->row($sheet->getHighestRow(), function ($row) {
+                 $row->setFontSize(15)->setFontWeight('bold');
+             });
+             $sheet->appendRow(['']);
+         }
 
          $sheet->appendRow($header);
          $sheet->row($sheet->getHighestRow(), function ($row) {
@@ -149,7 +159,7 @@
          {
              $data = $this->unsetFilters($data);
 
-             $sheet->appendRow([$this->checkboxes[$option_id]]);
+             $sheet->appendRow([isset($this->checkboxes[$option_id]) ? $this->checkboxes[$option_id] : 'Pas d\'option choisi']);
              $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#595959');});
              $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
 
@@ -180,9 +190,9 @@
                  return $user->adresses->first()->$key;
              })->toArray();
          }
-
-         $data['filter_checkboxes'] = collect([]);
-         $data['filter_choices'] = collect([]);
+         else{
+             $data += ['Le compte a été supprimé!'];
+         }
 
          // String with the options
          if (!$inscription->user_options->isEmpty()) {
@@ -195,6 +205,10 @@
              $data['filter_checkboxes'] = $inscription->user_options->filter(function ($option, $key) {
                  return in_array($option->option_id, array_keys($this->checkboxes)) ? true : false;
              })->toArray();
+         }
+         else{
+             $data['filter_checkboxes'] = [];
+             $data['filter_choices'] = [];
          }
 
          return $data;
@@ -214,13 +228,13 @@
                      // Sort each person in each options
                      $depth  = $this->sort == 'choice' ? 2 : 1;
                      $filter = $this->sort == 'choice' ? $inscription['filter_choices'] : $inscription['filter_checkboxes'];
+
                      $this->sortByOption($filter, $inscription, $depth);
                  }
              }
              else{
-                $this->sorted =  $converted;
+                $this->sorted = $converted;
              }
-
          }
 
          return $this->sorted;
@@ -229,15 +243,16 @@
      public function sortByOption($filter, $data, $depth = 2)
      {
          if(empty($filter)){
-             return false;
+             $this->sorted[0][] = $data;
          }
+
          // Sort each person in each options
          array_walk($filter, function (&$value,$key) use ($data,$depth) {
              if($depth == 1){
                  $this->sorted[$value['option_id']][] = $data;
              }
              if($depth == 2){
-                 $this->sorted[$value['option_id']][$value['groupe_id']][] = $data;
+                $this->sorted[$value['option_id']][$value['groupe_id']][] = $data;
              }
          });
      }

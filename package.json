@@ -8,16 +8,17 @@
     "bootstrap-sass": "^3.3.7",
     "bootstrap-vue": "^0.3.12",
     "gulp": "^3.9.1",
-    "jquery": "^3.1.0",
-    "laravel-elixir": "^6.0.0-14",
+    "jquery": "^3.3.1",
+    "laravel-elixir": "^6.0.0-17",
     "laravel-elixir-vue-2": "^0.2.0",
     "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.16.2",
     "vue": "^2.0.1",
-    "vue-resource": "^1.0.3"
+    "vue-resource": "^1.3.6"
   },
   "dependencies": {
-    "vue-multiselect": "^1.1.4",
-    "vuejs-datepicker": "^0.4.27"
+    "vue-multiselect": "^1.1.5",
+    "vue-template-compiler": "^2.5.13",
+    "vuejs-datepicker": "^0.4.29"
   }
 }

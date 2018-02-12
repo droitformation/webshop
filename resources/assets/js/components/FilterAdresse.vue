@@ -38,7 +38,7 @@
                         </select>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" v-model="term.value" class="form-control" v-bind:value="term.value" :name="'terms[' + index + ']'" placeholder="Recherche...">
+                        <input type="text" v-model="term.value" class="form-control" :name="'terms[' + index + ']'" placeholder="Recherche...">
                     </div>
                 </div>
 

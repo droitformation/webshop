@@ -50,6 +50,14 @@
                 </div>
 
                 <p class="text-right margBottom"><a @click="ajouterOccurence" class="btn btn-sm btn-primary">Envoyer</a></p>
+
+               <div v-if="errors.length">
+                   <b>Il manque des informations:</b>
+                   <ul>
+                       <li v-for="error in errors">{{ error }}</li>
+                   </ul>
+               </div>
+
            </li>
            <li v-for="occurrence in list" class="list-group-item">
                <div class="row">
@@ -66,7 +74,7 @@
                        <div class="form-group-item">
                            <label><strong>Titre</strong></label>
                            <p v-if="!occurrence.state">{{ occurrence.title }}</p>
-                           <p v-if="occurrence.state"><input class="form-control" name="title" type="text" v-model="occurrence.title" v-bind:value="occurrence.title"></p>
+                           <p v-if="occurrence.state"><input class="form-control" name="title" type="text" v-model="occurrence.title"></p>
                        </div>
                    </div>
                </div>
@@ -76,7 +84,7 @@
                            <label><strong>Lieu</strong></label>
                            <p v-if="!occurrence.state">{{ occurrence.lieux }}</p>
                            <p v-if="occurrence.state">
-                               <select class="form-control form-required required" v-model="occurrence.lieux_id" name="lieux_id">
+                               <select class="form-control form-required required" required v-model="occurrence.lieux_id" name="lieux_id">
                                    <option value="">Choix</option>
                                    <option v-for="location in loc"
                                            v-bind:selected="occurrence.lieux_id == location.id ? 'true' : 'false'"
@@ -106,13 +114,13 @@
                            <label><strong>Date</strong></label>
                            <p v-if="!occurrence.state">{{ occurrence.starting_at }}</p>
                            <p v-if="occurrence.state">
-                               <input name="starting_at" class="form-control datePickerApp" v-model="occurrence.starting_at" v-bind:value="occurrence.starting_at">
+                               <input name="starting_at" class="form-control datePickerApp" v-model="occurrence.starting_at">
                            </p>
                        </div>
                        <div class="form-group-item">
                            <label><strong>Capacité</strong></label>
                            <p v-if="!occurrence.state">{{ occurrence.capacite_salle }}</p>
-                           <p v-if="occurrence.state"><input class="form-control" name="capacite_salle" v-model="occurrence.capacite_salle" type="text" v-bind:value="occurrence.capacite_salle"></p>
+                           <p v-if="occurrence.state"><input class="form-control" name="capacite_salle" v-model="occurrence.capacite_salle" type="text"></p>
                        </div>
                    </div>
                </div>
@@ -149,7 +157,8 @@ export default {
                 colloque_id: this.colloque,
                 prices:[]
             },
-            add : false
+            add : false,
+            errors:[]
         }
     },
     beforeMount: function ()  {
@@ -219,16 +228,29 @@ export default {
         updateOccurrences:function(occurrences){
             this.list = occurrences;
         },
+        checkForm:function(){
+
+            if( this.nouveau.title && this.nouveau.lieux_id && this.nouveau.starting_at && this.nouveau.capacite_salle) return true;
+            this.errors = [];
+            if(!this.nouveau.title) this.errors.push("Titre requis.");
+            if(!this.nouveau.lieux_id) this.errors.push("Lieu requis.");
+            if(!this.nouveau.starting_at) this.errors.push("Date requise.");
+            if(!this.nouveau.capacite_salle) this.errors.push("Capacité requise.");
+
+            return false;
+        },
         ajouterOccurence:function(){
 
-            this.$http.post('/vue/occurrence', { occurrence : this.nouveau }).then((response) => {
+            if(this.checkForm()){
+                this.$http.post('/vue/occurrence', { occurrence : this.nouveau }).then((response) => {
 
-                this.updateOccurrences(response.body.occurrences);
-                this.resetform();
+                    this.updateOccurrences(response.body.occurrences);
+                    this.resetform();
 
-            }, (response) => {
-            // error callback
-            }).bind(this);
+                }, (response) => {
+                // error callback
+                }).bind(this);
+            }
         },
         ajouter:function(){
             this.add = true;

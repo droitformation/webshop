@@ -145,7 +145,7 @@ class Colloque extends Model
                 'colloque_id'    => $occurrence->colloque_id,
                 'title'          => $occurrence->title,
                 'starting_at'    => $occurrence->starting_at->format('Y-m-d'),
-                'lieux'          => $occurrence->location->name,
+                'lieux'          => isset($occurrence->location) ? $occurrence->location->name : '',
                 'lieux_id'       => $occurrence->lieux_id,
                 'prices'         => $occurrence->prices->pluck('id'),
                 'prices_names'   => $occurrence->prices->implode('description', ', '),
