@@ -195,9 +195,7 @@ class OrderMaker implements OrderMakerInterface{
     public function getQty($order)
     {
         return $products = $order->products->groupBy('id')->map(function ($group) {
-            return $group->sum(function ($item) {
-                return count($item['id']);
-            });
+            return $group->pluck('id')->count();
         });
     }
 

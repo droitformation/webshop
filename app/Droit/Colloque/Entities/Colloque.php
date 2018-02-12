@@ -325,6 +325,6 @@ class Colloque extends Model
 
     public function attestation()
     {
-        return $this->hasone('App\Droit\Colloque\Entities\Colloque_attestation');
+        return $this->hasOne('App\Droit\Colloque\Entities\Colloque_attestation');
     }
 }

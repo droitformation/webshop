@@ -49,7 +49,7 @@ class ExportInscriptionsTest extends TestCase
         $inscription->user_options = new \Illuminate\Database\Eloquent\Collection([$user_option1,$user_option2]);
 
         $expect = 'Option checkbox;Option choix:The text';
-        $html   = $exporter->userOptionsHtml($inscription);
+        $html   = $exporter->userOptionsHtml($inscription->user_options);
 
         $this->assertEquals($expect, $html);
 

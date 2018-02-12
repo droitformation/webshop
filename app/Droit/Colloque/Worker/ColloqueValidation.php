@@ -28,7 +28,7 @@ class ColloqueValidation
 
     public function hasAttestation()
     {
-        if(!count($this->colloque->attestation)){
+        if(!isset($this->colloque->attestation)){
             $this->errors[] = 'Il manque les infos d\'attestation pour activer le colloque';
         }
 
