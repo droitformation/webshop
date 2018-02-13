@@ -68,7 +68,7 @@ class SendConfirmationGroupInscriptionEmail extends Job implements ShouldQueue
             'logo'         => 'facdroit.png',
             'concerne'     => 'Inscription',
             'annexes'      => $this->group->colloque->annexe,
-            'participants' => $this->group->participant_list,
+            'participants' => $this->group->participant_list, // array
             'colloque'     => $this->group->colloque,
             'user'         => $this->group->user,
             'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
