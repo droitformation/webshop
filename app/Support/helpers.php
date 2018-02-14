@@ -122,3 +122,9 @@ function orderBoxesShipping($weight, $paquets = []){
 
     return $paquets;
 }
+
+function civilites($civilite_id){
+    $civilites = [1 => 'Monsieur', 2 => 'Madame', 3 => '', 4 => ''];
+
+    return isset($civilites[$civilite_id]) ? $civilites[$civilite_id] : '';
+}

@@ -36,7 +36,7 @@ class InscriptionEloquent implements InscriptionInterface{
     public function getColloqe($colloque_id, $pagination = false, $filters = [])
     {
         $inscription = $this->inscription
-            ->with(['user','user.adresses','groupe','groupe.user.adresses','price','user_options','colloque.options','colloque.documents'])
+            ->with(['user','user.adresses','groupe','groupe.user.adresses','price','options','user_options','user_options.option_groupe','colloque','colloque.options','colloque.documents','rappels'])
             ->colloque($colloque_id)
             ->filter($filters)
             ->groupBy('user_id')->groupBy('group_id')

@@ -6,7 +6,8 @@
         <p>{{ $inscription->detenteur['email'] }}</p>
 
         <p><a class="btn btn-info btn-xs btn-isGroupe" data-toggle="modal" data-target="#editGroup_{{ $inscription->groupe->id }}">Changer le détenteur</a></p>
-        @include('backend.inscriptions.modals.change', ['group' => $inscription->groupe, 'adresse' => $inscription->adresse_inscrit ]) <!-- Modal edit group -->
+        @include('backend.inscriptions.modals.change', ['group' => $inscription->groupe, 'adresse' => $inscription->adresse_inscrit ])
+        <!-- Modal edit group -->
     </td>
     <td>
 
@@ -17,7 +18,8 @@
         @endif
 
         <p><a class="btn btn-success btn-xs btn-isGroupe" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a></p>
-        @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $colloque, 'inscription' => null]) <!-- Modal add to group -->
+        @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $colloque, 'inscription' => null])
+        <!-- Modal add to group -->
 
     </td>
     <td>{{ $inscription->groupe->price_cents }} CHF</td>

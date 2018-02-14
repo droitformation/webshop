@@ -154,8 +154,6 @@ class Inscription extends Model
      * */
     public function getDocumentsAttribute()
     {
-        $this->load('colloque');
-
         if(!empty($this->colloque->annexe) && $this->inscrit)
         {
             foreach($this->colloque->annexe as $id => $annexe)
@@ -197,7 +195,7 @@ class Inscription extends Model
 
         $adresse =  $this->inscrit->adresses->where('type',1)->first();
 
-        return ['id' => $this->inscrit->id, 'civilite' => $adresse->civilite_title, 'name' => $adresse->name, 'email' => $adresse->email];
+        return ['id' => $this->inscrit->id, 'civilite' => civilites($adresse->civilite_id), 'name' => $adresse->name, 'email' => $adresse->email];
     }
 
     public function getAdresseInscritAttribute()

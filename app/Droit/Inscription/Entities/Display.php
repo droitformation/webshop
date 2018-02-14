@@ -91,7 +91,7 @@ class Display
             return [];
         }
 
-        return ['id' => $inscrit->id, 'civilite' => $this->adresse->civilite_title, 'name' => $this->adresse->name, 'email' => $this->adresse->email ];
+        return ['id' => $inscrit->id, 'civilite' => ($this->adresse->civilite_id), 'name' => $this->adresse->name, 'email' => $this->adresse->email ];
     }
 
     public function getParticiants()
