@@ -217,27 +217,26 @@ export default {
         },
         ajouterPrice:function(){
 
-            this.$http.post('/vue/price', { price : this.nouveau }).then((response) => {
-                this.list = _.orderBy(response.body.prices, ['type'],['desc']);
-                this.resetform();
-            }, (response) => {}).bind(this);
+            var self = this;
+            axios.post('/vue/price', { price : this.nouveau }).then(function (response) {
+                self.list = _.orderBy(response.data.prices, ['type'],['desc']);
+                self.resetform();
+            }).catch(function (error) { console.log(error);});
         },
         savePrice : function(price){
 
-            //var model = _.find(this.prices, function(model) { return model.id == price.id });
-
-            this.$http.post('/vue/price/' + price.id, { price, '_method' : 'put' }).then((response) => {
-               this.list = _.orderBy(response.body.prices, ['type'],['desc']);
-            }, (response) => {}).bind(this);
+            var self = this;
+            axios.post('/vue/price/' + price.id, { price, '_method' : 'put' }).then(function (response) {
+               self.list = _.orderBy(response.data.prices, ['type'],['desc']);
+            }).catch(function (error) { console.log(error);});
 
         },
         deletePrice :function(price){
 
-            //var model = _.find(this.prices, function(model) { return model.id == price.id });
-
-            this.$http.post('/vue/price/' + price.id, { '_method' : 'DELETE' }).then((response) => {
-                this.list = _.orderBy(response.body.prices, ['type'],['desc']);
-            }, (response) => {}).bind(this);
+            var self = this;
+            axios.post('/vue/price/' + price.id, { '_method' : 'DELETE' }).then(function (response) {
+                self.list = _.orderBy(response.data.prices, ['type'],['desc']);
+            }).catch(function (error) { console.log(error);});
         }
     }
 }

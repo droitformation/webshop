@@ -66,35 +66,30 @@ export default {
            this.list = rappels;
         },
         generate: function(e) {
-              this.loading   = true;
-              this.isVisible = false;
+            this.loading   = true;
+            this.isVisible = false;
 
-              e.preventDefault();
-              var print = this.toPrint ? 1 : null;
-              this.$http.post('/admin/' + this.path + '/rappel/generate', { id: this.item , print: print}).then((response) => {
+            e.preventDefault();
+            var print = this.toPrint ? 1 : null;
 
-                  var self = this;
-                  //small delay for pdf generation completion
-                  setTimeout(function(){
-                       self.updateRappels(response.body.rappels);
-                       self.loading = false;
-                  }, 500);
-
-              }, (response) => {
-                // error callback
-              }).bind(this);
+            var self = this;
+            axios.post('/admin/' + this.path + '/rappel/generate', { id: this.item , print: print}).then(function (response) {
+              //small delay for pdf generation completion
+              setTimeout(function(){
+                   self.updateRappels(response.data.rappels);
+                   self.loading = false;
+              }, 500);
+            }).catch(function (error) { console.log(error);});
         },
         remove : function(id){
-             this.loading = true;
-             this.$http.post('/admin/' + this.path + '/rappel/' + id, { item : this.item, '_method' : 'DELETE' }).then((response) => {
-                  console.log(response);
+            this.loading = true;
 
-                  // set data on vm
-                  this.updateRappels(response.body.rappels);
-                  this.loading = false;
-
-             }, (response) => {
-             }).bind(this);
+            var self = this;
+            axios.post('/admin/' + this.path + '/rappel/' + id, { item : this.item, '_method' : 'DELETE' }).then(function (response) {
+                 console.log(response);
+                  self.updateRappels(response.data.rappels);
+                  self.loading = false;
+            }).catch(function (error) { console.log(error);});
 
         }
     }

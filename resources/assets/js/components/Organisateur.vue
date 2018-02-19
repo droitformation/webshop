@@ -60,13 +60,11 @@ export default {
         },
         updateAdresse : function(){
 
-             this.$http.post('/admin/organisateur/colloque', { id: this.selected }).then((response) => {
+            var self = this;
+            axios.post('/admin/organisateur/colloque', { id: this.selected }).then(function (response) {
+                 self.makeAdresse(response.data.organisateur);
+            }).catch(function (error) { console.log(error);});
 
-                 this.makeAdresse(response.body.organisateur);
-
-            }, (response) => {
-            // error callback
-            }).bind(this);
         }
     }
 }

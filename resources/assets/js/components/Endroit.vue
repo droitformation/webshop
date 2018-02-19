@@ -53,20 +53,17 @@ export default {
             this.name    = location.name;
             this.adresse = location.adresse;
 
-            if(location.map)
-            {
+            if(location.map){
                 this.map = '<img style="max-width:100%;" src="files/colloques/cartes/'+ location.map +'" alt="Carte">';
             }
         },
         updateAdresse : function(){
 
-             this.$http.post('/admin/location/colloque', { id: this.selected }).then((response) => {
+            var self = this;
+            axios.post('/admin/location/colloque', { id: this.selected }).then(function (response) {
+               self.makeAdresse(response.data.location);
+            }).catch(function (error) { console.log(error);});
 
-                 this.makeAdresse(response.body.location);
-
-            }, (response) => {
-            // error callback
-            }).bind(this);
         }
     }
 }

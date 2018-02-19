@@ -28,20 +28,17 @@ export default {
     },
     methods: {
         generate: function() {
-              this.loading = true;
-              this.isVisible = false;
-              // POST /someUrl
-              this.$http.post('/admin/' + this.path + '/generate', { id: this.order }).then((response) => {
+            this.loading = true;
+            this.isVisible = false;
 
-                console.log(response);
-
+            var self = this;
+            axios.post('/admin/' + this.path + '/generate', { id: this.order }).then(function (response) {
+                console.log(response.data);
                 // set data on vm
-                this.link    = response.body.link;
-                this.loading = false;
-
-              }, (response) => {
-                // error callback
-              }).bind(this);
+                self.link    = response.data.link;
+                self.loading = false;
+                self.isVisible = true;
+            }).catch(function (error) { console.log(error);});
         }
     }
 }

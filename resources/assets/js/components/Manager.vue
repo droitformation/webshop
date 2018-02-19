@@ -124,42 +124,36 @@ export default {
     methods: {
         getDirectories: function(){
 
-              this.$http.get('/admin/gettree').then((response) => {
-                    this.directories = response.body.directories;
-                  }, (response) => {
-                    // error callback
-              }).bind(this);
+            var self = this;
+            axios.get('/admin/gettree').then(function (response) {
+                 self.directories = response.data.directories;
+            }).catch(function (error) { console.log(error);});
         },
         chosenFolder: function(path){
 
             this.loading = true;
             this.directory = path.replace("files/", "");
             this.files = null
-            this.$http.post('/admin/getfiles', { path : path }).then((response) => {
 
-                this.files = response.body.files;
-                this.path  = path;
+            var self = this;
+            axios.post('/admin/getfiles', { path : path }).then(function (response) {
 
-                this.$nextTick(function(){
-                    this.loading = false;
+                self.files = response.data.files;
+                self.path  = path;
+
+                self.$nextTick(function(){
+                    self.loading = false;
                 });
 
-              }, (response) => {
-                // error callback
-            }).bind(this);
+            }).catch(function (error) { console.log(error);});
         },
         deleteFile: function(path){
 
-             this.$http.post('/admin/files/delete', { path : path }).then((response) => {
-
+            var self = this;
+            axios.post('/admin/files/delete', { path : path }).then(function (response) {
                 var answer = confirm('Voulez-vous vraiment supprimer ' + path + ' ?');
-
-                if (answer){
-                     this.files.splice( this.files.indexOf(path), 1 );
-                }
-
-                }, (response) => {
-             }).bind(this);
+                if (answer){ self.files.splice( self.files.indexOf(path), 1 );}
+            }).catch(function (error) { console.log(error);});
         },
         chosenFile: function(path){
             this.filename = path;

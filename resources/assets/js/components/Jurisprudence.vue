@@ -156,24 +156,15 @@
                this.blocs = arrets;
             },
             changed: function(selected, checked) {
-                  this.loading = true;
+                this.loading = true;
 
-                  // POST
-                  this.$http.post('/vue/arrets', { site: this.site, categories : selected, years : checked, display : this.display  }).then((response) => {
-
-                      var self = this;
-                      //small delay for pdf generation completion
+                var self = this;
+                axios.post('/vue/arrets', { site: this.site, categories : selected, years : checked, display : this.display  }).then(function (response) {
                       setTimeout(function(){
-
-                           self.updateArrets(response.body.arrets);
-                           //self.updatePagination(response.body.pagination);
-
+                           self.updateArrets(response.data.arrets);
                            self.loading = false;
                       }, 500);
-
-                  }, (response) => {
-                    // error callback
-                  }).bind(this);
+                }).catch(function (error) { console.log(error);});
             },
         }
     }

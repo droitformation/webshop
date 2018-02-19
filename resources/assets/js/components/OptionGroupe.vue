@@ -176,27 +176,30 @@ export default {
         },
         ajouterOption:function(){
 
-            this.$http.post('/vue/option', { option : this.nouveau }).then((response) => {
-                this.list = _.orderBy(response.body.options, ['type'],['desc']);
-                this.resetform();
-            }, (response) => {}).bind(this);
+            var self = this;
+            axios.post('/vue/option', { option : this.nouveau }).then(function (response) {
+                self.list = _.orderBy(response.data.options, ['type'],['desc']);
+                self.resetform();
+            }).catch(function (error) { console.log(error);});
 
         },
         saveOption : function(option){
 
-            this.$http.post('/vue/option/' + option.id, { option, '_method' : 'put' }).then((response) => {
-               console.log(response.body.options);
-               this.list = _.orderBy(response.body.options, ['type'],['desc']);
-            }, (response) => {}).bind(this);
+            var self = this;
+            axios.post('/vue/option/' + option.id, { option, '_method' : 'put' }).then(function (response) {
+               console.log(response.data.options);
+               self.list = _.orderBy(response.data.options, ['type'],['desc']);
+            }).catch(function (error) { console.log(error);});
 
         },
         saveGroup : function(option){
 
             if(this.groupeitem.text.length){
-                this.$http.post('/vue/groupe', this.groupeitem ).then((response) => {
-                   console.log(response.body.options);
-                   this.list = _.orderBy(response.body.options, ['type'],['desc']);
-                }, (response) => {}).bind(this);
+
+                var self = this;
+                axios.post('/vue/groupe', this.groupeitem).then(function (response) {
+                    self.list = _.orderBy(response.data.options, ['type'],['desc']);
+                }).catch(function (error) { console.log(error);});
             }
 
             this.newgroupitem = false;
@@ -215,9 +218,11 @@ export default {
             }
 
             if(shouldDelete){
-                   this.$http.post('/vue/option/' + option.id, { '_method' : 'DELETE' }).then((response) => {
-                    this.list = _.orderBy(response.body.options, ['type'],['desc']);
-                }, (response) => {}).bind(this);
+
+                var self = this;
+                axios.post('/vue/option/' + option.id, { '_method' : 'DELETE' }).then(function (response) {
+                    self.list = _.orderBy(response.data.options, ['type'],['desc']);
+                }).catch(function (error) { console.log(error);});
             }
         }
     }

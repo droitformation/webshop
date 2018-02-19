@@ -155,14 +155,14 @@
                 this.options = options;
             },
             fetch () {
-                this.$http.get('admin/user/getUser/' + this.chosen_id, {}).then((response) => {
 
-                    console.log(response.body);
-                    this.chosen = response.body;
-                    this.hasChosen = true;
-                    this.noResult = false;
-                    // self.loading = false;
-                }, (response) => { }).bind(this);
+                var self = this;
+                axios.post('admin/user/getUser/' + this.chosen_id, {}).then(function (response) {
+                    console.log(response.data);
+                    self.chosen = response.data;
+                    self.hasChosen = true;
+                    self.noResult = false;
+                }).catch(function (error) { console.log(error);});
             },
         }
     }

@@ -242,14 +242,12 @@ export default {
         ajouterOccurence:function(){
 
             if(this.checkForm()){
-                this.$http.post('/vue/occurrence', { occurrence : this.nouveau }).then((response) => {
 
-                    this.updateOccurrences(response.body.occurrences);
-                    this.resetform();
-
-                }, (response) => {
-                // error callback
-                }).bind(this);
+                var self = this;
+                axios.post('/vue/occurrence', { occurrence : this.nouveau }).then(function (response) {
+                     self.updateOccurrences(response.data.occurrences);
+                     self.resetform();
+                }).catch(function (error) { console.log(error);});
             }
         },
         ajouter:function(){
@@ -270,26 +268,21 @@ export default {
 
             var occurrence = this.list[occurence.id];
 
-            this.$http.post('/vue/occurrence/' + occurrence.id, { occurrence, '_method' : 'put'  }).then((response) => {
-
-                this.updateOccurrences(response.body.occurrences);
-
-            }, (response) => {
-            // error callback
-            }).bind(this);
+            var self = this;
+            axios.post('/vue/occurrence/' + occurrence.id, { occurrence, '_method' : 'put'  }).then(function (response) {
+                self.updateOccurrences(response.data.occurrences);
+            }).catch(function (error) { console.log(error);});
 
         },
         deleteOccurrence :function(occurence){
 
             var model = this.list[occurence.id];
 
-            this.$http.post('/vue/occurrence/' + model.id, { '_method' : 'DELETE' }).then((response) => {
+            var self = this;
+            axios.post('/vue/occurrence/' + model.id, { '_method' : 'DELETE' }).then(function (response) {
+                self.updateOccurrences(response.data.occurrences);
+            }).catch(function (error) { console.log(error);});
 
-                this.updateOccurrences(response.body.occurrences);
-
-            }, (response) => {
-            // error callback
-            }).bind(this);
         },
     }
 }
