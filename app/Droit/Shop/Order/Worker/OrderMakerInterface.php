@@ -36,11 +36,6 @@ interface OrderMakerInterface
     public function removeEmpty($items);
 
     /*
-    * Count qty for each product in order
-    * */
-    public function getCountProducts($order);
-
-    /*
     * Get qty for each product
     *
     * Return [21 => 1, 3 => 2, 223 => 1] (product_id => qty)

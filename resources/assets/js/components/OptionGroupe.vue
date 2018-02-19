@@ -21,7 +21,7 @@
 
                         <div class="list-group-option" v-if="nouveau.type == 'choix' &&  nouveau.groupe.length != 0">
                             <p v-for="groupe in nouveau.groupe">
-                                <input class="form-control" :value="groupe.text" v-model="groupe.text" placeholder="Choix">
+                                <input class="form-control" v-model="groupe.text" placeholder="Choix">
                             </p>
                             <a class="btn btn-xs btn-info" @click="addNewGroupe()"><i class="fa fa-plus"></i></a>
                         </div>
@@ -39,7 +39,7 @@
                         <label><strong>Titre</strong></label>
                         <p v-if="!option.state">{{ option.title }}</p>
                         <div v-if="option.state">
-                            <input class="form-control" name="title" type="text" v-model="option.title" v-bind:value="option.title">
+                            <input class="form-control" name="title" type="text" v-model="option.title">
                         </div>
                     </div>
                     <div class="col-md-2 text-right">
@@ -57,7 +57,7 @@
 
                         <div class="list-option-groupe" v-if="option.state">
                             <p v-for="groupe in option.groupe">
-                                <input class="form-control" :value="groupe.text" v-model="groupe.text">
+                                <input class="form-control" v-model="groupe.text">
                             </p>
 
                             <div class="row" v-if="newgroupitem" style="margin-bottom:8px;">

@@ -6,7 +6,6 @@
             @if(isset($user_options->option))
                 <li>{{ $user_options->option->title }}
                     @if($user_options->option->type == 'choix')
-                        <?php $user_options->load('option_groupe'); ?>
                         <p class="text-info">{{ isset($user_options->option_groupe) ?  $user_options->option_groupe->text : '' }}</p>
                     @endif
                     @if($user_options->option->type == 'text')
@@ -14,7 +13,7 @@
                     @endif
                 </li>
             @else
-                <?php  $option = $user_options->option()->withTrashed()->get(); ?>
+                <?php $option = $user_options->option()->withTrashed()->get(); ?>
                 <p class="text-muted">
                     Attention, option supprimé {{ !$option->isEmpty() ? $option->first()->title : $user_options->option_id }}
                 </p>

@@ -151,23 +151,6 @@ class OrderMaker implements OrderMakerInterface{
     }
 
     /*
-    * Count qty for each product in order
-    * */
-    public function getCountProducts($order)
-    {
-        $products = $order->products->groupBy('id');
-
-        foreach($products as $id => $product)
-        {
-            $count[$id] = $product->sum(function ($item) {
-                return count($item['id']);
-            });
-        }
-
-        return $count;
-    }
-
-    /*
      * Reset qty of products
      * */
     public function resetQty($order,$operator)
@@ -195,9 +178,7 @@ class OrderMaker implements OrderMakerInterface{
     public function getQty($order)
     {
         return $products = $order->products->groupBy('id')->map(function ($group) {
-            return $group->sum(function ($item) {
-                return count($item['id']);
-            });
+            return $group->pluck('id')->count();
         });
     }
 

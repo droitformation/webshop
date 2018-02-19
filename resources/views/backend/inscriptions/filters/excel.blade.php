@@ -15,8 +15,19 @@
         </div>
         <div class="form-group col-md-3">
             <h4>Options</h4>
-            <div class="radio"><label><input type="radio" name="sort" value="" checked> Normal</label></div>
-            <div class="radio"><label><input type="radio" name="sort" value="1"> Trier par options à choix</label></div>
+            <div class="radio"><label><input type="radio" name="sort" value="" checked> Pas de tri</label></div>
+
+           <?php
+                $options    = isset($colloque->options) ? $colloque->options->where('type', 'choix') : collect([]);
+                $checkboxes = isset($colloque->options) ? $colloque->options->where('type', 'checkbox') : collect([]);
+            ?>
+
+            @if(!$checkboxes->isEmpty())
+                <div class="radio"><label><input type="radio" name="sort" value="checkbox"> Trier par options</label></div>
+            @endif
+            @if(!$options->isEmpty())
+                <div class="radio"><label><input type="radio" name="sort" value="choice"> Trier par choix obligatoire</label></div>
+            @endif
         </div>
         @if(count($colloque->occurrences))
             <div class="form-group col-md-3">

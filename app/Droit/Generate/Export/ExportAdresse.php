@@ -39,35 +39,6 @@
          $writer->close();exit;
      }
 
-     /*
-      * Export
-      * */
-    /* public function export($adresses)
-     {
-         $adresses = $this->prepareAdresse($adresses);
-
-         $filename = "file.csv";
-
-         // Open handle
-         $handle   = fopen($filename, 'w+');
-
-         // Add columns names
-         fputcsv($handle, array_map(function($text) {
-             return iconv(mb_detect_encoding($text, mb_detect_order(), true), "UTF-8", $text);
-         }, array_values(config('columns.names'))), ";",'"');
-
-         // Put all adresses in csv
-         foreach($adresses as $row)
-         {
-             fputcsv($handle, $row->toArray() , ";",'"');
-         }
-
-         // Close handle
-         fclose($handle);
-
-         return $filename;
-     }*/
-
      public function prepareAdresse($adresses)
      {
          $columns = collect(array_keys(config('columns.names')));

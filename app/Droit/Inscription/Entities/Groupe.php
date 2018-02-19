@@ -36,6 +36,9 @@ class Groupe extends Model
         return $this->rappels;
     }
 
+    /*
+     * Return Array
+     * */
     public function getParticipantListAttribute()
     {
         $this->load('inscriptions.participant');

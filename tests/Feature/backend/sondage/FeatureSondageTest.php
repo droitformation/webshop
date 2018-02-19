@@ -184,4 +184,41 @@ class FeatureSondageTest extends TestCase
         $this->assertSame('warning', $this->app->session->get('alert.style'));
         $this->assertSame('Aucun sondage trouvé ou aucune question dans ce sondage!', $this->app->session->get('alert.message'));
     }
+
+    public function testAnswerAndAnswerAgain()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        // Create a sondage for the colloque
+        $sondage = factory(\App\Droit\Sondage\Entities\Sondage::class)->create([
+            'colloque_id' => $colloque->id,
+            'valid_at'    => \Carbon\Carbon::now()->addDay(5),
+        ]);
+
+        // Create and attach a questioin to sondage
+        $question = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'checkbox','question' => 'One question' ,'choices' => null]);
+        $sondage->avis()->attach($question->id, ['rang' => 1]);
+
+        // Make the token with the infos
+        $token = base64_encode(json_encode([
+            'sondage_id' => $sondage->id,
+            'email'      => 'cindy.leschaud@gmail.com',
+            'isTest'     => null,
+        ]));
+
+        $response = $this->post('reponse', ['sondage_id' => $sondage->id, 'email' => 'cindy.leschaud@gmail.com', 'isTest'=> null, 'reponses' => [$question->id]]);
+
+        // See if the reponse is in the database
+        $this->assertDatabaseHas('sondage_reponses', [
+            'sondage_id' => $sondage->id,
+            'email'      => 'cindy.leschaud@gmail.com',
+            'isTest'     => null
+        ]);
+
+        $response = $this->get('reponse/create/'.$token);
+
+        $this->assertEquals(302,$response->getStatusCode());
+    }
 }

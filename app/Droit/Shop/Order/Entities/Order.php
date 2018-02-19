@@ -156,7 +156,7 @@ class Order extends Model{
         // Load relations
         $this->load(['shipping','coupon','paquets']);
 
-        if(count($this->coupon) && $this->coupon->type == 'shipping') {
+        if(isset($this->coupon) && $this->coupon->type == 'shipping') {
             return 0;
         }
 

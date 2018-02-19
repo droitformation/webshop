@@ -96,7 +96,6 @@ class OrderMakerTest extends TestCase
         $count = $make->getQty($order);
 
         $this->assertEquals($expect, $count->toArray());
-
     }
 
     public function testMapProducts()

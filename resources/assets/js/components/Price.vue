@@ -13,15 +13,15 @@
                    <div class="col-md-6">
                        <dl class="dl-horizontal price-list">
                            <dt>Description:</dt>
-                           <dd><input class="form-control" name="description" type="text" v-model="nouveau.description" v-bind:value="nouveau.description"></dd>
+                           <dd><input class="form-control" name="description" type="text" v-model="nouveau.description"></dd>
                            <dt>Remarque:</dt>
-                           <dd><input class="form-control" name="remarque" type="text" v-model="nouveau.remarque" v-bind:value="nouveau.remarque"></dd>
+                           <dd><input class="form-control" name="remarque" type="text" v-model="nouveau.remarque"></dd>
                        </dl>
                    </div>
                    <div class="col-md-6">
                        <dl class="dl-horizontal price-list">
                            <dt>Prix:</dt>
-                           <dd><input class="form-control" name="remarque" type="text" v-model="nouveau.price" v-bind:value="nouveau.price"></dd>
+                           <dd><input class="form-control" name="remarque" type="text" v-model="nouveau.price"></dd>
                            <dt>Type de prix::</dt>
                            <dd>
                                <select class="form-control" v-model="nouveau.type">
@@ -36,7 +36,7 @@
                    <div class="col-md-12">
                        <dl class="dl-horizontal price-list">
                            <dt style="width:200px;">Cacher le prix à partir du:</dt>
-                           <dd style="margin-left:220px;"><input class="form-control datePickerNew" name="end_at" type="text" v-model="nouveau.end_at" v-bind:value="nouveau.end_at"></dd>
+                           <dd style="margin-left:220px;"><input class="form-control datePickerNew" name="end_at" type="text" v-model="nouveau.end_at"></dd>
                        </dl>
                    </div>
                </div>
@@ -64,12 +64,12 @@
                            <dt>Description:</dt>
                            <dd v-if="!price.state">{{ price.description }}</dd>
                            <dd v-if="price.state">
-                               <input class="form-control" name="description" type="text" v-model="price.description" v-bind:value="price.description">
+                               <input class="form-control" name="description" type="text" v-model="price.description">
                            </dd>
                            <dt>Remarque:</dt>
                            <dd v-if="!price.state">{{ price.remarque }}</dd>
                            <dd v-if="price.state">
-                               <input class="form-control" name="remarque" type="text" v-model="price.remarque" v-bind:value="price.remarque">
+                               <input class="form-control" name="remarque" type="text" v-model="price.remarque">
                            </dd>
                        </dl>
                    </div>
@@ -78,7 +78,7 @@
                            <dt>Prix:</dt>
                            <dd v-if="!price.state">{{ price.price }} CHF</dd>
                            <dd v-if="price.state">
-                               <input class="form-control" name="remarque" type="text" v-model="price.price" v-bind:value="price.price">
+                               <input class="form-control" name="remarque" type="text" v-model="price.price">
                            </dd>
                            <dt>Type de prix:</dt>
                            <dd v-if="!price.state">{{ price.type }}</dd>
@@ -98,7 +98,7 @@
                            <dt style="width:200px;">Cacher le prix à partir du:</dt>
                            <dd style="margin-left:220px;" v-if="!price.state">{{ price.end_at }}</dd>
                            <dd style="margin-left:220px;" v-if="price.state">
-                               <input class="form-control datePickerPrices" name="end_at" type="text" v-model="price.end_at" v-bind:value="price.end_at">
+                               <input class="form-control datePickerPrices" name="end_at" type="text" v-model="price.end_at">
                            </dd>
                        </dl>
                    </div>

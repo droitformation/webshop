@@ -28,7 +28,7 @@ class ExportInscriptionsTest extends TestCase
         parent::tearDown();
     }
 
-    public function testTextUserOption()
+   public function testTextUserOption()
     {
         $exporter = new \App\Droit\Generate\Export\ExportInscription();
 
@@ -49,7 +49,7 @@ class ExportInscriptionsTest extends TestCase
         $inscription->user_options = new \Illuminate\Database\Eloquent\Collection([$user_option1,$user_option2]);
 
         $expect = 'Option checkbox;Option choix:The text';
-        $html   = $exporter->userOptionsHtml($inscription);
+        $html   = $exporter->userOptionsHtml($inscription->user_options);
 
         $this->assertEquals($expect, $html);
 
@@ -82,17 +82,25 @@ class ExportInscriptionsTest extends TestCase
         $exporter->options = ['1' => 'Option choix 1', '2' => 'Option choix 2'];
         $exporter->groupes = ['1' => 'The text 1', '2' => 'The text 2'];
 
-        $actual = $exporter->sortByOption($inscription, $data, []);
-        $expect = [
-            1 => [
-                1 => [0 => ['Name' => 'Cindy Leschaud']]
+        $filter = [
+            [
+                'option_id' => 1,
+                'groupe_id' => null,
             ],
-            2 => [
-                2 => [0 => ['Name' => 'Cindy Leschaud']]
+            [
+                'option_id' => 2,
+                'groupe_id' => null,
             ]
         ];
 
-        $this->assertEquals($expect, $actual);
+        $exporter->sortByOption($filter, $inscription, $depth = 1);
+
+        $expect = [
+            1 => [0 => $inscription],
+            2 => [0 => $inscription]
+        ];
+
+        $this->assertEquals($exporter->sorted, $expect);
 
     }
 }
