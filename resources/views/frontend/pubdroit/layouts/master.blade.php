@@ -222,6 +222,15 @@
 		<script src="<?php echo secure_asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
         <script src="<?php echo secure_asset('frontend/pubdroit/js/interaction.js');?>"></script>
         <script src="<?php echo secure_asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114403548-1"></script>
+		<script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-114403548-1');
+		</script>
 
 	</body>
 </html>
