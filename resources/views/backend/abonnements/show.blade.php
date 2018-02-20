@@ -145,7 +145,7 @@
         </div>
         <div class="col-md-6">
 
-            @if( $abonnement->status == 'abonne')
+            @if( $abonnement->status == 'abonne' || $abonnement->status == 'tiers')
 
                 <div class="panel panel-midnightblue">
                     <div class="panel-heading">
