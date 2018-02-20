@@ -1,6 +1,6 @@
 <div class="form-group">
     <label class="control-label">Role</label>&nbsp;
-    <label class="radio"><input {{ !$user->roles->isEmpty() ? 'checked' : '' }} type="radio" name="role" value="0"> Utilisateur simple</label>
+    <label class="radio"><input {{ $user->roles->isEmpty() ? 'checked' : '' }} type="radio" name="role" value="0"> Utilisateur simple</label>
     @if(isset($roles))
         @foreach($roles as $role)
             <label class="radio">

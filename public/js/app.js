@@ -2719,7 +2719,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
 
         if (this.chosen_id) {
-
             this.fetch();
         }
 
@@ -2794,7 +2793,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fetch: function fetch() {
 
             var self = this;
-            axios.post('admin/user/getUser/' + this.chosen_id, {}).then(function (response) {
+            axios.get('admin/user/getUser/' + this.chosen_id, {}).then(function (response) {
                 console.log(response.data);
                 self.chosen = response.data;
                 self.hasChosen = true;

@@ -81,10 +81,7 @@
         },
         mounted: function ()  {
 
-             if(this.chosen_id){
-
-               this.fetch();
-             }
+            if(this.chosen_id){ this.fetch(); }
 
             this.$nextTick(function() {
 
@@ -157,7 +154,7 @@
             fetch () {
 
                 var self = this;
-                axios.post('admin/user/getUser/' + this.chosen_id, {}).then(function (response) {
+                axios.get('admin/user/getUser/' + this.chosen_id, {}).then(function (response) {
                     console.log(response.data);
                     self.chosen = response.data;
                     self.hasChosen = true;
