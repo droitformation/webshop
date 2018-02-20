@@ -111,11 +111,11 @@ class Abo_users extends Model{
 
         if($this->price && !empty($this->price))
         {
-            $price   = $this->price / 100;
-            return $money->format($price);
+            $price = $this->price / 100;
+            return $price > 0 ? $money->format($price) : '';
         }
 
-        return "";
+        return '';
     }
 
     public function getPriceCentsRemiseAttribute()
@@ -131,7 +131,7 @@ class Abo_users extends Model{
             $remise = $remise * $this->exemplaires;
             $remise = $remise / 100;
 
-            return $money->format($remise);
+            return $remise > 0 ? $money->format($remise) : null;
         }
 
         return null;

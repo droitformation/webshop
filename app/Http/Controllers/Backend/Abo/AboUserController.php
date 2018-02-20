@@ -81,7 +81,7 @@ class AboUserController extends Controller {
     {
         $abonnement = $this->abonnement->update($request->all());
 
-        $this->worker->update($abonnement);
+        //$this->worker->update($abonnement);
 
         alert()->success('L\'abonné a été mis à jour');
 
