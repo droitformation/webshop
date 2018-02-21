@@ -40,10 +40,7 @@ class MakeRappelAbo extends Job implements ShouldQueue
 
         if(empty($this->factures)){ return true; }
 
-        $factures = $this->facture->getMultiple($this->factures);
-
-        foreach($factures as $facture)
-        {
+        foreach($this->factures as $facture) {
             // Make rappel if not exist
             if($facture->rappels->isEmpty())
             {

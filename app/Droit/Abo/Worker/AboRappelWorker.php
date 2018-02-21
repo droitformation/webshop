@@ -38,7 +38,6 @@ class AboRappelWorker implements AboRappelWorkerInterface{
             $chunks = $factures->chunk(15);
 
             foreach($chunks as $chunk) {
-                
                 $job = (new MakeRappelAbo($chunk));
                 $this->dispatch($job);
             }

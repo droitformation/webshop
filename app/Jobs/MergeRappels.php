@@ -39,17 +39,19 @@ class MergeRappels extends Job implements ShouldQueue
 
         if(!$factures->isEmpty())
         {
+            $factures = $factures->sortBy(function ($abo, $key) {
+                return $abo->abonnement->numero;
+            });
+
             // Directory for edition => product_id
             $dir = 'files/abos/rappel/'.$this->product->id;
             
             // Get all files in directory
             $lists = $factures->map(function ($item, $key)
             {
-                $pdf = '';
                 $rappel = $item->rappels->sortByDesc('created_at')->first();
-                if($rappel){
-                    $pdf = 'files/abos/rappel/'.$this->product->id.'/rappel_'.$rappel->id.'_'.$item->id.'.pdf';
-                }
+                $pdf = $rappel ? 'files/abos/rappel/'.$this->product->id.'/rappel_'.$rappel->id.'_'.$item->id.'.pdf' : '';
+
                 if(\File::exists(public_path($pdf))){ return public_path($pdf); }
             })->all();
 
