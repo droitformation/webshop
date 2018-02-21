@@ -39,7 +39,7 @@
     </div>
 
     <h1 class="title blue">
-        <?php $rappel = (isset($rappel) ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'ère').' Rappel</span>' : ''); ?>
+        <?php $rappel = (isset($rappel) ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'er').' Rappel</span>' : ''); ?>
         {!! $rappel !!} Facture
     </h1>
 

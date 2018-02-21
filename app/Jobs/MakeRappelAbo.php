@@ -47,9 +47,10 @@ class MakeRappelAbo extends Job implements ShouldQueue
             // Make rappel if not exist
             if($facture->rappels->isEmpty())
             {
-                $rappel  = $this->rappel->create(['abo_facture_id' => $facture->id]);
+                $rappel = $this->rappel->create(['abo_facture_id' => $facture->id]);
                 
                 $generator->makeAbo('rappel', $facture, 1, $rappel);
+                sleep(1);
             }
         }
     }
