@@ -53,6 +53,7 @@ class InscriptionEloquent implements InscriptionInterface{
             ->where('colloque_id','=',$id)
             ->occurrence($occurrences)
             ->with(['user','user.adresses','price','user_options','colloque.options','occurrences'])
+            ->groupBy('user_id')
             ->orderBy('created_at','DESC')->get();
     }
 
