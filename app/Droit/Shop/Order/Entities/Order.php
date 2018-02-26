@@ -110,7 +110,7 @@ class Order extends Model{
         // simple shipping
         if(isset($this->shipping)){
             $paquet = isset($this->paquet) ? $this->paquet : 1 ;
-            $shipping_price = $this->shipping->price * $paquet;
+            $shipping_price = $this->shipping->price > 0 ? $this->shipping->price * $paquet : 0;
         }
 
         // Shipping x nbr paquets
@@ -165,7 +165,7 @@ class Order extends Model{
         // simple shipping
         if(isset($this->shipping)){
             $paquet = isset($this->paquet) ? $this->paquet : 1 ;
-            $shipping_price = $this->shipping->price * $paquet;
+            $shipping_price = $this->shipping->price > 0 ? $this->shipping->price * $paquet : 0;
         }
 
         if(isset($this->shipping) || !$this->paquets->isEmpty()) {
