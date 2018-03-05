@@ -51,7 +51,7 @@ Route::post('reponse', 'ReponseController@store');
 Route::post('sendMessage','ContactController@sendMessage');
 Route::get('/','HomeController@index');
 
-Route::group(['middleware' => 'site'], function () {
+Route::group(['middleware' => ['site','impostor']], function () {
     
     Route::group(['prefix' => 'pubdroit'], function () {
 
