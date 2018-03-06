@@ -24,6 +24,11 @@
                         <input name="participant" required class="form-control" value="" type="text">
                     </div>
 
+                    <div class="form-group">
+                        <label>Email du participant</label>
+                        <input name="email" class="form-control" value="" type="text">
+                    </div>
+
                     @if(!$colloque->prices->isEmpty())
                         @include('backend.inscriptions.partials.prices', ['select' => 'price_id'])
                     @endif

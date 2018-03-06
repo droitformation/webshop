@@ -18,6 +18,10 @@
                                 <label><strong>Nom du participant</strong></label>
                                 <input name="participant" required class="form-control" value="{{ isset($inscription->participant) ? $inscription->participant->name : 'problème avec le participant' }}" type="text">
                             </div>
+                            <div class="form-group participant">
+                                <label><strong>Email du participant</strong></label>
+                                <input name="email" class="form-control" value="{{ isset($inscription->participant) ? $inscription->participant->email : '' }}" type="text">
+                            </div>
                         @endif
 
                         @if(!$inscription->colloque->prices->isEmpty())
