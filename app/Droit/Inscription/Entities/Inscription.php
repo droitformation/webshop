@@ -166,7 +166,8 @@ class Inscription extends Model
                 {
                     $docs[$annexe]['file'] = $file;
                     $docs[$annexe]['link'] = $path;
-                    $docs[$annexe]['name'] = $name;
+                    $docs[$annexe]['name'] = ucfirst($annexe);
+                    $docs[$annexe]['url']  = asset($path);
                 }
             }
         }
