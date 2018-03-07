@@ -154,19 +154,19 @@ class Inscription extends Model
      * */
     public function getDocumentsAttribute()
     {
-        if(!empty($this->colloque->annexe) && $this->inscrit)
-        {
-            foreach($this->colloque->annexe as $id => $annexe)
-            {
+        if(!empty($this->colloque->annexe) && $this->inscrit) {
+            foreach($this->colloque->annexe as $id => $annexe) {
+
                 $name = $annexe.'_'.$this->colloque->id.'-'.$this->inscrit->id.'.pdf';
                 $path = config('documents.colloque.'.$annexe).$name;
                 $file = public_path($path);
 
-                if (\File::exists($file))
-                {
+                if (\File::exists($file)) {
+
                     $docs[$annexe]['file'] = $file;
                     $docs[$annexe]['link'] = $path;
-                    $docs[$annexe]['name'] = $name;
+                    $docs[$annexe]['name'] = ucfirst($annexe);
+                    $docs[$annexe]['url']  = asset($path);
                 }
             }
         }

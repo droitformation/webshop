@@ -98,7 +98,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
             $message->to($email, $user->name)->subject('Confirmation d\'inscription');
 
-            if(!empty($attachements)) {
+            if(!empty($attachements) && config('inscription.link') == false) {
                 foreach($attachements as $attachement) {
                     $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
                 }
@@ -116,6 +116,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             'annexes'      => $model->colloque->annexe,
             'colloque'     => $model->colloque,
             'user'         => $model->user,
+            'attachements' => $model->documents
         ];
 
         if($model instanceof \App\Droit\Inscription\Entities\Groupe)

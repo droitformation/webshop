@@ -88,7 +88,7 @@ class Colloque extends Model
             $file = public_path('files/colloques/'.$programme->first()->type.'/'.$programme->first()->path);
 
             if (\File::exists($file)) {
-                return ['name' => 'Programme.pdf', 'file' => $file];
+                return ['name' => 'Programme', 'file' => $file, 'url' => asset('files/colloques/'.$programme->first()->type.'/'.$programme->first()->path)];
             }
         }
 

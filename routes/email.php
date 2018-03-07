@@ -134,12 +134,27 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             return 'Aucune inscription à afficher';
         }
 
+        if($inscription->group_id)
+        {
+            $attachements = $inscription->groupe->documents;
+        }
+
+        if($inscription->user_id)
+        {
+            $attachements = $inscription->documents;
+        }
+
+        $program = $inscription->colloque->programme_attachement;
+
+        if($program){ $attachements['program'] = $program; }
+
         $data = [
             'title'        => 'Votre inscription sur publications-droit.ch',
             'concerne'     => 'Inscription',
             'annexes'      => $inscription->colloque->annexe,
             'colloque'     => $inscription->colloque,
             'inscription'  => $inscription,
+            'attachements' => $attachements,
             'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 

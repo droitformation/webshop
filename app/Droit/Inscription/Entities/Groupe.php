@@ -118,25 +118,22 @@ class Groupe extends Model
         {
             $annexes = $this->colloque->annexe;
 
-            if(in_array('bon',$annexes))
-            {
-                foreach($this->inscriptions as $inscription)
-                {
-                    $docs[] = $this->getFile('bon',$inscription->participant->id);
+            if(in_array('bon',$annexes)) {
+                foreach($this->inscriptions as $nbr => $inscription) {
+                    $docs[] = $this->getFile('bon',$inscription->participant->id, $nbr+1);
                 }
             }
 
-            if(in_array('facture',$annexes))
-            {
+            if(in_array('facture',$annexes)) {
                 $docs[] = $this->getFile('facture');
                 $docs[] = $this->getFile('bv');
             }
         }
 
-        return $docs;
+        return array_filter($docs);
     }
 
-    public function getFile($annexe,$part = false)
+    public function getFile($annexe,$part = false, $nbr = '')
     {
         $part = ($part ? '-'.$part : '');
         $path = config('documents.colloque.'.$annexe);
@@ -145,9 +142,9 @@ class Groupe extends Model
 
         $file = public_path($path.$name);
 
-        if (\File::exists($file))
-        {
-            return ['file' => $file, 'name' => $name];
+        if (\File::exists($file)) {
+
+            return ['file' => $file, 'name' => ucfirst($annexe).$nbr, 'link' => $path.$name, 'url' => asset($path.$name)];
         }
 
         return null;

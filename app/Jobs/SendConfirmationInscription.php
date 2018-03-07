@@ -43,13 +43,10 @@ class SendConfirmationInscription extends Job implements ShouldQueue
         $annexes = $this->inscription->colloque->annexe;
 
         // Generate annexes if any
-        if(empty($this->inscription->documents) && !empty($annexes))
-        {
-            foreach ($annexes as $annexe)
-            {
+        if(empty($this->inscription->documents) && !empty($annexes)) {
+            foreach ($annexes as $annexe) {
                 // Make the bon and the other docs if the price is not 0
-                if($annexe == 'bon' || ($this->inscription->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')))
-                {
+                if($annexe == 'bon' || ($this->inscription->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv'))) {
                     $generator->make($annexe, $this->inscription);
                 }
             }
@@ -71,6 +68,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             'colloque'    => $this->inscription->colloque,
             'user'        => $this->inscription->user,
             'inscription' => $this->inscription,
+            'attachements'=> $attachements,
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 
@@ -81,10 +79,8 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
 
             // Attach all documents
-            if(!empty($attachements))
-            {
-                foreach($attachements as $attachement)
-                {
+            if(!empty($attachements) && config('inscription.link') == false) {
+                foreach($attachements as $attachement) {
                     $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
                 }
             }
