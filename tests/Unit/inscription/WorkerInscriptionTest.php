@@ -181,7 +181,8 @@ class WorkerInscriptionTest extends TestCase
             'annexes'     => $inscription->colloque->annexe,
             'colloque'    => $inscription->colloque,
             'inscription' => $inscription,
-            'user'        => $inscription->user
+            'user'        => $inscription->user,
+            'attachements'=> $inscription->documents
         ];
 
         $this->assertEquals($data, $result);
@@ -209,7 +210,8 @@ class WorkerInscriptionTest extends TestCase
             'colloque'     => $group->groupe->colloque,
             'user'         => $group->groupe->user,
             'inscription'  => $group->groupe->inscriptions->first(),
-            'participants' => $group->groupe->participant_list
+            'participants' => $group->groupe->participant_list,
+            'attachements' => []
         ];
 
         $this->assertEquals($data, $result);

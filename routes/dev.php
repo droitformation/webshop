@@ -1069,9 +1069,18 @@ Route::get('testproduct', function()
     $reminders  = \App::make('App\Droit\Reminder\Repo\ReminderInterface');
     $list = $reminders->toSend();
 
+    $insc_repo  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+    $group_repo = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
+
+    $inscription = $insc_repo->find(16061);
+    $groupe = $group_repo->find(32);
+
     echo '<pre>';
-    print_r($list);
+    print_r($inscription->documents);
+    print_r($groupe->documents);
     echo '</pre>';exit();
+
+
     foreach($list as $reminder)
     {
         $model = new $reminder->model;

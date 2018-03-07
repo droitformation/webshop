@@ -134,7 +134,16 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             return 'Aucune inscription à afficher';
         }
 
-        $attachements = $inscription->documents;
+        if($inscription->group_id)
+        {
+            $attachements = $inscription->groupe->documents;
+        }
+
+        if($inscription->user_id)
+        {
+            $attachements = $inscription->documents;
+        }
+
         $program = $inscription->colloque->programme_attachement;
 
         if($program){ $attachements['program'] = $program; }
