@@ -587,9 +587,4 @@ if (App::environment('local')) {
  * */
 require base_path('routes/test.php');
 
-Route::post('bounce', function () {
-
-    //\Log::info('bounced!');
-    return response()->json(['ok']);
-
-});
+Route::post('bounce', 'Backend\Newsletter\TrackingController@bounce');

@@ -68,4 +68,9 @@ class TrackingController extends Controller
 
         return view('backend.newsletter.lists.stats')->with(['campagne' => $campagne, 'stats' => $stats, 'mailgun_stats' => $mailgun_stats]);
     }
+
+    public function bounce(Request $request)
+    {
+        return $request->all();
+    }
 }
