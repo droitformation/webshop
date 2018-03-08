@@ -586,3 +586,10 @@ if (App::environment('local')) {
  * Only for test CF
  * */
 require base_path('routes/test.php');
+
+Route::post('bounce', function () {
+
+    //\Log::info('bounced!');
+    return response()->json(['ok']);
+
+});
