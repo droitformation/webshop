@@ -72,8 +72,8 @@ class TrackingController extends Controller
 
     public function bounce(Request $request)
     {
-        return $request->all();
+        //return $request->input('recipient');
 
-        //\Mail::to(env('MAIL_TEST'))->send(new \App\Mail\NotifyBounce($request->all()));
+        \Mail::to(env('MAIL_TEST'))->send(new \App\Mail\NotifyBounce($request->input('recipient')));
     }
 }
