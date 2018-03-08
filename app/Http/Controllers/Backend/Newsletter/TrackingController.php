@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Newsletter\Repo\NewsletterTrackingInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\MailgunInterface;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class TrackingController extends Controller
@@ -72,5 +73,7 @@ class TrackingController extends Controller
     public function bounce(Request $request)
     {
         return $request->all();
+
+        //\Mail::to(env('MAIL_TEST'))->send(new \App\Mail\NotifyBounce($request->all()));
     }
 }
