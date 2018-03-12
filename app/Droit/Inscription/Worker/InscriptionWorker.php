@@ -96,11 +96,11 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             // Overwrite the email to send to?
             $email = ($email ? $email : $user->email);
 
-            $message->to($email, $user->name)->subject('Confirmation d\'inscription');
+            $message->from('info@publications-droit.ch')->to($email, $user->name)->subject('Confirmation d\'inscription');
 
             if(!empty($attachements) && config('inscription.link') == false) {
                 foreach($attachements as $attachement) {
-                    $message->attach($attachement['file'], ['as' => $attachement['pdfname'], 'mime' => 'application/pdf']);
+                    $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
                 }
             }
         });
