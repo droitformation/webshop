@@ -100,7 +100,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
             if(!empty($attachements) && config('inscription.link') == false) {
                 foreach($attachements as $attachement) {
-                    $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
+                    $message->attach($attachement['file'], ['as' => $attachement['pdfname'], 'mime' => 'application/pdf']);
                 }
             }
         });
