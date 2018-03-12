@@ -17,15 +17,17 @@ class NotifyBounce extends Mailable
      * @var Order
      */
     public $bounce;
+    public $remarque;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($bounce)
+    public function __construct($bounce,$remarque)
     {
         $this->bounce = $bounce;
+        $this->remarque = $remarque;
     }
 
     /**
