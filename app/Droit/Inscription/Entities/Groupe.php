@@ -144,7 +144,13 @@ class Groupe extends Model
 
         if (\File::exists($file)) {
 
-            return ['file' => $file, 'name' => ucfirst($annexe).$nbr, 'link' => $path.$name, 'url' => asset($path.$name)];
+            return [
+                'file' => $file,
+                'name' => ucfirst($annexe).$nbr,
+                'link' => $path.$name,
+                'pdfname' => $name,
+                'url'      => asset($path.$name)
+            ];
         }
 
         return null;
