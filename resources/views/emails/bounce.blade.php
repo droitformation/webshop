@@ -14,10 +14,10 @@
                 <div style="{{ $style['paragraph'] }}">
                     <p>Le message envoyé à l'adresse {!! $bounce !!} n'a pas pu être remis.</p>
                     <p><strong>Erreur:</strong></p>
-                    @if($error == 'bounced')
-                        <p>Le serveur de messagerie du destinataire indique que l'adresse du destinataire n'existe pas.</p>
-                    @else
+                    @if($error == 'dropped')
                         <p>Il y a plusieurs raisons pour lesquelles le relay cesse de tenter de livrer des messages et les supprime, y compris: les rebonds, les messages ayant atteint leur limite de tentatives, les adresses précédemment désabonnées / rejetées / réclamées ou les adresses rejetées par un ESP.</p>
+                    @else
+                        <p>Le serveur de messagerie du destinataire indique que l'adresse du destinataire n'existe pas.</p>
                     @endif
                 </div>
 
