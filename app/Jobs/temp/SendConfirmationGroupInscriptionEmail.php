@@ -82,11 +82,9 @@ class SendConfirmationGroupInscriptionEmail extends Job implements ShouldQueue
             $message->to($email, $user->name)->subject('Confirmation d\'inscription');
 
             // Attach all documents
-            if(!empty($attachements))
-            {
-                foreach($attachements as $attachement)
-                {
-                    $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
+            if(!empty($attachements)) {
+                foreach($attachements as $attachement) {
+                    $message->attach($attachement['file'], ['as' => $attachement['name'].'.pdf', 'mime' => 'application/pdf']);
                 }
             }
         });
