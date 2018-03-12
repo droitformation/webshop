@@ -96,7 +96,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             // Overwrite the email to send to?
             $email = ($email ? $email : $user->email);
 
-            $message->from('info@publications-droit.ch')->to($email, $user->name)->subject('Confirmation d\'inscription');
+            $message->sender(config('mail.from.address'))->to($email, $user->name)->subject('Confirmation d\'inscription');
 
             if(!empty($attachements) && config('inscription.link') == false) {
                 foreach($attachements as $attachement) {
