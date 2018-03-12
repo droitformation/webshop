@@ -39,6 +39,6 @@ class NotifyBounce extends Mailable
      */
     public function build()
     {
-        return $this->from('info@publications-droit.ch')->sender(config('mail.from.address'))->subject('Email non valide')->view('emails.bounce');
+        return $this->from('info@publications-droit.ch')->subject('Email non valide')->view('emails.bounce');
     }
 }
