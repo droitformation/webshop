@@ -17,6 +17,7 @@ class NotifyBounce extends Mailable
      * @var Order
      */
     public $bounce;
+    public $error;
     public $remarque;
 
     /**
@@ -24,9 +25,10 @@ class NotifyBounce extends Mailable
      *
      * @return void
      */
-    public function __construct($bounce,$remarque)
+    public function __construct($bounce,$error,$remarque)
     {
         $this->bounce = $bounce;
+        $this->error = $error;
         $this->remarque = $remarque;
     }
 
@@ -37,6 +39,6 @@ class NotifyBounce extends Mailable
      */
     public function build()
     {
-        return $this->from('info@publications-droit.ch')->subject('Email non valide')->view('emails.bounce');
+        return $this->from('info@publications-droit.ch')->sender(config('mail.from.address'))->subject('Email non valide')->view('emails.bounce');
     }
 }

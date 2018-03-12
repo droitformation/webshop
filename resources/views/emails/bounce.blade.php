@@ -13,13 +13,20 @@
 
                 <div style="{{ $style['paragraph'] }}">
                     <p>Le message envoyé à l'adresse {!! $bounce !!} n'a pas pu être remis.</p>
+                    <p><strong>Erreur:</strong></p>
+                    @if($error == 'bounced')
+                        <p>Le serveur de messagerie du destinataire indique que l'adresse du destinataire n'existe pas.</p>
+                    @else
+                        <p>Il y a plusieurs raisons pour lesquelles le relay cesse de tenter de livrer des messages et les supprime, y compris: les rebonds, les messages ayant atteint leur limite de tentatives, les adresses précédemment désabonnées / rejetées / réclamées ou les adresses rejetées par un ESP.</p>
+                    @endif
                 </div>
-                @if(isset($remarque))
+
+                @if(isset($remarque) && !empty($remarque))
                     <div style="{{ $style['paragraph'] }}">
                         <h3>Pour webmaster:</h3>
                        <?php
                             echo '<pre>';
-                            print_r(json_encode($remarque));
+                            print_r($remarque);
                             echo '</pre>';
                         ?>
                     </div>
