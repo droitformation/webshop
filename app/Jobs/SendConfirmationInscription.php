@@ -81,7 +81,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             // Attach all documents
             if(!empty($attachements) && config('inscription.link') == false) {
                 foreach($attachements as $attachement) {
-                    $message->attach($attachement['file'], ['as' => $attachement['name'], 'mime' => 'application/pdf']);
+                    $message->attach($attachement['file'], ['as' => isset($attachement['pdfname']) ? $attachement['pdfname'] : '', 'mime' => 'application/pdf']);
                 }
             }
         });
