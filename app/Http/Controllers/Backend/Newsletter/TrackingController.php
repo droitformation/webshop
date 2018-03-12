@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Newsletter\Repo\NewsletterTrackingInterface;
 use App\Droit\Newsletter\Repo\NewsletterCampagneInterface;
 use App\Droit\Newsletter\Worker\MailgunInterface;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class TrackingController extends Controller
@@ -67,5 +68,13 @@ class TrackingController extends Controller
         });
 
         return view('backend.newsletter.lists.stats')->with(['campagne' => $campagne, 'stats' => $stats, 'mailgun_stats' => $mailgun_stats]);
+    }
+
+    public function bounce(Request $request)
+    {
+        //return $request->input('recipient');
+
+        \Mail::to('droit.formation@unine.ch')->send(new \App\Mail\NotifyBounce($request->input('recipient')));
+        \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\NotifyBounce($request->input('recipient')));
     }
 }
