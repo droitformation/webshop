@@ -78,7 +78,36 @@
                 @if(!empty($annexes))
 
                     <div style="{{ $style['body_content'] }}">
-                        <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}"><strong>Vous trouverez ci-joint :</strong></p>
+                        @if(config('inscription.link') == true && !empty($attachements))
+
+                            <h2 style="{{$resetMargin}}margin-bottom:5px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 16px;line-height: 28px;font-weight: bold;color: #000000;"><strong>Nous vous remercions de télécharger :</strong></h2>
+
+                            <div style="{{ $style['body_content'] }} background:#f5f5f5; margin-top: 15px; margin-bottom:15px; padding: 10px;">
+                                <h2 style="{{$resetMargin}}margin-bottom:5px;{{ $resetPadding }}-webkit-text-size-adjust: none;padding-left:5px;font-family: Arial, Helvetica, sans-serif;font-size: 14px;line-height: 22px;font-weight: bold;color: #000000;">
+                                    <strong>Liens vers vos documents à télécharger</strong>
+                                </h2>
+                                <table border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
+                                    <tr>
+                                        @if(!empty($attachements) && config('inscription.link'))
+                                            @foreach($attachements as $attachement)
+                                                <td>
+                                                    <table border="0" cellspacing="0" cellpadding="0" style="margin: 0 5px;">
+                                                        <tr>
+                                                            <td align="center" bgcolor="#55bc75">
+                                                                <a href="{{ $attachement['url'] }}" target="_blank" style="{{ $button }}">{{ $attachement['name'] }}</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            @endforeach
+                                        @endif
+                                    </tr>
+                                </table>
+
+                            </div>
+                        @else
+                            <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}"><strong>Vous trouverez ci-joint :</strong></p>
+                        @endif
 
                         <ul style="{{$resetMargin}}margin-bottom: 10px;margin-left: 15px;{{ $resetPadding }}">
                             @if(isset($participants) && count($participants) > 1)
@@ -118,32 +147,6 @@
                     <p style="{{$resetMargin}}{{ $resetPadding }}{{ $style['mb-15'] }}">Nous restons à disposition pour tout renseignement et vous adressons nos meilleures salutations.</p>
                     <p style="{{$resetMargin}}{{ $resetPadding }}{{ $style['mb-15'] }}color:#000;"><strong>Le secrétariat de la Faculté de droit</strong></p>
                 </div>
-
-                @if(config('inscription.link') == true && !empty($attachements))
-                    <div style="{{ $style['body_content'] }} background:#f5f5f5; margin-top: 20px; padding: 10px;">
-                        <h2 style="{{$resetMargin}}margin-bottom:5px;{{ $resetPadding }}-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;font-size: 15px;line-height: 22px;font-weight: bold;color: #000000;">
-                            <strong>Liens vers vos documents à télécharger</strong>
-                        </h2>
-                        <table border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
-                            <tr>
-                                @if(!empty($attachements) && config('inscription.link'))
-                                    @foreach($attachements as $attachement)
-                                        <td>
-                                            <table border="0" cellspacing="0" cellpadding="0" style="margin: 0 5px;">
-                                                <tr>
-                                                    <td align="center" bgcolor="#55bc75">
-                                                        <a href="{{ $attachement['url'] }}" target="_blank" style="{{ $button }}">{{ $attachement['name'] }}</a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    @endforeach
-                                @endif
-                            </tr>
-                        </table>
-
-                    </div>
-                @endif
 
             </td>
         </tr>
