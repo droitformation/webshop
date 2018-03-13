@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Newsletter;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ContentRequest;
+use App\Http\Requests\NewsletterContentRequest;
 
 use App\Droit\Newsletter\Repo\NewsletterContentInterface;
 use App\Droit\Newsletter\Repo\NewsletterClipboardInterface;
@@ -39,7 +39,7 @@ class ContentController extends Controller
      * POST data
      * @return Response
      */
-    public function store(ContentRequest $request){
+    public function store(NewsletterContentRequest $request){
 
         $data = $request->all();
 
