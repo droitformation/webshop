@@ -174,7 +174,7 @@ class User extends Authenticatable {
     public function getInscriptionParticipationsAttribute()
     {
         return !$this->participations->isEmpty() ? $this->participations->reject(function ($participation, $key) {
-            return isset($participation->inscription) && $participation->inscription->inscrit->id == $this->id;
+            return !isset($participation->inscription->groupe) || isset($participation->inscription) && $participation->inscription->inscrit->id == $this->id;
         }) : collect([]);
     }
 
