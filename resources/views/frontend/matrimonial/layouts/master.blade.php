@@ -50,7 +50,7 @@
                 <div class="row">
                     <h1 class="col-md-4 col-xs-12">
                         <a class="" href="{{ url('matrimonial/page/index') }}">
-                            <img src="{{ secure_asset('logos/droitmatrimonial.svg') }}" alt="Logo droitmatrimonial.ch">
+                            <img height="65px" src="{{ secure_asset('logos/droitmatrimonial.svg') }}" alt="Logo droitmatrimonial.ch">
                         </a>
                     </h1>
                     <div class="col-md-6 col-xs-12 text-right">
