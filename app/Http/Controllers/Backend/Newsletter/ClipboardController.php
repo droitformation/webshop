@@ -38,7 +38,7 @@ class ClipboardController extends Controller
         $replicate = $content->replicate();
 
         $replicate->newsletter_campagne_id = $request->input('campagne_id');
-        $replicate->rang = $request->input('rang', 0) + 1;
+        $replicate->rang = !empty($request->input('rang')) ? $request->input('rang') + 1 : 0;
         $replicate->save();
 
         $copy->delete();
