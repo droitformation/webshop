@@ -512,6 +512,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::get('ajax/categories/{id?}', 'Backend\Content\CategorieController@categories');
         Route::post('ajax/categorie/arrets','Backend\Content\CategorieController@arrets');
 
+        Route::get('ajax/categoriesimple/{id?}', 'Api\CategorieController@simple');
+        Route::get('ajax/categorieliste/{site_id}','Api\CategorieController@liste');
+
         Route::get('ajax/product',  'Api\ProductController@index');
         Route::get('ajax/product/{id}', 'Api\ProductController@show');
         Route::post('ajax/product/remove_link', 'Api\ProductController@remove_link');

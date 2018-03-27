@@ -107,6 +107,25 @@ App.factory('Arrets', ['$http', '$q','__env', function($http, $q,__env) {
     };
 }]);
 
+App.factory('Categories', ['$http', '$q','__env', function($http, $q,__env) {
+    return {
+        query: function(site_id) {
+            var deferred = $q.defer();
+            $http.get( __env.ajaxUrl + '/categorieliste/' + site_id, { cache: true }).success(function(data) {
+                deferred.resolve(data);
+            }).error(function(data) {deferred.reject(data);});
+            return deferred.promise;
+        },
+        simple: function(id) {
+            var deferred = $q.defer();
+            $http.get( __env.ajaxUrl + '/categoriesimple/'+ id).success(function(data) {
+                deferred.resolve(data);
+            }).error(function(data) {deferred.reject(data);});
+            return deferred.promise;
+        }
+    };
+}]);
+
 /**
  * Retrive all Products
  */
@@ -249,6 +268,81 @@ App.controller("EditController",['$scope','$http','myService','__env', function(
 
 }]);
 
+
+App.controller("EditCategorieController",['$scope','$http','myService','Categories','__env', function($scope,myService,$http,Categories,__env){
+
+    $scope.editable = 0;
+    var self = this;
+
+    this.onedit = function(id){
+        return id == $scope.editable;
+    };
+
+    this.close = function(){
+        $('.edit_content_form').hide();
+    };
+
+    this.finishEdit = function(idItem){
+
+        $('.edit_content_form').hide();
+        $('.finishEdit').hide();
+        $('.editContent').show();
+    }
+
+    /* assign empty values for categories */
+    this.categories = [];
+    this.categorie  = false;
+
+    /* function for refreshing the asynchronus retrival of blocs */
+    this.refresh = function() {
+
+        var site_id = $('#main').data('site');
+        site_id = !site_id ? null : site_id;
+
+        Categories.query(site_id).then(function (data) {
+            self.categories = data;
+        });
+    }
+
+    this.editContent = function(idItem){
+
+        //myService.setBloc(0);
+
+        $scope.editable = idItem;
+
+        $('.edit_content_form').hide();
+
+        var content = $('#bloc_rang_'+idItem);
+        content.find('.edit_content_form').css("width",600).show();
+        content.find('.finishEdit').show();
+
+        if(self.categories.length == 0){
+            this.refresh();
+        }
+    };
+
+
+    this.close = function(){
+        myService.setBloc(0);
+        $('.edit_content_form').hide();
+    };
+
+    /* When one arret is selected in the dropdown */
+    this.changed = function(){
+
+        /* hide categorie */
+        self.categorie = false;
+
+        /* Get the id of categorie */
+        var id = $scope.selected.id
+
+        /* Get the selected categorie infos */
+        Categories.simple(id).then(function (data) { self.categorie = data; });
+    };
+
+
+}]);
+
 /**
  * Select products controller
  */
@@ -383,6 +477,50 @@ App.controller('SelectController', ['$scope','$http','Arrets','myService','__env
                 self.categories = data.categories;
                 self.date = myService.convertDateArret(self.arret.pub_date)
             });
+    };
+
+}]);
+
+App.controller('SelectCategorieController', ['$scope','$http','Categories','myService','__env',function($scope,$http,Categories,myService,__env){
+
+    /* assign empty values for arrets */
+    this.categories = [];
+    this.categorie  = false;
+
+    /* capture this (the controller scope ) as self */
+    var self = this;
+
+    /* function for refreshing the asynchronus retrival of blocs */
+    this.refresh = function() {
+
+        var site_id = $('#main').data('site');
+        site_id = !site_id ? null : site_id;
+
+        Categories.query(site_id).then(function (data) {
+            self.categories = data;
+        });
+    }
+
+    if(self.categories.length == 0){
+        this.refresh();
+    }
+
+    this.close = function(){
+        myService.setBloc(0);
+        $('.edit_content_form').hide();
+    };
+
+    /* When one arret is selected in the dropdown */
+    this.changed = function(){
+
+        /* hide categorie */
+        self.categorie = false;
+
+        /* Get the id of categorie */
+        var id = $scope.selected.id
+
+        /* Get the selected categorie infos */
+        Categories.simple(id).then(function (data) { self.categorie = data; });
     };
 
 }]);
