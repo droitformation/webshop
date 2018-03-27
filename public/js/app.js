@@ -25297,7 +25297,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-spinner fa-spin"
   })]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
-  }, [_c('ol', {
+  }, [(_vm.path == 'inscription') ? _c('ol', {
     staticStyle: {
       "margin-left": "5px",
       "padding-left": "3px"
@@ -25312,7 +25312,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "target": "_blank"
       }
     }, [_vm._v("\n                         + BV\n                    ")])])
-  }))])])])
+  })) : _vm._e()])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

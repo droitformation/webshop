@@ -18,11 +18,9 @@
                 <i v-show="loading" class="fa fa-spinner fa-spin"></i>
             </div>
             <div class="col-md-2">
-                <ol style="margin-left: 5px;padding-left: 3px;">
+                <ol style="margin-left: 5px;padding-left: 3px;" v-if="path == 'inscription'">
                     <li class="rappel-item" v-for="rappel in list">
-                        <a :href="'admin/inscription/rappel/' +rappel.id" target="_blank" class="btn btn-default btn-xs">
-                             + BV
-                        </a>
+                        <a :href="'admin/inscription/rappel/' + rappel.id" target="_blank" class="btn btn-default btn-xs"> + BV</a>
                     </li>
                 </ol>
             </div>
