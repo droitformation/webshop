@@ -12,23 +12,21 @@
             <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}padding:5px 35px 35px 35px;">
 
                 <div style="{{ $style['paragraph'] }}">
-                    <p>Le message envoyé à l'adresse {!! $bounce !!} n'a pas pu être remis.</p>
-                    <p><strong>Erreur:</strong></p>
-                    @if($error == 'dropped')
-                        <p>Il y a plusieurs raisons pour lesquelles le relay cesse de tenter de livrer des messages et les supprime, y compris: les rebonds, les messages ayant atteint leur limite de tentatives, les adresses précédemment désabonnées / rejetées / réclamées ou les adresses rejetées par un ESP.</p>
-                    @else
-                        <p>Le serveur de messagerie du destinataire indique que l'adresse du destinataire n'existe pas.</p>
+                    <p>Le message envoyé à l'adresse <strong>{!! $bounce !!}</strong> n'a pas pu être remis.</p>
+                    <p><strong>Infos:</strong></p>
+                    @if(isset($headers) && !empty($headers))
+                        <ul>
+                            @foreach($headers as $line => $header)
+                                <li>{{ $line }} : {{ $header }}</li>
+                            @endforeach
+                        </ul>
                     @endif
                 </div>
 
-                @if(isset($remarque) && !empty($remarque))
+                @if(isset($body) && !empty($body))
                     <div style="{{ $style['paragraph'] }}">
-                        <h3>Pour webmaster:</h3>
-                       <?php
-                            echo '<pre>';
-                            print_r($remarque);
-                            echo '</pre>';
-                        ?>
+                        <p><strong>Message:</strong></p>
+                       {{ $body }}
                     </div>
                 @endif
 

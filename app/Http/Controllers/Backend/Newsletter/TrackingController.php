@@ -73,16 +73,22 @@ class TrackingController extends Controller
     public function bounce(Request $request)
     {
         if(env('SEND_ADMIN')){
-            \Mail::to('droit.formation@unine.ch')->send(new \App\Mail\NotifyBounce($request->input('recipient'), $request->input('event'), []));
+           // \Mail::to('droit.formation@unine.ch')->send(new \App\Mail\NotifyBounce($request->input('recipient'), $request->input('event'), []));
         }
 
-        \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\NotifyBounce($request->input('recipient'), $request->input('event'), $request->all()));
+       // \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\NotifyBounce($request->input('recipient'), $request->input('event'), $request->all()));
 
         //\Log::info(json_encode($request->all()));
     }
 
     public function incoming(Request $request)
     {
+        $bounce = new \App\Droit\Tracking\Entities\Bounce($request->all());
+
         \Log::info($request->all());
+
+        \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\NotifyBounce($bounce->failed(), $bounce->headers(), $bounce->body()));
+
+        return true;
     }
 }
