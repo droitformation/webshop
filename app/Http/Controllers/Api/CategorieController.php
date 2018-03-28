@@ -27,4 +27,28 @@ class CategorieController extends Controller {
 		return ['categories' => $categories];
     }
 
+    public function simple($id)
+    {
+        $categorie = $this->categorie->find($id);
+
+        return response()->json( [
+            'id' => $categorie->id,
+            'title' => $categorie->title,
+            'image' => $categorie->image,
+        ]);
+    }
+
+    public function liste($site_id)
+    {
+        $categories = $this->categorie->getAll($site_id);
+        $categories = $categories->map(function ($item, $key) {
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+                'image' => $item->image,
+            ];
+        });
+
+        return response()->json($categories);
+    }
 }

@@ -38,7 +38,8 @@ return [
         6 => 'Text',
         7 => 'Groupe',
         8 => 'Livre',
-        9 => 'Colloque'
+        9 => 'Colloque',
+        10 => 'Picto Droite'
     ],
 
     /*
