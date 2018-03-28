@@ -80,4 +80,9 @@ class TrackingController extends Controller
 
         //\Log::info(json_encode($request->all()));
     }
+
+    public function incoming(Request $request)
+    {
+        \Log::info($request->all());
+    }
 }

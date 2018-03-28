@@ -591,3 +591,4 @@ if (App::environment('local')) {
 require base_path('routes/test.php');
 
 Route::post('bounce', 'Backend\Newsletter\TrackingController@bounce');
+Route::post('incoming', 'Backend\Newsletter\TrackingController@incoming');
