@@ -74,7 +74,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
 
         $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements) {
 
-            $message->to($user->email, $user->name)->sender(config('mail.from.address'))->subject('Confirmation d\'inscription');
+            $message->to($user->email, $user->name)->subject('Confirmation d\'inscription');
             $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
             $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
 
