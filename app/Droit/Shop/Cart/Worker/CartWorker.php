@@ -127,7 +127,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          {
              foreach($products as $product)
              {
-                 $totalWeight +=  isset($product->weight) && !empty($product->weight) ? $product->weight : 100;
+                 $totalWeight +=  isset($product->weight) && !empty($product->weight) ? $product->weight : 0;
              }
          }
 
