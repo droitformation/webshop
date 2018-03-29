@@ -98,7 +98,7 @@
                             <label class="col-sm-3 control-label">Poids maximum</label>
                             <div class="col-sm-4 col-xs-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ $product->weight }}" name="weight">
+                                    <input type="text" class="form-control" required value="{{ $product->weight }}" name="weight">
                                     <span class="input-group-addon">grammes</span>
                                 </div>
                             </div>

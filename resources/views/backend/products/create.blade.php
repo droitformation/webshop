@@ -66,7 +66,7 @@
                             <label class="col-sm-3 control-label">Poids</label>
                             <div class="col-sm-3 col-xs-6">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="weight">
+                                    <input type="text" required class="form-control" name="weight">
                                     <span class="input-group-addon">grammes</span>
                                 </div>
                             </div>
