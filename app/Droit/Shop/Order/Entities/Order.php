@@ -78,7 +78,11 @@ class Order extends Model{
 
     public function getPriceTotalExplodeAttribute()
     {
-        return explode('.',$this->total_with_shipping);
+        $price = explode('.',$this->total_with_shipping);
+        $francs   = isset($price[0]) ? $price[0] : 0;
+        $centimes = isset($price[1]) ? $price[1] : 0;
+
+        return [$francs,$centimes];
     }
 
     public function getFactureAttribute()
@@ -102,7 +106,7 @@ class Order extends Model{
 
         // safe guard
         if(!isset($this->shipping) && $this->paquets->isEmpty()){
-            return 'un problème avec les frais de port';
+            return 0;
         }
 
         $shipping_price = 0;
@@ -131,7 +135,7 @@ class Order extends Model{
 
         // safe guard
         if(!isset($this->shipping) && $this->paquets->isEmpty()){
-            return 'un problème avec les frais de port';
+            return 0;
         }
 
         $price = !$this->paquets->isEmpty() ? $this->paquets->reduce(function ($carry, $item) {
@@ -178,7 +182,7 @@ class Order extends Model{
         }
         else{
             // safe guard
-            return 'un problème avec les frais de port';
+            return 0;
         }
     }
 

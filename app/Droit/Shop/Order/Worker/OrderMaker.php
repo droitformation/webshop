@@ -265,7 +265,14 @@ class OrderMaker implements OrderMakerInterface{
                 }
                 elseif( ($proprety == 'price' && !isset($data['gratuit'][$index])) || $proprety != 'price')
                 {
-                    $price = (isset($data['price'][$index]) && ($proprety == 'price') ? $data['price'][$index] * 100 : $product->$proprety);
+                   // $price = (isset($data['price'][$index]) && ($proprety == 'price') ? $data['price'][$index] * 100 : $product->$proprety);
+
+                    if($proprety == 'weight'){
+                        $price = empty($product->$proprety) ? 0 : $product->$proprety;
+                    }
+                    else{
+                        $price = (isset($data['price'][$index]) && ($proprety == 'price') ? $data['price'][$index] * 100 : $product->$proprety);
+                    }
 
                     $total += $price;
                 }
@@ -280,14 +287,15 @@ class OrderMaker implements OrderMakerInterface{
      **/
     public function getShipping($order)
     {
+        $weight = $this->total($order['order'], 'weight');
+
         // If shipping free
-        if(isset($order['free'])){
+        if(isset($order['free']) || $weight == 0){
             $shipping = $this->shipping->getShipping(null);
             return ['shipping_id' => $shipping->id];
         }
 
         // else calculate
-        $weight   = $this->total($order['order'], 'weight');
         $orderbox = new \App\Droit\Shop\Order\Entities\OrderBox($order);
 
         return  $orderbox->calculate($weight)->getShippingList();
