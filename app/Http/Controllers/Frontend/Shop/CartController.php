@@ -56,7 +56,7 @@ class CartController extends Controller {
         }
 
         \Cart::instance('shop')
-            ->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image,'weight' => $item->weight))
+            ->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image, 'weight' => $item->weight))
             ->associate('App\Droit\Shop\Product\Entities\Product');
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
