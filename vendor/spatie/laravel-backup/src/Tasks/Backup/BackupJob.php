@@ -51,6 +51,16 @@ class BackupJob
         return $this;
     }
 
+    public function onlyDbName(array $allowedDbNames): self
+    {
+        $this->dbDumpers = $this->dbDumpers->filter(
+            function (DbDumper $dbDumper, string $connectionName) use ($allowedDbNames) {
+                return in_array($connectionName, $allowedDbNames);
+            });
+
+        return $this;
+    }
+
     public function dontBackupDatabases(): self
     {
         $this->dbDumpers = new Collection();

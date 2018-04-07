@@ -97,4 +97,42 @@ class FeatureCartTest extends TestCase
         $response->assertSee('TEST124');
 
     }
+
+    public function testProductHasNoWeightShippingIsNull()
+    {
+        $cartworker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+
+        $make     = new \tests\factories\ObjectFactory();
+        $person   = $make->makeUser();
+        $this->actingAs($person);
+
+        $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+            'weight' => null,
+            'price'  => 1000,
+        ]);
+
+        $this->call('POST', 'pubdroit/cart/addProduct', ['product_id' => $product->id]);
+
+        $this->assertEquals('10.00',$cartworker->totalCartWithShipping());
+        $this->assertEquals('0.00',$cartworker->totalShipping());
+    }
+
+    public function testProductHasPositivWeightShippingIsNotNull()
+    {
+        $cartworker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+
+        $make     = new \tests\factories\ObjectFactory();
+        $person   = $make->makeUser();
+        $this->actingAs($person);
+
+        $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+            'weight' => 200,
+            'price'  => 1000,
+        ]);
+
+        $this->call('POST', 'pubdroit/cart/addProduct', ['product_id' => $product->id]);
+
+        $this->assertEquals('20.00',$cartworker->totalCartWithShipping());
+        $this->assertEquals('10.00',$cartworker->totalShipping());
+    }
 }
