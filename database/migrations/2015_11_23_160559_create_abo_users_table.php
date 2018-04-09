@@ -24,7 +24,8 @@ class CreateAboUsersTable extends Migration
             $table->string('reference')->nullable();
             $table->text('remarque')->nullable();
 
-            $table->enum('status',['abonne','gratuit'])->default('abonne');
+            $table->string('status')->default('abonne');
+            $table->string('raison')->nullable();
             $table->enum('renouvellement',['auto','year'])->default('auto');
 
             $table->timestamps();

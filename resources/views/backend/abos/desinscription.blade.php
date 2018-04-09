@@ -19,14 +19,17 @@
                         <tr>
                             <th class="col-md-1">Action</th>
                             <th class="col-md-1">Numéro</th>
-                            <th class="col-md-4">Nom</th>
-                            <th class="col-md-4">Entreprise</th>
+                            <th class="col-md-2">Nom</th>
+                            <th class="col-md-3">Entreprise</th>
+                            <th class="col-md-1">Date résiliation</th>
+                            <th class="col-md-3">Raison résiliation</th>
                             <th class="col-md-1">Status</th>
                         </tr>
                         </thead>
                         <tbody>
                         @if(!$abo->resilie->isEmpty())
-                            @foreach($abo->resilie as $abonnement)
+                            @foreach($abo->resilie->sortBy('numero') as $abonnement)
+                                <?php $user = $abonnement->user_adresse; ?>
                                 <tr>
                                     <td>
                                         <form action="{{ url('admin/abonnement/restore/'.$abonnement->id) }}" method="POST" class="form-horizontal">
@@ -36,23 +39,17 @@
                                     </td>
                                     <td>{{ $abonnement->numero }}</td>
                                     <td>
-                                        @if($abonnement->user)
-                                            {{ $abonnement->user->name }}
-                                        @elseif($abonnement->originaluser)
-                                            {{ $abonnement->originaluser->name }}
-                                        @else
-                                            <p><span class="label label-warning">Duplicata</span></p>
+                                        {!! $user ? $user->name : '<p><span class="label label-warning">Duplicata</span></p>' !!}
+
+                                        @if($abonnement->tiers_user_id || $abonnement->tiers_id)
+                                            <p><strong>Tiers payant:</strong></p>
+                                            {{ $abonnement->user_facturation->name }}<br/>
+                                            {!! $abonnement->user_facturation->adresse.'<br/>'.$abonnement->user_facturation->npa.' '.$abonnement->user_facturation->ville !!}
                                         @endif
                                     </td>
-                                    <td>
-                                        @if($abonnement->user)
-                                            {{ $abonnement->user->company }}
-                                        @elseif($abonnement->originaluser)
-                                            {{ $abonnement->originaluser->company }}
-                                        @else
-                                            <p><span class="label label-warning">Duplicata</span></p>
-                                        @endif
-                                    </td>
+                                    <td>{!! $user && ($user->company != $user->name) ? $user->company  : '' !!}</td>
+                                    <td>{{ $abonnement->deleted_at ? $abonnement->deleted_at->format('d/m/Y') : 'pas de date' }}</td>
+                                    <td>{!! $abonnement->raison !!}</td>
                                     <td>Résilié</td>
                                 </tr>
                             @endforeach

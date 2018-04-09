@@ -8,8 +8,9 @@ class Abo_users extends Model{
     use SoftDeletes;
 
     protected $table = 'abo_users';
-
-    protected $fillable = ['abo_id','numero','exemplaires','adresse_id','tiers_id','user_id','tiers_user_id','price','reference','remarque','status','renouvellement'];
+    protected $dates = ['deleted_at'];
+    protected $fillable = ['abo_id','numero','exemplaires','adresse_id','tiers_id','user_id','raison',
+        'tiers_user_id','price','reference','remarque','status','renouvellement','deleted_at'];
 
     public function getAboNoAttribute()
     {

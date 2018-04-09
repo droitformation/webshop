@@ -36,7 +36,6 @@
 
     <div class="row">
         <div class="col-md-12">
-
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
@@ -81,10 +80,10 @@
                                         <td>{{ $abonnement->exemplaires }}</td>
                                         <td>{{ $abonnement->status }}</td>
                                         <td class="text-right">
-                                            <form action="{{ url('admin/abonnement/'.$abonnement->id) }}" method="POST" class="form-horizontal">
-                                                <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button id="deleteAbo_{{ $abonnement->id }}" type="submit" data-what="Supprimer l'abonné n°" data-action="{{ $abonnement->numero }}" class="btn btn-danger btn-sm deleteAction">Désabonner</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger btn-sm"data-toggle="modal" data-target="#resilier_{{ $abonnement->id }}">
+                                                Désabonner
+                                            </button>
+                                            @include('backend.abos.partials.delete', ['abonnement' => $abonnement])
                                         </td>
                                     </tr>
                                 @endforeach

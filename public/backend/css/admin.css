@@ -487,6 +487,7 @@ hr.line-delimit{
 
 .modal-content h4{
     font-size: 16px;
+    text-align: left;
 }
 
 .modal-content .form-group{

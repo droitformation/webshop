@@ -112,7 +112,7 @@ class AboUserEloquent implements AboUserInterface{
             $abo_user->status = 'tiers';
         }
         else{
-            $abo_user->status = $data['status'];
+            $abo_user->status = isset($data['status']) ? $data['status'] : $abo_user->status;
         }
 
         $abo_user->save();

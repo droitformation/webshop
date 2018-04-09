@@ -7,7 +7,7 @@ $(document).ready(function() {
     var init = function()
     {
         var api    = this.api();
-        var column = api.column(5);
+        var column = api.column(6);
 
         var select = $('<select class="form-control"><option value="">Filtrer par status</option></select>')
             .appendTo( $(column.header()).empty()).on( 'change', function () {
@@ -23,7 +23,7 @@ $(document).ready(function() {
     var initabo = function()
     {
         var api    = this.api();
-        var column = api.column(6);
+        var column = api.column(5);
 
         var select = $('<select class="form-control"><option value="">Filtrer par status</option></select>')
             .appendTo( $(column.header()).empty()).on( 'change', function () {
@@ -84,7 +84,7 @@ $(document).ready(function() {
     });
 
     $('.simple-table').DataTable({
-        initComplete: init,
+       // initComplete: init,
         language: langues,
         pageLength: 25,
         pagingType: 'simple',

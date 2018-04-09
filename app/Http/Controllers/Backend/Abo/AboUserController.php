@@ -88,9 +88,14 @@ class AboUserController extends Controller {
         return redirect('admin/abonnement/'.$abonnement->id);
     }
 
-	public function destroy($id)
+	public function destroy($id, Request $request)
 	{
-        $this->abonnement->delete($id);
+	    if(!empty($request->input('raison'))){
+            $this->abonnement->update(['id' => $id, 'raison' => $request->input('raison'), 'deleted_at' => $request->input('deleted_at')]);
+        }
+        else{
+            $this->abonnement->delete($id);
+        }
 
         alert()->success('L\'abonné a été supprimé');
 
