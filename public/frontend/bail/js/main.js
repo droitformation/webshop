@@ -102,7 +102,7 @@ $(function() {
 	var width = $('#appComponent').width();
 
 	if(width > 860){
-		$('#mainContent').css({ 'min-height' : height });
+		$('#mainContent').css({ 'min-height' : height + 170 });
 	}
 
 });
