@@ -3910,8 +3910,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -25311,7 +25309,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "href": 'admin/inscription/rappel/' + rappel.id,
         "target": "_blank"
       }
-    }, [_vm._v("\n                         + BV\n                    ")])])
+    }, [_vm._v(" + BV")])])
   })) : _vm._e()])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
