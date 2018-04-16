@@ -10,6 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendRappelEmail implements ShouldQueue
 {
+    public $tries = 1;
+
     use InteractsWithQueue, Queueable, SerializesModels;
 
     protected $inscriptions;
