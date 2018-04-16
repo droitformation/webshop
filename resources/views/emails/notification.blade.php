@@ -7,7 +7,7 @@
     <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
         <tr>
             <td style="{{ $fontFamily }} {{ $style['email-body_cell_header'] }}">
-                <h1 style="{{ $style['header-2'] }}text-align:left;">Nouvelle {{ $what }}</h1>
+                <h1 style="{{ $style['header-2'] }}text-align:left;">Nouvelle notification: {{ $what }}</h1>
             </td>
         </tr>
         <tr>
@@ -15,6 +15,7 @@
 
                 {!! isset($colloque) ? '<p '.$style['paragraph'].'>'.$name.' vient de s\'inscrire au colloque<br/> <strong>'.$colloque.'</strong></p>' : ''  !!}
                 {!! isset($order) ? '<p '.$style['paragraph'].'>Commande passé par '.$name.'<br/> n° <strong>'.$order.'</strong></p>' : ''  !!}
+                {!! isset($rappel) ? '<p '.$style['paragraph'].'>n° <strong>'.$rappel.'</strong></p>' : ''  !!}
 
                 <div style="{{ $style['paragraph'] }}">
                     @if(isset($abos))

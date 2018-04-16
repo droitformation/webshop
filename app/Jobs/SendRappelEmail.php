@@ -15,8 +15,7 @@ class SendRappelEmail implements ShouldQueue
 
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $inscriptions;
-    protected $inscription;
+    public $inscription;
     protected $worker;
     protected $mailer;
 
@@ -25,10 +24,9 @@ class SendRappelEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($inscriptions)
+    public function __construct($inscription)
     {
-        $this->inscriptions = $inscriptions;
-        $this->inscription  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+        $this->inscription = $inscription;
         $this->worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -41,71 +39,59 @@ class SendRappelEmail implements ShouldQueue
      */
     public function handle()
     {
-        if(empty($this->inscriptions)){ return true; }
+        try {
 
-        $inscriptions = $this->inscription->getMultiple($this->inscriptions);
+            throw new Exception("The field is undefined.");
+            $inscription = $this->inscription;
 
-        if(!$inscriptions->isEmpty()) {
-            foreach($inscriptions as $inscription) {
-                $this->send($inscription);
+            $user   = $inscription->inscrit;
+            $rappel = $inscription->list_rappel->sortBy('created_at')->last();
+
+            $data = [
+                'title'       => 'Votre inscription sur publications-droit.ch',
+                'concerne'    => 'Rappel',
+                'annexes'     => $inscription->colloque->annexe,
+                'colloque'    => $inscription->colloque,
+                'inscription' => $inscription,
+                'user'        => $user,
+                'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            ];
+
+            if($inscription->group_id && isset($inscription->groupe)) {
+                $data['participants'] = $inscription->groupe->participant_list;
             }
-        }
 
-        return true;
+            \Mail::send('emails.colloque.rappel', $data , function ($message) use ($user,$rappel,$inscription) {
+
+                $message->to($user->email, $user->name)->subject('Rappel');
+                $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
+                $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
+
+                $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
+
+                if($inscription->doc_bv){
+                    $message->attach(public_path($inscription->doc_bv), array('as' => 'Bv.pdf', 'mime' => 'application/pdf'));
+                }
+            });
+        }
+        catch(Exception $e) {
+            // bird is clearly not the word
+            $this->failed($e);
+        }
     }
 
-    protected function send($inscription)
-    {
-        $user   = $inscription->inscrit;
-        $rappel = $inscription->list_rappel->sortBy('created_at')->last();
-
-        $data = [
-            'title'       => 'Votre inscription sur publications-droit.ch',
-            'concerne'    => 'Rappel',
-            'annexes'     => $inscription->colloque->annexe,
-            'colloque'    => $inscription->colloque,
-            'inscription' => $inscription,
-            'user'        => $user,
-            'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
-        ];
-
-        if($inscription->group_id && isset($inscription->groupe))
-        {
-            $data['participants'] = $inscription->groupe->participant_list;
-        }
-
-        \Mail::send('emails.colloque.rappel', $data , function ($message) use ($user,$rappel,$inscription) {
-
-            $message->to($user->email, $user->name)->subject('Rappel');
-            $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
-            $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
-
-            $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
-
-            if($inscription->doc_bv){
-                $message->attach(public_path($inscription->doc_bv), array('as' => 'Bv.pdf', 'mime' => 'application/pdf'));
-            }
-        });
-    }
-
-    /**
-     * The job failed to process.
-     *
-     * @param  Exception  $exception
-     * @return void
-     */
-    public function failed(Exception $exception)
+    public function failed(\Exception $e)
     {
         $infos = [
-            'name'  => 'Problème avec les rappels',
-            'what'  => 'Rappel',
-            'order' => $this->inscriptions->pluck('inscription_no')->implode(',')->all(),
+            'name'  => 'Problème avec le rappels',
+            'what'  => 'Problème avec l\'envoi du rappel',
+            'rappel' => $this->inscription->inscription_no,
             'link'  => url('admin/colloques')
         ];
 
         \Mail::send('emails.notification', $infos, function ($m) {
             $m->from('info@publications-droit.ch', 'Administration Droit Formation');
-            $m->to('droit.formation@unine.ch', 'Administration')->subject('Problème avec l\'envoi des rappels');
+            $m->to('droit.formation@unine.ch', 'Administration')->subject('Problème avec l\'envoi du rappel');
         });
     }
 }
