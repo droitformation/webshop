@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -10,6 +11,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendRappelEmail implements ShouldQueue
 {
+    public $tries = 1;
+
     use InteractsWithQueue, Queueable, SerializesModels;
 
     protected $inscriptions;
@@ -82,6 +85,27 @@ class SendRappelEmail implements ShouldQueue
             if($inscription->doc_bv){
                 $message->attach(public_path($inscription->doc_bv), array('as' => 'Bv.pdf', 'mime' => 'application/pdf'));
             }
+        });
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        $infos = [
+            'name'  => 'Problème avec les rappels',
+            'what'  => 'Rappel',
+            'order' => $this->inscriptions->pluck('inscription_no')->implode(',')->all(),
+            'link'  => url('admin/colloques')
+        ];
+
+        \Mail::send('emails.notification', $infos, function ($m) {
+            $m->from('info@publications-droit.ch', 'Administration Droit Formation');
+            $m->to('droit.formation@unine.ch', 'Administration')->subject('Problème avec l\'envoi des rappels');
         });
     }
 }
