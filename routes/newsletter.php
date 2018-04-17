@@ -1,7 +1,5 @@
 <?php
 
-$middleware = !empty(config('newsletter.middlewares')) ? config('newsletter.middlewares') : [];
-
 /*
 |--------------------------------------------------------------------------
 | Frontend Routes
@@ -15,14 +13,7 @@ Route::get('activation/{token}/{newsletter_id}', 'Frontend\InscriptionController
 Route::get('campagne/{id}', 'Frontend\CampagneController@show');
 Route::get('pdf/{id}', 'Frontend\CampagneController@pdf');
 
-Route::group(['prefix' => 'display'], function () {
-   // Route::resource('newsletter', 'Frontend\NewsletterController');
-    //Route::get('newsletter/campagne/{id}', 'Frontend\NewsletterController@campagne');
-    Route::resource('campagne', 'Frontend\CampagneController');
-});
-
-
-Route::group(['middleware' => $middleware], function () {
+Route::group(['middleware' => 'auth'], function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -46,6 +37,7 @@ Route::group(['middleware' => $middleware], function () {
         Route::get('campagne/cancel/{id}', 'Backend\Newsletter\CampagneController@cancel');
         Route::post('campagne/archive', 'Backend\Newsletter\CampagneController@archive');
 
+        Route::get('campagne/compose/{id}', 'Backend\Newsletter\CampagneController@compose'); // new
         Route::resource('campagne', 'Backend\Newsletter\CampagneController');
 
         // Content building blocs

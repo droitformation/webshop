@@ -389,6 +389,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('upload', 'Backend\UploadController@upload');
         Route::post('uploadFile', 'Backend\UploadController@uploadFile');
         Route::post('uploadJS', 'Backend\UploadController@uploadJS');
+        Route::post('uploadNewsletter', 'Backend\UploadController@uploadNewsletter');
         Route::post('uploadRedactor', 'Backend\UploadController@uploadRedactor');
 
         Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);

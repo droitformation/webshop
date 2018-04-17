@@ -51,8 +51,22 @@ class CampagneController extends Controller
     {
         $campagne = $this->campagne->find($id);
         $blocs    = $this->type->getAll();
-        
+
         return view('backend.newsletter.campagne.show')->with(['campagne' => $campagne, 'blocs' => $blocs]);
+    }
+
+    /**
+     * New implementation compose
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function compose($id)
+    {
+        $campagne = $this->campagne->find($id);
+        $blocs    = $this->type->getAll();
+
+        return view('backend.newsletter.compose')->with(['campagne' => $campagne, 'blocs' => $blocs]);
     }
 
     /**

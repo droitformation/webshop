@@ -32,6 +32,10 @@ Vue.component('detenteur', require('./components/Detenteur.vue'));
 Vue.component('manager', require('./components/Manager.vue'));
 Vue.component('filter-adresse', require('./components/FilterAdresse.vue'));
 Vue.component('list-autocomplete', require('./components/ListAutocomplete.vue'));
+Vue.component('build-newsletter', require('./components/BuildNewsletter.vue'));
+Vue.component('build-newsletter-models', require('./components/BuildNewsletterModels.vue'));
+Vue.component('content-newsletter', require('./components/partials/ContentNewsletter.vue'));
+Vue.component('image-newsletter', require('./components/partials/ImageNewsletter.vue'));
 
 const app = new Vue({
     el: '#appComponent'
