@@ -41,7 +41,6 @@ class SendRappelEmail implements ShouldQueue
     {
         try {
 
-            throw new Exception("The field is undefined.");
             $inscription = $this->inscription;
 
             $user   = $inscription->inscrit;
@@ -65,7 +64,7 @@ class SendRappelEmail implements ShouldQueue
 
                 $message->to($user->email, $user->name)->subject('Rappel');
                 $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
-                $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
+                $message->replyTo('info@publications-droit.ch', 'Réponse depuis publications-droit.ch');
 
                 $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
 
