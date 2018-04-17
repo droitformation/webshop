@@ -2,7 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Dusk\DuskServiceProvider;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Queue\Events\JobFailed;
+use App\Mail\WebmasterNotification;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -67,6 +69,11 @@ class AppServiceProvider extends ServiceProvider {
             $this->mock = \Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
             $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);
         }
+
+        Queue::failing(function (JobFailed $event) {
+            \Mail::to('cindy.leschaud@gmail.com')
+                ->send(new WebmasterNotification('Job failed exception: '.$event->exception->getMessage().' '.$event->job->getRawBody()));
+        });
     }
 
 	/**

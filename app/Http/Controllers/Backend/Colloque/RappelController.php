@@ -160,11 +160,16 @@ class RappelController extends Controller
     {
         $inscriptions = $this->inscription->getMultiple($request->input('inscriptions'));
 
-        $this->worker->make($inscriptions);
+        if(!$inscriptions->isEmpty()){
 
-        // Send the rappels via email
-        $job = (new SendRappelEmail($request->input('inscriptions')))->delay(\Carbon\Carbon::now()->addMinutes(1));
-        $this->dispatch($job);
+            $this->worker->make($inscriptions);
+
+            foreach ($inscriptions as $inscription){
+                // Send the rappels via email
+                $job = (new SendRappelEmail($inscription))->delay(\Carbon\Carbon::now()->addMinutes(1));
+                $this->dispatch($job);
+            }
+        }
 
         alert()->success('Rappels envoyés');
 
