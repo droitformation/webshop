@@ -141,7 +141,29 @@ class ArretController extends Controller {
      */
     public function arrets($site = null)
     {
-        return response()->json( $this->arret->getAll($site) , 200 );
+        $arrets = $this->arret->getAll($site);
+
+        $arrets = $arrets->map(function ($item, $key) {
+            return [
+                'id'        => $item->id,
+                'droptitle' => $item->reference,
+                'title'     => $item->title,
+                'abstract'   => $item->abstract,
+                'content'   => $item->pub_text,
+                'link'      => secure_asset(config('newsletter.path.arret')).'/'.$item->file,
+                'message'   => 'Télécharger en pdf',
+                'class'     => '',
+                'images'    => $item->categories->map(function ($categorie, $key) use ($item) {
+                    return [
+                        'link'  => url('jurisprudence#'.$item->reference),
+                        'image' => secure_asset(config('newsletter.path.categorie').$categorie->image),
+                        'title' => $categorie->title,
+                    ];
+                }),
+            ];
+        });
+
+        return response()->json( $arrets , 200 );
     }
 
     /**

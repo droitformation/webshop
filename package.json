@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "es6-promise": "^4.2.4"
+    "es6-promise": "^4.2.4",
+    "vue-drag-and-drop-list": "^1.0.0",
+    "vuedraggable": "^2.16.0"
   }
 }

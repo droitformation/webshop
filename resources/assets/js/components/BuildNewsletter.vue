@@ -5,32 +5,34 @@
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
 
-                    <!-- Bloc image gauche-->
-                    <td v-if="type == 4" valign="top" align="center" width="160" class="resetMarge">
-                        <image-newsletter @imageUploaded="imageUploadedUpdate"></image-newsletter>
-                    </td>
-                    <td v-if="type == 4" width="25" class="resetMarge"></td><!-- space -->
+                   <tr>
+                       <!-- Bloc image gauche-->
+                       <td v-if="type == 4" valign="top" align="center" width="160" class="resetMarge">
+                           <image-newsletter @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                       </td>
+                       <td v-if="type == 4" width="25" class="resetMarge"></td><!-- space -->
 
-                    <td valign="top" :width="widthTable" class="resetMarge contentForm">
-                        <image-newsletter v-if="type == 1 || type == 2" @imageUploaded="imageUploadedUpdate"></image-newsletter>
-                        <h2 v-html="create.titre"></h2>
-                        <div v-if="hasText" v-html="create.contenu"></div>
-                    </td>
+                       <td valign="top" :width="widthTable" class="resetMarge contentForm">
+                           <image-newsletter v-if="(type == 1 || type == 2)" @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <h2 v-html="create.titre"></h2>
+                           <div v-if="hasText" v-html="create.contenu"></div>
+                       </td>
 
-                    <!-- Bloc image droite-->
-                    <td v-if="type == 3" width="25" class="resetMarge"></td><!-- space -->
-                    <td v-if="type == 3" valign="top" align="center" width="160" class="resetMarge">
-                        <image-newsletter @imageUploaded="imageUploadedUpdate"></image-newsletter>
-                    </td>
+                       <!-- Bloc image droite-->
+                       <td v-if="type == 3" width="25" class="resetMarge"></td><!-- space -->
+                       <td v-if="type == 3" valign="top" align="center" width="160" class="resetMarge">
+                           <image-newsletter @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                       </td>
+                   </tr>
 
                 </table>
                 <!-- Bloc content-->
             </div>
             <div class="col-md-5">
-                <form name="blocForm" class="form-horizontal" method="post" :action="url"><input name="_token" :value="_token" type="hidden">
+                <form name="blocForm" method="post" :action="url"><input name="_token" :value="_token" type="hidden">
                     <div class="panel panel-success">
                         <div class="panel-body">
-
+                            <h3>{{ title }}</h3>
                             <div class="form-group">
                                 <label>Titre</label>
                                 <input v-model="create.titre" type="text" required name="titre" class="form-control">
@@ -76,7 +78,7 @@
 
     export default{
 
-        props: ['type','campagne','_token','url'],
+        props: ['type','campagne','_token','url','title'],
         components:{
             'image-newsletter' : ImageNewsletter,
         },

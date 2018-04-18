@@ -14,9 +14,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <build-newsletter type="1" :campagne="{{ $campagne }}" _token="{{ csrf_token() }}" url="{{ url('build/content') }}"></build-newsletter>
-
-                <build-newsletter-models type="5" site="2" :campagne="{{ $campagne }}" _token="{{ csrf_token() }}" url="{{ url('build/content') }}"></build-newsletter-models>
+                <build :blocs="{{ $blocs }}" :campagne="{{ $campagne }}" _token="{{ csrf_token() }}" url="{{ url('build/content') }}"></build>
 
             </div><!-- end 12 col -->
         </div><!-- end row -->

@@ -18,7 +18,27 @@ class ColloqueController extends Controller {
     
 	public function index()
 	{
-        return $this->colloque->getCurrent();
+        $colloques = $this->colloque->getCurrent();
+
+        $colloques = $colloques->map(function ($item, $key) {
+            return [
+                'id'        => $item->id,
+                'droptitle' => $item->titre,
+                'title'     => $item->titre,
+                'abstract'  => $item->sujet,
+                'content'   => $item->remarques,
+                'link'      => url('pubdroit/colloque/').$item->id,
+                'message'   => 'Informations et inscription',
+                'class'     => '',
+                'images'    => [[
+                    'link'  => url('pubdroit/colloque/').$item->id,
+                    'image' => $item->frontend_illustration,
+                    'title' => $item->titre,
+                ]],
+            ];
+        });
+
+        return response()->json( $colloques , 200 );
 	}
     
     public function show($id)

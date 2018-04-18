@@ -142,4 +142,17 @@ class CategorieController extends Controller {
         return response()->json( $references, 200 );
     }
 
+    public function categoriearrets(Request $request){
+
+        $categorie = $this->categorie->find($request->input('id'));
+
+        $arrets = $categorie->arrets->map(function ($item, $key) {
+            return [
+                'id' => $item->id,
+                'reference' => $item->reference,
+            ];
+        })->all();
+
+        return response()->json( $arrets, 200 );
+    }
 }
