@@ -103,7 +103,7 @@ class UploadController extends Controller
                 $constraint->aspectRatio();
                 $constraint->upsize();
             })
-            ->save(public_path('test/').$fileName);
+            ->save(public_path('files/uploads/').$fileName);
 
         return response()->json(['error' => false, 'name' => $fileName]);
     }

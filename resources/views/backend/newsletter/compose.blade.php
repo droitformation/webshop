@@ -10,33 +10,22 @@
         }
     </style>
 
+    <div id="StyleNewsletter" class="onBuild">
+        <!-- Logos -->
+        @include('emails.newsletter.send.logos')
+        <!-- Header -->
+        @include('emails.newsletter.send.header')
+
+        @if(config('newsletter.pdf'))
+            @include('emails.newsletter.send.link')
+        @endif
+    </div>
+
     <div id="appComponent">
         <div class="row">
             <div class="col-md-12">
-<?php
- /*            echo '<pre>';
-                print_r($contents->first());
-                echo '</pre>';exit(); */
-                ?>
 
-                @foreach($contents as $content)
-                    @if($content->type_content == 'model')
-                        <build-newsletter-models type="{{ $content->type_id }}"
-                                                 site="{{ $content->site_id }}"
-                                                 :content="{{ $content }}"
-                                                 :campagne="{{ $campagne }}" _token="{{ csrf_token() }}"
-                                                 url="{{ url('build/content') }}">
-                        </build-newsletter-models>
-                    @else
-                        <build-newsletter type="{{ $content->type_id }}"
-                                          site="{{ $content->site_id }}"
-                                          :model="{{ $content }}"
-                                          :campagne="{{ $campagne }}" _token="{{ csrf_token() }}"
-                                          url="{{ url('build/content') }}">
-                        </build-newsletter>
-                    @endif
-                @endforeach
-
+                <edit-build :contents="{{ $contents }}" :campagne="{{ $campagne }}" _token="{{ csrf_token() }}" url="{{ url('build/content') }}" site="{{ $campagne->newsletter->site_id }}"></edit-build>
                 <build :blocs="{{ $blocs }}" :campagne="{{ $campagne }}" _token="{{ csrf_token() }}" url="{{ url('build/content') }}"></build>
 
             </div><!-- end 12 col -->

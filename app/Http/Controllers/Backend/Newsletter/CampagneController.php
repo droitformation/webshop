@@ -67,12 +67,11 @@ class CampagneController extends Controller
 
         $contents = $campagne->content->map(function ($item, $key) {
             $convert = new \App\Droit\Newsletter\Entities\ContentModel();
-            return $item->setAttribute('model',$convert->setModel($item)->convert());
+            $item->setAttribute('model',$convert->setModel($item)->convert());
+            $item->setAttribute('type_content',$item->type_content);
+            $item->setAttribute('path',secure_asset(config('newsletter.path.upload')).'/');
+            return $item;
         });
-
-/*        echo '<pre>';
-        print_r($contents);
-        echo '</pre>';exit();*/
 
         $blocs = $this->type->getAll();
 
@@ -176,7 +175,7 @@ class CampagneController extends Controller
 
         alert()->success('Campagne édité');
 
-        return redirect('build/campagne/'.$campagne->id);
+        return redirect()->back();
     }
 
     /**

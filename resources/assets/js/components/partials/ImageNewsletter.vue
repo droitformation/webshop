@@ -8,21 +8,24 @@
         <button v-if="image" class="btn btn-success btn-xs" @click="remove">Retirer</button>
     </div>
 </template>
-<style>
-    body{
-        background-color:#ff0000;
-    }
-</style>
+<style></style>
 <script>
 
     export default{
+        props: ['model'],
         data(){
             return{
                 image:null,
                 uploadImage:null
             }
         },
+        mounted: function ()  {
+            this.initialize();
+        },
         methods: {
+            initialize(){
+                this.image = this.model.image ? this.model.path + this.model.image : null;
+            },
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length)

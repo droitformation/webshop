@@ -2,8 +2,22 @@
     <div>
 
         <div v-if="type">
-            <build-newsletter :title="title" v-if="type && isNormal" :type="type" site="2" :campagne="campagne" _token="_token" url="url"></build-newsletter>
-            <build-newsletter-models :title="title" v-if="type && isModel" :type="type" site="2" :campagne="campagne" _token="_token" url="url"></build-newsletter-models>
+            <build-newsletter
+                    mode="create"
+                    :title="title" v-if="type && isNormal"
+                    :type="type" site="2"
+                    :campagne="campagne"
+                    :_token="_token"
+                    @cancel="cancel"
+                    :url="url"></build-newsletter>
+            <build-newsletter-models
+                    mode="create"
+                    :title="title" v-if="type && isModel"
+                    :type="type" site="2"
+                    :campagne="campagne"
+                    :_token="_token"
+                    @cancel="cancel"
+                    :url="url"></build-newsletter-models>
         </div>
 
         <div class="row">
@@ -56,7 +70,11 @@
             selectBloc : function(bloc){
                 this.type = bloc.id;
                 this.title = bloc.titre
-            }
+            },
+            cancel: function(){
+                this.type = null;
+                this.title = ''
+            },
         }
     }
 </script>

@@ -33,6 +33,7 @@ Vue.component('manager', require('./components/Manager.vue'));
 Vue.component('filter-adresse', require('./components/FilterAdresse.vue'));
 Vue.component('list-autocomplete', require('./components/ListAutocomplete.vue'));
 Vue.component('build', require('./components/Build.vue'));
+Vue.component('edit-build', require('./components/EditBuild.vue'));
 Vue.component('build-newsletter', require('./components/BuildNewsletter.vue'));
 Vue.component('build-newsletter-models', require('./components/BuildNewsletterModels.vue'));
 Vue.component('content-newsletter', require('./components/partials/ContentNewsletter.vue'));

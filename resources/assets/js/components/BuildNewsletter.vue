@@ -2,35 +2,40 @@
     <div>
         <div class="row">
             <div class="col-md-7" id="StyleNewsletterCreate">
+
+                <div class="btn-group pull-right" v-if="mode == 'edit'">
+                    <button v-if="model && !isEdit" @click="editMode(model)" class="btn btn-xs btn-warning">éditer</button>
+                    <button v-if="model && !isEdit" @click="deleteContent(model)" class="btn btn-xs btn-danger">x</button>
+                </div>
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
 
                    <tr>
                        <!-- Bloc image gauche-->
                        <td v-if="type == 4" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <image-newsletter @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
                        </td>
                        <td v-if="type == 4" width="25" class="resetMarge"></td><!-- space -->
 
                        <td valign="top" :width="widthTable" class="resetMarge contentForm">
-                           <image-newsletter v-if="(type == 1 || type == 2)" @imageUploaded="imageUploadedUpdate"></image-newsletter>
-                           <h2 v-html="content.titre"></h2>
+                           <image-newsletter v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <h3 v-html="content.titre"></h3>
                            <div v-if="hasText" v-html="content.contenu"></div>
                        </td>
 
                        <!-- Bloc image droite-->
                        <td v-if="type == 3 || type == 10" width="25" class="resetMarge"></td><!-- space -->
                        <td v-if="type == 3 || type == 10" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter v-if="type == 3" @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <image-newsletter v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
                            <img v-if="categorie && type == 10" :src="imgcategorie" class="img-responsive">
                        </td>
                    </tr>
 
                 </table>
                 <!-- Bloc content-->
-                {{ content }}
+
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5" v-show="isEdit || mode == 'create'">
                 <form name="blocForm" method="post" :action="url"><input name="_token" :value="_token" type="hidden">
                     <div class="panel panel-success">
                         <div class="panel-body">
@@ -46,7 +51,7 @@
                             </div>
                             <div class="form-group" v-if="hasText">
                                 <label>Texte</label>
-                                <textarea v-model="content.contenu" required name="contenu" :class="'form-control redactorBuild_' + type" rows="10">{{ content.contenu }}</textarea>
+                                <textarea v-model="content.contenu" required name="contenu" :class="'form-control redactorBuild_' + hash" rows="10">{{ content.contenu }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -54,11 +59,10 @@
                                     <input type="hidden" v-if="uploadImage" :value="uploadImage" name="image">
                                     <input type="hidden" :value="type" name="type_id">
                                     <input type="hidden" :value="campagne.id" name="campagne">
-                                    <div v-if="model">
-                                        <input type="hidden" name="id" :value="model.id" />
-                                    </div>
+                                    <input v-if="model" type="hidden" name="id" :value="model.id" />
+                                    <input v-if="categorie" type="hidden" name="categorie_id" :value="categorie.id" />
                                     <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
-                                    <button type="button" class="btn btn-sm btn-default cancelCreate">Annuler</button>
+                                    <button type="button" @click="close" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +92,7 @@
 
     export default{
 
-        props: ['type','campagne','_token','url','title','model','site'],
+        props: ['type','campagne','_token','url','title','model','site','mode'],
         components:{
             'image-newsletter' : ImageNewsletter,
         },
@@ -103,6 +107,8 @@
                 uploadImage:null,
                 categories: [],
                 categorie: null,
+                isEdit: false,
+                hash: Math.random().toString(36).substring(7)
             }
         },
         computed: {
@@ -115,6 +121,7 @@
             imgcategorie:function(){
                 return this.content.model.image + this.categorie.image;
             }
+
         },
         components:{
         },
@@ -130,11 +137,12 @@
                 }
 
                 this.content = this.model ? this.model : this.create;
+                this.isEdit = !this.content ? true : false;
 
                 this.$nextTick(function(){
                     var self = this;
 
-                    $('.redactorBuild_' + self.type).redactor({
+                    $('.redactorBuild_' + self.hash).redactor({
                         minHeight: 50,
                         maxHeight: 270,
                         lang: 'fr',
@@ -162,6 +170,19 @@
             imageUploadedUpdate(value){
                 console.log(value);
                 this.uploadImage = value;
+            },
+            editMode(model){
+                this.isEdit = true;
+            },
+            close(){
+                this.isEdit = false;
+                if(this.mode == 'create'){
+                    this.model = null;
+                    this.$emit('cancel', this.cancel);
+                }
+            },
+            deleteContent(model){
+                this.$emit('deleteContent', model);
             }
         }
     }

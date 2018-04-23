@@ -2,6 +2,12 @@
     <div>
         <div class="row">
             <div class="col-md-7" id="StyleNewsletterCreate">
+
+                <div class="btn-group pull-right" v-if="mode == 'edit'">
+                    <button v-if="model && !isEdit" @click="editMode(model)" class="btn btn-xs btn-warning">éditer</button>
+                    <button v-if="model && !isEdit" @click="deleteContent(content)" class="btn btn-xs btn-danger">x</button>
+                </div>
+
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
                     <tr v-if="model">
@@ -24,10 +30,9 @@
                     </tr>
                 </table>
                 <!-- Bloc content-->
-                {{ content }}
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5" v-show="isEdit || mode == 'create'">
                 <form name="blocForm" class="form-horizontal" method="post" :action="url"><input name="_token" :value="_token" type="hidden">
                     <div class="panel panel-success">
                         <div class="panel-body">
@@ -72,7 +77,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
-                                <button type="button" class="btn btn-sm btn-default cancelCreate">Annuler</button>
+                                <button type="button" @click="close" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                             </div>
 
                         </div>
@@ -124,7 +129,7 @@
     import draggable from 'vuedraggable';
     export default{
 
-        props: ['type','campagne','_token','url','site','title','content'],
+        props: ['type','campagne','_token','url','site','title','content','mode'],
         components: {
             draggable,
         },
@@ -137,6 +142,7 @@
                 arrets: [],
                 models: [],
                 lists:[],
+                isEdit: false,
             }
         },
         computed: {
@@ -172,7 +178,8 @@
         },
         methods: {
             initialize : function(){
-                this.model = this.content ? this.content.model : null;
+                this.model  = this.content ? this.content.model : null;
+                this.isEdit = !this.content ? true : false;
             },
             getModels: function(route) {
                 var self = this;
@@ -196,7 +203,19 @@
             updateModel(){
                 this.getArretsCategories();
             },
-
+            editMode(model){
+                this.isEdit = true;
+            },
+            close(){
+                this.isEdit = false;
+                if(this.mode == 'create'){
+                    this.model = null;
+                    this.$emit('cancel', this.cancel);
+                }
+            },
+            deleteContent(model){
+                this.$emit('deleteContent', model);
+            }
         }
     }
 </script>
