@@ -64,9 +64,19 @@ class CampagneController extends Controller
     public function compose($id)
     {
         $campagne = $this->campagne->find($id);
-        $blocs    = $this->type->getAll();
 
-        return view('backend.newsletter.compose')->with(['campagne' => $campagne, 'blocs' => $blocs]);
+        $contents = $campagne->content->map(function ($item, $key) {
+            $convert = new \App\Droit\Newsletter\Entities\ContentModel();
+            return $item->setAttribute('model',$convert->setModel($item)->convert());
+        });
+
+/*        echo '<pre>';
+        print_r($contents);
+        echo '</pre>';exit();*/
+
+        $blocs = $this->type->getAll();
+
+        return view('backend.newsletter.compose')->with(['campagne' => $campagne, 'blocs' => $blocs, 'contents' => $contents]);
     }
 
     /**

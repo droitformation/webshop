@@ -14,32 +14,39 @@
 
                        <td valign="top" :width="widthTable" class="resetMarge contentForm">
                            <image-newsletter v-if="(type == 1 || type == 2)" @imageUploaded="imageUploadedUpdate"></image-newsletter>
-                           <h2 v-html="create.titre"></h2>
-                           <div v-if="hasText" v-html="create.contenu"></div>
+                           <h2 v-html="content.titre"></h2>
+                           <div v-if="hasText" v-html="content.contenu"></div>
                        </td>
 
                        <!-- Bloc image droite-->
-                       <td v-if="type == 3" width="25" class="resetMarge"></td><!-- space -->
-                       <td v-if="type == 3" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                       <td v-if="type == 3 || type == 10" width="25" class="resetMarge"></td><!-- space -->
+                       <td v-if="type == 3 || type == 10" valign="top" align="center" width="160" class="resetMarge">
+                           <image-newsletter v-if="type == 3" @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <img v-if="categorie && type == 10" :src="imgcategorie" class="img-responsive">
                        </td>
                    </tr>
 
                 </table>
                 <!-- Bloc content-->
+                {{ content }}
             </div>
             <div class="col-md-5">
                 <form name="blocForm" method="post" :action="url"><input name="_token" :value="_token" type="hidden">
                     <div class="panel panel-success">
                         <div class="panel-body">
                             <h3>{{ title }}</h3>
+                            <div v-if="type == 10">
+                                <select class="form-control form-required required" v-model="categorie" name="id">
+                                    <option v-for="categorie in categories" v-bind:value="categorie">{{ categorie.title }}</option>
+                                </select><br/>
+                            </div>
                             <div class="form-group">
                                 <label>Titre</label>
-                                <input v-model="create.titre" type="text" required name="titre" class="form-control">
+                                <input v-model="content.titre" type="text" required name="titre" class="form-control">
                             </div>
                             <div class="form-group" v-if="hasText">
                                 <label>Texte</label>
-                                <textarea v-model="create.contenu" required name="contenu" :class="'form-control redactorBuild_' + type" rows="10">{{ create.contenu }}</textarea>
+                                <textarea v-model="content.contenu" required name="contenu" :class="'form-control redactorBuild_' + type" rows="10">{{ content.contenu }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -47,6 +54,9 @@
                                     <input type="hidden" v-if="uploadImage" :value="uploadImage" name="image">
                                     <input type="hidden" :value="type" name="type_id">
                                     <input type="hidden" :value="campagne.id" name="campagne">
+                                    <div v-if="model">
+                                        <input type="hidden" name="id" :value="model.id" />
+                                    </div>
                                     <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
                                     <button type="button" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                                 </div>
@@ -78,7 +88,7 @@
 
     export default{
 
-        props: ['type','campagne','_token','url','title'],
+        props: ['type','campagne','_token','url','title','model','site'],
         components:{
             'image-newsletter' : ImageNewsletter,
         },
@@ -88,8 +98,11 @@
                    titre : '',
                    contenu : ''
                 },
+                content: {},
                 image:null,
-                uploadImage:null
+                uploadImage:null,
+                categories: [],
+                categorie: null,
             }
         },
         computed: {
@@ -98,6 +111,9 @@
             },
             hasText: function () {
                 return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
+            },
+            imgcategorie:function(){
+                return this.content.model.image + this.categorie.image;
             }
         },
         components:{
@@ -107,6 +123,13 @@
         },
         methods: {
             initialize : function(){
+
+                if(this.type == 10){
+                    this.getCategories();
+                    this.categorie = this.model ? this.model.categorie : null;
+                }
+
+                this.content = this.model ? this.model : this.create;
 
                 this.$nextTick(function(){
                     var self = this;
@@ -124,11 +147,17 @@
                         buttons  : ['html','formatting','bold','italic','link','image','file','|','unorderedlist','orderedlist'],
                         blurCallback:function(e){
                             var text = this.code.get();
-                            self.create.contenu = this.code.get();
+                            self.content.contenu = this.code.get();
                         }
                     });
 
                 });
+            },
+            getCategories: function() {
+                var self = this;
+                axios.get('admin/ajax/categories/' + self.site).then(function (response) {
+                     self.categories = response.data;
+                }).catch(function (error) { console.log(error);});
             },
             imageUploadedUpdate(value){
                 console.log(value);

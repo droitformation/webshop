@@ -21,24 +21,11 @@ class ProductController extends Controller {
         $products = $this->product->getAll();
 
         $products = $products->map(function ($item, $key) {
-            return [
-                'id'        => $item->id,
-                'droptitle' => $item->title,
-                'title'     => $item->title,
-                'abstract'  => $item->teaser,
-                'content'   => $item->description,
-                'link'      => url('pubdroit/product/').$item->id,
-                'message'   => 'Acheter',
-                'class'     => '',
-                'images'    => [[
-                    'link'  => url('pubdroit/product/').$item->id,
-                    'image' => !empty($item->image) ? secure_asset('files/products/'.$item->image) : null,
-                    'title' => $item->title,
-                ]],
-            ];
+            $convert = new \App\Droit\Newsletter\Entities\ContentModel();
+            return $convert->product($item);
         });
 
-        return response()->json( $products , 200 );
+        return response()->json($products , 200 );
 	}
     
     public function show($id)

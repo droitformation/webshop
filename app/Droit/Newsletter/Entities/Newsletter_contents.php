@@ -27,6 +27,11 @@ class Newsletter_contents extends Model {
         }
     }
 
+    public function getTypeContentAttribute()
+    {
+        return in_array($this->type_id, [1,2,3,4,6,10]) ? 'content' : 'model';
+    }
+
     public function getLinkOrUrlAttribute()
     {
         $file = config('newsletter.path.upload').$this->lien;
@@ -51,6 +56,11 @@ class Newsletter_contents extends Model {
     public function type(){
 
         return $this->belongsTo('App\Droit\Newsletter\Entities\Newsletter_types');
+    }
+
+    public function categorie(){
+
+        return $this->belongsTo('App\Droit\Categorie\Entities\Categorie');
     }
 
     // Has to be defined in configuration 

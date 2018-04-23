@@ -13,6 +13,29 @@
     <div id="appComponent">
         <div class="row">
             <div class="col-md-12">
+<?php
+ /*            echo '<pre>';
+                print_r($contents->first());
+                echo '</pre>';exit(); */
+                ?>
+
+                @foreach($contents as $content)
+                    @if($content->type_content == 'model')
+                        <build-newsletter-models type="{{ $content->type_id }}"
+                                                 site="{{ $content->site_id }}"
+                                                 :content="{{ $content }}"
+                                                 :campagne="{{ $campagne }}" _token="{{ csrf_token() }}"
+                                                 url="{{ url('build/content') }}">
+                        </build-newsletter-models>
+                    @else
+                        <build-newsletter type="{{ $content->type_id }}"
+                                          site="{{ $content->site_id }}"
+                                          :model="{{ $content }}"
+                                          :campagne="{{ $campagne }}" _token="{{ csrf_token() }}"
+                                          url="{{ url('build/content') }}">
+                        </build-newsletter>
+                    @endif
+                @endforeach
 
                 <build :blocs="{{ $blocs }}" :campagne="{{ $campagne }}" _token="{{ csrf_token() }}" url="{{ url('build/content') }}"></build>
 

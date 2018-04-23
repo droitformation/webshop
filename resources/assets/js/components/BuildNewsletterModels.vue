@@ -24,6 +24,7 @@
                     </tr>
                 </table>
                 <!-- Bloc content-->
+                {{ content }}
             </div>
 
             <div class="col-md-5">
@@ -123,7 +124,7 @@
     import draggable from 'vuedraggable';
     export default{
 
-        props: ['type','campagne','_token','url','site','title'],
+        props: ['type','campagne','_token','url','site','title','content'],
         components: {
             draggable,
         },
@@ -140,18 +141,14 @@
         },
         computed: {
             route: function () {
-
-                if(this.type == 5){
-                    return "admin/ajax/arrets/" + this.site;
-                }
-
-                if(this.type == 8){
-                    return "admin/ajax/product";
-                }
-
-                if(this.type == 9){
-                    return "admin/ajax/colloque";
-                }
+                if(this.type == 5){ return "admin/ajax/arrets/" + this.site; }
+                if(this.type == 8){ return "admin/ajax/product"; }
+                if(this.type == 9){ return "admin/ajax/colloque"; }
+            },
+            selected: function () {
+                if(this.type == 5){ this.content.arret }
+                if(this.type == 8){ this.content.product }
+                if(this.type == 9){ this.content.colloque }
             },
             prepared: function () {
                 var arr = [];
@@ -171,8 +168,12 @@
         mounted: function ()  {
             this.getModels(this.route);
             this.getCategories();
+            this.initialize();
         },
         methods: {
+            initialize : function(){
+                this.model = this.content ? this.content.model : null;
+            },
             getModels: function(route) {
                 var self = this;
                 axios.get(route).then(function (response) {
