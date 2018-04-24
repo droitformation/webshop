@@ -27,7 +27,7 @@ class ArretController extends Controller {
             $request->input('site'), [
                 'categories' => $request->input('categories',[]),
                 'years'      => $request->input('years',[]),
-                'display'    => $request->input('display',null)
+                'display'    => $request->input('display') > 0 ? true : null
             ]
         );
 
