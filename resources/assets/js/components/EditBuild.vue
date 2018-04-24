@@ -14,6 +14,16 @@
                                          :url="url">
                 </build-newsletter-models>
 
+                <build-newsletter-group v-if="content.type_content == 'group'"
+                                         :type="content.type_id"
+                                         :site="site"
+                                         :content="content"
+                                         :campagne="campagne" _token="_token"
+                                         @deleteContent="deleteContentBloc"
+                                         :_token="_token"
+                                         :url="url">
+                </build-newsletter-group>
+
                 <build-newsletter v-if="content.type_content == 'content'"
                                          :type="content.type_id"
                                          :site="site"

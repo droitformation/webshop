@@ -13,12 +13,12 @@
                    <tr>
                        <!-- Bloc image gauche-->
                        <td v-if="type == 4" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
+                           <image-newsletter :type="type" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
                        </td>
                        <td v-if="type == 4" width="25" class="resetMarge"></td><!-- space -->
 
                        <td valign="top" :width="widthTable" class="resetMarge contentForm">
-                           <image-newsletter v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <image-newsletter :type="type" v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
                            <h3 v-html="content.titre"></h3>
                            <div v-if="hasText" v-html="content.contenu"></div>
                        </td>
@@ -26,8 +26,8 @@
                        <!-- Bloc image droite-->
                        <td v-if="type == 3 || type == 10" width="25" class="resetMarge"></td><!-- space -->
                        <td v-if="type == 3 || type == 10" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
-                           <img v-if="categorie && type == 10" :src="imgcategorie" class="img-responsive">
+                           <image-newsletter :type="type" v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
+                           <img v-if="categorie && type == 10" :src="content.model.path + categorie.image" class="img-responsive">
                        </td>
                    </tr>
 
@@ -35,16 +35,21 @@
                 <!-- Bloc content-->
 
             </div>
-            <div class="col-md-5" v-show="isEdit || mode == 'create'">
-                <form name="blocForm" method="post" :action="url"><input name="_token" :value="_token" type="hidden">
+            <div class="col-md-5 edit_bloc_form" v-show="isEdit || mode == 'create'">
+                <form name="blocForm" method="post" :action="action">
+
+                    <input name="_token" :value="_token" type="hidden">
+                    <input v-if="mode == 'edit'" type="hidden" name="_method" value="PUT">
                     <div class="panel panel-success">
                         <div class="panel-body">
                             <h3>{{ title }}</h3>
+
                             <div v-if="type == 10">
                                 <select class="form-control form-required required" v-model="categorie" name="id">
                                     <option v-for="categorie in categories" v-bind:value="categorie">{{ categorie.title }}</option>
                                 </select><br/>
                             </div>
+
                             <div class="form-group">
                                 <label>Titre</label>
                                 <input v-model="content.titre" type="text" required name="titre" class="form-control">
@@ -73,6 +78,21 @@
     </div>
 </template>
 <style>
+    #StyleNewsletterCreate{
+        margin-top:5px;
+    }
+    .edit_bloc_form::before{
+        color: #85c744;
+        content: "◄";
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        height: 10px;
+        left: -2px;
+        position: absolute;
+        top: 0px;
+        width: 5px;
+    }
     .upload-btn-wrapper {
       position: relative;
       overflow: hidden;
@@ -85,6 +105,9 @@
       left: 0;
       top: 0;
       opacity: 0;
+    }
+    .margeUp{
+        margin-top:5px;
     }
 </style>
 <script>
@@ -119,9 +142,12 @@
                 return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
             },
             imgcategorie:function(){
-                return this.content.model.image + this.categorie.image;
-            }
-
+                return this.content ? this.content.model.image + this.categorie.image : '';
+            },
+            action:function(){
+                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }
+                if(this.mode == 'create'){ return this.url; }
+            },
         },
         components:{
         },

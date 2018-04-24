@@ -1,6 +1,8 @@
 <template>
     <div>
-        <img v-if="image" :src="image" class="img-responsive">
+        <div v-if="image"><img :src="image" class="img-responsive"></div>
+        <div v-if="!image"><img :src="size" /></div>
+
         <div class="upload-btn-wrapper" v-if="!image">
             <button class="btn btn-info btn-xs">Sélectionner image</button>
             <input type="file" v-on:change="onFileChange" class="form-control">
@@ -12,19 +14,26 @@
 <script>
 
     export default{
-        props: ['model'],
+        props: ['model','type'],
         data(){
             return{
                 image:null,
-                uploadImage:null
+                uploadImage:null,
+                big: 'http://www.placehold.it/560x200/EFEFEF/AAAAAA&text=image',
+                small: 'http://www.placehold.it/130x140/EFEFEF/AAAAAA&text=image',
             }
         },
         mounted: function ()  {
             this.initialize();
         },
+        computed: {
+            size : function(){
+                return this.type == 3 || this.type == 4 ? this.small : this.big;
+            }
+        },
         methods: {
             initialize(){
-                this.image = this.model.image ? this.model.path + this.model.image : null;
+                this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
             },
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;

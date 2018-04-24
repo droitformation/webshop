@@ -26,6 +26,10 @@ class ContentModel
             return $this->colloque($this->item->colloque);
         }
 
+        if($this->item->type_id == 7){
+            return $this->group($this->item);
+        }
+
         if($this->item->type_id == 10){
             return $this->picto($this->item);
         }
@@ -101,10 +105,38 @@ class ContentModel
             'abstract'  => '',
             'content'   => $model->contenu,
             'link'      => null,
-            'image'     => secure_asset(config('newsletter.path.categorie')).'/',
+            'path'     => secure_asset(config('newsletter.path.categorie')).'/',
             'message'   => null,
             'class'     => '',
             'categorie' => $model->categorie
         ];
+    }
+
+    public function group($model)
+    {
+        $arrets = isset($model->groupe) && !$model->groupe->arrets->isEmpty() ? $model->groupe->arrets : collect([]);
+
+        return [
+            'id'        => $model->id,
+            'droptitle' => null,
+            'title'     => $model->titre,
+            'abstract'  => '',
+            'content'   => $model->contenu,
+            'link'      => null,
+            'image'     => secure_asset(config('newsletter.path.categorie')).'/',
+            'message'   => null,
+            'class'     => '',
+            'categorie' => $model->groupe->categorie,
+            'arrets'    => $arrets->map(function ($arret, $key) {
+                return $this->arret($arret);
+             }),
+            'choosen'   => $arrets->map(function ($arret, $key) {
+                return [
+                    'id' => $arret->id,
+                    'reference' => $arret->reference,
+                ];
+            })
+        ];
+
     }
 }

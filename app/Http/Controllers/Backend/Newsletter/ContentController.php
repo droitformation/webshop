@@ -70,7 +70,6 @@ class ContentController extends Controller
 
         alert()->success('Bloc édité');
 
-       // return redirect('build/campagne/'.$contents->newsletter_campagne_id.'#componant');
         return redirect(url()->previous().'#componant');
     }
 

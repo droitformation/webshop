@@ -95,13 +95,14 @@ class NewsletterContentEloquent implements NewsletterContentInterface{
 
         if($data['type_id'] == 7)
         {
-            $helper = new Helper();
-            $arrets = $helper->prepareCategories($data['arrets']);
-
             $model = new \App\Droit\Arret\Entities\Groupe();
 
             $groupe = $model->create(['categorie_id' => $data['categorie_id']]);
-            $groupe->arrets()->sync($arrets);
+            $results = collect($data['arrets'])->mapWithKeys(function ($id, $key){
+                return [$id => ['sorting' => $key]];
+            })->all();
+
+            $groupe->arrets()->attach($results);
 
             $contents->groupe_id = $groupe->id;
             $contents->save();
@@ -137,7 +138,19 @@ class NewsletterContentEloquent implements NewsletterContentInterface{
 
         $contents->updated_at = date('Y-m-d G:i:s');
 		$contents->save();
-		
+
+        if(isset($data['arrets']) && !empty($data['arrets'])) {
+
+            $model  = new \App\Droit\Arret\Entities\Groupe();
+            $groupe = $model->find($data['groupe_id']);
+
+            $results = collect($data['arrets'])->mapWithKeys(function ($id, $key) use ($groupe) {
+                return [$id => ['sorting' => $key]];
+            })->all();
+
+            return $groupe->arrets()->sync($results);
+        }
+
 		return $contents;
 	}
 

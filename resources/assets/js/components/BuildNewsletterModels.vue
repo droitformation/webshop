@@ -33,7 +33,10 @@
             </div>
 
             <div class="col-md-5" v-show="isEdit || mode == 'create'">
-                <form name="blocForm" class="form-horizontal" method="post" :action="url"><input name="_token" :value="_token" type="hidden">
+                <form name="blocForm" class="form-horizontal" method="post" :action="action">
+
+                    <input name="_token" :value="_token" type="hidden">
+                    <input v-if="mode == 'edit'" type="hidden" name="_method" value="PUT">
                     <div class="panel panel-success">
                         <div class="panel-body">
                             <h3>{{ title }}</h3>
@@ -155,6 +158,10 @@
                 if(this.type == 5){ this.content.arret }
                 if(this.type == 8){ this.content.product }
                 if(this.type == 9){ this.content.colloque }
+            },
+            action:function(){
+                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }
+                if(this.mode == 'create'){ return this.url; }
             },
             prepared: function () {
                 var arr = [];
