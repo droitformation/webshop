@@ -13,12 +13,12 @@
                    <tr>
                        <!-- Bloc image gauche-->
                        <td v-if="type == 4" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter :type="type" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
+                           <image-newsletter :mode="mode" :type="type" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
                        </td>
                        <td v-if="type == 4" width="25" class="resetMarge"></td><!-- space -->
 
                        <td valign="top" :width="widthTable" class="resetMarge contentForm">
-                           <image-newsletter :type="type" v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <image-newsletter :mode="mode" :type="type" v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
                            <h3 v-html="content.titre"></h3>
                            <div v-if="hasText" v-html="content.contenu"></div>
                        </td>
@@ -26,7 +26,7 @@
                        <!-- Bloc image droite-->
                        <td v-if="type == 3 || type == 10" width="25" class="resetMarge"></td><!-- space -->
                        <td v-if="type == 3 || type == 10" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter :type="type" v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
+                           <image-newsletter :mode="mode" :type="type" v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
                            <img v-if="categorie && type == 10" :src="imgcategorie" class="img-responsive">
                        </td>
                    </tr>

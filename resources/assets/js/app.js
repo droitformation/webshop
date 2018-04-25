@@ -37,7 +37,7 @@ Vue.component('edit-build', require('./components/EditBuild.vue'));
 Vue.component('build-newsletter', require('./components/BuildNewsletter.vue'));
 Vue.component('build-newsletter-models', require('./components/BuildNewsletterModels.vue'));
 Vue.component('build-newsletter-group', require('./components/BuildNewsletterGroup.vue'));
-Vue.component('content-newsletter', require('./components/partials/ContentNewsletter.vue'));
+Vue.component('analyse-newsletter', require('./components/partials/AnalyseNewsletter.vue'));
 Vue.component('image-newsletter', require('./components/partials/ImageNewsletter.vue'));
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';

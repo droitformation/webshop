@@ -42,6 +42,7 @@ class ContentModel
         return [
             'id'        =>  $arret->id,
             'droptitle' =>  $arret->reference,
+            'reference'  => $arret->reference,
             'title'     =>  $arret->title,
             'abstract'   => $arret->abstract,
             'content'   =>  $arret->pub_text,
@@ -55,6 +56,22 @@ class ContentModel
                     'title' => $categorie->title,
                 ];
             }),
+            'analyses' => $arret->analyses->map(function ($analyse, $key) {
+                return [
+                    'id'         => $analyse->id,
+                    'path'       => secure_asset(config('newsletter.path.categorie').$analyse->site->slug.'/analyse.jpg'),
+                    'date'       => utf8_encode($analyse->pub_date->formatLocalized('%d %B %Y')),
+                    'auteurs'    => $analyse->authors->map(function ($author, $key) {
+                        return [
+                            'name' => $author->name,
+                            'occupation' => $author->occupation,
+                            'author_photo' => secure_asset(config('newsletter.path.author').$author->author_photo),
+                        ];
+                    }),
+                    'abstract'   => $analyse->abstract,
+                    'document'   => $analyse->document ? secure_asset('files/analyses/'.$analyse->file) : null,
+                ];
+            })
         ];
     }
 

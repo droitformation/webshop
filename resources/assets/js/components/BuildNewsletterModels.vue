@@ -8,6 +8,8 @@
                     <button v-if="model && !isEdit" @click="deleteContent(content)" class="btn btn-xs btn-danger">x</button>
                 </div>
 
+                <analyse-newsletter v-if="model && type == 5 && site != 4" :arret="model" :analyses="model.analyses"></analyse-newsletter>
+
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
                     <tr v-if="model">
@@ -30,6 +32,9 @@
                     </tr>
                 </table>
                 <!-- Bloc content-->
+
+                <analyse-newsletter v-if="model && type == 5 && site == 4" :arret="model" :analyses="model.analyses"></analyse-newsletter>
+
             </div>
 
             <div class="col-md-5" v-show="isEdit || mode == 'create'">
@@ -62,7 +67,7 @@
                             </div>
                             <div v-if="type != 7">
                                 <select class="form-control form-required required" v-model="model" name="id" v-on:change="updateModel">
-                                    <option :value="null" disabled>Sélectionner</option>
+                                    <option v-if="!model" :value="null" disabled>Sélectionner</option>
                                     <option v-for="model in models" v-bind:value="model">{{ model.title }}</option>
                                 </select><br/>
                             </div>
@@ -133,11 +138,14 @@
 <script>
 
     import draggable from 'vuedraggable';
+    import AnalyseNewsletter from './partials/AnalyseNewsletter.vue';
+
     export default{
 
         props: ['type','campagne','_token','url','site','title','content','mode'],
         components: {
             draggable,
+            'analyse-newsletter' : AnalyseNewsletter,
         },
         data(){
             return{
