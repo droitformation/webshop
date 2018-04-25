@@ -108,7 +108,12 @@ class ContentModel
             'path'     => secure_asset(config('newsletter.path.categorie')).'/',
             'message'   => null,
             'class'     => '',
-            'categorie' => $model->categorie
+            'categorie' =>  [
+                'id'    => $model->categorie->id,
+                'title' => $model->categorie->title,
+                'image' => $model->categorie->image,
+                'path'  => secure_asset(config('newsletter.path.categorie').$model->categorie->image),
+            ]
         ];
     }
 
@@ -126,7 +131,12 @@ class ContentModel
             'image'     => secure_asset(config('newsletter.path.categorie')).'/',
             'message'   => null,
             'class'     => '',
-            'categorie' => $model->groupe->categorie,
+            'categorie' =>  [
+                'id'    => $model->groupe->categorie->id,
+                'title' => $model->groupe->categorie->title,
+                'image' => $model->groupe->categorie->image,
+                'path'  => secure_asset(config('newsletter.path.categorie').$model->groupe->categorie->image),
+            ],
             'arrets'    => $arrets->map(function ($arret, $key) {
                 return $this->arret($arret);
              }),

@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col-md-7" id="StyleNewsletterCreate">
 
-                <div class="btn-group pull-right" v-if="mode == 'edit'">
-                    <button v-if="model && !isEdit" @click="editMode(model)" class="btn btn-xs btn-warning">éditer</button>
-                    <button v-if="model && !isEdit" @click="deleteContent(model)" class="btn btn-xs btn-danger">x</button>
+                <div class="btn-group pull-right" v-if="content && mode == 'edit'">
+                    <button v-if="model && !isEdit" @click="editMode(content)" class="btn btn-xs btn-warning">éditer</button>
+                    <button v-if="model && !isEdit" @click="deleteContent(content)" class="btn btn-xs btn-danger">x</button>
                 </div>
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
@@ -27,13 +27,12 @@
                        <td v-if="type == 3 || type == 10" width="25" class="resetMarge"></td><!-- space -->
                        <td v-if="type == 3 || type == 10" valign="top" align="center" width="160" class="resetMarge">
                            <image-newsletter :type="type" v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
-                           <img v-if="categorie && type == 10" :src="content.model.path + categorie.image" class="img-responsive">
+                           <img v-if="categorie && type == 10" :src="imgcategorie" class="img-responsive">
                        </td>
                    </tr>
 
                 </table>
                 <!-- Bloc content-->
-
             </div>
             <div class="col-md-5 edit_bloc_form" v-show="isEdit || mode == 'create'">
                 <form name="blocForm" method="post" :action="action">
@@ -46,6 +45,7 @@
 
                             <div v-if="type == 10">
                                 <select class="form-control form-required required" v-model="categorie" name="id">
+                                    <option v-if="!categorie" :value="null" disabled>Sélectionner catégorie</option>
                                     <option v-for="categorie in categories" v-bind:value="categorie">{{ categorie.title }}</option>
                                 </select><br/>
                             </div>
@@ -62,6 +62,7 @@
                             <div class="form-group">
                                 <div class="btn-group">
                                     <input type="hidden" v-if="uploadImage" :value="uploadImage" name="image">
+                                    <input type="hidden" v-if="categorie" :value="categorie.image" name="image">
                                     <input type="hidden" :value="type" name="type_id">
                                     <input type="hidden" :value="campagne.id" name="campagne">
                                     <input v-if="model" type="hidden" name="id" :value="model.id" />
@@ -105,6 +106,7 @@
       left: 0;
       top: 0;
       opacity: 0;
+            cursor:pointer;
     }
     .margeUp{
         margin-top:5px;
@@ -142,7 +144,7 @@
                 return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
             },
             imgcategorie:function(){
-                return this.content ? this.content.model.image + this.categorie.image : '';
+                return this.model ? this.content.model.path + this.categorie.image : this.categorie.path;
             },
             action:function(){
                 if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }
@@ -163,7 +165,7 @@
                 }
 
                 this.content = this.model ? this.model : this.create;
-                this.isEdit = !this.content ? true : false;
+                this.isEdit  = !this.content ? true : false;
 
                 this.$nextTick(function(){
                     var self = this;
@@ -191,10 +193,10 @@
                 var self = this;
                 axios.get('admin/ajax/categories/' + self.site).then(function (response) {
                      self.categories = response.data;
+                     self.categorie = self.content ? self.content.model.categorie : null;
                 }).catch(function (error) { console.log(error);});
             },
             imageUploadedUpdate(value){
-                console.log(value);
                 this.uploadImage = value;
             },
             editMode(model){
@@ -202,6 +204,7 @@
             },
             close(){
                 this.isEdit = false;
+                this.initialize();
                 if(this.mode == 'create'){
                     this.model = null;
                     this.$emit('cancel', this.cancel);

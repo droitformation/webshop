@@ -40,8 +40,10 @@
                     <div class="panel panel-success">
                         <div class="panel-body">
                             <h3>{{ title }}</h3>
+
                             <div v-if="type == 7">
                                 <select class="form-control form-required required" v-model="categorie" name="id" v-on:change="updateModel">
+                                    <option v-if="!categorie" :value="null" disabled>Sélectionner catégorie</option>
                                     <option v-for="categorie in categories" v-bind:value="categorie">{{ categorie.title }}</option>
                                 </select><br/>
 
@@ -60,6 +62,7 @@
                             </div>
                             <div v-if="type != 7">
                                 <select class="form-control form-required required" v-model="model" name="id" v-on:change="updateModel">
+                                    <option :value="null" disabled>Sélectionner</option>
                                     <option v-for="model in models" v-bind:value="model">{{ model.title }}</option>
                                 </select><br/>
                             </div>
@@ -215,6 +218,7 @@
             },
             close(){
                 this.isEdit = false;
+                this.initialize();
                 if(this.mode == 'create'){
                     this.model = null;
                     this.$emit('cancel', this.cancel);

@@ -2930,6 +2930,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2963,7 +2965,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return this.type == 2 || this.type == 3 || this.type == 4 || this.type == 6 || this.type == 10 ? true : false;
         },
         imgcategorie: function imgcategorie() {
-            return this.content ? this.content.model.image + this.categorie.image : '';
+            return this.model ? this.content.model.path + this.categorie.image : this.categorie.path;
         },
         action: function action() {
             if (this.mode == 'edit') {
@@ -3011,12 +3013,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var self = this;
         axios.get('admin/ajax/categories/' + self.site).then(function (response) {
             self.categories = response.data;
+            self.categorie = self.content ? self.content.model.categorie : null;
         }).catch(function (error) {
             console.log(error);
         });
     },
     imageUploadedUpdate: function imageUploadedUpdate(value) {
-        console.log(value);
         this.uploadImage = value;
     },
     editMode: function editMode(model) {
@@ -3024,6 +3026,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     close: function close() {
         this.isEdit = false;
+        this.initialize();
         if (this.mode == 'create') {
             this.model = null;
             this.$emit('cancel', this.cancel);
@@ -3221,6 +3224,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('admin/ajax/categories/' + self.site).then(function (response) {
                 self.categories = response.data;
                 self.lists.push(self.categories);
+                self.categorie = self.content ? self.content.model.categorie : null;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -3257,6 +3261,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
+//
+//
+//
 //
 //
 //
@@ -3497,6 +3504,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         close: function close() {
             this.isEdit = false;
+            this.initialize();
             if (this.mode == 'create') {
                 this.model = null;
                 this.$emit('cancel', this.cancel);
@@ -5655,7 +5663,7 @@ exports.push([module.i, "\n.max{\n    max-height:80px;\n}\n.form-group-border{\n
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n#StyleNewsletterCreate{\n    margin-top:5px;\n}\n.edit_bloc_form::before{\n    color: #85c744;\n    content: \"◄\";\n    display: block;\n    font-size: 14px;\n    font-weight: bold;\n    height: 10px;\n    left: -2px;\n    position: absolute;\n    top: 0px;\n    width: 5px;\n}\n.upload-btn-wrapper {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n}\n.upload-btn-wrapper input[type=file] {\n  font-size: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  opacity: 0;\n}\n.margeUp{\n    margin-top:5px;\n}\n", ""]);
+exports.push([module.i, "\n#StyleNewsletterCreate{\n    margin-top:5px;\n}\n.edit_bloc_form::before{\n    color: #85c744;\n    content: \"◄\";\n    display: block;\n    font-size: 14px;\n    font-weight: bold;\n    height: 10px;\n    left: -2px;\n    position: absolute;\n    top: 0px;\n    width: 5px;\n}\n.upload-btn-wrapper {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n}\n.upload-btn-wrapper input[type=file] {\n  font-size: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  opacity: 0;\n        cursor:pointer;\n}\n.margeUp{\n    margin-top:5px;\n}\n", ""]);
 
 /***/ }),
 /* 66 */
@@ -27745,13 +27753,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.categorie = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }, _vm.updateModel]
     }
-  }, _vm._l((_vm.categories), function(categorie) {
+  }, [(!_vm.categorie) ? _c('option', {
+    attrs: {
+      "disabled": ""
+    },
+    domProps: {
+      "value": null
+    }
+  }, [_vm._v("Sélectionner catégorie")]) : _vm._e(), _vm._v(" "), _vm._l((_vm.categories), function(categorie) {
     return _c('option', {
       domProps: {
         "value": categorie
       }
     }, [_vm._v(_vm._s(categorie.title))])
-  })), _c('br'), _vm._v(" "), _c('div', {
+  })], 2), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "row drag"
   }, [_c('div', {
     staticClass: "col-md-6"
@@ -27815,13 +27830,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.model = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }, _vm.updateModel]
     }
-  }, _vm._l((_vm.models), function(model) {
+  }, [_c('option', {
+    attrs: {
+      "disabled": ""
+    },
+    domProps: {
+      "value": null
+    }
+  }, [_vm._v("Sélectionner")]), _vm._v(" "), _vm._l((_vm.models), function(model) {
     return _c('option', {
       domProps: {
         "value": model
       }
     }, [_vm._v(_vm._s(model.title))])
-  })), _c('br')]) : _vm._e(), _vm._v(" "), _c('div', {
+  })], 2), _c('br')]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "btn-group"
   }, [_c('input', {
     attrs: {
@@ -28682,20 +28704,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "StyleNewsletterCreate"
     }
-  }, [(_vm.mode == 'edit') ? _c('div', {
+  }, [(_vm.content && _vm.mode == 'edit') ? _c('div', {
     staticClass: "btn-group pull-right"
   }, [(_vm.model && !_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-xs btn-warning",
     on: {
       "click": function($event) {
-        _vm.editMode(_vm.model)
+        _vm.editMode(_vm.content)
       }
     }
   }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), (_vm.model && !_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-xs btn-danger",
     on: {
       "click": function($event) {
-        _vm.deleteContent(_vm.model)
+        _vm.deleteContent(_vm.content)
       }
     }
   }, [_vm._v("x")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('table', {
@@ -28772,7 +28794,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e(), _vm._v(" "), (_vm.categorie && _vm.type == 10) ? _c('img', {
     staticClass: "img-responsive",
     attrs: {
-      "src": _vm.content.model.path + _vm.categorie.image
+      "src": _vm.imgcategorie
     }
   }) : _vm._e()], 1) : _vm._e()])])]), _vm._v(" "), _c('div', {
     directives: [{
@@ -28828,13 +28850,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.categorie = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, _vm._l((_vm.categories), function(categorie) {
+  }, [(!_vm.categorie) ? _c('option', {
+    attrs: {
+      "disabled": ""
+    },
+    domProps: {
+      "value": null
+    }
+  }, [_vm._v("Sélectionner catégorie")]) : _vm._e(), _vm._v(" "), _vm._l((_vm.categories), function(categorie) {
     return _c('option', {
       domProps: {
         "value": categorie
       }
     }, [_vm._v(_vm._s(categorie.title))])
-  })), _c('br')]) : _vm._e(), _vm._v(" "), _c('div', {
+  })], 2), _c('br')]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', [_vm._v("Titre")]), _vm._v(" "), _c('input', {
     directives: [{
@@ -28893,6 +28922,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     domProps: {
       "value": _vm.uploadImage
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.categorie) ? _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "image"
+    },
+    domProps: {
+      "value": _vm.categorie.image
     }
   }) : _vm._e(), _vm._v(" "), _c('input', {
     attrs: {
@@ -29648,7 +29685,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-success"
   }, [_c('div', {
     staticClass: "panel-body"
-  }, [_c('h3', [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), (_vm.categorie) ? _c('select', {
+  }, [_c('h3', [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -29670,13 +29707,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.categorie = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }, _vm.updateModel]
     }
-  }, _vm._l((_vm.categories), function(categorie) {
+  }, [_c('option', {
+    attrs: {
+      "disabled": ""
+    },
+    domProps: {
+      "value": null
+    }
+  }, [_vm._v("Sélectionner")]), _vm._v(" "), _vm._l((_vm.categories), function(categorie) {
     return _c('option', {
       domProps: {
         "value": categorie
       }
     }, [_vm._v(_vm._s(categorie.title))])
-  })) : _vm._e(), _c('br'), _vm._v(" "), _c('div', {
+  })], 2), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "row drag"
   }, [_c('div', {
     staticClass: "col-md-6"

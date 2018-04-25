@@ -16,9 +16,7 @@
                             <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ categorie.title }}</h3>
                         </td>
                         <td valign="top" align="center" width="160" class="resetMarge">
-                            <p>
-                                <img width="130" border="0" :alt="categorie.title" :src="content.model.image + '/' + categorie.image">
-                            </p>
+                            <p><img width="130" border="0" :alt="categorie.title" :src="content.model.image + '/' + categorie.image"></p>
                         </td>
                     </tr><!-- space -->
                     <tr bgcolor="ffffff"><td height="15"></td></tr><!-- space -->
@@ -47,6 +45,7 @@
                         </tr>
                     </table>
                     <!-- Bloc content-->
+
                 </div>
             </div>
 
@@ -58,7 +57,8 @@
                         <div class="panel-body">
                             <h3>{{ title }}</h3>
 
-                            <select v-if="categorie" class="form-control form-required required" v-model="categorie" name="id" v-on:change="updateModel">
+                            <select class="form-control form-required required" v-model="categorie" name="id" v-on:change="updateModel">
+                                <option :value="null" disabled>Sélectionner</option>
                                 <option v-for="categorie in categories" v-bind:value="categorie">{{ categorie.title }}</option>
                             </select><br/>
 
@@ -81,7 +81,7 @@
                                 <input v-if="categorie" type="hidden" :value="categorie.id" name="categorie_id">
                                 <input type="hidden" :value="content.groupe_id" name="groupe_id">
                                 <input v-for="chose in choosen" type="hidden" name="arrets[]" :value="chose.id" />
-                                <input  type="hidden" name="id" :value="content.id" />
+                                <input type="hidden" name="id" :value="content.id" />
                                 <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
                                 <button type="button" @click="close" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                             </div>
@@ -176,6 +176,7 @@
                 axios.get('admin/ajax/categories/' + self.site).then(function (response) {
                       self.categories = response.data;
                       self.lists.push(self.categories);
+                      self.categorie = self.content ? self.content.model.categorie : null;
                 }).catch(function (error) { console.log(error);});
             },
             getArretsCategories: function() {
