@@ -11,8 +11,7 @@
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="tableReset contentForm">
                     <tr>
                         <td valign="top" align="center" width="375" class="resetMarge contentForm">
-                            <?php $i = 1; ?>
-                            @foreach($arret->analyses as $analyse)
+                            @foreach($arret->analyses as $i => $analyse)
                                 <table border="0" width="375" align="left" cellpadding="0" cellspacing="0" class="resetTable">
                                     <tr>
                                         <td valign="top" width="375" class="resetMarge contentForm">
@@ -24,10 +23,9 @@
                                             <p><a href="{{ secure_asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
                                         </td>
                                     </tr>
-                                    @if( $arret->analyses->count() > 1 && $arret->analyses->count() > $i)
-                                        <tr bgcolor="ffffff"><td colspan="3" height="35" class=""></td></tr><!-- space -->
-                                    @endif
-                                    <?php $i++; ?>
+
+                                    {!! $arret->analyses->count() > 0 && $arret->analyses->count() > $i + 1 ? row() : '' !!}
+
                                 </table>
                             @endforeach
                         </td>

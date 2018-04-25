@@ -128,3 +128,12 @@ function civilites($civilite_id){
 
     return isset($civilites[$civilite_id]) ? $civilites[$civilite_id] : '';
 }
+
+/*
+ * Newsletter laxout helpers
+ * */
+
+// Empty row
+function row(){
+    return '<tr bgcolor="ffffff"><td height="35" class="blocBorder"></td></tr>';
+}
