@@ -21,6 +21,13 @@ class Arret extends Model {
             return 'c'.$categorie->id;
         })->implode(' ');
     }
+
+    public function getTitleAttribute()
+    {
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+        return $this->reference.' '.$this->pub_date->formatLocalized('%A %d %B %Y');;
+    }
     
     /**
      * Scope a query to only include arrets for site

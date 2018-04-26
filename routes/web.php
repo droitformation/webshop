@@ -389,6 +389,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('upload', 'Backend\UploadController@upload');
         Route::post('uploadFile', 'Backend\UploadController@uploadFile');
         Route::post('uploadJS', 'Backend\UploadController@uploadJS');
+        Route::post('uploadNewsletter', 'Backend\UploadController@uploadNewsletter');
         Route::post('uploadRedactor', 'Backend\UploadController@uploadRedactor');
 
         Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
@@ -511,6 +512,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::get('ajax/analyses/{id}','Backend\Content\AnalyseController@simple');
         Route::get('ajax/categories/{id?}', 'Backend\Content\CategorieController@categories');
         Route::post('ajax/categorie/arrets','Backend\Content\CategorieController@arrets');
+        Route::post('ajax/categorie/categoriearrets','Backend\Content\CategorieController@categoriearrets');
 
         Route::get('ajax/categoriesimple/{id?}', 'Api\CategorieController@simple');
         Route::get('ajax/categorieliste/{site_id}','Api\CategorieController@liste');

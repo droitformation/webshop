@@ -18,7 +18,27 @@ class ProductController extends Controller {
     
 	public function index()
 	{
-        return $this->product->getAll();
+        $products = $this->product->getAll();
+
+        $products = $products->map(function ($item, $key) {
+            return [
+                'id'        => $item->id,
+                'droptitle' => $item->title,
+                'title'     => $item->title,
+                'abstract'  => $item->teaser,
+                'content'   => $item->description,
+                'link'      => url('pubdroit/product/').$item->id,
+                'message'   => 'Acheter',
+                'class'     => '',
+                'images'    => [[
+                    'link'  => url('pubdroit/product/').$item->id,
+                    'image' => !empty($item->image) ? secure_asset('files/products/'.$item->image) : null,
+                    'title' => $item->title,
+                ]],
+            ];
+        });
+
+        return response()->json( $products , 200 );
 	}
     
     public function show($id)

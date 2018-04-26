@@ -91,6 +91,23 @@ class UploadController extends Controller
         return false;
     }
 
+    public function uploadNewsletter(Request $request)
+    {
+        $imageData = $request->input('image');
+        $fileName  = \Carbon\Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
+
+        $sizes = config('size.newsletter');
+        \Image::make($request->input('image'))
+            ->orientate()
+            ->resize($sizes['width'], $sizes['height'], function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
+            ->save(public_path('test/').$fileName);
+
+        return response()->json(['error' => false, 'name' => $fileName]);
+    }
+
     public function uploadRedactor(Request $request)
     {
         // thumb for redactor filemanager
