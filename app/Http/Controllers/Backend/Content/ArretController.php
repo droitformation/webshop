@@ -147,6 +147,7 @@ class ArretController extends Controller {
             return [
                 'id'        => $item->id,
                 'droptitle' => $item->reference,
+                'reference' => $item->reference,
                 'title'     => $item->title,
                 'abstract'   => $item->abstract,
                 'content'   => $item->pub_text,
