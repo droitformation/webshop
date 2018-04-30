@@ -133,4 +133,11 @@ class SendController extends Controller
 
         return redirect('build/campagne/'.$campagne->id);
     }
+
+    public function preview($id)
+    {
+        $data  = $this->worker->html($id);
+
+        return response($data);
+    }
 }
