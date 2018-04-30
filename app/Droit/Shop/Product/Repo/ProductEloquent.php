@@ -136,7 +136,7 @@ class ProductEloquent implements ProductInterface{
             ->orWhere('shop_products.title', 'like', '%'.$term.'%')
             ->select('shop_products.*','shop_product_attributes.value');
 
-        if(!$hidden)
+        if($hidden)
         {
             $products->where('hidden','=',0);
         }
