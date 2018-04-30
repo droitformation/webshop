@@ -1,6 +1,4 @@
 <div class="arret">
-    <a target="_blank" href="{{ isset($bloc->lien) && !empty($bloc->lien) ? $bloc->lien : url('/') }}">
-        <img style="max-width: 400px; max-height: 250px;" alt="{{ $bloc->titre }}" src="{{ secure_asset(config('newsletter.path.upload').$bloc->image) }}" />
-    </a>
+    <img style="max-width: 400px; max-height: 250px;" src="{{ secure_asset(config('newsletter.path.upload').$bloc->image) }}" />
     <h2>{{ $bloc->titre }}</h2>
 </div><hr>

@@ -94,8 +94,9 @@ return [
     'pdf' => env('PDF_MAKE', false),
 
     /*
-      * Link to pdf
+      * List id in db (publications, bail, matrimonial, pi2)
       * */
 
     'lists' => [1,2,3,10],
+
 ];

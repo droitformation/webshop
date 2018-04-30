@@ -56,7 +56,7 @@
                 <!-- Header -->
                 @include('emails.newsletter.send.header')
 
-                @if(config('newsletter.pdf'))
+                @if(isset($campagne->newsletter) && $campagne->newsletter->pdf)
                     @include('emails.newsletter.send.link')
                 @endif
 
