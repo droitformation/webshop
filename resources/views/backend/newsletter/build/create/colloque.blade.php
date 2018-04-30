@@ -29,9 +29,7 @@
             <div class="panel-body">
                 <label>Sélectionner le colloque</label>
                 <select class="form-control" name="colloque_id" ng-change="select.changed()" ng-model="selected" ng-options="colloque.titre for colloque in select.colloques track by colloque.id"></select>
-
                 <div class="btn-group" style="margin-top: 10px;">
-                    <input type="hidden" value="{[{ select.colloque.id }]}" name="colloque_id">
                     <input type="hidden" value="{{ $bloc->id }}" name="type_id">
                     <input type="hidden" value="{{ $campagne->id }}" name="campagne">
                     <button type="submit" class="btn btn-sm btn-success">Envoyer</button>

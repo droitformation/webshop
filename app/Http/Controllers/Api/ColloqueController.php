@@ -25,6 +25,7 @@ class ColloqueController extends Controller {
                 'id'        => $item->id,
                 'droptitle' => $item->titre,
                 'title'     => $item->titre,
+                'titre'     => $item->titre,
                 'abstract'  => $item->sujet,
                 'content'   => $item->remarques,
                 'link'      => url('pubdroit/colloque/').$item->id,

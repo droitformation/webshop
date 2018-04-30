@@ -17,6 +17,29 @@
                 background: {{ $campagne->newsletter->color }};
                 color: #fff;
             }
+            #StyleNewsletter .resetTable.alert-dumois{
+                border-top: 1px solid {{ $campagne->newsletter->color }};
+                border-left:1px solid {{ $campagne->newsletter->color }};
+                border-right:1px solid {{ $campagne->newsletter->color }};
+            }
+
+            #sortable .alert-dumois{
+                border-top: 1px solid  {{ $campagne->newsletter->color }};{{ $campagne->newsletter->color }};
+                border-left:1px solid  {{ $campagne->newsletter->color }};
+                border-right:1px solid {{ $campagne->newsletter->color }};
+            }
+
+            #StyleNewsletter .resetTable.alert-dumois .blocBorder{
+                border-bottom: 1px solid {{ $campagne->newsletter->color }};
+            }
+
+            #sortable .alert-dumois .blocBorder{
+                border-bottom: 1px solid {{ $campagne->newsletter->color }};
+            }
+
+            .link_pdf a{
+                color:{{ $campagne->newsletter->color }}; !important;
+            }
         </style>
         <!--[if gte mso 9]>
         <style type="text/css">

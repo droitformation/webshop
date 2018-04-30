@@ -27,13 +27,19 @@ class CreateNewslettersTable extends Migration {
             $table->string('header')->nullable();
 			$table->string('soutien')->nullable();
             $table->string('color');
+
+            $table->tinyInteger('pdf')->nullable();
+            $table->string('classe')->nullable();
+            $table->tinyInteger('comment')->nullable();
+            $table->string('comment_title')->default('Commentaire')->nullable();
+            $table->string('display')->default('bottom')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
 		});
 	}
 
-
-	/**
+    /**
 	 * Reverse the migrations.
 	 *
 	 * @return void
