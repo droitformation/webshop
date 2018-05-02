@@ -52,9 +52,13 @@ class SondageWorker
         $this->colloque = $this->colloque_repo->find($colloque_id);
 
         return $this->colloque->inscriptions->map(function ($inscription) {
+            if(substr(strrchr($inscription->detenteur['email'], "@"), 1) == 'publications-droit.ch'){
+                return $inscription->detenteur['username'];
+            }
+
             return $inscription->detenteur['email'];
         })->unique()->reject(function ($value, $key) {
-            return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
+            return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value) || (substr(strrchr($value, "@"), 1) == 'publications-droit.ch');
         })->toArray();
     }
 }

@@ -196,7 +196,22 @@ class Inscription extends Model
 
         $adresse =  $this->inscrit->adresses->where('type',1)->first();
 
-        return ['id' => $this->inscrit->id, 'civilite' => civilites($adresse->civilite_id), 'name' => $adresse->name, 'email' => $adresse->email];
+        return [
+            'id' => $this->inscrit->id,
+            'civilite' => civilites($adresse->civilite_id),
+            'name' => $adresse->name,
+            'email' => $adresse->email,
+            'username' => $this->inscrit->username
+        ];
+    }
+
+    public function getSubstituteEmailAttribute()
+    {
+        if(substr(strrchr($this->detenteur['email'], "@"), 1) == 'publications-droit.ch'){
+            return true;
+        }
+
+        return false;
     }
 
     public function getAdresseInscritAttribute()

@@ -1,4 +1,5 @@
 <?php $path = isset($path) ? $path : 'admin'; ?>
+
 <form action="{{ url(''.$path.'/adresse') }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">{!! csrf_field() !!}
     <h3>Créer une adresse</h3>
 
@@ -41,7 +42,13 @@
     <div class="form-group">
         <label class="col-sm-3 control-label">Email</label>
         <div class="col-sm-5">
-            <input type="text" name="email" class="form-control" value="{{ isset($user) ? $user->email : '' }}">
+            <input type="text" name="email" id="email_input" class="form-control" value="{{ isset($user) ? $user->email : '' }}">
+            <p id="email_warning" style="display: none;" class="text-danger"> <br/><i class="fa fa-exclamation-triangle"></i> &nbsp;
+                Les emails de substitution ne sont pas valides pour les envois de confirmation d'inscriptions.
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <button id="email_btn" class="btn btn-default btn-xs">Créer email de substitution</button>
         </div>
     </div>
 

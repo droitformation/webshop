@@ -23,7 +23,7 @@ class User extends Authenticatable {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['first_name','last_name', 'company','email', 'password'];
+	protected $fillable = ['first_name','last_name', 'company','email', 'password','username'];
 
     /**
      * Send the password reset notification.

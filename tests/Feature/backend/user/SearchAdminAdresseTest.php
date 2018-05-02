@@ -65,7 +65,6 @@ class SearchAdminAdresseTest extends TestCase
         $adresse->orders()->saveMany([$order1,$order2]);
 
         $response = $this->call('POST', 'admin/adresse/convert', ['id' => $adresse->id, 'password' => 'cindy2']);
-
         $location = $response->headers->get('Location');
 
         $path = explode('/',$location);

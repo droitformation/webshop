@@ -136,6 +136,7 @@ class UserEloquent implements UserInterface{
             'first_name'     => isset($data['first_name']) && !empty($data['first_name']) ? $data['first_name'] : null,
             'last_name'      => isset($data['last_name']) && !empty($data['last_name']) ? $data['last_name'] : null,
             'company'        => isset($data['company']) && !empty($data['company']) ? $data['company'] : null,
+            'username'       => isset($data['username']) && !empty($data['username']) ? $data['username'] : null,
             'email'          => $data['email'],
             'password'       => bcrypt($data['password']),
             'created_at'     => date('Y-m-d G:i:s'),
@@ -174,6 +175,7 @@ class UserEloquent implements UserInterface{
         $user->first_name = isset($data['first_name']) && !empty($data['first_name']) ? $data['first_name'] : null;
         $user->last_name = isset($data['last_name']) && !empty($data['last_name']) ? $data['last_name'] : null;
         $user->company = isset($data['company']) && !empty($data['company']) ? $data['company'] : null;
+        $user->username = isset($data['username']) && !empty($data['username']) ? $data['username'] : null;
 
         if(isset($data['password']) && !empty($data['password'])) {
             $user->password = bcrypt($data['password']);

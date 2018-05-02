@@ -54,6 +54,25 @@ class AccountWorker implements AccountWorkerInterface
     {
         $this->data = $this->adresse ? array_only($this->adresse->toArray(), ['first_name','last_name','company','email','adresse','npa','ville']) + $data : $data;
 
+        $this->uniqueEmail();
+
+        return $this;
+    }
+
+    public function uniqueEmail()
+    {
+        // if there is no email or the email exist for a user already make a substitude one
+        if(empty($this->data['email']) || $this->repo_user->findByEmail($this->data['email'])){
+
+            $email = substr(md5(openssl_random_pseudo_bytes(32)),-11).'@publications-droit.ch';
+
+            $this->data['email'] = $email;
+
+            if($this->adresse){
+                $this->repo_adresse->update(['id' => $this->adresse->id, 'email' => $email]);
+            }
+        }
+
         return $this;
     }
 

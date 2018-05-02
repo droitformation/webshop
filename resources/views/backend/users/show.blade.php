@@ -51,8 +51,13 @@
                                   </div>
 
                                   <div class="form-group">
-                                      <label for="message" class="control-label">Email</label>
+                                      <label for="message" class="control-label">Email (Utilisé pour login)</label>
                                       <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="message" class="control-label">Email global si aucun email personnel</label>
+                                      <input type="email" name="username" class="form-control" value="{{ $user->username }}">
                                   </div>
 
                                   @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
@@ -149,7 +154,7 @@
                                                       {!! $adresse->livraison ? '<small>livraison</small>' : '' !!}
                                                   </p>
                                               </div>
-                                              <div class="col-md-4 text-right">
+                                              <div class="col-md-2 text-right">
                                                   @if($adresse->user_id > 0 && !$adresse->livraison)
                                                       <form action="{{ url('admin/adresse/livraison') }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
                                                           <input type="hidden" name="adresse_id" value="{{ $adresse->id }}">
@@ -157,6 +162,13 @@
                                                           <button type="submit" class="btn btn-inverse btn-sm">Définir comme adresse de livraison</button>
                                                       </form>
                                                   @endif
+                                              </div>
+                                              <div class="col-md-2 text-right">
+                                                  <form action="{{ url('admin/adresse/livraison') }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+                                                      <input type="hidden" name="adresse_id" value="{{ $adresse->id }}">
+                                                      <input type="hidden" name="user_id" value="{{ $adresse->user_id }}">
+                                                      <button type="submit" class="btn btn-inverse btn-sm">Définir comme adresse de livraison</button>
+                                                  </form>
                                               </div>
                                               <div class="col-md-1">
                                                   <a role="button" class="btn btn-sm btn-primary" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$adresse->id}}">Voir</a>
