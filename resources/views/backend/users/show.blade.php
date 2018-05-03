@@ -151,10 +151,10 @@
                                                   <h4 style="margin-bottom: 5px;"> {{ $adresse->name }} </h4>
                                                   <p class="text-muted">
                                                       <i class="fa fa-map-marker"></i>&nbsp;Adresse {{ $adresse->type_title }}
-                                                      {!! $adresse->livraison ? '<small>livraison</small>' : '' !!}
+                                                      {!! $adresse->l5vraison ? '<small>livraison</small>' : '' !!}
                                                   </p>
                                               </div>
-                                              <div class="col-md-2 text-right">
+                                              <div class="col-md-4 text-right">
                                                   @if($adresse->user_id > 0 && !$adresse->livraison)
                                                       <form action="{{ url('admin/adresse/livraison') }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
                                                           <input type="hidden" name="adresse_id" value="{{ $adresse->id }}">
@@ -163,19 +163,12 @@
                                                       </form>
                                                   @endif
                                               </div>
-                                              <div class="col-md-2 text-right">
-                                                  <form action="{{ url('admin/adresse/livraison') }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
-                                                      <input type="hidden" name="adresse_id" value="{{ $adresse->id }}">
-                                                      <input type="hidden" name="user_id" value="{{ $adresse->user_id }}">
-                                                      <button type="submit" class="btn btn-inverse btn-sm">Définir comme adresse de livraison</button>
-                                                  </form>
-                                              </div>
                                               <div class="col-md-1">
                                                   <a role="button" class="btn btn-sm btn-primary" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$adresse->id}}">Voir</a>
                                               </div>
                                           </div>
                                           <div id="collapse{{$adresse->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                              @include('backend.adresses.partials.update',['adresse' => $adresse])
+                                              @include('backend.adresses.partials.update',['adresse' => $adresse, 'user' => $user])
                                           </div>
                                       </div>
                                   </div>

@@ -120,7 +120,8 @@ class SearchAdminAdresseTest extends TestCase
         ]);
     }
 
-    public function testConvertAdresseToUserFails()
+    // New implementation put substitute email and password 123456
+/*    public function testConvertAdresseToUserFails()
     {
         $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
             'first_name' => 'New',
@@ -132,7 +133,7 @@ class SearchAdminAdresseTest extends TestCase
 
         $response->assertSessionHasErrors('email');
         $response->assertSessionHasErrors('password');
-    }
+    }*/
 
     public function testDeleteAdresse()
     {

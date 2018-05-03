@@ -37,7 +37,7 @@ class AccountWorker implements AccountWorkerInterface
         $adresse = $this->adresse ? $this->adresse : $this->repo_adresse->create($data);
 
         // update adresse with user_id and livraison
-        $this->repo_adresse->update(['id' => $adresse->id, 'user_id' => $this->user->id, 'livraison' => 1]);
+        $this->repo_adresse->update(['id' => $adresse->id, 'user_id' => $this->user->id, 'livraison' => 1, 'email' => $this->data['email']]);
 
         return $this->user->load('adresses');
     }
@@ -45,7 +45,7 @@ class AccountWorker implements AccountWorkerInterface
     public function makeUser()
     {
         // Create user account
-        $this->user = $this->repo_user->create(array_only($this->data,['email','password','first_name','last_name','company']));
+        $this->user = $this->repo_user->create(array_only($this->data,['email','password','username','first_name','last_name','company']));
 
         return $this;
     }
@@ -61,8 +61,11 @@ class AccountWorker implements AccountWorkerInterface
 
     public function uniqueEmail()
     {
+
         // if there is no email or the email exist for a user already make a substitude one
-        if(empty($this->data['email']) || $this->repo_user->findByEmail($this->data['email'])){
+        $duplicate = isset($this->data['email']) ? $this->repo_user->findByEmail($this->data['email']) : null;
+
+        if(empty($this->data['email']) || $duplicate){
 
             $email = substr(md5(openssl_random_pseudo_bytes(32)),-11).'@publications-droit.ch';
 
@@ -73,20 +76,24 @@ class AccountWorker implements AccountWorkerInterface
             }
         }
 
+        if(!empty($this->data['email']) && $duplicate){
+            $this->data['username'] = $this->data['email'];
+        }
+
         return $this;
     }
 
     public function validate()
     {
         $validator = \Validator::make($this->data, [
+            'adresse'    => 'required',
+            'npa'        => 'required',
+            'ville'      => 'required',
             'first_name' => 'required_without:company',
             'last_name'  => 'required_without:company',
             'company'    => 'required_without_all:first_name,last_name',
             'email'      => 'required|email|max:255|unique:users',
             'password'   => 'required|min:6',
-            'adresse'    => 'required',
-            'npa'        => 'required',
-            'ville'      => 'required',
         ]);
 
         if($validator->fails()) {

@@ -28,6 +28,15 @@ class WorkerAccountTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @expectedException \Illuminate\Validation\ValidationException
+     */
+    public function testValidationFails()
+    {
+        $worker = \App::make('App\Droit\User\Worker\AccountWorkerInterface');
+        $reponse = $worker->createAccount([]);
+    }
+
     public function testSetAdresse()
     {
         $make    = new \tests\factories\ObjectFactory();
@@ -114,6 +123,46 @@ class WorkerAccountTest extends TestCase
         $this->assertTrue($attempt);
     }
 
+    public function testExtractAdresse()
+    {
+        // create user with 2 adresses
+        $make = new \tests\factories\ObjectFactory();
+        $user    = $make->makeUser(); // one adresse already
+
+        $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
+            'email'   => null,
+            'user_id' => null,
+        ]);
+
+        $adresse->user_id = $user->id;
+        $adresse->save();
+        $adresse = $adresse->fresh();
+
+        $this->assertSame($adresse->user_id,$user->id);
+
+        // extract 1 adresse
+        $response = $this->call('POST', 'admin/adresse/convert', ['id' => $adresse->id]);
+        $location = $response->headers->get('Location');
+
+        $path = explode('/',$location);
+        $path = end($path);
+
+        $response = $this->get('admin/user/'.$path);
+        $response->assertStatus(200);
+
+        $content = $response->getOriginalContent();
+        $content = $content->getData();
+        $newuser = $content['user'];
+
+        $adresse = $adresse->fresh();
+
+        $this->assertNotEquals($adresse->user_id,$user->id);
+
+        $this->assertNotEmpty($adresse->email);
+        $this->assertNotNull($adresse->user_id);
+        $this->assertTrue(substr(strrchr($adresse->email, "@"), 1) == 'publications-droit.ch');
+    }
+
     public function testsRestoreAccount()
     {
         $make = new \tests\factories\ObjectFactory();
@@ -148,14 +197,5 @@ class WorkerAccountTest extends TestCase
             'deleted_at' => null
         ]);
 
-    }
-
-    /**
-     * @expectedException \Illuminate\Validation\ValidationException
-     */
-    public function testValidationFails()
-    {
-        $worker = \App::make('App\Droit\User\Worker\AccountWorkerInterface');
-        $reponse = $worker->createAccount([]);
     }
 }
