@@ -44,6 +44,14 @@ class HelperMiscTest extends TestCase
         $this->assertEquals('cindy_12',$result);
     }
 
+    public function testIsSubstitudeEmail()
+    {
+        $email = 'wdq932wnre@publications-droit.ch';
+        $result = isSubstitute($email);
+
+        $this->assertTrue($result);
+    }
+
     public function testInsertBeforeArray()
     {
         $key    = 'Cindy';

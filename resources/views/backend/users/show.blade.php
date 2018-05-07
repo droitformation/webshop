@@ -51,8 +51,13 @@
                                   </div>
 
                                   <div class="form-group">
-                                      <label for="message" class="control-label">Email</label>
+                                      <label for="message" class="control-label">Email (Utilisé pour login)</label>
                                       <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="message" class="control-label">Email global si aucun email personnel</label>
+                                      <input type="email" name="username" class="form-control" value="{{ $user->username != $user->email ?  $user->username : '' }}">
                                   </div>
 
                                   @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
@@ -146,7 +151,7 @@
                                                   <h4 style="margin-bottom: 5px;"> {{ $adresse->name }} </h4>
                                                   <p class="text-muted">
                                                       <i class="fa fa-map-marker"></i>&nbsp;Adresse {{ $adresse->type_title }}
-                                                      {!! $adresse->livraison ? '<small>livraison</small>' : '' !!}
+                                                      {!! $adresse->l5vraison ? '<small>livraison</small>' : '' !!}
                                                   </p>
                                               </div>
                                               <div class="col-md-4 text-right">
@@ -163,7 +168,7 @@
                                               </div>
                                           </div>
                                           <div id="collapse{{$adresse->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                              @include('backend.adresses.partials.update',['adresse' => $adresse])
+                                              @include('backend.adresses.partials.update',['adresse' => $adresse, 'user' => $user])
                                           </div>
                                       </div>
                                   </div>

@@ -24,9 +24,20 @@
 
                                     <div class="input-wrapper">
 
-                                        <input type="checkbox" class="rappel-input" checked name="inscriptions[]" value="{{ $inscription->id }}" />
+                                        <input type="checkbox" class="rappel-input" {{ $inscription->substitute_email ? 'disabled' : 'checked' }} name="inscriptions[]" value="{{ $inscription->id }}" />
                                         <strong>{{ $inscription->inscrit->name }}</strong>
 
+                                        @if($inscription->substitute_email)
+                                            <div class="text-danger" style="margin: 3px 0;">
+                                               <p>L'email du compte est un email de substitution.<br/>
+                                                @if(!empty($inscription->detenteur['username']))
+                                                    Le rappel sera envoyé à l'email global : {{ $inscription->detenteur['username'] }}
+                                                @else
+                                                   <a href="{{ url('admin/user/'.$inscription->detenteur['id']) }}">Ajouter un email global</a>
+                                                @endif
+                                               </p>
+                                            </div>
+                                        @endif
                                         <a target="_blank" href="{{ url('preview/rappel/'.$inscription->id) }}" class="btn btn-default btn-sm pull-right">Voir l'email envoyé</a>
 
                                         @if(!$inscription->occurrences->isEmpty() && !$inscription->occurrence_done->isEmpty())

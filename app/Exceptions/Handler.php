@@ -131,6 +131,11 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
+        if ($e instanceof \App\Exceptions\EmailSubstituteException){
+            alert()->danger('L\'email '.$e->getMessage().' est un email de substitution et n\'est pas valide pour l\'envoi de confirmation.');
+            return redirect()->back();
+        }
+
 		if ($e instanceof \App\Exceptions\RegisterException){
 			alert()->danger('Vous êtes déjà inscrit à ce colloque');
 			return redirect()->back();

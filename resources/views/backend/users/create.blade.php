@@ -53,9 +53,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Email</label>
+                        <label for="message" class="col-sm-3 control-label">Email (Utilisé pour login)</label>
                         <div class="col-sm-6">
-                            <input type="email" name="email" id="email" value="{{ old('email') }}" class="form-control">
+                            <input type="email" id="email_input" name="email" value="{{ old('email') }}" class="form-control">
+                            <p id="email_warning" style="display: none;" class="text-danger"> <br/><i class="fa fa-exclamation-triangle"></i> &nbsp;
+                                Les emails de substitution ne sont pas valides pour les envois de confirmation d'inscriptions.
+                            </p>
+                        </div>
+                        <div class="col-sm-3">
+                            <button id="email_btn" class="btn btn-default btn-xs">Créer email de substitution</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Email global si aucun email personnel</label>
+                        <div class="col-sm-6">
+                            <input type="email" name="username" value="{{ old('username') }}" class="form-control">
                         </div>
                     </div>
 
@@ -73,6 +86,7 @@
                             <label class="radio-inline"><input type="radio" name="role" value="0" checked> Non</label>
                         </div>
                     </div>
+
 
                 </div>
                 <div class="panel-footer mini-footer">
