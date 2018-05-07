@@ -28,7 +28,7 @@ class WorkerAccountTest extends TestCase
         parent::tearDown();
     }
 
-    public function testCreateAccountWithSubstitudeEmail()
+    public function testCreateAccountWithSubstitudeEmailAndExistintgEmail()
     {
         $make = new \tests\factories\ObjectFactory();
         $user = $make->makeUser();
@@ -157,14 +157,12 @@ class WorkerAccountTest extends TestCase
         $make = new \tests\factories\ObjectFactory();
         $user    = $make->makeUser(); // one adresse already
 
+        $original = $user;
+
         $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
             'email'   => null,
-            'user_id' => null,
+            'user_id' => $user->id,
         ]);
-
-        $adresse->user_id = $user->id;
-        $adresse->save();
-        $adresse = $adresse->fresh();
 
         $this->assertSame($adresse->user_id,$user->id);
 
@@ -186,9 +184,14 @@ class WorkerAccountTest extends TestCase
 
         $this->assertNotEquals($adresse->user_id,$user->id);
 
+        $user =  $user->fresh();
+
+        $this->assertEquals($user->email, $original->email);
+
         $this->assertNotEmpty($adresse->email);
         $this->assertNotNull($adresse->user_id);
         $this->assertTrue(substr(strrchr($adresse->email, "@"), 1) == 'publications-droit.ch');
+        $this->assertTrue(substr(strrchr($newuser->email, "@"), 1) == 'publications-droit.ch');
     }
 
     public function testsRestoreAccount()

@@ -37,7 +37,11 @@ class AccountWorker implements AccountWorkerInterface
         $adresse = $this->adresse ? $this->adresse : $this->repo_adresse->create($data);
 
         // update adresse with user_id and livraison
-        $this->repo_adresse->update(['id' => $adresse->id, 'user_id' => $this->user->id, 'livraison' => 1, 'email' => $this->data['email']]);
+        $adresse = $this->repo_adresse->update(['id' => $adresse->id, 'user_id' => $this->user->id, 'livraison' => 1]);
+
+        // Need to update adresse model there is a automatic update to same user with repo
+        $adresse->email = $this->data['email'];
+        $adresse->save();
 
         return $this->user->load('adresses');
     }
@@ -95,11 +99,6 @@ class AccountWorker implements AccountWorkerInterface
 
         if($validator->fails()) {
             throw new \Illuminate\Validation\ValidationException($validator->errors());
-        }
-
-        // Need to update adresse after validation, there is a automatic update to same user
-        if($this->adresse){
-            $this->repo_adresse->update(['id' => $this->adresse->id, 'email' => $this->data['email']]);
         }
 
         return $this;
