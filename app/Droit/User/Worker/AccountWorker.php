@@ -61,23 +61,20 @@ class AccountWorker implements AccountWorkerInterface
 
     public function uniqueEmail()
     {
-
         // if there is no email or the email exist for a user already make a substitude one
-        $duplicate = isset($this->data['email']) ? $this->repo_user->findByEmail($this->data['email']) : null;
+        $duplicate = isset($this->data['email']) && !empty($this->data['email']) ? $this->repo_user->findByEmail($this->data['email']) : null;
 
+        // if no email or duplicate user email
         if(empty($this->data['email']) || $duplicate){
 
-            $email = substr(md5(openssl_random_pseudo_bytes(32)),-11).'@publications-droit.ch';
+            // Make substitute
+            $email = substituteEmail();
 
+            // It's a duplicate ? keep in username
+            $this->data['username'] = $duplicate ? $duplicate->email : null;
+
+            // Change the mail to the new one
             $this->data['email'] = $email;
-
-            if($this->adresse){
-                $this->repo_adresse->update(['id' => $this->adresse->id, 'email' => $email]);
-            }
-        }
-
-        if(!empty($this->data['email']) && $duplicate){
-            $this->data['username'] = $this->data['email'];
         }
 
         return $this;
@@ -98,6 +95,11 @@ class AccountWorker implements AccountWorkerInterface
 
         if($validator->fails()) {
             throw new \Illuminate\Validation\ValidationException($validator->errors());
+        }
+
+        // Need to update adresse after validation, there is a automatic update to same user
+        if($this->adresse){
+            $this->repo_adresse->update(['id' => $this->adresse->id, 'email' => $this->data['email']]);
         }
 
         return $this;

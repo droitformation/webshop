@@ -28,6 +28,34 @@ class WorkerAccountTest extends TestCase
         parent::tearDown();
     }
 
+    public function testCreateAccountWithSubstitudeEmail()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $email = $user->email;
+
+        $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
+            'type'    => 1,
+            'email'   => $user->email,
+            'user_id' => null
+        ]);
+
+        $data = ['password' => 123456];
+
+        $worker = \App::make('App\Droit\User\Worker\AccountWorkerInterface');
+        $user = $worker->setAdresse($adresse)->createAccount($data);
+
+        $adresse = $adresse->fresh();
+
+        $this->assertTrue(isset($adresse->user));
+        $this->assertEquals($email,$adresse->user->username);
+
+        $attempt = \Auth::attempt(['email' => $adresse->user->email, 'password' => '123456']);
+
+        $this->assertTrue($attempt);
+    }
+
     /**
      * @expectedException \Illuminate\Validation\ValidationException
      */

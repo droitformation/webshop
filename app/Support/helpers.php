@@ -128,3 +128,11 @@ function civilites($civilite_id){
 
     return isset($civilites[$civilite_id]) ? $civilites[$civilite_id] : '';
 }
+
+function isSubstitute($email){
+    return substr(strrchr($email, "@"), 1) == 'publications-droit.ch' ? true : false;
+}
+
+function substituteEmail(){
+    return substr(md5(openssl_random_pseudo_bytes(32)),-11).'@publications-droit.ch';
+}

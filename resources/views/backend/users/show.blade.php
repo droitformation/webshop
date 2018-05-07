@@ -57,7 +57,7 @@
 
                                   <div class="form-group">
                                       <label for="message" class="control-label">Email global si aucun email personnel</label>
-                                      <input type="email" name="username" class="form-control" value="{{ $user->username }}">
+                                      <input type="email" name="username" class="form-control" value="{{ $user->username != $user->email ?  $user->username : '' }}">
                                   </div>
 
                                   @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
