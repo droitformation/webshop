@@ -86,6 +86,7 @@ class AccountWorker implements AccountWorkerInterface
 
     public function validate()
     {
+
         $validator = \Validator::make($this->data, [
             'adresse'    => 'required',
             'npa'        => 'required',
@@ -98,7 +99,7 @@ class AccountWorker implements AccountWorkerInterface
         ]);
 
         if($validator->fails()) {
-            throw new \Illuminate\Validation\ValidationException($validator->errors());
+            throw new \Illuminate\Validation\ValidationException($validator);
         }
 
         return $this;
