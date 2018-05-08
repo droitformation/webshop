@@ -2,15 +2,29 @@
 @if(isset($arret))
     <table border="0" width="600" align="center" cellpadding="0" cellspacing="0" class="tableReset {{ $arret->dumois ? 'alert-dumois' : '' }}">
 
+        <?php $comment = isset($campagne->newsletter) ? $campagne->newsletter->comment :null; ?>
 
-    <?php $title = isset($campagne->newsletter) ? $campagne->newsletter->comment : 'Commentaire'; ?>
+        @if($arret->dumois && $comment)
+            <tr bgcolor="ffffff"><td height="20"></td></tr><!-- space -->
+            <tr bgcolor="ffffff">
+                <td>
+                    @component('emails.newsletter.send.partials.widebloc', ['width' => '560'])
+                        <h2 style="text-align: left;font-family: sans-serif;">{{ $campagne->newsletter->comment_title }}</h2>
+                    @endcomponent
+                </td>
+            </tr>
+        @endif
 
         @if(isset($campagne->newsletter) && $campagne->newsletter->display == 'top')
             <!-- Analyses -->
+            @if(!$comment)
+                <tr bgcolor="ffffff"><td height="10"></td></tr><!-- space -->
+            @endif
+
             @include('emails.newsletter.send.partials.analyses', ['arret' => $arret])
         @endif
 
-        <tr bgcolor="ffffff"><td height="35"></td></tr><!-- space -->
+        <tr bgcolor="ffffff"><td height="25"></td></tr><!-- space -->
         <tr align="center" class="resetMarge">
             <td class="resetMarge">
                 <!-- Bloc content-->
@@ -23,9 +37,6 @@
                     @endslot
 
                     @slot('content')
-                        <?php $comment = isset($campagne->newsletter) ? $campagne->newsletter->comment : null; ?>
-                        {!! $arret->dumois && $comment ? '<h2 style="text-align: left;font-family: sans-serif;">Commentaire</h2>' : '' !!}
-
                         <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $arret->dumois ? 'Arrêt du mois : ' : '' }}{{ $arret->reference }} du {{ $arret->pub_date->formatLocalized('%d %B %Y') }}</h3>
                         <p class="abstract">{!! $arret->abstract !!}</p>
                         <div>{!! $arret->pub_text !!}</div>
@@ -37,11 +48,12 @@
         </tr>
 
         @if(isset($campagne->newsletter) && $campagne->newsletter->display == 'bottom')
+            <tr bgcolor="ffffff"><td height="10"></td></tr><!-- space -->
             <!-- Analyses -->
-            @include('emails.newsletter.send.partials.analyses', ['arret' => $arret, 'isEdit' => isset($isEdit) ? true : false])
+            @include('emails.newsletter.send.partials.analyses', ['arret' => $arret])
         @endif
 
-        <tr bgcolor="ffffff"><td height="35" class="blocBorder"></td></tr><!-- space -->
+        <tr bgcolor="ffffff"><td height="25" class="blocBorder"></td></tr><!-- space -->
     </table>
     <!-- End bloc -->
 @endif
