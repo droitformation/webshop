@@ -187,10 +187,17 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             'colloque_id' => $colloque->id
         ]);
 
+        $attachments = [
+            'bon' => ['name' => 'Bon', 'url' => '#'],
+            'facture' => ['name' => 'Facture', 'url' => '#'],
+            'bv' => ['name' => 'BV', 'url' => '#'],
+        ];
+
         $data = [
             'title'        => 'Votre inscription sur publications-droit.ch',
             'concerne'     => 'Inscription',
             'annexes'      => $inscription->colloque->annexe,
+            'attachements' => $attachments,
             'colloque'     => $inscription->colloque,
             'inscription'  => $inscription,
             'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),

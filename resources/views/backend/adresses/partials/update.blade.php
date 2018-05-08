@@ -1,4 +1,12 @@
 <?php $path = isset($path) ? $path : 'admin'; ?>
+
+@if(isset($user) && $user->adresses->count() > 1)
+    <form action="{{ url('admin/adresse/convert') }}" class="pull-right" method="POST">{!! csrf_field() !!}
+        <input type="hidden" value="{{ $adresse->id }}" name="id">
+        <button type="submit" class="btn btn-default btn-sm">Extraire comme compte</button>
+    </form>
+@endif
+
 <form action="{{ url(''.$path.'/adresse/'.$adresse->id) }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">
     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
     <hr/>
@@ -56,7 +64,11 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Email</label>
         <div class="col-sm-7">
-            <input type="text" name="email" class="form-control" value="{{ $adresse->email }}">
+            <input type="text" name="email" id="email_input" class="form-control" value="{{ $adresse->email }}">
+            <button id="email_btn" class="btn btn-default btn-xs">Créer email de substitution</button>
+            <p id="email_warning" style="display: none;" class="text-danger"> <br/><i class="fa fa-exclamation-triangle"></i> &nbsp;
+                Les emails de substitution ne sont pas valides pour les envois de confirmation d'inscriptions.
+            </p>
         </div>
     </div>
 

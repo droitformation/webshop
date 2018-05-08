@@ -29,6 +29,11 @@ class UpdateSubscriberEmail
         $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
         $repo   = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
 
+        // Do not update is it is a substitude email
+        if(substr(strrchr($event->email_new, "@"), 1) == 'publications-droit.ch'){
+            return false;
+        }
+
         $email_old = $event->email_old;
         $email_new = $event->email_new;
 

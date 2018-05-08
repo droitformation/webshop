@@ -1072,7 +1072,7 @@ Route::get('testproduct', function()
     $insc_repo  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $group_repo = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
 
-    $inscription = $insc_repo->find(16061);
+    $inscription = $insc_repo->find(16071);
     $groupe = $group_repo->find(32);
 
     echo '<pre>';

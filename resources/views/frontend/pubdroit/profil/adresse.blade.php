@@ -1,5 +1,4 @@
-<form action="{{ url('pubdroit/profil/update') }}" method="POST" class="form">
-    {!! csrf_field() !!}
+<form action="{{ url('pubdroit/profil/update') }}" method="POST" class="form">{!! csrf_field() !!}
 
     <div class="row form-group">
         <label class="col-sm-4 control-label">Titre</label>

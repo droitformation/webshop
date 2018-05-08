@@ -37,7 +37,11 @@ class AccountWorker implements AccountWorkerInterface
         $adresse = $this->adresse ? $this->adresse : $this->repo_adresse->create($data);
 
         // update adresse with user_id and livraison
-        $this->repo_adresse->update(['id' => $adresse->id, 'user_id' => $this->user->id, 'livraison' => 1]);
+        $adresse = $this->repo_adresse->update(['id' => $adresse->id, 'user_id' => $this->user->id, 'livraison' => 1]);
+
+        // Need to update adresse model there is a automatic update to same user with repo
+        $adresse->email = $this->data['email'];
+        $adresse->save();
 
         return $this->user->load('adresses');
     }
@@ -45,7 +49,7 @@ class AccountWorker implements AccountWorkerInterface
     public function makeUser()
     {
         // Create user account
-        $this->user = $this->repo_user->create(array_only($this->data,['email','password','first_name','last_name','company']));
+        $this->user = $this->repo_user->create(array_only($this->data,['email','password','username','first_name','last_name','company']));
 
         return $this;
     }
@@ -54,24 +58,48 @@ class AccountWorker implements AccountWorkerInterface
     {
         $this->data = $this->adresse ? array_only($this->adresse->toArray(), ['first_name','last_name','company','email','adresse','npa','ville']) + $data : $data;
 
+        $this->uniqueEmail();
+
+        return $this;
+    }
+
+    public function uniqueEmail()
+    {
+        // if there is no email or the email exist for a user already make a substitude one
+        $duplicate = isset($this->data['email']) && !empty($this->data['email']) ? $this->repo_user->findByEmail($this->data['email']) : null;
+
+        // if no email or duplicate user email
+        if(empty($this->data['email']) || $duplicate){
+
+            // Make substitute
+            $email = substituteEmail();
+
+            // It's a duplicate ? keep in username
+            $this->data['username'] = $duplicate ? $duplicate->email : null;
+
+            // Change the mail to the new one
+            $this->data['email'] = $email;
+        }
+
         return $this;
     }
 
     public function validate()
     {
+
         $validator = \Validator::make($this->data, [
+            'adresse'    => 'required',
+            'npa'        => 'required',
+            'ville'      => 'required',
             'first_name' => 'required_without:company',
             'last_name'  => 'required_without:company',
             'company'    => 'required_without_all:first_name,last_name',
             'email'      => 'required|email|max:255|unique:users',
             'password'   => 'required|min:6',
-            'adresse'    => 'required',
-            'npa'        => 'required',
-            'ville'      => 'required',
         ]);
 
         if($validator->fails()) {
-            throw new \Illuminate\Validation\ValidationException($validator->errors());
+            throw new \Illuminate\Validation\ValidationException($validator);
         }
 
         return $this;

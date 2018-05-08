@@ -65,6 +65,10 @@
                                               </span>
                                           </div><!-- /input-group -->
                                       </div>
+                                      <p class="text-danger">
+                                          <i class="fa fa-exclamation-triangle"></i>&nbsp;
+                                          Sans adresse email une de substitution sera crée.
+                                          Celle-ci n'est pas sera pas valide pour les envois de documents.</p>
                                   </form>
                               </div>
                           </div>

@@ -105,6 +105,20 @@ $( function() {
         return false;
     });
 
+    $('body').on('click','#email_btn',function(event){
+        event.preventDefault();
+        event.stopPropagation();
+
+        var $input  = $('#email_input');
+
+        var hash = Math.random().toString(36).substr(2, 12);
+        hash = hash + '@publications-droit.ch';
+
+        $input.val(hash);
+        $('#email_warning').show();
+
+    });
+
     /*
     * For product abos
     * */

@@ -91,6 +91,10 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
     public function send($data, $user, $attachements, $email)
     {
+        if(substr(strrchr($email, "@"), 1) == 'publications-droit.ch'){
+            throw new \App\Exceptions\EmailSubstituteException($email);
+        }
+
         \Mail::send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements,$email) {
 
             // Overwrite the email to send to?

@@ -46,6 +46,11 @@
          return $adresses->map(function ($adresse) use ($columns) {
              return $columns->map(function ($column) use ($adresse)
              {
+                 // withdraw substitute @publications-droit.ch emails from excel
+                 if($column == 'email' && (substr(strrchr($adresse->$column, "@"), 1) == 'publications-droit.ch')){
+                    return '';
+                 }
+
                  return trim(html_entity_decode($adresse->$column));
              });
          });

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\CreateAdresse;
+use App\Droit\User\Worker\AccountWorkerInterface;
 use App\Http\Requests\UpdateAdresse;
 use App\Http\Requests\SearchTermRequest;
 
@@ -17,11 +18,13 @@ class AdresseController extends Controller {
     protected $adresse;
     protected $user;
     protected $format;
+    protected $account;
 
-    public function __construct(AdresseInterface $adresse, UserInterface $user)
+    public function __construct(AdresseInterface $adresse, UserInterface $user, AccountWorkerInterface $account)
     {
         $this->adresse = $adresse;
         $this->user    = $user;
+        $this->account = $account;
         $this->format  = new \App\Droit\Helper\Format();
     }
 
@@ -84,33 +87,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->find($request->input('id'));
 
-        $data = [
-            'first_name' => !empty($adresse->first_name) ? $adresse->first_name : "",
-            'last_name'  => !empty($adresse->last_name) ? $adresse->last_name : "",
-            'company'    => $adresse->company,
-            'email'      => $adresse->email,
-            'password'   => $request->input('password',null),
-        ];
-
-        $validator = \Validator::make($data, [
-            'first_name' => 'required_without:company',
-            'last_name'  => 'required_without:company',
-            'company'    => 'required_without_all:first_name,last_name',
-            'email'      => 'required|email|max:255|unique:users',
-            'password'   => 'required|min:5',
-        ]);
-
-        if($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $data['password'] = bcrypt($request->input('password',null));
-
-        // Create user account
-        $user = $this->user->create($data);
-
-        // update adresse with user_id
-        $this->adresse->update(['id' => $adresse->id, 'user_id' => $user->id, 'livraison' => 1]);
+        $user = $this->account->setAdresse($adresse)->createAccount(['password' => $request->input('password',123456)]);
         
         // Assign all orders to new user
         $this->adresse->assignOrdersToUser($adresse->id, $user->id);
