@@ -7,7 +7,10 @@
             @component('emails.newsletter.send.partials.widebloc', ['width' => '560'])
                 <p class="centerText">
                     <a target="_blank" href="{{ isset($bloc->lien) && !empty($bloc->lien) ? $bloc->link_or_url : url('/') }}">
-                        <img style="max-width: 560px;" alt="{{ $bloc->titre or '' }}" src="{{ secure_asset(config('newsletter.path.upload').$bloc->image) }}" />
+                        <img
+                            style="max-width: 560px;"
+                            alt="{{ $bloc->titre or '' }}"
+                            src="{{ secure_asset(config('newsletter.path.upload').$bloc->image) }}" />
                     </a>
                 </p>
                 {!!  $bloc->titre ? '<h2 class="centerText">'. $bloc->titre.'</h2>' : '' !!}
