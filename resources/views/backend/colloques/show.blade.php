@@ -204,42 +204,54 @@
                         @include('backend.colloques.partials.upload', ['type' => 'programme', 'name' => 'Programme'])
                     @endif
 
+                    @if(!$colloque->documents->isEmpty())
                     <h5>Documents</h5>
-
-                        @if($colloque->documents)
-                            @foreach($colloque->documents as $document)
-                                @if($document->type == 'document')
-                                    <div class="colloque-doc-item">
-                                        <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
-                                        <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
-                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-action="{{ $document->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
-                                        </form>
-                                    </div>
-                                @endif
-                            @endforeach
-                        @endif
-                        <br/> <br/>
-                        <h5>Ajouter un document</h5>
-                        <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            {!! csrf_field() !!}
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <p><input type="file" required name="file"></p>
-
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier">
-                                        <span class="input-group-btn">
-                                           <button type="submit" class="btn btn-info">Ajouter</button>
-                                        </span>
-                                    </div><!-- /input-group -->
-
-                                    <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
-                                    <input type="hidden" name="path" value="files/colloques">
-                                    <input type="hidden" name="type" value="document">
+                        @foreach($colloque->documents as $document)
+                            @if($document->type == 'document')
+                                <div class="colloque-doc-item">
+                                    <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
+                                    <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
+                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                        <button data-action="{{ $document->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
+                                    </form>
                                 </div>
+                            @endif
+                        @endforeach
+                        <br/> <br/>
+                    @endif
+
+                    <h5>Ajouter un document</h5>
+                    <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        {!! csrf_field() !!}
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p><input type="file" required name="file"></p>
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier">
+                                    <span class="input-group-btn">
+                                       <button type="submit" class="btn btn-info">Ajouter</button>
+                                    </span>
+                                </div><!-- /input-group -->
+
+                                <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
+                                <input type="hidden" name="path" value="files/colloques">
+                                <input type="hidden" name="type" value="document">
                             </div>
-                        </form>
+                        </div>
+                    </form>
+                    <hr/>
+                    <h4><i class="fa fa-file"></i> &nbsp;Ajouter un slide</h4>
+                    @include('backend.colloques.partials.slides', ['colloque' => $colloque])
+
+                    <br/>
+
+                    @if(!$colloque->getMedia('slides')->isEmpty())
+                        @foreach($colloque->getMedia('slides') as $slide)
+                            @include('backend.colloques.partials.slides', ['colloque' => $colloque, 'slide' => $slide])
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
 

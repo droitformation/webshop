@@ -5,11 +5,12 @@ namespace App\Droit\Colloque\Entities;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class Colloque extends Model
+class Colloque extends Model implements HasMedia
 {
-
-    use SoftDeletes;
+    use SoftDeletes, HasMediaTrait;
 
     protected $table = 'colloques';
 

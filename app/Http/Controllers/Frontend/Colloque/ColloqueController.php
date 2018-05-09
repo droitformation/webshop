@@ -90,4 +90,8 @@ class ColloqueController extends Controller
         return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
+    public function documents()
+    {
+        
+    }
 }
