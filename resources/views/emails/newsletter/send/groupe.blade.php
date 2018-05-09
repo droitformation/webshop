@@ -6,9 +6,7 @@
 
     @foreach($bloc->groupe->arrets as $arret)
         @if(isset($arret))
-
             @include('emails.newsletter.send.arret', ['arret' => $arret, 'bloc' => $bloc])
-
         @endif
     @endforeach
 @endif

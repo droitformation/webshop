@@ -64,9 +64,18 @@ class CampagneController extends Controller
     public function compose($id)
     {
         $campagne = $this->campagne->find($id);
-        $blocs    = $this->type->getAll();
 
-        return view('backend.newsletter.compose')->with(['campagne' => $campagne, 'blocs' => $blocs]);
+        $contents = $campagne->content->map(function ($item, $key) {
+            $convert = new \App\Droit\Newsletter\Entities\ContentModel();
+            $item->setAttribute('model',$convert->setModel($item)->convert());
+            $item->setAttribute('type_content',$item->type_content);
+            $item->setAttribute('path',secure_asset(config('newsletter.path.upload')).'/');
+            return $item;
+        });
+
+        $blocs = $this->type->getAll();
+
+        return view('backend.newsletter.compose')->with(['campagne' => $campagne, 'blocs' => $blocs, 'contents' => $contents]);
     }
 
     /**
@@ -166,7 +175,7 @@ class CampagneController extends Controller
 
         alert()->success('Campagne édité');
 
-        return redirect('build/campagne/'.$campagne->id);
+        return redirect()->back();
     }
 
     /**

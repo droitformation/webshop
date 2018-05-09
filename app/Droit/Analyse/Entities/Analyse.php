@@ -53,4 +53,8 @@ class Analyse extends Model {
         return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'analyse_authors', 'analyse_id', 'author_id')->withPivot('sorting')->orderBy('last_name', 'asc');
     }
 
+    public function site()
+    {
+        return $this->belongsTo('\App\Droit\Site\Entities\Site');
+    }
 }

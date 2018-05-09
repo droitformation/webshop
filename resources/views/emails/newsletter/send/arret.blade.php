@@ -54,6 +54,7 @@
         @endif
 
         <tr bgcolor="ffffff"><td height="25" class="blocBorder"></td></tr><!-- space -->
+
     </table>
     <!-- End bloc -->
 @endif

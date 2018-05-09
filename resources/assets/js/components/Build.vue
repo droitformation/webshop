@@ -2,8 +2,24 @@
     <div>
 
         <div v-if="type">
-            <build-newsletter :title="title" v-if="type && isNormal" :type="type" :campagne="campagne" _token="_token" url="url"></build-newsletter>
-            <build-newsletter-models :title="title" v-if="type && isModel" :type="type" site="2" :campagne="campagne" _token="_token" url="url"></build-newsletter-models>
+            <build-newsletter
+                    mode="create"
+                    :site="site"
+                    :title="title" v-if="type && isNormal"
+                    :type="type"
+                    :campagne="campagne"
+                    :_token="_token"
+                    @cancel="cancel"
+                    :url="url"></build-newsletter>
+            <build-newsletter-models
+                    mode="create"
+                    :site="site"
+                    :title="title" v-if="type && isModel"
+                    :type="type"
+                    :campagne="campagne"
+                    :_token="_token"
+                    @cancel="cancel"
+                    :url="url"></build-newsletter-models>
         </div>
 
         <div class="row">
@@ -30,7 +46,7 @@
     import BuildNewsletterModels from './BuildNewsletterModels.vue'
     import BuildNewsletter from './BuildNewsletter.vue'
     export default{
-        props: ['campagne','_token','url','blocs'],
+        props: ['campagne','_token','url','blocs','site'],
         data(){
             return{
                 type:null,
@@ -54,7 +70,11 @@
             selectBloc : function(bloc){
                 this.type = bloc.id;
                 this.title = bloc.titre
-            }
+            },
+            cancel: function(){
+                this.type = null;
+                this.title = ''
+            },
         }
     }
 </script>

@@ -1,7 +1,7 @@
 <!-- Bloc content-->
 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="tableReset contentForm">
+    <tr bgcolor="ffffff"><td height="5"></td></tr><!-- space -->
     <tr>
-
         @if($direction == 'left')
             <td valign="top" align="center" width="160" class="resetMarge">
                 {{ $picto }}
@@ -17,7 +17,7 @@
                 {{ $picto }}
             </td>
         @endif
-
     </tr>
+    <tr bgcolor="ffffff"><td height="5"></td></tr><!-- space -->
 </table>
 <!-- Bloc content-->

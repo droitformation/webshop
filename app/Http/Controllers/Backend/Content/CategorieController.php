@@ -130,6 +130,15 @@ class CategorieController extends Controller {
     {
         $categories = $this->categorie->getAll($site);
 
+        $categories = $categories->map(function ($item, $key) {
+            return [
+                'id'    => $item->id,
+                'title' => $item->title,
+                'image' => $item->image,
+                'path'  => secure_asset(config('newsletter.path.categorie').$item->image),
+            ];
+        })->all();
+
         return response()->json( $categories, 200 );
     }
 
