@@ -50,6 +50,13 @@ class Colloque extends Model implements HasMedia
         return $this->capacite > $inscriptions ? true : false;
     }
 
+    public function getSlidesAttribute()
+    {
+        return $this->getMedia('slides')->filter(function ($slide, $key) {
+            return ((date('Y-m-d') >= $slide->getCustomProperty('start_at', '')) && (date('Y-m-d') <= $slide->getCustomProperty('end_at', '')));
+        });
+    }
+
     public function getFrontendIllustrationAttribute()
     {
         $illustration = $this->documents->filter(function ($item){

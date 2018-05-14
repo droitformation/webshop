@@ -178,7 +178,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
                     <h4><i class="fa fa-file"></i> &nbsp;Documents</h4>
-                    <h5>Vignette</h5>
+                    <h5><strong>Vignette</strong></h5>
                     @if($colloque->illustration)
                         <div class="thumbnail big">
                             <form action="{{ url('admin/document/'.$colloque->illustration->id) }}" method="POST" class="pull-right">
@@ -191,7 +191,7 @@
                         @include('backend.colloques.partials.upload', ['type' => 'illustration', 'name' => 'Illustration'])
                     @endif
 
-                    <h5>Programme</h5>
+                    <h5><strong>Programme</strong></h5>
                     @if($colloque->programme)
                         <div class="colloque-doc-item">
                             <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
@@ -204,25 +204,26 @@
                         @include('backend.colloques.partials.upload', ['type' => 'programme', 'name' => 'Programme'])
                     @endif
 
-                    @if(!$colloque->documents->isEmpty())
-                    <h5>Documents</h5>
-                        @foreach($colloque->documents as $document)
-                            @if($document->type == 'document')
-                                <div class="colloque-doc-item">
-                                    <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
-                                    <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
-                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                        <button data-action="{{ $document->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
-                                    </form>
-                                </div>
-                            @endif
+                    <?php $documents = $colloque->documents->filter(function ($document, $key) {
+                        return $document->type == 'document';
+                    }); ?>
+
+                    @if(!$documents->isEmpty())
+                        <h5><strong>Documents</strong></h5>
+                        @foreach($documents as $document)
+                            <div class="colloque-doc-item">
+                                <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
+                                <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
+                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                    <button data-action="{{ $document->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
+                                </form>
+                            </div>
                         @endforeach
                         <br/> <br/>
                     @endif
 
-                    <h5>Ajouter un document</h5>
-                    <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        {!! csrf_field() !!}
+                    <h5><strong>Ajouter un document</strong></h5>
+                    <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <p><input type="file" required name="file"></p>
@@ -240,13 +241,16 @@
                             </div>
                         </div>
                     </form>
-                    <hr/>
-                    <h4><i class="fa fa-file"></i> &nbsp;Ajouter un slide</h4>
+                </div>
+            </div>
+            <div class="panel panel-midnightblue">
+                <div class="panel-body">
+
+                    <h4><i class="fa fa-file-text-o"></i> &nbsp;Ajouter un slide</h4>
                     @include('backend.colloques.partials.slides', ['colloque' => $colloque])
 
-                    <br/>
-
                     @if(!$colloque->getMedia('slides')->isEmpty())
+                        <h5><b>Slides</b></h5>
                         @foreach($colloque->getMedia('slides') as $slide)
                             @include('backend.colloques.partials.slides', ['colloque' => $colloque, 'slide' => $slide])
                         @endforeach
