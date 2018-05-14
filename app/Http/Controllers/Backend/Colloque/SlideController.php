@@ -34,20 +34,49 @@ class SlideController extends Controller
         return redirect()->back();
     }
 
+    public function update($id,Request $request)
+    {
+        $colloque   = $this->colloque->find($request->input('colloque_id'));
+        $mediaItems = $colloque->getMedia('slides');
+        $media      = $mediaItems->find($id);
+
+        $custom = ['title' => $request->input('title'),'start_at' => $request->input('start_at'), 'end_at' => $request->input('end_at')];
+
+        if($media){
+            if($request->file('file')){
+                $colloque->addMediaFromRequest('file')->withCustomProperties($custom)->toMediaCollection('slides');
+            }
+            else{
+                $colloque->addMedia($media->getPath())->withCustomProperties($custom)->toMediaCollection('slides');
+            }
+
+            $media->delete();
+        }
+
+        alert()->success('Slide édité');
+
+        return redirect()->back();
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $this->colloque->delete($id);
+        $colloque   = $this->colloque->find($request->input('id'));
+        $mediaItems = $colloque->getMedia('slides');
+        $media = $mediaItems->find($request->input('media_id'));
 
-        alert()->success('Colloque supprimé');
+        if($media){
+            $media->delete();
+        }
 
-        return redirect('admin/colloque');
+        alert()->success('Slide supprimé');
+
+        return redirect()->back();
     }
-
 
 }

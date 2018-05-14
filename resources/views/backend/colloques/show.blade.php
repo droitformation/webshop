@@ -183,7 +183,7 @@
                         <div class="thumbnail big">
                             <form action="{{ url('admin/document/'.$colloque->illustration->id) }}" method="POST" class="pull-right">
                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                <button data-action="Vignette" class="btn btn-danger btn-sm deleteAction">x</button>
+                                <button data-action="Vignette" class="btn btn-danger btn-xs deleteAction">x</button>
                             </form>
                             <img style="height: 140px;" src="{{ secure_asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
                         </div>
@@ -194,10 +194,10 @@
                     <h5><strong>Programme</strong></h5>
                     @if($colloque->programme)
                         <div class="colloque-doc-item">
-                            <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
+                            <a class="btn btn-default btn-xs" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
                             <form action="{{ url('admin/document/'.$colloque->programme->id) }}" method="POST" class="pull-right">
                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                <button data-action="Programme" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
+                                <button data-action="Programme" data-what="supprimer" class="btn btn-danger btn-xs deleteAction">x</button>
                             </form>
                         </div>
                     @else
@@ -223,30 +223,35 @@
                     @endif
 
                     <h5><strong>Ajouter un document</strong></h5>
-                    <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <p><input type="file" required name="file"></p>
+                    <div class="well">
+                        <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <p><input type="file" required name="file"></p>
 
-                                <div class="input-group">
-                                    <input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier">
-                                    <span class="input-group-btn">
-                                       <button type="submit" class="btn btn-info">Ajouter</button>
-                                    </span>
-                                </div><!-- /input-group -->
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" required name="titre" value="" placeholder="Titre du fichier">
+                                        <span class="input-group-btn">
+                                           <button type="submit" class="btn btn-info">Ajouter</button>
+                                        </span>
+                                    </div><!-- /input-group -->
 
-                                <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
-                                <input type="hidden" name="path" value="files/colloques">
-                                <input type="hidden" name="type" value="document">
+                                    <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
+                                    <input type="hidden" name="path" value="files/colloques">
+                                    <input type="hidden" name="type" value="document">
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
-                    <h4><i class="fa fa-file-text-o"></i> &nbsp;Ajouter un slide</h4>
+                    <h4><i class="fa fa-file-text-o"></i> &nbsp;
+                        Slides
+                        <a class="btn btn-warning btn-sm pull-right" id="copyBtn" href="{{ url('pubdroit/documents/'.$colloque->id) }}">Lien</a>
+                    </h4>
                     @include('backend.colloques.partials.slides', ['colloque' => $colloque])
 
                     @if(!$colloque->getMedia('slides')->isEmpty())

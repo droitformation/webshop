@@ -45,7 +45,6 @@
                                     @else
                                         <p class="text-danger">COMPLET</p>
                                     @endif
-                                    @include('frontend.pubdroit.colloque.partials.download', ['colloque' => $colloque])
                                 </div>
                             </div>
                             <div class="clearfix"></div>

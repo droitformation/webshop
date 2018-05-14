@@ -61,6 +61,7 @@ Route::group(['middleware' => ['site','impostor']], function () {
           * */
         Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
         Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
+        Route::get('documents/{id}', 'Frontend\Colloque\ColloqueController@documents');
 
         Route::group(['middleware' => 'auth'], function () {
 
@@ -300,6 +301,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         // Add, edit, delete items for colloque
         //Route::get('colloque/{back?}', 'Backend\Colloque\ColloqueController@index')->middleware('back');
         Route::resource('colloque', 'Backend\Colloque\ColloqueController');
+
         Route::resource('slide', 'Backend\Colloque\SlideController');
 
         Route::post('price/change', 'Backend\Colloque\PriceController@change');
