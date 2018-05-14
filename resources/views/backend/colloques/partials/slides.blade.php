@@ -3,9 +3,9 @@
     <div class="mt-10">
         <div class="row">
             <div class="col-md-5">
-                <a href="{{ $slide->getUrl() }}" class="btn btn-default btn-xs">
+                <a href="{{ $slide->getUrl() }}" class="btn btn-default btn-xs btn-download">
                     <i class="fa fa-download"></i>&nbsp;
-                    {{ $slide->getCustomProperty('title', '') }}
+                    {{ $slide->getCustomProperty('title', $slide->name) }}
                 </a>
             </div>
             <div class="col-md-4">

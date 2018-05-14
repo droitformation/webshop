@@ -1289,6 +1289,11 @@ input[type="checkbox"].rappel-input {
     margin-bottom: 20px;
 }
 
+.btn-download{
+    white-space: normal;
+    display: block;
+    text-align: left;
+}
 
 .isMoved{
     height:100px;

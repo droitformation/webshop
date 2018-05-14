@@ -15,7 +15,7 @@
                     @foreach($colloque->slides as $slide)
                         <p>
                             <a target="_blank" href="{{ $slide->getUrl() }}" class="btn btn-primary">
-                                <i class="fa fa-download"></i> &nbsp;{{ $slide->getCustomProperty('title', '') }}
+                                <i class="fa fa-download"></i> &nbsp;{{ $slide->getCustomProperty('title', $slide->name) }}
                             </a>
                         </p>
                     @endforeach
