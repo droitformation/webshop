@@ -335,4 +335,9 @@ class Colloque extends Model implements HasMedia
     {
         return $this->hasOne('App\Droit\Colloque\Entities\Colloque_attestation');
     }
+
+    public function liste()
+    {
+        return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter_lists');
+    }
 }

@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Backend\Colloque;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Jobs\SendSlide;
 use App\Droit\Service\UploadInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\Newsletter\Repo\NewsletterListInterface;
 
 class SlideController extends Controller
 {
     protected $colloque;
     protected $upload;
+    protected $list;
 
-
-    public function __construct(ColloqueInterface $colloque, UploadInterface $upload)
+    public function __construct(ColloqueInterface $colloque, UploadInterface $upload, NewsletterListInterface $list)
     {
         $this->colloque = $colloque;
         $this->upload   = $upload;
+        $this->list     = $list;
     }
 
     public function store(Request $request)
@@ -79,4 +81,24 @@ class SlideController extends Controller
         return redirect()->back();
     }
 
+    public function send(Request $request)
+    {
+        $colloque = $this->colloque->find($request->input('colloque_id'));
+
+        $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+        $list   = $worker->getList($colloque->id);
+        $emails = $list->emails->pluck('email');
+
+        if(!empty($emails)){
+            foreach ($emails as $email) {
+                $this->dispatch(new SendSlide($email ,$colloque));
+            }
+        }
+
+        $this->list->update(['id' => $list->id, 'send_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+
+        alert()->success('Le lien vers les slides ont été envoyés');
+
+        return redirect()->back();
+    }
 }
