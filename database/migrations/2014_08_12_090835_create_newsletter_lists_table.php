@@ -16,6 +16,7 @@ class CreateNewsletterListsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('colloque_id')->nullable();
+            $table->dateTime('send_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,7 +2,7 @@
     <div class="mt-10">
         <div class="row">
             <div class="col-md-6">
-                <a href="{{ $slide->getUrl() }}" class="btn btn-default btn-xs btn-download">
+                <a target="_blank" href="{{ $slide->getUrl() }}" class="btn btn-default btn-xs btn-download">
                     <i class="fa fa-download"></i>&nbsp;{{ $slide->getCustomProperty('title', $slide->name) }}
                 </a>
             </div>

@@ -250,8 +250,19 @@
 
                     <h4><i class="fa fa-file-text-o"></i> &nbsp;
                         Slides
-                        <a class="btn btn-warning btn-sm pull-right" id="copyBtn" href="{{ url('pubdroit/documents/'.$colloque->id) }}">Lien</a>
+
+                        <div class="btn-group pull-right">
+                            <form action="{{ url('admin/slide/send') }}" method="POST">{!! csrf_field() !!}
+                                <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
+                                <a target="_blank" class="btn btn-default btn-sm" href="{{ url('preview/slides/'.$colloque->id) }}">Voir email</a>
+                                <a class="btn btn-warning btn-sm" id="copyBtn" href="{{ url('pubdroit/documents/'.$colloque->id) }}">Copier lien</a>
+                                <button class="btn btn-inverse btn-sm">Envoyer</button>
+                            </form>
+                        </div>
                     </h4>
+
+                    {!! $colloque->liste && $colloque->liste->send_at ? '<small class="text-muted">Envoyé le '.$colloque->liste->send_at.'</small>' : '' !!}
+
                     @include('backend.colloques.partials.slides', ['colloque' => $colloque])
 
                     @if(!$colloque->getMedia('slides')->isEmpty())

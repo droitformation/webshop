@@ -1300,6 +1300,21 @@ Route::get('badges_test', function () {
 
 });
 
+Route::get('/mailable_slide', function () {
+
+    $colloques = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+    $colloque  = $colloques->find(127);
+
+    $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+
+    $list = $worker->getList(127);
+
+    $texte = 'Lorem ad quîs j\'libéro pharétra vivamus mollis ultricités ut, vulputaté ac pulvinar èst commodo aenanm pharétra cubilia, lacus aenean pharetra des ïd quisquées mauris varius sit. Mie dictumst nûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit çunc, primiés ?';
+    $url   = secure_url('pubdroit/documents/'.$colloque->id);
+
+    return new App\Mail\SendSlides($colloque,$texte,$url);
+});
+
 Route::get('merge', function () {
 
       // Export adresses

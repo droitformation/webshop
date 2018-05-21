@@ -196,4 +196,5 @@ class SondageController extends Controller
 
         return redirect('admin/sondage');
     }
+
 }
