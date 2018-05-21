@@ -90,4 +90,10 @@ class ColloqueController extends Controller
         return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
+    public function documents($id)
+    {
+        $colloque = $this->colloque->find($id);
+
+        return view('frontend.pubdroit.colloque.partials.download')->with(['colloque' => $colloque]);
+    }
 }

@@ -172,4 +172,5 @@ class ColloqueController extends Controller
 
         return redirect('admin/colloque');
     }
+
 }

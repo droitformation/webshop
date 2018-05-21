@@ -22,6 +22,22 @@ $( function() {
         }
     });
 
+    $("#copyBtn").on('click', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(this).attr('href')).select();
+        document.execCommand("copy");
+        $temp.remove();
+
+        $(this).text('Copié!');
+
+        setTimeout(function(){
+            $('#copyBtn').text('Lien');
+        }, 1000);
+    });
+
     var $excelGroup = $('#excelGroup');
     $excelGroup.on('show.bs.collapse','.collapse', function() {
         $excelGroup.find('.collapse.in').collapse('hide');

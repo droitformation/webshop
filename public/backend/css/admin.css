@@ -167,6 +167,11 @@ select.form-control + .chosen-container .chosen-results li, select.form-control 
     margin: 0;
 }
 
+.panel-body h5 strong{
+    margin: 25px 0 10px 0;
+    display: block;
+}
+
 .list-group-item {
     padding: 5px 15px 5px 15px;
     line-height: 23px;
@@ -1284,6 +1289,11 @@ input[type="checkbox"].rappel-input {
     margin-bottom: 20px;
 }
 
+.btn-download{
+    white-space: normal;
+    display: block;
+    text-align: left;
+}
 
 .isMoved{
     height:100px;

@@ -11,6 +11,19 @@ function delete_in_array($string,$value){
     return '';
 }
 
+function formatPeriod($start,$end)
+{
+    $start = \Carbon\Carbon::parse($start)->format('d/m/Y');
+    $end   = \Carbon\Carbon::parse($end)->format('d/m/Y');
+
+    return $start.' au '.$end;
+}
+
+function inPeriod($start,$end)
+{
+    return ((date('Y-m-d') >= $start) && (date('Y-m-d') <= $end));
+}
+
 function var_exist($data, $index){
     if($data && is_array($data)){
         return isset($data[$index]) && !empty($data[$index]) ? true : false;

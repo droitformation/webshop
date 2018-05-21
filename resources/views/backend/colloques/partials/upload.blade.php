@@ -1,5 +1,4 @@
-<form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-    {!! csrf_field() !!}
+<form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
     <div class="form-group">
         <div class="col-md-9 col-sm-9">
             <div class="form-group">
