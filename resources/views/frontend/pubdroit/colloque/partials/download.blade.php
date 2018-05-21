@@ -33,11 +33,12 @@
                 </a>
             </p>
 
+            <h3>{{ $colloque->titre }}</h3>
+            <p><i class="fa fa-calendar"></i> &nbsp;{{ $colloque->event_date }}</p>
+
             @if(!$colloque->slides->isEmpty())
-                <h3>{{ $colloque->titre }}</h3>
-                <p><i class="fa fa-calendar"></i> &nbsp;{{ $colloque->event_date }}</p>
-                <h4>Documents en téléchargement</h4><br/>
                 @if(date('Y-m-d') >= $colloque->start_at->subDays(15)->toDateString() )
+                    <h4>Documents en téléchargement</h4><br/>
                     <div class="well">
                         @foreach($colloque->slides as $slide)
                             <p>
@@ -47,7 +48,11 @@
                             </p>
                         @endforeach
                     </div>
+                @else
+                    <p style="color: #000;margin-top: 20px;">Les documents ne sont pas disponibles.</p>
                 @endif
+            @else
+                <p style="color: #000; margin-top: 20px;">Encore aucun document disponible.</p>
             @endif
 
         </div>
