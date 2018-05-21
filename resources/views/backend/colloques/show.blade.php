@@ -250,14 +250,10 @@
 
                     <h4><i class="fa fa-file-text-o"></i> &nbsp;
                         Slides
-
                         <div class="btn-group pull-right">
-                            <form action="{{ url('admin/slide/send') }}" method="POST">{!! csrf_field() !!}
-                                <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
-                                <a target="_blank" class="btn btn-default btn-sm" href="{{ url('preview/slides/'.$colloque->id) }}">Voir email</a>
-                                <a class="btn btn-warning btn-sm" id="copyBtn" href="{{ url('pubdroit/documents/'.$colloque->id) }}">Copier lien</a>
-                                <button class="btn btn-inverse btn-sm">Envoyer</button>
-                            </form>
+                            <a target="_blank" class="btn btn-default btn-sm" href="{{ url('preview/slides/'.$colloque->id) }}">Voir email</a>
+                            <a class="btn btn-warning btn-sm" id="copyBtn" href="{{ url('pubdroit/documents/'.$colloque->id) }}">Copier lien</a>
+                            <a class="btn btn-inverse btn-sm" href="{{ url('admin/slide/confirm/'.$colloque->id) }}">Confirmer et envoyer</a>
                         </div>
                     </h4>
 

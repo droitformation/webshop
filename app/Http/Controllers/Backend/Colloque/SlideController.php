@@ -23,6 +23,16 @@ class SlideController extends Controller
         $this->list     = $list;
     }
 
+    public function confirm($colloque_id)
+    {
+        $colloque = $this->colloque->find($colloque_id);
+        $worker = new \App\Droit\Sondage\Worker\SondageWorker();
+        $list   = $worker->getList($colloque->id);
+        $emails = $list->emails->pluck('email');
+
+        return view('backend.colloques.confirmation')->with(['colloque' => $colloque, 'emails' => $emails]);
+    }
+
     public function store(Request $request)
     {
         $colloque = $this->colloque->find($request->input('colloque_id'));
@@ -99,6 +109,6 @@ class SlideController extends Controller
 
         alert()->success('Le lien vers les slides ont été envoyés');
 
-        return redirect()->back();
+        return redirect('admin/colloque/'.$colloque->id);
     }
 }

@@ -303,6 +303,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::resource('colloque', 'Backend\Colloque\ColloqueController');
 
         Route::post('slide/send', 'Backend\Colloque\SlideController@send');
+        Route::get('slide/confirm/{colloque_id}', 'Backend\Colloque\SlideController@confirm');
         Route::resource('slide', 'Backend\Colloque\SlideController');
 
         Route::post('price/change', 'Backend\Colloque\PriceController@change');
