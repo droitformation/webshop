@@ -257,7 +257,7 @@
                         </div>
                     </h4>
 
-                    {!! $colloque->liste && $colloque->liste->send_at ? '<small class="text-muted">Envoyé le '.$colloque->liste->send_at.'</small>' : '' !!}
+                    {!! $colloque->liste && $colloque->liste->send_at ? '<small class="text-muted">Dernier envoi le '.$colloque->liste->send_at.'</small>' : '' !!}
 
                     @include('backend.colloques.partials.slides', ['colloque' => $colloque])
 
