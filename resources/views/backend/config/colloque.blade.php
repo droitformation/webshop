@@ -118,10 +118,6 @@
                         </div>
                         <div class="form-group">
                             <label><strong>Si oui il n'est pas possible de s'inscrire si la personne possède 2 (rappels) factures ouvertes.</strong></label>
-                           {{-- <div class="input-group" style="width: 130px;">
-                                <input type="text" class="form-control" name="inscription[days]" value="{!! Registry::get('inscription.days')!!}">
-                                <span class="input-group-addon" id="basic-addon2">jours</span>
-                            </div>--}}
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -150,8 +146,31 @@
                 </div>
 
             </div>
-
         </div>
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <h4><i class="fa fa-file-text-o"></i> &nbsp;Texte envois des slides</h4>
+                <div class="panel panel-inverse">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label><strong>Texte</strong></label>
+                            <textarea name="slides[texte]" class="form-control redactorSimple">{!! Registry::get('slides.texte') !!}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>Signature</strong></label>
+                            <textarea name="slides[adresse]" class="form-control redactorSimple">{!! Registry::get('slides.adresse') !!}</textarea>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-info btn-sm  pull-right">Mettre à jour</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </form>
 </div><!-- App end -->
 @stop
