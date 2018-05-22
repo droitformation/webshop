@@ -34,6 +34,8 @@ class SendSlides extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.slide');
+        $subject = $this->colloque->titre.' - Colloque du '.$this->colloque->event_date.' - VOS DOCUMENTS A TELECHARGER';
+
+        return $this->subject($subject)->view('emails.slide');
     }
 }
