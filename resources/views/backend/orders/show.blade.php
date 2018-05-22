@@ -175,7 +175,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[warning]" value="{{ $warning }}">
+                                    <input class="form-control" type="text" name="comment[warning]" value="{{ $warning }}">
                                 </div>
                             </div>
                         </div>
@@ -187,7 +187,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="message[special]" value="{{ $special }}">
+                                    <input class="form-control" type="text" name="comment[special]" value="{{ $special }}">
                                 </div>
                             </div>
                         </div>
