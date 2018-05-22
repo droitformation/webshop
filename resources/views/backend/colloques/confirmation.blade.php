@@ -4,7 +4,7 @@
     <p><a href="{{ url('admin/colloque/'.$colloque->id) }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> &nbsp;Retour au colloque</a></p>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-12">
             <h3 class="text-info">Confirmer et envoyer les liens aux emails</h3>
         </div>
     </div>
