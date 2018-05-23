@@ -10,13 +10,15 @@
                 <p style="margin-top: 0;">
                     <a style="margin-top: 0;" href="{{ secure_url('pubdroit/colloque/'.$colloque->id) }}">
                         <?php $illustraton = $colloque->illustration ? $colloque->illustration->path : 'illu.png'; ?>
-                        <img height="150px" src="{{ secure_asset('files/colloques/illustration/'.$illustraton) }}" alt=""/>
+                        <img height="120px" src="{{ secure_asset('files/colloques/illustration/'.$illustraton) }}" alt=""/>
                     </a>
                 </p>
                 <!-- Greeting -->
                 <h1 style="{{ $style['header-2'] }}">{{ $colloque->titre }}<br/></h1>
-                <p style="color: #000;margin-top: 15px;margin-bottom: 10px;">{{ $colloque->event_date }}</p>
-                <p style="color: #000;margin-top: 15px;margin-bottom: 20px;">{{ $texte }}</p>
+                <p style="color: #000;margin-top: 5px;margin-bottom: 25px;font-style: italic;">{{ $colloque->event_date }}</p>
+                <div style="color: #000;margin-top: 15px;margin-bottom: 20px; text-align: left;">
+                    {!! \Registry::get('slides.texte') !!}
+                </div>
             </td>
         </tr>
         <tr>
@@ -34,7 +36,9 @@
                 </table>
 
                 <!-- Salutation -->
-                <p style="{{ $style['paragraph'] }}font-weigth:normal;margin-top: 40px;margin-bottom:0;font-size: 14px;">Le secrétariat de la Faculté de droit</p>
+                <div style="{{ $style['paragraph'] }}font-weigth:normal;color:#1b1b1b;margin-top: 40px;margin-bottom:0;font-size: 14px;">
+                    {!! \Registry::get('slides.adresse') !!}
+                </div>
 
             </td>
         </tr>

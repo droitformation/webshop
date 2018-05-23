@@ -75,12 +75,15 @@ class FeatureProfileTest extends TestCase
             'colloque_id'  => $inscription2->colloque_id,
         ]);
 
+        \Registry::shouldReceive('get')->andReturn('Vous avez des paiements en attente, veuillez contacter le secrétariat: droit.formation@unine.ch');
+        \Registry::shouldReceive('get')->andReturn(1);
+
         $response = $this->get('/pubdroit/colloque/'.$colloque->id);
 
         $response->assertStatus(200);
         $response->assertViewHas('colloque');
 
-        //$response->assertSee('Vous avez des paiements en attente, veuillez contacter le secrétariat: droit.formation@unine.ch');
+        $response->assertSee('Vous avez des paiements en attente, veuillez contacter le secrétariat: droit.formation@unine.ch');
 
     }
 
