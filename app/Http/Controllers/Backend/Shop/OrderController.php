@@ -235,29 +235,10 @@ class OrderController extends Controller {
 
     public function update($id, Request $request)
     {
-        $updates = [
-            'id'         => $request->input('id'),
-            'created_at' => $request->input('created_at',null),
-            'paquet'     => $request->input('paquet',null),
-            'user_id'    => $request->input('user_id',null),
-            'adresse_id' => $request->input('adresse_id',null),
-            'comment'    => $request->input('comment',null)
-        ];
+        $order = $this->order->find($id);
 
-        $order  = $this->order->update(array_filter($updates));
-        $coupon = $request->input('coupon_id',null) ? $this->coupon->find($request->input('coupon_id')) : null;
-    
-        // Prepare data and update
-        $data   = $this->ordermaker->updateOrder($order, $request->input('shipping_id'), $coupon);
-        $order  = $this->order->update($data);
-
-        if(!empty(array_filter($request->input('tva',[]))))
-            $this->pdfgenerator->setTva(array_filter($request->input('tva')));
-
-        if(!empty(array_filter($request->input('message',[]))))
-            $this->pdfgenerator->setMsg(array_filter($request->input('message')));
-
-        $this->pdfgenerator->factureOrder($order);
+        $updater = new \App\Droit\Shop\Order\Worker\OrderUpdate(array_filter($request->all()),$order);
+        $order = $updater->updateOrder();
 
         alert()->success('La commande a été mise à jour');
 

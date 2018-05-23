@@ -12,6 +12,7 @@ class OrderUpdate
     protected $repo_order;
     protected $repo_coupon;
     protected $repo_product;
+    protected $pdfgenerator;
 
     public function __construct($request,$order){
         $this->request = $request;
@@ -20,15 +21,22 @@ class OrderUpdate
         $this->repo_order = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
         $this->repo_coupon = \App::make('App\Droit\Shop\Coupon\Repo\CouponInterface');
         $this->repo_product = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+        $this->pdfgenerator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    }
+
+    public function updateOrder()
+    {
+        return $this->prepareData()->coupon()->shipping()->messages()->update();
     }
 
     public function prepareData()
     {
         $this->data = array_filter(array_only($this->request,['id','created_at','paquet','user_id','adresse_id','comment']));
-        $this->data['coupon_id']   = null;
-        $this->data['shipping_id'] = null;
+        $this->data['coupon_id']   = $this->order->coupon_id;
+        $this->data['shipping_id'] = $this->order->shipping_id;
+        $this->data['comment']     = isset($this->order->comment) ? unserialize($this->order->comment) : null;
 
-        $this->coupon()->shipping();
+        return $this;
     }
 
     // calculate coupon
@@ -57,9 +65,10 @@ class OrderUpdate
     public function shipping()
     {
         if(isset($this->request['shipping_id'])) {
-/*            $paquets = $this->order->paquets();
+
+            $paquets = $this->order->paquets();
             $this->order->paquets()->detach();
-            $paquets->delete();*/
+            $paquets->delete();
 
             $this->data['shipping_id'] = isset($this->coupon) && ($this->coupon->type == 'priceshipping' || $this->coupon->type == 'shipping') ? 6 : $this->request['shipping_id'];
             $this->data['paquet'] = isset($this->request['paquet']) ? $this->request['paquet'] : null;
@@ -68,11 +77,24 @@ class OrderUpdate
             $orderbox = new \App\Droit\Shop\Order\Entities\OrderBox($this->order);
             $paquets  = $orderbox->calculate($this->order->weight)->getShippingList();
 
-           // $this->repo_order->setPaquets($this->order,$paquets);
-            $this->data['boxes'] = $paquets;
+            $this->repo_order->setPaquets($this->order,$paquets);
+            //$this->data['boxes'] = $paquets;
 
             $this->data['shipping_id'] = isset($this->coupon) && ($this->coupon->type == 'priceshipping' || $this->coupon->type == 'shipping') ? 6 : null;
             $this->data['paquet'] = null;
+        }
+
+        return $this;
+    }
+
+    public function messages()
+    {
+        if(isset($this->request['comment']) && !empty($this->request['comment'])){
+            $this->data['comment'] = $this->request['comment'];
+        }
+
+        if(isset($this->request['tva']) && !empty($this->request['tva'])){
+            $this->data['tva'] = $this->request['tva'];
         }
 
         return $this;
@@ -82,15 +104,15 @@ class OrderUpdate
     {
         $order = $this->repo_order->update($this->data);
 
-        $messages = array_filter(array_only($this->request,['tva','message']));
+        if(isset($this->data['tva']) && !empty($this->data['tva']))
+            $this->pdfgenerator->setTva($this->data['tva']);
 
-        if(isset($messages['tva']) && !empty($messages['tva']))
-            $this->pdfgenerator->setTva($messages['tva']);
-
-        if(isset($messages['message']) && !empty($messages['message']))
-            $this->pdfgenerator->setMsg($messages['message']);
+        if(isset($this->data['comment']) && !empty($this->data['comment']))
+            $this->pdfgenerator->setMsg($this->data['comment']);
 
         $this->pdfgenerator->factureOrder($order);
+
+        return $order;
     }
 
     public function updateProducts($coupon)
