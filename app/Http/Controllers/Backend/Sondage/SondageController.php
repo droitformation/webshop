@@ -66,7 +66,7 @@ class SondageController extends Controller
 
         if($sondage->colloque_id){
             $worker = new \App\Droit\Sondage\Worker\SondageWorker();
-            $worker->createList($sondage->colloque_id);
+            $worker->getList($sondage->colloque_id);
         }
 
         alert()->success('Le sondage a été crée');
