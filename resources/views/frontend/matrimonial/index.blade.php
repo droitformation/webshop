@@ -12,8 +12,26 @@
             <div class="col-md-12 homepageBlock">
 
                 @if(isset($page))
-					<h1>{{ $page->title }}</h1>
-					{!! $page->content !!}
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h1>{{ $page->title }}</h1>
+                            {!! $page->content !!}
+                        </div>
+                        <div class="col-md-3">
+                            <div class="sidebar-app">
+                                @if(isset($page) && !$page->blocs->isEmpty())
+                                    @foreach($page->blocs as $bloc)
+                                        @if($bloc->type == 'soutien')
+                                            <div class="widget clear">
+                                                @include('frontend.partials.bloc', ['bloc' => $bloc])
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
 
                     @if(!$page->contents->isEmpty())
                         <h4 class="line">News</h4>
