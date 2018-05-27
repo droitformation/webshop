@@ -42,22 +42,25 @@ class OrderUpdate
     // calculate coupon
     public function coupon()
     {
+        $coupon = null;
+        $this->data['coupon_id'] = null;
+
         if(isset($this->request['coupon_id']) && !empty($this->request['coupon_id'])){
             $this->data['coupon_id'] = $this->request['coupon_id'];
 
             $coupon = $this->repo_coupon->find($this->request['coupon_id']);
 
-            $products_updated = $this->updateProducts($coupon);
-
-            $total = $products_updated->map(function ($item, $key) {
-                return $item['price'];
-            })->sum();
-
-            $this->data['amount']   = number_format($total, 0, '.', '');
-            $this->data['products'] = $products_updated->toArray();
-
             $this->coupon = $coupon;
         }
+
+        $products_updated = $this->updateProducts($coupon);
+
+        $total = $products_updated->map(function ($item, $key) {
+            return $item['price'];
+        })->sum();
+
+        $this->data['amount']   = number_format($total, 0, '.', '');
+        $this->data['products'] = $products_updated->toArray();
 
         return $this;
     }
@@ -104,7 +107,7 @@ class OrderUpdate
     {
         $order = $this->repo_order->update($this->data);
 
-        if(isset($this->data['tva']) && !empty($this->data['tva']))
+        if(isset($this->data['tva']) && !empty(array_filter($this->data['tva'])))
             $this->pdfgenerator->setTva($this->data['tva']);
 
         if(isset($this->data['comment']) && !empty($this->data['comment']))
@@ -115,14 +118,14 @@ class OrderUpdate
         return $order;
     }
 
-    public function updateProducts($coupon)
+    public function updateProducts($coupon = null)
     {
         return $this->order->products->map(function ($product, $key) use ($coupon) {
 
             $price  = !$product->pivot->isFree ? $product->price_cents : 0;
 
             // search if product eligible for discount
-            if(isset($coupon->products) && $coupon->products->contains($product->id)) {
+            if(isset($coupon) && isset($coupon->products) && $coupon->products->contains($product->id)) {
                 if($coupon->type == 'product') {
                     $price = $this->calculPriceWithCoupon($product, $coupon, 'percent');
                 }
