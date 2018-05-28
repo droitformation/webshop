@@ -31,7 +31,7 @@ class OrderUpdate
 
     public function prepareData()
     {
-        $this->data = array_filter(array_only($this->request,['id','created_at','paquet','user_id','adresse_id','comment']));
+        $this->data = array_filter(array_only($this->request,['id','created_at','paquet','user_id','adresse_id','comment','payed_at']));
         $this->data['coupon_id']   = $this->order->coupon_id;
         $this->data['shipping_id'] = $this->order->shipping_id;
         $this->data['comment']     = isset($this->order->comment) ? unserialize($this->order->comment) : null;
@@ -81,7 +81,6 @@ class OrderUpdate
             $paquets  = $orderbox->calculate($this->order->weight)->getShippingList();
 
             $this->repo_order->setPaquets($this->order,$paquets);
-            //$this->data['boxes'] = $paquets;
 
             $this->data['shipping_id'] = isset($this->coupon) && ($this->coupon->type == 'priceshipping' || $this->coupon->type == 'shipping') ? 6 : null;
             $this->data['paquet'] = null;
