@@ -86,7 +86,6 @@ class AccountWorker implements AccountWorkerInterface
 
     public function validate()
     {
-
         $validator = \Validator::make($this->data, [
             'adresse'    => 'required',
             'npa'        => 'required',
@@ -94,7 +93,7 @@ class AccountWorker implements AccountWorkerInterface
             'first_name' => 'required_without:company',
             'last_name'  => 'required_without:company',
             'company'    => 'required_without_all:first_name,last_name',
-            'email'      => 'required|email|max:255|unique:users',
+            'email'      => 'required|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
             'password'   => 'required|min:6',
         ]);
 
