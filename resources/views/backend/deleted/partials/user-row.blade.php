@@ -84,6 +84,12 @@
                     @endforeach
                 @endif
 
+                @if(!$user->abos->isEmpty())
+                    <dt>Abonnements</dt>
+                    @foreach($user->abos as $abo)
+                        <dd>{{ $abo->numero }}</dd>
+                    @endforeach
+                @endif
             </dl>
         </td>
         <td>
