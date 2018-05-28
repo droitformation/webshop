@@ -229,4 +229,42 @@ class WorkerAccountTest extends TestCase
         ]);
 
     }
+
+    public function testAllowAlreadyDeletedUserEmail()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
+            'email'   => $user->email,
+            'user_id' => null,
+        ]);
+
+        $user->delete();
+
+        $response = $this->call('POST', 'admin/adresse/convert', ['id' => $adresse->id]);
+        $location = $response->headers->get('Location');
+
+        $path = explode('/',$location);
+        $path = end($path);
+
+        $response = $this->get('admin/user/'.$path);
+        $response->assertStatus(200);
+
+        $content = $response->getOriginalContent();
+        $content = $content->getData();
+        $newuser = $content['user'];
+
+        $this->assertDatabaseMissing('users', [
+            'id' => $user->id,
+            'deleted_at' => null
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $newuser->id,
+            'email' => $user->email,
+            'deleted_at' => null
+        ]);
+
+    }
 }
