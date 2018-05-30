@@ -18,6 +18,13 @@ class SondageWorker
         $this->colloque_repo = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     }
 
+    public function getList($colloque_id)
+    {
+        $exist = $this->list->findByColloque($colloque_id);
+
+        return $exist ? $this->updateList($colloque_id) : $this->createList($colloque_id);
+    }
+
     public function createList($colloque_id)
     {
         $emails = $this->getEmails($colloque_id);

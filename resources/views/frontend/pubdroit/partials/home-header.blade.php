@@ -39,15 +39,15 @@
                                     {{ $colloque->location ? $colloque->location->name : '' }}, {!! $colloque->location ? strip_tags($colloque->location->adresse) : '' !!}</p>
                                 {!! $colloque->remarque !!}
 
-                                @if($colloque->is_open)
-                                    <p><a class="more-btn btn-sm" href="{{ $register_url }}">Inscription</a></p>
-                                @else
-                                    <p class="text-danger text-right">COMPLET</p>
-                                @endif
-
+                                <div class="btn-group pull-right">
+                                    @if($colloque->is_open)
+                                        <a class="more-btn btn-sm" href="{{ $register_url }}">Inscription</a>
+                                    @else
+                                        <p class="text-danger">COMPLET</p>
+                                    @endif
+                                </div>
                             </div>
                             <div class="clearfix"></div>
-
                         </div>
 
                     @endforeach

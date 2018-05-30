@@ -7,7 +7,8 @@ class Newsletter_lists extends Model {
 
     use SoftDeletes;
 
-	protected $fillable = ['title','colloque_id','updated_at'];
+	protected $fillable = ['title','colloque_id','updated_at','send_at'];
+	protected $dates = ['send_at'];
 
     public function emails()
     {

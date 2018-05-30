@@ -5,11 +5,12 @@ namespace App\Droit\Colloque\Entities;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class Colloque extends Model
+class Colloque extends Model implements HasMedia
 {
-
-    use SoftDeletes;
+    use SoftDeletes, HasMediaTrait;
 
     protected $table = 'colloques';
 
@@ -47,6 +48,13 @@ class Colloque extends Model
         }
 
         return $this->capacite > $inscriptions ? true : false;
+    }
+
+    public function getSlidesAttribute()
+    {
+        return $this->getMedia('slides')->filter(function ($slide, $key) {
+            return ((date('Y-m-d') >= $slide->getCustomProperty('start_at', '')) && (date('Y-m-d') <= $slide->getCustomProperty('end_at', '')));
+        });
     }
 
     public function getFrontendIllustrationAttribute()
@@ -326,5 +334,10 @@ class Colloque extends Model
     public function attestation()
     {
         return $this->hasOne('App\Droit\Colloque\Entities\Colloque_attestation');
+    }
+
+    public function liste()
+    {
+        return $this->hasOne('App\Droit\Newsletter\Entities\Newsletter_lists');
     }
 }

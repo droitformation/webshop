@@ -178,12 +178,12 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
                     <h4><i class="fa fa-file"></i> &nbsp;Documents</h4>
-                    <h5>Vignette</h5>
+                    <h5><strong>Vignette</strong></h5>
                     @if($colloque->illustration)
                         <div class="thumbnail big">
                             <form action="{{ url('admin/document/'.$colloque->illustration->id) }}" method="POST" class="pull-right">
                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                <button data-action="Vignette" class="btn btn-danger btn-sm deleteAction">x</button>
+                                <button data-action="Vignette" class="btn btn-danger btn-xs deleteAction">x</button>
                             </form>
                             <img style="height: 140px;" src="{{ secure_asset('files/colloques/illustration/'.$colloque->illustration->path) }}" />
                         </div>
@@ -191,38 +191,40 @@
                         @include('backend.colloques.partials.upload', ['type' => 'illustration', 'name' => 'Illustration'])
                     @endif
 
-                    <h5>Programme</h5>
+                    <h5><strong>Programme</strong></h5>
                     @if($colloque->programme)
                         <div class="colloque-doc-item">
-                            <a class="btn btn-default" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
+                            <a class="btn btn-default btn-xs" target="_blank" href="files/colloques/programme/{{ $colloque->programme->path }}"><i class="fa fa-file"></i> &nbsp;Le programme</a>
                             <form action="{{ url('admin/document/'.$colloque->programme->id) }}" method="POST" class="pull-right">
                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                <button data-action="Programme" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
+                                <button data-action="Programme" data-what="supprimer" class="btn btn-danger btn-xs deleteAction">x</button>
                             </form>
                         </div>
                     @else
                         @include('backend.colloques.partials.upload', ['type' => 'programme', 'name' => 'Programme'])
                     @endif
 
-                    <h5>Documents</h5>
+                    <?php $documents = $colloque->documents->filter(function ($document, $key) {
+                        return $document->type == 'document';
+                    }); ?>
 
-                        @if($colloque->documents)
-                            @foreach($colloque->documents as $document)
-                                @if($document->type == 'document')
-                                    <div class="colloque-doc-item">
-                                        <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
-                                        <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
-                                            <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                            <button data-action="{{ $document->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
-                                        </form>
-                                    </div>
-                                @endif
-                            @endforeach
-                        @endif
+                    @if(!$documents->isEmpty())
+                        <h5><strong>Documents</strong></h5>
+                        @foreach($documents as $document)
+                            <div class="colloque-doc-item">
+                                <a class="btn btn-default" target="_blank" href="{{ $document->colloque_path }}"><i class="fa fa-file-archive-o"></i> &nbsp;{{ $document->titre }}</a>
+                                <form action="{{ url('admin/document/'.$document->id) }}" method="POST" class="pull-right">
+                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                    <button data-action="{{ $document->titre }}" data-what="supprimer" class="btn btn-danger btn-sm deleteAction">x</button>
+                                </form>
+                            </div>
+                        @endforeach
                         <br/> <br/>
-                        <h5>Ajouter un document</h5>
-                        <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            {!! csrf_field() !!}
+                    @endif
+
+                    <h5><strong>Ajouter un document</strong></h5>
+                    <div class="well">
+                        <form action="{{ url('admin/uploadFile') }}" method="post" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <p><input type="file" required name="file"></p>
@@ -240,6 +242,32 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-midnightblue">
+                <div class="panel-body">
+
+                    <h4><i class="fa fa-file-text-o"></i> &nbsp;
+                        Slides
+                        <div class="btn-group pull-right">
+                            <a target="_blank" class="btn btn-default btn-sm" href="{{ url('preview/slides/'.$colloque->id) }}">Voir email</a>
+                            <a class="btn btn-warning btn-sm" id="copyBtn" href="{{ url('pubdroit/documents/'.$colloque->id) }}">Copier lien</a>
+                            <a class="btn btn-inverse btn-sm" href="{{ url('admin/slide/confirm/'.$colloque->id) }}">Confirmer et envoyer</a>
+                        </div>
+                    </h4>
+
+                    {!! $colloque->liste && $colloque->liste->send_at ? '<small class="text-muted">Dernier envoi le '.$colloque->liste->send_at.'</small>' : '' !!}
+
+                    @include('backend.colloques.partials.slides', ['colloque' => $colloque])
+
+                    @if(!$colloque->getMedia('slides')->isEmpty())
+                        <h5><b>Slides</b></h5>
+                        @foreach($colloque->getMedia('slides') as $slide)
+                            @include('backend.colloques.partials.slides', ['colloque' => $colloque, 'slide' => $slide])
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
 

@@ -33,7 +33,9 @@ class NewsletterListEloquent implements NewsletterListInterface{
 
     public function findByColloque($colloque_id)
     {
-	    return $this->list->where('colloque_id','=',$colloque_id)->firstOrFail();
+        $exist = $this->list->where('colloque_id','=',$colloque_id)->get();
+
+        return (!$exist->isEmpty() ? $exist->first() : null);
     }
 
     public function emailExist($id,$email)
