@@ -2,7 +2,13 @@
     <div>
 
         <div class="upload-btn-wrapper" v-if="!image">
-            <button class="btn btn-info btn-xs">Sélectionner image</button>
+            <button class="btn btn-primary btn-xs iframe-btn" href="../filemanager/dialog.php?type=1&field_id=fieldID&relative_url=0" type="button">Choisir existante</button>
+            <input id="fieldID" name="image" value="" type="hidden">
+        </div>
+
+        <div class="upload-btn-wrapper" v-if="!image">
+
+            <button class="btn btn-info btn-xs">Télécharger image</button>
             <input type="file" v-on:change="onFileChange" class="form-control">
         </div>
 
@@ -45,6 +51,7 @@
         },
         mounted: function ()  {
             this.initialize();
+            this.iframe();
         },
         computed: {
             size : function(){
@@ -52,6 +59,27 @@
             }
         },
         methods: {
+            iframe(){
+                this.$nextTick(function() {
+                    $('.iframe-btn').fancybox({
+                        'width'		: 900,
+                        'height'	: 600,
+                        'type'		: 'iframe',
+                        'autoScale'    	: false
+                    });
+                });
+
+                var self = this;
+
+                $('#fieldID').change(function() {
+                    var image = $('#fieldID').val();
+                    var lastURLSegment = image.substr(image.lastIndexOf('/') + 1);
+                    self.image = image;
+                    self.uploadImage = lastURLSegment;
+                    self.$emit('imageUploaded', self.uploadImage)
+                    console.log(lastURLSegment);
+                });
+            },
             initialize(){
                 this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
             },
@@ -73,15 +101,18 @@
             remove(){
                  this.image = null;
                  this.isRemoved = true;
+                 this.iframe();
             },
             cancel(){
                  this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
                  this.isRemoved = false;
+                 this.iframe();
             },
             upload(){
                 axios.post('/admin/uploadNewsletter',{ image: this.image }).then(response => {
                     this.uploadImage = response.data.name;
                     this.$emit('imageUploaded', this.uploadImage)
+                    this.iframe();
                 });
             }
         }

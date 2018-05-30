@@ -5570,6 +5570,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5586,6 +5592,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         this.initialize();
+        this.iframe();
     },
     computed: {
         size: function size() {
@@ -5593,6 +5600,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        iframe: function iframe() {
+            this.$nextTick(function () {
+                $('.iframe-btn').fancybox({
+                    'width': 900,
+                    'height': 600,
+                    'type': 'iframe',
+                    'autoScale': false
+                });
+            });
+
+            var self = this;
+
+            $('#fieldID').change(function () {
+                var image = $('#fieldID').val();
+                var lastURLSegment = image.substr(image.lastIndexOf('/') + 1);
+                self.image = image;
+                self.uploadImage = lastURLSegment;
+                self.$emit('imageUploaded', self.uploadImage);
+                console.log(lastURLSegment);
+            });
+        },
         initialize: function initialize() {
             this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
         },
@@ -5613,10 +5641,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         remove: function remove() {
             this.image = null;
             this.isRemoved = true;
+            this.iframe();
         },
         cancel: function cancel() {
             this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
             this.isRemoved = false;
+            this.iframe();
         },
         upload: function upload() {
             var _this = this;
@@ -5624,6 +5654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post('/admin/uploadNewsletter', { image: this.image }).then(function (response) {
                 _this.uploadImage = response.data.name;
                 _this.$emit('imageUploaded', _this.uploadImage);
+                _this.iframe();
             });
         }
     }
@@ -29242,8 +29273,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [(!_vm.image) ? _c('div', {
     staticClass: "upload-btn-wrapper"
   }, [_c('button', {
+    staticClass: "btn btn-primary btn-xs iframe-btn",
+    attrs: {
+      "href": "../filemanager/dialog.php?type=1&field_id=fieldID&relative_url=0",
+      "type": "button"
+    }
+  }, [_vm._v("Choisir existante")]), _vm._v(" "), _c('input', {
+    attrs: {
+      "id": "fieldID",
+      "name": "image",
+      "value": "",
+      "type": "hidden"
+    }
+  })]) : _vm._e(), _vm._v(" "), (!_vm.image) ? _c('div', {
+    staticClass: "upload-btn-wrapper"
+  }, [_c('button', {
     staticClass: "btn btn-info btn-xs"
-  }, [_vm._v("Sélectionner image")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Télécharger image")]), _vm._v(" "), _c('input', {
     staticClass: "form-control",
     attrs: {
       "type": "file"

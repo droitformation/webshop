@@ -31,6 +31,7 @@
             @endif
         </div>
 
+
     <div id="StyleNewsletter" class="onBuild">
         <!-- Logos -->
         @include('emails.newsletter.send.logos')

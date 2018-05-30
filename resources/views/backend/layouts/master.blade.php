@@ -37,12 +37,17 @@
     <!-- Manager -->
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
 
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
+
+
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
     @endif
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <base href="/">
+
+    <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.fancybox.min.js');?>"></script>
 
     @include('script.config')
     <script>

@@ -42,7 +42,9 @@ class ContentController extends Controller
     public function store(NewsletterContentRequest $request){
 
         $data = $request->all();
-
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';exit();
         $upload = new Helper();
 
         // image resize

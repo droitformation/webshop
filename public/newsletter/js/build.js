@@ -446,6 +446,7 @@ App.controller('SelectController', ['$scope','$http','Arrets','myService','__env
         site_id = !site_id ? null : site_id;
 
         Arrets.query(site_id).then(function (data) {
+            console.log(data);
             self.arrets = data;
         });
     }
