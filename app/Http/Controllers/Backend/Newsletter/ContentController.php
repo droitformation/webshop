@@ -42,9 +42,6 @@ class ContentController extends Controller
     public function store(NewsletterContentRequest $request){
 
         $data = $request->all();
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';exit();
         $upload = new Helper();
 
         // image resize
@@ -94,7 +91,9 @@ class ContentController extends Controller
             return $item;
         });
 
-        return response()->json($contents);
+        alert()->success('Bloc supprimé');
+        return redirect(url()->previous().'#componant');
+        //return response()->json($contents);
     }
 
     /**

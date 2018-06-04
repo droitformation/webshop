@@ -1,23 +1,22 @@
 <template>
     <div>
 
-        <div class="upload-btn-wrapper" v-if="!image">
-            <button class="btn btn-primary btn-xs iframe-btn" href="../filemanager/dialog.php?type=1&field_id=fieldID&relative_url=0" type="button">Choisir existante</button>
+        <div class="upload-btn-wrapper" v-if="!image && visible">
+            <button @click="newSelected" class="btn btn-primary btn-xs iframe-btn" href="../filemanager/dialog.php?type=1&field_id=fieldID&relative_url=0" type="button">Choisir existante</button>
             <input id="fieldID" name="image" value="" type="hidden">
         </div>
 
-        <div class="upload-btn-wrapper" v-if="!image">
-
+        <div class="upload-btn-wrapper" v-if="!image && visible">
             <button class="btn btn-info btn-xs">Télécharger image</button>
             <input type="file" v-on:change="onFileChange" class="form-control">
         </div>
 
         <div class="responsive-newsletter">
-            <div v-if="image"><img :src="image" class="img-responsive"></div>
+            <div v-if="image"><img :width="sizeImage" :src="image" class="img-responsive"></div>
             <div v-if="!image"><img :src="size" /></div>
         </div>
 
-        <div class="btn-remove">
+        <div class="btn-remove" v-if="visible">
             <button v-if="image" class="btn btn-success btn-xs" @click="remove">Changer l'image</button>
             <button v-if="isRemoved" class="btn btn-danger btn-xs" @click="cancel">Annuler</button>
         </div>
@@ -39,7 +38,7 @@
 <script>
 
     export default{
-        props: ['model','type','mode'],
+        props: ['model','type','mode','visible'],
         data(){
             return{
                 isRemoved:false,
@@ -56,9 +55,15 @@
         computed: {
             size : function(){
                 return this.type == 3 || this.type == 4 ? this.small : this.big;
+            },
+            sizeImage : function(){
+                return this.type == 3 || this.type == 4 ? '130px' : '560px';
             }
         },
         methods: {
+            editMode(data){
+                this.isEditable = data;
+            },
             iframe(){
                 this.$nextTick(function() {
                     $('.iframe-btn').fancybox({
@@ -101,12 +106,14 @@
             remove(){
                  this.image = null;
                  this.isRemoved = true;
-                 this.iframe();
             },
             cancel(){
                  this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
                  this.isRemoved = false;
                  this.iframe();
+            },
+            newSelected(){
+                  this.iframe();
             },
             upload(){
                 axios.post('/admin/uploadNewsletter',{ image: this.image }).then(response => {

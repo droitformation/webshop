@@ -3,9 +3,15 @@
         <div class="row">
             <div class="col-md-7" id="StyleNewsletterCreate">
 
-                <div class="btn-group pull-right" v-if="content && mode == 'edit'">
-                    <button v-if="model && !isEdit" @click="editMode(content)" class="btn btn-xs btn-warning">éditer</button>
-                    <button v-if="model && !isEdit" @click="deleteContent(content)" class="btn btn-xs btn-danger">x</button>
+                <div class="btn-group pull-right" v-if="content && mode == 'edit'" style="margin-bottom:5px;">
+                    <form method="post" :action="action" v-if="model && !isEdit">
+                        <input name="_token" :value="_token" type="hidden">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="id" :value="model.id" />
+                        <input type="hidden" :value="campagne.id" name="campagne_id">
+                        <button v-if="model && !isEdit" @click="editMode(content)" class="btn btn-xs btn-warning">éditer</button>
+                        <button class="btn btn-xs btn-danger deleteActionNewsletter deleteContentBloc" :data-id="model.id" :data-action="model.titre">x</button>
+                    </form>
                 </div>
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
@@ -13,12 +19,12 @@
                    <tr>
                        <!-- Bloc image gauche-->
                        <td v-if="type == 4" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter :mode="mode" :type="type" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
+                           <image-newsletter :visible="isImage" :mode="mode" :type="type" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
                        </td>
                        <td v-if="type == 4" width="25" class="resetMarge"></td><!-- space -->
 
                        <td valign="top" :width="widthTable" class="resetMarge contentForm">
-                           <image-newsletter :mode="mode" :type="type" v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
+                           <image-newsletter :visible="isImage" :mode="mode" :type="type" v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
                            <h3 v-html="content.titre"></h3>
                            <div v-if="hasText" v-html="content.contenu"></div>
                        </td>
@@ -26,7 +32,7 @@
                        <!-- Bloc image droite-->
                        <td v-if="type == 3 || type == 10" width="25" class="resetMarge"></td><!-- space -->
                        <td v-if="type == 3 || type == 10" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter :mode="mode" :type="type" v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
+                           <image-newsletter :visible="isImage" :mode="mode" :type="type" v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
                            <img v-if="categorie && type == 10" :src="imgcategorie" class="img-responsive">
                        </td>
                    </tr>
@@ -133,7 +139,8 @@
                 categories: [],
                 categorie: null,
                 isEdit: false,
-                hash: Math.random().toString(36).substring(7)
+                isImage:null,
+                hash: null
             }
         },
         computed: {
@@ -157,7 +164,12 @@
             this.initialize();
         },
         methods: {
+            makeHash(){
+                this.hash = Math.random().toString(36).substring(7);
+            },
             initialize : function(){
+
+                this.makeHash();
 
                 if(this.type == 10){
                     this.getCategories();
@@ -166,6 +178,10 @@
 
                 this.content = this.model ? this.model : this.create;
                 this.isEdit  = !this.content ? true : false;
+
+                if(!this.model){
+                   this.isImage = true;
+                }
 
                 this.$nextTick(function(){
                     var self = this;
@@ -201,9 +217,11 @@
             },
             editMode(model){
                 this.isEdit = true;
+                this.isImage = true;
             },
             close(){
                 this.isEdit = false;
+                this.isImage = false;
                 this.initialize();
                 if(this.mode == 'create'){
                     this.model = null;

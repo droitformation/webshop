@@ -2970,6 +2970,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2991,7 +2997,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             categories: [],
             categorie: null,
             isEdit: false,
-            hash: Math.random().toString(36).substring(7)
+            isImage: null,
+            hash: null
         };
     },
 
@@ -3017,7 +3024,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 }, _defineProperty(_props$components$dat, 'components', {}), _defineProperty(_props$components$dat, 'mounted', function mounted() {
     this.initialize();
 }), _defineProperty(_props$components$dat, 'methods', {
+    makeHash: function makeHash() {
+        this.hash = Math.random().toString(36).substring(7);
+    },
+
     initialize: function initialize() {
+
+        this.makeHash();
 
         if (this.type == 10) {
             this.getCategories();
@@ -3026,6 +3039,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         this.content = this.model ? this.model : this.create;
         this.isEdit = !this.content ? true : false;
+
+        if (!this.model) {
+            this.isImage = true;
+        }
 
         this.$nextTick(function () {
             var _$$redactor;
@@ -3061,9 +3078,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     editMode: function editMode(model) {
         this.isEdit = true;
+        this.isImage = true;
     },
     close: function close() {
         this.isEdit = false;
+        this.isImage = false;
         this.initialize();
         if (this.mode == 'create') {
             this.model = null;
@@ -5575,11 +5594,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['model', 'type', 'mode'],
+    props: ['model', 'type', 'mode', 'visible'],
     data: function data() {
         return {
             isRemoved: false,
@@ -5597,9 +5615,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         size: function size() {
             return this.type == 3 || this.type == 4 ? this.small : this.big;
+        },
+        sizeImage: function sizeImage() {
+            return this.type == 3 || this.type == 4 ? '130px' : '560px';
         }
     },
     methods: {
+        editMode: function editMode(data) {
+            this.isEditable = data;
+        },
         iframe: function iframe() {
             this.$nextTick(function () {
                 $('.iframe-btn').fancybox({
@@ -5641,11 +5665,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         remove: function remove() {
             this.image = null;
             this.isRemoved = true;
-            this.iframe();
         },
         cancel: function cancel() {
             this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
             this.isRemoved = false;
+            this.iframe();
+        },
+        newSelected: function newSelected() {
             this.iframe();
         },
         upload: function upload() {
@@ -28918,22 +28944,59 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "StyleNewsletterCreate"
     }
   }, [(_vm.content && _vm.mode == 'edit') ? _c('div', {
-    staticClass: "btn-group pull-right"
-  }, [(_vm.model && !_vm.isEdit) ? _c('button', {
+    staticClass: "btn-group pull-right",
+    staticStyle: {
+      "margin-bottom": "5px"
+    }
+  }, [(_vm.model && !_vm.isEdit) ? _c('form', {
+    attrs: {
+      "method": "post",
+      "action": _vm.action
+    }
+  }, [_c('input', {
+    attrs: {
+      "name": "_token",
+      "type": "hidden"
+    },
+    domProps: {
+      "value": _vm._token
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_method",
+      "value": "DELETE"
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "id"
+    },
+    domProps: {
+      "value": _vm.model.id
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "campagne_id"
+    },
+    domProps: {
+      "value": _vm.campagne.id
+    }
+  }), _vm._v(" "), (_vm.model && !_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-xs btn-warning",
     on: {
       "click": function($event) {
         _vm.editMode(_vm.content)
       }
     }
-  }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), (_vm.model && !_vm.isEdit) ? _c('button', {
-    staticClass: "btn btn-xs btn-danger",
-    on: {
-      "click": function($event) {
-        _vm.deleteContent(_vm.content)
-      }
+  }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-xs btn-danger deleteActionNewsletter deleteContentBloc",
+    attrs: {
+      "data-id": _vm.model.id,
+      "data-action": _vm.model.titre
     }
-  }, [_vm._v("x")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('table', {
+  }, [_vm._v("x")])]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('table', {
     staticClass: "resetTable",
     attrs: {
       "border": "0",
@@ -28951,6 +29014,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('image-newsletter', {
     attrs: {
+      "visible": _vm.isImage,
       "mode": _vm.mode,
       "type": _vm.type,
       "model": _vm.model
@@ -28971,6 +29035,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [((_vm.type == 1 || _vm.type == 2)) ? _c('image-newsletter', {
     attrs: {
+      "visible": _vm.isImage,
       "mode": _vm.mode,
       "type": _vm.type,
       "model": _vm.model
@@ -29000,6 +29065,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [(_vm.type == 3) ? _c('image-newsletter', {
     attrs: {
+      "visible": _vm.isImage,
       "mode": _vm.mode,
       "type": _vm.type,
       "model": _vm.model
@@ -29270,13 +29336,16 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [(!_vm.image) ? _c('div', {
+  return _c('div', [(!_vm.image && _vm.visible) ? _c('div', {
     staticClass: "upload-btn-wrapper"
   }, [_c('button', {
     staticClass: "btn btn-primary btn-xs iframe-btn",
     attrs: {
       "href": "../filemanager/dialog.php?type=1&field_id=fieldID&relative_url=0",
       "type": "button"
+    },
+    on: {
+      "click": _vm.newSelected
     }
   }, [_vm._v("Choisir existante")]), _vm._v(" "), _c('input', {
     attrs: {
@@ -29285,7 +29354,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "",
       "type": "hidden"
     }
-  })]) : _vm._e(), _vm._v(" "), (!_vm.image) ? _c('div', {
+  })]) : _vm._e(), _vm._v(" "), (!_vm.image && _vm.visible) ? _c('div', {
     staticClass: "upload-btn-wrapper"
   }, [_c('button', {
     staticClass: "btn btn-info btn-xs"
@@ -29302,13 +29371,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.image) ? _c('div', [_c('img', {
     staticClass: "img-responsive",
     attrs: {
+      "width": _vm.sizeImage,
       "src": _vm.image
     }
   })]) : _vm._e(), _vm._v(" "), (!_vm.image) ? _c('div', [_c('img', {
     attrs: {
       "src": _vm.size
     }
-  })]) : _vm._e()]), _vm._v(" "), _c('div', {
+  })]) : _vm._e()]), _vm._v(" "), (_vm.visible) ? _c('div', {
     staticClass: "btn-remove"
   }, [(_vm.image) ? _c('button', {
     staticClass: "btn btn-success btn-xs",
@@ -29320,7 +29390,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.cancel
     }
-  }, [_vm._v("Annuler")]) : _vm._e()])])
+  }, [_vm._v("Annuler")]) : _vm._e()]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
