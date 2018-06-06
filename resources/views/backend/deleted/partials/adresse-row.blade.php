@@ -23,7 +23,7 @@
         {{ isset($adresse->pays) ? $adresse->pays->title : '' }}
     </td>
     <td>
-        @include('backend.deleted.partials.items', ['adresse' => $adresse])
+        @include('backend.deleted.partials.items', ['adresse' => $adresse, 'type' => 'adresse'])
     </td>
     <td>
         @if($adresse->trashed())
