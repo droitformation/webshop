@@ -162,6 +162,23 @@ Route::get('testing', function() {
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
+
+    $model = new \App\Droit\User\Entities\User();
+
+    foreach (range(0, 9900, 500) as $i) {
+        $users = $model->with(['adresses'])->offset($i)->offset($i)->limit(500)->get();
+
+        foreach ($users as $user){
+            $adresse = $user->adresse_livraison;
+            if(empty($adresse)){
+                echo $user->name. ' | user id: '.$user->id;
+                echo '<br/>';
+            }
+        }
+    }
+
+    exit();
+
     $me      = $users->find(710);
     //$inscription = $inscriptions->find(14892);
 
