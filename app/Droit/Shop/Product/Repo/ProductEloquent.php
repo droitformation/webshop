@@ -17,9 +17,13 @@ class ProductEloquent implements ProductInterface{
         $products = $this->product->search($search)->visible($visible)
             ->orderByRaw(\DB::raw('CASE WHEN edition_at IS NOT NULL THEN edition_at ELSE created_at END DESC'));
 
-        if($nbr)
-        {
+        if($nbr){
             return $products->paginate($nbr);
+        }
+
+        if(isset($search['categorie_id']) && $search['categorie_id'] == 5){
+            $sixmonthago = \Carbon\Carbon::today()->subMonths(6)->toDateTimeString();
+            $products->where('created_at', '>=' ,$sixmonthago);
         }
 
         return $products->get();
