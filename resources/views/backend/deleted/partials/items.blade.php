@@ -6,10 +6,14 @@
         @endforeach
     @endif
 
-    @if(isset($adresse->abos) && !$adresse->abos->isEmpty())
-        {!! isset($title) ? '<dt>Abonnements '.$title.' <span class="label label-default pull-right">'.$adresse->id.'</span></dt>' : '<dt>Abonnements</dt>' !!}
-        @foreach($adresse->abos as $abo)
-            <dd>{{ $abo->numero }}</dd>
-        @endforeach
+    @if(isset($type))
+        <?php $unconvert = $adresse->abos->where('user_id',null);  ?>
+        @if(!$unconvert->isEmpty())
+            {!! '<dt>Abonnements (non converti) <span class="label label-warning pull-right">'.$adresse->id.'</span></dt>' !!}
+            @foreach($unconvert as $abo)
+                <dd>{{ $abo->abo->title }} | {{ $abo->numero }}</dd>
+            @endforeach
+        @endif
     @endif
+
 </dl>

@@ -165,7 +165,9 @@ Route::get('testing', function() {
 
     $model = new \App\Droit\User\Entities\User();
 
-    foreach (range(0, 9900, 500) as $i) {
+    $nouveautes = $products->getByCategorie('Nouveautés');
+
+/*    foreach (range(0, 9900, 500) as $i) {
         $users = $model->with(['adresses'])->offset($i)->offset($i)->limit(500)->get();
 
         foreach ($users as $user){
@@ -175,8 +177,12 @@ Route::get('testing', function() {
                 echo '<br/>';
             }
         }
-    }
+    }*/
 
+    $sixmonthago = \Carbon\Carbon::today()->subMonths(6)->toDateTimeString();
+    echo '<pre>';
+    print_r($nouveautes->toArray());
+    echo '</pre>';exit();
     exit();
 
     $me      = $users->find(710);
