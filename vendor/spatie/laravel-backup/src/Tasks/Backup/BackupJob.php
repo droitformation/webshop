@@ -6,6 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use Spatie\DbDumper\DbDumper;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Spatie\DbDumper\Databases\Sqlite;
 use Spatie\Backup\Events\BackupHasFailed;
 use Spatie\Backup\Events\BackupWasSuccessful;
@@ -236,6 +237,7 @@ class BackupJob
                 consoleOutput()->info("Gzipping {$dbDumper->getDbName()}...");
 
                 $compressedDumpPath = Gzip::compress($temporaryFilePath);
+                File::delete($temporaryFilePath);
 
                 return $compressedDumpPath;
             }
