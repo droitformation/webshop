@@ -66,10 +66,7 @@
                 this.list = this.contents;
             },
             deleteContentBloc(content){
-                var self = this;
-                axios.post(self.url + '/' + content.id , { '_method' : 'DELETE', 'campagne_id' : self.campagne.id, 'id' : content.id }).then(function (response) {
-                    self.list = response.data;
-                }).catch(function (error) { console.log(error);});
+
             }
         }
     }

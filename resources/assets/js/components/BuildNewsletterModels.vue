@@ -3,9 +3,15 @@
         <div class="row">
             <div class="col-md-7" id="StyleNewsletterCreate">
 
-                <div class="btn-group pull-right" v-if="mode == 'edit'">
-                    <button v-if="model && !isEdit" @click="editMode(model)" class="btn btn-xs btn-warning">éditer</button>
-                    <button v-if="model && !isEdit" @click="deleteContent(content)" class="btn btn-xs btn-danger">x</button>
+                <div class="btn-group pull-right" v-if="mode == 'edit'" style="margin-bottom:5px;">
+                    <form method="post" :action="action" v-if="model && !isEdit">
+                        <input name="_token" :value="_token" type="hidden">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="id" :value="content.id" />
+                        <input type="hidden" :value="campagne.id" name="campagne_id">
+                        <button v-if="model && !isEdit" @click="editMode(model)" class="btn btn-xs btn-warning">éditer</button>
+                        <button type="submit" class="btn btn-xs btn-danger deleteNewsAction" :data-id="content.id" :data-action="model.title">x</button>
+                    </form>
                 </div>
 
                 <analyse-newsletter v-if="model && type == 5 && site != 4" :arret="model" :analyses="model.analyses"></analyse-newsletter>
@@ -38,7 +44,7 @@
             </div>
 
             <div class="col-md-5" v-show="isEdit || mode == 'create'">
-                <form name="blocForm" class="form-horizontal" method="post" :action="action">
+                <form name="blocForm newsletterForm" class="form-horizontal" method="post" :action="action">
 
                     <input name="_token" :value="_token" type="hidden">
                     <input v-if="mode == 'edit'" type="hidden" name="_method" value="PUT">
@@ -233,7 +239,7 @@
                 }
             },
             deleteContent(model){
-                this.$emit('deleteContent', model);
+                //this.$emit('deleteContent', model);
             }
         }
     }

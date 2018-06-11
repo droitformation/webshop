@@ -52,7 +52,7 @@
             </div>
 
             <div class="col-md-5" v-show="isEdit">
-                <form name="blocForm" class="form-horizontal" method="post" :action="url + '/' + content.id">
+                <form name="blocForm newsletterForm" class="form-horizontal" method="post" :action="url + '/' + content.id">
                     <input name="_token" :value="_token" type="hidden">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="panel panel-success">

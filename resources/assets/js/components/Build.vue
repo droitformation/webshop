@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-7">
 
-                <div class="component-menu">
+                <div id="componant" class="component-menu">
                     <h5>Composants</h5>
                     <div class="component-bloc">
                         <a v-for="bloc in blocs" class="blocEdit" @click="selectBloc(bloc)">

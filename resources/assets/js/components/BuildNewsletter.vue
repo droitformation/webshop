@@ -10,7 +10,7 @@
                         <input type="hidden" name="id" :value="model.id" />
                         <input type="hidden" :value="campagne.id" name="campagne_id">
                         <button v-if="model && !isEdit" @click="editMode(content)" class="btn btn-xs btn-warning">éditer</button>
-                        <button class="btn btn-xs btn-danger deleteActionNewsletter deleteContentBloc" :data-id="model.id" :data-action="model.titre">x</button>
+                        <button class="btn btn-xs btn-danger deleteNewsAction" :data-id="model.id" :data-action="model.titre">x</button>
                     </form>
                 </div>
                 <!-- Bloc content-->
@@ -25,7 +25,7 @@
 
                        <td valign="top" :width="widthTable" class="resetMarge contentForm">
                            <image-newsletter :visible="isImage" :mode="mode" :type="type" v-if="(type == 1 || type == 2)" :model="model" @imageUploaded="imageUploadedUpdate"></image-newsletter>
-                           <h3 v-html="content.titre"></h3>
+                           <h3 :style="align" v-html="content.titre"></h3>
                            <div v-if="hasText" v-html="content.contenu"></div>
                        </td>
 
@@ -41,7 +41,7 @@
                 <!-- Bloc content-->
             </div>
             <div class="col-md-5 edit_bloc_form" v-show="isEdit || mode == 'create'">
-                <form name="blocForm" method="post" :action="action">
+                <form name="blocForm newsletterForm" method="post" :action="action">
 
                     <input name="_token" :value="_token" type="hidden">
                     <input v-if="mode == 'edit'" type="hidden" name="_method" value="PUT">
@@ -149,6 +149,9 @@
             },
             hasText: function () {
                 return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
+            },
+            align: function () {
+                return (this.type == 1) ? 'text-align:center;' : 'text-align:left;';
             },
             imgcategorie:function(){
                 return this.model ? this.content.model.path + this.categorie.image : this.categorie.path;

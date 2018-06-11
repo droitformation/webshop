@@ -3009,6 +3009,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         hasText: function hasText() {
             return this.type == 2 || this.type == 3 || this.type == 4 || this.type == 6 || this.type == 10 ? true : false;
         },
+        align: function align() {
+            return this.type == 1 ? 'text-align:center;' : 'text-align:left;';
+        },
         imgcategorie: function imgcategorie() {
             return this.model ? this.content.model.path + this.categorie.image : this.categorie.path;
         },
@@ -3459,6 +3462,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3580,7 +3589,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         deleteContent: function deleteContent(model) {
-            this.$emit('deleteContent', model);
+            //this.$emit('deleteContent', model);
         }
     }
 });
@@ -3698,14 +3707,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         initialize: function initialize() {
             this.list = this.contents;
         },
-        deleteContentBloc: function deleteContentBloc(content) {
-            var self = this;
-            axios.post(self.url + '/' + content.id, { '_method': 'DELETE', 'campagne_id': self.campagne.id, 'id': content.id }).then(function (response) {
-                self.list = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
+        deleteContentBloc: function deleteContentBloc(content) {}
     }
 });
 
@@ -27859,22 +27861,60 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "StyleNewsletterCreate"
     }
   }, [(_vm.mode == 'edit') ? _c('div', {
-    staticClass: "btn-group pull-right"
-  }, [(_vm.model && !_vm.isEdit) ? _c('button', {
+    staticClass: "btn-group pull-right",
+    staticStyle: {
+      "margin-bottom": "5px"
+    }
+  }, [(_vm.model && !_vm.isEdit) ? _c('form', {
+    attrs: {
+      "method": "post",
+      "action": _vm.action
+    }
+  }, [_c('input', {
+    attrs: {
+      "name": "_token",
+      "type": "hidden"
+    },
+    domProps: {
+      "value": _vm._token
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_method",
+      "value": "DELETE"
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "id"
+    },
+    domProps: {
+      "value": _vm.content.id
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "campagne_id"
+    },
+    domProps: {
+      "value": _vm.campagne.id
+    }
+  }), _vm._v(" "), (_vm.model && !_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-xs btn-warning",
     on: {
       "click": function($event) {
         _vm.editMode(_vm.model)
       }
     }
-  }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), (_vm.model && !_vm.isEdit) ? _c('button', {
-    staticClass: "btn btn-xs btn-danger",
-    on: {
-      "click": function($event) {
-        _vm.deleteContent(_vm.content)
-      }
+  }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-xs btn-danger deleteNewsAction",
+    attrs: {
+      "type": "submit",
+      "data-id": _vm.content.id,
+      "data-action": _vm.model.title
     }
-  }, [_vm._v("x")]) : _vm._e()]) : _vm._e(), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.site != 4) ? _c('analyse-newsletter', {
+  }, [_vm._v("x")])]) : _vm._e()]) : _vm._e(), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.site != 4) ? _c('analyse-newsletter', {
     attrs: {
       "arret": _vm.model,
       "analyses": _vm.model.analyses
@@ -27948,7 +27988,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('form', {
     staticClass: "form-horizontal",
     attrs: {
-      "name": "blocForm",
+      "name": "blocForm newsletterForm",
       "method": "post",
       "action": _vm.action
     }
@@ -28991,7 +29031,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-xs btn-danger deleteActionNewsletter deleteContentBloc",
+    staticClass: "btn btn-xs btn-danger deleteNewsAction",
     attrs: {
       "data-id": _vm.model.id,
       "data-action": _vm.model.titre
@@ -29044,6 +29084,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "imageUploaded": _vm.imageUploadedUpdate
     }
   }) : _vm._e(), _vm._v(" "), _c('h3', {
+    style: (_vm.align),
     domProps: {
       "innerHTML": _vm._s(_vm.content.titre)
     }
@@ -29088,7 +29129,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-5 edit_bloc_form"
   }, [_c('form', {
     attrs: {
-      "name": "blocForm",
+      "name": "blocForm newsletterForm",
       "method": "post",
       "action": _vm.action
     }
@@ -29304,7 +29345,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "col-md-7"
   }, [_c('div', {
-    staticClass: "component-menu"
+    staticClass: "component-menu",
+    attrs: {
+      "id": "componant"
+    }
   }, [_c('h5', [_vm._v("Composants")]), _vm._v(" "), _c('div', {
     staticClass: "component-bloc"
   }, _vm._l((_vm.blocs), function(bloc) {
@@ -29973,7 +30017,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('form', {
     staticClass: "form-horizontal",
     attrs: {
-      "name": "blocForm",
+      "name": "blocForm newsletterForm",
       "method": "post",
       "action": _vm.url + '/' + _vm.content.id
     }
