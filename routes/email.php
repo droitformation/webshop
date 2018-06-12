@@ -275,11 +275,17 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
 
     });
 
-    Route::get('aborappel', function () {
+    Route::get('aborappel/{id?}', function ($id = null) {
 
         $model    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-        $factures = $model->getAll(303);
-        $facture  = !$factures->isEmpty() ? $factures->first() : null;
+
+        if($id) {
+            $facture =  $model->find($id);
+        }
+        else {
+            $factures = $model->getAll(303);
+            $facture = !$factures->isEmpty() ? $factures->first() : null;
+        }
 
         if($facture)
         {

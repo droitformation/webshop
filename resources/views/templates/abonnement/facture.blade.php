@@ -183,6 +183,8 @@
     </table>
 </div>
 
+@if(isset($print) && ($print == true))
+
 <!-- BV -->
 <?php list($francs,$centimes) = $abo->price_total_explode; ?>
 
@@ -241,5 +243,6 @@
         </td>
     </tr>
 </table>
+@endif
 
 @stop

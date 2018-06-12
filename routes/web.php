@@ -449,6 +449,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::delete('abonnement/rappel/{id}', 'Backend\Abo\AboRappelController@destroy');
 
         Route::post('rappel/send', 'Backend\Abo\AboRappelController@send');
+        Route::get('rappel/confirmation/{product_id}', 'Backend\Abo\AboRappelController@confirmation');
+        Route::get('rappel/show/{id}','Backend\Abo\AboRappelController@show');
         Route::get('rappel/{id}', 'Backend\Abo\AboRappelController@index');
 
         Route::resource('rappel', 'Backend\Abo\AboRappelController');
