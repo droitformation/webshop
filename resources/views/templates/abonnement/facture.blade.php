@@ -62,7 +62,7 @@
                     <tr>
                         <td width="20%"><strong class="blue">Date:</strong></td>
                         <td width="80%">
-                            {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') :  $facture->created_at->formatLocalized('%d %B %Y') }}
+                            {{ isset($rappel) && !empty($rappel) ? $model->created_at->formatLocalized('%d %B %Y') :  $facture->created_at->formatLocalized('%d %B %Y') }}
                         </td>
                     </tr>
                     <tr>
@@ -173,7 +173,7 @@
                     <p class="message">{{ $messages['remerciements'] }}</p><br/>
                     <p class="message">
                         Neuchâtel, le
-                        {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') :  $facture->created_at->formatLocalized('%d %B %Y') }}
+                        {{ isset($rappel) && !empty($rappel) ? $model->created_at->formatLocalized('%d %B %Y') :  $facture->created_at->formatLocalized('%d %B %Y') }}
                     </p>
                 </div>
 
@@ -182,6 +182,8 @@
         </tr>
     </table>
 </div>
+
+@if(isset($print) && ($print == true))
 
 <!-- BV -->
 <?php list($francs,$centimes) = $abo->price_total_explode; ?>
@@ -241,5 +243,6 @@
         </td>
     </tr>
 </table>
+@endif
 
 @stop

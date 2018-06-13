@@ -124,7 +124,8 @@ class AboServiceProvider extends ServiceProvider
         {
             return new \App\Droit\Abo\Worker\AboRappelWorker(
                 \App::make('App\Droit\Abo\Repo\AboFactureInterface'),
-                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface')
+                \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface'),
+                \App::make('App\Droit\Abo\Repo\AboRappelInterface')
             );
         });
     }

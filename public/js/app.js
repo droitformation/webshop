@@ -4469,6 +4469,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -28667,6 +28672,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-default btn-xs",
       attrs: {
         "href": 'admin/inscription/rappel/' + rappel.id,
+        "target": "_blank"
+      }
+    }, [_vm._v(" + BV")])])
+  })) : _vm._e(), _vm._v(" "), (_vm.path == 'abonnement') ? _c('ol', {
+    staticStyle: {
+      "margin-left": "5px",
+      "padding-left": "3px"
+    }
+  }, _vm._l((_vm.list), function(rappel) {
+    return _c('li', {
+      staticClass: "rappel-item"
+    }, [_c('a', {
+      staticClass: "btn btn-default btn-xs",
+      attrs: {
+        "href": 'admin/rappel/show/' + rappel.id,
         "target": "_blank"
       }
     }, [_vm._v(" + BV")])])

@@ -7,8 +7,12 @@ Route::get('abos_test', function () {
 
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-
-    $all = $abo->getAll()->where('abo_id',2);
+    $rappels  = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
+    $rappel  = $rappels->find(462);
+    echo '<pre>';
+    print_r($rappel->doc_rappel);
+    echo '</pre>';exit();
+  /*  $all = $abo->getAll()->where('abo_id',2);
 
     $all->map(function ($abo, $key) {
         if(isset($abo->user->user)){
@@ -24,7 +28,7 @@ Route::get('abos_test', function () {
         echo '<pre>';
         print_r($abo->toArray());
         echo '</pre>';
-    });
+    });*/
 
     /*
         list($hasUser, $noUser) = $all->partition(function ($abo_user) {

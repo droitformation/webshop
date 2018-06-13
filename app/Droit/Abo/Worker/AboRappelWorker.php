@@ -10,7 +10,7 @@ use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 use App\Jobs\MergeRappels;
 use App\Jobs\MakeRappelAbo;
 use App\Jobs\NotifyJobFinished;
-
+use App\Droit\Abo\Repo\AboRappelInterface;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class AboRappelWorker implements AboRappelWorkerInterface{
@@ -18,11 +18,13 @@ class AboRappelWorker implements AboRappelWorkerInterface{
     use DispatchesJobs;
 
     protected $facture;
+    protected $rappel;
     protected $generator;
 
-    public function __construct(AboFactureInterface $facture, PdfGeneratorInterface $generator)
+    public function __construct(AboFactureInterface $facture, PdfGeneratorInterface $generator, AboRappelInterface $rappel)
     {
         $this->facture    = $facture;
+        $this->rappel     = $rappel;
         $this->generator  = $generator;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -34,11 +36,9 @@ class AboRappelWorker implements AboRappelWorkerInterface{
 
         if(!$factures->isEmpty())
         {
-            // Get chunk
-            $chunks = $factures->chunk(15);
-
-            foreach($chunks as $chunk) {
-                $job = (new MakeRappelAbo($chunk));
+            foreach ($factures as $facture){
+                // Make the rappels
+                $job = (new MakeRappelAbo($facture));
                 $this->dispatch($job);
             }
 
@@ -65,6 +65,23 @@ class AboRappelWorker implements AboRappelWorkerInterface{
         {
             $this->generator->makeAbo('rappel', $facture, $nbr, $rappel);
         }
+    }
+
+    public function makeRappel($facture, $new = null)
+    {
+        if($facture->rappels->isEmpty() || $new)
+        {
+            $nbr = $facture->rappels->isEmpty() ? 1 : $facture->rappels->count() + 1;
+
+            $rappel = $this->rappel->create(['abo_facture_id' => $facture->id]);
+        }
+        else
+        {
+            $nbr    = $facture->rappels->count();
+            $rappel = $facture->rappels->sortBy('created_at')->last();
+        }
+
+        $this->generator->makeAbo('rappel', $facture, $nbr, $rappel);
     }
 
     /*

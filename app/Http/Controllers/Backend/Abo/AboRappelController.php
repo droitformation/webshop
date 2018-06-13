@@ -45,6 +45,20 @@ class AboRappelController extends Controller {
         return view('backend.abonnements.rappels.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
     }
 
+    public function show($id)
+    {
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+        $rappel = $this->rappel->find($id);
+
+        $generator->stream = true;
+        $generator->setPrint(true);
+
+        $nbr = $rappel->facture->rappels->isEmpty() ? 1 : $rappel->facture->rappels->count();
+
+        return $generator->makeAbo('rappel', $rappel->facture, $nbr, $rappel);
+    }
+
 	public function generate(Request $request)
 	{
         $rappel = $this->rappel->create(['abo_facture_id' => $request->input('id')]);
@@ -63,15 +77,32 @@ class AboRappelController extends Controller {
         return ['rappels' => $facture->rappel_list];
 	}
 
+    public function confirmation($product_id)
+    {
+        $factures = $this->facture->getRappels($product_id);
+        $product  = $this->product->find($product_id);
+
+        return view('backend.abonnements.rappels.confirmation')->with(['factures' => $factures, 'product' => $product ]);
+	}
+
     public function send(Request $request)
     {
-        // Make sur we have created all the rappels in pdf
-        $job = (new MakeRappelAbo($request->input('rappels')));
-        $this->dispatch($job);
-        
-        //Send the rappels via email
-        $job = (new SendRappelAboEmail($request->input('rappels')))->delay(\Carbon\Carbon::now()->addMinutes(1));
-        $this->dispatch($job);
+        $factures = $this->facture->getMultiple($request->input('factures'));
+
+        if(!$factures->isEmpty()){
+            foreach ($factures as $facture){
+                // Make the rappels
+                $job = (new MakeRappelAbo($facture))->delay(\Carbon\Carbon::now()->addSeconds(10));
+                $this->dispatch($job);
+            }
+
+            sleep(5);
+            foreach ($factures as $facture){
+                //Send the rappels via email
+                $job = (new SendRappelAboEmail($facture))->delay(\Carbon\Carbon::now()->addMinutes(1));
+                $this->dispatch($job);
+            }
+        }
 
         alert()->success('Rappels envoyés');
 

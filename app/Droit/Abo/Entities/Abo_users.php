@@ -88,6 +88,15 @@ class Abo_users extends Model{
         return isset($this->tiers) ? $this->tiers : $this->user_adresse;
     }
 
+    public function getSubstituteEmailAttribute()
+    {
+        if(substr(strrchr($this->user_facturation->email, "@"), 1) == 'publications-droit.ch'){
+            return true;
+        }
+
+        return false;
+    }
+
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
