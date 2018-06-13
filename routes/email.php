@@ -224,10 +224,20 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             return 'Aucune inscription à afficher';
         }
 
+        $rappel = $inscription->list_rappel->sortBy('created_at')->last();
+
+        if(!$rappel) {
+            return 'Aucun rappel à afficher';
+        }
+
+        $attachements['rappel'] = ['pdfname' => 'Rappel', 'name' => 'Rappel', 'file' => public_path($rappel->doc_rappel), 'url' => asset($rappel->doc_rappel)];
+        $attachements['bv'] = ['pdfname' => 'BV', 'name' => 'BV', 'file' => public_path($rappel->doc_bv), 'url' => asset($rappel->doc_bv)];
+
         $data = [
             'title'        => 'Votre inscription sur publications-droit.ch',
             'concerne'     => 'Inscription',
             'annexes'      => $inscription->colloque->annexe,
+            'attachements' => $attachements,
             'colloque'     => $inscription->colloque,
             'inscription'  => $inscription,
             'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
@@ -245,6 +255,7 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         }
 
         return view('emails.colloque.rappel')->with($data);
+
     });
 
 
@@ -291,12 +302,15 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         {
             $rappel = $facture->rappels->sortBy('created_at')->last();
 
+            $attachements[] = ['pdfname' => 'Rappel', 'name' => 'Rappel', 'file' => public_path($rappel->doc_rappel), 'url' => asset($rappel->doc_rappel)];
+
             $data = [
-                'title'       => 'Abonnement sur publications-droit.ch',
-                'concerne'    => 'Rappel',
-                'abonnement'  => $facture->abonnement,
-                'abo'         => $facture->abonnement->abo,
-                'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+                'title'        => 'Abonnement sur publications-droit.ch',
+                'concerne'     => 'Rappel',
+                'abonnement'   => $facture->abonnement,
+                'abo'          => $facture->abonnement->abo,
+                'attachements' => $attachements,
+                'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
             ];
 
             return view('emails.abo.rappel')->with($data);
