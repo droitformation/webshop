@@ -122,7 +122,7 @@ class CheckoutController extends Controller {
             $data = $this->checkout->getAboData();
             $abos = $this->abo->makeAbonnement($data);
 
-            event(new NewAboRequest($abos));
+            event(new NewAboRequest($abos, \Auth::user()));
         }
 
         $this->cleanUp();

@@ -78,6 +78,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
 
     public function make($facture)
     {
+        $this->generator->setPrint(true);
         $this->generator->makeAbo('facture', $facture);
     }
 
@@ -90,6 +91,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
 
                 // Make or remake the facture is the status is abonne
                 if($abonnement->status == 'abonne' || $abonnement->status == 'tiers') {
+                    $this->generator->setPrint(true);
                     $this->generator->makeAbo('facture', $facture);
                 }
                 else
