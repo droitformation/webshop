@@ -18,10 +18,11 @@
                 {!! isset($rappel) ? '<p '.$style['paragraph'].'>n° <strong>'.$rappel.'</strong></p>' : ''  !!}
 
                 <div style="{{ $style['paragraph'] }}">
+                    <p>{{ $name }}</p>
                     @if(isset($abos))
                         <ul>
                             @foreach($abos as $abo)
-                                <li>{{ $abo->abo->title }}</li>
+                                <li><a href="{{ url('admin/abonnement/'.$abo->id) }}">{{ $abo->abo->title }}</a></li>
                             @endforeach
                         </ul>
                     @endif
