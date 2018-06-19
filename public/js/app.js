@@ -2928,6 +2928,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2936,11 +2942,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             types: [{ 'name': 'Compte utilisateur', 'value': 'user' }, { 'name': 'Adresse', 'value': 'adresse' }],
             searchTerms: this.terms,
-            columns: [{ 'name': 'Nom', 'label': 'last_name' }, { 'name': 'Prénom', 'label': 'first_name' }, { 'name': 'Email', 'label': 'email' }, { 'name': 'Entreprise', 'label': 'company' }, { 'name': 'Adresse ', 'label': 'adresse ' }, { 'name': 'NPA', 'label': 'npa' }, { 'name': 'Ville', 'label': 'ville' }]
-
+            columns: {
+                user: [{ 'name': 'Nom', 'label': 'last_name' }, { 'name': 'Prénom', 'label': 'first_name' }, { 'name': 'Email', 'label': 'email' }, { 'name': 'Entreprise', 'label': 'company' }],
+                adresse: [{ 'name': 'Nom', 'label': 'last_name' }, { 'name': 'Prénom', 'label': 'first_name' }, { 'name': 'Email', 'label': 'email' }, { 'name': 'Entreprise', 'label': 'company' }, { 'name': 'Adresse ', 'label': 'adresse ' }, { 'name': 'NPA', 'label': 'npa' }, { 'name': 'Ville', 'label': 'ville' }]
+            }
         };
     },
 
+    computed: {
+        choosencolumns: function choosencolumns() {
+            return this.columns[this.selected];
+        }
+    },
     components: {},
     mounted: function mounted() {},
     methods: {
@@ -2949,7 +2962,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         removeTerm: function removeTerm(term) {
             this.searchTerms.splice(term, 1);
-        }
+        },
+        updateType: function updateType() {}
     }
 });
 
@@ -27429,7 +27443,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "type"
     },
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -27437,7 +27451,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+      }, _vm.updateType]
     }
   }, _vm._l((_vm.types), function(type) {
     return _c('option', {
@@ -27570,7 +27584,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.$set(term, "column", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
         }
       }
-    }, _vm._l((_vm.columns), function(column) {
+    }, _vm._l((_vm.choosencolumns), function(column) {
       return _c('option', {
         domProps: {
           "value": column.label
@@ -27651,7 +27665,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v("  \n                        Ou "), _c('span', {
     staticClass: "text-muted"
-  }, [_vm._v("(chaque terme séparément)")])])])]) : _vm._e()], 2), _vm._v(" "), _vm._m(0)])])
+  }, [_vm._v("(chaque terme séparément)")])])])]) : _vm._e()], 2), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-md-2"
@@ -27663,6 +27677,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "submit"
     }
   }, [_vm._v("Recherche")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-2"
+  }, [_c('p', [_c('strong', [_c('span', {
+    staticClass: "text-danger"
+  }, [_vm._v("La recherche se fait sur les champs existant pour chaque type:"), _c('br')])]), _vm._v(" "), _c('strong', [_vm._v("Comptes utilisateurs: ")]), _vm._v(" Nom, prénom, email, entreprise"), _c('br'), _vm._v(" "), _c('strong', [_vm._v("Adresses: ")]), _vm._v(" Nom, prénom, email, entreprise, adresse, NPA, ville\n            ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

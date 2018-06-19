@@ -11,9 +11,9 @@
                     <tr>
                         <td valign="top" width="375" class="resetMarge">
                             <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $bloc->colloque->titre }}</h3>
-                            <p class="abstract">{!! $bloc->colloque->soustitre !!}</p>
-                            <p>{{ $bloc->colloque->sujet }}</p>
-                            <p><strong>Organisé par: </strong><cite>{{ $bloc->colloque->organisateur }}</cite></p>
+                            <p class="abstract">{!! $bloc->colloque->event_date !!}</p>
+                            <p><strong>Lieu: </strong><cite>{{ $bloc->colloque->location ? $bloc->colloque->location->name : '' }}</cite></p>
+
                             <p><a target="_blank"
                                   style="padding: 5px 10px; text-decoration: none; background: {{ $campagne->newsletter->color }}; color: #fff; margin-top: 10px; display: inline-block;"
                                   href="{{ url('pubdroit/colloque/'.$bloc->colloque->id) }}">Informations et inscription</a></p>

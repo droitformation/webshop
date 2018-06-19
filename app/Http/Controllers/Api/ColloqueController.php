@@ -25,13 +25,14 @@ class ColloqueController extends Controller {
                 'id'        => $item->id,
                 'droptitle' => $item->titre,
                 'title'     => $item->titre,
+                'title'     => $item->titre,
                 'abstract'  => $item->sujet,
                 'content'   => $item->remarques,
-                'link'      => url('pubdroit/colloque/').$item->id,
+                'link'      =>url('pubdroit/colloque/'.$item->id),
                 'message'   => 'Informations et inscription',
                 'class'     => '',
                 'images'    => [[
-                    'link'  => url('pubdroit/colloque/').$item->id,
+                    'link'  => url('pubdroit/colloque/'.$item->id),
                     'image' => $item->frontend_illustration,
                     'title' => $item->titre,
                 ]],
@@ -56,7 +57,7 @@ class ColloqueController extends Controller {
 			'location'     => $colloque->location ? $colloque->location->name : '',
 			'date'         => $colloque->event_date,
 			'registration' => utf8_encode($colloque->registration_at->formatLocalized('%d %B %Y')),
-			'link'         => url('pubdroit/colloque/').$colloque->id
+			'link'         => url('pubdroit/colloque/'.$colloque->id)
 		];
     }
 
