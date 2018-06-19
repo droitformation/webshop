@@ -39,6 +39,13 @@ class DeletedAdresseController extends Controller
         if(!empty($request->all())){
 
             $terms    = $this->worker->prepareTerms($request->only('terms','columns'),$type);
+
+            if(empty($terms)){
+                $request->flash();
+                alert()->danger('Les termes ne correspondent pas au type de recherche');
+                return redirect()->back();
+            }
+
             $adresses = $this->$type->getDeleted($terms, $operator);
 
             if($type == 'adresse'){

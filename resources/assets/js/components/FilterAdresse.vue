@@ -5,7 +5,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label class="control-label">Rechercher</label>
-                    <select name="type" class="form-control" v-model="selected">
+                    <select name="type" class="form-control" v-model="selected"  v-on:change="updateType">
                         <option v-for="type in types" v-bind:value="type.value">{{ type.name }}</option>
                     </select>
                 </div>
@@ -27,14 +27,13 @@
             <div class="col-md-4">
 
                 <p><button type="button" class="btn btn-xs btn-success" @click="addTerm"><i class="fa fa-plus"></i> &nbsp;terme de recherche</button></p>
-
                 <div v-for="(term,index) in searchTerms" class="row">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-xs btn-danger" @click="removeTerm(index)"><i class="fa fa-minus"></i></button>
                     </div>
                     <div class="col-md-4">
                         <select v-model="term.column" :name="'columns[' + index + ']'" class="form-control">
-                            <option v-for="column in columns" v-bind:value="column.label">{{ column.name }}</option>
+                            <option v-for="column in choosencolumns" v-bind:value="column.label">{{ column.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-7">
@@ -59,6 +58,13 @@
             <div class="col-md-2">
                 <label class="control-label">&nbsp;</label><br/>
                 <button class="btn btn-info" type="submit">Recherche</button>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <strong><span class="text-danger">La recherche se fait sur les champs existant pour chaque type:<br/></span></strong>
+                    <strong>Comptes utilisateurs: </strong> Nom, prénom, email, entreprise<br/>
+                    <strong>Adresses: </strong> Nom, prénom, email, entreprise, adresse, NPA, ville
+                </p>
             </div>
         </div>
 
@@ -86,17 +92,30 @@
                    {'name' : 'Adresse', 'value' : 'adresse'},
                 ],
                 searchTerms: this.terms,
-                columns: [
-                   {'name' : 'Nom', 'label' : 'last_name'},
-                   {'name' : 'Prénom', 'label' : 'first_name'},
-                   {'name' : 'Email', 'label' : 'email'},
-                   {'name' : 'Entreprise', 'label' : 'company'},
-                   {'name' : 'Adresse ', 'label' : 'adresse '},
-                   {'name' : 'NPA', 'label' : 'npa'},
-                   {'name' : 'Ville', 'label' : 'ville'},
-                ],
-
+                columns:
+                {
+                    user:[
+                        {'name' : 'Nom', 'label' : 'last_name'},
+                        {'name' : 'Prénom', 'label' : 'first_name'},
+                        {'name' : 'Email', 'label' : 'email'},
+                        {'name' : 'Entreprise', 'label' : 'company'},
+                    ],
+                    adresse:[
+                        {'name' : 'Nom', 'label' : 'last_name'},
+                        {'name' : 'Prénom', 'label' : 'first_name'},
+                        {'name' : 'Email', 'label' : 'email'},
+                        {'name' : 'Entreprise', 'label' : 'company'},
+                        {'name' : 'Adresse ', 'label' : 'adresse '},
+                        {'name' : 'NPA', 'label' : 'npa'},
+                        {'name' : 'Ville', 'label' : 'ville'},
+                    ]
+                },
             }
+        },
+        computed: {
+             choosencolumns: function () {
+                return this.columns[this.selected];
+             },
         },
         components:{
         },
@@ -109,6 +128,9 @@
             },
             removeTerm: function(term){
                 this.searchTerms.splice(term, 1)
+            },
+            updateType: function(){
+
             }
         }
     }
