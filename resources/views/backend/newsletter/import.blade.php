@@ -10,6 +10,7 @@
                         <h4>Importer une liste</h4>
                     </div>
                     <div class="panel-body">
+                        <h4 class="text-danger"><strong>Newsletters Principales</strong></h4>
                         <p>Les emails seront importé dans la liste d'envoi de la newsletter choisie et synchronisés sur le service externe.</p>
                         <hr/>
                         <div class="form-group">
@@ -17,11 +18,15 @@
                             <div class="col-sm-8">
                                 <select class="form-control" required name="newsletter_id">
                                     <option value="">Choix de la newsletter</option>
+
                                     @if(!$newsletters->isEmpty())
                                         @foreach($newsletters as $list)
-                                            <option value="{{ $list->id }}">{{ $list->titre }}</option>
+                                            @if(in_array($list->id,config('newsletter.lists')))
+                                                <option value="{{ $list->id }}">{{ $list->titre }}</option>
+                                            @endif
                                         @endforeach
                                     @endif
+
                                 </select>
                             </div>
                         </div>
