@@ -33,7 +33,7 @@ class DeletedAdresseController extends Controller
         $terms    = [];
 
         $type     = !empty($request->input('type')) ? $request->input('type') : 'user';
-        $group    = !empty($request->input('group')) &&  $request->input('group') != 'user_id' ? $request->input('group') : 'id';
+        $group    = !empty($request->input('group')) &&  $request->input('group') != 'user_id' ? $request->input('group') : '';
         $operator = !empty($request->input('operator')) ? $request->input('operator') : 'and';
 
         if(!empty($request->all())){
@@ -60,7 +60,7 @@ class DeletedAdresseController extends Controller
                 $adresses = $onlyadresse->merge($hasuser);
             }
 
-            $adresses = $adresses->groupBy($group);
+            $adresses = $adresses->sortBy('name_slug')->groupBy($group);
         }
 
         return view('backend.deleted.index')->with([
