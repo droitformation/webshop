@@ -22,6 +22,7 @@
                     <span v-if="chosen.civilite">{{ chosen.civilite }}</span>
                     <span><a target="_blank" :href="'admin/user/' + chosen.user_id">{{ chosen.name }}</a></span>
                     <span v-if="chosen.cp">{{ chosen.cp }}</span>
+                    <span v-if="chosen.complement">{{ chosen.complement }}</span>
                     <span>{{ chosen.adresse }}</span>
                     <span>{{ chosen.npa }} {{ chosen.ville }}</span>
                     <button type="button" class="btn btn-danger btn-xs pull-right" @click.prevent="remove">changer</button>

@@ -3268,6 +3268,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['type', 'chosen_id'],
@@ -26612,7 +26613,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank",
       "href": 'admin/user/' + _vm.chosen.user_id
     }
-  }, [_vm._v(_vm._s(_vm.chosen.name))])]), _vm._v(" "), (_vm.chosen.cp) ? _c('span', [_vm._v(_vm._s(_vm.chosen.cp))]) : _vm._e(), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.adresse))]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.npa) + " " + _vm._s(_vm.chosen.ville))]), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.chosen.name))])]), _vm._v(" "), (_vm.chosen.cp) ? _c('span', [_vm._v(_vm._s(_vm.chosen.cp))]) : _vm._e(), _vm._v(" "), (_vm.chosen.complement) ? _c('span', [_vm._v(_vm._s(_vm.chosen.complement))]) : _vm._e(), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.adresse))]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.npa) + " " + _vm._s(_vm.chosen.ville))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger btn-xs pull-right",
     attrs: {
       "type": "button"
