@@ -84,17 +84,18 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label">Adresse</label>
-        <div class="col-sm-7">
-            <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="">
-        </div>
-    </div>
-    <div class="form-group">
         <label class="col-sm-3 control-label">Complément d'adresse</label>
         <div class="col-sm-7">
             <input type="text" name="complement" class="form-control" value="">
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Adresse</label>
+        <div class="col-sm-7">
+            <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="">
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="col-sm-3 control-label">CP</label>
         <div class="col-sm-3 col-xs-6">
