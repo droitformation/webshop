@@ -17,33 +17,41 @@ class ProductEloquent implements ProductInterface{
         $products = $this->product->search($search)->visible($visible)
             ->orderByRaw(\DB::raw('CASE WHEN edition_at IS NOT NULL THEN edition_at ELSE created_at END DESC'));
 
-        if($nbr)
-        {
+        if($nbr){
             return $products->paginate($nbr);
+        }
+
+        if(isset($search['categorie_id']) && $search['categorie_id'] == 5){
+            $sixmonthago = \Carbon\Carbon::today()->subMonths(6)->toDateTimeString();
+            $products->where('created_at', '>=' ,$sixmonthago);
         }
 
         return $products->get();
     }
 
-    public function getList($terms){
+    public function getList($terms,$admin = false){
 
         // If term first
         if(isset($terms['term']) && !empty($terms['term'])) {
             return $this->search($terms['term']);
         }
 
+        $sort = isset($terms['sort']) && !empty(array_filter($terms['sort'])) ? array_filter($terms['sort']) : null;
+
         // if sort
-        if(isset($terms['sort'])) {
+        if($sort){
 
-            $terms['sort'] = array_filter($terms['sort']);
+            $product = $this->product->search($terms['sort']);
 
-            if(!empty($terms['sort'])){
-                return $this->product->search($terms['sort'])->visible(true)->orderBy('created_at', 'DESC')->get();
+            if(!$admin){
+                $product->visible(true);
             }
+
+            return $product->orderByRaw(\DB::raw('CASE WHEN edition_at IS NOT NULL THEN edition_at ELSE created_at END DESC'))->get();
         }
 
         // else pagination
-        return $this->product->orderBy('created_at', 'DESC')->paginate(20);
+        return $this->product->orderByRaw(\DB::raw('CASE WHEN edition_at IS NOT NULL THEN edition_at ELSE created_at END DESC'))->paginate(20);
     }
 
     public function listForAdminOrder()
@@ -141,7 +149,7 @@ class ProductEloquent implements ProductInterface{
             $products->where('hidden','=',0);
         }
 
-        return $products->groupBy('shop_products.id')->get();
+        return $products->groupBy('shop_products.id')->orderByRaw(\DB::raw('CASE WHEN edition_at IS NOT NULL THEN edition_at ELSE created_at END DESC'))->get();
     }
 
     public function create(array $data){

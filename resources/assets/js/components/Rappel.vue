@@ -23,6 +23,11 @@
                         <a :href="'admin/inscription/rappel/' + rappel.id" target="_blank" class="btn btn-default btn-xs"> + BV</a>
                     </li>
                 </ol>
+                <ol style="margin-left: 5px;padding-left: 3px;" v-if="path == 'abonnement'">
+                    <li class="rappel-item" v-for="rappel in list">
+                        <a :href="'admin/rappel/show/' + rappel.id" target="_blank" class="btn btn-default btn-xs"> + BV</a>
+                    </li>
+                </ol>
             </div>
         </div>
 

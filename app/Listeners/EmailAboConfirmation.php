@@ -38,7 +38,7 @@ class EmailAboConfirmation
         $this->dispatch($job);
 
         // Notify admin email of new inscription
-        $job = (new NotifyAdminNewAbo($event->abos))->delay(15);
+        $job = (new NotifyAdminNewAbo($event->abos, $event->user))->delay(15);
 
         $this->dispatch($job);
     }

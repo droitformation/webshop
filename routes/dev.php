@@ -7,8 +7,12 @@ Route::get('abos_test', function () {
 
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-
-    $all = $abo->getAll()->where('abo_id',2);
+    $rappels  = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
+    $rappel  = $rappels->find(462);
+    echo '<pre>';
+    print_r($rappel->doc_rappel);
+    echo '</pre>';exit();
+  /*  $all = $abo->getAll()->where('abo_id',2);
 
     $all->map(function ($abo, $key) {
         if(isset($abo->user->user)){
@@ -24,7 +28,7 @@ Route::get('abos_test', function () {
         echo '<pre>';
         print_r($abo->toArray());
         echo '</pre>';
-    });
+    });*/
 
     /*
         list($hasUser, $noUser) = $all->partition(function ($abo_user) {
@@ -161,6 +165,29 @@ Route::get('testing', function() {
     $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
+
+
+    $model = new \App\Droit\User\Entities\User();
+
+    $nouveautes = $products->getByCategorie('Nouveautés');
+
+/*    foreach (range(0, 9900, 500) as $i) {
+        $users = $model->with(['adresses'])->offset($i)->offset($i)->limit(500)->get();
+
+        foreach ($users as $user){
+            $adresse = $user->adresse_livraison;
+            if(empty($adresse)){
+                echo $user->name. ' | user id: '.$user->id;
+                echo '<br/>';
+            }
+        }
+    }*/
+
+    $sixmonthago = \Carbon\Carbon::today()->subMonths(6)->toDateTimeString();
+    echo '<pre>';
+    print_r($nouveautes->toArray());
+    echo '</pre>';exit();
+    exit();
 
     $me      = $users->find(710);
     //$inscription = $inscriptions->find(14892);
@@ -1167,60 +1194,131 @@ Route::get('/test_mailgun', function () {
     echo '</pre>';exit();
 });
 
+Route::get('cleanlist', function()
+{
+    //$clean = new \App\Droit\Newsletter\Worker\CleanWorker(1588258,1,'pubdroit');
+    //$clean = new \App\Droit\Newsletter\Worker\CleanWorker(1588350,2,'bail');
+    $clean = new \App\Droit\Newsletter\Worker\CleanWorker(1588260,3,'matrimonial');
+    $clean->save();
+
+    // Filter pubdroit => mailjet
+    //$subscribers = $clean->filter();
+    //$clean->setMissing();
+
+    // Filter Mailjet DB
+    $subscribers = $clean->missingDB();
+   // $clean->addSubscriber($subscribers,1);
+   // $clean->clean();
+
+    echo '<pre>';
+    //print_r($clean->subscribers);
+    print_r($subscribers);
+    //print_r(implode('<br>',$clean->subscribers['ok']));
+    echo '</pre>';exit();
+});
 
 Route::get('factory', function()
 {
 
+    /*
+        $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 10000, 'price'  => 1000]);
 
-    $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $product  = factory(App\Droit\Shop\Product\Entities\Product::class)->make(['weight' => 10000, 'price'  => 1000]);
+        $order = [
+            'user_id' => 710,
+            'order'   => [
+                'products' => [0 => 11, 1 => 12],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 25],
+                'gratuit'  => [1 => 1]
+         ],
+            'admin' => 1
+        ];
 
-    $order = [
-        'user_id' => 710,
-        'order'   => [
-            'products' => [0 => 11, 1 => 12],
-            'qty'      => [0 => 2, 1 => 2],
-            'rabais'   => [0 => 25],
-            'gratuit'  => [1 => 1]
-        ],
-        'admin' => 1
-    ];
+    /*    $order = $model->find(3891);
 
-    $order = $model->find(3891);
+        $paquets = collect($order->paquets)->groupBy(function ($item, $key) {
+            return ($item->shipping->value/1000).' Kg | '.$item->shipping->price_cents;
+        })->map(function ($item, $key) {
+            return $item->sum('qty');
+        });
 
-    $paquets = collect($order->paquets)->groupBy(function ($item, $key) {
-        return ($item->shipping->value/1000).' Kg | '.$item->shipping->price_cents;
-    })->map(function ($item, $key) {
-        return $item->sum('qty');
-    });
-
-    echo '<pre>';
-    print_r($paquets);
+        echo '<pre>';
+        print_r($paquets);*/
 
     $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
     $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
-    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
-    $mailjet->setList(1590782);
+    $newsletter = \App::make('App\Droit\Newsletter\Repo\NewsletterInterface');
 
-    $emails = [];
-    $allusers = [];
-/*
-    foreach (range(0, 6000, 1000) as $i) {
-        $users = $mailjet->getSubscribers($i);
-        $allusers[] = collect($users)->map(function ($item, $key) {
-            return $item['Email'];
-        });
+    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+
+    $mailjet->setList(1588258);
+    $pubdroit = $newsletter->find(1);
+
+    $allusersDB = $pubdroit->subscriptions->unique('email');
+
+    $subscribers = [];
+
+    /*
+        foreach (range(0, 8000, 1000) as $i) {
+            $users = $mailjet->getSubscribers($i);
+            $allusers[] = collect($users)->map(function ($item, $key) {
+                return $item['Email'];
+            });
+        }
+
+        $emails = array_flatten($allusers);
+
+        $data = collect($emails)->map(function ($item, $key) {return [$item];});
+
+        Excel::create('pubdroit', function($excel) use ($data) {
+            $excel->sheet('Sheetname', function($sheet) use ($data) {
+              $sheet->fromArray($data);
+            });
+        })->store('xls', storage_path('excel'));
+
+        exit;
+              */
+
+    $results = \Excel::load(storage_path('excel/pubdroit.xls'), function($reader) {
+        $reader->ignoreEmpty();
+    })->get();
+
+    $emails = $results->flatten()->all();
+
+    foreach ($allusersDB as $item){
+        if(!in_array(strtolower($item->email),$emails)) {
+            // if not in abos and confirmed => subscribe
+            if($item->activated_at){
+                $subscribers['missing'][] = $item->email;
+            }
+            // if not in abos and not confirmed => delete
+            if(!$item->activated_at){
+                $subscribers['unconfirmed'][] = $item;
+            }
+        }
+        else{
+            $subscribers['ok'][] = $item->email;
+        }
     }
 
-    $emails = array_flatten($allusers);
-
     echo '<pre>';
-    print_r(implode('<br>',$emails));
-
+    print_r($subscribers);
     echo '</pre>';exit();
-*/
 
-    $results = \Excel::load('public/files/import/pi2.xlsx', function($reader) {
+/*    foreach ($subscribers['missing'] as $missing){
+        echo $missing.'<br/>';
+
+        $mailjet->subscribeEmailToList($missing);
+    }*/
+
+    foreach ($subscribers['unconfirmed'] as $missing){
+        $missing->delete();
+    }
+
+    exit;
+
+/*    $results = \Excel::load('public/files/import/pi2.xlsx', function($reader) {
         $reader->ignoreEmpty();
         $reader->setSeparator('\r\n');
     })->get();
@@ -1251,7 +1349,7 @@ Route::get('factory', function()
             echo '<br/>is not in '.$email;
             $worker->make($email,10);
         }
-    }
+    }*/
 });
 
 Route::get('badges_test', function () {

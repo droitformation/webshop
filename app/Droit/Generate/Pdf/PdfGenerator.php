@@ -115,6 +115,8 @@ class PdfGenerator implements PdfGeneratorInterface
 
         $data['generate'] = $generate;
         $data['rappel']   = $rappel;
+        $data['model']    = $rappel_model;
+        $data['print']    = $this->toPrint;
 
         $context = stream_context_create([
             'ssl' => [

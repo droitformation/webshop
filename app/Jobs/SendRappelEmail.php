@@ -46,14 +46,21 @@ class SendRappelEmail implements ShouldQueue
             $user   = $inscription->inscrit;
             $rappel = $inscription->list_rappel->sortBy('created_at')->last();
 
+            $attachements['rappel'] = ['pdfname' => 'Rappel', 'name' => 'Rappel', 'file' => public_path($rappel->doc_rappel), 'url' => asset($rappel->doc_rappel)];
+
+            if($rappel->doc_bv){
+                $attachements['bv'] = ['pdfname' => 'BV', 'name' => 'BV', 'file' => public_path($rappel->doc_bv), 'url' => asset($rappel->doc_bv)];
+            }
+
             $data = [
-                'title'       => 'Votre inscription sur publications-droit.ch',
-                'concerne'    => 'Rappel',
-                'annexes'     => $inscription->colloque->annexe,
-                'colloque'    => $inscription->colloque,
-                'inscription' => $inscription,
-                'user'        => $user,
-                'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+                'title'        => 'Votre inscription sur publications-droit.ch',
+                'concerne'     => 'Rappel',
+                'annexes'      => $inscription->colloque->annexe,
+                'attachements' => $attachements,
+                'colloque'     => $inscription->colloque,
+                'inscription'  => $inscription,
+                'user'         => $user,
+                'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
             ];
 
             if($inscription->group_id && isset($inscription->groupe)) {
@@ -66,10 +73,10 @@ class SendRappelEmail implements ShouldQueue
                 $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
                 $message->replyTo('info@publications-droit.ch', 'Réponse depuis publications-droit.ch');
 
-                $message->attach(public_path($rappel->doc_rappel), array('as' => 'Rappel.pdf', 'mime' => 'application/pdf'));
-
-                if($inscription->doc_bv){
-                    $message->attach(public_path($inscription->doc_bv), array('as' => 'Bv.pdf', 'mime' => 'application/pdf'));
+                if(!empty($attachements) && config('inscription.link') == false) {
+                    foreach($attachements as $attachement) {
+                        $message->attach($attachement['file'], ['as' => isset($attachement['pdfname']) ? $attachement['pdfname'] : '', 'mime' => 'application/pdf']);
+                    }
                 }
             });
         }

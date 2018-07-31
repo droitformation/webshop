@@ -35,6 +35,39 @@ class AboAdminWorkerTest extends TestCase
         parent::tearDown();
     }
 
+    public function testMakeRappel()
+    {
+        $worker = \App::make('App\Droit\Abo\Worker\AboRappelWorkerInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeUserAbonnement($abo, null, true);
+        $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->create(['abo_user_id' => $abo_user->id ,'product_id' => $abo->current_product->id]);
+
+        $this->assertEquals(0, $abo_facture->rappels->count());
+
+        $worker->makeRappel($abo_facture);
+
+        $abo_facture = $abo_facture->fresh();
+        $abo_facture->load('rappels');
+
+        $this->assertEquals(1, $abo_facture->rappels->count());
+
+        $worker->makeRappel($abo_facture);
+
+        $abo_facture = $abo_facture->fresh();
+        $abo_facture->load('rappels');
+
+        $this->assertEquals(1, $abo_facture->rappels->count());
+
+        $worker->makeRappel($abo_facture,true);
+
+        $abo_facture = $abo_facture->fresh();
+        $abo_facture->load('rappels');
+
+        $this->assertEquals(2, $abo_facture->rappels->count());
+    }
+
     public function testBindFactures()
     {
         $abo      = $this->makeAbosGetProduct();

@@ -86,4 +86,10 @@ class Newsletter extends Model {
     {
         return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter_users', 'newsletter_subscriptions', 'newsletter_id','user_id');
     }
+
+    public function active_subscriptions()
+    {
+        return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter_users', 'newsletter_subscriptions', 'newsletter_id','user_id')
+            ->whereNotNull('newsletter_users.activated_at');
+    }
 }

@@ -30,9 +30,9 @@ class NotifyJobFinished extends Job implements ShouldQueue
      */
     public function handle()
     {
-        /*Mail::send('emails.notify', ['text' => $this->text], function ($m) {
+        \Mail::send('emails.notify', ['text' => $this->text], function ($m) {
             $m->from('info@publications-droit.ch', 'Administration Droit Formation');
             $m->to('info@publications-droit.ch', 'Administration')->subject('Notification');
-        });*/
+        });
     }
 }

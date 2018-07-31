@@ -20,6 +20,7 @@ class CreateAuthorsTable extends Migration {
             $table->text('bio')->nullable();
             $table->string('photo')->nullable();
             $table->integer('rang')->nullable();
+            $table->integer('site_id')->nullable();
         });
 	}
 

@@ -48,4 +48,8 @@ class Site extends Model{
         return $this->hasMany('App\Droit\Faq\Entities\Faq_question');
     }
 
+    public function newsletter()
+    {
+        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter')->first();
+    }
 }

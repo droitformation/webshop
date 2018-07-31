@@ -50,7 +50,7 @@ class ProductController extends Controller {
         session(['product_search' => $data]);
 
         // Return products if sorted or search results or else paginate
-        $products = $this->product->getList($data);
+        $products = $this->product->getList($data,true);
 
 		return view('backend.products.index')->with(['products' => $products, 'sort' => $data['sort'], 'term' => $data['term']]);
 	}

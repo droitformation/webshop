@@ -11,20 +11,16 @@ class MakeRappelAbo extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
-    protected $rappel;
     protected $facture;
-    protected $factures;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($factures)
+    public function __construct($facture)
     {
-        $this->rappel     = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
-        $this->facture    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-        $this->factures   = $factures;
+        $this->facture  = $facture;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -36,19 +32,8 @@ class MakeRappelAbo extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+        $worker = \App::make('App\Droit\Abo\Worker\AboRappelWorkerInterface');
 
-        if(empty($this->factures)){ return true; }
-
-        foreach($this->factures as $facture) {
-            // Make rappel if not exist
-            if($facture->rappels->isEmpty())
-            {
-                $rappel = $this->rappel->create(['abo_facture_id' => $facture->id]);
-                
-                $generator->makeAbo('rappel', $facture, 1, $rappel);
-                sleep(1);
-            }
-        }
+        $worker->makeRappel($this->facture);
     }
 }

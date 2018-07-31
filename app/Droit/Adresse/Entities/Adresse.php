@@ -83,6 +83,16 @@ class Adresse extends Model {
         return $this->first_name.' '.$this->last_name;
     }
 
+    public function getNameSlugAttribute()
+    {
+        if(empty(trim($this->first_name)) && empty(trim($this->last_name)))
+        {
+            return str_slug($this->company);
+        }
+
+        return str_slug($this->first_name.' '.$this->last_name);
+    }
+
     public function getInvoiceNameAttribute()
     {
         $name = [];

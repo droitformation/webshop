@@ -100,6 +100,7 @@ class SearchController extends Controller
                         'civilite' => $result->adresse_contact->civilite_title,
                         'name'     => $result->adresse_contact->name ,
                         'company'  => $result->adresse_contact->company,
+                        'complement' => $result->adresse_contact->complement,
                         'cp'       => $result->adresse_contact->cp_trim,
                         'adresse'  => $result->adresse_contact->adresse,
                         'npa'      => $result->adresse_contact->npa,

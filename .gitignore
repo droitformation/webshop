@@ -25,5 +25,7 @@ public/files/seminaires
 public/colloques
 public/newsletter/js/env.js
 storage/designpond_registry.json
-public/newsletter
 public/files/downloads
+public/newsletter/
+public/storage
+storage/excel/

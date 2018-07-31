@@ -8,6 +8,8 @@
     $tdTableTitle = '-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width: 40px;padding-top: 6px;padding-bottom: 6px;padding-left: 12px;padding-right: 12px;font-size: 12px;line-height: 16px;font-weight: bold;text-transform: uppercase;color: #505050;background-color: #ebebeb;border-bottom: 1px solid #e3e3e3;border-top: 1px solid #e3e3e3;';
     $desktopHide  = 'display: none;font-size: 0;max-height: 0;width: 0;line-height: 0;overflow: hidden;mso-hide: all;';
     $tdTableRow   = 'padding-top: 5px;padding-bottom: 5px;padding-left: 12px;padding-right: 12px;height:30px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: middle;font-size: 14px;line-height: 16px;color: #54565c;background-color: #ffffff;border-bottom: 1px solid #e3e3e3;';
+    $button = 'font-size: 14px; font-family: Helvetica, Arial, sans-serif;  color: #ffffff;
+          text-decoration: none; text-decoration: none; padding: 5px 12px 3px 12px; border-radius:3px;  border: 1px solid #46a873; display: inline-block;';
     ?>
 
     <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url('pubdroit') }}" target="_blank">
@@ -42,6 +44,32 @@
                 </table>
 
                 <div style="{{ $style['body_content'] }}">
+                    @if(config('inscription.link') == true && !empty($attachements))
+
+                        <div style="{{ $style['body_content'] }} background:#f5f5f5; margin-top: 15px; margin-bottom:15px; padding: 10px;">
+                            <h2 style="{{$resetMargin}}margin-bottom:5px;{{ $resetPadding }}-webkit-text-size-adjust: none;padding-left:5px;font-family: Arial, Helvetica, sans-serif;font-size: 14px;line-height: 22px;font-weight: bold;color: #000000;">
+                                <strong>Liens vers le rappel à télécharger</strong>
+                            </h2>
+                            <table border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
+                                <tr>
+                                    @if(!empty($attachements) && config('inscription.link'))
+                                        @foreach($attachements as $attachement)
+                                            <td>
+                                                <table border="0" cellspacing="0" cellpadding="0" style="margin: 0 5px;">
+                                                    <tr>
+                                                        <td align="center" bgcolor="#55bc75">
+                                                            <a href="{{ $attachement['url'] }}" target="_blank" style="{{ $button }}">{{ $attachement['name'] }}</a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        @endforeach
+                                    @endif
+                                </tr>
+                            </table>
+                        </div>
+                    @endif
+
                     <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}">
                         <strong>A toutes fins utiles, les coordonnées ci-après vous permettront le règlement de votre facture via Internet.</strong>
                     </p>

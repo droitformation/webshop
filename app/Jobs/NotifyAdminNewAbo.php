@@ -13,15 +13,17 @@ class NotifyAdminNewAbo extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $abos;
+    protected $user;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Collection $abos)
+    public function __construct(Collection $abos,$user)
     {
         $this->abos = $abos;
+        $this->user = $user;
     }
 
     /**
@@ -32,7 +34,7 @@ class NotifyAdminNewAbo extends Job implements ShouldQueue
     public function handle()
     {
         $infos = [
-            'name'     => $this->abos->first()->user_facturation->name,
+            'name'     => $this->user->name,
             'what'     => 'Demande d\'abonnement',
             'link'     => url('admin/abo'),
             'abos'     => $this->abos

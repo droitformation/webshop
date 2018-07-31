@@ -12,15 +12,17 @@ class NewAboRequest extends Event
     use SerializesModels;
 
     public $abos;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Collection $abos)
+    public function __construct(Collection $abos, $user)
     {
         $this->abos = $abos;
+        $this->user = $user;
     }
 
     /**

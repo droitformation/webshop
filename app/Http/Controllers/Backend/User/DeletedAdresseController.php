@@ -33,12 +33,19 @@ class DeletedAdresseController extends Controller
         $terms    = [];
 
         $type     = !empty($request->input('type')) ? $request->input('type') : 'user';
-        $group    = !empty($request->input('group')) &&  $request->input('group') != 'user_id' ? $request->input('group') : 'id';
+        $group    = !empty($request->input('group')) &&  $request->input('group') != 'user_id' ? $request->input('group') : '';
         $operator = !empty($request->input('operator')) ? $request->input('operator') : 'and';
 
         if(!empty($request->all())){
 
             $terms    = $this->worker->prepareTerms($request->only('terms','columns'),$type);
+
+            if(empty($terms)){
+                $request->flash();
+                alert()->danger('Les termes ne correspondent pas au type de recherche');
+                return redirect()->back();
+            }
+
             $adresses = $this->$type->getDeleted($terms, $operator);
 
             if($type == 'adresse'){
@@ -53,7 +60,7 @@ class DeletedAdresseController extends Controller
                 $adresses = $onlyadresse->merge($hasuser);
             }
 
-            $adresses = $adresses->groupBy($group);
+            $adresses = $adresses->sortBy('name_slug')->groupBy($group);
         }
 
         return view('backend.deleted.index')->with([

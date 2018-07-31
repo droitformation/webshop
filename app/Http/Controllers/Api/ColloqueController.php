@@ -43,7 +43,7 @@ class ColloqueController extends Controller {
 			'location'     => $colloque->location ? $colloque->location->name : '',
 			'date'         => $colloque->event_date,
 			'registration' => utf8_encode($colloque->registration_at->formatLocalized('%d %B %Y')),
-			'link'         => url('pubdroit/colloque/').$colloque->id
+			'link'         => url('pubdroit/colloque/'.$colloque->id)
 		];
     }
 

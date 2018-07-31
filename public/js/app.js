@@ -3872,6 +3872,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3880,11 +3886,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             types: [{ 'name': 'Compte utilisateur', 'value': 'user' }, { 'name': 'Adresse', 'value': 'adresse' }],
             searchTerms: this.terms,
-            columns: [{ 'name': 'Nom', 'label': 'last_name' }, { 'name': 'Prénom', 'label': 'first_name' }, { 'name': 'Email', 'label': 'email' }, { 'name': 'Entreprise', 'label': 'company' }, { 'name': 'Adresse ', 'label': 'adresse ' }, { 'name': 'NPA', 'label': 'npa' }, { 'name': 'Ville', 'label': 'ville' }]
-
+            columns: {
+                user: [{ 'name': 'Nom', 'label': 'last_name' }, { 'name': 'Prénom', 'label': 'first_name' }, { 'name': 'Email', 'label': 'email' }, { 'name': 'Entreprise', 'label': 'company' }],
+                adresse: [{ 'name': 'Nom', 'label': 'last_name' }, { 'name': 'Prénom', 'label': 'first_name' }, { 'name': 'Email', 'label': 'email' }, { 'name': 'Entreprise', 'label': 'company' }, { 'name': 'Adresse ', 'label': 'adresse ' }, { 'name': 'NPA', 'label': 'npa' }, { 'name': 'Ville', 'label': 'ville' }]
+            }
         };
     },
 
+    computed: {
+        choosencolumns: function choosencolumns() {
+            return this.columns[this.selected];
+        }
+    },
     components: {},
     mounted: function mounted() {},
     methods: {
@@ -3893,7 +3906,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         removeTerm: function removeTerm(term) {
             this.searchTerms.splice(term, 1);
-        }
+        },
+        updateType: function updateType() {}
     }
 });
 
@@ -4137,6 +4151,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -5382,6 +5397,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -27827,7 +27847,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank",
       "href": 'admin/user/' + _vm.chosen.user_id
     }
-  }, [_vm._v(_vm._s(_vm.chosen.name))])]), _vm._v(" "), (_vm.chosen.cp) ? _c('span', [_vm._v(_vm._s(_vm.chosen.cp))]) : _vm._e(), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.adresse))]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.npa) + " " + _vm._s(_vm.chosen.ville))]), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.chosen.name))])]), _vm._v(" "), (_vm.chosen.cp) ? _c('span', [_vm._v(_vm._s(_vm.chosen.cp))]) : _vm._e(), _vm._v(" "), (_vm.chosen.complement) ? _c('span', [_vm._v(_vm._s(_vm.chosen.complement))]) : _vm._e(), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.adresse))]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.chosen.npa) + " " + _vm._s(_vm.chosen.ville))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger btn-xs pull-right",
     attrs: {
       "type": "button"
@@ -28728,7 +28748,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "type"
     },
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -28736,7 +28756,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+      }, _vm.updateType]
     }
   }, _vm._l((_vm.types), function(type) {
     return _c('option', {
@@ -28869,7 +28889,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.$set(term, "column", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
         }
       }
-    }, _vm._l((_vm.columns), function(column) {
+    }, _vm._l((_vm.choosencolumns), function(column) {
       return _c('option', {
         domProps: {
           "value": column.label
@@ -28950,7 +28970,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v("  \n                        Ou "), _c('span', {
     staticClass: "text-muted"
-  }, [_vm._v("(chaque terme séparément)")])])])]) : _vm._e()], 2), _vm._v(" "), _vm._m(0)])])
+  }, [_vm._v("(chaque terme séparément)")])])])]) : _vm._e()], 2), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-md-2"
@@ -28962,6 +28982,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "submit"
     }
   }, [_vm._v("Recherche")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-2"
+  }, [_c('p', [_c('strong', [_c('span', {
+    staticClass: "text-danger"
+  }, [_vm._v("La recherche se fait sur les champs existant pour chaque type:"), _c('br')])]), _vm._v(" "), _c('strong', [_vm._v("Comptes utilisateurs: ")]), _vm._v(" Nom, prénom, email, entreprise"), _c('br'), _vm._v(" "), _c('strong', [_vm._v("Adresses: ")]), _vm._v(" Nom, prénom, email, entreprise, adresse, NPA, ville\n            ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -30510,6 +30536,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-default btn-xs",
       attrs: {
         "href": 'admin/inscription/rappel/' + rappel.id,
+        "target": "_blank"
+      }
+    }, [_vm._v(" + BV")])])
+  })) : _vm._e(), _vm._v(" "), (_vm.path == 'abonnement') ? _c('ol', {
+    staticStyle: {
+      "margin-left": "5px",
+      "padding-left": "3px"
+    }
+  }, _vm._l((_vm.list), function(rappel) {
+    return _c('li', {
+      staticClass: "rappel-item"
+    }, [_c('a', {
+      staticClass: "btn btn-default btn-xs",
+      attrs: {
+        "href": 'admin/rappel/show/' + rappel.id,
         "target": "_blank"
       }
     }, [_vm._v(" + BV")])])

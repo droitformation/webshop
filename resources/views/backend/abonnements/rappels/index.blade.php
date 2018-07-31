@@ -14,14 +14,10 @@
                 </div>
 
                 <div class="col-md-6">
-                    <form action="{{ url('admin/rappel/send') }}" method="POST" class="pull-right" style="margin-left: 20px;">
-                        {!! csrf_field() !!}
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <input type="hidden" name="count" value="{{ !$factures->isEmpty() ? $factures->count() : 0 }}">
-                        <button class="btn btn-inverse pull-right" id="confirmSendAboRappels">
-                            <i class="fa fa-paper-plane"></i> &nbsp;Envoyer les rappel
-                        </button>
-                    </form>
+
+                    <a href="{{ url('admin/rappel/confirmation/'.$product->id) }}" class="btn btn-inverse pull-right" >
+                        <i class="fa fa-paper-plane"></i> &nbsp; Confirmer la liste et envoyer
+                    </a>
 
                     <form action="{{ url('admin/abo/bind') }}" method="POST" class="pull-right">
                         <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
