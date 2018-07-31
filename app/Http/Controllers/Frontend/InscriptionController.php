@@ -75,7 +75,8 @@ class InscriptionController extends Controller
         $newsletter = $this->newsletter->find($request->input('newsletter_id'));
 
         if(!$subscribe) {
-            alert()->danger('<strong>Vous êtes déjà inscrit à cettte newsletter</strong>');
+            alert()->danger('<strong>Vous êtes déjà inscrit à cette newsletter</strong>');
+            return redirect()->back();
         }
         else {
             
@@ -85,6 +86,7 @@ class InscriptionController extends Controller
             });
 
             alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
+            return redirect()->back();
         }
 
         return redirect($request->input('return_path', '/'));

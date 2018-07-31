@@ -50,6 +50,6 @@ class Site extends Model{
 
     public function newsletter()
     {
-        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter')->first();
+        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter');
     }
 }

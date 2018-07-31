@@ -17,6 +17,7 @@ Route::get('event', 'Api\ColloqueController@event');
 //Route::post('tracking', 'Backend\Newsletter\TrackingController@tracking');
 Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@tracking');
 
+Route::get('site/subscribe/{site_id}', 'HomeController@subscribe');
 /*
 |--------------------------------------------------------------------------
 | Validate presence for inscriptions
@@ -24,7 +25,6 @@ Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@
 */
 Route::get('presence/{id}/{key}', 'CodeController@presence');
 Route::get('presence/occurrence/{id}/{key}', 'CodeController@occurrence');
-
 /*
 |--------------------------------------------------------------------------
 | Ajax login validation

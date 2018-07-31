@@ -33,4 +33,12 @@ class HomeController extends Controller
         
         return redirect('pubdroit');
     }
+
+    public function subscribe($site_id)
+    {
+        $site = $this->site->find($site_id);
+        $newsletter = $site->newsletter->first();
+
+        return view('frontend.subscribe')->with(['site' => $site, 'newsletter' => $newsletter]);
+    }
 }
