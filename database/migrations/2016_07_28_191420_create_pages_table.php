@@ -28,6 +28,7 @@ class CreatePagesTable extends Migration
 
             $table->string('title')->nullable();
             $table->longText('content')->nullable();
+            $table->text('excerpt')->nullable();
             $table->string('slug');
             $table->string('menu_title');
             $table->integer('rang')->nullable();
