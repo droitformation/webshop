@@ -1207,8 +1207,9 @@ Route::get('cleanlist', function()
 
     // Filter Mailjet DB
     $subscribers = $clean->missingDB();
-   // $clean->addSubscriber($subscribers,1);
-   // $clean->clean();
+   // $clean->addSubscriber($subscribers,1);/
+    //
+     $clean->clean();
 
     echo '<pre>';
     //print_r($clean->subscribers);

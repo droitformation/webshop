@@ -754,6 +754,16 @@ select[multiple] {
     background: #e6408f;
 }
 
+.color-droitdutravail{
+    color: #fff;
+    background: #5a101f;
+}
+
+.color-rcassurances{
+    color: #fff;
+    background: #337ab7;
+}
+
 .panel-body > .list-admin{
     margin: -20px;
 }
