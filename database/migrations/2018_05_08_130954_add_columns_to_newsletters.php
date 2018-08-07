@@ -19,6 +19,7 @@ class AddColumnsToNewsletters extends Migration
             $table->tinyInteger('comment')->nullable();
             $table->string('comment_title')->default('Commentaire')->nullable();
             $table->string('display')->default('bottom')->nullable();
+            $table->tinyInteger('hide_title')->nullable();
         });
     }
 

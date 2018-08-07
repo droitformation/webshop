@@ -1,6 +1,6 @@
 <!-- Bloc -->
 @if(isset($arret))
-    <table border="0" width="600" align="center" cellpadding="0" cellspacing="0" class="tableReset {{ $arret->dumois ? 'alert-dumois' : '' }}">
+    <table border="0" width="600" align="center" cellpadding="0" cellspacing="0" class="tableReset {{ $arret->dumois ? $campagne->newsletter->classe : '' }}">
 
         <?php $comment = isset($campagne->newsletter) ? $campagne->newsletter->comment :null; ?>
 
