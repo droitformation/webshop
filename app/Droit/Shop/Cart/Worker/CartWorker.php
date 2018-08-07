@@ -105,6 +105,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
                  return '<p><span class="text-muted">Frais de port offerts</span></p>';
              }
 
+             if($coupon['type'] == 'priceshipping' || $coupon['type'] == 'price')
+             {
+                 return '<p><span class="text-muted">'.$coupon['title'].'</span> &nbsp;'.$coupon['value'].' CHF</p>';
+             }
+
              return '<p><span class="text-muted">'.$coupon['title'].'</span> &nbsp;'.$coupon['value'].'%</p>';
          }
 
@@ -208,7 +213,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
                      {
                          $newprice = $this->calculPriceWithCoupon($product, 'minus');
 
-                         if($type = 'priceshipping')
+                         if($type == 'priceshipping')
                          {
                              session(['noShipping' => 'noShipping']);
                          }
@@ -307,8 +312,8 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      public function totalShipping()
      {
          $shipping = $this->getTotalWeight()->setShipping()->orderShipping;
-
          // Add shipping for abos
+
          if(!\Cart::instance('abonnement')->content()->isEmpty() && !\Session::has('noShipping'))
          {
              $abo_shipping = \Cart::instance('abonnement')->content()->map(function ($item, $key) {

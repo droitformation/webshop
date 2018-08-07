@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Shop\Product\Repo\ProductInterface;
+use App\Droit\Shop\Coupon\Repo\CouponInterface;
 use Illuminate\Http\Request;
 use App\Droit\Shop\Cart\Worker\CartWorker;
 
@@ -10,12 +11,14 @@ class CartController extends Controller {
 
     protected $product;
     protected $worker;
+    protected $coupon;
     protected $money;
 
-    public function __construct(ProductInterface $product, CartWorker $worker)
+    public function __construct(ProductInterface $product, CartWorker $worker, CouponInterface $coupon)
     {
         $this->product = $product;
         $this->worker  = $worker;
+        $this->coupon  = $coupon;
         $this->money   = new \App\Droit\Shop\Product\Entities\Money;
     }
 
@@ -58,6 +61,13 @@ class CartController extends Controller {
         \Cart::instance('shop')
             ->add($item->id, $item->title, 1, $item->price_cents , array('image' => $item->image, 'weight' => $item->weight))
             ->associate('App\Droit\Shop\Product\Entities\Product');
+
+        // if global coupon and no other
+        $coupon_global = $this->coupon->getGlobal();
+
+        if($coupon_global){
+            $this->worker->reset()->setCoupon($coupon_global->title)->applyCoupon();
+        }
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');
 

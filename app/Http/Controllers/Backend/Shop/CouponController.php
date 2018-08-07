@@ -82,7 +82,7 @@ class CouponController extends Controller
      */
     public function update(CouponRequest $request, $id)
     {
-        $coupon  = $this->coupon->update($request->all());
+        $coupon = $this->coupon->update($request->all());
 
         return redirect('admin/coupon')->with(['status' => 'success', 'message' => 'Le coupon a été mis à jour']);
     }

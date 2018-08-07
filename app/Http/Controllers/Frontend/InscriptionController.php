@@ -77,17 +77,14 @@ class InscriptionController extends Controller
         if(!$subscribe) {
             alert()->danger('<strong>Vous êtes déjà inscrit à cettte newsletter</strong>');
         }
-        else {
             
-            \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe,$newsletter) {
-                $message->from($newsletter->from_email, $newsletter->from_name);
-                $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
-            });
+        \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe,$newsletter) {
+            $message->from($newsletter->from_email, $newsletter->from_name);
+            $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
+        });
 
-            alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
-        }
-
-        return redirect($request->input('return_path', '/'));
+        alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
+        return redirect()->back();
     }
 
     /**
