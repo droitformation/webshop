@@ -19,7 +19,11 @@
                     <div class="row">
                         @foreach($menus_names as $menu_id => $menu)
                             <div class="col-md-6">
-                                <h4><a class="btn btn-info btn-sm" href="{{ url('admin/menu/'.$menu_id) }}"><i class="fa fa-edit"></i></a> &nbsp;{{ $menus[$menu_id] }}</h4>
+                                @if($menu_id)
+                                    <h4><a class="btn btn-info btn-sm" href="{{ url('admin/menu/'.$menu_id) }}"><i class="fa fa-edit"></i></a> &nbsp;{{ $menus[$menu_id] }}</h4>
+                                @else
+                                    <h4>Page accueil</h4>
+                                @endif
                                 <div class="dd nestable_list" style="height: auto;">
                                     <ol class="dd-list sortable">
                                         @if(!$menu->isEmpty())
