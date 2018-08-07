@@ -55,6 +55,7 @@ class NewsletterInscriptionTest extends TestCase
 
         \Mail::shouldReceive('send')->once();
 
+        $this->call('get','pubdroit');
         $response = $this->call('POST', 'subscribe', ['email' => 'info@leschaud.ch', 'return_path' => '/pubdroit', 'newsletter_id' => $newsletter->id , 'site_id' => 1]);
 
         $response->assertRedirect('/pubdroit');

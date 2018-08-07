@@ -19,6 +19,7 @@ class CreateShopCouponsTable extends Migration {
             $table->string('title');
             $table->string('type')->default('global');
             $table->dateTime('expire_at');
+            $table->tinyInteger('global')->nullable();
             $table->timestamps();
         });
 	}

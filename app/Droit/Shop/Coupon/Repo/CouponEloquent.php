@@ -34,6 +34,12 @@ class CouponEloquent implements CouponInterface{
         return false;
     }
 
+    public function getGlobal()
+    {
+        $coupons =  $this->coupon->where('expire_at','>=',date('Y-m-d'))->whereNotNull('global')->get();
+        return !$coupons->isEmpty() ? $coupons->first() : null;
+    }
+
     public function getValid()
     {
         return $this->coupon->where('expire_at','>=',date('Y-m-d'))->get();
