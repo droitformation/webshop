@@ -10,7 +10,7 @@
     <td align="right">
         <p>{{ $cart_worker->totalCart() }} CHF</p>
         {!! $cart_worker->getCoupon() !!}
-        <p>{{ $cart_worker->totalShipping() }}  CHF</p>
+        <p>{{ $cart_worker->totalShipping() }} CHF</p>
         <p><strong>{{ $cart_worker->totalCartWithShipping() }} CHF</strong></p>
     </td>
 </tr>

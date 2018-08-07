@@ -50,6 +50,7 @@ class CouponEloquent implements CouponInterface{
         $coupon = $this->coupon->create(array(
             'title'      => $data['title'],
             'value'      => (isset($data['value']) ? $data['value'] : null),
+            'global'     => (isset($data['global']) && $data['global'] > 0 ? 1 : null),
             'type'       => $data['type'],
             'expire_at'  => $data['expire_at']
         ));
@@ -79,7 +80,8 @@ class CouponEloquent implements CouponInterface{
         }
 
         $coupon->fill($data);
-
+        $coupon->global = isset($data['global']) && $data['global'] > 0 ? 1 : null;
+        
         $coupon->save();
 
         // add products if any

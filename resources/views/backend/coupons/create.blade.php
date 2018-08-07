@@ -16,6 +16,19 @@
 
                     <div class="panel-body">
                         <h4><i class="fa fa-edit"></i> &nbsp;Ajouter coupon</h4>
+
+                        <div class="form-group">
+                            <label for="file" class="col-sm-3 control-label">Appliqué automatiquement lors d'une commande</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline">
+                                    <input checked type="radio" name="global" value="0"> Non
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="global" value="1"> Oui
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Type de rabais</label>
                             <div class="col-sm-5 col-xs-8">

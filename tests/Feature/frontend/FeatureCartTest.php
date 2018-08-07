@@ -135,4 +135,33 @@ class FeatureCartTest extends TestCase
         $this->assertEquals('20.00',$cartworker->totalCartWithShipping());
         $this->assertEquals('10.00',$cartworker->totalShipping());
     }
+
+    public function testProductHasCouponGlobal()
+    {
+        $cartworker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+
+        $make     = new \tests\factories\ObjectFactory();
+        $person   = $make->makeUser();
+        $this->actingAs($person);
+
+        $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+            'weight' => 200,
+            'price'  => 2000,
+        ]);
+
+        $coupon = factory(\App\Droit\Shop\Coupon\Entities\Coupon::class)->create([
+            'value'     => '5',
+            'type'      => 'price',
+            'global'    => 1,
+            'title'     => 'RABAIS',
+            'expire_at' => \Carbon\Carbon::now()->addDay()
+        ]);
+
+        $coupon->products()->attach($product->id);
+
+        $this->call('POST', 'pubdroit/cart/addProduct', ['product_id' => $product->id]);
+
+        $this->assertEquals('25.00',$cartworker->totalCartWithShipping());
+        $this->assertEquals('10.00',$cartworker->totalShipping());
+    }
 }

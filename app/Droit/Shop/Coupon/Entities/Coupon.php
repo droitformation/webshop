@@ -9,7 +9,7 @@ class Coupon extends Model{
 
     protected $dates = ['expire_at'];
 
-    protected $fillable = ['value','title','type','expire_at'];
+    protected $fillable = ['value','title','type','expire_at','global'];
 
     public function getCouponValueAttribute()
     {

@@ -30,7 +30,10 @@
                             @foreach($coupons as $coupon)
                                 <tr>
                                     <td><a href="{{ url('admin/coupon/'.$coupon->id) }}" class="btn btn-sm btn-info">éditer</a></td>
-                                    <td>{{ $coupon->title }}</td>
+                                    <td>
+                                        {!! $coupon->global ? '<span class="label label-warning">global</span> ' : '' !!}
+                                        {{ $coupon->title }}
+                                    </td>
                                     <td>
                                         <?php $type = $coupon->type == 'price' || $coupon->type == 'priceshipping' ? 'CHF' : '%'; ?>
                                         {{ !empty($coupon->value) ? $coupon->value.' '.$type : 'gratuit' }}
