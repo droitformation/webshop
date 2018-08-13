@@ -17,7 +17,7 @@ class AnalyseEloquent implements AnalyseInterface{
 
     public function getAll($site = null, $exclude = [])
     {
-        $analyse = $this->analyse->site($site)->with(['authors','categories','arrets']);
+        $analyse = $this->analyse->with(['authors','categories','arrets']);
 
         if(!empty($exclude))
         {
@@ -26,7 +26,7 @@ class AnalyseEloquent implements AnalyseInterface{
             });
         }
 
-        return $analyse->orderBy('pub_date', 'DESC')->get();
+        return $analyse->site($site)->orderBy('analyses.pub_date', 'DESC')->get();
     }
 
     public function allForSite($site, $years = null)

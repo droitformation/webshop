@@ -52,6 +52,7 @@ class ContentModel
             'images'    =>  $arret->categories->map(function ($categorie, $key) use ($arret) {
                 return [
                     'link'  => url('jurisprudence#'. $arret->reference),
+                    'id'    => $categorie->id,
                     'image' => secure_asset(config('newsletter.path.categorie').$categorie->image),
                     'title' => $categorie->title,
                 ];

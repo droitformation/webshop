@@ -8,7 +8,9 @@
                     <a target="_blank" href="{{ $site }}/page/jurisprudence">
                        <img width="130" border="0" alt="{{ $categorie->title }}" src="{{ secure_asset(config('newsletter.path.categorie').$categorie->image) }}">
                     </a>
-                    <p style="text-align: center;margin: 0 0 5px 0;padding: 0;">{{ $categorie->title }}</p>
+                    @if(!$campagne->newsletter->hide_title)
+                        <p style="text-align: center;margin: 0 0 5px 0;padding: 0;">{{ $categorie->title }}</p>
+                    @endif
                 @endif
             @endforeach
         </td>

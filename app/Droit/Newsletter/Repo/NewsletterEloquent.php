@@ -45,6 +45,7 @@ class NewsletterEloquent implements NewsletterInterface{
             'color'        => (isset($data['color']) ? $data['color'] : ''),
             'logos'        => (isset($data['logos']) ? $data['logos'] : ''),
             'header'       => (isset($data['header']) ? $data['header'] : ''),
+            'second_color' => (isset($data['second_color']) ? $data['second_color'] : null),
 			'created_at'   => date('Y-m-d G:i:s'),
 			'updated_at'   => date('Y-m-d G:i:s')
 		));
@@ -69,8 +70,9 @@ class NewsletterEloquent implements NewsletterInterface{
 
         $newsletter->fill($data);
 		$newsletter->updated_at = date('Y-m-d G:i:s');
+        $newsletter->second_color = isset($data['second_color']) && !empty($data['second_color']) ? $data['second_color'] : null;
 
-		$newsletter->save();
+        $newsletter->save();
 		
 		return $newsletter;
 	}

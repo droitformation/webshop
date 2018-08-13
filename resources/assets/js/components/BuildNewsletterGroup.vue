@@ -37,7 +37,7 @@
                             <!-- Bloc image droite-->
                             <td width="25" class="resetMarge"></td><!-- space -->
                             <td valign="top" align="center" width="160" class="resetMarge">
-                                <p v-for="image in arret.images">
+                                <p v-for="image in arret.images" v-if="image.id != categorie.id">
                                     <a target="_blank" :href="image.link">
                                         <img width="130" border="0" :alt="image.title" :src="image.image">
                                     </a>

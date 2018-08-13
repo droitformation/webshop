@@ -79,6 +79,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Couleur secondaire</label>
+                        <div class="col-sm-3">
+                            <input type="text"  class="form-control colorpicker" name="second_color" value="#536B2F">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Bannière avec logos</label>
                         <div class="col-sm-6">
                             <input type="file" required name="logos">

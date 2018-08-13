@@ -30018,7 +30018,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "width": "160"
       }
     }, _vm._l((arret.images), function(image) {
-      return _c('p', [_c('a', {
+      return (image.id != _vm.categorie.id) ? _c('p', [_c('a', {
         attrs: {
           "target": "_blank",
           "href": image.link
@@ -30030,7 +30030,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "alt": image.title,
           "src": image.image
         }
-      })])])
+      })])]) : _vm._e()
     }))]) : _vm._e(), _vm._v(" "), _vm._m(3, true)])])
   })], 2), _vm._v(" "), _c('div', {
     directives: [{
