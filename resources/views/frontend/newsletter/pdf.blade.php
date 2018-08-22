@@ -1,8 +1,9 @@
 @extends('frontend.newsletter.layouts.print')
 @section('content')
 
+
     <div class="header">
-        <h1>{{ config('app.name') }}</h1>
+        <h1>{{ $campagne->newsletter->site->nom }}</h1>
         <h2>{{ $campagne->sujet }}</h2>
         <h3>{{ $campagne->auteurs }}</h3>
     </div>

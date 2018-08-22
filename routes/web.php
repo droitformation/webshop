@@ -18,6 +18,8 @@ Route::get('event', 'Api\ColloqueController@event');
 Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@tracking');
 
 Route::get('site/subscribe/{site_id}', 'HomeController@subscribe');
+Route::get('site/unsubscribe/{site_id}', 'HomeController@unsubscribe');
+Route::get('site/confirmation/{site_id}', 'HomeController@confirmation');
 /*
 |--------------------------------------------------------------------------
 | Validate presence for inscriptions

@@ -33,7 +33,7 @@
                        <td v-if="type == 3 || type == 10" width="25" class="resetMarge"></td><!-- space -->
                        <td v-if="type == 3 || type == 10" valign="top" align="center" width="160" class="resetMarge">
                            <image-newsletter :visible="isImage" :mode="mode" :type="type" v-if="type == 3" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
-                           <img v-if="categorie && type == 10" :src="imgcategorie" class="img-responsive">
+                           <img v-if="type == 10 || categorie" :src="imgcategorie" class="img-responsive">
                        </td>
                    </tr>
 
@@ -154,7 +154,14 @@
                 return (this.type == 1) ? 'text-align:center;' : 'text-align:left;';
             },
             imgcategorie:function(){
-                return this.model ? this.content.model.path + this.categorie.image : this.categorie.path;
+                if(this.model){
+                    return  this.model.model.categorie.path
+                }
+                if(this.categorie){
+                    return this.categorie.path;
+                }
+
+                return '';
             },
             action:function(){
                 if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }
@@ -212,7 +219,7 @@
                 var self = this;
                 axios.get('admin/ajax/categories/' + self.site).then(function (response) {
                      self.categories = response.data;
-                     self.categorie = self.content ? self.content.model.categorie : null;
+                     self.categorie = self.model ? self.content.model.categorie : null;
                 }).catch(function (error) { console.log(error);});
             },
             imageUploadedUpdate(value){

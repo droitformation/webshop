@@ -9,37 +9,38 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="id" :value="content.id" />
                         <input type="hidden" :value="campagne.id" name="campagne_id">
-                        <button v-if="model && !isEdit" @click="editMode(model)" class="btn btn-xs btn-warning">éditer</button>
+                        <button v-if="model && !isEdit" @click="editMode(model)" type="button" class="btn btn-xs btn-warning">éditer</button>
                         <button type="submit" class="btn btn-xs btn-danger deleteNewsAction" :data-id="content.id" :data-action="model.title">x</button>
                     </form>
                 </div>
 
-                <analyse-newsletter v-if="model && type == 5 && site != 4" :arret="model" :analyses="model.analyses"></analyse-newsletter>
+                <analyse-newsletter v-if="model && type == 5 && newsletter.display == 'top'" :arret="model" :analyses="model.analyses"></analyse-newsletter>
 
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
                     <tr v-if="model">
                         <td valign="top" width="375" class="resetMarge contentForm">
-                            <h3>{{ model.title }}</h3>
+                            <h3>{{ model.dumois ? 'Arrêt du mois : ' : '' }}{{ model.title }}</h3>
                             <p class="abstract">{{ model.abstract }}</p>
                             <div v-html="model.content" class="content"></div>
-                            <p><a :class="model.class" :href="model.link">{{ model.message }}</a></p>
+                            <p><a target="_blank" :class="model.class" :href="model.link">{{ model.message }}</a></p>
                         </td>
 
                         <!-- Bloc image droite-->
                         <td width="25" class="resetMarge"></td><!-- space -->
                         <td valign="top" align="center" width="160" class="resetMarge">
-                            <p v-for="image in model.images">
+                            <div v-for="image in model.images">
                                 <a target="_blank" :href="image.link">
                                     <img width="130" border="0" :alt="image.title" :src="image.image">
                                 </a>
-                            </p>
+                                <p v-if="!newsletter.hide_title" style="text-align:center !important;">{{ image.title }}</p>
+                            </div>
                         </td>
                     </tr>
                 </table>
                 <!-- Bloc content-->
 
-                <analyse-newsletter v-if="model && type == 5 && site == 4" :arret="model" :analyses="model.analyses"></analyse-newsletter>
+                <analyse-newsletter v-if="model && type == 5 && newsletter.display == 'bottom'" :arret="model" :analyses="model.analyses"></analyse-newsletter>
 
             </div>
 
@@ -148,7 +149,7 @@
 
     export default{
 
-        props: ['type','campagne','_token','url','site','title','content','mode'],
+        props: ['type','campagne','_token','url','site','title','content','mode','newsletter'],
         components: {
             draggable,
             'analyse-newsletter' : AnalyseNewsletter,

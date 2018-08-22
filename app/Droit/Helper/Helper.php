@@ -587,8 +587,11 @@ class Helper {
 
         if( $node->isLeaf() )
         {
-            return '<li class="dd-item" data-id="'.$node->id.'" id="page_rang_'.$node->id.'"><div class="dd-handle">
-                    <i class="fa fa-crosshairs"></i> &nbsp; <a href="admin/page/'.$node->id.'">' . $node->menu_title . '</a>'.$form.'</div></li>';
+            $hidden = $node->hidden ? '<small class="text-muted">caché</small>' : '';
+
+            return '<li class="dd-item" data-id="'.$node->id.'" id="page_rang_'.$node->id.'">
+                    <div class="dd-handle">
+                    <i class="fa fa-crosshairs"></i> &nbsp; <a href="admin/page/'.$node->id.'">'.$node->menu_title.'</a> '.$hidden.' '.$form.'</div></li>';
         }
         else
         {

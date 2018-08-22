@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css');?>">
     <script src="//use.fontawesome.com/037c712a00.js"></script>
 
-
 </head>
 <body>
 <div class="verticalcenter">
@@ -30,18 +29,18 @@
             </a>
         </h1>
 
-        <p><a href="{{ $site->url }}" class="text-inverse"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a></p>
+        <p><a href="{{ $site->url }}" target="_parent" class="text-inverse"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour au site</a></p>
 
         <div class="well" style="background: #fff;">
-          <h3>Inscription à la newsletter</h3>
+          <h3>{{ $action }} à la newsletter</h3>
           <h4>{{ $newsletter->titre }}</h4>
-          <form action="{{ url('subscribe') }}" method="POST" class="form" id="subscribe">{!! csrf_field() !!}
+          <form action="{{ url($url) }}" method="POST" class="form" id="subscribe">{!! csrf_field() !!}
               <div class="form-group">
                   <label class="control-label">Votre email</label>
                   <div class="input-group">
                       <input type="text" class="form-control" name="email" value="{{ old('email') or '' }}">
                       <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">Inscription</button>
+                    <button class="btn btn-default" type="submit">{{ $action }}</button>
                 </span>
                   </div>
               </div>
@@ -52,7 +51,6 @@
           </form>
         </div>
     </div>
-
   </div>
   </body>
   </html>

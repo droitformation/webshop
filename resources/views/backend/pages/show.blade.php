@@ -37,7 +37,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Visible sur le site</label>
                         <div class="col-sm-5">
-                            <label class="radio-inline"><input type="radio" value="0" {{ !$page->hidden ? 'checked' : '' }} name="hidden"> Oui</label>
+                            <label class="radio-inline"><input type="radio" value="" {{ !$page->hidden ? 'checked' : '' }} name="hidden"> Oui</label>
                             <label class="radio-inline"><input type="radio" value="1" {{ $page->hidden ? 'checked' : '' }} name="hidden"> Non</label>
                         </div>
                     </div>
@@ -47,6 +47,14 @@
                         <div class="col-sm-5">
                             {!! Form::text('menu_title', $page->menu_title , array('class' => 'form-control') ) !!}
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Lien slug</label>
+                        <div class="col-sm-3">
+                            <input type="text" name="slug" value="{{ $page->slug }}" class="form-control">
+                        </div>
+                        <div class="col-sm-2"><p class="help-block">Pour webmaster</p></div>
                     </div>
 
                     <div class="form-group">
@@ -91,6 +99,8 @@
                                     <option {{ $page->template == 'newsletter' ? 'selected' : '' }} value="newsletter">Contenu généré newsletter</option>
                                     <option {{ $page->template == 'jurisprudence' ? 'selected' : '' }} value="jurisprudence">Contenu généré jurisprudence</option>
                                     <option {{ $page->template == 'doctrine' ? 'selected' : '' }} value="doctrine">Contenu généré doctrine</option>
+                                    <option {{ $page->template == 'authors' ? 'selected' : '' }} value="authors">Contenu généré auteurs</option>
+                                    <option {{ $page->template == 'colloques' ? 'selected' : '' }} value="colloques">Contenu généré colloques</option>
                                     <option {{ $page->template == 'revue' ? 'selected' : '' }} value="revue">Contenu généré revues</option>
                                 </select>
                             </div>
@@ -103,12 +113,22 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="contenu" class="col-sm-3 control-label">Contenu</label>
-                            <div class="col-sm-8">
-                                {!! Form::textarea('content', $page->content , array('class' => 'form-control  redactor' )) !!}
+                        @if(($current_site == 4 || $current_site == 5) && in_array($page->template,['index','page','contact']))
+                            <div class="form-group">
+                                <label for="contenu" class="col-sm-3 control-label">Résumé</label>
+                                <div class="col-sm-8">
+                                    <textarea name="excerpt" class="form-control redactorSimple">{{ $page->excerpt }}</textarea>
+                                </div>
                             </div>
-                        </div>
+                        @endif
+                        @if(in_array($page->template,['index','page','contact']))
+                            <div class="form-group">
+                                <label for="contenu" class="col-sm-3 control-label">Contenu</label>
+                                <div class="col-sm-8">
+                                    {!! Form::textarea('content', $page->content , ['class' => 'form-control  redactor']) !!}
+                                </div>
+                            </div>
+                        @endif
                     @else
                         <div class="well">
                             <div class="form-group">

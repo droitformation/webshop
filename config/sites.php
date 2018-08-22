@@ -40,6 +40,7 @@ return [
     'droitdutravail' => [
         'site' => [
             ['name' => 'Menus', 'url' => 'menus','color' => 'sky', 'icon' => 'list'],
+            ['name' => 'Contenus', 'url' => 'blocs','color' => 'primary', 'icon' => 'clipboard'],
             ['name' => 'Pages', 'url' => 'pages','color' => 'orange', 'icon' => 'file-text'],
             ['name' => 'Arrêts', 'url' => 'arrets','color' => 'green', 'icon' => 'edit'],
             ['name' => 'Analyses', 'url' => 'analyses','color' => 'brown', 'icon' => 'dot-circle-o'],
@@ -49,6 +50,7 @@ return [
     'rcassurances' => [
         'site' => [
             ['name' => 'Menus', 'url' => 'menus','color' => 'sky', 'icon' => 'list'],
+            ['name' => 'Contenus', 'url' => 'blocs','color' => 'primary', 'icon' => 'clipboard'],
             ['name' => 'Pages', 'url' => 'pages','color' => 'orange', 'icon' => 'file-text'],
             ['name' => 'Arrêts', 'url' => 'arrets','color' => 'green', 'icon' => 'edit'],
             ['name' => 'Analyses', 'url' => 'analyses','color' => 'brown', 'icon' => 'dot-circle-o'],

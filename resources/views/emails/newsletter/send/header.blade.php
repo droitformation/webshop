@@ -23,7 +23,7 @@
                                 <td width="20"></td>
                                 <td align="left">
                                     <h2 class="header headerSmall">
-                                        <span style="color: #fff;font-size: 14px;display: block;">{{ $campagne->auteurs }}&nbsp;</span>
+                                        <span style="color: #fff;font-size: 15px;display: block;">{{ $campagne->auteurs }}&nbsp;</span>
                                     </h2>
                                 </td>
                                 <td width="20"></td>

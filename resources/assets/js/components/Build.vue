@@ -46,7 +46,7 @@
     import BuildNewsletterModels from './BuildNewsletterModels.vue'
     import BuildNewsletter from './BuildNewsletter.vue'
     export default{
-        props: ['campagne','_token','url','blocs','site'],
+        props: ['campagne','_token','url','blocs','site','newsletter'],
         data(){
             return{
                 type:null,

@@ -19,7 +19,7 @@
                                         <td valign="top" width="10" class="resetMarge"></td>
                                         <td valign="top" width="305" class="resetMarge">
                                             <h3>{{ author.name }}</h3>
-                                            <p>{{ author.occupation }}</p>
+                                            <p  v-html="author.occupation"></p>
                                         </td>
                                     </tr>
                                     <tr bgcolor="ffffff"><td colspan="3" height="15" class=""></td></tr>

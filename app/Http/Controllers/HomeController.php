@@ -39,6 +39,23 @@ class HomeController extends Controller
         $site = $this->site->find($site_id);
         $newsletter = $site->newsletter->first();
 
-        return view('frontend.subscribe')->with(['site' => $site, 'newsletter' => $newsletter]);
+        return view('frontend.subscribe')->with(['site' => $site, 'newsletter' => $newsletter, 'action' => 'Inscription', 'url' => 'subscribe']);
     }
+
+    public function unsubscribe($site_id)
+    {
+        $site = $this->site->find($site_id);
+        $newsletter = $site->newsletter->first();
+
+        return view('frontend.subscribe')->with(['site' => $site, 'newsletter' => $newsletter, 'action' => 'Désinscription', 'url' => 'unsubscribe']);
+    }
+
+    public function confirmation($site_id)
+    {
+        $site = $this->site->find($site_id);
+        $newsletter = $site->newsletter->first();
+
+        return view('frontend.confirmation')->with(['site' => $site, 'newsletter' => $newsletter]);
+    }
+
 }

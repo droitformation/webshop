@@ -99,6 +99,6 @@ class ListTest extends TestCase
 
     function prepareFileUpload($path)
     {
-        return new \Symfony\Component\HttpFoundation\File\UploadedFile($path, null, \File::mimeType($path), null, null, true);
+        return new \Symfony\Component\HttpFoundation\File\UploadedFile($path, 'test.xlsx', \File::mimeType($path), null, null, true);
     }
 }

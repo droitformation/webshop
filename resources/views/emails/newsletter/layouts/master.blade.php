@@ -300,8 +300,8 @@
                             <tr>
                                 <td align="center" class="linkGrey">Si vous ne désirez plus recevoir cette newsletter, vous pouvez vous désinscrire à tout moment en
                                     <a href="[[UNSUB_LINK_EN]]"></a>
-                                    <?php $site = isset($campagne->newsletter->site) ? $campagne->newsletter->preview.'/'.$campagne->newsletter->site->slug : 'pubdroit'; ?>
-                                    <a class="linkGrey" href="{{ url($site.'/unsubscribe') }}">cliquant ici</a>.
+                                    <?php $site = isset($campagne->newsletter->site) ? $campagne->newsletter->site->id : 1; ?>
+                                    <a class="linkGrey" href="{{ url('site/unsubscribe/'.$site) }}">cliquant ici</a>.
                                 </td>
                             </tr>
                             <tr><td height="15"></td></tr><!-- space bottom -->

@@ -2811,7 +2811,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['campagne', '_token', 'url', 'blocs', 'site'],
+    props: ['campagne', '_token', 'url', 'blocs', 'site', 'newsletter'],
     data: function data() {
         return {
             type: null,
@@ -3013,7 +3013,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return this.type == 1 ? 'text-align:center;' : 'text-align:left;';
         },
         imgcategorie: function imgcategorie() {
-            return this.model ? this.content.model.path + this.categorie.image : this.categorie.path;
+            if (this.model) {
+                return this.model.model.categorie.path;
+            }
+            if (this.categorie) {
+                return this.categorie.path;
+            }
+
+            return '';
         },
         action: function action() {
             if (this.mode == 'edit') {
@@ -3071,7 +3078,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var self = this;
         axios.get('admin/ajax/categories/' + self.site).then(function (response) {
             self.categories = response.data;
-            self.categorie = self.content ? self.content.model.categorie : null;
+            self.categorie = self.model ? self.content.model.categorie : null;
         }).catch(function (error) {
             console.log(error);
         });
@@ -3239,12 +3246,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['type', 'campagne', '_token', 'url', 'site', 'title', 'content'],
+    props: ['type', 'campagne', '_token', 'url', 'site', 'title', 'content', 'mode', 'newsletter'],
     components: {
         draggable: __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a
     },
@@ -3267,6 +3281,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             return arr;
+        },
+        action: function action() {
+            if (this.mode == 'edit') {
+                return this.url + '/' + this.content.id;
+            }
+            if (this.mode == 'create') {
+                return this.url;
+            }
         }
     },
     mounted: function mounted() {
@@ -3468,6 +3490,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -3475,7 +3498,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['type', 'campagne', '_token', 'url', 'site', 'title', 'content', 'mode'],
+    props: ['type', 'campagne', '_token', 'url', 'site', 'title', 'content', 'mode', 'newsletter'],
     components: {
         draggable: __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
         'analyse-newsletter': __WEBPACK_IMPORTED_MODULE_1__partials_AnalyseNewsletter_vue___default.a
@@ -3683,12 +3706,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['campagne', '_token', 'url', 'site', 'contents'],
+    props: ['campagne', '_token', 'url', 'site', 'contents', 'newsletter'],
     data: function data() {
         return {
             list: []
@@ -5869,7 +5895,7 @@ exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 73 */
@@ -27331,7 +27357,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "valign": "top",
           "width": "305"
         }
-      }, [_c('h3', [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(author.occupation))])])]), _vm._v(" "), _vm._m(0, true)])
+      }, [_c('h3', [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('p', {
+        domProps: {
+          "innerHTML": _vm._s(author.occupation)
+        }
+      })])]), _vm._v(" "), _vm._m(0, true)])
     }), _vm._v(" "), _c('p', {
       staticClass: "abstract"
     }, [_vm._v(_vm._s(analyse.abstract))]), _vm._v(" "), _vm._m(1, true)], 2), _vm._v(" "), _c('td', {
@@ -27922,6 +27952,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.model && !_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-xs btn-warning",
+    attrs: {
+      "type": "button"
+    },
     on: {
       "click": function($event) {
         _vm.editMode(_vm.model)
@@ -27934,7 +27967,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-id": _vm.content.id,
       "data-action": _vm.model.title
     }
-  }, [_vm._v("x")])]) : _vm._e()]) : _vm._e(), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.site != 4) ? _c('analyse-newsletter', {
+  }, [_vm._v("x")])]) : _vm._e()]) : _vm._e(), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.newsletter.display == 'top') ? _c('analyse-newsletter', {
     attrs: {
       "arret": _vm.model,
       "analyses": _vm.model.analyses
@@ -27954,7 +27987,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "valign": "top",
       "width": "375"
     }
-  }, [_c('h3', [_vm._v(_vm._s(_vm.model.title))]), _vm._v(" "), _c('p', {
+  }, [_c('h3', [_vm._v(_vm._s(_vm.model.dumois ? 'Arrêt du mois : ' : '') + _vm._s(_vm.model.title))]), _vm._v(" "), _c('p', {
     staticClass: "abstract"
   }, [_vm._v(_vm._s(_vm.model.abstract))]), _vm._v(" "), _c('div', {
     staticClass: "content",
@@ -27964,6 +27997,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('p', [_c('a', {
     class: _vm.model.class,
     attrs: {
+      "target": "_blank",
       "href": _vm.model.link
     }
   }, [_vm._v(_vm._s(_vm.model.message))])])]), _vm._v(" "), _c('td', {
@@ -27979,7 +28013,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "160"
     }
   }, _vm._l((_vm.model.images), function(image) {
-    return _c('p', [_c('a', {
+    return _c('div', [_c('a', {
       attrs: {
         "target": "_blank",
         "href": image.link
@@ -27991,8 +28025,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "alt": image.title,
         "src": image.image
       }
-    })])])
-  }))]) : _vm._e()]), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.site == 4) ? _c('analyse-newsletter', {
+    })]), _vm._v(" "), (!_vm.newsletter.hide_title) ? _c('p', {
+      staticStyle: {
+        "text-align": "center !important"
+      }
+    }, [_vm._v(_vm._s(image.title))]) : _vm._e()])
+  }))]) : _vm._e()]), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.newsletter.display == 'bottom') ? _c('analyse-newsletter', {
     attrs: {
       "arret": _vm.model,
       "analyses": _vm.model.analyses
@@ -29140,7 +29178,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "imageUploaded": _vm.imageUploadedUpdate
     }
-  }) : _vm._e(), _vm._v(" "), (_vm.categorie && _vm.type == 10) ? _c('img', {
+  }) : _vm._e(), _vm._v(" "), (_vm.type == 10 || _vm.categorie) ? _c('img', {
     staticClass: "img-responsive",
     attrs: {
       "src": _vm.imgcategorie
@@ -29927,22 +29965,60 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "btn-group pull-right"
-  }, [(!_vm.isEdit) ? _c('button', {
+  }, [(!_vm.isEdit) ? _c('form', {
+    attrs: {
+      "method": "post",
+      "action": _vm.action
+    }
+  }, [_c('input', {
+    attrs: {
+      "name": "_token",
+      "type": "hidden"
+    },
+    domProps: {
+      "value": _vm._token
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_method",
+      "value": "DELETE"
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "id"
+    },
+    domProps: {
+      "value": _vm.content.id
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "campagne_id"
+    },
+    domProps: {
+      "value": _vm.campagne.id
+    }
+  }), _vm._v(" "), (!_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-xs btn-warning",
+    attrs: {
+      "type": "button"
+    },
     on: {
       "click": function($event) {
         _vm.editMode(_vm.content)
       }
     }
-  }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('button', {
-    staticClass: "btn btn-xs btn-danger",
-    on: {
-      "click": function($event) {
-        _vm.deleteContent(_vm.content)
-      }
+  }, [_vm._v("éditer")]) : _vm._e(), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-xs btn-danger deleteNewsAction",
+    attrs: {
+      "type": "submit",
+      "data-id": _vm.content.id,
+      "data-action": "Groupe"
     }
-  }, [_vm._v("x")]) : _vm._e()]), _vm._v(" "), (_vm.categorie) ? _c('table', {
-    staticClass: "tableReset contentForm",
+  }, [_vm._v("x")])]) : _vm._e()]), _vm._v(" "), (_vm.categorie) ? _c('table', {
+    staticClass: "tableReset",
     attrs: {
       "border": "0",
       "width": "560",
@@ -29970,7 +30046,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "align": "center",
       "width": "160"
     }
-  }, [_c('p', [_c('img', {
+  }, [_c('div', [_c('img', {
     attrs: {
       "width": "130",
       "border": "0",
@@ -29993,7 +30069,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "valign": "top",
         "width": "375"
       }
-    }, [_c('h3', [_vm._v(_vm._s(arret.title))]), _vm._v(" "), _c('p', {
+    }, [_c('h3', [_vm._v(_vm._s(arret.dumois ? 'Arrêt du mois : ' : '') + _vm._s(arret.title))]), _vm._v(" "), _c('p', {
       staticClass: "abstract"
     }, [_vm._v(_vm._s(arret.abstract))]), _vm._v(" "), _c('div', {
       staticClass: "content",
@@ -30003,6 +30079,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" "), _c('p', [_c('a', {
       class: arret.class,
       attrs: {
+        "target": "_blank",
         "href": arret.link
       }
     }, [_vm._v(_vm._s(arret.message))])])]), _vm._v(" "), _c('td', {
@@ -30018,7 +30095,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "width": "160"
       }
     }, _vm._l((arret.images), function(image) {
-      return (image.id != _vm.categorie.id) ? _c('p', [_c('a', {
+      return (image.id != _vm.categorie.id) ? _c('div', [_c('a', {
         attrs: {
           "target": "_blank",
           "href": image.link
@@ -30030,7 +30107,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "alt": image.title,
           "src": image.image
         }
-      })])]) : _vm._e()
+      })]), _vm._v(" "), (!_vm.newsletter.hide_title) ? _c('p', {
+        staticStyle: {
+          "text-align": "center !important"
+        }
+      }, [_vm._v(_vm._s(image.title))]) : _vm._e()]) : _vm._e()
     }))]) : _vm._e(), _vm._v(" "), _vm._m(3, true)])])
   })], 2), _vm._v(" "), _c('div', {
     directives: [{
@@ -30574,10 +30655,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "type": content.type_id,
         "site": _vm.site,
+        "newsletter": _vm.newsletter,
         "mode": "edit",
         "content": content,
         "campagne": _vm.campagne,
-        "_token": "_token",
         "_token": _vm._token,
         "url": _vm.url
       },
@@ -30588,9 +30669,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "type": content.type_id,
         "site": _vm.site,
+        "newsletter": _vm.newsletter,
+        "mode": "edit",
         "content": content,
         "campagne": _vm.campagne,
-        "_token": "_token",
         "_token": _vm._token,
         "url": _vm.url
       },
@@ -30604,7 +30686,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "mode": "edit",
         "model": content,
         "campagne": _vm.campagne,
-        "_token": "_token",
         "_token": _vm._token,
         "url": _vm.url
       },

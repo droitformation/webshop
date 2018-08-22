@@ -1,5 +1,7 @@
 $( function() {
 
+    $("#fancybox-close").trigger('click');
+
     var base_url = location.protocol + "//" + location.host+"/";
 
     $('[data-toggle="popover"]').popover({

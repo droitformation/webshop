@@ -6,9 +6,10 @@
                 <build-newsletter-models v-if="content.type_content == 'model'"
                                          :type="content.type_id"
                                          :site="site"
+                                         :newsletter="newsletter"
                                          mode="edit"
                                          :content="content"
-                                         :campagne="campagne" _token="_token"
+                                         :campagne="campagne"
                                          @deleteContent="deleteContentBloc"
                                          :_token="_token"
                                          :url="url">
@@ -17,8 +18,10 @@
                 <build-newsletter-group v-if="content.type_content == 'group'"
                                          :type="content.type_id"
                                          :site="site"
+                                         :newsletter="newsletter"
+                                         mode="edit"
                                          :content="content"
-                                         :campagne="campagne" _token="_token"
+                                         :campagne="campagne"
                                          @deleteContent="deleteContentBloc"
                                          :_token="_token"
                                          :url="url">
@@ -30,7 +33,7 @@
                                          mode="edit"
                                          :model="content"
                                          @deleteContent="deleteContentBloc"
-                                         :campagne="campagne" _token="_token"
+                                         :campagne="campagne"
                                          :_token="_token"
                                          :url="url">
                 </build-newsletter>
@@ -47,7 +50,7 @@
     import BuildNewsletter from './BuildNewsletter.vue'
 
     export default{
-        props: ['campagne','_token','url','site','contents'],
+        props: ['campagne','_token','url','site','contents','newsletter'],
         data(){
             return{
                 list :[]

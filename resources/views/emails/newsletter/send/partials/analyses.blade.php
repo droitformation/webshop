@@ -28,7 +28,7 @@
                                     @include('emails.newsletter.send.partials.authors')
                                     <!-- End Authors -->
                                     <p class="abstract">{!! $analyse->abstract !!}</p>
-                                    <p><a href="{{ secure_asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
+                                    <p><a target="_blank" href="{{ secure_asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
                                 </td>
                             </tr>
                             @if( $arret->analyses->count() > 1 && $arret->analyses->count() > $i+1)

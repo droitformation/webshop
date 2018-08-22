@@ -15,7 +15,7 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->enum('position',['main','sidebar','footer']);
+            $table->enum('position',['main','sidebar','footer','home']);
             $table->integer('site_id');
         });
     }

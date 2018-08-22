@@ -5,18 +5,24 @@
             <div class="col-md-7" id="StyleNewsletterCreate">
 
                 <div class="btn-group pull-right">
-                    <button v-if="!isEdit" @click="editMode(content)" class="btn btn-xs btn-warning">éditer</button>
-                    <button v-if="!isEdit" @click="deleteContent(content)" class="btn btn-xs btn-danger">x</button>
+                    <form method="post" :action="action" v-if="!isEdit">
+                        <input name="_token" :value="_token" type="hidden">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="id" :value="content.id" />
+                        <input type="hidden" :value="campagne.id" name="campagne_id">
+                        <button v-if="!isEdit" @click="editMode(content)" type="button" class="btn btn-xs btn-warning">éditer</button>
+                        <button type="submit" class="btn btn-xs btn-danger deleteNewsAction" :data-id="content.id" data-action="Groupe">x</button>
+                    </form>
                 </div>
 
-                <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="tableReset contentForm" v-if="categorie">
+                <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="tableReset" v-if="categorie">
                     <tr bgcolor="ffffff"><td height="15"></td></tr><!-- space -->
                     <tr>
                         <td width="400" align="left" class="resetMarge contentForm" valign="top">
                             <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ categorie.title }}</h3>
                         </td>
                         <td valign="top" align="center" width="160" class="resetMarge">
-                            <p><img width="130" border="0" :alt="categorie.title" :src="content.model.image + '/' + categorie.image"></p>
+                            <div><img width="130" border="0" :alt="categorie.title" :src="content.model.image + '/' + categorie.image"></div>
                         </td>
                     </tr><!-- space -->
                     <tr bgcolor="ffffff"><td height="15"></td></tr><!-- space -->
@@ -28,20 +34,21 @@
                         <tr bgcolor="ffffff"><td height="5"></td></tr><!-- space -->
                         <tr v-if="arret">
                             <td valign="top" width="375" class="resetMarge contentForm">
-                                <h3>{{ arret.title }}</h3>
+                                <h3>{{ arret.dumois ? 'Arrêt du mois : ' : '' }}{{ arret.title }}</h3>
                                 <p class="abstract">{{ arret.abstract }}</p>
                                 <div v-html="arret.content" class="content"></div>
-                                <p><a :class="arret.class" :href="arret.link">{{ arret.message }}</a></p>
+                                <p><a target="_blank" :class="arret.class" :href="arret.link">{{ arret.message }}</a></p>
                             </td>
 
                             <!-- Bloc image droite-->
                             <td width="25" class="resetMarge"></td><!-- space -->
                             <td valign="top" align="center" width="160" class="resetMarge">
-                                <p v-for="image in arret.images" v-if="image.id != categorie.id">
+                                <div v-for="image in arret.images" v-if="image.id != categorie.id">
                                     <a target="_blank" :href="image.link">
                                         <img width="130" border="0" :alt="image.title" :src="image.image">
                                     </a>
-                                </p>
+                                    <p v-if="!newsletter.hide_title" style="text-align:center !important;">{{ image.title }}</p>
+                                </div>
                             </td>
                         </tr>
                         <tr bgcolor="ffffff"><td height="5"></td></tr><!-- space -->
@@ -137,7 +144,7 @@
     import draggable from 'vuedraggable';
     export default{
 
-        props: ['type','campagne','_token','url','site','title','content'],
+        props: ['type','campagne','_token','url','site','title','content','mode','newsletter'],
         components: {
             draggable,
         },
@@ -159,6 +166,10 @@
                 });
 
                 return arr;
+            },
+            action:function(){
+                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }
+                if(this.mode == 'create'){ return this.url; }
             }
         },
         mounted: function ()  {

@@ -180,4 +180,6 @@ $(document).ready(function() {
     $('.dataTables_filter input').addClass('form-control').attr('placeholder','Recherche...');
     $('.dataTables_length select').addClass('form-control');
 
+
+
 });

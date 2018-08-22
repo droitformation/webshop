@@ -42,10 +42,11 @@ class ContentModel
         return [
             'id'        =>  $arret->id,
             'droptitle' =>  $arret->reference,
-            'reference'  => $arret->reference,
+            'reference' =>  $arret->reference,
             'title'     =>  $arret->title,
-            'abstract'   => $arret->abstract,
+            'abstract'  =>  $arret->abstract,
             'content'   =>  $arret->pub_text,
+            'dumois'    =>  $arret->dumois,
             'link'      =>  secure_asset(config('newsletter.path.arret')).'/'. $arret->file,
             'message'   => 'Télécharger en pdf',
             'class'     => '',
@@ -116,6 +117,8 @@ class ContentModel
 
     public function picto($model)
     {
+        $image = isset($model->categorie) ? $model->categorie->image : $model->image;
+
         return [
             'id'        => $model->id,
             'droptitle' => null,
@@ -127,10 +130,10 @@ class ContentModel
             'message'   => null,
             'class'     => '',
             'categorie' =>  [
-                'id'    => $model->categorie->id,
-                'title' => $model->categorie->title,
-                'image' => $model->categorie->image,
-                'path'  => secure_asset(config('newsletter.path.categorie').$model->categorie->image),
+                'id'    => isset($model->categorie) ? $model->categorie->id : null,
+                'title' => isset($model->categorie) ? $model->categorie->title : $model->titre,
+                'image' => $image,
+                'path'  => secure_asset(config('newsletter.path.categorie').$image),
             ]
         ];
     }

@@ -64,8 +64,9 @@ class PageEloquent implements PageInterface{
             'rang'        => (isset($data['rang']) ? $data['rang'] : 0),
             'menu_id'     => (isset($data['menu_id']) ? $data['menu_id'] : null),
             'url'         => (isset($data['url']) ? $data['url'] : null),
+            'excerpt'     => (isset($data['excerpt']) && !empty($data['excerpt']) ? $data['excerpt'] : null),
             'isExternal'  => (isset($data['isExternal']) && $data['isExternal'] > 0 ? 1 : null),
-            'hidden'      => (isset($data['hidden']) ? 1 : null),
+            'hidden'      => (isset($data['hidden']) && $data['hidden'] > 0 ? 1 : null),
             'created_at'  => date('Y-m-d G:i:s'),
             'updated_at'  => date('Y-m-d G:i:s')
         ));
@@ -103,6 +104,7 @@ class PageEloquent implements PageInterface{
 
         $page->hidden     = $data['hidden'] > 0 ? 1 : null;
         $page->updated_at = date('Y-m-d G:i:s');
+        $page->excerpt    = (isset($data['excerpt']) && !empty($data['excerpt']) ? $data['excerpt'] : null);
 
         $page->save();
         
