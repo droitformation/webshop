@@ -77,18 +77,14 @@ class InscriptionController extends Controller
             alert()->danger('<strong>Vous êtes déjà inscrit à cette newsletter</strong>');
             return redirect()->back();
         }
-        else {
             
-            \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe,$newsletter) {
-                $message->from($newsletter->from_email, $newsletter->from_name);
-                $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
-            });
+        \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe,$newsletter) {
+            $message->from($newsletter->from_email, $newsletter->from_name);
+            $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
+        });
 
-            alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
-            return redirect()->back();
-        }
-
-        return redirect($request->input('return_path', '/'));
+        alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
+        return redirect()->back();
     }
 
     /**
@@ -102,6 +98,7 @@ class InscriptionController extends Controller
             alert()->danger('<strong>Merci d\'indiquer une adresse email</strong>');
             return redirect()->back();
         }
+
 
         // find the abo and newsletter
         $subscriber = $this->subscription->findByEmail( $request->input('email') );

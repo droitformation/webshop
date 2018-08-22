@@ -12,10 +12,22 @@
 
             <div class="panel panel-midnightblue">
                 <form action="{{ url('admin/coupon/'.$coupon->id) }}" method="POST" class="form-horizontal">
-                    <input type="hidden" name="_method" value="PUT">
-                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
                     <div class="panel-body">
                         <h4><i class="fa fa-edit"></i> &nbsp;Editer coupon</h4>
+
+                        <div class="form-group">
+                            <label for="file" class="col-sm-3 control-label">Appliqué automatiquement lors d'une commande</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline">
+                                    <input {{ !$coupon->global ? 'checked' : '' }} type="radio" name="global" value="0"> Non
+                                </label>
+                                <label class="radio-inline">
+                                    <input {{ $coupon->global ? 'checked' : '' }} type="radio" name="global" value="1"> Oui
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Type de rabais</label>
                             <div class="col-sm-5 col-xs-8">
