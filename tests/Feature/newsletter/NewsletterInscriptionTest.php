@@ -79,6 +79,7 @@ class NewsletterInscriptionTest extends TestCase
         $this->subscription->shouldReceive('findByEmail')->once()->andReturn($user);
         $this->subscription_worker->shouldReceive('unsubscribe')->once();
 
+        $this->call('get','bail');
         $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => 'bail']);
 
         $response->assertRedirect('/bail');
@@ -118,7 +119,7 @@ class NewsletterInscriptionTest extends TestCase
 
         $response = $this->call('GET', 'activation/1234/'.$newsletter->id);
 
-        $response->assertRedirect($site->url);
+        $response->assertRedirect('site/confirmation/'.$site->id);
     }
 
     public function testActivateFailNewsletterSubscription()

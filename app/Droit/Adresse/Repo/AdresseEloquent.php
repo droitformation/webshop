@@ -31,26 +31,39 @@ class AdresseEloquent implements AdresseInterface{
 
 		$columns = [
 			'adresse' => ['email','first_name','last_name','company'],
-			'user' => ['email','first_name','last_name','company']
+			'user' => ['email','first_name','last_name']
 		];
 
 		return $this->adresse
-            ->where(function ($query)  use ($terms,$columns){
-                foreach($columns['adresse'] as $column){
-                    foreach($terms as $term){
-                        $query->orWhere('adresses.'.$column,'LIKE','%'.$term.'%');
-                    }
-                }
-            })
-			->orWhereHas('user', function ($query) use($terms,$columns) {
+			->where(function ($query) {
+				$query->where(function ($query) {
+					$query->where('user_id','=',0)->orWhereNull('user_id');
+				})->orWhere(function ($query) {
+					$query->where('user_id','>',0)->has('user');
+				})->orWhere(function ($query) {
+                    $query->whereNotNull('user_id')->has('user');
+                });
+			})
+			->where(function ($query) use ($terms,$columns) {
+
+			foreach($columns['adresse'] as $column){
+				foreach($terms as $term){
+					$query->orWhere($column,'LIKE','%'.$term.'%');
+				}
+			}
+
+			$query->orWhereHas('user', function ($query) use($terms,$columns) {
 				$query->where(function ($q) use ($columns,$terms) {
 					foreach($columns['user'] as $column){
 						foreach($terms as $term){
-							$q->orWhere('users.'.$column,'LIKE','%'.$term.'%');
+							$q->orWhere($column,'LIKE','%'.$term.'%');
 						}
 					}
 				});
-			})->get();
+			});
+
+		})->get();
+
     }
 
 	public function findByEmail($email)
