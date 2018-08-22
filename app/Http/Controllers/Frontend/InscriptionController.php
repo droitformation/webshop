@@ -58,8 +58,7 @@ class InscriptionController extends Controller
         //Subscribe to mailjet
         $this->subscribeworker->subscribe($subscriber,[$newsletter_id]);
 
-        alert()->success('Vous êtes maintenant abonné à la newsletter');
-        return redirect($newsletter->site->url);
+        return redirect('site/confirmation/'.$newsletter->site->id);
     }
 
     /**
@@ -117,6 +116,6 @@ class InscriptionController extends Controller
         $this->subscribeworker->unsubscribe($subscriber,[$newsletter->id]);
 
         alert()->success('<strong>Vous avez été désinscrit</strong>');
-        return redirect($request->input('return_path', '/'));
+        return redirect()->back();
     }
 }
