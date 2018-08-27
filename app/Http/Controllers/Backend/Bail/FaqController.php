@@ -21,11 +21,11 @@ class FaqController extends Controller
         $this->question = $question;
     }
 
-    public function index()
+    public function index($site_id)
     {
-        $cats = $this->faqcat->getAll();
+        $cats = $this->faqcat->getAll($site_id);
 
-        return view('backend.faq.index')->with(['cats' => $cats]);
+        return view('backend.faq.index')->with(['cats' => $cats, 'current_site' => $site_id]);
     }
 
     /**
