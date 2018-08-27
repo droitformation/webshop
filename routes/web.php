@@ -199,6 +199,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::get('adresse/getAdresse/{id}', 'Api\User\AdresseController@getAdresse');
 
         Route::resource('faq', 'Backend\Bail\FaqController');
+        Route::get('faqs/{site_id}', 'Backend\Bail\FaqController@index');
         Route::get('question/create/{categorie}', 'Backend\Bail\QuestionController@create');
         Route::resource('question', 'Backend\Bail\QuestionController');
 
