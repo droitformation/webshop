@@ -25,8 +25,8 @@
                                     @foreach($chunk as $categorie)
                                         <div class="col-md-4">
                                             <h5>
-                                                <strong>{{ $categorie->title }}</strong>
-                                                <a href="{{ url('admin/question/create/'.$categorie->id) }}" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i></a>
+                                                <strong>{{ $categorie->title }}</strong>&nbsp;
+                                                <a href="{{ url('admin/question/create/'.$categorie->id) }}" class="btn btn-success btn-xs pull-right">Ajouter une question</a>
                                             </h5>
 
                                             @if(!$categorie->questions->isEmpty())
@@ -36,8 +36,11 @@
                                                             <div class="row">
                                                                 <div class="col-md-9">{{ $question->title }}</div>
                                                                 <div class="col-md-3 text-right">
-                                                                    <a href="{{ url('admin/question/'.$question->id) }}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>
-                                                                    <a href="{{ url('admin/question/'.$question->id) }}" class="btn btn-danger btn-xs deleteAction">X</a>
+                                                                    <form action="{{ url('admin/question/'.$question->id) }}" method="POST">
+                                                                        <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
+                                                                        <a href="{{ url('admin/question/'.$question->id) }}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>
+                                                                        <button data-what="Supprimer" data-action="{{ $question->title }}" class="btn btn-xs btn-danger btn-delete deleteAction">X</button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -47,7 +50,8 @@
 
                                             <form action="{{ url('admin/faq/'.$categorie->id) }}" method="POST" class="form-horizontal text-right">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                                <button data-what="Supprimer" data-action="{{ $categorie->title }}" class="btn btn-xs btn-default btn-delete deleteAction">Supprimer la catégorie</button>
+                                                <a href="{{ url('admin/faq/'.$categorie->id) }}" class="btn btn-info btn-xs">Editer la catégorie</a>
+                                                <button data-what="Supprimer" data-action="{{ $categorie->title }}" class="btn btn-xs btn-danger btn-delete deleteAction">Supprimer la catégorie</button>
                                             </form>
 
                                         </div>
