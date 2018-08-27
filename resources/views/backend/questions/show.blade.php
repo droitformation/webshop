@@ -16,8 +16,7 @@
 
             <!-- form start -->
             <form action="{{ url('admin/question/'.$question->id) }}" method="POST" class="validate-form form-horizontal" data-validate="parsley">
-                <input type="hidden" name="_method" value="PUT">
-                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                 <div class="panel-heading">
                     <h4>&Eacute;diter question</h4>

@@ -19,9 +19,6 @@ class FaqController extends Controller
     {
         $this->faqcat   = $faqcat;
         $this->question = $question;
- 
-        view()->share('site_slug', 'bail');
-        view()->share('current_site_id', 2);
     }
 
     public function index()
@@ -66,7 +63,7 @@ class FaqController extends Controller
     {
         $categorie = $this->faqcat->find($id);
 
-        return view('backend.faq.create')->with(['categorie' => $categorie]);
+        return view('backend.faq.show')->with(['categorie' => $categorie, 'current_site' => $categorie->site_id]);
     }
 
     /**
