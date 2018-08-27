@@ -33,9 +33,9 @@ class FaqController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($site_id)
     {
-        return view('backend.faq.create');
+        return view('backend.faq.create')->with(['current_site' => $site_id]);
     }
 
     /**

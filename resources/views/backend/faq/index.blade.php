@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-12 text-right">
-        <a href="{{ url('admin/faq/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une catégorie</a>
+        <a href="{{ url('admin/faq/create/'.$current_site) }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter une catégorie</a>
     </div>
 </div>
 

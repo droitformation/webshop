@@ -3,7 +3,7 @@
 
 <div class="row"><!-- row -->
     <div class="col-md-12"><!-- col -->
-        <p><a class="btn btn-default" href="{{ url('admin/faq') }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
+        <p><a class="btn btn-default" href="{{ url('admin/faqs/'.$categorie->site_id) }}"><i class="fa fa-reply"></i> &nbsp;Retour à la liste</a></p>
     </div>
 </div>
 <!-- start row -->

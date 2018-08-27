@@ -200,6 +200,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::resource('faq', 'Backend\Bail\FaqController');
         Route::get('faqs/{site_id}', 'Backend\Bail\FaqController@index');
+        Route::get('faq/create/{site_id}', 'Backend\Bail\FaqController@create');
         Route::get('question/create/{categorie}', 'Backend\Bail\QuestionController@create');
         Route::resource('question', 'Backend\Bail\QuestionController');
 
