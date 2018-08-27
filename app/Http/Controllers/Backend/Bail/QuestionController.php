@@ -19,9 +19,6 @@ class QuestionController extends Controller
     {
         $this->faqcat   = $faqcat;
         $this->question = $question;
-       
-        view()->share('site_slug', 'bail');
-        view()->share('current_site', 2);
     }
 
     /**
@@ -34,7 +31,7 @@ class QuestionController extends Controller
         $current    = $this->faqcat->find($id);
         $categories = $this->faqcat->getAll($current->site_id);
 
-        return view('backend.questions.create')->with(['current' => $current, 'categories' => $categories]);
+        return view('backend.questions.create')->with(['current' => $current, 'categories' => $categories, 'current_site' => $current->site_id]);
     }
 
     /**
@@ -63,7 +60,7 @@ class QuestionController extends Controller
         $question   = $this->question->find($id);
         $categories = $this->faqcat->getAll($question->site_id);
 
-        return view('backend.questions.show')->with(['question' => $question, 'categories' => $categories]);
+        return view('backend.questions.show')->with(['question' => $question, 'categories' => $categories, 'current_site' => $question->site_id]);
     }
 
     /**
