@@ -98,7 +98,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
      {
          $coupon = (\Session::has('coupon') ? \Session::get('coupon') : false);
 
-         if($coupon)
+         if($coupon && $this->showCoupon())
          {
              if($coupon['type'] == 'shipping')
              {
@@ -239,6 +239,30 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
              $newprice = $item->price - ($item->price * ($this->hasCoupon->value)/100);
 
              \Cart::instance('shop')->update($item->rowId, array('price' => $newprice));
+         }
+     }
+
+     public function showCoupon()
+     {
+         $cart = \Cart::instance('shop')->content();
+
+         $valide = $this->coupon->findByTitle(session()->get('coupon.title'));
+
+         if($valide) {
+             // if it is a global coupon
+             if($valide->global == 1){
+                 // if the admin makes it (maybe later) allow for coupon expiration
+                 // Or the coupon is valid
+                 if(($valide >= date('Y-m-d'))) {
+                     // test if products are contained in coupon
+                     return !empty(array_intersect($valide->products->pluck('id')->all(), $cart->pluck('id')->all()));
+                 }
+                 else{
+                     return false;
+                 }
+             }
+             // it is another kind of coupon
+             return true;
          }
      }
 

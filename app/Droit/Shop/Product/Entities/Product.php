@@ -93,6 +93,31 @@ class Product extends Model{
         return $money->format($this->price / 100);
     }
 
+    public function getCouponPriceCentsAttribute()
+    {
+        $coupon = !$this->coupons->isEmpty() ? $this->coupons->first() : null;
+
+        if($coupon){
+            $calculate = new \App\Droit\Shop\Coupon\Entities\Calculate($this, $coupon);
+            return $calculate->calculate();
+        }
+
+        return null;
+    }
+
+    public function getCouponGlobalPriceAttribute()
+    {
+        $coupon = !$this->coupons->isEmpty() ? $this->coupons->first() : null;
+
+        if($coupon){
+            $calculate = new \App\Droit\Shop\Coupon\Entities\Calculate($this, $coupon);
+            return $calculate->global();
+        }
+
+        return null;
+    }
+
+
     /* search scopes query */
 
     public function scopeSearch($query, $search)
@@ -175,5 +200,10 @@ class Product extends Model{
     public function stocks()
     {
         return $this->hasMany('App\Droit\Shop\Stock\Entities\Stock');
+    }
+
+    public function coupons()
+    {
+        return $this->belongsToMany('App\Droit\Shop\Coupon\Entities\Coupon', 'shop_coupon_product','product_id','coupon_id');
     }
 }

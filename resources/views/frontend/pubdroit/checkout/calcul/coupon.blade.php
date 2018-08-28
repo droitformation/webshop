@@ -1,6 +1,9 @@
-@if(isset($coupon) && !empty($coupon))
+
+@inject('cartworker','App\Droit\Shop\Cart\Worker\CartWorker')
+
+@if(isset($coupon) && !empty($coupon) && $cartworker->showCoupon())
     <tr>
-        <td colspan="2"></td>
+        <td colspan="3"></td>
         <td class="text-right"><strong>Rabais appliqué</strong></td>
         <td class="text-right">
             @if($coupon['type'] == 'shipping')
