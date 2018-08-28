@@ -1,5 +1,7 @@
 @if(!Cart::instance('shop')->content()->isEmpty() || !Cart::instance('abonnement')->content()->isEmpty())
 
+    @inject('cartworker','App\Droit\Shop\Cart\Worker\CartWorker')
+
     <div class="row">
         <figure class="col-md-4 first">
             @if(!Cart::instance('shop')->content()->isEmpty())
@@ -21,7 +23,7 @@
         <figure class="col-md-4 price-total">
             <div class="cart-option-box cart-option-box-checkout">
                 <table width="100%" border="0" cellpadding="10" class="total-payment">
-                    @if(isset($coupon) && !empty($coupon))
+                    @if(isset($coupon) && !empty($coupon) && $cartworker->showCoupon())
                         <tr>
                             <td width="55%" align="left">Rabais appliqué</td>
                             <td width="45%" align="right">

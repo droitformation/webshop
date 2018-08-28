@@ -186,6 +186,29 @@ class Order extends Model{
         }
     }
 
+    public function getShowCouponAttribute()
+    {
+        // if it is a global coupon
+        if($this->coupon->global == 1){
+            // if the admin makes it (maybe later) allow for coupon expiration
+            // Or the coupon is valid
+            if(
+                ($this->admin == 1) && ($this->coupon->expire_at < date('Y-m-d')) ||
+                ($this->coupon->expire_at >= date('Y-m-d'))
+            )
+            {
+                // test if products are contained in coupon
+                return !empty(array_intersect($this->coupon->products->pluck('id')->all(), $this->products->pluck('id')->all()));
+            }
+            else{
+                return false;
+            }
+        }
+
+        // it is another kind of coupon
+        return true;
+    }
+
     /**
      * Scope a query to only get orders with free products
      *

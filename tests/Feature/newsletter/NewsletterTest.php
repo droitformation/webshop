@@ -107,7 +107,6 @@ class NewsletterTest extends TestCase
         $this->assertDatabaseHas('newsletter_campagnes', [
             'id'      => $campagne->id,
             'status'  => 'envoyé',
-            'send_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
     }

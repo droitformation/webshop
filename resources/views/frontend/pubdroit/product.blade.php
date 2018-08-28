@@ -15,6 +15,9 @@
 				<div class="row">
 
 					<div class="col-md-3 col-xs-12">
+						@if($product->coupon_global_price)
+							<span class="promo-icon">Promo</span>
+						@endif
 						<div class="thumbnail">
 							<img src="{{ secure_asset('files/products/'.$product->image) }}" alt="">
 						</div>

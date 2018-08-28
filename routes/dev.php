@@ -166,10 +166,19 @@ Route::get('testing', function() {
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
-
+    $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $model = new \App\Droit\User\Entities\User();
 
     $nouveautes = $products->getByCategorie('Nouveautés');
+
+    $order = $orders->find(4083);
+
+    $generate = new  \App\Droit\Generate\Entities\OrderGenerate($order);
+
+    echo '<pre>';
+    print_r($generate->showCoupon());
+
+    echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {
         $users = $model->with(['adresses'])->offset($i)->offset($i)->limit(500)->get();

@@ -30,7 +30,7 @@
         <td width="33%" align="top" valign="top" class="text-right">
             <table width="100%" id="content-table" class="total_line" align="right" valign="top">
 
-                @if($generate->order()->coupon_id > 0)
+                @if($generate->order()->coupon_id > 0 && $generate->showCoupon())
                     <tr align="top" valign="top">
                         <td width="40%" align="top" valign="top" class="text-right text-muted">
                             {!! $generate->order()->coupon->coupon_title !!}

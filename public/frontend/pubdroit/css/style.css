@@ -397,8 +397,17 @@ margin-bottom:0;
 .cart-price { overflow:hidden; }
 .price { float: left; margin-top: 4px; padding-left: 10px; border-left:1px solid #ababab; font-size:18px; color:#000; }
 .sale-icon { background:url(../images/sale-icon.png) no-repeat; width:78px; height:78px; position:absolute; left:0; top:0; text-indent:-999px; overflow:hidden; z-index: 50}
+.promo-icon { background:url('../images/red/promo.png') no-repeat; width:78px; height:78px; position:absolute; left:13px; top:0px; text-indent:-999px; overflow:hidden; z-index: 50}
+
 .cart-price {
     overflow: hidden;
+}
+.price_rabais{
+    float: left;
+    margin-top: 7px;
+    padding-left: 12px;
+    color: #0000cc;
+    font-size: 16px;
 }
 .s-product .cart-price {
     bottom: -5px;
