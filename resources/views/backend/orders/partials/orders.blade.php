@@ -173,12 +173,12 @@
                                             </tr>
                                             <tr>
                                                 <td width="85%" class="text-right">
-                                                    @if(isset($order->coupon))
+                                                    @if(isset($order->coupon) && $order->show_coupon)
                                                         <strong>Rabais appliqué <small class="text-muted">{!! $order->coupon->title !!}</small></strong>
                                                     @endif
                                                 </td>
                                                 <td width="15%" class="text-right">
-                                                    @if($order->coupon_id > 0)
+                                                    @if($order->coupon_id > 0 && $order->show_coupon)
                                                         <?php $order->load('coupon'); ?>
                                                         <p class="text-muted">{!! $order->coupon->coupon_value !!}</p>
                                                     @endif

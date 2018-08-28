@@ -199,12 +199,19 @@ class OrderMakerTest extends TestCase
 
     public function testProductsId()
     {
+        $factory = new \tests\factories\ObjectFactory();
+
+        $prod1 = $factory->makeProduct([]);
+        $prod2 = $factory->makeProduct([]);
+        $prod3 = $factory->makeProduct([]);
+        $prod4 = $factory->makeProduct([]);
+
         \Cart::instance('newInstance');
 
-        \Cart::add(55, 'Uno', 1, '12' , ['weight' => 155]);
-        \Cart::add(55, 'Uno', 1, '12' , ['weight' => 155]);
-        \Cart::add(56, 'Duo', 1, '34' , ['weight' => 255]);
-        \Cart::add(57, 'tre', 1, '35' , ['weight' => 125]);
+        \Cart::add($prod1->id, 'Uno', 1, $prod1->price , ['weight' => 155]);
+        \Cart::add($prod2->id, 'Uno', 1, $prod2->price  , ['weight' => 155]);
+        \Cart::add($prod3->id, 'Duo', 1, $prod3->price  , ['weight' => 255]);
+        \Cart::add($prod4->id, 'tre', 1, $prod4->price  , ['weight' => 125]);
 
         $cart = \Cart::content();
 
@@ -213,10 +220,10 @@ class OrderMakerTest extends TestCase
         $ids = $product->getProductsCart($cart);
 
         $expect = [
-            ['id' => 55],
-            ['id' => 55],
-            ['id' => 56],
-            ['id' => 57]
+            ['id' => $prod1->id, 'price' => null],
+            ['id' => $prod2->id, 'price' => null],
+            ['id' => $prod3->id, 'price' => null],
+            ['id' => $prod4->id, 'price' => null]
         ];
 
         $this->assertEquals($expect, $ids);

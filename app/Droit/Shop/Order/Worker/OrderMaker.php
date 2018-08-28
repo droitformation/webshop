@@ -192,8 +192,11 @@ class OrderMaker implements OrderMakerInterface{
         $ids = [];
 
         $cart->each(function($product) use (&$ids) {
+            $prod = $this->product->find($product->id);
             for($x = 0; $x < $product->qty; $x++) {
-                $ids[] = ['id' => $product->id];
+                // Calculation for coupon global
+                $price = $prod->coupon_global_price ? $prod->coupon_global_price * 100 : null;
+                $ids[] = ['id' => $product->id, 'price' => $price];
             }
         });
 
@@ -265,8 +268,6 @@ class OrderMaker implements OrderMakerInterface{
                 }
                 elseif( ($proprety == 'price' && !isset($data['gratuit'][$index])) || $proprety != 'price')
                 {
-                   // $price = (isset($data['price'][$index]) && ($proprety == 'price') ? $data['price'][$index] * 100 : $product->$proprety);
-
                     if($proprety == 'weight'){
                         $price = empty($product->$proprety) ? 0 : $product->$proprety;
                     }

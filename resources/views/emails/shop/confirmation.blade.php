@@ -58,13 +58,13 @@
 
                     <tr>
                         <td colspan="2" class="subTotal alignRight mobileHide" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 12px;padding-right: 12px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;font-size: 14px;line-height: 22px;color: #656565;background-color: #fff;">
-                            {!! ($order->coupon_id > 0 ? 'Rabais: '.$order->coupon->title.'<br>' : '') !!}
+                            {!! ($order->coupon_id > 0 && $order->show_coupon ? 'Rabais: '.$order->coupon->title.'<br>' : '') !!}
                             Subtotal:<br>
                             Frais de port:
                         </td>
                         <td class="width84 subTotal alignRight" style="{{ $resetMargin }}padding-top: 14px;padding-bottom: 14px;padding-left: 12px;padding-right: 12px;border-collapse: collapse;border-spacing: 0;-webkit-text-size-adjust: none;font-family: Arial, Helvetica, sans-serif;text-align: right;vertical-align: top;width: 124px;font-size: 14px;line-height: 22px;color: #656565;background-color: #fff;">
 
-                            @if($order->coupon_id > 0)
+                            @if($order->coupon_id > 0 && $order->show_coupon)
                                 <span class="desktopHide" style="display: none;font-size: 0;max-height: 0;width: 0;line-height: 0;overflow: hidden;mso-hide: all;">
                                     {!! $order->coupon->coupon_title !!}
                                 </span>
