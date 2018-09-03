@@ -7,11 +7,10 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
-use Tests\MocksGuzzleResponses;
 
 class OrderEventTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl,MocksGuzzleResponses;
+    use RefreshDatabase,ResetTbl;
 
     public function setUp()
     {
