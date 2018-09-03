@@ -94,6 +94,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group well well-small" style="background-color: #dcecff;">
+                            <label class="col-sm-3 control-label">Url pour envoi requête lors du payement</label>
+                            <div class="col-sm-7 col-xs-6">
+                                <input type="text" class="form-control" name="notify_url" value="{{ $product->notify_url }}" placeholder="http://">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Poids maximum</label>
                             <div class="col-sm-4 col-xs-8">

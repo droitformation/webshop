@@ -25,6 +25,8 @@ class CreateShopProductsTable extends Migration {
             $table->boolean('is_downloadable')->default(false);
             $table->tinyInteger('hidden')->nullable();
             $table->text('url')->nullable();
+            $table->string('notify_url')->nullable();
+            $table->text('download_link')->nullable();
             $table->integer('rang')->default(0);
             $table->integer('abo_id')->nullable();
             $table->softDeletes();
