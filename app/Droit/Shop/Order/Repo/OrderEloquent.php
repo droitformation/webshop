@@ -256,6 +256,10 @@ class OrderEloquent implements OrderInterface{
         if($name == 'payed_at')
         {
             $order->status = empty($data['value']) ? 'pending' : 'payed';
+
+            if($order->status == 'payed'){
+                event(new \App\Events\OrderUpdated($order));
+            }
         }
 
         $order->save();
