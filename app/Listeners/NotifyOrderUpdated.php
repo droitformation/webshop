@@ -35,7 +35,7 @@ class NotifyOrderUpdated
         })->each(function ($item, $key) use ($event) {
             // make request with data
             $data = [
-                'product' => $item->toArray(),
+                //'product' => $item->toArray(),
                 'user'    => [
                     "name"  => $event->order->order_adresse->name,
                     "email" => $event->order->order_adresse->email,
@@ -44,7 +44,8 @@ class NotifyOrderUpdated
 
             \Log::info('Envoi code to: '.json_encode($data));
 
-            $response  = $this->client->post( $item->notify_url, ['query' => ['data' => $data]]);
+            $response  = $this->client->post( $item->notify_url, ['query' => $data]);
+
             $data      = json_decode($response->getBody(), true);
 
             \Log::info('Envoi code response: '.json_encode($data));
