@@ -17,7 +17,7 @@ class NotifyOrderUpdated
      */
     public function __construct()
     {
-        $this->client = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false]]);
+        $this->client = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false], 'http_errors' => false]);
     }
 
     /**
@@ -35,20 +35,20 @@ class NotifyOrderUpdated
         })->each(function ($item, $key) use ($event) {
             // make request with data
             $data = [
-                //'product' => $item->toArray(),
+                'order_id' => $event->order->id,
                 'user'    => [
                     "name"  => $event->order->order_adresse->name,
                     "email" => $event->order->order_adresse->email,
                 ]
             ];
 
-            \Log::info('Envoi code to: '.json_encode($data));
+            $response = $this->client->post( $item->notify_url, ['query' => $data]);
 
-            $response  = $this->client->post( $item->notify_url, ['query' => $data]);
-
-            $data      = json_decode($response->getBody(), true);
-
-            \Log::info('Envoi code response: '.json_encode($data));
+            if($response->getStatusCode() != 200) {
+                \Mail::to('cindy.leschaud@gmail.com')->send(
+                    new \App\Mail\WebmasterNotification('Problème avec le code d\'accès à envoyer à ' . $event->order->order_adresse->email . ' order: ' . $event->order->id)
+                );
+            }
         });
 
     }
