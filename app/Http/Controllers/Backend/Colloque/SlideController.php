@@ -111,4 +111,22 @@ class SlideController extends Controller
 
         return redirect('admin/colloque/'.$colloque->id);
     }
+
+    public function sorting(Request $request)
+    {
+        $data     = $request->input('slide_rang');
+        $colloque = $this->colloque->find($request->input('id'));
+
+        $colloque->getMedia('slides')->map(function ($item, $key) use ($data) {
+            $rangs = array_flip($data);
+            if(isset($rangs[$item->id])){
+                $item->order_column = $rangs[$item->id];
+                $item->save();
+            }
+
+            return $item;
+        });
+
+        echo 'ok';die();
+    }
 }

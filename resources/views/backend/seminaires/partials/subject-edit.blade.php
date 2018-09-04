@@ -57,7 +57,7 @@
         <label class="col-md-2 col-xs-12 control-label">Auteur</label>
         <div class="col-md-10 col-xs-12">
             @if(!$authors->isEmpty())
-                <select class="form-control" name="authors[]">
+                <select class="form-control" multiple name="authors[]">
                     <option value="">Choix</option>
                     @foreach($authors as $author)
                         <option {{ $subject->authors->contains('id',$author->id) ? 'selected' : '' }} value="{{ $author->id }}">{{ $author->name }}</option>

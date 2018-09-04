@@ -1522,3 +1522,9 @@ input[type="checkbox"].rappel-input {
 .pt-0{
     padding-bottom: 0px !important;
 }
+
+.slide_handle{
+    cursor: move;
+    border: 1px solid #f1f1f1;
+    padding: 3px 5px;
+}
