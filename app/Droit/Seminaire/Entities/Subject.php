@@ -68,7 +68,7 @@ class Subject extends Model{
 
     public function authors()
     {
-        return $this->belongsToMany('App\Droit\Author\Entities\Author' , 'subject_authors', 'subject_id', 'author_id');
+        return $this->belongsToMany('App\Droit\Author\Entities\Author' , 'subject_authors', 'subject_id', 'author_id')->orderBy('last_name');
     }
 
     public function categories()
