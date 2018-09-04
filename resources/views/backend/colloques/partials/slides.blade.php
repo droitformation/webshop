@@ -1,5 +1,5 @@
 @if(isset($slide))
-    <div class="mt-10">
+    <div class="mt-10 slide_handle" id="slide_rang_{{ $slide->id }}">
         <div class="row">
             <div class="col-md-6">
                 <a target="_blank" href="{{ $slide->getUrl() }}" class="btn btn-default btn-xs btn-download">

@@ -278,9 +278,11 @@
 
                     @if(!$colloque->getMedia('slides')->isEmpty())
                         <h5><b>Slides</b></h5>
-                        @foreach($colloque->getMedia('slides') as $slide)
-                            @include('backend.colloques.partials.slides', ['colloque' => $colloque, 'slide' => $slide])
-                        @endforeach
+                        <div class="sortslides" data-id="{{ $colloque->id }}">
+                            @foreach($colloque->getMedia('slides') as $slide)
+                                @include('backend.colloques.partials.slides', ['colloque' => $colloque, 'slide' => $slide])
+                            @endforeach
+                        </div>
                     @endif
 
                 </div>
