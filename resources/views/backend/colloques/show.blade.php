@@ -120,12 +120,27 @@
                                         <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email or old('email')  }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
                                     </div>
                                 </div>
+
                                 <div class="row well">
-                                    <label class="col-sm-3 control-label">Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut</label>
+                                    <label class="col-sm-3 control-label">
+                                        <strong>Inscriptions</strong><br/>
+                                        Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut
+                                    </label>
                                     <div class="col-sm-8 col-xs-6">
                                         <textarea name="notice" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->notice or old('notice') }}</textarea>
                                     </div>
                                 </div>
+
+                                <div class="row well" style="background-color: #fff0c9;">
+                                    <label class="col-sm-3 control-label">
+                                        <strong>Slides</strong><br/>
+                                        Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut
+                                    </label>
+                                    <div class="col-sm-8 col-xs-6">
+                                        <textarea name="slide_text" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->slide_text or old('slide_text') }}</textarea>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <legend>Prix</legend>

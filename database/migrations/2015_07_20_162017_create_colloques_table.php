@@ -23,6 +23,7 @@ class CreateColloquesTable extends Migration
             $table->string('email')->nullable();
             $table->text('remarques')->nullable();
             $table->text('notice')->nullable();
+            $table->text('slide_text')->nullable();
             $table->date('start_at');
             $table->date('end_at')->nullable();
             $table->date('registration_at');

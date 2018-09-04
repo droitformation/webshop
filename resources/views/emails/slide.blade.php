@@ -17,7 +17,11 @@
                 <h1 style="{{ $style['header-2'] }}">{{ $colloque->titre }}<br/></h1>
                 <p style="color: #000;margin-top: 5px;margin-bottom: 25px;font-style: italic;">{{ $colloque->event_date }}</p>
                 <div style="color: #000;margin-top: 15px;margin-bottom: 20px; text-align: left;">
-                    {!! \Registry::get('slides.texte') !!}
+                    @if(!empty($colloque->slide_text))
+                        {!! $colloque->slide_text !!}
+                    @else
+                        {!! \Registry::get('slides.texte') !!}
+                    @endif
                 </div>
             </td>
         </tr>

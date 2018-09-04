@@ -44,6 +44,12 @@ class ShippingTableSeeder extends \Illuminate\Database\Seeder  {
                 'price' => '0',
                 'type'  => 'gratuit'
             ],
+            [
+                'title' => 'Envoi par Poste Lettre',
+                'value' => '101',
+                'price' => '0',
+                'type'  => 'poids'
+            ],
 		);
 
 		// Uncomment the below to run the seeder
