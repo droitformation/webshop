@@ -324,7 +324,14 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         $colloques = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
         $colloque  = $colloques->find($id);
 
-        $texte = 'Lorem ad quîs j\'libéro pharétra vivamus mollis ultricités ut, vulputaté ac pulvinar èst commodo aenanm pharétra cubilia, lacus aenean pharetra des ïd quisquées mauris varius sit. Mie dictumst nûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit çunc, primiés ?';
+        if($colloque->notice){
+            $texte = $colloque->notice;
+        }
+        else {
+            $texte = \Registry::get('slides.texte');
+        }
+
+        //$texte = 'Lorem ad quîs j\'libéro pharétra vivamus mollis ultricités ut, vulputaté ac pulvinar èst commodo aenanm pharétra cubilia, lacus aenean pharetra des ïd quisquées mauris varius sit. Mie dictumst nûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit çunc, primiés ?';
         $url   = secure_url('pubdroit/documents/'.$colloque->id);
 
         return new App\Mail\SendSlides($colloque,$texte,$url);
