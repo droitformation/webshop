@@ -637,4 +637,14 @@ class Helper {
         echo isset($term) && !empty($term) ? '<h3>Recherche '.$term.'</h3>' : '';
     }
 
+    public function prepareNotifyEvent($order)
+    {
+        return $order->products->filter(function ($product, $key) {
+            return $product->notify_url;
+        })->groupBy(function ($item, $key) {
+            return $item->notify_url;
+        })->map(function ($item, $key) {
+            return $item->count();
+        });
+    }
 }
