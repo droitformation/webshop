@@ -8,7 +8,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/3fa729f3750849ce8e0471b0487439cb)](https://www.codacy.com/app/gbadi/mailjet-apiv3-php)
 [![Build Status](https://travis-ci.org/mailjet/mailjet-apiv3-php.svg?branch=master)](https://travis-ci.org/mailjet/mailjet-apiv3-php)
 ![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat-square)
-![Current Version](https://img.shields.io/badge/version-1.1.8-green.svg)
+![Current Version](https://img.shields.io/badge/version-1.3.0-green.svg)
 
 [Mailjet][mailjet] API Client.
 
@@ -25,7 +25,7 @@ composer require mailjet/mailjet-apiv3-php
 ```
 Without composer:
 
-Clone or Download [this repository](https://github.com/mailjet/mailjet-apiv3-php-no-composer) that already contains all the dependencies and the `vendor/autoload.php` file. If you encounter any issue, please post it here and not on the mirror repository.
+Clone or Download [this repository](https://github.com/mailjet/mailjet-apiv3-php-no-composer) that already contains all the dependencies and the `vendor/autoload.php` file. If you encounter an issue, please post it here and not on the mirror repository.
 
 ## Getting Started !
 
@@ -100,24 +100,47 @@ $response = $mj->get(Resources::$Contact, ['filters' => $filters]);
 
 ### [Send transactional emails](http://dev.mailjet.com/guides/?php#send-transactional-email)
 
+You can send transactional messages with Mailjet's v3.1 Send API with the following code :  
+
 ``` php
 <?php
-
+/*
+This calls sends an email to one recipient.
+*/
+require 'vendor/autoload.php';
+use \Mailjet\Resources;
+$mj = new \Mailjet\Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PRIVATE'),
+              true,['version' => 'v3.1']);
 $body = [
-    'FromEmail' => "pilot@mailjet.com",
-    'FromName' => "Mailjet Pilot",
-    'Subject' => "Your email flight plan!",
-    'Text-part' => "Dear passenger, welcome to Mailjet! May the delivery force be with you!",
-    'Html-part' => "<h3>Dear passenger, welcome to Mailjet!</h3><br />May the delivery force be with you!",
-    'Recipients' => [['Email' => "passenger@mailjet.com"]]
+    'Messages' => [
+        [
+            'From' => [
+                'Email' => "pilot@mailjet.com",
+                'Name' => "Mailjet Pilot"
+            ],
+            'To' => [
+                [
+                    'Email' => "passenger1@mailjet.com",
+                    'Name' => "passenger 1"
+                ]
+            ],
+            'Subject' => "Your email flight plan!",
+            'TextPart' => "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!",
+            'HTMLPart' => "<h3>Dear passenger 1, welcome to Mailjet!</h3><br />May the delivery force be with you!"
+        ]
+    ]
 ];
-
 $response = $mj->post(Resources::$Email, ['body' => $body]);
+$response->success() && var_dump($response->getData());
+?>
 ```
+
+In case, you wish to use Mailjet's Send API v3, you can find the legacy documentation and code samples [here](https://dev.mailjet.com/legacy/?php#send-api-v3-august-2017)
+
 
 ### [Send marketing campaign](http://dev.mailjet.com/guides/?php#send-marketing-campaigns)
 
-To send your first newsletter, you need to have at least one active sender address in the Sender domains & addresses section.
+In order to send your first newsletter, you need to have at least one active sender address in the Sender domains & addresses section.
 
 ``` php
 <?php
@@ -138,9 +161,9 @@ $response = $mj->post(Resources::$NewsletterTest, ['id' => $id, 'body' => $body]
 
 ### [Event API - real time notifications](http://dev.mailjet.com/guides/?php#event-api-real-time-notifications)
 
-The Event API offer a real-time notification through http request on any events related to the messages you sent. The main supported events are open, click, bounce, spam, blocked, unsub and sent. This event notification works for transactional and marketing emails.
+The [Event API](https://www.mailjet.com/feature/event-api/) offer a real-time notification through http request on any events related to the messages you sent. The main supported events are open, click, bounce, spam, blocked, unsub and sent. This event notification works for transactional and marketing emails.
 
-The endpoint is an URL our server will call for each event (it can lead to a lot of hits !). You can use the API to setup a new endpoint using the /eventcallbackurl resource. Alternatively, you can configure this in your account preferences, in the Event Tracking section.
+The endpoint is an URL our server will call for each event (it can lead to a lot of hits). You can use the API to setup a new endpoint using the /eventcallbackurl resource. Alternatively, you can configure this in your account preferences, in the Event Tracking section.
 
 ``` php
 <?php
@@ -216,7 +239,7 @@ API call > Client constructor > Resource (only with version, available in the Re
 
  - Fork the project.
  - Create a topic branch.
- - Implement your feature or bug fix.
+ - Implement your feature/bug fix.
  - Add documentation for your feature or bug fix.
  - Add specs for your feature or bug fix.
  - Commit and push your changes.
