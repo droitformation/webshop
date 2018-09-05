@@ -81,6 +81,7 @@ return [
                 'use_single_transaction',
                 'timeout' => 60 * 5, // 5 minute timeout
                 'exclude_tables' => ['email_log', 'newsletter_tracking'],
+                'add_extra_option' => '-u ' . env('DB_USERNAME', 'root'),
             ]
 		],
 
