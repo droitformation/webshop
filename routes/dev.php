@@ -171,13 +171,18 @@ Route::get('testing', function() {
 
     $nouveautes = $products->getByCategorie('Nouveautés');
 
-    $order = $orders->find(4083);
+    $order = $orders->find(4099);
 
-    $generate = new  \App\Droit\Generate\Entities\OrderGenerate($order);
+    $products = $order->products->filter(function ($product, $key) {
+        return $product->notify_url;
+    })->groupBy(function ($item, $key) {
+        return $item->notify_url;
+    })->map(function ($item, $key) {
+        return $item->count();
+    });
 
     echo '<pre>';
-    print_r($generate->showCoupon());
-
+    print_r($products);
     echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {

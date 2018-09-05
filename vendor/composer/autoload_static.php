@@ -6021,7 +6021,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Tests\\Feature\\SubscriptionWorkerTest' => __DIR__ . '/../..' . '/tests/Feature/newsletter/SubscriptionWorkerTest.php',
         'Tests\\Feature\\SubstituteEmailTest' => __DIR__ . '/../..' . '/tests/Feature/backend/user/SubstituteEmailTest.php',
         'Tests\\Feature\\TrackingTest' => __DIR__ . '/../..' . '/tests/Feature/newsletter/TrackingTest.php',
-        'Tests\\MocksGuzzleResponses' => __DIR__ . '/../..' . '/tests/MocksGuzzleResponses.php',
         'Tests\\ResetTbl' => __DIR__ . '/../..' . '/tests/ResetTbl.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\AboAdminTest' => __DIR__ . '/../..' . '/tests/Unit/abo/AboAdminTest.php',

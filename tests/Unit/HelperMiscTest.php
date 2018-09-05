@@ -184,4 +184,38 @@ class HelperMiscTest extends TestCase
             $this->assertEquals($expect[$i], $result);
         }
     }
+
+
+    public function testPrepareNotifiy()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $product1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+            'notify_url' => 'http://publications-droit.ch'
+        ]);
+
+        $product2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+            'notify_url' => 'http://designpond.ch'
+        ]);
+
+        $product3 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create([
+            'notify_url' => 'http://designpond.ch'
+        ]);
+
+        $orders = $make->order(1);
+        $order  = $orders->first();
+        $order->products()->sync([]);
+
+        $order->products()->attach($product1->id);
+        $order->products()->attach($product2->id);
+        $order->products()->attach($product3->id);
+
+        $order = $order->load('products');
+
+        $actual = $this->helper->prepareNotifyEvent($order);
+
+        $expect = collect(['http://publications-droit.ch' => 1, 'http://designpond.ch' => 2]);
+
+        $this->assertEquals($expect,$actual);
+    }
 }

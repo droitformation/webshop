@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NotifyOrderUpdated
 {
-    protected $clients;
+    protected $client;
 
     /**
      * Create the event listener.
@@ -28,28 +28,34 @@ class NotifyOrderUpdated
      */
     public function handle(OrderUpdated $event)
     {
+        $helper = new \App\Droit\Helper\Helper();
+
         // get products
+        $products = $helper->prepareNotifyEvent($event->order);
+
         // test if any has a request to do
-        $products = $event->order->products->filter(function ($product, $key) {
-            return $product->notify_url;
-        })->each(function ($item, $key) use ($event) {
+        $products->each(function ($item, $url) use ($event) {
             // make request with data
+            \Log::info('qty: '.$item.' url: '.$url);
+
             $data = [
                 'order_id' => $event->order->id,
+                'qty' => $item,
                 'user'    => [
                     "name"  => $event->order->order_adresse->name,
                     "email" => $event->order->order_adresse->email,
                 ]
             ];
 
-            $response = $this->client->post( $item->notify_url, ['query' => $data]);
+            $response = $this->client->post( $url, ['query' => $data]);
 
             if($response->getStatusCode() != 200) {
                 \Mail::to('cindy.leschaud@gmail.com')->send(
                     new \App\Mail\WebmasterNotification('Problème avec le code d\'accès à envoyer à ' . $event->order->order_adresse->email . ' order: ' . $event->order->id)
                 );
             }
-        });
 
+        });
     }
+
 }

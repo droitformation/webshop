@@ -76,4 +76,5 @@ class OrderEventTest extends TestCase
 
         \Event::assertNotDispatched(\App\Events\OrderUpdated::class);
     }
+
 }
