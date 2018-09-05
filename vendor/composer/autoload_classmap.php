@@ -5420,7 +5420,6 @@ return array(
     'Tests\\Feature\\SubscriptionWorkerTest' => $baseDir . '/tests/Feature/newsletter/SubscriptionWorkerTest.php',
     'Tests\\Feature\\SubstituteEmailTest' => $baseDir . '/tests/Feature/backend/user/SubstituteEmailTest.php',
     'Tests\\Feature\\TrackingTest' => $baseDir . '/tests/Feature/newsletter/TrackingTest.php',
-    'Tests\\MocksGuzzleResponses' => $baseDir . '/tests/MocksGuzzleResponses.php',
     'Tests\\ResetTbl' => $baseDir . '/tests/ResetTbl.php',
     'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',
     'Tests\\Unit\\AboAdminTest' => $baseDir . '/tests/Unit/abo/AboAdminTest.php',
