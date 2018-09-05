@@ -5,7 +5,9 @@ php:
   - '7.1'
 
 before_script:
-  - pecl install imagick
+  - pear config-set preferred_state beta
+  - pecl channel-update pecl.php.net
+  - yes | pecl install imagick
   - cp .env.travis .env
   - mysql -e 'create database staging;'
   - composer self-update
