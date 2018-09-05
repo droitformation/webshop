@@ -12,19 +12,11 @@ This package provides an easy to work with class to convert pdf's to images.
 
 Spatie is a webdesign agency in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
-## Postcardware
-
-You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment you are required to send us a postcard from your hometown, mentioning which of our package(s) you are using.
-
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-The best postcards will get published on the open source page on our website.
-
 ## Requirements
 
-You should have [Imagick](http://php.net/manual/en/imagick.setresolution.php) and [Ghostscript](http://www.ghostscript.com/) installed.
+You should have [Imagick](http://php.net/manual/en/imagick.setresolution.php) and [Ghostscript](http://www.ghostscript.com/) installed. See [issues regarding Ghostscript](#issues-regarding-ghostscript).
 
-## Install
+## Installation
 
 The package can be installed via composer:
 ``` bash
@@ -40,10 +32,11 @@ $pdf = new Spatie\PdfToImage\Pdf($pathToPdf);
 $pdf->saveImage($pathToWhereImageShouldBeStored);
 ```
 
-If the path you pass to `saveImage` has the extensions  `jpg`, `jpeg`, or `png` the image will be saved in that format.
+If the path you pass to `saveImage` has the extensions `jpg`, `jpeg`, or `png` the image will be saved in that format.
 Otherwise the output will be a jpg.
 
-##Other methods
+## Other methods
+
 You can get the total number of pages in the pdf:
 ```php
 $pdf->getNumberOfPages(); //returns an int
@@ -61,15 +54,38 @@ $pdf->setOutputFormat('png')
     ->saveImage($pathToWhereImageShouldBeStored); //the output wil be a png, no matter what
 ```
 
-## Change log
+You can set the quality of compression from 0 to 100:
+```php
+$pdf->setCompressionQuality(100); // sets the compression quality to maximum
+```
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+## Issues regarding Ghostscript
+
+This package uses Ghostscript through Imagick. For this to work Ghostscripts `gs` command should be accessible from the PHP process. For the PHP CLI process (e.g. Laravel's asynchronous jobs, commands, etc...) this is usually already the case. 
+
+However for PHP on FPM (e.g. when running this package "in the browser") you might run into the following problem:
+
+```
+Uncaught ImagickException: FailedToExecuteCommand 'gs'
+```
+
+This can be fixed by adding the following line at the end of your `php-fpm.conf` file and restarting PHP FPM. If you're unsure where the `php-fpm.conf` file is located you can check `phpinfo()`.
+
+```
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+```
+
+This will instruct PHP FPM to look for the `gs` binary in the right places.
 
 ## Testing
 
 ``` bash
 $ composer test
 ```
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Contributing
 
@@ -79,13 +95,25 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
 
+## Postcardware
+
+You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
+
+Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
+
+We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
+
 ## Credits
 
 - [Freek Van der Herten](https://github.com/spatie)
 - [All Contributors](../../contributors)
 
-## About Spatie
-Spatie is a webdesign agency in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
+## Support us
+
+Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
+
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
 

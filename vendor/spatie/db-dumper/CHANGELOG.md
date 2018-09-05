@@ -2,6 +2,14 @@
 
 All notable changes to `db-dumper` will be documented in this file
 
+## 2.10.1 - 2018-08-30
+
+- allow destination paths to have a space character
+
+## 2.10.0 - 2018-04-27
+
+- add support for compressing dumps
+
 ## 2.9.0 - 2018-03-05
 
 - add support for setting `--set-gtid-purged`

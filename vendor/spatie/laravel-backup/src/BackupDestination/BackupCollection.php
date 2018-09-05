@@ -2,33 +2,20 @@
 
 namespace Spatie\Backup\BackupDestination;
 
+use Spatie\Backup\Helpers\File;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class BackupCollection extends Collection
 {
     /** @var null|int */
     protected $sizeCache = null;
 
-    /** @var array */
-    protected static $allowedMimeTypes = [
-        'application/zip', 'application/x-zip', 'application/x-gzip',
-    ];
-
-    /**
-     * @param \Illuminate\Contracts\Filesystem\Filesystem|null $disk
-     * @param array                                            $files
-     *
-     * @return \Spatie\Backup\BackupDestination\BackupCollection
-     */
-    public static function createFromFiles($disk, array $files): self
+    public static function createFromFiles(?FileSystem $disk, array $files): self
     {
         return (new static($files))
             ->filter(function ($path) use ($disk) {
-                if ($disk && method_exists($disk, 'mimeType')) {
-                    return in_array($disk->mimeType($path), self::$allowedMimeTypes);
-                }
-
-                return pathinfo($path, PATHINFO_EXTENSION) === 'zip';
+                return (new File)->isZipFile($disk, $path);
             })
             ->map(function ($path) use ($disk) {
                 return new Backup($disk, $path);
@@ -39,18 +26,12 @@ class BackupCollection extends Collection
             ->values();
     }
 
-    /**
-     * @return \Spatie\Backup\BackupDestination\Backup|null
-     */
-    public function newest()
+    public function newest(): ?Backup
     {
         return $this->first();
     }
 
-    /**
-     * @return \Spatie\Backup\BackupDestination\Backup|null
-     */
-    public function oldest()
+    public function oldest(): ?Backup
     {
         return $this
             ->filter->exists()
