@@ -76,11 +76,13 @@ return [
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
-			'dump' => [
-				'dump_command_path' => env('DB_BACKUP', '/usr/bin'), // only the path, so without `mysqldump` or `pg_dump`
-				'use_single_transaction',
-				'timeout' => 300,
-			]
+            'dump' => [
+                'dump_binary_path' => env('DB_BACKUP', '/usr/bin'), // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+                'exclude_tables' => ['email_log', 'newsletter_tracking'],
+                'add_extra_option' => '-u ' . env('DB_USERNAME', 'root'),
+            ]
 		],
 
 		'pgsql' => [
