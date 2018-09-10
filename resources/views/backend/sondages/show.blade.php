@@ -87,7 +87,9 @@
                         @if(!$avis->isEmpty())
                             <select class="form-control" name="question_id[]" multiple>
                                 @foreach($avis as $question)
-                                    <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
+                                    @if(!$question->hidden)
+                                        <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                             <span class="input-group-btn" style="vertical-align:top; padding-left: 5px;">
@@ -99,13 +101,18 @@
                 </form>
 
                 <hr/>
-                <h4>Liste des questions
-                    <small class="text-muted pull-right"><i class="fa fa-crosshairs"></i> &nbsp;Cliquez-glissez les pages pour changer l'ordre des questions.</small>
-                </h4>
+
+                <h4>Liste des questions</h4>
+                <div class="row">
+                    <p class="col-md-6"><span class="avis-hidden-square"></span> Questions cachées</p>
+                    <p class="col-md-6 text-right"><small class="text-muted"><i class="fa fa-crosshairs"></i>
+                            &nbsp;Cliquez-glissez les pages pour changer l'ordre des questions.</small></p>
+                </div>
+
                 @if(!$sondage->avis->isEmpty())
                     <ol class="sortquestion" data-id="{{ $sondage->id }}">
                         @foreach($sondage->avis as $avis)
-                            <li class="form-group type-choix question-item sondage-question-item" id="question_rang_{{ $avis->id }}">
+                            <li class="form-group type-choix question-item sondage-question-item {{ $avis->hidden ? 'avis-hidden' : '' }}" id="question_rang_{{ $avis->id }}">
                                 <div class="sondage-question-list">
                                     {!! $avis->question !!}
                                 </div>

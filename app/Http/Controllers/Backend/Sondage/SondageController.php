@@ -85,6 +85,7 @@ class SondageController extends Controller
         $emails    = [];
         $sondage   = $this->sondage->find($id);
         $avis      = $this->avis->getAll();
+
         $colloques = $this->colloque->getAll(false,false);
 
         if($sondage->colloque_id){

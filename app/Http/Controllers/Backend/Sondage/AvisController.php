@@ -17,7 +17,7 @@ class AvisController extends Controller
     public function __construct(AvisInterface $avis, SondageInterface $sondage)
     {
         $this->avis = $avis;
-        $this->sondage  = $sondage;
+        $this->sondage = $sondage;
     }
 
     /**
@@ -29,7 +29,11 @@ class AvisController extends Controller
     {
         $avis = $this->avis->getAll();
 
-        return view('backend.avis.index')->with(['avis' => $avis]);
+        list($hidden, $activ) = $avis->partition(function ($item) {
+            return $item->hidden;
+        });
+
+        return view('backend.avis.index')->with(['avis' => $activ, 'hidden' => $hidden]);
     }
 
     /**
