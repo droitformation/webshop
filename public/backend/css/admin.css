@@ -1173,6 +1173,20 @@ input[type="checkbox"].rappel-input {
     padding-bottom: 8px;
 }
 
+.question-item.sondage-question-item.avis-hidden{
+    background: #feeae6;
+}
+
+span.avis-hidden-square{
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    vertical-align: middle;
+    margin-right: 5px;
+    background: #feeae6;
+    border: 1px solid #ffd5cd;
+}
+
 .sondage-question-list p,
 .sondage-question-list h4{
     margin-bottom: 0;

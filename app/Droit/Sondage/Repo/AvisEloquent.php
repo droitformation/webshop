@@ -12,9 +12,9 @@ class AvisEloquent implements AvisInterface{
         $this->avis = $avis;
     }
 
-    public function getAll()
+    public function getAll($active = null)
     {
-        return $this->avis->all();
+        return $this->avis->active($active)->get();
     }
 
     public function find($id)
@@ -27,7 +27,8 @@ class AvisEloquent implements AvisInterface{
         $avis = $this->avis->create(array(
             'type'     => $data['type'],
             'question' => $data['question'],
-            'choices'  => isset($data['choices']) ? $data['choices'] : null
+            'choices'  => isset($data['choices']) ? $data['choices'] : null,
+            'hidden'   => isset($data['hidden']) ? $data['hidden'] : null,
         ));
 
         if(!$avis)

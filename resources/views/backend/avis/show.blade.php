@@ -22,6 +22,14 @@
                     <h3>Question</h3>
 
                     <div class="form-group">
+                        <label class="col-sm-3 control-label"><strong>Visible</strong></label>
+                        <div class="col-sm-8">
+                            <label class="radio-inline"><input type="radio" {{ !$avis->hidden ? 'checked' : '' }} name="hidden" value=""> Oui</label>
+                            <label class="radio-inline"><input type="radio" {{ $avis->hidden ? 'checked' : '' }} name="hidden" value="1"> Non</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Type</label>
                         <div class="col-sm-6">
                             <select name="type" class="form-control" id="sondageTypeSelect">
