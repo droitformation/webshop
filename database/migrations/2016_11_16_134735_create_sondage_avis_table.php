@@ -18,6 +18,7 @@ class CreateSondageAvisTable extends Migration
             $table->string('type');
             $table->text('question');
             $table->text('choices')->nullable();
+            $table->tinyInteger('hidden')->nullable();
             $table->timestamps();
         });
     }
