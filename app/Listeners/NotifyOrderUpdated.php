@@ -50,7 +50,7 @@ class NotifyOrderUpdated
             $response = $this->client->post( $url, ['query' => $data]);
 
             if($response->getStatusCode() != 200) {
-                \Mail::to('cindy.leschaud@gmail.com')->send(
+                \Mail::to('droitformation.web@gmail.com')->send(
                     new \App\Mail\WebmasterNotification('Problème avec le code d\'accès à envoyer à ' . $event->order->order_adresse->email . ' order: ' . $event->order->id)
                 );
             }
