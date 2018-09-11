@@ -19,7 +19,7 @@
             <div class="media-body">
                 <p>Formulaire d'évaluation</p>
                 <h4 class="sondage-title-colloque"><strong>{{ $sondage->colloque->titre }}</strong></h4>
-                <p><strong>{{ $sondage->colloque->event_date }}</strong></p>
+                <p><strong>{{ ucfirst($sondage->colloque->event_date) }}</strong></p>
             </div>
         </div>
 
