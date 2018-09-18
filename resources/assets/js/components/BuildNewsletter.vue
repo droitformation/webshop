@@ -3,16 +3,22 @@
         <div class="row">
             <div class="col-md-7" id="StyleNewsletterCreate">
 
-                <div class="btn-group pull-right" v-if="content && mode == 'edit'" style="margin-bottom:5px;">
-                    <form method="post" :action="action" v-if="model && !isEdit">
-                        <input name="_token" :value="_token" type="hidden">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="id" :value="model.id" />
-                        <input type="hidden" :value="campagne.id" name="campagne_id">
-                        <button v-if="model && !isEdit" @click="editMode(content)" class="btn btn-xs btn-warning">éditer</button>
-                        <button class="btn btn-xs btn-danger deleteNewsAction" :data-id="model.id" :data-action="model.titre">x</button>
-                    </form>
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <div v-if="content && mode == 'edit'" style="margin-bottom:5px;">
+                            <button v-if="model && !isEdit" @click="editMode(content)" class="btn btn-xs btn-warning pull-left">éditer</button>
+                            <form method="post" :action="action" v-if="model && !isEdit" class="pull-right">
+                                <input name="_token" :value="_token" type="hidden">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="id" :value="model.id" />
+                                <input type="hidden" :value="campagne.id" name="campagne_id">
+                                <button type="submit" class="btn btn-xs btn-danger deleteNewsAction" :data-id="model.id" :data-action="model.titre">x</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
 
@@ -74,7 +80,7 @@
                                     <input v-if="model" type="hidden" name="id" :value="model.id" />
                                     <input v-if="categorie" type="hidden" name="categorie_id" :value="categorie.id" />
                                     <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
-                                    <button type="button" @click="close" class="btn btn-sm btn-default cancelCreate">Annuler</button>
+                                    <button type="button" @submit.prevent @click="close" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -197,20 +203,29 @@
                     var self = this;
 
                     $('.redactorBuild_' + self.hash).redactor({
-                        minHeight: 50,
-                        maxHeight: 270,
+                        minHeight: '180px',
+                        maxHeight: '370px',
+                        removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],
                         lang: 'fr',
-                        plugins: ['imagemanager','filemanager'],
+                        plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],
                         fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-                        fileManagerJson: 'admin/fileJson?_token=' +   $('meta[name="_token"]').attr('content'),
                         imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
                         imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
-                        plugins: ['iconic'],
-                        buttons  : ['html','formatting','bold','italic','link','image','file','|','unorderedlist','orderedlist'],
-                        blurCallback:function(e){
-                            var text = this.code.get();
-                            self.content.contenu = this.code.get();
+                        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
+                        imageResizable: true,
+                        imagePosition: true,
+                        formatting: ['h1', 'h2','h3','p', 'blockquote'],
+                        callbacks: {
+                            focus:function(e){
+                                var text = this.source.getCode();
+                                self.content.contenu = this.source.getCode();
+                            },
+                            enter: function(e)
+                            {
+                               return !(window.event && window.event.keyCode == 13 && window.event.keyCode == 46);
+                            }
                         }
+
                     });
 
                 });

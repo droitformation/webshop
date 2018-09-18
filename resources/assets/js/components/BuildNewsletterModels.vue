@@ -14,7 +14,11 @@
                     </form>
                 </div>
 
-                <analyse-newsletter v-if="model && type == 5 && newsletter.display == 'top'" :arret="model" :analyses="model.analyses"></analyse-newsletter>
+                <analyse-newsletter
+                        v-if="model && type == 5 && newsletter.display == 'top'"
+                        :title="newsletter.comment_title"
+                        :arret="model"
+                        :analyses="model.analyses"></analyse-newsletter>
 
                 <!-- Bloc content-->
                 <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
@@ -40,7 +44,11 @@
                 </table>
                 <!-- Bloc content-->
 
-                <analyse-newsletter v-if="model && type == 5 && newsletter.display == 'bottom'" :arret="model" :analyses="model.analyses"></analyse-newsletter>
+                <analyse-newsletter
+                        v-if="model && type == 5 && newsletter.display == 'bottom'"
+                        :title="newsletter.comment_title"
+                        :arret="model"
+                        :analyses="model.analyses"></analyse-newsletter>
 
             </div>
 

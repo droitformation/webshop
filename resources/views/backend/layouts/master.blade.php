@@ -167,13 +167,6 @@
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
-@if(isset($isNewsletter))
-    @include('script.date')
-    @include('script.angular')
-    @include('script.main')
-    <script type="text/javascript" src="<?php echo secure_asset('backend/js/select-list.js');?>"></script>
-    <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/upload.js');?>"></script>
-@endif
 
 <script type="text/javascript" src="{{ secure_asset('newsletter/js/sorting.js') }}"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-user.js');?>"></script>

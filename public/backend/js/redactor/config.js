@@ -1,32 +1,33 @@
 $( function() {
 
-        
     $('.redactor').redactor({
-        minHeight  : 250,
-        maxHeight: 450,
+        minHeight  : '350px',
+        maxHeight: '450px',
         removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],
         lang: 'fr',
-        plugins: ['imagemanager','filemanager','fontsize','fontcolor'],
+        plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],
         fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
         fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
         imageResizable: true,
         imagePosition: true,
-        buttons    : ['html','formatting','bold','italic','|','unorderedlist','orderedlist', '|','image','file','link','alignment']
+        formatting: ['h1', 'h2','h3','p', 'blockquote']
     });
 
     $('.redactorSimple').redactor({
-        minHeight: 50,
-        maxHeight: 270,
+        minHeight: '180px',
+        maxHeight: '370px',
+        removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],
         lang: 'fr',
-        plugins: ['imagemanager','filemanager'],
+        plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],
         fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
-        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
         imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name="_token"]').attr('content'),
         imageManagerJson: 'admin/imageJson?_token=' + $('meta[name="_token"]').attr('content'),
-        plugins: ['iconic'],
-        buttons  : ['html','formatting','bold','italic','link','image','file','|','unorderedlist','orderedlist']
+        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
+        imageResizable: true,
+        imagePosition: true,
+        formatting: ['h1', 'h2','h3','p', 'blockquote']
     });
 
 });

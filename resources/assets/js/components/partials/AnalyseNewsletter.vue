@@ -8,7 +8,9 @@
                     <table v-for="analyse in analyses" border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="tableReset contentForm">
                         <tr>
                             <td valign="top" align="center" width="375" class="resetMarge contentForm">
-                                <h3 style="text-align: left;font-family: sans-serif;">Commentaire de l'arrêt {{ arret.reference }}</h3>
+                                <h3 style="text-align: left;font-family: sans-serif;">
+                                    {{ title }} de l'arrêt {{ arret.reference }}
+                                </h3>
                                 <!-- Authors -->
 
                                 <table v-for="author in analyse.auteurs" border="0" width="375" align="left" cellpadding="0" cellspacing="0" class="resetTable">
@@ -51,7 +53,7 @@
 <script>
 
     export default{
-        props: ['arret','analyses'],
+        props: ['arret','analyses','title'],
         data(){
             return{
             }

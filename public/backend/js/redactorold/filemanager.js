@@ -3,25 +3,24 @@
 	$.Redactor.prototype.filemanager = function()
 	{
 		return {
-			langs: {
-				en: {
-					"upload": "Upload",
-					"choose": "Choose"
-				}
-			},
 			init: function()
 			{
-				if (!this.opts.fileManagerJson)
-				{
-					return;
-				}
+				if (!this.opts.fileManagerJson) return;
 
 				this.modal.addCallback('file', this.filemanager.load);
 			},
 			load: function()
 			{
-				var $box = $('<div  style="overflow: auto; height: 300px; display: none;" class="redactor-modal-tab" data-title="Choose">').hide();
-				this.modal.getModal().append($box);
+				var $modal = this.modal.getModal();
+
+				this.modal.createTabber($modal);
+				this.modal.addTab(1, 'Upload', 'active');
+				this.modal.addTab(2, 'Choose');
+
+				$('#redactor-modal-file-upload-box').addClass('redactor-tab redactor-tab1');
+
+				var $box = $('<div id="redactor-file-manager-box" style="overflow: auto; height: 300px;" class="redactor-tab redactor-tab2">').hide();
+				$modal.append($box);
 
 
 				$.ajax({
@@ -33,8 +32,7 @@
 						var ul = $('<ul id="redactor-modal-list">');
 						$.each(data, $.proxy(function(key, val)
 						{
-
-							var a = $('<a href="#" data-params="' + encodeURI(JSON.stringify(val)) + '" class="redactor-file-manager-link">' + val.title + ' <span style="font-size: 11px; color: #888;">' + val.name + '</span> <span style="position: absolute; right: 10px; font-size: 11px; color: #888;">(' + val.size + ')</span></a>');
+							var a = $('<a href="#" title="' + val.title + '" rel="' + val.link + '" class="redactor-file-manager-link">' + val.title + ' <span style="font-size: 11px; color: #888;">' + val.name + '</span> <span style="position: absolute; right: 10px; font-size: 11px; color: #888;">(' + val.size + ')</span></a>');
 							var li = $('<li />');
 
 							a.on('click', $.proxy(this.filemanager.insert, this));
@@ -44,7 +42,7 @@
 
 						}, this));
 
-						$box.append(ul);
+						$('#redactor-file-manager-box').append(ul);
 
 
 					}, this)
@@ -55,10 +53,9 @@
 			{
 				e.preventDefault();
 
-				var $el = $(e.target).closest('.redactor-file-manager-link');
-				var json = $.parseJSON(decodeURI($el.attr('data-params')));
+				var $target = $(e.target).closest('.redactor-file-manager-link');
 
-				this.file.insert(json, null);
+				this.file.insert('<a href="' + $target.attr('rel') + '">' + $target.attr('title') + '</a>');
 			}
 		};
 	};
