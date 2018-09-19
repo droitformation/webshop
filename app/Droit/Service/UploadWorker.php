@@ -15,9 +15,6 @@ class UploadWorker implements UploadInterface {
 
         $image_name =  basename($name,'.'.$ext);
 
-/*        $string  = \Str::slug($image_name);
-        $newname = $string.'.'.$ext;*/
-
         $newname = str_slug($image_name).'.'.$ext;
 
         // Get the name first because after moving, the file doesn't exist anymore

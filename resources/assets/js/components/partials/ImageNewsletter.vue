@@ -2,8 +2,7 @@
     <div>
 
         <div class="upload-btn-wrapper" v-if="!image && visible">
-            <button @click="newSelected" class="btn btn-primary btn-xs iframe-btn" href="../filemanager/dialog.php?type=1&field_id=fieldID&relative_url=0" type="button">Choisir existante</button>
-            <input id="fieldID" name="image" value="" type="hidden">
+            <image-uploader :wrapper="false" id="fieldID" name="file" @imageChoosen="imageChoosenSelect"></image-uploader>
         </div>
 
         <div class="upload-btn-wrapper" v-if="!image && visible">
@@ -36,6 +35,7 @@
 
 </style>
 <script>
+    import ImageUploader from '../ImageUploader.vue';
 
     export default{
         props: ['model','type','mode','visible'],
@@ -47,6 +47,9 @@
                 big: 'http://www.placehold.it/560x200/EFEFEF/AAAAAA&text=image',
                 small: 'http://www.placehold.it/130x140/EFEFEF/AAAAAA&text=image',
             }
+        },
+        components:{
+            'image-uploader' : ImageUploader,
         },
         mounted: function ()  {
             this.initialize();
@@ -64,26 +67,27 @@
             editMode(data){
                 this.isEditable = data;
             },
+            imageChoosenSelect(filename){
+
+                var lastURLSegment = filename.substr(filename.lastIndexOf('/') + 1);
+                this.image = filename;
+                this.uploadImage = lastURLSegment;
+                this.$emit('imageUploaded', this.uploadImage)
+            },
             iframe(){
                 this.$nextTick(function() {
-                    $('.iframe-btn').fancybox({
-                        'width'		: 900,
-                        'height'	: 600,
-                        'type'		: 'iframe',
-                        'autoScale'    	: false
+                    var self = this;
+
+                    $('#fieldID').change(function() {
+                        var image = $(this).val();
+                        var lastURLSegment = image.substr(image.lastIndexOf('/') + 1);
+                        self.image = image;
+                        self.uploadImage = lastURLSegment;
+                        self.$emit('imageUploaded', self.uploadImage)
+                        console.log(lastURLSegment);
                     });
                 });
 
-                var self = this;
-
-                $('#fieldID').change(function() {
-                    var image = $('#fieldID').val();
-                    var lastURLSegment = image.substr(image.lastIndexOf('/') + 1);
-                    self.image = image;
-                    self.uploadImage = lastURLSegment;
-                    self.$emit('imageUploaded', self.uploadImage)
-                    console.log(lastURLSegment);
-                });
             },
             initialize(){
                 this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
@@ -119,7 +123,7 @@
                 axios.post('/admin/uploadNewsletter',{ image: this.image }).then(response => {
                     this.uploadImage = response.data.name;
                     this.$emit('imageUploaded', this.uploadImage)
-                    this.iframe();
+                    // this.iframe();
                 });
             }
         }

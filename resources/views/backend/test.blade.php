@@ -6,8 +6,7 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body" id="appComponent">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Choisir un fichier</button>
-                    <manager :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
+                    <image-uploader :wrapper="false" :id="12" inputname="file"></image-uploader>
                 </div>
             </div>
 

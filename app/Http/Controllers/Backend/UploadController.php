@@ -54,19 +54,20 @@ class UploadController extends Controller
         return redirect()->back();
     }
 
+    // For dropzone manager
     public function upload(Request $request)
     {
         $path  = $request->input('path').'/'.$request->input('type');
-        $files = $this->upload->upload( $request->file('file') ,$path );
+        $files = $this->upload->upload( $request->file('file') , $path , 'newsletter');
 
         if($files)
         {
             $array = [
-                'success' => true,
-                'files'   => $files['name'],
-                'id'      => $request->input('id',null),
-                'get'     => $request->all(),
-                'post'    => $request->all()
+                'success'  => true,
+                'filename' => $files['name'],
+                'id'       => $request->input('id',null),
+                'get'      => $request->all(),
+                'post'     => $request->all()
             ];
 
             return response()->json($array);

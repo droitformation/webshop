@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-7" id="StyleNewsletterCreate">
 
-                <div class="row">
+                <div class="row" style="margin-bottom:10px">
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
                         <div v-if="content && mode == 'edit'" style="margin-bottom:5px;">

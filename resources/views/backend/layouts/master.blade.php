@@ -35,6 +35,7 @@
     <link rel='stylesheet' type='text/css' href="<?php echo secure_asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
 
     <!-- Manager -->
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/dropzone.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
