@@ -535,6 +535,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::get('ajax/colloque',  'Api\ColloqueController@index');
         Route::get('ajax/colloque/{id}', 'Api\ColloqueController@show');
+
+        // For newsletter
+        Route::get('ajax/list/{categorie}/{site_id}','Api\NewsletterModelController@index');
+        Route::get('ajax/list/{product}/{site_id?}',  'Api\NewsletterModelController@index');
+        Route::get('ajax/list/{colloque}/{site_id?}',  'Api\NewsletterModelController@index');
+        Route::get('ajax/list/{arret}/{site_id}', 'Api\NewsletterModelController@index');
+
+        Route::get('ajax/single/{categorie}/{id}','Api\NewsletterModelController@show');
+        Route::get('ajax/single/{arret}/{id}', 'Api\NewsletterModelController@show');
+        Route::get('ajax/single/{colloque}/{id}',  'Api\NewsletterModelController@show');
+        Route::get('ajax/single/{product}/{id}',  'Api\NewsletterModelController@show');
+
     });
 
     /*

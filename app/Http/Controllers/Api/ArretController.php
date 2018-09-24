@@ -63,5 +63,17 @@ class ArretController extends Controller {
         ]);
 
     }
-    
+
+    /**
+     * Return response arrets
+     *
+     * @return response
+     */
+    public function arrets($site = null)
+    {
+        $arrets = $this->arret->getAll($site);
+        $arrets = $arrets->pluck('title','id');
+
+        return response()->json( $arrets , 200 );
+    }
 }

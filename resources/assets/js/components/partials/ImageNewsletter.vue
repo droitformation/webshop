@@ -64,11 +64,7 @@
             }
         },
         methods: {
-            editMode(data){
-                this.isEditable = data;
-            },
             imageChoosenSelect(filename){
-
                 var lastURLSegment = filename.substr(filename.lastIndexOf('/') + 1);
                 this.image = filename;
                 this.uploadImage = lastURLSegment;
@@ -90,7 +86,7 @@
 
             },
             initialize(){
-                this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
+                this.image = null;
             },
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
@@ -112,18 +108,17 @@
                  this.isRemoved = true;
             },
             cancel(){
-                 this.image = this.model && this.model.image ? this.model.path + this.model.image : null;
+                 this.image = null;
                  this.isRemoved = false;
                  this.iframe();
             },
             newSelected(){
-                  this.iframe();
+                 this.iframe();
             },
             upload(){
                 axios.post('/admin/uploadNewsletter',{ image: this.image }).then(response => {
                     this.uploadImage = response.data.name;
                     this.$emit('imageUploaded', this.uploadImage)
-                    // this.iframe();
                 });
             }
         }

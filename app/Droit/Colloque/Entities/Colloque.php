@@ -50,6 +50,11 @@ class Colloque extends Model implements HasMedia
         return $this->capacite > $inscriptions ? true : false;
     }
 
+    public function getTitleAttribute()
+    {
+        return $this->titre;
+    }
+
     public function getSlidesAttribute()
     {
         return $this->getMedia('slides')->filter(function ($slide, $key) {

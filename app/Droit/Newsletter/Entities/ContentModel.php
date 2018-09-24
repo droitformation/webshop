@@ -138,6 +138,18 @@ class ContentModel
         ];
     }
 
+    public function categorie($model)
+    {
+        $image = isset($model->categorie) ? $model->categorie->image : $model->image;
+
+        return [
+            'id'    => isset($model->categorie) ? $model->categorie->id : null,
+            'title' => isset($model->categorie) ? $model->categorie->title : $model->titre,
+            'image' => $image,
+            'path'  => secure_asset(config('newsletter.path.categorie').$image),
+        ];
+    }
+
     public function group($model)
     {
         $arrets = isset($model->groupe) && !$model->groupe->arrets->isEmpty() ? $model->groupe->arrets : collect([]);

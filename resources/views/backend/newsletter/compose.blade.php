@@ -47,15 +47,6 @@
         <div class="row">
             <div class="col-md-12">
 
-                <edit-build
-                        :contents="{{ $contents }}"
-                        :campagne="{{ $campagne }}"
-                        :newsletter="{{ $campagne->newsletter }}"
-                        _token="{{ csrf_token() }}"
-                        url="{{ url('build/content') }}"
-                        site="{{ $campagne->newsletter->site_id }}">
-                </edit-build>
-
                 <build :blocs="{{ $blocs }}"
                        :campagne="{{ $campagne }}"
                        :newsletter="{{ $campagne->newsletter }}"
