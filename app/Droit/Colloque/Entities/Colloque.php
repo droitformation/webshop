@@ -229,7 +229,7 @@ class Colloque extends Model implements HasMedia
     {
         if($status) $query->where(function ($query) {
             $query->whereNotNull('end_at')->where('end_at','>',date('Y-m-d'));
-        })->orWhere('start_at','>',date('Y-m-d'));
+        })->orWhere('start_at','>=',date('Y-m-d'));
     }
 
     public function scopeAdmin($query,$status)
