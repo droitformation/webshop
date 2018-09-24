@@ -93,10 +93,10 @@
 
                         <ul style="{{$resetMargin}}margin-bottom: 10px;margin-left: 15px;{{ $resetPadding }}">
                             @if(isset($participants) && count($participants) > 1)
-                                <?php echo (in_array('facture',$annexes) ? '<li>Le rappel relative aux participations</li>' : ''); ?>
+                                <?php echo (in_array('facture',$annexes) ? '<li>Le rappel relatif aux participations</li>' : ''); ?>
                                 <?php echo (in_array('bv',$annexes) ?      '<li>Le bulletin de versement qui vous permettra de régler le montant des inscriptions dans les meilleurs délais.</li>' : ''); ?>
                             @else
-                                <?php echo (in_array('facture',$annexes) ? '<li>Le rappel relative à votre participation</li>' : ''); ?>
+                                <?php echo (in_array('facture',$annexes) ? '<li>Le rappel relatif à votre participation</li>' : ''); ?>
                                 <?php echo (in_array('bv',$annexes) ?      '<li>Le bulletin de versement qui vous permettra de régler le montant de votre inscription dans les meilleurs délais.</li>' : ''); ?>
                             @endif
                         </ul>
