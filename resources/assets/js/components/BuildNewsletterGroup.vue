@@ -68,7 +68,7 @@
 
                             <select class="form-control form-required required" v-model="categorie" name="id" v-on:change="updateModel">
                                 <option :value="null" disabled>Sélectionner</option>
-                                <option v-for="categorie in categories" v-bind:value="categorie">{{ categorie.title }}</option>
+                                <option v-for="categorie in categories" v-bind:value="categorie.id">{{ categorie.title }}</option>
                             </select><br/>
 
                             <div class="row drag">

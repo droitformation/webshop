@@ -931,7 +931,7 @@ module.exports = g;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(3);
-var normalizeHeaderName = __webpack_require__(33);
+var normalizeHeaderName = __webpack_require__(34);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -1034,7 +1034,7 @@ __webpack_require__(129)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(37),
+  __webpack_require__(38),
   /* template */
   __webpack_require__(110),
   /* scopeId */
@@ -1072,7 +1072,7 @@ __webpack_require__(125)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(39),
+  __webpack_require__(40),
   /* template */
   __webpack_require__(105),
   /* scopeId */
@@ -1108,12 +1108,12 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(3);
-var settle = __webpack_require__(25);
-var buildURL = __webpack_require__(28);
-var parseHeaders = __webpack_require__(34);
-var isURLSameOrigin = __webpack_require__(32);
+var settle = __webpack_require__(26);
+var buildURL = __webpack_require__(29);
+var parseHeaders = __webpack_require__(35);
+var isURLSameOrigin = __webpack_require__(33);
 var createError = __webpack_require__(12);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(28);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1209,7 +1209,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(30);
+      var cookies = __webpack_require__(31);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1330,7 +1330,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(24);
+var enhanceError = __webpack_require__(25);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -1371,11 +1371,49 @@ module.exports = function bind(fn, thisArg) {
 
 
 /* styles */
+__webpack_require__(119)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(46),
+  /* template */
+  __webpack_require__(99),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Applications/MAMP/htdocs/shop/resources/assets/js/components/ImageUploader.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ImageUploader.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0bdc838f", Component.options)
+  } else {
+    hotAPI.reload("data-v-0bdc838f", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
 __webpack_require__(121)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(54),
+  __webpack_require__(55),
   /* template */
   __webpack_require__(101),
   /* scopeId */
@@ -1404,7 +1442,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1413,7 +1451,7 @@ __webpack_require__(131)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(55),
+  __webpack_require__(56),
   /* template */
   __webpack_require__(112),
   /* scopeId */
@@ -1442,7 +1480,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1842,7 +1880,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   }
 
   if (true) {
-    var Sortable = __webpack_require__(79);
+    var Sortable = __webpack_require__(80);
     module.exports = buildDraggable(Sortable);
   } else if (typeof define == "function" && define.amd) {
     define(['sortablejs'], function (Sortable) {
@@ -1855,12 +1893,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 })();
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list__);
 
 /**
@@ -1868,8 +1906,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(75);
-__webpack_require__(56);
+__webpack_require__(76);
+__webpack_require__(57);
 
 window.Vue = __webpack_require__(137);
 
@@ -1883,27 +1921,27 @@ window.Vue = __webpack_require__(137);
 //Vue.component('inscription', require('./components/Inscription.vue'));
 // Vue.component('content-form', require('./components/ContentForm.vue'));
 
-Vue.component('generate', __webpack_require__(88));
+Vue.component('generate', __webpack_require__(89));
 Vue.component('rappel', __webpack_require__(97));
 Vue.component('organisateur', __webpack_require__(95));
-Vue.component('endroit', __webpack_require__(86));
+Vue.component('endroit', __webpack_require__(87));
 Vue.component('jurisprudence', __webpack_require__(90));
 Vue.component('occurrence', __webpack_require__(93));
 Vue.component('price', __webpack_require__(96));
 Vue.component('option-groupe', __webpack_require__(94));
-Vue.component('detenteur', __webpack_require__(84));
+Vue.component('detenteur', __webpack_require__(85));
 
 Vue.component('manager', __webpack_require__(92));
-Vue.component('image-uploader', __webpack_require__(89));
-Vue.component('filter-adresse', __webpack_require__(87));
+Vue.component('image-uploader', __webpack_require__(14));
+Vue.component('filter-adresse', __webpack_require__(88));
 Vue.component('list-autocomplete', __webpack_require__(91));
-Vue.component('build', __webpack_require__(82));
-Vue.component('edit-build', __webpack_require__(85));
+Vue.component('build', __webpack_require__(83));
+Vue.component('edit-build', __webpack_require__(86));
 Vue.component('build-newsletter', __webpack_require__(7));
 Vue.component('build-newsletter-models', __webpack_require__(8));
-Vue.component('build-newsletter-group', __webpack_require__(83));
-Vue.component('analyse-newsletter', __webpack_require__(14));
-Vue.component('image-newsletter', __webpack_require__(15));
+Vue.component('build-newsletter-group', __webpack_require__(84));
+Vue.component('analyse-newsletter', __webpack_require__(15));
+Vue.component('image-newsletter', __webpack_require__(16));
 
 
 
@@ -1914,13 +1952,13 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(19);
+module.exports = __webpack_require__(20);
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1928,7 +1966,7 @@ module.exports = __webpack_require__(19);
 
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(13);
-var Axios = __webpack_require__(21);
+var Axios = __webpack_require__(22);
 var defaults = __webpack_require__(6);
 
 /**
@@ -1963,14 +2001,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(10);
-axios.CancelToken = __webpack_require__(20);
+axios.CancelToken = __webpack_require__(21);
 axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(35);
+axios.spread = __webpack_require__(36);
 
 module.exports = axios;
 
@@ -1979,7 +2017,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2043,7 +2081,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2051,10 +2089,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(6);
 var utils = __webpack_require__(3);
-var InterceptorManager = __webpack_require__(22);
-var dispatchRequest = __webpack_require__(23);
-var isAbsoluteURL = __webpack_require__(31);
-var combineURLs = __webpack_require__(29);
+var InterceptorManager = __webpack_require__(23);
+var dispatchRequest = __webpack_require__(24);
+var isAbsoluteURL = __webpack_require__(32);
+var combineURLs = __webpack_require__(30);
 
 /**
  * Create a new instance of Axios
@@ -2135,7 +2173,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2194,14 +2232,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(3);
-var transformData = __webpack_require__(26);
+var transformData = __webpack_require__(27);
 var isCancel = __webpack_require__(11);
 var defaults = __webpack_require__(6);
 
@@ -2280,7 +2318,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2306,7 +2344,7 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2338,7 +2376,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2365,7 +2403,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2408,7 +2446,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2483,7 +2521,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2502,7 +2540,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2562,7 +2600,7 @@ module.exports = (
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2583,7 +2621,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2658,7 +2696,7 @@ module.exports = (
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2677,7 +2715,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2721,7 +2759,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2755,7 +2793,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2846,12 +2884,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_ImageNewsletter_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_ImageNewsletter_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_ImageNewsletter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_ImageNewsletter_vue__);
 var _props$components$dat;
 
@@ -3121,12 +3159,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 }), _props$components$dat);
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
 //
 //
@@ -3354,14 +3392,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_AnalyseNewsletter_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_AnalyseNewsletter_vue__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_AnalyseNewsletter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__partials_AnalyseNewsletter_vue__);
 //
 //
@@ -3642,7 +3680,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3677,7 +3715,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3762,7 +3800,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3840,7 +3878,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3962,7 +4000,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4016,7 +4054,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4186,7 +4224,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4366,7 +4404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4544,7 +4582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4741,7 +4779,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5040,7 +5078,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5280,7 +5318,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5358,7 +5396,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5612,7 +5650,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5722,7 +5760,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5796,12 +5834,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageUploader_vue__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageUploader_vue__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageUploader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ImageUploader_vue__);
 //
 //
@@ -5936,10 +5974,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window._ = __webpack_require__(77);
+window._ = __webpack_require__(78);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -5959,7 +5997,7 @@ window._ = __webpack_require__(77);
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(18);
+window.axios = __webpack_require__(19);
 
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -5980,144 +6018,144 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // });
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.mt-15{\n   margin-bottom:15px;\n}\n", "", {"version":3,"sources":["Detenteur.vue?589b77ea"],"names":[],"mappings":";AAQA;GACA,mBAAA;CACA","file":"Detenteur.vue","sourcesContent":["<template>\n    <div class=\"mt-15\">\n        <p><strong>{{ detenteur.civilite }}</strong></p>\n        <p><a :href=\"'admin/user/' + detenteur.id\">{{ detenteur.name }}</a></p>\n        <p>{{ detenteur.email }}</p>\n    </div>\n</template>\n<style>\n    .mt-15{\n       margin-bottom:15px;\n    }\n</style>\n<script>\n    export default{\n        props: ['user'],\n        data(){\n            return{}\n        },\n        beforeMount: function () {\n            this.getData();\n        },\n        methods: {\n            getData : function(){\n                 this.detenteur = this.user;\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n.modal-dialog{\n     width:860px;\n}\n\n", "", {"version":3,"sources":["ImageUploader.vue?38155c76"],"names":[],"mappings":";AA2DA;KACA,WAAA;KACA,iBAAA;KACA,eAAA;CACA;AACA;KACA,YAAA;CACA","file":"ImageUploader.vue","sourcesContent":["<template>\n<div>\n    <button type=\"button\" class=\"btn btn-primary btn-xs\" @click=\"getFiles()\" data-toggle=\"modal\" :data-target=\"'#myModal_' + id\">Choisir un fichier</button>\n    <div id=\"bs-modal\">\n        <!-- MODAL -->\n        <div class=\"modal fade\" :id=\"'myModal_' + id\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n                        <h4 class=\"modal-title\" id=\"myModalLabel\">Choisir un fichier</h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"row\">\n                            <div class=\"col-md-2\">\n                                <div :id=\"'dropzone_' + id\" class=\"dropzone\"></div>\n                            </div>\n                            <div class=\"col-md-10\">\n                               <div class=\"wrapper-gallery\">\n                                   <ul v-if=\"files\" class=\"gallery\">\n                                       <li v-for=\"file in files\">\n                                           <figure class=\"figure-file-item\">\n                                               <img v-if=\"isImage(file)\" :src=\"path + '/' + file\" alt=\"image\" />\n                                               <img v-if=\"!isImage(file)\" height=\"105px\" src=\"images/text.svg\" alt=\"image\" />\n                                           </figure>\n                                           <div class=\"figure-file-item-label\">\n                                               <p v-if=\"!isImage(file)\">{{ file }}</p>\n                                               <button @click=\"chosenFile(path + '/' + file)\" class=\"btn btn-xs btn-info btn-file-item\">Choisir</button>\n                                               <button @click=\"deleteFile(path + '/' + file)\" class=\"btn btn-xs btn-danger\">x</button>\n                                           </div>\n                                       </li>\n                                   </ul>\n                                   <p class=\"loading\" v-show=\"loading\"><i class=\"fa fa-spinner fa-spin\"></i></p>\n                               </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"modal-footer\">\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Fermer</button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <input v-if=\"chosen && filename && !wrapper\" class=\"file-choosen\" :id=\"id\" type=\"hidden\" :name=\"inputname\" v-bind:value=\"filename\">\n\n    <div v-if=\"chosen && filename && wrapper\" class=\"file-choosen-wrapper\">\n        <input class=\"file-choosen\" type=\"hidden\" :name=\"inputname\" v-bind:value=\"filename\">\n        <img v-if=\"isImage(filename)\" class=\"file-choosen file-image thumbnail\" :src=\"filename\" alt=\"image\" />\n        <a v-if=\"!isImage(filename)\" target=\"_blank\" class=\"file-choosen\" :href=\"filename\">{{ filename }}</a>\n        <button @click=\"removeFile()\" class=\"btn btn-xs btn-danger\">x</button>\n    </div>\n\n</div>\n\n</template>\n\n<style>\n   .loading{\n        width:50px;\n        margin:40px auto;\n        font-size:30px;\n    }\n    .modal-dialog{\n        width:860px;\n    }\n\n</style>\n<script>\n\nexport default {\n props: ['inputname','id','wrapper'],\n    data () {\n        return {\n           path: 'files/uploads',\n           files: [],\n           chosen: false,\n           filename: '',\n           loading: false,\n        }\n    },\n    computed: {\n    },\n    mounted: function ()  {\n        this.getFiles();\n\n        var self = this;\n        this.$nextTick(function(){\n\n            Dropzone.autoDiscover = false;\n\n            var myDropzone = new Dropzone(\"#dropzone_\" + this.id, {\n                url: \"admin/upload\",\n                dictDefaultMessage: \" Ajouter un fichier\",\n                dictRemoveFile: \"OK\",\n                thumbnailWidth: 100,\n                thumbnailHeight: 80,\n                addRemoveLinks : true\n            });\n\n            myDropzone.on('sending', function(file, xhr, formData){\n                formData.append('path', self.path);\n                formData.append('_token', $(\"meta[name='_token']\").attr('content'));\n            });\n\n            myDropzone.on(\"success\", function(file,response) {\n                console.log(response.filename);\n                self.addFile(response.filename);\n            });\n        });\n    },\n    methods: {\n         getFiles() {\n\n            this.loading = true;\n            var self = this;\n\n            axios.post('/admin/getfiles', { path : this.path }).then(function (response) {\n                self.files = response.data.files;\n                self.loading = false;\n            }).catch(function (error) { console.log(error);});\n        },\n        deleteFile: function(path){\n            var self = this;\n            axios.post('/admin/files/delete', { path : path }).then(function (response) {\n                var answer = confirm('Voulez-vous vraiment supprimer ' + path + ' ?');\n                if (answer){ self.files.splice( self.files.indexOf(path), 1 );}\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFile: function(path){\n            this.filename = path;\n            this.chosen   = true;\n\n            this.$emit('imageChoosen', this.filename)\n            $('#myModal_'+this.id).modal('hide');\n        },\n        addFile: function(file){\n            this.files.push(file);\n        },\n        removeFile: function(){\n            this.filename = null;\n            this.chosen   = false;\n        },\n        isActive: function(path){\n            return this.directory === path ? true : false;\n        },\n        isImage: function(filename){\n\n            var get_ext = filename.split('.').reverse();\n            var exts    = ['jpg','jpeg','png','gif'];\n\n            return ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ) ? true : false;\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#chosen-select-app{\n    z-index:100;\n    width: 100% !important; /* or any value that fits your needs */\n}\n#loader-app{\n    text-align:center;\n    width:100%;\n    font-size:30px;\n    height:30px;\n    line-height:30px;\n}\n\n", "", {"version":3,"sources":["Jurisprudence.vue?b66e15b4"],"names":[],"mappings":";AAkFA;IACA,YAAA;IACA,uBAAA,CAAA,uCAAA;CACA;AAEA;IACA,kBAAA;IACA,WAAA;IACA,eAAA;IACA,YAAA;IACA,iBAAA;CACA","file":"Jurisprudence.vue","sourcesContent":["\n<template>\n    <div>\n\n        <div class=\"row\">\n            <div class=\"col-md-8\">\n                <h3 class=\"line\">Jurisprudence</h3>\n\n                <p id=\"loader-app\" v-show=\"loading\"><i class=\"fa fa-spinner fa-spin\"></i></p>\n                <p v-if=\"blocs.length === 0\" v-show=\"!loading\" class=\"text-danger\"><i class=\"fa fa-exclamation-triangle\"></i> &nbsp;Aucun arrêt pour cette recherche</p>\n\n                <section v-show=\"!loading\">\n\n                    <article class=\"row\" v-for=\"arret in blocs\">\n                        <div class=\"col-md-9\">\n                            <div class=\"post\">\n                                <div class=\"post-title\">\n                                    <h3>{{ arret.title }}</h3>\n                                    <p class=\"text-abstract-app\">{{ arret.abstract }}</p>\n                                 </div>\n                                <div class=\"post-entry\">\n                                    <div v-html=\"arret.pub_text\"></div>\n                                    <a target=\"_blank\" :href=\"arret.document\" v-if=\"arret.document\">Télécharger en pdf &nbsp;&nbsp;<i class=\"fa fa-file-pdf-o\"></i></a>\n\n                                    <!-- Ananlyse -->\n                                    <div class=\"analyse-app\" v-for=\"analyse in arret.analyses\">\n                                        <div class=\"well well-app\">\n                                            <h3>Analyse de {{ analyse.auteurs }}</h3>\n                                            <p class=\"text-muted\">{{ analyse.date }}</p>\n                                            <p class=\"text-abstract-app\">{{ analyse.abstract }}</p>\n                                            <a target=\"_blank\" :href=\"analyse.document\" v-if=\"analyse.document\">Télécharger en pdf &nbsp;&nbsp;<i class=\"fa fa-file-pdf-o\"></i></a>\n                                        </div>\n                                    </div>\n                                    <!-- END Ananlyse -->\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-md-3\">\n                            <div class=\"list-cat-app\" v-for=\"cat in arret.categories\">\n                                <img width=\"130\" :alt=\"cat.title\" :src=\"url +'files/pictos/' + cat.image\">\n                                <p><small>{{ cat.title }}</small></p>\n                            </div>\n                        </div>\n\n                    </article>\n\n                </section>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"sidebar-app fixed\">\n\n                    <a :href=\"url + slug\" class=\"btn btn-default btn-block\"><i class=\"fa fa-arrow-circle-left\"></i> &nbsp;Retour accueil</a>\n\n                    <div class=\"widget clear\">\n                        <h3 class=\"title\"><i class=\"icon-tasks\"></i> &nbsp;Affichage</h3>\n                        <p><input type=\"checkbox\" name=\"display\" v-on:change=\"filterYears\" v-model=\"display\">\n                            <label>Que les arrêts avec analyses</label></p>\n                    </div>\n\n                    <div class=\"widget categories clear\">\n                        <h3 class=\"title\"><i class=\"icon-tasks\"></i> &nbsp;Catégories</h3>\n                        <select id=\"chosen-select-app\" data-placeholder=\"Choisir une ou plusieurs catégories\" style=\"width:100%\" multiple class=\"chosen-select category\">\n                            <option v-for=\"categorie in list\" v-bind:value=\"categorie.id\">{{ categorie.title}}</option>\n                        </select>\n                    </div>\n\n                    <div class=\"widget years clear\">\n                        <h3 class=\"title\"><i class=\"icon-calendar\"></i> &nbsp;Années</h3>\n                        <p v-for=\"annee in annees\">\n                           <input type=\"checkbox\" v-on:change=\"filterYears\" v-model=\"checked\" :value=\"annee\">\n                           <label :for=\"annee\">Paru en {{ annee }}</label>\n                        </p>\n                    </div>\n\n                </div>\n            </div>\n        </div>\n\n    </div>\n</template>\n<style>\n\n    #chosen-select-app{\n        z-index:100;\n        width: 100% !important; /* or any value that fits your needs */\n    }\n\n    #loader-app{\n        text-align:center;\n        width:100%;\n        font-size:30px;\n        height:30px;\n        line-height:30px;\n    }\n\n</style>\n<script>\n\n    export default {\n\n        props: ['site','years','categories','slug'],\n        data () {\n            return {\n                list : [],\n                annees : [],\n                blocs: [],\n                checked: [],\n                loading: false,\n                display:0,\n                url: location.protocol + \"//\" + location.host+\"/\",\n            }\n        },\n        computed: {\n            computedSite: function () {\n                return this.site\n            }\n        },\n        mounted: function ()  {\n\n            this.getCategories();\n            this.getAnnees();\n\n            let self = this;\n            this.loading = true;\n\n            this.changed([],[]);\n\n            this.$nextTick(function() {\n\n                 let self = this;\n\n                 $('#chosen-select-app').chosen();\n                 $(\"#chosen-select-app\").chosen().change(function(evt,params){\n\n                     var categories = $(this).val();\n                     var years      = self.checked ? self.checked : null;\n\n                     self.changed(categories , years);\n                 });\n            });\n        },\n        methods: {\n            filterYears : function(){\n                 var categories = $('#chosen-select-app').val();\n                 var years      = this.checked ? this.checked : null;\n\n                 this.changed(categories, years);\n            },\n            getCategories : function(){\n               this.list = this.categories;\n            },\n            getAnnees : function(){\n               this.annees = this.years;\n            },\n            updateArrets : function(arrets){\n               this.blocs = arrets;\n            },\n            changed: function(selected, checked) {\n                this.loading = true;\n\n                var self = this;\n                axios.post('/vue/arrets', { site: this.site, categories : selected, years : checked, display : this.display  }).then(function (response) {\n                      setTimeout(function(){\n                           self.updateArrets(response.data.arrets);\n                           self.loading = false;\n                      }, 500);\n                }).catch(function (error) { console.log(error);});\n            },\n        }\n    }\n</script>"]}]);
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"AnalyseNewsletter.vue"}]);
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#addOption{\n    margin-bottom:15px;\n}\n.margBottom{\n  padding-bottom:5px;\n}\n.margTop{\n    margin-top:10px;\n}\n.list-group-item {\n    padding: 8px 15px 8px 15px;\n}\n.list-group-item label{\n    margin-bottom: 5px;\n    margin-top: 5px;\n}\n.list-option-groupe p{\n       margin-bottom: 5px;\n}\n.list-group-option{\n    margin-top:10px;\n}\n.list-group-option p {\n    margin-bottom: 3px;\n}\n.option-title{\n    border-color:#6f7271;\n}\n.btn-input-h{\n    height:34px;\n}\n", "", {"version":3,"sources":["OptionGroupe.vue?758795ee"],"names":[],"mappings":";AAkFA;IACA,mBAAA;CACA;AACA;EACA,mBAAA;CACA;AACA;IACA,gBAAA;CACA;AACA;IACA,2BAAA;CACA;AACA;IACA,mBAAA;IACA,gBAAA;CACA;AACA;OACA,mBAAA;CACA;AACA;IACA,gBAAA;CACA;AACA;IACA,mBAAA;CACA;AACA;IACA,qBAAA;CACA;AACA;IACA,YAAA;CACA","file":"OptionGroupe.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"text-right\">\n            <div class=\"btn-pull\" style=\"margin-bottom:10px;\">\n                <a v-show=\"!add\" @click=\"ajouter\" class=\"btn btn-sm btn-success\">Ajouter</a>\n                <a v-show=\"add\" @click=\"resetform\" class=\"btn btn-sm btn-default\">Fermer</a>\n            </div>\n        </div>\n        <ul class=\"list-group\">\n            <li class=\"list-group-item\" id=\"addOption\" v-show=\"add\">\n                <div class=\"row\">\n                    <div class=\"col-md-4\">\n                        <select name=\"type\" v-model=\"nouveau.type\" class=\"form-control\" v-on:change=\"selectType\" >\n                            <option value=\"checkbox\">Case à cocher</option>\n                            <option value=\"choix\">Choix</option>\n                            <option value=\"text\">Texte</option>\n                        </select>\n                    </div>\n                    <div class=\"col-md-8\">\n                        <input type=\"text\" class=\"form-control option-title\" name=\"title\" placeholder=\"Titre de l'option\" v-model=\"nouveau.title\">\n\n                        <div class=\"list-group-option\" v-if=\"nouveau.type == 'choix' &&  nouveau.groupe.length != 0\">\n                            <p v-for=\"groupe in nouveau.groupe\">\n                                <input class=\"form-control\" v-model=\"groupe.text\" placeholder=\"Choix\">\n                            </p>\n                            <a class=\"btn btn-xs btn-info\" @click=\"addNewGroupe()\"><i class=\"fa fa-plus\"></i></a>\n                        </div>\n                    </div>\n                </div>\n                <p class=\"text-right margTop\"><a @click=\"ajouterOption\" class=\"btn btn-sm btn-primary\">Envoyer</a></p>\n            </li>\n        </ul>\n\n        <ul class=\"list-group\">\n            <li v-for=\"option in list\" :class=\"'list-group-item ' + option.type\">\n                <h4 class=\"list-option-title\">{{ option.type_name }}</h4>\n                <div class=\"row\">\n                    <div class=\"col-md-10\">\n                        <label><strong>Titre</strong></label>\n                        <p v-if=\"!option.state\">{{ option.title }}</p>\n                        <div v-if=\"option.state\">\n                            <input class=\"form-control\" name=\"title\" type=\"text\" v-model=\"option.title\">\n                        </div>\n                    </div>\n                    <div class=\"col-md-2 text-right\">\n                        <div class=\"btn-group\">\n                            <a v-show=\"!option.state\" @click=\"editOption(option)\" class=\"btn btn-xs btn-info\">éditer</a>\n                            <a v-show=\"!option.state\" @click=\"deleteOption(option)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-times\"></i></a>\n                            <a v-show=\"option.state\" @click=\"saveOption(option)\" class=\"btn btn-xs btn-primary\">sauvegarder</a>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"row\" v-if=\"option.groupe.length != 0\">\n                    <div class=\"col-md-10\">\n                        <label><strong>Choix</strong></label>\n                        <p v-if=\"!option.state\" v-for=\"groupe in option.groupe\">{{ groupe.text }}</p>\n\n                        <div class=\"list-option-groupe\" v-if=\"option.state\">\n                            <p v-for=\"groupe in option.groupe\">\n                                <input class=\"form-control\" v-model=\"groupe.text\">\n                            </p>\n\n                            <div class=\"row\" v-if=\"newgroupitem\" style=\"margin-bottom:8px;\">\n                                <div class=\"col-md-11\">\n                                    <input class=\"form-control\" value=\"\" v-model=\"groupeitem.text\">\n                                </div>\n                                <div class=\"col-md-1\">\n                                    <button type=\"button\" @click=\"saveGroup(option)\" class=\"btn btn-sm btn-primary btn-input-h pull-right\">ajouter</button>\n                                </div>\n                            </div>\n\n                            <a class=\"btn btn-xs btn-info\" @click=\"addNewGroupeItem(option)\"><i class=\"fa fa-plus\"></i></a>\n                        </div>\n\n                    </div>\n                </div>\n            </li>\n        </ul>\n\n    </div>\n</template>\n<style>\n    #addOption{\n        margin-bottom:15px;\n    }\n    .margBottom{\n      padding-bottom:5px;\n    }\n    .margTop{\n        margin-top:10px;\n    }\n    .list-group-item {\n        padding: 8px 15px 8px 15px;\n    }\n    .list-group-item label{\n        margin-bottom: 5px;\n        margin-top: 5px;\n    }\n    .list-option-groupe p{\n           margin-bottom: 5px;\n    }\n    .list-group-option{\n        margin-top:10px;\n    }\n    .list-group-option p {\n        margin-bottom: 3px;\n    }\n    .option-title{\n        border-color:#6f7271;\n    }\n    .btn-input-h{\n        height:34px;\n    }\n</style>\n<script>\n\nexport default {\n\n    props: ['colloque','options'],\n    data () {\n        return {\n            list: [],\n            nouveau:{\n                title: '',\n                type: 'checkbox',\n                groupe: new Array(),\n                colloque_id: this.colloque,\n            },\n            groupeitem: {},\n            add : false,\n            newgroupitem: false,\n            isText: false\n        }\n    },\n    beforeMount: function () {\n        this.getOptions();\n    },\n    methods: {\n        getOptions : function(){\n             this.list = _.orderBy(this.options, ['type'],['desc']);\n        },\n        selectType : function(){\n\n            if(this.nouveau.type == 'choix')\n            {\n                 this.nouveau.groupe.push({ text: ''});\n            }\n            else{\n                this.nouveau.groupe = [];\n            }\n        },\n        editOption : function(option){\n            option.state = true;\n        },\n        ajouter : function(){\n            this.add = true;\n        },\n        addNewGroupe: function(option) {\n            this.nouveau.groupe.push({text: ''});\n        },\n        addNewGroupeItem: function(option) {\n            this.newgroupitem = true;\n            this.groupeitem.text = '';\n            this.groupeitem.option_id = option.id;\n            this.groupeitem.colloque_id = this.colloque;\n        },\n        resetform :function(){\n            this.add = false;\n            this.nouveau = {\n                title: '',\n                option: '',\n                type: 'checkbox',\n                groupe: [],\n                colloque_id: this.colloque,\n            };\n        },\n        ajouterOption:function(){\n\n            var self = this;\n            axios.post('/vue/option', { option : this.nouveau }).then(function (response) {\n                self.list = _.orderBy(response.data.options, ['type'],['desc']);\n                self.resetform();\n            }).catch(function (error) { console.log(error);});\n\n        },\n        saveOption : function(option){\n\n            var self = this;\n            axios.post('/vue/option/' + option.id, { option, '_method' : 'put' }).then(function (response) {\n               console.log(response.data.options);\n               self.list = _.orderBy(response.data.options, ['type'],['desc']);\n            }).catch(function (error) { console.log(error);});\n\n        },\n        saveGroup : function(option){\n\n            if(this.groupeitem.text.length){\n\n                var self = this;\n                axios.post('/vue/groupe', this.groupeitem).then(function (response) {\n                    self.list = _.orderBy(response.data.options, ['type'],['desc']);\n                }).catch(function (error) { console.log(error);});\n            }\n\n            this.newgroupitem = false;\n            this.groupeitem = {};\n        },\n        deleteOption :function(option){\n\n            var shouldDelete = false;\n\n            if(option.isUsed){\n                var answer = confirm('Cette option est lié à des inscription, voulez-vous vraiment supprimer?');\n                shouldDelete = answer ? true : false;\n            }\n            else{\n                shouldDelete = true;\n            }\n\n            if(shouldDelete){\n\n                var self = this;\n                axios.post('/vue/option/' + option.id, { '_method' : 'DELETE' }).then(function (response) {\n                    self.list = _.orderBy(response.data.options, ['type'],['desc']);\n                }).catch(function (error) { console.log(error);});\n            }\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.choixAdresse{\n    margin-bottom:10px;\n}\n", "", {"version":3,"sources":["Endroit.vue?42768181"],"names":[],"mappings":";AAoBA;IACA,mBAAA;CACA","file":"Endroit.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"choixAdresse\">\n           <select class=\"form-control form-required required\" v-model=\"selected\" name=\"location_id\" v-on:change=\"updateAdresse\">\n               <option v-for=\"adresse in list\" v-bind:value=\"adresse.id\">{{ adresse.name }}</option>\n           </select>\n       </div>\n       <div class=\"thumbnail thumbnail-colloque\">\n            <div class=\"row\">\n                <div class=\"col-md-3\" v-html=\"map\"></div>\n                <div class=\"col-md-8\">\n                    <h4 v-html=\"name\"></h4>\n                    <p v-html=\"adresse\"></p>\n                </div>\n            </div>\n       </div>\n   </div>\n</template>\n<style>\n    .choixAdresse{\n        margin-bottom:10px;\n    }\n</style>\n<script>\nexport default {\n\n    props: ['endroit','adresses'],\n    data () {\n        return {\n            list: [],\n            map: '<span class=\"text-danger\">il n\\'existe pas de carte</span>',\n            name: '',\n            adresse:''\n        }\n    },\n    computed: {\n       computedEndroit: function () {\n            return this.endroit\n        },\n    },\n    beforeMount: function ()  {\n        this.selected = this.endroit;\n\n        this.getAdresses();\n        this.updateAdresse();\n    },\n    methods: {\n        getAdresses : function(){\n           this.list = this.adresses;\n        },\n        makeAdresse: function(location){\n            this.name    = location.name;\n            this.adresse = location.adresse;\n\n            if(location.map){\n                this.map = '<img style=\"max-width:100%;\" src=\"files/colloques/cartes/'+ location.map +'\" alt=\"Carte\">';\n            }\n        },\n        updateAdresse : function(){\n\n            var self = this;\n            axios.post('/admin/location/colloque', { id: this.selected }).then(function (response) {\n               self.makeAdresse(response.data.location);\n            }).catch(function (error) { console.log(error);});\n\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.autocomplete-bloc{\n    padding:10px 0;\n    margin-top:5px;\n}\n.autocomplete-bloc span{\n    display:block;\n}\n.autocomplete-bloc .btn.btn-danger{\n    margin-top:8px;\n}\n.empty-text{\n    margin-top:5px;\n}\n.no-adresse {\n    position: absolute;\n    top: 5px;\n    right: 5px;\n    display: block;\n    color: #7b7b7b;\n    font-size: 12px;\n    border: 1px solid #d4d4d4;\n    padding: 3px;\n    width:auto;\n    text-align: center;\n}\n", "", {"version":3,"sources":["ListAutocomplete.vue?55aa56b8"],"names":[],"mappings":";AAmCA;IACA,eAAA;IACA,eAAA;CACA;AACA;IACA,cAAA;CACA;AACA;IACA,eAAA;CACA;AACA;IACA,eAAA;CACA;AACA;IACA,mBAAA;IACA,SAAA;IACA,WAAA;IACA,eAAA;IACA,eAAA;IACA,gBAAA;IACA,0BAAA;IACA,aAAA;IACA,WAAA;IACA,mBAAA;CACA","file":"ListAutocomplete.vue","sourcesContent":["<template>\n    <div>\n\n        <div class=\"input-group\" v-show=\"!hasChosen\">\n            <span class=\"input-group-addon\">\n                <img v-show=\"searching\" height=\"15px\" src=\"images/default.svg\">\n            </span>\n            <input :class=\"'search-input form-control search-adresse-autocomplete_' + type\" placeholder=\"Chercher...\" type=\"text\">\n            <span class=\"input-group-addon\" style=\"border:none;background:#fff; width:100px;\">\n                <span class=\"empty-text text-danger pull-right\" v-show=\"noResult\">Aucun résultat</span>\n            </span>\n        </div>\n\n        <div v-if=\"hasChosen\" class=\"choice-adresse autocomplete-bloc\">\n            <input :name=\"type\" :value=\"chosen.user_id\" type=\"hidden\">\n\n            <div class=\"panel panel-primary\">\n                <div class=\"panel-body panel-colloque\">\n                    <span class=\"no-adresse\">{{ chosen.user_id }}</span>\n\n                    <span v-if=\"chosen.company && (chosen.company != chosen.company)\"><strong>{{ chosen.company }}</strong></span>\n                    <span v-if=\"chosen.civilite\">{{ chosen.civilite }}</span>\n                    <span><a target=\"_blank\" :href=\"'admin/user/' + chosen.user_id\">{{ chosen.name }}</a></span>\n                    <span v-if=\"chosen.cp\">{{ chosen.cp }}</span>\n                    <span v-if=\"chosen.complement\">{{ chosen.complement }}</span>\n                    <span>{{ chosen.adresse }}</span>\n                    <span>{{ chosen.npa }} {{ chosen.ville }}</span>\n                    <button type=\"button\" class=\"btn btn-danger btn-xs pull-right\" @click.prevent=\"remove\">changer</button>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</template>\n<style>\n    .autocomplete-bloc{\n        padding:10px 0;\n        margin-top:5px;\n    }\n    .autocomplete-bloc span{\n        display:block;\n    }\n    .autocomplete-bloc .btn.btn-danger{\n        margin-top:8px;\n    }\n    .empty-text{\n        margin-top:5px;\n    }\n    .no-adresse {\n        position: absolute;\n        top: 5px;\n        right: 5px;\n        display: block;\n        color: #7b7b7b;\n        font-size: 12px;\n        border: 1px solid #d4d4d4;\n        padding: 3px;\n        width:auto;\n        text-align: center;\n    }\n</style>\n\n<script>\n    export default{\n        props: ['type','chosen_id'],\n        data(){\n            return{\n                chosen: {\n                    civilite : '',\n                    name : '',\n                    company: '',\n                    adresse: '',\n                    cp: '',\n                    npa: '',\n                    ville: '',\n                    user_id: null\n                },\n                hasChosen: false,\n                noResult: false,\n                searching: false\n            }\n        },\n        mounted: function ()  {\n\n            if(this.chosen_id){ this.fetch(); }\n\n            this.$nextTick(function() {\n\n                let self = this;\n\n                $(\".search-adresse-autocomplete_\" + this.type).keypress(function(e) {\n                    var code = (e.keyCode ? e.keyCode : e.which);\n                    if(code == 13) { //Enter keycode\n                        return false;\n                    }\n                });\n\n                $(\".search-adresse-autocomplete_\" + this.type).blur(function(){\n                     if($(this).val() === '') {\n                          self.noResult = false;\n                     }\n                 })\n\n                $(\".search-adresse-autocomplete_\" + this.type).autocomplete({\n                    source    : base_url + 'vue/autocomplete',\n                    minLength : 2,\n                    search: function( event, ui ) {\n                        self.searching = true;\n                    },\n                    select : function( event, ui ) {\n                         self.chosen = ui.item.user;\n                         self.hasChosen = true;\n                         self.searching = false;\n                         self.noResult = false;\n                         console.log(ui.item.user);\n                         return false;\n                    },\n                    response: function(event, ui) {\n                        if (ui.content.length === 0) {\n                            self.searching = false;\n                            self.noResult = true;\n                        }\n                    },\n                    change: function(event, ui) {\n                        console.log($(this).val());\n                         self.searching = false;\n                        if($(this).val() === '') {\n                             self.noResult = false;\n                        }\n                    }\n                }).autocomplete( \"instance\" )._renderItem = function( ul, item ){\n                    return $(\"<li>\").append(\"<a>\" + item.label + \"<span>\" + item.desc + \"</span><span>\" + item.company + \"</span></a>\").appendTo(ul);\n                };\n\n            });\n        },\n        methods: {\n            remove () {\n                this.hasChosen = false;\n                this.chosen = {\n                    civilite : '',\n                    name : '',\n                    company: '',\n                    adresse: '',\n                    cp: '',\n                    npa: '',\n                    ville: '',\n                    user_id: null\n                };\n                this.user_id = null;\n            },\n            updateOptions(options){\n                this.options = options;\n            },\n            fetch () {\n\n                var self = this;\n                axios.get('admin/user/getUser/' + this.chosen_id, {}).then(function (response) {\n                    console.log(response.data);\n                    self.chosen = response.data;\n                    self.hasChosen = true;\n                    self.noResult = false;\n                }).catch(function (error) { console.log(error);});\n            },\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n", "", {"version":3,"sources":["BuildNewsletterModels.vue?11d290e4"],"names":[],"mappings":";AAsHA;IACA,cAAA;IACA,mBAAA;IACA,aAAA;IACA,iBAAA;IACA,uBAAA;IACA,mBAAA;IACA,iDAAA;IACA,6DAAA;CACA;AAEA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,aAAA;IACA,gBAAA;IACA,qDAAA;CACA;AAEA;CACA,eAAA;CACA,0BAAA;CACA,wBAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA","file":"BuildNewsletterModels.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <div class=\"btn-group pull-right\" v-if=\"mode == 'edit'\" style=\"margin-bottom:5px;\">\n                    <form method=\"post\" :action=\"action\" v-if=\"model && !isEdit\">\n                        <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                        <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                        <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                        <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                        <button v-if=\"model && !isEdit\" @click=\"editMode(model)\" type=\"button\" class=\"btn btn-xs btn-warning\">éditer</button>\n                        <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"content.id\" :data-action=\"model.title\">x</button>\n                    </form>\n                </div>\n\n                <analyse-newsletter\n                        v-if=\"model && type == 5 && newsletter.display == 'top'\"\n                        :title=\"newsletter.comment_title\"\n                        :arret=\"model\"\n                        :analyses=\"model.analyses\"></analyse-newsletter>\n\n                <!-- Bloc content-->\n                <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"resetTable\">\n                    <tr v-if=\"model\">\n                        <td valign=\"top\" width=\"375\" class=\"resetMarge contentForm\">\n                            <h3>{{ model.dumois ? 'Arrêt du mois : ' : '' }}{{ model.title }}</h3>\n                            <p class=\"abstract\">{{ model.abstract }}</p>\n                            <div v-html=\"model.content\" class=\"content\"></div>\n                            <p><a target=\"_blank\" :class=\"model.class\" :href=\"model.link\">{{ model.message }}</a></p>\n                        </td>\n\n                        <!-- Bloc image droite-->\n                        <td width=\"25\" class=\"resetMarge\"></td><!-- space -->\n                        <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                            <div v-for=\"image in model.images\">\n                                <a target=\"_blank\" :href=\"image.link\">\n                                    <img width=\"130\" border=\"0\" :alt=\"image.title\" :src=\"image.image\">\n                                </a>\n                                <p v-if=\"!newsletter.hide_title\" style=\"text-align:center !important;\">{{ image.title }}</p>\n                            </div>\n                        </td>\n                    </tr>\n                </table>\n                <!-- Bloc content-->\n\n                <analyse-newsletter\n                        v-if=\"model && type == 5 && newsletter.display == 'bottom'\"\n                        :title=\"newsletter.comment_title\"\n                        :arret=\"model\"\n                        :analyses=\"model.analyses\"></analyse-newsletter>\n\n            </div>\n\n            <div class=\"col-md-5\" v-show=\"isEdit || mode == 'create'\">\n                <form name=\"blocForm newsletterForm\" class=\"form-horizontal\" method=\"post\" :action=\"action\">\n\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <input v-if=\"mode == 'edit'\" type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <div v-if=\"type == 7\">\n                                <select class=\"form-control form-required required\" v-model=\"categorie\" name=\"id\" v-on:change=\"updateModel\">\n                                    <option v-if=\"!categorie\" :value=\"null\" disabled>Sélectionner catégorie</option>\n                                    <option v-for=\"categorie in categories\" v-bind:value=\"categorie\">{{ categorie.title }}</option>\n                                </select><br/>\n\n                                <div class=\"row drag\">\n                                    <div class=\"col-md-6\">\n                                        <draggable v-model=\"arrets\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                            <div v-for=\"element in arrets\" :key=\"element.id\">{{ element.reference }}</div>\n                                        </draggable>\n                                    </div>\n                                    <div class=\"col-md-6\">\n                                        <draggable v-model=\"choosen\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                            <div v-for=\"element in choosen\" :key=\"element.id\">{{ element.reference }}</div>\n                                        </draggable>\n                                    </div>\n                                </div>\n                            </div>\n                            <div v-if=\"type != 7\">\n                                <select class=\"form-control form-required required\" v-model=\"model\" name=\"id\" v-on:change=\"updateModel\">\n                                    <option v-if=\"!model\" :value=\"null\" disabled>Sélectionner</option>\n                                    <option v-for=\"model in models\" v-bind:value=\"model\">{{ model.title }}</option>\n                                </select><br/>\n                            </div>\n\n                            <div class=\"btn-group\">\n                                <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                <input v-if=\"type == 7 && categorie\" type=\"hidden\" :value=\"categorie.id\" name=\"categorie_id\">\n\n                                <div v-if=\"model\">\n                                    <input v-if=\"type == 5\" type=\"hidden\" :value=\"model.id\" name=\"arret_id\">\n                                    <input v-if=\"type == 8\" type=\"hidden\" :value=\"model.id\" name=\"product_id\">\n                                    <input v-if=\"type == 9\" type=\"hidden\" :value=\"model.id\" name=\"colloque_id\">\n                                </div>\n\n                                <div v-if=\"type == 7\">\n                                    <input v-for=\"chose in choosen\" type=\"hidden\" name=\"arrets[]\" :value=\"chose.id\" />\n                                </div>\n\n                                <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                <button type=\"button\" @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                            </div>\n\n                        </div>\n                    </div>\n\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n</style>\n<script>\n\n    import draggable from 'vuedraggable';\n    import AnalyseNewsletter from './partials/AnalyseNewsletter.vue';\n\n    export default{\n\n        props: ['type','campagne','_token','url','site','title','content','mode','newsletter'],\n        components: {\n            draggable,\n            'analyse-newsletter' : AnalyseNewsletter,\n        },\n        data(){\n            return{\n                model:null,\n                choosen: [],\n                categorie: null,\n                categories: [],\n                arrets: [],\n                models: [],\n                lists:[],\n                isEdit: false,\n            }\n        },\n        computed: {\n            route: function () {\n                if(this.type == 5){ return \"admin/ajax/arrets/\" + this.site; }\n                if(this.type == 8){ return \"admin/ajax/product\"; }\n                if(this.type == 9){ return \"admin/ajax/colloque\"; }\n            },\n            selected: function () {\n                if(this.type == 5){ this.content.arret }\n                if(this.type == 8){ this.content.product }\n                if(this.type == 9){ this.content.colloque }\n            },\n            action:function(){\n                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }\n                if(this.mode == 'create'){ return this.url; }\n            },\n            prepared: function () {\n                var arr = [];\n                _.each(this.choosen,function(o){\n                   arr.push(_.pick(o,'id'));\n                });\n\n                return arr;\n            }\n        },\n        watch : {\n           type:function(val) {\n              this.models = [];\n              this.getModels(this.route);\n           },\n        },\n        mounted: function ()  {\n            this.getModels(this.route);\n            this.getCategories();\n            this.initialize();\n        },\n        methods: {\n            initialize : function(){\n                this.model  = this.content ? this.content.model : null;\n                this.isEdit = !this.content ? true : false;\n            },\n            getModels: function(route) {\n                var self = this;\n                axios.get(route).then(function (response) {\n                      self.models = response.data;\n                }).catch(function (error) { console.log(error);});\n            },\n            getCategories: function() {\n                var self = this;\n                axios.get('admin/ajax/categories/' + self.site).then(function (response) {\n                      self.categories = response.data;\n                      self.lists.push(self.categories);\n                }).catch(function (error) { console.log(error);});\n            },\n            getArretsCategories: function() {\n                var self = this;\n                axios.post(\"admin/ajax/categorie/categoriearrets\",{ id: self.categorie.id }).then(function (response) {\n                      self.arrets = response.data;\n                }).catch(function (error) { console.log(error);});\n            },\n            updateModel(){\n                this.getArretsCategories();\n            },\n            editMode(model){\n                this.isEdit = true;\n            },\n            close(){\n                this.isEdit = false;\n                this.initialize();\n                if(this.mode == 'create'){\n                    this.model = null;\n                    this.$emit('cancel', this.cancel);\n                }\n            },\n            deleteContent(model){\n                //this.$emit('deleteContent', model);\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#addPrices{\n    margin-bottom:15px;\n}\n.margBottom{\n  padding-bottom:5px;\n}\n.list-group-item {\n    padding: 8px 15px 8px 15px;\n}\n.price-list{\n    width:100%;\n}\n.price-list dd {\n    margin-left: 100px;\n}\n\n", "", {"version":3,"sources":["Price.vue?1b59cdd3"],"names":[],"mappings":";AAgHA;IACA,mBAAA;CACA;AACA;EACA,mBAAA;CACA;AACA;IACA,2BAAA;CACA;AACA;IACA,WAAA;CACA;AACA;IACA,mBAAA;CACA","file":"Price.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"text-right\">\n           <div class=\"btn-pull\" style=\"margin-bottom:10px;\">\n               <a v-show=\"!add\" @click=\"ajouter\" class=\"btn btn-sm btn-success\">Ajouter</a>\n               <a v-show=\"add\" @click=\"resetform\" class=\"btn btn-sm btn-default\">Fermer</a>\n           </div>\n       </div>\n       <ul class=\"list-group\">\n           <li class=\"list-group-item\" id=\"addPrices\" v-show=\"add\">\n               <div class=\"row\">\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Description:</dt>\n                           <dd><input class=\"form-control\" name=\"description\" type=\"text\" v-model=\"nouveau.description\"></dd>\n                           <dt>Remarque:</dt>\n                           <dd><input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"nouveau.remarque\"></dd>\n                       </dl>\n                   </div>\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Prix:</dt>\n                           <dd><input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"nouveau.price\"></dd>\n                           <dt>Type de prix::</dt>\n                           <dd>\n                               <select class=\"form-control\" v-model=\"nouveau.type\">\n                                   <option value=\"public\">Public</option>\n                                   <option value=\"admin\">Admin</option>\n                               </select>\n                           </dd>\n                       </dl>\n                   </div>\n               </div>\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt style=\"width:200px;\">Cacher le prix à partir du:</dt>\n                           <dd style=\"margin-left:220px;\"><input class=\"form-control datePickerNew\" name=\"end_at\" type=\"text\" v-model=\"nouveau.end_at\"></dd>\n                       </dl>\n                   </div>\n               </div>\n\n               <p class=\"text-right margBottom\"><a @click=\"ajouterPrice\" class=\"btn btn-sm btn-primary\">Envoyer</a></p>\n           </li>\n       </ul>\n\n       <ul class=\"list-group\">\n           <li v-for=\"price in list\" :class=\"'list-group-item ' + price.type\">\n\n               <div class=\"row\">\n                   <div class=\"col-md-12 text-right\">\n                       <div class=\"btn-group\" style=\"margin-bottom:10px;\">\n                           <a v-show=\"!price.state\" @click=\"editPrice(price)\" class=\"btn btn-xs btn-info\">éditer</a>\n                           <a v-show=\"!price.state\" @click=\"deletePrice(price)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-times\"></i></a>\n                           <a v-show=\"price.state\" @click=\"savePrice(price)\" class=\"btn btn-xs btn-primary\">sauvegarder</a>\n                       </div>\n                   </div>\n               </div>\n\n               <div class=\"row\">\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Description:</dt>\n                           <dd v-if=\"!price.state\">{{ price.description }}</dd>\n                           <dd v-if=\"price.state\">\n                               <input class=\"form-control\" name=\"description\" type=\"text\" v-model=\"price.description\">\n                           </dd>\n                           <dt>Remarque:</dt>\n                           <dd v-if=\"!price.state\">{{ price.remarque }}</dd>\n                           <dd v-if=\"price.state\">\n                               <input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"price.remarque\">\n                           </dd>\n                       </dl>\n                   </div>\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Prix:</dt>\n                           <dd v-if=\"!price.state\">{{ price.price }} CHF</dd>\n                           <dd v-if=\"price.state\">\n                               <input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"price.price\">\n                           </dd>\n                           <dt>Type de prix:</dt>\n                           <dd v-if=\"!price.state\">{{ price.type }}</dd>\n                           <dd v-if=\"price.state\">\n                               <select class=\"form-control\" v-model=\"price.type\">\n                                   <option value=\"public\">Public</option>\n                                   <option value=\"admin\">Admin</option>\n                               </select>\n                           </dd>\n                       </dl>\n                   </div>\n               </div>\n\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt style=\"width:200px;\">Cacher le prix à partir du:</dt>\n                           <dd style=\"margin-left:220px;\" v-if=\"!price.state\">{{ price.end_at }}</dd>\n                           <dd style=\"margin-left:220px;\" v-if=\"price.state\">\n                               <input class=\"form-control datePickerPrices\" name=\"end_at\" type=\"text\" v-model=\"price.end_at\">\n                           </dd>\n                       </dl>\n                   </div>\n               </div>\n\n           </li>\n       </ul>\n\n   </div>\n</template>\n<style>\n    #addPrices{\n        margin-bottom:15px;\n    }\n    .margBottom{\n      padding-bottom:5px;\n    }\n    .list-group-item {\n        padding: 8px 15px 8px 15px;\n    }\n    .price-list{\n        width:100%;\n    }\n    .price-list dd {\n        margin-left: 100px;\n    }\n\n</style>\n<script>\n\nexport default {\n\n    props: ['colloque','prices','occurrences'],\n    data () {\n        return {\n            list: [],\n            list_occurrences: [],\n            nouveau:{\n                description: '',\n                price: '',\n                type: 'public',\n                rang: '',\n                remarque: '',\n                end_at:'',\n                colloque_id: this.colloque,\n            },\n            add : false\n        }\n    },\n    beforeMount: function () {\n        this.getData();\n    },\n    methods: {\n        getData : function(){\n             this.list = _.orderBy(this.prices, ['type'],['desc']);\n             this.list_occurrences = this.occurrences;\n\n             this.$nextTick(function(){\n\n               $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                var self = this;\n\n                $('.datePickerNew').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   self.nouveau.end_at = ev.target.value;\n                });\n            });\n        },\n        editPrice : function(price){\n            price.state = true;\n\n            this.$nextTick(function(){\n                 $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                $('.datePickerPrices').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   price.end_at = ev.target.value;\n                });\n            });\n\n        },\n        ajouter:function(){\n            this.add = true;\n        },\n        resetform :function(){\n            this.add = false;\n            this.nouveau = {\n                description: '',\n                price: '',\n                type: '',\n                rang: '',\n                remarque: '',\n                colloque_id: this.colloque,\n            };\n        },\n        ajouterPrice:function(){\n\n            var self = this;\n            axios.post('/vue/price', { price : this.nouveau }).then(function (response) {\n                self.list = _.orderBy(response.data.prices, ['type'],['desc']);\n                self.resetform();\n            }).catch(function (error) { console.log(error);});\n        },\n        savePrice : function(price){\n\n            var self = this;\n            axios.post('/vue/price/' + price.id, { price, '_method' : 'put' }).then(function (response) {\n               self.list = _.orderBy(response.data.prices, ['type'],['desc']);\n            }).catch(function (error) { console.log(error);});\n\n        },\n        deletePrice :function(price){\n\n            var self = this;\n            axios.post('/vue/price/' + price.id, { '_method' : 'DELETE' }).then(function (response) {\n                self.list = _.orderBy(response.data.prices, ['type'],['desc']);\n            }).catch(function (error) { console.log(error);});\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.choixAdresse{\n    margin-bottom:10px;\n}\n", "", {"version":3,"sources":["Organisateur.vue?555b2ff7"],"names":[],"mappings":";AAoBA;IACA,mBAAA;CACA","file":"Organisateur.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"choixAdresse\">\n           <select class=\"form-control form-required required\" v-model=\"selected\" name=\"adresse_id\" v-on:change=\"updateAdresse\">\n               <option v-for=\"adresse in list\" v-bind:value=\"adresse.id\">{{ adresse.name }}</option>\n           </select>\n       </div>\n       <div class=\"thumbnail thumbnail-colloque\">\n            <div class=\"row\">\n                <div class=\"col-md-3\" v-html=\"logo\"></div>\n                <div class=\"col-md-8\">\n                    <h4 v-html=\"name\"></h4>\n                    <p v-html=\"adresse\"></p>\n                </div>\n            </div>\n       </div>\n   </div>\n</template>\n<style>\n    .choixAdresse{\n        margin-bottom:10px;\n    }\n</style>\n<script>\nexport default {\n\n    props: ['organisateur','adresses'],\n    data () {\n        return {\n            list: [],\n            logo: '<span class=\"text-danger\">il n\\'existe pas de logo</span>',\n            name: '',\n            adresse:''\n        }\n    },\n    computed: {\n       computedEndroit: function () {\n            return this.organisateur\n        },\n    },\n    beforeMount: function ()  {\n        this.selected = this.organisateur;\n\n        this.getAdresses();\n        this.updateAdresse();\n    },\n    methods: {\n        getAdresses : function(){\n           this.list = this.adresses;\n        },\n        makeAdresse: function(organisateur){\n            this.name    = organisateur.name;\n            this.adresse = organisateur.adresse;\n\n            if(organisateur.logo)\n            {\n                this.logo = '<img style=\"max-width:100%;max-height:100px;\" src=\"files/logos/'+ organisateur.logo +'\" alt=\"Logo\">';\n            }\n        },\n        updateAdresse : function(){\n\n            var self = this;\n            axios.post('/admin/organisateur/colloque', { id: this.selected }).then(function (response) {\n                 self.makeAdresse(response.data.organisateur);\n            }).catch(function (error) { console.log(error);});\n\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.max{\n    max-height:80px;\n}\n.form-group-border{\n    margin-top:20px;\n}\n.form-group-border .checkbox{\n    padding-left:0;\n}\n", "", {"version":3,"sources":["FilterAdresse.vue?39bc0a2b"],"names":[],"mappings":";AAyEA;IACA,gBAAA;CACA;AACA;IACA,gBAAA;CACA;AACA;IACA,eAAA;CACA","file":"FilterAdresse.vue","sourcesContent":["<template>\n    <div>\n\n        <div class=\"row\">\n            <div class=\"col-md-2\">\n                <div class=\"form-group\">\n                    <label class=\"control-label\">Rechercher</label>\n                    <select name=\"type\" class=\"form-control\" v-model=\"selected\"  v-on:change=\"updateType\">\n                        <option v-for=\"type in types\" v-bind:value=\"type.value\">{{ type.name }}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"col-md-2\">\n                <div class=\"form-group\">\n                    <label class=\"control-label\">Grouper par</label>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"checked\" name=\"group\" type=\"radio\" value=\"id\"> &nbsp;Ne pas grouper</label>\n                    </div>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"checked\" name=\"group\" type=\"radio\" value=\"email\"> &nbsp;Même email</label>\n                    </div>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"checked\" name=\"group\" type=\"radio\" value=\"last_name\"> &nbsp;Même Nom</label>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-md-4\">\n\n                <p><button type=\"button\" class=\"btn btn-xs btn-success\" @click=\"addTerm\"><i class=\"fa fa-plus\"></i> &nbsp;terme de recherche</button></p>\n                <div v-for=\"(term,index) in searchTerms\" class=\"row\">\n                    <div class=\"col-md-1\">\n                        <button type=\"button\" class=\"btn btn-xs btn-danger\" @click=\"removeTerm(index)\"><i class=\"fa fa-minus\"></i></button>\n                    </div>\n                    <div class=\"col-md-4\">\n                        <select v-model=\"term.column\" :name=\"'columns[' + index + ']'\" class=\"form-control\">\n                            <option v-for=\"column in choosencolumns\" v-bind:value=\"column.label\">{{ column.name }}</option>\n                        </select>\n                    </div>\n                    <div class=\"col-md-7\">\n                        <input type=\"text\" v-model=\"term.value\" class=\"form-control\" :name=\"'terms[' + index + ']'\" placeholder=\"Recherche...\">\n                    </div>\n                </div>\n\n                <div v-if=\"searchTerms.length\" class=\"form-group form-group-border\">\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"operator\" name=\"operator\" type=\"radio\" value=\"and\"> &nbsp;\n                            Et <span class=\"text-muted\">(tous les termes doivent correspondre)</span>\n                        </label>\n                    </div>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"operator\" name=\"operator\" type=\"radio\" value=\"or\"> &nbsp;\n                            Ou <span class=\"text-muted\">(chaque terme séparément)</span>\n                        </label>\n                    </div>\n                </div>\n\n            </div>\n            <div class=\"col-md-2\">\n                <label class=\"control-label\">&nbsp;</label><br/>\n                <button class=\"btn btn-info\" type=\"submit\">Recherche</button>\n            </div>\n            <div class=\"col-md-2\">\n                <p>\n                    <strong><span class=\"text-danger\">La recherche se fait sur les champs existant pour chaque type:<br/></span></strong>\n                    <strong>Comptes utilisateurs: </strong> Nom, prénom, email, entreprise<br/>\n                    <strong>Adresses: </strong> Nom, prénom, email, entreprise, adresse, NPA, ville\n                </p>\n            </div>\n        </div>\n\n    </div>\n</template>\n<style>\n    .max{\n        max-height:80px;\n    }\n    .form-group-border{\n        margin-top:20px;\n    }\n    .form-group-border .checkbox{\n        padding-left:0;\n    }\n</style>\n<script>\n\n    export default{\n        props: ['selected','checked','operator','terms'],\n        data(){\n            return{\n                types: [\n                   {'name' : 'Compte utilisateur', 'value' : 'user'},\n                   {'name' : 'Adresse', 'value' : 'adresse'},\n                ],\n                searchTerms: this.terms,\n                columns:\n                {\n                    user:[\n                        {'name' : 'Nom', 'label' : 'last_name'},\n                        {'name' : 'Prénom', 'label' : 'first_name'},\n                        {'name' : 'Email', 'label' : 'email'},\n                        {'name' : 'Entreprise', 'label' : 'company'},\n                    ],\n                    adresse:[\n                        {'name' : 'Nom', 'label' : 'last_name'},\n                        {'name' : 'Prénom', 'label' : 'first_name'},\n                        {'name' : 'Email', 'label' : 'email'},\n                        {'name' : 'Entreprise', 'label' : 'company'},\n                        {'name' : 'Adresse ', 'label' : 'adresse '},\n                        {'name' : 'NPA', 'label' : 'npa'},\n                        {'name' : 'Ville', 'label' : 'ville'},\n                    ]\n                },\n            }\n        },\n        computed: {\n             choosencolumns: function () {\n                return this.columns[this.selected];\n             },\n        },\n        components:{\n        },\n        mounted: function () {\n\n        },\n        methods: {\n            addTerm : function(){\n                 this.searchTerms.push({ 'column' : 'first_name', 'value' : ' ' });\n            },\n            removeTerm: function(term){\n                this.searchTerms.splice(term, 1)\n            },\n            updateType: function(){\n\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#StyleNewsletterCreate{\n    margin-top:5px;\n}\n.edit_bloc_form::before{\n    color: #85c744;\n    content: \"◄\";\n    display: block;\n    font-size: 14px;\n    font-weight: bold;\n    height: 10px;\n    left: -2px;\n    position: absolute;\n    top: 0px;\n    width: 5px;\n}\n.upload-btn-wrapper {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n}\n.upload-btn-wrapper input[type=file] {\n  font-size: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  opacity: 0;\n        cursor:pointer;\n}\n.margeUp{\n    margin-top:5px;\n}\n", "", {"version":3,"sources":["BuildNewsletter.vue?01cf39a6"],"names":[],"mappings":";AA6FA;IACA,eAAA;CACA;AACA;IACA,eAAA;IACA,aAAA;IACA,eAAA;IACA,gBAAA;IACA,kBAAA;IACA,aAAA;IACA,WAAA;IACA,mBAAA;IACA,SAAA;IACA,WAAA;CACA;AACA;EACA,mBAAA;EACA,iBAAA;EACA,sBAAA;CACA;AAEA;EACA,iBAAA;EACA,mBAAA;EACA,QAAA;EACA,OAAA;EACA,WAAA;QACA,eAAA;CACA;AACA;IACA,eAAA;CACA","file":"BuildNewsletter.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <div class=\"row\" style=\"margin-bottom:10px\">\n                    <div class=\"col-md-10\"></div>\n                    <div class=\"col-md-2\">\n                        <div v-if=\"content && mode == 'edit'\" style=\"margin-bottom:5px;\">\n                            <button v-if=\"model && !isEdit\" @click=\"editMode(content)\" class=\"btn btn-xs btn-warning pull-left\">éditer</button>\n                            <form method=\"post\" :action=\"action\" v-if=\"model && !isEdit\" class=\"pull-right\">\n                                <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                                <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                                <input type=\"hidden\" name=\"id\" :value=\"model.id\" />\n                                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                                <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"model.id\" :data-action=\"model.titre\">x</button>\n                            </form>\n                        </div>\n                    </div>\n                </div>\n\n                <!-- Bloc content-->\n                <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"resetTable\">\n\n                   <tr>\n                       <!-- Bloc image gauche-->\n                       <td v-if=\"type == 4\" valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                           <image-newsletter :visible=\"isImage\" :mode=\"mode\" :type=\"type\" @imageUploaded=\"imageUploadedUpdate\" :model=\"model\" ></image-newsletter>\n                       </td>\n                       <td v-if=\"type == 4\" width=\"25\" class=\"resetMarge\"></td><!-- space -->\n\n                       <td valign=\"top\" :width=\"widthTable\" class=\"resetMarge contentForm\">\n                           <image-newsletter :visible=\"isImage\" :mode=\"mode\" :type=\"type\" v-if=\"(type == 1 || type == 2)\" :model=\"model\" @imageUploaded=\"imageUploadedUpdate\"></image-newsletter>\n                           <h3 :style=\"align\" v-html=\"content.titre\"></h3>\n                           <div v-if=\"hasText\" v-html=\"content.contenu\"></div>\n                       </td>\n\n                       <!-- Bloc image droite-->\n                       <td v-if=\"type == 3 || type == 10\" width=\"25\" class=\"resetMarge\"></td><!-- space -->\n                       <td v-if=\"type == 3 || type == 10\" valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                           <image-newsletter :visible=\"isImage\" :mode=\"mode\" :type=\"type\" v-if=\"type == 3\" @imageUploaded=\"imageUploadedUpdate\" :model=\"model\" ></image-newsletter>\n                           <img v-if=\"type == 10 || categorie\" :src=\"imgcategorie\" class=\"img-responsive\">\n                       </td>\n                   </tr>\n\n                </table>\n                <!-- Bloc content-->\n            </div>\n            <div class=\"col-md-5 edit_bloc_form\" v-show=\"isEdit || mode == 'create'\">\n                <form name=\"blocForm newsletterForm\" method=\"post\" :action=\"action\">\n\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <input v-if=\"mode == 'edit'\" type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <div v-if=\"type == 10\">\n                                <select class=\"form-control form-required required\" v-model=\"categorie\" name=\"id\">\n                                    <option v-if=\"!categorie\" :value=\"null\" disabled>Sélectionner catégorie</option>\n                                    <option v-for=\"categorie in categories\" v-bind:value=\"categorie\">{{ categorie.title }}</option>\n                                </select><br/>\n                            </div>\n\n                            <div class=\"form-group\">\n                                <label>Titre</label>\n                                <input v-model=\"content.titre\" type=\"text\" required name=\"titre\" class=\"form-control\">\n                            </div>\n                            <div class=\"form-group\" v-if=\"hasText\">\n                                <label>Texte</label>\n                                <textarea v-model=\"content.contenu\" required name=\"contenu\" :class=\"'form-control redactorBuild_' + hash\" rows=\"10\">{{ content.contenu }}</textarea>\n                            </div>\n\n                            <div class=\"form-group\">\n                                <div class=\"btn-group\">\n                                    <input type=\"hidden\" v-if=\"uploadImage\" :value=\"uploadImage\" name=\"image\">\n                                    <input type=\"hidden\" v-if=\"categorie\" :value=\"categorie.image\" name=\"image\">\n                                    <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                    <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                    <input v-if=\"model\" type=\"hidden\" name=\"id\" :value=\"model.id\" />\n                                    <input v-if=\"categorie\" type=\"hidden\" name=\"categorie_id\" :value=\"categorie.id\" />\n                                    <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                    <button type=\"button\" @submit.prevent @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n    #StyleNewsletterCreate{\n        margin-top:5px;\n    }\n    .edit_bloc_form::before{\n        color: #85c744;\n        content: \"◄\";\n        display: block;\n        font-size: 14px;\n        font-weight: bold;\n        height: 10px;\n        left: -2px;\n        position: absolute;\n        top: 0px;\n        width: 5px;\n    }\n    .upload-btn-wrapper {\n      position: relative;\n      overflow: hidden;\n      display: inline-block;\n    }\n\n    .upload-btn-wrapper input[type=file] {\n      font-size: 100px;\n      position: absolute;\n      left: 0;\n      top: 0;\n      opacity: 0;\n            cursor:pointer;\n    }\n    .margeUp{\n        margin-top:5px;\n    }\n</style>\n<script>\n    import ImageNewsletter from './partials/ImageNewsletter.vue';\n\n    export default{\n\n        props: ['type','campagne','_token','url','title','model','site','mode'],\n        components:{\n            'image-newsletter' : ImageNewsletter,\n        },\n        data(){\n            return{\n                create: {\n                   titre : '',\n                   contenu : ''\n                },\n                content: {},\n                image:null,\n                uploadImage:null,\n                categories: [],\n                categorie: null,\n                isEdit: false,\n                isImage:null,\n                hash: null\n            }\n        },\n        computed: {\n            widthTable: function () {\n                return (this.type == 1) || (this.type == 2) || (this.type == 6) ? '560' : '375';\n            },\n            hasText: function () {\n                return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;\n            },\n            align: function () {\n                return (this.type == 1) ? 'text-align:center;' : 'text-align:left;';\n            },\n            imgcategorie:function(){\n                if(this.model){\n                    return  this.model.model.categorie.path\n                }\n                if(this.categorie){\n                    return this.categorie.path;\n                }\n\n                return '';\n            },\n            action:function(){\n                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }\n                if(this.mode == 'create'){ return this.url; }\n            },\n        },\n        components:{\n        },\n        mounted: function ()  {\n            this.initialize();\n        },\n        methods: {\n            makeHash(){\n                this.hash = Math.random().toString(36).substring(7);\n            },\n            initialize : function(){\n\n                this.makeHash();\n\n                if(this.type == 10){\n                    this.getCategories();\n                    this.categorie = this.model ? this.model.categorie : null;\n                }\n\n                this.content = this.model ? this.model : this.create;\n                this.isEdit  = !this.content ? true : false;\n\n                if(!this.model){\n                   this.isImage = true;\n                }\n\n                this.$nextTick(function(){\n                    var self = this;\n\n                    $('.redactorBuild_' + self.hash).redactor({\n                        minHeight: '180px',\n                        maxHeight: '370px',\n                        removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],\n                        lang: 'fr',\n                        plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],\n                        fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageManagerJson: 'admin/imageJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageResizable: true,\n                        imagePosition: true,\n                        formatting: ['h1', 'h2','h3','p', 'blockquote'],\n                        callbacks: {\n                            focus:function(e){\n                                var text = this.source.getCode();\n                                self.content.contenu = this.source.getCode();\n                            },\n                            enter: function(e)\n                            {\n                               return !(window.event && window.event.keyCode == 13 && window.event.keyCode == 46);\n                            }\n                        }\n\n                    });\n\n                });\n            },\n            getCategories: function() {\n                var self = this;\n                axios.get('admin/ajax/categories/' + self.site).then(function (response) {\n                     self.categories = response.data;\n                     self.categorie = self.model ? self.content.model.categorie : null;\n                }).catch(function (error) { console.log(error);});\n            },\n            imageUploadedUpdate(value){\n                this.uploadImage = value;\n            },\n            editMode(model){\n                this.isEdit = true;\n                this.isImage = true;\n            },\n            close(){\n                this.isEdit = false;\n                this.isImage = false;\n                this.initialize();\n                if(this.mode == 'create'){\n                    this.model = null;\n                    this.$emit('cancel', this.cancel);\n                }\n            },\n            deleteContent(model){\n                this.$emit('deleteContent', model);\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"Build.vue"}]);
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.btn-remove{\n    margin-bottom: 10px;\n    display: block;\n    margin-top: 10px;\n}\n.responsive-newsletter{\n    margin-bottom: 10px;\n}\n\n", "", {"version":3,"sources":["ImageNewsletter.vue?6f4ca157"],"names":[],"mappings":";AA0BA;IACA,oBAAA;IACA,eAAA;IACA,iBAAA;CACA;AACA;IACA,oBAAA;CACA","file":"ImageNewsletter.vue","sourcesContent":["<template>\n    <div>\n\n        <div class=\"upload-btn-wrapper\" v-if=\"!image && visible\">\n            <image-uploader :wrapper=\"false\" id=\"fieldID\" name=\"file\" @imageChoosen=\"imageChoosenSelect\"></image-uploader>\n        </div>\n\n        <div class=\"upload-btn-wrapper\" v-if=\"!image && visible\">\n            <button class=\"btn btn-info btn-xs\">Télécharger image</button>\n            <input type=\"file\" v-on:change=\"onFileChange\" class=\"form-control\">\n        </div>\n\n        <div class=\"responsive-newsletter\">\n            <div v-if=\"image\"><img :width=\"sizeImage\" :src=\"image\" class=\"img-responsive\"></div>\n            <div v-if=\"!image\"><img :src=\"size\" /></div>\n        </div>\n\n        <div class=\"btn-remove\" v-if=\"visible\">\n            <button v-if=\"image\" class=\"btn btn-success btn-xs\" @click=\"remove\">Changer l'image</button>\n            <button v-if=\"isRemoved\" class=\"btn btn-danger btn-xs\" @click=\"cancel\">Annuler</button>\n        </div>\n\n    </div>\n</template>\n<style>\n\n    .btn-remove{\n        margin-bottom: 10px;\n        display: block;\n        margin-top: 10px;\n    }\n    .responsive-newsletter{\n        margin-bottom: 10px;\n    }\n\n</style>\n<script>\n    import ImageUploader from '../ImageUploader.vue';\n\n    export default{\n        props: ['model','type','mode','visible'],\n        data(){\n            return{\n                isRemoved:false,\n                image:null,\n                uploadImage:null,\n                big: 'http://www.placehold.it/560x200/EFEFEF/AAAAAA&text=image',\n                small: 'http://www.placehold.it/130x140/EFEFEF/AAAAAA&text=image',\n            }\n        },\n        components:{\n            'image-uploader' : ImageUploader,\n        },\n        mounted: function ()  {\n            this.initialize();\n            this.iframe();\n        },\n        computed: {\n            size : function(){\n                return this.type == 3 || this.type == 4 ? this.small : this.big;\n            },\n            sizeImage : function(){\n                return this.type == 3 || this.type == 4 ? '130px' : '560px';\n            }\n        },\n        methods: {\n            editMode(data){\n                this.isEditable = data;\n            },\n            imageChoosenSelect(filename){\n\n                var lastURLSegment = filename.substr(filename.lastIndexOf('/') + 1);\n                this.image = filename;\n                this.uploadImage = lastURLSegment;\n                this.$emit('imageUploaded', this.uploadImage)\n            },\n            iframe(){\n                this.$nextTick(function() {\n                    var self = this;\n\n                    $('#fieldID').change(function() {\n                        var image = $(this).val();\n                        var lastURLSegment = image.substr(image.lastIndexOf('/') + 1);\n                        self.image = image;\n                        self.uploadImage = lastURLSegment;\n                        self.$emit('imageUploaded', self.uploadImage)\n                        console.log(lastURLSegment);\n                    });\n                });\n\n            },\n            initialize(){\n                this.image = this.model && this.model.image ? this.model.path + this.model.image : null;\n            },\n            onFileChange(e) {\n                let files = e.target.files || e.dataTransfer.files;\n                if (!files.length)\n                    return;\n                this.createImage(files[0]);\n            },\n            createImage(file) {\n                let reader = new FileReader();\n                let vm = this;\n                reader.onload = (e) => {\n                    vm.image = e.target.result;\n                    vm.upload()\n                };\n                reader.readAsDataURL(file);\n            },\n            remove(){\n                 this.image = null;\n                 this.isRemoved = true;\n            },\n            cancel(){\n                 this.image = this.model && this.model.image ? this.model.path + this.model.image : null;\n                 this.isRemoved = false;\n                 this.iframe();\n            },\n            newSelected(){\n                  this.iframe();\n            },\n            upload(){\n                axios.post('/admin/uploadNewsletter',{ image: this.image }).then(response => {\n                    this.uploadImage = response.data.name;\n                    this.$emit('imageUploaded', this.uploadImage)\n                    // this.iframe();\n                });\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#addOccurrence{\n    margin-bottom:15px;\n}\n.margBottom{\n  padding-bottom:5px;\n}\n.list-group-item {\n    padding: 8px 15px 8px 15px;\n}\n", "", {"version":3,"sources":["Occurrence.vue?30fe9a76"],"names":[],"mappings":";AAmIA;IACA,mBAAA;CACA;AACA;EACA,mBAAA;CACA;AACA;IACA,2BAAA;CACA","file":"Occurrence.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"text-right\">\n           <div class=\"btn-pull\" style=\"margin-bottom:10px;\">\n               <a v-show=\"!add\" @click=\"ajouter\" class=\"btn btn-sm btn-success\">Ajouter</a>\n               <a v-show=\"add\" @click=\"resetform\" class=\"btn btn-sm btn-default\">Fermer</a>\n           </div>\n       </div>\n       <ul class=\"list-group\">\n           <li class=\"list-group-item\" id=\"addOccurrence\" v-show=\"add\">\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Titre</strong></label>\n                           <p><input class=\"form-control\" autocomplete=\"off\" name=\"title\" type=\"text\" v-model=\"nouveau.title\"></p>\n                       </div>\n                   </div>\n               </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8\">\n                        <div class=\"form-group-item\">\n                           <label><strong>Lieu</strong></label>\n                           <select class=\"form-control form-required required\" v-model=\"nouveau.lieux_id\" name=\"lieux_id\">\n                               <option value=\"\">Choix</option>\n                               <option v-for=\"location in loc\" autocomplete=\"off\" v-bind:value=\"location.id\">{{ location.name }}</option>\n                           </select>\n                        </div>\n                        <div class=\"form-group-item\">\n                            <label><strong>Prix</strong></label>\n                            <select class=\"form-control\" multiple v-model=\"nouveau.prices\" style=\"height:80px;\">\n                                <option value=\"\">Choix</option>\n                                <option v-for=\"price in prix\" v-bind:value=\"price.id\">\n                                    {{ price.description }}\n                                </option>\n                            </select>\n                        </div>\n                    </div>\n                    <div class=\"col-md-4\">\n                        <div class=\"form-group-item\">\n                            <label><strong>Date</strong></label>\n                            <input name=\"starting_at\" autocomplete=\"off\" class=\"form-control datePickerNew\" v-model=\"nouveau.starting_at\">\n                        </div>\n                       <div class=\"form-group-item\">\n                           <label><strong>Capacité</strong></label>\n                           <input class=\"form-control\" autocomplete=\"off\" name=\"capacite_salle\" v-model=\"nouveau.capacite_salle\" type=\"text\">\n                       </div>\n                    </div>\n                </div>\n\n                <p class=\"text-right margBottom\"><a @click=\"ajouterOccurence\" class=\"btn btn-sm btn-primary\">Envoyer</a></p>\n\n               <div v-if=\"errors.length\">\n                   <b>Il manque des informations:</b>\n                   <ul>\n                       <li v-for=\"error in errors\">{{ error }}</li>\n                   </ul>\n               </div>\n\n           </li>\n           <li v-for=\"occurrence in list\" class=\"list-group-item\">\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <div class=\"btn-group pull-right\">\n                            <a v-show=\"!occurrence.state\" @click=\"edit(occurrence)\" class=\"btn btn-xs btn-info\">éditer</a>\n                            <a v-show=\"!occurrence.state\" @click=\"deleteOccurrence(occurrence)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-times\"></i></a>\n                            <a v-show=\"occurrence.state\" @click=\"save(occurrence)\" class=\"btn btn-xs btn-primary\">sauvegarder</a>\n                       </div>\n                   </div>\n               </div>\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Titre</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.title }}</p>\n                           <p v-if=\"occurrence.state\"><input class=\"form-control\" name=\"title\" type=\"text\" v-model=\"occurrence.title\"></p>\n                       </div>\n                   </div>\n               </div>\n               <div class=\"row\">\n                   <div class=\"col-md-8\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Lieu</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.lieux }}</p>\n                           <p v-if=\"occurrence.state\">\n                               <select class=\"form-control form-required required\" required v-model=\"occurrence.lieux_id\" name=\"lieux_id\">\n                                   <option value=\"\">Choix</option>\n                                   <option v-for=\"location in loc\"\n                                           v-bind:selected=\"occurrence.lieux_id == location.id ? 'true' : 'false'\"\n                                           v-bind:value=\"location.id\">\n                                       {{ location.name }}\n                                   </option>\n                               </select>\n                           </p>\n                       </div>\n                       <div class=\"form-group-item\">\n                           <label><strong>Prix</strong></label>\n                           <p v-if=\"!occurrence.state\">\n                               {{ occurrence.prices_names }}\n                           </p>\n                           <p v-if=\"occurrence.state\">\n                               <select class=\"form-control\" multiple v-model=\"occurrence.prices\" style=\"height:80px;\">\n                                   <option value=\"\">Choix</option>\n                                   <option v-for=\"price in prix\" v-bind:value=\"price.id\">\n                                       {{ price.description }}\n                                   </option>\n                               </select>\n                           </p>\n                       </div>\n                   </div>\n                   <div class=\"col-md-4\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Date</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.starting_at }}</p>\n                           <p v-if=\"occurrence.state\">\n                               <input name=\"starting_at\" class=\"form-control datePickerApp\" v-model=\"occurrence.starting_at\">\n                           </p>\n                       </div>\n                       <div class=\"form-group-item\">\n                           <label><strong>Capacité</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.capacite_salle }}</p>\n                           <p v-if=\"occurrence.state\"><input class=\"form-control\" name=\"capacite_salle\" v-model=\"occurrence.capacite_salle\" type=\"text\"></p>\n                       </div>\n                   </div>\n               </div>\n           </li>\n       </ul>\n   </div>\n</template>\n<style>\n    #addOccurrence{\n        margin-bottom:15px;\n    }\n    .margBottom{\n      padding-bottom:5px;\n    }\n    .list-group-item {\n        padding: 8px 15px 8px 15px;\n    }\n</style>\n<script>\n\nexport default {\n\n    props: ['occurrences','locations','colloque','prices'],\n    data () {\n        return {\n            list: [],\n            loc : [],\n            prix : [],\n            nouveau:{\n                title: '',\n                lieux_id: '',\n                starting_at: '',\n                capacite_salle: '',\n                colloque_id: this.colloque,\n                prices:[]\n            },\n            add : false,\n            errors:[]\n        }\n    },\n    beforeMount: function ()  {\n        this.getOccurrences();\n        this.getLocations();\n        this.getPrices();\n    },\n    methods: {\n        edit : function(occurence){\n            this.list[occurence.id].state = true;\n\n             this.$nextTick(function(){\n                 $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                $('.datePickerApp').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   occurence.starting_at = ev.target.value;\n                });\n\n            });\n        },\n        delete : function(occurence){\n            this.list[occurence.id].state = false;\n        },\n        getOccurrences : function(){\n\n           this.list = this.occurrences;\n\n           this.$nextTick(function(){\n\n               $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                var self = this;\n\n                $('.datePickerNew').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   self.nouveau.starting_at = ev.target.value;\n                });\n            });\n        },\n        getLocations : function(){\n           this.loc = this.locations;\n        },\n        getPrices : function(){\n           this.prix = this.prices;\n        },\n        updateOccurrences:function(occurrences){\n            this.list = occurrences;\n        },\n        checkForm:function(){\n\n            if( this.nouveau.title && this.nouveau.lieux_id && this.nouveau.starting_at && this.nouveau.capacite_salle) return true;\n            this.errors = [];\n            if(!this.nouveau.title) this.errors.push(\"Titre requis.\");\n            if(!this.nouveau.lieux_id) this.errors.push(\"Lieu requis.\");\n            if(!this.nouveau.starting_at) this.errors.push(\"Date requise.\");\n            if(!this.nouveau.capacite_salle) this.errors.push(\"Capacité requise.\");\n\n            return false;\n        },\n        ajouterOccurence:function(){\n\n            if(this.checkForm()){\n\n                var self = this;\n                axios.post('/vue/occurrence', { occurrence : this.nouveau }).then(function (response) {\n                     self.updateOccurrences(response.data.occurrences);\n                     self.resetform();\n                }).catch(function (error) { console.log(error);});\n            }\n        },\n        ajouter:function(){\n            this.add = true;\n        },\n        resetform :function(){\n            this.add = false;\n            this.nouveau = {\n                title: '',\n                lieux_id: '',\n                starting_at: '',\n                capacite_salle: '',\n                colloque_id: this.colloque,\n                prices:[]\n            };\n        },\n        save : function(occurence){\n\n            var occurrence = this.list[occurence.id];\n\n            var self = this;\n            axios.post('/vue/occurrence/' + occurrence.id, { occurrence, '_method' : 'put'  }).then(function (response) {\n                self.updateOccurrences(response.data.occurrences);\n            }).catch(function (error) { console.log(error);});\n\n        },\n        deleteOccurrence :function(occurence){\n\n            var model = this.list[occurence.id];\n\n            var self = this;\n            axios.post('/vue/occurrence/' + model.id, { '_method' : 'DELETE' }).then(function (response) {\n                self.updateOccurrences(response.data.occurrences);\n            }).catch(function (error) { console.log(error);});\n\n        },\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n", "", {"version":3,"sources":["BuildNewsletterGroup.vue?0874180a"],"names":[],"mappings":";AA2GA;IACA,cAAA;IACA,mBAAA;IACA,aAAA;IACA,iBAAA;IACA,uBAAA;IACA,mBAAA;IACA,iDAAA;IACA,6DAAA;CACA;AAEA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,aAAA;IACA,gBAAA;IACA,qDAAA;CACA;AAEA;CACA,eAAA;CACA,0BAAA;CACA,wBAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA","file":"BuildNewsletterGroup.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <div class=\"btn-group pull-right\">\n                    <form method=\"post\" :action=\"action\" v-if=\"!isEdit\">\n                        <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                        <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                        <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                        <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                        <button v-if=\"!isEdit\" @click=\"editMode(content)\" type=\"button\" class=\"btn btn-xs btn-warning\">éditer</button>\n                        <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"content.id\" data-action=\"Groupe\">x</button>\n                    </form>\n                </div>\n\n                <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"tableReset\" v-if=\"categorie\">\n                    <tr bgcolor=\"ffffff\"><td height=\"15\"></td></tr><!-- space -->\n                    <tr>\n                        <td width=\"400\" align=\"left\" class=\"resetMarge contentForm\" valign=\"top\">\n                            <h3 class=\"mainTitle\" style=\"text-align: left;font-family: sans-serif;\">{{ categorie.title }}</h3>\n                        </td>\n                        <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                            <div><img width=\"130\" border=\"0\" :alt=\"categorie.title\" :src=\"content.model.image + '/' + categorie.image\"></div>\n                        </td>\n                    </tr><!-- space -->\n                    <tr bgcolor=\"ffffff\"><td height=\"15\"></td></tr><!-- space -->\n                </table>\n\n                <div v-for=\"arret in lists\">\n                    <!-- Bloc content-->\n                    <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"resetTable\">\n                        <tr bgcolor=\"ffffff\"><td height=\"5\"></td></tr><!-- space -->\n                        <tr v-if=\"arret\">\n                            <td valign=\"top\" width=\"375\" class=\"resetMarge contentForm\">\n                                <h3>{{ arret.dumois ? 'Arrêt du mois : ' : '' }}{{ arret.title }}</h3>\n                                <p class=\"abstract\">{{ arret.abstract }}</p>\n                                <div v-html=\"arret.content\" class=\"content\"></div>\n                                <p><a target=\"_blank\" :class=\"arret.class\" :href=\"arret.link\">{{ arret.message }}</a></p>\n                            </td>\n\n                            <!-- Bloc image droite-->\n                            <td width=\"25\" class=\"resetMarge\"></td><!-- space -->\n                            <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                                <div v-for=\"image in arret.images\" v-if=\"image.id != categorie.id\">\n                                    <a target=\"_blank\" :href=\"image.link\">\n                                        <img width=\"130\" border=\"0\" :alt=\"image.title\" :src=\"image.image\">\n                                    </a>\n                                    <p v-if=\"!newsletter.hide_title\" style=\"text-align:center !important;\">{{ image.title }}</p>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr bgcolor=\"ffffff\"><td height=\"5\"></td></tr><!-- space -->\n                    </table>\n                    <!-- Bloc content-->\n\n                </div>\n            </div>\n\n            <div class=\"col-md-5\" v-show=\"isEdit\">\n                <form name=\"blocForm newsletterForm\" class=\"form-horizontal\" method=\"post\" :action=\"url + '/' + content.id\">\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <input type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <select class=\"form-control form-required required\" v-model=\"categorie\" name=\"id\" v-on:change=\"updateModel\">\n                                <option :value=\"null\" disabled>Sélectionner</option>\n                                <option v-for=\"categorie in categories\" v-bind:value=\"categorie\">{{ categorie.title }}</option>\n                            </select><br/>\n\n                            <div class=\"row drag\">\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"arrets\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in arrets\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"choosen\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in choosen\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                            </div>\n\n                            <div class=\"btn-group\">\n                                <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                <input v-if=\"categorie\" type=\"hidden\" :value=\"categorie.id\" name=\"categorie_id\">\n                                <input type=\"hidden\" :value=\"content.groupe_id\" name=\"groupe_id\">\n                                <input v-for=\"chose in choosen\" type=\"hidden\" name=\"arrets[]\" :value=\"chose.id\" />\n                                <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                                <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                <button type=\"button\" @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                            </div>\n\n                        </div>\n                    </div>\n\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n</style>\n<script>\n\n    import draggable from 'vuedraggable';\n    export default{\n\n        props: ['type','campagne','_token','url','site','title','content','mode','newsletter'],\n        components: {\n            draggable,\n        },\n        data(){\n            return{\n                choosen: [],\n                categorie: null,\n                categories: [],\n                arrets: [],\n                lists:[],\n                isEdit: false,\n            }\n        },\n        computed: {\n            prepared: function () {\n                var arr = [];\n                _.each(this.choosen,function(o){\n                   arr.push(_.pick(o,'id'));\n                });\n\n                return arr;\n            },\n            action:function(){\n                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }\n                if(this.mode == 'create'){ return this.url; }\n            }\n        },\n        mounted: function ()  {\n            this.getCategories();\n            this.initialize();\n        },\n        methods: {\n            initialize : function(){\n                this.choosen = this.content.model.choosen;\n                this.lists   = this.content.model.arrets;\n                this.categorie = this.content.model.categorie;\n\n                this.getArretsCategories();\n            },\n            getCategories: function() {\n                var self = this;\n                axios.get('admin/ajax/categories/' + self.site).then(function (response) {\n                      self.categories = response.data;\n                      self.lists.push(self.categories);\n                      self.categorie = self.content ? self.content.model.categorie : null;\n                }).catch(function (error) { console.log(error);});\n            },\n            getArretsCategories: function() {\n                var self = this;\n                axios.post(\"admin/ajax/categorie/categoriearrets\",{ id: self.categorie.id }).then(function (response) {\n                      self.arrets = response.data;\n                }).catch(function (error) { console.log(error);});\n            },\n            updateModel(){\n                this.getArretsCategories();\n            },\n            editMode(model){\n                this.isEdit = true;\n            },\n            close(){\n                this.isEdit = false;\n                this.initialize();\n            },\n            deleteContent(model){\n                this.$emit('deleteContent', model);\n            }\n        }\n    }\n</script>\n"]}]);
-
-/***/ }),
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n", "", {"version":3,"sources":["Manager.vue?cfcd9ee2"],"names":[],"mappings":";AAwEA;KACA,WAAA;KACA,iBAAA;KACA,eAAA;CACA","file":"Manager.vue","sourcesContent":["<template>\n<div>\n    <div id=\"bs-modal\">\n        <!-- MODAL -->\n        <div class=\"modal fade\" :id=\"'myModal_' + id\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n                        <h4 class=\"modal-title\" id=\"myModalLabel\">Choisir un fichier</h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"row\">\n                            <div class=\"col-md-2\">\n                                <div id=\"treeMenu\">\n\n                                    <div class=\"tree\">\n                                        <div id=\"fileManagerTree\">\n                                            <ul>\n                                                <li v-bind:class=\"{active: isActive(index)}\" v-for=\"(directorie,index) in directories\">\n                                                    <button type=\"button\" class=\"node\" v-on:click.stop=\"chosenFolder('files/' + index)\"><i class=\"fa fa-folder-o\"></i> &nbsp;{{ index }}</button>\n                                                    <ul>\n                                                        <li v-bind:class=\"{active: isActive(second)}\" v-for=\"(folder,second) in directorie\">\n                                                            <button type=\"button\" class=\"node\" v-on:click.stop=\"chosenFolder('files/' + index + '/' + second)\"><i class=\"fa fa-folder-o\"></i> &nbsp;{{ second }}</button>\n                                                        </li>\n                                                    </ul>\n                                                </li>\n                                            </ul>\n                                        </div>\n                                    </div>\n\n                                    <div :id=\"'dropzone_' + id\" class=\"dropzone\"></div>\n                                    <p class=\"dropmessage\"><i>Les fichiers sont téléchargé dans le dossier en cours, sinon si aucun n'est choisi le dossier par défault sera uploads</i></p>\n                                </div>\n                            </div>\n                            <div class=\"col-md-10\">\n                                <p class=\"loading\" v-show=\"loading\"><i class=\"fa fa-spinner fa-spin\"></i></p>\n                                <div v-show=\"!loading\" id=\"fileManager\" data-path=\"files/uploads\">\n                                    <p v-if=\"!files\">Aucun fichier à ce niveau</p>\n                                    <ul v-if=\"files\" id=\"gallery\">\n                                        <li v-for=\"file in files\" class=\"file-item\">\n                                            <button @click=\"deleteFile(path + '/' + file)\" class=\"btn btn-xs btn-danger\">x</button>\n\n                                            <img v-if=\"isImage(file)\" @click=\"chosenFile(path + '/' + file)\" :src=\"path + displayPath + '/' + file\" alt=\"image\" />\n                                            <img v-if=\"!isImage(file)\" @click=\"chosenFile(path + '/' + file)\" src=\"images/text.svg\" alt=\"image\" />\n                                            <p v-if=\"!isImage(file)\">{{ file }}</p>\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"modal-footer\">\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Fermer</button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div v-if=\"chosen && filename\" class=\"file-choosen-wrapper\">\n        <input class=\"file-choosen\" type=\"hidden\" :name=\"name\" v-bind:value=\"filename\">\n        <img v-if=\"isImage(filename)\" class=\"file-choosen file-image thumbnail\" :src=\"filename\" alt=\"image\" />\n        <a v-if=\"!isImage(filename)\" target=\"_blank\" class=\"file-choosen\" :href=\"filename\">{{ filename }}</a>\n        <button @click=\"removeFile()\" class=\"btn btn-xs btn-danger\">x</button>\n    </div>\n\n</div>\n\n</template>\n\n<style>\n   .loading{\n        width:50px;\n        margin:40px auto;\n        font-size:30px;\n    }\n</style>\n<script>\n\nexport default {\n props: ['name','thumbs', 'input','id'],\n    data () {\n        return {\n           directories:[],\n           path: 'files/uploads',\n           files: null,\n           chosen: false,\n           filename: '',\n           directory:'',\n           loading: false\n        }\n    },\n    computed: {\n        displayPath: function (path) {\n           return this.thumbs.indexOf(this.directory) === 0 ? '/thumbs' : '';\n        }\n    },\n    mounted: function ()  {\n        this.getDirectories();\n\n        var self = this;\n        this.$nextTick(function(){\n\n            var myDropzone = new Dropzone(\"#dropzone_\" + this.id, {\n                url: \"admin/upload\",\n                dictDefaultMessage: \" Ajouter un fichier\",\n                dictRemoveFile: \"Enlever\",\n                thumbnailWidth: 100,\n                thumbnailHeight: 80,\n                addRemoveLinks : true\n            });\n\n            myDropzone.on('sending', function(file, xhr, formData){\n                formData.append('path', self.path);\n                formData.append('_token', $(\"meta[name='_token']\").attr('content'));\n            });\n\n            myDropzone.on(\"success\", function(file) {\n                self.addFile(file);\n            });\n        });\n    },\n    methods: {\n        getDirectories: function(){\n\n            var self = this;\n            axios.get('/admin/gettree').then(function (response) {\n                 self.directories = response.data.directories;\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFolder: function(path){\n\n            this.loading = true;\n            this.directory = path.replace(\"files/\", \"\");\n            this.files = null\n\n            var self = this;\n            axios.post('/admin/getfiles', { path : path }).then(function (response) {\n\n                self.files = response.data.files;\n                self.path  = path;\n\n                self.$nextTick(function(){\n                    self.loading = false;\n                });\n\n            }).catch(function (error) { console.log(error);});\n        },\n        deleteFile: function(path){\n\n            var self = this;\n            axios.post('/admin/files/delete', { path : path }).then(function (response) {\n                var answer = confirm('Voulez-vous vraiment supprimer ' + path + ' ?');\n                if (answer){ self.files.splice( self.files.indexOf(path), 1 );}\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFile: function(path){\n            this.filename = path;\n            this.chosen   = true;\n\n            $('#myModal_'+this.id).modal('hide');\n        },\n        addFile: function(file){\n            this.files.push(file.name);\n        },\n        removeFile: function(){\n            this.filename = null;\n            this.chosen   = false;\n        },\n        isActive: function(path){\n            return this.directory === path ? true : false;\n        },\n        isImage: function(filename){\n\n            var get_ext = filename.split('.').reverse();\n            var exts    = ['jpg','jpeg','png','gif'];\n\n            return ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ) ? true : false;\n        }\n    }\n}\n</script>"]}]);
+exports.push([module.i, "\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n", "", {"version":3,"sources":["BuildNewsletterGroup.vue?1dd270ee"],"names":[],"mappings":";AA2GA;IACA,cAAA;IACA,mBAAA;IACA,aAAA;IACA,iBAAA;IACA,uBAAA;IACA,mBAAA;IACA,iDAAA;IACA,6DAAA;CACA;AAEA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,aAAA;IACA,gBAAA;IACA,qDAAA;CACA;AAEA;CACA,eAAA;CACA,0BAAA;CACA,wBAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA","file":"BuildNewsletterGroup.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <div class=\"btn-group pull-right\">\n                    <form method=\"post\" :action=\"action\" v-if=\"!isEdit\">\n                        <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                        <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                        <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                        <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                        <button v-if=\"!isEdit\" @click=\"editMode(content)\" type=\"button\" class=\"btn btn-xs btn-warning\">éditer</button>\n                        <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"content.id\" data-action=\"Groupe\">x</button>\n                    </form>\n                </div>\n\n                <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"tableReset\" v-if=\"categorie\">\n                    <tr bgcolor=\"ffffff\"><td height=\"15\"></td></tr><!-- space -->\n                    <tr>\n                        <td width=\"400\" align=\"left\" class=\"resetMarge contentForm\" valign=\"top\">\n                            <h3 class=\"mainTitle\" style=\"text-align: left;font-family: sans-serif;\">{{ categorie.title }}</h3>\n                        </td>\n                        <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                            <div><img width=\"130\" border=\"0\" :alt=\"categorie.title\" :src=\"content.model.image + '/' + categorie.image\"></div>\n                        </td>\n                    </tr><!-- space -->\n                    <tr bgcolor=\"ffffff\"><td height=\"15\"></td></tr><!-- space -->\n                </table>\n\n                <div v-for=\"arret in lists\">\n                    <!-- Bloc content-->\n                    <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"resetTable\">\n                        <tr bgcolor=\"ffffff\"><td height=\"5\"></td></tr><!-- space -->\n                        <tr v-if=\"arret\">\n                            <td valign=\"top\" width=\"375\" class=\"resetMarge contentForm\">\n                                <h3>{{ arret.dumois ? 'Arrêt du mois : ' : '' }}{{ arret.title }}</h3>\n                                <p class=\"abstract\">{{ arret.abstract }}</p>\n                                <div v-html=\"arret.content\" class=\"content\"></div>\n                                <p><a target=\"_blank\" :class=\"arret.class\" :href=\"arret.link\">{{ arret.message }}</a></p>\n                            </td>\n\n                            <!-- Bloc image droite-->\n                            <td width=\"25\" class=\"resetMarge\"></td><!-- space -->\n                            <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                                <div v-for=\"image in arret.images\" v-if=\"image.id != categorie.id\">\n                                    <a target=\"_blank\" :href=\"image.link\">\n                                        <img width=\"130\" border=\"0\" :alt=\"image.title\" :src=\"image.image\">\n                                    </a>\n                                    <p v-if=\"!newsletter.hide_title\" style=\"text-align:center !important;\">{{ image.title }}</p>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr bgcolor=\"ffffff\"><td height=\"5\"></td></tr><!-- space -->\n                    </table>\n                    <!-- Bloc content-->\n\n                </div>\n            </div>\n\n            <div class=\"col-md-5\" v-show=\"isEdit\">\n                <form name=\"blocForm newsletterForm\" class=\"form-horizontal\" method=\"post\" :action=\"url + '/' + content.id\">\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <input type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <select class=\"form-control form-required required\" v-model=\"categorie\" name=\"id\" v-on:change=\"updateModel\">\n                                <option :value=\"null\" disabled>Sélectionner</option>\n                                <option v-for=\"categorie in categories\" v-bind:value=\"categorie.id\">{{ categorie.title }}</option>\n                            </select><br/>\n\n                            <div class=\"row drag\">\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"arrets\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in arrets\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"choosen\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in choosen\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                            </div>\n\n                            <div class=\"btn-group\">\n                                <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                <input v-if=\"categorie\" type=\"hidden\" :value=\"categorie.id\" name=\"categorie_id\">\n                                <input type=\"hidden\" :value=\"content.groupe_id\" name=\"groupe_id\">\n                                <input v-for=\"chose in choosen\" type=\"hidden\" name=\"arrets[]\" :value=\"chose.id\" />\n                                <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                                <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                <button type=\"button\" @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                            </div>\n\n                        </div>\n                    </div>\n\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n</style>\n<script>\n\n    import draggable from 'vuedraggable';\n    export default{\n\n        props: ['type','campagne','_token','url','site','title','content','mode','newsletter'],\n        components: {\n            draggable,\n        },\n        data(){\n            return{\n                choosen: [],\n                categorie: null,\n                categories: [],\n                arrets: [],\n                lists:[],\n                isEdit: false,\n            }\n        },\n        computed: {\n            prepared: function () {\n                var arr = [];\n                _.each(this.choosen,function(o){\n                   arr.push(_.pick(o,'id'));\n                });\n\n                return arr;\n            },\n            action:function(){\n                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }\n                if(this.mode == 'create'){ return this.url; }\n            }\n        },\n        mounted: function ()  {\n            this.getCategories();\n            this.initialize();\n        },\n        methods: {\n            initialize : function(){\n                this.choosen = this.content.model.choosen;\n                this.lists   = this.content.model.arrets;\n                this.categorie = this.content.model.categorie;\n\n                this.getArretsCategories();\n            },\n            getCategories: function() {\n                var self = this;\n                axios.get('admin/ajax/categories/' + self.site).then(function (response) {\n                      self.categories = response.data;\n                      self.lists.push(self.categories);\n                      self.categorie = self.content ? self.content.model.categorie : null;\n                }).catch(function (error) { console.log(error);});\n            },\n            getArretsCategories: function() {\n                var self = this;\n                axios.post(\"admin/ajax/categorie/categoriearrets\",{ id: self.categorie.id }).then(function (response) {\n                      self.arrets = response.data;\n                }).catch(function (error) { console.log(error);});\n            },\n            updateModel(){\n                this.getArretsCategories();\n            },\n            editMode(model){\n                this.isEdit = true;\n            },\n            close(){\n                this.isEdit = false;\n                this.initialize();\n            },\n            deleteContent(model){\n                this.$emit('deleteContent', model);\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"EditBuild.vue"}]);
+exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n", "", {"version":3,"sources":["Manager.vue?cfcd9ee2"],"names":[],"mappings":";AAwEA;KACA,WAAA;KACA,iBAAA;KACA,eAAA;CACA","file":"Manager.vue","sourcesContent":["<template>\n<div>\n    <div id=\"bs-modal\">\n        <!-- MODAL -->\n        <div class=\"modal fade\" :id=\"'myModal_' + id\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n                        <h4 class=\"modal-title\" id=\"myModalLabel\">Choisir un fichier</h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"row\">\n                            <div class=\"col-md-2\">\n                                <div id=\"treeMenu\">\n\n                                    <div class=\"tree\">\n                                        <div id=\"fileManagerTree\">\n                                            <ul>\n                                                <li v-bind:class=\"{active: isActive(index)}\" v-for=\"(directorie,index) in directories\">\n                                                    <button type=\"button\" class=\"node\" v-on:click.stop=\"chosenFolder('files/' + index)\"><i class=\"fa fa-folder-o\"></i> &nbsp;{{ index }}</button>\n                                                    <ul>\n                                                        <li v-bind:class=\"{active: isActive(second)}\" v-for=\"(folder,second) in directorie\">\n                                                            <button type=\"button\" class=\"node\" v-on:click.stop=\"chosenFolder('files/' + index + '/' + second)\"><i class=\"fa fa-folder-o\"></i> &nbsp;{{ second }}</button>\n                                                        </li>\n                                                    </ul>\n                                                </li>\n                                            </ul>\n                                        </div>\n                                    </div>\n\n                                    <div :id=\"'dropzone_' + id\" class=\"dropzone\"></div>\n                                    <p class=\"dropmessage\"><i>Les fichiers sont téléchargé dans le dossier en cours, sinon si aucun n'est choisi le dossier par défault sera uploads</i></p>\n                                </div>\n                            </div>\n                            <div class=\"col-md-10\">\n                                <p class=\"loading\" v-show=\"loading\"><i class=\"fa fa-spinner fa-spin\"></i></p>\n                                <div v-show=\"!loading\" id=\"fileManager\" data-path=\"files/uploads\">\n                                    <p v-if=\"!files\">Aucun fichier à ce niveau</p>\n                                    <ul v-if=\"files\" id=\"gallery\">\n                                        <li v-for=\"file in files\" class=\"file-item\">\n                                            <button @click=\"deleteFile(path + '/' + file)\" class=\"btn btn-xs btn-danger\">x</button>\n\n                                            <img v-if=\"isImage(file)\" @click=\"chosenFile(path + '/' + file)\" :src=\"path + displayPath + '/' + file\" alt=\"image\" />\n                                            <img v-if=\"!isImage(file)\" @click=\"chosenFile(path + '/' + file)\" src=\"images/text.svg\" alt=\"image\" />\n                                            <p v-if=\"!isImage(file)\">{{ file }}</p>\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"modal-footer\">\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Fermer</button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div v-if=\"chosen && filename\" class=\"file-choosen-wrapper\">\n        <input class=\"file-choosen\" type=\"hidden\" :name=\"name\" v-bind:value=\"filename\">\n        <img v-if=\"isImage(filename)\" class=\"file-choosen file-image thumbnail\" :src=\"filename\" alt=\"image\" />\n        <a v-if=\"!isImage(filename)\" target=\"_blank\" class=\"file-choosen\" :href=\"filename\">{{ filename }}</a>\n        <button @click=\"removeFile()\" class=\"btn btn-xs btn-danger\">x</button>\n    </div>\n\n</div>\n\n</template>\n\n<style>\n   .loading{\n        width:50px;\n        margin:40px auto;\n        font-size:30px;\n    }\n</style>\n<script>\n\nexport default {\n props: ['name','thumbs', 'input','id'],\n    data () {\n        return {\n           directories:[],\n           path: 'files/uploads',\n           files: null,\n           chosen: false,\n           filename: '',\n           directory:'',\n           loading: false\n        }\n    },\n    computed: {\n        displayPath: function (path) {\n           return this.thumbs.indexOf(this.directory) === 0 ? '/thumbs' : '';\n        }\n    },\n    mounted: function ()  {\n        this.getDirectories();\n\n        var self = this;\n        this.$nextTick(function(){\n\n            var myDropzone = new Dropzone(\"#dropzone_\" + this.id, {\n                url: \"admin/upload\",\n                dictDefaultMessage: \" Ajouter un fichier\",\n                dictRemoveFile: \"Enlever\",\n                thumbnailWidth: 100,\n                thumbnailHeight: 80,\n                addRemoveLinks : true\n            });\n\n            myDropzone.on('sending', function(file, xhr, formData){\n                formData.append('path', self.path);\n                formData.append('_token', $(\"meta[name='_token']\").attr('content'));\n            });\n\n            myDropzone.on(\"success\", function(file) {\n                self.addFile(file);\n            });\n        });\n    },\n    methods: {\n        getDirectories: function(){\n\n            var self = this;\n            axios.get('/admin/gettree').then(function (response) {\n                 self.directories = response.data.directories;\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFolder: function(path){\n\n            this.loading = true;\n            this.directory = path.replace(\"files/\", \"\");\n            this.files = null\n\n            var self = this;\n            axios.post('/admin/getfiles', { path : path }).then(function (response) {\n\n                self.files = response.data.files;\n                self.path  = path;\n\n                self.$nextTick(function(){\n                    self.loading = false;\n                });\n\n            }).catch(function (error) { console.log(error);});\n        },\n        deleteFile: function(path){\n\n            var self = this;\n            axios.post('/admin/files/delete', { path : path }).then(function (response) {\n                var answer = confirm('Voulez-vous vraiment supprimer ' + path + ' ?');\n                if (answer){ self.files.splice( self.files.indexOf(path), 1 );}\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFile: function(path){\n            this.filename = path;\n            this.chosen   = true;\n\n            $('#myModal_'+this.id).modal('hide');\n        },\n        addFile: function(file){\n            this.files.push(file.name);\n        },\n        removeFile: function(){\n            this.filename = null;\n            this.chosen   = false;\n        },\n        isActive: function(path){\n            return this.directory === path ? true : false;\n        },\n        isImage: function(filename){\n\n            var get_ext = filename.split('.').reverse();\n            var exts    = ['jpg','jpeg','png','gif'];\n\n            return ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ) ? true : false;\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
 /* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"EditBuild.vue"}]);
+
+/***/ }),
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(76).polyfill();
+module.exports = __webpack_require__(77).polyfill();
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -7303,7 +7341,7 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -24408,7 +24446,7 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(138)(module)))
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -24601,7 +24639,7 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -26151,7 +26189,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
@@ -26204,7 +26242,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(78);
+__webpack_require__(79);
 // On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -26218,7 +26256,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -26676,7 +26714,7 @@ return DragAndDropList;
 })));
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26685,7 +26723,7 @@ __webpack_require__(130)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(36),
+  __webpack_require__(37),
   /* template */
   __webpack_require__(111),
   /* scopeId */
@@ -26714,7 +26752,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26723,7 +26761,7 @@ __webpack_require__(133)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(38),
+  __webpack_require__(39),
   /* template */
   __webpack_require__(114),
   /* scopeId */
@@ -26752,7 +26790,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26761,7 +26799,7 @@ __webpack_require__(118)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(40),
+  __webpack_require__(41),
   /* template */
   __webpack_require__(98),
   /* scopeId */
@@ -26790,7 +26828,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26799,7 +26837,7 @@ __webpack_require__(135)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(41),
+  __webpack_require__(42),
   /* template */
   __webpack_require__(117),
   /* scopeId */
@@ -26828,7 +26866,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26837,7 +26875,7 @@ __webpack_require__(123)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(42),
+  __webpack_require__(43),
   /* template */
   __webpack_require__(103),
   /* scopeId */
@@ -26866,7 +26904,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26875,7 +26913,7 @@ __webpack_require__(128)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(43),
+  __webpack_require__(44),
   /* template */
   __webpack_require__(109),
   /* scopeId */
@@ -26904,12 +26942,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(44),
+  __webpack_require__(45),
   /* template */
   __webpack_require__(108),
   /* scopeId */
@@ -26939,44 +26977,6 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(119)
-
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(45),
-  /* template */
-  __webpack_require__(99),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Applications/MAMP/htdocs/shop/resources/assets/js/components/ImageUploader.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] ImageUploader.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0bdc838f", Component.options)
-  } else {
-    hotAPI.reload("data-v-0bdc838f", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26986,7 +26986,7 @@ __webpack_require__(120)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(46),
+  __webpack_require__(47),
   /* template */
   __webpack_require__(100),
   /* scopeId */
@@ -27024,7 +27024,7 @@ __webpack_require__(124)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(47),
+  __webpack_require__(48),
   /* template */
   __webpack_require__(104),
   /* scopeId */
@@ -27062,7 +27062,7 @@ __webpack_require__(134)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(48),
+  __webpack_require__(49),
   /* template */
   __webpack_require__(115),
   /* scopeId */
@@ -27100,7 +27100,7 @@ __webpack_require__(132)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(49),
+  __webpack_require__(50),
   /* template */
   __webpack_require__(113),
   /* scopeId */
@@ -27138,7 +27138,7 @@ __webpack_require__(122)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(50),
+  __webpack_require__(51),
   /* template */
   __webpack_require__(102),
   /* scopeId */
@@ -27176,7 +27176,7 @@ __webpack_require__(127)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(51),
+  __webpack_require__(52),
   /* template */
   __webpack_require__(107),
   /* scopeId */
@@ -27214,7 +27214,7 @@ __webpack_require__(126)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(52),
+  __webpack_require__(53),
   /* template */
   __webpack_require__(106),
   /* scopeId */
@@ -27248,7 +27248,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(53),
+  __webpack_require__(54),
   /* template */
   __webpack_require__(116),
   /* scopeId */
@@ -30606,7 +30606,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Sélectionner")]), _vm._v(" "), _vm._l((_vm.categories), function(categorie) {
     return _c('option', {
       domProps: {
-        "value": categorie
+        "value": categorie.id
       }
     }, [_vm._v(_vm._s(categorie.title))])
   })], 2), _c('br'), _vm._v(" "), _c('div', {
@@ -31138,7 +31138,7 @@ if (false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(57);
+var content = __webpack_require__(58);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31164,7 +31164,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(58);
+var content = __webpack_require__(59);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31190,7 +31190,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(59);
+var content = __webpack_require__(60);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31216,7 +31216,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(60);
+var content = __webpack_require__(61);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31242,7 +31242,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(61);
+var content = __webpack_require__(62);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31268,7 +31268,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(62);
+var content = __webpack_require__(63);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31294,7 +31294,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(63);
+var content = __webpack_require__(64);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31320,7 +31320,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(64);
+var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31346,7 +31346,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(65);
+var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31372,7 +31372,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(66);
+var content = __webpack_require__(67);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31398,7 +31398,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(67);
+var content = __webpack_require__(68);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31424,7 +31424,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(68);
+var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31450,7 +31450,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(69);
+var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31476,7 +31476,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(70);
+var content = __webpack_require__(71);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31502,7 +31502,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(71);
+var content = __webpack_require__(72);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31528,7 +31528,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(72);
+var content = __webpack_require__(73);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31554,7 +31554,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(73);
+var content = __webpack_require__(74);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -31580,7 +31580,7 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(74);
+var content = __webpack_require__(75);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -42449,7 +42449,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5), __webpack_require__(80).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5), __webpack_require__(81).setImmediate))
 
 /***/ }),
 /* 138 */
@@ -42483,7 +42483,7 @@ module.exports = function(module) {
 /* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(17);
+module.exports = __webpack_require__(18);
 
 
 /***/ })
