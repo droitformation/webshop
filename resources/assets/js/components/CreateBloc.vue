@@ -5,6 +5,7 @@
 
                 <arret v-if="type == 5 && model" :newsletter="newsletter" :arret="model"></arret>
                 <text-content v-if="hasTitle" :newbloc="newbloc" :categorie="model" :type="type" @imageUploaded="imageUploadedUpdate"></text-content>
+                <model-content v-if="type != 5 && model" :type="type" :model="model"></model-content>
 
             </div>
             <div class="col-md-5 edit_bloc_form">
@@ -16,9 +17,9 @@
                             <h3>{{ title }}</h3>
 
                             <div v-if="type == 10 || type == 5 || type == 9 || type == 8 || type == 7">
-                                <select class="form-control form-required required" @change="getSingle(selected)" v-model="selected" name="id">
+                                <select class="form-control form-required required" @change="getSingle(selected)" v-model="selected" name="model_id">
                                     <option v-if="!selected" :value="null" disabled>Sélectionner</option>
-                                    <option v-for="(model,index) in models" v-bind:value="index">{{ model }}</option>
+                                    <option v-for="model in models" v-bind:value="model.id">{{ model.title }}</option>
                                 </select><br/>
                             </div>
 
@@ -31,14 +32,29 @@
                                 <textarea v-model="newbloc.contenu" required name="contenu" :class="'form-control redactorBuild_' + hash" rows="10">{{ newbloc.contenu }}</textarea>
                             </div>
 
+                            <div v-if="type == 7" class="row drag">
+                                <div class="col-md-6">
+                                    <draggable v-model="arrets" class="dragArea" :options="{group:'arret'}">
+                                        <div v-for="element in arrets" :key="element.id">{{ element.reference }}</div>
+                                    </draggable>
+                                </div>
+                                <div class="col-md-6">
+                                    <draggable v-model="choosen" class="dragArea" :options="{group:'arret'}">
+                                        <div v-for="element in choosen" :key="element.id">{{ element.reference }}</div>
+                                    </draggable>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="btn-group">
                                     <input type="hidden" v-if="uploadImage" :value="uploadImage" name="image">
-                                    <input type="hidden" v-if="categorie" :value="categorie.image" name="image">
+                                    <input type="hidden" v-if="model && path == 'categorie'" :value="model.image" name="image">
                                     <input type="hidden" :value="type" name="type_id">
                                     <input type="hidden" :value="campagne.id" name="campagne">
 
-                                    <input v-if="categorie" type="hidden" name="categorie_id" :value="categorie.id" />
+                                    <input v-if="model" type="hidden" :name="path + '_id'" :value="model.id" />
+                                    <input v-for="chose in choosen" type="hidden" name="arrets[]" :value="chose.id" />
+
                                     <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
                                     <button type="button" @submit.prevent @click="close" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                                 </div>
@@ -83,11 +99,48 @@
     .margeUp{
         margin-top:5px;
     }
+
+    .dragArea {
+        height: 300px;
+        margin: 0 0 20px 0;
+        padding: 3px;
+        overflow: scroll;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    }
+
+    .dragArea div {
+        width: 100%;
+        height: auto;
+        line-height: 18px;
+        padding: 5px;
+        cursor: pointer;
+        box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);
+    }
+
+    .sortable-ghost {
+        color: #EAEAEA;
+        background-color: #EAEAEA;
+        border: 1px dashed #aaa;
+    }
+    .sortable-chosen:not(.sortable-ghost) {
+        color: #224466;
+        background-color: #2299ff;
+    }
+    .sortable-drag {
+        color: #449922;
+        background-color: #44ff33;
+    }
 </style>
 <script>
     import ImageNewsletter from './partials/ImageNewsletter.vue';
     import Arret from './blocs/Arret.vue';
     import TextContent from './blocs/TextContent.vue';
+    import ModelContent from './blocs/ModelContent.vue';
+    import draggable from 'vuedraggable';
+
     export default{
 
         props: ['type','campagne','newsletter','_token','url','title','site'],
@@ -95,25 +148,22 @@
             'image-newsletter' : ImageNewsletter,
             'arret' : Arret,
             'text-content' : TextContent,
+            'model-content' : ModelContent,
+            draggable,
         },
         data(){
             return{
                 newbloc: {
                    titre : '',
                    contenu : '',
-                   image:null,
-                   categorie_id: null,
-                   arret_id: null,
-                   colloque_id: null,
-                   product_id: null,
+                   image : null,
                 },
                 uploadImage:null,
                 models: [],
+                arrets:[],
+                choosen: [],
                 selected:null,
                 model:null,
-                categorie: null,
-                arret: null,
-                product: null,
                 hash: null
             }
         },
@@ -124,6 +174,10 @@
             },
             selected: function (newSelected, oldSelected) {
                 this.getSingle();
+
+                if(this.type == 7){
+                    this.getArrets();
+                }
             },
         },
         computed: {
@@ -159,9 +213,14 @@
                 this.hash = Math.random().toString(36).substring(7);
             },
             initialize : function(){
+
+                // remove all content
                 this.newbloc.titre = '';
                 this.newbloc.contenu = '';
+                this.model = null;
+                this.arrets = [];
 
+                // initialize textarea and get list of models
                 this.makeHash();
                 this.getModels();
 
@@ -183,22 +242,17 @@
                         formatting: ['h1', 'h2','h3','p', 'blockquote'],
                         callbacks: {
                             blur:function(e){
-                                var text = this.source.getCode();
-                                self.newbloc.contenu = text;
-                                console.log(text);
+                                self.newbloc.contenu = this.source.getCode();
                             },
                             enter: function(e){
                                return !(window.event && window.event.keyCode == 13 && window.event.keyCode == 46);
                             }
                         }
-
                     });
-
                 });
             },
             getModels: function() {
                 var self = this;
-
                 if(this.path){
                      axios.get('admin/ajax/list/'+ this.path +'/' + self.site).then(function (response) {
                          self.models = response.data;
@@ -208,9 +262,19 @@
                     this.models = [];
                 }
             },
+            getArrets: function() {
+                var self = this;
+                if(this.selected){
+                     axios.get('admin/ajax/categoriearrets/' + this.selected).then(function (response) {
+                         self.arrets = response.data;
+                     }).catch(function (error) { console.log(error);});
+                }
+                else{
+                    this.arrets = [];
+                }
+            },
             getSingle: function() {
                 var self = this;
-
                 if(this.path){
                      axios.get('admin/ajax/single/'+ this.path +'/' + self.selected).then(function (response) {
                          self.model = response.data;

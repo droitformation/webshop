@@ -140,13 +140,11 @@ class ContentModel
 
     public function categorie($model)
     {
-        $image = isset($model->categorie) ? $model->categorie->image : $model->image;
-
         return [
-            'id'    => isset($model->categorie) ? $model->categorie->id : null,
-            'title' => isset($model->categorie) ? $model->categorie->title : $model->titre,
-            'image' => $image,
-            'path'  => secure_asset(config('newsletter.path.categorie').$image),
+            'id'    => $model->id,
+            'title' => $model->title,
+            'image' => $model->image,
+            'path'  => secure_asset(config('newsletter.path.categorie').$model->image),
         ];
     }
 

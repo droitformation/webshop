@@ -30,7 +30,12 @@ class NewsletterModelController extends Controller {
         $site_id = $model == 'product' || $model == 'colloque' ? null : $site_id;
 
         $models = $this->$model->getAll($site_id);
-        $models = $models->pluck('title','id');
+        $models = $models->map(function ($item, $key) {
+            return [
+                'id' => $item->id,
+                'title' => $item->title
+            ];
+        });
 
         return response()->json( $models , 200 );
     }
@@ -45,4 +50,16 @@ class NewsletterModelController extends Controller {
         return response()->json( $convert , 200 );
     }
 
+    public function arrets($id){
+
+        $categorie = $this->categorie->find($id);
+        $references = $categorie->arrets->map(function ($item, $key) {
+            return [
+                'id' => $item->id,
+                'reference' => $item->reference
+            ];
+        });
+
+        return response()->json( $references, 200 );
+    }
 }
