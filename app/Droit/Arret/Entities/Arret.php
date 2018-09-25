@@ -26,7 +26,7 @@ class Arret extends Model {
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
-        return $this->reference.' '.$this->pub_date->formatLocalized('%A %d %B %Y');;
+        return $this->reference.' du '.$this->pub_date->formatLocalized('%d %B %Y');;
     }
     
     /**

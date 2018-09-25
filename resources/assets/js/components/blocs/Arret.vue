@@ -10,7 +10,7 @@
         <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="resetTable">
             <tr>
                 <td valign="top" width="375" class="resetMarge contentForm">
-                    <h3>{{ arret.dumois ? 'Arrêt du mois : ' : '' }}{{ arret.title }}</h3>
+                    <h3 style="text-align: left; font-family: sans-serif;">{{ arret.dumois ? 'Arrêt du mois : ' : '' }}{{ arret.title }}</h3>
                     <p class="abstract">{{ arret.abstract }}</p>
                     <div v-html="arret.content" class="content"></div>
                     <p><a target="_blank" :class="arret.class" :href="arret.link">{{ arret.message }}</a></p>
@@ -22,7 +22,7 @@
                         <a target="_blank" :href="image.link">
                             <img width="130" border="0" :alt="image.title" :src="image.image">
                         </a>
-                        <p v-if="!newsletter.hide_title" style="text-align:center !important;">{{ image.title }}</p>
+                        <p v-if="!newsletter.hide_title" style="text-align:center !important;margin: 0px 0px 5px; padding: 0px;">{{ image.title }}</p>
                     </div>
                 </td>
             </tr>
