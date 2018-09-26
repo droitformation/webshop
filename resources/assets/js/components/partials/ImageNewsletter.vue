@@ -2,7 +2,7 @@
     <div>
 
         <div class="upload-btn-wrapper" v-if="!image && visible">
-            <image-uploader :wrapper="false" id="fieldID" name="file" @imageChoosen="imageChoosenSelect"></image-uploader>
+            <image-uploader :wrapper="false" :id="id" name="file" @imageChoosen="imageChoosenSelect"></image-uploader>
         </div>
 
         <div class="upload-btn-wrapper" v-if="!image && visible">
@@ -38,7 +38,7 @@
     import ImageUploader from '../ImageUploader.vue';
 
     export default{
-        props: ['model','type','mode','visible'],
+        props: ['model','type','visible','filename','id'],
         data(){
             return{
                 isRemoved:false,
@@ -46,6 +46,7 @@
                 uploadImage:null,
                 big: 'http://www.placehold.it/560x200/EFEFEF/AAAAAA&text=image',
                 small: 'http://www.placehold.it/130x140/EFEFEF/AAAAAA&text=image',
+                hash:null,
             }
         },
         components:{
@@ -70,11 +71,14 @@
                 this.uploadImage = lastURLSegment;
                 this.$emit('imageUploaded', this.uploadImage)
             },
+            makeHash(){
+                this.hash = Math.random().toString(36).substring(7);
+            },
             iframe(){
                 this.$nextTick(function() {
                     var self = this;
 
-                    $('#fieldID').change(function() {
+                    $('#'+this.id).change(function() {
                         var image = $(this).val();
                         var lastURLSegment = image.substr(image.lastIndexOf('/') + 1);
                         self.image = image;
@@ -86,7 +90,7 @@
 
             },
             initialize(){
-                this.image = null;
+                this.image = this.filename ? this.filename : null;
             },
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
@@ -108,7 +112,7 @@
                  this.isRemoved = true;
             },
             cancel(){
-                 this.image = null;
+                 this.image = this.filename ? this.filename : null;
                  this.isRemoved = false;
                  this.iframe();
             },

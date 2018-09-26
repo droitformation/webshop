@@ -46,44 +46,44 @@
     <div id="appComponent">
         <div class="row">
             <div class="col-md-12">
+                <div id="StyleNewsletter" style="margin: 0; width: auto;">
+                    @if(!$campagne->content->isEmpty())
+                        <div class="row">
+                            <div class="col-md-7" id="StyleNewsletterCreate" style="position: relative;">
+                                @foreach($campagne->content as $bloc)
 
-                @if(!$campagne->content->isEmpty())
-                    <div class="row">
-                        <div class="col-md-7" id="StyleNewsletterCreate" style="position: relative;">
-                            @foreach($campagne->content as $bloc)
+                                    <div style="position: relative;">
+                                        <edit-bloc
+                                                :bloc="{{ $bloc }}"
+                                                :campagne="{{ $campagne }}"
+                                                :type="{{ $bloc->type_id }}"
+                                                :newsletter="{{ $campagne->newsletter }}"
+                                                _token="{{ csrf_token() }}"
+                                                url="{{ url('build/content') }}"
+                                                site="{{ $campagne->newsletter->site_id }}">
+                                        </edit-bloc>
 
-                                <div style="position: relative;">
-                                    <edit-bloc
-                                            :bloc="{{ $bloc }}"
-                                            :campagne="{{ $campagne }}"
-                                            :type="{{ $bloc->type_id }}"
-                                            :newsletter="{{ $campagne->newsletter }}"
-                                            _token="{{ csrf_token() }}"
-                                            url="{{ url('build/content') }}"
-                                            site="{{ $campagne->newsletter->site_id }}">
-                                    </edit-bloc>
-
-                                    <div id="bloc_{{ $bloc->id }}">
-                                        @include('emails.newsletter.send.'.$bloc->type->partial, ['bloc' => $bloc, 'arret' => (isset($bloc->arret) ? $bloc->arret : null) ,'campagne' => $campagne])
+                                        <div id="bloc_{{ $bloc->id }}">
+                                            @include('emails.newsletter.send.'.$bloc->type->partial, ['bloc' => $bloc, 'arret' => (isset($bloc->arret) ? $bloc->arret : null) ,'campagne' => $campagne])
+                                        </div>
                                     </div>
-                                </div>
 
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
 
 
-                <!-- Building blocs newsletter -->
-                <build :blocs="{{ $blocs }}"
-                       :campagne="{{ $campagne }}"
-                       :newsletter="{{ $campagne->newsletter }}"
-                       _token="{{ csrf_token() }}"
-                       url="{{ url('build/content') }}"
-                       site="{{ $campagne->newsletter->site_id }}"
-                >
-                </build>
-
+                    <!-- Building blocs newsletter -->
+                    <build :blocs="{{ $blocs }}"
+                           :campagne="{{ $campagne }}"
+                           :newsletter="{{ $campagne->newsletter }}"
+                           _token="{{ csrf_token() }}"
+                           url="{{ url('build/content') }}"
+                           site="{{ $campagne->newsletter->site_id }}"
+                    >
+                    </build>
+                </div>
             </div><!-- end 12 col -->
         </div><!-- end row -->
     </div>

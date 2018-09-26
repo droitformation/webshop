@@ -1,13 +1,23 @@
 <template>
     <div>
-        <button :id="'btn'+bloc_id" v-show="activ" class="btn btn-info btn-xs pull-right" type="button" @click="makeVisible">editer</button>
+        <div v-show="activ" class="pull-right" style="margin-top:5px;">
+            <form method="post" :action="action" class="pull-right">
+                <input name="_token" :value="_token" type="hidden">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="id" :value="bloc.id" />
+                <input type="hidden" :value="campagne.id" name="campagne_id">
+                <button type="submit" class="btn btn-xs btn-danger deleteNewsAction" :data-id="bloc.id" :data-action="bloc.titre">x</button>
+            </form>
+            <button :id="'btn'+bloc_id" class="btn btn-info btn-xs" type="button" @click="makeVisible">editer</button>
+        </div>
 
         <arret v-if="type == 5 && model && visible" class="paddingUp" :newsletter="newsletter" :arret="model"></arret>
+        <text-content v-if="hasTitle && visible" class="paddingUp" :newbloc="newbloc" :categorie="model" :type="type" @imageUploaded="imageUploadedUpdate"></text-content>
 
         <div class="wrapper-bloc-edit" v-if="visible">
             <div class="edit_bloc_form">
                 <form name="blocForm newsletterForm" method="post" :action="action">
-
+                    <input type="hidden" name="_method" value="PUT">
                     <input name="_token" :value="_token" type="hidden">
                     <div class="panel panel-success">
                         <div class="panel-body">
@@ -19,14 +29,35 @@
                                 </select><br/>
                             </div>
 
+                            <div v-if="type == 7" class="row drag">
+                                <div class="col-md-6">
+                                    <draggable v-model="arrets" class="dragArea" :options="{group:'arret'}">
+                                        <div v-for="element in arrets" :key="element.id">{{ element.reference }}</div>
+                                    </draggable>
+                                </div>
+                                <div class="col-md-6">
+                                    <draggable v-model="choosen" class="dragArea" :options="{group:'arret'}">
+                                        <div v-for="element in choosen" :key="element.id">{{ element.reference }}</div>
+                                    </draggable>
+                                </div>
+                            </div>
+
+                            <div class="form-group" v-if="hasTitle">
+                                <label>Titre</label>
+                                <input v-model="newbloc.titre" type="text" required name="titre" class="form-control">
+                            </div>
+                            <div class="form-group" v-if="hasText">
+                                <label>Texte</label>
+                                <textarea v-model="newbloc.contenu" required name="contenu" :class="'form-control redactorBuild_' + hash" rows="10">{{ newbloc.contenu }}</textarea>
+                            </div>
+
                             <div class="form-group">
                                 <div class="btn-group">
+                                    <input type="hidden" v-if="uploadImage" :value="uploadImage" name="image">
                                     <input type="hidden" :value="bloc.id" name="id">
                                     <input type="hidden" :value="type" name="type_id">
                                     <input type="hidden" :value="campagne.id" name="campagne">
-
                                     <input v-if="model" type="hidden" :name="path + '_id'" :value="model.id" />
-
                                     <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
                                     <button type="button" @submit.prevent @click="makeVisible" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                                 </div>
@@ -46,7 +77,7 @@
     left:615px;
 }
 .edit_bloc_form{
-    width: 630px;
+    width: 640px;
 }
 .edit_bloc_form::before{
         color: #85c744;
@@ -65,36 +96,86 @@
         padding-bottom:10px;
         border-bottom:1px solid #f5f5f5;
     }
+        .dragArea {
+        height: 300px;
+        margin: 0 0 20px 0;
+        padding: 3px;
+        overflow: scroll;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    }
+
+    .dragArea div {
+        width: 100%;
+        height: auto;
+        line-height: 18px;
+        padding: 5px;
+        cursor: pointer;
+        box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);
+    }
+
+    .sortable-ghost {
+        color: #EAEAEA;
+        background-color: #EAEAEA;
+        border: 1px dashed #aaa;
+    }
+    .sortable-chosen:not(.sortable-ghost) {
+        color: #224466;
+        background-color: #2299ff;
+    }
+    .sortable-drag {
+        color: #449922;
+        background-color: #44ff33;
+    }
 </style>
 <script>
 
     import Arret from './blocs/Arret.vue';
+    import TextContent from './blocs/TextContent.vue';
+    import draggable from 'vuedraggable';
 
     export default{
 
         props: ['bloc','campagne','newsletter','type','_token','url','site'],
         components:{
             'arret' : Arret,
+            'text-content' : TextContent,
+             draggable,
         },
         data(){
             return{
+                newbloc:{
+                    titre: this.bloc.titre,
+                    contenu: this.bloc.contenu,
+                    filename: this.bloc.image,
+                    path: this.bloc.path,
+                },
                 visible: false,
                 activ:true,
                 models: [],
-                selected:null,
+                selected: this.bloc.categorie_id ,
                 hash: null,
                 model:null,
+                uploadImage:null,
+                arrets: []  ,
+                choosen: this.bloc.model && this.bloc.model.choosen ? this.bloc.model.choosen : [] ,
             }
         },
         watch: {
-
+            selected: function (newSelected, oldSelected) {
+                if(this.type == 7){
+                    this.getArrets();
+                }
+            },
         },
         computed: {
             bloc_id(){
                 return 'bloc_' + this.bloc.id;
             },
             action:function(){
-                return this.url;
+                return this.url + '/' + this.bloc.id;;
             },
             path: function () {
                 if(this.type == 5){return 'arret';}
@@ -104,43 +185,42 @@
 
                 return null;
             },
+            hasTitle: function () {
+                return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
+            },
+            hasText: function () {
+                return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
+            },
             uniqueid: function () {
-                if(this.type == 5){return 'arret_id';}
-                if(this.type == 7 || this.type == 10){return 'categorie_id';}
-                if(this.type == 8){ return 'product_id';}
-                if(this.type == 9){ return 'colloque_id';}
+                if(this.type == 5){return this.bloc.arret_id;}
+                if(this.type == 7 || this.type == 10){return this.bloc.categorie_id;}
+                if(this.type == 8){ return this.bloc.product_id;}
+                if(this.type == 9){ return this.bloc.colloque_id;}
 
                 return null;
             },
         },
         mounted: function ()  {
             this.initialize();
+            this.makeHash();
         },
         methods: {
             makeVisible(){
                 this.visible = this.visible ? false : true;
-                this.activ = this.visible ? false : true;
+                this.activ   = this.visible ? false : true;
 
-                if(this.visible){
+                if(this.visible && this.type != 7){
                     this.hideOriginal();
                 }
-            },
-            hideOriginal(){
-                this.$nextTick(function(){
-                    console.log($('#'+ this.bloc_id));
-                    $('#'+ this.bloc_id).hide();
-                    $('#btn'+ this.bloc_id).hide();
-                });
-            },
-            makeHash(){
-                this.hash = Math.random().toString(36).substring(7);
-            },
-            initialize : function(){
+                else{
+                    this.showOriginal();
+                }
 
-                this.getSingle();
-                this.getModels();
+                 if(this.type == 7){
+                    this.getArrets();
+                 }
 
-                this.$nextTick(function(){
+                 this.$nextTick(function(){
                     var self = this;
 
                     $('.redactorBuild_' + self.hash).redactor({
@@ -158,7 +238,7 @@
                         formatting: ['h1', 'h2','h3','p', 'blockquote'],
                         callbacks: {
                             blur:function(e){
-                                self.contenu = this.source.getCode();
+                                self.newbloc.contenu = this.source.getCode();
                             },
                             enter: function(e){
                                return !(window.event && window.event.keyCode == 13 && window.event.keyCode == 46);
@@ -166,6 +246,26 @@
                         }
                     });
                 });
+            },
+            hideOriginal(){
+                this.$nextTick(function(){
+                    console.log($('#'+ this.bloc_id));
+                    $('#'+ this.bloc_id).hide();
+                    $('#btn'+ this.bloc_id).hide();
+                });
+            },
+            showOriginal(){
+                this.$nextTick(function(){
+                    $('#'+ this.bloc_id).show();
+                    $('#btn'+ this.bloc_id).show();
+                });
+            },
+            makeHash(){
+                this.hash = Math.random().toString(36).substring(7);
+            },
+            initialize : function(){
+                this.getSingle();
+                this.getModels();
             },
             getModels: function() {
                 var self = this;
@@ -186,13 +286,13 @@
                      }).catch(function (error) { console.log(error);});
                 }
                 else{
-                    this.arrets = [];
+                    this.arrets = this.bloc.model && this.bloc.model.arrets ? this.bloc.model.arrets : [];
                 }
             },
             getSingle: function() {
                 var self = this;
                 if(this.path){
-                    var id = this.selected ? this.selected : this.bloc.arret_id;
+                     var id = this.selected ? this.selected : this.uniqueid;
                      axios.get('admin/ajax/single/'+ this.path +'/' + id).then(function (response) {
                          self.model = response.data;
                      }).catch(function (error) { console.log(error);});

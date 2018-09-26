@@ -168,8 +168,11 @@ class ContentModel
                 'image' => $model->groupe->categorie->image,
                 'path'  => secure_asset(config('newsletter.path.categorie').$model->groupe->categorie->image),
             ],
-            'arrets'    => $arrets->map(function ($arret, $key) {
-                return $this->arret($arret);
+            'arrets'    => $model->groupe->categorie->arrets->map(function ($arret, $key) {
+                return [
+                    'id' => $arret->id,
+                    'reference' => $arret->reference,
+                ];
              }),
             'choosen'   => $arrets->map(function ($arret, $key) {
                 return [

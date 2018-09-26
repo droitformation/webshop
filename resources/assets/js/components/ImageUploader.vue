@@ -90,24 +90,27 @@ export default {
 
             Dropzone.autoDiscover = false;
 
-            var myDropzone = new Dropzone("#dropzone_" + this.id, {
-                url: "admin/upload",
-                dictDefaultMessage: " Ajouter un fichier",
-                dictRemoveFile: "OK",
-                thumbnailWidth: 100,
-                thumbnailHeight: 80,
-                addRemoveLinks : true
-            });
+            if ($('#dropzone_' + this.id).length) {
 
-            myDropzone.on('sending', function(file, xhr, formData){
-                formData.append('path', self.path);
-                formData.append('_token', $("meta[name='_token']").attr('content'));
-            });
+                var myDropzone = new Dropzone("#dropzone_" + this.id, {
+                    url: "admin/upload",
+                    dictDefaultMessage: " Ajouter un fichier",
+                    dictRemoveFile: "OK",
+                    thumbnailWidth: 100,
+                    thumbnailHeight: 80,
+                    addRemoveLinks : true
+                });
 
-            myDropzone.on("success", function(file,response) {
-                console.log(response.filename);
-                self.addFile(response.filename);
-            });
+                myDropzone.on('sending', function(file, xhr, formData){
+                    formData.append('path', self.path);
+                    formData.append('_token', $("meta[name='_token']").attr('content'));
+                });
+
+                myDropzone.on("success", function(file,response) {
+                    console.log(response.filename);
+                    self.addFile(response.filename);
+                });
+             }
         });
     },
     methods: {

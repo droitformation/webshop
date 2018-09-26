@@ -15,7 +15,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-5">
 
                 <div id="componant" class="component-menu">
                     <h5>Composants</h5>

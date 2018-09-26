@@ -474,7 +474,7 @@
 .redactor-toolbar a.re-button-icon,
 .redactor-air a.re-button-icon {
   font-size: 16px;
-  padding: 9px 15px 6px 15px; }
+  padding: 9px 12px 6px 12px; }
 
 .redactor-toolbar a:hover,
 .redactor-air a:hover {
@@ -1039,7 +1039,7 @@
   margin: 0;
   padding: 16px 18px;
   color: #333;
-  font-family: "Trebuchet MS", "Helvetica Neue", Helvetica, Tahoma, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
   line-height: 1.5;
   box-sizing: border-box; }
