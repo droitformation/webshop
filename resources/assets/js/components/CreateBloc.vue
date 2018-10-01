@@ -8,7 +8,7 @@
                 <model-content v-if="type != 5 && model" :type="type" :model="model"></model-content>
 
             </div>
-            <div class="col-md-5 edit_bloc_form">
+            <div class="col-md-5 create_bloc_form">
                 <form name="blocForm newsletterForm" method="post" :action="action">
 
                     <input name="_token" :value="_token" type="hidden">
@@ -70,7 +70,7 @@
     #StyleNewsletterCreate{
         margin-top:5px;
     }
-    .edit_bloc_form::before{
+    .create_bloc_form::before{
         color: #85c744;
         content: "◄";
         display: block;
@@ -88,6 +88,9 @@
       display: inline-block;
     }
 
+    .create_bloc_form{
+        margin-left:10px;
+    }
     .upload-btn-wrapper input[type=file] {
       font-size: 100px;
       position: absolute;

@@ -13,17 +13,18 @@
 
         <arret v-if="type == 5 && model && visible" class="paddingUp" :newsletter="newsletter" :arret="model"></arret>
         <text-content v-if="hasTitle && visible" class="paddingUp" :newbloc="newbloc" :categorie="model" :type="type" @imageUploaded="imageUploadedUpdate"></text-content>
+        <model-content v-if="!hasTitle && type != 5 && model && visible" :color="color" class="paddingUp" :model="model" :type="type"></model-content>
 
         <div class="wrapper-bloc-edit" v-if="visible">
             <div class="edit_bloc_form">
                 <form name="blocForm newsletterForm" method="post" :action="action">
                     <input type="hidden" name="_method" value="PUT">
                     <input name="_token" :value="_token" type="hidden">
-                    <div class="panel panel-success">
+                    <div class="panel panel-warning">
                         <div class="panel-body">
 
                             <div v-if="type == 10 || type == 5 || type == 9 || type == 8 || type == 7">
-                                <select class="form-control form-required required" @change="getSingle(selected)" v-model="selected" name="model_id">
+                                <select :disabled="type == 7" class="form-control form-required required" @change="getSingle(selected)" v-model="selected" name="model_id">
                                     <option v-if="!selected" :value="null" disabled>Sélectionner</option>
                                     <option v-for="model in models" v-bind:value="model.id">{{ model.title }}</option>
                                 </select><br/>
@@ -57,8 +58,10 @@
                                     <input type="hidden" :value="bloc.id" name="id">
                                     <input type="hidden" :value="type" name="type_id">
                                     <input type="hidden" :value="campagne.id" name="campagne">
-                                    <input v-if="model" type="hidden" :name="path + '_id'" :value="model.id" />
-                                    <button type="submit" class="btn btn-sm btn-success">Envoyer</button>
+                                    <input type="hidden" :value="bloc.groupe_id" name="groupe_id">
+                                    <input v-if="model" type="hidden" :name="path + '_id'" :value="selected" />
+                                    <input v-for="chose in choosen" type="hidden" name="arrets[]" :value="chose.id" />
+                                    <button type="submit" class="btn btn-sm btn-warning">Envoyer</button>
                                     <button type="button" @submit.prevent @click="makeVisible" class="btn btn-sm btn-default cancelCreate">Annuler</button>
                                 </div>
                             </div>
@@ -74,13 +77,13 @@
 .wrapper-bloc-edit{
     position:absolute;
     top:0;
-    left:615px;
+    left:600px;
 }
 .edit_bloc_form{
     width: 640px;
 }
 .edit_bloc_form::before{
-        color: #85c744;
+        color: #f1c40f;
         content: "◄";
         display: block;
         font-size: 14px;
@@ -134,6 +137,7 @@
 
     import Arret from './blocs/Arret.vue';
     import TextContent from './blocs/TextContent.vue';
+    import ModelContent from './blocs/ModelContent.vue';
     import draggable from 'vuedraggable';
 
     export default{
@@ -142,6 +146,7 @@
         components:{
             'arret' : Arret,
             'text-content' : TextContent,
+            'model-content' : ModelContent,
              draggable,
         },
         data(){
@@ -155,21 +160,15 @@
                 visible: false,
                 activ:true,
                 models: [],
-                selected: this.bloc.categorie_id ,
+                selected: null,
                 hash: null,
                 model:null,
                 uploadImage:null,
-                arrets: []  ,
+                arrets: this.bloc.model && this.bloc.model.listearrets ? this.bloc.model.listearrets :[] ,
                 choosen: this.bloc.model && this.bloc.model.choosen ? this.bloc.model.choosen : [] ,
             }
         },
-        watch: {
-            selected: function (newSelected, oldSelected) {
-                if(this.type == 7){
-                    this.getArrets();
-                }
-            },
-        },
+        watch: {},
         computed: {
             bloc_id(){
                 return 'bloc_' + this.bloc.id;
@@ -199,6 +198,9 @@
 
                 return null;
             },
+            color(){
+                return this.newsletter.color;
+            }
         },
         mounted: function ()  {
             this.initialize();
@@ -209,16 +211,14 @@
                 this.visible = this.visible ? false : true;
                 this.activ   = this.visible ? false : true;
 
+                this.selected = this.uniqueid ? this.uniqueid : null;
+
                 if(this.visible && this.type != 7){
                     this.hideOriginal();
                 }
                 else{
                     this.showOriginal();
                 }
-
-                 if(this.type == 7){
-                    this.getArrets();
-                 }
 
                  this.$nextTick(function(){
                     var self = this;
@@ -286,7 +286,7 @@
                      }).catch(function (error) { console.log(error);});
                 }
                 else{
-                    this.arrets = this.bloc.model && this.bloc.model.arrets ? this.bloc.model.arrets : [];
+                    this.arrets = this.bloc.model && this.bloc.model.listearrets ? this.bloc.model.listearrets : [];
                 }
             },
             getSingle: function() {

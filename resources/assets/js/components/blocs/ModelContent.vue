@@ -8,7 +8,8 @@
                     <h3>{{ model.title }}</h3>
                     <p class="abstract">{{ model.abstract }}</p>
                     <div v-html="model.content" class="content"></div>
-                    <p><a target="_blank" :class="model.class" :href="model.link">{{ model.message }}</a></p>
+                    <p><a target="_blank" :style="style" :class="model.class" :href="model.link">{{ model.message }}</a></p>
+
                 </td>
                 <!-- Bloc image droite-->
                 <td width="25" class="resetMarge"></td><!-- space -->
@@ -17,7 +18,6 @@
                         <a target="_blank" :href="image.link">
                             <img width="130" border="0" :alt="image.title" :src="image.image">
                         </a>
-                        <p style="text-align:center !important;">{{ image.title }}</p>
                     </div>
                     <img v-if="type == 7" :src="model.path" class="img-responsive">
                 </td>
@@ -27,11 +27,19 @@
 
     </div>
 </template>
+<style>
+
+</style>
 <script>
     export default{
-        props: ['model','type'],
+        props: ['model','type','color'],
         data(){
             return{}
+        },
+        computed: {
+            style(){
+                return this.model.style + 'background:' + this.color;
+            }
         },
         methods: {}
     }

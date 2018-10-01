@@ -83,11 +83,12 @@ class ContentModel
             'id'        => $colloque->id,
             'droptitle' => $colloque->titre,
             'title'     => $colloque->titre,
-            'abstract'  => $colloque->sujet,
+            'abstract'  => $colloque->event_date,
             'content'   => $colloque->remarques,
             'link'      => url('pubdroit/colloque/').$colloque->id,
             'message'   => 'Informations et inscription',
             'class'     => '',
+            'style'     => 'padding: 5px 10px; text-decoration: none; color: #fff; margin-top: 10px; display: inline-block;',
             'images'    => [[
                 'link'  => url('pubdroit/colloque/').$colloque->id,
                 'image' => $colloque->frontend_illustration,
@@ -151,29 +152,37 @@ class ContentModel
     public function group($model)
     {
         $arrets = isset($model->groupe) && !$model->groupe->arrets->isEmpty() ? $model->groupe->arrets : collect([]);
+        $title  = isset($model->groupe) && isset($model->groupe->categorie) ? $model->groupe->categorie->title : $model->titre;
 
         return [
-            'id'        => $model->id,
-            'droptitle' => null,
-            'title'     => $model->titre,
-            'abstract'  => '',
-            'content'   => $model->contenu,
-            'link'      => null,
-            'image'     => secure_asset(config('newsletter.path.categorie')).'/',
-            'message'   => null,
-            'class'     => '',
-            'categorie' =>  [
-                'id'    => $model->groupe->categorie->id,
-                'title' => $model->groupe->categorie->title,
-                'image' => $model->groupe->categorie->image,
-                'path'  => secure_asset(config('newsletter.path.categorie').$model->groupe->categorie->image),
+            'id'           => $model->id,
+            'droptitle'    => null,
+            'title'        => $title,
+            'abstract'     => '',
+            'content'      => $model->contenu,
+            'categorie_id' => $model->categorie_id,
+            'link'         => null,
+            'image'        => secure_asset(config('newsletter.path.categorie')).'/',
+            'message'      => null,
+            'class'        => '',
+            'categorie'    =>  [
+                'id'       => $model->groupe->categorie->id,
+                'title'    => $model->groupe->categorie->title,
+                'image'    => $model->groupe->categorie->image,
+                'path'     => secure_asset(config('newsletter.path.categorie').$model->groupe->categorie->image),
             ],
-            'arrets'    => $model->groupe->categorie->arrets->map(function ($arret, $key) {
-                return [
-                    'id' => $arret->id,
-                    'reference' => $arret->reference,
-                ];
-             }),
+            'listearrets'    => $model->groupe->categorie->arrets->map(function ($arret, $key) use ($arrets) {
+                if(!$arrets->contains($arret->id)){
+                    return [
+                        'id' => $arret->id,
+                        'reference' => $arret->reference,
+                    ];
+                }
+
+                return null;
+             })->reject(function ($value, $key) {
+                return empty($value);
+            }),
             'choosen'   => $arrets->map(function ($arret, $key) {
                 return [
                     'id' => $arret->id,

@@ -116,8 +116,7 @@ class NewsletterContentEloquent implements NewsletterContentInterface{
 
         $contents = $this->contents->findOrFail($data['id']);
 		
-		if( ! $contents )
-		{
+		if( ! $contents ) {
             throw new \App\Exceptions\CampagneUpdateException('Update of content failed');
 		}
 
