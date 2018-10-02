@@ -88,7 +88,9 @@
                             <select class="form-control" name="question_id[]" multiple>
                                 @foreach($avis as $question)
                                     @if(!$question->hidden)
-                                        <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
+                                        @if(!$sondage->avis->contains('id',$question->id))
+                                            <option value="{{ $question->id }}">{{ strip_tags($question->question) }}</option>
+                                        @endif
                                     @endif
                                 @endforeach
                             </select>
