@@ -11,7 +11,11 @@
         </div>
 
         <div class="responsive-newsletter">
-            <div v-if="image"><img :width="sizeImage" :src="image" class="img-responsive"></div>
+            <div v-if="image">
+                <a :href="link">
+                    <img :width="sizeImage" :src="image" class="img-responsive">
+                </a>
+            </div>
             <div v-if="!image"><img :src="size" /></div>
         </div>
 
@@ -38,7 +42,7 @@
     import ImageUploader from '../ImageUploader.vue';
 
     export default{
-        props: ['model','type','visible','filename','id'],
+        props: ['model','type','visible','filename','id','link'],
         data(){
             return{
                 isRemoved:false,

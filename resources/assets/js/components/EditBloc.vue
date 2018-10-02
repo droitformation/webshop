@@ -13,7 +13,7 @@
 
         <arret v-if="type == 5 && model && visible" class="paddingUp" :newsletter="newsletter" :arret="model"></arret>
         <text-content v-if="hasTitle && visible" class="paddingUp" :newbloc="newbloc" :categorie="model" :type="type" @imageUploaded="imageUploadedUpdate"></text-content>
-        <model-content v-if="!hasTitle && type != 5 && model && visible" :color="color" class="paddingUp" :model="model" :type="type"></model-content>
+        <model-content v-if="!hasTitle && model && visible && type != 5 && type != 10" :color="color" class="paddingUp" :model="model" :type="type"></model-content>
 
         <div class="wrapper-bloc-edit" v-if="visible">
             <div class="edit_bloc_form">
@@ -46,6 +46,10 @@
                             <div class="form-group" v-if="hasTitle">
                                 <label>Titre</label>
                                 <input v-model="newbloc.titre" type="text" required name="titre" class="form-control">
+                            </div>
+                            <div class="form-group" v-if="hasImage">
+                                <label>Ajouter un lien sur l'image</label>
+                                <input v-model="newbloc.lien" type="text" value="" name="lien" class="form-control">
                             </div>
                             <div class="form-group" v-if="hasText">
                                 <label>Texte</label>
@@ -156,6 +160,7 @@
                     contenu: this.bloc.contenu,
                     filename: this.bloc.image,
                     path: this.bloc.path,
+                    lien: this.bloc.lien,
                 },
                 visible: false,
                 activ:true,
@@ -189,6 +194,9 @@
             },
             hasText: function () {
                 return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
+            },
+            hasImage: function () {
+                return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) ? true : false;
             },
             uniqueid: function () {
                 if(this.type == 5){return this.bloc.arret_id;}

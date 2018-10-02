@@ -8,6 +8,11 @@
         {
             color: {{ $campagne->newsletter->color }};
         }
+        #StyleNewsletter .resetTable.alert-dumois{
+            border-top: 1px solid {{ $campagne->newsletter->color }};
+            border-left:1px solid {{ $campagne->newsletter->color }};
+            border-right:1px solid {{ $campagne->newsletter->color }};
+        }
     </style>
 
     <div class="component-build"><!-- Start component-build -->

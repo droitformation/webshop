@@ -5,7 +5,7 @@
 
                 <arret v-if="type == 5 && model" :newsletter="newsletter" :arret="model"></arret>
                 <text-content v-if="hasTitle" :newbloc="newbloc" :categorie="model" :type="type" @imageUploaded="imageUploadedUpdate"></text-content>
-                <model-content v-if="type != 5 && model" :type="type" :model="model"></model-content>
+                <model-content v-if="type != 5 && type != 10 && model" :type="type" :model="model"></model-content>
 
             </div>
             <div class="col-md-5 create_bloc_form">
@@ -27,6 +27,12 @@
                                 <label>Titre</label>
                                 <input v-model="newbloc.titre" type="text" required name="titre" class="form-control">
                             </div>
+
+                            <div class="form-group" v-if="hasImage">
+                                <label>Ajouter un lien sur l'image</label>
+                                <input v-model="newbloc.lien" type="text" value="" name="lien" class="form-control">
+                            </div>
+
                             <div class="form-group" v-if="hasText">
                                 <label>Texte</label>
                                 <textarea v-model="newbloc.contenu" required name="contenu" :class="'form-control redactorBuild_' + hash" rows="10">{{ newbloc.contenu }}</textarea>
@@ -160,6 +166,7 @@
                    titre : '',
                    contenu : '',
                    image : null,
+                   lien:'#',
                 },
                 uploadImage:null,
                 models: [],
@@ -192,6 +199,9 @@
             },
             hasTitle: function () {
                 return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;
+            },
+            hasImage: function () {
+                return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) ? true : false;
             },
             align: function () {
                 return (this.type == 1) ? 'text-align:center;' : 'text-align:left;';
