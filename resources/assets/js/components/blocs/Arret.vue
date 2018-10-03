@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <analyse-newsletter
                 v-if="newsletter.display == 'top'"
                 :title="newsletter.comment_title"

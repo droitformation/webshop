@@ -13,7 +13,7 @@
 
         <arret v-if="type == 5 && model && visible" class="paddingUp" :newsletter="newsletter" :arret="model"></arret>
         <text-content v-if="hasTitle && visible" class="paddingUp" :newbloc="newbloc" :categorie="model" :type="type" @imageUploaded="imageUploadedUpdate"></text-content>
-        <model-content v-if="!hasTitle && model && visible && type != 5 && type != 10" :color="color" class="paddingUp" :model="model" :type="type"></model-content>
+        <model-content v-if="!hasTitle && model && visible && type != 5 && type != 10  && type != 7" :color="color" class="paddingUp" :model="model" :type="type"></model-content>
 
         <div class="wrapper-bloc-edit" v-if="visible">
             <div class="edit_bloc_form">

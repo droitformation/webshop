@@ -6,6 +6,7 @@
 
             @component('emails.newsletter.send.partials.widebloc', ['width' => '560'])
                 <?php $width = \Image::make(public_path(config('newsletter.path.upload').$bloc->image))->width();?>
+                <?php $width = $width > 560 ? 560 : $width; ?>
                 <p class="centerText">
                     <a target="_blank" href="{{ isset($bloc->lien) && !empty($bloc->lien) ? $bloc->link_or_url : url('/') }}">
                         <img style="width: {{ $width }}px;" alt="{{ $bloc->titre or '' }}" src="{{ secure_asset(config('newsletter.path.upload').$bloc->image) }}" />

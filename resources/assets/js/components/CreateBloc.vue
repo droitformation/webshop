@@ -5,7 +5,7 @@
 
                 <arret v-if="type == 5 && model" :newsletter="newsletter" :arret="model"></arret>
                 <text-content v-if="hasTitle" :newbloc="newbloc" :categorie="model" :type="type" @imageUploaded="imageUploadedUpdate"></text-content>
-                <model-content v-if="type != 5 && type != 10 && model" :type="type" :model="model"></model-content>
+                <model-content v-if="type != 5 && type != 10 && model" :color="color" :type="type" :model="model"></model-content>
 
             </div>
             <div class="col-md-5 create_bloc_form">
@@ -166,7 +166,7 @@
                    titre : '',
                    contenu : '',
                    image : null,
-                   lien:'#',
+                   lien:  location.protocol + "//" + location.host+"/",
                 },
                 uploadImage:null,
                 models: [],
@@ -217,6 +217,9 @@
             action:function(){
                 return this.url;
             },
+            color(){
+                return this.newsletter.color;
+            }
         },
         mounted: function ()  {
             this.initialize();

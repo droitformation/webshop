@@ -23,7 +23,6 @@
                     <img v-if="categorie" :src="imgcategorie" class="img-responsive">
                 </td>
             </tr>
-
         </table>
         <!-- Bloc content-->
 
@@ -58,7 +57,7 @@
                 return this.newbloc.filename ? this.newbloc.path + '/' + this.newbloc.filename  : null;
             },
             linkurl(){
-                return this.newbloc.link ? this.newbloc.link : '#';
+                return this.newbloc.link ? this.newbloc.link : location.protocol + "//" + location.host+"/";
             }
         },
         data(){

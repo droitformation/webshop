@@ -182,13 +182,13 @@ class ContentModel
                 return null;
              })->reject(function ($value, $key) {
                 return empty($value);
-            }),
+            })->sortBy('reference')->values(),
             'choosen'   => $arrets->map(function ($arret, $key) {
                 return [
                     'id' => $arret->id,
                     'reference' => $arret->reference,
                 ];
-            })
+            })->values()
         ];
 
     }

@@ -58,7 +58,7 @@ class NewsletterModelController extends Controller {
                 'id' => $item->id,
                 'reference' => $item->reference
             ];
-        });
+        })->sortBy('reference')->values(); // reset key or vuejs wont display correct order
 
         return response()->json( $references, 200 );
     }

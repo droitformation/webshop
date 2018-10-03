@@ -9,7 +9,6 @@
                     <p class="abstract">{{ model.abstract }}</p>
                     <div v-html="model.content" class="content"></div>
                     <p><a target="_blank" :style="style" :class="model.class" :href="model.link">{{ model.message }}</a></p>
-
                 </td>
                 <!-- Bloc image droite-->
                 <td width="25" class="resetMarge"></td><!-- space -->

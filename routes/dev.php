@@ -171,18 +171,17 @@ Route::get('testing', function() {
 
     $nouveautes = $products->getByCategorie('Nouveautés');
 
-    $order = $orders->find(4099);
-
-    $products = $order->products->filter(function ($product, $key) {
-        return $product->notify_url;
-    })->groupBy(function ($item, $key) {
-        return $item->notify_url;
-    })->map(function ($item, $key) {
-        return $item->count();
-    });
+    $model = App::make('App\Droit\Categorie\Repo\CategorieInterface');
+    $categorie = $model->find(92);
+    $references = $categorie->arrets->map(function ($item, $key) {
+        return [
+            'id' => $item->id,
+            'reference' => $item->reference
+        ];
+    })->sortBy('reference')->values();
 
     echo '<pre>';
-    print_r($products);
+    print_r($references);
     echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {
