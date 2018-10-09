@@ -1,6 +1,6 @@
-<!-- Bloc -->
+
 <table border="0" width="600" align="center" cellpadding="0" cellspacing="0" class="tableReset">
-    <tr bgcolor="ffffff"><td colspan="3" height="35"></td></tr><!-- space -->
+    <tr bgcolor="ffffff"><td colspan="3" height="35"></td></tr>
     <tr align="center" class="resetMarge">
         <td class="resetMarge">
 
@@ -11,6 +11,5 @@
 
         </td>
     </tr>
-    <tr bgcolor="ffffff"><td colspan="3" height="35" class="blocBorder"></td></tr><!-- space -->
+    <tr bgcolor="ffffff"><td colspan="3" height="35" class="blocBorder"></td></tr>
 </table>
-<!-- End bloc -->

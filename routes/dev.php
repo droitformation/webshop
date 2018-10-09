@@ -1176,9 +1176,9 @@ Route::get('/test_mailgun', function () {
     $mailgun = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
 
     $toSend = \Carbon\Carbon::now()->addMinutes(1)->toRfc2822String();
-    $html    = $worker->html(1665);
+    $html    = $worker->html(1766);
 
-    $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
+  /*  $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
         ->setHtml($html)
         ->setSendDate($toSend)
         ->setTags(['testing_123'])
@@ -1188,7 +1188,7 @@ Route::get('/test_mailgun', function () {
     $tag      = 'campagne_1669';
     $response = $mailgun->getStats($date,$tag);
 
-    $results = $mailgun->mailgun_agregate($response);
+    $results = $mailgun->mailgun_agregate($response);*/
 /*
     $tracking = App::make('App\Droit\Newsletter\Repo\NewsletterTrackingInterface');
     $tracking->logSent([
@@ -1197,14 +1197,7 @@ Route::get('/test_mailgun', function () {
         'list_id'        => 12,
     ]);*/
 
-    echo '<pre>';
-    print_r($response);
-    echo '</pre>';
-   // $response = $mailgun->sendTransactional('testing');
-
-    echo '<pre>';
-    print_r($results);
-    echo '</pre>';exit();
+   return $html;
 });
 
 Route::get('cleanlist', function()

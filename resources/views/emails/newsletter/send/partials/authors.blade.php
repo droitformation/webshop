@@ -11,7 +11,7 @@
                     <p style="font-family: sans-serif;">{!! $author->occupation !!}</p>
                 </td>
             </tr>
-            <tr bgcolor="ffffff"><td colspan="3" height="15" class=""></td></tr><!-- space -->
+            <tr bgcolor="ffffff"><td colspan="3" height="15" class=""></td></tr>
         </table>
     @endforeach
 @endif

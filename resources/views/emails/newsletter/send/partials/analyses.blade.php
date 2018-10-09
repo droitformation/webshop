@@ -16,7 +16,7 @@
                     @foreach($arret->analyses as $i => $analyse)
                         <table border="0" width="375" align="left" cellpadding="0" cellspacing="0" class="resetTable">
                             @if( $arret->analyses->count() > 1 && $arret->analyses->count() > $i+1)
-                                <tr bgcolor="ffffff"><td colspan="3" height="15" class=""></td></tr><!-- space -->
+                                <tr bgcolor="ffffff"><td colspan="3" height="15" class=""></td></tr>
                             @endif
                             <tr>
                                 <td valign="top" width="375" class="resetMarge contentForm">
@@ -24,15 +24,15 @@
                                         <?php $title = isset($campagne->newsletter) ? $campagne->newsletter->comment_title : 'Commentaire'; ?>
                                         {{ $title }} de l'arrêt {{ $arret->reference }}
                                     </h3>
-                                    <!-- Authors -->
+                                 
                                     @include('emails.newsletter.send.partials.authors')
-                                    <!-- End Authors -->
+                                
                                     <p class="abstract">{!! $analyse->abstract !!}</p>
                                     <p><a target="_blank" href="{{ secure_asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
                                 </td>
                             </tr>
                             @if( $arret->analyses->count() > 1 && $arret->analyses->count() > $i+1)
-                                <tr bgcolor="ffffff"><td colspan="3" height="15" class=""></td></tr><!-- space -->
+                                <tr bgcolor="ffffff"><td colspan="3" height="15" class=""></td></tr>
                             @endif
                         </table>
                     @endforeach

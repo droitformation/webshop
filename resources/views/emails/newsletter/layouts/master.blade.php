@@ -10,6 +10,9 @@
 
         <style type="text/css">
 
+            p{
+                margin:0;
+            }
             #main{
                 margin-top:20px;
             }

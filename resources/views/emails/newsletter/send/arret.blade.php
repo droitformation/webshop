@@ -1,11 +1,11 @@
-<!-- Bloc -->
+
 @if(isset($arret))
     <table border="0" width="600" align="center" cellpadding="0" cellspacing="0" class="tableReset {{ $arret->dumois ? $campagne->newsletter->classe : '' }}">
 
         <?php $comment = isset($campagne->newsletter) ? $campagne->newsletter->comment :null;?>
 
         @if($arret->dumois && $comment)
-            <tr bgcolor="ffffff"><td height="20"></td></tr><!-- space -->
+            <tr bgcolor="ffffff"><td height="20"></td></tr>
             <tr bgcolor="ffffff">
                 <td>
                     @component('emails.newsletter.send.partials.widebloc', ['width' => '560'])
@@ -16,18 +16,17 @@
         @endif
 
         @if(isset($campagne->newsletter) && $campagne->newsletter->display == 'top')
-            <!-- Analyses -->
             @if(!$comment)
-                <tr bgcolor="ffffff"><td height="10"></td></tr><!-- space -->
+                <tr bgcolor="ffffff"><td height="10"></td></tr>
             @endif
 
             @include('emails.newsletter.send.partials.analyses', ['arret' => $arret])
         @endif
 
-        <tr bgcolor="ffffff"><td height="25"></td></tr><!-- space -->
+        <tr bgcolor="ffffff"><td height="25"></td></tr>
         <tr align="center" class="resetMarge">
             <td class="resetMarge">
-                <!-- Bloc content-->
+
 
                 @component('emails.newsletter.send.partials.tablebloc',['direction' => 'right'])
                     @slot('picto')
@@ -48,13 +47,13 @@
         </tr>
 
         @if(isset($campagne->newsletter) && $campagne->newsletter->display == 'bottom')
-            <tr bgcolor="ffffff"><td height="10"></td></tr><!-- space -->
-            <!-- Analyses -->
+            <tr bgcolor="ffffff"><td height="10"></td></tr>
+
             @include('emails.newsletter.send.partials.analyses', ['arret' => $arret])
         @endif
 
-        <tr bgcolor="ffffff"><td height="25" class="blocBorder"></td></tr><!-- space -->
+        <tr bgcolor="ffffff"><td height="25" class="blocBorder"></td></tr>
 
     </table>
-    <!-- End bloc -->
+
 @endif

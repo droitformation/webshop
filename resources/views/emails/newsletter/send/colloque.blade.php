@@ -1,4 +1,4 @@
-<!-- Bloc -->
+
 <?php $width = isset($isEdit) ? 560 : 600; ?>
 
 @if(isset($bloc->colloque))
@@ -29,5 +29,5 @@
         </tr>
         <tr bgcolor="ffffff"><td height="35" class="blocBorder"></td></tr><!-- space -->
     </table>
-    <!-- End bloc -->
+
 @endif

@@ -1,7 +1,7 @@
 <?php $color = $campagne->newsletter->second_color ? $campagne->newsletter->second_color : $campagne->newsletter->color; ?>
 <tr>
     <td align="center">
-        <!-- Title -->
+
         <table bgcolor="{{ $color }}" width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="resetTable headerInfos">
             <tr bgcolor="{{ $color }}"><td colspan="4" height="10"></td></tr><!-- space -->
 
@@ -41,10 +41,10 @@
 	                </td>
                 @endif
 
-            </tr><!-- space -->
+            </tr>
 
-            <tr bgcolor="{{ $color }}"><td colspan="4" height="10"></td></tr><!-- space -->
+            <tr bgcolor="{{ $color }}"><td colspan="4" height="10"></td></tr>
         </table>
-        <!-- End title -->
+
     </td>
 </tr>
