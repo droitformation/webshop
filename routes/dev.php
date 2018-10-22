@@ -1176,7 +1176,7 @@ Route::get('/test_mailgun', function () {
     $mailgun = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
 
     $toSend = \Carbon\Carbon::now()->addMinutes(1)->toRfc2822String();
-    $html    = $worker->html(1766);
+    $html    = $worker->html(1720);
 
   /*  $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
         ->setHtml($html)
