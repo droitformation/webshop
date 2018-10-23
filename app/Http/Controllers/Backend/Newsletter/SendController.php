@@ -46,8 +46,7 @@ class SendController extends Controller
         // Sync html content to api service and send to newsletter list!
         $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id);
 
-        if(!$response)
-        {
+        if(!$response) {
             throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
         }
 
@@ -55,12 +54,11 @@ class SendController extends Controller
          *  Send at specified date or delay for 15 minutes before sending just in case
          */
         $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
-        
         $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
 
         if(!$result['success'])
         {
-            throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi'.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
+            throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi '.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
         }
 
         // Update campagne status

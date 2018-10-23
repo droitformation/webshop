@@ -47,6 +47,7 @@
             return{
                 isRemoved:false,
                 image:null,
+                imageName:'',
                 uploadImage:null,
                 big: 'http://www.placehold.it/560x200/EFEFEF/AAAAAA&text=image',
                 small: 'http://www.placehold.it/130x140/EFEFEF/AAAAAA&text=image',
@@ -107,6 +108,7 @@
                 let vm = this;
                 reader.onload = (e) => {
                     vm.image = e.target.result;
+                    vm.imageName = file.name;
                     vm.upload()
                 };
                 reader.readAsDataURL(file);
@@ -124,7 +126,7 @@
                  this.iframe();
             },
             upload(){
-                axios.post('/admin/uploadNewsletter',{ image: this.image }).then(response => {
+                axios.post('/admin/uploadNewsletter',{ image: this.image, name: this.imageName }).then(response => {
                     this.uploadImage = response.data.name;
                     this.$emit('imageUploaded', this.uploadImage)
                 });

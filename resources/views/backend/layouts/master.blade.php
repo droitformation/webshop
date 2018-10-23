@@ -139,6 +139,7 @@
 <script src="<?php echo secure_asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>
 <script src="//gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
+@include('script.date')
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
@@ -166,8 +167,8 @@
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
-<script type='text/javascript' src="<?php echo secure_asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
+<script type='text/javascript' src="<?php echo secure_asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
 <script type="text/javascript" src="{{ secure_asset('newsletter/js/sorting.js') }}"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-user.js');?>"></script>

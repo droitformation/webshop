@@ -13,7 +13,26 @@
                     <h3>"{{ $campagne->sujet }}"</h3>
                     <br/>
                         <label class="control-label text-primary">Spécifier une date et heure d'envoi</label>
-                        <p><input type="text" class="form-control datePickerNewsletter" id="datePickerNewsletter" value="" name="date"></p>
+
+                        <div class="input-group date datePickerNewsletter" style="width:200px;" id="datePickerNewsletter_{{ $campagne->id }}">
+                            <input type="text" class="form-control" name="date"/>
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datePickerNewsletter_' + <?php echo $campagne->id; ?>).datetimepicker({
+                                    locale: 'fr-ch',
+                                    sideBySide: true,
+                                    widgetPositioning: {
+                                        horizontal: 'left'
+                                    },
+                                    format:  'YYYY-MM-DD HH:mm',
+                                    minDate : moment().add(15, 'm').format()
+                                });
+                            });
+                        </script>
                     <hr/>
                     <p class="text-danger">
                         <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Attention</h4>

@@ -95,9 +95,15 @@ class UploadController extends Controller
     public function uploadNewsletter(Request $request)
     {
         $imageData = $request->input('image');
-        $fileName  = \Carbon\Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
+        \Log::info(json_encode(base64_decode($request->input('image'))));
+        //$fileName  = \Carbon\Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
+
+        list($name,$ext) = parts_name($request->input('name'));
+
+        $fileName = str_slug($name).rand(1000,100000).'_newsletter.'.$ext;
 
         $sizes = config('size.newsletter');
+
         \Image::make($request->input('image'))->orientate()
             ->resize($sizes['width'], $sizes['height'], function ($constraint) {
                 $constraint->aspectRatio();

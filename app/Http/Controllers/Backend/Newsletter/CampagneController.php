@@ -159,7 +159,7 @@ class CampagneController extends Controller
 
         alert()->success('Campagne crée');
 
-        return redirect('build/campagne/'.$campagne->id);
+        return redirect('build/campagne/compose/'.$campagne->id);
     }
 
     /**
