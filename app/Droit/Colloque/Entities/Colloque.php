@@ -17,7 +17,7 @@ class Colloque extends Model implements HasMedia
     protected $dates = ['deleted_at','start_at','end_at','registration_at','active_at'];
 
     protected $fillable = [
-        'titre', 'soustitre', 'sujet', 'remarques', 'capacite','notice','start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
+        'titre', 'soustitre', 'sujet', 'remarques', 'themes','capacite','notice','start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
         'location_id', 'compte_id', 'visible', 'bon', 'facture', 'email' ,'adresse_id','created_at', 'updated_at','url','slide_text'
     ];
 

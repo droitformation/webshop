@@ -18,8 +18,8 @@
                             <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $bloc->product->title }}</h3>
                             <p class="abstract">{!!$bloc->product->teaser !!}</p>
                             <div>{!! $bloc->product->description !!}</div>
-                            <p><a target="_blank"
-                                  style="padding: 5px 15px; text-decoration: none; background: {{ $campagne->newsletter->color }}; color: #fff; margin-top: 10px; display: inline-block;"
+                            <p><a target="_blank" class="btn-commande"
+                                  style="padding: 5px 15px; text-decoration: none; background: {{ $campagne->newsletter->color }}; color: #fff; margin-top: 20px; display: inline-block;"
                                   href="{{ url('pubdroit/product/'.$bloc->product->id) }}">Acheter</a>
                             </p>
                     @endslot

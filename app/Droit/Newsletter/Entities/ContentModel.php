@@ -84,11 +84,11 @@ class ContentModel
             'droptitle' => $colloque->titre,
             'title'     => $colloque->titre,
             'abstract'  => $colloque->event_date,
-            'content'   => $colloque->remarques,
+            'content'   => $colloque->themes,
             'link'      => url('pubdroit/colloque/').$colloque->id,
             'message'   => 'Informations et inscription',
             'class'     => '',
-            'style'     => 'padding: 5px 10px; text-decoration: none; color: #fff; margin-top: 10px; display: inline-block;',
+            'style'     => 'padding: 5px 10px; text-decoration: none; color: #fff; margin-top: 20px; display: inline-block;',
             'images'    => [[
                 'link'  => url('pubdroit/colloque/').$colloque->id,
                 'image' => $colloque->frontend_illustration,
@@ -108,6 +108,7 @@ class ContentModel
             'link'      => url('pubdroit/product/').$product->id,
             'message'   => 'Acheter',
             'class'     => '',
+            'style'     => 'padding: 5px 10px; text-decoration: none; color: #fff; margin-top: 20px; display: inline-block;',
             'images'    => [[
                 'link'  => url('pubdroit/product/').$product->id,
                 'image' => !empty($product->image) ? secure_asset('files/products/'.$product->image) : null,

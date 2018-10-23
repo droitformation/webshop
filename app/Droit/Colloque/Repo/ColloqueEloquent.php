@@ -144,8 +144,7 @@ class ColloqueEloquent implements ColloqueInterface{
             $colloque->url  = (!empty($data['url']) ? $data['url'] : null);
         }
 
-        if(isset($data['capacite']))
-        {
+        if(isset($data['capacite'])) {
             $colloque->capacite = $data['capacite'] > 0 ? $data['capacite'] : null;
         }
 

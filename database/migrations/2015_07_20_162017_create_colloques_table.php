@@ -35,6 +35,8 @@ class CreateColloquesTable extends Migration
             $table->tinyInteger('bon')->default(1);
             $table->tinyInteger('facture')->default(1);
             $table->integer('counter')->default(0);
+            $table->integer('capacite')->nullable();
+            $table->text('themes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
