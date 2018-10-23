@@ -250,11 +250,13 @@ td.pad-b{
 .compte{
     font-weight: bold;
     padding-left: 105px;
+    padding-top: -6px;
 }
 
 .price{
     text-align: right;
     padding-right: 4px;
+    padding-top: 3px;
     font-size: 17px;
     letter-spacing:2.07mm;
 }
