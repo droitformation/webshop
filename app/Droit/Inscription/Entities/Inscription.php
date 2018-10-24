@@ -238,11 +238,28 @@ class Inscription extends Model
     {
         if($this->group_id > 0)
         {
-            return ucwords($this->participant->name);
+            return ucwords($this->participant->the_name);
         }
         elseif(isset($this->user) && isset($this->user->adresse_contact))
         {
             return ucwords($this->user->adresse_contact->name);
+        }
+
+        return $this->user_id;
+    }
+
+    public function getBadgeNameInscriptionAttribute()
+    {
+        if($this->group_id > 0) {
+            $name = explode(',',ucwords($this->participant->name));
+
+            $complete = explode(' ', ucwords($this->participant->name));
+            $complete = count($complete) > 2 ? $complete[1].' '.$complete[2] : end($complete);
+
+            return isset($name[1]) && !empty($name[1]) ? $name[1] : $complete;
+        }
+        elseif(isset($this->user) && isset($this->user->adresse_contact)) {
+            return ucwords($this->user->adresse_contact->last_name);
         }
 
         return $this->user_id;

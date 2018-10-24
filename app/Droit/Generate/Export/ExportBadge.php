@@ -20,14 +20,7 @@ class ExportBadge
     public function export($inscriptions, $colloque = null)
     {
         $inscriptions = $inscriptions->map(function ($inscription) {
-            if(!is_numeric($inscription->name_inscription)) {
-                $name = explode(' ', $inscription->name_inscription);
-                $name = count($name) > 2 ? $name[1].' '.$name[2] : end($name);
-            }
-            else{
-                $name = $inscription->name_inscription;
-            }
-            return ['name' => $inscription->name_inscription, 'last_name' => str_slug($name)];
+            return ['name' => $inscription->name_inscription, 'last_name' => str_slug($inscription->badge_name_inscription)];
         });
 
         if($this->range){

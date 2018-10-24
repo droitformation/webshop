@@ -14,7 +14,7 @@ class CreateColloqueInscriptionsParticipantsTable extends Migration
     {
         Schema::create('colloque_inscriptions_participants', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->integer('inscription_id')->unsigned()->index();
             $table->softDeletes();
             $table->timestamps();

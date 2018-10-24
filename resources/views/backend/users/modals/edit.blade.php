@@ -17,6 +17,7 @@
                             <div class="form-group participant">
                                 <label><strong>Nom du participant</strong></label>
                                 <input name="participant" required class="form-control" value="{{ isset($inscription->participant) ? $inscription->participant->name : 'problème avec le participant' }}" type="text">
+                                <p class="text-muted">Inscrire "prenom, nom"</p>
                             </div>
                             <div class="form-group participant">
                                 <label><strong>Email du participant</strong></label>

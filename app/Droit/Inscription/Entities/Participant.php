@@ -17,6 +17,11 @@ class Participant extends Model
 
     protected $fillable = ['name', 'inscription_id','email'];
 
+    public function getTheNameAttribute()
+    {
+        return str_replace(',',' ',$this->name);
+    }
+
     public function inscription()
     {
         return $this->belongsTo('App\Droit\Inscription\Entities\Inscription');
