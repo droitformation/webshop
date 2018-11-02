@@ -60,7 +60,7 @@
                             @foreach($inscription->documents as $type => $annexe)
                                 <?php
                                     $path = config('documents.colloque.'.$type.'');
-                                    $file = 'files/colloques/'.$type.'/'.$annexe['name'];
+                                    $file = 'files/colloques/'.$type.'/'.$annexe['pdfname'];
                                     echo '<a target="_blank" href="'.secure_asset($file).'" class="btn btn-primary btn-block" style="text-align:left;"><i class="fa fa-file"></i> &nbsp;'.ucfirst($type).'</a>';
                                 ?>
                             @endforeach
