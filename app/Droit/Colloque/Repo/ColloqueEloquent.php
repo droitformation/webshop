@@ -47,7 +47,11 @@ class ColloqueEloquent implements ColloqueInterface{
 
     public function getByYear($year)
     {
-        return $this->colloque->whereRaw('YEAR(`start_at`) = ?', [$year])->orderBy('start_at','DESC')->get();
+        return $this->colloque
+			->whereRaw('YEAR(`start_at`) = ?', [$year])
+			->where('start_at','<',date('Y-m-d'))
+			->orderBy('start_at','DESC')
+			->get();
     }
 
     public function getYears()
