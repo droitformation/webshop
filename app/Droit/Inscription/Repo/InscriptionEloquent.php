@@ -281,6 +281,20 @@ class InscriptionEloquent implements InscriptionInterface{
         
         return $inscription;
     }
+	
+	 public function updateSend(array $data)
+    {
+        $inscription = $this->inscription->find($data['id']);
+
+        if(!$inscription){
+            return false;
+        }
+        
+        $inscription->fill($data);
+        $inscription->save();
+        
+        return $inscription;
+    }
     
     public function update(array $data){
 
