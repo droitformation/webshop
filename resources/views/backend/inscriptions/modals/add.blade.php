@@ -22,6 +22,7 @@
                     <div class="form-group">
                         <label>Nom du participant</label>
                         <input name="participant" required class="form-control" value="" type="text">
+                        <p class="text-muted">Inscrire "prenom, nom"</p>
                     </div>
 
                     <div class="form-group">

@@ -156,7 +156,7 @@ class Generate{
     {
         $this->model->load('participant');
 
-        return isset($this->model->participant) && !empty($this->model->participant) ? $this->model->participant->name : null;
+        return isset($this->model->participant) && !empty($this->model->participant) ? $this->model->participant->the_name : null;
     }
 
     public function getOccurrences()

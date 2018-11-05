@@ -8,7 +8,7 @@
         @include('backend.users.modals.edit', ['inscription' => $inscription])
     </div>
     <div class="media-body">
-        <p><strong>{!! $inscription->participant->name !!}</strong></p>
+        <p><strong>{!! $inscription->participant->the_name !!}</strong></p>
         <p>
             {{ $inscription->inscription_no }} &nbsp;
             @include('backend.partials.toggle', ['inscription' => $inscription, 'id' => $inscription->id])
