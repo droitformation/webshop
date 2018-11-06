@@ -63,6 +63,16 @@ class User extends Authenticatable {
         $this->attributes['company'] = trim($value);
     }
 
+    public function getNameSlugAttribute()
+    {
+        if(empty(trim($this->first_name)) && empty(trim($this->last_name)))
+        {
+            return str_slug($this->company);
+        }
+
+        return str_slug($this->last_name);
+    }
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
