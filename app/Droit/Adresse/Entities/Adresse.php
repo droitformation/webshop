@@ -90,7 +90,7 @@ class Adresse extends Model {
             return str_slug($this->company);
         }
 
-        return str_slug($this->first_name.' '.$this->last_name);
+        return str_slug($this->last_name);
     }
 
     public function getInvoiceNameAttribute()
