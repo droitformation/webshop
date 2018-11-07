@@ -12,6 +12,7 @@
         <p><strong>Lieu: </strong>
             {{ $colloque->location ? $colloque->location->name : '' }}, {!! $colloque->location ? $colloque->location->adresse : ''  !!}</p>
         {!! $colloque->remarque !!}
+        {!! $colloque->themes !!}
     </div>
     <div class="clearfix"></div>
 </div>

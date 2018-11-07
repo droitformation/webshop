@@ -9,6 +9,10 @@
                         <h3>{[{ select.colloque.titre }]}</h3>
                         <p class="abstract">{[{ select.colloque.date }]}</p>
                         <p><strong>Lieu: </strong><cite>{[{ select.colloque.location }]}</cite></p>
+
+                        <h4 ng-show="select.colloque.themes.length">Thèmes principaux</h4>
+                        <div ng-bind-html="select.colloque.themes" ng-show="select.colloque.themes.length" style="text-align: left;" class="themes"></div>
+
                     </div>
                 </td>
                 <td valign="top" width="25" class="resetMarge"></td>

@@ -13,7 +13,10 @@
                             <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $bloc->colloque->titre }}</h3>
                             <p class="abstract">{!! $bloc->colloque->event_date !!}</p>
                             <p><strong>Lieu: </strong><cite>{{ $bloc->colloque->location ? $bloc->colloque->location->name : '' }}</cite></p>
-
+                            @if(!empty($bloc->colloque->themes))
+                                <h4>Thèmes principaux</h4>
+                                <div style="text-align: left;" class="themes">{!! $bloc->colloque->themes !!}</div>
+                            @endif
                             <p><a target="_blank"
                                   style="padding: 5px 10px; text-decoration: none; background: {{ $campagne->newsletter->color }}; color: #fff; margin-top: 10px; display: inline-block;"
                                   href="{{ url('pubdroit/colloque/'.$bloc->colloque->id) }}">Informations et inscription</a></p>

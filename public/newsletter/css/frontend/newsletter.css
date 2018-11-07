@@ -193,6 +193,14 @@
     font-weight:bold;
 }
 
+#StyleNewsletter .contentForm .themes ul,
+#StyleNewsletterCreate .contentForm .themes ul
+{
+    padding-left: 5px;
+    margin-left: 15px;
+    line-height: 18px;
+}
+
 .text-center {
     text-align: center;
 }
