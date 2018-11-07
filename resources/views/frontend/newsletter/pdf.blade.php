@@ -3,7 +3,7 @@
 
 
     <div class="header">
-        <h1>{{ $campagne->newsletter->site->nom }}</h1>
+        {!! $campagne->newsletter->site ? '<h1>'.$campagne->newsletter->site->nom.'</h1>' : '' !!}
         <h2>{{ $campagne->sujet }}</h2>
         <h3>{{ $campagne->auteurs }}</h3>
     </div>

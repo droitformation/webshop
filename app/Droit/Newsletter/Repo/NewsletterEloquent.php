@@ -71,6 +71,12 @@ class NewsletterEloquent implements NewsletterInterface{
         $newsletter->fill($data);
 		$newsletter->updated_at = date('Y-m-d G:i:s');
         $newsletter->second_color = isset($data['second_color']) && !empty($data['second_color']) ? $data['second_color'] : null;
+        $newsletter->pdf = isset($data['pdf']) && !empty($data['pdf']) ? $data['pdf'] : null;
+        $newsletter->comment = isset($data['comment']) && !empty($data['comment']) ? $data['comment'] : null;
+        $newsletter->classe = isset($data['classe']) && !empty($data['classe']) ? $data['classe'] : null;
+        $newsletter->comment_title = isset($data['comment_title']) && !empty($data['comment_title']) ? $data['comment_title'] : null;
+        $newsletter->hide_title = isset($data['hide_title']) && !empty($data['hide_title']) ? $data['hide_title'] : null;
+        $newsletter->display = isset($data['display']) && !empty($data['display']) ? $data['display'] : null;
 
         $newsletter->save();
 		

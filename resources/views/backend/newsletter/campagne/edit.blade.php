@@ -7,7 +7,7 @@
         <div class="options" style="margin-bottom: 10px;">
             <div class="btn-toolbar">
                 <a href="{{ url('build/newsletter') }}" class="btn btn-info"><i class="fa fa-chevron-left"></i> &nbsp;Retour aux newsletter</a>
-                <a href="{{ url('build/campagne/'.$campagne->id) }}" class="btn btn-inverse pull-right"> Composer la campagne  &nbsp;<i class="fa fa-chevron-right"></i></a>
+                <a href="{{ url('build/campagne/compose/'.$campagne->id) }}" class="btn btn-inverse pull-right"> Composer la campagne  &nbsp;<i class="fa fa-chevron-right"></i></a>
             </div>
         </div>
 

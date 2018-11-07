@@ -133,6 +133,57 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <label class="col-sm-3 control-label"></label>
+                            <div class="col-sm-9"><h4>Configurations affichage</h4></div>
+                        </div>
+
+                        <div class="well">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Lien vers la newsletter en pdf</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline"><input {{ $newsletter->pdf ? 'checked' : '' }} type="radio" name="pdf" value="1"> Oui</label>
+                                    <label class="radio-inline"><input {{ !$newsletter->pdf ? 'checked' : '' }} type="radio" name="pdf" value=""> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Titre "Commentaire" ou "Analyse"</label>
+                                <div class="col-sm-3">
+                                    <input type="text"  class="form-control" name="comment_title" value="{{ $newsletter->comment_title }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Afficher le titre "Commentaire" ou "Analyse"</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline"><input {{ $newsletter->comment ? 'checked' : '' }} type="radio" name="comment" value="1"> Oui</label>
+                                    <label class="radio-inline"><input {{ !$newsletter->comment ? 'checked' : '' }} type="radio" name="comment" value=""> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Style autour du commentaire <small class="text-muted">Classe CSS</small></label>
+                                <div class="col-sm-3">
+                                    <input type="text"  class="form-control" name="classe" value="{{ $newsletter->classe }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Position de l'analyse</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline"><input {{ $newsletter->display == 'top' ? 'checked' : '' }} type="radio" name="display" value="top"> Avant arrêt</label>
+                                    <label class="radio-inline"><input {{ $newsletter->display == 'bottom' ? 'checked' : '' }} type="radio" name="display" value="bottom"> Après arrêt</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Cacher les titres de pictos</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline"><input {{ $newsletter->hide_title ? 'checked' : '' }} type="radio" name="hide_title" value="1"> Oui</label>
+                                    <label class="radio-inline"><input {{ !$newsletter->hide_title ? 'checked' : '' }} type="radio" name="hide_title" value=""> Non</label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="panel-footer">
                        <div class="row">
