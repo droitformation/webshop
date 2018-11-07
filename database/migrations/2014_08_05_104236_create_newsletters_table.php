@@ -27,15 +27,6 @@ class CreateNewslettersTable extends Migration {
             $table->string('header')->nullable();
 			$table->string('soutien')->nullable();
             $table->string('color');
-
-            $table->tinyInteger('pdf')->nullable();
-            $table->string('classe')->nullable();
-            $table->tinyInteger('comment')->nullable();
-            $table->string('comment_title')->nullable();
-            $table->string('display')->nullable();
-            $table->tinyInteger('hide_title')->nullable();
-            $table->string('second_color')->nullabl();
-
             $table->timestamps();
             $table->softDeletes();
 
