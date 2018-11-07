@@ -58,6 +58,12 @@
                         <p><strong>Lieu: </strong>
                         {{ $colloque->location ? $colloque->location->name : '' }}, {!! $colloque->location ? strip_tags($colloque->location->adresse) : '' !!}</p>
 
+                        @if(!empty($colloque->themes ))
+                            <hr/>
+                            <h4>Thèmes principaux</h4>
+                            {!! $colloque->themes !!}
+                        @endif
+
                         <hr/>
 
                         @if($colloque->is_active && $colloque->is_open && !$colloque->url)

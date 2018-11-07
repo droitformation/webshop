@@ -108,9 +108,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="description" class="col-sm-3 control-label">Thèmes principaux <br/><small class="text-muted">max. 450 caractères</small></label>
+
+                                <label for="description" class="col-sm-3 control-label">Thèmes principaux</label>
                                 <div class="col-sm-8">
-                                    <textarea name="themes" id="themes" cols="50" rows="8" class="redactorLimit form-control">{{ $colloque->themes or old('themes') }}</textarea>
+                                    <textarea name="themes" cols="50" rows="8" class="form-control redactorLimit">{{ $colloque->themes or old('themes') }}</textarea>
                                 </div>
                             </div>
 
