@@ -29,4 +29,12 @@ $( function() {
         buttons  : ['html','formatting','bold','italic','link','image','file','|','unorderedlist','orderedlist']
     });
 
+    $('.redactorLimit').redactor({
+        minHeight: '180px',
+        maxHeight: '280px',
+        removeEmpty : ['strong' , 'em' , 'span' , 'p' ],
+        lang: 'fr',
+        formatting: ['p'],
+        buttons: ['formatting','|','unorderedlist']
+    });
 });

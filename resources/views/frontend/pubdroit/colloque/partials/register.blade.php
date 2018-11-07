@@ -2,7 +2,6 @@
     {!! csrf_field() !!}
 
     <div id="colloque-dependence">
-
         <!-- Prices -->
         @if(!$colloque->prices_active->isEmpty())
             <div class='wrapper'>
