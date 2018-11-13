@@ -130,7 +130,7 @@ class Colloque extends Model implements HasMedia
     public function getDescriptionAttribute()
     {
         $html = !empty($this->soustitre) ? $this->soustitre.' | ' : '';
-        $html .= $this->location ? $this->location->name : ' | ';
+        $html .= $this->location ? $this->location->name.' | ' : '';
         $html .= $this->event_date;
 
         return $html;
