@@ -12,7 +12,7 @@
 	@if(\Request::is('pubdroit/colloque/*') && isset($colloque))
 		<meta property='og:title' content="{{ $colloque->titre }}"/>
 		<meta property='og:image' content="{{ $colloque->frontend_illustration }}"/>
-		<meta property='og:description' content="{{ $colloque->event_date }}"/>
+		<meta property='og:description' content="{{ $colloque->description }}"/>
 		<meta property='og:url' content="{{ url('pubdroit/colloques/'.$colloque->id) }}" />
 	@endif
 	<!-- Fin Meta -->
