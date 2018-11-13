@@ -6,7 +6,17 @@
 	<meta name="description" content="Publications droit, shop en ligne, Faculté de droit - Université de Neuchâtel, 2000 Neuchâtel">
 	<meta name="author" content="Cindy Leschaud">
 	<meta name="viewport" content="width=device-width">
-	
+
+
+	<!-- Meta LinkedIn -->
+	@if(\Request::is('pubdroit/colloque/*') && isset($colloque))
+		<meta property='og:title' content="{{ $colloque->titre }}"/>
+		<meta property='og:image' content="{{ $colloque->frontend_illustration }}"/>
+		<meta property='og:description' content="{{ $colloque->event_date }}"/>
+		<meta property='og:url' content="{{ url('pubdroit/colloques/'.$colloque->id) }}" />
+	@endif
+	<!-- Fin Meta -->
+
     <!-- CSS Files
     ================================================== -->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
