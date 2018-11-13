@@ -4,9 +4,7 @@
 	<title>Publications droit</title>
 	
 	<meta name="description" content="Publications droit, shop en ligne, Faculté de droit - Université de Neuchâtel, 2000 Neuchâtel">
-	<meta name="author" content="Cindy Leschaud">
 	<meta name="viewport" content="width=device-width">
-
 
 	<!-- Meta LinkedIn -->
 	@if(\Request::is('pubdroit/colloque/*') && isset($colloque))
@@ -14,6 +12,9 @@
 		<meta property='og:image' content="{{ $colloque->frontend_illustration }}"/>
 		<meta property='og:description' content="{{ $colloque->description }}"/>
 		<meta property='og:url' content="{{ url('pubdroit/colloques/'.$colloque->id) }}" />
+		<meta name="author" content="Publications droit, Faculté de droit, UniNE">
+	@else
+		<meta name="author" content="Cindy Leschaud">
 	@endif
 	<!-- Fin Meta -->
 
