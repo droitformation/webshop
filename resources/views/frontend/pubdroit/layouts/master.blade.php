@@ -57,7 +57,7 @@
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
 	<script src="<?php echo secure_asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo secure_asset('common/js/validation.js');?>"></script>
-
+	<script src="//platform-api.sharethis.com/js/sharethis.js#property=5beaaa2158e49d001b369ef0&product=inline-share-buttons"></script>
 </head>
 	<body>
 
