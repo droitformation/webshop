@@ -70,6 +70,7 @@ class CampagneTest extends TestCase
         $this->campagne->shouldReceive('update')->once();
         $this->worker->shouldReceive('html')->once()->andReturn('<html><header></header><body></body></html>');
 
+        $this->mailjet->shouldReceive('updateSubject')->once()->andReturn(true);
         $this->mailjet->shouldReceive('setHtml')->once()->andReturn(true);
         $this->mailjet->shouldReceive('setList')->once()->andReturn(true);
         $this->mailjet->shouldReceive('sendCampagne')->once()->andReturn(['success' => true]);
@@ -88,6 +89,7 @@ class CampagneTest extends TestCase
         $this->worker->shouldReceive('html')->once()->andReturn('<html><header></header><body></body></html>');
 
         $this->mailjet->shouldReceive('setList')->once()->andReturn(true);
+        $this->mailjet->shouldReceive('updateSubject')->once()->andReturn(true);
         $this->mailjet->shouldReceive('setHtml')->once()->andReturn(false);
 
         $response = $this->call('POST', 'build/send/campagne', ['id' => '1']);
@@ -110,6 +112,7 @@ class CampagneTest extends TestCase
         $this->worker->shouldReceive('html')->once()->andReturn('<html><header></header><body></body></html>');
 
         $this->mailjet->shouldReceive('setList')->once()->andReturn(true);
+        $this->mailjet->shouldReceive('updateSubject')->once()->andReturn(true);
         $this->mailjet->shouldReceive('setHtml')->once()->andReturn(true);
         $this->mailjet->shouldReceive('sendCampagne')->once()->andReturn($result);
 
