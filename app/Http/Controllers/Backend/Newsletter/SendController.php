@@ -44,9 +44,11 @@ class SendController extends Controller
         $this->mailjet->setList($campagne->newsletter->list_id); // list id
 
         // Sync html content to api service and send to newsletter list!
-        $response = $this->mailjet->setHtml($html,$campagne->api_campagne_id);
+        $update   = $this->mailjet->updateSubject($campagne->api_campagne_id,$campagne->sujet);
+        $response = $this->mailjet->setHtml($html, $campagne->api_campagne_id);
 
-        if(!$response) {
+        if(!$response || !$update)
+        {
             throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
         }
 

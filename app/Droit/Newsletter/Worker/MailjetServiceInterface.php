@@ -30,6 +30,7 @@ interface MailjetServiceInterface {
     public function createCampagne($campagne);
     public function getCampagne($CampaignID);
     public function updateCampagne($CampaignID, $status);
+    public function updateSubject($CampaignID,$sujet);
     public function setHtml($html,$id);
     public function sendTest($id,$email,$sujet);
     public function sendCampagne($id, $date = null);
