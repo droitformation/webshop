@@ -217,13 +217,23 @@ class MailjetService implements MailjetServiceInterface{
     {
         $body = [
             'Html-part' => $html,
-            'Text-part' => strip_tags($html)
+            'Text-part' => strip_tags($html),
         ];
 
         $response = $this->mailjet->put(Resources::$NewsletterDetailcontent, ['ID' => $id, 'body' => $body]);
 
         if($response->success())
             return $response->getData();
+        else
+            return false;
+    }
+
+    public function updateSubject($CampaignID,$sujet)
+    {
+        $response = $this->mailjet->put(Resources::$Newsletter, ['ID' => $CampaignID, 'body' => ['Subject' => $sujet]]);
+
+        if($response->getStatus() == 200 || $response->getStatus() == 202 || $response->getStatus() == 304)
+            return true;
         else
             return false;
     }
