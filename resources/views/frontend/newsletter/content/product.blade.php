@@ -9,6 +9,7 @@
             </div><!--END POST-TITLE-->
             <div class="post-entry">
                 <p>{!!$bloc->product->teaser !!}</p>
+                <div>{!! $bloc->product->description !!}</div>
                 <p><a target="_blank" style="padding: 5px 15px; text-decoration: none; background: {{ $campagne->newsletter->color }}; color: #fff; margin-top: 10px; display: inline-block;" href="{{ url('pubdroit/product/'.$bloc->product->id) }}">Acheter</a></p>
             </div>
         </div><!--END POST-->
