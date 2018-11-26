@@ -93,7 +93,6 @@
                             <p>Les inscriptions sont terminées</p>
                         @endif
 
-
                         <div style="display: none;">
                             <div class="sharethis-inline-share-buttons"></div>
                         </div>
