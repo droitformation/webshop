@@ -140,6 +140,10 @@
 <script src="//gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 @include('script.date')
+@include('script.angular')
+@include('script.main')
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/select-list.js');?>"></script>
+
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>

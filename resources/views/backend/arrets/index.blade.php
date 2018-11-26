@@ -27,7 +27,7 @@
                                         <td><a class="btn btn-sky btn-sm" href="{{ url('admin/arret/'.$arret->id) }}">éditer</a></td>
                                         <td><strong>{{ $arret->reference }}</strong></td>
                                         <td>{{ utf8_encode($arret->pub_date->formatLocalized('%d %B %Y')) }}</td>
-                                        <td>{{ $arret->abstract }}</td>
+                                        <td>{!! $arret->abstract !!}</td>
                                         <td class="text-right">
                                             <form action="{{ url('admin/arret/'.$arret->id) }}" method="POST" class="form-horizontal">
                                                 <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
