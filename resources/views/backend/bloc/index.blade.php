@@ -31,7 +31,7 @@
                                 <td><strong>{!! $bloc->title !!}</strong></td>
                                 <td>
                                     @if(!empty($bloc->image))
-                                        <img height="50" src="{{ secure_asset('files/uploads/'.$bloc->image) }}" alt="{{ $bloc->title or '' }}" />
+                                        <img height="50" src="{{ secure_asset('files/uploads/'.$bloc->image) }}" alt="{{ $bloc->title ?? '' }}" />
                                     @endif
                                 </td>
                                 <td>{{ $positions[$bloc->position] }}</td>

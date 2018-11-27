@@ -161,6 +161,18 @@ Route::group(['prefix' => 'team' , 'middleware' => ['auth','team','back']], func
     Route::get('colloque/archive/{year}', 'Team\Colloque\ColloqueController@archive');
 });
 
+Route::group(['prefix' => 'hub'], function () {
+    Route::post('arrets','Hub\ContentController@arrets');
+    Route::post('analyses','Hub\ContentController@analyses');
+    Route::post('categories','Hub\ContentController@categories');
+    Route::post('years','Hub\ContentController@years');
+    Route::post('authors','Hub\ContentController@authors');
+    Route::post('campagne','Hub\ContentController@campagne');
+    Route::post('archives','Hub\ContentController@archives');
+    Route::post('homepage','Hub\ContentController@homepage');
+    Route::post('menu','Hub\ContentController@menu');
+    Route::post('page','Hub\ContentController@page');
+});
 
 /* *
 * Administration routes

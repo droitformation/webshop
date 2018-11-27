@@ -19,6 +19,8 @@
 
 namespace Doctrine\DBAL\Sharding;
 
+use Doctrine\DBAL\Sharding\ShardChoser\ShardChoser;
+
 /**
  * Shard Manager for the Connection Pooling Shard Strategy
  *
@@ -27,12 +29,12 @@ namespace Doctrine\DBAL\Sharding;
 class PoolingShardManager implements ShardManager
 {
     /**
-     * @var \Doctrine\DBAL\Sharding\PoolingShardConnection
+     * @var PoolingShardConnection
      */
     private $conn;
 
     /**
-     * @var \Doctrine\DBAL\Sharding\ShardChoser\ShardChoser
+     * @var ShardChoser
      */
     private $choser;
 
@@ -42,7 +44,7 @@ class PoolingShardManager implements ShardManager
     private $currentDistributionValue;
 
     /**
-     * @param \Doctrine\DBAL\Sharding\PoolingShardConnection $conn
+     * @param PoolingShardConnection $conn
      */
     public function __construct(PoolingShardConnection $conn)
     {
@@ -52,7 +54,7 @@ class PoolingShardManager implements ShardManager
     }
 
     /**
-     * @return void
+     * {@inheritDoc}
      */
     public function selectGlobal()
     {
@@ -61,9 +63,7 @@ class PoolingShardManager implements ShardManager
     }
 
     /**
-     * @param string $distributionValue
-     *
-     * @return void
+     * {@inheritDoc}
      */
     public function selectShard($distributionValue)
     {
@@ -73,7 +73,7 @@ class PoolingShardManager implements ShardManager
     }
 
     /**
-     * @return string|null
+     * {@inheritDoc}
      */
     public function getCurrentDistributionValue()
     {
@@ -81,15 +81,15 @@ class PoolingShardManager implements ShardManager
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getShards()
     {
         $params = $this->conn->getParams();
-        $shards = array();
+        $shards = [];
 
         foreach ($params['shards'] as $shard) {
-            $shards[] = array('id' => $shard['id']);
+            $shards[] = ['id' => $shard['id']];
         }
 
         return $shards;
@@ -111,7 +111,7 @@ class PoolingShardManager implements ShardManager
             throw new \RuntimeException("No shards found.");
         }
 
-        $result = array();
+        $result = [];
         $oldDistribution = $this->getCurrentDistributionValue();
 
         foreach ($shards as $shard) {

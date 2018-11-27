@@ -17,6 +17,13 @@ class MenuEloquent implements MenuInterface{
         return $this->menu->sites($site)->get();
     }
 
+    public function getBySitePosition($site_id,$position)
+    {
+        $menu = $this->menu->with(['active'])->sites($site_id)->where('position','=',$position)->get();
+
+        return !$menu->isEmpty() ? $menu->first() : null;
+    }
+
     public function find($id){
 
         return $this->menu->find($id);

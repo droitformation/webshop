@@ -1112,8 +1112,19 @@ Route::get('testproduct', function()
     $insc_repo  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $group_repo = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
 
+    $menus = \App::make('App\Droit\Menu\Repo\MenuInterface');
+
     $inscription = $insc_repo->find(16071);
     $groupe = $group_repo->find(32);
+
+    $menu = $menus->find(6);
+
+    return new \App\Http\Resources\Menu($menu);
+
+    echo '<pre>';
+    print_r($menu->active);
+    echo '</pre>';exit();
+
 
     echo '<pre>';
     print_r($inscription->documents);

@@ -13,7 +13,7 @@
                 <h1 style="{{ $style['header-1'] }}">{{ $reminder->title }}</h1>
                 @if($item)
                     <p style="color: #000;margin-top: 5px;margin-bottom: 0px;">
-                        <strong> Pour le {{ $config['name'] }}</strong><br/> {{ $item->titre or $item->title }}
+                        <strong> Pour le {{ $config['name'] }}</strong><br/> {{ $item->titre ?? $item->title }}
                     </p>
                 @endif
             </td>

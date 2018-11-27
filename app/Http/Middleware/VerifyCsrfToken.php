@@ -11,7 +11,7 @@ class VerifyCsrfToken extends BaseVerifier {
      * @var array
      */
     protected $except = [
-        'tracking','bounce','incoming'
+        'tracking','bounce','incoming','hub/*'
     ];
 
 	/**

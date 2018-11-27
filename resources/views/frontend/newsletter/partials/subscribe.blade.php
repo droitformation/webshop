@@ -2,7 +2,7 @@
     <div class="form-group">
         <label class="control-label">Votre email</label>
         <div class="input-group">
-            <input type="text" class="form-control" name="email" value="{{ old('email') or '' }}">
+            <input type="text" class="form-control" name="email" value="{{ old('email') ?? '' }}">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">Inscription</button>
             </span>

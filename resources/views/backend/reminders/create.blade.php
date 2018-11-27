@@ -64,7 +64,7 @@
                         @if($items && !$items->isEmpty())
                             <select class="form-control" name="model_id">
                                 @foreach($items as $item)
-                                    <option value="{{ $item->id }}">{{ $item->title or $item->titre }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->title ?? $item->titre }}</option>
                                 @endforeach
                             </select>
                         @endif

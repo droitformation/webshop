@@ -37,14 +37,14 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  * the offset and re-created from persistence with only the offset, not the original timezone
  * attached.
  *
- * @link    www.doctrine-project.org
- * @since   1.0
- * @author  Benjamin Eberlei <kontakt@beberlei.de>
- * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author  Jonathan Wage <jonwage@gmail.com>
- * @author  Roman Borschel <roman@code-factory.org>
+ * @link   www.doctrine-project.org
+ * @since  1.0
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author Jonathan Wage <jonwage@gmail.com>
+ * @author Roman Borschel <roman@code-factory.org>
  */
-class DateTimeTzType extends Type
+class DateTimeTzType extends Type implements PhpDateTimeMappingType
 {
     /**
      * {@inheritdoc}
@@ -67,8 +67,15 @@ class DateTimeTzType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return ($value !== null)
-            ? $value->format($platform->getDateTimeTzFormatString()) : null;
+        if (null === $value) {
+            return $value;
+        }
+
+        if ($value instanceof \DateTimeInterface) {
+            return $value->format($platform->getDateTimeTzFormatString());
+        }
+
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTime']);
     }
 
     /**
@@ -76,7 +83,7 @@ class DateTimeTzType extends Type
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        if ($value === null || $value instanceof \DateTime) {
+        if ($value === null || $value instanceof \DateTimeInterface) {
             return $value;
         }
 

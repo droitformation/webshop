@@ -34,12 +34,10 @@ class Authenticate {
 	{
 		if ($this->auth->guest())
 		{
-			if ($request->ajax())
-			{
+			if ($request->ajax()) {
 				return response('Unauthorized.', 401);
 			}
-			else
-			{
+			else {
                 $path = $request->getRequestUri();
                 $path = str_replace('/','',$path);
 

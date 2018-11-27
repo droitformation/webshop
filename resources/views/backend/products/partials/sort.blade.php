@@ -3,7 +3,7 @@
     <select class="form-control" name="sort[{{ $type }}]">
         <option value="">Choix</option>
         @foreach($items as $item)
-            <option {{ isset($sort[$type]) && ($sort[$type] == $item->id) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
+            <option {{ isset($sort[$type]) && ($sort[$type] == $item->id) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title ?? $item->name }}</option>
         @endforeach
     </select>
 @endif

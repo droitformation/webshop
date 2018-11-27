@@ -32,7 +32,7 @@ class Analyse extends Model {
 
     public function scopeYears($query, $years)
     {
-        if(!empty($years))
+        if(isset($years) && !empty($years))
         {
             $query->whereIn(\DB::raw("year(pub_date)"), $years)->get();
         }

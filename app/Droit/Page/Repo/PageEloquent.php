@@ -32,6 +32,11 @@ class PageEloquent implements PageInterface{
         return $this->page->sites($site)->where('parent_id','=',0)->orderBy('rang')->get();
     }
 
+    public function getHomepage($site_id)
+    {
+        return $this->page->sites($site_id)->where('template','=','index')->with(['contents'])->first();
+    }
+
     public function find($id){
 
         return $this->page->with(['contents','blocs'])->find($id);

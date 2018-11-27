@@ -20,6 +20,15 @@
 namespace Doctrine\DBAL\Schema;
 
 use Doctrine\DBAL\Types;
+use function array_intersect_key;
+use function array_key_exists;
+use function array_keys;
+use function array_map;
+use function array_merge;
+use function array_shift;
+use function array_unique;
+use function count;
+use function strtolower;
 
 /**
  * Compares two Schemas and return an instance of SchemaDiff.
@@ -36,7 +45,7 @@ class Comparator
      *
      * @return \Doctrine\DBAL\Schema\SchemaDiff
      */
-    static public function compareSchemas(Schema $fromSchema, Schema $toSchema)
+    public static function compareSchemas(Schema $fromSchema, Schema $toSchema)
     {
         $c = new self();
 
@@ -60,7 +69,7 @@ class Comparator
         $diff = new SchemaDiff();
         $diff->fromSchema = $fromSchema;
 
-        $foreignKeysToTable = array();
+        $foreignKeysToTable = [];
 
         foreach ($toSchema->getNamespaces() as $namespace) {
             if ( ! $fromSchema->hasNamespace($namespace)) {
@@ -99,7 +108,7 @@ class Comparator
             foreach ($table->getForeignKeys() as $foreignKey) {
                 $foreignTable = strtolower($foreignKey->getForeignTableName());
                 if (!isset($foreignKeysToTable[$foreignTable])) {
-                    $foreignKeysToTable[$foreignTable] = array();
+                    $foreignKeysToTable[$foreignTable] = [];
                 }
                 $foreignKeysToTable[$foreignTable][] = $foreignKey;
             }
@@ -116,6 +125,10 @@ class Comparator
                     $localTableName = strtolower($foreignKey->getLocalTableName());
                     if (isset($diff->changedTables[$localTableName])) {
                         foreach ($diff->changedTables[$localTableName]->removedForeignKeys as $key => $removedForeignKey) {
+                            // We check if the key is from the removed table if not we skip.
+                            if ($tableName !== strtolower($removedForeignKey->getForeignTableName())) {
+                                continue;
+                            }
                             unset($diff->changedTables[$localTableName]->removedForeignKeys[$key]);
                         }
                     }
@@ -155,7 +168,7 @@ class Comparator
      * @param \Doctrine\DBAL\Schema\Schema   $schema
      * @param \Doctrine\DBAL\Schema\Sequence $sequence
      *
-     * @return boolean
+     * @return bool
      */
     private function isAutoIncrementSequenceInSchema($schema, $sequence)
     {
@@ -172,7 +185,7 @@ class Comparator
      * @param \Doctrine\DBAL\Schema\Sequence $sequence1
      * @param \Doctrine\DBAL\Schema\Sequence $sequence2
      *
-     * @return boolean
+     * @return bool
      */
     public function diffSequence(Sequence $sequence1, Sequence $sequence2)
     {
@@ -180,11 +193,7 @@ class Comparator
             return true;
         }
 
-        if ($sequence1->getInitialValue() != $sequence2->getInitialValue()) {
-            return true;
-        }
-
-        return false;
+        return $sequence1->getInitialValue() !== $sequence2->getInitialValue();
     }
 
     /**
@@ -195,7 +204,7 @@ class Comparator
      * @param \Doctrine\DBAL\Schema\Table $table1
      * @param \Doctrine\DBAL\Schema\Table $table2
      *
-     * @return boolean|\Doctrine\DBAL\Schema\TableDiff
+     * @return TableDiff|false
      */
     public function diffTable(Table $table1, Table $table2)
     {
@@ -238,36 +247,36 @@ class Comparator
         $table1Indexes = $table1->getIndexes();
         $table2Indexes = $table2->getIndexes();
 
-        foreach ($table2Indexes as $index2Name => $index2Definition) {
-            foreach ($table1Indexes as $index1Name => $index1Definition) {
-                if ($this->diffIndex($index1Definition, $index2Definition) === false) {
-                    if ( ! $index1Definition->isPrimary() && $index1Name != $index2Name) {
-                        $tableDifferences->renamedIndexes[$index1Name] = $index2Definition;
-                        $changes++;
-                    }
+        /* See if all the indexes in table 1 exist in table 2 */
+        foreach ($table2Indexes as $indexName => $index) {
+            if (($index->isPrimary() && $table1->hasPrimaryKey()) || $table1->hasIndex($indexName)) {
+                continue;
+            }
 
-                    unset($table1Indexes[$index1Name]);
-                    unset($table2Indexes[$index2Name]);
-                } else {
-                    if ($index1Name == $index2Name) {
-                        $tableDifferences->changedIndexes[$index2Name] = $table2Indexes[$index2Name];
-                        unset($table1Indexes[$index1Name]);
-                        unset($table2Indexes[$index2Name]);
-                        $changes++;
-                    }
-                }
+            $tableDifferences->addedIndexes[$indexName] = $index;
+            $changes++;
+        }
+        /* See if there are any removed indexes in table 2 */
+        foreach ($table1Indexes as $indexName => $index) {
+            // See if index is removed in table 2.
+            if (($index->isPrimary() && ! $table2->hasPrimaryKey()) ||
+                ! $index->isPrimary() && ! $table2->hasIndex($indexName)
+            ) {
+                $tableDifferences->removedIndexes[$indexName] = $index;
+                $changes++;
+                continue;
+            }
+
+            // See if index has changed in table 2.
+            $table2Index = $index->isPrimary() ? $table2->getPrimaryKey() : $table2->getIndex($indexName);
+
+            if ($this->diffIndex($index, $table2Index)) {
+                $tableDifferences->changedIndexes[$indexName] = $table2Index;
+                $changes++;
             }
         }
 
-        foreach ($table1Indexes as $index1Name => $index1Definition) {
-            $tableDifferences->removedIndexes[$index1Name] = $index1Definition;
-            $changes++;
-        }
-
-        foreach ($table2Indexes as $index2Name => $index2Definition) {
-            $tableDifferences->addedIndexes[$index2Name] = $index2Definition;
-            $changes++;
-        }
+        $this->detectIndexRenamings($tableDifferences);
 
         $fromFkeys = $table1->getForeignKeys();
         $toFkeys = $table2->getForeignKeys();
@@ -275,14 +284,12 @@ class Comparator
         foreach ($fromFkeys as $key1 => $constraint1) {
             foreach ($toFkeys as $key2 => $constraint2) {
                 if ($this->diffForeignKey($constraint1, $constraint2) === false) {
-                    unset($fromFkeys[$key1]);
-                    unset($toFkeys[$key2]);
+                    unset($fromFkeys[$key1], $toFkeys[$key2]);
                 } else {
                     if (strtolower($constraint1->getName()) == strtolower($constraint2->getName())) {
                         $tableDifferences->changedForeignKeys[] = $constraint2;
                         $changes++;
-                        unset($fromFkeys[$key1]);
-                        unset($toFkeys[$key2]);
+                        unset($fromFkeys[$key1], $toFkeys[$key2]);
                     }
                 }
             }
@@ -305,17 +312,15 @@ class Comparator
      * Try to find columns that only changed their name, rename operations maybe cheaper than add/drop
      * however ambiguities between different possibilities should not lead to renaming at all.
      *
-     * @param \Doctrine\DBAL\Schema\TableDiff $tableDifferences
-     *
      * @return void
      */
     private function detectColumnRenamings(TableDiff $tableDifferences)
     {
-        $renameCandidates = array();
+        $renameCandidates = [];
         foreach ($tableDifferences->addedColumns as $addedColumnName => $addedColumn) {
             foreach ($tableDifferences->removedColumns as $removedColumn) {
                 if (count($this->diffColumn($addedColumn, $removedColumn)) == 0) {
-                    $renameCandidates[$addedColumn->getName()][] = array($removedColumn, $addedColumn, $addedColumnName);
+                    $renameCandidates[$addedColumn->getName()][] = [$removedColumn, $addedColumn, $addedColumnName];
                 }
             }
         }
@@ -328,8 +333,51 @@ class Comparator
 
                 if ( ! isset($tableDifferences->renamedColumns[$removedColumnName])) {
                     $tableDifferences->renamedColumns[$removedColumnName] = $addedColumn;
-                    unset($tableDifferences->addedColumns[$addedColumnName]);
-                    unset($tableDifferences->removedColumns[$removedColumnName]);
+                    unset(
+                        $tableDifferences->addedColumns[$addedColumnName],
+                        $tableDifferences->removedColumns[$removedColumnName]
+                    );
+                }
+            }
+        }
+    }
+
+    /**
+     * Try to find indexes that only changed their name, rename operations maybe cheaper than add/drop
+     * however ambiguities between different possibilities should not lead to renaming at all.
+     *
+     * @return void
+     */
+    private function detectIndexRenamings(TableDiff $tableDifferences)
+    {
+        $renameCandidates = [];
+
+        // Gather possible rename candidates by comparing each added and removed index based on semantics.
+        foreach ($tableDifferences->addedIndexes as $addedIndexName => $addedIndex) {
+            foreach ($tableDifferences->removedIndexes as $removedIndex) {
+                if (! $this->diffIndex($addedIndex, $removedIndex)) {
+                    $renameCandidates[$addedIndex->getName()][] = [$removedIndex, $addedIndex, $addedIndexName];
+                }
+            }
+        }
+
+        foreach ($renameCandidates as $candidateIndexes) {
+            // If the current rename candidate contains exactly one semantically equal index,
+            // we can safely rename it.
+            // Otherwise it is unclear if a rename action is really intended,
+            // therefore we let those ambiguous indexes be added/dropped.
+            if (count($candidateIndexes) === 1) {
+                list($removedIndex, $addedIndex) = $candidateIndexes[0];
+
+                $removedIndexName = strtolower($removedIndex->getName());
+                $addedIndexName = strtolower($addedIndex->getName());
+
+                if (! isset($tableDifferences->renamedIndexes[$removedIndexName])) {
+                    $tableDifferences->renamedIndexes[$removedIndexName] = $addedIndex;
+                    unset(
+                        $tableDifferences->addedIndexes[$addedIndexName],
+                        $tableDifferences->removedIndexes[$removedIndexName]
+                    );
                 }
             }
         }
@@ -339,7 +387,7 @@ class Comparator
      * @param \Doctrine\DBAL\Schema\ForeignKeyConstraint $key1
      * @param \Doctrine\DBAL\Schema\ForeignKeyConstraint $key2
      *
-     * @return boolean
+     * @return bool
      */
     public function diffForeignKey(ForeignKeyConstraint $key1, ForeignKeyConstraint $key2)
     {
@@ -359,11 +407,7 @@ class Comparator
             return true;
         }
 
-        if ($key1->onDelete() != $key2->onDelete()) {
-            return true;
-        }
-
-        return false;
+        return $key1->onDelete() !== $key2->onDelete();
     }
 
     /**
@@ -382,12 +426,19 @@ class Comparator
         $properties1 = $column1->toArray();
         $properties2 = $column2->toArray();
 
-        $changedProperties = array();
+        $changedProperties = [];
 
-        foreach (array('type', 'notnull', 'unsigned', 'autoincrement') as $property) {
+        foreach (['type', 'notnull', 'unsigned', 'autoincrement'] as $property) {
             if ($properties1[$property] != $properties2[$property]) {
                 $changedProperties[] = $property;
             }
+        }
+
+        // This is a very nasty hack to make comparator work with the legacy json_array type, which should be killed in v3
+        if ($this->isALegacyJsonComparison($properties1['type'], $properties2['type'])) {
+            array_shift($changedProperties);
+
+            $changedProperties[] = 'comment';
         }
 
         if ($properties1['default'] != $properties2['default'] ||
@@ -453,6 +504,21 @@ class Comparator
     }
 
     /**
+     * TODO: kill with fire on v3.0
+     *
+     * @deprecated
+     */
+    private function isALegacyJsonComparison(Types\Type $one, Types\Type $other) : bool
+    {
+        if ( ! $one instanceof Types\JsonType || ! $other instanceof Types\JsonType) {
+            return false;
+        }
+
+        return ( ! $one instanceof Types\JsonArrayType && $other instanceof Types\JsonArrayType)
+            || ( ! $other instanceof Types\JsonArrayType && $one instanceof Types\JsonArrayType);
+    }
+
+    /**
      * Finds the difference between the indexes $index1 and $index2.
      *
      * Compares $index1 with $index2 and returns $index2 if there are any
@@ -461,14 +527,10 @@ class Comparator
      * @param \Doctrine\DBAL\Schema\Index $index1
      * @param \Doctrine\DBAL\Schema\Index $index2
      *
-     * @return boolean
+     * @return bool
      */
     public function diffIndex(Index $index1, Index $index2)
     {
-        if ($index1->isFullfilledBy($index2) && $index2->isFullfilledBy($index1)) {
-            return false;
-        }
-
-        return true;
+        return ! ($index1->isFullfilledBy($index2) && $index2->isFullfilledBy($index1));
     }
 }

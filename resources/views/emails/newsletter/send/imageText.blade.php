@@ -9,7 +9,7 @@
                     <a target="_blank" href="{{ isset($bloc->lien) && !empty($bloc->lien) ? $bloc->link_or_url : url('/') }}">
                         <img
                             style="max-width: 560px;"
-                            alt="{{ $bloc->titre or '' }}"
+                            alt="{{ $bloc->titre ?? '' }}"
                             src="{{ secure_asset(config('newsletter.path.upload').$bloc->image) }}" />
                     </a>
                 </p>

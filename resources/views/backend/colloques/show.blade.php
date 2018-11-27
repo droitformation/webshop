@@ -73,7 +73,7 @@
                             <div class="form-group">
                                 <label for="organisateur" class="col-sm-3 control-label">Capacité de la salle</label>
                                 <div class="col-sm-2">
-                                    <input name="capacite" type="text" value="{{ $colloque->capacite or old('capacite') }}" class="form-control">
+                                    <input name="capacite" type="text" value="{{ $colloque->capacite ?? old('capacite') }}" class="form-control">
                                 </div>
                                 <div class="col-md-6">
                                     <p class="help-block">Permet de fermer les inscription sur le site</p>
@@ -103,7 +103,7 @@
                             <div class="form-group">
                                 <label for="description" class="col-sm-3 control-label">Remarques</label>
                                 <div class="col-sm-8">
-                                    <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->remarques or old('remarques') }}</textarea>
+                                    <textarea name="remarques" id="remarques" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->remarques ?? old('remarques') }}</textarea>
                                 </div>
                             </div>
 
@@ -111,7 +111,7 @@
 
                                 <label for="description" class="col-sm-3 control-label">Thèmes principaux</label>
                                 <div class="col-sm-8">
-                                    <textarea name="themes" cols="50" rows="8" class="form-control redactorLimit">{{ $colloque->themes or old('themes') }}</textarea>
+                                    <textarea name="themes" cols="50" rows="8" class="form-control redactorLimit">{{ $colloque->themes ?? old('themes') }}</textarea>
                                 </div>
                             </div>
 
@@ -125,7 +125,7 @@
                                 <div class="row well">
                                     <label class="col-sm-3 control-label"><i class="fa fa-envelope"></i> &nbsp;Envoyer les email de confirmation<br/> à une autre adresse email</label>
                                     <div class="col-sm-8 col-xs-6">
-                                        <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email or old('email')  }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
+                                        <input type="text" class="form-control" name="email" style="margin-top: 10px;" value="{{ $colloque->email ?? old('email')  }}" placeholder="Par défaut: {!! Registry::get('inscription.infos.email') !!}">
                                     </div>
                                 </div>
 
@@ -135,7 +135,7 @@
                                         Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut
                                     </label>
                                     <div class="col-sm-8 col-xs-6">
-                                        <textarea name="notice" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->notice or old('notice') }}</textarea>
+                                        <textarea name="notice" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->notice ?? old('notice') }}</textarea>
                                     </div>
                                 </div>
 
@@ -145,7 +145,7 @@
                                         Changer le texte envoyé via email<br/>Voir dans config pour le message par défaut
                                     </label>
                                     <div class="col-sm-8 col-xs-6">
-                                        <textarea name="slide_text" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->slide_text or old('slide_text') }}</textarea>
+                                        <textarea name="slide_text" cols="50" rows="4" class="redactorSimple form-control">{{ $colloque->slide_text ?? old('slide_text') }}</textarea>
                                     </div>
                                 </div>
 

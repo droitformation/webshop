@@ -18,7 +18,7 @@ class ProjectUrlMatcher extends Symfony\Component\Routing\Matcher\UrlMatcher
     public function match($rawPathinfo)
     {
         $allow = $allowSchemes = array();
-        $pathinfo = rawurldecode($rawPathinfo);
+        $pathinfo = rawurldecode($rawPathinfo) ?: '/';
         $context = $this->context;
         $requestMethod = $canonicalMethod = $context->getMethod();
 
@@ -26,7 +26,7 @@ class ProjectUrlMatcher extends Symfony\Component\Routing\Matcher\UrlMatcher
             $canonicalMethod = 'GET';
         }
 
-        if ('/' === $pathinfo && !$allow) {
+        if ('/' === $pathinfo && !$allow && !$allowSchemes) {
             throw new Symfony\Component\Routing\Exception\NoConfigurationException();
         }
 

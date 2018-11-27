@@ -20,10 +20,23 @@
 namespace Doctrine\DBAL\Platforms;
 
 use Doctrine\DBAL\Schema\Identifier;
-use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\Types\BinaryType;
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function count;
+use function func_get_args;
+use function implode;
+use function is_array;
+use function is_bool;
+use function is_numeric;
+use function is_string;
+use function join;
+use function sprintf;
+use function trim;
 
 /**
  * Drizzle platform
@@ -101,6 +114,7 @@ class DrizzlePlatform extends AbstractPlatform
         if ( ! empty($columnDef['autoincrement'])) {
             $autoinc = ' AUTO_INCREMENT';
         }
+
         return $autoinc;
     }
 
@@ -141,7 +155,7 @@ class DrizzlePlatform extends AbstractPlatform
      */
     protected function initializeDoctrineTypeMappings()
     {
-        $this->doctrineTypeMapping = array(
+        $this->doctrineTypeMapping = [
             'boolean'       => 'boolean',
             'varchar'       => 'string',
             'varbinary'     => 'binary',
@@ -155,7 +169,7 @@ class DrizzlePlatform extends AbstractPlatform
             'timestamp'     => 'datetime',
             'double'        => 'float',
             'bigint'        => 'bigint',
-        );
+        ];
     }
 
     /**
@@ -193,7 +207,7 @@ class DrizzlePlatform extends AbstractPlatform
     /**
      * {@inheritDoc}
      */
-    protected function _getCreateTableSQL($tableName, array $columns, array $options = array())
+    protected function _getCreateTableSQL($tableName, array $columns, array $options = [])
     {
         $queryFields = $this->getColumnDeclarationListSQL($columns);
 
@@ -205,7 +219,7 @@ class DrizzlePlatform extends AbstractPlatform
 
         // add all indexes
         if (isset($options['indexes']) && ! empty($options['indexes'])) {
-            foreach($options['indexes'] as $index => $definition) {
+            foreach ($options['indexes'] as $index => $definition) {
                 $queryFields .= ', ' . $this->getIndexDeclarationSQL($index, $definition);
             }
         }
@@ -226,7 +240,7 @@ class DrizzlePlatform extends AbstractPlatform
         $query .= $this->buildTableOptions($options);
         $query .= $this->buildPartitionOptions($options);
 
-        $sql[] = $query;
+        $sql = [$query];
 
         if (isset($options['foreignKeys'])) {
             foreach ((array) $options['foreignKeys'] as $definition) {
@@ -250,7 +264,7 @@ class DrizzlePlatform extends AbstractPlatform
             return $options['table_options'];
         }
 
-        $tableOptions = array();
+        $tableOptions = [];
 
         // Collate
         if ( ! isset($options['collate'])) {
@@ -313,7 +327,7 @@ class DrizzlePlatform extends AbstractPlatform
      */
     protected function getReservedKeywordsClass()
     {
-        return 'Doctrine\DBAL\Platforms\Keywords\DrizzleKeywords';
+        return Keywords\DrizzleKeywords::class;
     }
 
     /**
@@ -482,8 +496,8 @@ class DrizzlePlatform extends AbstractPlatform
      */
     public function getAlterTableSQL(TableDiff $diff)
     {
-        $columnSql = array();
-        $queryParts = array();
+        $columnSql = [];
+        $queryParts = [];
 
         if ($diff->newName !== false) {
             $queryParts[] =  'RENAME TO ' . $diff->getNewName()->getQuotedName($this);
@@ -544,8 +558,8 @@ class DrizzlePlatform extends AbstractPlatform
                     . $this->getColumnDeclarationSQL($column->getQuotedName($this), $columnArray);
         }
 
-        $sql = array();
-        $tableSql = array();
+        $sql = [];
+        $tableSql = [];
 
         if ( ! $this->onSchemaAlterTable($diff, $tableSql)) {
             if (count($queryParts) > 0) {
@@ -607,6 +621,8 @@ class DrizzlePlatform extends AbstractPlatform
 
     /**
      * {@inheritDoc}
+     *
+     * @deprecated Use application-generated UUIDs instead
      */
     public function getGuidExpression()
     {

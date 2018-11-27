@@ -107,7 +107,7 @@
                         {{ $sites->find($current_site)->nom }}
                     </div>
                 @else
-                    <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
+                    <h2>{!! $pageTitle ?? 'Droit Formation <small>Administration</small>' !!}</h2>
                 @endif
             </div>
 

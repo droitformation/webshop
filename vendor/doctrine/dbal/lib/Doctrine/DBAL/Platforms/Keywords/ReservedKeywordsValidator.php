@@ -26,18 +26,20 @@ use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Index;
+use function implode;
+use function str_replace;
 
 class ReservedKeywordsValidator implements Visitor
 {
     /**
      * @var KeywordList[]
      */
-    private $keywordLists = array();
+    private $keywordLists = [];
 
     /**
      * @var array
      */
-    private $violations = array();
+    private $violations = [];
 
     /**
      * @param \Doctrine\DBAL\Platforms\Keywords\KeywordList[] $keywordLists
@@ -66,12 +68,13 @@ class ReservedKeywordsValidator implements Visitor
             $word = str_replace('`', '', $word);
         }
 
-        $keywordLists = array();
+        $keywordLists = [];
         foreach ($this->keywordLists as $keywordList) {
             if ($keywordList->isKeyword($word)) {
                 $keywordLists[] = $keywordList->getName();
             }
         }
+
         return $keywordLists;
     }
 

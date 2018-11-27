@@ -29,12 +29,12 @@ namespace Doctrine\DBAL\Schema;
 class SchemaConfig
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $hasExplicitForeignKeyIndexes = false;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $maxIdentifierLength = 63;
 
@@ -46,10 +46,10 @@ class SchemaConfig
     /**
      * @var array
      */
-    protected $defaultTableOptions = array();
+    protected $defaultTableOptions = [];
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasExplicitForeignKeyIndexes()
     {
@@ -57,27 +57,27 @@ class SchemaConfig
     }
 
     /**
-     * @param boolean $flag
+     * @param bool $flag
      *
      * @return void
      */
     public function setExplicitForeignKeyIndexes($flag)
     {
-        $this->hasExplicitForeignKeyIndexes = (bool)$flag;
+        $this->hasExplicitForeignKeyIndexes = (bool) $flag;
     }
 
     /**
-     * @param integer $length
+     * @param int $length
      *
      * @return void
      */
     public function setMaxIdentifierLength($length)
     {
-        $this->maxIdentifierLength = (int)$length;
+        $this->maxIdentifierLength = (int) $length;
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getMaxIdentifierLength()
     {

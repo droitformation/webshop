@@ -64,7 +64,7 @@
                             @if($items && !$items->isEmpty())
                                 <select class="form-control" name="model_id">
                                     @foreach($items as $item)
-                                        <option {{ $reminder->model_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->titre }}</option>
+                                        <option {{ $reminder->model_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title ?? $item->titre }}</option>
                                     @endforeach
                                 </select>
                             @endif

@@ -68,6 +68,31 @@ class ArretEloquent implements ArretInterface{
         return $arrets->orderBy('reference', 'ASC')->get();
     }
 
+    public function getAllForSiteActive($exclude = [], $site = null, $options = [])
+    {
+        $arrets = $this->arret->with(['categories','analyses'])->site($site);
+
+        if(!empty($exclude)) {
+            $arrets->whereNotIn('id', $exclude);
+        }
+
+        if(isset($options['categories'])){
+            $arrets = $arrets->categories($options['categories']);
+        }
+
+        if(isset($options['years'])){
+            $arrets = $arrets->years($options['years']);
+        }
+
+        $arrets = $arrets->orderBy('pub_date', 'DESC');
+
+        if(isset($options['limit']) && $options['limit'] > 0){
+            $arrets = $arrets->take($options['limit']);
+        }
+
+        return $arrets->get();
+    }
+
     public function getPaginate($nbr)
     {
         return $this->arret->with(['categories','analyses'])->orderBy('pub_date', 'DESC')->paginate($nbr);

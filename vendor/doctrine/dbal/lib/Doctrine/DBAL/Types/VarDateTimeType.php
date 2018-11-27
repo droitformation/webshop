@@ -20,6 +20,7 @@
 namespace Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use function date_create;
 
 /**
  * Variable DateTime Type using date_create() instead of DateTime::createFromFormat().
@@ -50,6 +51,7 @@ class VarDateTimeType extends DateTimeType
         if ( ! $val) {
             throw ConversionException::conversionFailed($value, $this->getName());
         }
+
         return $val;
     }
 }

@@ -93,6 +93,20 @@ class RedirectableUrlMatcherTest extends UrlMatcherTest
         $this->assertEquals(array('_route' => 'foo', 'bar' => 'baz', 'redirect' => 'value'), $matcher->match('/foo/baz'));
     }
 
+    public function testSchemeRedirectForRoot()
+    {
+        $coll = new RouteCollection();
+        $coll->add('foo', new Route('/', array(), array(), array(), '', array('https')));
+
+        $matcher = $this->getUrlMatcher($coll);
+        $matcher
+            ->expects($this->once())
+            ->method('redirect')
+            ->with('/', 'foo', 'https')
+            ->will($this->returnValue(array('redirect' => 'value')));
+        $this->assertEquals(array('_route' => 'foo', 'redirect' => 'value'), $matcher->match('/'));
+    }
+
     public function testSlashRedirectWithParams()
     {
         $coll = new RouteCollection();
@@ -125,6 +139,25 @@ class RedirectableUrlMatcherTest extends UrlMatcherTest
         $matcher = $this->getUrlMatcher($coll, new RequestContext());
         $matcher->expects($this->once())->method('redirect')->with('/foo', 'foo', 'https')->willReturn(array());
         $this->assertSame(array('_route' => 'foo'), $matcher->match('/foo'));
+    }
+
+    public function testFallbackPage()
+    {
+        $coll = new RouteCollection();
+        $coll->add('foo', new Route('/foo/'));
+        $coll->add('bar', new Route('/{name}'));
+
+        $matcher = $this->getUrlMatcher($coll);
+        $matcher->expects($this->once())->method('redirect')->with('/foo/', 'foo')->will($this->returnValue(array('_route' => 'foo')));
+        $this->assertSame(array('_route' => 'foo'), $matcher->match('/foo'));
+
+        $coll = new RouteCollection();
+        $coll->add('foo', new Route('/foo'));
+        $coll->add('bar', new Route('/{name}/'));
+
+        $matcher = $this->getUrlMatcher($coll);
+        $matcher->expects($this->once())->method('redirect')->with('/foo', 'foo')->will($this->returnValue(array('_route' => 'foo')));
+        $this->assertSame(array('_route' => 'foo'), $matcher->match('/foo/'));
     }
 
     public function testMissingTrailingSlashAndScheme()
