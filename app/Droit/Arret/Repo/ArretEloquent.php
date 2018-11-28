@@ -21,7 +21,7 @@ class ArretEloquent implements ArretInterface{
             $arrets->whereNotIn('id', $exclude);
         }
 
-        return $arrets->orderBy('reference', 'ASC')->get();
+        return $arrets->orderBy('pub_date', 'DESC')->get();
     }
 
     public function allForSite($site, $options)

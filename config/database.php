@@ -81,7 +81,7 @@ return [
                 'use_single_transaction',
                 'timeout' => 60 * 5, // 5 minute timeout
                 'exclude_tables' => ['email_log', 'newsletter_tracking'],
-                'add_extra_option' => '--user='.env('DB_USERNAME', 'forge').' --password='.env('DB_PASSWORD', 'forge').' --host=127.0.0.1',
+                'add_extra_option' => '--user='.env('DB_USERNAME', 'forge').' --password='.env('DB_PASSWORD', 'forge').' --host=localhost',
             ]
 		],
 

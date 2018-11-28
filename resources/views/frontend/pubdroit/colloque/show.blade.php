@@ -96,8 +96,6 @@
 
                         <div style="display: none;">
                             <div class="sharethis-inline-share-buttons"></div>
-                            <a href="http://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(url()->current()) }}&title=Colloque">Share on LinkedIn</a>
-                            <a href="https://www.linkedin.com/shareArticle?mini=true&summary=Colloque&title=f1&url={{ urlencode('https://publications-droit.ch/pubdroit/colloque/132') }}">Share on LinkedIn</a>
                         </div>
 
                     </div>
