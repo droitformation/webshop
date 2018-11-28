@@ -52,8 +52,8 @@
             <div class="col-md-7 col-xs-12 text-right">
                 <nav id="menu-principal">
                     @if(isset($menu_main))
-                        @if(!$menu_main->pages_active->isEmpty())
-                            @foreach($menu_main->pages_active as $page)
+                        @if(!$menu_main->active->isEmpty())
+                            @foreach($menu_main->active as $page)
                                 <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('bail/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
                             @endforeach
                         @endif

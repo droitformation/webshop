@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
 use App\Mail\WebmasterNotification;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -15,6 +16,8 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+        Schema::defaultStringLength(191);
+
         view()->composer([
             'backend.partials.sites',
             'backend.menus.*',

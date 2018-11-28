@@ -9,10 +9,7 @@ use App\Droit\Arret\Repo\ArretInterface;
 
 class ContentController extends Controller
 {
-    public $site;
-
     protected $worker;
-    protected $api;
     protected $arret;
     protected $analyse;
     protected $categorie;
@@ -24,7 +21,6 @@ class ContentController extends Controller
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
-        $this->api = new \App\Droit\Service\Jurisprudence();
         $this->worker    = \App::make('App\Droit\Newsletter\Worker\CampagneInterface');
         $this->arret     = \App::make('App\Droit\Arret\Repo\ArretInterface');
         $this->analyse   = \App::make('App\Droit\Analyse\Repo\AnalyseInterface');
@@ -120,7 +116,6 @@ class ContentController extends Controller
 
     public function archives(Request $request)
     {
-        $this->api->setSite($request->input('params')['site_id']);
         $year = isset($request->input('params')['year']) ? $request->input('params')['year'] : null;
 
         $newsletters = $this->worker->getArchivesBySite($request->input('params')['site_id'],$year);

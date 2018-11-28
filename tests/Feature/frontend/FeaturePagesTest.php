@@ -54,7 +54,6 @@ class FeaturePagesTest extends TestCase
         }
     }
 
-
     public function testListSearchCurrentColloques()
     {
         $make = new \tests\factories\ObjectFactory();
