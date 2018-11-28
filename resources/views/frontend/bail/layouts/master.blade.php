@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="<?php echo secure_asset('frontend/common/css/filter.css');?>">
     <link rel="stylesheet" href="<?php echo secure_asset('common/css/sites.css');?>">
     <link rel="stylesheet" href="<?php echo secure_asset('frontend/bail/css/responsive.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('common/css/jquery.fancybox.min.css');?>">
 
     <!-- Javascript Files
     ================================================== -->
@@ -32,6 +33,8 @@
     <!-- Local -->
     <script src="<?php echo secure_asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
+    <script src="<?php echo secure_asset('common/js/jquery.fancybox.min.js');?>"></script>
+    <script src="<?php echo secure_asset('common/js/common.js');?>"></script>
 
     <script>
         window.Laravel = <?php echo json_encode([
