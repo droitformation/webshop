@@ -153,8 +153,11 @@ class HubContentTest extends TestCase
 
     public function testAuthorsForSite()
     {
-        $site    = factory(\App\Droit\Site\Entities\Site::class)->create();
-        $authors = factory(\App\Droit\Author\Entities\Author::class,5)->create(['site_id' => $site->id]);
+        $site  = factory(\App\Droit\Site\Entities\Site::class)->create();
+        for ($x = 0; $x <= 4; $x++) {
+            $author   = factory(\App\Droit\Author\Entities\Author::class)->create();
+            $author->sites()->attach($site->id);
+        }
 
         $response = $this->call('POST', 'hub/authors', ['params' => ['site_id' => $site->id]]);
 
