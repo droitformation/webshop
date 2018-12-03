@@ -195,7 +195,7 @@ return array(
          *
          * @var int
          */
-        "DOMPDF_DPI" => 120,
+        "DOMPDF_DPI" => 96,
 
         /**
          * Enable inline PHP

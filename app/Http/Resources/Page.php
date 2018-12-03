@@ -22,7 +22,8 @@ class Page extends JsonResource
             'template' => $this->template,
             'menu_title' => $this->menu_title,
             'slug' => $this->slug,
-            'blocs' => Bloc::collection($this->blocs),
+            'blocs' => Bloc::collection($this->blocs->sortBy('rang')),
+            //'contents' => Content::collection($this->contents),
         ];
     }
 }

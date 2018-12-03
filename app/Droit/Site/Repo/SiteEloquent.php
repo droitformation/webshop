@@ -14,12 +14,12 @@ class SiteEloquent implements SiteInterface{
 
     public function getAll(){
 
-        return $this->site->with(['arrets','analyses'])->orderBy('id','desc')->get();
+        return $this->site->with(['arrets','analyses','authors'])->orderBy('id','desc')->get();
     }
 
     public function find($id){
 
-        return $this->site->with(['menus','categories'])->find($id);
+        return $this->site->with(['menus','categories','authors'])->find($id);
     }
 
     public function findBySlug($slug)

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Bloc extends JsonResource
+class Content extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,6 +20,7 @@ class Bloc extends JsonResource
             'content' => $this->content,
             'url' => $this->url,
             'type' => $this->type,
+            'style' => $this->style,
             'image' => asset('files/uploads/'.$this->image, env('SECURE_ASSET')),
         ];
     }

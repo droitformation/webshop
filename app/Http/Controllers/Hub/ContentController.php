@@ -28,6 +28,7 @@ class ContentController extends Controller
         $this->author    = \App::make('App\Droit\Author\Repo\AuthorInterface');
         $this->page      = \App::make('App\Droit\Page\Repo\PageInterface');
         $this->menu      = \App::make('App\Droit\Menu\Repo\MenuInterface');
+
     }
 
     /*
@@ -78,7 +79,7 @@ class ContentController extends Controller
     {
         $page = $this->page->getHomepage($request->input('params')['site_id']);
 
-        return response()->json(['data' => $page]);
+        return new \App\Http\Resources\Page($page);
     }
 
     public function page(Request $request)
@@ -99,7 +100,7 @@ class ContentController extends Controller
     {
         $authors = $this->author->getBySite($request->input('params')['site_id']);
 
-        return new \App\Http\Resources\AuthorCollection($authors);
+        return new \App\Http\Resources\AuthorCollection($authors, $request->input('params')['site_id']);
     }
 
     public function campagne(Request $request)

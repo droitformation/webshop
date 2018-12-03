@@ -20,7 +20,7 @@ class Analyse extends JsonResource
             'id'        => $this->id,
             'author'    => $this->author,
             'title'     => $this->title,
-            'reference' => $this->arrets->first()->reference,
+            'reference' => isset($this->arrets) && !$this->arrets->isEmpty() ? $this->arrets->first()->reference : '',
             'filter'    => $this->filter,
             'pub_date'  => $this->pub_date->formatLocalized('%d %B %Y'),
             'year'      => $this->pub_date->year,

@@ -30,7 +30,7 @@ class Author extends Model {
 
     public function analyses()
     {
-        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyse_authors', 'analyse_id', 'author_id');
+        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyse_authors', 'author_id', 'analyse_id');
     }
 
     public function products()
@@ -38,5 +38,9 @@ class Author extends Model {
         return $this->belongsToMany('\App\Droit\Shop\Product\Entities\Product', 'shop_product_authors', 'author_id', 'product_id');
     }
 
+    public function sites()
+    {
+        return $this->belongsToMany('\App\Droit\Site\Entities\Site', 'authors_sites', 'author_id', 'site_id');
+    }
 }
 

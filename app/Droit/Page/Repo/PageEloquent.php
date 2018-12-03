@@ -34,7 +34,7 @@ class PageEloquent implements PageInterface{
 
     public function getHomepage($site_id)
     {
-        return $this->page->sites($site_id)->where('template','=','index')->with(['contents'])->first();
+        return $this->page->sites($site_id)->where('template','=','index')->with(['contents','blocs'])->first();
     }
 
     public function find($id){

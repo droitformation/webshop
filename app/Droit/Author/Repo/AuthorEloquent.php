@@ -19,7 +19,9 @@ class AuthorEloquent implements AuthorInterface{
 
     public function getBySite($site_id)
     {
-        return $this->author->where('site_id','=',$site_id)->orderBy('last_name', 'asc')->get();
+        return $this->author->whereHas('sites', function ($query) use ($site_id){
+            $query->where('site_id', '=', $site_id);
+        })->orderBy('last_name', 'asc')->get();
     }
 
     public function find($id){

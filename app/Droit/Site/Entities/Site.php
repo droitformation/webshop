@@ -52,4 +52,9 @@ class Site extends Model{
     {
         return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter');
     }
+
+    public function authors()
+    {
+        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'authors_sites', 'site_id', 'author_id');
+    }
 }

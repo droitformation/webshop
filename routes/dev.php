@@ -171,17 +171,12 @@ Route::get('testing', function() {
 
     $nouveautes = $products->getByCategorie('Nouveautés');
 
-    $model = App::make('App\Droit\Categorie\Repo\CategorieInterface');
-    $categorie = $model->find(92);
-    $references = $categorie->arrets->map(function ($item, $key) {
-        return [
-            'id' => $item->id,
-            'reference' => $item->reference
-        ];
-    })->sortBy('reference')->values();
+    $model = App::make('App\Droit\Author\Repo\AuthorInterface');
+    $author = $model->find(75);
+
 
     echo '<pre>';
-    print_r($references);
+    print_r($author->analyses->toArray());
     echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {
@@ -448,6 +443,24 @@ Route::get('sondage_test', function()
 
 });
 
+Route::get('bv_factures', function()
+{
+    $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+
+    $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
+    $facture   = $Inscriptions->find(18614);//701
+
+    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+
+    //return $generator->makeAbo('facture', $facture);
+    $generator->stream = true;
+    return $generator->make('bv', $facture);
+});
+
 Route::get('abo1', function()
 {
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
@@ -468,6 +481,7 @@ Route::get('abo2', function()
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $facture = $factures->find(381);//1697
+
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $generator->stream = true;
@@ -696,16 +710,19 @@ Route::get('categoriestest', function() {
     //$model = App::make('App\Droit\Arret\Repo\ArretInterface');
    // $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
    // $pages = App::make('App\Droit\Page\Repo\PageInterface');
-
+/*
     $model  = \App::make('App\Droit\User\Repo\UserInterface');
     $user = $model->find(710);
 
     $adresses = $user->adresses->map(function ($item) use ($current) {
         return [$item->id => $item->type];
-    });
+    });*/
+
+    $pages = App::make('App\Droit\Page\Repo\PageInterface');
+    $find = $pages->find(30);
 
     echo '<pre>';
-    print_r($adresses);
+    print_r($find->toArray());
     echo '</pre>';exit();
 
     // Create colloque

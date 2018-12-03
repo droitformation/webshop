@@ -1177,6 +1177,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'App\\Http\\Resources\\Categorie' => __DIR__ . '/../..' . '/app/Http/Resources/Categorie.php',
         'App\\Http\\Resources\\CategorieCollection' => __DIR__ . '/../..' . '/app/Http/Resources/CategorieCollection.php',
         'App\\Http\\Resources\\Colloque' => __DIR__ . '/../..' . '/app/Http/Resources/Colloque.php',
+        'App\\Http\\Resources\\Content' => __DIR__ . '/../..' . '/app/Http/Resources/Content.php',
         'App\\Http\\Resources\\Menu' => __DIR__ . '/../..' . '/app/Http/Resources/Menu.php',
         'App\\Http\\Resources\\Newsletter' => __DIR__ . '/../..' . '/app/Http/Resources/Newsletter.php',
         'App\\Http\\Resources\\NewsletterCampagne' => __DIR__ . '/../..' . '/app/Http/Resources/NewsletterCampagne.php',

@@ -577,6 +577,7 @@ return array(
     'App\\Http\\Resources\\Categorie' => $baseDir . '/app/Http/Resources/Categorie.php',
     'App\\Http\\Resources\\CategorieCollection' => $baseDir . '/app/Http/Resources/CategorieCollection.php',
     'App\\Http\\Resources\\Colloque' => $baseDir . '/app/Http/Resources/Colloque.php',
+    'App\\Http\\Resources\\Content' => $baseDir . '/app/Http/Resources/Content.php',
     'App\\Http\\Resources\\Menu' => $baseDir . '/app/Http/Resources/Menu.php',
     'App\\Http\\Resources\\Newsletter' => $baseDir . '/app/Http/Resources/Newsletter.php',
     'App\\Http\\Resources\\NewsletterCampagne' => $baseDir . '/app/Http/Resources/NewsletterCampagne.php',
