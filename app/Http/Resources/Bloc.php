@@ -20,6 +20,7 @@ class Bloc extends JsonResource
             'content' => $this->content,
             'url' => $this->url,
             'type' => $this->type,
+            'position' => $this->position,
             'image' => asset('files/uploads/'.$this->image, env('SECURE_ASSET')),
         ];
     }

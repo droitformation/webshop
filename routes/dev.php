@@ -174,9 +174,10 @@ Route::get('testing', function() {
     $model = App::make('App\Droit\Author\Repo\AuthorInterface');
     $author = $model->find(75);
 
+    $tests = File::allfiles(base_path('tests'));
 
     echo '<pre>';
-    print_r($author->analyses->toArray());
+    print_r(count($tests));
     echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {
@@ -719,7 +720,7 @@ Route::get('categoriestest', function() {
     });*/
 
     $pages = App::make('App\Droit\Page\Repo\PageInterface');
-    $find = $pages->find(30);
+    $find = $pages->getHomepage(4);
 
     echo '<pre>';
     print_r($find->toArray());

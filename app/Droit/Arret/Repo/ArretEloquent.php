@@ -53,7 +53,7 @@ class ArretEloquent implements ArretInterface{
 
         return $arrets->groupBy(function ($archive, $key) {
             return $archive->pub_date->year;
-        })->keys();
+        })->sortKeysDesc()->keys();
     }
 
     public function getAllActives($exclude = [], $site = null)
