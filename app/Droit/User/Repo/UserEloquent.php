@@ -192,7 +192,12 @@ class UserEloquent implements UserInterface{
         }
 
         if(isset($data['role'])) {
-            $user->roles()->sync([$data['role']]);
+            if($data['role'] != 10){
+                $user->roles()->sync([$data['role']]);
+            }
+            else{
+                $user->roles()->detach();
+            }
         }
 
         $user->updated_at = date('Y-m-d G:i:s');
