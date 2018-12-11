@@ -22,7 +22,8 @@ class Categorie extends Model {
 
     public function arrets()
     {
-        return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', 'arret_categories', 'categories_id', 'arret_id');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', $database.'.arret_categories', 'categories_id', 'arret_id');
     }
 
     public function site()

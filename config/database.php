@@ -65,6 +65,19 @@ return [
 			'strict'    => false,
 		],
 
+        'transfert' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST', 'localhost'),
+            'database'  => env('DB_DATABASE_TRANSFERT', 'rca'),
+            'username'  => env('DB_USERNAME_TRANSFERT', 'root'),
+            'password'  => env('DB_PASSWORD_TRANSFERT', 'root'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
 		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => env('DB_HOST', 'localhost'),

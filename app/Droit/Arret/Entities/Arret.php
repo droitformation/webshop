@@ -80,12 +80,14 @@ class Arret extends Model {
 
     public function categories()
     {
-        return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', $database.'.arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
     public function analyses()
     {
-        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyses_arret', 'arret_id', 'analyse_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', $database.'.analyses_arret', 'arret_id', 'analyse_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
     public function site()

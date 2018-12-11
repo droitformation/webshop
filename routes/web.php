@@ -629,6 +629,7 @@ if (App::environment('local')) {
  * Only for test CF
  * */
 require base_path('routes/test.php');
+require base_path('routes/transfert.php');
 
 Route::post('bounce', 'Backend\Newsletter\TrackingController@bounce');
 Route::post('incoming', 'Backend\Newsletter\TrackingController@incoming');

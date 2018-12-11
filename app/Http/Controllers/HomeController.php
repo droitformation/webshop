@@ -58,4 +58,36 @@ class HomeController extends Controller
         return view('frontend.confirmation')->with(['site' => $site, 'newsletter' => $newsletter]);
     }
 
+    /*
+     * Transfert function
+     * */
+    public function transfert()
+    {
+        return view('transfert');
+    }
+
+    public function dotransfert(Request $request)
+    {
+        setEnv('DB_DATABASE_TRANSFERT', $request->input('database'));
+
+        if(env('DB_DATABASE_TRANSFERT') != $request->input('database')){
+            return redirect()->back()->withInput($request->all())->with(['message' => 'Refresh database connection']);
+        }
+
+        $transfert = new \App\Droit\Services\Transfert();
+
+        $model = $transfert->getOld('Newsletter');
+        $model = $model->first();
+
+        $transfert->makeSite($request->all())->prepare();
+        $transfert->makeNewsletter($model)->makeCampagne();
+        $transfert->makeSubscriptions();
+
+        return redirect()->back();
+    }
+
+    public function setDatabase($slug)
+    {
+        setEnv('DB_DATABASE_TRANSFERT',$slug);
+    }
 }

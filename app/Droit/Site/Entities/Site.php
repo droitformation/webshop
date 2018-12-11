@@ -55,6 +55,7 @@ class Site extends Model{
 
     public function authors()
     {
-        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'authors_sites', 'site_id', 'author_id');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Author\Entities\Author', $database.'.authors_sites', 'site_id', 'author_id');
     }
 }

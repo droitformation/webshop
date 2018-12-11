@@ -86,7 +86,8 @@ class Newsletter extends Model {
 
     public function subscriptions()
     {
-        return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter_users', 'newsletter_subscriptions', 'newsletter_id','user_id');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter_users', $database.'.newsletter_subscriptions', 'newsletter_id','user_id');
     }
 
     public function active_subscriptions()
