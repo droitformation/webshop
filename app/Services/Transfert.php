@@ -79,7 +79,7 @@ class Transfert
         $old = $this->getOld('Newsletter_campagnes','Newsletter');
 
         // Get all old campagnes for newsletter
-        $old_models = $old->with('content')->get();
+        $old_models = $old->get();
 
         // loop over campagnes
         if(!$old_models->isEmpty()){
@@ -209,7 +209,7 @@ class Transfert
         $old = $this->getOld($type['model']);
 
         // Get all
-        $old_models = $old->setConnection($this->connection)->with($type['relations'])->get();
+        $old_models = $old->setConnection($this->connection)->get();
 
         // Loop
         foreach ($old_models as $model){

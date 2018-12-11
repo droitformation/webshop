@@ -19,49 +19,51 @@
 </head>
     <body>
         <div class="container">
+            @include('alert::bootstrap')
+            <div class="col-7">
             <div class="card mt-6">
                 <div class="card-body">
                     <h1 class="mb-4">Transfert</h1>
                     <form action="{{ url('/dotransfert') }}" method="POST" class="mb-4 form">{!! csrf_field() !!}
 
                             <div class="row mt-1">
-                                <label class="col-2" for="nom">database</label>
-                                <div class="col-4">
+                                <label class="col-3" for="nom">database</label>
+                                <div class="col-7">
                                     <input type="text" class="form-control" name="database" value="{{ old('database') }}">
                                 </div>
                             </div>
 
                             <div class="row mt-1">
-                                <label class="col-2" for="nom">nom</label>
-                                <div class="col-4">
+                                <label class="col-3" for="nom">nom</label>
+                                <div class="col-7">
                                     <input type="text" class="form-control" name="nom" value="{{ old('nom') }}">
                                 </div>
                             </div>
 
                             <div class="row mt-1">
-                                <label class="col-2" for="nom">url</label>
-                                <div class="col-4">
+                                <label class="col-3" for="nom">url</label>
+                                <div class="col-7">
                                     <input type="text" class="form-control" name="url" value="{{ old('url') }}">
                                 </div>
                             </div>
 
                             <div class="row mt-1">
-                                <label class="col-2" for="nom">logo</label>
-                                <div class="col-4">
+                                <label class="col-3" for="nom">logo</label>
+                                <div class="col-7">
                                     <input type="text" class="form-control" name="logo" value="{{ old('logo') }}">
                                 </div>
                             </div>
 
                             <div class="row mt-1">
-                                <label class="col-2" for="nom">slug</label>
-                                <div class="col-4">
+                                <label class="col-3" for="nom">slug</label>
+                                <div class="col-7">
                                     <input type="text" class="form-control" name="slug" value="{{ old('slug') }}">
                                 </div>
                             </div>
 
                             <div class="row mt-1">
-                                <label class="col-2" for="nom">prefix</label>
-                                <div class="col-4">
+                                <label class="col-3" for="nom">prefix</label>
+                                <div class="col-7">
                                     <input type="text" class="form-control" name="prefix" value="{{ old('prefix') }}">
                                 </div>
                             </div>
@@ -70,6 +72,7 @@
 
                     </form>
                 </div>
+            </div>
             </div>
         </div>
 

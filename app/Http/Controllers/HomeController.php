@@ -71,7 +71,8 @@ class HomeController extends Controller
         setEnv('DB_DATABASE_TRANSFERT', $request->input('database'));
 
         if(env('DB_DATABASE_TRANSFERT') != $request->input('database')){
-            return redirect()->back()->withInput($request->all())->with(['message' => 'Refresh database connection']);
+            alert()->danger('Refresh database connection');
+            return redirect()->back()->withInput($request->all());
         }
 
         $transfert = new \App\Droit\Services\Transfert();
@@ -82,6 +83,8 @@ class HomeController extends Controller
         $transfert->makeSite($request->all())->prepare();
         $transfert->makeNewsletter($model)->makeCampagne();
         $transfert->makeSubscriptions();
+
+        alert()->success('Terminé');
 
         return redirect()->back();
     }

@@ -147,4 +147,12 @@ class TransfertTest extends TestCase
 
         $this->assertEquals($one->subscriptions->first()->getConnection()->getDatabaseName(),'staging');
     }
+
+    public function testGetOldCamoagnes()
+    {
+        $transfert = new \App\Droit\Services\Transfert();
+        $model = $transfert->getOld('Newsletter','Newsletter');
+
+        $transfert->makeCampagne();
+    }
 }
