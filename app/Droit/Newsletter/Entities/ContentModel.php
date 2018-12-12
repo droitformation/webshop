@@ -47,7 +47,7 @@ class ContentModel
             'abstract'  =>  $arret->abstract,
             'content'   =>  $arret->pub_text,
             'dumois'    =>  $arret->dumois,
-            'link'      =>  secure_asset(config('newsletter.path.arret')).'/'. $arret->file,
+            'link'      =>  secure_asset(config('newsletter.path.arret')).'/'. $arret->filename,
             'message'   => 'Télécharger en pdf',
             'class'     => '',
             'images'    =>  $arret->categories->map(function ($categorie, $key) use ($arret) {
@@ -71,7 +71,7 @@ class ContentModel
                         ];
                     }),
                     'abstract'   => $analyse->abstract,
-                    'document'   => $analyse->document ? secure_asset('files/analyses/'.$analyse->file) : null,
+                    'document'   => $analyse->document ? secure_asset('files/analyses/'.$analyse->filename) : null,
                 ];
             })
         ];

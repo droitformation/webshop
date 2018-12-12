@@ -12,7 +12,7 @@ class ArretEloquent implements ArretInterface{
 		$this->arret = $arret;
 	}
 
-    public function getAll($site = null, $exclude = null)
+    public function getAll($site = null, $exclude = null, $by = 'pub_date')
     {
         $arrets = $this->arret->with(['categories','analyses'])->site($site);
 
@@ -21,7 +21,7 @@ class ArretEloquent implements ArretInterface{
             $arrets->whereNotIn('id', $exclude);
         }
 
-        return $arrets->orderBy('pub_date', 'DESC')->get();
+        return $arrets->orderBy($by, 'DESC')->get();
     }
 
     public function allForSite($site, $options)

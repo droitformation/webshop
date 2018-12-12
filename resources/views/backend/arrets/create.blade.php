@@ -105,7 +105,7 @@
             <div class="panel-footer mini-footer ">
                 <div class="col-sm-3">
                     <input type="hidden" name="site_id" value="{{ $current_site }}">
-                    {!! Form::hidden('user_id', \Auth::user()->id )!!}
+                    <input type="hidden" name="user_id" value="{{ \Auth::user()->id }}">
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary" type="submit">Envoyer </button>

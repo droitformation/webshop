@@ -708,7 +708,7 @@ Route::get('cartworker', function()
 });
 
 Route::get('categoriestest', function() {
-    //$model = App::make('App\Droit\Arret\Repo\ArretInterface');
+    $model = App::make('App\Droit\Arret\Repo\ArretInterface');
    // $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
    // $pages = App::make('App\Droit\Page\Repo\PageInterface');
 /*
@@ -718,6 +718,17 @@ Route::get('categoriestest', function() {
     $adresses = $user->adresses->map(function ($item) use ($current) {
         return [$item->id => $item->type];
     });*/
+
+    $arrets = $model->getAll(5, null, 'reference');
+
+    $arrets = $arrets->map(function ($item, $key) {
+        $convert = new \App\Droit\Newsletter\Entities\ContentModel();
+        return $convert->arret($item);
+    })->sortBy('reference');
+
+    echo '<pre>';
+    print_r($arrets);
+    echo '</pre>';exit();
 
     $pages = App::make('App\Droit\Page\Repo\PageInterface');
     $find = $pages->getHomepage(4);

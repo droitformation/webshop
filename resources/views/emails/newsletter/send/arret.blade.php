@@ -27,7 +27,6 @@
         <tr align="center" class="resetMarge">
             <td class="resetMarge">
 
-
                 @component('emails.newsletter.send.partials.tablebloc',['direction' => 'right'])
                     @slot('picto')
                         @if(!$arret->categories->isEmpty() )
@@ -39,7 +38,7 @@
                         <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $arret->dumois ? 'Arrêt du mois : ' : '' }}{{ $arret->reference }} du {{ $arret->pub_date->formatLocalized('%d %B %Y') }}</h3>
                         <p class="abstract">{!! $arret->abstract !!}</p>
                         <div>{!! $arret->pub_text !!}</div>
-                        <p><a target="_blank" href="{{ secure_asset(config('newsletter.path.arret').$arret->file) }}">Télécharger en pdf</a></p>
+                        <p><a target="_blank" href="{{ secure_asset(config('newsletter.path.arret').$arret->filename) }}">Télécharger en pdf</a></p>
                     @endslot
                 @endcomponent
 

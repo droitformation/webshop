@@ -12,7 +12,20 @@ class Arret extends Model {
 
     public function getDocumentAttribute()
     {
-        return (!empty($this->file) && \File::exists(public_path('files/arrets/'.$this->file))) ? $this->file : null;
+        return (!empty($this->file) && \File::exists(public_path('files/arrets/'.$this->site->slug.'/'.$this->file))) ? $this->site->slug.'/'.$this->file : null;
+    }
+
+    public function getFilenameAttribute()
+    {
+        if(\File::exists(public_path('files/arrets/'.$this->site->slug.'/'.$this->file))){
+            return $this->site->slug.'/'.$this->file;
+        }
+
+        if(\File::exists(public_path('files/arrets/'.$this->file))){
+            return $this->file;
+        }
+
+        return null;
     }
 
     public function getFilterAttribute()

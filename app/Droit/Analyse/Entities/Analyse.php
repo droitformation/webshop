@@ -10,7 +10,20 @@ class Analyse extends Model {
 
     public function getDocumentAttribute()
     {
-        return !empty($this->file ) && \File::exists(public_path('files/analyses/'.$this->file)) ? $this->file : null;
+        return !empty($this->file) && \File::exists(public_path('files/analyses/'.$this->site->slug.'/'.$this->file)) ? $this->site->slug.'/'.$this->file : null;
+    }
+
+    public function getFilenameAttribute()
+    {
+        if(\File::exists(public_path('files/analyses/'.$this->site->slug.'/'.$this->file))){
+            return $this->site->slug.'/'.$this->file;
+        }
+
+        if(\File::exists(public_path('files/analyses/'.$this->file))){
+            return $this->file;
+        }
+
+        return null;
     }
 
     public function getFilterAttribute()

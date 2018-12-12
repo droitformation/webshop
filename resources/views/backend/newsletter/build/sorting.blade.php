@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6">
-                <p><a href="{{ url('build/campagne/'.$campagne->id) }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> &nbsp;Composer la campagne</a></p>
+                <p><a href="{{ url('build/campagne/compose/'.$campagne->id) }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> &nbsp;Composer la campagne</a></p>
             </div>
             <div class="col-md-6">
                 @if(!$clipboards->isEmpty())

@@ -19,7 +19,7 @@
                             <div v-if="type == 10 || type == 5 || type == 9 || type == 8 || type == 7">
                                 <select class="form-control form-required required" @change="getSingle(selected)" v-model="selected" name="model_id">
                                     <option v-if="!selected" :value="null" disabled>Sélectionner</option>
-                                    <option v-for="model in models" v-bind:value="model.id">{{ model.title }}</option>
+                                    <option v-for="model in droptitles" v-bind:value="model.id">{{ model.title }}</option>
                                 </select><br/>
                             </div>
 
@@ -219,6 +219,9 @@
             },
             color(){
                 return this.newsletter.color;
+            },
+            droptitles: function () {
+                return _.orderBy(this.models, 'title')
             }
         },
         mounted: function ()  {
