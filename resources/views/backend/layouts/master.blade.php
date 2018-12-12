@@ -175,6 +175,8 @@
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
 <script type="text/javascript" src="{{ secure_asset('newsletter/js/sorting.js') }}"></script>
+<script type="text/javascript" src="{{ secure_asset('newsletter/js/datatables.js') }}"></script>
+
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-user.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-adresse.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/order.js');?>"></script>

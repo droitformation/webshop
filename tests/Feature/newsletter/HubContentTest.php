@@ -103,7 +103,7 @@ class HubContentTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertEquals([$year1,$year2], $response->json('data'));
+        $this->assertEquals([$year2,$year1], $response->json('data'));
     }
 
     public function testGetHomepage()
