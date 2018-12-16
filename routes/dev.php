@@ -5,49 +5,37 @@
 
 Route::get('abos_test', function () {
 
-    $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $abouser       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $rappels  = \App::make('App\Droit\Abo\Repo\AboRappelInterface');
-    $rappel  = $rappels->find(462);
+    $worker =  \App::make('App\Droit\Abo\Worker\AboFactureWorker');
+
+    $abos     = \App::make('App\Droit\Abo\Repo\AboInterface');
+    $products = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+
+    $product = $products->find(347);
+    $abo     = $abos->find(2);
+    $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
+
+    $files = $worker->prepareFiles($abonnes, $product);
+    $files2 = $worker->prepareFiles2($abonnes, $product);
+
+    // Directory for edition => product_id
+    $dir   = 'files/abos/facture/'.$product->id;
+
+    // Get all files in directory
+    $allfiles = \File::files(public_path($dir));
+    //
+    $array = $files2['tiers']->toArray();
+    ksort($array);
+    $exist = array_intersect($allfiles,$array);
+
+    //ksort($exist);
     echo '<pre>';
-    print_r($rappel->doc_rappel);
+    print_r($files['tiers']);
+    print_r($array);
+
     echo '</pre>';exit();
-  /*  $all = $abo->getAll()->where('abo_id',2);
-
-    $all->map(function ($abo, $key) {
-        if(isset($abo->user->user)){
-            $abo->user_id = $abo->user->user->id;
-        }
-
-        if(isset($abo->tiers->user)){
-            $abo->tiers_user_id = $abo->tiers->user->id;
-        }
-
-        $abo->save();
-
-        echo '<pre>';
-        print_r($abo->toArray());
-        echo '</pre>';
-    });*/
-
-    /*
-        list($hasUser, $noUser) = $all->partition(function ($abo_user) {
-            return isset($abo_user->user->user);
-        });*/
-/*
-    $image = new Imagick($tmpfname);
-    $ident = $image->identifyImage();
-
-    echo '<pre>';
-    print_r($ident);
-    echo '</pre>';exit();*/
-
-/*    echo '<pre>';
-    echo 'has user <br/>';
-    print_r($hasUser->count());
-    echo '<br/>no user <br/>';
-    print_r($noUser->count());
-    echo '</pre>';exit();*/
 
 });
 

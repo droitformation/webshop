@@ -36,21 +36,16 @@ class MergeFactures extends Job implements ShouldQueue
     {
         $worker = \App::make('App\Droit\Abo\Worker\AboWorkerInterface');
 
-        // Directory for edition => product_id
-        $dir   = 'files/abos/facture/'.$this->product->id;
-
-        // Get all files in directory
-        $files = \File::files(public_path($dir));
-
         // Make each types
         if(!$this->status_files->isEmpty()){
             foreach ($this->status_files as $status => $abos){
 
-                // Make sur file/pdf exist
-                $exist = array_intersect($files,$abos->toArray());
+                // sort keys
+                $all = $abos->toArray();
+                ksort($all);
 
                 $name  = 'factures_'.$status.'_'.$this->product->reference.'_'.$this->product->edition_clean;
-                $worker->merge($exist, $name, $this->abo->id);
+                $worker->merge($all, $name, $this->abo->id);
             }
         }
 

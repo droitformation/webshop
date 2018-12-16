@@ -56,21 +56,14 @@ class AboFactureWorker implements AboFactureWorkerInterface{
             }
 
             // dispatch types of abos ¯\_(ツ)_/¯
-            $status_files = $abonnes->mapToGroups(function ($item, $key) use ($product) {
-                $dir  = 'files/abos/facture/'.$product->id;
-                $path = 'facture_'.$product->reference.'-'.$item->id.'_'.$product->id.'.pdf';
-                $filename = public_path($dir.'/'.$path);
-                if($item->status == 'tiers'){return ['tiers' => $filename];}
-                if($item->exemplaires > 1){return ['multiple' => $filename];}
-                return ['abonne' => $filename];
-            });
+            $status_files = $this->prepareFiles($abonnes, $product);
 
             // Job for merging documents
             $merge = (new MergeFactures($product, $abo, $status_files));
             $this->dispatch($merge);
 
             // Job notify merging is done
-            $job = (new NotifyJobFinishedEmail('Les factures ont été crées et attachés. Nom du fichier: factures_'.$product->reference.'_'.$product->edition_clean));
+            $job = (new NotifyJobFinishedEmail('Les factures ont été crées Veuillez penser à les attacher. Nom du fichier: factures_'.$product->reference.'_'.$product->edition_clean));
             $this->dispatch($job);
 
         }
@@ -113,15 +106,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
         $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
         // dispatch types of abos ¯\_(ツ)_/¯
-        $status_files = $abonnes->mapToGroups(function ($item, $key) use ($product) {
-            $dir  = 'files/abos/facture/'.$product->id;
-            $path = 'facture_'.$product->reference.'-'.$item->id.'_'.$product->id.'.pdf';
-            $filename = public_path($dir.'/'.$path);
-
-            if($item->status == 'tiers'){return ['tiers' => $filename];}
-            if($item->exemplaires > 1){return ['multiple' => $filename];}
-            return ['abonne' => $filename];
-        });
+        $status_files = $this->prepareFiles($abonnes, $product);
 
         // Job for merging documents
         $merge = (new MergeFactures($product, $abo, $status_files));
@@ -134,5 +119,29 @@ class AboFactureWorker implements AboFactureWorkerInterface{
         alert()->success('Les factures sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
 
         return redirect()->back();
+    }
+
+    public function prepareFiles($abonnes, $product)
+    {
+        return $abonnes
+            ->groupBy(function ($item, $key) {
+                if($item->status == 'tiers'){return 'tiers'; }
+                if($item->exemplaires > 1){return 'multiple';}
+                return 'abonne';
+            })->map(function ($item, $key) use ($product) {
+                return $item->reject(function ($value, $key) use ($product)  {
+
+                    $dir  = 'files/abos/facture/'.$product->id;
+                    $path = 'facture_'.$product->reference.'-'.$value->id.'_'.$product->id.'.pdf';
+
+                    return !\File::exists(public_path($dir.'/'.$path)) ? true : false;
+                })->mapWithKeys(function ($item) use ($product)  {
+
+                    $dir  = 'files/abos/facture/'.$product->id;
+                    $path = 'facture_'.$product->reference.'-'.$item->id.'_'.$product->id.'.pdf';
+
+                    return [$item->numero => public_path($dir.'/'.$path)];
+                });
+            });
     }
 }

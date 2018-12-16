@@ -49,6 +49,7 @@ class AboWorker implements AboWorkerInterface{
 
             //Every pdf file should come at the end of the command
             foreach($files as $file) {
+                $file = new \SplFileInfo($file);
                 $cmd .= $file." ";
             }
 
