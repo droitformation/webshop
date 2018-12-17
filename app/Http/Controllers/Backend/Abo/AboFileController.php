@@ -64,7 +64,7 @@ class AboFileController extends Controller {
         
         $this->$worker->bind($product, $abo);
 
-        alert()->success('Les '.$worker.'s sont re-attachés<br/>Rafraichissez la page pour mettre à jour le document.');
+        alert()->success('Les '.$worker.'s sont re-attachés, cela peut prendre quelques secondes.<br/>Rafraichissez la page pour mettre à jour le document.');
 
         return redirect()->back();
     }
