@@ -20,7 +20,7 @@
                                  </div>
                                 <div class="post-entry">
                                     <div v-html="arret.pub_text"></div>
-                                    <a target="_blank" :href="arret.document" v-if="arret.document">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a>
+                                    <a target="_blank" :href="arret.filename" v-if="arret.filename">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a>
 
                                     <!-- Ananlyse -->
                                     <div class="analyse-app" v-for="analyse in arret.analyses">
@@ -28,7 +28,7 @@
                                             <h3>Analyse de {{ analyse.auteurs }}</h3>
                                             <p class="text-muted">{{ analyse.date }}</p>
                                             <p class="text-abstract-app">{{ analyse.abstract }}</p>
-                                            <a target="_blank" :href="analyse.document" v-if="analyse.document">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a>
+                                            <a target="_blank" :href="analyse.filename" v-if="analyse.filename">Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a>
                                         </div>
                                     </div>
                                     <!-- END Ananlyse -->

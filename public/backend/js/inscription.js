@@ -53,4 +53,12 @@ $( function() {
 
         $(this).closest('fieldset').remove();
     });
+
+    $('body').on("blur", '.participant-input' ,function(e) {
+        var val = $(this).val();
+        if( !val.includes(',') ){
+            alert('Vérifier que le nom et prénom sont séparés par une virgule');
+        }
+    });
+
 });

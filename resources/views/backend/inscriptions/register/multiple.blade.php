@@ -17,7 +17,7 @@
 
             <div class="form-group">
                 <label>Nom du participant</label>
-                <input name="participant[]" required class="form-control" value="" type="text">
+                <input name="participant[]" required class="form-control participant-input" value="" type="text">
                 <p class="text-muted">Inscrire "prenom, nom"</p>
             </div>
 

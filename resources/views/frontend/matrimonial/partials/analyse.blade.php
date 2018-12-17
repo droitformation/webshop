@@ -23,9 +23,9 @@
                             <p>{!! $analyse->abstract !!}</p>
                         </div><!--END POST-TITLE-->
                         <div class="post-entry">
-                            @if($analyse->document)
+                            @if($analyse->filename)
                                 <p>
-                                    <a target="_blank" href="{{ secure_asset('files/analyses/'.$analyse->file) }}">
+                                    <a target="_blank" href="{{ secure_asset(config('newsletter.path.analyse').$analyse->filename) }}">
                                         Télécharger cette analyse en PDF &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
                                     </a>
                                 </p>

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-9">
         <div class="bloc-content">
-            <h2>{{ $bloc->titre }}</h2>
+            <h2 class="text-left">{{ $bloc->titre }}</h2>
             {!! $bloc->contenu !!}
         </div><!--END POST-->
     </div>
