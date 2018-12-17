@@ -70,6 +70,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
 
                         if($facture->doc_facture){ \File::delete(public_path($facture->doc_facture)); }
 
+                        $generator->setPrint(true);
                         $generator->makeAbo('facture', $facture);
                     }
                 }
