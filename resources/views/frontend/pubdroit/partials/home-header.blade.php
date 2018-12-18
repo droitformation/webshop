@@ -1,4 +1,4 @@
-<section class="row">
+<section class="row" style="margin-top: 20px;">
     <section class="col-md-8 col-xs-12">
     @if(!$colloques->isEmpty())
 
@@ -46,7 +46,7 @@
     @if(isset($page))
         <section class="row">
             <div class="col-md-12">
-                {!! !empty($page->title) ? '<h2>'. $page->title.'</h2>' : '' !!}
+                {!! !empty($page->title) ? '<h3>'. $page->title.'</h3>' : '' !!}
                 {!! $page->content !!}
             </div>
         </section>
