@@ -16,18 +16,20 @@ class MakeFactureAbo extends Job implements ShouldQueue
     protected $abos;
     protected $product;
     protected $date_creation;
+    protected $print;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($abos, $product, $all, $date_creation)
+    public function __construct($abos, $product, $all, $date_creation, $print = null)
     {
-        $this->facture    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-        $this->all        = $all;
-        $this->abos       = $abos;
-        $this->product    = $product;
+        $this->facture       = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+        $this->all           = $all;
+        $this->abos          = $abos;
+        $this->product       = $product;
+        $this->print         = $print;
         $this->date_creation = $date_creation;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -42,6 +44,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
     {
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $repo    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+
         // All abonnements for the product
         if(!$this->abos->isEmpty())
         {
@@ -70,7 +73,10 @@ class MakeFactureAbo extends Job implements ShouldQueue
 
                         if($facture->doc_facture){ \File::delete(public_path($facture->doc_facture)); }
 
-                        $generator->setPrint(true);
+                        if($this->print){
+                            $generator->setPrint(true);
+                        }
+
                         $generator->makeAbo('facture', $facture);
                     }
                 }

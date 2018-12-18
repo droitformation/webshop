@@ -19,6 +19,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
 
     protected $facture;
     protected $generator;
+    protected $print;
 
     public function __construct(AboFactureInterface $facture, PdfGeneratorInterface $generator)
     {
@@ -28,7 +29,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
-    public function generate($product, $abo, $all = false, $date)
+    public function generate($product, $abo, $all = false, $date, $print = null)
     {
         // All abonnements for the product
         if(!$abo->abonnements->isEmpty())
@@ -41,8 +42,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
 
             foreach($chunks as $chunk) {
                 // dispatch job to make 15 factures
-                \Log::info('date worker'.$date);
-                $job = (new MakeFactureAbo($chunk, $product, $all, $date));
+                $job = (new MakeFactureAbo($chunk, $product, $all, $date, $print));
                 $this->dispatch($job);
             }
 
