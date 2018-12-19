@@ -15,10 +15,22 @@ class StripRequest
      */
     public function handle($request, Closure $next)
     {
+        // resend adress if any
+        $adresse = $request->input('adresse',[]);
+
+        if(!empty($adresse)) {
+            // unset defaults, we can now test if we had other infos present, if not dont show form in view
+            unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
+
+            $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
+        }
+
+        $data = array_merge(['adresse' => $adresse],$request->except(['adresse']));
+
         $helper = new \App\Droit\Helper\Helper();
 
         // Validate the adresse if any
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($data, [
             'adresse.first_name' => 'required_without_all:adresse.company,user_id',
             'adresse.last_name'  => 'required_without_all:adresse.company,user_id',
             'adresse.company'    => 'required_without_all:adresse.first_name,adresse.last_name,user_id',
@@ -47,16 +59,6 @@ class StripRequest
 
         // Resend products along to refill form
         if ($validator->fails()) {
-
-            // resend adress if any
-            $adresse = $request->input('adresse',[]);
-
-            if(!empty($adresse)) {
-                // unset defaults, we can now test if we had other infos present, if not dont show form in view
-                unset($adresse['canton_id'],$adresse['pays_id'],$adresse['civilite_id']);
-
-                $adresse = (isset($adresse) ? array_filter(array_values($adresse)) : []);
-            }
 
             $order = $request->input('order',[]);
 

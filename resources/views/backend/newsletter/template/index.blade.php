@@ -23,20 +23,20 @@
                             <div class="col-md-7">
                                 <h3>{{ $newsletter->titre }}</h3>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p><i class="fa fa-user"></i> &nbsp; {{ $newsletter->from_name }}</p>
                                 <p><i class="fa fa-envelope"></i> &nbsp; {{ $newsletter->from_email }}</p>
                             </div>
-                            <div class="col-md-2 text-right">
-                                <div class="btn-group-vertical" role="group">
-                                    <a href="{{ url('build/newsletter/'.$newsletter->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> &nbsp;Editer</a>
-                                    <a href="{{ url('build/campagne/create/'.$newsletter->id) }}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp;Campagne</a>
-                                </div>
+                            <div class="col-md-1 text-right">
+                                <a href="{{ url('build/newsletter/'.$newsletter->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                             </div>
                         </div>
                         <br/>
                         <div class="row">
                             <div class="col-md-12">
+                                <a href="{{ url('build/campagne/create/'.$newsletter->id) }}" class="btn btn-success pull-right">
+                                    <i class="fa fa-plus"></i> &nbsp;Campagne
+                                </a>
                                 @if(!$newsletter->campagnes->isEmpty())
 
                                     <?php

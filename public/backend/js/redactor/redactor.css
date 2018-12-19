@@ -1062,9 +1062,11 @@
       margin: 0 1.5em 0 0; }
     .redactor-styles[dir="rtl"] figcaption {
       text-align: right; }
-  .redactor-styles a,
-  .redactor-styles a:hover {
+
+  .redactor-styles a:not('.btn'),
+  .redactor-styles a:not('.btn'):hover {
     color: #3397ff; }
+
   .redactor-styles p,
   .redactor-styles dl,
   .redactor-styles blockquote,

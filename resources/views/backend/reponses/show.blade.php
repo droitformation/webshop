@@ -86,7 +86,7 @@
                                                         <dl class="dl-horizontal dl-sondage">
                                                             <?php
                                                                 $reponses = $avis['reponses'];
-                                                                $reponses = sortArrayByArray($reponses->toArray(), ['Excellent','Bon','Satisfaisant','Insatisfaisant']);
+                                                                $reponses = sortArrayByArray($reponses->toArray(), ['Excellente','Excellent','Bon','Satisfaisant','Insatisfaisant']);
                                                             ?>
                                                             @foreach($reponses as $q => $note)
                                                                 <dt>{{ $q }}: </dt>
