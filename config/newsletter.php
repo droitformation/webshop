@@ -97,6 +97,6 @@ return [
       * List id in db (publications, bail, matrimonial, pi2)
       * */
 
-    'lists' => [1,2,3,10,15,16],
+    'lists' => [1,2,3,10,16,17],
 
 ];
