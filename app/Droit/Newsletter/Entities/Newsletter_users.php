@@ -15,8 +15,18 @@ class Newsletter_users extends Model {
         return $this->activated_at && $this->activated_at->timestamp < 0 ? null : $this->activated_at;
     }
 
+    public function scopeNewsletter($query,$newsletter_id)
+    {
+        if ($newsletter_id){
+            return $query->whereHas('subscriptions', function ($query) use ($newsletter_id) {
+                $query->where('newsletter_id','=',$newsletter_id);
+            });
+        }
+    }
+
     public function subscriptions()
     {
-        return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter', 'newsletter_subscriptions', 'user_id', 'newsletter_id');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter', $database.'.newsletter_subscriptions', 'user_id', 'newsletter_id');
     }
 }

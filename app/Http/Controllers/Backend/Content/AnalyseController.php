@@ -11,6 +11,7 @@ use App\Droit\Arret\Repo\ArretInterface;
 use App\Droit\Categorie\Repo\CategorieInterface;
 use App\Droit\Service\UploadInterface;
 use App\Droit\Author\Repo\AuthorInterface;
+use App\Droit\Site\Repo\SiteInterface;
 
 class AnalyseController extends Controller {
 
@@ -20,14 +21,16 @@ class AnalyseController extends Controller {
     protected $categorie;
     protected $upload;
     protected $custom;
+    protected $site;
 
-    public function __construct(AuthorInterface $author, AnalyseInterface $analyse, ArretInterface $arret, CategorieInterface $categorie , UploadInterface $upload )
+    public function __construct(AuthorInterface $author, AnalyseInterface $analyse, ArretInterface $arret, CategorieInterface $categorie , UploadInterface $upload , SiteInterface $site)
     {
         $this->author    = $author;
         $this->analyse   = $analyse;
         $this->arret     = $arret;
         $this->categorie = $categorie;
         $this->upload    = $upload;
+        $this->site      = $site;
         $this->helper    = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR');
@@ -88,11 +91,12 @@ class AnalyseController extends Controller {
     public function store(Request $request)
     {
         $data  = $request->except('file');
+        $site = $this->site->find($request->input('site_id'));
 
         // Files upload
         if( $request->file('file',null) ) {
-            $file = $this->upload->upload( $request->file('file') , 'files/analyses' );
-            $data['file'] = $file['name'];
+            $file = $this->upload->upload( $request->file('file') , 'files/analyses/'.$site->slug );
+            $data['file'] = $site->slug.'/'.$file['name'];
         }
 
         $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
@@ -113,11 +117,12 @@ class AnalyseController extends Controller {
     public function update(Request $request)
     {
         $data  = $request->except('file');
+        $site = $this->site->find($request->input('site_id'));
 
         // Files upload
         if( $request->file('file',null) ) {
-            $file = $this->upload->upload( $request->file('file') , 'files/analyses' );
-            $data['file'] = $file['name'];
+            $file = $this->upload->upload( $request->file('file') , 'files/analyses/'.$site->slug );
+            $data['file'] = $site->slug.'/'.$file['name'];
         }
 
         $data['categories'] = $this->helper->prepareCategories($request->input('categories'));

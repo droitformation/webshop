@@ -399,7 +399,8 @@ $factory->define(App\Droit\Author\Entities\Author::class, function (Faker\Genera
         'occupation' => 'Webmaster',
         'bio'        => 'Test',
         'photo'      => 'cindy.jpg',
-        'rang'       => 1
+        'rang'       => 1,
+        'site_id'    => 1
     ];
 });
 

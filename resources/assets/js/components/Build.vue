@@ -2,14 +2,22 @@
     <div>
 
         <div v-if="type">
-            <build-newsletter :title="title" v-if="type && isNormal" :type="type" :campagne="campagne" _token="_token" url="url"></build-newsletter>
-            <build-newsletter-models :title="title" v-if="type && isModel" :type="type" site="2" :campagne="campagne" _token="_token" url="url"></build-newsletter-models>
+            <create-bloc
+                    mode="create"
+                    :site="site"
+                    :title="title"
+                    :type="type"
+                    :campagne="campagne"
+                    :newsletter="newsletter"
+                    :_token="_token"
+                    @cancel="cancel"
+                    :url="url"></create-bloc>
         </div>
 
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-5">
 
-                <div class="component-menu">
+                <div id="componant" class="component-menu">
                     <h5>Composants</h5>
                     <div class="component-bloc">
                         <a v-for="bloc in blocs" class="blocEdit" @click="selectBloc(bloc)">
@@ -27,10 +35,9 @@
 
 </style>
 <script>
-    import BuildNewsletterModels from './BuildNewsletterModels.vue'
-    import BuildNewsletter from './BuildNewsletter.vue'
+    import CreateBloc from './CreateBloc.vue'
     export default{
-        props: ['campagne','_token','url','blocs'],
+        props: ['campagne','_token','url','blocs','site','newsletter'],
         data(){
             return{
                 type:null,
@@ -47,14 +54,17 @@
             }
         },
         components:{
-            'build-newsletter' : BuildNewsletter,
-            'build-newsletter-models' : BuildNewsletterModels,
+            'create-bloc' : CreateBloc,
         },
         methods: {
             selectBloc : function(bloc){
-                this.type = bloc.id;
+                this.type  = bloc.id;
                 this.title = bloc.titre
-            }
+            },
+            cancel: function(){
+                this.type = null;
+                this.title = ''
+            },
         }
     }
 </script>

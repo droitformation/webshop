@@ -56,12 +56,11 @@ class SendController extends Controller
          *  Send at specified date or delay for 15 minutes before sending just in case
          */
         $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
-        
         $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
 
         if(!$result['success'])
         {
-            throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi'.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
+            throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi '.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
         }
 
         // Update campagne status
@@ -133,5 +132,12 @@ class SendController extends Controller
         alert()->success('Email de test envoyé!');
 
         return redirect('build/campagne/'.$campagne->id);
+    }
+
+    public function preview($id)
+    {
+        $data  = $this->worker->html($id);
+
+        return response($data);
     }
 }

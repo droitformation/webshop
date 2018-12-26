@@ -55,7 +55,12 @@ class SubscriberController extends Controller
         $search = ($search ? $search['value'] : null);
 
         return $this->subscriber->get_ajax(
-            $request->input('draw'), $request->input('start'), $request->input('length'), $order[0]['column'], $order[0]['dir'], $search
+            $request->input('draw'),
+            $request->input('start'),
+            $request->input('length'),
+            $order[0]['column'],
+            $order[0]['dir'],
+            $search
         );
     }
 

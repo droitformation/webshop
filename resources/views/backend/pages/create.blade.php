@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Visible sur le site</label>
                         <div class="col-sm-5">
-                            <label class="radio-inline"><input type="radio" value="0" name="hidden"> Oui</label>
+                            <label class="radio-inline"><input type="radio" value="" name="hidden"> Oui</label>
                             <label class="radio-inline"><input type="radio" value="1" name="hidden" checked> Non</label>
                         </div>
                     </div>
@@ -53,6 +53,7 @@
                             @if(!$menus->isEmpty())
                                 <?php $menu_sites = $menus->groupBy('site_id'); ?>
                                 <select class="form-control" name="menu_id">
+                                    <option value="">Choix</option>
                                     @foreach($menu_sites as $site_id => $menu_site)
                                         <optgroup label="{{ $sites->find($site_id)->nom }}">
                                             @foreach($menu_site as $menu)
@@ -68,9 +69,17 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Ordre dans le menu</label>
                         <div class="col-sm-1">
-                            <input type="text" name="rang" value="" class="form-control">
+                            <input type="text" name="rang" value="{{ old('rang') }}" class="form-control">
                         </div>
                         <div class="col-sm-2"><p class="help-block">Ordre croissant</p></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Lien slug</label>
+                        <div class="col-sm-3">
+                            <input type="text" name="slug" value="{{ old('slug') }}" class="form-control">
+                        </div>
+                        <div class="col-sm-2"><p class="help-block">Pour webmaster</p></div>
                     </div>
 
                     <div class="form-group">
@@ -83,6 +92,8 @@
                                 <option value="newsletter">Contenu généré newsletter</option>
                                 <option value="jurisprudence">Contenu généré jurisprudence</option>
                                 <option value="doctrine">Contenu généré doctrine</option>
+                                <option value="authors">Contenu généré auteurs</option>
+                                <option value="colloques">Contenu généré colloques</option>
                                 <option value="revue">Contenu généré revues</option>
                             </select>
                         </div>
@@ -97,16 +108,25 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Titre</label>
                         <div class="col-sm-7">
-                            <input type="text" name="title" value="" class="form-control">
+                            <input type="text" name="title" value="{{ old('title') }}" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="contenu" class="col-sm-3 control-label">Contenu</label>
+                        <label for="contenu" class="col-sm-3 control-label">Résumé</label>
                         <div class="col-sm-7">
-                            <textarea name="content" class="form-control  redactor"></textarea>
+                            <textarea name="excerpt" class="form-control redactorSimple">{{ old('excerpt') }}</textarea>
                         </div>
                     </div>
+
+                    @if($current_site == 4 || $current_site == 5)
+                        <div class="form-group">
+                            <label for="contenu" class="col-sm-3 control-label">Contenu</label>
+                            <div class="col-sm-7">
+                                <textarea name="content" class="form-control redactor">{{ old('content') }}</textarea>
+                            </div>
+                        </div>
+                    @endif
 
                     <div class="well">
                         <div class="form-group">
@@ -119,7 +139,7 @@
                         <div class="form-group">
                             <label for="contenu" class="col-sm-3 control-label">Lien</label>
                             <div class="col-sm-7">
-                                <input type="text" name="url" value="" class="form-control">
+                                <input type="text" name="url" value="{{ old('url') }}" class="form-control">
                             </div>
                         </div>
                     </div>

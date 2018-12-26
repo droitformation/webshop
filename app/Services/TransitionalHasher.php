@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Droit\User\Entities\User;
+use Illuminate\Hashing\HashManager;
 
-class TransitionalHasher extends \Illuminate\Hashing\BcryptHasher
+class TransitionalHasher extends HashManager
 {
     public function check($value, $hashedValue, array $options = array())
     {
@@ -19,7 +20,7 @@ class TransitionalHasher extends \Illuminate\Hashing\BcryptHasher
                 // Update the password to Laravel's Bcrypt hash
                 // If two users have matching passwords, we might update the
                 // wrong user -- but it doesn't matter!
-                $user->password = \Hash::make($value);
+                $user->password = bcrypt($value);
                 $user->save();
 
                 // Log in the user

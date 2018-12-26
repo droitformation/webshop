@@ -12,7 +12,7 @@ class ArretEloquent implements ArretInterface{
 		$this->arret = $arret;
 	}
 
-    public function getAll($site = null, $exclude = null)
+    public function getAll($site = null, $exclude = null, $by = 'pub_date')
     {
         $arrets = $this->arret->with(['categories','analyses'])->site($site);
 
@@ -21,7 +21,7 @@ class ArretEloquent implements ArretInterface{
             $arrets->whereNotIn('id', $exclude);
         }
 
-        return $arrets->orderBy('reference', 'ASC')->get();
+        return $arrets->orderBy($by, 'DESC')->get();
     }
 
     public function allForSite($site, $options)
@@ -53,7 +53,7 @@ class ArretEloquent implements ArretInterface{
 
         return $arrets->groupBy(function ($archive, $key) {
             return $archive->pub_date->year;
-        })->keys();
+        })->sortKeysDesc()->keys();
     }
 
     public function getAllActives($exclude = [], $site = null)
@@ -66,6 +66,31 @@ class ArretEloquent implements ArretInterface{
         }
 
         return $arrets->orderBy('reference', 'ASC')->get();
+    }
+
+    public function getAllForSiteActive($exclude = [], $site = null, $options = [])
+    {
+        $arrets = $this->arret->with(['categories','analyses'])->site($site);
+
+        if(!empty($exclude)) {
+            $arrets->whereNotIn('id', $exclude);
+        }
+
+        if(isset($options['categories'])){
+            $arrets = $arrets->categories($options['categories']);
+        }
+
+        if(isset($options['years'])){
+            $arrets = $arrets->years($options['years']);
+        }
+
+        $arrets = $arrets->orderBy('pub_date', 'DESC');
+
+        if(isset($options['limit']) && $options['limit'] > 0){
+            $arrets = $arrets->take($options['limit']);
+        }
+
+        return $arrets->get();
     }
 
     public function getPaginate($nbr)

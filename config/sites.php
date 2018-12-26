@@ -38,7 +38,7 @@ return [
             ['name' => 'Catégories', 'url' => 'categories','color' => 'inverse', 'icon' => 'edit'],
         ]
     ],
-/*    'droitdutravail' => [
+    'droitdutravail' => [
         'site' => [
             ['name' => 'Menus', 'url' => 'menus','color' => 'sky', 'icon' => 'list'],
             ['name' => 'Contenus', 'url' => 'blocs','color' => 'primary', 'icon' => 'clipboard'],
@@ -57,7 +57,7 @@ return [
             ['name' => 'Analyses', 'url' => 'analyses','color' => 'brown', 'icon' => 'dot-circle-o'],
             ['name' => 'Catégories', 'url' => 'categories','color' => 'inverse', 'icon' => 'edit'],
         ]
-    ],*/
+    ],
     'fac_sites' => [
         'pubdroit'         => ['image' => 'pubdroit.png', 'url' => 'http://www.publications-droit.ch'],
         'bail'             => ['image' => 'bail.png', 'url' => 'http://www.bail.ch'],

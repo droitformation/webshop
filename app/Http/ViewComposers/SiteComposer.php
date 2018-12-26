@@ -3,7 +3,6 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
-
 use App\Droit\Site\Repo\SiteInterface;
 
 class SiteComposer

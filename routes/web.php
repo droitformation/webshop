@@ -17,6 +17,9 @@ Route::get('event', 'Api\ColloqueController@event');
 //Route::post('tracking', 'Backend\Newsletter\TrackingController@tracking');
 Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@tracking');
 
+Route::get('site/subscribe/{site_id}', 'HomeController@subscribe');
+Route::get('site/unsubscribe/{site_id}', 'HomeController@unsubscribe');
+Route::get('site/confirmation/{site_id}', 'HomeController@confirmation');
 /*
 |--------------------------------------------------------------------------
 | Validate presence for inscriptions
@@ -24,7 +27,6 @@ Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@
 */
 Route::get('presence/{id}/{key}', 'CodeController@presence');
 Route::get('presence/occurrence/{id}/{key}', 'CodeController@occurrence');
-
 /*
 |--------------------------------------------------------------------------
 | Ajax login validation
@@ -159,6 +161,18 @@ Route::group(['prefix' => 'team' , 'middleware' => ['auth','team','back']], func
     Route::get('colloque/archive/{year}', 'Team\Colloque\ColloqueController@archive');
 });
 
+Route::group(['prefix' => 'hub'], function () {
+    Route::post('arrets','Hub\ContentController@arrets');
+    Route::post('analyses','Hub\ContentController@analyses');
+    Route::post('categories','Hub\ContentController@categories');
+    Route::post('years','Hub\ContentController@years');
+    Route::post('authors','Hub\ContentController@authors');
+    Route::post('campagne','Hub\ContentController@campagne');
+    Route::post('archives','Hub\ContentController@archives');
+    Route::post('homepage','Hub\ContentController@homepage');
+    Route::post('menu','Hub\ContentController@menu');
+    Route::post('page','Hub\ContentController@page');
+});
 
 /* *
 * Administration routes
@@ -533,6 +547,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::get('ajax/colloque',  'Api\ColloqueController@index');
         Route::get('ajax/colloque/{id}', 'Api\ColloqueController@show');
+
+        // For newsletter
+        Route::get('ajax/list/{categorie}/{site_id}','Api\NewsletterModelController@index');
+        Route::get('ajax/list/{product}/{site_id?}',  'Api\NewsletterModelController@index');
+        Route::get('ajax/list/{colloque}/{site_id?}',  'Api\NewsletterModelController@index');
+        Route::get('ajax/list/{arret}/{site_id}', 'Api\NewsletterModelController@index');
+
+        Route::get('ajax/categoriearrets/{id}', 'Api\NewsletterModelController@arrets');
+
+        Route::get('ajax/single/{categorie}/{id}','Api\NewsletterModelController@show');
+        Route::get('ajax/single/{arret}/{id}', 'Api\NewsletterModelController@show');
+        Route::get('ajax/single/{colloque}/{id}',  'Api\NewsletterModelController@show');
+        Route::get('ajax/single/{product}/{id}',  'Api\NewsletterModelController@show');
+
     });
 
     /*
@@ -601,6 +629,7 @@ if (App::environment('local')) {
  * Only for test CF
  * */
 require base_path('routes/test.php');
+require base_path('routes/transfert.php');
 
 Route::post('bounce', 'Backend\Newsletter\TrackingController@bounce');
 Route::post('incoming', 'Backend\Newsletter\TrackingController@incoming');

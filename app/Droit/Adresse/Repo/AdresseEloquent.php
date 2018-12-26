@@ -51,7 +51,7 @@ class AdresseEloquent implements AdresseInterface{
 					$query->orWhere($column,'LIKE','%'.$term.'%');
 				}
 			}
-		
+
 			$query->orWhereHas('user', function ($query) use($terms,$columns) {
 				$query->where(function ($q) use ($columns,$terms) {
 					foreach($columns['user'] as $column){

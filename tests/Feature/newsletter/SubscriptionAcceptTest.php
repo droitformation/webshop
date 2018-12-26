@@ -136,4 +136,5 @@ class SubscriptionAcceptTest extends TestCase
 
         $response->assertRedirect('build/subscriber/'.$subscriber->id);
     }
+
 }

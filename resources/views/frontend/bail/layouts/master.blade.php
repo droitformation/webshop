@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="<?php echo secure_asset('frontend/common/css/filter.css');?>">
     <link rel="stylesheet" href="<?php echo secure_asset('common/css/sites.css');?>">
     <link rel="stylesheet" href="<?php echo secure_asset('frontend/bail/css/responsive.css');?>">
+    <link rel="stylesheet" href="<?php echo secure_asset('common/css/jquery.fancybox.min.css');?>">
 
     <!-- Javascript Files
     ================================================== -->
@@ -32,6 +33,8 @@
     <!-- Local -->
     <script src="<?php echo secure_asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
+    <script src="<?php echo secure_asset('common/js/jquery.fancybox.min.js');?>"></script>
+    <script src="<?php echo secure_asset('common/js/common.js');?>"></script>
 
     <script>
         window.Laravel = <?php echo json_encode([
@@ -52,8 +55,8 @@
             <div class="col-md-7 col-xs-12 text-right">
                 <nav id="menu-principal">
                     @if(isset($menu_main))
-                        @if(!$menu_main->pages_active->isEmpty())
-                            @foreach($menu_main->pages_active as $page)
+                        @if(!$menu_main->active->isEmpty())
+                            @foreach($menu_main->active as $page)
                                 <a class="{{ Request::is('bail/page/'.$page->slug) ? 'active' : '' }}" href="{{ url('bail/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
                             @endforeach
                         @endif

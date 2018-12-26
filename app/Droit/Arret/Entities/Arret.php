@@ -12,7 +12,20 @@ class Arret extends Model {
 
     public function getDocumentAttribute()
     {
-        return (!empty($this->file) && \File::exists(public_path('files/arrets/'.$this->file))) ? $this->file : null;
+        return (!empty($this->file) && \File::exists(public_path('files/arrets/'.$this->site->slug.'/'.$this->file))) ? $this->site->slug.'/'.$this->file : null;
+    }
+
+    public function getFilenameAttribute()
+    {
+        if(\File::exists(public_path('files/arrets/'.$this->site->slug.'/'.$this->file))){
+            return $this->site->slug.'/'.$this->file;
+        }
+
+        if(\File::exists(public_path('files/arrets/'.$this->file))){
+            return $this->file;
+        }
+
+        return null;
     }
 
     public function getFilterAttribute()
@@ -26,7 +39,7 @@ class Arret extends Model {
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
-        return $this->reference.' '.$this->pub_date->formatLocalized('%A %d %B %Y');;
+        return $this->reference.' du '.$this->pub_date->formatLocalized('%d %B %Y');;
     }
     
     /**
@@ -80,12 +93,14 @@ class Arret extends Model {
 
     public function categories()
     {
-        return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', $database.'.arret_categories', 'arret_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
     public function analyses()
     {
-        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyses_arret', 'arret_id', 'analyse_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', $database.'.analyses_arret', 'arret_id', 'analyse_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
     public function site()

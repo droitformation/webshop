@@ -30,4 +30,5 @@ script:
   - php artisan db:seed --env=testing --no-interaction
   - php artisan config:clear
   - composer dumpautoload
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --testsuite Unit
+  - vendor/bin/phpunit --testsuite Feature

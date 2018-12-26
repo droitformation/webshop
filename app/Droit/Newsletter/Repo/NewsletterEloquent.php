@@ -45,6 +45,7 @@ class NewsletterEloquent implements NewsletterInterface{
             'color'        => (isset($data['color']) ? $data['color'] : ''),
             'logos'        => (isset($data['logos']) ? $data['logos'] : ''),
             'header'       => (isset($data['header']) ? $data['header'] : ''),
+            'second_color' => (isset($data['second_color']) ? $data['second_color'] : null),
 			'created_at'   => date('Y-m-d G:i:s'),
 			'updated_at'   => date('Y-m-d G:i:s')
 		));
@@ -69,8 +70,15 @@ class NewsletterEloquent implements NewsletterInterface{
 
         $newsletter->fill($data);
 		$newsletter->updated_at = date('Y-m-d G:i:s');
+        $newsletter->second_color = isset($data['second_color']) && !empty($data['second_color']) ? $data['second_color'] : null;
+        $newsletter->pdf = isset($data['pdf']) && !empty($data['pdf']) ? $data['pdf'] : null;
+        $newsletter->comment = isset($data['comment']) && !empty($data['comment']) ? $data['comment'] : null;
+        $newsletter->classe = isset($data['classe']) && !empty($data['classe']) ? $data['classe'] : null;
+        $newsletter->comment_title = isset($data['comment_title']) && !empty($data['comment_title']) ? $data['comment_title'] : null;
+        $newsletter->hide_title = isset($data['hide_title']) && !empty($data['hide_title']) ? $data['hide_title'] : null;
+        $newsletter->display = isset($data['display']) && !empty($data['display']) ? $data['display'] : null;
 
-		$newsletter->save();
+        $newsletter->save();
 		
 		return $newsletter;
 	}

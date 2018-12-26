@@ -79,7 +79,7 @@
                                                             <p class="text-right">- {{ $order->coupon->value }}%</p>
                                                         @endif
                                                     @endif
-                                                    <p class="text-right">{{ $order->shipping->price_cents }} CHF</p>
+                                                    <p class="text-right">{{ $order->total_shipping }} CHF</p>
                                                     <p class="text-right">{{ $order->total_with_shipping }} CHF</p>
                                                 </div>
                                             </div>

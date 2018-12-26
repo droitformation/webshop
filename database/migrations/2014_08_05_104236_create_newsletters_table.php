@@ -29,11 +29,11 @@ class CreateNewslettersTable extends Migration {
             $table->string('color');
             $table->timestamps();
             $table->softDeletes();
+
 		});
 	}
 
-
-	/**
+    /**
 	 * Reverse the migrations.
 	 *
 	 * @return void

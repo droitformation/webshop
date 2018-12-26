@@ -42,12 +42,10 @@ class ContentController extends Controller
     public function store(NewsletterContentRequest $request){
 
         $data = $request->all();
-
         $upload = new Helper();
 
         // image resize
-        if(isset($data['image']) && !empty($data['image']))
-        {
+        if(isset($data['image']) && !empty($data['image'])) {
             $upload->resizeImage($data['image'],$data['type_id']);
         }
 
@@ -55,7 +53,8 @@ class ContentController extends Controller
 
         alert()->success('Bloc ajouté');
 
-        return redirect('build/campagne/'.$data['campagne'].'#componant');
+        //return redirect('build/campagne/'.$data['campagne'].'#componant');
+        return redirect(url()->previous().'#componant');
     }
 
     /**
@@ -69,7 +68,7 @@ class ContentController extends Controller
 
         alert()->success('Bloc édité');
 
-        return redirect('build/campagne/'.$contents->newsletter_campagne_id.'#componant');
+        return redirect(url()->previous().'#componant');
     }
 
     /**
@@ -82,7 +81,18 @@ class ContentController extends Controller
 
         $this->content->delete($request->input('id'));
 
-        return 'ok';
+        $campagne = $this->campagne->find($request->input('campagne_id'));
+
+        $contents = $campagne->content->map(function ($item, $key) {
+            $convert = new \App\Droit\Newsletter\Entities\ContentModel();
+            $item->setAttribute('model',$convert->setModel($item)->convert());
+            $item->setAttribute('type_content',$item->type_content);
+            return $item;
+        });
+
+        alert()->success('Bloc supprimé');
+        return redirect(url()->previous().'#componant');
+        //return response()->json($contents);
     }
 
     /**

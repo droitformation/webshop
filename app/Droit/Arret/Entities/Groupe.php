@@ -13,7 +13,8 @@ class Groupe extends Model {
 
     public function arrets()
     {
-        return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', 'arrets_groupes', 'groupe_id', 'arret_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', $database.'.arrets_groupes', 'groupe_id', 'arret_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
     public function categorie()

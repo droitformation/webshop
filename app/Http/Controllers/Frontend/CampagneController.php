@@ -33,9 +33,18 @@ class CampagneController extends Controller
     {
         $campagne = $this->campagne->find($id);
 
-        $pdf = \PDF::loadView('frontend.newsletter.pdf', ['campagne' => $campagne])->setPaper('a4');
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ]
+        ]);
 
-       // $pdf->set_option('defaultFont', 'Arial');
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        $pdf = $pdf->loadView('frontend.newsletter.pdf', ['campagne' => $campagne])->setPaper('a4');
 
         return $pdf->stream('newsletter_'.$id.'.pdf');
     }

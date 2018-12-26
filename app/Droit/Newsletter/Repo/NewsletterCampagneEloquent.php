@@ -11,11 +11,20 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 	{
 		$this->campagne = $campagne;
 	}
-	
+
+	// used in arrtes to hide campagneworker
 	public function getAll($newsletter_id = null)
 	{
 		return $this->campagne->news($newsletter_id)->orderBy('created_at','DESC')->get();
 	}
+
+    // used in arrtes to hide campagneworker
+    public function getAllBySite($site_id)
+    {
+        return $this->campagne->where('status','=','brouillon')->whereHas('newsletter', function ($query) use ($site_id){
+            $query->where('site_id', '=', $site_id);
+        })->orderBy('created_at','DESC')->get();
+    }
 
     public function getAllSent(){
 
@@ -27,7 +36,16 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
         return $this->campagne->where('status','=','envoyé')->whereNull('hidden')->news($newsletter_id)->orderBy('created_at','DESC')->get();
     }
 
-	public function getArchives($newsletter_id,$year)
+    public function getLastCampagneBySite($site_id)
+    {
+        $campagne = $this->campagne->where('status','=','envoyé')->whereNull('hidden')->whereHas('newsletter', function ($query) use ($site_id){
+            $query->where('site_id', '=', $site_id);
+        })->orderBy('created_at','DESC')->get();
+
+        return !$campagne->isEmpty() ? $campagne->first() : null;
+    }
+
+    public function getArchives($newsletter_id,$year)
 	{
 		return $this->campagne->where('newsletter_id','=',$newsletter_id)
 			->where('status','=','envoyé')
@@ -38,6 +56,20 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 			->orderBy('created_at','DESC')
 			->get();
 	}
+
+    public function getArchivesBySite($site_id,$year)
+    {
+        return $this->campagne->where('status','=','envoyé')
+            ->with(['newsletter'])
+            ->year($year)
+            ->where(function ($query) {
+                $query->whereDate('send_at', '<', \Carbon\Carbon::now())->orWhereNull('send_at');
+            })
+            ->whereHas('newsletter', function ($query) use ($site_id) {
+                $query->where('site_id', '=', $site_id);
+            })->orderBy('send_at','DESC')
+            ->get();
+    }
 
 	public function find($id)
 	{

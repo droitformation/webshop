@@ -18,9 +18,9 @@
                     <a class="anchor" name="{{ $arret->reference }}"></a>
                     {!! $arret->pub_text !!}
 
-                    @if($arret->document)
+                    @if($arret->filename)
                         <p>
-                            <a target="_blank" href="{{ secure_asset('files/arrets/'.$arret->file) }}">
+                            <a target="_blank" href="{{ secure_asset(config('newsletter.path.arret').$arret->filename) }}">
                                 Télécharger en pdf &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
                             </a>
                         </p>

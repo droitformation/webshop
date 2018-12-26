@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('send/campagne', 'Backend\Newsletter\SendController@campagne');
         Route::post('send/test', 'Backend\Newsletter\SendController@test');
         Route::post('send/forward', 'Backend\Newsletter\SendController@forward');
+        Route::get('send/preview/{id}', 'Backend\Newsletter\SendController@preview');
 
         Route::post('clipboard/copy', 'Backend\Newsletter\ClipboardController@copy');
         Route::post('clipboard/paste', 'Backend\Newsletter\ClipboardController@paste');

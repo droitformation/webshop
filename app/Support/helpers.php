@@ -149,3 +149,21 @@ function isSubstitute($email){
 function substituteEmail(){
     return substr(md5(openssl_random_pseudo_bytes(32)),-11).'@publications-droit.ch';
 }
+
+function parts_name($filename){
+    $parts = explode(".", $filename);
+    $ext   = array_pop($parts);
+
+    $name = implode('',$parts);
+
+    return [$name,$ext];
+}
+
+function setEnv($key, $value)
+{
+    file_put_contents(app()->environmentFilePath(), str_replace(
+        $key . '=' . env($key),
+        $key . '=' . $value,
+        file_get_contents(app()->environmentFilePath())
+    ));
+}

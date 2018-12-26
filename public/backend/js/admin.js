@@ -1,10 +1,19 @@
 $( function() {
 
+    $("#fancybox-close").trigger('click');
+
     var base_url = location.protocol + "//" + location.host+"/";
 
     $('[data-toggle="popover"]').popover({
         html : true,
         trigger : 'hover'
+    });
+
+    $('.iframe-btn').fancybox({
+        'width'		: 900,
+        'height'	: 600,
+        'type'		: 'iframe',
+        'autoScale'    	: false
     });
 
     $('.colorpicker').colorPicker();
@@ -101,7 +110,6 @@ $( function() {
             doctype: '<!doctype html>'
         });
     });
-
 
     /*
      * delete action confirmation
@@ -435,4 +443,13 @@ $(window).resize(ajustamodal);
 function ajustamodal() {
     var altura = $(window).height() - 255; //value corresponding to the modal heading + footer
     $(".ativa-scroll").css({"height":altura,"overflow-y":"auto"});
+}
+
+
+function responsive_filemanager_callback(field_id){
+    console.log(field_id);
+    var url=jQuery('#'+field_id).val();
+    //alert('update '+field_id+" with "+url);
+    jQuery('#'+field_id).trigger('change');
+    //your code
 }

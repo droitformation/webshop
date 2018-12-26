@@ -1,45 +1,58 @@
-<!-- Bloc -->
-<?php $width = isset($isEdit) ? 560 : 600; ?>
-@if(isset($bloc->arret))
 
-    <?php setlocale(LC_TIME, 'fr_CH.UTF-8'); ?>
-    <table border="0" width="{{ $width }}" align="center" cellpadding="0" cellspacing="0" class="tableReset {{ $bloc->arret->dumois ? 'alert-dumois' : '' }}">
-        <tr bgcolor="ffffff"><td height="35"></td></tr><!-- space -->
+@if(isset($arret))
+    <table border="0" width="600" align="center" cellpadding="0" cellspacing="0" class="tableReset {{ $arret->dumois ? $campagne->newsletter->classe : '' }}">
+
+        <?php $comment = isset($campagne->newsletter) ? $campagne->newsletter->comment :null;?>
+
+        @if($arret->dumois && $comment)
+            <tr bgcolor="ffffff"><td height="20"></td></tr>
+            <tr bgcolor="ffffff">
+                <td>
+                    @component('emails.newsletter.send.partials.widebloc', ['width' => '560'])
+                        <h2 style="text-align: left;font-family: sans-serif;">{{ $campagne->newsletter->comment_title }}</h2>
+                    @endcomponent
+                </td>
+            </tr>
+        @endif
+
+        @if(isset($campagne->newsletter) && $campagne->newsletter->display == 'top')
+            @if(!$comment)
+                <tr bgcolor="ffffff"><td height="10"></td></tr>
+            @endif
+
+            @include('emails.newsletter.send.partials.analyses', ['arret' => $arret])
+        @endif
+
+        <tr bgcolor="ffffff"><td height="25"></td></tr>
         <tr align="center" class="resetMarge">
             <td class="resetMarge">
-                <!-- Bloc content-->
-                <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="tableReset contentForm">
-                    <tr>
-                        <td valign="top" width="375" class="resetMarge">
-                            <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $bloc->arret->dumois ? 'Arrêt du mois : ' : '' }}{{ $bloc->arret->reference }} du {{ $bloc->arret->pub_date->formatLocalized('%d %B %Y') }}</h3>
-                            <p class="abstract">{!! $bloc->arret->abstract !!}</p>
-                            <div>{!! $bloc->arret->pub_text !!}</div>
-                            <p><a href="{{ secure_asset(config('newsletter.path.arret').$bloc->arret->file) }}">Télécharger en pdf</a></p>
-                        </td>
-                        <td width="25" height="1" class="resetMarge" valign="top" style="font-size: 1px; line-height: 1px;margin: 0;padding: 0;"></td><!-- space -->
-                        <td align="center" valign="top" width="160" class="resetMarge">
-                           @if(!$bloc->arret->categories->isEmpty() )
-                               @include('emails.newsletter.send.partials.categories',['categories' => $bloc->arret->categories])
-                           @endif
-                        </td>
-                    </tr>
-                </table>
-                <!-- Bloc content-->
+
+                @component('emails.newsletter.send.partials.tablebloc',['direction' => 'right'])
+                    @slot('picto')
+                        @if(!$arret->categories->isEmpty() )
+                            @include('emails.newsletter.send.partials.categories',['categories' => $arret->categories])
+                        @endif
+                    @endslot
+
+                    @slot('content')
+                        <h3 class="mainTitle" style="text-align: left;font-family: sans-serif;">{{ $arret->dumois ? 'Arrêt du mois : ' : '' }}{{ $arret->reference }} du {{ $arret->pub_date->formatLocalized('%d %B %Y') }}</h3>
+                        <p class="abstract">{!! $arret->abstract !!}</p>
+                        <div>{!! $arret->pub_text !!}</div>
+                        <p><a target="_blank" href="{{ secure_asset(config('newsletter.path.arret').$arret->filename) }}">Télécharger en pdf</a></p>
+                    @endslot
+                @endcomponent
+
             </td>
         </tr>
-        @if($bloc->arret->analyses->isEmpty())
-            <tr bgcolor="ffffff"><td height="35" class="blocBorder"></td></tr><!-- space -->
+
+        @if(isset($campagne->newsletter) && $campagne->newsletter->display == 'bottom')
+            <tr bgcolor="ffffff"><td height="10"></td></tr>
+
+            @include('emails.newsletter.send.partials.analyses', ['arret' => $arret])
         @endif
-        <tr>
-            <td align="center">
-                <!-- Analyses -->
-                @include('emails.newsletter.send.partials.analyses', ['arret' => $bloc->arret, 'isEdit' => isset($isEdit) ? true : false])
-                <!-- End Analyses -->
-            </td>
-        </tr>
-        @if(!$bloc->arret->analyses->isEmpty())
-            <tr bgcolor="ffffff"><td height="35" class="blocBorder"></td></tr><!-- space -->
-        @endif
+
+        <tr bgcolor="ffffff"><td height="25" class="blocBorder"></td></tr>
+
     </table>
-    <!-- End bloc -->
+
 @endif

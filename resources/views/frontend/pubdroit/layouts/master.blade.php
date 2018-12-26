@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="<?php echo secure_asset('frontend/common/css/selectric.css');?>">
 	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/user/profil.css');?>">
 	<link rel="stylesheet" href="<?php echo secure_asset('common/css/sites.css');?>">
+	<link rel="stylesheet" href="<?php echo secure_asset('common/css/jquery.fancybox.min.css');?>">
 
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/main-slider.css');?>">
@@ -57,6 +58,9 @@
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
 	<script src="<?php echo secure_asset('common/js/messages_fr.js');?>"></script>
     <script src="<?php echo secure_asset('common/js/validation.js');?>"></script>
+	<script src="<?php echo secure_asset('common/js/jquery.fancybox.min.js');?>"></script>
+	<script src="<?php echo secure_asset('common/js/common.js');?>"></script>
+
 	<script src="//platform-api.sharethis.com/js/sharethis.js#property=5beaaa2158e49d001b369ef0&product=inline-share-buttons"></script>
 </head>
 	<body>
@@ -73,9 +77,9 @@
 								@if(!$menus->isEmpty())
 									<?php $menu = $menus->where('position','main'); ?>
 									@if(!$menu->isEmpty())
-										<?php $menu = $menu->first()->load('pages_active'); ?>
-										@if(!$menu->pages_active->isEmpty())
-											@foreach($menu->pages_active as $page)
+										<?php $menu = $menu->first()->load('active'); ?>
+										@if(!$menu->active->isEmpty())
+											@foreach($menu->active as $page)
 												<li>{!! $page->page_url !!}</li>
 											@endforeach
 										@endif
@@ -180,10 +184,19 @@
 						<figure class="col-md-6">
 							@if(isset($newsletters) && !$newsletters->isEmpty())
 								<h4>Newsletter</h4>
-								<p>Si vous souhaitez être informé des dernières nouveautés, inscrivez-vous simplement à notre newsletter en insérant votre adresse e-mail.</p>
+								<p>Si vous souhaitez être informé des dernières nouveautés, inscrivez-vous simplement à notre newsletter.</p>
 								@foreach($newsletters as $newsletter)
-									<h4>{{ $newsletter->titre }}</h4>
-									@include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'pubdroit'])
+									<p><a data-fancybox data-type="iframe"
+										  data-src="{{ url('site/subscribe/'.$newsletter->site->id) }}"
+										  class="btn btn-default btn-profile btn-block"
+										  href="javascript:;">
+											Je m'inscrit!
+										</a></p>
+									{{--@include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'pubdroit'])--}}
+
+									<p style="margin-top: 8px;">Je souhaite me <a data-fancybox data-type="iframe"
+																				  data-src="{{ url('site/unsubscribe/'.$newsletter->site->id) }}"
+																				  href="javascript:;">désinscrire</a></p>
 								@endforeach
 							@endif
 						</figure>
@@ -239,7 +252,6 @@
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
             gtag('config', 'UA-114403548-1');
 		</script>
 

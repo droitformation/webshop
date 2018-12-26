@@ -23,10 +23,10 @@
         @include('frontend.bail.sidebar.doctrine')
     @endif
 
-    @if(isset($menu_sidebar) && !$menu_sidebar->pages_active->isEmpty())
+    @if(isset($menu_sidebar) && !$menu_sidebar->active->isEmpty())
         <div class="widget clear">
             <h3 class="title">Liens directs</h3>
-            @foreach($menu_sidebar->pages_active as $active)
+            @foreach($menu_sidebar->active as $active)
                 <a class="link" href="{{ url($site->slug.'/page/'.$active->slug) }}">{{ $active->menu_title }}</a>
             @endforeach
         </div>

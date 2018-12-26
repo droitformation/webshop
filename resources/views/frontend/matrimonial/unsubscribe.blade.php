@@ -13,7 +13,9 @@
 					@if(!$newsletters->isEmpty())
 						@foreach($newsletters as $newsletter)
 							<h4>{{ $newsletter->titre }}</h4>
-							@include('frontend.newsletter.partials.unsubscribe', ['newsletter' => $newsletter, 'return_path' => 'matrimonial'])
+							<p style="margin-top: 8px;">Je souhaite me <a data-fancybox data-type="iframe"
+																		  data-src="{{ url('site/unsubscribe/'.$newsletter->site->id) }}"
+																		  href="javascript:;">désinscrire</a></p>
 						@endforeach
 					@endif
 				</div>

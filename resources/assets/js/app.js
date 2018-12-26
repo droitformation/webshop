@@ -30,13 +30,21 @@ Vue.component('option-groupe', require('./components/OptionGroupe.vue'));
 Vue.component('detenteur', require('./components/Detenteur.vue'));
 
 Vue.component('manager', require('./components/Manager.vue'));
+Vue.component('image-uploader', require('./components/ImageUploader.vue'));
 Vue.component('filter-adresse', require('./components/FilterAdresse.vue'));
 Vue.component('list-autocomplete', require('./components/ListAutocomplete.vue'));
+
 Vue.component('build', require('./components/Build.vue'));
+Vue.component('edit-build', require('./components/EditBuild.vue'));
+
 Vue.component('build-newsletter', require('./components/BuildNewsletter.vue'));
 Vue.component('build-newsletter-models', require('./components/BuildNewsletterModels.vue'));
-Vue.component('content-newsletter', require('./components/partials/ContentNewsletter.vue'));
+Vue.component('build-newsletter-group', require('./components/BuildNewsletterGroup.vue'));
+Vue.component('analyse-newsletter', require('./components/partials/AnalyseNewsletter.vue'));
 Vue.component('image-newsletter', require('./components/partials/ImageNewsletter.vue'));
+
+Vue.component('create-bloc', require('./components/CreateBloc.vue'));
+Vue.component('edit-bloc', require('./components/EditBloc.vue'));
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 

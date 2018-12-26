@@ -13,11 +13,11 @@
         @endforeach
     @endif
 
-    @if(isset($menu_sidebar) && !$menu_sidebar->pages_active->isEmpty())
+    @if(isset($menu_sidebar) && !$menu_sidebar->active->isEmpty())
 
         <div class="widget clear">
             <h3 class="title">Liens directs</h3>
-            @foreach($menu_sidebar->pages_active as $page)
+            @foreach($menu_sidebar->active as $page)
                 <a class="link" href="{{ url($site->slug.'/page/'.$page->slug) }}">{{ $page->menu_title }}</a>
             @endforeach
         </div>

@@ -10,7 +10,20 @@ class Analyse extends Model {
 
     public function getDocumentAttribute()
     {
-        return !empty($this->file ) && \File::exists(public_path('files/analyses/'.$this->file)) ? $this->file : null;
+        return !empty($this->file) && \File::exists(public_path('files/analyses/'.$this->site->slug.'/'.$this->file)) ? $this->site->slug.'/'.$this->file : null;
+    }
+
+    public function getFilenameAttribute()
+    {
+        if(\File::exists(public_path('files/analyses/'.$this->site->slug.'/'.$this->file))){
+            return $this->site->slug.'/'.$this->file;
+        }
+
+        if(\File::exists(public_path('files/analyses/'.$this->file))){
+            return $this->file;
+        }
+
+        return null;
     }
 
     public function getFilterAttribute()
@@ -32,7 +45,7 @@ class Analyse extends Model {
 
     public function scopeYears($query, $years)
     {
-        if(!empty($years))
+        if(isset($years) && !empty($years))
         {
             $query->whereIn(\DB::raw("year(pub_date)"), $years)->get();
         }
@@ -40,17 +53,24 @@ class Analyse extends Model {
 
     public function categories()
     {
-        return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', 'analyse_categories', 'analyse_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Categorie\Entities\Categorie', $database.'.analyse_categories', 'analyse_id', 'categories_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
     
 	public function arrets()
-    {     
-        return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', 'analyses_arret', 'analyse_id', 'arret_id')->withPivot('sorting')->orderBy('sorting', 'asc');
+    {
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Arret\Entities\Arret', $database.'.analyses_arret', 'analyse_id', 'arret_id')->withPivot('sorting')->orderBy('sorting', 'asc');
     }
 
     public function authors()
     {
-        return $this->belongsToMany('\App\Droit\Author\Entities\Author', 'analyse_authors', 'analyse_id', 'author_id')->withPivot('sorting')->orderBy('last_name', 'asc');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Author\Entities\Author', $database.'.analyse_authors', 'analyse_id', 'author_id')->withPivot('sorting')->orderBy('last_name', 'asc');
     }
 
+    public function site()
+    {
+        return $this->belongsTo('\App\Droit\Site\Entities\Site');
+    }
 }

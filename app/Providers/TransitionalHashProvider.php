@@ -2,6 +2,7 @@
 namespace App\Providers;
 
 use App\Services\TransitionalHasher;
+use Illuminate\Contracts\Hashing\Hasher;
 
 class TransitionalHashProvider extends \Illuminate\Hashing\HashServiceProvider {
 
@@ -19,8 +20,12 @@ class TransitionalHashProvider extends \Illuminate\Hashing\HashServiceProvider {
      */
     public function register()
     {
-        $this->app->singleton('hash', function () {
-            return new TransitionalHasher;
+        $this->app->singleton('hash', function ($app) {
+            return new TransitionalHasher($app);
+        });
+
+        $this->app->singleton('hash.driver', function ($app) {
+            return $app['hash']->driver();
         });
     }
 

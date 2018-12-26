@@ -58,8 +58,7 @@ class InscriptionController extends Controller
         //Subscribe to mailjet
         $this->subscribeworker->subscribe($subscriber,[$newsletter_id]);
 
-        alert()->success('Vous êtes maintenant abonné à la newsletter');
-        return redirect($newsletter->site->url);
+        return redirect('site/confirmation/'.$newsletter->site->id);
     }
 
     /**
@@ -75,7 +74,8 @@ class InscriptionController extends Controller
         $newsletter = $this->newsletter->find($request->input('newsletter_id'));
 
         if(!$subscribe) {
-            alert()->danger('<strong>Vous êtes déjà inscrit à cettte newsletter</strong>');
+            alert()->danger('<strong>Vous êtes déjà inscrit à cette newsletter</strong>');
+            return redirect()->back();
         }
             
         \Mail::send('emails.confirmation', ['site' => $site, 'token' => $subscribe->activation_token, 'newsletter_id' => $request->input('newsletter_id')], function($message) use ($subscribe,$newsletter) {
@@ -99,6 +99,7 @@ class InscriptionController extends Controller
             return redirect()->back();
         }
 
+
         // find the abo and newsletter
         $subscriber = $this->subscription->findByEmail( $request->input('email') );
         $newsletter = $this->newsletter->find($request->input('newsletter_id'));
@@ -112,6 +113,6 @@ class InscriptionController extends Controller
         $this->subscribeworker->unsubscribe($subscriber,[$newsletter->id]);
 
         alert()->success('<strong>Vous avez été désinscrit</strong>');
-        return redirect($request->input('return_path', '/'));
+        return redirect()->back();
     }
 }

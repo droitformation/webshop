@@ -28,7 +28,7 @@ class AlertServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'alert');
     }
@@ -38,17 +38,7 @@ class AlertServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-        $this->registerAlert();
-    }
-
-    /**
-     * Register the alert class.
-     *
-     * @return void
-     */
-    protected function registerAlert()
+    public function register(): void
     {
         $this->app->singleton('alert', function (Container $app) {
             $session = $app['session.store'];

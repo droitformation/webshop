@@ -7,7 +7,7 @@
         @if(!$product->$labels->isEmpty())
             @foreach($product->$labels as $type)
                 <div style="min-height: 30px;">
-                    <strong style="line-height: 30px;">{{ $type->title or $type->name }}</strong>
+                    <strong style="line-height: 30px;">{{ $type->title ?? $type->name }}</strong>
                     <form action="{{ url('admin/productlabel/'.$type->id) }}" method="POST" class="pull-right">
                         <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
@@ -28,7 +28,7 @@
                 @if(!$items->isEmpty())
                     <p><select class="form-control multi-selection" name="type_id[]" multiple>
                         @foreach($items as $item)
-                            <option {{ isset($choices) && in_array($item->id, $choices) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title or $item->name }}</option>
+                            <option {{ isset($choices) && in_array($item->id, $choices) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title ?? $item->name }}</option>
                         @endforeach
                     </select></p>
                     <button id="add{{ ucfirst($labels) }}" class="btn btn-info" type="submit">Ajouter</button>

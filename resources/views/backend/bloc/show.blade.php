@@ -12,8 +12,7 @@
 
                 <!-- form start -->
                 <form action="{{ url('admin/bloc/'.$bloc->id) }}" enctype="multipart/form-data" method="POST" class="validate-form form-horizontal" data-validate="parsley">
-                    <input type="hidden" name="_method" value="PUT">
-                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
                 <div class="panel-body event-info">
                     <h4>&Eacute;diter {{ $bloc->titre }}</h4>
@@ -44,7 +43,7 @@
                             @if(!$sites->isEmpty())
                                 <select multiple class="form-control" name="page_id[]">
                                     @if(!$bloc->pages->isEmpty())
-                                        <?php $site = $sites->find($bloc->pages->first()->site_id);  ?>
+                                        <?php $site = $sites->find($bloc->site_id); ?>
                                         @include('backend.bloc.partials.select', ['site' => $site])
                                     @else
                                         @foreach($sites as $site)

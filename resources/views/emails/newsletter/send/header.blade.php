@@ -1,27 +1,27 @@
+<?php $color = $campagne->newsletter->second_color ? $campagne->newsletter->second_color : $campagne->newsletter->color; ?>
 <tr>
     <td align="center">
-        <!-- Title -->
-        <table bgcolor="{{ $campagne->newsletter->color }}" width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="resetTable headerInfos">
-            <tr bgcolor="{{ $campagne->newsletter->color }}"><td colspan="4" height="10"></td></tr><!-- space -->
 
-            <tr bgcolor="{{ $campagne->newsletter->color }}">
+        <table bgcolor="{{ $color }}" width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="resetTable headerInfos">
+            <tr bgcolor="{{ $color }}"><td colspan="4" height="10"></td></tr><!-- space -->
+
+            <tr bgcolor="{{ $color }}">
 	            <?php $width_tbl = $campagne->newsletter->logo_soutien ? 430 : 600; ?>
                 <td width="{{ $width_tbl }}">
-                    <table width="{{ $width_tbl }}" bgcolor="{{ $campagne->newsletter->color }}" border="0" cellpadding="0" cellspacing="0" align="center" class="resetTable">
+                    <table width="{{ $width_tbl }}" bgcolor="{{ $color }}" border="0" cellpadding="0" cellspacing="0" align="center" class="resetTable" style="height: 60px;">
                         @if(!empty($campagne->sujet ))
-                        <tr bgcolor="{{ $campagne->newsletter->color }}">
+                        <tr bgcolor="{{ $color }}">
                             <td width="20"></td>
                             <td colspan="2" align="left">
-                                <h1 class="header"><span style="color: #fff;font-size: 16px;display: block;">{!! $campagne->sujet !!}&nbsp;</span></h1>
+                                <h1 class="header"><span style="color: #fff;font-size: 18px;display: block;">{!! $campagne->sujet !!}&nbsp;</span></h1>
                             </td>
                             <td width="20"></td>
                         </tr>
                         @endif
                         @if(!empty($campagne->auteurs ))
-                            <tr bgcolor="{{ $campagne->newsletter->color }}">
+                            <tr bgcolor="{{ $color }}">
                                 <td width="20"></td>
                                 <td align="left">
-
                                     <h2 class="header headerSmall">
                                         <span style="color: #fff;font-size: 15px;display: block;">{{ $campagne->auteurs }}&nbsp;</span>
                                     </h2>
@@ -31,6 +31,7 @@
                         @endif
                     </table>
                 </td>
+
                 @if($campagne->newsletter->logo_soutien)
 	                <td width="110" style="text-align: left; ">
                         <small style="text-align: left; font-family: sans-serif;color: #fff;font-size: 11px;">Avec le soutien de</small>
@@ -39,10 +40,11 @@
                         </a>
 	                </td>
                 @endif
-            </tr><!-- space -->
 
-            <tr bgcolor="{{ $campagne->newsletter->color }}"><td colspan="4" height="10"></td></tr><!-- space -->
+            </tr>
+
+            <tr bgcolor="{{ $color }}"><td colspan="4" height="10"></td></tr>
         </table>
-        <!-- End title -->
+
     </td>
 </tr>

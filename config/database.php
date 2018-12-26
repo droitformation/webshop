@@ -59,11 +59,24 @@ return [
 			'username'  => env('DB_TEST_USERNAME', 'root'),
 			'password'  => env('DB_TEST_PASSWORD', 'root'),
 			'unix_socket' => env('DB_SOCKET', ''),
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
 		],
+
+        'transfert' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST', 'localhost'),
+            'database'  => env('DB_DATABASE_TRANSFERT', 'rca'),
+            'username'  => env('DB_USERNAME_TRANSFERT', 'root'),
+            'password'  => env('DB_PASSWORD_TRANSFERT', 'root'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
 
 		'mysql' => [
 			'driver'    => 'mysql',
@@ -72,8 +85,8 @@ return [
 			'username'  => env('DB_USERNAME', 'forge'),
 			'password'  => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
+			'charset'   => 'utf8mb4',
+			'collation' => 'utf8mb4_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
             'dump' => [
@@ -81,7 +94,7 @@ return [
                 'use_single_transaction',
                 'timeout' => 60 * 5, // 5 minute timeout
                 'exclude_tables' => ['email_log', 'newsletter_tracking'],
-                'add_extra_option' => '--user='.env('DB_USERNAME', 'forge').' --password='.env('DB_PASSWORD', 'forge').' --host=127.0.0.1',
+                'add_extra_option' => '--user='.env('DB_USERNAME', 'forge').' --password='.env('DB_PASSWORD', 'forge').' --host=localhost',
             ]
 		],
 

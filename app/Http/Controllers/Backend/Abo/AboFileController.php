@@ -44,8 +44,7 @@ class AboFileController extends Controller {
         $date = $request->input('date',date('Y-m-d'));
         $date = \Carbon\Carbon::parse($date)->toDateTimeString();
 
-        \Log::info('date controller'.$date);
-        $this->$worker->generate($product,$abo, $request->input('all'), $date);
+        $this->$worker->generate($product,$abo, $request->input('all'), $date, $request->input('print',null));
 
         alert()->success('La création des '.$worker.'s est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
 
@@ -64,7 +63,7 @@ class AboFileController extends Controller {
         
         $this->$worker->bind($product, $abo);
 
-        alert()->success('Les '.$worker.'s sont re-attachés<br/>Rafraichissez la page pour mettre à jour le document.');
+        alert()->success('Les '.$worker.'s sont re-attachés, cela peut prendre quelques secondes.<br/>Rafraichissez la page pour mettre à jour le document.');
 
         return redirect()->back();
     }

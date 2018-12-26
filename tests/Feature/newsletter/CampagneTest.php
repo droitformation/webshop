@@ -170,6 +170,6 @@ class CampagneTest extends TestCase
 
         $response = $this->call('POST', 'build/campagne', ['sujet' => 'Sujet', 'auteurs' => 'Cindy Leschaud', 'newsletter_id' => '3']);
 
-        $response->assertRedirect('build/campagne/'.$campagne->id);
+        $response->assertRedirect('build/campagne/compose/'.$campagne->id);
     }
 }

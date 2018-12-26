@@ -2,6 +2,18 @@
 
 All notable changes to `db-dumper` will be documented in this file
 
+## 2.12.0 - 2018-12-10
+
+- add `doNotCreateTables`
+
+## 2.11.1 - 2018-09-27
+
+- add `useExtension`
+
+## 2.11.0 - 2018-09-26
+
+- add `Compressor`
+
 ## 2.10.1 - 2018-08-30
 
 - allow destination paths to have a space character

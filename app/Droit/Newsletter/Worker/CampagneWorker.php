@@ -45,6 +45,27 @@ class CampagneWorker implements CampagneInterface{
     }
 
     /**
+     * Interaction with site controllers
+     * List of arrets in non sent campagne to hide on frontend
+     */
+    public function excludeArrets($site_id)
+    {
+        return $this->campagne->getAllBySite($site_id)->flatMap(function ($campagne) {
+            return $campagne->content;
+        })->map(function ($content, $key) {
+
+            if($content->arret_id)
+                return $content->arret_id ;
+
+            if($content->groupe_id > 0)
+                return $content->groupe->arrets->pluck('id')->all();
+
+        })->filter(function ($value, $key) {
+            return !empty($value);
+        })->flatten()->toArray();
+    }
+
+    /**
      * Get campagne for site
      */
     public function getCampagne($id)
@@ -53,13 +74,20 @@ class CampagneWorker implements CampagneInterface{
     }
 
     /**
-     * Last sent campagne for site
+     * Last sent campagne for newsletter
      */
     public function last($newsletter_id = null)
     {
         return $this->campagne->getLastCampagne($newsletter_id);
     }
 
+    /**
+     * Last sent campagne for site
+     */
+    public function lastBySite($site_id)
+    {
+        return $this->campagne->getLastCampagneBySite($site_id);
+    }
 
     /**
      * Archives by year
@@ -67,6 +95,14 @@ class CampagneWorker implements CampagneInterface{
     public function getArchives($newsletter_id,$year)
     {
         return $this->campagne->getArchives($newsletter_id,$year);
+    }
+
+    /**
+     * Archives by year
+     */
+    public function getArchivesBySite($site_id,$year)
+    {
+        return $this->campagne->getArchivesBySite($site_id,$year);
     }
 
     /**

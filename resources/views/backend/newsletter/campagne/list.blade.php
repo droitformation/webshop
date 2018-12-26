@@ -27,14 +27,14 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{ url('build/campagne/'.$campagne->id) }}">Composer</a></li>
+                                        <li><a href="{{ url('build/campagne/compose/'.$campagne->id) }}">Composer</a></li>
                                         <li><a href="{{ url('build/statistics/'.$campagne->id) }}">Statistiques</a></li>
                                         <li><a href="javascript:;" class="sendEmailNewsletter" data-campagne="{{ $campagne->id }}">Envoyer par email</a></li>
                                         <li><a href="{{ url('build/send/confirmation/'.$campagne->id) }}">Envoyer à une liste</a></li>
                                     </ul>
                                 </div>
                             @else
-                                <a class="btn btn-info btn-sm" href="{{ url('build/campagne/'.$campagne->id) }}">Composer</a>
+                                <a class="btn btn-info btn-sm" href="{{ url('build/campagne/compose/'.$campagne->id) }}">Composer</a>
                                 <a class="btn btn-primary btn-sm" href="{{ url('build/send/confirmation/'.$campagne->id) }}">Envoyer à une liste</a>
                             @endif
 
@@ -55,7 +55,7 @@
                             @include('backend.newsletter.campagne.partials.send',['campagne' => $campagne])
 
                         @else
-                            <p><strong>Envoyé le:</strong> <br/>{{ $campagne->send_at->formatLocalized('%d %b %Y') }} à {{ $campagne->send_at->toTimeString() }}</p>
+                            <p><strong>Envoyé le:</strong> <br/>{{ $campagne->updated_at->formatLocalized('%d %b %Y') }} à {{ $campagne->updated_at->toTimeString() }}</p>
                             @if($campagne->send_at && $campagne->send_at > \Carbon\Carbon::now())
                                 <p><strong>Envoi prévu à:</strong> <br/>{{ $campagne->send_at->formatLocalized('%d %b %Y') }} à {{ $campagne->send_at->toTimeString() }}</p>
                                 <div class="btn-group btn-group-sm">

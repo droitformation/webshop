@@ -16,6 +16,11 @@ class Newsletter_campagnes extends Model {
         if ($newsletter_id) $query->whereIn('newsletter_id',$newsletter_id);
     }
 
+    public function scopeYear($query,$year)
+    {
+        if ($year) $query->whereYear('created_at', $year);
+    }
+
     public function newsletter(){
 
         return $this->belongsTo('App\Droit\Newsletter\Entities\Newsletter', 'newsletter_id', 'id');

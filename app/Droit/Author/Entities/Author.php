@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Author extends Model {
 
-	protected $fillable = ['first_name','last_name','occupation','bio','photo','rang'];
+	protected $fillable = ['first_name','last_name','occupation','bio','photo','rang','site_id'];
 
     public $timestamps  = false;
 
@@ -30,13 +30,20 @@ class Author extends Model {
 
     public function analyses()
     {
-        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', 'analyse_authors', 'analyse_id', 'author_id');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Analyse\Entities\Analyse', $database.'.analyse_authors', 'author_id', 'analyse_id');
     }
 
     public function products()
     {
-        return $this->belongsToMany('\App\Droit\Shop\Product\Entities\Product', 'shop_product_authors', 'author_id', 'product_id');
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Shop\Product\Entities\Product', $database.'.shop_product_authors', 'author_id', 'product_id');
     }
 
+    public function sites()
+    {
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Site\Entities\Site', $database.'.authors_sites', 'author_id', 'site_id');
+    }
 }
 

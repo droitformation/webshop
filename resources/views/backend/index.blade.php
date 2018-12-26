@@ -67,7 +67,7 @@
                                                 <p><a href="{{ url('admin/user/'.$inscription->inscrit->id) }}">{{ $adresse ? $adresse->name : '' }}</a></p>
                                                 <p>{{ $inscription->inscrit->email }}</p>
                                             @else
-                                                <h4><span class="label label-warning">Utilisateur ou groupe non trouvé ID: {{ $inscription->group_id or $inscription->user_id }}</span></h4>
+                                                <h4><span class="label label-warning">Utilisateur ou groupe non trouvé ID: {{ $inscription->group_id ?? $inscription->user_id }}</span></h4>
                                             @endif
 
                                             @if(isset($inscription->groupe))

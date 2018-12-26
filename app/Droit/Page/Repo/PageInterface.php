@@ -9,6 +9,7 @@ interface PageInterface {
     public function search($term);
     public function buildTree($data);
     public function getBySlug($site,$slug);
+    public function getHomepage($site_id);
     public function create(array $data);
     public function update(array $data);
     public function updateSorting(array $data);

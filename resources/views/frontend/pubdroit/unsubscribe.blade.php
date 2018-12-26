@@ -13,13 +13,17 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<h3>Entrez votre adresse email pour vous <strong>désinscrire</strong></h3>
+					<h3>Se <strong>désinscrire</strong></h3>
                     <div class="row">
                         <div class="col-md-5 col-xs-12">
 							@if(!$newsletters->isEmpty())
 								@foreach($newsletters as $newsletter)
-									<h4>{{ $newsletter->titre }}</h4>
-									@include('frontend.newsletter.partials.unsubscribe', ['newsletter' => $newsletter, 'return_path' => 'pubdroit'])
+									<h4>Newsletter {{ $newsletter->titre }}</h4>
+									<p style="margin-top: 8px;">
+										<a data-fancybox data-type="iframe"
+										   class="btn btn-default btn-profile btn-block"
+										   data-src="{{ url('site/unsubscribe/'.$newsletter->site->id) }}"
+											href="javascript:;">Désinscription</a></p>
 								@endforeach
 							@endif
                         </div>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
 use App\Mail\WebmasterNotification;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -15,6 +16,8 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+        Schema::defaultStringLength(191);
+
         view()->composer([
             'backend.partials.sites',
             'backend.menus.*',
@@ -67,10 +70,10 @@ class AppServiceProvider extends ServiceProvider {
         view()->composer(['frontend.bail.*','backend.seminaires.*'], 'App\Http\ViewComposers\BailComposer');
         view()->composer(['frontend.matrimonial.*'], 'App\Http\ViewComposers\MatrimonialComposer');
 
-        if (\App::environment('local')) {
+      /*  if (\App::environment('local')) {
             $this->mock = \Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
             $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);
-        }
+        }*/
 
         Queue::failing(function (JobFailed $event) {
             \Mail::to('cindy.leschaud@gmail.com')

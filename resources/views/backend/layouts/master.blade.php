@@ -35,7 +35,11 @@
     <link rel='stylesheet' type='text/css' href="<?php echo secure_asset('backend/plugins/form-nestable/jquery.nestable.css');?>" />
 
     <!-- Manager -->
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/dropzone.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
+
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
+
 
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
@@ -43,6 +47,8 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <base href="/">
+
+    <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.fancybox.min.js');?>"></script>
 
     @include('script.config')
     <script>
@@ -101,7 +107,7 @@
                         {{ $sites->find($current_site)->nom }}
                     </div>
                 @else
-                    <h2>{!! $pageTitle or 'Droit Formation <small>Administration</small>' !!}</h2>
+                    <h2>{!! $pageTitle ?? 'Droit Formation <small>Administration</small>' !!}</h2>
                 @endif
             </div>
 
@@ -133,6 +139,11 @@
 <script src="<?php echo secure_asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>
 <script src="//gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
+@include('script.date')
+@include('script.angular')
+@include('script.main')
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/select-list.js');?>"></script>
+
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
@@ -160,17 +171,12 @@
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-multiselect/js/jquery.multi-select.js');?>"></script>
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-multiselect/js/jquery.quicksearch.js');?>"></script>
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
+
 <script type='text/javascript' src="<?php echo secure_asset('backend/plugins/bootbox/bootbox.min.js');?>"></script>
 
-@if(isset($isNewsletter))
-    @include('script.date')
-    @include('script.angular')
-    @include('script.main')
-    <script type="text/javascript" src="<?php echo secure_asset('backend/js/select-list.js');?>"></script>
-    <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/upload.js');?>"></script>
-@endif
-
 <script type="text/javascript" src="{{ secure_asset('newsletter/js/sorting.js') }}"></script>
+<script type="text/javascript" src="{{ secure_asset('newsletter/js/datatables.js') }}"></script>
+
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-user.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-adresse.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/order.js');?>"></script>

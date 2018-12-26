@@ -50,6 +50,12 @@ class Site extends Model{
 
     public function newsletter()
     {
-        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter')->first();
+        return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter');
+    }
+
+    public function authors()
+    {
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany('\App\Droit\Author\Entities\Author', $database.'.authors_sites', 'site_id', 'author_id');
     }
 }

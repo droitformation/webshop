@@ -16,7 +16,7 @@ class MenuController extends Controller
     {
         $this->menu = $menu;
 
-        view()->share('positions', ['sidebar' => 'Barre latérale', 'main' => 'Principal', 'footer' => 'Pied de page']);
+        view()->share('positions', ['sidebar' => 'Barre latérale', 'main' => 'Principal', 'footer' => 'Pied de page', 'home' => 'Bloc page d\'accueil']);
     }
 
     /**

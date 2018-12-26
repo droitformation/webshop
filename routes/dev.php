@@ -159,18 +159,13 @@ Route::get('testing', function() {
 
     $nouveautes = $products->getByCategorie('Nouveautés');
 
-    $order = $orders->find(4099);
+    $model = App::make('App\Droit\Author\Repo\AuthorInterface');
+    $author = $model->find(75);
 
-    $products = $order->products->filter(function ($product, $key) {
-        return $product->notify_url;
-    })->groupBy(function ($item, $key) {
-        return $item->notify_url;
-    })->map(function ($item, $key) {
-        return $item->count();
-    });
+    $tests = File::allfiles(base_path('tests'));
 
     echo '<pre>';
-    print_r($products);
+    print_r(count($tests));
     echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {
@@ -437,6 +432,24 @@ Route::get('sondage_test', function()
 
 });
 
+Route::get('bv_factures', function()
+{
+    $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+
+    $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
+
+    $facture   = $Inscriptions->find(18614);//701
+
+    $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+    //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
+
+    //return $generator->makeAbo('facture', $facture);
+    $generator->stream = true;
+    return $generator->make('bv', $facture);
+});
+
 Route::get('abo1', function()
 {
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
@@ -457,6 +470,7 @@ Route::get('abo2', function()
     $abo       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $facture = $factures->find(381);//1697
+
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $generator->stream = true;
@@ -682,19 +696,33 @@ Route::get('cartworker', function()
 });
 
 Route::get('categoriestest', function() {
-    //$model = App::make('App\Droit\Arret\Repo\ArretInterface');
+    $model = App::make('App\Droit\Arret\Repo\ArretInterface');
    // $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
    // $pages = App::make('App\Droit\Page\Repo\PageInterface');
-
+/*
     $model  = \App::make('App\Droit\User\Repo\UserInterface');
     $user = $model->find(710);
 
     $adresses = $user->adresses->map(function ($item) use ($current) {
         return [$item->id => $item->type];
-    });
+    });*/
+
+    $arrets = $model->getAll(5, null, 'reference');
+
+    $arrets = $arrets->map(function ($item, $key) {
+        $convert = new \App\Droit\Newsletter\Entities\ContentModel();
+        return $convert->arret($item);
+    })->sortBy('reference');
 
     echo '<pre>';
-    print_r($adresses);
+    print_r($arrets);
+    echo '</pre>';exit();
+
+    $pages = App::make('App\Droit\Page\Repo\PageInterface');
+    $find = $pages->getHomepage(4);
+
+    echo '<pre>';
+    print_r($find->toArray());
     echo '</pre>';exit();
 
     // Create colloque
@@ -1101,8 +1129,19 @@ Route::get('testproduct', function()
     $insc_repo  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
     $group_repo = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
 
+    $menus = \App::make('App\Droit\Menu\Repo\MenuInterface');
+
     $inscription = $insc_repo->find(16071);
     $groupe = $group_repo->find(32);
+
+    $menu = $menus->find(6);
+
+    return new \App\Http\Resources\Menu($menu);
+
+    echo '<pre>';
+    print_r($menu->active);
+    echo '</pre>';exit();
+
 
     echo '<pre>';
     print_r($inscription->documents);
@@ -1165,9 +1204,9 @@ Route::get('/test_mailgun', function () {
     $mailgun = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
 
     $toSend = \Carbon\Carbon::now()->addMinutes(1)->toRfc2822String();
-    $html    = $worker->html(1665);
+    $html    = $worker->html(1720);
 
-    $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
+  /*  $mailgun->setSender('info@publications-droit.ch', 'Publications-droit')
         ->setHtml($html)
         ->setSendDate($toSend)
         ->setTags(['testing_123'])
@@ -1177,7 +1216,7 @@ Route::get('/test_mailgun', function () {
     $tag      = 'campagne_1669';
     $response = $mailgun->getStats($date,$tag);
 
-    $results = $mailgun->mailgun_agregate($response);
+    $results = $mailgun->mailgun_agregate($response);*/
 /*
     $tracking = App::make('App\Droit\Newsletter\Repo\NewsletterTrackingInterface');
     $tracking->logSent([
@@ -1186,14 +1225,7 @@ Route::get('/test_mailgun', function () {
         'list_id'        => 12,
     ]);*/
 
-    echo '<pre>';
-    print_r($response);
-    echo '</pre>';
-   // $response = $mailgun->sendTransactional('testing');
-
-    echo '<pre>';
-    print_r($results);
-    echo '</pre>';exit();
+   return $html;
 });
 
 Route::get('cleanlist', function()
@@ -1209,8 +1241,9 @@ Route::get('cleanlist', function()
 
     // Filter Mailjet DB
     $subscribers = $clean->missingDB();
-   // $clean->addSubscriber($subscribers,1);
-   // $clean->clean();
+   // $clean->addSubscriber($subscribers,1);/
+    //
+     $clean->clean();
 
     echo '<pre>';
     //print_r($clean->subscribers);

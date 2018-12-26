@@ -24,7 +24,7 @@ class Menu extends Model{
         return $this->hasMany('App\Droit\Page\Entities\Page')->orderBy('pages.rang');
     }
 
-    public function pages_active()
+    public function active()
     {
         return $this->hasMany('App\Droit\Page\Entities\Page')->whereNull('hidden')->orderBy('pages.rang');
     }

@@ -54,19 +54,20 @@ class UploadController extends Controller
         return redirect()->back();
     }
 
+    // For dropzone manager
     public function upload(Request $request)
     {
         $path  = $request->input('path').'/'.$request->input('type');
-        $files = $this->upload->upload( $request->file('file') ,$path );
+        $files = $this->upload->upload( $request->file('file') , $path , 'newsletter');
 
         if($files)
         {
             $array = [
-                'success' => true,
-                'files'   => $files['name'],
-                'id'      => $request->input('id',null),
-                'get'     => $request->all(),
-                'post'    => $request->all()
+                'success'  => true,
+                'filename' => $files['name'],
+                'id'       => $request->input('id',null),
+                'get'      => $request->all(),
+                'post'     => $request->all()
             ];
 
             return response()->json($array);
@@ -94,26 +95,27 @@ class UploadController extends Controller
     public function uploadNewsletter(Request $request)
     {
         $imageData = $request->input('image');
-        $fileName  = \Carbon\Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
+        \Log::info(json_encode(base64_decode($request->input('image'))));
+        //$fileName  = \Carbon\Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
+
+        list($name,$ext) = parts_name($request->input('name'));
+
+        $fileName = str_slug($name).rand(1000,100000).'_newsletter.'.$ext;
 
         $sizes = config('size.newsletter');
-        \Image::make($request->input('image'))
-            ->orientate()
+
+        \Image::make($request->input('image'))->orientate()
             ->resize($sizes['width'], $sizes['height'], function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
-            })
-            ->save(public_path('test/').$fileName);
+            })->save(public_path('files/uploads/').$fileName);
 
         return response()->json(['error' => false, 'name' => $fileName]);
     }
 
     public function uploadRedactor(Request $request)
     {
-        // thumb for redactor filemanager
-        // $this->upload->upload( $request->file('file') , 'files/uploads/thumbs', 'thumbs');
-
-        $file = $this->upload->upload( $request->file('file') , 'files/uploads' );
+        $file = $this->upload->upload( $request->file('file')[0] , 'files/uploads' );
 
         if($file)
         {
@@ -126,13 +128,16 @@ class UploadController extends Controller
 
                 $this->upload->resize( public_path('files/uploads/thumbs/'.$file['name']), null, $sizes['width'], $sizes['height']);
             }
-            
-            $array = [
-                'filelink' => secure_asset('files/uploads/'.$file['name']),
-                'filename' => $file['name']
+
+            $array = ['file' =>
+                [
+                    'url'  => secure_asset('/files/uploads/'.$file['name']),
+                    'name' => $file['name'],
+                    'id'   => md5(date('YmdHis'))
+                ]
             ];
 
-            return response()->json($array,200 );
+            return response()->json($array);
         }
 
         return false;
@@ -140,16 +145,19 @@ class UploadController extends Controller
 
     public function uploadFileRedactor(Request $request)
     {
-        $file = $this->upload->upload( $request->file('file') , 'files/uploads' );
+        $file = $this->upload->upload( $request->file('file')[0] , 'files/uploads' );
 
         if($file)
         {
-            $array = [
-                'filelink' => secure_asset('files/uploads/'.$file['name']),
-                'filename' => $file['name']
+            $array = ['file' =>
+                [
+                    'url'  => secure_asset('/files/uploads/'.$file['name']),
+                    'name' => $file['name'],
+                    'id'   => md5(date('YmdHis'))
+                ]
             ];
 
-            return response()->json($array,200 );
+            return response()->json($array);
         }
 
         return false;
@@ -168,7 +176,7 @@ class UploadController extends Controller
 
                 if(substr($mime, 0, 5) == 'image')
                 {
-                    $data[] = ['image' => secure_asset('files/uploads/'.$file), 'thumb' => secure_asset('files/uploads/'.$file), 'title' => $file];
+                    $data[] = ['url' => secure_asset('/files/uploads/' . $file), 'thumb' => secure_asset( '/files/uploads/' . $file) , 'title' => $file];
                 }
             }
         }
@@ -189,7 +197,7 @@ class UploadController extends Controller
 
                 if(substr($mime, 0, 5) != 'image')
                 {
-                    $data[] = ['image' => $file, 'title' => secure_asset('files/uploads/'.$file) ];
+                    $data[] = ['name' => $file, 'url' => secure_asset('/files/uploads/'.$file), 'title' => $file];
                 }
             }
         }

@@ -1,7 +1,7 @@
 @extends('frontend.pubdroit.layouts.master')
 @section('content')
 
-    @if($products->onFirstPage())
+    @if(isset($products) && $products->onFirstPage())
         @include('frontend.pubdroit.partials.home-header')
     @else
         <p class="backBtn"><a class="btn btn-sm btn-default btn-profile" href="{{ url('pubdroit') }}"><span aria-hidden="true">&larr;</span> Retour à l'accueil</a></p>
@@ -11,7 +11,7 @@
         <!-- Start Main Content -->
         <section class="col-md-9 col-xs-12">
 
-            @if(!$products->isEmpty())
+            @if(isset($products) && !$products->isEmpty())
 
                 <div class="heading-bar">
                     <h2><i class="fa fa-book"></i> &nbsp;Publications</h2>

@@ -26,6 +26,9 @@ class Conversion
     /** @var bool */
     protected $keepOriginalImageFormat = false;
 
+    /** @var bool */
+    protected $generateResponsiveImages = false;
+
     public function __construct(string $name)
     {
         $this->name = $name;
@@ -49,9 +52,9 @@ class Conversion
      * Set the timecode in seconds to extract a video thumbnail.
      * Only used on video media.
      */
-    public function extractVideoFrameAtSecond(int $timecode): self
+    public function extractVideoFrameAtSecond(int $timeCode): self
     {
-        $this->extractVideoFrameAtSecond = $timecode;
+        $this->extractVideoFrameAtSecond = $timeCode;
 
         return $this;
     }
@@ -68,7 +71,7 @@ class Conversion
         return $this;
     }
 
-    public function shouldKeepOriginalImageFormat(): Bool
+    public function shouldKeepOriginalImageFormat(): bool
     {
         return $this->keepOriginalImageFormat;
     }
@@ -78,9 +81,16 @@ class Conversion
         return $this->manipulations;
     }
 
-    public function removeManipulation(string $manipulationName)
+    public function removeManipulation(string $manipulationName) : self
     {
         $this->manipulations->removeManipulation($manipulationName);
+
+        return $this;
+    }
+
+    public function withoutManipulations() : self
+    {
+        $this->manipulations = new Manipulations();
 
         return $this;
     }
@@ -103,7 +113,7 @@ class Conversion
      *
      * @return $this
      */
-    public function setManipulations($manipulations)
+    public function setManipulations($manipulations) : self
     {
         if ($manipulations instanceof Manipulations) {
             $this->manipulations = $this->manipulations->mergeManipulations($manipulations);
@@ -123,7 +133,7 @@ class Conversion
      *
      * @return $this
      */
-    public function addAsFirstManipulations(Manipulations $manipulations)
+    public function addAsFirstManipulations(Manipulations $manipulations) : self
     {
         $manipulationSequence = $manipulations->getManipulationSequence()->toArray();
 
@@ -141,7 +151,7 @@ class Conversion
      *
      * @return $this
      */
-    public function performOnCollections(...$collectionNames)
+    public function performOnCollections(...$collectionNames) : self
     {
         $this->performOnCollections = $collectionNames;
 
@@ -171,7 +181,7 @@ class Conversion
      *
      * @return $this
      */
-    public function queued()
+    public function queued() : self
     {
         $this->performOnQueue = true;
 
@@ -183,7 +193,7 @@ class Conversion
      *
      * @return $this
      */
-    public function nonQueued()
+    public function nonQueued() : self
     {
         $this->performOnQueue = false;
 
@@ -195,11 +205,29 @@ class Conversion
      *
      * @return $this
      */
-    public function nonOptimized()
+    public function nonOptimized() : self
     {
         $this->removeManipulation('optimize');
 
         return $this;
+    }
+
+    /**
+     * When creating the converted image, responsive images will be created as well.
+     */
+    public function withResponsiveImages() : self
+    {
+        $this->generateResponsiveImages = true;
+
+        return $this;
+    }
+
+    /**
+     * Determine if responsive images should be created for this conversion.
+     */
+    public function shouldGenerateResponsiveImages(): bool
+    {
+        return $this->generateResponsiveImages;
     }
 
     /*
@@ -216,7 +244,9 @@ class Conversion
     public function getResultExtension(string $originalFileExtension = ''): string
     {
         if ($this->shouldKeepOriginalImageFormat()) {
-            return $originalFileExtension;
+            if (in_array($originalFileExtension, ['jpg', 'pjpg', 'png', 'gif'])) {
+                return $originalFileExtension;
+            }
         }
 
         if ($manipulationArgument = $this->manipulations->getManipulationArgument('format')) {
@@ -224,5 +254,18 @@ class Conversion
         }
 
         return $originalFileExtension;
+    }
+
+    public function getConversionFile(string $file): string
+    {
+        $fileName = pathinfo($file, PATHINFO_FILENAME);
+
+        $extension = $this->getResultExtension();
+
+        if (! $extension) {
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
+        }
+
+        return "{$fileName}-{$this->getName()}.{$extension}";
     }
 }
