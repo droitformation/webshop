@@ -40,7 +40,7 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
     {
         $campagne = $this->campagne->where('status','=','envoyé')->whereNull('hidden')->whereHas('newsletter', function ($query) use ($site_id){
             $query->where('site_id', '=', $site_id);
-        })->orderBy('created_at','DESC')->get();
+        })->orderBy('send_at','DESC')->get();
 
         return !$campagne->isEmpty() ? $campagne->first() : null;
     }
@@ -53,7 +53,7 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 				$query->whereDate('send_at', '<', \Carbon\Carbon::now())->orWhereNull('send_at');
 			})
 			->whereRaw('YEAR(`created_at`) = ?', [$year])
-			->orderBy('created_at','DESC')
+			->orderBy('send_at','DESC')
 			->get();
 	}
 
