@@ -992,6 +992,13 @@ Route::get('confirmation_newsletter', function()
     $sites = new App\Droit\Site\Entities\Site();
     $site  = $sites->find(1);
 
+    $model = new \App\Droit\Newsletter\Entities\Newsletter_users();
+    $email = $model->where('email','=','roger.peter@peteranwalt.ch')->get();
+
+    echo '<pre>';
+    print_r($email->first()->subscriptions);
+    echo '</pre>';exit();
+
     $data = [
         'site' => $site,
         'token' => '<xcdsfgreqewfwdb'
