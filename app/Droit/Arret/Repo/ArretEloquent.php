@@ -84,6 +84,10 @@ class ArretEloquent implements ArretInterface{
             $arrets = $arrets->years($options['years']);
         }
 
+        if(isset($options['limit']) && $options['limit'] > 0){
+            $arrets = $arrets->has('analyses');
+        }
+
         $arrets = $arrets->orderBy('pub_date', 'DESC');
 
         if(isset($options['limit']) && $options['limit'] > 0){
