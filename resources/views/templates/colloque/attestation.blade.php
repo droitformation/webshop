@@ -17,7 +17,7 @@
                 @if(!empty($expediteur))
                     <ul id="facdroit">
                         @foreach($expediteur as $line)
-                            <li>{{ $line }}</li>
+                            <li>{!! $line !!}</li>
                         @endforeach
 
                         <?php $telephone = isset($colloque->attestation) && !empty($colloque->attestation->telephone) ? $colloque->attestation->telephone : \Registry::get('shop.infos.telephone'); ?>
