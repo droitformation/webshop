@@ -6,5 +6,4 @@
 <script type="text/javascript" src="{{ secure_asset('backend/js/redactor/imagemanager.min.js') }}"></script>
 <script type="text/javascript" src="{{ secure_asset('backend/js/redactor/filemanager.min.js') }}"></script>
 <script type="text/javascript" src="{{ secure_asset('backend/js/redactor/alignment.min.js') }}"></script>
-<script type="text/javascript" src="{{ secure_asset('backend/js/redactor/limiter.min.js') }}"></script>
 <script type="text/javascript" src="{{ secure_asset('backend/js/redactor/linkbtn.js') }}"></script>

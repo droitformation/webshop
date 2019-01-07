@@ -142,6 +142,7 @@
 @include('script.date')
 @include('script.angular')
 @include('script.main')
+
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/select-list.js');?>"></script>
 
 <!-- Filter plugin -->
@@ -194,6 +195,7 @@
 <!-- Upload plugins -->
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/dropzone.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/upload.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/tree.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.mask.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jQuery.print.js');?>"></script>

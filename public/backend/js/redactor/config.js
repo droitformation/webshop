@@ -30,16 +30,6 @@ $( function() {
         formatting: ['h1', 'h2','h3','p', 'blockquote']
     });
 
-    $('.redactorLimit').redactor({
-        minHeight: '180px',
-        maxHeight: '280px',
-        plugins: ['limiter'],
-        limiter: 450,
-        removeEmpty : ['strong' , 'em' , 'span' , 'p' ],
-        lang: 'fr',
-        formatting: ['p'],
-        buttons: ['format','lists']
-    });
 
     $('.redactorLimit').redactor({
         minHeight: '180px',
