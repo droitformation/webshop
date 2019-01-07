@@ -68,8 +68,12 @@ class CampagneWorker implements CampagneInterface{
     /**
      * Get campagne for site
      */
-    public function getCampagne($id)
+    public function getCampagne($id, $archive = null)
     {
+        if($archive){
+            return $this->campagne->old($id);
+        }
+
         return $this->campagne->find($id);
     }
 

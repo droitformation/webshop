@@ -10,6 +10,7 @@ interface NewsletterCampagneInterface {
 	public function getArchives($newsletter_id,$year);
     public function getArchivesBySite($site_id,$year);
 	public function find($data);
+    public function old($id);
 	public function archive($id);
 	public function create(array $data);
 	public function update(array $data);

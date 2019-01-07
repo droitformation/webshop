@@ -106,7 +106,17 @@ class ContentController extends Controller
     public function campagne(Request $request)
     {
         if(isset($request->input('params')['id']) && !empty($request->input('params')['id'])){
-            $campagne = $this->worker->getCampagne($request->input('params')['id']);
+
+            if(
+                (($request->input('params')['site_id'] == 4) && ($request->input('params')['id'] <= 71))
+                ||
+                (($request->input('params')['site_id'] == 5) && ($request->input('params')['id'] <= 263))
+            ){
+                $campagne = $this->worker->getCampagne($request->input('params')['id'], true);
+            }
+            else{
+                $campagne = $this->worker->getCampagne($request->input('params')['id']);
+            }
         }
         else{
             $campagne = $this->worker->lastBySite($request->input('params')['site_id']);
