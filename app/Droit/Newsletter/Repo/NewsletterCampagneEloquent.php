@@ -52,7 +52,7 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 			->where(function ($query) {
 				$query->whereDate('send_at', '<', \Carbon\Carbon::now())->orWhereNull('send_at');
 			})
-			->whereRaw('YEAR(`created_at`) = ?', [$year])
+			->whereRaw('YEAR(`send_at`) = ?', [$year])
 			->orderBy('send_at','DESC')
 			->get();
 	}

@@ -40,8 +40,8 @@
                                 @if(!$newsletter->campagnes->isEmpty())
 
                                     <?php
-                                        $years     = $newsletter->sent->groupBy(function ($archive, $key) {
-                                            return $archive->created_at->year;
+                                        $years = $newsletter->sent->groupBy(function ($archive, $key) {
+                                            return isset($archive->send_at) ? $archive->send_at->year : $archive->created_at->year;
                                         })->keys();
                                     ?>
 
