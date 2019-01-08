@@ -34,11 +34,7 @@ class CampagneController extends Controller
         $campagne = $this->campagne->find($id);
 
         $context = stream_context_create([
-            'ssl' => [
-                'verify_peer' => FALSE,
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ]
+            'ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]
         ]);
 
         $pdf = \App::make('dompdf.wrapper');
@@ -48,5 +44,4 @@ class CampagneController extends Controller
 
         return $pdf->stream('newsletter_'.$id.'.pdf');
     }
-
 }

@@ -133,4 +133,25 @@ class ContentController extends Controller
 
         return new \App\Http\Resources\NewsletterCollection($newsletters);
     }
+
+    public function pdf($id,$site_id)
+    {
+        if(
+            (($site_id == 4) && ($id <= 71)) || (($site_id == 5) && ($id <= 263))
+        ){
+            $campagne = $this->worker->getCampagne($id, true);
+        }
+        else{
+            $campagne = $this->worker->getCampagne($id);
+        }
+
+        $context = stream_context_create(['ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]]);
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        $pdf = $pdf->loadView('frontend.newsletter.pdf', ['campagne' => $campagne])->setPaper('a4');
+
+        return $pdf->stream('newsletter_'.$campagne->id.'.pdf');
+    }
 }
