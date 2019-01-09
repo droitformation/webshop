@@ -25,6 +25,11 @@ class Newsletter_contents extends Model {
         elseif(isset($this->groupe)){
             return $this->groupe->categorie->title;
         }
+        elseif(isset($this->image)){
+            return $this->image;
+        }
+
+        return 'Image out titre vide';
     }
 
     public function getTypeContentAttribute()
