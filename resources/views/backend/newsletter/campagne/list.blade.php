@@ -55,7 +55,9 @@
                             @include('backend.newsletter.campagne.partials.send',['campagne' => $campagne])
 
                         @else
-                            <p><strong>Envoyé le:</strong> <br/>{{ $campagne->updated_at->formatLocalized('%d %b %Y') }} à {{ $campagne->updated_at->toTimeString() }}</p>
+
+                            <p><strong>Envoyé le:</strong> <br/>{{ $campagne->send_at->formatLocalized('%d %b %Y') }} à {{ $campagne->send_at->toTimeString() }}</p>
+
                             @if($campagne->send_at && $campagne->send_at > \Carbon\Carbon::now())
                                 <p><strong>Envoi prévu à:</strong> <br/>{{ $campagne->send_at->formatLocalized('%d %b %Y') }} à {{ $campagne->send_at->toTimeString() }}</p>
                                 <div class="btn-group btn-group-sm">
@@ -63,6 +65,7 @@
                                     <a class="btn btn-warning" href="{{ url('build/campagne/cancel/'.$campagne->id) }}">Annuler l'envoi</a>
                                 </div>
                             @endif
+
                         @endif
                     </td>
                     <td class="text-right">

@@ -1,7 +1,6 @@
 @extends('frontend.newsletter.layouts.print')
 @section('content')
 
-
     <div class="header">
         {!! $campagne->newsletter->site ? '<h1>'.$campagne->newsletter->site->nom.'</h1>' : '' !!}
         <h2>{{ $campagne->sujet }}</h2>
