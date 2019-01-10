@@ -11,6 +11,16 @@ class Newsletter_campagnes extends Model {
 
     protected $dates = ['deleted_at','send_at'];
 
+    public function getSendUpdateDateAttribute()
+    {
+        if(($this->newsletter->site_id == 4 && $this->old_id <= 71) || ($this->newsletter->site_id == 5 && $this->old_id <= 263)){
+
+            return $this->send_at;
+        }
+
+        return $this->updated_at;
+    }
+
     public function scopeNews($query,$newsletter_id)
     {
         if ($newsletter_id) $query->whereIn('newsletter_id',$newsletter_id);

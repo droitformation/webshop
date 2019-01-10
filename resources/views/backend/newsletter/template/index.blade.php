@@ -46,10 +46,10 @@
                                     ?>
 
                                     <h4>Brouillons</h4>
-                                    @include('backend.newsletter.campagne.list',['campagnes' => $newsletter->draft])
+                                    @include('backend.newsletter.campagne.list',['campagnes' => $newsletter->draft, 'newsletter' => $newsletter])
 
                                     <h4>En attente d'envoi</h4>
-                                    @include('backend.newsletter.campagne.list',['campagnes' => $newsletter->pending])
+                                    @include('backend.newsletter.campagne.list',['campagnes' => $newsletter->pending, 'newsletter' => $newsletter])
 
                                     <hr/>
                                     <div class="newsletter-archives">

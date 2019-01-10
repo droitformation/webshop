@@ -56,7 +56,7 @@
 
                         @else
 
-                            <p><strong>Envoyé le:</strong> <br/>{{ $campagne->send_at->formatLocalized('%d %b %Y') }} à {{ $campagne->send_at->toTimeString() }}</p>
+                            <p><strong>Envoyé le:</strong> <br/>{{ $campagne->send_update_date->formatLocalized('%d %b %Y') }} à {{ $campagne->send_update_date->toTimeString() }}</p>
 
                             @if($campagne->send_at && $campagne->send_at > \Carbon\Carbon::now())
                                 <p><strong>Envoi prévu à:</strong> <br/>{{ $campagne->send_at->formatLocalized('%d %b %Y') }} à {{ $campagne->send_at->toTimeString() }}</p>
