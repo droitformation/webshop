@@ -190,7 +190,7 @@
 										  data-src="{{ url('site/subscribe/'.$newsletter->site->id) }}"
 										  class="btn btn-default btn-profile btn-block"
 										  href="javascript:;">
-											Je m'inscrit!
+											Je m'inscris!
 										</a></p>
 									{{--@include('frontend.newsletter.partials.subscribe', ['newsletter' => $newsletter, 'return_path' => 'pubdroit'])--}}
 
