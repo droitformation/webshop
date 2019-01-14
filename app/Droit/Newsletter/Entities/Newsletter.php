@@ -71,7 +71,7 @@ class Newsletter extends Model {
         return $this->hasMany('\App\Droit\Newsletter\Entities\Newsletter_campagnes')
             ->where('status','=','envoyé')
             ->where(function ($query) {
-                $query->whereDate('send_at', '<', \Carbon\Carbon::now())->orWhereNull('send_at');
+                $query->whereDate('send_at', '<=', \Carbon\Carbon::now())->orWhereNull('send_at');
             })
             ->orderBy('created_at','DESC');
     }
