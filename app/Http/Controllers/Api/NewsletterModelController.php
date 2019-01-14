@@ -27,7 +27,7 @@ class NewsletterModelController extends Controller {
 
     public function index($model,$site_id = null)
     {
-        $site_id = $model == 'product' || $model == 'colloque' ? null : $site_id;
+        $site_id = $model == 'product' || $model == 'colloque' ? true : $site_id;
 
         $models = $this->$model->getAll($site_id);
         $models = $models->map(function ($item, $key) {

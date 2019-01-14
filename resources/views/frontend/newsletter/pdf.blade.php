@@ -9,9 +9,7 @@
 
     @if(!$campagne->content->isEmpty())
         @foreach($campagne->content as $bloc)
-            <div class="bloc">
-                {!! view('frontend.newsletter.print.'.$bloc->type->partial)->with(['bloc' => $bloc , 'campagne' => $campagne])->__toString() !!}
-            </div>
+            {!! view('frontend.newsletter.print.'.$bloc->type->partial)->with(['bloc' => $bloc , 'campagne' => $campagne])->__toString() !!}
         @endforeach
     @endif
 

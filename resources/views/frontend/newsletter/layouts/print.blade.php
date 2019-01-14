@@ -10,20 +10,20 @@
                 box-sizing:border-box;
             }
             @page {
-                padding: 20px; margin:20px 50px; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: avoid;
+                padding: 20px; margin:20px 50px; background: #fff; font-family: Arial, Helvetica, sans-serif;
             }
             .bloc{
                 margin: 10px 0;
                 width: 100%;
                 page-break-inside: avoid !important;
             }
-            .bloc,
-            .bloc div,
-            .bloc div p,
-            .bloc div p a,
-            .bloc p
-            .bloc a,
-            .bloc ul li
+
+            .div,
+            .div p,
+            .div p a,
+            .p
+            .a,
+            .ul li
             {
                 font-size: 14px !important;
                 line-height:17px;
