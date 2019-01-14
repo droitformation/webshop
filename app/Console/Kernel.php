@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel {
 
 			if($run_command)
 			{
-				$command = 'php '. base_path('artisan'). ' queue:listen --tries=3 > /dev/null & echo $!';
+				$command = 'php '. base_path('artisan'). ' queue:listen --tries=3 --daemon > /dev/null & echo $!';
 				$number = exec($command);
 				file_put_contents($monitor_file_path, $number);
 			}
