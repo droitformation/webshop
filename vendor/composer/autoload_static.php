@@ -95,6 +95,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         array (
             'Ramsey\\Uuid\\' => 12,
         ),
+        'Q' => 
+        array (
+            'Queueworker\\SansDaemon\\' => 23,
+        ),
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
@@ -330,6 +334,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
+        ),
+        'Queueworker\\SansDaemon\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/queueworker/sansdaemon/src',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -5272,6 +5280,9 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Psr\\SimpleCache\\CacheException' => __DIR__ . '/..' . '/psr/simple-cache/src/CacheException.php',
         'Psr\\SimpleCache\\CacheInterface' => __DIR__ . '/..' . '/psr/simple-cache/src/CacheInterface.php',
         'Psr\\SimpleCache\\InvalidArgumentException' => __DIR__ . '/..' . '/psr/simple-cache/src/InvalidArgumentException.php',
+        'Queueworker\\SansDaemon\\Console\\WorkCommand' => __DIR__ . '/..' . '/queueworker/sansdaemon/src/Console/WorkCommand.php',
+        'Queueworker\\SansDaemon\\SansDaemonServiceProvider' => __DIR__ . '/..' . '/queueworker/sansdaemon/src/SansDaemonServiceProvider.php',
+        'Queueworker\\SansDaemon\\Traits\\SansDaemonWorkerTrait' => __DIR__ . '/..' . '/queueworker/sansdaemon/src/Traits/SansDaemonWorkerTrait.php',
         'Ramsey\\Uuid\\BinaryUtils' => __DIR__ . '/..' . '/ramsey/uuid/src/BinaryUtils.php',
         'Ramsey\\Uuid\\Builder\\DefaultUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DefaultUuidBuilder.php',
         'Ramsey\\Uuid\\Builder\\DegradedUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DegradedUuidBuilder.php',

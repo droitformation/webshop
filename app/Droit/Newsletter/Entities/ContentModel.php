@@ -43,6 +43,7 @@ class ContentModel
             'id'        =>  $arret->id,
             'droptitle' =>  $arret->reference,
             'reference' =>  $arret->reference,
+            //'sort'      =>  str_replace('TF ','',$arret->reference),
             'title'     =>  $arret->title,
             'abstract'  =>  $arret->abstract,
             'content'   =>  $arret->pub_text,
