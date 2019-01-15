@@ -131,7 +131,7 @@
                             <div class="listArrets forArrets" ng-init="typeItem='arrets';uidContent='{!! $analyse->id  !!}';itemContent='analyses'">
                                 <div ng-repeat="(listName, list) in selectarret.models.lists">
                                     <ul class="list-arrets" dnd-list="list">
-                                        <li ng-repeat="item in list"
+                                        <li ng-repeat="item in list  | orderBy:'sort'"
                                             dnd-draggable="item"
                                             dnd-moved="list.splice($index, 1); logEvent('Container moved', event); selectarret.dropped(item)"
                                             dnd-effect-allowed="move"

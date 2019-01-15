@@ -39,11 +39,13 @@ class ContentModel
 
     public function arret($arret)
     {
+        $sort = str_replace('TF ','',$arret->reference);
+
         return [
             'id'        =>  $arret->id,
             'droptitle' =>  $arret->reference,
             'reference' =>  $arret->reference,
-            //'sort'      =>  str_replace('TF ','',$arret->reference),
+            'sort'      =>  $sort,
             'title'     =>  $arret->title,
             'abstract'  =>  $arret->abstract,
             'content'   =>  $arret->pub_text,

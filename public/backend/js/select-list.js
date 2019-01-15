@@ -38,6 +38,8 @@ App.service('myService',  function ($rootScope,$filter) {
                         isSelected: false,
                         itemId: value.id
                     });
+
+                    models.lists.A = _.sortBy(models.lists.A, function(o) { return o.reference })
                 }
             });
 
@@ -86,8 +88,6 @@ App.service('myService',  function ($rootScope,$filter) {
                         itemId     : value.id
                     });
                 });
-
-                console.log(selected);
             }
 
             return models;
