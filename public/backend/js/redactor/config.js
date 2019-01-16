@@ -37,6 +37,6 @@ $( function() {
         removeEmpty : ['strong' , 'em' , 'span' , 'p' ],
         lang: 'fr',
         formatting: ['p'],
-        buttons: ['formatting','|','unorderedlist']
+        buttons: ['format','|','lists']
     });
 });
