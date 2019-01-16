@@ -27,10 +27,10 @@ class Kernel extends ConsoleKernel {
 		$schedule->command('backup:clean')->daily()->at('18:00');
 		$schedule->command('backup:run')->daily()->at('19:00');
 
-        $schedule->command('queue:work --daemon')
+        $schedule->command('queue:work --stop-when-empty')
             //->pingBefore('https://cronitor.link/OJA0Ue/run')->thenPing('https://cronitor.link/OJA0Ue/complete')
             ->name('monitor_queue_listener')
-            ->everyFiveMinutes()
+            ->everyMinute()
             ->withoutOverlapping();
 	}
 
