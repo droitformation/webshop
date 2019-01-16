@@ -116,13 +116,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="description" class="col-sm-3 control-label">Thèmes principaux</label>
-                                <div class="col-sm-8">
-                                    <textarea name="themes" cols="50" rows="8" class="form-control redactorLimit">{{ $colloque->themes or old('themes') }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 <div class="row well">
                                     <label class="col-sm-3 control-label"><i class="fa fa-external-link-square"></i> &nbsp;Inscription externes</label>
                                     <div class="col-sm-8 col-xs-6">
