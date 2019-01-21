@@ -11,6 +11,7 @@
 		"barryvdh/laravel-debugbar": "^3.2",
 		"barryvdh/laravel-dompdf": "0.8.x@dev",
 		"baum/baum": "~1.1",
+		"box/spout": "^2.7",
 		"designPond/config-registry": "0.1.x-dev",
 		"fideloper/proxy": "4.0",
 		"guzzlehttp/guzzle": "6.3.*",
