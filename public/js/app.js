@@ -6707,6 +6707,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['model', 'type', 'color'],
@@ -7206,7 +7207,7 @@ exports.push([module.i, "\n#addOccurrence{\n    margin-bottom:15px;\n}\n.margBot
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"ModelContent.vue"}]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"ModelContent.vue"}]);
 
 /***/ }),
 /* 86 */
@@ -32271,7 +32272,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('h3', [_vm._v(_vm._s(_vm.model.title))]), _vm._v(" "), _c('p', {
     staticClass: "abstract"
-  }, [_vm._v(_vm._s(_vm.model.abstract))]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.model.abstract))]), _vm._v(" "), _c('span', {
+    domProps: {
+      "innerHTML": _vm._s(_vm.model.more)
+    }
+  }), _vm._v(" "), _c('div', {
     staticClass: "content",
     domProps: {
       "innerHTML": _vm._s(_vm.model.content)

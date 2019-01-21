@@ -7,6 +7,7 @@
                 <td valign="top" width="375" class="resetMarge contentForm">
                     <h3>{{ model.title }}</h3>
                     <p class="abstract">{{ model.abstract }}</p>
+                    <span v-html="model.more"></span>
                     <div v-html="model.content" class="content"></div>
                     <p><a target="_blank" :style="style" :class="model.class" :href="model.link">{{ model.message }}</a></p>
                 </td>

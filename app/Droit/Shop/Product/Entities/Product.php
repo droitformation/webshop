@@ -122,7 +122,7 @@ class Product extends Model{
 
     public function scopeSearch($query, $search)
     {
-        if($search && !empty($search)) {
+        if($search && !empty($search) && is_array($search)) {
             $search = array_filter($search);
             
             foreach($search as $item => $value) {
