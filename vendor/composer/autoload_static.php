@@ -4,15 +4,15 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
+class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'cf97c57bfe0f23854afd2f3818abb7a0' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/create_uploaded_file.php',
         '9bf37a3d0dad93e29cb4e1b1bfab04e9' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/marshal_headers_from_sapi.php',
@@ -31,10 +31,10 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
-        '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '0c3c22e27afa83be19b4c938f4c6e9ea' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/functions.php',
         'f1fc7a7a353e3515a5d5efd255977059' => __DIR__ . '/..' . '/vinkla/alert/src/helpers.php',
+        '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         '4b69412694a85d7780e1934ebfeb0c1b' => __DIR__ . '/../..' . '/tests/factories/ObjectFactory.php',
         '6f63623309b417353d909e0e864f4beb' => __DIR__ . '/../..' . '/app/Support/helpers.php',
     );
@@ -200,8 +200,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'ZipStream\\' => 
         array (
@@ -401,8 +401,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         ),
         'Illuminate\\Notifications\\' => 
         array (
-            0 => __DIR__ . '/..' . '/laravel/nexmo-notification-channel/src',
-            1 => __DIR__ . '/..' . '/laravel/slack-notification-channel/src',
+            0 => __DIR__ . '/..' . '/laravel/slack-notification-channel/src',
+            1 => __DIR__ . '/..' . '/laravel/nexmo-notification-channel/src',
         ),
         'Illuminate\\' => 
         array (
@@ -418,13 +418,13 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         ),
         'Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/php-http/message/src',
-            1 => __DIR__ . '/..' . '/php-http/message-factory/src',
+            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
+            1 => __DIR__ . '/..' . '/php-http/message/src',
         ),
         'Http\\Discovery\\' => 
         array (
-            0 => __DIR__ . '/..' . '/php-http/discovery/src',
-            1 => __DIR__ . '/..' . '/symfony/polyfill-mbstring/src',
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring/src',
+            1 => __DIR__ . '/..' . '/php-http/discovery/src',
         ),
         'Http\\Client\\Common\\' => 
         array (
@@ -1281,6 +1281,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\ExtraServiceProvider' => __DIR__ . '/../..' . '/app/Providers/ExtraServiceProvider.php',
         'App\\Providers\\GenerateServiceProvider' => __DIR__ . '/../..' . '/app/Providers/GenerateServiceProvider.php',
+        'App\\Providers\\HorizonServiceProvider' => __DIR__ . '/../..' . '/app/Providers/HorizonServiceProvider.php',
         'App\\Providers\\JurisprudenceServiceProvider' => __DIR__ . '/../..' . '/app/Providers/JurisprudenceServiceProvider.php',
         'App\\Providers\\NewsletterServiceProvider' => __DIR__ . '/../..' . '/app/Providers/NewsletterServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
@@ -1387,99 +1388,6 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',
         'BeyondCode\\DumpServer\\Dumper' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/Dumper.php',
         'BeyondCode\\DumpServer\\RequestContextProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/RequestContextProvider.php',
-        'Box\\Spout\\Autoloader\\Psr4Autoloader' => __DIR__ . '/..' . '/box/spout/src/Spout/Autoloader/Psr4Autoloader.php',
-        'Box\\Spout\\Common\\Escaper\\CSV' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Escaper/CSV.php',
-        'Box\\Spout\\Common\\Escaper\\EscaperInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Escaper/EscaperInterface.php',
-        'Box\\Spout\\Common\\Escaper\\ODS' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Escaper/ODS.php',
-        'Box\\Spout\\Common\\Escaper\\XLSX' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Escaper/XLSX.php',
-        'Box\\Spout\\Common\\Exception\\EncodingConversionException' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Exception/EncodingConversionException.php',
-        'Box\\Spout\\Common\\Exception\\IOException' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Exception/IOException.php',
-        'Box\\Spout\\Common\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Exception/InvalidArgumentException.php',
-        'Box\\Spout\\Common\\Exception\\SpoutException' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Exception/SpoutException.php',
-        'Box\\Spout\\Common\\Exception\\UnsupportedTypeException' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Exception/UnsupportedTypeException.php',
-        'Box\\Spout\\Common\\Helper\\EncodingHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Helper/EncodingHelper.php',
-        'Box\\Spout\\Common\\Helper\\FileSystemHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Helper/FileSystemHelper.php',
-        'Box\\Spout\\Common\\Helper\\GlobalFunctionsHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Helper/GlobalFunctionsHelper.php',
-        'Box\\Spout\\Common\\Helper\\StringHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Helper/StringHelper.php',
-        'Box\\Spout\\Common\\Singleton' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Singleton.php',
-        'Box\\Spout\\Common\\Type' => __DIR__ . '/..' . '/box/spout/src/Spout/Common/Type.php',
-        'Box\\Spout\\Reader\\AbstractReader' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/AbstractReader.php',
-        'Box\\Spout\\Reader\\CSV\\Reader' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/CSV/Reader.php',
-        'Box\\Spout\\Reader\\CSV\\RowIterator' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/CSV/RowIterator.php',
-        'Box\\Spout\\Reader\\CSV\\Sheet' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/CSV/Sheet.php',
-        'Box\\Spout\\Reader\\CSV\\SheetIterator' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/CSV/SheetIterator.php',
-        'Box\\Spout\\Reader\\Exception\\IteratorNotRewindableException' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Exception/IteratorNotRewindableException.php',
-        'Box\\Spout\\Reader\\Exception\\NoSheetsFoundException' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Exception/NoSheetsFoundException.php',
-        'Box\\Spout\\Reader\\Exception\\ReaderException' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Exception/ReaderException.php',
-        'Box\\Spout\\Reader\\Exception\\ReaderNotOpenedException' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Exception/ReaderNotOpenedException.php',
-        'Box\\Spout\\Reader\\Exception\\SharedStringNotFoundException' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Exception/SharedStringNotFoundException.php',
-        'Box\\Spout\\Reader\\Exception\\XMLProcessingException' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Exception/XMLProcessingException.php',
-        'Box\\Spout\\Reader\\IteratorInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/IteratorInterface.php',
-        'Box\\Spout\\Reader\\ODS\\Helper\\CellValueFormatter' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/ODS/Helper/CellValueFormatter.php',
-        'Box\\Spout\\Reader\\ODS\\Reader' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/ODS/Reader.php',
-        'Box\\Spout\\Reader\\ODS\\RowIterator' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/ODS/RowIterator.php',
-        'Box\\Spout\\Reader\\ODS\\Sheet' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/ODS/Sheet.php',
-        'Box\\Spout\\Reader\\ODS\\SheetIterator' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/ODS/SheetIterator.php',
-        'Box\\Spout\\Reader\\ReaderFactory' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/ReaderFactory.php',
-        'Box\\Spout\\Reader\\ReaderInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/ReaderInterface.php',
-        'Box\\Spout\\Reader\\SheetInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/SheetInterface.php',
-        'Box\\Spout\\Reader\\Wrapper\\SimpleXMLElement' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Wrapper/SimpleXMLElement.php',
-        'Box\\Spout\\Reader\\Wrapper\\XMLInternalErrorsHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Wrapper/XMLInternalErrorsHelper.php',
-        'Box\\Spout\\Reader\\Wrapper\\XMLReader' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/Wrapper/XMLReader.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\CellHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/CellHelper.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\CellValueFormatter' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/CellValueFormatter.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\DateFormatHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/DateFormatHelper.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\SharedStringsCaching\\CachingStrategyFactory' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/SharedStringsCaching/CachingStrategyFactory.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\SharedStringsCaching\\CachingStrategyInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/SharedStringsCaching/CachingStrategyInterface.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\SharedStringsCaching\\FileBasedStrategy' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/SharedStringsCaching/FileBasedStrategy.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\SharedStringsCaching\\InMemoryStrategy' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/SharedStringsCaching/InMemoryStrategy.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\SharedStringsHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/SharedStringsHelper.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\SheetHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/SheetHelper.php',
-        'Box\\Spout\\Reader\\XLSX\\Helper\\StyleHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Helper/StyleHelper.php',
-        'Box\\Spout\\Reader\\XLSX\\Reader' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Reader.php',
-        'Box\\Spout\\Reader\\XLSX\\RowIterator' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/RowIterator.php',
-        'Box\\Spout\\Reader\\XLSX\\Sheet' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/Sheet.php',
-        'Box\\Spout\\Reader\\XLSX\\SheetIterator' => __DIR__ . '/..' . '/box/spout/src/Spout/Reader/XLSX/SheetIterator.php',
-        'Box\\Spout\\Writer\\AbstractMultiSheetsWriter' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/AbstractMultiSheetsWriter.php',
-        'Box\\Spout\\Writer\\AbstractWriter' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/AbstractWriter.php',
-        'Box\\Spout\\Writer\\CSV\\Writer' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/CSV/Writer.php',
-        'Box\\Spout\\Writer\\Common\\Helper\\AbstractStyleHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Common/Helper/AbstractStyleHelper.php',
-        'Box\\Spout\\Writer\\Common\\Helper\\CellHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Common/Helper/CellHelper.php',
-        'Box\\Spout\\Writer\\Common\\Helper\\ZipHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Common/Helper/ZipHelper.php',
-        'Box\\Spout\\Writer\\Common\\Internal\\AbstractWorkbook' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Common/Internal/AbstractWorkbook.php',
-        'Box\\Spout\\Writer\\Common\\Internal\\WorkbookInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Common/Internal/WorkbookInterface.php',
-        'Box\\Spout\\Writer\\Common\\Internal\\WorksheetInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Common/Internal/WorksheetInterface.php',
-        'Box\\Spout\\Writer\\Common\\Sheet' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Common/Sheet.php',
-        'Box\\Spout\\Writer\\Exception\\Border\\InvalidNameException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/Border/InvalidNameException.php',
-        'Box\\Spout\\Writer\\Exception\\Border\\InvalidStyleException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/Border/InvalidStyleException.php',
-        'Box\\Spout\\Writer\\Exception\\Border\\InvalidWidthException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/Border/InvalidWidthException.php',
-        'Box\\Spout\\Writer\\Exception\\InvalidColorException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/InvalidColorException.php',
-        'Box\\Spout\\Writer\\Exception\\InvalidSheetNameException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/InvalidSheetNameException.php',
-        'Box\\Spout\\Writer\\Exception\\SheetNotFoundException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/SheetNotFoundException.php',
-        'Box\\Spout\\Writer\\Exception\\WriterAlreadyOpenedException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/WriterAlreadyOpenedException.php',
-        'Box\\Spout\\Writer\\Exception\\WriterException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/WriterException.php',
-        'Box\\Spout\\Writer\\Exception\\WriterNotOpenedException' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Exception/WriterNotOpenedException.php',
-        'Box\\Spout\\Writer\\ODS\\Helper\\BorderHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/ODS/Helper/BorderHelper.php',
-        'Box\\Spout\\Writer\\ODS\\Helper\\FileSystemHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/ODS/Helper/FileSystemHelper.php',
-        'Box\\Spout\\Writer\\ODS\\Helper\\StyleHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/ODS/Helper/StyleHelper.php',
-        'Box\\Spout\\Writer\\ODS\\Internal\\Workbook' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/ODS/Internal/Workbook.php',
-        'Box\\Spout\\Writer\\ODS\\Internal\\Worksheet' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/ODS/Internal/Worksheet.php',
-        'Box\\Spout\\Writer\\ODS\\Writer' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/ODS/Writer.php',
-        'Box\\Spout\\Writer\\Style\\Border' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Style/Border.php',
-        'Box\\Spout\\Writer\\Style\\BorderBuilder' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Style/BorderBuilder.php',
-        'Box\\Spout\\Writer\\Style\\BorderPart' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Style/BorderPart.php',
-        'Box\\Spout\\Writer\\Style\\Color' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Style/Color.php',
-        'Box\\Spout\\Writer\\Style\\Style' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Style/Style.php',
-        'Box\\Spout\\Writer\\Style\\StyleBuilder' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/Style/StyleBuilder.php',
-        'Box\\Spout\\Writer\\WriterFactory' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/WriterFactory.php',
-        'Box\\Spout\\Writer\\WriterInterface' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/WriterInterface.php',
-        'Box\\Spout\\Writer\\XLSX\\Helper\\BorderHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Helper/BorderHelper.php',
-        'Box\\Spout\\Writer\\XLSX\\Helper\\FileSystemHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Helper/FileSystemHelper.php',
-        'Box\\Spout\\Writer\\XLSX\\Helper\\SharedStringsHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Helper/SharedStringsHelper.php',
-        'Box\\Spout\\Writer\\XLSX\\Helper\\StyleHelper' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Helper/StyleHelper.php',
-        'Box\\Spout\\Writer\\XLSX\\Internal\\Workbook' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Internal/Workbook.php',
-        'Box\\Spout\\Writer\\XLSX\\Internal\\Worksheet' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Internal/Worksheet.php',
-        'Box\\Spout\\Writer\\XLSX\\Writer' => __DIR__ . '/..' . '/box/spout/src/Spout/Writer/XLSX/Writer.php',
         'CantonsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CantonsTableSeeder.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
@@ -2694,6 +2602,8 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Http\\Client\\Common\\Plugin\\RedirectPlugin' => __DIR__ . '/..' . '/php-http/client-common/src/Plugin/RedirectPlugin.php',
         'Http\\Client\\Common\\Plugin\\RequestMatcherPlugin' => __DIR__ . '/..' . '/php-http/client-common/src/Plugin/RequestMatcherPlugin.php',
         'Http\\Client\\Common\\Plugin\\RetryPlugin' => __DIR__ . '/..' . '/php-http/client-common/src/Plugin/RetryPlugin.php',
+        'Http\\Client\\Common\\Plugin\\VersionBridgePlugin' => __DIR__ . '/..' . '/php-http/client-common/src/Plugin/VersionBridgePlugin.php',
+        'Http\\Client\\Common\\VersionBridgeClient' => __DIR__ . '/..' . '/php-http/client-common/src/VersionBridgeClient.php',
         'Http\\Client\\Exception' => __DIR__ . '/..' . '/php-http/httplug/src/Exception.php',
         'Http\\Client\\Exception\\HttpException' => __DIR__ . '/..' . '/php-http/httplug/src/Exception/HttpException.php',
         'Http\\Client\\Exception\\NetworkException' => __DIR__ . '/..' . '/php-http/httplug/src/Exception/NetworkException.php',
@@ -2707,6 +2617,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Http\\Discovery\\Exception' => __DIR__ . '/..' . '/php-http/discovery/src/Exception.php',
         'Http\\Discovery\\Exception\\ClassInstantiationFailedException' => __DIR__ . '/..' . '/php-http/discovery/src/Exception/ClassInstantiationFailedException.php',
         'Http\\Discovery\\Exception\\DiscoveryFailedException' => __DIR__ . '/..' . '/php-http/discovery/src/Exception/DiscoveryFailedException.php',
+        'Http\\Discovery\\Exception\\NoCandidateFoundException' => __DIR__ . '/..' . '/php-http/discovery/src/Exception/NoCandidateFoundException.php',
         'Http\\Discovery\\Exception\\NotFoundException' => __DIR__ . '/..' . '/php-http/discovery/src/Exception/NotFoundException.php',
         'Http\\Discovery\\Exception\\PuliUnavailableException' => __DIR__ . '/..' . '/php-http/discovery/src/Exception/PuliUnavailableException.php',
         'Http\\Discovery\\Exception\\StrategyUnavailableException' => __DIR__ . '/..' . '/php-http/discovery/src/Exception/StrategyUnavailableException.php',
@@ -3858,9 +3769,13 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Maatwebsite\\Excel\\Readers\\LaravelExcelReader' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Readers/LaravelExcelReader.php',
         'Maatwebsite\\Excel\\Writers\\CellWriter' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Writers/CellWriter.php',
         'Maatwebsite\\Excel\\Writers\\LaravelExcelWriter' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Writers/LaravelExcelWriter.php',
+        'Mailgun\\Api\\Attachment' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/Attachment.php',
         'Mailgun\\Api\\Domain' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/Domain.php',
         'Mailgun\\Api\\Event' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/Event.php',
         'Mailgun\\Api\\HttpApi' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/HttpApi.php',
+        'Mailgun\\Api\\Ip' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/Ip.php',
+        'Mailgun\\Api\\MailingList' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/MailingList.php',
+        'Mailgun\\Api\\MailingList\\Member' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/MailingList/Member.php',
         'Mailgun\\Api\\Message' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/Message.php',
         'Mailgun\\Api\\Pagination' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/Pagination.php',
         'Mailgun\\Api\\Route' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Api/Route.php',
@@ -3908,6 +3823,7 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Mailgun\\Messages\\Exceptions\\TooManyParameters' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Messages/Exceptions/TooManyParameters.php',
         'Mailgun\\Messages\\MessageBuilder' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Messages/MessageBuilder.php',
         'Mailgun\\Model\\ApiResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/ApiResponse.php',
+        'Mailgun\\Model\\Attachment\\Attachment' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Attachment/Attachment.php',
         'Mailgun\\Model\\Domain\\AbstractDomainResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Domain/AbstractDomainResponse.php',
         'Mailgun\\Model\\Domain\\ConnectionResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Domain/ConnectionResponse.php',
         'Mailgun\\Model\\Domain\\CreateCredentialResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Domain/CreateCredentialResponse.php',
@@ -3925,6 +3841,21 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
         'Mailgun\\Model\\Domain\\VerifyResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Domain/VerifyResponse.php',
         'Mailgun\\Model\\Event\\Event' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Event/Event.php',
         'Mailgun\\Model\\Event\\EventResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Event/EventResponse.php',
+        'Mailgun\\Model\\Ip\\IndexResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Ip/IndexResponse.php',
+        'Mailgun\\Model\\Ip\\ShowResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Ip/ShowResponse.php',
+        'Mailgun\\Model\\Ip\\UpdateResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Ip/UpdateResponse.php',
+        'Mailgun\\Model\\MailingList\\CreateResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/CreateResponse.php',
+        'Mailgun\\Model\\MailingList\\DeleteResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/DeleteResponse.php',
+        'Mailgun\\Model\\MailingList\\MailingList' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/MailingList.php',
+        'Mailgun\\Model\\MailingList\\Member\\CreateResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/Member/CreateResponse.php',
+        'Mailgun\\Model\\MailingList\\Member\\DeleteResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/Member/DeleteResponse.php',
+        'Mailgun\\Model\\MailingList\\Member\\IndexResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/Member/IndexResponse.php',
+        'Mailgun\\Model\\MailingList\\Member\\Member' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/Member/Member.php',
+        'Mailgun\\Model\\MailingList\\Member\\ShowResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/Member/ShowResponse.php',
+        'Mailgun\\Model\\MailingList\\Member\\UpdateResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/Member/UpdateResponse.php',
+        'Mailgun\\Model\\MailingList\\PagesResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/PagesResponse.php',
+        'Mailgun\\Model\\MailingList\\ShowResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/ShowResponse.php',
+        'Mailgun\\Model\\MailingList\\UpdateResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/MailingList/UpdateResponse.php',
         'Mailgun\\Model\\Message\\SendResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Message/SendResponse.php',
         'Mailgun\\Model\\Message\\ShowResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/Message/ShowResponse.php',
         'Mailgun\\Model\\PaginationResponse' => __DIR__ . '/..' . '/mailgun/mailgun-php/src/Mailgun/Model/PaginationResponse.php',
@@ -6537,11 +6468,11 @@ class ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit095e52a3f0b00f30df8e0a6776076ddc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4e9f05bf6c0c08726b822494c448369c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4e9f05bf6c0c08726b822494c448369c::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit4e9f05bf6c0c08726b822494c448369c::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit4e9f05bf6c0c08726b822494c448369c::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit4e9f05bf6c0c08726b822494c448369c::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -4,7 +4,7 @@ use Baum\Node;
 /**
 * {{class}}
 */
-class {{ class }} extends Node {
+class {{class}} extends Node {
 
   /**
    * Table name.

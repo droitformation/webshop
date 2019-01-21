@@ -8,16 +8,6 @@ use Queueworker\SansDaemon\Console\WorkCommand;
 class SansDaemonServiceProvider extends QueueServiceProvider
 {
     /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
-
-    /**
      * Register the application services.
      *
      * @return void
@@ -36,7 +26,7 @@ class SansDaemonServiceProvider extends QueueServiceProvider
      */
     protected function registerWorkCommand()
     {
-        $this->app->singleton('command.queue.work', function ($app) {
+        $this->app->extend('command.queue.work', function ($command, $app) {
             return new WorkCommand($app['queue.worker']);
         });
     }

@@ -5,20 +5,20 @@ namespace Queueworker\SansDaemon\Traits;
 trait SansDaemonWorkerTrait
 {
     /**
-     * Number of jobs processed
+     * Number of jobs processed.
      *
      * @var int
-     *
-    */
+     */
     protected $jobsProcessed = 0;
 
     /**
-     * Process the queue sans-daemon mode
+     * Process the queue sans-daemon mode.
      *
-     * @param  string  $connection
-     * @param  string  $queue
+     * @param string $connection
+     * @param string $queue
+     *
      * @return void
-    */
+     */
     protected function runSansDaemon($connection, $queue)
     {
         return $this->processJobs($connection, $queue);
@@ -27,11 +27,12 @@ trait SansDaemonWorkerTrait
     /**
      * Process jobs from the queue.
      *
-     * @param  string  $connectionName
-     * @param  string  $queue
-     * @return void
+     * @param string $connectionName
+     * @param string $queue
      *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function processJobs($connectionName, $queue)
     {
@@ -47,13 +48,14 @@ trait SansDaemonWorkerTrait
     }
 
     /**
-     * Determine if the next job on the queue should be processed
+     * Determine if the next job on the queue should be processed.
      *
-     * @param  string  $connectionName
-     * @param  string  $queue
-     * @param  \Illuminate\Queue\WorkerOptions  $options
+     * @param string                           $connectionName
+     * @param string                           $queue
+     * @param \Illuminate\Queue\WorkerOptions  $options
+     *
      * @return bool
-    */
+     */
     protected function jobShouldProcess($connectionName, $queue, $options)
     {
         if ($this->isOverMaxExecutionTime($options)) {
@@ -69,29 +71,30 @@ trait SansDaemonWorkerTrait
     }
 
     /**
-     * Check if worker is running longer, than set max execution time
+     * Check if worker is running longer, than set max execution time.
      *
-     * @param  \Illuminate\Queue\WorkerOptions  $options
+     * @param \Illuminate\Queue\WorkerOptions $options
+     *
      * @return bool
      */
     protected function isOverMaxExecutionTime($options)
     {
-        //Is set 0 or less -> worker can run forever
         if ($options->maxExecutionTime <= 0) {
             return false;
         }
 
         $elapsedTime = microtime(true) - LARAVEL_START;
+
         return $elapsedTime > $options->maxExecutionTime;
     }
 
     /**
-     * Get the size of the queue
+     * Get the size of the queue.
      *
-     * @param  string  $connectionName
-     * @param  string  $queue
+     * @param string $connectionName
+     * @param string $queue
+     *
      * @return int
-     *
      */
     protected function getSize($connectionName, $queue)
     {
