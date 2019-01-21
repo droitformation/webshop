@@ -14,6 +14,7 @@
             border-right:1px solid {{ $campagne->newsletter->color }};
         }
     </style>
+    <p><a href="{{ url('build/newsletter') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>  &nbsp;&nbsp;Retour aux newsletter</a></p>
 
     <div class="component-build"><!-- Start component-build -->
         <div id="optionsNewsletter">
