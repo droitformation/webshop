@@ -243,6 +243,7 @@
                         fileManagerJson: 'admin/fileJson?_token=' + $('meta[name="_token"]').attr('content'),
                         imageResizable: true,
                         imagePosition: true,
+                        linkNewTab: true,
                         formatting: ['h1', 'h2','h3','p', 'blockquote'],
                         callbacks: {
                             blur:function(e){

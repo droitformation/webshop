@@ -202,6 +202,7 @@ class Handler extends ExceptionHandler {
         }
 
 		if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException){
+		    \Log::info('previous '.url()->previous());
 			return response()->view('404', [], 404);
 		}
 		
