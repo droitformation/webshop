@@ -35,7 +35,7 @@ class Analyse extends JsonResource
                 ];
             }),
             'arrets'    => $this->arrets->pluck('title','reference'),
-            'file'      => $this->file ? asset('files/analyses/'.$this->site->slug.'/'.$this->file, env('SECURE_ASSET')) : null,
+            'file'      => $this->filename ? asset('files/analyses/'.$this->filename, env('SECURE_ASSET')) : null,
         ];
     }
 }
