@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('queue:work --stop-when-empty')
             //->pingBefore('https://cronitor.link/OJA0Ue/run')->thenPing('https://cronitor.link/OJA0Ue/complete')
             ->name('monitor_queue_listener')
-            ->everyMinute()
+            ->everyFiveMinutes()
             ->withoutOverlapping();
 	}
 
