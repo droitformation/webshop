@@ -97,6 +97,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Résumé (sur page des auteurs)</label>
+                    <div class="col-sm-7">
+                        {!! Form::textarea('remarque', $analyse->remarque , array('class' => 'form-control', 'cols' => '50' , 'rows' => '4')) !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="col-sm-3 control-label">Catégories</label>
                     <div class="col-sm-9">
 

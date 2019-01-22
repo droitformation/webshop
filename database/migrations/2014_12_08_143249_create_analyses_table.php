@@ -20,6 +20,7 @@ class CreateAnalysesTable extends Migration {
             $table->string('author')->nullable();
             $table->dateTime('pub_date');
             $table->text('abstract')->nullable();
+            $table->text('remarque')->nullable();
             $table->text('file')->nullable();
 			$table->string('title')->nullable();
 			$table->timestamps();

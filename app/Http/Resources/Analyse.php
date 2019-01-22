@@ -25,6 +25,7 @@ class Analyse extends JsonResource
             'pub_date'  => $this->pub_date->formatLocalized('%d %B %Y'),
             'year'      => $this->pub_date->year,
             'abstract'  => $this->abstract,
+            'remarque'  => $this->remarque,
             'authors_list' => $this->authors->implode('name', ', '),
             'authors'   => $this->authors->map(function($item, $key){
                 return [
