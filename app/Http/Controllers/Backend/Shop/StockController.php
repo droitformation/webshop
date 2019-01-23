@@ -49,4 +49,17 @@ class StockController extends Controller
             });
         })->export('xls');
     }
+
+    public function qty(Request $request)
+    {
+        $product = $this->product->find($request->input('id'));
+
+        // Compare with sku of product
+        $sku = $product->sku - $request->input('qty');
+
+        // if not enough throw exception
+        $result = ($sku < 0) ? 0 : 1;
+
+        return response()->json(['result' => $result, 'current' => $product->sku, 'qty' => $request->input('qty')]);
+    }
 }

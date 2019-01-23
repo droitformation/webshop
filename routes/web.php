@@ -373,6 +373,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::resource('product', 'Backend\Shop\ProductController');
 
         Route::post('stock/change', 'Backend\Shop\StockController@update');
+        Route::post('stock/qty', 'Backend\Shop\StockController@qty');
         Route::get('stock/product/{id}', 'Backend\Shop\StockController@product');
         Route::get('stock/export/{id}', 'Backend\Shop\StockController@export');
 

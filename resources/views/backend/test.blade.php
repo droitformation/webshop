@@ -6,7 +6,15 @@
 
             <div class="panel panel-midnightblue">
                 <div class="panel-body" id="appComponent">
-                    <image-uploader :wrapper="false" :id="12" inputname="file"></image-uploader>
+                    <form id="formOrder" action="{{ url('admin/order/verification') }}" class="validate-form" data-validate="parsley" method="POST">
+                        {!! csrf_field() !!}
+
+                        <product-select :products="{{ $products }}"></product-select>
+
+                        <button type="submit" class="btn btn-info">Vérifier la commande</button>
+
+                    </form>
+
                 </div>
             </div>
 

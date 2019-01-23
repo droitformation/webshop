@@ -46,6 +46,8 @@ Vue.component('image-newsletter', require('./components/partials/ImageNewsletter
 Vue.component('create-bloc', require('./components/CreateBloc.vue'));
 Vue.component('edit-bloc', require('./components/EditBloc.vue'));
 
+Vue.component('product-select', require('./components/ProductSelect.vue'));
+
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 
 Vue.use(VueDragAndDropList);

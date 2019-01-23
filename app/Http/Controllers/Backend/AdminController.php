@@ -10,6 +10,7 @@ use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 
+
 class AdminController extends Controller {
 
     protected $colloque;
@@ -39,6 +40,9 @@ class AdminController extends Controller {
 
     public function test()
     {
-        return view('backend.test');
+        $model = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+        $products = $model->listForAdminOrder();
+
+        return view('backend.test')->with(['products' => $products]);
     }
 }
