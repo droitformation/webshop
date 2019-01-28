@@ -46,14 +46,14 @@
                                     $old_products  = Session::get('old_products');
                                     $first_product = array_shift($old_products);
                                 ?>
-                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'old_product' => $first_product, 'index' => ''])
+                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'old_product' => $first_product, 'index' => 0])
 
                                 @foreach($old_products as $index => $old_product)
                                     <?php $index = isset($index) ? $index + 1 : 1; ?>
                                     @include('backend.orders.partials.product', ['id' => '', 'old_product' => $old_product, 'index' => $index])
                                 @endforeach
                             @else
-                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'index' => ''])
+                                @include('backend.orders.partials.product', ['id' => 'fieldset_clone_order', 'index' => 0])
                             @endif
                         </div>
 

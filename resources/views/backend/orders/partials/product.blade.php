@@ -1,4 +1,4 @@
-<fieldset class="field_clone_order" id="{{ $id }}">
+<fieldset class="field_clone_order" data-index="{{ $index }}" id="{{ $id }}">
     <div class="row">
         <div class="col-lg-6 col-md-5 col-xs-12">
             <label style="display: block;">Produit</label>
@@ -6,7 +6,9 @@
                 <option value="">Choix</option>
                 @if(!$products->isEmpty())
                     @foreach($products as $product)
-                        <option {{ isset($old_product['product']) && $old_product['product'] == $product->id ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->title }} | {{ $product->price_cents  }} CHF</option>
+                        <option data-sku="{{ $product->sku }}" {{ isset($old_product['product']) && $old_product['product'] == $product->id ? 'selected' : '' }} value="{{ $product->id }}">
+                            {{ $product->title }} | {{ $product->price_cents  }} CHF | qté: {{ $product->sku  }}
+                        </option>
                     @endforeach
                 @endif
             </select>

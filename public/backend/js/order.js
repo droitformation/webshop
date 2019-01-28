@@ -36,6 +36,8 @@ $('body').on("click", '#cloneBtnOrder' ,function(e) {
     clone.attr('id', '');
     clone.appendTo($wrapper_clone);
 
+    clone.closest('.field_clone_order').attr('data-index',length);
+
     select.chosen();
 });
 
@@ -81,36 +83,38 @@ $( function() {
 
     let $input_wrapper = $('.field_clone_order');
 
-    console.log($input_wrapper);
-
     $input_wrapper.each( function( index, element ){
 
-        let $product   = $(this).find('.input-product');
-        let $qty       = $(this).find('.input-qty');
-        let $error_qty = $(this).find('.error_qty');
+        $(document).on('change', '.input-qty', function() {
 
-        $error_qty.hide();
-
-        let $product_id = $product.val();
-        let $qty_id = $qty.val();
-
-        $product.change(function() {
-            let $product_id = $product.val();
-            console.log('change '+$product_id);
-            check($product_id, $qty_id, $qty, $error_qty)
+            $(this).css('border-color','');
+            let $error_qty = $(this).find('span.error_qty');
+            $('.error_qty').hide();
+            console.log($error_qty);
         });
 
-        console.log($product_id);
-        console.log($qty_id);
+        $(document).on('change', '.chosen-select', function() {
 
-        $qty.change(function() {
-            console.log('change '+$qty_id);
-            check($product_id, $qty_id, $qty, $error_qty)
+            let $qty = $(this).closest('div').next('div').find('.input-qty');
+            let $error_qty = $(this).closest('div').next('div').find('.error_qty');
+
+            let sku = $(this).find('option:selected').data('sku');
+
+            if(sku == 0){
+                $qty.css('border-color','red');
+                $error_qty.show();
+            }
+            else{
+                $qty.css('border-color','');
+                $error_qty.hide();
+            }
+
+            console.log(sku);
         });
-
     });
 
-    function check($product_id, $qty_id, $el, $error){
+
+/*    function check($product_id, $qty_id, $el, $error){
 
         $.ajax({
             type   : "POST",
@@ -130,6 +134,6 @@ $( function() {
             },
             error:function(){}
         });
-    }
+    }*/
 
 });
