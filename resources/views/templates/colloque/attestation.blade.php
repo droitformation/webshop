@@ -84,7 +84,7 @@
                 @endif
 
                 @if(isset($colloque->themes) && !empty($colloque->themes))
-                    <p><strong>Thèmes:</strong></p>
+                    <p><strong>Thèmes abordés:</strong></p>
                     <div id="themes">
                         {!! $colloque->themes !!}
                     </div>
