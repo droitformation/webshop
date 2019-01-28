@@ -36,7 +36,7 @@ class DocumentController extends Controller
 
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $generator->stream = true;
-
+        
         return $generator->make($doc, $inscription);
     }
 

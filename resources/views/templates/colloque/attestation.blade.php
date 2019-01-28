@@ -78,8 +78,16 @@
             <td width="20%"></td>
             <td width="80%" class="comment-attestation">
                 @if(isset($colloque->attestation) && $colloque->attestation->comment)
+                    <div id="themes">
+                        {!! $colloque->attestation->comment !!}
+                    </div><br>
+                @endif
+
+                @if(isset($colloque->themes) && !empty($colloque->themes))
                     <p><strong>Thèmes:</strong></p>
-                    {!! $colloque->attestation->comment !!}
+                    <div id="themes">
+                        {!! $colloque->themes !!}
+                    </div>
                 @endif
             </td>
         </tr>
