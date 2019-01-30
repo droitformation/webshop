@@ -7,7 +7,7 @@ class Newsletter extends Model {
 
 	protected $fillable = [
 	    'titre','from_name','from_email','return_email','unsuscribe','preview','site_id','list_id','color','logos','header','soutien',
-        'pdf','comment','classe','comment_title','hide_title','display','second_color'];
+        'pdf','comment','classe','comment_title','hide_title','display','second_color','static'];
 
     use SoftDeletes;
 
@@ -18,6 +18,13 @@ class Newsletter extends Model {
         $logos = public_path('newsletter/'.$this->logos);
 
         return \File::exists($logos) ? 'newsletter/'.$this->logos : null;
+    }
+
+    public function getTagsAttribute()
+    {
+        return $this->specialisations->map(function ($item, $key) {
+            return ['id' => $item->id, 'value' => $item->title];
+        })->toArray();
     }
 
     public function getBanniereHeaderAttribute()
@@ -94,5 +101,10 @@ class Newsletter extends Model {
     {
         return $this->belongsToMany('App\Droit\Newsletter\Entities\Newsletter_users', 'newsletter_subscriptions', 'newsletter_id','user_id')
             ->whereNotNull('newsletter_users.activated_at');
+    }
+
+    public function specialisations()
+    {
+        return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation','newsletter_specialisations','newsletter_id','specialisation_id');
     }
 }

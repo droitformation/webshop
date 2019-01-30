@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="appComponent">
 
                 <form action="{{ url('build/newsletter/'.$newsletter->id) }}" data-validate="parsley" method="POST" enctype="multipart/form-data" class="validate-form form-horizontal">
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
@@ -21,6 +21,8 @@
                     </div>
                     <div class="panel-body">
 
+                        <newsletter-type :specialisations="{{ $specialisations }}" :tags="{{ json_encode($newsletter->specialisations->pluck('id')->toArray()) }}" static="{{ $newsletter->static }}"></newsletter-type>
+
                         <div class="form-group">
                             <label for="message" class="col-sm-3 control-label">Titre</label>
                             <div class="col-sm-5">
@@ -28,19 +30,21 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="message" class="col-sm-3 control-label">Nom de la liste</label>
-                            <div class="col-sm-5">
-                                <select class="form-control" required name="list_id">
-                                    <option value="">Choix de la liste</option>
-                                    @if(!empty($lists))
-                                        @foreach($lists as $list)
-                                            <option {{ $newsletter->list_id == $list['ID'] ? 'selected' :'' }} value="{{ $list['ID'] }}">{{ $list['Name'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                        @if($newsletter->static)
+                            <div class="form-group">
+                                <label for="message" class="col-sm-3 control-label">Nom de la liste</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control" required name="list_id">
+                                        <option value="">Choix de la liste</option>
+                                        @if(!empty($lists))
+                                            @foreach($lists as $list)
+                                                <option {{ $newsletter->list_id == $list['ID'] ? 'selected' :'' }} value="{{ $list['ID'] }}">{{ $list['Name'] }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         @if(config('newsletter.multi') && isset($sites))
                             <div class="form-group">

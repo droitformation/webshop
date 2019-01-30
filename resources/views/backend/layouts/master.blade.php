@@ -26,6 +26,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/select2.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/inscription.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/types.css');?>">
@@ -178,6 +179,7 @@
 <script type="text/javascript" src="{{ secure_asset('newsletter/js/sorting.js') }}"></script>
 <script type="text/javascript" src="{{ secure_asset('newsletter/js/datatables.js') }}"></script>
 
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/select2.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-user.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/search-adresse.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/order.js');?>"></script>

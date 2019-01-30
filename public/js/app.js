@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 167);
+/******/ 	return __webpack_require__(__webpack_require__.s = 170);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -199,7 +199,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(164)
+var listToStyles = __webpack_require__(167)
 
 /*
 type StyleObject = {
@@ -929,13 +929,13 @@ module.exports = g;
 
 
 /* styles */
-__webpack_require__(157)
+__webpack_require__(160)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(66),
+  __webpack_require__(67),
   /* template */
-  __webpack_require__(132),
+  __webpack_require__(135),
   /* scopeId */
   null,
   /* cssModules */
@@ -967,6 +967,8 @@ module.exports = Component.exports
 
 "use strict";
 
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1105,12 +1107,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.transitionMode = true;
           }
         }
+        var headerOffset = 0;
         var children = slots;
-        var footer = this.$slots.footer;
+        var _$slots = this.$slots,
+            header = _$slots.header,
+            footer = _$slots.footer;
 
-        if (footer) {
-          children = slots ? [].concat(_toConsumableArray(slots), _toConsumableArray(footer)) : [].concat(_toConsumableArray(footer));
+        if (header) {
+          headerOffset = header.length;
+          children = children ? [].concat(_toConsumableArray(header), _toConsumableArray(children)) : [].concat(_toConsumableArray(header));
         }
+        if (footer) {
+          children = children ? [].concat(_toConsumableArray(children), _toConsumableArray(footer)) : [].concat(_toConsumableArray(footer));
+        }
+        this.headerOffset = headerOffset;
         var attributes = null;
         var update = function update(name, value) {
           attributes = buildAttribute(attributes, name, value);
@@ -1150,7 +1160,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         this.computeIndexes();
       },
       beforeDestroy: function beforeDestroy() {
-        this._sortable.destroy();
+        if (this._sortable !== undefined) this._sortable.destroy();
       },
 
 
@@ -1295,6 +1305,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           draggingElement = evt.item;
         },
         onDragAdd: function onDragAdd(evt) {
+          this.updateEvenemt(evt);
           var element = evt.item._underlying_vm_;
           if (element === undefined) {
             return;
@@ -1307,6 +1318,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           this.emitChanges({ added: added });
         },
         onDragRemove: function onDragRemove(evt) {
+          this.updateEvenemt(evt);
           insertNodeAt(this.rootContainer, evt.item, evt.oldIndex);
           if (this.isCloning) {
             removeNode(evt.clone);
@@ -1319,6 +1331,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           this.emitChanges({ removed: removed });
         },
         onDragUpdate: function onDragUpdate(evt) {
+          this.updateEvenemt(evt);
           removeNode(evt.item);
           insertNodeAt(evt.from, evt.item, evt.oldIndex);
           var oldIndex = this.context.index;
@@ -1326,6 +1339,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           this.updatePosition(oldIndex, newIndex);
           var moved = { element: this.context.element, oldIndex: oldIndex, newIndex: newIndex };
           this.emitChanges({ moved: moved });
+        },
+        updateEvenemt: function updateEvenemt(evt) {
+          this.updateProperty(evt, 'newIndex');
+          this.updateProperty(evt, 'oldIndex');
+        },
+        updateProperty: function updateProperty(evt, propertyName) {
+          evt.hasOwnProperty(propertyName) && (evt[propertyName] += this.headerOffset);
         },
         computeFutureIndex: function computeFutureIndex(relatedContext, evt) {
           if (!relatedContext.element) {
@@ -1362,7 +1382,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   }
 
   if (true) {
-    var Sortable = __webpack_require__(95);
+    var Sortable = __webpack_require__(96);
     module.exports = buildDraggable(Sortable);
   } else if (typeof define == "function" && define.amd) {
     define(['sortablejs'], function (Sortable) {
@@ -1481,13 +1501,13 @@ module.exports = defaults;
 
 
 /* styles */
-__webpack_require__(144)
+__webpack_require__(147)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(65),
+  __webpack_require__(66),
   /* template */
-  __webpack_require__(118),
+  __webpack_require__(120),
   /* scopeId */
   null,
   /* cssModules */
@@ -1784,13 +1804,13 @@ module.exports = function bind(fn, thisArg) {
 
 
 /* styles */
-__webpack_require__(155)
+__webpack_require__(158)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(42),
   /* template */
-  __webpack_require__(130),
+  __webpack_require__(133),
   /* scopeId */
   null,
   /* cssModules */
@@ -1822,13 +1842,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(149)
+__webpack_require__(152)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(44),
   /* template */
-  __webpack_require__(123),
+  __webpack_require__(126),
   /* scopeId */
   null,
   /* cssModules */
@@ -1860,13 +1880,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(154)
+__webpack_require__(157)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(45),
   /* template */
-  __webpack_require__(129),
+  __webpack_require__(132),
   /* scopeId */
   null,
   /* cssModules */
@@ -1898,13 +1918,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(142)
+__webpack_require__(145)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(52),
   /* template */
-  __webpack_require__(116),
+  __webpack_require__(118),
   /* scopeId */
   null,
   /* cssModules */
@@ -1936,13 +1956,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(162)
+__webpack_require__(165)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(62),
+  __webpack_require__(63),
   /* template */
-  __webpack_require__(138),
+  __webpack_require__(141),
   /* scopeId */
   null,
   /* cssModules */
@@ -1974,13 +1994,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(159)
+__webpack_require__(162)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(63),
+  __webpack_require__(64),
   /* template */
-  __webpack_require__(134),
+  __webpack_require__(137),
   /* scopeId */
   null,
   /* cssModules */
@@ -2012,13 +2032,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(148)
+__webpack_require__(151)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(64),
+  __webpack_require__(65),
   /* template */
-  __webpack_require__(122),
+  __webpack_require__(125),
   /* scopeId */
   null,
   /* cssModules */
@@ -2050,7 +2070,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_drag_and_drop_list__);
 
 /**
@@ -2058,10 +2078,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(91);
-__webpack_require__(67);
+__webpack_require__(92);
+__webpack_require__(68);
 
-window.Vue = __webpack_require__(165);
+window.Vue = __webpack_require__(168);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -2073,34 +2093,35 @@ window.Vue = __webpack_require__(165);
 //Vue.component('inscription', require('./components/Inscription.vue'));
 // Vue.component('content-form', require('./components/ContentForm.vue'));
 
-Vue.component('generate', __webpack_require__(105));
-Vue.component('rappel', __webpack_require__(114));
-Vue.component('organisateur', __webpack_require__(111));
-Vue.component('endroit', __webpack_require__(103));
-Vue.component('jurisprudence', __webpack_require__(106));
-Vue.component('occurrence', __webpack_require__(109));
-Vue.component('price', __webpack_require__(112));
-Vue.component('option-groupe', __webpack_require__(110));
-Vue.component('detenteur', __webpack_require__(100));
+Vue.component('generate', __webpack_require__(106));
+Vue.component('rappel', __webpack_require__(116));
+Vue.component('organisateur', __webpack_require__(113));
+Vue.component('endroit', __webpack_require__(104));
+Vue.component('jurisprudence', __webpack_require__(107));
+Vue.component('occurrence', __webpack_require__(111));
+Vue.component('price', __webpack_require__(114));
+Vue.component('option-groupe', __webpack_require__(112));
+Vue.component('detenteur', __webpack_require__(101));
 
-Vue.component('manager', __webpack_require__(108));
+Vue.component('manager', __webpack_require__(109));
 Vue.component('image-uploader', __webpack_require__(18));
-Vue.component('filter-adresse', __webpack_require__(104));
-Vue.component('list-autocomplete', __webpack_require__(107));
+Vue.component('filter-adresse', __webpack_require__(105));
+Vue.component('list-autocomplete', __webpack_require__(108));
 
-Vue.component('build', __webpack_require__(98));
-Vue.component('edit-build', __webpack_require__(102));
+Vue.component('build', __webpack_require__(99));
+Vue.component('edit-build', __webpack_require__(103));
 
 Vue.component('build-newsletter', __webpack_require__(15));
 Vue.component('build-newsletter-models', __webpack_require__(16));
-Vue.component('build-newsletter-group', __webpack_require__(99));
+Vue.component('build-newsletter-group', __webpack_require__(100));
 Vue.component('analyse-newsletter', __webpack_require__(9));
 Vue.component('image-newsletter', __webpack_require__(6));
 
 Vue.component('create-bloc', __webpack_require__(17));
-Vue.component('edit-bloc', __webpack_require__(101));
+Vue.component('edit-bloc', __webpack_require__(102));
 
-Vue.component('product-select', __webpack_require__(113));
+Vue.component('product-select', __webpack_require__(115));
+Vue.component('newsletter-type', __webpack_require__(110));
 
 
 
@@ -5665,6 +5686,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['specialisations', 'tags', 'static'],
+    data: function data() {
+        return {
+            visible: false,
+            options: ['foo', 'bar', 'baz']
+        };
+    },
+
+    computed: {
+        mailjet: function mailjet() {
+            return this.static == 1 ? true : false;
+        }
+    },
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.initialize();
+        this.isStatic();
+    },
+
+    methods: {
+        initialize: function initialize() {
+
+            this.$nextTick(function () {
+                var self = this;
+
+                $('.specialisations-list').select2({
+                    placeholder: 'Spécialisations'
+                });
+            });
+        },
+
+        isStatic: function isStatic() {
+            this.visible = this.static == 1 ? true : false;
+        },
+        isSelected: function isSelected(id) {
+            return _.includes(this.tags, id) ? 'selected' : '';
+        }
+    }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5932,7 +6028,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6172,7 +6268,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6250,7 +6346,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6504,7 +6600,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6646,7 +6742,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6756,7 +6852,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6817,7 +6913,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6870,7 +6966,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6960,7 +7056,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7034,7 +7130,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7179,10 +7275,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window._ = __webpack_require__(93);
+window._ = __webpack_require__(94);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -7223,179 +7319,179 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // });
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.mt-15{\n   margin-bottom:15px;\n}\n", "", {"version":3,"sources":["Detenteur.vue?589b77ea"],"names":[],"mappings":";AAQA;GACA,mBAAA;CACA","file":"Detenteur.vue","sourcesContent":["<template>\n    <div class=\"mt-15\">\n        <p><strong>{{ detenteur.civilite }}</strong></p>\n        <p><a :href=\"'admin/user/' + detenteur.id\">{{ detenteur.name }}</a></p>\n        <p>{{ detenteur.email }}</p>\n    </div>\n</template>\n<style>\n    .mt-15{\n       margin-bottom:15px;\n    }\n</style>\n<script>\n    export default{\n        props: ['user'],\n        data(){\n            return{}\n        },\n        beforeMount: function () {\n            this.getData();\n        },\n        methods: {\n            getData : function(){\n                 this.detenteur = this.user;\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n.modal-dialog{\n     width:860px;\n}\n\n", "", {"version":3,"sources":["ImageUploader.vue?18171430"],"names":[],"mappings":";AA2DA;KACA,WAAA;KACA,iBAAA;KACA,eAAA;CACA;AACA;KACA,YAAA;CACA","file":"ImageUploader.vue","sourcesContent":["<template>\n<div>\n    <button type=\"button\" class=\"btn btn-primary btn-xs\" @click=\"getFiles()\" data-toggle=\"modal\" :data-target=\"'#myModal_' + id\">Choisir un fichier</button>\n    <div id=\"bs-modal\">\n        <!-- MODAL -->\n        <div class=\"modal fade\" :id=\"'myModal_' + id\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n                        <h4 class=\"modal-title\" id=\"myModalLabel\">Choisir un fichier</h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"row\">\n                            <div class=\"col-md-2\">\n                                <div :id=\"'dropzone_' + id\" class=\"dropzone\"></div>\n                            </div>\n                            <div class=\"col-md-10\">\n                               <div class=\"wrapper-gallery\">\n                                   <ul v-if=\"files\" class=\"gallery\">\n                                       <li v-for=\"file in files\">\n                                           <figure class=\"figure-file-item\">\n                                               <img v-if=\"isImage(file)\" :src=\"path + '/' + file\" alt=\"image\" />\n                                               <img v-if=\"!isImage(file)\" height=\"105px\" src=\"images/text.svg\" alt=\"image\" />\n                                           </figure>\n                                           <div class=\"figure-file-item-label\">\n                                               <p v-if=\"!isImage(file)\">{{ file }}</p>\n                                               <button @click=\"chosenFile(path + '/' + file)\" class=\"btn btn-xs btn-info btn-file-item\">Choisir</button>\n                                               <button @click=\"deleteFile(path + '/' + file)\" class=\"btn btn-xs btn-danger\">x</button>\n                                           </div>\n                                       </li>\n                                   </ul>\n                                   <p class=\"loading\" v-show=\"loading\"><i class=\"fa fa-spinner fa-spin\"></i></p>\n                               </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"modal-footer\">\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Fermer</button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <input v-if=\"chosen && filename && !wrapper\" class=\"file-choosen\" :id=\"id\" type=\"hidden\" :name=\"inputname\" v-bind:value=\"filename\">\n\n    <div v-if=\"chosen && filename && wrapper\" class=\"file-choosen-wrapper\">\n        <input class=\"file-choosen\" type=\"hidden\" :name=\"inputname\" v-bind:value=\"filename\">\n        <img v-if=\"isImage(filename)\" class=\"file-choosen file-image thumbnail\" :src=\"filename\" alt=\"image\" />\n        <a v-if=\"!isImage(filename)\" target=\"_blank\" class=\"file-choosen\" :href=\"filename\">{{ filename }}</a>\n        <button @click=\"removeFile()\" class=\"btn btn-xs btn-danger\">x</button>\n    </div>\n\n</div>\n\n</template>\n\n<style>\n   .loading{\n        width:50px;\n        margin:40px auto;\n        font-size:30px;\n    }\n    .modal-dialog{\n        width:860px;\n    }\n\n</style>\n<script>\n\nexport default {\n props: ['inputname','id','wrapper'],\n    data () {\n        return {\n           path: 'files/uploads',\n           files: [],\n           chosen: false,\n           filename: '',\n           loading: false,\n        }\n    },\n    computed: {\n    },\n    mounted: function ()  {\n        this.getFiles();\n\n        var self = this;\n        this.$nextTick(function(){\n\n            Dropzone.autoDiscover = false;\n\n            if ($('#dropzone_' + this.id).length) {\n\n                var myDropzone = new Dropzone(\"#dropzone_\" + this.id, {\n                    url: \"admin/upload\",\n                    dictDefaultMessage: \" Ajouter un fichier\",\n                    dictRemoveFile: \"OK\",\n                    thumbnailWidth: 100,\n                    thumbnailHeight: 80,\n                    addRemoveLinks : true\n                });\n\n                myDropzone.on('sending', function(file, xhr, formData){\n                    formData.append('path', self.path);\n                    formData.append('_token', $(\"meta[name='_token']\").attr('content'));\n                });\n\n                myDropzone.on(\"success\", function(file,response) {\n                    console.log(response.filename);\n                    self.addFile(response.filename);\n                });\n             }\n        });\n    },\n    methods: {\n         getFiles() {\n\n            this.loading = true;\n            var self = this;\n\n            axios.post('/admin/getfiles', { path : this.path }).then(function (response) {\n                self.files = response.data.files;\n                self.loading = false;\n            }).catch(function (error) { console.log(error);});\n        },\n        deleteFile: function(path){\n            var self = this;\n            axios.post('/admin/files/delete', { path : path }).then(function (response) {\n                var answer = confirm('Voulez-vous vraiment supprimer ' + path + ' ?');\n                if (answer){ self.files.splice( self.files.indexOf(path), 1 );}\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFile: function(path){\n            this.filename = path;\n            this.chosen   = true;\n\n            this.$emit('imageChoosen', this.filename)\n            $('#myModal_'+this.id).modal('hide');\n        },\n        addFile: function(file){\n            this.files.push(file);\n        },\n        removeFile: function(){\n            this.filename = null;\n            this.chosen   = false;\n        },\n        isActive: function(path){\n            return this.directory === path ? true : false;\n        },\n        isImage: function(filename){\n\n            var get_ext = filename.split('.').reverse();\n            var exts    = ['jpg','jpeg','png','gif'];\n\n            return ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ) ? true : false;\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#chosen-select-app{\n    z-index:100;\n    width: 100% !important; /* or any value that fits your needs */\n}\n#loader-app{\n    text-align:center;\n    width:100%;\n    font-size:30px;\n    height:30px;\n    line-height:30px;\n}\n\n", "", {"version":3,"sources":["Jurisprudence.vue?334f5e76"],"names":[],"mappings":";AAkFA;IACA,YAAA;IACA,uBAAA,CAAA,uCAAA;CACA;AAEA;IACA,kBAAA;IACA,WAAA;IACA,eAAA;IACA,YAAA;IACA,iBAAA;CACA","file":"Jurisprudence.vue","sourcesContent":["\n<template>\n    <div>\n\n        <div class=\"row\">\n            <div class=\"col-md-8\">\n                <h3 class=\"line\">Jurisprudence</h3>\n\n                <p id=\"loader-app\" v-show=\"loading\"><i class=\"fa fa-spinner fa-spin\"></i></p>\n                <p v-if=\"blocs.length === 0\" v-show=\"!loading\" class=\"text-danger\"><i class=\"fa fa-exclamation-triangle\"></i> &nbsp;Aucun arrêt pour cette recherche</p>\n\n                <section v-show=\"!loading\">\n\n                    <article class=\"row\" v-for=\"arret in blocs\">\n                        <div class=\"col-md-9\">\n                            <div class=\"post\">\n                                <div class=\"post-title\">\n                                    <h3>{{ arret.title }}</h3>\n                                    <p class=\"text-abstract-app\">{{ arret.abstract }}</p>\n                                 </div>\n                                <div class=\"post-entry\">\n                                    <div v-html=\"arret.pub_text\"></div>\n                                    <a target=\"_blank\" :href=\"arret.filename\" v-if=\"arret.filename\">Télécharger en pdf &nbsp;&nbsp;<i class=\"fa fa-file-pdf-o\"></i></a>\n\n                                    <!-- Ananlyse -->\n                                    <div class=\"analyse-app\" v-for=\"analyse in arret.analyses\">\n                                        <div class=\"well well-app\">\n                                            <h3>Analyse de {{ analyse.auteurs }}</h3>\n                                            <p class=\"text-muted\">{{ analyse.date }}</p>\n                                            <p class=\"text-abstract-app\">{{ analyse.abstract }}</p>\n                                            <a target=\"_blank\" :href=\"analyse.filename\" v-if=\"analyse.filename\">Télécharger en pdf &nbsp;&nbsp;<i class=\"fa fa-file-pdf-o\"></i></a>\n                                        </div>\n                                    </div>\n                                    <!-- END Ananlyse -->\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-md-3\">\n                            <div class=\"list-cat-app\" v-for=\"cat in arret.categories\">\n                                <img width=\"130\" :alt=\"cat.title\" :src=\"url +'files/pictos/' + cat.image\">\n                                <p><small>{{ cat.title }}</small></p>\n                            </div>\n                        </div>\n\n                    </article>\n\n                </section>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"sidebar-app fixed\">\n\n                    <a :href=\"url + slug\" class=\"btn btn-default btn-block\"><i class=\"fa fa-arrow-circle-left\"></i> &nbsp;Retour accueil</a>\n\n                    <div class=\"widget clear\">\n                        <h3 class=\"title\"><i class=\"icon-tasks\"></i> &nbsp;Affichage</h3>\n                        <p><input type=\"checkbox\" name=\"display\" v-on:change=\"filterYears\" v-model=\"display\">\n                            <label>Que les arrêts avec analyses</label></p>\n                    </div>\n\n                    <div class=\"widget categories clear\">\n                        <h3 class=\"title\"><i class=\"icon-tasks\"></i> &nbsp;Catégories</h3>\n                        <select id=\"chosen-select-app\" data-placeholder=\"Choisir une ou plusieurs catégories\" style=\"width:100%\" multiple class=\"chosen-select category\">\n                            <option v-for=\"categorie in list\" v-bind:value=\"categorie.id\">{{ categorie.title}}</option>\n                        </select>\n                    </div>\n\n                    <div class=\"widget years clear\">\n                        <h3 class=\"title\"><i class=\"icon-calendar\"></i> &nbsp;Années</h3>\n                        <p v-for=\"annee in annees\">\n                           <input type=\"checkbox\" v-on:change=\"filterYears\" v-model=\"checked\" :value=\"annee\">\n                           <label :for=\"annee\">Paru en {{ annee }}</label>\n                        </p>\n                    </div>\n\n                </div>\n            </div>\n        </div>\n\n    </div>\n</template>\n<style>\n\n    #chosen-select-app{\n        z-index:100;\n        width: 100% !important; /* or any value that fits your needs */\n    }\n\n    #loader-app{\n        text-align:center;\n        width:100%;\n        font-size:30px;\n        height:30px;\n        line-height:30px;\n    }\n\n</style>\n<script>\n\n    export default {\n\n        props: ['site','years','categories','slug'],\n        data () {\n            return {\n                list : [],\n                annees : [],\n                blocs: [],\n                checked: [],\n                loading: false,\n                display:0,\n                url: location.protocol + \"//\" + location.host+\"/\",\n            }\n        },\n        computed: {\n            computedSite: function () {\n                return this.site\n            }\n        },\n        mounted: function ()  {\n\n            this.getCategories();\n            this.getAnnees();\n\n            let self = this;\n            this.loading = true;\n\n            this.changed([],[]);\n\n            this.$nextTick(function() {\n\n                 let self = this;\n\n                 $('#chosen-select-app').chosen();\n                 $(\"#chosen-select-app\").chosen().change(function(evt,params){\n\n                     var categories = $(this).val();\n                     var years      = self.checked ? self.checked : null;\n\n                     self.changed(categories , years);\n                 });\n            });\n        },\n        methods: {\n            filterYears : function(){\n                 var categories = $('#chosen-select-app').val();\n                 var years      = this.checked ? this.checked : null;\n\n                 this.changed(categories, years);\n            },\n            getCategories : function(){\n               this.list = this.categories;\n            },\n            getAnnees : function(){\n               this.annees = this.years;\n            },\n            updateArrets : function(arrets){\n               this.blocs = arrets;\n            },\n            changed: function(selected, checked) {\n                this.loading = true;\n\n                var self = this;\n                axios.post('/vue/arrets', { site: this.site, categories : selected, years : checked, display : this.display  }).then(function (response) {\n                      setTimeout(function(){\n                           self.updateArrets(response.data.arrets);\n                           self.loading = false;\n                      }, 500);\n                }).catch(function (error) { console.log(error);});\n            },\n        }\n    }\n</script>"]}]);
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"AnalyseNewsletter.vue"}]);
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#addOption{\n    margin-bottom:15px;\n}\n.margBottom{\n  padding-bottom:5px;\n}\n.margTop{\n    margin-top:10px;\n}\n.list-group-item {\n    padding: 8px 15px 8px 15px;\n}\n.list-group-item label{\n    margin-bottom: 5px;\n    margin-top: 5px;\n}\n.list-option-groupe p{\n       margin-bottom: 5px;\n}\n.list-group-option{\n    margin-top:10px;\n}\n.list-group-option p {\n    margin-bottom: 3px;\n}\n.option-title{\n    border-color:#6f7271;\n}\n.btn-input-h{\n    height:34px;\n}\n", "", {"version":3,"sources":["OptionGroupe.vue?758795ee"],"names":[],"mappings":";AAkFA;IACA,mBAAA;CACA;AACA;EACA,mBAAA;CACA;AACA;IACA,gBAAA;CACA;AACA;IACA,2BAAA;CACA;AACA;IACA,mBAAA;IACA,gBAAA;CACA;AACA;OACA,mBAAA;CACA;AACA;IACA,gBAAA;CACA;AACA;IACA,mBAAA;CACA;AACA;IACA,qBAAA;CACA;AACA;IACA,YAAA;CACA","file":"OptionGroupe.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"text-right\">\n            <div class=\"btn-pull\" style=\"margin-bottom:10px;\">\n                <a v-show=\"!add\" @click=\"ajouter\" class=\"btn btn-sm btn-success\">Ajouter</a>\n                <a v-show=\"add\" @click=\"resetform\" class=\"btn btn-sm btn-default\">Fermer</a>\n            </div>\n        </div>\n        <ul class=\"list-group\">\n            <li class=\"list-group-item\" id=\"addOption\" v-show=\"add\">\n                <div class=\"row\">\n                    <div class=\"col-md-4\">\n                        <select name=\"type\" v-model=\"nouveau.type\" class=\"form-control\" v-on:change=\"selectType\" >\n                            <option value=\"checkbox\">Case à cocher</option>\n                            <option value=\"choix\">Choix</option>\n                            <option value=\"text\">Texte</option>\n                        </select>\n                    </div>\n                    <div class=\"col-md-8\">\n                        <input type=\"text\" class=\"form-control option-title\" name=\"title\" placeholder=\"Titre de l'option\" v-model=\"nouveau.title\">\n\n                        <div class=\"list-group-option\" v-if=\"nouveau.type == 'choix' &&  nouveau.groupe.length != 0\">\n                            <p v-for=\"groupe in nouveau.groupe\">\n                                <input class=\"form-control\" v-model=\"groupe.text\" placeholder=\"Choix\">\n                            </p>\n                            <a class=\"btn btn-xs btn-info\" @click=\"addNewGroupe()\"><i class=\"fa fa-plus\"></i></a>\n                        </div>\n                    </div>\n                </div>\n                <p class=\"text-right margTop\"><a @click=\"ajouterOption\" class=\"btn btn-sm btn-primary\">Envoyer</a></p>\n            </li>\n        </ul>\n\n        <ul class=\"list-group\">\n            <li v-for=\"option in list\" :class=\"'list-group-item ' + option.type\">\n                <h4 class=\"list-option-title\">{{ option.type_name }}</h4>\n                <div class=\"row\">\n                    <div class=\"col-md-10\">\n                        <label><strong>Titre</strong></label>\n                        <p v-if=\"!option.state\">{{ option.title }}</p>\n                        <div v-if=\"option.state\">\n                            <input class=\"form-control\" name=\"title\" type=\"text\" v-model=\"option.title\">\n                        </div>\n                    </div>\n                    <div class=\"col-md-2 text-right\">\n                        <div class=\"btn-group\">\n                            <a v-show=\"!option.state\" @click=\"editOption(option)\" class=\"btn btn-xs btn-info\">éditer</a>\n                            <a v-show=\"!option.state\" @click=\"deleteOption(option)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-times\"></i></a>\n                            <a v-show=\"option.state\" @click=\"saveOption(option)\" class=\"btn btn-xs btn-primary\">sauvegarder</a>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"row\" v-if=\"option.groupe.length != 0\">\n                    <div class=\"col-md-10\">\n                        <label><strong>Choix</strong></label>\n                        <p v-if=\"!option.state\" v-for=\"groupe in option.groupe\">{{ groupe.text }}</p>\n\n                        <div class=\"list-option-groupe\" v-if=\"option.state\">\n                            <p v-for=\"groupe in option.groupe\">\n                                <input class=\"form-control\" v-model=\"groupe.text\">\n                            </p>\n\n                            <div class=\"row\" v-if=\"newgroupitem\" style=\"margin-bottom:8px;\">\n                                <div class=\"col-md-11\">\n                                    <input class=\"form-control\" value=\"\" v-model=\"groupeitem.text\">\n                                </div>\n                                <div class=\"col-md-1\">\n                                    <button type=\"button\" @click=\"saveGroup(option)\" class=\"btn btn-sm btn-primary btn-input-h pull-right\">ajouter</button>\n                                </div>\n                            </div>\n\n                            <a class=\"btn btn-xs btn-info\" @click=\"addNewGroupeItem(option)\"><i class=\"fa fa-plus\"></i></a>\n                        </div>\n\n                    </div>\n                </div>\n            </li>\n        </ul>\n\n    </div>\n</template>\n<style>\n    #addOption{\n        margin-bottom:15px;\n    }\n    .margBottom{\n      padding-bottom:5px;\n    }\n    .margTop{\n        margin-top:10px;\n    }\n    .list-group-item {\n        padding: 8px 15px 8px 15px;\n    }\n    .list-group-item label{\n        margin-bottom: 5px;\n        margin-top: 5px;\n    }\n    .list-option-groupe p{\n           margin-bottom: 5px;\n    }\n    .list-group-option{\n        margin-top:10px;\n    }\n    .list-group-option p {\n        margin-bottom: 3px;\n    }\n    .option-title{\n        border-color:#6f7271;\n    }\n    .btn-input-h{\n        height:34px;\n    }\n</style>\n<script>\n\nexport default {\n\n    props: ['colloque','options'],\n    data () {\n        return {\n            list: [],\n            nouveau:{\n                title: '',\n                type: 'checkbox',\n                groupe: new Array(),\n                colloque_id: this.colloque,\n            },\n            groupeitem: {},\n            add : false,\n            newgroupitem: false,\n            isText: false\n        }\n    },\n    beforeMount: function () {\n        this.getOptions();\n    },\n    methods: {\n        getOptions : function(){\n             this.list = _.orderBy(this.options, ['type'],['desc']);\n        },\n        selectType : function(){\n\n            if(this.nouveau.type == 'choix')\n            {\n                 this.nouveau.groupe.push({ text: ''});\n            }\n            else{\n                this.nouveau.groupe = [];\n            }\n        },\n        editOption : function(option){\n            option.state = true;\n        },\n        ajouter : function(){\n            this.add = true;\n        },\n        addNewGroupe: function(option) {\n            this.nouveau.groupe.push({text: ''});\n        },\n        addNewGroupeItem: function(option) {\n            this.newgroupitem = true;\n            this.groupeitem.text = '';\n            this.groupeitem.option_id = option.id;\n            this.groupeitem.colloque_id = this.colloque;\n        },\n        resetform :function(){\n            this.add = false;\n            this.nouveau = {\n                title: '',\n                option: '',\n                type: 'checkbox',\n                groupe: [],\n                colloque_id: this.colloque,\n            };\n        },\n        ajouterOption:function(){\n\n            var self = this;\n            axios.post('/vue/option', { option : this.nouveau }).then(function (response) {\n                self.list = _.orderBy(response.data.options, ['type'],['desc']);\n                self.resetform();\n            }).catch(function (error) { console.log(error);});\n\n        },\n        saveOption : function(option){\n\n            var self = this;\n            axios.post('/vue/option/' + option.id, { option, '_method' : 'put' }).then(function (response) {\n               console.log(response.data.options);\n               self.list = _.orderBy(response.data.options, ['type'],['desc']);\n            }).catch(function (error) { console.log(error);});\n\n        },\n        saveGroup : function(option){\n\n            if(this.groupeitem.text.length){\n\n                var self = this;\n                axios.post('/vue/groupe', this.groupeitem).then(function (response) {\n                    self.list = _.orderBy(response.data.options, ['type'],['desc']);\n                }).catch(function (error) { console.log(error);});\n            }\n\n            this.newgroupitem = false;\n            this.groupeitem = {};\n        },\n        deleteOption :function(option){\n\n            var shouldDelete = false;\n\n            if(option.isUsed){\n                var answer = confirm('Cette option est lié à des inscription, voulez-vous vraiment supprimer?');\n                shouldDelete = answer ? true : false;\n            }\n            else{\n                shouldDelete = true;\n            }\n\n            if(shouldDelete){\n\n                var self = this;\n                axios.post('/vue/option/' + option.id, { '_method' : 'DELETE' }).then(function (response) {\n                    self.list = _.orderBy(response.data.options, ['type'],['desc']);\n                }).catch(function (error) { console.log(error);});\n            }\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.choixAdresse{\n    margin-bottom:10px;\n}\n", "", {"version":3,"sources":["Endroit.vue?42768181"],"names":[],"mappings":";AAoBA;IACA,mBAAA;CACA","file":"Endroit.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"choixAdresse\">\n           <select class=\"form-control form-required required\" v-model=\"selected\" name=\"location_id\" v-on:change=\"updateAdresse\">\n               <option v-for=\"adresse in list\" v-bind:value=\"adresse.id\">{{ adresse.name }}</option>\n           </select>\n       </div>\n       <div class=\"thumbnail thumbnail-colloque\">\n            <div class=\"row\">\n                <div class=\"col-md-3\" v-html=\"map\"></div>\n                <div class=\"col-md-8\">\n                    <h4 v-html=\"name\"></h4>\n                    <p v-html=\"adresse\"></p>\n                </div>\n            </div>\n       </div>\n   </div>\n</template>\n<style>\n    .choixAdresse{\n        margin-bottom:10px;\n    }\n</style>\n<script>\nexport default {\n\n    props: ['endroit','adresses'],\n    data () {\n        return {\n            list: [],\n            map: '<span class=\"text-danger\">il n\\'existe pas de carte</span>',\n            name: '',\n            adresse:''\n        }\n    },\n    computed: {\n       computedEndroit: function () {\n            return this.endroit\n        },\n    },\n    beforeMount: function ()  {\n        this.selected = this.endroit;\n\n        this.getAdresses();\n        this.updateAdresse();\n    },\n    methods: {\n        getAdresses : function(){\n           this.list = this.adresses;\n        },\n        makeAdresse: function(location){\n            this.name    = location.name;\n            this.adresse = location.adresse;\n\n            if(location.map){\n                this.map = '<img style=\"max-width:100%;\" src=\"files/colloques/cartes/'+ location.map +'\" alt=\"Carte\">';\n            }\n        },\n        updateAdresse : function(){\n\n            var self = this;\n            axios.post('/admin/location/colloque', { id: this.selected }).then(function (response) {\n               self.makeAdresse(response.data.location);\n            }).catch(function (error) { console.log(error);});\n\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.autocomplete-bloc{\n    padding:10px 0;\n    margin-top:5px;\n}\n.autocomplete-bloc span{\n    display:block;\n}\n.autocomplete-bloc .btn.btn-danger{\n    margin-top:8px;\n}\n.empty-text{\n    margin-top:5px;\n}\n.no-adresse {\n    position: absolute;\n    top: 5px;\n    right: 5px;\n    display: block;\n    color: #7b7b7b;\n    font-size: 12px;\n    border: 1px solid #d4d4d4;\n    padding: 3px;\n    width:auto;\n    text-align: center;\n}\n", "", {"version":3,"sources":["ListAutocomplete.vue?55aa56b8"],"names":[],"mappings":";AAmCA;IACA,eAAA;IACA,eAAA;CACA;AACA;IACA,cAAA;CACA;AACA;IACA,eAAA;CACA;AACA;IACA,eAAA;CACA;AACA;IACA,mBAAA;IACA,SAAA;IACA,WAAA;IACA,eAAA;IACA,eAAA;IACA,gBAAA;IACA,0BAAA;IACA,aAAA;IACA,WAAA;IACA,mBAAA;CACA","file":"ListAutocomplete.vue","sourcesContent":["<template>\n    <div>\n\n        <div class=\"input-group\" v-show=\"!hasChosen\">\n            <span class=\"input-group-addon\">\n                <img v-show=\"searching\" height=\"15px\" src=\"images/default.svg\">\n            </span>\n            <input :class=\"'search-input form-control search-adresse-autocomplete_' + type\" placeholder=\"Chercher...\" type=\"text\">\n            <span class=\"input-group-addon\" style=\"border:none;background:#fff; width:100px;\">\n                <span class=\"empty-text text-danger pull-right\" v-show=\"noResult\">Aucun résultat</span>\n            </span>\n        </div>\n\n        <div v-if=\"hasChosen\" class=\"choice-adresse autocomplete-bloc\">\n            <input :name=\"type\" :value=\"chosen.user_id\" type=\"hidden\">\n\n            <div class=\"panel panel-primary\">\n                <div class=\"panel-body panel-colloque\">\n                    <span class=\"no-adresse\">{{ chosen.user_id }}</span>\n\n                    <span v-if=\"chosen.company && (chosen.company != chosen.company)\"><strong>{{ chosen.company }}</strong></span>\n                    <span v-if=\"chosen.civilite\">{{ chosen.civilite }}</span>\n                    <span><a target=\"_blank\" :href=\"'admin/user/' + chosen.user_id\">{{ chosen.name }}</a></span>\n                    <span v-if=\"chosen.cp\">{{ chosen.cp }}</span>\n                    <span v-if=\"chosen.complement\">{{ chosen.complement }}</span>\n                    <span>{{ chosen.adresse }}</span>\n                    <span>{{ chosen.npa }} {{ chosen.ville }}</span>\n                    <button type=\"button\" class=\"btn btn-danger btn-xs pull-right\" @click.prevent=\"remove\">changer</button>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</template>\n<style>\n    .autocomplete-bloc{\n        padding:10px 0;\n        margin-top:5px;\n    }\n    .autocomplete-bloc span{\n        display:block;\n    }\n    .autocomplete-bloc .btn.btn-danger{\n        margin-top:8px;\n    }\n    .empty-text{\n        margin-top:5px;\n    }\n    .no-adresse {\n        position: absolute;\n        top: 5px;\n        right: 5px;\n        display: block;\n        color: #7b7b7b;\n        font-size: 12px;\n        border: 1px solid #d4d4d4;\n        padding: 3px;\n        width:auto;\n        text-align: center;\n    }\n</style>\n\n<script>\n    export default{\n        props: ['type','chosen_id'],\n        data(){\n            return{\n                chosen: {\n                    civilite : '',\n                    name : '',\n                    company: '',\n                    adresse: '',\n                    cp: '',\n                    npa: '',\n                    ville: '',\n                    user_id: null\n                },\n                hasChosen: false,\n                noResult: false,\n                searching: false\n            }\n        },\n        mounted: function ()  {\n\n            if(this.chosen_id){ this.fetch(); }\n\n            this.$nextTick(function() {\n\n                let self = this;\n\n                $(\".search-adresse-autocomplete_\" + this.type).keypress(function(e) {\n                    var code = (e.keyCode ? e.keyCode : e.which);\n                    if(code == 13) { //Enter keycode\n                        return false;\n                    }\n                });\n\n                $(\".search-adresse-autocomplete_\" + this.type).blur(function(){\n                     if($(this).val() === '') {\n                          self.noResult = false;\n                     }\n                 })\n\n                $(\".search-adresse-autocomplete_\" + this.type).autocomplete({\n                    source    : base_url + 'vue/autocomplete',\n                    minLength : 2,\n                    search: function( event, ui ) {\n                        self.searching = true;\n                    },\n                    select : function( event, ui ) {\n                         self.chosen = ui.item.user;\n                         self.hasChosen = true;\n                         self.searching = false;\n                         self.noResult = false;\n                         console.log(ui.item.user);\n                         return false;\n                    },\n                    response: function(event, ui) {\n                        if (ui.content.length === 0) {\n                            self.searching = false;\n                            self.noResult = true;\n                        }\n                    },\n                    change: function(event, ui) {\n                        console.log($(this).val());\n                         self.searching = false;\n                        if($(this).val() === '') {\n                             self.noResult = false;\n                        }\n                    }\n                }).autocomplete( \"instance\" )._renderItem = function( ul, item ){\n                    return $(\"<li>\").append(\"<a>\" + item.label + \"<span>\" + item.desc + \"</span><span>\" + item.company + \"</span></a>\").appendTo(ul);\n                };\n\n            });\n        },\n        methods: {\n            remove () {\n                this.hasChosen = false;\n                this.chosen = {\n                    civilite : '',\n                    name : '',\n                    company: '',\n                    adresse: '',\n                    cp: '',\n                    npa: '',\n                    ville: '',\n                    user_id: null\n                };\n                this.user_id = null;\n            },\n            updateOptions(options){\n                this.options = options;\n            },\n            fetch () {\n\n                var self = this;\n                axios.get('admin/user/getUser/' + this.chosen_id, {}).then(function (response) {\n                    console.log(response.data);\n                    self.chosen = response.data;\n                    self.hasChosen = true;\n                    self.noResult = false;\n                }).catch(function (error) { console.log(error);});\n            },\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"TextContent.vue"}]);
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n", "", {"version":3,"sources":["BuildNewsletterModels.vue?11d290e4"],"names":[],"mappings":";AAsHA;IACA,cAAA;IACA,mBAAA;IACA,aAAA;IACA,iBAAA;IACA,uBAAA;IACA,mBAAA;IACA,iDAAA;IACA,6DAAA;CACA;AAEA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,aAAA;IACA,gBAAA;IACA,qDAAA;CACA;AAEA;CACA,eAAA;CACA,0BAAA;CACA,wBAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA","file":"BuildNewsletterModels.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <div class=\"btn-group pull-right\" v-if=\"mode == 'edit'\" style=\"margin-bottom:5px;\">\n                    <form method=\"post\" :action=\"action\" v-if=\"model && !isEdit\">\n                        <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                        <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                        <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                        <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                        <button v-if=\"model && !isEdit\" @click=\"editMode(model)\" type=\"button\" class=\"btn btn-xs btn-warning\">éditer</button>\n                        <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"content.id\" :data-action=\"model.title\">x</button>\n                    </form>\n                </div>\n\n                <analyse-newsletter\n                        v-if=\"model && type == 5 && newsletter.display == 'top'\"\n                        :title=\"newsletter.comment_title\"\n                        :arret=\"model\"\n                        :analyses=\"model.analyses\"></analyse-newsletter>\n\n                <!-- Bloc content-->\n                <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"resetTable\">\n                    <tr v-if=\"model\">\n                        <td valign=\"top\" width=\"375\" class=\"resetMarge contentForm\">\n                            <h3>{{ model.dumois ? 'Arrêt du mois : ' : '' }}{{ model.title }}</h3>\n                            <p class=\"abstract\">{{ model.abstract }}</p>\n                            <div v-html=\"model.content\" class=\"content\"></div>\n                            <p><a target=\"_blank\" :class=\"model.class\" :href=\"model.link\">{{ model.message }}</a></p>\n                        </td>\n\n                        <!-- Bloc image droite-->\n                        <td width=\"25\" class=\"resetMarge\"></td><!-- space -->\n                        <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                            <div v-for=\"image in model.images\">\n                                <a target=\"_blank\" :href=\"image.link\">\n                                    <img width=\"130\" border=\"0\" :alt=\"image.title\" :src=\"image.image\">\n                                </a>\n                                <p v-if=\"!newsletter.hide_title\" style=\"text-align:center !important;\">{{ image.title }}</p>\n                            </div>\n                        </td>\n                    </tr>\n                </table>\n                <!-- Bloc content-->\n\n                <analyse-newsletter\n                        v-if=\"model && type == 5 && newsletter.display == 'bottom'\"\n                        :title=\"newsletter.comment_title\"\n                        :arret=\"model\"\n                        :analyses=\"model.analyses\"></analyse-newsletter>\n\n            </div>\n\n            <div class=\"col-md-5\" v-show=\"isEdit || mode == 'create'\">\n                <form name=\"blocForm newsletterForm\" class=\"form-horizontal\" method=\"post\" :action=\"action\">\n\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <input v-if=\"mode == 'edit'\" type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <div v-if=\"type == 7\">\n                                <select class=\"form-control form-required required\" v-model=\"categorie\" name=\"id\" v-on:change=\"updateModel\">\n                                    <option v-if=\"!categorie\" :value=\"null\" disabled>Sélectionner catégorie</option>\n                                    <option v-for=\"categorie in categories\" v-bind:value=\"categorie\">{{ categorie.title }}</option>\n                                </select><br/>\n\n                                <div class=\"row drag\">\n                                    <div class=\"col-md-6\">\n                                        <draggable v-model=\"arrets\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                            <div v-for=\"element in arrets\" :key=\"element.id\">{{ element.reference }}</div>\n                                        </draggable>\n                                    </div>\n                                    <div class=\"col-md-6\">\n                                        <draggable v-model=\"choosen\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                            <div v-for=\"element in choosen\" :key=\"element.id\">{{ element.reference }}</div>\n                                        </draggable>\n                                    </div>\n                                </div>\n                            </div>\n                            <div v-if=\"type != 7\">\n                                <select class=\"form-control form-required required\" v-model=\"model\" name=\"id\" v-on:change=\"updateModel\">\n                                    <option v-if=\"!model\" :value=\"null\" disabled>Sélectionner</option>\n                                    <option v-for=\"model in models\" v-bind:value=\"model\">{{ model.title }}</option>\n                                </select><br/>\n                            </div>\n\n                            <div class=\"btn-group\">\n                                <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                <input v-if=\"type == 7 && categorie\" type=\"hidden\" :value=\"categorie.id\" name=\"categorie_id\">\n\n                                <div v-if=\"model\">\n                                    <input v-if=\"type == 5\" type=\"hidden\" :value=\"model.id\" name=\"arret_id\">\n                                    <input v-if=\"type == 8\" type=\"hidden\" :value=\"model.id\" name=\"product_id\">\n                                    <input v-if=\"type == 9\" type=\"hidden\" :value=\"model.id\" name=\"colloque_id\">\n                                </div>\n\n                                <div v-if=\"type == 7\">\n                                    <input v-for=\"chose in choosen\" type=\"hidden\" name=\"arrets[]\" :value=\"chose.id\" />\n                                </div>\n\n                                <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                <button type=\"button\" @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                            </div>\n\n                        </div>\n                    </div>\n\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n</style>\n<script>\n\n    import draggable from 'vuedraggable';\n    import AnalyseNewsletter from './partials/AnalyseNewsletter.vue';\n\n    export default{\n\n        props: ['type','campagne','_token','url','site','title','content','mode','newsletter'],\n        components: {\n            draggable,\n            'analyse-newsletter' : AnalyseNewsletter,\n        },\n        data(){\n            return{\n                model:null,\n                choosen: [],\n                categorie: null,\n                categories: [],\n                arrets: [],\n                models: [],\n                lists:[],\n                isEdit: false,\n            }\n        },\n        computed: {\n            route: function () {\n                if(this.type == 5){ return \"admin/ajax/arrets/\" + this.site; }\n                if(this.type == 8){ return \"admin/ajax/product\"; }\n                if(this.type == 9){ return \"admin/ajax/colloque\"; }\n            },\n            selected: function () {\n                if(this.type == 5){ this.content.arret }\n                if(this.type == 8){ this.content.product }\n                if(this.type == 9){ this.content.colloque }\n            },\n            action:function(){\n                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }\n                if(this.mode == 'create'){ return this.url; }\n            },\n            prepared: function () {\n                var arr = [];\n                _.each(this.choosen,function(o){\n                   arr.push(_.pick(o,'id'));\n                });\n\n                return arr;\n            }\n        },\n        watch : {\n           type:function(val) {\n              this.models = [];\n              this.getModels(this.route);\n           },\n        },\n        mounted: function ()  {\n            this.getModels(this.route);\n            this.getCategories();\n            this.initialize();\n        },\n        methods: {\n            initialize : function(){\n                this.model  = this.content ? this.content.model : null;\n                this.isEdit = !this.content ? true : false;\n            },\n            getModels: function(route) {\n                var self = this;\n                axios.get(route).then(function (response) {\n                      self.models = response.data;\n                }).catch(function (error) { console.log(error);});\n            },\n            getCategories: function() {\n                var self = this;\n                axios.get('admin/ajax/categories/' + self.site).then(function (response) {\n                      self.categories = response.data;\n                      self.lists.push(self.categories);\n                }).catch(function (error) { console.log(error);});\n            },\n            getArretsCategories: function() {\n                var self = this;\n                axios.post(\"admin/ajax/categorie/categoriearrets\",{ id: self.categorie.id }).then(function (response) {\n                      self.arrets = response.data;\n                }).catch(function (error) { console.log(error);});\n            },\n            updateModel(){\n                this.getArretsCategories();\n            },\n            editMode(model){\n                this.isEdit = true;\n            },\n            close(){\n                this.isEdit = false;\n                this.initialize();\n                if(this.mode == 'create'){\n                    this.model = null;\n                    this.$emit('cancel', this.cancel);\n                }\n            },\n            deleteContent(model){\n                //this.$emit('deleteContent', model);\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#addPrices{\n    margin-bottom:15px;\n}\n.margBottom{\n  padding-bottom:5px;\n}\n.list-group-item {\n    padding: 8px 15px 8px 15px;\n}\n.price-list{\n    width:100%;\n}\n.price-list dd {\n    margin-left: 100px;\n}\n\n", "", {"version":3,"sources":["Price.vue?1b59cdd3"],"names":[],"mappings":";AAgHA;IACA,mBAAA;CACA;AACA;EACA,mBAAA;CACA;AACA;IACA,2BAAA;CACA;AACA;IACA,WAAA;CACA;AACA;IACA,mBAAA;CACA","file":"Price.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"text-right\">\n           <div class=\"btn-pull\" style=\"margin-bottom:10px;\">\n               <a v-show=\"!add\" @click=\"ajouter\" class=\"btn btn-sm btn-success\">Ajouter</a>\n               <a v-show=\"add\" @click=\"resetform\" class=\"btn btn-sm btn-default\">Fermer</a>\n           </div>\n       </div>\n       <ul class=\"list-group\">\n           <li class=\"list-group-item\" id=\"addPrices\" v-show=\"add\">\n               <div class=\"row\">\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Description:</dt>\n                           <dd><input class=\"form-control\" name=\"description\" type=\"text\" v-model=\"nouveau.description\"></dd>\n                           <dt>Remarque:</dt>\n                           <dd><input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"nouveau.remarque\"></dd>\n                       </dl>\n                   </div>\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Prix:</dt>\n                           <dd><input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"nouveau.price\"></dd>\n                           <dt>Type de prix::</dt>\n                           <dd>\n                               <select class=\"form-control\" v-model=\"nouveau.type\">\n                                   <option value=\"public\">Public</option>\n                                   <option value=\"admin\">Admin</option>\n                               </select>\n                           </dd>\n                       </dl>\n                   </div>\n               </div>\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt style=\"width:200px;\">Cacher le prix à partir du:</dt>\n                           <dd style=\"margin-left:220px;\"><input class=\"form-control datePickerNew\" name=\"end_at\" type=\"text\" v-model=\"nouveau.end_at\"></dd>\n                       </dl>\n                   </div>\n               </div>\n\n               <p class=\"text-right margBottom\"><a @click=\"ajouterPrice\" class=\"btn btn-sm btn-primary\">Envoyer</a></p>\n           </li>\n       </ul>\n\n       <ul class=\"list-group\">\n           <li v-for=\"price in list\" :class=\"'list-group-item ' + price.type\">\n\n               <div class=\"row\">\n                   <div class=\"col-md-12 text-right\">\n                       <div class=\"btn-group\" style=\"margin-bottom:10px;\">\n                           <a v-show=\"!price.state\" @click=\"editPrice(price)\" class=\"btn btn-xs btn-info\">éditer</a>\n                           <a v-show=\"!price.state\" @click=\"deletePrice(price)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-times\"></i></a>\n                           <a v-show=\"price.state\" @click=\"savePrice(price)\" class=\"btn btn-xs btn-primary\">sauvegarder</a>\n                       </div>\n                   </div>\n               </div>\n\n               <div class=\"row\">\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Description:</dt>\n                           <dd v-if=\"!price.state\">{{ price.description }}</dd>\n                           <dd v-if=\"price.state\">\n                               <input class=\"form-control\" name=\"description\" type=\"text\" v-model=\"price.description\">\n                           </dd>\n                           <dt>Remarque:</dt>\n                           <dd v-if=\"!price.state\">{{ price.remarque }}</dd>\n                           <dd v-if=\"price.state\">\n                               <input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"price.remarque\">\n                           </dd>\n                       </dl>\n                   </div>\n                   <div class=\"col-md-6\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt>Prix:</dt>\n                           <dd v-if=\"!price.state\">{{ price.price }} CHF</dd>\n                           <dd v-if=\"price.state\">\n                               <input class=\"form-control\" name=\"remarque\" type=\"text\" v-model=\"price.price\">\n                           </dd>\n                           <dt>Type de prix:</dt>\n                           <dd v-if=\"!price.state\">{{ price.type }}</dd>\n                           <dd v-if=\"price.state\">\n                               <select class=\"form-control\" v-model=\"price.type\">\n                                   <option value=\"public\">Public</option>\n                                   <option value=\"admin\">Admin</option>\n                               </select>\n                           </dd>\n                       </dl>\n                   </div>\n               </div>\n\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <dl class=\"dl-horizontal price-list\">\n                           <dt style=\"width:200px;\">Cacher le prix à partir du:</dt>\n                           <dd style=\"margin-left:220px;\" v-if=\"!price.state\">{{ price.end_at }}</dd>\n                           <dd style=\"margin-left:220px;\" v-if=\"price.state\">\n                               <input class=\"form-control datePickerPrices\" name=\"end_at\" type=\"text\" v-model=\"price.end_at\">\n                           </dd>\n                       </dl>\n                   </div>\n               </div>\n\n           </li>\n       </ul>\n\n   </div>\n</template>\n<style>\n    #addPrices{\n        margin-bottom:15px;\n    }\n    .margBottom{\n      padding-bottom:5px;\n    }\n    .list-group-item {\n        padding: 8px 15px 8px 15px;\n    }\n    .price-list{\n        width:100%;\n    }\n    .price-list dd {\n        margin-left: 100px;\n    }\n\n</style>\n<script>\n\nexport default {\n\n    props: ['colloque','prices','occurrences'],\n    data () {\n        return {\n            list: [],\n            list_occurrences: [],\n            nouveau:{\n                description: '',\n                price: '',\n                type: 'public',\n                rang: '',\n                remarque: '',\n                end_at:'',\n                colloque_id: this.colloque,\n            },\n            add : false\n        }\n    },\n    beforeMount: function () {\n        this.getData();\n    },\n    methods: {\n        getData : function(){\n             this.list = _.orderBy(this.prices, ['type'],['desc']);\n             this.list_occurrences = this.occurrences;\n\n             this.$nextTick(function(){\n\n               $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                var self = this;\n\n                $('.datePickerNew').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   self.nouveau.end_at = ev.target.value;\n                });\n            });\n        },\n        editPrice : function(price){\n            price.state = true;\n\n            this.$nextTick(function(){\n                 $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                $('.datePickerPrices').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   price.end_at = ev.target.value;\n                });\n            });\n\n        },\n        ajouter:function(){\n            this.add = true;\n        },\n        resetform :function(){\n            this.add = false;\n            this.nouveau = {\n                description: '',\n                price: '',\n                type: '',\n                rang: '',\n                remarque: '',\n                colloque_id: this.colloque,\n            };\n        },\n        ajouterPrice:function(){\n\n            var self = this;\n            axios.post('/vue/price', { price : this.nouveau }).then(function (response) {\n                self.list = _.orderBy(response.data.prices, ['type'],['desc']);\n                self.resetform();\n            }).catch(function (error) { console.log(error);});\n        },\n        savePrice : function(price){\n\n            var self = this;\n            axios.post('/vue/price/' + price.id, { price, '_method' : 'put' }).then(function (response) {\n               self.list = _.orderBy(response.data.prices, ['type'],['desc']);\n            }).catch(function (error) { console.log(error);});\n\n        },\n        deletePrice :function(price){\n\n            var self = this;\n            axios.post('/vue/price/' + price.id, { '_method' : 'DELETE' }).then(function (response) {\n                self.list = _.orderBy(response.data.prices, ['type'],['desc']);\n            }).catch(function (error) { console.log(error);});\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.choixAdresse{\n    margin-bottom:10px;\n}\n", "", {"version":3,"sources":["Organisateur.vue?555b2ff7"],"names":[],"mappings":";AAoBA;IACA,mBAAA;CACA","file":"Organisateur.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"choixAdresse\">\n           <select class=\"form-control form-required required\" v-model=\"selected\" name=\"adresse_id\" v-on:change=\"updateAdresse\">\n               <option v-for=\"adresse in list\" v-bind:value=\"adresse.id\">{{ adresse.name }}</option>\n           </select>\n       </div>\n       <div class=\"thumbnail thumbnail-colloque\">\n            <div class=\"row\">\n                <div class=\"col-md-3\" v-html=\"logo\"></div>\n                <div class=\"col-md-8\">\n                    <h4 v-html=\"name\"></h4>\n                    <p v-html=\"adresse\"></p>\n                </div>\n            </div>\n       </div>\n   </div>\n</template>\n<style>\n    .choixAdresse{\n        margin-bottom:10px;\n    }\n</style>\n<script>\nexport default {\n\n    props: ['organisateur','adresses'],\n    data () {\n        return {\n            list: [],\n            logo: '<span class=\"text-danger\">il n\\'existe pas de logo</span>',\n            name: '',\n            adresse:''\n        }\n    },\n    computed: {\n       computedEndroit: function () {\n            return this.organisateur\n        },\n    },\n    beforeMount: function ()  {\n        this.selected = this.organisateur;\n\n        this.getAdresses();\n        this.updateAdresse();\n    },\n    methods: {\n        getAdresses : function(){\n           this.list = this.adresses;\n        },\n        makeAdresse: function(organisateur){\n            this.name    = organisateur.name;\n            this.adresse = organisateur.adresse;\n\n            if(organisateur.logo)\n            {\n                this.logo = '<img style=\"max-width:100%;max-height:100px;\" src=\"files/logos/'+ organisateur.logo +'\" alt=\"Logo\">';\n            }\n        },\n        updateAdresse : function(){\n\n            var self = this;\n            axios.post('/admin/organisateur/colloque', { id: this.selected }).then(function (response) {\n                 self.makeAdresse(response.data.organisateur);\n            }).catch(function (error) { console.log(error);});\n\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.wrapper-bloc-edit{\n    position:absolute;\n    top:0;\n    left:600px;\n}\n.edit_bloc_form{\n    width: 640px;\n}\n.edit_bloc_form::before{\n        color: #f1c40f;\n        content: \"◄\";\n        display: block;\n        font-size: 14px;\n        font-weight: bold;\n        height: 10px;\n        left: -12px;\n        position: absolute;\n        top: 0px;\n        width: 5px;\n}\n.paddingUp{\n        padding-top:55px;\n        padding-bottom:10px;\n        border-bottom:1px solid #f5f5f5;\n}\n.dragArea {\n        height: 300px;\n        margin: 0 0 20px 0;\n        padding: 3px;\n        overflow: scroll;\n        border: 1px solid #ccc;\n        border-radius: 3px;\n        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n        transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n        width: 100%;\n        height: auto;\n        line-height: 18px;\n        padding: 5px;\n        cursor: pointer;\n        box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n        color: #EAEAEA;\n        background-color: #EAEAEA;\n        border: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n        color: #224466;\n        background-color: #2299ff;\n}\n.sortable-drag {\n        color: #449922;\n        background-color: #44ff33;\n}\n", "", {"version":3,"sources":["EditBloc.vue?4baf80d9"],"names":[],"mappings":";AAgFA;IACA,kBAAA;IACA,MAAA;IACA,WAAA;CACA;AACA;IACA,aAAA;CACA;AACA;QACA,eAAA;QACA,aAAA;QACA,eAAA;QACA,gBAAA;QACA,kBAAA;QACA,aAAA;QACA,YAAA;QACA,mBAAA;QACA,SAAA;QACA,WAAA;CACA;AACA;QACA,iBAAA;QACA,oBAAA;QACA,gCAAA;CACA;AACA;QACA,cAAA;QACA,mBAAA;QACA,aAAA;QACA,iBAAA;QACA,uBAAA;QACA,mBAAA;QACA,iDAAA;QACA,6DAAA;CACA;AAEA;QACA,YAAA;QACA,aAAA;QACA,kBAAA;QACA,aAAA;QACA,gBAAA;QACA,qDAAA;CACA;AAEA;QACA,eAAA;QACA,0BAAA;QACA,wBAAA;CACA;AACA;QACA,eAAA;QACA,0BAAA;CACA;AACA;QACA,eAAA;QACA,0BAAA;CACA","file":"EditBloc.vue","sourcesContent":["<template>\n    <div>\n        <div v-show=\"activ\" class=\"pull-right\" style=\"margin-top:5px;\">\n            <form method=\"post\" :action=\"action\" class=\"pull-right\">\n                <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                <input type=\"hidden\" name=\"id\" :value=\"bloc.id\" />\n                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"bloc.id\" :data-action=\"bloc.titre\">x</button>\n            </form>\n            <button :id=\"'btn'+bloc_id\" class=\"btn btn-info btn-xs\" type=\"button\" @click=\"makeVisible\">editer</button>\n        </div>\n\n        <arret v-if=\"type == 5 && model && visible\" class=\"paddingUp\" :newsletter=\"newsletter\" :arret=\"model\"></arret>\n        <text-content v-if=\"hasTitle && visible\" class=\"paddingUp\" :newbloc=\"newbloc\" :categorie=\"model\" :type=\"type\" @imageUploaded=\"imageUploadedUpdate\"></text-content>\n        <model-content v-if=\"!hasTitle && model && visible && type != 5 && type != 10  && type != 7\" :color=\"color\" class=\"paddingUp\" :model=\"model\" :type=\"type\"></model-content>\n\n        <div class=\"wrapper-bloc-edit\" v-if=\"visible\">\n            <div class=\"edit_bloc_form\">\n                <form name=\"blocForm newsletterForm\" method=\"post\" :action=\"action\">\n                    <input type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <div class=\"panel panel-warning\">\n                        <div class=\"panel-body\">\n\n                            <div v-if=\"type == 10 || type == 5 || type == 9 || type == 8 || type == 7\">\n                                <select :disabled=\"type == 7\" class=\"form-control form-required required\" @change=\"getSingle(selected)\" v-model=\"selected\" name=\"model_id\">\n                                    <option v-if=\"!selected\" :value=\"null\" disabled>Sélectionner</option>\n                                    <option v-for=\"model in models\" v-bind:value=\"model.id\">{{ model.title }}</option>\n                                </select><br/>\n                            </div>\n\n                            <div v-if=\"type == 7\" class=\"row drag\">\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"arrets\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in arrets\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"choosen\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in choosen\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                            </div>\n\n                            <div class=\"form-group\" v-if=\"hasTitle\">\n                                <label>Titre</label>\n                                <input v-model=\"newbloc.titre\" type=\"text\" required name=\"titre\" class=\"form-control\">\n                            </div>\n                            <div class=\"form-group\" v-if=\"hasImage\">\n                                <label>Ajouter un lien sur l'image</label>\n                                <input v-model=\"newbloc.lien\" type=\"text\" value=\"\" name=\"lien\" class=\"form-control\">\n                            </div>\n                            <div class=\"form-group\" v-if=\"hasText\">\n                                <label>Texte</label>\n                                <textarea v-model=\"newbloc.contenu\" required name=\"contenu\" :class=\"'form-control redactorBuild_' + hash\" rows=\"10\">{{ newbloc.contenu }}</textarea>\n                            </div>\n\n                            <div class=\"form-group\">\n                                <div class=\"btn-group\">\n                                    <input type=\"hidden\" v-if=\"uploadImage\" :value=\"uploadImage\" name=\"image\">\n                                    <input type=\"hidden\" :value=\"bloc.id\" name=\"id\">\n                                    <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                    <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                    <input type=\"hidden\" :value=\"bloc.groupe_id\" name=\"groupe_id\">\n                                    <input v-if=\"model\" type=\"hidden\" :name=\"path + '_id'\" :value=\"selected\" />\n                                    <input v-for=\"chose in choosen\" type=\"hidden\" name=\"arrets[]\" :value=\"chose.id\" />\n                                    <button type=\"submit\" class=\"btn btn-sm btn-warning\">Envoyer</button>\n                                    <button type=\"button\" @submit.prevent @click=\"makeVisible\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </form>\n            </div>\n\n        </div>\n    </div>\n</template>\n<style>\n.wrapper-bloc-edit{\n    position:absolute;\n    top:0;\n    left:600px;\n}\n.edit_bloc_form{\n    width: 640px;\n}\n.edit_bloc_form::before{\n        color: #f1c40f;\n        content: \"◄\";\n        display: block;\n        font-size: 14px;\n        font-weight: bold;\n        height: 10px;\n        left: -12px;\n        position: absolute;\n        top: 0px;\n        width: 5px;\n    }\n    .paddingUp{\n        padding-top:55px;\n        padding-bottom:10px;\n        border-bottom:1px solid #f5f5f5;\n    }\n        .dragArea {\n        height: 300px;\n        margin: 0 0 20px 0;\n        padding: 3px;\n        overflow: scroll;\n        border: 1px solid #ccc;\n        border-radius: 3px;\n        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n        transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n    }\n\n    .dragArea div {\n        width: 100%;\n        height: auto;\n        line-height: 18px;\n        padding: 5px;\n        cursor: pointer;\n        box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n    }\n\n    .sortable-ghost {\n        color: #EAEAEA;\n        background-color: #EAEAEA;\n        border: 1px dashed #aaa;\n    }\n    .sortable-chosen:not(.sortable-ghost) {\n        color: #224466;\n        background-color: #2299ff;\n    }\n    .sortable-drag {\n        color: #449922;\n        background-color: #44ff33;\n    }\n</style>\n<script>\n\n    import Arret from './blocs/Arret.vue';\n    import TextContent from './blocs/TextContent.vue';\n    import ModelContent from './blocs/ModelContent.vue';\n    import draggable from 'vuedraggable';\n\n    export default{\n\n        props: ['bloc','campagne','newsletter','type','_token','url','site'],\n        components:{\n            'arret' : Arret,\n            'text-content' : TextContent,\n            'model-content' : ModelContent,\n             draggable,\n        },\n        data(){\n            return{\n                newbloc:{\n                    titre: this.bloc.titre,\n                    contenu: this.bloc.contenu,\n                    filename: this.bloc.image,\n                    path: this.bloc.path,\n                    lien: this.bloc.lien,\n                },\n                visible: false,\n                activ:true,\n                models: [],\n                selected: null,\n                hash: null,\n                model:null,\n                uploadImage:null,\n                arrets: this.bloc.model && this.bloc.model.listearrets ? this.bloc.model.listearrets :[] ,\n                choosen: this.bloc.model && this.bloc.model.choosen ? this.bloc.model.choosen : [] ,\n            }\n        },\n        watch: {},\n        computed: {\n            bloc_id(){\n                return 'bloc_' + this.bloc.id;\n            },\n            action:function(){\n                return this.url + '/' + this.bloc.id;;\n            },\n            path: function () {\n                if(this.type == 5){return 'arret';}\n                if(this.type == 7 || this.type == 10){return 'categorie';}\n                if(this.type == 8){ return 'product';}\n                if(this.type == 9){ return 'colloque';}\n\n                return null;\n            },\n            hasTitle: function () {\n                return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;\n            },\n            hasText: function () {\n                return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;\n            },\n            hasImage: function () {\n                return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) ? true : false;\n            },\n            uniqueid: function () {\n                if(this.type == 5){return this.bloc.arret_id;}\n                if(this.type == 7 || this.type == 10){return this.bloc.categorie_id;}\n                if(this.type == 8){ return this.bloc.product_id;}\n                if(this.type == 9){ return this.bloc.colloque_id;}\n\n                return null;\n            },\n            color(){\n                return this.newsletter.color;\n            }\n        },\n        mounted: function ()  {\n            this.initialize();\n            this.makeHash();\n        },\n        methods: {\n            makeVisible(){\n                this.visible = this.visible ? false : true;\n                this.activ   = this.visible ? false : true;\n\n                this.selected = this.uniqueid ? this.uniqueid : null;\n\n                if(this.visible && this.type != 7){\n                    this.hideOriginal();\n                }\n                else{\n                    this.showOriginal();\n                }\n\n                 this.$nextTick(function(){\n                    var self = this;\n\n                    $('.redactorBuild_' + self.hash).redactor({\n                        minHeight: '180px',\n                        maxHeight: '370px',\n                        removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],\n                        lang: 'fr',\n                        plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],\n                        fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageManagerJson: 'admin/imageJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageResizable: true,\n                        imagePosition: true,\n                        linkNewTab: true,\n                        formatting: ['h1', 'h2','h3','p', 'blockquote'],\n                        callbacks: {\n                            blur:function(e){\n                                self.newbloc.contenu = this.source.getCode();\n                            },\n                            enter: function(e){\n                               return !(window.event && window.event.keyCode == 13 && window.event.keyCode == 46);\n                            }\n                        }\n                    });\n                });\n            },\n            hideOriginal(){\n                this.$nextTick(function(){\n                    console.log($('#'+ this.bloc_id));\n                    $('#'+ this.bloc_id).hide();\n                    $('#btn'+ this.bloc_id).hide();\n                });\n            },\n            showOriginal(){\n                this.$nextTick(function(){\n                    $('#'+ this.bloc_id).show();\n                    $('#btn'+ this.bloc_id).show();\n                });\n            },\n            makeHash(){\n                this.hash = Math.random().toString(36).substring(7);\n            },\n            initialize : function(){\n                this.getSingle();\n                this.getModels();\n            },\n            getModels: function() {\n                var self = this;\n                if(this.path){\n                     axios.get('admin/ajax/list/'+ this.path +'/' + self.site).then(function (response) {\n                         self.models = response.data;\n                     }).catch(function (error) { console.log(error);});\n                }\n                else{\n                    this.models = [];\n                }\n            },\n            getArrets: function() {\n                var self = this;\n                if(this.selected){\n                     axios.get('admin/ajax/categoriearrets/' + this.selected).then(function (response) {\n                         self.arrets = response.data;\n                     }).catch(function (error) { console.log(error);});\n                }\n                else{\n                    this.arrets = this.bloc.model && this.bloc.model.listearrets ? this.bloc.model.listearrets : [];\n                }\n            },\n            getSingle: function() {\n                var self = this;\n                if(this.path){\n                     var id = this.selected ? this.selected : this.uniqueid;\n                     axios.get('admin/ajax/single/'+ this.path +'/' + id).then(function (response) {\n                         self.model = response.data;\n                     }).catch(function (error) { console.log(error);});\n                }\n                else{\n                    this.model = null;\n                }\n            },\n            imageUploadedUpdate(value){\n                this.uploadImage = value;\n            },\n            close(){\n                this.makeVisible();\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.max{\n    max-height:80px;\n}\n.form-group-border{\n    margin-top:20px;\n}\n.form-group-border .checkbox{\n    padding-left:0;\n}\n", "", {"version":3,"sources":["FilterAdresse.vue?39bc0a2b"],"names":[],"mappings":";AAyEA;IACA,gBAAA;CACA;AACA;IACA,gBAAA;CACA;AACA;IACA,eAAA;CACA","file":"FilterAdresse.vue","sourcesContent":["<template>\n    <div>\n\n        <div class=\"row\">\n            <div class=\"col-md-2\">\n                <div class=\"form-group\">\n                    <label class=\"control-label\">Rechercher</label>\n                    <select name=\"type\" class=\"form-control\" v-model=\"selected\"  v-on:change=\"updateType\">\n                        <option v-for=\"type in types\" v-bind:value=\"type.value\">{{ type.name }}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"col-md-2\">\n                <div class=\"form-group\">\n                    <label class=\"control-label\">Grouper par</label>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"checked\" name=\"group\" type=\"radio\" value=\"id\"> &nbsp;Ne pas grouper</label>\n                    </div>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"checked\" name=\"group\" type=\"radio\" value=\"email\"> &nbsp;Même email</label>\n                    </div>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"checked\" name=\"group\" type=\"radio\" value=\"last_name\"> &nbsp;Même Nom</label>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-md-4\">\n\n                <p><button type=\"button\" class=\"btn btn-xs btn-success\" @click=\"addTerm\"><i class=\"fa fa-plus\"></i> &nbsp;terme de recherche</button></p>\n                <div v-for=\"(term,index) in searchTerms\" class=\"row\">\n                    <div class=\"col-md-1\">\n                        <button type=\"button\" class=\"btn btn-xs btn-danger\" @click=\"removeTerm(index)\"><i class=\"fa fa-minus\"></i></button>\n                    </div>\n                    <div class=\"col-md-4\">\n                        <select v-model=\"term.column\" :name=\"'columns[' + index + ']'\" class=\"form-control\">\n                            <option v-for=\"column in choosencolumns\" v-bind:value=\"column.label\">{{ column.name }}</option>\n                        </select>\n                    </div>\n                    <div class=\"col-md-7\">\n                        <input type=\"text\" v-model=\"term.value\" class=\"form-control\" :name=\"'terms[' + index + ']'\" placeholder=\"Recherche...\">\n                    </div>\n                </div>\n\n                <div v-if=\"searchTerms.length\" class=\"form-group form-group-border\">\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"operator\" name=\"operator\" type=\"radio\" value=\"and\"> &nbsp;\n                            Et <span class=\"text-muted\">(tous les termes doivent correspondre)</span>\n                        </label>\n                    </div>\n                    <div class=\"checkbox\">\n                        <label><input v-model=\"operator\" name=\"operator\" type=\"radio\" value=\"or\"> &nbsp;\n                            Ou <span class=\"text-muted\">(chaque terme séparément)</span>\n                        </label>\n                    </div>\n                </div>\n\n            </div>\n            <div class=\"col-md-2\">\n                <label class=\"control-label\">&nbsp;</label><br/>\n                <button class=\"btn btn-info\" type=\"submit\">Recherche</button>\n            </div>\n            <div class=\"col-md-2\">\n                <p>\n                    <strong><span class=\"text-danger\">La recherche se fait sur les champs existant pour chaque type:<br/></span></strong>\n                    <strong>Comptes utilisateurs: </strong> Nom, prénom, email, entreprise<br/>\n                    <strong>Adresses: </strong> Nom, prénom, email, entreprise, adresse, NPA, ville\n                </p>\n            </div>\n        </div>\n\n    </div>\n</template>\n<style>\n    .max{\n        max-height:80px;\n    }\n    .form-group-border{\n        margin-top:20px;\n    }\n    .form-group-border .checkbox{\n        padding-left:0;\n    }\n</style>\n<script>\n\n    export default{\n        props: ['selected','checked','operator','terms'],\n        data(){\n            return{\n                types: [\n                   {'name' : 'Compte utilisateur', 'value' : 'user'},\n                   {'name' : 'Adresse', 'value' : 'adresse'},\n                ],\n                searchTerms: this.terms,\n                columns:\n                {\n                    user:[\n                        {'name' : 'Nom', 'label' : 'last_name'},\n                        {'name' : 'Prénom', 'label' : 'first_name'},\n                        {'name' : 'Email', 'label' : 'email'},\n                        {'name' : 'Entreprise', 'label' : 'company'},\n                    ],\n                    adresse:[\n                        {'name' : 'Nom', 'label' : 'last_name'},\n                        {'name' : 'Prénom', 'label' : 'first_name'},\n                        {'name' : 'Email', 'label' : 'email'},\n                        {'name' : 'Entreprise', 'label' : 'company'},\n                        {'name' : 'Adresse ', 'label' : 'adresse '},\n                        {'name' : 'NPA', 'label' : 'npa'},\n                        {'name' : 'Ville', 'label' : 'ville'},\n                    ]\n                },\n            }\n        },\n        computed: {\n             choosencolumns: function () {\n                return this.columns[this.selected];\n             },\n        },\n        components:{\n        },\n        mounted: function () {\n\n        },\n        methods: {\n            addTerm : function(){\n                 this.searchTerms.push({ 'column' : 'first_name', 'value' : ' ' });\n            },\n            removeTerm: function(term){\n                this.searchTerms.splice(term, 1)\n            },\n            updateType: function(){\n\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#StyleNewsletterCreate{\n    margin-top:5px;\n}\n.create_bloc_form::before{\n    color: #85c744;\n    content: \"◄\";\n    display: block;\n    font-size: 14px;\n    font-weight: bold;\n    height: 10px;\n    left: -2px;\n    position: absolute;\n    top: 0px;\n    width: 5px;\n}\n.upload-btn-wrapper {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n}\n.create_bloc_form{\n    margin-left:10px;\n}\n.upload-btn-wrapper input[type=file] {\n  font-size: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  opacity: 0;\n        cursor:pointer;\n}\n.margeUp{\n    margin-top:5px;\n}\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n    color: #EAEAEA;\n    background-color: #EAEAEA;\n    border: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n    color: #224466;\n    background-color: #2299ff;\n}\n.sortable-drag {\n    color: #449922;\n    background-color: #44ff33;\n}\n", "", {"version":3,"sources":["CreateBloc.vue?7e852e08"],"names":[],"mappings":";AA2EA;IACA,eAAA;CACA;AACA;IACA,eAAA;IACA,aAAA;IACA,eAAA;IACA,gBAAA;IACA,kBAAA;IACA,aAAA;IACA,WAAA;IACA,mBAAA;IACA,SAAA;IACA,WAAA;CACA;AACA;EACA,mBAAA;EACA,iBAAA;EACA,sBAAA;CACA;AAEA;IACA,iBAAA;CACA;AACA;EACA,iBAAA;EACA,mBAAA;EACA,QAAA;EACA,OAAA;EACA,WAAA;QACA,eAAA;CACA;AACA;IACA,eAAA;CACA;AAEA;IACA,cAAA;IACA,mBAAA;IACA,aAAA;IACA,iBAAA;IACA,uBAAA;IACA,mBAAA;IACA,iDAAA;IACA,6DAAA;CACA;AAEA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,aAAA;IACA,gBAAA;IACA,qDAAA;CACA;AAEA;IACA,eAAA;IACA,0BAAA;IACA,wBAAA;CACA;AACA;IACA,eAAA;IACA,0BAAA;CACA;AACA;IACA,eAAA;IACA,0BAAA;CACA","file":"CreateBloc.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <arret v-if=\"type == 5 && model\" :newsletter=\"newsletter\" :arret=\"model\"></arret>\n                <text-content v-if=\"hasTitle\" :newbloc=\"newbloc\" :categorie=\"model\" :type=\"type\" @imageUploaded=\"imageUploadedUpdate\"></text-content>\n                <model-content v-if=\"type != 5 && type != 10 && model\" :color=\"color\" :type=\"type\" :model=\"model\"></model-content>\n\n            </div>\n            <div class=\"col-md-5 create_bloc_form\">\n                <form name=\"blocForm newsletterForm\" method=\"post\" :action=\"action\">\n\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <div v-if=\"type == 10 || type == 5 || type == 9 || type == 8 || type == 7\">\n                                <select class=\"form-control form-required required\" @change=\"getSingle(selected)\" v-model=\"selected\" name=\"model_id\">\n                                    <option v-if=\"!selected\" :value=\"null\" disabled>Sélectionner</option>\n                                    <option v-for=\"model in droptitles\" v-bind:value=\"model.id\">{{ model.title }}</option>\n                                </select><br/>\n                            </div>\n\n                            <div class=\"form-group\" v-if=\"hasTitle\">\n                                <label>Titre</label>\n                                <input v-model=\"newbloc.titre\" type=\"text\" required name=\"titre\" class=\"form-control\">\n                            </div>\n\n                            <div class=\"form-group\" v-if=\"hasImage\">\n                                <label>Ajouter un lien sur l'image</label>\n                                <input v-model=\"newbloc.lien\" type=\"text\" value=\"\" name=\"lien\" class=\"form-control\">\n                            </div>\n\n                            <div class=\"form-group\" v-if=\"hasText\">\n                                <label>Texte</label>\n                                <textarea v-model=\"newbloc.contenu\" required name=\"contenu\" :class=\"'form-control redactorBuild_' + hash\" rows=\"10\">{{ newbloc.contenu }}</textarea>\n                            </div>\n\n                            <div v-if=\"type == 7\" class=\"row drag\">\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"arrets\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in arrets\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"choosen\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in choosen\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                            </div>\n\n                            <div class=\"form-group\">\n                                <div class=\"btn-group\">\n                                    <input type=\"hidden\" v-if=\"uploadImage\" :value=\"uploadImage\" name=\"image\">\n                                    <input type=\"hidden\" v-if=\"model && path == 'categorie'\" :value=\"model.image\" name=\"image\">\n                                    <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                    <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n\n                                    <input v-if=\"model\" type=\"hidden\" :name=\"path + '_id'\" :value=\"model.id\" />\n                                    <input v-for=\"chose in choosen\" type=\"hidden\" name=\"arrets[]\" :value=\"chose.id\" />\n\n                                    <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                    <button type=\"button\" @submit.prevent @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n    #StyleNewsletterCreate{\n        margin-top:5px;\n    }\n    .create_bloc_form::before{\n        color: #85c744;\n        content: \"◄\";\n        display: block;\n        font-size: 14px;\n        font-weight: bold;\n        height: 10px;\n        left: -2px;\n        position: absolute;\n        top: 0px;\n        width: 5px;\n    }\n    .upload-btn-wrapper {\n      position: relative;\n      overflow: hidden;\n      display: inline-block;\n    }\n\n    .create_bloc_form{\n        margin-left:10px;\n    }\n    .upload-btn-wrapper input[type=file] {\n      font-size: 100px;\n      position: absolute;\n      left: 0;\n      top: 0;\n      opacity: 0;\n            cursor:pointer;\n    }\n    .margeUp{\n        margin-top:5px;\n    }\n\n    .dragArea {\n        height: 300px;\n        margin: 0 0 20px 0;\n        padding: 3px;\n        overflow: scroll;\n        border: 1px solid #ccc;\n        border-radius: 3px;\n        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n        transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n    }\n\n    .dragArea div {\n        width: 100%;\n        height: auto;\n        line-height: 18px;\n        padding: 5px;\n        cursor: pointer;\n        box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n    }\n\n    .sortable-ghost {\n        color: #EAEAEA;\n        background-color: #EAEAEA;\n        border: 1px dashed #aaa;\n    }\n    .sortable-chosen:not(.sortable-ghost) {\n        color: #224466;\n        background-color: #2299ff;\n    }\n    .sortable-drag {\n        color: #449922;\n        background-color: #44ff33;\n    }\n</style>\n<script>\n    import ImageNewsletter from './partials/ImageNewsletter.vue';\n    import Arret from './blocs/Arret.vue';\n    import TextContent from './blocs/TextContent.vue';\n    import ModelContent from './blocs/ModelContent.vue';\n    import draggable from 'vuedraggable';\n\n    export default{\n\n        props: ['type','campagne','newsletter','_token','url','title','site'],\n        components:{\n            'image-newsletter' : ImageNewsletter,\n            'arret' : Arret,\n            'text-content' : TextContent,\n            'model-content' : ModelContent,\n            draggable,\n        },\n        data(){\n            return{\n                newbloc: {\n                   titre : '',\n                   contenu : '',\n                   image : null,\n                   lien:  location.protocol + \"//\" + location.host+\"/\",\n                },\n                uploadImage:null,\n                models: [],\n                arrets:[],\n                choosen: [],\n                selected:null,\n                model:null,\n                hash: null\n            }\n        },\n        watch: {\n            // whenever question changes, this function will run\n            type: function (newType, oldType) {\n                this.initialize();\n            },\n            selected: function (newSelected, oldSelected) {\n                this.getSingle();\n\n                if(this.type == 7){\n                    this.getArrets();\n                }\n            },\n        },\n        computed: {\n            widthTable: function () {\n                return (this.type == 1) || (this.type == 2) || (this.type == 6) ? '560' : '375';\n            },\n            hasText: function () {\n                return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;\n            },\n            hasTitle: function () {\n                return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;\n            },\n            hasImage: function () {\n                return (this.type == 1) || (this.type == 2) || (this.type == 3) || (this.type == 4) ? true : false;\n            },\n            align: function () {\n                return (this.type == 1) ? 'text-align:center;' : 'text-align:left;';\n            },\n            path: function () {\n                if(this.type == 5){return 'arret';}\n                if(this.type == 7 || this.type == 10){return 'categorie';}\n                if(this.type == 8){ return 'product';}\n                if(this.type == 9){ return 'colloque';}\n\n                return null;\n            },\n            action:function(){\n                return this.url;\n            },\n            color(){\n                return this.newsletter.color;\n            },\n            droptitles: function () {\n                return _.orderBy(this.models, 'title')\n            }\n        },\n        mounted: function ()  {\n            this.initialize();\n        },\n        methods: {\n            makeHash(){\n                this.hash = Math.random().toString(36).substring(7);\n            },\n            initialize : function(){\n\n                // remove all content\n                this.newbloc.titre = '';\n                this.newbloc.contenu = '';\n                this.model = null;\n                this.arrets = [];\n\n                // initialize textarea and get list of models\n                this.makeHash();\n                this.getModels();\n\n                this.$nextTick(function(){\n                    var self = this;\n\n                    $('.redactorBuild_' + self.hash).redactor({\n                        minHeight: '180px',\n                        maxHeight: '370px',\n                        removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],\n                        lang: 'fr',\n                        plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],\n                        fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageManagerJson: 'admin/imageJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageResizable: true,\n                        imagePosition: true,\n                        linkNewTab: true,\n                        formatting: ['h1', 'h2','h3','p', 'blockquote'],\n                        callbacks: {\n                            blur:function(e){\n                                self.newbloc.contenu = this.source.getCode();\n                            },\n                            enter: function(e){\n                               return !(window.event && window.event.keyCode == 13 && window.event.keyCode == 46);\n                            }\n                        }\n                    });\n                });\n            },\n            getModels: function() {\n                var self = this;\n                if(this.path){\n                     axios.get('admin/ajax/list/'+ this.path +'/' + self.site).then(function (response) {\n                         self.models = response.data;\n                     }).catch(function (error) { console.log(error);});\n                }\n                else{\n                    this.models = [];\n                }\n            },\n            getArrets: function() {\n                var self = this;\n                if(this.selected){\n                     axios.get('admin/ajax/categoriearrets/' + this.selected).then(function (response) {\n                         self.arrets = response.data;\n                     }).catch(function (error) { console.log(error);});\n                }\n                else{\n                    this.arrets = [];\n                }\n            },\n            getSingle: function() {\n                var self = this;\n                if(this.path){\n                     axios.get('admin/ajax/single/'+ this.path +'/' + self.selected).then(function (response) {\n                         self.model = response.data;\n                     }).catch(function (error) { console.log(error);});\n                }\n                else{\n                    this.model = null;\n                }\n            },\n            imageUploadedUpdate(value){\n                this.uploadImage = value;\n            },\n            close(){\n                this.isEdit = false;\n                this.isImage = false;\n                this.initialize();\n                this.$emit('cancel', this.cancel);\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#StyleNewsletterCreate{\n    margin-top:5px;\n}\n.edit_bloc_form::before{\n    color: #85c744;\n    content: \"◄\";\n    display: block;\n    font-size: 14px;\n    font-weight: bold;\n    height: 10px;\n    left: -2px;\n    position: absolute;\n    top: 0px;\n    width: 5px;\n}\n.upload-btn-wrapper {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n}\n.upload-btn-wrapper input[type=file] {\n  font-size: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  opacity: 0;\n        cursor:pointer;\n}\n.margeUp{\n    margin-top:5px;\n}\n", "", {"version":3,"sources":["BuildNewsletter.vue?01cf39a6"],"names":[],"mappings":";AA6FA;IACA,eAAA;CACA;AACA;IACA,eAAA;IACA,aAAA;IACA,eAAA;IACA,gBAAA;IACA,kBAAA;IACA,aAAA;IACA,WAAA;IACA,mBAAA;IACA,SAAA;IACA,WAAA;CACA;AACA;EACA,mBAAA;EACA,iBAAA;EACA,sBAAA;CACA;AAEA;EACA,iBAAA;EACA,mBAAA;EACA,QAAA;EACA,OAAA;EACA,WAAA;QACA,eAAA;CACA;AACA;IACA,eAAA;CACA","file":"BuildNewsletter.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <div class=\"row\" style=\"margin-bottom:10px\">\n                    <div class=\"col-md-10\"></div>\n                    <div class=\"col-md-2\">\n                        <div v-if=\"content && mode == 'edit'\" style=\"margin-bottom:5px;\">\n                            <button v-if=\"model && !isEdit\" @click=\"editMode(content)\" class=\"btn btn-xs btn-warning pull-left\">éditer</button>\n                            <form method=\"post\" :action=\"action\" v-if=\"model && !isEdit\" class=\"pull-right\">\n                                <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                                <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                                <input type=\"hidden\" name=\"id\" :value=\"model.id\" />\n                                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                                <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"model.id\" :data-action=\"model.titre\">x</button>\n                            </form>\n                        </div>\n                    </div>\n                </div>\n\n                <!-- Bloc content-->\n                <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"resetTable\">\n\n                   <tr>\n                       <!-- Bloc image gauche-->\n                       <td v-if=\"type == 4\" valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                           <image-newsletter :visible=\"isImage\" :mode=\"mode\" :type=\"type\" @imageUploaded=\"imageUploadedUpdate\" :model=\"model\" ></image-newsletter>\n                       </td>\n                       <td v-if=\"type == 4\" width=\"25\" class=\"resetMarge\"></td><!-- space -->\n\n                       <td valign=\"top\" :width=\"widthTable\" class=\"resetMarge contentForm\">\n                           <image-newsletter :visible=\"isImage\" :mode=\"mode\" :type=\"type\" v-if=\"(type == 1 || type == 2)\" :model=\"model\" @imageUploaded=\"imageUploadedUpdate\"></image-newsletter>\n                           <h3 :style=\"align\" v-html=\"content.titre\"></h3>\n                           <div v-if=\"hasText\" v-html=\"content.contenu\"></div>\n                       </td>\n\n                       <!-- Bloc image droite-->\n                       <td v-if=\"type == 3 || type == 10\" width=\"25\" class=\"resetMarge\"></td><!-- space -->\n                       <td v-if=\"type == 3 || type == 10\" valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                           <image-newsletter :visible=\"isImage\" :mode=\"mode\" :type=\"type\" v-if=\"type == 3\" @imageUploaded=\"imageUploadedUpdate\" :model=\"model\" ></image-newsletter>\n                           <img v-if=\"type == 10 || categorie\" :src=\"imgcategorie\" class=\"img-responsive\">\n                       </td>\n                   </tr>\n\n                </table>\n                <!-- Bloc content-->\n            </div>\n            <div class=\"col-md-5 edit_bloc_form\" v-show=\"isEdit || mode == 'create'\">\n                <form name=\"blocForm newsletterForm\" method=\"post\" :action=\"action\">\n\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <input v-if=\"mode == 'edit'\" type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <div v-if=\"type == 10\">\n                                <select class=\"form-control form-required required\" v-model=\"categorie\" name=\"id\">\n                                    <option v-if=\"!categorie\" :value=\"null\" disabled>Sélectionner catégorie</option>\n                                    <option v-for=\"categorie in categories\" v-bind:value=\"categorie\">{{ categorie.title }}</option>\n                                </select><br/>\n                            </div>\n\n                            <div class=\"form-group\">\n                                <label>Titre</label>\n                                <input v-model=\"content.titre\" type=\"text\" required name=\"titre\" class=\"form-control\">\n                            </div>\n                            <div class=\"form-group\" v-if=\"hasText\">\n                                <label>Texte</label>\n                                <textarea v-model=\"content.contenu\" required name=\"contenu\" :class=\"'form-control redactorBuild_' + hash\" rows=\"10\">{{ content.contenu }}</textarea>\n                            </div>\n\n                            <div class=\"form-group\">\n                                <div class=\"btn-group\">\n                                    <input type=\"hidden\" v-if=\"uploadImage\" :value=\"uploadImage\" name=\"image\">\n                                    <input type=\"hidden\" v-if=\"categorie\" :value=\"categorie.image\" name=\"image\">\n                                    <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                    <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                    <input v-if=\"model\" type=\"hidden\" name=\"id\" :value=\"model.id\" />\n                                    <input v-if=\"categorie\" type=\"hidden\" name=\"categorie_id\" :value=\"categorie.id\" />\n                                    <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                    <button type=\"button\" @submit.prevent @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n    #StyleNewsletterCreate{\n        margin-top:5px;\n    }\n    .edit_bloc_form::before{\n        color: #85c744;\n        content: \"◄\";\n        display: block;\n        font-size: 14px;\n        font-weight: bold;\n        height: 10px;\n        left: -2px;\n        position: absolute;\n        top: 0px;\n        width: 5px;\n    }\n    .upload-btn-wrapper {\n      position: relative;\n      overflow: hidden;\n      display: inline-block;\n    }\n\n    .upload-btn-wrapper input[type=file] {\n      font-size: 100px;\n      position: absolute;\n      left: 0;\n      top: 0;\n      opacity: 0;\n            cursor:pointer;\n    }\n    .margeUp{\n        margin-top:5px;\n    }\n</style>\n<script>\n    import ImageNewsletter from './partials/ImageNewsletter.vue';\n\n    export default{\n\n        props: ['type','campagne','_token','url','title','model','site','mode'],\n        components:{\n            'image-newsletter' : ImageNewsletter,\n        },\n        data(){\n            return{\n                create: {\n                   titre : '',\n                   contenu : ''\n                },\n                content: {},\n                image:null,\n                uploadImage:null,\n                categories: [],\n                categorie: null,\n                isEdit: false,\n                isImage:null,\n                hash: null\n            }\n        },\n        computed: {\n            widthTable: function () {\n                return (this.type == 1) || (this.type == 2) || (this.type == 6) ? '560' : '375';\n            },\n            hasText: function () {\n                return (this.type == 2) || (this.type == 3) || (this.type == 4) || (this.type == 6) || (this.type == 10) ? true : false;\n            },\n            align: function () {\n                return (this.type == 1) ? 'text-align:center;' : 'text-align:left;';\n            },\n            imgcategorie:function(){\n                if(this.model){\n                    return  this.model.model.categorie.path\n                }\n                if(this.categorie){\n                    return this.categorie.path;\n                }\n\n                return '';\n            },\n            action:function(){\n                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }\n                if(this.mode == 'create'){ return this.url; }\n            },\n        },\n        components:{\n        },\n        mounted: function ()  {\n            this.initialize();\n        },\n        methods: {\n            makeHash(){\n                this.hash = Math.random().toString(36).substring(7);\n            },\n            initialize : function(){\n\n                this.makeHash();\n\n                if(this.type == 10){\n                    this.getCategories();\n                    this.categorie = this.model ? this.model.categorie : null;\n                }\n\n                this.content = this.model ? this.model : this.create;\n                this.isEdit  = !this.content ? true : false;\n\n                if(!this.model){\n                   this.isImage = true;\n                }\n\n                this.$nextTick(function(){\n                    var self = this;\n\n                    $('.redactorBuild_' + self.hash).redactor({\n                        minHeight: '180px',\n                        maxHeight: '370px',\n                        removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],\n                        lang: 'fr',\n                        plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],\n                        fileUpload : 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageUpload: 'admin/uploadRedactor?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageManagerJson: 'admin/imageJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        fileManagerJson: 'admin/fileJson?_token=' + $('meta[name=\"_token\"]').attr('content'),\n                        imageResizable: true,\n                        imagePosition: true,\n                        formatting: ['h1', 'h2','h3','p', 'blockquote'],\n                        callbacks: {\n                            focus:function(e){\n                                var text = this.source.getCode();\n                                self.content.contenu = this.source.getCode();\n                            },\n                            enter: function(e)\n                            {\n                               return !(window.event && window.event.keyCode == 13 && window.event.keyCode == 46);\n                            }\n                        }\n\n                    });\n\n                });\n            },\n            getCategories: function() {\n                var self = this;\n                axios.get('admin/ajax/categories/' + self.site).then(function (response) {\n                     self.categories = response.data;\n                     self.categorie = self.model ? self.content.model.categorie : null;\n                }).catch(function (error) { console.log(error);});\n            },\n            imageUploadedUpdate(value){\n                this.uploadImage = value;\n            },\n            editMode(model){\n                this.isEdit = true;\n                this.isImage = true;\n            },\n            close(){\n                this.isEdit = false;\n                this.isImage = false;\n                this.initialize();\n                if(this.mode == 'create'){\n                    this.model = null;\n                    this.$emit('cancel', this.cancel);\n                }\n            },\n            deleteContent(model){\n                this.$emit('deleteContent', model);\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"Build.vue"}]);
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.btn-remove{\n    margin-bottom: 10px;\n    display: block;\n    margin-top: 10px;\n}\n.responsive-newsletter{\n    margin-bottom: 10px;\n}\n\n", "", {"version":3,"sources":["ImageNewsletter.vue?c8baf174"],"names":[],"mappings":";AA8BA;IACA,oBAAA;IACA,eAAA;IACA,iBAAA;CACA;AACA;IACA,oBAAA;CACA","file":"ImageNewsletter.vue","sourcesContent":["<template>\n    <div>\n\n        <div class=\"upload-btn-wrapper\" v-if=\"!image && visible\">\n            <image-uploader :wrapper=\"false\" :id=\"id\" name=\"file\" @imageChoosen=\"imageChoosenSelect\"></image-uploader>\n        </div>\n\n        <div class=\"upload-btn-wrapper\" v-if=\"!image && visible\">\n            <button class=\"btn btn-info btn-xs\">Télécharger image</button>\n            <input type=\"file\" v-on:change=\"onFileChange\" class=\"form-control\">\n        </div>\n\n        <div class=\"responsive-newsletter\">\n            <div v-if=\"image\">\n                <a :href=\"link\">\n                    <img :width=\"sizeImage\" :src=\"image\" class=\"img-responsive\">\n                </a>\n            </div>\n            <div v-if=\"!image\"><img :src=\"size\" /></div>\n        </div>\n\n        <div class=\"btn-remove\" v-if=\"visible\">\n            <button v-if=\"image\" class=\"btn btn-success btn-xs\" @click=\"remove\">Changer l'image</button>\n            <button v-if=\"isRemoved\" class=\"btn btn-danger btn-xs\" @click=\"cancel\">Annuler</button>\n        </div>\n\n    </div>\n</template>\n<style>\n\n    .btn-remove{\n        margin-bottom: 10px;\n        display: block;\n        margin-top: 10px;\n    }\n    .responsive-newsletter{\n        margin-bottom: 10px;\n    }\n\n</style>\n<script>\n    import ImageUploader from '../ImageUploader.vue';\n\n    export default{\n        props: ['model','type','visible','filename','id','link'],\n        data(){\n            return{\n                isRemoved:false,\n                image:null,\n                imageName:'',\n                uploadImage:null,\n                big: 'http://www.placehold.it/560x200/EFEFEF/AAAAAA&text=image',\n                small: 'http://www.placehold.it/130x140/EFEFEF/AAAAAA&text=image',\n                hash:null,\n            }\n        },\n        components:{\n            'image-uploader' : ImageUploader,\n        },\n        mounted: function ()  {\n            this.initialize();\n            this.iframe();\n        },\n        computed: {\n            size : function(){\n                return this.type == 3 || this.type == 4 ? this.small : this.big;\n            },\n            sizeImage : function(){\n                return this.type == 3 || this.type == 4 ? '130px' : '560px';\n            }\n        },\n        methods: {\n            imageChoosenSelect(filename){\n                var lastURLSegment = filename.substr(filename.lastIndexOf('/') + 1);\n                this.image = filename;\n                this.uploadImage = lastURLSegment;\n                this.$emit('imageUploaded', this.uploadImage)\n            },\n            makeHash(){\n                this.hash = Math.random().toString(36).substring(7);\n            },\n            iframe(){\n                this.$nextTick(function() {\n                    var self = this;\n\n                    $('#'+this.id).change(function() {\n                        var image = $(this).val();\n                        var lastURLSegment = image.substr(image.lastIndexOf('/') + 1);\n                        self.image = image;\n                        self.uploadImage = lastURLSegment;\n                        self.$emit('imageUploaded', self.uploadImage)\n                        console.log(lastURLSegment);\n                    });\n                });\n\n            },\n            initialize(){\n                this.image = this.filename ? this.filename : null;\n            },\n            onFileChange(e) {\n                let files = e.target.files || e.dataTransfer.files;\n                if (!files.length)\n                    return;\n                this.createImage(files[0]);\n            },\n            createImage(file) {\n                let reader = new FileReader();\n                let vm = this;\n                reader.onload = (e) => {\n                    vm.image = e.target.result;\n                    vm.imageName = file.name;\n                    vm.upload()\n                };\n                reader.readAsDataURL(file);\n            },\n            remove(){\n                 this.image = null;\n                 this.isRemoved = true;\n            },\n            cancel(){\n                 this.image = this.filename ? this.filename : null;\n                 this.isRemoved = false;\n                 this.iframe();\n            },\n            newSelected(){\n                 this.iframe();\n            },\n            upload(){\n                axios.post('/admin/uploadNewsletter',{ image: this.image, name: this.imageName }).then(response => {\n                    this.uploadImage = response.data.name;\n                    this.$emit('imageUploaded', this.uploadImage)\n                });\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n#addOccurrence{\n    margin-bottom:15px;\n}\n.margBottom{\n  padding-bottom:5px;\n}\n.list-group-item {\n    padding: 8px 15px 8px 15px;\n}\n", "", {"version":3,"sources":["Occurrence.vue?30fe9a76"],"names":[],"mappings":";AAmIA;IACA,mBAAA;CACA;AACA;EACA,mBAAA;CACA;AACA;IACA,2BAAA;CACA","file":"Occurrence.vue","sourcesContent":["\n<template>\n   <div>\n       <div class=\"text-right\">\n           <div class=\"btn-pull\" style=\"margin-bottom:10px;\">\n               <a v-show=\"!add\" @click=\"ajouter\" class=\"btn btn-sm btn-success\">Ajouter</a>\n               <a v-show=\"add\" @click=\"resetform\" class=\"btn btn-sm btn-default\">Fermer</a>\n           </div>\n       </div>\n       <ul class=\"list-group\">\n           <li class=\"list-group-item\" id=\"addOccurrence\" v-show=\"add\">\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Titre</strong></label>\n                           <p><input class=\"form-control\" autocomplete=\"off\" name=\"title\" type=\"text\" v-model=\"nouveau.title\"></p>\n                       </div>\n                   </div>\n               </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8\">\n                        <div class=\"form-group-item\">\n                           <label><strong>Lieu</strong></label>\n                           <select class=\"form-control form-required required\" v-model=\"nouveau.lieux_id\" name=\"lieux_id\">\n                               <option value=\"\">Choix</option>\n                               <option v-for=\"location in loc\" autocomplete=\"off\" v-bind:value=\"location.id\">{{ location.name }}</option>\n                           </select>\n                        </div>\n                        <div class=\"form-group-item\">\n                            <label><strong>Prix</strong></label>\n                            <select class=\"form-control\" multiple v-model=\"nouveau.prices\" style=\"height:80px;\">\n                                <option value=\"\">Choix</option>\n                                <option v-for=\"price in prix\" v-bind:value=\"price.id\">\n                                    {{ price.description }}\n                                </option>\n                            </select>\n                        </div>\n                    </div>\n                    <div class=\"col-md-4\">\n                        <div class=\"form-group-item\">\n                            <label><strong>Date</strong></label>\n                            <input name=\"starting_at\" autocomplete=\"off\" class=\"form-control datePickerNew\" v-model=\"nouveau.starting_at\">\n                        </div>\n                       <div class=\"form-group-item\">\n                           <label><strong>Capacité</strong></label>\n                           <input class=\"form-control\" autocomplete=\"off\" name=\"capacite_salle\" v-model=\"nouveau.capacite_salle\" type=\"text\">\n                       </div>\n                    </div>\n                </div>\n\n                <p class=\"text-right margBottom\"><a @click=\"ajouterOccurence\" class=\"btn btn-sm btn-primary\">Envoyer</a></p>\n\n               <div v-if=\"errors.length\">\n                   <b>Il manque des informations:</b>\n                   <ul>\n                       <li v-for=\"error in errors\">{{ error }}</li>\n                   </ul>\n               </div>\n\n           </li>\n           <li v-for=\"occurrence in list\" class=\"list-group-item\">\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <div class=\"btn-group pull-right\">\n                            <a v-show=\"!occurrence.state\" @click=\"edit(occurrence)\" class=\"btn btn-xs btn-info\">éditer</a>\n                            <a v-show=\"!occurrence.state\" @click=\"deleteOccurrence(occurrence)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-times\"></i></a>\n                            <a v-show=\"occurrence.state\" @click=\"save(occurrence)\" class=\"btn btn-xs btn-primary\">sauvegarder</a>\n                       </div>\n                   </div>\n               </div>\n               <div class=\"row\">\n                   <div class=\"col-md-12\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Titre</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.title }}</p>\n                           <p v-if=\"occurrence.state\"><input class=\"form-control\" name=\"title\" type=\"text\" v-model=\"occurrence.title\"></p>\n                       </div>\n                   </div>\n               </div>\n               <div class=\"row\">\n                   <div class=\"col-md-8\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Lieu</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.lieux }}</p>\n                           <p v-if=\"occurrence.state\">\n                               <select class=\"form-control form-required required\" required v-model=\"occurrence.lieux_id\" name=\"lieux_id\">\n                                   <option value=\"\">Choix</option>\n                                   <option v-for=\"location in loc\"\n                                           v-bind:selected=\"occurrence.lieux_id == location.id ? 'true' : 'false'\"\n                                           v-bind:value=\"location.id\">\n                                       {{ location.name }}\n                                   </option>\n                               </select>\n                           </p>\n                       </div>\n                       <div class=\"form-group-item\">\n                           <label><strong>Prix</strong></label>\n                           <p v-if=\"!occurrence.state\">\n                               {{ occurrence.prices_names }}\n                           </p>\n                           <p v-if=\"occurrence.state\">\n                               <select class=\"form-control\" multiple v-model=\"occurrence.prices\" style=\"height:80px;\">\n                                   <option value=\"\">Choix</option>\n                                   <option v-for=\"price in prix\" v-bind:value=\"price.id\">\n                                       {{ price.description }}\n                                   </option>\n                               </select>\n                           </p>\n                       </div>\n                   </div>\n                   <div class=\"col-md-4\">\n                       <div class=\"form-group-item\">\n                           <label><strong>Date</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.starting_at }}</p>\n                           <p v-if=\"occurrence.state\">\n                               <input name=\"starting_at\" class=\"form-control datePickerApp\" v-model=\"occurrence.starting_at\">\n                           </p>\n                       </div>\n                       <div class=\"form-group-item\">\n                           <label><strong>Capacité</strong></label>\n                           <p v-if=\"!occurrence.state\">{{ occurrence.capacite_salle }}</p>\n                           <p v-if=\"occurrence.state\"><input class=\"form-control\" name=\"capacite_salle\" v-model=\"occurrence.capacite_salle\" type=\"text\"></p>\n                       </div>\n                   </div>\n               </div>\n           </li>\n       </ul>\n   </div>\n</template>\n<style>\n    #addOccurrence{\n        margin-bottom:15px;\n    }\n    .margBottom{\n      padding-bottom:5px;\n    }\n    .list-group-item {\n        padding: 8px 15px 8px 15px;\n    }\n</style>\n<script>\n\nexport default {\n\n    props: ['occurrences','locations','colloque','prices'],\n    data () {\n        return {\n            list: [],\n            loc : [],\n            prix : [],\n            nouveau:{\n                title: '',\n                lieux_id: '',\n                starting_at: '',\n                capacite_salle: '',\n                colloque_id: this.colloque,\n                prices:[]\n            },\n            add : false,\n            errors:[]\n        }\n    },\n    beforeMount: function ()  {\n        this.getOccurrences();\n        this.getLocations();\n        this.getPrices();\n    },\n    methods: {\n        edit : function(occurence){\n            this.list[occurence.id].state = true;\n\n             this.$nextTick(function(){\n                 $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                $('.datePickerApp').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   occurence.starting_at = ev.target.value;\n                });\n\n            });\n        },\n        delete : function(occurence){\n            this.list[occurence.id].state = false;\n        },\n        getOccurrences : function(){\n\n           this.list = this.occurrences;\n\n           this.$nextTick(function(){\n\n               $.fn.datepicker.dates['fr'] = {\n                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],\n                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],\n                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],\n                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],\n                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],\n                    today: \"Aujourd'hui\",\n                    clear: \"Clear\"\n                };\n\n                var self = this;\n\n                $('.datePickerNew').datepicker({\n                    format: 'yyyy-mm-dd',\n                    language: 'fr'\n                }).on('changeDate', function(ev){\n                   self.nouveau.starting_at = ev.target.value;\n                });\n            });\n        },\n        getLocations : function(){\n           this.loc = this.locations;\n        },\n        getPrices : function(){\n           this.prix = this.prices;\n        },\n        updateOccurrences:function(occurrences){\n            this.list = occurrences;\n        },\n        checkForm:function(){\n\n            if( this.nouveau.title && this.nouveau.lieux_id && this.nouveau.starting_at && this.nouveau.capacite_salle) return true;\n            this.errors = [];\n            if(!this.nouveau.title) this.errors.push(\"Titre requis.\");\n            if(!this.nouveau.lieux_id) this.errors.push(\"Lieu requis.\");\n            if(!this.nouveau.starting_at) this.errors.push(\"Date requise.\");\n            if(!this.nouveau.capacite_salle) this.errors.push(\"Capacité requise.\");\n\n            return false;\n        },\n        ajouterOccurence:function(){\n\n            if(this.checkForm()){\n\n                var self = this;\n                axios.post('/vue/occurrence', { occurrence : this.nouveau }).then(function (response) {\n                     self.updateOccurrences(response.data.occurrences);\n                     self.resetform();\n                }).catch(function (error) { console.log(error);});\n            }\n        },\n        ajouter:function(){\n            this.add = true;\n        },\n        resetform :function(){\n            this.add = false;\n            this.nouveau = {\n                title: '',\n                lieux_id: '',\n                starting_at: '',\n                capacite_salle: '',\n                colloque_id: this.colloque,\n                prices:[]\n            };\n        },\n        save : function(occurence){\n\n            var occurrence = this.list[occurence.id];\n\n            var self = this;\n            axios.post('/vue/occurrence/' + occurrence.id, { occurrence, '_method' : 'put'  }).then(function (response) {\n                self.updateOccurrences(response.data.occurrences);\n            }).catch(function (error) { console.log(error);});\n\n        },\n        deleteOccurrence :function(occurence){\n\n            var model = this.list[occurence.id];\n\n            var self = this;\n            axios.post('/vue/occurrence/' + model.id, { '_method' : 'DELETE' }).then(function (response) {\n                self.updateOccurrences(response.data.occurrences);\n            }).catch(function (error) { console.log(error);});\n\n        },\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"ModelContent.vue"}]);
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n", "", {"version":3,"sources":["BuildNewsletterGroup.vue?1dd270ee"],"names":[],"mappings":";AA2GA;IACA,cAAA;IACA,mBAAA;IACA,aAAA;IACA,iBAAA;IACA,uBAAA;IACA,mBAAA;IACA,iDAAA;IACA,6DAAA;CACA;AAEA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,aAAA;IACA,gBAAA;IACA,qDAAA;CACA;AAEA;CACA,eAAA;CACA,0BAAA;CACA,wBAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA;AACA;CACA,eAAA;CACA,0BAAA;CACA","file":"BuildNewsletterGroup.vue","sourcesContent":["<template>\n    <div>\n        <div class=\"row\">\n\n            <div class=\"col-md-7\" id=\"StyleNewsletterCreate\">\n\n                <div class=\"btn-group pull-right\">\n                    <form method=\"post\" :action=\"action\" v-if=\"!isEdit\">\n                        <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                        <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n                        <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                        <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne_id\">\n                        <button v-if=\"!isEdit\" @click=\"editMode(content)\" type=\"button\" class=\"btn btn-xs btn-warning\">éditer</button>\n                        <button type=\"submit\" class=\"btn btn-xs btn-danger deleteNewsAction\" :data-id=\"content.id\" data-action=\"Groupe\">x</button>\n                    </form>\n                </div>\n\n                <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"tableReset\" v-if=\"categorie\">\n                    <tr bgcolor=\"ffffff\"><td height=\"15\"></td></tr><!-- space -->\n                    <tr>\n                        <td width=\"400\" align=\"left\" class=\"resetMarge contentForm\" valign=\"top\">\n                            <h3 class=\"mainTitle\" style=\"text-align: left;font-family: sans-serif;\">{{ categorie.title }}</h3>\n                        </td>\n                        <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                            <div><img width=\"130\" border=\"0\" :alt=\"categorie.title\" :src=\"content.model.image + '/' + categorie.image\"></div>\n                        </td>\n                    </tr><!-- space -->\n                    <tr bgcolor=\"ffffff\"><td height=\"15\"></td></tr><!-- space -->\n                </table>\n\n                <div v-for=\"arret in lists\">\n                    <!-- Bloc content-->\n                    <table border=\"0\" width=\"560\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"resetTable\">\n                        <tr bgcolor=\"ffffff\"><td height=\"5\"></td></tr><!-- space -->\n                        <tr v-if=\"arret\">\n                            <td valign=\"top\" width=\"375\" class=\"resetMarge contentForm\">\n                                <h3>{{ arret.dumois ? 'Arrêt du mois : ' : '' }}{{ arret.title }}</h3>\n                                <p class=\"abstract\">{{ arret.abstract }}</p>\n                                <div v-html=\"arret.content\" class=\"content\"></div>\n                                <p><a target=\"_blank\" :class=\"arret.class\" :href=\"arret.link\">{{ arret.message }}</a></p>\n                            </td>\n\n                            <!-- Bloc image droite-->\n                            <td width=\"25\" class=\"resetMarge\"></td><!-- space -->\n                            <td valign=\"top\" align=\"center\" width=\"160\" class=\"resetMarge\">\n                                <div v-for=\"image in arret.images\" v-if=\"image.id != categorie.id\">\n                                    <a target=\"_blank\" :href=\"image.link\">\n                                        <img width=\"130\" border=\"0\" :alt=\"image.title\" :src=\"image.image\">\n                                    </a>\n                                    <p v-if=\"!newsletter.hide_title\" style=\"text-align:center !important;\">{{ image.title }}</p>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr bgcolor=\"ffffff\"><td height=\"5\"></td></tr><!-- space -->\n                    </table>\n                    <!-- Bloc content-->\n\n                </div>\n            </div>\n\n            <div class=\"col-md-5\" v-show=\"isEdit\">\n                <form name=\"blocForm newsletterForm\" class=\"form-horizontal\" method=\"post\" :action=\"url + '/' + content.id\">\n                    <input name=\"_token\" :value=\"_token\" type=\"hidden\">\n                    <input type=\"hidden\" name=\"_method\" value=\"PUT\">\n                    <div class=\"panel panel-success\">\n                        <div class=\"panel-body\">\n                            <h3>{{ title }}</h3>\n\n                            <select class=\"form-control form-required required\" v-model=\"categorie\" name=\"id\" v-on:change=\"updateModel\">\n                                <option :value=\"null\" disabled>Sélectionner</option>\n                                <option v-for=\"categorie in categories\" v-bind:value=\"categorie.id\">{{ categorie.title }}</option>\n                            </select><br/>\n\n                            <div class=\"row drag\">\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"arrets\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in arrets\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                                <div class=\"col-md-6\">\n                                    <draggable v-model=\"choosen\" class=\"dragArea\" :options=\"{group:'arret'}\">\n                                        <div v-for=\"element in choosen\" :key=\"element.id\">{{ element.reference }}</div>\n                                    </draggable>\n                                </div>\n                            </div>\n\n                            <div class=\"btn-group\">\n                                <input type=\"hidden\" :value=\"type\" name=\"type_id\">\n                                <input type=\"hidden\" :value=\"campagne.id\" name=\"campagne\">\n                                <input v-if=\"categorie\" type=\"hidden\" :value=\"categorie.id\" name=\"categorie_id\">\n                                <input type=\"hidden\" :value=\"content.groupe_id\" name=\"groupe_id\">\n                                <input v-for=\"chose in choosen\" type=\"hidden\" name=\"arrets[]\" :value=\"chose.id\" />\n                                <input type=\"hidden\" name=\"id\" :value=\"content.id\" />\n                                <button type=\"submit\" class=\"btn btn-sm btn-success\">Envoyer</button>\n                                <button type=\"button\" @click=\"close\" class=\"btn btn-sm btn-default cancelCreate\">Annuler</button>\n                            </div>\n\n                        </div>\n                    </div>\n\n                </form>\n            </div>\n        </div>\n    </div>\n</template>\n<style>\n\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n\n.sortable-ghost {\n\tcolor: #EAEAEA;\n\tbackground-color: #EAEAEA;\n\tborder: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n\tcolor: #224466;\n\tbackground-color: #2299ff;\n}\n.sortable-drag {\n\tcolor: #449922;\n\tbackground-color: #44ff33;\n}\n</style>\n<script>\n\n    import draggable from 'vuedraggable';\n    export default{\n\n        props: ['type','campagne','_token','url','site','title','content','mode','newsletter'],\n        components: {\n            draggable,\n        },\n        data(){\n            return{\n                choosen: [],\n                categorie: null,\n                categories: [],\n                arrets: [],\n                lists:[],\n                isEdit: false,\n            }\n        },\n        computed: {\n            prepared: function () {\n                var arr = [];\n                _.each(this.choosen,function(o){\n                   arr.push(_.pick(o,'id'));\n                });\n\n                return arr;\n            },\n            action:function(){\n                if(this.mode == 'edit'){ return this.url + '/' + this.content.id; }\n                if(this.mode == 'create'){ return this.url; }\n            }\n        },\n        mounted: function ()  {\n            this.getCategories();\n            this.initialize();\n        },\n        methods: {\n            initialize : function(){\n                this.choosen = this.content.model.choosen;\n                this.lists   = this.content.model.arrets;\n                this.categorie = this.content.model.categorie;\n\n                this.getArretsCategories();\n            },\n            getCategories: function() {\n                var self = this;\n                axios.get('admin/ajax/categories/' + self.site).then(function (response) {\n                      self.categories = response.data;\n                      self.lists.push(self.categories);\n                      self.categorie = self.content ? self.content.model.categorie : null;\n                }).catch(function (error) { console.log(error);});\n            },\n            getArretsCategories: function() {\n                var self = this;\n                axios.post(\"admin/ajax/categorie/categoriearrets\",{ id: self.categorie.id }).then(function (response) {\n                      self.arrets = response.data;\n                }).catch(function (error) { console.log(error);});\n            },\n            updateModel(){\n                this.getArretsCategories();\n            },\n            editMode(model){\n                this.isEdit = true;\n            },\n            close(){\n                this.isEdit = false;\n                this.initialize();\n            },\n            deleteContent(model){\n                this.$emit('deleteContent', model);\n            }\n        }\n    }\n</script>\n"]}]);
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n", "", {"version":3,"sources":["Manager.vue?cfcd9ee2"],"names":[],"mappings":";AAwEA;KACA,WAAA;KACA,iBAAA;KACA,eAAA;CACA","file":"Manager.vue","sourcesContent":["<template>\n<div>\n    <div id=\"bs-modal\">\n        <!-- MODAL -->\n        <div class=\"modal fade\" :id=\"'myModal_' + id\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n                        <h4 class=\"modal-title\" id=\"myModalLabel\">Choisir un fichier</h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"row\">\n                            <div class=\"col-md-2\">\n                                <div id=\"treeMenu\">\n\n                                    <div class=\"tree\">\n                                        <div id=\"fileManagerTree\">\n                                            <ul>\n                                                <li v-bind:class=\"{active: isActive(index)}\" v-for=\"(directorie,index) in directories\">\n                                                    <button type=\"button\" class=\"node\" v-on:click.stop=\"chosenFolder('files/' + index)\"><i class=\"fa fa-folder-o\"></i> &nbsp;{{ index }}</button>\n                                                    <ul>\n                                                        <li v-bind:class=\"{active: isActive(second)}\" v-for=\"(folder,second) in directorie\">\n                                                            <button type=\"button\" class=\"node\" v-on:click.stop=\"chosenFolder('files/' + index + '/' + second)\"><i class=\"fa fa-folder-o\"></i> &nbsp;{{ second }}</button>\n                                                        </li>\n                                                    </ul>\n                                                </li>\n                                            </ul>\n                                        </div>\n                                    </div>\n\n                                    <div :id=\"'dropzone_' + id\" class=\"dropzone\"></div>\n                                    <p class=\"dropmessage\"><i>Les fichiers sont téléchargé dans le dossier en cours, sinon si aucun n'est choisi le dossier par défault sera uploads</i></p>\n                                </div>\n                            </div>\n                            <div class=\"col-md-10\">\n                                <p class=\"loading\" v-show=\"loading\"><i class=\"fa fa-spinner fa-spin\"></i></p>\n                                <div v-show=\"!loading\" id=\"fileManager\" data-path=\"files/uploads\">\n                                    <p v-if=\"!files\">Aucun fichier à ce niveau</p>\n                                    <ul v-if=\"files\" id=\"gallery\">\n                                        <li v-for=\"file in files\" class=\"file-item\">\n                                            <button @click=\"deleteFile(path + '/' + file)\" class=\"btn btn-xs btn-danger\">x</button>\n\n                                            <img v-if=\"isImage(file)\" @click=\"chosenFile(path + '/' + file)\" :src=\"path + displayPath + '/' + file\" alt=\"image\" />\n                                            <img v-if=\"!isImage(file)\" @click=\"chosenFile(path + '/' + file)\" src=\"images/text.svg\" alt=\"image\" />\n                                            <p v-if=\"!isImage(file)\">{{ file }}</p>\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"modal-footer\">\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Fermer</button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div v-if=\"chosen && filename\" class=\"file-choosen-wrapper\">\n        <input class=\"file-choosen\" type=\"hidden\" :name=\"name\" v-bind:value=\"filename\">\n        <img v-if=\"isImage(filename)\" class=\"file-choosen file-image thumbnail\" :src=\"filename\" alt=\"image\" />\n        <a v-if=\"!isImage(filename)\" target=\"_blank\" class=\"file-choosen\" :href=\"filename\">{{ filename }}</a>\n        <button @click=\"removeFile()\" class=\"btn btn-xs btn-danger\">x</button>\n    </div>\n\n</div>\n\n</template>\n\n<style>\n   .loading{\n        width:50px;\n        margin:40px auto;\n        font-size:30px;\n    }\n</style>\n<script>\n\nexport default {\n props: ['name','thumbs', 'input','id'],\n    data () {\n        return {\n           directories:[],\n           path: 'files/uploads',\n           files: null,\n           chosen: false,\n           filename: '',\n           directory:'',\n           loading: false\n        }\n    },\n    computed: {\n        displayPath: function (path) {\n           return this.thumbs.indexOf(this.directory) === 0 ? '/thumbs' : '';\n        }\n    },\n    mounted: function ()  {\n        this.getDirectories();\n\n        var self = this;\n        this.$nextTick(function(){\n\n            var myDropzone = new Dropzone(\"#dropzone_\" + this.id, {\n                url: \"admin/upload\",\n                dictDefaultMessage: \" Ajouter un fichier\",\n                dictRemoveFile: \"Enlever\",\n                thumbnailWidth: 100,\n                thumbnailHeight: 80,\n                addRemoveLinks : true\n            });\n\n            myDropzone.on('sending', function(file, xhr, formData){\n                formData.append('path', self.path);\n                formData.append('_token', $(\"meta[name='_token']\").attr('content'));\n            });\n\n            myDropzone.on(\"success\", function(file) {\n                self.addFile(file);\n            });\n        });\n    },\n    methods: {\n        getDirectories: function(){\n\n            var self = this;\n            axios.get('/admin/gettree').then(function (response) {\n                 self.directories = response.data.directories;\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFolder: function(path){\n\n            this.loading = true;\n            this.directory = path.replace(\"files/\", \"\");\n            this.files = null\n\n            var self = this;\n            axios.post('/admin/getfiles', { path : path }).then(function (response) {\n\n                self.files = response.data.files;\n                self.path  = path;\n\n                self.$nextTick(function(){\n                    self.loading = false;\n                });\n\n            }).catch(function (error) { console.log(error);});\n        },\n        deleteFile: function(path){\n\n            var self = this;\n            axios.post('/admin/files/delete', { path : path }).then(function (response) {\n                var answer = confirm('Voulez-vous vraiment supprimer ' + path + ' ?');\n                if (answer){ self.files.splice( self.files.indexOf(path), 1 );}\n            }).catch(function (error) { console.log(error);});\n        },\n        chosenFile: function(path){\n            this.filename = path;\n            this.chosen   = true;\n\n            $('#myModal_'+this.id).modal('hide');\n        },\n        addFile: function(file){\n            this.files.push(file.name);\n        },\n        removeFile: function(){\n            this.filename = null;\n            this.chosen   = false;\n        },\n        isActive: function(path){\n            return this.directory === path ? true : false;\n        },\n        isImage: function(filename){\n\n            var get_ext = filename.split('.').reverse();\n            var exts    = ['jpg','jpeg','png','gif'];\n\n            return ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ) ? true : false;\n        }\n    }\n}\n</script>"]}]);
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"Arret.vue"}]);
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"EditBuild.vue"}]);
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(92).polyfill();
+module.exports = __webpack_require__(93).polyfill();
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -7403,7 +7499,7 @@ module.exports = __webpack_require__(92).polyfill();
  * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
- * @version   v4.2.4+314e4831
+ * @version   v4.2.5+7f2b526d
  */
 
 (function (global, factory) {
@@ -8509,15 +8605,19 @@ var Promise$1 = function () {
     var promise = this;
     var constructor = promise.constructor;
 
-    return promise.then(function (value) {
-      return constructor.resolve(callback()).then(function () {
-        return value;
+    if (isFunction(callback)) {
+      return promise.then(function (value) {
+        return constructor.resolve(callback()).then(function () {
+          return value;
+        });
+      }, function (reason) {
+        return constructor.resolve(callback()).then(function () {
+          throw reason;
+        });
       });
-    }, function (reason) {
-      return constructor.resolve(callback()).then(function () {
-        throw reason;
-      });
-    });
+    }
+
+    return promise.then(callback, callback);
   };
 
   return Promise;
@@ -8581,7 +8681,7 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -8598,7 +8698,7 @@ return Promise$1;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.5';
+  var VERSION = '4.17.11';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -8862,7 +8962,7 @@ return Promise$1;
   var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
 
   /** Used to detect strings that need a more robust regexp to match words. */
-  var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
+  var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
 
   /** Used to assign default `context` object properties. */
   var contextProps = [
@@ -9022,6 +9122,14 @@ return Promise$1;
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
+      // Use `util.types` for Node.js 10+.
+      var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+      if (types) {
+        return types;
+      }
+
+      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -9800,20 +9908,6 @@ return Promise$1;
       }
     }
     return result;
-  }
-
-  /**
-   * Gets the value at `key`, unless `key` is "__proto__".
-   *
-   * @private
-   * @param {Object} object The object to query.
-   * @param {string} key The key of the property to get.
-   * @returns {*} Returns the property value.
-   */
-  function safeGet(object, key) {
-    return key == '__proto__'
-      ? undefined
-      : object[key];
   }
 
   /**
@@ -12273,7 +12367,7 @@ return Promise$1;
           if (isArguments(objValue)) {
             newValue = toPlainObject(objValue);
           }
-          else if (!isObject(objValue) || (srcIndex && isFunction(objValue))) {
+          else if (!isObject(objValue) || isFunction(objValue)) {
             newValue = initCloneObject(srcValue);
           }
         }
@@ -15194,6 +15288,22 @@ return Promise$1;
         array[length] = isIndex(index, arrLength) ? oldArray[index] : undefined;
       }
       return array;
+    }
+
+    /**
+     * Gets the value at `key`, unless `key` is "__proto__".
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @param {string} key The key of the property to get.
+     * @returns {*} Returns the property value.
+     */
+    function safeGet(object, key) {
+      if (key == '__proto__') {
+        return;
+      }
+
+      return object[key];
     }
 
     /**
@@ -25683,10 +25793,10 @@ return Promise$1;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(166)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(169)(module)))
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -25879,12 +25989,13 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
  * Sortable
  * @author	RubaXa   <trash@rubaxa.org>
+ * @author	owenm    <owen23355@gmail.com>
  * @license MIT
  */
 
@@ -25926,26 +26037,43 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		scrollParentEl,
 		scrollCustomFn,
 
-		lastEl,
-		lastCSS,
-		lastParentCSS,
-
 		oldIndex,
 		newIndex,
 
 		activeGroup,
 		putSortable,
 
-		autoScroll = {},
+		autoScrolls = [],
+		scrolling = false,
+
+		awaitingDragStarted = false,
+		ignoreNextClick = false,
+		sortables = [],
+
+		pointerElemChangedInterval,
+		lastPointerElemX,
+		lastPointerElemY,
 
 		tapEvt,
 		touchEvt,
 
 		moved,
 
+
+		lastTarget,
+		lastDirection,
+		pastFirstInvertThresh = false,
+		isCircumstantialInvert = false,
+		lastMode, // 'swap' or 'insert'
+
+		targetMoveDistance,
+
+
+		forRepaintDummy,
+		realDragElRect, // dragEl rect after current animation
+
 		/** @const */
 		R_SPACE = /\s+/g,
-		R_FLOAT = /left|right|inline/,
 
 		expando = 'Sortable' + (new Date).getTime(),
 
@@ -25957,34 +26085,144 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		$ = win.jQuery || win.Zepto,
 		Polymer = win.Polymer,
 
-		captureMode = false,
-		passiveMode = false,
+		captureMode = {
+			capture: false,
+			passive: false
+		},
 
+		IE11OrLess = !!navigator.userAgent.match(/(?:Trident.*rv[ :]?11\.|msie|iemobile)/i),
+		Edge = !!navigator.userAgent.match(/Edge/i),
+		// FireFox = !!navigator.userAgent.match(/firefox/i),
+
+		CSSFloatProperty = Edge || IE11OrLess ? 'cssFloat' : 'float',
+
+		// This will not pass for IE9, because IE9 DnD only works on anchors
 		supportDraggable = ('draggable' in document.createElement('div')),
-		supportCssPointerEvents = (function (el) {
-			// false when IE11
-			if (!!navigator.userAgent.match(/(?:Trident.*rv[ :]?11\.|msie)/i)) {
+
+		supportCssPointerEvents = (function() {
+			// false when <= IE11
+			if (IE11OrLess) {
 				return false;
 			}
-			el = document.createElement('x');
+			var el = document.createElement('x');
 			el.style.cssText = 'pointer-events:auto';
 			return el.style.pointerEvents === 'auto';
 		})(),
 
 		_silent = false,
+		_alignedSilent = false,
 
 		abs = Math.abs,
 		min = Math.min,
 
 		savedInputChecked = [],
-		touchDragOverListeners = [],
 
-		_autoScroll = _throttle(function (/**Event*/evt, /**Object*/options, /**HTMLElement*/rootEl) {
+		_detectDirection = function(el, options) {
+			var elCSS = _css(el),
+				elWidth = parseInt(elCSS.width),
+				child1 = _getChild(el, 0, options),
+				child2 = _getChild(el, 1, options),
+				firstChildCSS = child1 && _css(child1),
+				secondChildCSS = child2 && _css(child2),
+				firstChildWidth = firstChildCSS && parseInt(firstChildCSS.marginLeft) + parseInt(firstChildCSS.marginRight) + _getRect(child1).width,
+				secondChildWidth = secondChildCSS && parseInt(secondChildCSS.marginLeft) + parseInt(secondChildCSS.marginRight) + _getRect(child2).width;
+			if (elCSS.display === 'flex') {
+				return elCSS.flexDirection === 'column' || elCSS.flexDirection === 'column-reverse'
+				? 'vertical' : 'horizontal';
+			}
+			return (child1 &&
+				(
+					firstChildCSS.display === 'block' ||
+					firstChildCSS.display === 'flex' ||
+					firstChildCSS.display === 'table' ||
+					firstChildCSS.display === 'grid' ||
+					firstChildWidth >= elWidth &&
+					elCSS[CSSFloatProperty] === 'none' ||
+					child2 &&
+					elCSS[CSSFloatProperty] === 'none' &&
+					firstChildWidth + secondChildWidth > elWidth
+				) ?
+				'vertical' : 'horizontal'
+			);
+		},
+
+		/**
+		 * Detects first nearest empty sortable to X and Y position using emptyInsertThreshold.
+		 * @param  {Number} x      X position
+		 * @param  {Number} y      Y position
+		 * @return {HTMLElement}   Element of the first found nearest Sortable
+		 */
+		_detectNearestEmptySortable = function(x, y) {
+			for (var i = 0; i < sortables.length; i++) {
+				if (sortables[i].children.length) continue;
+
+				var rect = _getRect(sortables[i]),
+					threshold = sortables[i][expando].options.emptyInsertThreshold,
+					insideHorizontally = x >= (rect.left - threshold) && x <= (rect.right + threshold),
+					insideVertically = y >= (rect.top - threshold) && y <= (rect.bottom + threshold);
+
+				if (insideHorizontally && insideVertically) {
+					return sortables[i];
+				}
+			}
+		},
+
+		_isClientInRowColumn = function(x, y, el, axis, options) {
+			var targetRect = _getRect(el),
+				targetS1Opp = axis === 'vertical' ? targetRect.left : targetRect.top,
+				targetS2Opp = axis === 'vertical' ? targetRect.right : targetRect.bottom,
+				mouseOnOppAxis = axis === 'vertical' ? x : y;
+
+			return targetS1Opp < mouseOnOppAxis && mouseOnOppAxis < targetS2Opp;
+		},
+
+		_isElInRowColumn = function(el1, el2, axis) {
+			var el1Rect = el1 === dragEl && realDragElRect || _getRect(el1),
+				el2Rect = el2 === dragEl && realDragElRect || _getRect(el2),
+				el1S1Opp = axis === 'vertical' ? el1Rect.left : el1Rect.top,
+				el1S2Opp = axis === 'vertical' ? el1Rect.right : el1Rect.bottom,
+				el1OppLength = axis === 'vertical' ? el1Rect.width : el1Rect.height,
+				el2S1Opp = axis === 'vertical' ? el2Rect.left : el2Rect.top,
+				el2S2Opp = axis === 'vertical' ? el2Rect.right : el2Rect.bottom,
+				el2OppLength = axis === 'vertical' ? el2Rect.width : el2Rect.height;
+
+			return (
+				el1S1Opp === el2S1Opp ||
+				el1S2Opp === el2S2Opp ||
+				(el1S1Opp + el1OppLength / 2) === (el2S1Opp + el2OppLength / 2)
+			);
+		},
+
+		_getParentAutoScrollElement = function(el, includeSelf) {
+			// skip to window
+			if (!el || !el.getBoundingClientRect) return win;
+
+			var elem = el;
+			var gotSelf = false;
+			do {
+				// we don't need to get elem css if it isn't even overflowing in the first place (performance)
+				if (elem.clientWidth < elem.scrollWidth || elem.clientHeight < elem.scrollHeight) {
+					var elemCSS = _css(elem);
+					if (
+						elem.clientWidth < elem.scrollWidth && (elemCSS.overflowX == 'auto' || elemCSS.overflowX == 'scroll') ||
+						elem.clientHeight < elem.scrollHeight && (elemCSS.overflowY == 'auto' || elemCSS.overflowY == 'scroll')
+					) {
+						if (!elem || !elem.getBoundingClientRect || elem === document.body) return win;
+
+						if (gotSelf || includeSelf) return elem;
+						gotSelf = true;
+					}
+				}
+			/* jshint boss:true */
+			} while (elem = elem.parentNode);
+
+			return win;
+		},
+
+		_autoScroll = _throttle(function (/**Event*/evt, /**Object*/options, /**HTMLElement*/rootEl, /**Boolean*/isFallback) {
 			// Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
-			if (rootEl && options.scroll) {
-				var _this = rootEl[expando],
-					el,
-					rect,
+			if (options.scroll) {
+				var _this = rootEl ? rootEl[expando] : window,
 					sens = options.scrollSensitivity,
 					speed = options.scrollSpeed,
 
@@ -25994,98 +26232,158 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					winWidth = window.innerWidth,
 					winHeight = window.innerHeight,
 
-					vx,
-					vy,
+					scrollThisInstance = false;
 
-					scrollOffsetX,
-					scrollOffsetY
-				;
-
-				// Delect scrollEl
+				// Detect scrollEl
 				if (scrollParentEl !== rootEl) {
+					_clearAutoScrolls();
+
 					scrollEl = options.scroll;
-					scrollParentEl = rootEl;
 					scrollCustomFn = options.scrollFn;
 
 					if (scrollEl === true) {
-						scrollEl = rootEl;
-
-						do {
-							if ((scrollEl.offsetWidth < scrollEl.scrollWidth) ||
-								(scrollEl.offsetHeight < scrollEl.scrollHeight)
-							) {
-								break;
-							}
-							/* jshint boss:true */
-						} while (scrollEl = scrollEl.parentNode);
+						scrollEl = _getParentAutoScrollElement(rootEl, true);
+						scrollParentEl = scrollEl;
 					}
 				}
 
-				if (scrollEl) {
-					el = scrollEl;
-					rect = scrollEl.getBoundingClientRect();
-					vx = (abs(rect.right - x) <= sens) - (abs(rect.left - x) <= sens);
-					vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
-				}
+
+				var layersOut = 0;
+				var currentParent = scrollEl;
+				do {
+					var	el = currentParent,
+						rect = _getRect(el),
+
+						top = rect.top,
+						bottom = rect.bottom,
+						left = rect.left,
+						right = rect.right,
+
+						width = rect.width,
+						height = rect.height,
+
+						scrollWidth,
+						scrollHeight,
+
+						css,
+
+						vx,
+						vy,
+
+						canScrollX,
+						canScrollY,
+
+						scrollPosX,
+						scrollPosY;
 
 
-				if (!(vx || vy)) {
-					vx = (winWidth - x <= sens) - (x <= sens);
-					vy = (winHeight - y <= sens) - (y <= sens);
+					if (el !== win) {
+						scrollWidth = el.scrollWidth;
+						scrollHeight = el.scrollHeight;
 
-					/* jshint expr:true */
-					(vx || vy) && (el = win);
-				}
+						css = _css(el);
 
+						canScrollX = width < scrollWidth && (css.overflowX === 'auto' || css.overflowX === 'scroll');
+						canScrollY = height < scrollHeight && (css.overflowY === 'auto' || css.overflowY === 'scroll');
 
-				if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
-					autoScroll.el = el;
-					autoScroll.vx = vx;
-					autoScroll.vy = vy;
+						scrollPosX = el.scrollLeft;
+						scrollPosY = el.scrollTop;
+					} else {
+						scrollWidth = document.documentElement.scrollWidth;
+						scrollHeight = document.documentElement.scrollHeight;
 
-					clearInterval(autoScroll.pid);
+						css = _css(document.documentElement);
 
-					if (el) {
-						autoScroll.pid = setInterval(function () {
-							scrollOffsetY = vy ? vy * speed : 0;
-							scrollOffsetX = vx ? vx * speed : 0;
+						canScrollX = width < scrollWidth && (css.overflowX === 'auto' || css.overflowX === 'scroll' || css.overflowX === 'visible');
+						canScrollY = height < scrollHeight && (css.overflowY === 'auto' || css.overflowY === 'scroll' || css.overflowY === 'visible');
 
-							if ('function' === typeof(scrollCustomFn)) {
-								return scrollCustomFn.call(_this, scrollOffsetX, scrollOffsetY, evt);
-							}
-
-							if (el === win) {
-								win.scrollTo(win.pageXOffset + scrollOffsetX, win.pageYOffset + scrollOffsetY);
-							} else {
-								el.scrollTop += scrollOffsetY;
-								el.scrollLeft += scrollOffsetX;
-							}
-						}, 24);
+						scrollPosX = document.documentElement.scrollLeft;
+						scrollPosY = document.documentElement.scrollTop;
 					}
-				}
+
+					vx = canScrollX && (abs(right - x) <= sens && (scrollPosX + width) < scrollWidth) - (abs(left - x) <= sens && !!scrollPosX);
+
+					vy = canScrollY && (abs(bottom - y) <= sens && (scrollPosY + height) < scrollHeight) - (abs(top - y) <= sens && !!scrollPosY);
+
+
+					if (!autoScrolls[layersOut]) {
+						for (var i = 0; i <= layersOut; i++) {
+							if (!autoScrolls[i]) {
+								autoScrolls[i] = {};
+							}
+						}
+					}
+
+					if (autoScrolls[layersOut].vx != vx || autoScrolls[layersOut].vy != vy || autoScrolls[layersOut].el !== el) {
+						autoScrolls[layersOut].el = el;
+						autoScrolls[layersOut].vx = vx;
+						autoScrolls[layersOut].vy = vy;
+
+						clearInterval(autoScrolls[layersOut].pid);
+
+						if (el && (vx != 0 || vy != 0)) {
+							scrollThisInstance = true;
+							/* jshint loopfunc:true */
+							autoScrolls[layersOut].pid = setInterval((function () {
+								// emulate drag over during autoscroll (fallback), emulating native DnD behaviour
+								if (isFallback && this.layer === 0) {
+									Sortable.active._emulateDragOver(true);
+								}
+								var scrollOffsetY = autoScrolls[this.layer].vy ? autoScrolls[this.layer].vy * speed : 0;
+								var scrollOffsetX = autoScrolls[this.layer].vx ? autoScrolls[this.layer].vx * speed : 0;
+
+								if ('function' === typeof(scrollCustomFn)) {
+									if (scrollCustomFn.call(_this, scrollOffsetX, scrollOffsetY, evt, touchEvt, autoScrolls[this.layer].el) !== 'continue') {
+										return;
+									}
+								}
+								if (autoScrolls[this.layer].el === win) {
+									win.scrollTo(win.pageXOffset + scrollOffsetX, win.pageYOffset + scrollOffsetY);
+								} else {
+									autoScrolls[this.layer].el.scrollTop += scrollOffsetY;
+									autoScrolls[this.layer].el.scrollLeft += scrollOffsetX;
+								}
+							}).bind({layer: layersOut}), 24);
+						}
+					}
+					layersOut++;
+				} while (options.bubbleScroll && currentParent !== win && (currentParent = _getParentAutoScrollElement(currentParent, false)));
+				scrolling = scrollThisInstance; // in case another function catches scrolling as false in between when it is not
 			}
 		}, 30),
 
+		_clearAutoScrolls = function () {
+			autoScrolls.forEach(function(autoScroll) {
+				clearInterval(autoScroll.pid);
+			});
+			autoScrolls = [];
+		},
+
 		_prepareGroup = function (options) {
 			function toFn(value, pull) {
-				if (value === void 0 || value === true) {
-					value = group.name;
-				}
+				return function(to, from, dragEl, evt) {
+					var sameGroup = to.options.group.name &&
+									from.options.group.name &&
+									to.options.group.name === from.options.group.name;
 
-				if (typeof value === 'function') {
-					return value;
-				} else {
-					return function (to, from) {
-						var fromGroup = from.options.group.name;
+					if (value == null && (pull || sameGroup)) {
+						// Default pull value
+						// Default pull and put value if same group
+						return true;
+					} else if (value == null || value === false) {
+						return false;
+					} else if (pull && value === 'clone') {
+						return value;
+					} else if (typeof value === 'function') {
+						return toFn(value(to, from, dragEl, evt), pull)(to, from, dragEl, evt);
+					} else {
+						var otherGroup = (pull ? to : from).options.group.name;
 
-						return pull
-							? value
-							: value && (value.join
-								? value.indexOf(fromGroup) > -1
-								: (fromGroup == value)
-							);
-					};
-				}
+						return (value === true ||
+						(typeof value === 'string' && value === otherGroup) ||
+						(value.join && value.indexOf(otherGroup) > -1));
+					}
+				};
 			}
 
 			var group = {};
@@ -26101,23 +26399,77 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			group.revertClone = originalGroup.revertClone;
 
 			options.group = group;
-		}
-	;
+		},
 
-	// Detect support a passive mode
-	try {
-		window.addEventListener('test', null, Object.defineProperty({}, 'passive', {
-			get: function () {
-				// `false`, because everything starts to work incorrectly and instead of d'n'd,
-				// begins the page has scrolled.
-				passiveMode = false;
-				captureMode = {
-					capture: false,
-					passive: passiveMode
-				};
+		_checkAlignment = function(evt) {
+			if (!dragEl || !dragEl.parentNode) return;
+			dragEl.parentNode[expando] && dragEl.parentNode[expando]._computeIsAligned(evt);
+		},
+
+		_isTrueParentSortable = function(el, target) {
+			var trueParent = target;
+			while (!trueParent[expando]) {
+				trueParent = trueParent.parentNode;
 			}
-		}));
-	} catch (err) {}
+
+			return el === trueParent;
+		},
+
+		_artificalBubble = function(sortable, originalEvt, method) {
+			// Artificial IE bubbling
+			var nextParent = sortable.parentNode;
+			while (nextParent && !nextParent[expando]) {
+				nextParent = nextParent.parentNode;
+			}
+
+			if (nextParent) {
+				nextParent[expando][method](_extend(originalEvt, {
+					artificialBubble: true
+				}));
+			}
+		},
+
+		_hideGhostForTarget = function() {
+			if (!supportCssPointerEvents && ghostEl) {
+				_css(ghostEl, 'display', 'none');
+			}
+		},
+
+		_unhideGhostForTarget = function() {
+			if (!supportCssPointerEvents && ghostEl) {
+				_css(ghostEl, 'display', '');
+			}
+		};
+
+
+	// #1184 fix - Prevent click event on fallback if dragged but item not changed position
+	document.addEventListener('click', function(evt) {
+		if (ignoreNextClick) {
+			evt.preventDefault();
+			evt.stopPropagation && evt.stopPropagation();
+			evt.stopImmediatePropagation && evt.stopImmediatePropagation();
+			ignoreNextClick = false;
+			return false;
+		}
+	}, true);
+
+	var nearestEmptyInsertDetectEvent = function(evt) {
+		if (dragEl) {
+			var nearest = _detectNearestEmptySortable(evt.clientX, evt.clientY);
+
+			if (nearest) {
+				nearest[expando]._onDragOver({
+					clientX: evt.clientX,
+					clientY: evt.clientY,
+					target: nearest,
+					rootEl: nearest
+				});
+			}
+		}
+	};
+	// We do not want this to be triggered if completed (bubbling canceled), so only define it here
+	document.addEventListener('dragover', nearestEmptyInsertDetectEvent);
+	document.addEventListener('mousemove', nearestEmptyInsertDetectEvent);
 
 	/**
 	 * @class  Sortable
@@ -26126,7 +26478,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 	 */
 	function Sortable(el, options) {
 		if (!(el && el.nodeType && el.nodeType === 1)) {
-			throw 'Sortable: `el` must be HTMLElement, and not ' + {}.toString.call(el);
+			throw 'Sortable: `el` must be HTMLElement, not ' + {}.toString.call(el);
 		}
 
 		this.el = el; // root element
@@ -26138,7 +26490,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 		// Default options
 		var defaults = {
-			group: Math.random(),
+			group: null,
 			sort: true,
 			disabled: false,
 			store: null,
@@ -26146,7 +26498,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			scroll: true,
 			scrollSensitivity: 30,
 			scrollSpeed: 10,
+			bubbleScroll: true,
 			draggable: /[uo]l/i.test(el.nodeName) ? 'li' : '>*',
+			swapThreshold: 1, // percentage; 0 <= x <= 1
+			invertSwap: false, // invert always
+			invertedSwapThreshold: null, // will be set to same as swapThreshold if default
+			removeCloneOnHide: true,
+			direction: function() {
+				return _detectDirection(el, this.options);
+			},
 			ghostClass: 'sortable-ghost',
 			chosenClass: 'sortable-chosen',
 			dragClass: 'sortable-drag',
@@ -26154,6 +26514,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			filter: null,
 			preventOnFilter: true,
 			animation: 0,
+			easing: null,
 			setData: function (dataTransfer, dragEl) {
 				dataTransfer.setData('Text', dragEl.textContent);
 			},
@@ -26161,12 +26522,17 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			dragoverBubble: false,
 			dataIdAttr: 'data-id',
 			delay: 0,
+			touchStartThreshold: parseInt(window.devicePixelRatio, 10) || 1,
 			forceFallback: false,
 			fallbackClass: 'sortable-fallback',
 			fallbackOnBody: false,
 			fallbackTolerance: 0,
 			fallbackOffset: {x: 0, y: 0},
-			supportPointer: Sortable.supportPointer !== false
+			supportPointer: Sortable.supportPointer !== false && (
+				('PointerEvent' in window) ||
+				window.navigator && ('msPointerEnabled' in window.navigator) // microsoft
+			),
+			emptyInsertThreshold: 5
 		};
 
 
@@ -26188,26 +26554,68 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		this.nativeDraggable = options.forceFallback ? false : supportDraggable;
 
 		// Bind events
-		_on(el, 'mousedown', this._onTapStart);
-		_on(el, 'touchstart', this._onTapStart);
-		options.supportPointer && _on(el, 'pointerdown', this._onTapStart);
+		if (options.supportPointer) {
+			_on(el, 'pointerdown', this._onTapStart);
+		} else {
+			_on(el, 'mousedown', this._onTapStart);
+			_on(el, 'touchstart', this._onTapStart);
+		}
 
 		if (this.nativeDraggable) {
 			_on(el, 'dragover', this);
 			_on(el, 'dragenter', this);
 		}
 
-		touchDragOverListeners.push(this._onDragOver);
+		sortables.push(this.el);
 
 		// Restore sorting
-		options.store && this.sort(options.store.get(this));
+		options.store && options.store.get && this.sort(options.store.get(this) || []);
 	}
-
 
 	Sortable.prototype = /** @lends Sortable.prototype */ {
 		constructor: Sortable,
 
+		_computeIsAligned: function(evt) {
+			var target;
+
+			if (ghostEl && !supportCssPointerEvents) {
+				_hideGhostForTarget();
+				target = document.elementFromPoint(evt.clientX, evt.clientY);
+				_unhideGhostForTarget();
+			} else {
+				target = evt.target;
+			}
+
+			target = _closest(target, this.options.draggable, this.el, false);
+			if (_alignedSilent) return;
+			if (!dragEl || dragEl.parentNode !== this.el) return;
+
+			var children = this.el.children;
+			for (var i = 0; i < children.length; i++) {
+				// Don't change for target in case it is changed to aligned before onDragOver is fired
+				if (_closest(children[i], this.options.draggable, this.el, false) && children[i] !== target) {
+					children[i].sortableMouseAligned = _isClientInRowColumn(evt.clientX, evt.clientY, children[i], this._getDirection(evt, null), this.options);
+				}
+			}
+			// Used for nulling last target when not in element, nothing to do with checking if aligned
+			if (!_closest(target, this.options.draggable, this.el, true)) {
+				lastTarget = null;
+			}
+
+			_alignedSilent = true;
+			setTimeout(function() {
+				_alignedSilent = false;
+			}, 30);
+
+		},
+
+		_getDirection: function(evt, target) {
+			return (typeof this.options.direction === 'function') ? this.options.direction.call(this, evt, target, dragEl) : this.options.direction;
+		},
+
 		_onTapStart: function (/** Event|TouchEvent */evt) {
+			if (!evt.cancelable) return;
+
 			var _this = this,
 				el = this.el,
 				options = this.options,
@@ -26215,12 +26623,18 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				type = evt.type,
 				touch = evt.touches && evt.touches[0],
 				target = (touch || evt).target,
-				originalTarget = evt.target.shadowRoot && (evt.path && evt.path[0]) || target,
+				originalTarget = evt.target.shadowRoot && ((evt.path && evt.path[0]) || (evt.composedPath && evt.composedPath()[0])) || target,
 				filter = options.filter,
 				startIndex;
 
 			_saveInputCheckedState(el);
 
+
+			// IE: Calls events in capture mode if event element is nested. This ensures only correct element's _onTapStart goes through.
+			// This process is also done in _onDragOver
+			if (IE11OrLess && !evt.artificialBubble && !_isTrueParentSortable(el, target)) {
+				return;
+			}
 
 			// Don't trigger start event when an element is been dragged, otherwise the evt.oldindex always wrong when set option.group.
 			if (dragEl) {
@@ -26228,7 +26642,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			}
 
 			if (/mousedown|pointerdown/.test(type) && evt.button !== 0 || options.disabled) {
-				return; // only left button or enabled
+				return; // only left button and enabled
 			}
 
 			// cancel dnd if original target is content editable
@@ -26236,9 +26650,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				return;
 			}
 
-			target = _closest(target, options.draggable, el);
+			target = _closest(target, options.draggable, el, false);
 
 			if (!target) {
+				if (IE11OrLess) {
+					_artificalBubble(el, evt, '_onTapStart');
+				}
 				return;
 			}
 
@@ -26254,13 +26671,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			if (typeof filter === 'function') {
 				if (filter.call(this, evt, target, this)) {
 					_dispatchEvent(_this, originalTarget, 'filter', target, el, el, startIndex);
-					preventOnFilter && evt.preventDefault();
+					preventOnFilter && evt.cancelable && evt.preventDefault();
 					return; // cancel dnd
 				}
 			}
 			else if (filter) {
 				filter = filter.split(',').some(function (criteria) {
-					criteria = _closest(originalTarget, criteria.trim(), el);
+					criteria = _closest(originalTarget, criteria.trim(), el, false);
 
 					if (criteria) {
 						_dispatchEvent(_this, criteria, 'filter', target, el, el, startIndex);
@@ -26269,17 +26686,69 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				});
 
 				if (filter) {
-					preventOnFilter && evt.preventDefault();
+					preventOnFilter && evt.cancelable && evt.preventDefault();
 					return; // cancel dnd
 				}
 			}
 
-			if (options.handle && !_closest(originalTarget, options.handle, el)) {
+			if (options.handle && !_closest(originalTarget, options.handle, el, false)) {
 				return;
 			}
 
 			// Prepare `dragstart`
 			this._prepareDragStart(evt, touch, target, startIndex);
+		},
+
+
+		_handleAutoScroll: function(evt, fallback) {
+			if (!dragEl || !this.options.scroll) return;
+			var x = evt.clientX,
+				y = evt.clientY,
+
+				elem = document.elementFromPoint(x, y),
+				_this = this;
+
+			// IE does not seem to have native autoscroll,
+			// Edge's autoscroll seems too conditional,
+			// Firefox and Chrome are good
+			if (fallback || Edge || IE11OrLess) {
+				_autoScroll(evt, _this.options, elem, fallback);
+
+				// Listener for pointer element change
+				var ogElemScroller = _getParentAutoScrollElement(elem, true);
+				if (
+					scrolling &&
+					(
+						!pointerElemChangedInterval ||
+						x !== lastPointerElemX ||
+						y !== lastPointerElemY
+					)
+				) {
+
+					pointerElemChangedInterval && clearInterval(pointerElemChangedInterval);
+					// Detect for pointer elem change, emulating native DnD behaviour
+					pointerElemChangedInterval = setInterval(function() {
+						if (!dragEl) return;
+						// could also check if scroll direction on newElem changes due to parent autoscrolling
+						var newElem = _getParentAutoScrollElement(document.elementFromPoint(x, y), true);
+						if (newElem !== ogElemScroller) {
+							ogElemScroller = newElem;
+							_clearAutoScrolls();
+							_autoScroll(evt, _this.options, ogElemScroller, fallback);
+						}
+					}, 10);
+					lastPointerElemX = x;
+					lastPointerElemY = y;
+				}
+
+			} else {
+				// if DnD is enabled (and browser has good autoscrolling), first autoscroll will already scroll, so get parent autoscroll of first autoscroll
+				if (!_this.options.bubbleScroll || _getParentAutoScrollElement(elem, true) === window) {
+					_clearAutoScrolls();
+					return;
+				}
+				_autoScroll(evt, _this.options, _getParentAutoScrollElement(elem, false), false);
+			}
 		},
 
 		_prepareDragStart: function (/** Event */evt, /** Touch */touch, /** HTMLElement */target, /** Number */startIndex) {
@@ -26290,8 +26759,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				dragStartFn;
 
 			if (target && !dragEl && (target.parentNode === el)) {
-				tapEvt = evt;
-
 				rootEl = el;
 				dragEl = target;
 				parentEl = dragEl.parentNode;
@@ -26300,10 +26767,19 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				activeGroup = options.group;
 				oldIndex = startIndex;
 
+				tapEvt = {
+					target: dragEl,
+					clientX: (touch || evt).clientX,
+					clientY: (touch || evt).clientY
+				};
+
 				this._lastX = (touch || evt).clientX;
 				this._lastY = (touch || evt).clientY;
 
 				dragEl.style['will-change'] = 'all';
+				// undo animation if needed
+				dragEl.style.transition = '';
+				dragEl.style.transform = '';
 
 				dragStartFn = function () {
 					// Delayed drag has been triggered
@@ -26313,14 +26789,14 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					// Make the element draggable
 					dragEl.draggable = _this.nativeDraggable;
 
-					// Chosen item
-					_toggleClass(dragEl, options.chosenClass, true);
-
 					// Bind the events: dragstart/dragend
 					_this._triggerDragStart(evt, touch);
 
 					// Drag start event
 					_dispatchEvent(_this, rootEl, 'choose', dragEl, rootEl, rootEl, oldIndex);
+
+					// Chosen item
+					_toggleClass(dragEl, options.chosenClass, true);
 				};
 
 				// Disable "draggable"
@@ -26328,11 +26804,14 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					_find(dragEl, criteria.trim(), _disableDraggable);
 				});
 
-				_on(ownerDocument, 'mouseup', _this._onDrop);
-				_on(ownerDocument, 'touchend', _this._onDrop);
-				_on(ownerDocument, 'touchcancel', _this._onDrop);
-				_on(ownerDocument, 'selectstart', _this);
-				options.supportPointer && _on(ownerDocument, 'pointercancel', _this._onDrop);
+				if (options.supportPointer) {
+					_on(ownerDocument, 'pointerup', _this._onDrop);
+					_on(ownerDocument, 'pointercancel', _this._onDrop);
+				} else {
+					_on(ownerDocument, 'mouseup', _this._onDrop);
+					_on(ownerDocument, 'touchend', _this._onDrop);
+					_on(ownerDocument, 'touchcancel', _this._onDrop);
+				}
 
 				if (options.delay) {
 					// If the user moves the pointer or let go the click or touch
@@ -26341,16 +26820,23 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					_on(ownerDocument, 'mouseup', _this._disableDelayedDrag);
 					_on(ownerDocument, 'touchend', _this._disableDelayedDrag);
 					_on(ownerDocument, 'touchcancel', _this._disableDelayedDrag);
-					_on(ownerDocument, 'mousemove', _this._disableDelayedDrag);
-					_on(ownerDocument, 'touchmove', _this._disableDelayedDrag);
-					options.supportPointer && _on(ownerDocument, 'pointermove', _this._disableDelayedDrag);
+					_on(ownerDocument, 'mousemove', _this._delayedDragTouchMoveHandler);
+					_on(ownerDocument, 'touchmove', _this._delayedDragTouchMoveHandler);
+					options.supportPointer && _on(ownerDocument, 'pointermove', _this._delayedDragTouchMoveHandler);
 
 					_this._dragStartTimer = setTimeout(dragStartFn, options.delay);
 				} else {
 					dragStartFn();
 				}
+			}
+		},
 
-
+		_delayedDragTouchMoveHandler: function (/** TouchEvent|PointerEvent **/e) {
+			var touch = e.touches ? e.touches[0] : e;
+			if (min(abs(touch.clientX - this._lastX), abs(touch.clientY - this._lastY))
+					>= this.options.touchStartThreshold
+			) {
+				this._disableDelayedDrag();
 			}
 		},
 
@@ -26361,28 +26847,23 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			_off(ownerDocument, 'mouseup', this._disableDelayedDrag);
 			_off(ownerDocument, 'touchend', this._disableDelayedDrag);
 			_off(ownerDocument, 'touchcancel', this._disableDelayedDrag);
-			_off(ownerDocument, 'mousemove', this._disableDelayedDrag);
-			_off(ownerDocument, 'touchmove', this._disableDelayedDrag);
-			_off(ownerDocument, 'pointermove', this._disableDelayedDrag);
+			_off(ownerDocument, 'mousemove', this._delayedDragTouchMoveHandler);
+			_off(ownerDocument, 'touchmove', this._delayedDragTouchMoveHandler);
+			_off(ownerDocument, 'pointermove', this._delayedDragTouchMoveHandler);
 		},
 
 		_triggerDragStart: function (/** Event */evt, /** Touch */touch) {
 			touch = touch || (evt.pointerType == 'touch' ? evt : null);
 
-			if (touch) {
-				// Touch device support
-				tapEvt = {
-					target: dragEl,
-					clientX: touch.clientX,
-					clientY: touch.clientY
-				};
-
-				this._onDragStart(tapEvt, 'touch');
-			}
-			else if (!this.nativeDraggable) {
-				this._onDragStart(tapEvt, true);
-			}
-			else {
+			if (!this.nativeDraggable || touch) {
+				if (this.options.supportPointer) {
+					_on(document, 'pointermove', this._onTouchMove);
+				} else if (touch) {
+					_on(document, 'touchmove', this._onTouchMove);
+				} else {
+					_on(document, 'mousemove', this._onTouchMove);
+				}
+			} else {
 				_on(dragEl, 'dragend', this);
 				_on(rootEl, 'dragstart', this._onDragStart);
 			}
@@ -26400,15 +26881,25 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			}
 		},
 
-		_dragStarted: function () {
+		_dragStarted: function (fallback) {
+			awaitingDragStarted = false;
 			if (rootEl && dragEl) {
+				if (this.nativeDraggable) {
+					_on(document, 'dragover', this._handleAutoScroll);
+					_on(document, 'dragover', _checkAlignment);
+				}
 				var options = this.options;
 
 				// Apply effect
+				!fallback && _toggleClass(dragEl, options.dragClass, false);
 				_toggleClass(dragEl, options.ghostClass, true);
-				_toggleClass(dragEl, options.dragClass, false);
+
+				// In case dragging an animated element
+				_css(dragEl, 'transform', '');
 
 				Sortable.active = this;
+
+				fallback && this._appendGhost();
 
 				// Drag start event
 				_dispatchEvent(this, rootEl, 'start', dragEl, rootEl, rootEl, oldIndex);
@@ -26417,24 +26908,20 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			}
 		},
 
-		_emulateDragOver: function () {
+		_emulateDragOver: function (bypassLastTouchCheck) {
 			if (touchEvt) {
-				if (this._lastX === touchEvt.clientX && this._lastY === touchEvt.clientY) {
+				if (this._lastX === touchEvt.clientX && this._lastY === touchEvt.clientY && !bypassLastTouchCheck) {
 					return;
 				}
-
 				this._lastX = touchEvt.clientX;
 				this._lastY = touchEvt.clientY;
 
-				if (!supportCssPointerEvents) {
-					_css(ghostEl, 'display', 'none');
-				}
+				_hideGhostForTarget();
 
 				var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY);
 				var parent = target;
-				var i = touchDragOverListeners.length;
 
-				if (target && target.shadowRoot) {
+				while (target && target.shadowRoot) {
 					target = target.shadowRoot.elementFromPoint(touchEvt.clientX, touchEvt.clientY);
 					parent = target;
 				}
@@ -26442,16 +26929,18 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				if (parent) {
 					do {
 						if (parent[expando]) {
-							while (i--) {
-								touchDragOverListeners[i]({
-									clientX: touchEvt.clientX,
-									clientY: touchEvt.clientY,
-									target: target,
-									rootEl: parent
-								});
-							}
+							var inserted;
 
-							break;
+							inserted = parent[expando]._onDragOver({
+								clientX: touchEvt.clientX,
+								clientY: touchEvt.clientY,
+								target: target,
+								rootEl: parent
+							});
+
+							if (inserted && !this.options.dragoverBubble) {
+								break;
+							}
 						}
 
 						target = parent; // store last element
@@ -26459,56 +26948,59 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					/* jshint boss:true */
 					while (parent = parent.parentNode);
 				}
+				dragEl.parentNode[expando]._computeIsAligned(touchEvt);
 
-				if (!supportCssPointerEvents) {
-					_css(ghostEl, 'display', '');
-				}
+				_unhideGhostForTarget();
 			}
 		},
 
 
 		_onTouchMove: function (/**TouchEvent*/evt) {
 			if (tapEvt) {
+				if (!evt.cancelable) return;
 				var	options = this.options,
 					fallbackTolerance = options.fallbackTolerance,
 					fallbackOffset = options.fallbackOffset,
 					touch = evt.touches ? evt.touches[0] : evt,
-					dx = (touch.clientX - tapEvt.clientX) + fallbackOffset.x,
-					dy = (touch.clientY - tapEvt.clientY) + fallbackOffset.y,
+					matrix = ghostEl && _matrix(ghostEl),
+					scaleX = ghostEl && matrix && matrix.a,
+					scaleY = ghostEl && matrix && matrix.d,
+					dx = ((touch.clientX - tapEvt.clientX) + fallbackOffset.x) / (scaleX ? scaleX : 1),
+					dy = ((touch.clientY - tapEvt.clientY) + fallbackOffset.y) / (scaleY ? scaleY : 1),
 					translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
 
+
 				// only set the status to dragging, when we are actually dragging
-				if (!Sortable.active) {
+				if (!Sortable.active && !awaitingDragStarted) {
 					if (fallbackTolerance &&
 						min(abs(touch.clientX - this._lastX), abs(touch.clientY - this._lastY)) < fallbackTolerance
 					) {
 						return;
 					}
-
-					this._dragStarted();
+					this._onDragStart(evt, true);
 				}
 
-				// as well as creating the ghost element on the document body
-				this._appendGhost();
+				this._handleAutoScroll(touch, true);
+
 
 				moved = true;
 				touchEvt = touch;
+
 
 				_css(ghostEl, 'webkitTransform', translate3d);
 				_css(ghostEl, 'mozTransform', translate3d);
 				_css(ghostEl, 'msTransform', translate3d);
 				_css(ghostEl, 'transform', translate3d);
 
-				evt.preventDefault();
+				evt.cancelable && evt.preventDefault();
 			}
 		},
 
 		_appendGhost: function () {
 			if (!ghostEl) {
-				var rect = dragEl.getBoundingClientRect(),
+				var rect = _getRect(dragEl, this.options.fallbackOnBody ? document.body : rootEl, true),
 					css = _css(dragEl),
-					options = this.options,
-					ghostRect;
+					options = this.options;
 
 				ghostEl = dragEl.cloneNode(true);
 
@@ -26516,8 +27008,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				_toggleClass(ghostEl, options.fallbackClass, true);
 				_toggleClass(ghostEl, options.dragClass, true);
 
-				_css(ghostEl, 'top', rect.top - parseInt(css.marginTop, 10));
-				_css(ghostEl, 'left', rect.left - parseInt(css.marginLeft, 10));
+				_css(ghostEl, 'box-sizing', 'border-box');
+				_css(ghostEl, 'margin', 0);
+				_css(ghostEl, 'top', rect.top);
+				_css(ghostEl, 'left', rect.left);
 				_css(ghostEl, 'width', rect.width);
 				_css(ghostEl, 'height', rect.height);
 				_css(ghostEl, 'opacity', '0.8');
@@ -26526,59 +27020,47 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				_css(ghostEl, 'pointerEvents', 'none');
 
 				options.fallbackOnBody && document.body.appendChild(ghostEl) || rootEl.appendChild(ghostEl);
-
-				// Fixing dimensions.
-				ghostRect = ghostEl.getBoundingClientRect();
-				_css(ghostEl, 'width', rect.width * 2 - ghostRect.width);
-				_css(ghostEl, 'height', rect.height * 2 - ghostRect.height);
 			}
 		},
 
-		_onDragStart: function (/**Event*/evt, /**boolean*/useFallback) {
+		_onDragStart: function (/**Event*/evt, /**boolean*/fallback) {
 			var _this = this;
 			var dataTransfer = evt.dataTransfer;
 			var options = _this.options;
 
-			_this._offUpEvents();
+			// Setup clone
+			cloneEl = _clone(dragEl);
 
-			if (activeGroup.checkPull(_this, _this, dragEl, evt)) {
-				cloneEl = _clone(dragEl);
+			cloneEl.draggable = false;
+			cloneEl.style['will-change'] = '';
 
-				cloneEl.draggable = false;
-				cloneEl.style['will-change'] = '';
+			this._hideClone();
 
-				_css(cloneEl, 'display', 'none');
-				_toggleClass(cloneEl, _this.options.chosenClass, false);
+			_toggleClass(cloneEl, _this.options.chosenClass, false);
 
-				// #1143: IFrame support workaround
-				_this._cloneId = _nextTick(function () {
+
+			// #1143: IFrame support workaround
+			_this._cloneId = _nextTick(function () {
+				if (!_this.options.removeCloneOnHide) {
 					rootEl.insertBefore(cloneEl, dragEl);
-					_dispatchEvent(_this, rootEl, 'clone', dragEl);
-				});
-			}
-
-			_toggleClass(dragEl, options.dragClass, true);
-
-			if (useFallback) {
-				if (useFallback === 'touch') {
-					// Bind touch events
-					_on(document, 'touchmove', _this._onTouchMove);
-					_on(document, 'touchend', _this._onDrop);
-					_on(document, 'touchcancel', _this._onDrop);
-
-					if (options.supportPointer) {
-						_on(document, 'pointermove', _this._onTouchMove);
-						_on(document, 'pointerup', _this._onDrop);
-					}
-				} else {
-					// Old brwoser
-					_on(document, 'mousemove', _this._onTouchMove);
-					_on(document, 'mouseup', _this._onDrop);
 				}
+				_dispatchEvent(_this, rootEl, 'clone', dragEl);
+			});
 
+
+			!fallback && _toggleClass(dragEl, options.dragClass, true);
+
+			// Set proper drop events
+			if (fallback) {
+				ignoreNextClick = true;
 				_this._loopId = setInterval(_this._emulateDragOver, 50);
-			}
-			else {
+			} else {
+				// Undo what was set in _prepareDragStart before drag started
+				_off(document, 'mouseup', _this._onDrop);
+				_off(document, 'touchend', _this._onDrop);
+				_off(document, 'touchcancel', _this._onDrop);
+				_off(document, 'pointercancel', _this._onDrop);
+
 				if (dataTransfer) {
 					dataTransfer.effectAllowed = 'move';
 					options.setData && options.setData.call(_this, dataTransfer, dragEl);
@@ -26586,18 +27068,20 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 				_on(document, 'drop', _this);
 
-				// #1143: Бывает элемент с IFrame внутри блокирует `drop`,
-				// поэтому если вызвался `mouseover`, значит надо отменять весь d'n'd.
-				// Breaking Chrome 62+
-				// _on(document, 'mouseover', _this);
-
-				_this._dragStartId = _nextTick(_this._dragStarted);
+				// #1276 fix:
+				_css(dragEl, 'transform', 'translateZ(0)');
 			}
+
+			awaitingDragStarted = true;
+
+			_this._dragStartId = _nextTick(_this._dragStarted.bind(_this, fallback));
+			_on(document, 'selectstart', _this);
 		},
 
+		// Returns true - if no further action is needed (either inserted or another condition)
 		_onDragOver: function (/**Event*/evt) {
 			var el = this.el,
-				target,
+				target = evt.target,
 				dragRect,
 				targetRect,
 				revert,
@@ -26605,19 +27089,69 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				group = options.group,
 				activeSortable = Sortable.active,
 				isOwner = (activeGroup === group),
-				isMovingBetweenSortable = false,
-				canSort = options.sort;
+				canSort = options.sort,
+				_this = this;
 
-			if (evt.preventDefault !== void 0) {
-				evt.preventDefault();
-				!options.dragoverBubble && evt.stopPropagation();
-			}
+			if (_silent) return;
 
-			if (dragEl.animated) {
+			// IE event order fix
+			if (IE11OrLess && !evt.rootEl && !evt.artificialBubble && !_isTrueParentSortable(el, target)) {
 				return;
 			}
 
+			// Return invocation when no further action is needed in another sortable
+			function completed() {
+				if (activeSortable) {
+					// Set ghost class to new sortable's ghost class
+					_toggleClass(dragEl, putSortable ? putSortable.options.ghostClass : activeSortable.options.ghostClass, false);
+					_toggleClass(dragEl, options.ghostClass, true);
+				}
+
+				if (putSortable !== _this && _this !== Sortable.active) {
+					putSortable = _this;
+				} else if (_this === Sortable.active) {
+					putSortable = null;
+				}
+
+
+				// Null lastTarget if it is not inside a previously swapped element
+				if ((target === dragEl && !dragEl.animated) || (target === el && !target.animated)) {
+					lastTarget = null;
+				}
+				// no bubbling and not fallback
+				if (!options.dragoverBubble && !evt.rootEl && target !== document) {
+					_this._handleAutoScroll(evt);
+					dragEl.parentNode[expando]._computeIsAligned(evt);
+				}
+
+				!options.dragoverBubble && evt.stopPropagation && evt.stopPropagation();
+
+				return true;
+			}
+
+			// Call when dragEl has been inserted
+			function changed() {
+				_dispatchEvent(_this, rootEl, 'change', target, el, rootEl, oldIndex, _index(dragEl, options.draggable), evt);
+			}
+
+
+			if (evt.preventDefault !== void 0) {
+				evt.cancelable && evt.preventDefault();
+			}
+
+
 			moved = true;
+
+			target = _closest(target, options.draggable, el, true);
+
+			// target is dragEl or target is animated
+			if (!!_closest(evt.target, null, dragEl, true) || target.animated) {
+				return completed();
+			}
+
+			if (target !== dragEl) {
+				ignoreNextClick = false;
+			}
 
 			if (activeSortable && !options.disabled &&
 				(isOwner
@@ -26625,106 +27159,110 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					: (
 						putSortable === this ||
 						(
-							(activeSortable.lastPullMode = activeGroup.checkPull(this, activeSortable, dragEl, evt)) &&
+							(this.lastPutMode = activeGroup.checkPull(this, activeSortable, dragEl, evt)) &&
 							group.checkPut(this, activeSortable, dragEl, evt)
 						)
 					)
-				) &&
-				(evt.rootEl === void 0 || evt.rootEl === this.el) // touch fallback
+				)
 			) {
-				// Smart auto-scrolling
-				_autoScroll(evt, options, this.el);
+				var axis = this._getDirection(evt, target);
 
-				if (_silent) {
-					return;
-				}
-
-				target = _closest(evt.target, options.draggable, el);
-				dragRect = dragEl.getBoundingClientRect();
-
-				if (putSortable !== this) {
-					putSortable = this;
-					isMovingBetweenSortable = true;
-				}
+				dragRect = _getRect(dragEl);
 
 				if (revert) {
-					_cloneHide(activeSortable, true);
+					this._hideClone();
 					parentEl = rootEl; // actualization
 
-					if (cloneEl || nextEl) {
-						rootEl.insertBefore(dragEl, cloneEl || nextEl);
-					}
-					else if (!canSort) {
+					if (nextEl) {
+						rootEl.insertBefore(dragEl, nextEl);
+					} else {
 						rootEl.appendChild(dragEl);
 					}
 
-					return;
+					return completed();
 				}
 
-
 				if ((el.children.length === 0) || (el.children[0] === ghostEl) ||
-					(el === evt.target) && (_ghostIsLast(el, evt))
+					_ghostIsLast(evt, axis, el) && !dragEl.animated
 				) {
 					//assign target only if condition is true
 					if (el.children.length !== 0 && el.children[0] !== ghostEl && el === evt.target) {
-						target = el.lastElementChild;
+						target = _lastChild(el);
 					}
 
 					if (target) {
-						if (target.animated) {
-							return;
-						}
-
-						targetRect = target.getBoundingClientRect();
+						targetRect = _getRect(target);
 					}
 
-					_cloneHide(activeSortable, isOwner);
+					if (isOwner) {
+						activeSortable._hideClone();
+					} else {
+						activeSortable._showClone(this);
+					}
 
-					if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt) !== false) {
-						if (!dragEl.contains(el)) {
-							el.appendChild(dragEl);
-							parentEl = el; // actualization
-						}
+					if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, !!target) !== false) {
+						el.appendChild(dragEl);
+						parentEl = el; // actualization
+						realDragElRect = null;
 
+						changed();
 						this._animate(dragRect, dragEl);
 						target && this._animate(targetRect, target);
+						return completed();
 					}
 				}
-				else if (target && !target.animated && target !== dragEl && (target.parentNode[expando] !== void 0)) {
-					if (lastEl !== target) {
-						lastEl = target;
-						lastCSS = _css(target);
-						lastParentCSS = _css(target.parentNode);
+				else if (target && target !== dragEl && (target.parentNode[expando] !== void 0) && target !== el) {
+					var direction = 0,
+						targetBeforeFirstSwap,
+						aligned = target.sortableMouseAligned,
+						differentLevel = dragEl.parentNode !== el,
+						scrolledPastTop = _isScrolledPast(target, axis === 'vertical' ? 'top' : 'left');
+
+					if (lastTarget !== target) {
+						lastMode = null;
+						targetBeforeFirstSwap = _getRect(target)[axis === 'vertical' ? 'top' : 'left'];
+						pastFirstInvertThresh = false;
 					}
 
-					targetRect = target.getBoundingClientRect();
-
-					var width = targetRect.right - targetRect.left,
-						height = targetRect.bottom - targetRect.top,
-						floating = R_FLOAT.test(lastCSS.cssFloat + lastCSS.display)
-							|| (lastParentCSS.display == 'flex' && lastParentCSS['flex-direction'].indexOf('row') === 0),
-						isWide = (target.offsetWidth > dragEl.offsetWidth),
-						isLong = (target.offsetHeight > dragEl.offsetHeight),
-						halfway = (floating ? (evt.clientX - targetRect.left) / width : (evt.clientY - targetRect.top) / height) > 0.5,
-						nextSibling = target.nextElementSibling,
-						after = false
-					;
-
-					if (floating) {
-						var elTop = dragEl.offsetTop,
-							tgTop = target.offsetTop;
-
-						if (elTop === tgTop) {
-							after = (target.previousElementSibling === dragEl) && !isWide || halfway && isWide;
+					// Reference: https://www.lucidchart.com/documents/view/10fa0e93-e362-4126-aca2-b709ee56bd8b/0
+					if (
+						_isElInRowColumn(dragEl, target, axis) && aligned ||
+						differentLevel ||
+						scrolledPastTop ||
+						options.invertSwap ||
+						lastMode === 'insert' ||
+						// Needed, in the case that we are inside target and inserted because not aligned... aligned will stay false while inside
+						// and lastMode will change to 'insert', but we must swap
+						lastMode === 'swap'
+					) {
+						// New target that we will be inside
+						if (lastMode !== 'swap') {
+							isCircumstantialInvert = options.invertSwap || differentLevel || scrolling || scrolledPastTop;
 						}
-						else if (target.previousElementSibling === dragEl || dragEl.previousElementSibling === target) {
-							after = (evt.clientY - targetRect.top) / height > 0.5;
-						} else {
-							after = tgTop > elTop;
-						}
-						} else if (!isMovingBetweenSortable) {
-						after = (nextSibling !== dragEl) && !isLong || halfway && isLong;
+
+						direction = _getSwapDirection(evt, target, axis,
+							options.swapThreshold, options.invertedSwapThreshold == null ? options.swapThreshold : options.invertedSwapThreshold,
+							isCircumstantialInvert,
+							lastTarget === target);
+						lastMode = 'swap';
+					} else {
+						// Insert at position
+						direction = _getInsertDirection(target, options);
+						lastMode = 'insert';
 					}
+					if (direction === 0) return completed();
+
+					realDragElRect = null;
+					lastTarget = target;
+
+					lastDirection = direction;
+
+					targetRect = _getRect(target);
+
+					var nextSibling = target.nextElementSibling,
+						after = false;
+
+					after = direction === 1;
 
 					var moveVector = _onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, after);
 
@@ -26736,47 +27274,78 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 						_silent = true;
 						setTimeout(_unsilent, 30);
 
-						_cloneHide(activeSortable, isOwner);
+						if (isOwner) {
+							activeSortable._hideClone();
+						} else {
+							activeSortable._showClone(this);
+						}
 
-						if (!dragEl.contains(el)) {
-							if (after && !nextSibling) {
-								el.appendChild(dragEl);
-							} else {
-								target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
-							}
+						if (after && !nextSibling) {
+							el.appendChild(dragEl);
+						} else {
+							target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
 						}
 
 						parentEl = dragEl.parentNode; // actualization
 
+						// must be done before animation
+						if (targetBeforeFirstSwap !== undefined && !isCircumstantialInvert) {
+							targetMoveDistance = abs(targetBeforeFirstSwap - _getRect(target)[axis === 'vertical' ? 'top' : 'left']);
+						}
+						changed();
+						!differentLevel && this._animate(targetRect, target);
 						this._animate(dragRect, dragEl);
-						this._animate(targetRect, target);
+
+						return completed();
 					}
 				}
+
+				if (el.contains(dragEl)) {
+					return completed();
+				}
 			}
+
+			if (IE11OrLess && !evt.rootEl) {
+				_artificalBubble(el, evt, '_onDragOver');
+			}
+
+			return false;
 		},
 
 		_animate: function (prevRect, target) {
 			var ms = this.options.animation;
 
 			if (ms) {
-				var currentRect = target.getBoundingClientRect();
+				var currentRect = _getRect(target);
 
-				if (prevRect.nodeType === 1) {
-					prevRect = prevRect.getBoundingClientRect();
+				if (target === dragEl) {
+					realDragElRect = currentRect;
 				}
 
-				_css(target, 'transition', 'none');
-				_css(target, 'transform', 'translate3d('
-					+ (prevRect.left - currentRect.left) + 'px,'
-					+ (prevRect.top - currentRect.top) + 'px,0)'
-				);
+				if (prevRect.nodeType === 1) {
+					prevRect = _getRect(prevRect);
+				}
 
-				target.offsetWidth; // repaint
+				// Check if actually moving position
+				if ((prevRect.left + prevRect.width / 2) !== (currentRect.left + currentRect.width / 2)
+					|| (prevRect.top + prevRect.height / 2) !== (currentRect.top + currentRect.height / 2)
+				) {
+					var matrix = _matrix(this.el),
+						scaleX = matrix && matrix.a,
+						scaleY = matrix && matrix.d;
 
-				_css(target, 'transition', 'all ' + ms + 'ms');
-				_css(target, 'transform', 'translate3d(0,0,0)');
+					_css(target, 'transition', 'none');
+					_css(target, 'transform', 'translate3d('
+						+ (prevRect.left - currentRect.left) / (scaleX ? scaleX : 1) + 'px,'
+						+ (prevRect.top - currentRect.top) / (scaleY ? scaleY : 1) + 'px,0)'
+					);
 
-				clearTimeout(target.animated);
+					forRepaintDummy = target.offsetWidth; // repaint
+					_css(target, 'transition', 'transform ' + ms + 'ms' + (this.options.easing ? ' ' + this.options.easing : ''));
+					_css(target, 'transform', 'translate3d(0,0,0)');
+				}
+
+				(typeof target.animated === 'number') && clearTimeout(target.animated);
 				target.animated = setTimeout(function () {
 					_css(target, 'transition', '');
 					_css(target, 'transform', '');
@@ -26795,40 +27364,51 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			_off(ownerDocument, 'pointerup', this._onDrop);
 			_off(ownerDocument, 'touchcancel', this._onDrop);
 			_off(ownerDocument, 'pointercancel', this._onDrop);
-			_off(ownerDocument, 'selectstart', this);
+			_off(document, 'selectstart', this);
 		},
 
 		_onDrop: function (/**Event*/evt) {
 			var el = this.el,
 				options = this.options;
 
+			awaitingDragStarted = false;
+			scrolling = false;
+			isCircumstantialInvert = false;
+			pastFirstInvertThresh = false;
+
 			clearInterval(this._loopId);
-			clearInterval(autoScroll.pid);
+
+			clearInterval(pointerElemChangedInterval);
+			_clearAutoScrolls();
+			_cancelThrottle();
+
 			clearTimeout(this._dragStartTimer);
 
 			_cancelNextTick(this._cloneId);
 			_cancelNextTick(this._dragStartId);
 
 			// Unbind events
-			_off(document, 'mouseover', this);
 			_off(document, 'mousemove', this._onTouchMove);
+
 
 			if (this.nativeDraggable) {
 				_off(document, 'drop', this);
 				_off(el, 'dragstart', this._onDragStart);
+				_off(document, 'dragover', this._handleAutoScroll);
+				_off(document, 'dragover', _checkAlignment);
 			}
 
 			this._offUpEvents();
 
 			if (evt) {
 				if (moved) {
-					evt.preventDefault();
+					evt.cancelable && evt.preventDefault();
 					!options.dropBubble && evt.stopPropagation();
 				}
 
 				ghostEl && ghostEl.parentNode && ghostEl.parentNode.removeChild(ghostEl);
 
-				if (rootEl === parentEl || Sortable.active.lastPullMode !== 'clone') {
+				if (rootEl === parentEl || (putSortable && putSortable.lastPutMode !== 'clone')) {
 					// Remove clone
 					cloneEl && cloneEl.parentNode && cloneEl.parentNode.removeChild(cloneEl);
 				}
@@ -26842,26 +27422,28 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					dragEl.style['will-change'] = '';
 
 					// Remove class's
-					_toggleClass(dragEl, this.options.ghostClass, false);
+					_toggleClass(dragEl, putSortable ? putSortable.options.ghostClass : this.options.ghostClass, false);
 					_toggleClass(dragEl, this.options.chosenClass, false);
 
 					// Drag stop event
-					_dispatchEvent(this, rootEl, 'unchoose', dragEl, parentEl, rootEl, oldIndex);
+					_dispatchEvent(this, rootEl, 'unchoose', dragEl, parentEl, rootEl, oldIndex, null, evt);
 
 					if (rootEl !== parentEl) {
 						newIndex = _index(dragEl, options.draggable);
 
 						if (newIndex >= 0) {
 							// Add event
-							_dispatchEvent(null, parentEl, 'add', dragEl, parentEl, rootEl, oldIndex, newIndex);
+							_dispatchEvent(null, parentEl, 'add', dragEl, parentEl, rootEl, oldIndex, newIndex, evt);
 
 							// Remove event
-							_dispatchEvent(this, rootEl, 'remove', dragEl, parentEl, rootEl, oldIndex, newIndex);
+							_dispatchEvent(this, rootEl, 'remove', dragEl, parentEl, rootEl, oldIndex, newIndex, evt);
 
 							// drag from one list and drop into another
-							_dispatchEvent(null, parentEl, 'sort', dragEl, parentEl, rootEl, oldIndex, newIndex);
-							_dispatchEvent(this, rootEl, 'sort', dragEl, parentEl, rootEl, oldIndex, newIndex);
+							_dispatchEvent(null, parentEl, 'sort', dragEl, parentEl, rootEl, oldIndex, newIndex, evt);
+							_dispatchEvent(this, rootEl, 'sort', dragEl, parentEl, rootEl, oldIndex, newIndex, evt);
 						}
+
+						putSortable && putSortable.save();
 					}
 					else {
 						if (dragEl.nextSibling !== nextEl) {
@@ -26870,8 +27452,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 							if (newIndex >= 0) {
 								// drag & drop within the same list
-								_dispatchEvent(this, rootEl, 'update', dragEl, parentEl, rootEl, oldIndex, newIndex);
-								_dispatchEvent(this, rootEl, 'sort', dragEl, parentEl, rootEl, oldIndex, newIndex);
+								_dispatchEvent(this, rootEl, 'update', dragEl, parentEl, rootEl, oldIndex, newIndex, evt);
+								_dispatchEvent(this, rootEl, 'sort', dragEl, parentEl, rootEl, oldIndex, newIndex, evt);
 							}
 						}
 					}
@@ -26882,7 +27464,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 							newIndex = oldIndex;
 						}
 
-						_dispatchEvent(this, rootEl, 'end', dragEl, parentEl, rootEl, oldIndex, newIndex);
+						_dispatchEvent(this, rootEl, 'end', dragEl, parentEl, rootEl, oldIndex, newIndex, evt);
 
 						// Save sorting
 						this.save();
@@ -26890,7 +27472,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				}
 
 			}
-
 			this._nulling();
 		},
 
@@ -26905,15 +27486,24 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 			scrollEl =
 			scrollParentEl =
+			autoScrolls.length =
+
+			pointerElemChangedInterval =
+			lastPointerElemX =
+			lastPointerElemY =
 
 			tapEvt =
 			touchEvt =
 
 			moved =
 			newIndex =
+			oldIndex =
 
-			lastEl =
-			lastCSS =
+			lastTarget =
+			lastDirection =
+
+			forRepaintDummy =
+			realDragElRect =
 
 			putSortable =
 			activeGroup =
@@ -26922,6 +27512,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			savedInputChecked.forEach(function (el) {
 				el.checked = true;
 			});
+
 			savedInputChecked.length = 0;
 		},
 
@@ -26932,16 +27523,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 					this._onDrop(evt);
 					break;
 
-				case 'dragover':
 				case 'dragenter':
+				case 'dragover':
 					if (dragEl) {
 						this._onDragOver(evt);
 						_globalDragOver(evt);
 					}
-					break;
-
-				case 'mouseover':
-					this._onDrop(evt);
 					break;
 
 				case 'selectstart':
@@ -26965,7 +27552,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 			for (; i < n; i++) {
 				el = children[i];
-				if (_closest(el, options.draggable, this.el)) {
+				if (_closest(el, options.draggable, this.el, false)) {
 					order.push(el.getAttribute(options.dataIdAttr) || _generateId(el));
 				}
 			}
@@ -26984,7 +27571,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			this.toArray().forEach(function (id, i) {
 				var el = rootEl.children[i];
 
-				if (_closest(el, this.options.draggable, rootEl)) {
+				if (_closest(el, this.options.draggable, rootEl, false)) {
 					items[id] = el;
 				}
 			}, this);
@@ -27003,7 +27590,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		 */
 		save: function () {
 			var store = this.options.store;
-			store && store.set(this);
+			store && store.set && store.set(this);
 		},
 
 
@@ -27014,7 +27601,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		 * @returns {HTMLElement|null}
 		 */
 		closest: function (el, selector) {
-			return _closest(el, selector || this.options.draggable, this.el);
+			return _closest(el, selector || this.options.draggable, this.el, false);
 		},
 
 
@@ -27055,53 +27642,63 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				_off(el, 'dragover', this);
 				_off(el, 'dragenter', this);
 			}
-
 			// Remove draggable attributes
 			Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
 				el.removeAttribute('draggable');
 			});
 
-			touchDragOverListeners.splice(touchDragOverListeners.indexOf(this._onDragOver), 1);
-
 			this._onDrop();
 
+			sortables.splice(sortables.indexOf(this.el), 1);
+
 			this.el = el = null;
+		},
+
+		_hideClone: function() {
+			if (!cloneEl.cloneHidden) {
+				_css(cloneEl, 'display', 'none');
+				cloneEl.cloneHidden = true;
+				if (cloneEl.parentNode && this.options.removeCloneOnHide) {
+					cloneEl.parentNode.removeChild(cloneEl);
+				}
+			}
+		},
+
+		_showClone: function(putSortable) {
+			if (putSortable.lastPutMode !== 'clone') {
+				this._hideClone();
+				return;
+			}
+
+			if (cloneEl.cloneHidden) {
+				// show clone at dragEl or original position
+				if (rootEl.contains(dragEl) && !this.options.group.revertClone) {
+					rootEl.insertBefore(cloneEl, dragEl);
+				} else if (nextEl) {
+					rootEl.insertBefore(cloneEl, nextEl);
+				} else {
+					rootEl.appendChild(cloneEl);
+				}
+
+				if (this.options.group.revertClone) {
+					this._animate(dragEl, cloneEl);
+				}
+				_css(cloneEl, 'display', '');
+				cloneEl.cloneHidden = false;
+			}
 		}
 	};
 
-
-	function _cloneHide(sortable, state) {
-		if (sortable.lastPullMode !== 'clone') {
-			state = true;
-		}
-
-		if (cloneEl && (cloneEl.state !== state)) {
-			_css(cloneEl, 'display', state ? 'none' : '');
-
-			if (!state) {
-				if (cloneEl.state) {
-					if (sortable.options.group.revertClone) {
-						rootEl.insertBefore(cloneEl, nextEl);
-						sortable._animate(dragEl, cloneEl);
-					} else {
-						rootEl.insertBefore(cloneEl, dragEl);
-					}
-				}
-			}
-
-			cloneEl.state = state;
-		}
-	}
-
-
-	function _closest(/**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx) {
+	function _closest(/**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx, includeCTX) {
 		if (el) {
 			ctx = ctx || document;
 
 			do {
-				if ((selector === '>*' && el.parentNode === ctx) || _matches(el, selector)) {
+				if ((selector === '>*' && el.parentNode === ctx) || _matches(el, selector) || (includeCTX && el === ctx)) {
 					return el;
 				}
+
+				if (el === ctx) break;
 				/* jshint boss:true */
 			} while (el = _getParentOrHost(el));
 		}
@@ -27111,9 +27708,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 	function _getParentOrHost(el) {
-		var parent = el.host;
-
-		return (parent && parent.nodeType) ? parent : el.parentNode;
+		return (el.host && el !== document && el.host.nodeType)
+			? el.host
+			: el.parentNode;
 	}
 
 
@@ -27121,7 +27718,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		if (evt.dataTransfer) {
 			evt.dataTransfer.dropEffect = 'move';
 		}
-		evt.preventDefault();
+		evt.cancelable && evt.preventDefault();
 	}
 
 
@@ -27136,7 +27733,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 	function _toggleClass(el, name, state) {
-		if (el) {
+		if (el && name) {
 			if (el.classList) {
 				el.classList[state ? 'add' : 'remove'](name);
 			}
@@ -27163,12 +27760,32 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 				return prop === void 0 ? val : val[prop];
 			}
 			else {
-				if (!(prop in style)) {
+				if (!(prop in style) && prop.indexOf('webkit') === -1) {
 					prop = '-webkit-' + prop;
 				}
 
 				style[prop] = val + (typeof val === 'string' ? '' : 'px');
 			}
+		}
+	}
+
+	function _matrix(el) {
+		var appliedTransforms = '';
+		do {
+			var transform = _css(el, 'transform');
+
+			if (transform && transform !== 'none') {
+				appliedTransforms = transform + ' ' + appliedTransforms;
+			}
+			/* jshint boss:true */
+		} while (el = el.parentNode);
+
+		if (window.DOMMatrix) {
+			return new DOMMatrix(appliedTransforms);
+		} else if (window.WebKitCSSMatrix) {
+			return new WebKitCSSMatrix(appliedTransforms);
+		} else if (window.CSSMatrix) {
+			return new CSSMatrix(appliedTransforms);
 		}
 	}
 
@@ -27191,14 +27808,21 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 
-	function _dispatchEvent(sortable, rootEl, name, targetEl, toEl, fromEl, startIndex, newIndex) {
+	function _dispatchEvent(sortable, rootEl, name, targetEl, toEl, fromEl, startIndex, newIndex, originalEvt) {
 		sortable = (sortable || rootEl[expando]);
-
-		var evt = document.createEvent('Event'),
+		var evt,
 			options = sortable.options,
 			onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1);
-
-		evt.initEvent(name, true, true);
+		// Support for new CustomEvent feature
+		if (window.CustomEvent && !IE11OrLess && !Edge) {
+			evt = new CustomEvent(name, {
+				bubbles: true,
+				cancelable: true
+			});
+		} else {
+			evt = document.createEvent('Event');
+			evt.initEvent(name, true, true);
+		}
 
 		evt.to = toEl || rootEl;
 		evt.from = fromEl || rootEl;
@@ -27208,7 +27832,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		evt.oldIndex = startIndex;
 		evt.newIndex = newIndex;
 
-		rootEl.dispatchEvent(evt);
+		evt.originalEvent = originalEvt;
+
+		if (rootEl) {
+			rootEl.dispatchEvent(evt);
+	        }
 
 		if (options[onName]) {
 			options[onName].call(sortable, evt);
@@ -27221,17 +27849,26 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 			sortable = fromEl[expando],
 			onMoveFn = sortable.options.onMove,
 			retVal;
-
-		evt = document.createEvent('Event');
-		evt.initEvent('move', true, true);
+		// Support for new CustomEvent feature
+		if (window.CustomEvent && !IE11OrLess && !Edge) {
+			evt = new CustomEvent('move', {
+				bubbles: true,
+				cancelable: true
+			});
+		} else {
+			evt = document.createEvent('Event');
+			evt.initEvent('move', true, true);
+		}
 
 		evt.to = toEl;
 		evt.from = fromEl;
 		evt.dragged = dragEl;
 		evt.draggedRect = dragRect;
 		evt.related = targetEl || toEl;
-		evt.relatedRect = targetRect || toEl.getBoundingClientRect();
+		evt.relatedRect = targetRect || _getRect(toEl);
 		evt.willInsertAfter = willInsertAfter;
+
+		evt.originalEvent = originalEvt;
 
 		fromEl.dispatchEvent(evt);
 
@@ -27242,26 +27879,166 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		return retVal;
 	}
 
-
 	function _disableDraggable(el) {
 		el.draggable = false;
 	}
-
 
 	function _unsilent() {
 		_silent = false;
 	}
 
+	/**
+	 * Gets nth child of el, ignoring hidden children, sortable's elements (does not ignore clone if it's visible)
+	 * and non-draggable elements
+	 * @param  {HTMLElement} el       The parent element
+	 * @param  {Number} childNum      The index of the child
+	 * @param  {Object} options       Parent Sortable's options
+	 * @return {HTMLElement}          The child at index childNum, or null if not found
+	 */
+	function _getChild(el, childNum, options) {
+		var currentChild = 0,
+			i = 0,
+			children = el.children;
 
-	/** @returns {HTMLElement|false} */
-	function _ghostIsLast(el, evt) {
-		var lastEl = el.lastElementChild,
-			rect = lastEl.getBoundingClientRect();
+		while (i < children.length) {
+			if (
+				children[i].style.display !== 'none' &&
+				children[i] !== ghostEl &&
+				children[i] !== dragEl &&
+				_closest(children[i], options.draggable, el, false)
+			) {
+				if (currentChild === childNum) {
+					return children[i];
+				}
+				currentChild++;
+			}
 
-		// 5 — min delta
-		// abs — нельзя добавлять, а то глюки при наведении сверху
-		return (evt.clientY - (rect.top + rect.height) > 5) ||
-			(evt.clientX - (rect.left + rect.width) > 5);
+			i++;
+		}
+		return null;
+	}
+
+	/**
+	 * Gets the last child in the el, ignoring ghostEl
+	 * @param  {HTMLElement} el       Parent element
+	 * @return {HTMLElement}          The last child, ignoring ghostEl
+	 */
+	function _lastChild(el) {
+		var last = el.lastElementChild;
+
+		if (last === ghostEl) {
+			last = el.children[el.childElementCount - 2];
+		}
+
+		return last || null;
+	}
+
+	function _ghostIsLast(evt, axis, el) {
+		var elRect = _getRect(_lastChild(el)),
+			mouseOnAxis = axis === 'vertical' ? evt.clientY : evt.clientX,
+			mouseOnOppAxis = axis === 'vertical' ? evt.clientX : evt.clientY,
+			targetS2 = axis === 'vertical' ? elRect.bottom : elRect.right,
+			targetS1Opp = axis === 'vertical' ? elRect.left : elRect.top,
+			targetS2Opp = axis === 'vertical' ? elRect.right : elRect.bottom;
+
+		return (
+			mouseOnOppAxis > targetS1Opp &&
+			mouseOnOppAxis < targetS2Opp &&
+			mouseOnAxis > targetS2
+		);
+	}
+
+	function _getSwapDirection(evt, target, axis, swapThreshold, invertedSwapThreshold, invertSwap, isLastTarget) {
+		var targetRect = _getRect(target),
+			mouseOnAxis = axis === 'vertical' ? evt.clientY : evt.clientX,
+			targetLength = axis === 'vertical' ? targetRect.height : targetRect.width,
+			targetS1 = axis === 'vertical' ? targetRect.top : targetRect.left,
+			targetS2 = axis === 'vertical' ? targetRect.bottom : targetRect.right,
+			dragRect = _getRect(dragEl),
+			invert = false;
+
+
+		if (!invertSwap) {
+			// Never invert or create dragEl shadow when target movemenet causes mouse to move past the end of regular swapThreshold
+			if (isLastTarget && targetMoveDistance < targetLength * swapThreshold) { // multiplied only by swapThreshold because mouse will already be inside target by (1 - threshold) * targetLength / 2
+				// check if past first invert threshold on side opposite of lastDirection
+				if (!pastFirstInvertThresh &&
+					(lastDirection === 1 ?
+						(
+							mouseOnAxis > targetS1 + targetLength * invertedSwapThreshold / 2
+						) :
+						(
+							mouseOnAxis < targetS2 - targetLength * invertedSwapThreshold / 2
+						)
+					)
+				)
+				{
+					// past first invert threshold, do not restrict inverted threshold to dragEl shadow
+					pastFirstInvertThresh = true;
+				}
+
+				if (!pastFirstInvertThresh) {
+					var dragS1 = axis === 'vertical' ? dragRect.top : dragRect.left,
+						dragS2 = axis === 'vertical' ? dragRect.bottom : dragRect.right;
+					// dragEl shadow (target move distance shadow)
+					if (
+						lastDirection === 1 ?
+						(
+							mouseOnAxis < targetS1 + targetMoveDistance // over dragEl shadow
+						) :
+						(
+							mouseOnAxis > targetS2 - targetMoveDistance
+						)
+					)
+					{
+						return lastDirection * -1;
+					}
+				} else {
+					invert = true;
+				}
+			} else {
+				// Regular
+				if (
+					mouseOnAxis > targetS1 + (targetLength * (1 - swapThreshold) / 2) &&
+					mouseOnAxis < targetS2 - (targetLength * (1 - swapThreshold) / 2)
+				) {
+					return ((mouseOnAxis > targetS1 + targetLength / 2) ? -1 : 1);
+				}
+			}
+		}
+
+		invert = invert || invertSwap;
+
+		if (invert) {
+			// Invert of regular
+			if (
+				mouseOnAxis < targetS1 + (targetLength * invertedSwapThreshold / 2) ||
+				mouseOnAxis > targetS2 - (targetLength * invertedSwapThreshold / 2)
+			)
+			{
+				return ((mouseOnAxis > targetS1 + targetLength / 2) ? 1 : -1);
+			}
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Gets the direction dragEl must be swapped relative to target in order to make it
+	 * seem that dragEl has been "inserted" into that element's position
+	 * @param  {HTMLElement} target       The target whose position dragEl is being inserted at
+	 * @param  {Object} options           options of the parent sortable
+	 * @return {Number}                   Direction dragEl must be swapped
+	 */
+	function _getInsertDirection(target, options) {
+		var dragElIndex = _index(dragEl, options.draggable),
+			targetIndex = _index(target, options.draggable);
+
+		if (dragElIndex < targetIndex) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
 
 
@@ -27298,7 +28075,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		}
 
 		while (el && (el = el.previousElementSibling)) {
-			if ((el.nodeName.toUpperCase() !== 'TEMPLATE') && (selector === '>*' || _matches(el, selector))) {
+			if ((el.nodeName.toUpperCase() !== 'TEMPLATE') && el !== cloneEl) {
 				index++;
 			}
 		}
@@ -27308,39 +28085,45 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 	function _matches(/**HTMLElement*/el, /**String*/selector) {
 		if (el) {
-			selector = selector.split('.');
-
-			var tag = selector.shift().toUpperCase(),
-				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
-
-			return (
-				(tag === '' || el.nodeName.toUpperCase() == tag) &&
-				(!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)
-			);
+			try {
+				if (el.matches) {
+					return el.matches(selector);
+				} else if (el.msMatchesSelector) {
+					return el.msMatchesSelector(selector);
+				} else if (el.webkitMatchesSelector) {
+					return el.webkitMatchesSelector(selector);
+				}
+			} catch(_) {
+				return false;
+			}
 		}
 
 		return false;
 	}
 
+	var _throttleTimeout;
 	function _throttle(callback, ms) {
-		var args, _this;
-
 		return function () {
-			if (args === void 0) {
-				args = arguments;
-				_this = this;
+			if (!_throttleTimeout) {
+				var args = arguments,
+					_this = this;
 
-				setTimeout(function () {
+				_throttleTimeout = setTimeout(function () {
 					if (args.length === 1) {
 						callback.call(_this, args[0]);
 					} else {
 						callback.apply(_this, args);
 					}
 
-					args = void 0;
+					_throttleTimeout = void 0;
 				}, ms);
 			}
 		};
+	}
+
+	function _cancelThrottle() {
+		clearTimeout(_throttleTimeout);
+		_throttleTimeout = void 0;
 	}
 
 	function _extend(dst, src) {
@@ -27368,6 +28151,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 	}
 
 	function _saveInputCheckedState(root) {
+		savedInputChecked.length = 0;
+
 		var inputs = root.getElementsByTagName('input');
 		var idx = inputs.length;
 
@@ -27385,12 +28170,132 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		return clearTimeout(id);
 	}
 
+
+	/**
+	 * Returns the "bounding client rect" of given element
+	 * @param  {HTMLElement} el                The element whose boundingClientRect is wanted
+	 * @param  {[HTMLElement]} container       the parent the element will be placed in
+	 * @param  {[Boolean]} adjustForTransform  Whether the rect should compensate for parent's transform
+	 * (used for fixed positioning on el)
+	 * @return {Object}                        The boundingClientRect of el
+	 */
+	function _getRect(el, container, adjustForTransform) {
+		if (!el.getBoundingClientRect && el !== win) return;
+
+		var elRect,
+			top,
+			left,
+			bottom,
+			right,
+			height,
+			width;
+
+		if (el !== win) {
+			elRect = el.getBoundingClientRect();
+			top = elRect.top;
+			left = elRect.left;
+			bottom = elRect.bottom;
+			right = elRect.right;
+			height = elRect.height;
+			width = elRect.width;
+		} else {
+			top = 0;
+			left = 0;
+			bottom = window.innerHeight;
+			right = window.innerWidth;
+			height = window.innerHeight;
+			width = window.innerWidth;
+		}
+
+		if (adjustForTransform && el !== win) {
+			// Adjust for translate()
+			container = container || el.parentNode;
+
+			// solves #1123 (see: https://stackoverflow.com/a/37953806/6088312)
+			// Not needed on <= IE11
+			if (!IE11OrLess) {
+				do {
+					if (container && container.getBoundingClientRect && _css(container, 'transform') !== 'none') {
+						var containerRect = container.getBoundingClientRect();
+
+						// Set relative to edges of padding box of container
+						top -= containerRect.top + parseInt(_css(container, 'border-top-width'));
+						left -= containerRect.left + parseInt(_css(container, 'border-left-width'));
+						bottom = top + elRect.height;
+						right = left + elRect.width;
+
+						break;
+					}
+					/* jshint boss:true */
+				} while (container = container.parentNode);
+			}
+
+			// Adjust for scale()
+			var matrix = _matrix(el),
+				scaleX = matrix && matrix.a,
+				scaleY = matrix && matrix.d;
+
+			if (matrix) {
+				top /= scaleY;
+				left /= scaleX;
+
+				width /= scaleX;
+				height /= scaleY;
+
+				bottom = top + height;
+				right = left + width;
+			}
+		}
+
+		return {
+			top: top,
+			left: left,
+			bottom: bottom,
+			right: right,
+			width: width,
+			height: height
+		};
+	}
+
+
+	/**
+	 * Checks if a side of an element is scrolled past a side of it's parents
+	 * @param  {HTMLElement}  el       The element who's side being scrolled out of view is in question
+	 * @param  {String}       side     Side of the element in question ('top', 'left', 'right', 'bottom')
+	 * @return {Boolean}               Whether the element is overflowing the viewport on the given side of it's parent
+	 */
+	function _isScrolledPast(el, side) {
+		var parent = _getParentAutoScrollElement(parent, true),
+			elSide = _getRect(el)[side];
+
+		/* jshint boss:true */
+		while (parent) {
+			var parentSide = _getRect(parent)[side],
+				visible;
+
+			if (side === 'top' || side === 'left') {
+				visible = elSide >= parentSide;
+			} else {
+				visible = elSide <= parentSide;
+			}
+
+			if (!visible) return true;
+
+			if (parent === win) break;
+
+			parent = _getParentAutoScrollElement(parent, false);
+		}
+
+		return false;
+	}
+
 	// Fixed #973:
-	_on(document, 'touchmove', function (evt) {
-		if (Sortable.active) {
+	_on(document, 'touchmove', function(evt) {
+		if ((Sortable.active || awaitingDragStarted) && evt.cancelable) {
 			evt.preventDefault();
 		}
 	});
+
 
 	// Export utils
 	Sortable.utils = {
@@ -27399,7 +28304,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		css: _css,
 		find: _find,
 		is: function (el, selector) {
-			return !!_closest(el, selector, el);
+			return !!_closest(el, selector, el, false);
 		},
 		extend: _extend,
 		throttle: _throttle,
@@ -27408,7 +28313,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 		clone: _clone,
 		index: _index,
 		nextTick: _nextTick,
-		cancelNextTick: _cancelNextTick
+		cancelNextTick: _cancelNextTick,
+		detectDirection: _detectDirection,
+		getChild: _getChild
 	};
 
 
@@ -27423,24 +28330,27 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 	// Export
-	Sortable.version = '1.7.0';
+	Sortable.version = '1.8.1';
 	return Sortable;
 });
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
 
 // DOM APIs, for completeness
 
 exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
 };
 exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
 };
 exports.clearTimeout =
 exports.clearInterval = function(timeout) {
@@ -27455,7 +28365,7 @@ function Timeout(id, clearFn) {
 }
 Timeout.prototype.unref = Timeout.prototype.ref = function() {};
 Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
+  this._clearFn.call(scope, this._id);
 };
 
 // Does not start the time, just sets up the members needed.
@@ -27482,8 +28392,8 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(94);
-// On some exotic environments, it's not clear which object `setimmeidate` was
+__webpack_require__(95);
+// On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
 exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
@@ -27496,7 +28406,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -27954,18 +28864,18 @@ return DragAndDropList;
 })));
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(156)
+__webpack_require__(159)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(41),
   /* template */
-  __webpack_require__(131),
+  __webpack_require__(134),
   /* scopeId */
   null,
   /* cssModules */
@@ -27992,18 +28902,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(160)
+__webpack_require__(163)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(43),
   /* template */
-  __webpack_require__(135),
+  __webpack_require__(138),
   /* scopeId */
   null,
   /* cssModules */
@@ -28030,18 +28940,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(141)
+__webpack_require__(144)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(46),
   /* template */
-  __webpack_require__(115),
+  __webpack_require__(117),
   /* scopeId */
   null,
   /* cssModules */
@@ -28068,18 +28978,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(152)
+__webpack_require__(155)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(47),
   /* template */
-  __webpack_require__(127),
+  __webpack_require__(130),
   /* scopeId */
   null,
   /* cssModules */
@@ -28106,18 +29016,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(163)
+__webpack_require__(166)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(48),
   /* template */
-  __webpack_require__(140),
+  __webpack_require__(143),
   /* scopeId */
   null,
   /* cssModules */
@@ -28144,18 +29054,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(146)
+__webpack_require__(149)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(49),
   /* template */
-  __webpack_require__(120),
+  __webpack_require__(122),
   /* scopeId */
   null,
   /* cssModules */
@@ -28182,18 +29092,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(153)
+__webpack_require__(156)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(50),
   /* template */
-  __webpack_require__(128),
+  __webpack_require__(131),
   /* scopeId */
   null,
   /* cssModules */
@@ -28220,14 +29130,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(51),
   /* template */
-  __webpack_require__(126),
+  __webpack_require__(129),
   /* scopeId */
   null,
   /* cssModules */
@@ -28255,18 +29165,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(143)
+__webpack_require__(146)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(53),
   /* template */
-  __webpack_require__(117),
+  __webpack_require__(119),
   /* scopeId */
   null,
   /* cssModules */
@@ -28293,18 +29203,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(147)
+__webpack_require__(150)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(54),
   /* template */
-  __webpack_require__(121),
+  __webpack_require__(124),
   /* scopeId */
   null,
   /* cssModules */
@@ -28331,18 +29241,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(161)
+__webpack_require__(164)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(55),
   /* template */
-  __webpack_require__(137),
+  __webpack_require__(140),
   /* scopeId */
   null,
   /* cssModules */
@@ -28369,18 +29279,52 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(158)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(56),
   /* template */
-  __webpack_require__(133),
+  __webpack_require__(123),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Applications/MAMP/htdocs/shop/resources/assets/js/components/NewsletterType.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] NewsletterType.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2650f9dd", Component.options)
+  } else {
+    hotAPI.reload("data-v-2650f9dd", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(161)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(57),
+  /* template */
+  __webpack_require__(136),
   /* scopeId */
   null,
   /* cssModules */
@@ -28407,18 +29351,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(145)
+__webpack_require__(148)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(57),
+  __webpack_require__(58),
   /* template */
-  __webpack_require__(119),
+  __webpack_require__(121),
   /* scopeId */
   null,
   /* cssModules */
@@ -28445,18 +29389,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(151)
+__webpack_require__(154)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(58),
+  __webpack_require__(59),
   /* template */
-  __webpack_require__(125),
+  __webpack_require__(128),
   /* scopeId */
   null,
   /* cssModules */
@@ -28483,18 +29427,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 112 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(150)
+__webpack_require__(153)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(59),
+  __webpack_require__(60),
   /* template */
-  __webpack_require__(124),
+  __webpack_require__(127),
   /* scopeId */
   null,
   /* cssModules */
@@ -28521,14 +29465,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 113 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(60),
+  __webpack_require__(61),
   /* template */
-  __webpack_require__(136),
+  __webpack_require__(139),
   /* scopeId */
   null,
   /* cssModules */
@@ -28555,14 +29499,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 114 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(61),
+  __webpack_require__(62),
   /* template */
-  __webpack_require__(139),
+  __webpack_require__(142),
   /* scopeId */
   null,
   /* cssModules */
@@ -28590,7 +29534,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 115 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -28611,7 +29555,7 @@ if (false) {
 }
 
 /***/ }),
-/* 116 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -28694,7 +29638,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("x")])])])
-  })) : _vm._e(), _vm._v(" "), _c('p', {
+  }), 0) : _vm._e(), _vm._v(" "), _c('p', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -28785,7 +29729,7 @@ if (false) {
 }
 
 /***/ }),
-/* 117 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -28877,8 +29821,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "src": _vm.url + 'files/pictos/' + cat.image
         }
       }), _vm._v(" "), _c('p', [_c('small', [_vm._v(_vm._s(cat.title))])])])
-    }))])
-  }))]), _vm._v(" "), _c('div', {
+    }), 0)])
+  }), 0)]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('div', {
     staticClass: "sidebar-app fixed"
@@ -28941,7 +29885,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": categorie.id
       }
     }, [_vm._v(_vm._s(categorie.title))])
-  }))]), _vm._v(" "), _c('div', {
+  }), 0)]), _vm._v(" "), _c('div', {
     staticClass: "widget years clear"
   }, [_vm._m(2), _vm._v(" "), _vm._l((_vm.annees), function(annee) {
     return _c('p', [_c('input', {
@@ -29010,7 +29954,7 @@ if (false) {
 }
 
 /***/ }),
-/* 118 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29123,7 +30067,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "src": analyse.path
       }
     })])])]), _vm._v(" "), _vm._m(2, true)])
-  }))])])])
+  }), 0)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('tr', {
     attrs: {
@@ -29162,7 +30106,7 @@ if (false) {
 }
 
 /***/ }),
-/* 119 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29463,7 +30407,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('i', {
       staticClass: "fa fa-plus"
     })])], 2) : _vm._e()], 2)]) : _vm._e()])
-  }))])
+  }), 0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('label', [_c('strong', [_vm._v("Titre")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29478,7 +30422,7 @@ if (false) {
 }
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29512,7 +30456,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": adresse.id
       }
     }, [_vm._v(_vm._s(adresse.name))])
-  }))]), _vm._v(" "), _c('div', {
+  }), 0)]), _vm._v(" "), _c('div', {
     staticClass: "thumbnail thumbnail-colloque"
   }, [_c('div', {
     staticClass: "row"
@@ -29542,7 +30486,134 @@ if (false) {
 }
 
 /***/ }),
-/* 121 */
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "well"
+  }, [_c('div', {
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-8"
+  }, [_c('label', {
+    staticClass: "radio"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.static),
+      expression: "static"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "static",
+      "value": "0"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.static, "0")
+    },
+    on: {
+      "change": [function($event) {
+        _vm.static = "0"
+      }, function($event) {
+        _vm.isStatic()
+      }]
+    }
+  }), _vm._v(" Liste externe, emails exportés depuis le système\n            ")]), _vm._v(" "), _c('label', {
+    staticClass: "radio"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.static),
+      expression: "static"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "static",
+      "value": "1"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.static, "1")
+    },
+    on: {
+      "change": [function($event) {
+        _vm.static = "1"
+      }, function($event) {
+        _vm.isStatic()
+      }]
+    }
+  }), _vm._v(" Liste statique (Comme bail, Droitmatrimonial...) lié à un/des tag(s)\n            ")])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.mailjet),
+      expression: "mailjet"
+    }],
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-bottom": "20px",
+      "margin-top": "20px"
+    }
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-5"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.tags),
+      expression: "tags"
+    }],
+    staticClass: "specialisations-list",
+    staticStyle: {
+      "width": "100%"
+    },
+    attrs: {
+      "name": "specialisations[]",
+      "multiple": "multiple"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.tags = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.specialisations), function(specialisation) {
+    return _c('option', {
+      domProps: {
+        "selected": _vm.isSelected(specialisation.id),
+        "value": specialisation.id
+      }
+    }, [_vm._v(_vm._s(specialisation.title))])
+  }), 0)])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_c('strong', [_vm._v("Type d'envoi")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_c('strong', [_vm._v("Spécialisations (tags)")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2650f9dd", module.exports)
+  }
+}
+
+/***/ }),
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29617,7 +30688,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.remove($event)
+        return _vm.remove($event)
       }
     }
   }, [_vm._v("changer")])])])]) : _vm._e()])
@@ -29631,7 +30702,7 @@ if (false) {
 }
 
 /***/ }),
-/* 122 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29736,7 +30807,7 @@ if (false) {
 }
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29868,7 +30939,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "text-align": "center !important"
       }
     }, [_vm._v(_vm._s(image.title))]) : _vm._e()])
-  }))]) : _vm._e()]), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.newsletter.display == 'bottom') ? _c('analyse-newsletter', {
+  }), 0)]) : _vm._e()]), _vm._v(" "), (_vm.model && _vm.type == 5 && _vm.newsletter.display == 'bottom') ? _c('analyse-newsletter', {
     attrs: {
       "title": _vm.newsletter.comment_title,
       "arret": _vm.model,
@@ -29964,7 +31035,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1), _vm._v(" "), _c('div', {
+  }), 0)], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('draggable', {
     staticClass: "dragArea",
@@ -29984,7 +31055,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1)])]) : _vm._e(), _vm._v(" "), (_vm.type != 7) ? _c('div', [_c('select', {
+  }), 0)], 1)])]) : _vm._e(), _vm._v(" "), (_vm.type != 7) ? _c('div', [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -30079,7 +31150,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": chose.id
       }
     })
-  })) : _vm._e(), _vm._v(" "), _c('button', {
+  }), 0) : _vm._e(), _vm._v(" "), _c('button', {
     staticClass: "btn btn-sm btn-success",
     attrs: {
       "type": "submit"
@@ -30103,7 +31174,7 @@ if (false) {
 }
 
 /***/ }),
-/* 124 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -30486,7 +31557,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     })]) : _vm._e()])])])])
-  }))])
+  }), 0)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -30497,7 +31568,7 @@ if (false) {
 }
 
 /***/ }),
-/* 125 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -30531,7 +31602,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": adresse.id
       }
     }, [_vm._v(_vm._s(adresse.name))])
-  }))]), _vm._v(" "), _c('div', {
+  }), 0)]), _vm._v(" "), _c('div', {
     staticClass: "thumbnail thumbnail-colloque"
   }, [_c('div', {
     staticClass: "row"
@@ -30561,7 +31632,7 @@ if (false) {
 }
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -30601,7 +31672,7 @@ if (false) {
 }
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -30779,7 +31850,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1), _vm._v(" "), _c('div', {
+  }), 0)], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('draggable', {
     staticClass: "dragArea",
@@ -30799,7 +31870,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1)]) : _vm._e(), _vm._v(" "), (_vm.hasTitle) ? _c('div', {
+  }), 0)], 1)]) : _vm._e(), _vm._v(" "), (_vm.hasTitle) ? _c('div', {
     staticClass: "form-group"
   }, [_c('label', [_vm._v("Titre")]), _vm._v(" "), _c('input', {
     directives: [{
@@ -30960,7 +32031,7 @@ if (false) {
 }
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -31000,7 +32071,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": type.value
       }
     }, [_vm._v(_vm._s(type.name))])
-  }))])]), _vm._v(" "), _c('div', {
+  }), 0)])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('div', {
     staticClass: "form-group"
@@ -31131,7 +32202,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "value": column.label
         }
       }, [_vm._v(_vm._s(column.name))])
-    }))]), _vm._v(" "), _c('div', {
+    }), 0)]), _vm._v(" "), _c('div', {
       staticClass: "col-md-7"
     }, [_c('input', {
       directives: [{
@@ -31234,7 +32305,7 @@ if (false) {
 }
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -31416,7 +32487,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1), _vm._v(" "), _c('div', {
+  }), 0)], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('draggable', {
     staticClass: "dragArea",
@@ -31436,7 +32507,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1)]) : _vm._e(), _vm._v(" "), _c('div', {
+  }), 0)], 1)]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('div', {
     staticClass: "btn-group"
@@ -31517,7 +32588,7 @@ if (false) {
 }
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -31868,7 +32939,7 @@ if (false) {
 }
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -31911,7 +32982,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "alt": bloc.titre
       }
     }), _c('span', [_vm._v(_vm._s(bloc.titre))])])
-  }))])])])])
+  }), 0)])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -31922,7 +32993,7 @@ if (false) {
 }
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -31988,7 +33059,7 @@ if (false) {
 }
 
 /***/ }),
-/* 133 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32198,7 +33269,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Envoyer")])]), _vm._v(" "), (_vm.errors.length) ? _c('div', [_c('b', [_vm._v("Il manque des informations:")]), _vm._v(" "), _c('ul', _vm._l((_vm.errors), function(error) {
     return _c('li', [_vm._v(_vm._s(error))])
-  }))]) : _vm._e()]), _vm._v(" "), _vm._l((_vm.list), function(occurrence) {
+  }), 0)]) : _vm._e()]), _vm._v(" "), _vm._l((_vm.list), function(occurrence) {
     return _c('li', {
       staticClass: "list-group-item"
     }, [_c('div', {
@@ -32431,7 +33502,7 @@ if (false) {
 }
 
 /***/ }),
-/* 134 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32510,7 +33581,7 @@ if (false) {
 }
 
 /***/ }),
-/* 135 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32670,7 +33741,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "text-align": "center !important"
         }
       }, [_vm._v(_vm._s(image.title))]) : _vm._e()]) : _vm._e()
-    }))]) : _vm._e(), _vm._v(" "), _vm._m(3, true)])])
+    }), 0)]) : _vm._e(), _vm._v(" "), _vm._m(3, true)])])
   })], 2), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
@@ -32761,7 +33832,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1), _vm._v(" "), _c('div', {
+  }), 0)], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('draggable', {
     staticClass: "dragArea",
@@ -32781,7 +33852,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: element.id
     }, [_vm._v(_vm._s(element.reference))])
-  }))], 1)]), _vm._v(" "), _c('div', {
+  }), 0)], 1)]), _vm._v(" "), _c('div', {
     staticClass: "btn-group"
   }, [_c('input', {
     attrs: {
@@ -32897,7 +33968,7 @@ if (false) {
 }
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -33073,9 +34144,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
             var $$v = "1",
               $$i = _vm._i($$a, $$v);
             if ($$el.checked) {
-              $$i < 0 && (row.gratuit = $$a.concat([$$v]))
+              $$i < 0 && (_vm.$set(row, "gratuit", $$a.concat([$$v])))
             } else {
-              $$i > -1 && (row.gratuit = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+              $$i > -1 && (_vm.$set(row, "gratuit", $$a.slice(0, $$i).concat($$a.slice($$i + 1))))
             }
           } else {
             _vm.$set(row, "gratuit", $$c)
@@ -33117,7 +34188,7 @@ if (false) {
 }
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -33193,8 +34264,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }, [_c('i', {
         staticClass: "fa fa-folder-o"
       }), _vm._v("  " + _vm._s(second))])])
-    }))])
-  }))])]), _vm._v(" "), _c('div', {
+    }), 0)])
+  }), 0)])]), _vm._v(" "), _c('div', {
     staticClass: "dropzone",
     attrs: {
       "id": 'dropzone_' + _vm.id
@@ -33257,7 +34328,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }) : _vm._e(), _vm._v(" "), (!_vm.isImage(file)) ? _c('p', [_vm._v(_vm._s(file))]) : _vm._e()])
-  })) : _vm._e()])])])]), _vm._v(" "), _vm._m(2)])])])]), _vm._v(" "), (_vm.chosen && _vm.filename) ? _c('div', {
+  }), 0) : _vm._e()])])])]), _vm._v(" "), _vm._m(2)])])])]), _vm._v(" "), (_vm.chosen && _vm.filename) ? _c('div', {
     staticClass: "file-choosen-wrapper"
   }, [_c('input', {
     staticClass: "file-choosen",
@@ -33332,7 +34403,7 @@ if (false) {
 }
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -33407,7 +34478,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "padding": "0px"
       }
     }, [_vm._v(_vm._s(image.title))]) : _vm._e()])
-  }))])]), _vm._v(" "), (_vm.newsletter.display == 'bottom') ? _c('analyse-newsletter', {
+  }), 0)])]), _vm._v(" "), (_vm.newsletter.display == 'bottom') ? _c('analyse-newsletter', {
     attrs: {
       "title": _vm.newsletter.comment_title,
       "arret": _vm.arret,
@@ -33424,7 +34495,7 @@ if (false) {
 }
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -33465,7 +34536,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })]), _vm._v(" "), _c('div', {
       staticClass: "clearfix"
     })])
-  })), _vm._v(" "), _c('i', {
+  }), 0), _vm._v(" "), _c('i', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -33490,7 +34561,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "target": "_blank"
       }
     }, [_vm._v(" + BV")])])
-  })) : _vm._e(), _vm._v(" "), (_vm.path == 'abonnement') ? _c('ol', {
+  }), 0) : _vm._e(), _vm._v(" "), (_vm.path == 'abonnement') ? _c('ol', {
     staticStyle: {
       "margin-left": "5px",
       "padding-left": "3px"
@@ -33505,7 +34576,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "target": "_blank"
       }
     }, [_vm._v(" + BV")])])
-  })) : _vm._e()])])])
+  }), 0) : _vm._e()])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -33516,7 +34587,7 @@ if (false) {
 }
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -33563,7 +34634,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "deleteContent": _vm.deleteContentBloc
       }
     }) : _vm._e()], 1)
-  })) : _vm._e()])
+  }), 0) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -33574,13 +34645,13 @@ if (false) {
 }
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(68);
+var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33600,13 +34671,13 @@ if(false) {
 }
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(69);
+var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33626,13 +34697,13 @@ if(false) {
 }
 
 /***/ }),
-/* 143 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(70);
+var content = __webpack_require__(71);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33652,13 +34723,13 @@ if(false) {
 }
 
 /***/ }),
-/* 144 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(71);
+var content = __webpack_require__(72);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33678,13 +34749,13 @@ if(false) {
 }
 
 /***/ }),
-/* 145 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(72);
+var content = __webpack_require__(73);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33704,13 +34775,13 @@ if(false) {
 }
 
 /***/ }),
-/* 146 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(73);
+var content = __webpack_require__(74);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33730,13 +34801,13 @@ if(false) {
 }
 
 /***/ }),
-/* 147 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(74);
+var content = __webpack_require__(75);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33756,13 +34827,13 @@ if(false) {
 }
 
 /***/ }),
-/* 148 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(75);
+var content = __webpack_require__(76);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33782,13 +34853,13 @@ if(false) {
 }
 
 /***/ }),
-/* 149 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(76);
+var content = __webpack_require__(77);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33808,13 +34879,13 @@ if(false) {
 }
 
 /***/ }),
-/* 150 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(77);
+var content = __webpack_require__(78);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33834,13 +34905,13 @@ if(false) {
 }
 
 /***/ }),
-/* 151 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(78);
+var content = __webpack_require__(79);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33860,13 +34931,13 @@ if(false) {
 }
 
 /***/ }),
-/* 152 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(79);
+var content = __webpack_require__(80);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33886,13 +34957,13 @@ if(false) {
 }
 
 /***/ }),
-/* 153 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(80);
+var content = __webpack_require__(81);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33912,13 +34983,13 @@ if(false) {
 }
 
 /***/ }),
-/* 154 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(81);
+var content = __webpack_require__(82);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33938,13 +35009,13 @@ if(false) {
 }
 
 /***/ }),
-/* 155 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(82);
+var content = __webpack_require__(83);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33964,13 +35035,13 @@ if(false) {
 }
 
 /***/ }),
-/* 156 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(83);
+var content = __webpack_require__(84);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -33990,13 +35061,13 @@ if(false) {
 }
 
 /***/ }),
-/* 157 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(84);
+var content = __webpack_require__(85);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34016,13 +35087,13 @@ if(false) {
 }
 
 /***/ }),
-/* 158 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(85);
+var content = __webpack_require__(86);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34042,13 +35113,13 @@ if(false) {
 }
 
 /***/ }),
-/* 159 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(86);
+var content = __webpack_require__(87);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34068,13 +35139,13 @@ if(false) {
 }
 
 /***/ }),
-/* 160 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(87);
+var content = __webpack_require__(88);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34094,13 +35165,13 @@ if(false) {
 }
 
 /***/ }),
-/* 161 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(88);
+var content = __webpack_require__(89);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34120,13 +35191,13 @@ if(false) {
 }
 
 /***/ }),
-/* 162 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(89);
+var content = __webpack_require__(90);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34146,13 +35217,13 @@ if(false) {
 }
 
 /***/ }),
-/* 163 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(90);
+var content = __webpack_require__(91);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34172,7 +35243,7 @@ if(false) {
 }
 
 /***/ }),
-/* 164 */
+/* 167 */
 /***/ (function(module, exports) {
 
 /**
@@ -34205,13 +35276,13 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 165 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/*!
- * Vue.js v2.5.13
- * (c) 2014-2017 Evan You
+ * Vue.js v2.5.22
+ * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
 
@@ -34220,8 +35291,8 @@ module.exports = function listToStyles (parentId, list) {
 
 var emptyObject = Object.freeze({});
 
-// these helpers produces better vm code in JS engines due to their
-// explicitness and function inlining
+// These helpers produce better VM code in JS engines due to their
+// explicitness and function inlining.
 function isUndef (v) {
   return v === undefined || v === null
 }
@@ -34239,7 +35310,7 @@ function isFalse (v) {
 }
 
 /**
- * Check if value is primitive
+ * Check if value is primitive.
  */
 function isPrimitive (value) {
   return (
@@ -34261,7 +35332,7 @@ function isObject (obj) {
 }
 
 /**
- * Get the raw type string of a value e.g. [object Object]
+ * Get the raw type string of a value, e.g., [object Object].
  */
 var _toString = Object.prototype.toString;
 
@@ -34301,7 +35372,7 @@ function toString (val) {
 }
 
 /**
- * Convert a input value to a number for persistence.
+ * Convert an input value to a number for persistence.
  * If the conversion fails, return original string.
  */
 function toNumber (val) {
@@ -34333,12 +35404,12 @@ function makeMap (
 var isBuiltInTag = makeMap('slot,component', true);
 
 /**
- * Check if a attribute is a reserved attribute.
+ * Check if an attribute is a reserved attribute.
  */
 var isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
 
 /**
- * Remove an item from an array
+ * Remove an item from an array.
  */
 function remove (arr, item) {
   if (arr.length) {
@@ -34350,7 +35421,7 @@ function remove (arr, item) {
 }
 
 /**
- * Check whether the object has the property.
+ * Check whether an object has the property.
  */
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 function hasOwn (obj, key) {
@@ -34392,9 +35463,15 @@ var hyphenate = cached(function (str) {
 });
 
 /**
- * Simple bind, faster than native
+ * Simple bind polyfill for environments that do not support it,
+ * e.g., PhantomJS 1.x. Technically, we don't need this anymore
+ * since native bind is now performant enough in most browsers.
+ * But removing it would mean breaking code that was able to run in
+ * PhantomJS 1.x, so this must be kept for backward compatibility.
  */
-function bind (fn, ctx) {
+
+/* istanbul ignore next */
+function polyfillBind (fn, ctx) {
   function boundFn (a) {
     var l = arguments.length;
     return l
@@ -34403,10 +35480,18 @@ function bind (fn, ctx) {
         : fn.call(ctx, a)
       : fn.call(ctx)
   }
-  // record original fn length
+
   boundFn._length = fn.length;
   return boundFn
 }
+
+function nativeBind (fn, ctx) {
+  return fn.bind(ctx)
+}
+
+var bind = Function.prototype.bind
+  ? nativeBind
+  : polyfillBind;
 
 /**
  * Convert an Array-like object to a real Array.
@@ -34444,10 +35529,12 @@ function toObject (arr) {
   return res
 }
 
+/* eslint-disable no-unused-vars */
+
 /**
  * Perform no operation.
  * Stubbing args to make Flow happy without leaving useless transpiled code
- * with ...rest (https://flow.org/blog/2017/05/07/Strict-Function-Call-Arity/)
+ * with ...rest (https://flow.org/blog/2017/05/07/Strict-Function-Call-Arity/).
  */
 function noop (a, b, c) {}
 
@@ -34456,13 +35543,15 @@ function noop (a, b, c) {}
  */
 var no = function (a, b, c) { return false; };
 
+/* eslint-enable no-unused-vars */
+
 /**
- * Return same value
+ * Return the same value.
  */
 var identity = function (_) { return _; };
 
 /**
- * Generate a static keys string from compiler modules.
+ * Generate a string containing static keys from compiler modules.
  */
 function genStaticKeys (modules) {
   return modules.reduce(function (keys, m) {
@@ -34486,6 +35575,8 @@ function looseEqual (a, b) {
         return a.length === b.length && a.every(function (e, i) {
           return looseEqual(e, b[i])
         })
+      } else if (a instanceof Date && b instanceof Date) {
+        return a.getTime() === b.getTime()
       } else if (!isArrayA && !isArrayB) {
         var keysA = Object.keys(a);
         var keysB = Object.keys(b);
@@ -34507,6 +35598,11 @@ function looseEqual (a, b) {
   }
 }
 
+/**
+ * Return the first index at which a loosely equal value can be
+ * found in the array (if value is a plain object, the array must
+ * contain an object of the same shape), or -1 if it is not present.
+ */
 function looseIndexOf (arr, val) {
   for (var i = 0; i < arr.length; i++) {
     if (looseEqual(arr[i], val)) { return i }
@@ -34550,6 +35646,8 @@ var LIFECYCLE_HOOKS = [
 ];
 
 /*  */
+
+
 
 var config = ({
   /**
@@ -34634,6 +35732,12 @@ var config = ({
   mustUseProp: no,
 
   /**
+   * Perform updates asynchronously. Intended to be used by Vue Test Utils
+   * This will significantly reduce performance if set to false.
+   */
+  async: true,
+
+  /**
    * Exposed for legacy reasons
    */
   _lifecycleHooks: LIFECYCLE_HOOKS
@@ -34681,7 +35785,6 @@ function parsePath (path) {
 
 /*  */
 
-
 // can we use __proto__?
 var hasProto = '__proto__' in {};
 
@@ -34720,10 +35823,10 @@ var _isServer;
 var isServerRendering = function () {
   if (_isServer === undefined) {
     /* istanbul ignore if */
-    if (!inBrowser && typeof global !== 'undefined') {
+    if (!inBrowser && !inWeex && typeof global !== 'undefined') {
       // detect presence of vue-server-renderer and avoid
       // Webpack shimming the process
-      _isServer = global['process'].env.VUE_ENV === 'server';
+      _isServer = global['process'] && global['process'].env.VUE_ENV === 'server';
     } else {
       _isServer = false;
     }
@@ -34750,7 +35853,7 @@ if (typeof Set !== 'undefined' && isNative(Set)) {
   _Set = Set;
 } else {
   // a non-standard Set polyfill that only works with primitive keys.
-  _Set = (function () {
+  _Set = /*@__PURE__*/(function () {
     function Set () {
       this.set = Object.create(null);
     }
@@ -34808,7 +35911,7 @@ if (process.env.NODE_ENV !== 'production') {
       ? vm.options
       : vm._isVue
         ? vm.$options || vm.constructor.options
-        : vm || {};
+        : vm;
     var name = options.name || options._componentTag;
     var file = options.__file;
     if (!name && file) {
@@ -34864,7 +35967,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 /*  */
 
-
 var uid = 0;
 
 /**
@@ -34893,24 +35995,31 @@ Dep.prototype.depend = function depend () {
 Dep.prototype.notify = function notify () {
   // stabilize the subscriber list first
   var subs = this.subs.slice();
+  if (process.env.NODE_ENV !== 'production' && !config.async) {
+    // subs aren't sorted in scheduler if not running async
+    // we need to sort them now to make sure they fire in correct
+    // order
+    subs.sort(function (a, b) { return a.id - b.id; });
+  }
   for (var i = 0, l = subs.length; i < l; i++) {
     subs[i].update();
   }
 };
 
-// the current target watcher being evaluated.
-// this is globally unique because there could be only one
-// watcher being evaluated at any time.
+// The current target watcher being evaluated.
+// This is globally unique because only one watcher
+// can be evaluated at a time.
 Dep.target = null;
 var targetStack = [];
 
-function pushTarget (_target) {
-  if (Dep.target) { targetStack.push(Dep.target); }
-  Dep.target = _target;
+function pushTarget (target) {
+  targetStack.push(target);
+  Dep.target = target;
 }
 
 function popTarget () {
-  Dep.target = targetStack.pop();
+  targetStack.pop();
+  Dep.target = targetStack[targetStack.length - 1];
 }
 
 /*  */
@@ -34977,16 +36086,18 @@ function createTextVNode (val) {
 // used for static nodes and slot nodes because they may be reused across
 // multiple renders, cloning them avoids errors when DOM manipulations rely
 // on their elm reference.
-function cloneVNode (vnode, deep) {
-  var componentOptions = vnode.componentOptions;
+function cloneVNode (vnode) {
   var cloned = new VNode(
     vnode.tag,
     vnode.data,
-    vnode.children,
+    // #7975
+    // clone children array to avoid mutating original in case of cloning
+    // a child.
+    vnode.children && vnode.children.slice(),
     vnode.text,
     vnode.elm,
     vnode.context,
-    componentOptions,
+    vnode.componentOptions,
     vnode.asyncFactory
   );
   cloned.ns = vnode.ns;
@@ -34996,25 +36107,9 @@ function cloneVNode (vnode, deep) {
   cloned.fnContext = vnode.fnContext;
   cloned.fnOptions = vnode.fnOptions;
   cloned.fnScopeId = vnode.fnScopeId;
+  cloned.asyncMeta = vnode.asyncMeta;
   cloned.isCloned = true;
-  if (deep) {
-    if (vnode.children) {
-      cloned.children = cloneVNodes(vnode.children, true);
-    }
-    if (componentOptions && componentOptions.children) {
-      componentOptions.children = cloneVNodes(componentOptions.children, true);
-    }
-  }
   return cloned
-}
-
-function cloneVNodes (vnodes, deep) {
-  var len = vnodes.length;
-  var res = new Array(len);
-  for (var i = 0; i < len; i++) {
-    res[i] = cloneVNode(vnodes[i], deep);
-  }
-  return res
 }
 
 /*
@@ -35023,7 +36118,9 @@ function cloneVNodes (vnodes, deep) {
  */
 
 var arrayProto = Array.prototype;
-var arrayMethods = Object.create(arrayProto);[
+var arrayMethods = Object.create(arrayProto);
+
+var methodsToPatch = [
   'push',
   'pop',
   'shift',
@@ -35031,7 +36128,12 @@ var arrayMethods = Object.create(arrayProto);[
   'splice',
   'sort',
   'reverse'
-].forEach(function (method) {
+];
+
+/**
+ * Intercept mutating methods and emit events
+ */
+methodsToPatch.forEach(function (method) {
   // cache original method
   var original = arrayProto[method];
   def(arrayMethods, method, function mutator () {
@@ -35062,20 +36164,20 @@ var arrayMethods = Object.create(arrayProto);[
 var arrayKeys = Object.getOwnPropertyNames(arrayMethods);
 
 /**
- * By default, when a reactive property is set, the new value is
- * also converted to become reactive. However when passing down props,
- * we don't want to force conversion because the value may be a nested value
- * under a frozen data structure. Converting it would defeat the optimization.
+ * In some cases we may want to disable observation inside a component's
+ * update computation.
  */
-var observerState = {
-  shouldConvert: true
-};
+var shouldObserve = true;
+
+function toggleObserving (value) {
+  shouldObserve = value;
+}
 
 /**
- * Observer class that are attached to each observed
- * object. Once attached, the observer converts target
+ * Observer class that is attached to each observed
+ * object. Once attached, the observer converts the target
  * object's property keys into getter/setters that
- * collect dependencies and dispatches updates.
+ * collect dependencies and dispatch updates.
  */
 var Observer = function Observer (value) {
   this.value = value;
@@ -35083,10 +36185,11 @@ var Observer = function Observer (value) {
   this.vmCount = 0;
   def(value, '__ob__', this);
   if (Array.isArray(value)) {
-    var augment = hasProto
-      ? protoAugment
-      : copyAugment;
-    augment(value, arrayMethods, arrayKeys);
+    if (hasProto) {
+      protoAugment(value, arrayMethods);
+    } else {
+      copyAugment(value, arrayMethods, arrayKeys);
+    }
     this.observeArray(value);
   } else {
     this.walk(value);
@@ -35094,14 +36197,14 @@ var Observer = function Observer (value) {
 };
 
 /**
- * Walk through each property and convert them into
+ * Walk through all properties and convert them into
  * getter/setters. This method should only be called when
  * value type is Object.
  */
 Observer.prototype.walk = function walk (obj) {
   var keys = Object.keys(obj);
   for (var i = 0; i < keys.length; i++) {
-    defineReactive(obj, keys[i], obj[keys[i]]);
+    defineReactive$$1(obj, keys[i]);
   }
 };
 
@@ -35117,17 +36220,17 @@ Observer.prototype.observeArray = function observeArray (items) {
 // helpers
 
 /**
- * Augment an target Object or Array by intercepting
+ * Augment a target Object or Array by intercepting
  * the prototype chain using __proto__
  */
-function protoAugment (target, src, keys) {
+function protoAugment (target, src) {
   /* eslint-disable no-proto */
   target.__proto__ = src;
   /* eslint-enable no-proto */
 }
 
 /**
- * Augment an target Object or Array by defining
+ * Augment a target Object or Array by defining
  * hidden properties.
  */
 /* istanbul ignore next */
@@ -35151,7 +36254,7 @@ function observe (value, asRootData) {
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__;
   } else if (
-    observerState.shouldConvert &&
+    shouldObserve &&
     !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
     Object.isExtensible(value) &&
@@ -35168,7 +36271,7 @@ function observe (value, asRootData) {
 /**
  * Define a reactive property on an Object.
  */
-function defineReactive (
+function defineReactive$$1 (
   obj,
   key,
   val,
@@ -35185,6 +36288,9 @@ function defineReactive (
   // cater for pre-defined getter/setters
   var getter = property && property.get;
   var setter = property && property.set;
+  if ((!getter || setter) && arguments.length === 2) {
+    val = obj[key];
+  }
 
   var childOb = !shallow && observe(val);
   Object.defineProperty(obj, key, {
@@ -35213,6 +36319,8 @@ function defineReactive (
       if (process.env.NODE_ENV !== 'production' && customSetter) {
         customSetter();
       }
+      // #7981: for accessor properties without setter
+      if (getter && !setter) { return }
       if (setter) {
         setter.call(obj, newVal);
       } else {
@@ -35230,6 +36338,11 @@ function defineReactive (
  * already exist.
  */
 function set (target, key, val) {
+  if (process.env.NODE_ENV !== 'production' &&
+    (isUndef(target) || isPrimitive(target))
+  ) {
+    warn(("Cannot set reactive property on undefined, null, or primitive value: " + ((target))));
+  }
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.length = Math.max(target.length, key);
     target.splice(key, 1, val);
@@ -35251,7 +36364,7 @@ function set (target, key, val) {
     target[key] = val;
     return val
   }
-  defineReactive(ob.value, key, val);
+  defineReactive$$1(ob.value, key, val);
   ob.dep.notify();
   return val
 }
@@ -35260,6 +36373,11 @@ function set (target, key, val) {
  * Delete a property and trigger change if necessary.
  */
 function del (target, key) {
+  if (process.env.NODE_ENV !== 'production' &&
+    (isUndef(target) || isPrimitive(target))
+  ) {
+    warn(("Cannot delete reactive property on undefined, null, or primitive value: " + ((target))));
+  }
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.splice(key, 1);
     return
@@ -35333,7 +36451,11 @@ function mergeData (to, from) {
     fromVal = from[key];
     if (!hasOwn(to, key)) {
       set(to, key, fromVal);
-    } else if (isPlainObject(toVal) && isPlainObject(fromVal)) {
+    } else if (
+      toVal !== fromVal &&
+      isPlainObject(toVal) &&
+      isPlainObject(fromVal)
+    ) {
       mergeData(toVal, fromVal);
     }
   }
@@ -35414,13 +36536,26 @@ function mergeHook (
   parentVal,
   childVal
 ) {
-  return childVal
+  var res = childVal
     ? parentVal
       ? parentVal.concat(childVal)
       : Array.isArray(childVal)
         ? childVal
         : [childVal]
-    : parentVal
+    : parentVal;
+  return res
+    ? dedupeHooks(res)
+    : res
+}
+
+function dedupeHooks (hooks) {
+  var res = [];
+  for (var i = 0; i < hooks.length; i++) {
+    if (res.indexOf(hooks[i]) === -1) {
+      res.push(hooks[i]);
+    }
+  }
+  return res
 }
 
 LIFECYCLE_HOOKS.forEach(function (hook) {
@@ -35656,15 +36791,22 @@ function mergeOptions (
   normalizeProps(child, vm);
   normalizeInject(child, vm);
   normalizeDirectives(child);
-  var extendsFrom = child.extends;
-  if (extendsFrom) {
-    parent = mergeOptions(parent, extendsFrom, vm);
-  }
-  if (child.mixins) {
-    for (var i = 0, l = child.mixins.length; i < l; i++) {
-      parent = mergeOptions(parent, child.mixins[i], vm);
+
+  // Apply extends and mixins on the child options,
+  // but only if it is a raw options object that isn't
+  // the result of another mergeOptions call.
+  // Only merged options has the _base property.
+  if (!child._base) {
+    if (child.extends) {
+      parent = mergeOptions(parent, child.extends, vm);
+    }
+    if (child.mixins) {
+      for (var i = 0, l = child.mixins.length; i < l; i++) {
+        parent = mergeOptions(parent, child.mixins[i], vm);
+      }
     }
   }
+
   var options = {};
   var key;
   for (key in parent) {
@@ -35717,6 +36859,8 @@ function resolveAsset (
 
 /*  */
 
+
+
 function validateProp (
   key,
   propOptions,
@@ -35726,12 +36870,18 @@ function validateProp (
   var prop = propOptions[key];
   var absent = !hasOwn(propsData, key);
   var value = propsData[key];
-  // handle boolean props
-  if (isType(Boolean, prop.type)) {
+  // boolean casting
+  var booleanIndex = getTypeIndex(Boolean, prop.type);
+  if (booleanIndex > -1) {
     if (absent && !hasOwn(prop, 'default')) {
       value = false;
-    } else if (!isType(String, prop.type) && (value === '' || value === hyphenate(key))) {
-      value = true;
+    } else if (value === '' || value === hyphenate(key)) {
+      // only cast empty string / same name to boolean if
+      // boolean has higher priority
+      var stringIndex = getTypeIndex(String, prop.type);
+      if (stringIndex < 0 || booleanIndex < stringIndex) {
+        value = true;
+      }
     }
   }
   // check default value
@@ -35739,15 +36889,15 @@ function validateProp (
     value = getPropDefaultValue(vm, prop, key);
     // since the default value is a fresh copy,
     // make sure to observe it.
-    var prevShouldConvert = observerState.shouldConvert;
-    observerState.shouldConvert = true;
+    var prevShouldObserve = shouldObserve;
+    toggleObserving(true);
     observe(value);
-    observerState.shouldConvert = prevShouldConvert;
+    toggleObserving(prevShouldObserve);
   }
   if (
     process.env.NODE_ENV !== 'production' &&
     // skip validation for weex recycle-list child component props
-    !(false && isObject(value) && ('@binding' in value))
+    !(false)
   ) {
     assertProp(prop, key, value, vm, absent);
   }
@@ -35820,11 +36970,10 @@ function assertProp (
       valid = assertedType.valid;
     }
   }
+
   if (!valid) {
     warn(
-      "Invalid prop: type check failed for prop \"" + name + "\"." +
-      " Expected " + (expectedTypes.map(capitalize).join(', ')) +
-      ", got " + (toRawType(value)) + ".",
+      getInvalidTypeMessage(name, value, expectedTypes),
       vm
     );
     return
@@ -35875,17 +37024,63 @@ function getType (fn) {
   return match ? match[1] : ''
 }
 
-function isType (type, fn) {
-  if (!Array.isArray(fn)) {
-    return getType(fn) === getType(type)
+function isSameType (a, b) {
+  return getType(a) === getType(b)
+}
+
+function getTypeIndex (type, expectedTypes) {
+  if (!Array.isArray(expectedTypes)) {
+    return isSameType(expectedTypes, type) ? 0 : -1
   }
-  for (var i = 0, len = fn.length; i < len; i++) {
-    if (getType(fn[i]) === getType(type)) {
-      return true
+  for (var i = 0, len = expectedTypes.length; i < len; i++) {
+    if (isSameType(expectedTypes[i], type)) {
+      return i
     }
   }
-  /* istanbul ignore next */
-  return false
+  return -1
+}
+
+function getInvalidTypeMessage (name, value, expectedTypes) {
+  var message = "Invalid prop: type check failed for prop \"" + name + "\"." +
+    " Expected " + (expectedTypes.map(capitalize).join(', '));
+  var expectedType = expectedTypes[0];
+  var receivedType = toRawType(value);
+  var expectedValue = styleValue(value, expectedType);
+  var receivedValue = styleValue(value, receivedType);
+  // check if we need to specify expected value
+  if (expectedTypes.length === 1 &&
+      isExplicable(expectedType) &&
+      !isBoolean(expectedType, receivedType)) {
+    message += " with value " + expectedValue;
+  }
+  message += ", got " + receivedType + " ";
+  // check if we need to specify received value
+  if (isExplicable(receivedType)) {
+    message += "with value " + receivedValue + ".";
+  }
+  return message
+}
+
+function styleValue (value, type) {
+  if (type === 'String') {
+    return ("\"" + value + "\"")
+  } else if (type === 'Number') {
+    return ("" + (Number(value)))
+  } else {
+    return ("" + value)
+  }
+}
+
+function isExplicable (value) {
+  var explicitTypes = ['string', 'number', 'boolean'];
+  return explicitTypes.some(function (elem) { return value.toLowerCase() === elem; })
+}
+
+function isBoolean () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  return args.some(function (elem) { return elem.toLowerCase() === 'boolean'; })
 }
 
 /*  */
@@ -35934,7 +37129,6 @@ function logError (err, vm, info) {
 }
 
 /*  */
-/* globals MessageChannel */
 
 var callbacks = [];
 var pending = false;
@@ -35948,19 +37142,19 @@ function flushCallbacks () {
   }
 }
 
-// Here we have async deferring wrappers using both micro and macro tasks.
-// In < 2.4 we used micro tasks everywhere, but there are some scenarios where
-// micro tasks have too high a priority and fires in between supposedly
+// Here we have async deferring wrappers using both microtasks and (macro) tasks.
+// In < 2.4 we used microtasks everywhere, but there are some scenarios where
+// microtasks have too high a priority and fire in between supposedly
 // sequential events (e.g. #4521, #6690) or even between bubbling of the same
-// event (#6566). However, using macro tasks everywhere also has subtle problems
+// event (#6566). However, using (macro) tasks everywhere also has subtle problems
 // when state is changed right before repaint (e.g. #6813, out-in transitions).
-// Here we use micro task by default, but expose a way to force macro task when
+// Here we use microtask by default, but expose a way to force (macro) task when
 // needed (e.g. in event handlers attached by v-on).
 var microTimerFunc;
 var macroTimerFunc;
 var useMacroTask = false;
 
-// Determine (macro) Task defer implementation.
+// Determine (macro) task defer implementation.
 // Technically setImmediate should be the ideal choice, but it's only available
 // in IE. The only polyfill that consistently queues the callback after all DOM
 // events triggered in the same loop is by using MessageChannel.
@@ -35987,7 +37181,7 @@ if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   };
 }
 
-// Determine MicroTask defer implementation.
+// Determine microtask defer implementation.
 /* istanbul ignore next, $flow-disable-line */
 if (typeof Promise !== 'undefined' && isNative(Promise)) {
   var p = Promise.resolve();
@@ -36007,14 +37201,16 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
 
 /**
  * Wrap a function so that if any code inside triggers state change,
- * the changes are queued using a Task instead of a MicroTask.
+ * the changes are queued using a (macro) task instead of a microtask.
  */
 function withMacroTask (fn) {
   return fn._withTask || (fn._withTask = function () {
     useMacroTask = true;
-    var res = fn.apply(null, arguments);
-    useMacroTask = false;
-    return res
+    try {
+      return fn.apply(null, arguments)
+    } finally {
+      useMacroTask = false;    
+    }
   })
 }
 
@@ -36095,9 +37291,18 @@ if (process.env.NODE_ENV !== 'production') {
     );
   };
 
+  var warnReservedPrefix = function (target, key) {
+    warn(
+      "Property \"" + key + "\" must be accessed with \"$data." + key + "\" because " +
+      'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
+      'prevent conflicts with Vue internals' +
+      'See: https://vuejs.org/v2/api/#data',
+      target
+    );
+  };
+
   var hasProxy =
-    typeof Proxy !== 'undefined' &&
-    Proxy.toString().match(/native code/);
+    typeof Proxy !== 'undefined' && isNative(Proxy);
 
   if (hasProxy) {
     var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta,exact');
@@ -36117,9 +37322,11 @@ if (process.env.NODE_ENV !== 'production') {
   var hasHandler = {
     has: function has (target, key) {
       var has = key in target;
-      var isAllowed = allowedGlobals(key) || key.charAt(0) === '_';
+      var isAllowed = allowedGlobals(key) ||
+        (typeof key === 'string' && key.charAt(0) === '_' && !(key in target.$data));
       if (!has && !isAllowed) {
-        warnNonPresent(target, key);
+        if (key in target.$data) { warnReservedPrefix(target, key); }
+        else { warnNonPresent(target, key); }
       }
       return has || !isAllowed
     }
@@ -36128,7 +37335,8 @@ if (process.env.NODE_ENV !== 'production') {
   var getHandler = {
     get: function get (target, key) {
       if (typeof key === 'string' && !(key in target)) {
-        warnNonPresent(target, key);
+        if (key in target.$data) { warnReservedPrefix(target, key); }
+        else { warnNonPresent(target, key); }
       }
       return target[key]
     }
@@ -36165,7 +37373,7 @@ function traverse (val) {
 function _traverse (val, seen) {
   var i, keys;
   var isA = Array.isArray(val);
-  if ((!isA && !isObject(val)) || Object.isFrozen(val)) {
+  if ((!isA && !isObject(val)) || Object.isFrozen(val) || val instanceof VNode) {
     return
   }
   if (val.__ob__) {
@@ -36226,14 +37434,14 @@ function updateListeners (
   oldOn,
   add,
   remove$$1,
+  createOnceHandler,
   vm
 ) {
-  var name, def, cur, old, event;
+  var name, def$$1, cur, old, event;
   for (name in on) {
-    def = cur = on[name];
+    def$$1 = cur = on[name];
     old = oldOn[name];
     event = normalizeEvent(name);
-    /* istanbul ignore if */
     if (isUndef(cur)) {
       process.env.NODE_ENV !== 'production' && warn(
         "Invalid handler for event \"" + (event.name) + "\": got " + String(cur),
@@ -36243,7 +37451,10 @@ function updateListeners (
       if (isUndef(cur.fns)) {
         cur = on[name] = createFnInvoker(cur);
       }
-      add(event.name, cur, event.once, event.capture, event.passive, event.params);
+      if (isTrue(event.once)) {
+        cur = on[name] = createOnceHandler(event.name, cur, event.capture);
+      }
+      add(event.name, cur, event.capture, event.passive, event.params);
     } else if (cur !== old) {
       old.fns = cur;
       on[name] = old;
@@ -36498,9 +37709,13 @@ function resolveAsyncComponent (
     var contexts = factory.contexts = [context];
     var sync = true;
 
-    var forceRender = function () {
+    var forceRender = function (renderCompleted) {
       for (var i = 0, l = contexts.length; i < l; i++) {
         contexts[i].$forceUpdate();
+      }
+
+      if (renderCompleted) {
+        contexts.length = 0;
       }
     };
 
@@ -36510,7 +37725,9 @@ function resolveAsyncComponent (
       // invoke callbacks only if this is not a synchronous resolve
       // (async resolves are shimmed as synchronous during SSR)
       if (!sync) {
-        forceRender();
+        forceRender(true);
+      } else {
+        contexts.length = 0;
       }
     });
 
@@ -36521,7 +37738,7 @@ function resolveAsyncComponent (
       );
       if (isDef(factory.errorComp)) {
         factory.error = true;
-        forceRender();
+        forceRender(true);
       }
     });
 
@@ -36548,7 +37765,7 @@ function resolveAsyncComponent (
             setTimeout(function () {
               if (isUndef(factory.resolved) && isUndef(factory.error)) {
                 factory.loading = true;
-                forceRender();
+                forceRender(false);
               }
             }, res.delay || 200);
           }
@@ -36611,16 +37828,22 @@ function initEvents (vm) {
 
 var target;
 
-function add (event, fn, once) {
-  if (once) {
-    target.$once(event, fn);
-  } else {
-    target.$on(event, fn);
-  }
+function add (event, fn) {
+  target.$on(event, fn);
 }
 
 function remove$1 (event, fn) {
   target.$off(event, fn);
+}
+
+function createOnceHandler (event, fn) {
+  var _target = target;
+  return function onceHandler () {
+    var res = fn.apply(null, arguments);
+    if (res !== null) {
+      _target.$off(event, onceHandler);
+    }
+  }
 }
 
 function updateComponentListeners (
@@ -36629,19 +37852,17 @@ function updateComponentListeners (
   oldListeners
 ) {
   target = vm;
-  updateListeners(listeners, oldListeners || {}, add, remove$1, vm);
+  updateListeners(listeners, oldListeners || {}, add, remove$1, createOnceHandler, vm);
   target = undefined;
 }
 
 function eventsMixin (Vue) {
   var hookRE = /^hook:/;
   Vue.prototype.$on = function (event, fn) {
-    var this$1 = this;
-
     var vm = this;
     if (Array.isArray(event)) {
       for (var i = 0, l = event.length; i < l; i++) {
-        this$1.$on(event[i], fn);
+        vm.$on(event[i], fn);
       }
     } else {
       (vm._events[event] || (vm._events[event] = [])).push(fn);
@@ -36666,8 +37887,6 @@ function eventsMixin (Vue) {
   };
 
   Vue.prototype.$off = function (event, fn) {
-    var this$1 = this;
-
     var vm = this;
     // all
     if (!arguments.length) {
@@ -36676,8 +37895,8 @@ function eventsMixin (Vue) {
     }
     // array of events
     if (Array.isArray(event)) {
-      for (var i = 0, l = event.length; i < l; i++) {
-        this$1.$off(event[i], fn);
+      for (var i$1 = 0, l = event.length; i$1 < l; i$1++) {
+        vm.$off(event[i$1], fn);
       }
       return vm
     }
@@ -36690,16 +37909,14 @@ function eventsMixin (Vue) {
       vm._events[event] = null;
       return vm
     }
-    if (fn) {
-      // specific handler
-      var cb;
-      var i$1 = cbs.length;
-      while (i$1--) {
-        cb = cbs[i$1];
-        if (cb === fn || cb.fn === fn) {
-          cbs.splice(i$1, 1);
-          break
-        }
+    // specific handler
+    var cb;
+    var i = cbs.length;
+    while (i--) {
+      cb = cbs[i];
+      if (cb === fn || cb.fn === fn) {
+        cbs.splice(i, 1);
+        break
       }
     }
     return vm
@@ -36806,6 +38023,14 @@ function resolveScopedSlots (
 var activeInstance = null;
 var isUpdatingChildComponent = false;
 
+function setActiveInstance(vm) {
+  var prevActiveInstance = activeInstance;
+  activeInstance = vm;
+  return function () {
+    activeInstance = prevActiveInstance;
+  }
+}
+
 function initLifecycle (vm) {
   var options = vm.$options;
 
@@ -36835,31 +38060,20 @@ function initLifecycle (vm) {
 function lifecycleMixin (Vue) {
   Vue.prototype._update = function (vnode, hydrating) {
     var vm = this;
-    if (vm._isMounted) {
-      callHook(vm, 'beforeUpdate');
-    }
     var prevEl = vm.$el;
     var prevVnode = vm._vnode;
-    var prevActiveInstance = activeInstance;
-    activeInstance = vm;
+    var restoreActiveInstance = setActiveInstance(vm);
     vm._vnode = vnode;
     // Vue.prototype.__patch__ is injected in entry points
     // based on the rendering backend used.
     if (!prevVnode) {
       // initial render
-      vm.$el = vm.__patch__(
-        vm.$el, vnode, hydrating, false /* removeOnly */,
-        vm.$options._parentElm,
-        vm.$options._refElm
-      );
-      // no need for the ref nodes after initial patch
-      // this prevents keeping a detached DOM tree in memory (#5851)
-      vm.$options._parentElm = vm.$options._refElm = null;
+      vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */);
     } else {
       // updates
       vm.$el = vm.__patch__(prevVnode, vnode);
     }
-    activeInstance = prevActiveInstance;
+    restoreActiveInstance();
     // update __vue__ reference
     if (prevEl) {
       prevEl.__vue__ = null;
@@ -36982,7 +38196,13 @@ function mountComponent (
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
-  new Watcher(vm, updateComponent, noop, null, true /* isRenderWatcher */);
+  new Watcher(vm, updateComponent, noop, {
+    before: function before () {
+      if (vm._isMounted && !vm._isDestroyed) {
+        callHook(vm, 'beforeUpdate');
+      }
+    }
+  }, true /* isRenderWatcher */);
   hydrating = false;
 
   // manually mounted instance, call mounted on self
@@ -37025,29 +38245,30 @@ function updateChildComponent (
   // update $attrs and $listeners hash
   // these are also reactive so they may trigger child update if the child
   // used them during render
-  vm.$attrs = (parentVnode.data && parentVnode.data.attrs) || emptyObject;
+  vm.$attrs = parentVnode.data.attrs || emptyObject;
   vm.$listeners = listeners || emptyObject;
 
   // update props
   if (propsData && vm.$options.props) {
-    observerState.shouldConvert = false;
+    toggleObserving(false);
     var props = vm._props;
     var propKeys = vm.$options._propKeys || [];
     for (var i = 0; i < propKeys.length; i++) {
       var key = propKeys[i];
-      props[key] = validateProp(key, vm.$options.props, propsData, vm);
+      var propOptions = vm.$options.props; // wtf flow?
+      props[key] = validateProp(key, propOptions, propsData, vm);
     }
-    observerState.shouldConvert = true;
+    toggleObserving(true);
     // keep a copy of raw propsData
     vm.$options.propsData = propsData;
   }
 
   // update listeners
-  if (listeners) {
-    var oldListeners = vm.$options._parentListeners;
-    vm.$options._parentListeners = listeners;
-    updateComponentListeners(vm, listeners, oldListeners);
-  }
+  listeners = listeners || emptyObject;
+  var oldListeners = vm.$options._parentListeners;
+  vm.$options._parentListeners = listeners;
+  updateComponentListeners(vm, listeners, oldListeners);
+
   // resolve slots + force update if has children
   if (hasChildren) {
     vm.$slots = resolveSlots(renderChildren, parentVnode.context);
@@ -37101,6 +38322,8 @@ function deactivateChildComponent (vm, direct) {
 }
 
 function callHook (vm, hook) {
+  // #7573 disable dep collection when invoking lifecycle hooks
+  pushTarget();
   var handlers = vm.$options[hook];
   if (handlers) {
     for (var i = 0, j = handlers.length; i < j; i++) {
@@ -37114,10 +38337,10 @@ function callHook (vm, hook) {
   if (vm._hasHookEvent) {
     vm.$emit('hook:' + hook);
   }
+  popTarget();
 }
 
 /*  */
-
 
 var MAX_UPDATE_COUNT = 100;
 
@@ -37162,6 +38385,9 @@ function flushSchedulerQueue () {
   // as we run existing watchers
   for (index = 0; index < queue.length; index++) {
     watcher = queue[index];
+    if (watcher.before) {
+      watcher.before();
+    }
     id = watcher.id;
     has[id] = null;
     watcher.run();
@@ -37204,7 +38430,7 @@ function callUpdatedHooks (queue) {
   while (i--) {
     var watcher = queue[i];
     var vm = watcher.vm;
-    if (vm._watcher === watcher && vm._isMounted) {
+    if (vm._watcher === watcher && vm._isMounted && !vm._isDestroyed) {
       callHook(vm, 'updated');
     }
   }
@@ -37251,6 +38477,11 @@ function queueWatcher (watcher) {
     // queue the flush
     if (!waiting) {
       waiting = true;
+
+      if (process.env.NODE_ENV !== 'production' && !config.async) {
+        flushSchedulerQueue();
+        return
+      }
       nextTick(flushSchedulerQueue);
     }
   }
@@ -37258,7 +38489,9 @@ function queueWatcher (watcher) {
 
 /*  */
 
-var uid$2 = 0;
+
+
+var uid$1 = 0;
 
 /**
  * A watcher parses an expression, collects dependencies,
@@ -37283,11 +38516,12 @@ var Watcher = function Watcher (
     this.user = !!options.user;
     this.lazy = !!options.lazy;
     this.sync = !!options.sync;
+    this.before = options.before;
   } else {
     this.deep = this.user = this.lazy = this.sync = false;
   }
   this.cb = cb;
-  this.id = ++uid$2; // uid for batching
+  this.id = ++uid$1; // uid for batching
   this.active = true;
   this.dirty = this.lazy; // for lazy watchers
   this.deps = [];
@@ -37303,7 +38537,7 @@ var Watcher = function Watcher (
   } else {
     this.getter = parsePath(expOrFn);
     if (!this.getter) {
-      this.getter = function () {};
+      this.getter = noop;
       process.env.NODE_ENV !== 'production' && warn(
         "Failed watching path: \"" + expOrFn + "\" " +
         'Watcher only accepts simple dot-delimited paths. ' +
@@ -37362,13 +38596,11 @@ Watcher.prototype.addDep = function addDep (dep) {
  * Clean up for dependency collection.
  */
 Watcher.prototype.cleanupDeps = function cleanupDeps () {
-    var this$1 = this;
-
   var i = this.deps.length;
   while (i--) {
-    var dep = this$1.deps[i];
-    if (!this$1.newDepIds.has(dep.id)) {
-      dep.removeSub(this$1);
+    var dep = this.deps[i];
+    if (!this.newDepIds.has(dep.id)) {
+      dep.removeSub(this);
     }
   }
   var tmp = this.depIds;
@@ -37440,11 +38672,9 @@ Watcher.prototype.evaluate = function evaluate () {
  * Depend on all deps collected by this watcher.
  */
 Watcher.prototype.depend = function depend () {
-    var this$1 = this;
-
   var i = this.deps.length;
   while (i--) {
-    this$1.deps[i].depend();
+    this.deps[i].depend();
   }
 };
 
@@ -37452,8 +38682,6 @@ Watcher.prototype.depend = function depend () {
  * Remove self from all dependencies' subscriber list.
  */
 Watcher.prototype.teardown = function teardown () {
-    var this$1 = this;
-
   if (this.active) {
     // remove self from vm's watcher list
     // this is a somewhat expensive operation so we skip it
@@ -37463,7 +38691,7 @@ Watcher.prototype.teardown = function teardown () {
     }
     var i = this.deps.length;
     while (i--) {
-      this$1.deps[i].removeSub(this$1);
+      this.deps[i].removeSub(this);
     }
     this.active = false;
   }
@@ -37512,7 +38740,9 @@ function initProps (vm, propsOptions) {
   var keys = vm.$options._propKeys = [];
   var isRoot = !vm.$parent;
   // root instance props should be converted
-  observerState.shouldConvert = isRoot;
+  if (!isRoot) {
+    toggleObserving(false);
+  }
   var loop = function ( key ) {
     keys.push(key);
     var value = validateProp(key, propsOptions, propsData, vm);
@@ -37526,8 +38756,8 @@ function initProps (vm, propsOptions) {
           vm
         );
       }
-      defineReactive(props, key, value, function () {
-        if (vm.$parent && !isUpdatingChildComponent) {
+      defineReactive$$1(props, key, value, function () {
+        if (!isRoot && !isUpdatingChildComponent) {
           warn(
             "Avoid mutating a prop directly since the value will be " +
             "overwritten whenever the parent component re-renders. " +
@@ -37538,7 +38768,7 @@ function initProps (vm, propsOptions) {
         }
       });
     } else {
-      defineReactive(props, key, value);
+      defineReactive$$1(props, key, value);
     }
     // static props are already proxied on the component's prototype
     // during Vue.extend(). We only need to proxy props defined at
@@ -37549,7 +38779,7 @@ function initProps (vm, propsOptions) {
   };
 
   for (var key in propsOptions) loop( key );
-  observerState.shouldConvert = true;
+  toggleObserving(true);
 }
 
 function initData (vm) {
@@ -37595,11 +38825,15 @@ function initData (vm) {
 }
 
 function getData (data, vm) {
+  // #7573 disable dep collection when invoking data getters
+  pushTarget();
   try {
     return data.call(vm, vm)
   } catch (e) {
     handleError(e, vm, "data()");
     return {}
+  } finally {
+    popTarget();
   }
 }
 
@@ -37655,17 +38889,15 @@ function defineComputed (
   if (typeof userDef === 'function') {
     sharedPropertyDefinition.get = shouldCache
       ? createComputedGetter(key)
-      : userDef;
+      : createGetterInvoker(userDef);
     sharedPropertyDefinition.set = noop;
   } else {
     sharedPropertyDefinition.get = userDef.get
       ? shouldCache && userDef.cache !== false
         ? createComputedGetter(key)
-        : userDef.get
+        : createGetterInvoker(userDef.get)
       : noop;
-    sharedPropertyDefinition.set = userDef.set
-      ? userDef.set
-      : noop;
+    sharedPropertyDefinition.set = userDef.set || noop;
   }
   if (process.env.NODE_ENV !== 'production' &&
       sharedPropertyDefinition.set === noop) {
@@ -37694,13 +38926,19 @@ function createComputedGetter (key) {
   }
 }
 
+function createGetterInvoker(fn) {
+  return function computedGetter () {
+    return fn.call(this, this)
+  }
+}
+
 function initMethods (vm, methods) {
   var props = vm.$options.props;
   for (var key in methods) {
     if (process.env.NODE_ENV !== 'production') {
-      if (methods[key] == null) {
+      if (typeof methods[key] !== 'function') {
         warn(
-          "Method \"" + key + "\" has an undefined value in the component definition. " +
+          "Method \"" + key + "\" has type \"" + (typeof methods[key]) + "\" in the component definition. " +
           "Did you reference the function correctly?",
           vm
         );
@@ -37718,7 +38956,7 @@ function initMethods (vm, methods) {
         );
       }
     }
-    vm[key] = methods[key] == null ? noop : bind(methods[key], vm);
+    vm[key] = typeof methods[key] !== 'function' ? noop : bind(methods[key], vm);
   }
 }
 
@@ -37737,7 +38975,7 @@ function initWatch (vm, watch) {
 
 function createWatcher (
   vm,
-  keyOrFn,
+  expOrFn,
   handler,
   options
 ) {
@@ -37748,7 +38986,7 @@ function createWatcher (
   if (typeof handler === 'string') {
     handler = vm[handler];
   }
-  return vm.$watch(keyOrFn, handler, options)
+  return vm.$watch(expOrFn, handler, options)
 }
 
 function stateMixin (Vue) {
@@ -37760,7 +38998,7 @@ function stateMixin (Vue) {
   var propsDef = {};
   propsDef.get = function () { return this._props };
   if (process.env.NODE_ENV !== 'production') {
-    dataDef.set = function (newData) {
+    dataDef.set = function () {
       warn(
         'Avoid replacing instance root $data. ' +
         'Use nested data properties instead.',
@@ -37790,7 +39028,11 @@ function stateMixin (Vue) {
     options.user = true;
     var watcher = new Watcher(vm, expOrFn, cb, options);
     if (options.immediate) {
-      cb.call(vm, watcher.value);
+      try {
+        cb.call(vm, watcher.value);
+      } catch (error) {
+        handleError(error, vm, ("callback for immediate watcher \"" + (watcher.expression) + "\""));
+      }
     }
     return function unwatchFn () {
       watcher.teardown();
@@ -37812,11 +39054,11 @@ function initProvide (vm) {
 function initInjections (vm) {
   var result = resolveInject(vm.$options.inject, vm);
   if (result) {
-    observerState.shouldConvert = false;
+    toggleObserving(false);
     Object.keys(result).forEach(function (key) {
       /* istanbul ignore else */
       if (process.env.NODE_ENV !== 'production') {
-        defineReactive(vm, key, result[key], function () {
+        defineReactive$$1(vm, key, result[key], function () {
           warn(
             "Avoid mutating an injected value directly since the changes will be " +
             "overwritten whenever the provided component re-renders. " +
@@ -37825,10 +39067,10 @@ function initInjections (vm) {
           );
         });
       } else {
-        defineReactive(vm, key, result[key]);
+        defineReactive$$1(vm, key, result[key]);
       }
     });
-    observerState.shouldConvert = true;
+    toggleObserving(true);
   }
 }
 
@@ -37848,7 +39090,7 @@ function resolveInject (inject, vm) {
       var provideKey = inject[key].from;
       var source = vm;
       while (source) {
-        if (source._provided && provideKey in source._provided) {
+        if (source._provided && hasOwn(source._provided, provideKey)) {
           result[key] = source._provided[provideKey];
           break
         }
@@ -37897,9 +39139,10 @@ function renderList (
       ret[i] = render(val[key], key, i);
     }
   }
-  if (isDef(ret)) {
-    (ret)._isVList = true;
+  if (!isDef(ret)) {
+    ret = [];
   }
+  (ret)._isVList = true;
   return ret
 }
 
@@ -37929,19 +39172,7 @@ function renderSlot (
     }
     nodes = scopedSlotFn(props) || fallback;
   } else {
-    var slotNodes = this.$slots[name];
-    // warn duplicate slot usage
-    if (slotNodes) {
-      if (process.env.NODE_ENV !== 'production' && slotNodes._rendered) {
-        warn(
-          "Duplicate presence of slot \"" + name + "\" found in the same render tree " +
-          "- this will likely cause render errors.",
-          this
-        );
-      }
-      slotNodes._rendered = true;
-    }
-    nodes = slotNodes || fallback;
+    nodes = this.$slots[name] || fallback;
   }
 
   var target = props && props.slot;
@@ -37963,6 +39194,14 @@ function resolveFilter (id) {
 
 /*  */
 
+function isKeyNotMatch (expect, actual) {
+  if (Array.isArray(expect)) {
+    return expect.indexOf(actual) === -1
+  } else {
+    return expect !== actual
+  }
+}
+
 /**
  * Runtime helper for checking keyCodes from config.
  * exposed as Vue.prototype._k
@@ -37971,16 +39210,15 @@ function resolveFilter (id) {
 function checkKeyCodes (
   eventKeyCode,
   key,
-  builtInAlias,
-  eventKeyName
+  builtInKeyCode,
+  eventKeyName,
+  builtInKeyName
 ) {
-  var keyCodes = config.keyCodes[key] || builtInAlias;
-  if (keyCodes) {
-    if (Array.isArray(keyCodes)) {
-      return keyCodes.indexOf(eventKeyCode) === -1
-    } else {
-      return keyCodes !== eventKeyCode
-    }
+  var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
+  if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
+    return isKeyNotMatch(builtInKeyName, eventKeyName)
+  } else if (mappedKeyCode) {
+    return isKeyNotMatch(mappedKeyCode, eventKeyCode)
   } else if (eventKeyName) {
     return hyphenate(eventKeyName) !== key
   }
@@ -38022,12 +39260,13 @@ function bindObjectProps (
             ? data.domProps || (data.domProps = {})
             : data.attrs || (data.attrs = {});
         }
-        if (!(key in hash)) {
+        var camelizedKey = camelize(key);
+        if (!(key in hash) && !(camelizedKey in hash)) {
           hash[key] = value[key];
 
           if (isSync) {
             var on = data.on || (data.on = {});
-            on[("update:" + key)] = function ($event) {
+            on[("update:" + camelizedKey)] = function ($event) {
               value[key] = $event;
             };
           }
@@ -38052,11 +39291,9 @@ function renderStatic (
   var cached = this._staticTrees || (this._staticTrees = []);
   var tree = cached[index];
   // if has already-rendered static tree and not inside v-for,
-  // we can reuse the same tree by doing a shallow clone.
+  // we can reuse the same tree.
   if (tree && !isInFor) {
-    return Array.isArray(tree)
-      ? cloneVNodes(tree)
-      : cloneVNode(tree)
+    return tree
   }
   // otherwise, render a fresh tree.
   tree = cached[index] = this.$options.staticRenderFns[index].call(
@@ -38154,6 +39391,24 @@ function FunctionalRenderContext (
   Ctor
 ) {
   var options = Ctor.options;
+  // ensure the createElement function in functional components
+  // gets a unique context - this is necessary for correct named slot check
+  var contextVm;
+  if (hasOwn(parent, '_uid')) {
+    contextVm = Object.create(parent);
+    // $flow-disable-line
+    contextVm._original = parent;
+  } else {
+    // the context vm passed in is a functional context as well.
+    // in this case we want to make sure we are able to get a hold to the
+    // real context instance.
+    contextVm = parent;
+    // $flow-disable-line
+    parent = parent._original;
+  }
+  var isCompiled = isTrue(options._compiled);
+  var needNormalization = !isCompiled;
+
   this.data = data;
   this.props = props;
   this.children = children;
@@ -38161,12 +39416,6 @@ function FunctionalRenderContext (
   this.listeners = data.on || emptyObject;
   this.injections = resolveInject(options.inject, parent);
   this.slots = function () { return resolveSlots(children, parent); };
-
-  // ensure the createElement function in functional components
-  // gets a unique context - this is necessary for correct named slot check
-  var contextVm = Object.create(parent);
-  var isCompiled = isTrue(options._compiled);
-  var needNormalization = !isCompiled;
 
   // support for compiled functional template
   if (isCompiled) {
@@ -38180,7 +39429,7 @@ function FunctionalRenderContext (
   if (options._scopeId) {
     this._c = function (a, b, c, d) {
       var vnode = createElement(contextVm, a, b, c, d, needNormalization);
-      if (vnode) {
+      if (vnode && !Array.isArray(vnode)) {
         vnode.fnScopeId = options._scopeId;
         vnode.fnContext = parent;
       }
@@ -38223,14 +39472,31 @@ function createFunctionalComponent (
   var vnode = options.render.call(null, renderContext._c, renderContext);
 
   if (vnode instanceof VNode) {
-    vnode.fnContext = contextVm;
-    vnode.fnOptions = options;
-    if (data.slot) {
-      (vnode.data || (vnode.data = {})).slot = data.slot;
+    return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options, renderContext)
+  } else if (Array.isArray(vnode)) {
+    var vnodes = normalizeChildren(vnode) || [];
+    var res = new Array(vnodes.length);
+    for (var i = 0; i < vnodes.length; i++) {
+      res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options, renderContext);
     }
+    return res
   }
+}
 
-  return vnode
+function cloneAndMarkFunctionalResult (vnode, data, contextVm, options, renderContext) {
+  // #7817 clone node before setting fnContext, otherwise if the node is reused
+  // (e.g. it was from a cached normal slot) the fnContext causes named slots
+  // that should not be matched to match.
+  var clone = cloneVNode(vnode);
+  clone.fnContext = contextVm;
+  clone.fnOptions = options;
+  if (process.env.NODE_ENV !== 'production') {
+    (clone.devtoolsMeta = clone.devtoolsMeta || {}).renderContext = renderContext;
+  }
+  if (data.slot) {
+    (clone.data || (clone.data = {})).slot = data.slot;
+  }
+  return clone
 }
 
 function mergeProps (to, from) {
@@ -38241,45 +39507,29 @@ function mergeProps (to, from) {
 
 /*  */
 
-
-
-
-// Register the component hook to weex native render engine.
-// The hook will be triggered by native, not javascript.
-
-
-// Updates the state of the component to weex native render engine.
-
 /*  */
-
-// https://github.com/Hanks10100/weex-native-directive/tree/master/component
-
-// listening on native callback
 
 /*  */
 
 /*  */
 
-// hooks to be invoked on component VNodes during patch
+// inline hooks to be invoked on component VNodes during patch
 var componentVNodeHooks = {
-  init: function init (
-    vnode,
-    hydrating,
-    parentElm,
-    refElm
-  ) {
-    if (!vnode.componentInstance || vnode.componentInstance._isDestroyed) {
-      var child = vnode.componentInstance = createComponentInstanceForVnode(
-        vnode,
-        activeInstance,
-        parentElm,
-        refElm
-      );
-      child.$mount(hydrating ? vnode.elm : undefined, hydrating);
-    } else if (vnode.data.keepAlive) {
+  init: function init (vnode, hydrating) {
+    if (
+      vnode.componentInstance &&
+      !vnode.componentInstance._isDestroyed &&
+      vnode.data.keepAlive
+    ) {
       // kept-alive components, treat as a patch
       var mountedNode = vnode; // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode);
+    } else {
+      var child = vnode.componentInstance = createComponentInstanceForVnode(
+        vnode,
+        activeInstance
+      );
+      child.$mount(hydrating ? vnode.elm : undefined, hydrating);
     }
   },
 
@@ -38414,8 +39664,8 @@ function createComponent (
     }
   }
 
-  // merge component management hooks onto the placeholder node
-  mergeHooks(data);
+  // install component management hooks onto the placeholder node
+  installComponentHooks(data);
 
   // return a placeholder vnode
   var name = Ctor.options.name || tag;
@@ -38426,25 +39676,17 @@ function createComponent (
     asyncFactory
   );
 
-  // Weex specific: invoke recycle-list optimized @render function for
-  // extracting cell-slot template.
-  // https://github.com/Hanks10100/weex-native-directive/tree/master/component
-  /* istanbul ignore if */
   return vnode
 }
 
 function createComponentInstanceForVnode (
   vnode, // we know it's MountedComponentVNode but flow doesn't
-  parent, // activeInstance in lifecycle state
-  parentElm,
-  refElm
+  parent // activeInstance in lifecycle state
 ) {
   var options = {
     _isComponent: true,
-    parent: parent,
     _parentVnode: vnode,
-    _parentElm: parentElm || null,
-    _refElm: refElm || null
+    parent: parent
   };
   // check inline-template render functions
   var inlineTemplate = vnode.data.inlineTemplate;
@@ -38455,35 +39697,47 @@ function createComponentInstanceForVnode (
   return new vnode.componentOptions.Ctor(options)
 }
 
-function mergeHooks (data) {
-  if (!data.hook) {
-    data.hook = {};
-  }
+function installComponentHooks (data) {
+  var hooks = data.hook || (data.hook = {});
   for (var i = 0; i < hooksToMerge.length; i++) {
     var key = hooksToMerge[i];
-    var fromParent = data.hook[key];
-    var ours = componentVNodeHooks[key];
-    data.hook[key] = fromParent ? mergeHook$1(ours, fromParent) : ours;
+    var existing = hooks[key];
+    var toMerge = componentVNodeHooks[key];
+    if (existing !== toMerge && !(existing && existing._merged)) {
+      hooks[key] = existing ? mergeHook$1(toMerge, existing) : toMerge;
+    }
   }
 }
 
-function mergeHook$1 (one, two) {
-  return function (a, b, c, d) {
-    one(a, b, c, d);
-    two(a, b, c, d);
-  }
+function mergeHook$1 (f1, f2) {
+  var merged = function (a, b) {
+    // flow complains about extra args which is why we use any
+    f1(a, b);
+    f2(a, b);
+  };
+  merged._merged = true;
+  return merged
 }
 
 // transform component v-model info (value and callback) into
 // prop and event handler respectively.
 function transformModel (options, data) {
   var prop = (options.model && options.model.prop) || 'value';
-  var event = (options.model && options.model.event) || 'input';(data.props || (data.props = {}))[prop] = data.model.value;
+  var event = (options.model && options.model.event) || 'input'
+  ;(data.props || (data.props = {}))[prop] = data.model.value;
   var on = data.on || (data.on = {});
-  if (isDef(on[event])) {
-    on[event] = [data.model.callback].concat(on[event]);
+  var existing = on[event];
+  var callback = data.model.callback;
+  if (isDef(existing)) {
+    if (
+      Array.isArray(existing)
+        ? existing.indexOf(callback) === -1
+        : existing !== callback
+    ) {
+      on[event] = [callback].concat(existing);
+    }
   } else {
-    on[event] = data.model.callback;
+    on[event] = callback;
   }
 }
 
@@ -38571,7 +39825,7 @@ function _createElement (
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
       );
-    } else if (isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
+    } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
       // component
       vnode = createComponent(Ctor, data, context, children, tag);
     } else {
@@ -38587,8 +39841,11 @@ function _createElement (
     // direct component options / constructor
     vnode = createComponent(tag, data, context, children);
   }
-  if (isDef(vnode)) {
-    if (ns) { applyNS(vnode, ns); }
+  if (Array.isArray(vnode)) {
+    return vnode
+  } else if (isDef(vnode)) {
+    if (isDef(ns)) { applyNS(vnode, ns); }
+    if (isDef(data)) { registerDeepBindings(data); }
     return vnode
   } else {
     return createEmptyVNode()
@@ -38605,10 +39862,23 @@ function applyNS (vnode, ns, force) {
   if (isDef(vnode.children)) {
     for (var i = 0, l = vnode.children.length; i < l; i++) {
       var child = vnode.children[i];
-      if (isDef(child.tag) && (isUndef(child.ns) || isTrue(force))) {
+      if (isDef(child.tag) && (
+        isUndef(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
         applyNS(child, ns, force);
       }
     }
+  }
+}
+
+// ref #5318
+// necessary to ensure parent re-render when deep bindings like :style and
+// :class are used on slot nodes
+function registerDeepBindings (data) {
+  if (isObject(data.style)) {
+    traverse(data.style);
+  }
+  if (isObject(data.class)) {
+    traverse(data.class);
   }
 }
 
@@ -38637,15 +39907,15 @@ function initRender (vm) {
 
   /* istanbul ignore else */
   if (process.env.NODE_ENV !== 'production') {
-    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
+    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
       !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
     }, true);
-    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, function () {
+    defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
       !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
     }, true);
   } else {
-    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true);
-    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, null, true);
+    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true);
+    defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, null, true);
   }
 }
 
@@ -38663,20 +39933,9 @@ function renderMixin (Vue) {
     var render = ref.render;
     var _parentVnode = ref._parentVnode;
 
-    if (vm._isMounted) {
-      // if the parent didn't update, the slot nodes will be the ones from
-      // last render. They need to be cloned to ensure "freshness" for this render.
-      for (var key in vm.$slots) {
-        var slot = vm.$slots[key];
-        // _rendered is a flag added by renderSlot, but may not be present
-        // if the slot is passed from manually written render functions
-        if (slot._rendered || (slot[0] && slot[0].elm)) {
-          vm.$slots[key] = cloneVNodes(slot, true /* deep */);
-        }
-      }
+    if (_parentVnode) {
+      vm.$scopedSlots = _parentVnode.data.scopedSlots || emptyObject;
     }
-
-    vm.$scopedSlots = (_parentVnode && _parentVnode.data.scopedSlots) || emptyObject;
 
     // set parent vnode. this allows render functions to have access
     // to the data on the placeholder node.
@@ -38690,15 +39949,11 @@ function renderMixin (Vue) {
       // return error render result,
       // or previous vnode to prevent render error causing blank component
       /* istanbul ignore else */
-      if (process.env.NODE_ENV !== 'production') {
-        if (vm.$options.renderError) {
-          try {
-            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
-          } catch (e) {
-            handleError(e, vm, "renderError");
-            vnode = vm._vnode;
-          }
-        } else {
+      if (process.env.NODE_ENV !== 'production' && vm.$options.renderError) {
+        try {
+          vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
+        } catch (e) {
+          handleError(e, vm, "renderError");
           vnode = vm._vnode;
         }
       } else {
@@ -38724,13 +39979,13 @@ function renderMixin (Vue) {
 
 /*  */
 
-var uid$1 = 0;
+var uid$3 = 0;
 
 function initMixin (Vue) {
   Vue.prototype._init = function (options) {
     var vm = this;
     // a uid
-    vm._uid = uid$1++;
+    vm._uid = uid$3++;
 
     var startTag, endTag;
     /* istanbul ignore if */
@@ -38791,8 +40046,6 @@ function initInternalComponent (vm, options) {
   var parentVnode = options._parentVnode;
   opts.parent = options.parent;
   opts._parentVnode = parentVnode;
-  opts._parentElm = options._parentElm;
-  opts._refElm = options._refElm;
 
   var vnodeComponentOptions = parentVnode.componentOptions;
   opts.propsData = vnodeComponentOptions.propsData;
@@ -38833,50 +40086,30 @@ function resolveConstructorOptions (Ctor) {
 function resolveModifiedOptions (Ctor) {
   var modified;
   var latest = Ctor.options;
-  var extended = Ctor.extendOptions;
   var sealed = Ctor.sealedOptions;
   for (var key in latest) {
     if (latest[key] !== sealed[key]) {
       if (!modified) { modified = {}; }
-      modified[key] = dedupe(latest[key], extended[key], sealed[key]);
+      modified[key] = latest[key];
     }
   }
   return modified
 }
 
-function dedupe (latest, extended, sealed) {
-  // compare latest and sealed to ensure lifecycle hooks won't be duplicated
-  // between merges
-  if (Array.isArray(latest)) {
-    var res = [];
-    sealed = Array.isArray(sealed) ? sealed : [sealed];
-    extended = Array.isArray(extended) ? extended : [extended];
-    for (var i = 0; i < latest.length; i++) {
-      // push original options and not sealed options to exclude duplicated options
-      if (extended.indexOf(latest[i]) >= 0 || sealed.indexOf(latest[i]) < 0) {
-        res.push(latest[i]);
-      }
-    }
-    return res
-  } else {
-    return latest
-  }
-}
-
-function Vue$3 (options) {
+function Vue (options) {
   if (process.env.NODE_ENV !== 'production' &&
-    !(this instanceof Vue$3)
+    !(this instanceof Vue)
   ) {
     warn('Vue is a constructor and should be called with the `new` keyword');
   }
   this._init(options);
 }
 
-initMixin(Vue$3);
-stateMixin(Vue$3);
-eventsMixin(Vue$3);
-lifecycleMixin(Vue$3);
-renderMixin(Vue$3);
+initMixin(Vue);
+stateMixin(Vue);
+eventsMixin(Vue);
+lifecycleMixin(Vue);
+renderMixin(Vue);
 
 /*  */
 
@@ -39035,6 +40268,8 @@ function initAssetRegisters (Vue) {
 
 /*  */
 
+
+
 function getComponentName (opts) {
   return opts && (opts.Ctor.options.name || opts.tag)
 }
@@ -39098,20 +40333,20 @@ var KeepAlive = {
   },
 
   destroyed: function destroyed () {
-    var this$1 = this;
-
-    for (var key in this$1.cache) {
-      pruneCacheEntry(this$1.cache, key, this$1.keys);
+    for (var key in this.cache) {
+      pruneCacheEntry(this.cache, key, this.keys);
     }
   },
 
-  watch: {
-    include: function include (val) {
-      pruneCache(this, function (name) { return matches(val, name); });
-    },
-    exclude: function exclude (val) {
-      pruneCache(this, function (name) { return !matches(val, name); });
-    }
+  mounted: function mounted () {
+    var this$1 = this;
+
+    this.$watch('include', function (val) {
+      pruneCache(this$1, function (name) { return matches(val, name); });
+    });
+    this.$watch('exclude', function (val) {
+      pruneCache(this$1, function (name) { return !matches(val, name); });
+    });
   },
 
   render: function render () {
@@ -39187,7 +40422,7 @@ function initGlobalAPI (Vue) {
     warn: warn,
     extend: extend,
     mergeOptions: mergeOptions,
-    defineReactive: defineReactive
+    defineReactive: defineReactive$$1
   };
 
   Vue.set = set;
@@ -39211,20 +40446,25 @@ function initGlobalAPI (Vue) {
   initAssetRegisters(Vue);
 }
 
-initGlobalAPI(Vue$3);
+initGlobalAPI(Vue);
 
-Object.defineProperty(Vue$3.prototype, '$isServer', {
+Object.defineProperty(Vue.prototype, '$isServer', {
   get: isServerRendering
 });
 
-Object.defineProperty(Vue$3.prototype, '$ssrContext', {
+Object.defineProperty(Vue.prototype, '$ssrContext', {
   get: function get () {
     /* istanbul ignore next */
     return this.$vnode && this.$vnode.ssrContext
   }
 });
 
-Vue$3.version = '2.5.13';
+// expose FunctionalRenderContext for ssr runtime helper installation
+Object.defineProperty(Vue, 'FunctionalRenderContext', {
+  value: FunctionalRenderContext
+});
+
+Vue.version = '2.5.22';
 
 /*  */
 
@@ -39498,24 +40738,23 @@ function setTextContent (node, text) {
   node.textContent = text;
 }
 
-function setAttribute (node, key, val) {
-  node.setAttribute(key, val);
+function setStyleScope (node, scopeId) {
+  node.setAttribute(scopeId, '');
 }
 
-
-var nodeOps = Object.freeze({
-	createElement: createElement$1,
-	createElementNS: createElementNS,
-	createTextNode: createTextNode,
-	createComment: createComment,
-	insertBefore: insertBefore,
-	removeChild: removeChild,
-	appendChild: appendChild,
-	parentNode: parentNode,
-	nextSibling: nextSibling,
-	tagName: tagName,
-	setTextContent: setTextContent,
-	setAttribute: setAttribute
+var nodeOps = /*#__PURE__*/Object.freeze({
+  createElement: createElement$1,
+  createElementNS: createElementNS,
+  createTextNode: createTextNode,
+  createComment: createComment,
+  insertBefore: insertBefore,
+  removeChild: removeChild,
+  appendChild: appendChild,
+  parentNode: parentNode,
+  nextSibling: nextSibling,
+  tagName: tagName,
+  setTextContent: setTextContent,
+  setStyleScope: setStyleScope
 });
 
 /*  */
@@ -39537,7 +40776,7 @@ var ref = {
 
 function registerRef (vnode, isRemoval) {
   var key = vnode.data.ref;
-  if (!key) { return }
+  if (!isDef(key)) { return }
 
   var vm = vnode.context;
   var ref = vnode.componentInstance || vnode.elm;
@@ -39634,13 +40873,13 @@ function createPatchFunction (backend) {
   }
 
   function createRmCb (childElm, listeners) {
-    function remove () {
-      if (--remove.listeners === 0) {
+    function remove$$1 () {
+      if (--remove$$1.listeners === 0) {
         removeNode(childElm);
       }
     }
-    remove.listeners = listeners;
-    return remove
+    remove$$1.listeners = listeners;
+    return remove$$1
   }
 
   function removeNode (el) {
@@ -39668,7 +40907,25 @@ function createPatchFunction (backend) {
   }
 
   var creatingElmInVPre = 0;
-  function createElm (vnode, insertedVnodeQueue, parentElm, refElm, nested) {
+
+  function createElm (
+    vnode,
+    insertedVnodeQueue,
+    parentElm,
+    refElm,
+    nested,
+    ownerArray,
+    index
+  ) {
+    if (isDef(vnode.elm) && isDef(ownerArray)) {
+      // This vnode was used in a previous render!
+      // now it's used as a new node, overwriting its elm would cause
+      // potential patch errors down the road when it's used as an insertion
+      // reference node. Instead, we clone the node on-demand before creating
+      // associated DOM element for it.
+      vnode = ownerArray[index] = cloneVNode(vnode);
+    }
+
     vnode.isRootInsert = !nested; // for transition enter check
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
       return
@@ -39691,6 +40948,7 @@ function createPatchFunction (backend) {
           );
         }
       }
+
       vnode.elm = vnode.ns
         ? nodeOps.createElementNS(vnode.ns, tag)
         : nodeOps.createElement(tag, vnode);
@@ -39722,7 +40980,7 @@ function createPatchFunction (backend) {
     if (isDef(i)) {
       var isReactivated = isDef(vnode.componentInstance) && i.keepAlive;
       if (isDef(i = i.hook) && isDef(i = i.init)) {
-        i(vnode, false /* hydrating */, parentElm, refElm);
+        i(vnode, false /* hydrating */);
       }
       // after calling the init hook, if the vnode is a child component
       // it should've created a child instance and mounted it. the child
@@ -39730,6 +40988,7 @@ function createPatchFunction (backend) {
       // in that case we can just return the element and be done.
       if (isDef(vnode.componentInstance)) {
         initComponent(vnode, insertedVnodeQueue);
+        insert(parentElm, vnode.elm, refElm);
         if (isTrue(isReactivated)) {
           reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm);
         }
@@ -39781,7 +41040,7 @@ function createPatchFunction (backend) {
   function insert (parent, elm, ref$$1) {
     if (isDef(parent)) {
       if (isDef(ref$$1)) {
-        if (ref$$1.parentNode === parent) {
+        if (nodeOps.parentNode(ref$$1) === parent) {
           nodeOps.insertBefore(parent, elm, ref$$1);
         }
       } else {
@@ -39796,7 +41055,7 @@ function createPatchFunction (backend) {
         checkDuplicateKeys(children);
       }
       for (var i = 0; i < children.length; ++i) {
-        createElm(children[i], insertedVnodeQueue, vnode.elm, null, true);
+        createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i);
       }
     } else if (isPrimitive(vnode.text)) {
       nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)));
@@ -39827,12 +41086,12 @@ function createPatchFunction (backend) {
   function setScope (vnode) {
     var i;
     if (isDef(i = vnode.fnScopeId)) {
-      nodeOps.setAttribute(vnode.elm, i, '');
+      nodeOps.setStyleScope(vnode.elm, i);
     } else {
       var ancestor = vnode;
       while (ancestor) {
         if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
-          nodeOps.setAttribute(vnode.elm, i, '');
+          nodeOps.setStyleScope(vnode.elm, i);
         }
         ancestor = ancestor.parent;
       }
@@ -39843,13 +41102,13 @@ function createPatchFunction (backend) {
       i !== vnode.fnContext &&
       isDef(i = i.$options._scopeId)
     ) {
-      nodeOps.setAttribute(vnode.elm, i, '');
+      nodeOps.setStyleScope(vnode.elm, i);
     }
   }
 
   function addVnodes (parentElm, refElm, vnodes, startIdx, endIdx, insertedVnodeQueue) {
     for (; startIdx <= endIdx; ++startIdx) {
-      createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm);
+      createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm, false, vnodes, startIdx);
     }
   }
 
@@ -39936,20 +41195,20 @@ function createPatchFunction (backend) {
       } else if (isUndef(oldEndVnode)) {
         oldEndVnode = oldCh[--oldEndIdx];
       } else if (sameVnode(oldStartVnode, newStartVnode)) {
-        patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);
+        patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
         oldStartVnode = oldCh[++oldStartIdx];
         newStartVnode = newCh[++newStartIdx];
       } else if (sameVnode(oldEndVnode, newEndVnode)) {
-        patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue);
+        patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
         oldEndVnode = oldCh[--oldEndIdx];
         newEndVnode = newCh[--newEndIdx];
       } else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
-        patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);
+        patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
         canMove && nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm));
         oldStartVnode = oldCh[++oldStartIdx];
         newEndVnode = newCh[--newEndIdx];
       } else if (sameVnode(oldEndVnode, newStartVnode)) { // Vnode moved left
-        patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);
+        patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
         canMove && nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm);
         oldEndVnode = oldCh[--oldEndIdx];
         newStartVnode = newCh[++newStartIdx];
@@ -39959,16 +41218,16 @@ function createPatchFunction (backend) {
           ? oldKeyToIdx[newStartVnode.key]
           : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx);
         if (isUndef(idxInOld)) { // New element
-          createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
+          createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
         } else {
           vnodeToMove = oldCh[idxInOld];
           if (sameVnode(vnodeToMove, newStartVnode)) {
-            patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue);
+            patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
             oldCh[idxInOld] = undefined;
             canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm);
           } else {
             // same key but different element. treat as new element
-            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
+            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
           }
         }
         newStartVnode = newCh[++newStartIdx];
@@ -40007,9 +41266,21 @@ function createPatchFunction (backend) {
     }
   }
 
-  function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
+  function patchVnode (
+    oldVnode,
+    vnode,
+    insertedVnodeQueue,
+    ownerArray,
+    index,
+    removeOnly
+  ) {
     if (oldVnode === vnode) {
       return
+    }
+
+    if (isDef(vnode.elm) && isDef(ownerArray)) {
+      // clone reused vnode
+      vnode = ownerArray[index] = cloneVNode(vnode);
     }
 
     var elm = vnode.elm = oldVnode.elm;
@@ -40052,6 +41323,9 @@ function createPatchFunction (backend) {
       if (isDef(oldCh) && isDef(ch)) {
         if (oldCh !== ch) { updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly); }
       } else if (isDef(ch)) {
+        if (process.env.NODE_ENV !== 'production') {
+          checkDuplicateKeys(ch);
+        }
         if (isDef(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
         addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
       } else if (isDef(oldCh)) {
@@ -40193,7 +41467,7 @@ function createPatchFunction (backend) {
     }
   }
 
-  return function patch (oldVnode, vnode, hydrating, removeOnly, parentElm, refElm) {
+  return function patch (oldVnode, vnode, hydrating, removeOnly) {
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) { invokeDestroyHook(oldVnode); }
       return
@@ -40205,12 +41479,12 @@ function createPatchFunction (backend) {
     if (isUndef(oldVnode)) {
       // empty mount (likely as component), create new root element
       isInitialPatch = true;
-      createElm(vnode, insertedVnodeQueue, parentElm, refElm);
+      createElm(vnode, insertedVnodeQueue);
     } else {
       var isRealElement = isDef(oldVnode.nodeType);
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
-        patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly);
+        patchVnode(oldVnode, vnode, insertedVnodeQueue, null, null, removeOnly);
       } else {
         if (isRealElement) {
           // mounting to a real element
@@ -40241,7 +41515,7 @@ function createPatchFunction (backend) {
 
         // replacing existing element
         var oldElm = oldVnode.elm;
-        var parentElm$1 = nodeOps.parentNode(oldElm);
+        var parentElm = nodeOps.parentNode(oldElm);
 
         // create new node
         createElm(
@@ -40250,7 +41524,7 @@ function createPatchFunction (backend) {
           // extremely rare edge case: do not insert if old element is in a
           // leaving transition. Only happens when combining transition +
           // keep-alive + HOCs. (#4590)
-          oldElm._leaveCb ? null : parentElm$1,
+          oldElm._leaveCb ? null : parentElm,
           nodeOps.nextSibling(oldElm)
         );
 
@@ -40285,8 +41559,8 @@ function createPatchFunction (backend) {
         }
 
         // destroy old node
-        if (isDef(parentElm$1)) {
-          removeVnodes(parentElm$1, [oldVnode], 0, 0);
+        if (isDef(parentElm)) {
+          removeVnodes(parentElm, [oldVnode], 0, 0);
         } else if (isDef(oldVnode.tag)) {
           invokeDestroyHook(oldVnode);
         }
@@ -40463,7 +41737,9 @@ function updateAttrs (oldVnode, vnode) {
 }
 
 function setAttr (el, key, value) {
-  if (isBooleanAttr(key)) {
+  if (el.tagName.indexOf('-') > -1) {
+    baseSetAttr(el, key, value);
+  } else if (isBooleanAttr(key)) {
     // set attribute for blank value
     // e.g. <option disabled>Select one</option>
     if (isFalsyAttrValue(value)) {
@@ -40485,28 +41761,32 @@ function setAttr (el, key, value) {
       el.setAttributeNS(xlinkNS, key, value);
     }
   } else {
-    if (isFalsyAttrValue(value)) {
-      el.removeAttribute(key);
-    } else {
-      // #7138: IE10 & 11 fires input event when setting placeholder on
-      // <textarea>... block the first input event and remove the blocker
-      // immediately.
-      /* istanbul ignore if */
-      if (
-        isIE && !isIE9 &&
-        el.tagName === 'TEXTAREA' &&
-        key === 'placeholder' && !el.__ieph
-      ) {
-        var blocker = function (e) {
-          e.stopImmediatePropagation();
-          el.removeEventListener('input', blocker);
-        };
-        el.addEventListener('input', blocker);
-        // $flow-disable-line
-        el.__ieph = true; /* IE placeholder patched */
-      }
-      el.setAttribute(key, value);
+    baseSetAttr(el, key, value);
+  }
+}
+
+function baseSetAttr (el, key, value) {
+  if (isFalsyAttrValue(value)) {
+    el.removeAttribute(key);
+  } else {
+    // #7138: IE10 & 11 fires input event when setting placeholder on
+    // <textarea>... block the first input event and remove the blocker
+    // immediately.
+    /* istanbul ignore if */
+    if (
+      isIE && !isIE9 &&
+      (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') &&
+      key === 'placeholder' && !el.__ieph
+    ) {
+      var blocker = function (e) {
+        e.stopImmediatePropagation();
+        el.removeEventListener('input', blocker);
+      };
+      el.addEventListener('input', blocker);
+      // $flow-disable-line
+      el.__ieph = true; /* IE placeholder patched */
     }
+    el.setAttribute(key, value);
   }
 }
 
@@ -40647,7 +41927,7 @@ function wrapFilter (exp, filter) {
   } else {
     var name = filter.slice(0, i);
     var args = filter.slice(i + 1);
-    return ("_f(\"" + name + "\")(" + exp + "," + args)
+    return ("_f(\"" + name + "\")(" + exp + (args !== ')' ? ',' + args : args))
   }
 }
 
@@ -40715,6 +41995,18 @@ function addHandler (
     );
   }
 
+  // normalize click.right and click.middle since they don't actually fire
+  // this is technically browser-specific, but at least for now browsers are
+  // the only target envs that have right/middle clicks.
+  if (name === 'click') {
+    if (modifiers.right) {
+      name = 'contextmenu';
+      delete modifiers.right;
+    } else if (modifiers.middle) {
+      name = 'mouseup';
+    }
+  }
+
   // check capture modifier
   if (modifiers.capture) {
     delete modifiers.capture;
@@ -40730,18 +42022,6 @@ function addHandler (
     name = '&' + name; // mark the event as passive
   }
 
-  // normalize click.right and click.middle since they don't actually fire
-  // this is technically browser-specific, but at least for now browsers are
-  // the only target envs that have right/middle clicks.
-  if (name === 'click') {
-    if (modifiers.right) {
-      name = 'contextmenu';
-      delete modifiers.right;
-    } else if (modifiers.middle) {
-      name = 'mouseup';
-    }
-  }
-
   var events;
   if (modifiers.native) {
     delete modifiers.native;
@@ -40750,7 +42030,9 @@ function addHandler (
     events = el.events || (el.events = {});
   }
 
-  var newHandler = { value: value };
+  var newHandler = {
+    value: value.trim()
+  };
   if (modifiers !== emptyObject) {
     newHandler.modifiers = modifiers;
   }
@@ -40830,8 +42112,8 @@ function genComponentModel (
   if (trim) {
     valueExpression =
       "(typeof " + baseValueExpression + " === 'string'" +
-        "? " + baseValueExpression + ".trim()" +
-        ": " + baseValueExpression + ")";
+      "? " + baseValueExpression + ".trim()" +
+      ": " + baseValueExpression + ")";
   }
   if (number) {
     valueExpression = "_n(" + valueExpression + ")";
@@ -40840,7 +42122,7 @@ function genComponentModel (
 
   el.model = {
     value: ("(" + value + ")"),
-    expression: ("\"" + value + "\""),
+    expression: JSON.stringify(value),
     callback: ("function (" + baseValueExpression + ") {" + assignment + "}")
   };
 }
@@ -40875,16 +42157,14 @@ function genAssignmentCode (
  *
  */
 
-var len;
-var str;
-var chr;
-var index$1;
-var expressionPos;
-var expressionEndPos;
+var len, str, chr, index$1, expressionPos, expressionEndPos;
 
 
 
 function parseModel (val) {
+  // Fix https://github.com/vuejs/vue/pull/7730
+  // allow v-model="obj.val " (trailing whitespace)
+  val = val.trim();
   len = val.length;
 
   if (val.indexOf('[') < 0 || val.lastIndexOf(']') < len - 1) {
@@ -41045,8 +42325,8 @@ function genCheckboxModel (
     'if(Array.isArray($$a)){' +
       "var $$v=" + (number ? '_n(' + valueBinding + ')' : valueBinding) + "," +
           '$$i=_i($$a,$$v);' +
-      "if($$el.checked){$$i<0&&(" + value + "=$$a.concat([$$v]))}" +
-      "else{$$i>-1&&(" + value + "=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}" +
+      "if($$el.checked){$$i<0&&(" + (genAssignmentCode(value, '$$a.concat([$$v])')) + ")}" +
+      "else{$$i>-1&&(" + (genAssignmentCode(value, '$$a.slice(0,$$i).concat($$a.slice($$i+1))')) + ")}" +
     "}else{" + (genAssignmentCode(value, '$$c')) + "}",
     null, true
   );
@@ -41089,9 +42369,11 @@ function genDefaultModel (
   var type = el.attrsMap.type;
 
   // warn if v-bind:value conflicts with v-model
+  // except for inputs with v-bind:type
   if (process.env.NODE_ENV !== 'production') {
     var value$1 = el.attrsMap['v-bind:value'] || el.attrsMap[':value'];
-    if (value$1) {
+    var typeBinding = el.attrsMap['v-bind:type'] || el.attrsMap[':type'];
+    if (value$1 && !typeBinding) {
       var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
       warn$1(
         binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " +
@@ -41156,7 +42438,7 @@ function normalizeEvents (on) {
 
 var target$1;
 
-function createOnceHandler (handler, event, capture) {
+function createOnceHandler$1 (event, handler, capture) {
   var _target = target$1; // save current target element in closure
   return function onceHandler () {
     var res = handler.apply(null, arguments);
@@ -41169,12 +42451,10 @@ function createOnceHandler (handler, event, capture) {
 function add$1 (
   event,
   handler,
-  once$$1,
   capture,
   passive
 ) {
   handler = withMacroTask(handler);
-  if (once$$1) { handler = createOnceHandler(handler, event, capture); }
   target$1.addEventListener(
     event,
     handler,
@@ -41205,7 +42485,7 @@ function updateDOMListeners (oldVnode, vnode) {
   var oldOn = oldVnode.data.on || {};
   target$1 = vnode.elm;
   normalizeEvents(on);
-  updateListeners(on, oldOn, add$1, remove$2, vnode.context);
+  updateListeners(on, oldOn, add$1, remove$2, createOnceHandler$1, vnode.context);
   target$1 = undefined;
 }
 
@@ -41471,6 +42751,8 @@ var style = {
 
 /*  */
 
+var whitespaceRE = /\s+/;
+
 /**
  * Add class with compatibility for SVG since classList is not supported on
  * SVG elements in IE
@@ -41484,7 +42766,7 @@ function addClass (el, cls) {
   /* istanbul ignore else */
   if (el.classList) {
     if (cls.indexOf(' ') > -1) {
-      cls.split(/\s+/).forEach(function (c) { return el.classList.add(c); });
+      cls.split(whitespaceRE).forEach(function (c) { return el.classList.add(c); });
     } else {
       el.classList.add(cls);
     }
@@ -41509,7 +42791,7 @@ function removeClass (el, cls) {
   /* istanbul ignore else */
   if (el.classList) {
     if (cls.indexOf(' ') > -1) {
-      cls.split(/\s+/).forEach(function (c) { return el.classList.remove(c); });
+      cls.split(whitespaceRE).forEach(function (c) { return el.classList.remove(c); });
     } else {
       el.classList.remove(cls);
     }
@@ -41533,20 +42815,20 @@ function removeClass (el, cls) {
 
 /*  */
 
-function resolveTransition (def) {
-  if (!def) {
+function resolveTransition (def$$1) {
+  if (!def$$1) {
     return
   }
   /* istanbul ignore else */
-  if (typeof def === 'object') {
+  if (typeof def$$1 === 'object') {
     var res = {};
-    if (def.css !== false) {
-      extend(res, autoCssTransition(def.name || 'v'));
+    if (def$$1.css !== false) {
+      extend(res, autoCssTransition(def$$1.name || 'v'));
     }
-    extend(res, def);
+    extend(res, def$$1);
     return res
-  } else if (typeof def === 'string') {
-    return autoCssTransition(def)
+  } else if (typeof def$$1 === 'string') {
+    return autoCssTransition(def$$1)
   }
 }
 
@@ -41649,11 +42931,12 @@ var transformRE = /\b(transform|all)(,|$)/;
 
 function getTransitionInfo (el, expectedType) {
   var styles = window.getComputedStyle(el);
-  var transitionDelays = styles[transitionProp + 'Delay'].split(', ');
-  var transitionDurations = styles[transitionProp + 'Duration'].split(', ');
+  // JSDOM may return undefined for transition properties
+  var transitionDelays = (styles[transitionProp + 'Delay'] || '').split(', ');
+  var transitionDurations = (styles[transitionProp + 'Duration'] || '').split(', ');
   var transitionTimeout = getTimeout(transitionDelays, transitionDurations);
-  var animationDelays = styles[animationProp + 'Delay'].split(', ');
-  var animationDurations = styles[animationProp + 'Duration'].split(', ');
+  var animationDelays = (styles[animationProp + 'Delay'] || '').split(', ');
+  var animationDurations = (styles[animationProp + 'Duration'] || '').split(', ');
   var animationTimeout = getTimeout(animationDelays, animationDurations);
 
   var type;
@@ -41707,8 +42990,12 @@ function getTimeout (delays, durations) {
   }))
 }
 
+// Old versions of Chromium (below 61.0.3163.100) formats floating pointer numbers
+// in a locale-dependent way, using a comma instead of a dot.
+// If comma is not replaced with a dot, the input will be rounded down (i.e. acting
+// as a floor function) causing unexpected behaviors
 function toMs (s) {
-  return Number(s.slice(0, -1)) * 1000
+  return Number(s.slice(0, -1).replace(',', '.')) * 1000
 }
 
 /*  */
@@ -41840,13 +43127,15 @@ function enter (vnode, toggleDisplay) {
     addTransitionClass(el, startClass);
     addTransitionClass(el, activeClass);
     nextFrame(function () {
-      addTransitionClass(el, toClass);
       removeTransitionClass(el, startClass);
-      if (!cb.cancelled && !userWantsControl) {
-        if (isValidDuration(explicitEnterDuration)) {
-          setTimeout(cb, explicitEnterDuration);
-        } else {
-          whenTransitionEnds(el, type, cb);
+      if (!cb.cancelled) {
+        addTransitionClass(el, toClass);
+        if (!userWantsControl) {
+          if (isValidDuration(explicitEnterDuration)) {
+            setTimeout(cb, explicitEnterDuration);
+          } else {
+            whenTransitionEnds(el, type, cb);
+          }
         }
       }
     });
@@ -41938,7 +43227,7 @@ function leave (vnode, rm) {
       return
     }
     // record leaving element
-    if (!vnode.data.show) {
+    if (!vnode.data.show && el.parentNode) {
       (el.parentNode._pending || (el.parentNode._pending = {}))[(vnode.key)] = vnode;
     }
     beforeLeave && beforeLeave(el);
@@ -41946,13 +43235,15 @@ function leave (vnode, rm) {
       addTransitionClass(el, leaveClass);
       addTransitionClass(el, leaveActiveClass);
       nextFrame(function () {
-        addTransitionClass(el, leaveToClass);
         removeTransitionClass(el, leaveClass);
-        if (!cb.cancelled && !userWantsControl) {
-          if (isValidDuration(explicitLeaveDuration)) {
-            setTimeout(cb, explicitLeaveDuration);
-          } else {
-            whenTransitionEnds(el, type, cb);
+        if (!cb.cancelled) {
+          addTransitionClass(el, leaveToClass);
+          if (!userWantsControl) {
+            if (isValidDuration(explicitLeaveDuration)) {
+              setTimeout(cb, explicitLeaveDuration);
+            } else {
+              whenTransitionEnds(el, type, cb);
+            }
           }
         }
       });
@@ -42075,15 +43366,13 @@ var directive = {
     } else if (vnode.tag === 'textarea' || isTextInputType(el.type)) {
       el._vModifiers = binding.modifiers;
       if (!binding.modifiers.lazy) {
+        el.addEventListener('compositionstart', onCompositionStart);
+        el.addEventListener('compositionend', onCompositionEnd);
         // Safari < 10.2 & UIWebView doesn't fire compositionend when
         // switching focus before confirming composition choice
         // this also fixes the issue where some browsers e.g. iOS Chrome
         // fires "change" instead of "input" on autocomplete.
         el.addEventListener('change', onCompositionEnd);
-        if (!isAndroid) {
-          el.addEventListener('compositionstart', onCompositionStart);
-          el.addEventListener('compositionend', onCompositionEnd);
-        }
         /* istanbul ignore if */
         if (isIE9) {
           el.vmodel = true;
@@ -42217,7 +43506,7 @@ var show = {
     var oldValue = ref.oldValue;
 
     /* istanbul ignore if */
-    if (value === oldValue) { return }
+    if (!value === !oldValue) { return }
     vnode = locateNode(vnode);
     var transition$$1 = vnode.data && vnode.data.transition;
     if (transition$$1) {
@@ -42255,9 +43544,6 @@ var platformDirectives = {
 };
 
 /*  */
-
-// Provides transition support for a single element/component.
-// supports transition mode (out-in / in-out)
 
 var transitionProps = {
   name: String,
@@ -42324,6 +43610,10 @@ function isSameChild (child, oldChild) {
   return oldChild.key === child.key && oldChild.tag === child.tag
 }
 
+var isNotTextNode = function (c) { return c.tag || isAsyncPlaceholder(c); };
+
+var isVShowDirective = function (d) { return d.name === 'show'; };
+
 var Transition = {
   name: 'transition',
   props: transitionProps,
@@ -42338,7 +43628,7 @@ var Transition = {
     }
 
     // filter out text nodes (possible whitespaces)
-    children = children.filter(function (c) { return c.tag || isAsyncPlaceholder(c); });
+    children = children.filter(isNotTextNode);
     /* istanbul ignore if */
     if (!children.length) {
       return
@@ -42403,7 +43693,7 @@ var Transition = {
 
     // mark v-show
     // so that the transition module can hand over the control to the directive
-    if (child.data.directives && child.data.directives.some(function (d) { return d.name === 'show'; })) {
+    if (child.data.directives && child.data.directives.some(isVShowDirective)) {
       child.data.show = true;
     }
 
@@ -42445,17 +43735,6 @@ var Transition = {
 
 /*  */
 
-// Provides transition support for list items.
-// supports move transitions using the FLIP technique.
-
-// Because the vdom's children update algorithm is "unstable" - i.e.
-// it doesn't guarantee the relative positioning of removed elements,
-// we force transition-group to update its children into two passes:
-// in the first pass, we remove all nodes that need to be removed,
-// triggering their leaving transition; in the second pass, we insert/move
-// into the final desired state. This way in the second pass removed
-// nodes will remain where they should be.
-
 var props = extend({
   tag: String,
   moveClass: String
@@ -42465,6 +43744,25 @@ delete props.mode;
 
 var TransitionGroup = {
   props: props,
+
+  beforeMount: function beforeMount () {
+    var this$1 = this;
+
+    var update = this._update;
+    this._update = function (vnode, hydrating) {
+      var restoreActiveInstance = setActiveInstance(this$1);
+      // force removing pass
+      this$1.__patch__(
+        this$1._vnode,
+        this$1.kept,
+        false, // hydrating
+        true // removeOnly (!important, avoids unnecessary moves)
+      );
+      this$1._vnode = this$1.kept;
+      restoreActiveInstance();
+      update.call(this$1, vnode, hydrating);
+    };
+  },
 
   render: function render (h) {
     var tag = this.tag || this.$vnode.data.tag || 'span';
@@ -42509,17 +43807,6 @@ var TransitionGroup = {
     return h(tag, null, children)
   },
 
-  beforeUpdate: function beforeUpdate () {
-    // force removing pass
-    this.__patch__(
-      this._vnode,
-      this.kept,
-      false, // hydrating
-      true // removeOnly (!important avoids unnecessary moves)
-    );
-    this._vnode = this.kept;
-  },
-
   updated: function updated () {
     var children = this.prevChildren;
     var moveClass = this.moveClass || ((this.name || 'v') + '-move');
@@ -42545,6 +43832,9 @@ var TransitionGroup = {
         addTransitionClass(el, moveClass);
         s.transform = s.WebkitTransform = s.transitionDuration = '';
         el.addEventListener(transitionEndEvent, el._moveCb = function cb (e) {
+          if (e && e.target !== el) {
+            return
+          }
           if (!e || /transform$/.test(e.propertyName)) {
             el.removeEventListener(transitionEndEvent, cb);
             el._moveCb = null;
@@ -42620,21 +43910,21 @@ var platformComponents = {
 /*  */
 
 // install platform specific utils
-Vue$3.config.mustUseProp = mustUseProp;
-Vue$3.config.isReservedTag = isReservedTag;
-Vue$3.config.isReservedAttr = isReservedAttr;
-Vue$3.config.getTagNamespace = getTagNamespace;
-Vue$3.config.isUnknownElement = isUnknownElement;
+Vue.config.mustUseProp = mustUseProp;
+Vue.config.isReservedTag = isReservedTag;
+Vue.config.isReservedAttr = isReservedAttr;
+Vue.config.getTagNamespace = getTagNamespace;
+Vue.config.isUnknownElement = isUnknownElement;
 
 // install platform runtime directives & components
-extend(Vue$3.options.directives, platformDirectives);
-extend(Vue$3.options.components, platformComponents);
+extend(Vue.options.directives, platformDirectives);
+extend(Vue.options.components, platformComponents);
 
 // install platform patch function
-Vue$3.prototype.__patch__ = inBrowser ? patch : noop;
+Vue.prototype.__patch__ = inBrowser ? patch : noop;
 
 // public mount method
-Vue$3.prototype.$mount = function (
+Vue.prototype.$mount = function (
   el,
   hydrating
 ) {
@@ -42644,32 +43934,39 @@ Vue$3.prototype.$mount = function (
 
 // devtools global hook
 /* istanbul ignore next */
-Vue$3.nextTick(function () {
-  if (config.devtools) {
-    if (devtools) {
-      devtools.emit('init', Vue$3);
-    } else if (process.env.NODE_ENV !== 'production' && isChrome) {
+if (inBrowser) {
+  setTimeout(function () {
+    if (config.devtools) {
+      if (devtools) {
+        devtools.emit('init', Vue);
+      } else if (
+        process.env.NODE_ENV !== 'production' &&
+        process.env.NODE_ENV !== 'test' &&
+        isChrome
+      ) {
+        console[console.info ? 'info' : 'log'](
+          'Download the Vue Devtools extension for a better development experience:\n' +
+          'https://github.com/vuejs/vue-devtools'
+        );
+      }
+    }
+    if (process.env.NODE_ENV !== 'production' &&
+      process.env.NODE_ENV !== 'test' &&
+      config.productionTip !== false &&
+      typeof console !== 'undefined'
+    ) {
       console[console.info ? 'info' : 'log'](
-        'Download the Vue Devtools extension for a better development experience:\n' +
-        'https://github.com/vuejs/vue-devtools'
+        "You are running Vue in development mode.\n" +
+        "Make sure to turn on production mode when deploying for production.\n" +
+        "See more tips at https://vuejs.org/guide/deployment.html"
       );
     }
-  }
-  if (process.env.NODE_ENV !== 'production' &&
-    config.productionTip !== false &&
-    inBrowser && typeof console !== 'undefined'
-  ) {
-    console[console.info ? 'info' : 'log'](
-      "You are running Vue in development mode.\n" +
-      "Make sure to turn on production mode when deploying for production.\n" +
-      "See more tips at https://vuejs.org/guide/deployment.html"
-    );
-  }
-}, 0);
+  }, 0);
+}
 
 /*  */
 
-var defaultTagRE = /\{\{((?:.|\n)+?)\}\}/g;
+var defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
 var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g;
 
 var buildRegex = cached(function (delimiters) {
@@ -42840,13 +44137,6 @@ var isNonPhrasingTag = makeMap(
  * Not type-checking this file because it's mostly vendor code.
  */
 
-/*!
- * HTML Parser By John Resig (ejohn.org)
- * Modified by Juriy "kangax" Zaytsev
- * Original code by Erik Arvidsson, Mozilla Public License
- * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
- */
-
 // Regular Expressions for parsing tags and attributes
 var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
 // could use https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-QName
@@ -42857,13 +44147,9 @@ var startTagOpen = new RegExp(("^<" + qnameCapture));
 var startTagClose = /^\s*(\/?)>/;
 var endTag = new RegExp(("^<\\/" + qnameCapture + "[^>]*>"));
 var doctype = /^<!DOCTYPE [^>]+>/i;
-var comment = /^<!--/;
+// #7298: escape - to avoid being pased as HTML comment when inlined in page
+var comment = /^<!\--/;
 var conditionalComment = /^<!\[/;
-
-var IS_REGEX_CAPTURING_BROKEN = false;
-'x'.replace(/x(.)?/g, function (m, g) {
-  IS_REGEX_CAPTURING_BROKEN = g === '';
-});
 
 // Special Elements (can contain anything)
 var isPlainTextElement = makeMap('script,style,textarea', true);
@@ -42945,7 +44231,7 @@ function parseHTML (html, options) {
         var startTagMatch = parseStartTag();
         if (startTagMatch) {
           handleStartTag(startTagMatch);
-          if (shouldIgnoreFirstNewline(lastTag, html)) {
+          if (shouldIgnoreFirstNewline(startTagMatch.tagName, html)) {
             advance(1);
           }
           continue
@@ -42987,7 +44273,7 @@ function parseHTML (html, options) {
         endTagLength = endTag.length;
         if (!isPlainTextElement(stackedTag) && stackedTag !== 'noscript') {
           text = text
-            .replace(/<!--([\s\S]*?)-->/g, '$1')
+            .replace(/<!\--([\s\S]*?)-->/g, '$1') // #7298
             .replace(/<!\[CDATA\[([\s\S]*?)]]>/g, '$1');
         }
         if (shouldIgnoreFirstNewline(stackedTag, text)) {
@@ -43062,12 +44348,6 @@ function parseHTML (html, options) {
     var attrs = new Array(l);
     for (var i = 0; i < l; i++) {
       var args = match.attrs[i];
-      // hackish work around FF bug https://bugzilla.mozilla.org/show_bug.cgi?id=369778
-      if (IS_REGEX_CAPTURING_BROKEN && args[0].indexOf('""') === -1) {
-        if (args[3] === '') { delete args[3]; }
-        if (args[4] === '') { delete args[4]; }
-        if (args[5] === '') { delete args[5]; }
-      }
       var value = args[3] || args[4] || args[5] || '';
       var shouldDecodeNewlines = tagName === 'a' && args[1] === 'href'
         ? options.shouldDecodeNewlinesForHref
@@ -43093,12 +44373,9 @@ function parseHTML (html, options) {
     if (start == null) { start = index; }
     if (end == null) { end = index; }
 
-    if (tagName) {
-      lowerCasedTagName = tagName.toLowerCase();
-    }
-
     // Find the closest opened tag of the same type
     if (tagName) {
+      lowerCasedTagName = tagName.toLowerCase();
       for (pos = stack.length - 1; pos >= 0; pos--) {
         if (stack[pos].lowerCasedTag === lowerCasedTagName) {
           break
@@ -43147,7 +44424,7 @@ function parseHTML (html, options) {
 
 var onRE = /^@|^v-on:/;
 var dirRE = /^v-|^@|^:/;
-var forAliasRE = /(.*?)\s+(?:in|of)\s+(.*)/;
+var forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
 var stripParensRE = /^\(|\)$/g;
 
@@ -43332,7 +44609,8 @@ function parse (
           processIfConditions(element, currentParent);
         } else if (element.slotScope) { // scoped slot
           currentParent.plain = false;
-          var name = element.slotTarget || '"default"';(currentParent.scopedSlots || (currentParent.scopedSlots = {}))[name] = element;
+          var name = element.slotTarget || '"default"'
+          ;(currentParent.scopedSlots || (currentParent.scopedSlots = {}))[name] = element;
         } else {
           currentParent.children.push(element);
           element.parent = currentParent;
@@ -43456,8 +44734,20 @@ function processElement (element, options) {
 function processKey (el) {
   var exp = getBindingAttr(el, 'key');
   if (exp) {
-    if (process.env.NODE_ENV !== 'production' && el.tag === 'template') {
-      warn$2("<template> cannot be keyed. Place the key on real elements instead.");
+    if (process.env.NODE_ENV !== 'production') {
+      if (el.tag === 'template') {
+        warn$2("<template> cannot be keyed. Place the key on real elements instead.");
+      }
+      if (el.for) {
+        var iterator = el.iterator2 || el.iterator1;
+        var parent = el.parent;
+        if (iterator && iterator === exp && parent && parent.tag === 'transition-group') {
+          warn$2(
+            "Do not use v-for index as key on <transition-group> children, " +
+            "this is the same as not using keys."
+          );
+        }
+      }
     }
     el.key = exp;
   }
@@ -43485,6 +44775,8 @@ function processFor (el) {
   }
 }
 
+
+
 function parseFor (exp) {
   var inMatch = exp.match(forAliasRE);
   if (!inMatch) { return }
@@ -43493,7 +44785,7 @@ function parseFor (exp) {
   var alias = inMatch[1].trim().replace(stripParensRE, '');
   var iteratorMatch = alias.match(forIteratorRE);
   if (iteratorMatch) {
-    res.alias = alias.replace(forIteratorRE, '');
+    res.alias = alias.replace(forIteratorRE, '').trim();
     res.iterator1 = iteratorMatch[1].trim();
     if (iteratorMatch[2]) {
       res.iterator2 = iteratorMatch[2].trim();
@@ -43646,6 +44938,14 @@ function processAttrs (el) {
         name = name.replace(bindRE, '');
         value = parseFilters(value);
         isProp = false;
+        if (
+          process.env.NODE_ENV !== 'production' &&
+          value.trim().length === 0
+        ) {
+          warn$2(
+            ("The value for a v-bind expression cannot be empty. Found in \"v-bind:" + name + "\"")
+          );
+        }
         if (modifiers) {
           if (modifiers.prop) {
             isProp = true;
@@ -43794,21 +45094,22 @@ function checkForAliasModel (el, value) {
 
 /*  */
 
-/**
- * Expand input[v-model] with dyanmic type bindings into v-if-else chains
- * Turn this:
- *   <input v-model="data[type]" :type="type">
- * into this:
- *   <input v-if="type === 'checkbox'" type="checkbox" v-model="data[type]">
- *   <input v-else-if="type === 'radio'" type="radio" v-model="data[type]">
- *   <input v-else :type="type" v-model="data[type]">
- */
-
 function preTransformNode (el, options) {
   if (el.tag === 'input') {
     var map = el.attrsMap;
-    if (map['v-model'] && (map['v-bind:type'] || map[':type'])) {
-      var typeBinding = getBindingAttr(el, 'type');
+    if (!map['v-model']) {
+      return
+    }
+
+    var typeBinding;
+    if (map[':type'] || map['v-bind:type']) {
+      typeBinding = getBindingAttr(el, 'type');
+    }
+    if (!map.type && !typeBinding && map['v-bind']) {
+      typeBinding = "(" + (map['v-bind']) + ").type";
+    }
+
+    if (typeBinding) {
       var ifCondition = getAndRemoveAttr(el, 'v-if', true);
       var ifConditionExtra = ifCondition ? ("&&(" + ifCondition + ")") : "";
       var hasElse = getAndRemoveAttr(el, 'v-else', true) != null;
@@ -43859,14 +45160,14 @@ function cloneASTElement (el) {
   return createASTElement(el.tag, el.attrsList.slice(), el.parent)
 }
 
-var model$2 = {
+var model$1 = {
   preTransformNode: preTransformNode
 };
 
 var modules$1 = [
   klass$1,
   style$1,
-  model$2
+  model$1
 ];
 
 /*  */
@@ -44035,10 +45336,10 @@ function isDirectChildOfTemplateFor (node) {
 
 /*  */
 
-var fnExpRE = /^\s*([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/;
-var simplePathRE = /^\s*[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['.*?']|\[".*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*\s*$/;
+var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/;
+var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 
-// keyCode aliases
+// KeyboardEvent.keyCode aliases
 var keyCodes = {
   esc: 27,
   tab: 9,
@@ -44049,6 +45350,23 @@ var keyCodes = {
   right: 39,
   down: 40,
   'delete': [8, 46]
+};
+
+// KeyboardEvent.key aliases
+var keyNames = {
+  // #7880: IE11 and Edge use `Esc` for Escape key name.
+  esc: ['Esc', 'Escape'],
+  tab: 'Tab',
+  enter: 'Enter',
+  // #9112: IE11 uses `Spacebar` for Space key name.
+  space: [' ', 'Spacebar'],
+  // #7806: IE11 uses key names without `Arrow` prefix for arrow keys.
+  up: ['Up', 'ArrowUp'],
+  left: ['Left', 'ArrowLeft'],
+  right: ['Right', 'ArrowRight'],
+  down: ['Down', 'ArrowDown'],
+  // #9112: IE11 uses `Del` for Delete key name.
+  'delete': ['Backspace', 'Delete', 'Del']
 };
 
 // #4868: modifiers that prevent the execution of the listener
@@ -44071,8 +45389,7 @@ var modifierCode = {
 
 function genHandlers (
   events,
-  isNative,
-  warn
+  isNative
 ) {
   var res = isNative ? 'nativeOn:{' : 'on:{';
   for (var name in events) {
@@ -44100,7 +45417,6 @@ function genHandler (
     if (isMethodPath || isFunctionExpression) {
       return handler.value
     }
-    /* istanbul ignore if */
     return ("function($event){" + (handler.value) + "}") // inline statement
   } else {
     var code = '';
@@ -44133,11 +45449,10 @@ function genHandler (
       code += genModifierCode;
     }
     var handlerCode = isMethodPath
-      ? handler.value + '($event)'
+      ? ("return " + (handler.value) + "($event)")
       : isFunctionExpression
-        ? ("(" + (handler.value) + ")($event)")
+        ? ("return (" + (handler.value) + ")($event)")
         : handler.value;
-    /* istanbul ignore if */
     return ("function($event){" + code + handlerCode + "}")
   }
 }
@@ -44151,12 +45466,15 @@ function genFilterCode (key) {
   if (keyVal) {
     return ("$event.keyCode!==" + keyVal)
   }
-  var code = keyCodes[key];
+  var keyCode = keyCodes[key];
+  var keyName = keyNames[key];
   return (
     "_k($event.keyCode," +
     (JSON.stringify(key)) + "," +
-    (JSON.stringify(code)) + "," +
-    "$event.key)"
+    (JSON.stringify(keyCode)) + "," +
+    "$event.key," +
+    "" + (JSON.stringify(keyName)) +
+    ")"
   )
 }
 
@@ -44187,6 +45505,10 @@ var baseDirectives = {
 
 /*  */
 
+
+
+
+
 var CodegenState = function CodegenState (options) {
   this.options = options;
   this.warn = options.warn || baseWarn;
@@ -44194,9 +45516,10 @@ var CodegenState = function CodegenState (options) {
   this.dataGenFns = pluckModuleFunction(options.modules, 'genData');
   this.directives = extend(extend({}, baseDirectives), options.directives);
   var isReservedTag = options.isReservedTag || no;
-  this.maybeComponent = function (el) { return !isReservedTag(el.tag); };
+  this.maybeComponent = function (el) { return !(isReservedTag(el.tag) && !el.component); };
   this.onceId = 0;
   this.staticRenderFns = [];
+  this.pre = false;
 };
 
 
@@ -44214,6 +45537,10 @@ function generate (
 }
 
 function genElement (el, state) {
+  if (el.parent) {
+    el.pre = el.pre || el.parent.pre;
+  }
+
   if (el.staticRoot && !el.staticProcessed) {
     return genStatic(el, state)
   } else if (el.once && !el.onceProcessed) {
@@ -44222,7 +45549,7 @@ function genElement (el, state) {
     return genFor(el, state)
   } else if (el.if && !el.ifProcessed) {
     return genIf(el, state)
-  } else if (el.tag === 'template' && !el.slotTarget) {
+  } else if (el.tag === 'template' && !el.slotTarget && !state.pre) {
     return genChildren(el, state) || 'void 0'
   } else if (el.tag === 'slot') {
     return genSlot(el, state)
@@ -44232,7 +45559,10 @@ function genElement (el, state) {
     if (el.component) {
       code = genComponent(el.component, el, state);
     } else {
-      var data = el.plain ? undefined : genData$2(el, state);
+      var data;
+      if (!el.plain || (el.pre && state.maybeComponent(el))) {
+        data = genData$2(el, state);
+      }
 
       var children = el.inlineTemplate ? null : genChildren(el, state, true);
       code = "_c('" + (el.tag) + "'" + (data ? ("," + data) : '') + (children ? ("," + children) : '') + ")";
@@ -44248,7 +45578,15 @@ function genElement (el, state) {
 // hoist static sub-trees out
 function genStatic (el, state) {
   el.staticProcessed = true;
+  // Some elements (templates) need to behave differently inside of a v-pre
+  // node.  All pre nodes are static roots, so we can use this as a location to
+  // wrap a state change and reset it upon exiting the pre node.
+  var originalPreState = state.pre;
+  if (el.pre) {
+    state.pre = el.pre;
+  }
   state.staticRenderFns.push(("with(this){return " + (genElement(el, state)) + "}"));
+  state.pre = originalPreState;
   return ("_m(" + (state.staticRenderFns.length - 1) + (el.staticInFor ? ',true' : '') + ")")
 }
 
@@ -44389,10 +45727,10 @@ function genData$2 (el, state) {
   }
   // event handlers
   if (el.events) {
-    data += (genHandlers(el.events, false, state.warn)) + ",";
+    data += (genHandlers(el.events, false)) + ",";
   }
   if (el.nativeEvents) {
-    data += (genHandlers(el.nativeEvents, true, state.warn)) + ",";
+    data += (genHandlers(el.nativeEvents, true)) + ",";
   }
   // slot target
   // only for non-scoped slots
@@ -44484,7 +45822,7 @@ function genScopedSlot (
   var fn = "function(" + (String(el.slotScope)) + "){" +
     "return " + (el.tag === 'template'
       ? el.if
-        ? ((el.if) + "?" + (genChildren(el, state) || 'undefined') + ":undefined")
+        ? ("(" + (el.if) + ")?" + (genChildren(el, state) || 'undefined') + ":undefined")
         : genChildren(el, state) || 'undefined'
       : genElement(el, state)) + "}";
   return ("{key:" + key + ",fn:" + fn + "}")
@@ -44522,13 +45860,16 @@ function genChildren (
       el$1.tag !== 'template' &&
       el$1.tag !== 'slot'
     ) {
-      return (altGenElement || genElement)(el$1, state)
+      var normalizationType = checkSkip
+        ? state.maybeComponent(el$1) ? ",1" : ",0"
+        : "";
+      return ("" + ((altGenElement || genElement)(el$1, state)) + normalizationType)
     }
-    var normalizationType = checkSkip
+    var normalizationType$1 = checkSkip
       ? getNormalizationType(children, state.maybeComponent)
       : 0;
     var gen = altGenNode || genNode;
-    return ("[" + (children.map(function (c) { return gen(c, state); }).join(',')) + "]" + (normalizationType ? ("," + normalizationType) : ''))
+    return ("[" + (children.map(function (c) { return gen(c, state); }).join(',')) + "]" + (normalizationType$1 ? ("," + normalizationType$1) : ''))
   }
 }
 
@@ -44566,7 +45907,7 @@ function needsNormalization (el) {
 function genNode (node, state) {
   if (node.type === 1) {
     return genElement(node, state)
-  } if (node.type === 3 && node.isComment) {
+  } else if (node.type === 3 && node.isComment) {
     return genComment(node)
   } else {
     return genText(node)
@@ -44739,6 +46080,8 @@ function checkExpression (exp, text, errors) {
 
 /*  */
 
+
+
 function createFunction (code, errors) {
   try {
     return new Function(code)
@@ -44910,6 +46253,7 @@ var createCompiler = createCompilerCreator(function baseCompile (
 /*  */
 
 var ref$1 = createCompiler(baseOptions);
+var compile = ref$1.compile;
 var compileToFunctions = ref$1.compileToFunctions;
 
 /*  */
@@ -44934,8 +46278,8 @@ var idToTemplate = cached(function (id) {
   return el && el.innerHTML
 });
 
-var mount = Vue$3.prototype.$mount;
-Vue$3.prototype.$mount = function (
+var mount = Vue.prototype.$mount;
+Vue.prototype.$mount = function (
   el,
   hydrating
 ) {
@@ -45017,14 +46361,14 @@ function getOuterHTML (el) {
   }
 }
 
-Vue$3.compile = compileToFunctions;
+Vue.compile = compileToFunctions;
 
-module.exports = Vue$3;
+module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5), __webpack_require__(96).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5), __webpack_require__(97).setImmediate))
 
 /***/ }),
-/* 166 */
+/* 169 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -45052,7 +46396,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 167 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(22);

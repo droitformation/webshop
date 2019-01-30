@@ -50,6 +50,7 @@ class AppServiceProvider extends ServiceProvider {
             'backend.inscriptions.desinscription',
             'backend.adresses.*',
             'backend.newsletter.lists.*',
+            'backend.newsletter.template.*',
             'auth.register'
         ], 'App\Http\ViewComposers\UserAttributeComposer');
 

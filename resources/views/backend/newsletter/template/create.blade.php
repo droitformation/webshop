@@ -3,11 +3,14 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" id="appComponent">
 
             <form action="{{ url('build/newsletter') }}"  method="POST" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
                 <div class="panel-body">
                     <h4>Ajouter une newsletter</h4>
+
+                    <newsletter-type :specialisations="{{ $specialisations }}" tags="" static="0"></newsletter-type>
+
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Titre</label>
                         <div class="col-sm-5">
