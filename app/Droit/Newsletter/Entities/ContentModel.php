@@ -91,7 +91,7 @@ class ContentModel
             'more'      => $colloque->location ? '<p>'.$colloque->location->name.', '.strip_tags($colloque->location->adresse).'</p>' : '',
             'content'   => $colloque->themes,
             'link'      => url('pubdroit/colloque/').$colloque->id,
-            'message'   => 'Programme détaillé',
+            'message'   => 'Programme détaillé et inscription',
             'class'     => '',
             'style'     => 'padding: 5px 10px; text-decoration: none; color: #fff; margin-top: 20px; display: inline-block;',
             'images'    => [[

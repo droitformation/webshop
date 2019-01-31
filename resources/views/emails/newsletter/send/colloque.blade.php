@@ -26,7 +26,7 @@
                             {!! $bloc->colloque->themes && !empty($bloc->colloque->themes) ? $bloc->colloque->themes : '' !!}
                             <p><a target="_blank" class="btn-commande"
                                   style="padding: 5px 10px; text-decoration: none; background: {{ $campagne->newsletter->color }}; color: #fff; margin-top: 20px; display: inline-block;"
-                                  href="{{ url('pubdroit/colloque/'.$bloc->colloque->id) }}">Programme détaillé</a></p>
+                                  href="{{ url('pubdroit/colloque/'.$bloc->colloque->id) }}">Programme détaillé et inscription</a></p>
                     @endslot
                 @endcomponent
 
