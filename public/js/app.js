@@ -5686,9 +5686,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['specialisations', 'tags', 'static'],
+    props: ['specialisations', 'tags', 'static', 'list_id', 'liste', 'create'],
     data: function data() {
         return {
             visible: false,
@@ -30490,7 +30510,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('div', [_c('div', {
     staticClass: "well"
   }, [_c('div', {
     staticClass: "form-group",
@@ -30523,7 +30543,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.isStatic()
       }]
     }
-  }), _vm._v(" Liste externe, emails exportés depuis le système\n            ")]), _vm._v(" "), _c('label', {
+  }), _vm._v(" Liste externe, emails exportés depuis le système\n                ")]), _vm._v(" "), _c('label', {
     staticClass: "radio"
   }, [_c('input', {
     directives: [{
@@ -30547,7 +30567,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.isStatic()
       }]
     }
-  }), _vm._v(" Liste statique (Comme bail, Droitmatrimonial...) lié à un/des tag(s)\n            ")])])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" Liste statique (Comme bail, Droitmatrimonial...) lié à un/des tag(s)\n                ")])])]), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -30594,7 +30614,52 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": specialisation.id
       }
     }, [_vm._v(_vm._s(specialisation.title))])
-  }), 0)])])])
+  }), 0)])]), _vm._v(" "), (_vm.create && _vm.mailjet) ? _c('div', {
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-top": "20px"
+    }
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Nom de la nouvelle liste")]), _vm._v(" "), _vm._m(2)]) : _vm._e()]), _vm._v(" "), (!_vm.create) ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Nom de la liste")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-5"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.list_id),
+      expression: "list_id"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "list_id"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.list_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Choix de la liste")]), _vm._v(" "), _vm._l((_vm.liste), function(list) {
+    return _c('option', {
+      domProps: {
+        "value": list.ID
+      }
+    }, [_vm._v(_vm._s(list.Name))])
+  })], 2)])]) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('label', {
     staticClass: "col-sm-3 control-label"
@@ -30603,6 +30668,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('label', {
     staticClass: "col-sm-3 control-label"
   }, [_c('strong', [_vm._v("Spécialisations (tags)")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-5"
+  }, [_c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "name"
+    }
+  })])
 }]}
 module.exports.render._withStripped = true
 if (false) {

@@ -41,23 +41,23 @@ class NewsletterEloquent implements NewsletterInterface{
             'return_email' => $data['return_email'],
             'unsuscribe'   => $data['unsuscribe'],
             'preview'      => $data['preview'],
-            'list_id'      => $data['list_id'],
+            'list_id'      => (isset($data['list_id']) ? $data['list_id'] : ''),
             'color'        => (isset($data['color']) ? $data['color'] : ''),
             'logos'        => (isset($data['logos']) ? $data['logos'] : ''),
             'header'       => (isset($data['header']) ? $data['header'] : ''),
             'second_color' => (isset($data['second_color']) ? $data['second_color'] : null),
+            'static'       => (isset($data['static']) ? $data['static'] : null),
 			'created_at'   => date('Y-m-d G:i:s'),
 			'updated_at'   => date('Y-m-d G:i:s')
 		));
 		
-		if( ! $newsletter )
-		{
+		if( ! $newsletter ) {
 			return false;
 		}
 
         if($newsletter->static){
             $newsletter->specialisations()->attach($data['specialisations']);
-            event(new \App\Events\NewsletterStaticCreated($newsletter->id));
+            event(new \App\Events\NewsletterStaticCreated($newsletter,$data['$name']));
         }
 		
 		return $newsletter;

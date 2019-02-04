@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SubscribeSpecialisation
 {
     protected $import;
+    protected $mailjet;
 
     /**
      * Create the event listener.
@@ -18,6 +19,7 @@ class SubscribeSpecialisation
     public function __construct()
     {
         $this->import = \App::make('App\Droit\Newsletter\Worker\ImportWorker');
+        $this->mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
     }
 
     /**
@@ -28,8 +30,14 @@ class SubscribeSpecialisation
      */
     public function handle(NewsletterStaticCreated $event)
     {
-        $newsletter_id = $event->newsletter_id;
+        $newsletter = $event->newsletter;
+        $name = $event->name;
 
-        $this->import->syncSpecialisations($newsletter_id);
+        $id = $this->mailjet->createList($name);
+
+        $newsletter->list_id = $id;
+        $newsletter->save();
+
+        $this->import->syncSpecialisations($newsletter->id);
     }
 }

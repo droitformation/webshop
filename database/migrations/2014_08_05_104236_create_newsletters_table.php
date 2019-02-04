@@ -17,7 +17,7 @@ class CreateNewslettersTable extends Migration {
 			$table->increments('id');
             $table->string('titre');
             $table->integer('site_id')->nullable();
-			$table->integer('list_id');
+			$table->integer('list_id')->nullable();
             $table->string('from_name');
             $table->string('from_email');
             $table->string('return_email');

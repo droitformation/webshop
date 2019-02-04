@@ -14,16 +14,18 @@ class NewsletterStaticCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $newsletter_id;
+    public $newsletter;
+    public $name;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($newsletter_id)
+    public function __construct($newsletter,$name)
     {
-        $this->newsletter_id = $newsletter_id;
+        $this->newsletter = $newsletter;
+        $this->name = $name;
     }
 
     /**

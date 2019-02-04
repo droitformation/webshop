@@ -17,7 +17,7 @@
                 <div class="panel-body">
                     <h4>Ajouter une newsletter</h4>
 
-                    <newsletter-type :specialisations="{{ $specialisations }}" tags="" static="0"></newsletter-type>
+                    <newsletter-type :specialisations="{{ $specialisations }}" tags="" create="1" static="0"></newsletter-type>
 
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Titre</label>
@@ -26,19 +26,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="message" class="col-sm-3 control-label">Nom de la liste</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" required name="list_id">
-                                <option value="">Choix de la liste</option>
-                                @if(!empty($lists))
-                                    @foreach($lists as $list)
-                                        <option value="{{ $list['ID'] }}">{{ $list['Name'] }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
 
                     @if(config('newsletter.multi') && isset($sites))
                         <div class="form-group">
@@ -59,13 +46,13 @@
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Envoyé par</label>
                         <div class="col-sm-5">
-                            <input type="text" required class="form-control" name="from_name" value="">
+                            <input type="text" required class="form-control" name="from_name" value="" placeholder="Faculté de droit">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="message" class="col-sm-3 control-label">Email d'envoi</label>
                         <div class="col-sm-5">
-                            <input type="text" required class="form-control" name="from_email" value="">
+                            <input type="text" required class="form-control" name="from_email" value="" placeholder="info@publications-droit.ch">
                         </div>
                     </div>
                     <div class="form-group">
