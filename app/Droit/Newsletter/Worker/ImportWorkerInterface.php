@@ -9,4 +9,5 @@ interface ImportWorkerInterface
     public function read($file);
     public function store($file);
     public function sync($file,$list);
+    public function syncSpecialisations($newsletter_id);
 }

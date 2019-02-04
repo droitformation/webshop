@@ -484,22 +484,49 @@ Route::get('cartworker', function()
 
     $user   = Auth::user()->load('adresses');
     $worker = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');
+    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+    $import =  \App::make('App\Droit\Newsletter\Worker\ImportWorker');
     //$worker = \App::make('App\Droit\Abo\Worker\AboWorker');
 
     $specialisations = \App::make('App\Droit\Specialisation\Repo\SpecialisationInterface');
-    $specialisation  = $specialisations->search('Bai',true);
+    $specialisation  = $specialisations->find(1);
 
+    $import->syncSpecialisations(13);
+/*
     if(!$specialisation->isEmpty())
     {
         foreach($specialisation as $result)
         {
             $data[] = $result->title;
         }
-    }
+    }*/
 
-    $data = $specialisation->map(function ($item, $key) {
-        return $item->title;
-    })->all();
+    $data = $specialisation->emails;
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+    exit();
+    $filename = $specialisation->id.'_export';
+
+    \Excel::create($filename, function($excel) use ($data) {
+        $excel->sheet('Export', function ($sheet) use ($data){
+            $sheet->rows($data);
+        });
+    })->store('csv',public_path('files/import'));
+
+    //public_path('files/import/'.$filename.'.csv')
+
+    $import->sync($filename.'.csv',13);
+
+    exit;
+    return $mailjet->importBulkContactslistData(1970377,$data);
+
+
+
+    echo '<pre>';
+    print_r($body);
+    echo '</pre>';
+    exit();
 
 
     $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
@@ -1261,6 +1288,17 @@ Route::get('cleanlist', function()
 
 Route::get('factory', function()
 {
+    $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
+    $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
+    $newsletter = \App::make('App\Droit\Newsletter\Repo\NewsletterInterface');
+
+    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+
+    $data = [];
+
+    generateCsv($data);
+
+    //return $mailjet->createList('New test list');
 
     /*
         $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
@@ -1288,20 +1326,15 @@ Route::get('factory', function()
         echo '<pre>';
         print_r($paquets);*/
 
-    $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
-    $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
-    $newsletter = \App::make('App\Droit\Newsletter\Repo\NewsletterInterface');
 
-    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+    /*
 
     $mailjet->setList(1588258);
     $pubdroit = $newsletter->find(1);
 
     $allusersDB = $pubdroit->subscriptions->unique('email');
-
     $subscribers = [];
 
-    /*
         foreach (range(0, 8000, 1000) as $i) {
             $users = $mailjet->getSubscribers($i);
             $allusers[] = collect($users)->map(function ($item, $key) {

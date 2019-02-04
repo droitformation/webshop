@@ -19,7 +19,7 @@ class NewsletterEloquent implements NewsletterInterface{
 
 	public function find($id){
 				
-		return $this->newsletter->with(['site'])->find($id);
+		return $this->newsletter->with(['site','specialisations'])->find($id);
 	}
 
 	public function findMultiple($ids)
@@ -54,6 +54,11 @@ class NewsletterEloquent implements NewsletterInterface{
 		{
 			return false;
 		}
+
+        if($newsletter->static){
+            $newsletter->specialisations()->attach($data['specialisations']);
+            event(new \App\Events\NewsletterStaticCreated($newsletter->id));
+        }
 		
 		return $newsletter;
 		

@@ -162,6 +162,39 @@ class MailjetService implements MailjetServiceInterface{
         return false;
     }
 
+    public function createList($titre)
+    {
+        $body = [
+            'Name' => $titre
+        ];
+
+        $response = $this->mailjet->post(Resources::$Contactslist, ['body' => $body]);
+
+        if($response->success()){
+            $list = $response->getData();
+            return (isset($list[0]) &&  $list[0]['ID']) ? $list[0]['ID'] : false; // returns ID directly
+        }
+
+        return false;
+
+       //  [{"Address":"td2ik56jh","CreatedAt":"2019-02-04T07:38:03Z","ID":1970376,"IsDeleted":false,"Name":"New test list","SubscriberCount":0}]
+    }
+
+    public function importBulkContactslistData($ID,$data){
+
+        $body = [
+            'Action' => "addforce",
+            'Contacts' => $data
+        ];
+
+        $response = $this->mailjet->post(Resources::$ContactslistManagemanycontacts, ['id' => $ID, 'body' => $body]);
+
+        if($response->success())
+            return $response->getData();
+        else
+            return false;
+    }
+
     /**
      * Campagnes
      */
@@ -341,7 +374,7 @@ class MailjetService implements MailjetServiceInterface{
         $body = [
             'ContactsListID' => $this->list,
             'DataID'         => $dataID,
-            'Method'         => "addnoforce"
+            'Method'         => "addforce"
         ];
 
         $response = $this->mailjet->post(Resources::$Csvimport, ['body' => $body]);

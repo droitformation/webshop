@@ -95,10 +95,6 @@ class NewsletterController extends Controller
 
         $newsletter = $this->newsletter->create($data);
 
-        if($newsletter->static){
-            $newsletter->specialisations()->attach($data['specialisations']);
-        }
-
         alert()->success('Newsletter crée');
 
         return redirect('build/newsletter/'.$newsletter->id);
@@ -148,6 +144,8 @@ class NewsletterController extends Controller
 
         if($newsletter->static){
             $newsletter->specialisations()->sync($data['specialisations']);
+        }else{
+            $newsletter->specialisations()->detach();
         }
 
         alert()->success('Newsletter édité');

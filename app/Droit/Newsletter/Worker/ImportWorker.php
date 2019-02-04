@@ -157,4 +157,27 @@ class ImportWorker implements ImportWorkerInterface
 
         return true;
     }
+
+    public function syncSpecialisations($newsletter_id){
+
+        $newsletter = $this->newsletter->find($newsletter_id);
+
+        if($newsletter->specialisations->isEmpty()){
+            throw new \App\Exceptions\BadFormatException('Aucune spécialisations pour cette newsletter');
+        }
+
+        foreach($newsletter->specialisations as $specialisation){
+
+            $filename = $specialisation->id.'_export'.rand(100,100000);
+            $data = $specialisation->emails;
+
+            $this->excel->create($filename, function($excel) use ($data) {
+               $excel->sheet('Export', function ($sheet) use ($data){
+                   $sheet->rows($data);
+               });
+            })->store('csv',public_path('files/import'));
+
+            $this->sync($filename.'.csv',$newsletter_id);
+        }
+    }
 }

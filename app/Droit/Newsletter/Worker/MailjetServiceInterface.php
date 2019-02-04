@@ -22,6 +22,10 @@ interface MailjetServiceInterface {
     /**
      * Lists
      */
+    public function createList($titre);
+    public function importBulkContactslistData($ID,$data);
+    public function uploadCSVContactslistData($data);
+    public function importCSVContactslistData($data);
     public function getListRecipient($email);
 
     /**
@@ -41,10 +45,4 @@ interface MailjetServiceInterface {
      */
     public function statsCampagne($id);
     public function clickStatistics($id, $offset = 0);
-
-    /**
-     * import listes
-     */
-    public function uploadCSVContactslistData($data);
-    public function importCSVContactslistData($data);
 }

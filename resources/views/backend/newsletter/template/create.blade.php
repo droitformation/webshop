@@ -3,6 +3,14 @@
 
 <div class="row">
     <div class="col-md-12">
+        <div class="options" style="margin-bottom: 10px;">
+            <a href="{{ url('build/newsletter') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>  &nbsp;&nbsp;Retour aux newsletter</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
         <div class="panel panel-primary" id="appComponent">
 
             <form action="{{ url('build/newsletter') }}"  method="POST" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}

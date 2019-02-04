@@ -24,6 +24,7 @@ class EventServiceProvider extends ServiceProvider {
         'App\Events\SubscriptionRemoveTag' => ['App\Listeners\UnsubscribeFromNewsletter'],
         'App\Events\SubscriberEmailUpdated' => ['App\Listeners\UpdateSubscriberEmail'],
         'App\Events\EmailAccountUpdated' => ['App\Listeners\UpdateEmailAccount'],
+        'App\Events\NewsletterStaticCreated' => ['App\Listeners\SubscribeSpecialisation'],
         'App\Events\OrderUpdated' => ['App\Listeners\NotifyOrderUpdated']
 	];
 
