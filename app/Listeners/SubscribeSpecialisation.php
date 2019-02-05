@@ -5,6 +5,8 @@ namespace App\Listeners;
 use App\Events\NewsletterStaticCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Droit\Newsletter\Worker\ImportWorker;
+use App\Droit\Newsletter\Worker\MailjetServiceInterface;
 
 class SubscribeSpecialisation
 {
@@ -16,10 +18,10 @@ class SubscribeSpecialisation
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ImportWorker $import, MailjetServiceInterface $mailjet)
     {
-        $this->import = \App::make('App\Droit\Newsletter\Worker\ImportWorker');
-        $this->mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+        $this->import  = $import;
+        $this->mailjet = $mailjet;
     }
 
     /**

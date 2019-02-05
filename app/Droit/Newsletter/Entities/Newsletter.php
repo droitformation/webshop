@@ -27,6 +27,11 @@ class Newsletter extends Model {
         })->toArray();
     }
 
+    public function getIsValidAttribute()
+    {
+        return $this->static && !$this->specialisations->isEmpty() && $this->list_id;
+    }
+
     public function getBanniereHeaderAttribute()
     {
         $header = public_path('newsletter/'.$this->header);

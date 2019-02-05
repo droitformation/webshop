@@ -234,7 +234,7 @@ class MailjetServiceTest extends TestCase
 
         $response = \Mockery::mock('\Mailjet\Response');
 
-        $this->mailjet->shouldReceive('post')->once()->andReturn($response);
+        $this->mailjet->shouldReceive('post')->with($this->resources)->once()->andReturn($response);
         $response->shouldReceive('success')->once()->andReturn(false);
         $response->shouldReceive('getData')->once()->andReturn([]);
 

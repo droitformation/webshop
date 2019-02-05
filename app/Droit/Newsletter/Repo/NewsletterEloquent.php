@@ -57,7 +57,7 @@ class NewsletterEloquent implements NewsletterInterface{
 
         if($newsletter->static){
             $newsletter->specialisations()->attach($data['specialisations']);
-            event(new \App\Events\NewsletterStaticCreated($newsletter,$data['$name']));
+            event(new \App\Events\NewsletterStaticCreated($newsletter,$data['name']));
         }
 		
 		return $newsletter;
