@@ -237,6 +237,10 @@ class Order extends Model{
         }
     }
 
+    /*
+     * Statistiques
+     * */
+
     public function scopePeriod($query, $period)
     {
         if ($period) {
@@ -244,8 +248,44 @@ class Order extends Model{
             $end   = \Carbon\Carbon::parse($period['end'])->endOfDay();
 
             $query->whereBetween('created_at', [$start, $end]);
-        };
+        }
     }
+
+    public function scopeYear($query, $year)
+    {
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        }
+    }
+
+    public function scopeAuthors($query, $authors)
+    {
+        if ($authors && !empty($authors)) {
+            $query->has('products')->whereHas('products.authors', function ($q1) use ($authors) {
+                $q1->whereIn('shop_authors.id',$authors);
+            });
+        }
+    }
+
+    public function scopeDomains($query, $domains)
+    {
+        if ($domains && !empty($domains)) {
+            $query->has('products')->whereHas('products.domains', function ($q) use ($domains) {
+                $q->whereIn('domains.id',$domains);
+            });
+        }
+    }
+
+    public function scopeCategories($query, $categories)
+    {
+        if ($categories && !empty($categories)) {
+            $query->has('products')->whereHas('products.categories', function ($q) use ($categories) {
+                $q->whereIn('shop_categories.id',$categories);
+            });
+        }
+    }
+
+    /*****/
 
     public function scopeSearch($query, $order_no)
     {

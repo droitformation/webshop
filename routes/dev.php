@@ -1455,6 +1455,38 @@ Route::get('/mailable_slide', function () {
     return new App\Mail\SendSlides($colloque,$texte,$url);
 });
 
+Route::get('stats_test', function () {
+
+    $model = new \App\Droit\Shop\Order\Entities\Order();
+
+    $worker = new \App\Droit\Statistique\StatistiqueWorker();
+    $period = ['start' => '2019-01-21','end' => '2019-01-30'];
+
+    //$orders = $model->with(['products.authors','products.domains'])->period($period)->authors([1])->get();
+    //$orders = $model->with(['products.authors','products.domains'])->period($period)->categories([15])->get();
+    //$orders = $model->with(['products.authors','products.domains'])->period($period)->domains([1])->get();
+
+    $filters = [
+        'authors' => [1]
+    ];
+
+    $sort =[
+        'start' => \Carbon\Carbon::parse('2019-01-11')->startOfDay(),
+        'end'   => \Carbon\Carbon::parse('2019-01-31')->endOfDay(),
+    ];
+
+    $results = $worker->setFilters($filters)->setSort($sort)
+        ->setAggregate(['model' => 'order','name' => 'sum', 'type' => 'product'])
+        ->makeQuery('order')
+        ->aggregate();
+
+    echo '<pre>';
+    print_r($results);
+    echo '</pre>';
+    exit();
+});
+
+
 Route::get('merge', function () {
 
       // Export adresses

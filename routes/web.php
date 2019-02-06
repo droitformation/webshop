@@ -441,6 +441,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('subject/annexe', 'Backend\Content\SubjectController@annexe');
         Route::resource('subject', 'Backend\Content\SubjectController');
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Stats Routes
+        |--------------------------------------------------------------------------
+        */
+
+        Route::match(['get', 'post'], 'statistique', 'Backend\StatistiqueController@index');
+
         /*
         |--------------------------------------------------------------------------
         | Abonnements Routes
