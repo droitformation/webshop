@@ -26,7 +26,6 @@
                         </div>
                     </div>
 
-
                     @if(config('newsletter.multi') && isset($sites))
                         <div class="form-group">
                             <label for="message" class="col-sm-3 control-label">Site</label>

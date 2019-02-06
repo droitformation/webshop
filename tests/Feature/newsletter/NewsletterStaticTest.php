@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Feature;
+
 use Tests\ResetTbl;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
