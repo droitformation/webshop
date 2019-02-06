@@ -41,13 +41,10 @@ class StockController extends Controller
     {
         $product = $this->product->find($id);
         $stocks  = $product->stocks;
-        
-        \Excel::create('Export historique stock', function($excel) use ($stocks) {
-            $excel->sheet('Export_historique_stock', function($sheet) use ($stocks)
-            {
-                $sheet->loadView('backend.stocks.modals.table', ['stocks' => $stocks]);
-            });
-        })->export('xls');
+
+        $export = new \App\Droit\Generate\Export\ExportStock();
+
+        return $export->export($stocks);
     }
 
     public function qty(Request $request)

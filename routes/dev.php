@@ -1572,3 +1572,59 @@ Route::get('merge', function () {
     
 });
 
+
+Route::get('product_count', function() {
+
+    $model    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
+    $products = $model->getAll();
+
+
+    list($external, $inhouse) = $products->partition(function ($i) {
+        return $i->url;
+    });
+
+    $html = '<!DOCTYPE html><html lang="en"><head></head><body>';
+
+    $html .= '<table>';
+    $html .= '<tr><thead>';
+    $html .= '<th style="padding: 5px;" align="left">Titre</th><th style="padding: 5px;" align="left">Prix</th>';
+    $html .= '<th style="padding: 5px;" align="left">Stock</th><th style="padding: 5px;">Pages</th><th style="padding: 5px;" align="left">Année édition</th>';
+    $html .= '</thead></tr><tbody>';
+    $html .= render($inhouse);
+    $html .= '</tbody></table>';
+
+    $html .= '<h1>Vendu via site externe</h1>';
+
+    $html .= '<table>';
+    $html .= '<tr><thead>';
+    $html .= '<th style="padding: 5px;" align="left">Titre</th><th style="padding: 5px;" align="left">Prix</th>';
+    $html .= '<th style="padding: 5px;" align="left">Stock</th><th style="padding: 5px;">Pages</th><th style="padding: 5px;" align="left">Année édition</th>';
+    $html .= '</thead></tr><tbody>';
+    $html .= render($external);
+    $html .= '</tbody></table>';
+
+    $html .= '</body></html>';
+
+    return $html;
+    // titre, les éditeurs, l’année, le nombre de pages et le stock
+    //protected $fillable = ['title', 'price', 'sku','pages','edition_at'];
+
+});
+
+function render($inhouse){
+
+    $html = '';
+
+    foreach ($inhouse as $product){
+        $edition = isset($product->edition_at) && !empty($product->edition_at) ? $product->edition_at->format('Y') : 'édition non indiqué';
+        $html .= '<tr>';
+        $html .= '<td style="padding: 5px;">'.$product->title.'</td>';
+        $html .= '<td style="padding: 5px;">'.$product->price_cents.'</td>';
+        $html .= '<td style="padding: 5px;">'.($product->sku > 0 ? $product->sku : 'stock non indiqué').'</td>';
+        $html .= '<td style="padding: 5px;">'.($product->pages > 0 ? $product->pages : 'pages non indiqués').'</td>';
+        $html .= '<td style="padding: 5px;">'.$edition.'</td>';
+        $html .= '</tr>';
+    }
+
+    return $html;
+}
