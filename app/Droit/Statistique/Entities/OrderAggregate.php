@@ -21,7 +21,7 @@ class OrderAggregate
         if($type == 'price'){
             return $this->results->map(function ($item, $key) {
                 if($item instanceof \App\Droit\Shop\Order\Entities\Order){
-                    return $item->total_sum;
+                    return $item->total_with_shipping;
                 }
                 if($item instanceof \App\Droit\Inscription\Entities\Inscription){
                     return $item->price_cents;

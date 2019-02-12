@@ -76,7 +76,6 @@ class StatistiqueWorker
 
     public function aggregate()
     {
-
         if($this->aggregate){
             if($this->results->isEmpty()) return collect([]);
 

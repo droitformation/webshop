@@ -289,7 +289,8 @@ $factory->define(App\Droit\Shop\Order\Entities\Order::class, function (Faker\Gen
         'order_no'    => '2015-00000004',
         'amount'      => 10000,
         'shipping_id' => 1,
-        'onetimeurl'  => null
+        'onetimeurl'  => null,
+        'created_at'  => \Carbon\Carbon::now()->toDateTimeString()
     ];
 });
 
