@@ -76,19 +76,18 @@ class StatistiqueWorker
 
     public function aggregate()
     {
+
         if($this->aggregate){
             if($this->results->isEmpty()) return collect([]);
 
-            // by price => orders
-            // by products
-            // sum
-            if($this->aggregate['model'] == 'order'){
+            // by price => orders, by products, by title, sum
+            if($this->aggregate['model'] == 'order' || $this->aggregate['model'] == 'inscription'){
                 $aggregate = new OrderAggregate($this->results);
 
                 $func = $this->aggregate['name'];
                 $type = $this->aggregate['type'];
 
-                return $aggregate->$func();
+                return $aggregate->$func($type);
             }
         }
 

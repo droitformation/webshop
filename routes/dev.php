@@ -1470,14 +1470,11 @@ Route::get('stats_test', function () {
         'authors' => [1]
     ];
 
-    $sort =[
-        'start' => \Carbon\Carbon::parse('2019-01-11')->startOfDay(),
-        'end'   => \Carbon\Carbon::parse('2019-01-31')->endOfDay(),
-    ];
+    $sort = ['start' => '2019-01-11', 'end' => '2019-02-31'];
 
-    $results = $worker->setFilters($filters)->setSort($sort)
-        ->setAggregate(['model' => 'order','name' => 'sum', 'type' => 'product'])
-        ->makeQuery('order')
+    $results = $worker->setFilters([])->setSort($sort)
+        ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
+        ->makeQuery('inscription')
         ->aggregate();
 
     echo '<pre>';

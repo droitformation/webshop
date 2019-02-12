@@ -11,7 +11,8 @@ class OrderAggregate
 
     public function sum($type = null)
     {
-        if(!$type || $type == 'product'){
+        if(!$type || ( $type && $type == 'product')){
+
             return $this->results->map(function ($item, $key) {
                 return $item->products->count();
             })->sum();
@@ -19,9 +20,26 @@ class OrderAggregate
 
         if($type == 'price'){
             return $this->results->map(function ($item, $key) {
-                return $item->total_sum;
+                if($item instanceof \App\Droit\Shop\Order\Entities\Order){
+                    return $item->total_sum;
+                }
+                if($item instanceof \App\Droit\Inscription\Entities\Inscription){
+                    return $item->price_cents;
+                }
             })->sum();
         }
+
+        if($type == 'title'){
+            return $this->results->pluck('products')->flatten()->groupBy(function ($product, $key) {
+                return $product->id;
+            })->map(function ($item, $key) {
+                return $item->pluck('title');
+            })->map(function ($item, $key) {
+                return ['count' => $item->count(), 'title' => $item->first()];
+            });
+        }
+
+        // type of price, full or free
     }
 
     public function count()

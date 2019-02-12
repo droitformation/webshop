@@ -351,6 +351,28 @@ class Inscription extends Model
         }
     }
 
+
+    /*
+     * Statistiques
+     * */
+
+    public function scopePeriod($query, $period)
+    {
+        if ($period) {
+            $start = \Carbon\Carbon::parse($period['start'])->startOfDay();
+            $end   = \Carbon\Carbon::parse($period['end'])->endOfDay();
+
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+    }
+
+    public function scopeYear($query, $year)
+    {
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        }
+    }
+
     /**
      * Scope a query to only include multiple inscription
      *
