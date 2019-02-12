@@ -50,7 +50,7 @@ class PdfGenerator implements PdfGeneratorInterface
 
         $this->versement = [
             'nom'     => \Registry::get('shop.infos.nom'),
-            'adresse' => \Registry::get('shop.infos.adresse'),
+            'adresse' => \Registry::get('shop.infos.tiers'),
         ];
     }
 

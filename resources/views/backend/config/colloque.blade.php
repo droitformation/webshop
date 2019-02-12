@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-6">
 
-                <h4><i class="fa fa-home"></i> &nbsp;Adresse générale pour facture colloques</h4>
+                <h4><i class="fa fa-home"></i> &nbsp;Adresse globale (haut) pour facture colloques</h4>
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <div class="form-group col-md-4">

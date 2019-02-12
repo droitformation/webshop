@@ -45,7 +45,7 @@
                                     <input type="text" class="form-control" name="shop[infos][email]" value="{!! Registry::get('shop.infos.email')!!}">
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Adresse</strong></label>
+                                    <label><strong>Adresse global (haut facture)</strong></label>
                                     <textarea name="shop[infos][adresse]" class="form-control redactorSimple">{!! Registry::get('shop.infos.adresse') !!}</textarea>
                                 </div>
 
@@ -70,6 +70,10 @@
                     <h4><i class="fa fa-money"></i> &nbsp;Factures</h4>
                     <div class="panel panel-green">
                         <div class="panel-body">
+                            <div class="form-group">
+                                <label><strong>Adresse fond tiers (bv)</strong></label>
+                                <textarea name="shop[infos][tiers]" class="form-control redactorSimple">{!! Registry::get('shop.infos.tiers') !!}</textarea>
+                            </div>
                             <div class="form-group">
                                 <label><strong>Compte postal vente livres</strong></label>
                                 <input type="text" class="form-control" name="shop[compte][livre]" value="{!! Registry::get('shop.compte.livre')!!}">
