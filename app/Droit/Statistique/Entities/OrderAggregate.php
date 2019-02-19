@@ -11,8 +11,7 @@ class OrderAggregate
 
     public function sum($type = null)
     {
-        if(!$type || ( $type && $type == 'product')){
-
+        if($type == 'product'){
             return $this->results->map(function ($item, $key) {
                 return $item->products->count();
             })->sum();
@@ -39,6 +38,7 @@ class OrderAggregate
             });
         }
 
+        return $this->results->count();
         // type of price, full or free
     }
 

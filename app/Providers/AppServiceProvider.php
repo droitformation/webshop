@@ -57,6 +57,7 @@ class AppServiceProvider extends ServiceProvider {
             'frontend.pubdroit.partials.label',
             'backend.export.user',
             'backend.products.*',
+            'backend.stats.*',
             'frontend.bail.*',
         ], 'App\Http\ViewComposers\LabelComposer');
 

@@ -610,6 +610,8 @@ Route::group(['prefix' => 'vue'], function () {
 
     Route::post('groupe','Api\OptionGroupeController@store');
     Route::get('autocomplete', 'Backend\SearchController@autocomplete');
+
+    Route::post('models', 'Backend\StatistiqueController@models');
 });
 
 Route::group(['prefix' => 'access' , 'middleware' => ['auth','access']], function () {

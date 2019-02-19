@@ -7,6 +7,17 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body" id="appComponent">
 
+                    <form class="form-horizontal" action="{{ url('admin/statistique') }}" method="post">{!! csrf_field() !!}
+                        <statistique-filter></statistique-filter>
+                    </form>
+
+                    @if($results)
+                        <?php
+                        echo '<pre>';
+                        print_r($results);
+                        echo '</pre>';
+                        ?>
+                    @endif
                 </div>
             </div>
 
