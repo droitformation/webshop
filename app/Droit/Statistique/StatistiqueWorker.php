@@ -112,7 +112,7 @@ class StatistiqueWorker
                         }
 
                         return [
-                            //'collection' => $results,
+                            'collection' => $results,
                             'results'    => $this->makeAggregate($collection),
                             'aggregate'  => $this->aggregate
                         ];
