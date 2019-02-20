@@ -40,8 +40,6 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
 
-    <link href="{{ secure_asset('backend/css/select2.min.css') }}" rel="stylesheet" />
-
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
     @endif
@@ -201,7 +199,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.mask.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jQuery.print.js');?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
-<script src="{{ secure_asset('backend/js/select2.min.js') }}"></script>
+
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 

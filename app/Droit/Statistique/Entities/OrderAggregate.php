@@ -22,28 +22,40 @@ class OrderAggregate
                 if($item instanceof \App\Droit\Shop\Order\Entities\Order){
                     return $item->total_with_shipping;
                 }
-                if($item instanceof \App\Droit\Inscription\Entities\Inscription){
+                if($item instanceof \App\Droit\Inscription\Entities\Inscription || $item instanceof \App\Droit\Abo\Entities\Abo_users){
                     return $item->price_cents;
                 }
             })->sum();
         }
 
-        if($type == 'title'){
-            return $this->results->pluck('products')->flatten()->groupBy(function ($product, $key) {
-                return $product->id;
+        if($type == 'status'){
+            return $this->results->groupBy(function ($product, $key) {
+                return $product->status;
             })->map(function ($item, $key) {
-                return $item->pluck('title');
-            })->map(function ($item, $key) {
-                return ['count' => $item->count(), 'title' => $item->first()];
+                return $item->pluck('numero');
             });
         }
 
-        return $this->results->count();
-        // type of price, full or free
+        if($type == 'title'){
+            return $this->titles();
+        }
+
+        return $this->results->count(); // type of price, full or free
     }
 
     public function count()
     {
         return $this->results->count();
+    }
+
+    public function titles()
+    {
+        return $this->results->pluck('products')->flatten()->groupBy(function ($product, $key) {
+            return $product->id;
+        })->map(function ($item, $key) {
+            return $item->pluck('title');
+        })->map(function ($item, $key) {
+            return ['count' => $item->count(), 'title' => $item->first()];
+        });
     }
 }

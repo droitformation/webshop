@@ -6,19 +6,20 @@ class StatistiqueWorker
 {
     protected $order;
     protected $inscription;
-    protected $abo;
+    protected $abonnement;
 
     protected $filters = [];
-    protected $sort = [];
+    protected $period = [];
     protected $aggregate = [];
 
     public $results = null;
+    public $isGrouped = null;
 
     public function __construct()
     {
         $this->inscription = new \App\Droit\Inscription\Entities\Inscription();
         $this->order       = new \App\Droit\Shop\Order\Entities\Order();
-        $this->abo         = new \App\Droit\Abo\Entities\Abo();
+        $this->abonnement  = new \App\Droit\Abo\Entities\Abo_users();
     }
 
     /*
@@ -37,9 +38,9 @@ class StatistiqueWorker
      * Domains
      * Categories
      * */
-    public function setSort($sort)
+    public function setPeriod($period)
     {
-        $this->sort = $sort;
+        $this->period = $period;
 
         return $this;
     }
@@ -59,8 +60,8 @@ class StatistiqueWorker
     {
         $q = $this->$model;
 
-        if($this->sort){
-            $q = $q->period($this->sort);
+        if($this->period){
+            $q = $q->period($this->period);
         }
 
         if(!empty($this->filters)){
@@ -71,6 +72,23 @@ class StatistiqueWorker
 
         $this->results = $q->get();
 
+        //dd($this->results);
+
+        return $this;
+    }
+
+    public function group($when)
+    {
+        $this->isGrouped = true;
+
+        $this->results = $this->results->mapToGroups(function ($item, $key) use ($when) {
+
+            $grouping = ['month' => 'Y-m', 'year' => 'Y', 'day' => 'Y-m-d', 'week' => 'W Y'];
+            $group = isset($grouping[$when]) ? $grouping[$when] : 'm';
+
+            return [$item->created_at->format($group) => $item];
+        });
+
         return $this;
     }
 
@@ -80,16 +98,46 @@ class StatistiqueWorker
             if($this->results->isEmpty()) return collect([]);
 
             // by price => orders, by products, by title, sum
-            if($this->aggregate['model'] == 'order' || $this->aggregate['model'] == 'inscription'){
-                $aggregate = new OrderAggregate($this->results);
+            if($this->aggregate['model'] == 'order' || $this->aggregate['model'] == 'inscription' || $this->aggregate['model'] == 'abonnement'){
 
-                $func = $this->aggregate['name'];
-                $type = $this->aggregate['type'];
+                if($this->isGrouped){
+                    return $this->results->map(function ($collection, $key) {
 
-                return $aggregate->$func($type);
+                        if($this->isSumProduct()){
+                            $aggregate = new OrderAggregate($collection);
+                            $results   = $aggregate->titles();
+                        }
+                        else{
+                            $results = $collection;
+                        }
+
+                        return [
+                            //'collection' => $results,
+                            'results'    => $this->makeAggregate($collection),
+                            'aggregate'  => $this->aggregate
+                        ];
+                    });
+                }
+
+                return $this->makeAggregate($this->results);
             }
         }
 
         return $this->results;
+    }
+
+    public function isSumProduct()
+    {
+        return ($this->aggregate['model'] == 'order' && $this->aggregate['name'] == 'sum' && $this->aggregate['type'] == 'product') ? true : false;
+    }
+
+    public function makeAggregate($collection)
+    {
+        $aggregate = new OrderAggregate($collection);
+
+        $func = $this->aggregate['name'];
+        $type = $this->aggregate['type'];
+
+        return $aggregate->$func($type);
     }
 }

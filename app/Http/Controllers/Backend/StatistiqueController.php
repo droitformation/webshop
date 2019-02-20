@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Shop\Order\Repo\OrderInterface;
 
+use App\Droit\Abo\Repo\AboInterface;
 use App\Droit\Shop\Categorie\Repo\CategorieInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Shop\Author\Repo\AuthorInterface as ShopAuthorInterface;
@@ -23,8 +24,17 @@ class StatistiqueController extends Controller
     protected $authors;
     protected $domains;
     protected $colloque;
+    protected $abo;
 
-    public function __construct(InscriptionInterface $inscription, OrderInterface $order,CategorieInterface $categories, ColloqueInterface $colloque, ShopAuthorInterface $authors,DomainInterface $domains)
+    public function __construct(
+        InscriptionInterface $inscription,
+        OrderInterface $order,
+        CategorieInterface $categories,
+        ColloqueInterface $colloque,
+        ShopAuthorInterface $authors,
+        DomainInterface $domains,
+        AboInterface $abo
+    )
     {
         $this->inscription = $inscription;
         $this->order       = $order;
@@ -33,6 +43,7 @@ class StatistiqueController extends Controller
         $this->authors    = $authors;
         $this->domains    = $domains;
         $this->colloque  = $colloque;
+        $this->abo  = $abo;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -53,15 +64,16 @@ class StatistiqueController extends Controller
             $aggretate = explode('-',$data['sum']);
             $worker = new \App\Droit\Statistique\StatistiqueWorker();
 
-            $results = $worker->setFilters($data['sort'])->setSort($data['period'])
+            $filter = isset($data['filters']) ? ($data['filters']) : [];
+
+            $results = $worker->setFilters($filter)->setPeriod($data['period'])
                 ->setAggregate(['model' => $data['model'], 'name' => $aggretate[0], 'type' => $aggretate[1]]) // product or price or title (title,count)
                 ->makeQuery($data['model'])
+                ->group($data['group'])
                 ->aggregate();
-
         }
 
-        return view('backend.stats.index')->with(['results' => $results]);
-        // ->with(['inscriptions' => $inscriptions, 'orders' => $orders, 'colloques' => $colloques])
+        return view('backend.stats.index')->with(['results' => $results, 'search' => $request->except('_token')]);
     }
 
     public function models(Request $request)
@@ -70,7 +82,7 @@ class StatistiqueController extends Controller
         $filters = [
             'order' => ['authors','domains','categories'],
             'inscription' => ['colloque'],
-            'abo' => ['products'],
+            'abonnement' => ['abo'],
         ];
 
         $models = $filters[$request->input('model')];

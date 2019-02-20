@@ -157,6 +157,33 @@ class Abo_users extends Model{
         return $money->format($shipping);
     }
 
+    /*
+     * Statistiques
+    * */
+    public function scopePeriod($query, $period)
+    {
+        if ($period) {
+            $start = \Carbon\Carbon::parse($period['start'])->startOfDay();
+            $end   = \Carbon\Carbon::parse($period['end'])->endOfDay();
+
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+    }
+
+    public function scopeYear($query, $year)
+    {
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        }
+    }
+
+    public function scopeAbo($query, $abo)
+    {
+        if ($abo) {
+            $query->where('abo_id','=',$abo)->withTrashed();
+        }
+    }
+
     public function abo()
     {
         return $this->belongsTo('App\Droit\Abo\Entities\Abo','abo_id');

@@ -8,7 +8,7 @@
                 <div class="panel-body" id="appComponent">
 
                     <form class="form-horizontal" action="{{ url('admin/statistique') }}" method="post">{!! csrf_field() !!}
-                        <statistique-filter></statistique-filter>
+                        <statistique-filter :search="{{ json_encode($search) }}"></statistique-filter>
                     </form>
 
                     @if($results)

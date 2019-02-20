@@ -66,21 +66,21 @@ class StatsTest extends TestCase
 
         $sort = ['start' => $start, 'end' => $end];
 
-        $results = $worker->setFilters([])->setSort($sort)
+        $results = $worker->setFilters([])->setPeriod($sort)
             ->setAggregate(['model' => 'order', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
             ->makeQuery('order')
             ->aggregate();
 
         $this->assertEquals(200.00,$results);
 
-        $results = $worker->setFilters([])->setSort($sort)
+        $results = $worker->setFilters([])->setPeriod($sort)
             ->setAggregate(['model' => 'order', 'name' => 'sum', 'type' => 'product']) // product or price or title (title,count)
             ->makeQuery('order')
             ->aggregate();
 
         $this->assertEquals(5,$results);
 
-        $results = $worker->setFilters([])->setSort($sort)
+        $results = $worker->setFilters([])->setPeriod($sort)
             ->setAggregate(['model' => 'order', 'name' => 'sum', 'type' => 'title']) // product or price or title (title,count)
             ->makeQuery('order')
             ->aggregate();
@@ -107,19 +107,78 @@ class StatsTest extends TestCase
 
         $sort = ['start' => $start, 'end' => $end];
 
-        $results = $worker->setFilters([])->setSort($sort)
+        $results = $worker->setFilters([])->setPeriod($sort)
             ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
             ->makeQuery('inscription')
             ->aggregate();
 
         $this->assertEquals(80.00,$results);
 
-        $results = $worker->setFilters([])->setSort($sort)
+        $results = $worker->setFilters([])->setPeriod($sort)
             ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => null]) // product or price
             ->makeQuery('inscription')
             ->aggregate();
 
         $this->assertEquals(2,$results);
+
+    }
+
+    public function testGroupingByMonth()
+    {
+        $worker   = new \App\Droit\Statistique\StatistiqueWorker();
+
+        $month1 = \Carbon\Carbon::today()->subMonths(2)->format('Y-m');
+        $month2 = \Carbon\Carbon::today()->subMonths(3)->format('Y-m');
+
+        $inscription1 = $this->makeInscription(\Carbon\Carbon::today()->subMonths(2)->toDateString());
+        $inscription2 = $this->makeInscription(\Carbon\Carbon::today()->subMonths(3)->toDateString());
+
+        $start = \Carbon\Carbon::today()->subMonths(4)->toDateString();
+        $end   = \Carbon\Carbon::today()->subMonths(1)->toDateString();
+
+        $sort = ['start' => $start, 'end' => $end];
+
+        $results = $worker->setFilters([])->setPeriod($sort)
+            ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
+            ->makeQuery('inscription')
+            ->group('month')
+            ->aggregate();
+
+        $this->assertEquals([$month1,$month2],array_keys($results->toArray()));
+    }
+
+    public function testGroupingByWeek()
+    {
+        $worker   = new \App\Droit\Statistique\StatistiqueWorker();
+
+        // make some orders
+        $product1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['title' => 'Premier titre','price' => 2000]);
+        $product2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['title' => 'Second titre','price' => 2000]);
+        $product3 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['title' => 'Autre titre','price' => 2000]);
+
+        $order1 = $this->makeOrder([$product1->id, $product1->id, $product3->id],'12000', \Carbon\Carbon::today()->subMonths(3)->toDateTimeString());
+        $order2 = $this->makeOrder([$product2->id, $product3->id],'6000', \Carbon\Carbon::today()->subMonths(4)->toDateTimeString());
+
+        $month1 = \Carbon\Carbon::today()->subMonths(3)->format('Y-m');
+        $month2 = \Carbon\Carbon::today()->subMonths(4)->format('Y-m');
+
+        $start = \Carbon\Carbon::today()->subMonths(6)->toDateString();
+        $end   = \Carbon\Carbon::today()->subMonths(1)->toDateString();
+
+        $sort = ['start' => $start, 'end' => $end];
+
+        $results = $worker->setFilters([])->setPeriod($sort)
+            ->setAggregate(['model' => 'order', 'name' => 'sum', 'type' => 'product']) // product or price or title (title,count)
+            ->makeQuery('order')
+            ->group('month')
+            ->aggregate();
+
+        $expected = [
+            ['count' => 1, 'title' => 'Autre titre'],
+            ['count' => 2, 'title' => 'Premier titre'],
+        ];
+
+        $this->assertEquals($expected,array_values($results[$month1]['collection']->toArray()));
 
     }
 
