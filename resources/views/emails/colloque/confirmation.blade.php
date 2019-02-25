@@ -139,7 +139,13 @@
                         @if($colloque->notice)
                             {!! $colloque->notice !!}
                         @else
-                            {!! Registry::get('inscription.infos.desistement') !!}
+
+                            @if (strpos(Registry::get('inscription.infos.desistement'), '[registration_at]') !== false)
+                                {!! str_replace('[registration_at]', $colloque->registration_at->formatLocalized('%d %B %Y'), Registry::get('inscription.infos.desistement')) !!}
+                            @else
+                                {!! Registry::get('inscription.infos.desistement') !!}
+                            @endif
+
                         @endif
                     </p>
 
