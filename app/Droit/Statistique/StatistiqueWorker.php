@@ -72,8 +72,6 @@ class StatistiqueWorker
 
         $this->results = $q->get();
 
-        //dd($this->results);
-
         return $this;
     }
 
@@ -124,6 +122,13 @@ class StatistiqueWorker
         }
 
         return $this->results;
+    }
+
+    public function chart($results)
+    {
+        return $results->mapWithKeys(function ($item, $key) {
+            return [$key => (int) $item['results']];
+        });
     }
 
     public function isSumProduct()

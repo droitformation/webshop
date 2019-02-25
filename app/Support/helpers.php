@@ -167,3 +167,42 @@ function setEnv($key, $value)
         file_get_contents(app()->environmentFilePath())
     ));
 }
+
+function stat_search($data){
+
+    switch($data['group'])
+    {
+        case 'week':
+            $perodicite = 'semaine';
+            break;
+        case 'year':
+            $perodicite = 'année';
+            break;
+        case 'day':
+            $perodicite = 'jour';
+            break;
+        case 'month':
+            $perodicite = 'mois';
+            break;
+        default :
+            $perodicite = 'année';
+            break;
+    }
+
+    if($data['sum'] == 'sum-price'){
+        return 'Somme ventes par '.$perodicite;
+    }
+
+    if($data['sum'] == 'sum-product'){
+        return 'Somme ventes par livres par '.$perodicite;
+    }
+
+    if($data['sum'] == 'sum-status'){
+        return 'Status abos par '.$perodicite;
+    }
+
+    if($data['sum'] == 'sum-title'){
+        return 'Ventes de livres par '.$perodicite;
+    }
+
+}

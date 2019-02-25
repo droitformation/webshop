@@ -44,6 +44,7 @@
     @endif
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="{{ secure_asset('backend/js/Chart.min.js') }}"></script>
     <base href="/">
 
     <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.fancybox.min.js');?>"></script>
@@ -199,7 +200,6 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jQuery.print.js');?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 

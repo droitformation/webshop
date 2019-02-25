@@ -71,6 +71,7 @@ class StatistiqueController extends Controller
                 ->makeQuery($data['model'])
                 ->group($data['group'])
                 ->aggregate();
+
         }
 
         return view('backend.stats.index')->with(['results' => $results, 'search' => $request->except('_token')]);
