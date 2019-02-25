@@ -32,13 +32,13 @@
          <div class="col-lg-2 col-md-2 col-xs-12">
             <div class="input-group">
                <span class="input-group-addon">Du</span>
-               <input type="text" name="period[start]" v-model="start" class="form-control datePicker" value="" placeholder="Début">
+               <input type="text" name="period[start]" v-model="start" data-period="start" class="form-control datePickerStats" value="" placeholder="Début">
             </div>
          </div>
          <div class="col-lg-2 col-md-2 col-xs-12">
             <div class="input-group">
                <span class="input-group-addon">au</span>
-               <input type="text" name="period[end]" v-model="end" class="form-control datePicker" value="" placeholder="Fin">
+               <input type="text" name="period[end]" v-model="end" data-period="end" class="form-control datePickerStats" value="" placeholder="Fin">
             </div>
          </div>
          <div class="col-lg-3 col-md-3 col-xs-12">
@@ -65,7 +65,6 @@
             </div>
          </div>
       </div>
-
       <button class="btn btn-primary" style="margin-top: 20px;" type="submit">Rechercher</button>
    </div>
 </template>
@@ -91,23 +90,61 @@ export default {
             model: this.search.model ? this.search.model : 'order',
             sum: this.search.sum ? this.search.sum : null,
             group: this.search.group ? this.search.group : null,
-            start: this.search.period.start ? this.search.period.start : null,
-            end: this.search.period.end ? this.search.period.end : null,
+            start: '',
+            end: '',
             filters:[],
             models:[],
-            dataabo : this.search.filters.abo ? this.search.filters.abo : [],
-            datacolloque : this.search.filters.colloque ? this.search.filters.colloque : [],
-            dataauthors : this.search.filters.authors ? this.search.filters.authors : [],
-            datadomains : this.search.filters.domains ? this.search.filters.domains : [],
-            datacategories : this.search.filters.categories ? this.search.filters.categories : [],
+            dataabo : this.search.filters && this.search.filters.abo ? this.search.filters.abo : [],
+            datacolloque : this.search.filters && this.search.filters.colloque ? this.search.filters.colloque : [],
+            dataauthors : this.search.filters && this.search.filters.authors ? this.search.filters.authors : [],
+            datadomains : this.search.filters && this.search.filters.domains ? this.search.filters.domains : [],
+            datacategories : this.search.filters && this.search.filters.categories ? this.search.filters.categories : [],
         }
     },
     computed: {
     },
     mounted: function ()  {
+
        this.getModels();
+
+       this.start = this.search.period && this.search.period.start ? this.search.period.start : '';
+       this.end = this.search.period && this.search.period.end ? this.search.period.end : '';
+
+       this.$nextTick(function(){
+          let self = this;
+          $.fn.datepicker.dates['fr'] = {
+             days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+             daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+             daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+             months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+             monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+             today: "Aujourd'hui",
+             clear: "Clear"
+          };
+
+          $('.datePickerStats').datepicker({
+             format: 'yyyy-mm-dd',
+             language: 'fr'
+          }).on('changeDate', function(e) {
+             let period =  $(this).data('period');
+             let value = $(this).val();
+
+             self.setPeriod(period,value);
+          });
+       });
     },
     methods: {
+       setPeriod(period,value){
+          console.log(period);
+          console.log(value);
+
+          if(period == 'start'){
+             this.start = value;
+          }
+          if(period == 'end'){
+             this.end = value;
+          }
+       },
        getModels: function() {
           let self = this;
 

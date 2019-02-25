@@ -37,7 +37,6 @@
     <!-- Manager -->
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/dropzone.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
-
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
 
     @if(isset($isNewsletter))
@@ -200,9 +199,9 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jQuery.print.js');?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
-
 
 </body>
 </html>
