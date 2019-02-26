@@ -16,6 +16,7 @@ class ContactController extends Controller
     public function __construct(SiteInterface $site)
     {
         $this->site = $site;
+        $this->middleware('honeypot');
     }
 
     /**
