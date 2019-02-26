@@ -17,6 +17,7 @@
 				<div class="col-md-8">
 					<form action="{{ url('sendMessage') }}" class="form-horizontal" method="post">
 						{!! csrf_field() !!}
+						@honeypot
 						<div class="form-group">
 							<label class="col-md-2 control-label">Nom</label>
 							<div class="col-md-10">

@@ -55,7 +55,7 @@ class Kernel extends HttpKernel {
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-
+        'honeypot' =>  \Spatie\Honeypot\ProtectAgainstSpam::class,
 		'site'           => 'App\Http\Middleware\SiteMiddleware',
 		'checkout'       => 'App\Http\Middleware\CheckoutMiddleware',
         'cart'           => 'App\Http\Middleware\CartMiddleware',

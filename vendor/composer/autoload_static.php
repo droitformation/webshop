@@ -88,6 +88,7 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
             'Spatie\\MediaLibrary\\' => 20,
             'Spatie\\Image\\' => 13,
             'Spatie\\ImageOptimizer\\' => 22,
+            'Spatie\\Honeypot\\' => 16,
             'Spatie\\DbDumper\\' => 16,
             'Spatie\\Backup\\' => 14,
         ),
@@ -322,6 +323,10 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'Spatie\\ImageOptimizer\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/image-optimizer/src',
+        ),
+        'Spatie\\Honeypot\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/laravel-honeypot/src',
         ),
         'Spatie\\DbDumper\\' => 
         array (
@@ -761,6 +766,7 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'App\\Droit\\Generate\\Export\\ExportInscription' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportInscription.php',
         'App\\Droit\\Generate\\Export\\ExportOrder' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportOrder.php',
         'App\\Droit\\Generate\\Export\\ExportQrcode' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportQrcode.php',
+        'App\\Droit\\Generate\\Export\\ExportStock' => __DIR__ . '/../..' . '/app/Droit/Generate/Export/ExportStock.php',
         'App\\Droit\\Generate\\Pdf\\PdfGenerator' => __DIR__ . '/../..' . '/app/Droit/Generate/Pdf/PdfGenerator.php',
         'App\\Droit\\Generate\\Pdf\\PdfGeneratorInterface' => __DIR__ . '/../..' . '/app/Droit/Generate/Pdf/PdfGeneratorInterface.php',
         'App\\Droit\\Helper\\Convert' => __DIR__ . '/../..' . '/app/Droit/Helper/Convert.php',
@@ -5570,6 +5576,13 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'Spatie\\DbDumper\\Exceptions\\CannotSetParameter' => __DIR__ . '/..' . '/spatie/db-dumper/src/Exceptions/CannotSetParameter.php',
         'Spatie\\DbDumper\\Exceptions\\CannotStartDump' => __DIR__ . '/..' . '/spatie/db-dumper/src/Exceptions/CannotStartDump.php',
         'Spatie\\DbDumper\\Exceptions\\DumpFailed' => __DIR__ . '/..' . '/spatie/db-dumper/src/Exceptions/DumpFailed.php',
+        'Spatie\\Honeypot\\EncryptedTime' => __DIR__ . '/..' . '/spatie/laravel-honeypot/src/EncryptedTime.php',
+        'Spatie\\Honeypot\\HoneypotServiceProvider' => __DIR__ . '/..' . '/spatie/laravel-honeypot/src/HoneypotServiceProvider.php',
+        'Spatie\\Honeypot\\HoneypotViewComposer' => __DIR__ . '/..' . '/spatie/laravel-honeypot/src/HoneypotViewComposer.php',
+        'Spatie\\Honeypot\\ProtectAgainstSpam' => __DIR__ . '/..' . '/spatie/laravel-honeypot/src/ProtectAgainstSpam.php',
+        'Spatie\\Honeypot\\SpamDetected' => __DIR__ . '/..' . '/spatie/laravel-honeypot/src/SpamDetected.php',
+        'Spatie\\Honeypot\\SpamResponder\\BlankPageResponder' => __DIR__ . '/..' . '/spatie/laravel-honeypot/src/SpamResponder/BlankPageResponder.php',
+        'Spatie\\Honeypot\\SpamResponder\\SpamResponder' => __DIR__ . '/..' . '/spatie/laravel-honeypot/src/SpamResponder/SpamResponder.php',
         'Spatie\\ImageOptimizer\\DummyLogger' => __DIR__ . '/..' . '/spatie/image-optimizer/src/DummyLogger.php',
         'Spatie\\ImageOptimizer\\Image' => __DIR__ . '/..' . '/spatie/image-optimizer/src/Image.php',
         'Spatie\\ImageOptimizer\\Optimizer' => __DIR__ . '/..' . '/spatie/image-optimizer/src/Optimizer.php',
