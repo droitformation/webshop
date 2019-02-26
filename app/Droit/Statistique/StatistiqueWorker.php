@@ -1,6 +1,7 @@
 <?php namespace App\Droit\Statistique;
 
 use App\Droit\Statistique\Entites\OrderAggregate;
+use Illuminate\Support\Collection;
 
 class StatistiqueWorker
 {
@@ -9,7 +10,7 @@ class StatistiqueWorker
     protected $abonnement;
 
     protected $filters = [];
-    protected $period = [];
+    public $period = [];
     protected $aggregate = [];
 
     public $results = null;
@@ -43,6 +44,14 @@ class StatistiqueWorker
         $this->period = $period;
 
         return $this;
+    }
+
+    public function spanYears()
+    {
+        $start = \Carbon\Carbon::parse($this->period['start'])->year;
+        $end   = \Carbon\Carbon::parse($this->period['end'])->year;
+
+        return $start == $end ? false : true;
     }
 
     /*
@@ -79,13 +88,34 @@ class StatistiqueWorker
     {
         $this->isGrouped = true;
 
-        $this->results = $this->results->mapToGroups(function ($item, $key) use ($when) {
+        $year = function ($item) {
+            return $item->created_at->format('Y');
+        };
+
+        $month = function ($item) {
+            return $item->created_at->format('m');
+        };
+
+        $week = function ($item) {
+            return $item->created_at->format('W');
+        };
+
+        $day = function ($item) {
+            return $item->created_at->format('m-d');
+        };
+
+        $grouping = ['month' => [$year,$month], 'year' => [$year], 'day' => [$year,$day], 'week' => [$year,$week]];
+        $group    = isset($grouping[$when]) ? $grouping[$when] : [$year,$month];
+
+  /*      $this->results = $this->results->mapToGroups(function ($item, $key) use ($when) {
 
             $grouping = ['month' => 'Y-m', 'year' => 'Y', 'day' => 'Y-m-d', 'week' => 'W Y'];
             $group = isset($grouping[$when]) ? $grouping[$when] : 'm';
 
             return [$item->created_at->format($group) => $item];
-        });
+        });*/
+
+        $this->results = $this->results->groupBy($group, $preserveKeys = true);
 
         return $this;
     }
@@ -93,32 +123,29 @@ class StatistiqueWorker
     public function aggregate()
     {
         if($this->aggregate){
+
             if($this->results->isEmpty()) return collect([]);
 
             // by price => orders, by products, by title, sum
-            if($this->aggregate['model'] == 'order' || $this->aggregate['model'] == 'inscription' || $this->aggregate['model'] == 'abonnement'){
+            if($this->isGrouped){
+                // first collection is year wee keep it
+                return $this->results->map(function ($collection, $year) {
 
-                if($this->isGrouped){
-                    return $this->results->map(function ($collection, $key) {
+                    if($collection->first() instanceof Collection) {
 
-                        if($this->isSumProduct()){
-                            $aggregate = new OrderAggregate($collection);
-                            $results   = $aggregate->titles();
-                        }
-                        else{
-                            $results = $collection;
-                        }
+                    }
 
-                        return [
-                            //'collection' => $results,
-                            'results'    => $this->makeAggregate($collection),
-                            'aggregate'  => $this->aggregate
-                        ];
-                    });
-                }
+                    $results = $this->isSumProduct() ? (new OrderAggregate($collection))->titles() : $collection;
 
-                return $this->makeAggregate($this->results);
+                    return [
+                        //'collection' => $results,
+                        'results'    => $this->makeAggregate($collection),
+                        'aggregate'  => $this->aggregate
+                    ];
+                });
             }
+
+            return $this->makeAggregate($this->results);
         }
 
         return $this->results;

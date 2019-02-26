@@ -1470,15 +1470,16 @@ Route::get('stats_test', function () {
         'authors' => [1]
     ];
 
-    $sort = ['start' => '2019-01-11', 'end' => '2019-02-31'];
+    $sort = ['start' => '2018-11-11', 'end' => '2019-02-31'];
 
-    $results = $worker->setFilters([])->setSort($sort)
+    $results = $worker->setFilters([])->setPeriod($sort)
         ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
         ->makeQuery('inscription')
+        ->group('month')
         ->aggregate();
 
     echo '<pre>';
-    print_r($results);
+    print_r($results->results);
     echo '</pre>';
     exit();
 });

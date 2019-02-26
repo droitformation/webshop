@@ -127,7 +127,7 @@ class StatsTest extends TestCase
     {
         $worker   = new \App\Droit\Statistique\StatistiqueWorker();
 
-        $month1 = \Carbon\Carbon::today()->subMonths(2)->format('Y-m');
+        $month1 = \Carbon\Carbon::today()->subMonths(2)->format('Y');
         $month2 = \Carbon\Carbon::today()->subMonths(3)->format('Y-m');
 
         $inscription1 = $this->makeInscription(\Carbon\Carbon::today()->subMonths(2)->toDateString());
@@ -144,7 +144,7 @@ class StatsTest extends TestCase
             ->group('month')
             ->aggregate();
 
-        $this->assertEquals([$month1,$month2],array_keys($results->toArray()));
+        $this->assertEquals([$month1],array_keys($results->toArray()));
     }
 
     public function testGroupingByWeek()
@@ -170,8 +170,8 @@ class StatsTest extends TestCase
         $results = $worker->setFilters([])->setPeriod($sort)
             ->setAggregate(['model' => 'order', 'name' => 'sum', 'type' => 'product']) // product or price or title (title,count)
             ->makeQuery('order')
-            ->group('month')
-            ->aggregate();
+            ->group('month');
+            //->aggregate();
 
         $expected = [
             ['count' => 1, 'title' => 'Autre titre'],
@@ -180,6 +180,35 @@ class StatsTest extends TestCase
 
         //$this->assertEquals($expected,array_values($results[$month1]['collection']->toArray()));
 
+    }
+
+    public function testGroupingSpanYears()
+    {
+        $worker   = new \App\Droit\Statistique\StatistiqueWorker();
+
+        $start = \Carbon\Carbon::today()->endOfYear()->subMonths(4)->toDateString();
+        $end   = \Carbon\Carbon::today()->endOfYear()->subMonths(1)->toDateString();
+
+        $sort = ['start' => $start, 'end' => $end];
+
+        $results = $worker->setFilters([])->setPeriod($sort)
+            ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
+            ->makeQuery('inscription')->group('month')->aggregate();
+
+        $this->assertFalse($worker->spanYears());
+
+        $start = \Carbon\Carbon::today()->subYear(4)->toDateString();
+        $end   = \Carbon\Carbon::today()->subYear(1)->toDateString();
+
+        $sort = ['start' => $start, 'end' => $end];
+
+        $worker   = new \App\Droit\Statistique\StatistiqueWorker();
+
+        $results = $worker->setFilters([])->setPeriod($sort)
+            ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
+            ->makeQuery('inscription')->group('month')->aggregate();
+
+        $this->assertTrue($worker->spanYears());
     }
 
     /*
