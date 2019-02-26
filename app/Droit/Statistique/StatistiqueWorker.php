@@ -124,10 +124,31 @@ class StatistiqueWorker
         return $this->results;
     }
 
-    public function chart($results)
+    public function chart($results,$search = null)
     {
-        return $results->mapWithKeys(function ($item, $key) {
-            return [$key => (int) $item['results']];
+        return $results->mapWithKeys(function ($item, $key) use ($search) {
+
+            return [$key => $item['results']];
+
+            if(is_int($item['results'])){
+                return [$key => $item['results']];
+            }
+
+            $color = rand(0,255).', '.rand(0,255).', '.rand(0,255);
+
+            $data = [
+                'label' => stat_search($search),
+                'data' => [1,2,3,4,5],
+                'backgroundColor' => 'rgba('.$color.', 0.2)',
+                'borderColor' => 'rgba('.$color.',1)',
+                'borderWidth' => 1
+            ];
+
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+            exit();
+
         });
     }
 

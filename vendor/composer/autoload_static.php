@@ -6401,6 +6401,7 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'Tests\\Feature\\SearchAdminAdresseTest' => __DIR__ . '/../..' . '/tests/Feature/backend/user/SearchAdminAdresseTest.php',
         'Tests\\Feature\\ShopAuthorTest' => __DIR__ . '/../..' . '/tests/Feature/backend/shop/ShopAuthorTest.php',
         'Tests\\Feature\\SlideWorkerTest' => __DIR__ . '/../..' . '/tests/Feature/SlideWorkerTest.php',
+        'Tests\\Feature\\StatsTest' => __DIR__ . '/../..' . '/tests/Feature/StatsTest.php',
         'Tests\\Feature\\SubscriptionAcceptTest' => __DIR__ . '/../..' . '/tests/Feature/newsletter/SubscriptionAcceptTest.php',
         'Tests\\Feature\\SubscriptionTest' => __DIR__ . '/../..' . '/tests/Feature/newsletter/SubscriptionTest.php',
         'Tests\\Feature\\SubscriptionWorkerTest' => __DIR__ . '/../..' . '/tests/Feature/newsletter/SubscriptionWorkerTest.php',

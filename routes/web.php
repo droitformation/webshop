@@ -448,7 +448,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         |--------------------------------------------------------------------------
         */
 
-        Route::match(['get', 'post'], 'statistique', 'Backend\StatistiqueController@index');
+        Route::match(['get', 'post'], 'statistique', 'Backend\StatistiqueController@index')->middleware('clean');
 
         /*
         |--------------------------------------------------------------------------

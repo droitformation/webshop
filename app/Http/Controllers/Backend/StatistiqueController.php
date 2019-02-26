@@ -54,27 +54,24 @@ class StatistiqueController extends Controller
 
         if(!empty($request->all())){
 
-            $data = collect(request()->all())->map(function ($item, $key) {
-                return  is_array($item) ? array_filter($item) : $item;
-            })->filter(function($value) {
-                return null !== $value;
-            })->toArray();
-
-            // [sum] => sum-price
-            $aggretate = explode('-',$data['sum']);
             $worker = new \App\Droit\Statistique\StatistiqueWorker();
 
-            $filter = isset($data['filters']) ? ($data['filters']) : [];
+            $aggretate = explode('-',$request->input('sum')); // [sum] => sum-price
 
-            $results = $worker->setFilters($filter)->setPeriod($data['period'])
-                ->setAggregate(['model' => $data['model'], 'name' => $aggretate[0], 'type' => $aggretate[1]]) // product or price or title (title,count)
-                ->makeQuery($data['model'])
-                ->group($data['group'])
+            $results = $worker->setFilters($request->input('filters',[]))->setPeriod($request->input('period'))
+                ->setAggregate(['model' => $request->input('model'), 'name' => $aggretate[0], 'type' => $aggretate[1]]) // product or price or title (title,count)
+                ->makeQuery($request->input('model'))
+                ->group($request->input('group'))
                 ->aggregate();
 
+            $datapoints = $worker->chart($results);
         }
 
-        return view('backend.stats.index')->with(['results' => $results, 'search' => $request->except('_token')]);
+        return view('backend.stats.index')->with([
+            'results' => $results,
+            'search' => $request->except('_token'),
+            'datapoints' => isset($datapoints) ? $datapoints : []
+        ]);
     }
 
     public function models(Request $request)

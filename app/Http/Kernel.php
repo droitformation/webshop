@@ -71,6 +71,7 @@ class Kernel extends HttpKernel {
         'account'        =>'App\Http\Middleware\AccountUpdateMiddleware',
         'access'         =>'App\Http\Middleware\AccessUserMiddleware',
         'impostor'         =>'App\Http\Middleware\BanImpostor',
+        'clean'         =>'App\Http\Middleware\CleanMiddleware',
 	];
 
 }

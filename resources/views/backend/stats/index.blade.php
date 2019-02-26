@@ -24,11 +24,10 @@
                         print_r($results);
                         echo '</pre>';
                         ?>
+
+                       {{-- @include('backend.stats.chart',['datapoints ' => $datapoints])--}}
+
                     @endif
-
-
-                    {{--    @include('backend.stats.chart') --}}
-
 
                 </div>
             </div>

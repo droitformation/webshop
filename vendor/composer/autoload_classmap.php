@@ -5756,6 +5756,7 @@ return array(
     'Tests\\Feature\\SearchAdminAdresseTest' => $baseDir . '/tests/Feature/backend/user/SearchAdminAdresseTest.php',
     'Tests\\Feature\\ShopAuthorTest' => $baseDir . '/tests/Feature/backend/shop/ShopAuthorTest.php',
     'Tests\\Feature\\SlideWorkerTest' => $baseDir . '/tests/Feature/SlideWorkerTest.php',
+    'Tests\\Feature\\StatsTest' => $baseDir . '/tests/Feature/StatsTest.php',
     'Tests\\Feature\\SubscriptionAcceptTest' => $baseDir . '/tests/Feature/newsletter/SubscriptionAcceptTest.php',
     'Tests\\Feature\\SubscriptionTest' => $baseDir . '/tests/Feature/newsletter/SubscriptionTest.php',
     'Tests\\Feature\\SubscriptionWorkerTest' => $baseDir . '/tests/Feature/newsletter/SubscriptionWorkerTest.php',
