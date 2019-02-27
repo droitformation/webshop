@@ -69,7 +69,7 @@ class StatistiqueController extends Controller
 
         return view('backend.stats.index')->with([
             'results' => $results,
-            'search' => $request->except('_token'),
+            'search'  => $request->except('_token'),
             'datapoints' => isset($datapoints) ? $datapoints : []
         ]);
     }

@@ -15,17 +15,12 @@
 
                     @if($results)
                         <?php
-
-                        $data = $results->mapWithKeys(function ($item, $key) {
-                            return [$key => (int) $item['results']];
-                        });
-
-                        echo '<pre>';
-                        print_r($results);
-                        echo '</pre>';
+                            echo '<pre>';
+                            print_r($datapoints);
+                            echo '</pre>';
                         ?>
 
-                       {{-- @include('backend.stats.chart',['datapoints ' => $datapoints])--}}
+                        @include('backend.stats.chart',['datapoints ' => $datapoints])
 
                     @endif
 

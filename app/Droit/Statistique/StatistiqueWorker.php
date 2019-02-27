@@ -9,12 +9,13 @@ class StatistiqueWorker
     protected $inscription;
     protected $abonnement;
 
-    protected $filters = [];
+    public $filters = [];
     public $period = [];
-    protected $aggregate = [];
+    public $aggregate = [];
 
     public $results = null;
     public $isGrouped = null;
+    public $isNested = null;
 
     public function __construct()
     {
@@ -86,7 +87,7 @@ class StatistiqueWorker
 
     public function group($when)
     {
-        $this->isGrouped = true;
+        $this->isGrouped = $when;
 
         $year = function ($item) {
             return $item->created_at->format('Y');
@@ -107,14 +108,6 @@ class StatistiqueWorker
         $grouping = ['month' => [$year,$month], 'year' => [$year], 'day' => [$year,$day], 'week' => [$year,$week]];
         $group    = isset($grouping[$when]) ? $grouping[$when] : [$year,$month];
 
-  /*      $this->results = $this->results->mapToGroups(function ($item, $key) use ($when) {
-
-            $grouping = ['month' => 'Y-m', 'year' => 'Y', 'day' => 'Y-m-d', 'week' => 'W Y'];
-            $group = isset($grouping[$when]) ? $grouping[$when] : 'm';
-
-            return [$item->created_at->format($group) => $item];
-        });*/
-
         $this->results = $this->results->groupBy($group, $preserveKeys = true);
 
         return $this;
@@ -131,21 +124,19 @@ class StatistiqueWorker
                 // first collection is year wee keep it
                 return $this->results->map(function ($collection, $year) {
 
+                    // there is a other depth
                     if($collection->first() instanceof Collection) {
-
+                        $this->isNested = true;
+                        return $collection->map(function ($coll, $year) {
+                            return $this->makeAggregate($coll);
+                        });
                     }
 
-                    $results = $this->isSumProduct() ? (new OrderAggregate($collection))->titles() : $collection;
-
-                    return [
-                        //'collection' => $results,
-                        'results'    => $this->makeAggregate($collection),
-                        'aggregate'  => $this->aggregate
-                    ];
+                    return $this->makeAggregate($collection);
                 });
             }
 
-            return $this->makeAggregate($this->results);
+            return $this->aggregateCollection($this->results);
         }
 
         return $this->results;
@@ -153,30 +144,63 @@ class StatistiqueWorker
 
     public function chart($results,$search = null)
     {
-        return $results->mapWithKeys(function ($item, $key) use ($search) {
+        if($this->isNested){
+            // multiple charts for years
+            $data = $results->mapWithKeys(function ($first, $year) use ($search) {
+                return [
+                    $year => [
+                        'year'   => $year,
+                        'labels' => $first->keys()->all(),
+                        'data'   => $first->map(function ($item,$key) {
+                            return $item['results'];
+                        })->all(),
+                    ]
+                ];
+            })->reduce(function ($carry, $item) {
 
-            return [$key => $item['results']];
+                $data['datasets']   = $carry['datasets'];
+                $data['labels']     = array_values(array_unique(array_merge($item['labels'],$carry['labels'])));
+                $data['datasets'][] = $this->set($item['data'],$item['year']);
 
-            if(is_int($item['results'])){
-                return [$key => $item['results']];
+                return $data;
+
+            }, ['labels' => [], 'datasets' => []]);
+
+            if($this->isGrouped){
+                $data['labels'] = collect($data['labels'])->map(function ($item, $key) {
+                    return $item;
+                    return [$key => span_to_name($item,$this->isGrouped)];
+                })->all();
             }
 
-            $color = rand(0,255).', '.rand(0,255).', '.rand(0,255);
+            return $data;
+        }
 
-            $data = [
-                'label' => stat_search($search),
-                'data' => [1,2,3,4,5],
-                'backgroundColor' => 'rgba('.$color.', 0.2)',
-                'borderColor' => 'rgba('.$color.',1)',
-                'borderWidth' => 1
-            ];
-
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
-            exit();
-
+        $data['labels'] = $results->keys()->map(function ($item, $key) {
+            return month_to_name($item);
         });
+
+        $data['datasets'][] = $this->set($results->pluck('results')->all(),'Somme');
+
+        return $data;
+/*
+        if(is_int($first['results'])){
+            return [$year => $first['results']];
+        }*/
+    }
+
+    public function set($data,$label = null)
+    {
+        $color = rand(0,255).', '.rand(0,255).', '.rand(0,255);
+        //$data = array_replace(array_fill_keys(range(0, 11), 0), $data);
+
+        return [
+            'label' => isset($label) ? $label : '',
+            'data'  => array_map('intval', $data),
+            'backgroundColor' => 'rgba('.$color.', 0.2)',
+            'borderColor' => 'rgba('.$color.',1)',
+            'borderWidth' => 1
+        ];
     }
 
     public function isSumProduct()
@@ -185,6 +209,14 @@ class StatistiqueWorker
     }
 
     public function makeAggregate($collection)
+    {
+        return [
+            //'collection' => $this->isSumProduct() ? (new OrderAggregate($collection))->titles() : $collection,
+            'results'    => $this->aggregateCollection($collection),
+        ];
+    }
+
+    public function aggregateCollection($collection)
     {
         $aggregate = new OrderAggregate($collection);
 

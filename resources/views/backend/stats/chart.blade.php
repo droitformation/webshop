@@ -1,6 +1,6 @@
 <div>
-    <div class="chartjs-tooltip" id="tooltip-0"></div>
-    <div class="chartjs-tooltip" id="tooltip-1"></div>
+{{--    <div class="chartjs-tooltip" id="tooltip-0"></div>
+    <div class="chartjs-tooltip" id="tooltip-1"></div>--}}
     <canvas id="myChart" width="400" height="100"></canvas>
 </div>
 <script>
@@ -20,7 +20,7 @@
 
         if (tooltip.dataPoints.length > 0) {
             tooltip.dataPoints.forEach(function(dataPoint) {
-                var content = [dataPoint.xLabel, dataPoint.yLabel].join(': ');
+                var content = parseFloat(dataPoint.yLabel);
                 var $tooltip = $('#tooltip-' + dataPoint.datasetIndex);
 
                 $tooltip.html(content);
@@ -36,30 +36,17 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: <?php echo json_encode($datapoints->keys()); ?>,
-            datasets: [{
-                label: <?php echo json_encode(stat_search($search)); ?>,
-                data: <?php echo json_encode($datapoints->values()); ?>,
-                backgroundColor: 'rgba(20, 120, 170, 0.2)',
-                borderColor: 'rgba(20, 120, 170,1)',
-                borderWidth: 1
-            },
-            {
-                label: <?php echo json_encode(stat_search($search)); ?>,
-                data: <?php echo json_encode($datapoints->reverse()->values()); ?>,
-                backgroundColor: 'rgba(20, 160, 170, 0.2)',
-                borderColor: 'rgba(20, 160, 170,1)',
-                borderWidth: 1
-            }]
+            labels: <?php echo json_encode($datapoints['labels']); ?>,
+            datasets: <?php echo json_encode($datapoints['datasets']); ?>,
         },
         options: {
             scales: {yAxes: [{ticks: {beginAtZero:true}}]},
-            tooltips: {
+         /*   tooltips: {
                 enabled: false,
                 mode: 'index',
                 intersect: false,
                 custom: customTooltips
-            }
+            }*/
         }
     });
 </script>

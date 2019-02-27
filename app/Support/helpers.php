@@ -19,6 +19,19 @@ function formatPeriod($start,$end)
     return $start.' au '.$end;
 }
 
+function span_to_name($when,$span){
+    setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+    if($span == 'month'){
+        return \Carbon\Carbon::parse(date('Y').'-'.$when.'-01')->formatLocalized('%B');
+    }
+    if($span == 'week'){
+        return 'semaine '.$when;
+    }
+
+    return $when;
+}
+
 function inPeriod($start,$end)
 {
     return ((date('Y-m-d') >= $start) && (date('Y-m-d') <= $end));

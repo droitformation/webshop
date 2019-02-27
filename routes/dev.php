@@ -1470,7 +1470,7 @@ Route::get('stats_test', function () {
         'authors' => [1]
     ];
 
-    $sort = ['start' => '2018-11-11', 'end' => '2019-02-31'];
+    $sort = ['start' => '2018-01-01', 'end' => '2019-02-31'];
 
     $results = $worker->setFilters([])->setPeriod($sort)
         ->setAggregate(['model' => 'inscription', 'name' => 'sum', 'type' => 'price']) // product or price or title (title,count)
@@ -1478,8 +1478,10 @@ Route::get('stats_test', function () {
         ->group('month')
         ->aggregate();
 
+    $chart = $worker->chart($results);
+
     echo '<pre>';
-    print_r($results->results);
+    print_r(month_to_name('02'));
     echo '</pre>';
     exit();
 });
