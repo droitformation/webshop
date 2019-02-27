@@ -41,12 +41,6 @@
         },
         options: {
             scales: {yAxes: [{ticks: {beginAtZero:true}}]},
-         /*   tooltips: {
-                enabled: false,
-                mode: 'index',
-                intersect: false,
-                custom: customTooltips
-            }*/
         }
     });
 </script>

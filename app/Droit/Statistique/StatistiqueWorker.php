@@ -157,7 +157,6 @@ class StatistiqueWorker
                     ]
                 ];
             })->reduce(function ($carry, $item) {
-
                 $data['datasets']   = $carry['datasets'];
                 $data['labels']     = array_values(array_unique(array_merge($item['labels'],$carry['labels'])));
                 $data['datasets'][] = $this->set($item['data'],$item['year']);
@@ -167,17 +166,20 @@ class StatistiqueWorker
             }, ['labels' => [], 'datasets' => []]);
 
             if($this->isGrouped){
-                $data['labels'] = collect($data['labels'])->map(function ($item, $key) {
-                    return $item;
-                    return [$key => span_to_name($item,$this->isGrouped)];
+
+                $nbr = $this->isGrouped == 'week' ? 52 : 12;
+
+                $data['labels'] = fillMissing(1,$nbr, array_combine($data['labels'], $data['labels']));
+                $data['labels'] = collect($data['labels'])->mapWithKeys(function ($item, $key) {
+                    return [$key => span_to_name($key,$this->isGrouped)];
                 })->all();
             }
 
             return $data;
         }
 
-        $data['labels'] = $results->keys()->map(function ($item, $key) {
-            return month_to_name($item);
+        $data['labels'] = $results->keys()->mapWithKeys(function ($item, $key) {
+            return [(string) $item => span_to_name($item,$this->isGrouped)];
         });
 
         $data['datasets'][] = $this->set($results->pluck('results')->all(),'Somme');

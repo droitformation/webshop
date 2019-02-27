@@ -218,4 +218,32 @@ class HelperMiscTest extends TestCase
 
         $this->assertEquals($expect,$actual);
     }
+
+    public function testFilleMissingKeys()
+    {
+        $data = [
+            '01' => 12,
+            '02' => 5,
+            '05' => 2,
+            '06' => 5,
+            '10' => 1
+        ];
+
+        $results = fillMissing(1,10, $data);
+
+        $expect = [
+            '01' => 12,
+            '02' => 5,
+            '03'=> 0,
+            '04' => 0,
+            '05' => 2,
+            '06' => 5,
+            '07' => 0,
+            '08' => 0,
+            '09' => 0,
+            '10' => 1
+        ];
+
+        $this->assertEquals($results,$expect);
+    }
 }

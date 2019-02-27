@@ -217,5 +217,21 @@ function stat_search($data){
     if($data['sum'] == 'sum-title'){
         return 'Ventes de livres par '.$perodicite;
     }
+}
 
+function fillMissing($start,$end,$data){
+    $range = range($start,$end);
+    $result = [];
+
+    foreach($range as $key){
+        $key = str_pad($key, 2, '0', STR_PAD_LEFT);
+        if(isset($data[$key])){
+            $result[$key] = $data[$key];
+        }
+        else{
+            $result[$key] = 0;
+        }
+    }
+
+    return $result;
 }
