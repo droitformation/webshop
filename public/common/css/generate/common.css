@@ -135,13 +135,21 @@ ol li{
     display: block;
 }
 
+#themes p{
+    margin-bottom:5px;
+    padding-bottom: 0;
+}
+
 #themes  ul{
     margin-left: 5px;
-    margin-top: 10px;
+    margin-top:0;
     padding-left: 5px;
 }
 
 #themes ul li{
     margin-left: 5px;
     padding-left: 5px;
+    line-height: 15px;
+    margin-bottom: 2px;
+    font-size: 12px;
 }

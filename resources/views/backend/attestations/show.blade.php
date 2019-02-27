@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="comment" class="col-sm-3 control-label">Remarques</label>
+                            <label for="comment" class="col-sm-3 control-label">Remarques (ajouté avec les thèmes)</label>
                             <div class="col-sm-5">
                                 <textarea name="comment" cols="50" rows="4" class="redactorSimple form-control">{!! $attestation->comment !!}</textarea>
                             </div>

@@ -40,6 +40,7 @@ $( function() {
         lang: 'fr',
         formatting: ['p'],
         linkNewTab: true,
-        buttons: ['format','|','lists']
+        buttons: ['format','|','lists'],
+        formatting: ['h3','p']
     });
 });
