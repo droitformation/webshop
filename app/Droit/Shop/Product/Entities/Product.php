@@ -64,7 +64,7 @@ class Product extends Model{
 
         if(isset($this->pivot) && $this->pivot->price)
         {
-            return $money->format($this->pivot->price / 100);
+            return $money->format($this->pivot->price / 100,3);
         }
 
         return null;
@@ -78,11 +78,11 @@ class Product extends Model{
 
             if($this->pivot->rabais) {
                 $price = ($this->price - ($this->price * $this->pivot->rabais/100)) / 100;
-                return $money->format($price);
+                return $money->format($price,3);
             }
 
             if($this->pivot->price){
-                return $money->format($this->pivot->price / 100);
+                return $money->format($this->pivot->price / 100,3);
             }
 
             if($this->pivot->isFree){

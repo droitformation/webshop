@@ -73,10 +73,10 @@ class Money {
      * @param float Number to be formatted
      * @return float Formatted number
      */
-    public function format($input) {
+    public function format($input,$decimal = 2) {
         // Round number and format to 2 decimal places
         //return number_format(round($input, 2), 2);
-        return number_format((float)$input, 2, '.', '');
+        return number_format((float)$input, $decimal, '.', '');
     }
 
     /**

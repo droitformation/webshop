@@ -164,6 +164,34 @@ class OrderMakerTest extends TestCase
         $this->assertEquals('3000', $total);
     }
 
+    public function testCalculFormatmillieume()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $factory = new \tests\factories\ObjectFactory();
+
+        $prod1 = $factory->makeProduct([]);
+        $prod2 = $factory->makeProduct([]);
+
+        $prod1->weight = '1000';
+        $prod1->price = '5900';
+        $prod1->save();
+
+        $order = [
+            'products' => [0 => $prod1->id],
+            'qty'      => [0 => 124],
+            'rabais'   => [],
+            'gratuit'  => [],
+            'price'    => [0 => 10.875]
+        ];
+
+        // Calculations
+
+        $total = $make->total($order, $proprety = 'price');
+
+        $this->assertEquals('134850', $total);
+    }
+
     public function testMapWeightProducts()
     {
         $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
