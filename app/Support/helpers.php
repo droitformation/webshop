@@ -236,3 +236,21 @@ function fillMissing($start,$end,$data){
 
     return $result;
 }
+
+function groupedPeriod($period){
+    switch($period)
+    {
+        case 'week':
+            return 52;
+            break;
+        case 'day':
+            return 365;
+            break;
+        case 'month':
+            return 12;
+            break;
+        default :
+            return 12;
+            break;
+    }
+}

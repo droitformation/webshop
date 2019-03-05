@@ -127,14 +127,14 @@ class StatsTest extends TestCase
     {
         $worker   = new \App\Droit\Statistique\StatistiqueWorker();
 
-        $month1 = \Carbon\Carbon::today()->subMonths(2)->format('Y');
-        $month2 = \Carbon\Carbon::today()->subMonths(3)->format('Y-m');
+        $month1 = \Carbon\Carbon::today()->endOfYear()->subMonths(2)->format('Y');
+        $month2 = \Carbon\Carbon::today()->endOfYear()->subMonths(3)->format('Y-m');
 
-        $inscription1 = $this->makeInscription(\Carbon\Carbon::today()->subMonths(2)->toDateString());
-        $inscription2 = $this->makeInscription(\Carbon\Carbon::today()->subMonths(3)->toDateString());
+        $inscription1 = $this->makeInscription(\Carbon\Carbon::today()->endOfYear()->subMonths(2)->toDateString());
+        $inscription2 = $this->makeInscription(\Carbon\Carbon::today()->endOfYear()->subMonths(3)->toDateString());
 
-        $start = \Carbon\Carbon::today()->subMonths(4)->toDateString();
-        $end   = \Carbon\Carbon::today()->subMonths(1)->toDateString();
+        $start = \Carbon\Carbon::today()->endOfYear()->subMonths(4)->toDateString();
+        $end   = \Carbon\Carbon::today()->endOfYear()->subMonths(1)->toDateString();
 
         $sort = ['start' => $start, 'end' => $end];
 
@@ -156,14 +156,14 @@ class StatsTest extends TestCase
         $product2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['title' => 'Second titre','price' => 2000]);
         $product3 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['title' => 'Autre titre','price' => 2000]);
 
-        $order1 = $this->makeOrder([$product1->id, $product1->id, $product3->id],'12000', \Carbon\Carbon::today()->subMonths(3)->toDateTimeString());
-        $order2 = $this->makeOrder([$product2->id, $product3->id],'6000', \Carbon\Carbon::today()->subMonths(4)->toDateTimeString());
+        $order1 = $this->makeOrder([$product1->id, $product1->id, $product3->id],'12000', \Carbon\Carbon::today()->endOfYear()->subMonths(3)->toDateTimeString());
+        $order2 = $this->makeOrder([$product2->id, $product3->id],'6000', \Carbon\Carbon::today()->endOfYear()->subMonths(4)->toDateTimeString());
 
-        $month1 = \Carbon\Carbon::today()->subMonths(3)->format('Y-m');
-        $month2 = \Carbon\Carbon::today()->subMonths(4)->format('Y-m');
+        $month1 = \Carbon\Carbon::today()->endOfYear()->subMonths(3)->format('Y-m');
+        $month2 = \Carbon\Carbon::today()->endOfYear()->subMonths(4)->format('Y-m');
 
-        $start = \Carbon\Carbon::today()->subMonths(6)->toDateString();
-        $end   = \Carbon\Carbon::today()->subMonths(1)->toDateString();
+        $start = \Carbon\Carbon::today()->endOfYear()->subMonths(6)->toDateString();
+        $end   = \Carbon\Carbon::today()->endOfYear()->subMonths(1)->toDateString();
 
         $sort = ['start' => $start, 'end' => $end];
 
@@ -197,8 +197,8 @@ class StatsTest extends TestCase
 
         $this->assertFalse($worker->spanYears());
 
-        $start = \Carbon\Carbon::today()->subYear(4)->toDateString();
-        $end   = \Carbon\Carbon::today()->subYear(1)->toDateString();
+        $start = \Carbon\Carbon::today()->endOfYear()->subYear(4)->toDateString();
+        $end   = \Carbon\Carbon::today()->endOfYear()->subYear(1)->toDateString();
 
         $sort = ['start' => $start, 'end' => $end];
 

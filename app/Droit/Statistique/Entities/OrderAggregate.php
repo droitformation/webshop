@@ -40,6 +40,17 @@ class OrderAggregate
             return $this->titles();
         }
 
+        if($type == 'change'){
+            return $this->results->groupBy([
+                function ($item) {
+                    return $item->created_at;
+                },
+                function ($item) {
+                    return $item->deleted_at;
+                },
+            ], $preserveKeys = true);
+        }
+
         return $this->results->count(); // type of price, full or free
     }
 

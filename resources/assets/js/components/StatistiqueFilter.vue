@@ -21,7 +21,7 @@
                   <option v-if="model == 'order'" value="sum-title">Nombre de vente par livres</option>
                   <option v-if="model == 'inscription'" value="sum-price">Somme prix inscriptions</option>
                   <option v-if="model == 'abonnement'" value="sum-status">Status</option>
-                  <option v-if="model == 'abonnement'" value="sum-price">Somme prix</option>
+                  <option v-if="model == 'abonnement'" value="sum-change">Nombre crée/supprimé</option>
                </select>
             </div>
          </div>
@@ -46,7 +46,6 @@
                <span class="input-group-addon">Grouper par</span>
                <select class="form-control" v-model="group" name="group">
                   <option value="">Choix</option>
-                  <option value="day">Jour</option>
                   <option value="month">Mois</option>
                   <option value="week">Semaine</option>
                   <option value="year">Année</option>

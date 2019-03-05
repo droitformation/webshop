@@ -15,9 +15,9 @@
 
                     @if($results)
                         <?php
-                         /*   echo '<pre>';
-                            print_r($datapoints);
-                            echo '</pre>';*/
+                         /**/   echo '<pre>';
+                            print_r($results);
+                            echo '</pre>';
                         ?>
 
                         @if(isset($datapoints['labels']) && $datapoints['datasets'])

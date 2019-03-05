@@ -234,7 +234,7 @@ class HelperMiscTest extends TestCase
         $expect = [
             '01' => 12,
             '02' => 5,
-            '03'=> 0,
+            '03' => 0,
             '04' => 0,
             '05' => 2,
             '06' => 5,
@@ -246,4 +246,5 @@ class HelperMiscTest extends TestCase
 
         $this->assertEquals($results,$expect);
     }
+
 }

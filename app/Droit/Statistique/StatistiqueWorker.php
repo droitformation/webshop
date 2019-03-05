@@ -102,7 +102,7 @@ class StatistiqueWorker
         };
 
         $day = function ($item) {
-            return $item->created_at->format('m-d');
+            return $item->created_at->format('md');
         };
 
         $grouping = ['month' => [$year,$month], 'year' => [$year], 'day' => [$year,$day], 'week' => [$year,$week]];
@@ -167,7 +167,7 @@ class StatistiqueWorker
 
             if($this->isGrouped){
 
-                $nbr = $this->isGrouped == 'week' ? 52 : 12;
+                $nbr = groupedPeriod($this->isGrouped);
 
                 $data['labels'] = fillMissing(1,$nbr, array_combine($data['labels'], $data['labels']));
                 $data['labels'] = collect($data['labels'])->mapWithKeys(function ($item, $key) {
@@ -214,7 +214,7 @@ class StatistiqueWorker
     {
         return [
             //'collection' => $this->isSumProduct() ? (new OrderAggregate($collection))->titles() : $collection,
-            'results'    => $this->aggregateCollection($collection),
+            'results' => $this->aggregateCollection($collection),
         ];
     }
 

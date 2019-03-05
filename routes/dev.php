@@ -1457,14 +1457,29 @@ Route::get('/mailable_slide', function () {
 
 Route::get('stats_test', function () {
 
-    $model = new \App\Droit\Shop\Order\Entities\Order();
-
+   // $model = new \App\Droit\Shop\Order\Entities\Order();
+    $model = new \App\Droit\Abo\Entities\Abo_users();
     $worker = new \App\Droit\Statistique\StatistiqueWorker();
-    $period = ['start' => '2019-01-21','end' => '2019-01-30'];
 
-    //$orders = $model->with(['products.authors','products.domains'])->period($period)->authors([1])->get();
+    $period = ['start' => '2018-01-01','end' => '2019-01-30'];
+
+    $abos = $model->where('abo_id','=',2)->get();
     //$orders = $model->with(['products.authors','products.domains'])->period($period)->categories([15])->get();
     //$orders = $model->with(['products.authors','products.domains'])->period($period)->domains([1])->get();
+/*
+    list($underThree, $equalOrAboveThree) = $collection->partition(function ($i) {
+        return $i < 3;
+    });*/
+
+
+    $grouped =  $abos->groupBy(function ($item, $key) {
+        return $item->created_at->format('Y');
+    });
+
+    echo '<pre>';//     return $item->deleted_at->format('Y');
+    print_r($grouped);
+    echo '</pre>';
+    exit();
 
     $filters = [
         'authors' => [1]
@@ -1480,10 +1495,7 @@ Route::get('stats_test', function () {
 
     $chart = $worker->chart($results);
 
-    echo '<pre>';
-    print_r(month_to_name('02'));
-    echo '</pre>';
-    exit();
+
 });
 
 
