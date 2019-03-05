@@ -172,6 +172,11 @@ class StatistiqueWorker
                 $data['labels'] = fillMissing(1,$nbr, array_combine($data['labels'], $data['labels']));
                 $data['labels'] = collect($data['labels'])->mapWithKeys(function ($item, $key) {
                     return [$key => span_to_name($key,$this->isGrouped)];
+                })->values()->all();
+
+                $data['datasets'] = collect($data['datasets'])->map(function ($set, $key) use ($nbr) {
+                    $set['data'] = array_values(fillMissing(1,$nbr, $set['data']));
+                    return $set;
                 })->all();
             }
 
@@ -185,16 +190,11 @@ class StatistiqueWorker
         $data['datasets'][] = $this->set($results->pluck('results')->all(),'Somme');
 
         return $data;
-/*
-        if(is_int($first['results'])){
-            return [$year => $first['results']];
-        }*/
     }
 
     public function set($data,$label = null)
     {
         $color = rand(0,255).', '.rand(0,255).', '.rand(0,255);
-        //$data = array_replace(array_fill_keys(range(0, 11), 0), $data);
 
         return [
             'label' => isset($label) ? $label : '',

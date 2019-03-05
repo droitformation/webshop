@@ -15,12 +15,14 @@
 
                     @if($results)
                         <?php
-                            echo '<pre>';
+                         /*   echo '<pre>';
                             print_r($datapoints);
-                            echo '</pre>';
+                            echo '</pre>';*/
                         ?>
 
-                        @include('backend.stats.chart',['datapoints ' => $datapoints])
+                        @if(isset($datapoints['labels']) && $datapoints['datasets'])
+                            @include('backend.stats.chart',['datapoints ' => $datapoints])
+                        @endif
 
                     @endif
 
