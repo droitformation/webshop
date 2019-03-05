@@ -90,6 +90,47 @@ class OrderTest extends TestCase
         \DB::table('shop_order_paquets')->truncate();
     }
 
+    public function testCreateOrderWithcalcul()
+    {
+        \DB::table('shop_orders')->truncate();
+        \DB::table('shop_paquets')->truncate();
+        \DB::table('shop_order_paquets')->truncate();
+
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $product1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 5900]);
+
+        $data = [
+            'user_id' => $user->id,
+            'order' => [
+                'products' => [0 => $product1->id],
+                'qty'      => [0 => 124],
+                'rabais'   => [],
+                'gratuit'  => [],
+                'price'    => [0 => 10.88]
+            ],
+            'admin'   => 1,
+            'shipping_id' => 6,
+            'adresse' => [],
+            'tva'     => [],
+            'message' => []
+        ];
+
+        $total = 1349.12;
+
+        $response = $this->call('POST', '/admin/order', ['data' => json_encode($data)]);
+
+        $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $order  = $model->getLast(1)->first();
+
+        $this->assertEquals($total,$order->total_with_shipping);
+
+        \DB::table('shop_orders')->truncate();
+        \DB::table('shop_paquets')->truncate();
+        \DB::table('shop_order_paquets')->truncate();
+    }
+
     public function testCreateOrderWithStepFree()
     {
         $make = new \tests\factories\ObjectFactory();
