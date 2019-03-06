@@ -74,6 +74,8 @@ class AboUserEloquent implements AboUserInterface{
             'remarque'       => isset($data['remarque']) ? $data['remarque'] : null,
             'status'         => $status,
             'renouvellement' => $data['renouvellement'],
+            'created_at'    => date('Y-m-d G:i:s'),
+            'updated_at'    => date('Y-m-d G:i:s')
         ));
 
         if( ! $abo_user )
@@ -142,5 +144,9 @@ class AboUserEloquent implements AboUserInterface{
         }
 
         return $facture;
+    }
+
+    public function countByYears($years){
+        return $this->abo_user->whereIn(DB::raw("year(created_at)"), $years)->count();
     }
 }

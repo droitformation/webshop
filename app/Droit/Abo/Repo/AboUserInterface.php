@@ -11,4 +11,7 @@ interface AboUserInterface {
     public function update(array $data);
     public function restore($id);
     public function delete($id);
+
+    /* stats */
+    public function countByYears($years);
 }

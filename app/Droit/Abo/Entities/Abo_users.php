@@ -177,7 +177,7 @@ class Abo_users extends Model{
         }
     }
 
-    public function scopeAbo($query, $abo)
+    public function scopeMain($query, $abo)
     {
         if ($abo) {
             $query->where('abo_id','=',$abo)->withTrashed();

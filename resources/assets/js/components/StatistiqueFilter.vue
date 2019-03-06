@@ -21,35 +21,37 @@
                   <option v-if="model == 'order'" value="sum-title">Nombre de vente par livres</option>
                   <option v-if="model == 'inscription'" value="sum-price">Somme prix inscriptions</option>
                   <option v-if="model == 'abonnement'" value="sum-status">Status</option>
-                  <option v-if="model == 'abonnement'" value="sum-change">Nombre crée/supprimé</option>
+                  <option v-if="model == 'abonnement'" value="sum-change">Nombre crée/supprimé par année</option>
                </select>
             </div>
          </div>
       </div>
 
-      <h4 style="margin-top: 20px;">Période</h4>
-      <div class="row">
-         <div class="col-lg-2 col-md-2 col-xs-12">
-            <div class="input-group">
-               <span class="input-group-addon">Du</span>
-               <input type="text" name="period[start]" v-model="start" data-period="start" class="form-control datePickerStats" value="" placeholder="Début">
+      <div v-if="sum != 'sum-change'">
+         <h4 style="margin-top: 20px;">Période</h4>
+         <div class="row">
+            <div class="col-lg-2 col-md-2 col-xs-12">
+               <div class="input-group">
+                  <span class="input-group-addon">Du</span>
+                  <input type="text" name="period[start]" v-model="start" data-period="start" class="form-control datePickerStats" value="" placeholder="Début">
+               </div>
             </div>
-         </div>
-         <div class="col-lg-2 col-md-2 col-xs-12">
-            <div class="input-group">
-               <span class="input-group-addon">au</span>
-               <input type="text" name="period[end]" v-model="end" data-period="end" class="form-control datePickerStats" value="" placeholder="Fin">
+            <div class="col-lg-2 col-md-2 col-xs-12">
+               <div class="input-group">
+                  <span class="input-group-addon">au</span>
+                  <input type="text" name="period[end]" v-model="end" data-period="end" class="form-control datePickerStats" value="" placeholder="Fin">
+               </div>
             </div>
-         </div>
-         <div class="col-lg-3 col-md-3 col-xs-12">
-            <div class="input-group">
-               <span class="input-group-addon">Grouper par</span>
-               <select class="form-control" v-model="group" name="group">
-                  <option value="">Choix</option>
-                  <option value="month">Mois</option>
-                  <option value="week">Semaine</option>
-                  <option value="year">Année</option>
-               </select>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+               <div class="input-group">
+                  <span class="input-group-addon">Grouper par</span>
+                  <select class="form-control" v-model="group" name="group">
+                     <option value="">Choix</option>
+                     <option value="month">Mois</option>
+                     <option value="week">Semaine</option>
+                     <option value="year">Année</option>
+                  </select>
+               </div>
             </div>
          </div>
       </div>
@@ -58,9 +60,14 @@
          <div class="row">
             <div class="col-lg-4 col-md-4 col-xs-12" v-for="(filters,index) in models">
                 <label><strong>{{ index }}</strong></label>
-                <select class="form-control select-filter-index" :v-model="'data'+index" :id="'select-filter-'+ index" :rel="index" multiple :name="'filters['+index+'][]'">
+                <select v-if="index != 'abo'" class="form-control select-filter-index" :v-model="'data'+index" :id="'select-filter-'+ index" :rel="index" multiple :name="'filters['+index+'][]'">
                     <option v-for="model in filters" required v-bind:value="model.id">{{ model.title }}</option>
                 </select>
+
+               <select v-if="index == 'abo'" class="form-control select-filter-index" :v-model="'data'+index" :id="'select-filter-'+ index" :rel="index" :name="'filters['+index+']'">
+                  <option v-for="model in filters" required v-bind:value="model.id">{{ model.title }}</option>
+               </select>
+
             </div>
          </div>
       </div>

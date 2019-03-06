@@ -41,14 +41,7 @@ class OrderAggregate
         }
 
         if($type == 'change'){
-            return $this->results->groupBy([
-                function ($item) {
-                    return $item->created_at;
-                },
-                function ($item) {
-                    return $item->deleted_at;
-                },
-            ], $preserveKeys = true);
+            return $this->results;
         }
 
         return $this->results->count(); // type of price, full or free

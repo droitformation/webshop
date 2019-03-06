@@ -9,6 +9,8 @@ class StatistiqueWorker
     protected $inscription;
     protected $abonnement;
 
+    protected $model;
+
     public $filters = [];
     public $period = [];
     public $aggregate = [];
@@ -68,14 +70,17 @@ class StatistiqueWorker
 
     public function makeQuery($model)
     {
+        $this->model = $model;
+
         $q = $this->$model;
 
-        if($this->period){
+        if($this->period && !empty($this->period)){
             $q = $q->period($this->period);
         }
 
         if(!empty($this->filters)){
             foreach($this->filters as $relation => $values){
+                $relation = $relation == 'abo' ? 'main' : $relation;
                 $q = $q->$relation($values);
             }
         }
@@ -87,37 +92,43 @@ class StatistiqueWorker
 
     public function group($when)
     {
-        $this->isGrouped = $when;
+        if($when){
+            $this->isGrouped = $when;
 
-        $year = function ($item) {
-            return $item->created_at->format('Y');
-        };
+            $year = function ($item) {
+                return $item->created_at->format('Y');
+            };
 
-        $month = function ($item) {
-            return $item->created_at->format('m');
-        };
+            $month = function ($item) {
+                return $item->created_at->format('m');
+            };
 
-        $week = function ($item) {
-            return $item->created_at->format('W');
-        };
+            $week = function ($item) {
+                return $item->created_at->format('W');
+            };
 
-        $day = function ($item) {
-            return $item->created_at->format('md');
-        };
+            $day = function ($item) {
+                return $item->created_at->format('md');
+            };
 
-        $grouping = ['month' => [$year,$month], 'year' => [$year], 'day' => [$year,$day], 'week' => [$year,$week]];
-        $group    = isset($grouping[$when]) ? $grouping[$when] : [$year,$month];
+            $grouping = ['month' => [$year,$month], 'year' => [$year], 'day' => [$year,$day], 'week' => [$year,$week]];
+            $group    = isset($grouping[$when]) ? $grouping[$when] : [$year,$month];
 
-        $this->results = $this->results->groupBy($group, $preserveKeys = true);
+            $this->results = $this->results->groupBy($group, $preserveKeys = true);
+        }
 
         return $this;
     }
 
-    public function aggregate()
+    public function doAggregate()
     {
         if($this->aggregate){
 
             if($this->results->isEmpty()) return collect([]);
+
+            if($this->model == 'abonnement' && $this->aggregate['type'] == 'change'){
+                return $this->results;
+            }
 
             // by price => orders, by products, by title, sum
             if($this->isGrouped){
@@ -142,69 +153,6 @@ class StatistiqueWorker
         return $this->results;
     }
 
-    public function chart($results,$search = null)
-    {
-        if($this->isNested){
-            // multiple charts for years
-            $data = $results->mapWithKeys(function ($first, $year) use ($search) {
-                return [
-                    $year => [
-                        'year'   => $year,
-                        'labels' => $first->keys()->all(),
-                        'data'   => $first->map(function ($item,$key) {
-                            return $item['results'];
-                        })->all(),
-                    ]
-                ];
-            })->reduce(function ($carry, $item) {
-                $data['datasets']   = $carry['datasets'];
-                $data['labels']     = array_values(array_unique(array_merge($item['labels'],$carry['labels'])));
-                $data['datasets'][] = $this->set($item['data'],$item['year']);
-
-                return $data;
-
-            }, ['labels' => [], 'datasets' => []]);
-
-            if($this->isGrouped){
-
-                $nbr = groupedPeriod($this->isGrouped);
-
-                $data['labels'] = fillMissing(1,$nbr, array_combine($data['labels'], $data['labels']));
-                $data['labels'] = collect($data['labels'])->mapWithKeys(function ($item, $key) {
-                    return [$key => span_to_name($key,$this->isGrouped)];
-                })->values()->all();
-
-                $data['datasets'] = collect($data['datasets'])->map(function ($set, $key) use ($nbr) {
-                    $set['data'] = array_values(fillMissing(1,$nbr, $set['data']));
-                    return $set;
-                })->all();
-            }
-
-            return $data;
-        }
-
-        $data['labels'] = $results->keys()->mapWithKeys(function ($item, $key) {
-            return [(string) $item => span_to_name($item,$this->isGrouped)];
-        });
-
-        $data['datasets'][] = $this->set($results->pluck('results')->all(),'Somme');
-
-        return $data;
-    }
-
-    public function set($data,$label = null)
-    {
-        $color = rand(0,255).', '.rand(0,255).', '.rand(0,255);
-
-        return [
-            'label' => isset($label) ? $label : '',
-            'data'  => array_map('intval', $data),
-            'backgroundColor' => 'rgba('.$color.', 0.2)',
-            'borderColor' => 'rgba('.$color.',1)',
-            'borderWidth' => 1
-        ];
-    }
-
     public function isSumProduct()
     {
         return ($this->aggregate['model'] == 'order' && $this->aggregate['name'] == 'sum' && $this->aggregate['type'] == 'product') ? true : false;
@@ -226,5 +174,21 @@ class StatistiqueWorker
         $type = $this->aggregate['type'];
 
         return $aggregate->$func($type);
+    }
+
+    public function chart($results)
+    {
+        if($this->model == 'abonnement' && $this->aggregate['type'] == 'change'){
+            $chart = new \App\Droit\Statistique\Entites\AboChart($results);
+
+            return $chart->setAbo($this->filters['abo'])->chart();
+        }
+
+        if($this->model == 'order' || $this->model == 'inscription'){
+            $chart = new \App\Droit\Statistique\Entites\OrderChart($results);
+
+            return $chart->chart();
+        }
+
     }
 }

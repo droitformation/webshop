@@ -58,13 +58,15 @@ class StatistiqueController extends Controller
 
             $aggretate = explode('-',$request->input('sum')); // [sum] => sum-price
 
-            $results = $worker->setFilters($request->input('filters',[]))->setPeriod($request->input('period'))
+            $results = $worker->setFilters($request->input('filters',[]))
+                ->setPeriod($request->input('period',[]))
                 ->setAggregate(['model' => $request->input('model'), 'name' => $aggretate[0], 'type' => $aggretate[1]]) // product or price or title (title,count)
                 ->makeQuery($request->input('model'))
-                ->group($request->input('group'))
-                ->aggregate();
+                ->group($request->input('group',null))
+                ->doAggregate();
 
             $datapoints = $worker->chart($results);
+
         }
 
         return view('backend.stats.index')->with([

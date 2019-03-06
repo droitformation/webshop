@@ -1460,10 +1460,9 @@ Route::get('stats_test', function () {
    // $model = new \App\Droit\Shop\Order\Entities\Order();
     $model = new \App\Droit\Abo\Entities\Abo_users();
     $worker = new \App\Droit\Statistique\StatistiqueWorker();
-
     $period = ['start' => '2018-01-01','end' => '2019-01-30'];
 
-    $abos = $model->where('abo_id','=',2)->get();
+    $abos = $model->where('abo_id','=',2)->withTrashed()->orderBy('created_at')->get();
     //$orders = $model->with(['products.authors','products.domains'])->period($period)->categories([15])->get();
     //$orders = $model->with(['products.authors','products.domains'])->period($period)->domains([1])->get();
 /*
@@ -1471,13 +1470,52 @@ Route::get('stats_test', function () {
         return $i < 3;
     });*/
 
-
-    $grouped =  $abos->groupBy(function ($item, $key) {
+/*    $grouped = $abos->groupBy(function ($item, $key) {
         return $item->created_at->format('Y');
+    })->map(function ($collection, $year) {
+        return $collection->mapToGroups(function ($item, $key) {
+            $status = $item->deleted_at ? 'deleted' : 'created';
+            return [$status =>$item];
+        })->map(function ($collection, $year) {
+            return $collection->count();
+        });
     });
 
-    echo '<pre>';//     return $item->deleted_at->format('Y');
-    print_r($grouped);
+    $grouped2 = $grouped->keys()
+        ->reduce(function ($data, $year) use ($model,$grouped) {
+        $data['current'][] = $year;
+        $items = $model::where('abo_id','=',2)->whereIn(DB::raw("year(created_at)"), $data['current'])->withTrashed()->get();
+        $count = $grouped[$year];
+
+        $data[$year]['count']     = $items->count();
+        $data[$year]['created']   = $count->get('created');
+        $data[$year]['deleted']   = $count->get('deleted');
+
+        return $data;
+    }, []);
+
+    unset($grouped2['current']);
+    $data = collect($grouped2);*/
+
+    $chart = new \App\Droit\Statistique\Entites\AboChart($abos);
+
+    echo '<pre>';
+    print_r($chart->setAbo(2)->chart());
+    echo '</pre>';
+    exit();
+
+    $counted = [];
+    $current = [];
+    foreach ($grouped->keys() as $year){
+        $current[] = $year;
+        echo '<pre>';
+        print_r($current);
+        echo '</pre>';
+        $counted[] = $model::where('abo_id','=',2)->whereIn(DB::raw("year(created_at)"), $current)->withTrashed()->count();
+    }
+
+    echo '<pre>';
+    print_r($counted);
     echo '</pre>';
     exit();
 
