@@ -254,3 +254,20 @@ function groupedPeriod($period){
             break;
     }
 }
+
+function difference_count($plus,$minus){
+    return $plus - $minus;
+}
+
+function whatTable($search){
+
+    if(!empty($search)){
+        if(isset($search['model']) == 'abonnement' && isset($search['sum']) == 'sum-change'){
+            return 'backend.stats.table';
+        }
+
+        if(isset($search['model']) == 'abonnement' && isset($search['sum']) == 'sum-status'){
+            return 'abo-status';
+        }
+    }
+}

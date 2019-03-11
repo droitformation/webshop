@@ -179,9 +179,15 @@ class StatistiqueWorker
     public function chart($results)
     {
         if($this->model == 'abonnement' && $this->aggregate['type'] == 'change'){
-            $chart = new \App\Droit\Statistique\Entites\AboChart($results);
+            $chart = new \App\Droit\Statistique\Entites\AboChangeChart($results);
 
             return $chart->setAbo($this->filters['abo'])->chart();
+        }
+
+        if($this->model == 'abonnement' && $this->aggregate['type'] == 'status'){
+            $chart = new \App\Droit\Statistique\Entites\AboStatusChart($results);
+
+            return $chart->chart();
         }
 
         if($this->model == 'order' || $this->model == 'inscription'){

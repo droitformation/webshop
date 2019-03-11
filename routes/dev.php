@@ -1497,7 +1497,7 @@ Route::get('stats_test', function () {
     unset($grouped2['current']);
     $data = collect($grouped2);*/
 
-    $chart = new \App\Droit\Statistique\Entites\AboChart($abos);
+    $chart = new \App\Droit\Statistique\Entites\AboChangeChart($abos);
 
     echo '<pre>';
     print_r($chart->setAbo(2)->chart());

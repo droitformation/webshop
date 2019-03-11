@@ -14,13 +14,17 @@
                     </div>
 
                     @if($results)
+
                         <?php
-                         /**/   echo '<pre>';
-                            print_r($results);
-                            echo '</pre>';
+                      /* */ echo '<pre>';
+                        print_r($search);
+                        echo '</pre>';
                         ?>
 
-                        @if(isset($datapoints['labels']) && $datapoints['datasets'])
+                            @if(isset($datapoints['labels']) && $datapoints['datasets'])
+
+                            @include(whatTable($search))
+
                             @include('backend.stats.chart',['datapoints ' => $datapoints])
                         @endif
 

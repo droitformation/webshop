@@ -2,7 +2,7 @@
 
 use App\Droit\Statistique\Entites\Chart;
 
-class AboChart
+class AboChangeChart
 {
     use Chart;
 
@@ -34,7 +34,7 @@ class AboChart
             })->map(function ($collection, $year) {
                 return $collection->count();
             });
-        });
+        })->sortKeys();
 
         $sets = $years->keys()->reduce(function ($data, $year) use ($years) {
                 $data['current'][] = $year;
