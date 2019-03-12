@@ -119,7 +119,9 @@ class AdresseEloquent implements AdresseInterface{
 					$query->orWhereNotNull('user_id')->has('user');
 				});
 			})
-			->searchPays($pays)->searchCanton($cantons)->searchProfession($professions)
+			->searchPays($pays)
+            ->searchCanton($cantons)
+            ->searchProfession($professions)
 			->$searchSpecialisation($specialisations)
 			->$searchMember($members);
 

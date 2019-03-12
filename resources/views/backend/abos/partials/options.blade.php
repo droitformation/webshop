@@ -5,6 +5,7 @@
             <div class="input-group">
                 <span class="input-group-addon">Exporter</span>
                 <select class="form-control" name="status">
+                    <option {{ old('status') == 'tous' ? 'selected' : '' }} value="">Tous</option>
                     <option {{ old('status') == 'abonne' ? 'selected' : '' }} value="abonne">Abonné</option>
                     <option {{ old('status') == 'tiers'  ? 'selected' : '' }} value="tiers">Tiers</option>
                     <option {{ old('status') == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>

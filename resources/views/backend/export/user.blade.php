@@ -15,20 +15,22 @@
 
                             <form action="{{ url('admin/export/search') }}" method="post">{!! csrf_field() !!}
                                 <h4><i class="fa fa-globe"></i> &nbsp;Pays</h4>
+
                                 <fieldset class="container-export">
                                     <div class="form-group">
                                         @if(!$pays->isEmpty())
                                             <div class="col-md-4">
                                                 <select id="selectPays" class="form-control" name="pays">
-                                                    <option value="">-- Choix --</option>
+                                                    <option value=""> Tous </option>
                                                     @foreach($pays as $p)
-                                                        <option {{ ($p->id == 208 ? 'selected' : '') }} value="{{ $p->id }}">{{ $p->title }}</option>
+                                                        <option value="{{ $p->id }}">{{ $p->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         @endif
-                                    </div><br/>
+                                    </div>
                                 </fieldset>
+
                                 <div id="selectCantons">
                                     <h4><i class="fa fa-map"></i> &nbsp;Cantons</h4>
                                     <p class="text-right"><input type="checkbox" id="select_all" /> &nbsp;Séléctionner tous</p>

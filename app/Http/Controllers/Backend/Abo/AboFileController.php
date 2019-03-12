@@ -20,6 +20,7 @@ class AboFileController extends Controller {
     protected $facture;
     protected $rappel;
     protected $product;
+    protected $columns;
 
     public function __construct(AboInterface $abo, ProductInterface $product, AboFactureWorkerInterface $facture, AboRappelWorkerInterface $rappel)
     {
@@ -29,7 +30,11 @@ class AboFileController extends Controller {
         $this->rappel     = $rappel;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
-	}
+
+        $this->columns = config('columns.names');
+        $this->columns['exemplaires'] = 'Exemplaires';
+        $this->columns['numero'] = 'Numero';
+;	}
 
     /*
      * Generate all invoices and bind the all
@@ -71,18 +76,18 @@ class AboFileController extends Controller {
     public function export(Request $request){
 
         $abo     = $this->abo->find($request->input('id'));
-        $abonnes = $abo->abonnements->whereIn('status',$request->input('status'));
+        $status  =  !empty($request->input('status')) ? $request->input('status') : ['abonne','tiers','gratuit'];
+        $abonnes = $abo->abonnements->whereIn('status', $status );
 
-        $adresses = $this->prepareAdresse($abonnes->pluck('user_adresse'));
+        $adresses = $this->prepareAdresse($abonnes);
 
         $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
         $writer = WriterFactory::create(Type::XLSX); // for XLSX files
 
-        $filename = storage_path('excel/abo_statut_'.$request->input('status').'.xlsx');
-        $columns = array_values(config('columns.names'));
+        $filename = storage_path('excel/abo_statut_'.$request->input('status','tous').'.xlsx');
 
         $writer->openToBrowser($filename);
-        $writer->addRowWithStyle($columns,$defaultStyle); // add multiple rows at a time
+        $writer->addRowWithStyle($this->columns,$defaultStyle); // add multiple rows at a time
 
         if(!$adresses->isEmpty()){
             $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
@@ -91,14 +96,34 @@ class AboFileController extends Controller {
         $writer->close();exit;
     }
 
-    public function prepareAdresse($adresses)
+    public function prepareAdresse($abonnes)
     {
-        $columns = collect(array_keys(config('columns.names')));
+        return $abonnes->map(function ($abo) {
 
-        return $adresses->map(function ($adresse) use ($columns) {
-            return $columns->map(function ($column) use ($adresse) {
-                return isset($adresse) ? trim($adresse->$column) : '';
-            });
+            if(isset($abo->user_adresse)){
+                return [
+                    'civilite_title'   => trim($abo->user_adresse->civilite_title),
+                    'first_name'       => trim($abo->user_adresse->first_name),
+                    'last_name'        => trim($abo->user_adresse->last_name),
+                    'email'            => trim($abo->user_adresse->email),
+                    'profession_title' => trim($abo->user_adresse->profession_title),
+                    'company'          => trim($abo->user_adresse->company),
+                    'telephone'        => trim($abo->user_adresse->telephone),
+                    'mobile'           => trim($abo->user_adresse->mobile),
+                    'adresse'          => trim($abo->user_adresse->adresse),
+                    'cp_trim'          => trim($abo->user_adresse->cp_trim),
+                    'complement'       => trim($abo->user_adresse->complement),
+                    'npa'              => trim($abo->user_adresse->npa),
+                    'ville'            => trim($abo->user_adresse->ville),
+                    'canton_title'     => trim($abo->user_adresse->canton_title),
+                    'pays_title'       => trim($abo->user_adresse->pays_title),
+                    'exemplaires'      => trim($abo->exemplaires),
+                    'numero'           => trim($abo->numero),
+                ];
+            }
+
+            return '';
+
         });
     }
 }
