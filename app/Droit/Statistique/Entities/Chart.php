@@ -16,7 +16,7 @@ trait Chart
 
         return [
             'label' => isset($label) ? $label : '',
-            'data'  => array_map('intval', $data),
+            'data'  => is_array($data) ? array_map('intval', $data) : array_map('intval', [$data]),
             'backgroundColor' => 'rgba('.$color.', 0.2)',
             'borderColor' => 'rgba('.$color.',1)',
             'borderWidth' => 1

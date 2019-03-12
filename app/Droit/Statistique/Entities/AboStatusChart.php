@@ -20,45 +20,43 @@ class AboStatusChart
     public function chart()
     {
         if($this->isNested){
-            // multiple charts for years
-
 
             $data = $this->results->mapWithKeys(function ($first, $year) {
-                return [
-                    $year => [
-                        'year'   => $year,
-                        'data'   => $first['results']->all(),
-                    ]
-                ];
-            });
 
-            /*->reduce(function ($carry, $item) {
+                $datasets = $first['results']->map(function ($item, $key) use ($year) {
+                    return ['label' => $key, 'data' => $item->count()];
+                });
+
+                $labels[] = $year;
+
+                return [
+                    $year => ['datasets' => $datasets->values()]
+                ];
+
+            })/*->reduce(function ($carry, $item) {
                 $data['datasets']   = $carry['datasets'];
                 $data['labels']     = array_values(array_unique(array_merge($item['labels'],$carry['labels'])));
-                $data['datasets'][] = $this->set($item['data'],$item['year']);
+                $data['datasets'][] = $this->set($item['data'],$item['label']);
 
                 return $data;
 
-            }, ['labels' => [], 'datasets' => []])*/
-
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
-            exit();
+            }, ['labels' => [], 'datasets' => []])*/;
 
             if($this->isGrouped){
 
                 $nbr = groupedPeriod($this->isGrouped);
 
-                $data['labels'] = fillMissing(1,$nbr, array_combine($data['labels'], $data['labels']));
-                $data['labels'] = collect($data['labels'])->mapWithKeys(function ($item, $key) {
-                    return [$key => span_to_name($key,$this->isGrouped)];
-                })->values()->all();
-
-                $data['datasets'] = collect($data['datasets'])->map(function ($set, $key) use ($nbr) {
-                    $set['data'] = array_values(fillMissing(1,$nbr, $set['data']));
-                    return $set;
+                $set['labels']   = $data->keys()->all();
+                $set['datasets'] = $data->flatten(1)->map(function ($set, $year) {
+                    return $set->map(function ($row, $year) {
+                        return $this->set($row['data'],$row['label']);
+                    });
                 })->all();
+
+                echo '<pre>';
+                print_r($set);
+                echo '</pre>';
+                exit();
             }
 
             return $data;
