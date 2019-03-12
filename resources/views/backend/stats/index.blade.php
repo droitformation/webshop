@@ -23,7 +23,7 @@
 
                             @if(isset($datapoints['labels']) && $datapoints['datasets'])
 
-                            @include(whatTable($search))
+                        {{--    @include(whatTable($search))--}}
 
                             @include('backend.stats.chart',['datapoints ' => $datapoints])
                         @endif

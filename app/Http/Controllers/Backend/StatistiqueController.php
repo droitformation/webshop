@@ -67,6 +67,10 @@ class StatistiqueController extends Controller
 
             $datapoints = $worker->chart($results);
 
+            echo '<pre>';
+            print_r($datapoints);
+            echo '</pre>';
+            exit();
         }
 
         return view('backend.stats.index')->with([

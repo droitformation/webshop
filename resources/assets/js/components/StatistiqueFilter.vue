@@ -27,7 +27,7 @@
          </div>
       </div>
 
-      <div v-if="sum != 'sum-change'">
+      <div>
          <h4 style="margin-top: 20px;">Période</h4>
          <div class="row">
             <div class="col-lg-2 col-md-2 col-xs-12">

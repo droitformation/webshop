@@ -1,6 +1,7 @@
 <?php namespace App\Droit\Statistique\Entites;
 
 use App\Droit\Statistique\Entites\Chart;
+use Illuminate\Support\Collection;
 
 class AboChangeChart
 {
@@ -25,7 +26,22 @@ class AboChangeChart
 
     public function chart()
     {
-        $years = $this->results->groupBy(function ($item, $key) {
+        return $this->results->map(function ($collection, $year) {
+
+            // there is a other depth
+            if($collection instanceof Collection) {
+                return $collection->map(function ($coll, $month) {
+                    return $this->eachPeriod($coll);
+                });
+            }
+
+            return $this->eachPeriod($collection);
+        });
+    }
+
+    public function eachPeriod($results)
+    {
+        $years = $results->groupBy(function ($item, $key) {
             return $item->created_at->format('Y');
         })->map(function ($collection, $year) {
             return $collection->mapToGroups(function ($item, $key) {
@@ -37,17 +53,17 @@ class AboChangeChart
         })->sortKeys();
 
         $sets = $years->keys()->reduce(function ($data, $year) use ($years) {
-                $data['current'][] = $year;
+            $data['current'][] = $year;
 
-                $items = $this->getByYears($data['current']);
-                $count = $years[$year];
+            $items = $this->getByYears($data['current']);
+            $count = $years[$year];
 
-                $data[$year]['count']   = $items->count();
-                $data[$year]['created'] = $count->get('created');
-                $data[$year]['deleted'] = $count->get('deleted') ? $count->get('deleted') : 0;
+            $data[$year]['count']   = $items->count();
+            $data[$year]['created'] = $count->get('created');
+            $data[$year]['deleted'] = $count->get('deleted') ? $count->get('deleted') : 0;
 
-                return $data;
-            }, []);
+            return $data;
+        }, []);
 
         unset($sets['current']);
 

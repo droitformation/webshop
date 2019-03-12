@@ -19,6 +19,20 @@ class AboStatusChart
 
     public function chart()
     {
+        return $this->results->map(function ($collection, $year) {
+            // there is a other depth
+            if($collection instanceof Collection) {
+                return $collection->map(function ($coll, $month) {
+                    return $this->eachPeriod($coll);
+                });
+            }
+
+            return $this->eachPeriod($collection);
+        });
+    }
+
+    public function eachPeriod()
+    {
         if($this->isNested){
 
             $data = $this->results->mapWithKeys(function ($first, $year) {
@@ -27,30 +41,16 @@ class AboStatusChart
                     return ['label' => $key, 'data' => $item->count()];
                 });
 
-                $labels[] = $year;
-
-                return [
-                    $year => ['datasets' => $datasets->values()]
-                ];
-
-            })/*->reduce(function ($carry, $item) {
-                $data['datasets']   = $carry['datasets'];
-                $data['labels']     = array_values(array_unique(array_merge($item['labels'],$carry['labels'])));
-                $data['datasets'][] = $this->set($item['data'],$item['label']);
-
-                return $data;
-
-            }, ['labels' => [], 'datasets' => []])*/;
+                return [$year => ['datasets' => $datasets->values()]];
+            });
 
             if($this->isGrouped){
-
-                $nbr = groupedPeriod($this->isGrouped);
 
                 $set['labels']   = $data->keys()->all();
                 $set['datasets'] = $data->flatten(1)->map(function ($set, $year) {
                     return $set->map(function ($row, $year) {
                         return $this->set($row['data'],$row['label']);
-                    });
+                    })->all();
                 })->all();
 
                 echo '<pre>';
