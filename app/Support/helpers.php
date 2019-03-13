@@ -272,18 +272,12 @@ function whatTable($search){
     }
 }
 
-function depthNested($collection){
-    $depth = 0;
-    // there is a other depth
+use Illuminate\Support\Collection;
+
+function depthNested($collection,$depth = 0){
 
     if($collection instanceof Collection) {
-        $depth = $collection->map(function ($coll, $key) {
-            if($coll instanceof Collection) {
-                return 2;
-            }
-
-            return 1;
-        });
+        return depthNested($collection->first(), $depth + 1);
     }
 
     return $depth;

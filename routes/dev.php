@@ -1460,7 +1460,7 @@ Route::get('stats_test', function () {
    // $model = new \App\Droit\Shop\Order\Entities\Order();
     $model = new \App\Droit\Abo\Entities\Abo_users();
     $worker = new \App\Droit\Statistique\StatistiqueWorker();
-    $period = ['start' => '2018-01-01','end' => '2019-01-30'];
+    $period = ['start' => '2018-01-01','end' => '2019-03-30'];
 
     $abos = $model->where('abo_id','=',2)->withTrashed()->period($period)->orderBy('created_at')->get();
 
@@ -1474,7 +1474,7 @@ Route::get('stats_test', function () {
         ->setPeriod($period)
         ->setAggregate(['model' => 'abonnement', 'name' => $aggretate[0], 'type' => $aggretate[1]]) // product or price or title (title,count)
         ->makeQuery('abonnement')
-        ->group('year')
+        ->group('month')
         ->doAggregate();
 
     $chart = new \App\Droit\Statistique\Entites\AboChangeChart($results,'table');

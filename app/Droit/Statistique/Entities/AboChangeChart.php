@@ -30,23 +30,35 @@ class AboChangeChart
 
     public function prepare()
     {
-        return $this->results->map(function ($collection, $year) {
+        $depth = depthNested($this->results);
 
-            // there is a other depth
-            if($collection instanceof Collection) {
-                return $collection->map(function ($coll, $month) {
-                    return $this->eachPeriod($coll);
-                });
+        if($depth == 1){
+            return $this->eachPeriod($this->results,$depth);
+        }
+
+        return $this->results->map(function ($collection, $year) use ($depth) {
+
+            if($depth == 3){
+                // there is a other depth
+                if($collection instanceof Collection) {
+                    return $collection->map(function ($coll, $month) use ($depth) {
+                        return $this->eachPeriod($coll,$depth);
+                    });
+                }
             }
 
-            return $this->eachPeriod($collection);
+            return $this->eachPeriod($collection,$depth);
         });
     }
 
-    public function eachPeriod($results)
+    public function eachPeriod($results, $depth)
     {
-        $years = $results->groupBy(function ($item, $key) {
-            return $item->created_at->format('Y');
+        $levels = [1 => 'Y', 2 => 'Y', 3 => 'm-d', 4 => 'd'];
+
+        $depth = isset($levels[$depth]) ? $levels[$depth] : 1;
+
+        $labels = $results->groupBy(function ($item, $key) use ($depth) {
+            return $item->created_at->format($depth);
         })->map(function ($collection, $year) {
             return $collection->mapToGroups(function ($item, $key) {
                 $status = $item->deleted_at ? 'deleted' : 'created';
@@ -56,11 +68,11 @@ class AboChangeChart
             });
         })->sortKeys();
 
-        $this->sets = $years->keys()->reduce(function ($data, $year) use ($years) {
-            $data['years'][] = $year;
+        $this->sets[] = $labels->keys()->reduce(function ($data, $year) use ($labels) {
+            $data['labels'][] = $year;
 
-            $items = $this->getByYears($data['years']);
-            $count = $years[$year];
+            $items = $this->getByYears($data['labels']);
+            $count = $labels[$year];
 
             $data[$year]['count']   = $items->count();
             $data[$year]['created'] = $count->get('created');

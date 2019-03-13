@@ -249,20 +249,34 @@ class HelperMiscTest extends TestCase
 
     public function testDepthCollections()
     {
-        $collection = collect([1,2,3,4]);
+        $collection = new \stdClass();
 
         $results = depthNested($collection);
 
         $this->assertEquals($results,0);
 
-        $collection = collect([collect([1,2,3,4])]);
-        echo '<pre>';
-        print_r($collection);
-        echo '</pre>';
-        exit();
+        $collection = collect([1,2,3,4]);
+
         $results = depthNested($collection);
 
         $this->assertEquals($results,1);
-    }
 
+        $collection = collect([collect([1,2,3,4])]);
+
+        $results = depthNested($collection);
+
+        $this->assertEquals($results,2);
+
+        $collection = collect([collect([collect([1,2,3,4])])]);
+
+        $results = depthNested($collection);
+
+        $this->assertEquals($results,3);
+
+        $collection = collect([collect([collect([collect([1,2,3,4])])])]);
+
+        $results = depthNested($collection);
+
+        $this->assertEquals($results,4);
+    }
 }
