@@ -64,6 +64,11 @@ class Product extends Model{
 
         if(isset($this->pivot) && $this->pivot->price)
         {
+            if($this->pivot->price / 100 == round($this->pivot->price / 100))
+            {
+                return $money->format($this->pivot->price / 100,2);
+            }
+
             return $money->format($this->pivot->price / 100,3);
         }
 
