@@ -219,7 +219,7 @@ class HelperMiscTest extends TestCase
         $this->assertEquals($expect,$actual);
     }
 
-/*    public function testFilleMissingKeys()
+   public function testFilleMissingKeys()
     {
         $data = [
             '01' => 12,
@@ -232,19 +232,37 @@ class HelperMiscTest extends TestCase
         $results = fillMissing(1,10, $data);
 
         $expect = [
-            '01' => 12,
-            '02' => 5,
-            '03' => 0,
-            '04' => 0,
-            '05' => 2,
-            '06' => 5,
-            '07' => 0,
-            '08' => 0,
-            '09' => 0,
-            '10' => 1
+            1 => 12,
+            2 => 5,
+            3 => 0,
+            4 => 0,
+            5 => 2,
+            6 => 5,
+            7 => 0,
+            8 => 0,
+            9 => 0,
+            10 => 1
         ];
 
         $this->assertEquals($results,$expect);
-    }*/
+    }
+
+    public function testDepthCollections()
+    {
+        $collection = collect([1,2,3,4]);
+
+        $results = depthNested($collection);
+
+        $this->assertEquals($results,0);
+
+        $collection = collect([collect([1,2,3,4])]);
+        echo '<pre>';
+        print_r($collection);
+        echo '</pre>';
+        exit();
+        $results = depthNested($collection);
+
+        $this->assertEquals($results,1);
+    }
 
 }

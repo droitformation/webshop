@@ -1462,45 +1462,26 @@ Route::get('stats_test', function () {
     $worker = new \App\Droit\Statistique\StatistiqueWorker();
     $period = ['start' => '2018-01-01','end' => '2019-01-30'];
 
-    $abos = $model->where('abo_id','=',2)->withTrashed()->orderBy('created_at')->get();
+    $abos = $model->where('abo_id','=',2)->withTrashed()->period($period)->orderBy('created_at')->get();
+
     //$orders = $model->with(['products.authors','products.domains'])->period($period)->categories([15])->get();
     //$orders = $model->with(['products.authors','products.domains'])->period($period)->domains([1])->get();
-/*
-    list($underThree, $equalOrAboveThree) = $collection->partition(function ($i) {
-        return $i < 3;
-    });*/
+    $worker = new \App\Droit\Statistique\StatistiqueWorker();
 
-/*    $grouped = $abos->groupBy(function ($item, $key) {
-        return $item->created_at->format('Y');
-    })->map(function ($collection, $year) {
-        return $collection->mapToGroups(function ($item, $key) {
-            $status = $item->deleted_at ? 'deleted' : 'created';
-            return [$status =>$item];
-        })->map(function ($collection, $year) {
-            return $collection->count();
-        });
-    });
+    $aggretate = explode('-','sum-change'); // [sum] => sum-price
 
-    $grouped2 = $grouped->keys()
-        ->reduce(function ($data, $year) use ($model,$grouped) {
-        $data['current'][] = $year;
-        $items = $model::where('abo_id','=',2)->whereIn(DB::raw("year(created_at)"), $data['current'])->withTrashed()->get();
-        $count = $grouped[$year];
+    $results = $worker->setFilters(['abo' => 2])
+        ->setPeriod($period)
+        ->setAggregate(['model' => 'abonnement', 'name' => $aggretate[0], 'type' => $aggretate[1]]) // product or price or title (title,count)
+        ->makeQuery('abonnement')
+        ->group('year')
+        ->doAggregate();
 
-        $data[$year]['count']     = $items->count();
-        $data[$year]['created']   = $count->get('created');
-        $data[$year]['deleted']   = $count->get('deleted');
+    $chart = new \App\Droit\Statistique\Entites\AboChangeChart($results,'table');
 
-        return $data;
-    }, []);
-
-    unset($grouped2['current']);
-    $data = collect($grouped2);*/
-
-    $chart = new \App\Droit\Statistique\Entites\AboChangeChart($abos);
-
+    $chart->setAbo(2)->prepare();
     echo '<pre>';
-    print_r($chart->setAbo(2)->chart());
+    print_r($chart->sets);
     echo '</pre>';
     exit();
 

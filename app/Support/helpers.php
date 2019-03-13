@@ -271,3 +271,20 @@ function whatTable($search){
         }
     }
 }
+
+function depthNested($collection){
+    $depth = 0;
+    // there is a other depth
+
+    if($collection instanceof Collection) {
+        $depth = $collection->map(function ($coll, $key) {
+            if($coll instanceof Collection) {
+                return 2;
+            }
+
+            return 1;
+        });
+    }
+
+    return $depth;
+}

@@ -10,10 +10,14 @@ class AboChangeChart
     protected $results;
     protected $model;
     protected $abo_id;
+    protected $type;
 
-    public function __construct($results)
+    public $sets;
+
+    public function __construct($results, $type =  'chart')
     {
         $this->results = $results;
+        $this->type  = $type;
         $this->model = new \App\Droit\Abo\Entities\Abo_users();
     }
 
@@ -24,7 +28,7 @@ class AboChangeChart
         return $this;
     }
 
-    public function chart()
+    public function prepare()
     {
         return $this->results->map(function ($collection, $year) {
 
@@ -52,10 +56,10 @@ class AboChangeChart
             });
         })->sortKeys();
 
-        $sets = $years->keys()->reduce(function ($data, $year) use ($years) {
-            $data['current'][] = $year;
+        $this->sets = $years->keys()->reduce(function ($data, $year) use ($years) {
+            $data['years'][] = $year;
 
-            $items = $this->getByYears($data['current']);
+            $items = $this->getByYears($data['years']);
             $count = $years[$year];
 
             $data[$year]['count']   = $items->count();
@@ -65,17 +69,18 @@ class AboChangeChart
             return $data;
         }, []);
 
-        unset($sets['current']);
+        return $this;
+    }
 
-        $data['labels']   = $years->keys()->all();
+    public function chartData()
+    {
+        $data['labels']   = $years->keys()->all(); // years 1 loop
         $data['datasets'] = collect($sets)->transpose()->map(function ($item, $key) {
             $keys = [0 => 'Total', 1 => 'Crées', 2 => 'Supprimées'];
             $key  = isset($keys[$key]) ? $keys[$key] : 0;
 
             return $this->set($item,$key);
         })->all();
-
-        return $data;
     }
 
     public function getByYears($current)
