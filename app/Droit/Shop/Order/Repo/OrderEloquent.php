@@ -139,7 +139,7 @@ class OrderEloquent implements OrderInterface{
             'payement_id' => $data['payement_id'],
             'amount'      => $data['amount'],
             'order_no'    => $data['order_no'],
-            'comment'     => (isset($data['comment']) ? $data['comment'] : null),
+            'comment'     => (isset($data['comment']) ? serialize($data['comment']) : null),
         ));
 
         if( ! $order ) {
