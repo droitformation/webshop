@@ -421,7 +421,8 @@ class OrderMakerTest extends TestCase
             'shipping'    => collect([2 => ['shipping_id' => 2, 'qty' => 1]]),
             'payement_id' => 1,
             'paquet'      => null,
-            'products'    => $products
+            'products'    => $products,
+            'comment'     => null
         ];
 
         $mockorder = \Mockery::mock('App\Droit\Shop\Order\Repo\OrderInterface');

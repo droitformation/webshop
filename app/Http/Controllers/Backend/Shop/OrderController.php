@@ -170,7 +170,7 @@ class OrderController extends Controller {
             'user_id'        => $user_id,
             'shipping_id'    => $data['shipping_id'],
             'tva'            => $data['tva'],
-            'message'        => $data['message'],
+            'comment'        => $data['comment'],
             'paquet'         => isset($data['paquet']) ? $data['paquet'] : null,
             'free'           => isset($data['free']) ? 1 : null,
             'adresse'        => $adresse

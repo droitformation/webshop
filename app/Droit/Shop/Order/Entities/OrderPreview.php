@@ -88,7 +88,7 @@ class OrderPreview
 
     public function messages()
     {
-        return isset($this->data['message']) && !empty(array_filter($this->data['message'])) ? $this->data['message'] : null;
+        return isset($this->data['comment']) && !empty(array_filter($this->data['comment'])) ? $this->data['comment'] : null;
     }
 
     public function shipping_total()

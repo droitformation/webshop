@@ -64,8 +64,8 @@ class OrderMaker implements OrderMakerInterface{
         if(isset($commande['tva']) && !empty(array_filter($commande['tva'])))
             $this->generator->setTva(array_filter($commande['tva']));
 
-        if(isset($commande['message']) && !empty(array_filter($commande['message'])))
-            $this->generator->setMsg(array_filter($commande['message']));
+        if(isset($commande['comment']) && !empty(array_filter($commande['comment'])))
+            $this->generator->setMsg(array_filter($commande['comment']));
 
         $this->generator->factureOrder($order);
 
@@ -85,7 +85,8 @@ class OrderMaker implements OrderMakerInterface{
             'shipping'    => $shipping ? ['shipping_id' => $shipping->id] : $this->getShipping($order),
             'paquet'      => isset($order['paquet']) ? $order['paquet'] : null,
             'payement_id' => 1,
-            'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::instance('shop')->content())
+            'products'    => isset($order['admin']) ? $this->getProducts($order['order']) : $this->getProductsCart(\Cart::instance('shop')->content()),
+            'comment'     => isset($order['comment']) && !empty($order['comment']) ? $order['comment'] : null,
         ];
 
         $user = isset($order['admin']) ? $this->getUser($order) : ['user_id' => \Auth::user()->id];
