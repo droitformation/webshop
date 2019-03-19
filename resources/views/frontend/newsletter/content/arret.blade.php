@@ -41,7 +41,7 @@
                             @endif
                             <div class="media-body">
                                 <h4><i>{{ $author->name }}</i></h4>
-                                <p>{{ $author->occupation }}</p>
+                                <p>{!! $author->occupation !!}</p>
                             </div>
                         </div>
 
