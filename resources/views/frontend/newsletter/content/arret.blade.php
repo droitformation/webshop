@@ -49,7 +49,8 @@
                 @endif
 
                 {!! $analyse->abstract !!}
-                <p><a href="{{ secure_asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
+                <p style="display:block;margin-top:15px;">
+                    <a href="{{ secure_asset(config('newsletter.path.analyse').$analyse->file) }}">Télécharger en pdf</a></p>
             </div>
             <div class="col-md-3">
                 <a target="_blank" href="{{ config('newsletter.link.analyse') }}">
