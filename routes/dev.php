@@ -501,17 +501,32 @@ Route::get('cartworker', function()
         return $item->title;
     })->all();
 
-
-    $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+    $abo        = \App::make('App\Droit\Abo\Repo\AboInterface');
+   // $abo        = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $facture = $factures->find(2);//1697
 
+    $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+    $abousers      = \App::make('App\Droit\Abo\Repo\AboUserInterface');
+
+    $groupes       = new \App\Droit\Inscription\Entities\Groupe();
+    $abofacture    = $abofactures->find(16);
+    $abos = $abo->find(1);
+
+
+    //$job = new \App\Jobs\MakeDocument($inscription);
+    //$job->handle();
+    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $generator->stream = true;
+    $generator->setPrint(true);
+
+   // $generate = new \App\Droit\Generate\Entities\Generate($abofacture);
 
     //$generator->setMsg(['warning' => 'Après vérification de notre comptabilité, nous nous apercevons que la facture concernant la commande susmentionnée est due.']);
 
     //return $generator->factureOrder($order,$rappel);
 
-   // return $generator->makeAbo('facture', $facture);
+    return $generator->makeAbo('facture', $abofacture);
 
 
 
@@ -618,7 +633,15 @@ Route::get('cartworker', function()
     $abousers      = \App::make('App\Droit\Abo\Repo\AboUserInterface');
 
     $groupes       = new \App\Droit\Inscription\Entities\Groupe();
+    $abofacture    = $abofactures->find(939);
+    $abouser   = $abousers->find(531);
 
+
+    //$job = new \App\Jobs\MakeDocument($inscription);
+    //$job->handle();
+
+    $generator->stream = true;
+    $generate = new \App\Droit\Generate\Entities\Generate($abofacture);
 
     /*$range = ['a','b','c','d'];
 
@@ -648,15 +671,7 @@ Route::get('cartworker', function()
 /*    $groupe        = $groupes->find(1);
 
 
-    $abofacture    = $abofactures->find(939);
-    $abouser   = $abousers->find(531);*/
 
-
-    //$job = new \App\Jobs\MakeDocument($inscription);
-    //$job->handle();
-    //$generator->stream = true;
-
-    //$generate = new \App\Droit\Generate\Entities\Generate($abofacture);
 
     /*
         $worker       = \App::make('App\Droit\Shop\Cart\Worker\CartWorker');

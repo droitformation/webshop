@@ -48,7 +48,7 @@ class Newsletter extends Model {
                     ->orWhere('hidden','=','0');
             })
             ->where(function ($query) {
-                $query->whereDate('send_at', '<', \Carbon\Carbon::now());
+                $query->whereDate('send_at', '=<', \Carbon\Carbon::now());
             })
             ->orderBy('created_at','DESC');
     }
