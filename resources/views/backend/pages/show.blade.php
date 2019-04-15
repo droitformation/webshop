@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                         @endif
-                        @if(in_array($page->template,['index','page','contact']))
+                        @if(in_array($page->template,['index','page','contact','revue']))
                             <div class="form-group">
                                 <label for="contenu" class="col-sm-3 control-label">Contenu</label>
                                 <div class="col-sm-8">
