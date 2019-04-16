@@ -149,6 +149,12 @@ class ExportInscription{
 
                 $sheet->rows($data)->appendRow(['']);
             }
+
+            if(!isset($this->options[$option_id])){
+                $only = $options;
+                $only = $this->unsetFilters($only);
+                $sheet->rows($only);
+            }
         }
 
         $sheet->appendRow(['']);
