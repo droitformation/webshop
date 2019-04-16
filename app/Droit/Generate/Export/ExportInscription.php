@@ -131,7 +131,10 @@
 
          foreach ($converted as $option_id => $options)
          {
-             $sheet->appendRow([$this->options[$option_id]]);
+             $option_name = isset($this->options[$option_id]) ? $this->options[$option_id] : 'Aucun choix';
+
+             $sheet->appendRow([$option_name]);
+
              $sheet->row($sheet->getHighestRow(), function ($row) {$row->setFontWeight('bold')->setFontSize(16)->setFontColor('#595959');});
              $sheet->mergeCells('A'.$sheet->getHighestRow().':H'.$sheet->getHighestRow())->appendRow(['']);
 
@@ -260,9 +263,13 @@
      public function unsetFilters($data)
      {
         return collect($data)->map(function ($data, $key) {
-             unset($data['filter_choices']);
-             unset($data['filter_checkboxes']);
-             return $data;
+            if(isset($data['filter_choices'])){
+                unset($data['filter_choices']);
+            }
+            if(isset($data['filter_checkboxes'])){
+                unset($data['filter_checkboxes']);
+            }
+            return $data;
          })->toArray();
      }
 
