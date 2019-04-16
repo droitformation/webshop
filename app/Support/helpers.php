@@ -26,7 +26,7 @@ function span_to_name($when,$span){
         return \Carbon\Carbon::createFromFormat('Y-m-d',date('Y').'-'.$when.'-01')->formatLocalized('%B');
     }
     if($span == 'week'){
-        return 'semaine '.$when;
+        return 'sem. '.$when;
     }
 
     return $when;

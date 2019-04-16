@@ -191,7 +191,7 @@ class StatistiqueWorker
         }
 
         if($this->model == 'order' || $this->model == 'inscription'){
-            $chart = new \App\Droit\Statistique\Entites\OrderChart($results);
+            $chart = new \App\Droit\Statistique\Entites\OrderChart($results,$this->isNested,$this->isGrouped);
 
             return $chart->chart();
         }

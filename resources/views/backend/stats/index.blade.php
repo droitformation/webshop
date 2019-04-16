@@ -16,16 +16,19 @@
                     @if($results)
 
                         <?php
-                      /* */ echo '<pre>';
+                      /*  echo '<pre>';
                         print_r($search);
-                        echo '</pre>';
+                        echo '</pre>';*/
                         ?>
 
-                            @if(isset($datapoints['labels']) && $datapoints['datasets'])
 
-                        {{--    @include(whatTable($search))--}}
+                        @if(isset($datapoints['labels']) && $datapoints['datasets'])
 
-                            @include('backend.stats.chart',['datapoints ' => $datapoints])
+                            {{--@include(whatTable($search))--}}
+
+                            @include('backend.stats.compare',['datapoints' => $datapoints])
+
+                            {{--@include('backend.stats.chart',['datapoints ' => $datapoints])--}}
                         @endif
 
                     @endif
