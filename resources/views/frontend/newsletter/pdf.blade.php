@@ -7,6 +7,8 @@
         <h3>{{ $campagne->auteurs }}</h3>
     </div>
 
+    <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
+
     @if(!$campagne->content->isEmpty())
         @foreach($campagne->content as $bloc)
             {!! view('frontend.newsletter.print.'.$bloc->type->partial)->with(['bloc' => $bloc , 'campagne' => $campagne])->__toString() !!}
