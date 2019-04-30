@@ -210,7 +210,7 @@ class MailjetService implements MailjetServiceInterface{
             return $newsletter[0]['ID']; // returns ID directly
         }
 
-        return false;
+        return null;
     }
 
     public function setHtml($html,$id)

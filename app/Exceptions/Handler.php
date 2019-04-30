@@ -146,7 +146,7 @@ class Handler extends ExceptionHandler {
 		}
 
 		if ($e instanceof \App\Exceptions\CampagneCreationException){
-			alert()->warning('Problème avec la création de campagne sur mailjet');
+			alert()->warning('Problème avec la création de campagne sur mailjet, re-essayer et si le problème persiste avertir le webmaster.');
 			return redirect()->back();
 		}
 

@@ -150,8 +150,11 @@ class CampagneController extends Controller
 
         $created = $this->mailjet->createCampagne($campagne); // return Mailjet ID
 
-        if(!$created)
-        {
+        if(!$created) {
+            $this->campagne->delete($campagne->id);
+
+            $campagne = $campagne->fresh();
+
             throw new \App\Exceptions\CampagneCreationException('Problème avec la création de campagne sur mailjet');
         }
 
